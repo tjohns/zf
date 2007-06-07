@@ -7,15 +7,15 @@
         auf Feed Ebene und bei der Iteration über Einträge des Feeds bereit. Der Hauptunterschied
         ist die Struktur des Atom Protokolls selber. Atom ist ein Nachfolger von RSS; es ist ein
         mehr verallgemeinertes Protokoll und es wurde gestaltet, um einfacher mit Feeds umzugehen,
-        die ihren kompletten Inhalt innerhalb des Feeds bereit stellen, indem für diesen Zweck der 
-        <code>description</code> Tag von RSS in die zwei Elemente <code>summary</code> und 
+        die ihren kompletten Inhalt innerhalb des Feeds bereit stellen, indem für diesen Zweck der
+        <code>description</code> Tag von RSS in die zwei Elemente <code>summary</code> und
         <code>content</code> aufgeteilt wird.
     </para>
 
     <example id="zend.feed.consuming-atom.example.usage">
         <title>Grundlegende Verwendung eines Atom Feeds</title>
         <para>
-            Lese einen Atom Feed und gebe <code>title</code> und <code>summary</code> jedes 
+            Lese einen Atom Feed und gebe <code>title</code> und <code>summary</code> jedes
             Eintrages aus:
         </para>
         <programlisting role="php"><![CDATA[<?php
@@ -37,11 +37,11 @@ foreach ($feed as $entry) {
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - Die Überschrift des Feeds, gleichbedeutend mit der 
+                <para><code>title</code> - Die Überschrift des Feeds, gleichbedeutend mit der
                 Überschrift eines RSS Channels</para>
             </listitem>
             <listitem>
-                <para><code>id</code> - Jeder Feed und Eintrag hat in Atom einen einzigartige 
+                <para><code>id</code> - Jeder Feed und Eintrag hat in Atom einen einzigartige
                 Bezeichner</para>
             </listitem>
             <listitem>
@@ -49,13 +49,13 @@ foreach ($feed as $entry) {
                 <code>type</code> Attribut ausgezeichnet werden</para>
                 <para>
                     In einem RSS Channel wäre dies gleichbedeutend mit <code>type="text/html"</code>.
-                    Wenn der Link auf eine alternative Version des selben Inhalts verweist, der 
+                    Wenn der Link auf eine alternative Version des selben Inhalts verweist, der
                     nicht im Feed enthalten ist, würde es ein <code>rel="alternate"</code> Attribut
                     enthalten.
                 </para>
             </listitem>
             <listitem>
-                <para><code>subtitle</code> - Die Beschreibung des Feeds, gleichbedeutend mit der 
+                <para><code>subtitle</code> - Die Beschreibung des Feeds, gleichbedeutend mit der
                 Beschreibung eines RSS Channels</para>
                 <para><code>author->name()</code> - Der Name des Autoren des Feeds</para>
                 <para><code>author->email()</code> - Die E-Mail Adresse des Autoren des Feeds</para>
@@ -73,7 +73,7 @@ foreach ($feed as $entry) {
                 <para><code>id</code> - Der einzigartige Bezeichner des Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>title</code> - Die Überschrift des Eintrags, gleichbedeutend mit der 
+                <para><code>title</code> - Die Überschrift des Eintrags, gleichbedeutend mit der
                 Überschrift eines RSS Eintrags</para>
             </listitem>
             <listitem>
@@ -84,19 +84,19 @@ foreach ($feed as $entry) {
                 <para><code>summary</code> - Eine Zusammenfassung des Inhalts dieses Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>content</code> - Der komplette Inhalt des Eintrags; kann übersprungen 
+                <para><code>content</code> - Der komplette Inhalt des Eintrags; kann übersprungen
                 werden, wenn der Feed nur Zusammenfassungen enthält</para>
             </listitem>
             <listitem>
-                <para><code>author</code> - Mit <code>name</code> und <code>email</code> Unter-Tags 
+                <para><code>author</code> - Mit <code>name</code> und <code>email</code> Unter-Tags
                 wie den Feeds</para>
             </listitem>
             <listitem>
-                <para><code>published</code> - Das Datum, an dem der Eintrag veröffentlicht wurde, 
+                <para><code>published</code> - Das Datum, an dem der Eintrag veröffentlicht wurde,
                 im RFC 3339 Format</para>
             </listitem>
             <listitem>
-                <para><code>updated</code> - Das Datum, an dem der Eintrag das letzte Mal geändert 
+                <para><code>updated</code> - Das Datum, an dem der Eintrag das letzte Mal geändert
                 wurde, im RFC 3339 Format</para>
             </listitem>
         </itemizedlist>

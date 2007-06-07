@@ -171,15 +171,15 @@ foreach($response as $r) {
                 werden durch Benutzen von verketteten Methoden Aufrufen. (z.B., <code>$obj->method()->method2($arg)</code>)
             </para>
             <para>
-                Die <code>Zend_Service_Amazon_Query</code> API benutzt Überladung um einfachst eine Teile Suche zu 
-                realisieren, und ermöglicht es, basierend auf den spezifizierten Kriterien, zu suchen. Jede der 
-                Optionen wird als Methoden Aufruf angeboten, und jedes Methoden Argument korrespondiert mit dem 
+                Die <code>Zend_Service_Amazon_Query</code> API benutzt Überladung um einfachst eine Teile Suche zu
+                realisieren, und ermöglicht es, basierend auf den spezifizierten Kriterien, zu suchen. Jede der
+                Optionen wird als Methoden Aufruf angeboten, und jedes Methoden Argument korrespondiert mit dem
                 beschriebenen Options Wert:
             </para>
             <example>
                 <title>Suchen in Amazon durch Benutzen der alternativen Abfrage API</title>
                 <para>
-                    In diesem Beispiel wird die alternative Abfrage API als Fluent Interface benutzt um Optionen und 
+                    In diesem Beispiel wird die alternative Abfrage API als Fluent Interface benutzt um Optionen und
                     Ihre Werte festzulegen:
                 </para>
                 <programlisting><![CDATA[<?php
@@ -195,7 +195,7 @@ foreach($response as $r) {
                     Das setzt die Option <code>Category</code> auf "Books" und <code>Keywords</code> auf "PHP".
                 </para>
                 <para>
-                    Für weitere Informationen über die möglichen Optionen, sehen Sie bitte in die 
+                    Für weitere Informationen über die möglichen Optionen, sehen Sie bitte in die
                     <ulink
                         url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon Dokumentation</ulink>.
                 </para>
@@ -422,14 +422,14 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.resultset">
             <title>Zend_Service_Amazon_ResultSet</title>
             <para>
-                <code>Zend_Service_Amazon_ResultSet</code> Objekte werden zurückgegeben durch 
+                <code>Zend_Service_Amazon_ResultSet</code> Objekte werden zurückgegeben durch
                 <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
                 und erlauben es, die vielfach zurück gelieferten Resultate, einfachst zu Handhaben.
             </para>
             <note>
                 <title>SeekableIterator</title>
                 <para>
-                    Implementiert den <code>SeekableIterator</code> für einfach Iteration 
+                    Implementiert den <code>SeekableIterator</code> für einfach Iteration
                     (z.B. benutzen von <code>foreach</code>), sowie direkten Zugriff auf ein Spezielles Resultat
                     mit <code>seek()</code>.
                 </para>
@@ -780,7 +780,7 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.listmania">
             <title>Zend_Service_Amazon_Listmania</title>
             <para>
-                Jedes List Mania List Ergebnis des Teils wird als <code>Zend_Service_Amazon_Listmania</code> 
+                Jedes List Mania List Ergebnis des Teils wird als <code>Zend_Service_Amazon_Listmania</code>
                 Objekt zurückgegeben.
             </para>
             <sect4 id="zend.service.amazon.classes.listmania.properties">

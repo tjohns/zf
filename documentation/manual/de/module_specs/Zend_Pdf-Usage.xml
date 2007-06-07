@@ -8,8 +8,8 @@
         Das Beispiel kann in der Datei <filename>demos/Zend/Pdf/demo.php</filename> gefunden werden.
     </para>
     <para>
-        Dort gibt es auch die Datei <filename>test.pdf</filename>, die für diese Demo zu 
-        Testzwecken verwendet werden kann. 
+        Dort gibt es auch die Datei <filename>test.pdf</filename>, die für diese Demo zu
+        Testzwecken verwendet werden kann.
     </para>
 
     <example>
@@ -31,12 +31,12 @@ if (!isset($argv[1])) {
 try {
     $pdf = Zend_Pdf::load($argv[1]);
 } catch (Zend_Pdf_Exception $e) {
-    if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
+    if ($e->getMessage() == 'Datei \'' . $argv[1] . '\' konnte nicht zum Lesen geöffnet werden.') {
         // Erstelle neues PDF, wenn Datei nicht existiert
         $pdf = new Zend_Pdf();
 
         if (!isset($argv[2])) {
-            // force complete file rewriting (instead of updating)
+            // Erzwinge komplettes neu schreiben der Datei (statt nur updaten)
             $argv[2] = $argv[1];
         }
     } else {
@@ -75,11 +75,11 @@ foreach ($pdf->pages as $page){
     $page->restoreGS();
 }
 
-// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts (die Seite wird an das angegebene 
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts (die Seite wird an das angegebene
 // Dokument angehängt)
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
-// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts (die Seite wird nicht an das 
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts (die Seite wird nicht an das
 // angegebene Dokument angehängt)
 $pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 

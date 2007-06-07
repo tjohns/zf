@@ -1,11 +1,11 @@
 <sect1 id="zend.search.lucene.index-creation">
-	<title>Indexerstellung</title>
+    <title>Indexerstellung</title>
 
-	<sect2 id="zend.search.lucene.index-creation.creating">
+    <sect2 id="zend.search.lucene.index-creation.creating">
         <title>Einen neuen Index erstellen</title>
 
         <para>
-            Die Funktionen für das Erstellen und Aktualisieren eines Index wurden innerhalb der 
+            Die Funktionen für das Erstellen und Aktualisieren eines Index wurden innerhalb der
             Zend_Search_Lucene Komponente und von Java Lucene implementiert. Du kannst diese beiden
             Funktionalitäten verwenden.
         </para>
@@ -28,7 +28,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 // Indiziere den Dokumenteninhalt
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Füge das Dokument dem Index hinzu 
+// Füge das Dokument dem Index hinzu
 $index->addDocument($doc);
 ?>]]></programlisting>
 
@@ -41,7 +41,7 @@ $index->addDocument($doc);
         <title>Indexaktualisierung</title>
 
         <para>
-            Der selbe Prozess wird verwendet, um einen vorhandenen Index zu aktualisieren. Der 
+            Der selbe Prozess wird verwendet, um einen vorhandenen Index zu aktualisieren. Der
             einzige Unterschied ist, dass die open() Methode statt der create() Methode aufgerufen
             wird:
         </para>
@@ -59,7 +59,7 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 // Indiziere den Dokumenteninhalt
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Füge das Dokument dem Index hinzu 
+// Füge das Dokument dem Index hinzu
 $index->addDocument($doc);
 ?>]]></programlisting>
     </sect2>
@@ -67,8 +67,8 @@ $index->addDocument($doc);
         <title>Dokumente aktualisieren</title>
 
         <para>
-            Das Lucene Indexdateiformat unterstützt keine Aktualisierung von Dokumenten. Ein 
-            Dokument sollte entfernt und wieder hinzugefügt werden, um eine Aktualisierung zu 
+            Das Lucene Indexdateiformat unterstützt keine Aktualisierung von Dokumenten. Ein
+            Dokument sollte entfernt und wieder hinzugefügt werden, um eine Aktualisierung zu
             erreichen.
         </para>
 
@@ -86,7 +86,7 @@ foreach ($hits as $hit) {
 }
 ?>]]></programlisting>
     </sect2>
-    
+
     <sect2 id="zend.search.lucene.index-creation.counting">
         <title>Retrieving Index size</title>
 
@@ -163,7 +163,7 @@ $index->optimize();
             Die automatische Indexoptimierung wird durchgeführt, um einen Index konsistens zu halten.
         </para>
         <para>
-            Die automatische Indexoptimierung ist ein schrittweise Prozess, der durch verschiedene Indexoptionen gesteuert 
+            Die automatische Indexoptimierung ist ein schrittweise Prozess, der durch verschiedene Indexoptionen gesteuert
             wird. Sie fasst sehr kleine Segmente in größere zusammen und fasst die größeren Segmente dann in noch größere
             zusammen und so weiter.
         </para>
@@ -175,7 +175,7 @@ $index->optimize();
                 die im Hauptspeicher zwischen gespeicherten Dokumente in ein neues Segment geschrieben werden.
             </para>
             <para>
-                <emphasis>MaxBufferedDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von 
+                <emphasis>MaxBufferedDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
                 <code>$index->getMaxBufferedDocs()</code> oder <code>$index->setMaxBufferedDocs($maxBufferedDocs)</code>.
             </para>
             <para>
@@ -187,7 +187,7 @@ $index->optimize();
             <title><emphasis>MaxMergeDocs</emphasis> Option für automatische Optimierung</title>
             <para>
                 <emphasis>MaxMergeDocs</emphasis> ist die höchste Anzahl an Dokumenten, die jemals mit addDocument()
-                zusammengefasst werden kann. Kleine Werte (z.B. unter 10.000) sind für die interaktive Indizierung am 
+                zusammengefasst werden kann. Kleine Werte (z.B. unter 10.000) sind für die interaktive Indizierung am
                 besten, da dies die Pausen für das Indizieren auf wenige Sekunden begrenzen. Größere Werte sind am besten
                 für Stapelverarbeitung oder schnellere Suchabfragen.
             </para>
@@ -204,7 +204,7 @@ $index->optimize();
             <title><emphasis>MergeFactor</emphasis> Option für automatische Optimierung</title>
             <para>
                 <emphasis>MergeFactor</emphasis> legt fest, wie oft Segmentenindixes durch addDocument() zusammengefasst
-                werden sollen. Bei kleineren Werten wird beim Indizieren weniger RAM verbraucht und Suchabfragen auf 
+                werden sollen. Bei kleineren Werten wird beim Indizieren weniger RAM verbraucht und Suchabfragen auf
                 nicht optimierte Indizes sind schneller, aber die Indizierungsgeschwindigkeit ist langsamer. Bei größeren
                 Werten, wird mehr beim Indizieren RAM verbraucht und während Suchabfragen auf nicht optimierte Indizes langsamer
                 sind, ist das Indizieren schneller. Deshalb sind größere Werte (&gt; 10)  am besten für Stapelverarbeitung
@@ -216,7 +216,7 @@ $index->optimize();
                 "failed to open stream: Too many open files" error message. This limitation is system dependant.
             </para>
             <para>
-                <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von 
+                <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
                 <code>$index->getMergeFactor()</code> oder <code>$index->setMergeFactor($mergeFactor)</code>.
             </para>
             <para>

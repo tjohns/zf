@@ -119,7 +119,7 @@
             Ein Benutzer von den USA würde die Sprache <code>Englisch</code> und die Region <code>USA</code>
             erwarten, beschrieben durch das Gebietsschema "en_US". Ein Benutzer von Deutschland würde die Sprache
             <code>Deutsch</code> und die Region <code>Deutschland</code> erwarten, beschrieben durch das
-            Gebietsschema "de_DE". Hier findest Du eine 
+            Gebietsschema "de_DE". Hier findest Du eine
             <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_territories.html">Liste von vordefinierten Sprachen und Kombinationen von Regionen</ulink>
             wenn ein bestimmtes Gebietsschema im Zend Framework ausgewählt werden muß.
         </para>
@@ -154,7 +154,7 @@ $locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland
             Datumsberechnungen gemacht werden, wird die Berechnung welche durch die ZF Komponenten durchgeführt wird,
             nicht an diese Änderungen angepasst. Stattdessen wird die korrekte Uhrzeit benutzt, welche für die aktuell
             benutzte Zeitzone angegeben wurde, wobei moderne Regeln für Sommer-/Winterzeit und Zeitzonen Zuordnung
-            anhand von geographischen Regionen verwendet werden. 
+            anhand von geographischen Regionen verwendet werden.
         </para>
 
     </sect2>
@@ -188,7 +188,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellu
             <orderedlist>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::BROWSER</code> - Der Webbrowser des Benutzer welcher die 
+                        const <code>Zend_Locale::BROWSER</code> - Der Webbrowser des Benutzer welcher die
                         Informationen mit jeder Anfrage schickt. Diese wird von PHP durch die globale Variable
                         <code>HTTP_ACCEPT_LANGUAGE</code> veröffentlicht. Wenn kein passendes
                         Gebietsschema gefunden wurde, dann wird mit <code>ENVIRONMENT</code> gesucht und
@@ -288,7 +288,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             Datumsdefinitionen und PHP's date() Definitionen. Die Option 'fix_date' erlaubt oder verhindert eine
             Automatik welche versucht falsche Daten zu korrigieren. Die Option 'number_format' definiert ein
             Standard Format für Nummern bei Verwendung der Funktion <code>toNumber()</code>. (siehe
-            <xref 
+            <xref
                 linkend= "zend.locale.number.localize"/>
             ).
         </para>

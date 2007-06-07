@@ -2,13 +2,13 @@
     <title>Einführung</title>
     <para>
         <code>Zend_Json</code> stellt komfortable Methoden für das Serialisieren von nativem PHP
-        nach JSON und das Dekodieren von JSON in natives PHP bereit. Für weitere Informationen zu 
+        nach JSON und das Dekodieren von JSON in natives PHP bereit. Für weitere Informationen zu
         JSON <ulink url="http://www.json.org/">besuche die Website des JSON Projekts</ulink>.
     </para>
     <para>
-        JSON, JavaScript Object Notation, kann für den Datenaustausch zwischen Javascript und 
-        anderen Sprachen verwendet werden. Da JSON direkt in Javascript ausgewertet werden kann, 
-        ist es ein effizienteres und leichtgewichtigeres Format für den Datenaustausch mit 
+        JSON, JavaScript Object Notation, kann für den Datenaustausch zwischen Javascript und
+        anderen Sprachen verwendet werden. Da JSON direkt in Javascript ausgewertet werden kann,
+        ist es ein effizienteres und leichtgewichtigeres Format für den Datenaustausch mit
         Javascript Clients als XML.
     </para>
 </sect1>

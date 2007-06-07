@@ -35,7 +35,7 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
         Arten der Maßeinheiten haben die folgende einheitliche Schreibweise:
         <code>Zend_Measure_&lt;TYP&gt;::NAME_DER_EINHEIT</code>, wobei &lt;TYP&gt; identisch ist mit einer
         bekannten physikalischen oder nummerischen Einheit. Jede Maßeinheit besteht aus einem Faktor für die
-        Konvertierung und einer Darstellungseinheit. Eine detailierte Liste kann im Kapitel 
+        Konvertierung und einer Darstellungseinheit. Eine detailierte Liste kann im Kapitel
         <link linkend="zend.measure.types"><code>Arten von Maßeinheiten</code></link> gefunden werden.
     </para>
 

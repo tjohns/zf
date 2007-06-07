@@ -11,7 +11,7 @@
             Constructor der Klasse. Es ist entweder eine Zeichenkette im Format der
             kurzen Syntax wie für das Definieren für Optionen definiert, oder ein
             assoziatives Array im Format der langen Syntax wie für das Definieren
-            für Optionen definiert. Siehe 
+            für Optionen definiert. Siehe
             <link linkend="zend.console.getopt.rules">Definieren von GetOpt Regeln</link>
             für Details über die Syntax für die Definition von Optionen.
         </para>
@@ -40,7 +40,7 @@ $opts->addRules(
         <para>
             Zusätzlich zum Definieren von Hilfstexten bei der Definition
             von Optionsregeln im langen Format, können Hilfstexte
-            mit Optionsregeln verknüpft werden durch Verwendung der 
+            mit Optionsregeln verknüpft werden durch Verwendung der
             <code>setHelp()</code> Methode. Das Argument für die
             <code>setHelp()</code> Methode ist ein assoziatives Array, in welchen der
             Schlüssel ein Flag ist, und der Wert der betreffende Hilfetext.
@@ -191,7 +191,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
                     ("gnu") haben. Diese Option sollte nicht verwendet werden ausser
                     die Klasse wird erweiter um zusätzliche Syntax Formen zu
                     unterstützen. Die zwei Modi die in der Basisklasse
-                    <code>Zend_Console_Getopt</code> unterstützt werden sind 
+                    <code>Zend_Console_Getopt</code> unterstützt werden sind
                     eindeutig. Wenn die Angabe eine Zeichenkette ist, nimmt die Klasse
                     <code>MODE_GNU</code> an, sonst wird <code>MODE_ZEND</code> angenommen.
                     Aber wenn die Klasse erweitert wird, und zusätzliche Syntaxformen hinzugefügt

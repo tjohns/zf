@@ -114,7 +114,7 @@ Zend_Session::start();
                     notwendig ist, und die Session wird automatisch innerhalb von Zend_Session gestartet. Das bietet
                     eine extrem simple Handhabung die in den meisten Situationen gut funktioniert. Trotzdem ist man
                     dann dafür verantwortlich darauf zu schauen das das erste <code>new Zend_Session_Namespace()</code>
-                    passiert <emphasis role="strong">bevor</emphasis> irgendeine Ausgabe (z.B. 
+                    passiert <emphasis role="strong">bevor</emphasis> irgendeine Ausgabe (z.B.
                     <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink> ) von PHP an den Client
                     gesendet wird, wenn standardmäßige, Cookie-basierte Sessions verwendet werden (sehr
                     empfehlenswert). Siehe <xref linkend="zend.session.errors.headerssent" /> für mehr Informationen.
@@ -408,7 +408,7 @@ else {
             Notwendigkeiten darüber wo benötige Zeugnisse (wenn vorhanden) und "Authorisierungs" Identitäten
             abgespeichert werden. Anwendungen mappen oft Authentifizierungs Identitäten (z.B. Benutzernamen)
             an Authorisierungs Identitäten (z.B. einer eindeutigen zugeordneten Integerzahl) wärend der
-            Authentifizierung, welche in der Zend_Auth Authentifizierungs Adapter Methode 
+            Authentifizierung, welche in der Zend_Auth Authentifizierungs Adapter Methode
             <code>authenticate()</code> stattfindet.
         </para>
 

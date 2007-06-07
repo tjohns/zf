@@ -37,9 +37,9 @@ try {
             <listitem>
                 <para>
                     <code>Zend_Gdata_App_HttpException</code>
-                    indicates that an HTTP request was not successful.  
+                    indicates that an HTTP request was not successful.
                     Provides the ability to get the full Zend_Http_Response
-                    object to determine the exact cause of the failure in 
+                    object to determine the exact cause of the failure in
                     cases where <code>$e->getMessage()</code> does not provide
                     enough details.
                 </para>
@@ -59,7 +59,7 @@ try {
 
     <para>
         You can use these exception subclasses to handle specific exceptions
-        differently.  See the API documentation for information on which 
+        differently.  See the API documentation for information on which
         exception subclasses are thrown by which methods in Zend_Gdata.
     </para>
 

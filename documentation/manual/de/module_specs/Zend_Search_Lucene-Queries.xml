@@ -6,7 +6,7 @@
     </para>
 
     <para>
-        User query can be combined with queries created through API. Use query parser to construct 
+        User query can be combined with queries created through API. Use query parser to construct
         query from a string:
         <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></programlisting>
@@ -20,7 +20,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></program
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Exception</code> is thrown if something wrong in a 
+                    <code>Zend_Search_Lucene_Exception</code> is thrown if something wrong in a
                     query parser itself.
                 </para>
             </listitem>
@@ -31,7 +31,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></program
                 </para>
             </listitem>
         </itemizedlist>
-        Thus that's good idea to catch Zend_Search_Lucene_Search_QueryParserException and make 
+        Thus that's good idea to catch Zend_Search_Lucene_Search_QueryParserException and make
         appropriate message:
         <programlisting role="php"><![CDATA[<?php
 try {
@@ -42,13 +42,13 @@ try {
         </para>
 
         <para>
-            The same technique may (and should) be used for find() method of Zend_Search_Lucene 
+            The same technique may (and should) be used for find() method of Zend_Search_Lucene
             object.
         </para>
     </sect2>
 
-	<sect2 id="zend.search.lucene.queries.term-query">
-		<title>Begriffsabfrage</title>
+    <sect2 id="zend.search.lucene.queries.term-query">
+        <title>Begriffsabfrage</title>
         <para>
             Begriffsabfragen sind für Suchen nach einem einzelnen Begriff gedacht.
         </para>
@@ -76,37 +76,37 @@ $term  = new Zend_Search_Lucene_Index_Term('word1');  // Search 'word1' through 
 $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);]]></programlisting>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.multiterm-query">
-		<title>Mehrfache Begriffsabfrage</title>
+    <sect2 id="zend.search.lucene.queries.multiterm-query">
+        <title>Mehrfache Begriffsabfrage</title>
         <para>
             Mehrfache Begriffsabfragen sind für Suchen mit einem Satz von Begriffen gedacht.
         </para>
 
         <para>
-            Jeder Begriff dieses Satzes kann als <emphasis>required</emphasis> (notwendig), 
-            <emphasis>prohibited</emphasis> (verboten) oder <emphasis>neither</emphasis> (weder 
+            Jeder Begriff dieses Satzes kann als <emphasis>required</emphasis> (notwendig),
+            <emphasis>prohibited</emphasis> (verboten) oder <emphasis>neither</emphasis> (weder
             noch) definiert werden.
-            
+
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis>required</emphasis> bedeutet, dass Dokumente, die diesen 
+                        <emphasis>required</emphasis> bedeutet, dass Dokumente, die diesen
                         Begriff nicht enthalten, nicht der Abfrage entsprechen;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>prohibited</emphasis> bedeutet, dass Dokumente, die diesen 
+                        <emphasis>prohibited</emphasis> bedeutet, dass Dokumente, die diesen
                         Begriff enthalten, nicht der Abfrage entsprechen;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis>neither</emphasis>, in welchem Fall Dokumenten den Begriff weder 
-                        nicht enthalten dürfen, noch den Begriff enthalten müssen. Nichtsdestrotrotz 
-                        muß ein Dokument mindestens einem Begriff entsprechen, um der Abfrage 
+                        <emphasis>neither</emphasis>, in welchem Fall Dokumenten den Begriff weder
+                        nicht enthalten dürfen, noch den Begriff enthalten müssen. Nichtsdestrotrotz
+                        muß ein Dokument mindestens einem Begriff entsprechen, um der Abfrage
                         zu entsprechen.
                     </para>
                 </listitem>
@@ -114,9 +114,9 @@ $hits  = $index->find($query);]]></programlisting>
         </para>
 
         <para>
-            Beim Hinzufügen optionaler Begriffe zu einer Abfrage mit notwendigen Begriffen wird 
-            zwar derselbe Ergebnissatz (wie ohne die optionalen Begriffe) zurückgegeben, die 
-            Treffer, welche die optionalen Begriffe enthalten, werden aber weiter oben im 
+            Beim Hinzufügen optionaler Begriffe zu einer Abfrage mit notwendigen Begriffen wird
+            zwar derselbe Ergebnissatz (wie ohne die optionalen Begriffe) zurückgegeben, die
+            Treffer, welche die optionalen Begriffe enthalten, werden aber weiter oben im
             Ergebnissatz erscheinen.
         </para>
 
@@ -128,7 +128,7 @@ $hits  = $index->find($query);]]></programlisting>
             Abfragestring:
         </para>
         <programlisting role="querystring"><![CDATA[+word1 author:word2 -word3]]></programlisting>
-        
+
         <itemizedlist>
             <listitem>
                 <para>
@@ -182,24 +182,24 @@ $hits  = $index->find($query);]]></programlisting>
                 </listitem>
             </itemizedlist>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.phrase-query">
-		<title>Phrasenabfrage</title>
+    <sect2 id="zend.search.lucene.queries.phrase-query">
+        <title>Phrasenabfrage</title>
         <para>
             Phrasenabfragen sind für Suchen nach einer Phrase gedacht.
         </para>
 
         <para>
             Phrasenabfragen sind sehr flexibel und erlauben es, sowohl nach einer exakten Phrase als
-            auch nach ungenauen Phrasen zu suchen. 
+            auch nach ungenauen Phrasen zu suchen.
         </para>
-            
+
         <para>
-            Phrasen können auch Lücken oder mehrere Begriffe an der selben Stelle enthalten. Diese 
-            können mit Hilfe das Analysators für verschiedene Zwecke generiert werden, z.B. kann ein 
-            Begriff verdoppelt werden, um das Gewicht des Begriffs zu erhöhen oder verschiedene 
-            Synonyme können an einer Stelle platziert werden. 
+            Phrasen können auch Lücken oder mehrere Begriffe an der selben Stelle enthalten. Diese
+            können mit Hilfe das Analysators für verschiedene Zwecke generiert werden, z.B. kann ein
+            Begriff verdoppelt werden, um das Gewicht des Begriffs zu erhöhen oder verschiedene
+            Synonyme können an einer Stelle platziert werden.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -238,7 +238,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            Der Zend_Search_Lucene_Search_Query_Phrase Klassenkonstruktor nimmt drei optionale 
+            Der Zend_Search_Lucene_Search_Query_Phrase Klassenkonstruktor nimmt drei optionale
             Argumente entgegen:
         </para>
         <programlisting role="php"><![CDATA[<?php
@@ -273,7 +273,7 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
 
         <para>
-            Es wird nach der Phrase 'zend ????? download' gesucht und die Phrasen 'zend platform download', 
+            Es wird nach der Phrase 'zend ????? download' gesucht und die Phrasen 'zend platform download',
             'zend studio download', 'zend core download', 'zend framework download' und so weiter
             werden gefunden.
         </para>
@@ -288,14 +288,14 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), 
 
         <para>
             Die <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> Methode nimmt zwei
-            Argumente entgeben. Ein <code>Zend_Search_Lucene_Index_Term</code> Objekt ist 
+            Argumente entgeben. Ein <code>Zend_Search_Lucene_Index_Term</code> Objekt ist
             erforderlich und die Position optional:
         </para>
         <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
 
         <para>
-            <code>$term</code> enthält den nächsten Begriff in der Phrase. Er muss das selbe Feld 
+            <code>$term</code> enthält den nächsten Begriff in der Phrase. Er muss das selbe Feld
             ansprechen wie der vorherige Begriff. Andernfalls wird eine Ausnahme geworfen.
         </para>
 
@@ -318,7 +318,7 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
 
         <para>
-            Es wird nach der Phrase 'zend ????? download' gesucht und die Phrasen 'zend platform download', 
+            Es wird nach der Phrase 'zend ????? download' gesucht und die Phrasen 'zend platform download',
             'zend studio download', 'zend core download', 'zend framework download' und so weiter
             werden gefunden.
         </para>
@@ -334,21 +334,21 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
 
         <para>
             Der Ungenauigkeitsfaktor (slop factor) legt die Anzahl der anderen erlaubten Begriffe
-            zwischen Begriffen der Phrasenabfrage fest. Wenn die Anzahl 0 ist, entspricht dies 
-            der Suche nach einer exakten Phrase. Für größere Werte verhält es sich wie ein 
+            zwischen Begriffen der Phrasenabfrage fest. Wenn die Anzahl 0 ist, entspricht dies
+            der Suche nach einer exakten Phrase. Für größere Werte verhält es sich wie ein
             WITHIN (innerhalb) oder NEAR (nahe) Operator.
         </para>
         <para>
             Die Ungenauigkeit ist tatsächlich eine veränderbare Distanz, bei der die Einheiten
-            den Schritten entsprechen, die sich ein Begriff in der Phrasenabfrage von seiner 
-            eigentlichen Position entfernen darf. Um zum Beispiel die Reihenfolge zweier Worte zu 
-            vertauschen, werden zwei Schritte benötigt (der erste Schritt platziert die Worte 
+            den Schritten entsprechen, die sich ein Begriff in der Phrasenabfrage von seiner
+            eigentlichen Position entfernen darf. Um zum Beispiel die Reihenfolge zweier Worte zu
+            vertauschen, werden zwei Schritte benötigt (der erste Schritt platziert die Worte
             übereinander). Um also für Phrasen eine Neuanordnun zu erlauben, muss die Ungenauigkeit
             mindestens zwei entsprechen.
         </para>
         <para>
-            Exaktere Treffer werden höher bewertet als ungenauere Treffer, so dass die 
-            Suchergebnisse nach der Genauigkeit sortiert werden. Die Ungenauigkeit liegt 
+            Exaktere Treffer werden höher bewertet als ungenauere Treffer, so dass die
+            Suchergebnisse nach der Genauigkeit sortiert werden. Die Ungenauigkeit liegt
             standardmäßig bei 0, was exakte Treffer erfordert.
         </para>
         <para>
@@ -367,7 +367,7 @@ $hits1 = $index->find($query);
 $query->setSlop(2);
 $hits2 = $index->find($query);]]></programlisting>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

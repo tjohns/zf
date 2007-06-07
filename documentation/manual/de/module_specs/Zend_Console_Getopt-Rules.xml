@@ -23,7 +23,7 @@
         <title>Optionen mit der kurzen Syntax definieren</title>
         <para>
             <code>Zend_Console_Getopt</code> unterstützt eine kompakte Syntax wie Sie durch
-            GNU Getopt verwendet wird (siehe 
+            GNU Getopt verwendet wird (siehe
             <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>).
             Diese Syntax unterstützt nur Einzel-Zeichen Flags. In einer einzelnen
             Zeichenkette, wird jeder Buchstabe angegeben der einem Flag entspricht
@@ -59,7 +59,7 @@ $opts = new Zend_Console_Getopt('abp:');
             und auch Hilfszeichenkette zu definieren um die Verwendung für den
             Benutzer zu beschreiben. Statt einer einzelnen Zeichenkette die in der
             kurzen Syntax verwendet wird um die Optionen zu definieren, verwendet
-            die lange Syntax ein assoziatives Array als erstes Argument für den 
+            die lange Syntax ein assoziatives Array als erstes Argument für den
             Constructor.
         </para>
         <para>

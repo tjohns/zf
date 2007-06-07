@@ -42,7 +42,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
 
     <para>
         Es könnte hilfreich sein, zu verstehen das die <code>Zend_Debug::dump()</code>
-        Methode intern die PHP Funktion 
+        Methode intern die PHP Funktion
         <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>
         verwendet. Wenn der Ausgabestream als Webdarstellung erkannt wird, wird die
         Ausgabe von <code>var_dump()</code> mit Hilfe von

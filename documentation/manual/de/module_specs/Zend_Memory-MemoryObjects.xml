@@ -145,7 +145,7 @@ public function &getRef();
                 Das Verfolgen von Änderungen an Daten benötigt zusätzliche Ressourcen.
                 Die <code>getRef()</code> Methode gibt eine Referenz zu der
                 Zeichenkette zurück, welches direkt von der Benutzeranwendung
-                verändert wird. Deswegen ist es eine gute Idee die 
+                verändert wird. Deswegen ist es eine gute Idee die
                 <code>getRef()</code> Methode für den Zugriff auf die Werte der Daten
                 zu verwenden:
                 <programlisting role="php"><![CDATA[<?php

@@ -2,17 +2,17 @@
     <title>Einführung</title>
     <para>
         <code>Zend_Feed</code> stellt Funktionalitäten für das Konsumieren von RSS und Atom Feeds.
-        Es stellt eine natürliche Syntax bereit, um auf Elemente und Attribute des Feeds sowie auf 
-        die Attribute der Einträge zugreifen zu können. Mit derselben natürlichen Syntax bietet 
-        <code>Zend_Feed</code> auch eine umfassende Unterstützung für das Ändern von Feed und 
+        Es stellt eine natürliche Syntax bereit, um auf Elemente und Attribute des Feeds sowie auf
+        die Attribute der Einträge zugreifen zu können. Mit derselben natürlichen Syntax bietet
+        <code>Zend_Feed</code> auch eine umfassende Unterstützung für das Ändern von Feed und
         Eintragsstruktur sowie die Rückgabe der Ergebniss nach XML. In Zukunft könnte diese
         Modifizierungsunterstützung auch das Atom Publishing Protocol unterstützen.
     </para>
 
     <para>
-        <code>Zend_Feed</code> besteht aus der Basisklasse <code>Zend_Feed</code>, sowie den beiden 
-        abstrakten Basisklassen <code>Zend_Feed_Abstract</code> und 
-        <code>Zend_Feed_Entry_Abstract</code> für die Darstellung von Feeds und Einträgen, aus 
+        <code>Zend_Feed</code> besteht aus der Basisklasse <code>Zend_Feed</code>, sowie den beiden
+        abstrakten Basisklassen <code>Zend_Feed_Abstract</code> und
+        <code>Zend_Feed_Entry_Abstract</code> für die Darstellung von Feeds und Einträgen, aus
         speziellen Implementationen von Feeds und Einträgen für RSS und Atom sowie einem Helfer,
         der hinter den Kulissen die natürliche Syntax ermöglicht.
     </para>
@@ -20,7 +20,7 @@
     <para>
         Im Beispiel unten demonstrieren wir einen einfachen Anwendungsfall für die Abfrage eines
         RSS Feeds und die Speicherung relevanter Teile der Feed Daten in einem einfachen PHP Array,
-        welches dann für die Ausgabe der Daten, das Speichern in eine Datenbank, usw. genutzt 
+        welches dann für die Ausgabe der Daten, das Speichern in eine Datenbank, usw. genutzt
         werden kann.
     </para>
 
@@ -28,7 +28,7 @@
         <title>Achtung</title>
         <para>
             Viele RSS Feeds bieten verschiedene Eigenschaften für Kanäle und Einträge. Die RSS
-            Spezifikation bietet viele optionale Eigenschaften, also sei dir dessen beim Schreiben von 
+            Spezifikation bietet viele optionale Eigenschaften, also sei dir dessen beim Schreiben von
             Code für die Verarbeitung von RSS Daten bewußt.
         </para>
     </note>

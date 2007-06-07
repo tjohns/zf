@@ -12,7 +12,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 ?>]]></programlisting>
     <para>
         Wenn beim Abrufen des Feeds Fehler auftreten, wird eine <code>Zend_Feed_Exception</code>
-        geworfen. 
+        geworfen.
     </para>
 
     <para>
@@ -26,16 +26,16 @@ echo $channel->title();
 
 ?>]]></programlisting>
     <para>
-        Beachte die Syntax der Funktion. <code>Zend_Feed</code> verwendet die Konvention, die 
-        Eigenschaften als XML Objekt zu behandeln, wenn sie durch die "Getter" Syntax für Variablen 
-        (<code>$obj->property</code>) angefordert werden, und als String zu behandeln, wenn sie 
+        Beachte die Syntax der Funktion. <code>Zend_Feed</code> verwendet die Konvention, die
+        Eigenschaften als XML Objekt zu behandeln, wenn sie durch die "Getter" Syntax für Variablen
+        (<code>$obj->property</code>) angefordert werden, und als String zu behandeln, wenn sie
         durch die Methodensyntax (<code>$obj->property()</code>) angefordert werden. Dies ermöglicht
-        den Zugriff auf den kompletten Text jedes individuellen Knotens, während weiterhin der 
-        komplette Zugriff auf alle Kindelemente erlaubt ist. 
+        den Zugriff auf den kompletten Text jedes individuellen Knotens, während weiterhin der
+        komplette Zugriff auf alle Kindelemente erlaubt ist.
     </para>
 
     <para>
-        Wenn Channel-Eigenschaften Attribute beinhalten, sind diese durch die PHP Array Syntax 
+        Wenn Channel-Eigenschaften Attribute beinhalten, sind diese durch die PHP Array Syntax
         ansprechbar:
     </para>
         <programlisting role="php"><![CDATA[
@@ -50,7 +50,7 @@ echo $channel->category['domain'];
     </para>
 
     <para>
-        Meistens möchtest Du einen Feed durchlaufen und etwas mit seinen Einträgen machen. 
+        Meistens möchtest Du einen Feed durchlaufen und etwas mit seinen Einträgen machen.
         <code>Zend_Feed_Abstract</code> implementiert das <code>Iterator</code> Interface von PHP,
         so dass die Ausgabe aller Artikelüberschriften eines Channels nur dies erfordert:
     </para>
@@ -63,8 +63,8 @@ foreach ($channel as $item) {
 
 ?>]]></programlisting>
     <para>
-        Wenn du mit RSS nicht vertraut bist, kommt hier eine Übersicht über die Standardelemente, 
-        die du in einem RSS Channel und in einzelnen RSS Elementen (Einträgen) als verfügbar 
+        Wenn du mit RSS nicht vertraut bist, kommt hier eine Übersicht über die Standardelemente,
+        die du in einem RSS Channel und in einzelnen RSS Elementen (Einträgen) als verfügbar
         erwarten kannst.
     </para>
 
@@ -93,14 +93,14 @@ foreach ($channel as $item) {
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>pubDate</code> - Das Erscheinungsdatum dieses Informationssatzes, im 
+                <para><code>pubDate</code> - Das Erscheinungsdatum dieses Informationssatzes, im
                 RFC 822 Datumsformat</para>
             </listitem>
             <listitem>
                 <para><code>language</code> - Die Sprache, in der dieser Channel verfasst ist</para>
             </listitem>
             <listitem>
-                <para><code>category</code> - Eine oder mehrere Kategorien (durch mehrfache Tags 
+                <para><code>category</code> - Eine oder mehrere Kategorien (durch mehrfache Tags
                 spezifiziert), zu denen der Channel gehört</para>
             </listitem>
         </itemizedlist>
@@ -130,14 +130,14 @@ foreach ($channel as $item) {
                 <para><code>author</code> - Die E-Mail Adresse des Autoren</para>
             </listitem>
             <listitem>
-                <para><code>category</code> - Eine oder mehrere Kategorien, zu denen der Eintrag 
+                <para><code>category</code> - Eine oder mehrere Kategorien, zu denen der Eintrag
                 gehört</para>
             </listitem>
             <listitem>
                 <para><code>comments</code> - URL der Kommentare zu diesem Eintrag</para>
             </listitem>
             <listitem>
-                <para><code>pubDate</code> - Das Datum, an dem der Eintrag veröffentlicht wurde, 
+                <para><code>pubDate</code> - Das Datum, an dem der Eintrag veröffentlicht wurde,
                 im RFC 822 Datumsformat</para>
             </listitem>
         </itemizedlist>
@@ -156,8 +156,8 @@ if ($item->propname()) {
 ?>]]></programlisting>
 
     <para>
-        Wenn du stattdessen <code>$item->propname</code> verwendest, wirst du immer ein leeres 
-        Objekt erhalten, das mit <code>TRUE</code> evaluiert, so dass deine Prüfung fehlschlagen 
+        Wenn du stattdessen <code>$item->propname</code> verwendest, wirst du immer ein leeres
+        Objekt erhalten, das mit <code>TRUE</code> evaluiert, so dass deine Prüfung fehlschlagen
         würde.
     </para>
 

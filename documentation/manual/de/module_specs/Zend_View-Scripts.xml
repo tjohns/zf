@@ -1,67 +1,67 @@
 <sect1 id="zend.view.scripts">
-    
+
     <title>View Scripte</title>
-        
+
     <para>
-        Sobald dein Controller die Variablen übergeben und die render() Methode aufgerufen hat, 
-        inkludiert Zend_View das angeforderte View Skript und führt es "innerhalb" des 
-        Gültigkeitsbereichs der Zend_View Instanz aus. Deshalb weisen Referenzen auf $this in 
-        deinem View Skript auf die Zend_View Instanz selber.  
+        Sobald dein Controller die Variablen übergeben und die render() Methode aufgerufen hat,
+        inkludiert Zend_View das angeforderte View Skript und führt es "innerhalb" des
+        Gültigkeitsbereichs der Zend_View Instanz aus. Deshalb weisen Referenzen auf $this in
+        deinem View Skript auf die Zend_View Instanz selber.
     </para>
-    
+
     <para>
         Auf Variablen, die vom Controller an den View übergeben worden sind, kann als Eigenschaften
-        der Instanz zurückgegriffen werden. Wenn der Controller zum Beispiel eine Variable 
+        der Instanz zurückgegriffen werden. Wenn der Controller zum Beispiel eine Variable
         'irgendwas' übergeben hat, würdest du in deinem View Skript über $this->irgendwas darauf
         zugreifen können. (Dies erlaubt es dir, den Überblick darüber zu behalten, welche Variablen
         an das Skript übergeben worden sind und welche Variablen intern zum Skript selber gehören.)
     </para>
-    
+
     <para>
-        Zur Erinnerung hier noch einmal das Beispiel View Skript aus der Zend_View Einführung.        
+        Zur Erinnerung hier noch einmal das Beispiel View Skript aus der Zend_View Einführung.
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- Eine Tabelle mit einigen Büchern. -->
     <table>
         <tr>
             <th>Autor</th>
             <th>Titel</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['author']) ?></td>
             <td><?php echo $this->escape($val['title']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>Es gibt keine Bücher zum Anzeigen.</p>
-    
+
 <?php endif; ?>]]>
     </programlisting>
-        
+
     <sect2 id="zend.view.scripts.escaping">
-        
+
         <title>Ausgaben maskieren</title>
-        
+
         <para>
-            Eine der wichtigsten Aufgaben, die in einem View Skript zu erledigen sind, ist es 
+            Eine der wichtigsten Aufgaben, die in einem View Skript zu erledigen sind, ist es
             sicherzustellen, dass die Ausgaben auch richtig maskiert sind; neben anderen Dingen
             hilft dies auch Cross-Site Scripting Attacken zu vermeiden. Sofern du keine Funktion,
             Methode oder einen Helfer verwendest, der die Maskierungen selber durchführt, solltest
             Du Variablen immer maskieren, wenn du sie ausgeben möchtest.
         </para>
-        
+
         <para>
             Zend_View stellt eine Methode escape() bereit, die das Maskieren für dich übernimmt.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // schlechte View Skript Praxis:
 echo $this->variable;
@@ -70,14 +70,14 @@ echo $this->variable;
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
-        
+
         <para>
             Standardmäßig verwendet escape() die PHP htmlspecialchars() Funktion für die Maskierung.
             Allerdings könntest du abhängig von deiner Umgebung den Wunsch haben, die Maskierung
-            anders durchzuführen. Verwende die setEscape() Methode auf der Controller Ebene, um 
+            anders durchzuführen. Verwende die setEscape() Methode auf der Controller Ebene, um
             Zend_View mitzuteilen, welche Maskierungsmöglichkeit als Callback verwendet werden soll.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // erstelle eine Zend_View Instanz
 $view = new Zend_View();
@@ -98,29 +98,29 @@ $view->setEscape(array($obj, 'methodName'));
 echo $view->render(...);
 ?>]]>
         </programlisting>
-        
+
         <para>
-            Diese Callback Funktion oder Methode sollte den zu maskierenden Wert als ersten 
+            Diese Callback Funktion oder Methode sollte den zu maskierenden Wert als ersten
             Parameter übernehmen und alle anderen Parameter sollten optional sein.
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
-    
+
         <title>Verwendung alternativer Templatesysteme</title>
-        
+
         <para>
             Obwohl PHP selber eine mächtiges Templatesystem ist, haben viele Entwickler das Gefühl,
-            dass es zu mächtig oder komplex für die Template Designer ist und möchten ein 
+            dass es zu mächtig oder komplex für die Template Designer ist und möchten ein
             alternatives Templatesystem verwenden. Zend_View stellt zwei Mechanismen bereit,
-            um dies zu realisieren, die erste durch Viewskripte und die zweite durch 
-            Implementierung von Zend_View_Interface. 
+            um dies zu realisieren, die erste durch Viewskripte und die zweite durch
+            Implementierung von Zend_View_Interface.
         </para>
-        
+
         <sect3 id="zend.view.scripts.templates.scripts">
             <title>Template Systems Using View Scripts</title>
-            
+
             <para>
                 Ein Viewskript kann verwendet werden, um ein separats Templateobjekt zu instanzieren
                 und anzupassen, z.B. für eine PHPLIB-style Template. Das Viewskript für solch eine
@@ -135,24 +135,24 @@ if ($this->books) {
         "booklist" => "booklist.tpl",
         "eachbook" => "eachbook.tpl",
     ));
-    
+
     foreach ($this->books as $key => $val) {
         $tpl->set_var('author', $this->escape($val['author']);
         $tpl->set_var('title', $this->escape($val['title']);
         $tpl->parse("books", "eachbook", true);
     }
-    
+
     $tpl->pparse("output", "booklist");
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
 ?>]]></programlisting>
-        
+
             <para>
                 Dies wären die zugehörigen Template Dateien:
             </para>
-            
+
             <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
@@ -204,7 +204,7 @@ public function __isset($key);
 public function __unset($key);
 
 /**
- * Manuelle Zuweisung von Templatevariablen oder die Möglichkeit, mehrere Variablen in einem 
+ * Manuelle Zuweisung von Templatevariablen oder die Möglichkeit, mehrere Variablen in einem
  * Durchgang zuzuordnen.
  */
 public function assign($spec, $value = null);
@@ -332,11 +332,11 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Weise dem Template Variablen zu
      *
-     * Erlaubt das Zuweisen eines bestimmten Wertes zu einem bestimmten Schlüssel, ODER die 
+     * Erlaubt das Zuweisen eines bestimmten Wertes zu einem bestimmten Schlüssel, ODER die
      * Übergabe eines Array mit Schlüssel => Wert Paaren zum Setzen in einem Rutsch.
      *
      * @see __set()
-     * @param string|array $spec Die zu verwendene Zuweisungsstrategie (Schlüssel oder Array mit 
+     * @param string|array $spec Die zu verwendene Zuweisungsstrategie (Schlüssel oder Array mit
      * Schlüssel => Wert paaren)
      * @param mixed $value (Optional) Wenn ein Variablenname verwendet wurde, verwende dies als den
      * Wert.
@@ -379,7 +379,7 @@ class Zend_View_Smarty implements Zend_View_Interface
 ]]></programlisting>
 
             <para>
-                In diesem Beispiel kannst du die <code>Zend_View_Smarty</code> anstelle von 
+                In diesem Beispiel kannst du die <code>Zend_View_Smarty</code> anstelle von
                 <code>Zend_View</code> instanzieren und es dann ungefähr wie <code>Zend_View</code>
                 verwenden:
             </para>
@@ -394,7 +394,7 @@ $rendered = $view->render('bookinfo.tpl');
 
         </sect3>
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

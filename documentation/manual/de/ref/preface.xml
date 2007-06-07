@@ -1,9 +1,0 @@
-<preface id="preface">
-    <title>Einleitung</title>
-    <para>
-        Dieses Dokument ist das Programmierer Referenzhandbuch für das Zend Framework.
-    </para>
-</preface>
-<!--
-vim:se ts=4 sw=4 et:
--->

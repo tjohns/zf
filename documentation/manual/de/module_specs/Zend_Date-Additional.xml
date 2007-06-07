@@ -3,7 +3,7 @@
     <title>Funktionierende Beispiele</title>
 
     <para>
-        In diesem Kapitel werden wir verschiedene zusätzliche Funkionen beschreiben welche auch durch 
+        In diesem Kapitel werden wir verschiedene zusätzliche Funkionen beschreiben welche auch durch
         <code>Zend_Date</code> verfügbar sind. Natürlich haben alle beschriebene Funktionen auch Beispiele
         um die Arbeitsweise, und die einfache API für die richtige Benutzung von Ihnen, zu zeigen.
     </para>
@@ -285,7 +285,7 @@ print $date->getIso();
             ersten Zeilen des Beispiels gezeigt. Das Ändern der Zeitzone für ein <code>Zend_Date</code> Objekt
             hat einen Effekt auf das Datum selbst. Daten sind immer relativ zu einer Zeitzone. Das Ändern der
             Zeitzone für ein <code>Zend_Date</code> Objekt ändert nicht die Zeit des <code>Zend_Date</code> Objektes
-            selbst. Man muß sich in Erinnerung halten das Daten intern immer als Zeitpunkte und in der GMT 
+            selbst. Man muß sich in Erinnerung halten das Daten intern immer als Zeitpunkte und in der GMT
             gespeichert werden. Eine Zeitzone bedeutet also wieviele Stunden subtrahiert oder addiert werden müssen
             um die aktuelle globale Zeit für die eigene Zeitzone und Region er erhalten.
         </para>

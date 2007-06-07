@@ -1,26 +1,26 @@
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Zusammenarbeit Mit Java Lucene</title>
 
-	<sect2 id="zend.search.lucene.index-creation.file-formats">
-		<title>Dateiformate</title>
+    <sect2 id="zend.search.lucene.index-creation.file-formats">
+        <title>Dateiformate</title>
         <para>
-            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit Lucene Version 1.4 und 
+            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit Lucene Version 1.4 und
             höher.
         </para>
-    
+
         <para>
             Eine detaillierte Beschreibung dieses Formats ist hier erhältlich:
             <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
         </para>
-	</sect2>	
-    
+    </sect2>
+
     <sect2 id="zend.search.lucene.index-creation.index-directory">
         <title>Indexverzeichnis</title>
-    
+
         <para>
             Nach der Indexerstellung wird das Indexverzeichnis verschiedene Dateien enthalten:
         </para>
-    
+
         <itemizedlist>
             <listitem>
                 <para>
@@ -35,20 +35,20 @@
             </listitem>
             <listitem>
                 <para>
-                    Die <filename>deletable</filename> Datei ist eine Liste von Dateien, die nicht 
+                    Die <filename>deletable</filename> Datei ist eine Liste von Dateien, die nicht
                     mehr vom Index verwendet werden, aber nicht gelöscht werden konnten.
                 </para>
             </listitem>
         </itemizedlist>
-    </sect2>	
-	
-	<sect2 id="zend.search.lucene.java-lucene.source-code">
-		<title>Java Quellcode</title>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.java-lucene.source-code">
+        <title>Java Quellcode</title>
         <para>
             Das unten gelistete Java Programm stellt ein Beispiel für die Indizierung einer Datei
             mit Java Lucene dar:
         </para>
-    
+
         <programlisting role="java"><![CDATA[
 /**
 * Indexerstellung:
@@ -60,7 +60,7 @@ import java.io.*
 
 ...
 
-IndexWriter indexWriter = new IndexWriter("/data/my_index", 
+IndexWriter indexWriter = new IndexWriter("/data/my_index",
                                           new SimpleAnalyzer(), true);
 
 ...
@@ -79,7 +79,7 @@ doc.add(Field.Text("contents", reader));
 indexWriter.addDocument(doc);]]>
         </programlisting>
     </sect2>
-        
+
 </sect1>
 
 <!--

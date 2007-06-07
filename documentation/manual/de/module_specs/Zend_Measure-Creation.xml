@@ -11,7 +11,7 @@
         <link linkend="zend.measure.creation.string"><code>Zeichenkette</code>
         </link>
         ohne Einheit, oder eine
-        <link linkend="zend.measure.creation.localized"><code>lokalisierte Zeichenkette</code> 
+        <link linkend="zend.measure.creation.localized"><code>lokalisierte Zeichenkette</code>
         mit definierter Einheit</link> sein.
         Der zweite Parameter definiert die Art der Maßeinheit. Beide Parameter sind zwingend erforderlich. Die
         Sprache kann als optionaler dritter Parameter definiert werden.
@@ -22,7 +22,7 @@
         <title>Eine Maßeinheit von einer Integer oder Floatzahl erstellen</title>
 
         <para>
-            Zusätzlich zu Integerwerten können Floatwerte benutzt werden, aber 
+            Zusätzlich zu Integerwerten können Floatwerte benutzt werden, aber
             <ulink url="http://www.php.net/float">"einfache Dezimalbrüche wie 0.1 or 0.7 können nicht in Ihre
             binäre Entsprechung konvertiert werden ohne den Verlust von Genauigkeit,"</ulink> was zeitweise
             zu erstaunlichen Ergebnissen führt. Genauso sollten zwei Floatzahlen nicht auf Gleichheit geprüft
@@ -53,14 +53,14 @@ echo $unit;
 
         <para>
             Viele Maßeinheiten die als Eingabe einer ZF Anwendung empfangen werden können nur als
-            Zeichenketten den Klassen von <code>Zend_Measure_*</code> übergeben werden, wie z.B. Zahlen die in 
+            Zeichenketten den Klassen von <code>Zend_Measure_*</code> übergeben werden, wie z.B. Zahlen die in
             <ulink url="http://en.wikipedia.org/wiki/Roman_numerals">Römischer Schreibweise</ulink> geschrieben
             werden, oder extrem lange Binärwerte die die Genauigkeit von PHP's natürlichen Integer und Floattypen
             übersteigen würden. Da Integer auch als Zeichenketten geschrieben werden können sollten, sobald
             die Gefahr eines Genauigkeitverlustes durch die Limits von PHP's Integer und Floatwerten besteht,
             stattdessen Zeichenketten verwendet werden. <code>Zend_Measure_Number</code> benutzt die
             BCMath Erweiterung um aussergewöhnliche Genauigkeit zu unterstützen, wie im gezeigen Beispiel,
-            um die Beschränkungen von vielen PHP Funktionen wie 
+            um die Beschränkungen von vielen PHP Funktionen wie
             <ulink url="http://php.net/bin2dec"><code>bin2dec()</code></ulink> zu umgehen.
         </para>
 
@@ -110,7 +110,7 @@ echo $unit; // Ausgabe "125 m²";
             Die Teilung der Dezimalziffern mit "." und die Gruppierung der Tausender mit "," ist in der
             Englischen Sprache üblich, aber nur in anderen Sprachen. Um mit solchen Problemen umgehen zu können,
             besteht bei den lokalisierten Klassen der <code>Zend_Measure_*</code> Familie die Möglichkeit eine
-            Sprache oder Region anzugeben, um einen Eingabewert eindeutig zu machen und die erwartete 
+            Sprache oder Region anzugeben, um einen Eingabewert eindeutig zu machen und die erwartete
             semantische Eingabe richtig zu interpretieren.
         </para>
 

@@ -235,9 +235,9 @@
         </para>
 
         <para>
-            In der Klasse BINARY können beide Schreibweisen gefunden werden wie 
-            <code>KILOBYTE = 1024 - Binäre Computer Konvertierung KIBIBYTE = 1024 - Neue Schreibweise 
-            KILO_BINARY_BYTE = 1024 - Neu</code> und auch die Schreibweisen 
+            In der Klasse BINARY können beide Schreibweisen gefunden werden wie
+            <code>KILOBYTE = 1024 - Binäre Computer Konvertierung KIBIBYTE = 1024 - Neue Schreibweise
+            KILO_BINARY_BYTE = 1024 - Neu</code> und auch die Schreibweisen
             <code>KILOBYTE_SI = 1000 - SI Schreibweise für Kilo (1000)</code> im langen Format. DVD's zum Beispiel werden
             in der SI-Schreibweise beschriftet, aber fast alle Festplatten werden in Computer Binär Schreibweise
             beschriftet.

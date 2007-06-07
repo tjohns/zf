@@ -1,7 +1,7 @@
 <sect1 id="zend.log.formatters">
   <title>Formatters</title>
   <para>
-    A Formatter is an object that is responsible for taking an <code>event</code> array 
+    A Formatter is an object that is responsible for taking an <code>event</code> array
     describing a log event and outputting a string with a formatted log line.
   </para>
 
@@ -18,17 +18,17 @@
       <code>Zend_Log_Formatter_Simple</code> is the default formatter.  It is configured
       automatically when you specify no formatter.  The default configuration is equivalent
       to the following:
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
 $formatter = new Zend_Log_Formatter_Simple($format);
 
-?>]]></programlisting>         
+?>]]></programlisting>
     </para>
-      
+
     <para>
-      A formatter is set on an individual Writer object using the Writer's 
+      A formatter is set on an individual Writer object using the Writer's
       <code>setFormatter()</code> method:
 
       <programlisting role="php"><![CDATA[<?php
@@ -44,13 +44,13 @@ $logger->info('there');
 
 // outputs "hello there"
 
-?>]]></programlisting>         
+?>]]></programlisting>
     </para>
 
     <para>
       The constructor of <code>Zend_Log_Formatter_Simple</code> accepts a single
       parameter: the format string.  This string contains keys surrounded by
-      percent signs (e.g. <code>%message%</code>).  The format string may 
+      percent signs (e.g. <code>%message%</code>).  The format string may
       contain any key from the event data array.
     </para>
   </sect2>
@@ -72,9 +72,9 @@ $logger->addWriter($writer);
 
 $logger->info('informational message');
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
-    
+
     <para>
       The code above outputs the following XML (space added for clarity):
 
@@ -85,16 +85,16 @@ $logger->info('informational message');
   <priority>6</priority>
   <priorityName>INFO</priorityName>
 </logEntry>
-]]></programlisting>      
-    </para>    
-    
+]]></programlisting>
+    </para>
+
     <para>
       It's possible to customize the root element as well as specify a mapping
       of XML elements to the items in the event data array.  The constructor
       of <code>Zend_Log_Formatter_Xml</code> accepts a string with the name of
       the root element as the first parameter and an associative array with
       the element mapping as the second parameter:
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $writer = new Zend_Log_Writer_Stream('php://output');
@@ -106,20 +106,20 @@ $logger->addWriter($writer);
 
 $logger->info('informational message');
 
-?>]]></programlisting>          
+?>]]></programlisting>
 
-      The code above changes the root element from its default of 
+      The code above changes the root element from its default of
       <code>logEntry</code> to <code>log</code>.  It also maps the element
       <code>msg</code> to the event data item <code>message</code>.  This
       results in the following output:
-      
+
       <programlisting role="xml"><![CDATA[
 <log>
   <msg>informational message</msg>
   <level>INFO</level>
 </log>
-]]></programlisting>      
-    </para>          
-    
+]]></programlisting>
+    </para>
+
   </sect2>
 </sect1>

@@ -1,10 +1,10 @@
 <sect1 id="zend.mail.attachments">
     <title>Anhänge</title>
     <para>
-        Dateien können durch die <code>createAttachment()</code> Methode an eine E-Mail angehängt 
-        werden. Standardmäßig nimmt <code>Zend_Mail</code> an, dass der Anhang ein binärisches 
-        Objekt (application/octet-stream) ist, über eine bas64 Kodierung übertragen werden soll und 
-        als Anhang verarbeitet wird. Diese Annahmen können durch die Übergabe von weiteren  
+        Dateien können durch die <code>createAttachment()</code> Methode an eine E-Mail angehängt
+        werden. Standardmäßig nimmt <code>Zend_Mail</code> an, dass der Anhang ein binärisches
+        Objekt (application/octet-stream) ist, über eine bas64 Kodierung übertragen werden soll und
+        als Anhang verarbeitet wird. Diese Annahmen können durch die Übergabe von weiteren
         Parametern an <code>createAttachment()</code> überschrieben werden:
     </para>
     <example>

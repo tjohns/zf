@@ -4,7 +4,7 @@
     <sect2 id="zend.http.client.introduction">
         <title>Einführung</title>
         <para>
-            Zend_Http_Client stellt eine einfache Schnittstelle für das Durchführen von Hyper-Text 
+            Zend_Http_Client stellt eine einfache Schnittstelle für das Durchführen von Hyper-Text
             Transfer Protocol (HTTP) Anfragen. Zend_Http_Client unterstützt die meisten einfachen
             Funktionen, die man von einem HTTP Client erwartet, sowie einige komplexere Funktionen,
             wie z.B. HTTP Authentifizierung und Dateiuploads. Erfolgreiche Anfragen (und die meisten
@@ -15,7 +15,7 @@
         <para>
             Der Klassenkonstruktor akzeptiert optional eine URL als seinen ersten Parameter (kann
             entweder ein String oder ein Zend_Uri_Http Objekt sein) und ein optionales Array mit
-            Konfigurationsparametern. Beides kann ausgelassen und später durch Verwendung der 
+            Konfigurationsparametern. Beides kann ausgelassen und später durch Verwendung der
             setUri() and setConfig() Methoden gesetzt werden.
             <example>
                 <title>Ein Zend_Http_Client Objekt instanzieren</title>
@@ -26,7 +26,7 @@
     $client = new Zend_Http_Client('http://example.org', array(
         'maxredirects' => 0,
         'timeout'      => 30));
-        
+
     // Dies macht genau das selbe:
     $client = new Zend_Http_Client();
     $client->setUri('http://example.org');
@@ -41,8 +41,8 @@
     <sect2 id="zend.http.client.configuration">
         <title>Konfigurationsparameter</title>
         <para>
-            Der Konstruktor und die setConfig() Methode akzeptieren ein assoziatives Array mit 
-            Konfigurationsparametern. Das Setzen dieser Parameter ist optional, da alle einen 
+            Der Konstruktor und die setConfig() Methode akzeptieren ein assoziatives Array mit
+            Konfigurationsparametern. Das Setzen dieser Parameter ist optional, da alle einen
             Standardwert haben.
             <table>
                 <title>Zend_Http_Client Konfigurationsparameter</title>
@@ -64,14 +64,14 @@
                         </row>
                         <row>
                             <entry>strictredirects</entry>
-                            <entry>Ob beim Umleiten genau dem RFC zu folgen ist (siehe 
+                            <entry>Ob beim Umleiten genau dem RFC zu folgen ist (siehe
                             <xref linkend="zend.http.client.redirections" />)</entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
                         </row>
                         <row>
                             <entry>useragent</entry>
-                            <entry>String zu Identifizierung des User Agents (gesendet in den 
+                            <entry>String zu Identifizierung des User Agents (gesendet in den
                             Anfrageheadern)</entry>
                             <entry>string</entry>
                             <entry>'Zend_Http_Client'</entry>
@@ -90,15 +90,15 @@
                         </row>
                         <row>
                             <entry>adapter</entry>
-                            <entry>Zu verwendene Adapterklasse für die Verbindung (siehe 
+                            <entry>Zu verwendene Adapterklasse für die Verbindung (siehe
                             <xref linkend="zend.http.client.adapters" />)</entry>
                             <entry>mixed</entry>
                             <entry>'Zend_Http_Client_Adapter_Socket'</entry>
                         </row>
                         <row>
                             <entry>keepalive</entry>
-                            <entry>Ob keep-alive Verbindungen mit dem Server aktiviert werden 
-                            sollen. Nützlich und kann die Performance verbessern, wenn mehrere 
+                            <entry>Ob keep-alive Verbindungen mit dem Server aktiviert werden
+                            sollen. Nützlich und kann die Performance verbessern, wenn mehrere
                             aufeinanderfolgend Anfragen an den selben Server ausgeführt werden.</entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
@@ -111,7 +111,7 @@
     <sect2 id="zend.http.client.basic-requests">
         <title>Durchführen von einfachen HTTP Anfragen</title>
         <para>
-            Das Durchführen von einfachen HTTP Anfragen kann sehr leicht durch Verwendung der 
+            Das Durchführen von einfachen HTTP Anfragen kann sehr leicht durch Verwendung der
             request() Methode gemacht werden und benötigt selten mehr als drei Codezeilen:
             <example>
                 <title>Durchführen einer einfache GET Anfrage</title>
@@ -123,19 +123,19 @@
     $response = $client->request();
 ?>]]></programlisting>
             </example>
-            Die request() Methode akzeptiert einen optionalen Parameter - die Anfragemethode. 
-            Diese kann GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS oder CONNECT sein, wie im HTTP 
+            Die request() Methode akzeptiert einen optionalen Parameter - die Anfragemethode.
+            Diese kann GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS oder CONNECT sein, wie im HTTP
             Protokoll definiert.
             <footnote>
               <para>
                 Siehe RFC 2616 - <ulink url="http://www.w3.org/Protocols/rfc2616/rfc2616.html" />.
               </para>
             </footnote>.
-            Zur Erleichterung sind alle als Klassenkonstanten definiert: 
+            Zur Erleichterung sind alle als Klassenkonstanten definiert:
             Zend_Http_Request::GET, Zend_Http_Request::POST und so weiter.
         </para>
         <para>
-            Wenn keine Methode angegeben worden ist, wird die durch den letzten Aufruf von 
+            Wenn keine Methode angegeben worden ist, wird die durch den letzten Aufruf von
             setMethod() gesetzte Methode verwendet. Wenn setMethod() vorher nicht aufgerufen worden
             ist, wird als Standardmethode GET verwendet (siehe obiges Beispiel).
             <example>
@@ -144,24 +144,24 @@
 <![CDATA[<?php
     // Durchführen einer POST Anfrage
     $response = $client->request('POST');
-    
+
     // Ein weiterer Weg, eine POST Anfrage durchzuführen
     $client->setMethod(Zend_Http_Client::POST);
     $response = $client->request();
-?>]]></programlisting>            
+?>]]></programlisting>
             </example>
         </para>
     </sect2>
-        
+
     <sect2 id="zend.http.client.parameters">
         <title>Hinzufügen von GET und POST Parametern</title>
         <para>
             Das Hinzufügen von GET Parametern zu einer HTTP Anfrage ist recht einfach und kann
-            entweder über die Angabe als Teil der URL oder durch Verwendung der setParameterGet() 
+            entweder über die Angabe als Teil der URL oder durch Verwendung der setParameterGet()
             Methode erfolgen.
             Diese Methode benötigt den Namen des GET Parameter als seinen ersten Parameter und den
-            Wert des GET Parameter als seinen zweiten Parameter. Zur Erleichterung akzeptiert die 
-            setParameterGet() Methode auch ein einzelnes assoziatives Array mit GET Parameter als 
+            Wert des GET Parameter als seinen zweiten Parameter. Zur Erleichterung akzeptiert die
+            setParameterGet() Methode auch ein einzelnes assoziatives Array mit GET Parameter als
             Name => Wert Variablen, was beim setzen von mehreren GET Parametern komfortabler sein
             kann.
             <example>
@@ -173,7 +173,7 @@
 
     // Dies ist äquivalent durch Setzen der URL:
     $client->setUri('http://example.com/index.php?knight=lancelot');
-    
+
     // Hinzufügen mehrerer Parameter durch einen Aufruf
     $client->setParameterGet(array(
         'first_name'  => 'Bender',
@@ -184,10 +184,10 @@
             </example>
         </para>
         <para>
-            Während GET Parameter bei jeder Anfragemethode gesetzt werden können, können POST 
-            Parameter nur im Hauptteil von POST Anfragen versendet werden. Das Hinzufügen von POST 
+            Während GET Parameter bei jeder Anfragemethode gesetzt werden können, können POST
+            Parameter nur im Hauptteil von POST Anfragen versendet werden. Das Hinzufügen von POST
             Parameter zu einer Anfrage ist sehr ähnlich wie das Hinzufügen von GET Parametern and
-            kann mit der setParameterPost() Methode gemacht werden, die vom Aufbau der 
+            kann mit der setParameterPost() Methode gemacht werden, die vom Aufbau der
             setParameterGet() Methode ähnlich ist..
             <example>
                 <title>Setzen von POST Parametern</title>
@@ -195,7 +195,7 @@
 <![CDATA[<?php
     // Setzen eines POST Parameters
     $client->setParameterPost('language', 'fr');
-    
+
     // Hinzufügen von mehreren POST Parametern, eines davon mit mehreren Werten
     $client->setParameterPost(array(
         'language'  => 'es',
@@ -204,7 +204,7 @@
     ));
 ?>]]></programlisting>
             </example>
-            Beim Senden einer POST Anfrage ist zu beachten, dass man sowohl GET als auch POST 
+            Beim Senden einer POST Anfrage ist zu beachten, dass man sowohl GET als auch POST
             Parameter setzen kann. Auf der anderen Seite wird durch das Setzen von POST Parametern
             für andere Anfragen als POST kein Fehler ausgeworfen. Solange eine Anfrage keine POST
             Anfrage ist, werden POST Parameter einfach ignoriert.
@@ -221,7 +221,7 @@
             und Weise gibt <code>Zend_Http_Client->getLastResponse()</code> die letzte HTTP
             Antwort als <link linkend="zend.http.response">Zend_Http_Response</link> Objekt
             zurück die der Client empfangen hat.
-        </para>    
+        </para>
     </sect2>
 
 </sect1>

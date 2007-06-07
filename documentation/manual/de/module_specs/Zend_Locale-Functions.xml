@@ -64,7 +64,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // Prüfe ob die Gebietsschema gleich sind
-if ($locale->equals($mylocale) { 
+if ($locale->equals($mylocale) {
     print "Die Gebietsschemata sind gleich";
 }
 ?>]]></programlisting>
@@ -105,7 +105,7 @@ print_r($found2);
         </example>
 
         <para>
-            Um nur die Standard Gebietsschema für <link linkend="zend.locale.selection"><code>BROWSER</code>, 
+            Um nur die Standard Gebietsschema für <link linkend="zend.locale.selection"><code>BROWSER</code>,
             <code>ENVIRONMENT</code>, oder <code>FRAMEWORK</code></link> zu erhalten, können die folgenden
             Methoden benutzt werden:
             <itemizedlist>

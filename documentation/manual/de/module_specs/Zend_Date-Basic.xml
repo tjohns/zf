@@ -27,7 +27,7 @@
         <para>
             Ohne jegliche Argumente bedeutet die Erstellung einer Instanz das ein Objekt mit dem aktuellen
             Gebietsschema und dem aktuellen lokalen Datum zurückgegeben wird, durch Verwendung von PHP's
-            <code>time()</code> Funktion um den aktuellen 
+            <code>time()</code> Funktion um den aktuellen
             <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX Zeitpunkt</ulink> für das Objekt zu erhalten.
             Man muß sicherstellen das die PHP Umgebung die richtige
             <link linkend="zend.date.setdefaulttimezone">Standardzeitzone</link> gesetzt hat.

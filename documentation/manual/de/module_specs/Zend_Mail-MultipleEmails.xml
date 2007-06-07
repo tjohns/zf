@@ -1,11 +1,11 @@
 <sect1 id="zend.mail.multiple-emails">
     <title>Versand von mehrteiligen E-Mails über eine SMTP Verbindung</title>
     <para>
-        Standardmäßig wird eine SMTP Verbindung für jede Mail eingerichtet, die versandt werden 
-        soll. Wenn du mehrteilige Mails über eine SMTP Verbindung versenden möchtest, kannst Du die 
-        Aufrufe von <code>connect()</code> selber erledigen. Wenn der Versand bereits eine 
+        Standardmäßig wird eine SMTP Verbindung für jede Mail eingerichtet, die versandt werden
+        soll. Wenn du mehrteilige Mails über eine SMTP Verbindung versenden möchtest, kannst Du die
+        Aufrufe von <code>connect()</code> selber erledigen. Wenn der Versand bereits eine
         Verbindung vor dem Aufruf von <code>send()</code> eingerichtet hat, wird diese verwendet und
-        nicht geschlossen. 
+        nicht geschlossen.
     </para>
     <example>
         <title>Versand von mehrteiligen E-Mails über eine SMTP Verbindung</title>

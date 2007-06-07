@@ -251,6 +251,13 @@ $select = $db->select()
             </para>
 
             <para>
+                If you give an empty array as the columns argument, no columns
+                from the respective table are included in the result set.
+                See a <link linkend="zend.db.select.building.join.example-no-columns">code example</link>
+                under the section on the <code>join()</code> method.
+            </para>
+
+            <para>
                 You can specify the column name as
                 "<code>correlationName.columnName</code>".
                 Zend_Db_Select quotes each part individually.
@@ -466,7 +473,7 @@ $select = $db->select()
             </para>
 
             <example id="zend.db.select.building.join.example-no-columns">
-                <title>Examples of specifying no columns</title>
+                <title>Example of specifying no columns</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Build this query:

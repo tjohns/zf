@@ -2,7 +2,7 @@
     <title>Verändern der Feed- und Eintragsstruktur</title>
 
     <para>
-        Die natürliche Syntax von <code>Zend_Feed</code> wurde für das Erstellen und Verändern von 
+        Die natürliche Syntax von <code>Zend_Feed</code> wurde für das Erstellen und Verändern von
         Feeds und Einträgen sowie das Lesen dieser erweitert. Du kannst die neuen oder veränderten
         Objekte einfach in wohlgeformtes XML umsetzen, um es als Datei zu speichern oder an einen
         Server zu senden.
@@ -22,23 +22,23 @@ echo $entry->saveXML();
 
 ?>]]>   </programlisting>
         <para>
-            Dies gibt eine vollständige (enthält den <code>&lt;?xml ... &gt;</code> Prolog) XML 
+            Dies gibt eine vollständige (enthält den <code>&lt;?xml ... &gt;</code> Prolog) XML
             Darstellung des neuen Eintrags aus, inklusive jedes notwendige XML Namensraumes.
         </para>
         <para>
             Beachte, dass das Obige auch funktioniert, wenn der existierende Eintrag noch keinen
-            Autoren Tag beinhaltet. Du kannst soviele Ebenen von <code>-&gt;</code> Verweisen 
+            Autoren Tag beinhaltet. Du kannst soviele Ebenen von <code>-&gt;</code> Verweisen
             verwenden, wie Du möchtest, um auf eine Zuordnung zugreifen zu können; alle dieser
             zwischengeschalteten Stufen werden automatisch für dich erstellt wenn notwendig.
         </para>
     </example>
 
     <para>
-        Wenn du einen anderen Namensraum als <code>atom:</code>, <code>rss:</code>, oder 
-        <code>osrss:</code> in deinem Eintrag verwenden möchtest, musst du den Namensraum mit 
-        <code>Zend_Feed</code> durch die Verwendung von <code>Zend_Feed::registerNamespace()</code> 
+        Wenn du einen anderen Namensraum als <code>atom:</code>, <code>rss:</code>, oder
+        <code>osrss:</code> in deinem Eintrag verwenden möchtest, musst du den Namensraum mit
+        <code>Zend_Feed</code> durch die Verwendung von <code>Zend_Feed::registerNamespace()</code>
         registrieren. Wenn du ein bestehendes Element veränderst, wird es immer den ursprünglichen
-        Namensraum beibehalten. Wenn du ein neues Element hinzufügst, wird es den standardmäßigen 
+        Namensraum beibehalten. Wenn du ein neues Element hinzufügst, wird es den standardmäßigen
         Namensraum verwenden, wenn du nicht explizit einen anderen Namensraum festgelegt hast.
     </para>
 

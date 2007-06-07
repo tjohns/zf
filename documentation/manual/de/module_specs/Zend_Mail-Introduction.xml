@@ -1,9 +1,9 @@
 <sect1 id="zend.mail.introduction">
     <title>Einführung</title>
     <para>
-        <code>Zend_Mail</code> stellt verallgemeinerte Funktionalitäten zum Verfassen und Senden 
-        sowohl von Text E-Mails als auch von MIME-konformen mehrteiligen E-Mails bereit. Mails 
-        können mit <code>Zend_Mail</code> durch die in PHP integrierte 
+        <code>Zend_Mail</code> stellt verallgemeinerte Funktionalitäten zum Verfassen und Senden
+        sowohl von Text E-Mails als auch von MIME-konformen mehrteiligen E-Mails bereit. Mails
+        können mit <code>Zend_Mail</code> durch die in PHP integrierte
         <ulink url="http://php.net/mail"><code>mail()</code></ulink> Funktion oder direkt über
         eine SMTP Verbindung versandt werden.
     </para>
@@ -11,7 +11,7 @@
         <title>Einfache E-Mail mit Zend_Mail</title>
         <para>
             Eine einfache E-Mail besteht aus einigen Empfängern, einem Betreff, einem Hauptteil und
-            einem Versender. Um solch eine Mail mit Hilfe der 
+            einem Versender. Um solch eine Mail mit Hilfe der
             <ulink url="http://php.net/mail"><code>mail()</code></ulink> PHP Funktion zu versenden,
             musst Du folgendes tun:
        </para>
@@ -29,15 +29,15 @@ $mail->send();
         <title>Minimale Definitionen</title>
         <para>
             Um eine E-Mail mit <code>Zend_Mail</code> zu versenden, musst du mindestens einen Empfänger,
-            einen Versender (z.B., mit <code>setFrom()</code>) und einen Nachrichtentext (Text und/oder 
-            HTML) angeben. 
+            einen Versender (z.B., mit <code>setFrom()</code>) und einen Nachrichtentext (Text und/oder
+            HTML) angeben.
         </para>
     </note>
     <para>
-        Für die meisten Mailattribute gibt es "Get" Methoden, um die im Mailobjekt abgelegten 
+        Für die meisten Mailattribute gibt es "Get" Methoden, um die im Mailobjekt abgelegten
         Informationen zu lesen. Für weitere Einzelheiten wende dich an die API Dokumentation. Eine
-        besondere Methode ist <code>getRecipients()</code>. Sie gibt ein Array mit allen E-Mail 
-        Adressen der Empfänger zurück, die vor dem Methodenaufruf hinzugefügt worden sind.  
+        besondere Methode ist <code>getRecipients()</code>. Sie gibt ein Array mit allen E-Mail
+        Adressen der Empfänger zurück, die vor dem Methodenaufruf hinzugefügt worden sind.
     </para>
     <para>
         Aus Sicherheitsgründen filtert <code>Zend_Mail</code> alle Felder des Nachrichtenkopfs, um

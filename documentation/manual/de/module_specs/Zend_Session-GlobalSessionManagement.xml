@@ -5,7 +5,7 @@
     <para>
         Das Standardverhalten von Sessions kann mit Hilfe der statischen Methoden in Zend_Session geändert werden.
         Das komplette Management und die Manipulation des globalen Session Managements findet durch Verwendung
-        von Zend_Session statt, was auch die Konfiguration der 
+        von Zend_Session statt, was auch die Konfiguration der
         <ulink url="http://www.php.net/session#session.configuration">üblichen Optionen, welche von ext/session unterstützt werden,</ulink>
         durch <code>Zend_Session::setOptions()</code> enthält. Zum Beispiel kann, das fehlerhafte Versichern das ein
         sicherer save_path oder ein eindeutiger Cookiename von ext/session durch
@@ -130,7 +130,7 @@ remember_me_seconds = 864000
                         <para>
                             Wenn der Pfad von einer anderen Anwendung aus lesbar ist, kann die Entführung der
                             Session möglich sein. Wenn der Pfad von einer anderen Anwendung aus beschreibbar ist,
-                            kann die <ulink url="http://en.wikipedia.org/wiki/Session_poisoning">Session 
+                            kann die <ulink url="http://en.wikipedia.org/wiki/Session_poisoning">Session
                             vergiftet</ulink> werden. Wenn der Pfad mit anderen Benutzern oder anderen PHP
                             Anwendungen geteilt wird, können verschiedenste Sicherheitsprobleme auftreten. Das
                             inkludiert Diebstahl von Inhalten der Session, Entführung von Sessions und Kollisionen
@@ -220,7 +220,7 @@ remember_me_seconds = 864000
                         Using
                         <ulink url="http://php.net/outcontrol">Puffern der Ausgabe</ulink>
                         ist oft notwendig um dieses Problem zu verhindern, und hilft bei der Steigerung der
-                        Geschwindigkeit. Zum Beispiel aktiviert "<code>output_buffering = 65535</code>" in der 
+                        Geschwindigkeit. Zum Beispiel aktiviert "<code>output_buffering = 65535</code>" in der
                         <code>php.ini</code> das puffern der Ausgabe mit einem 64k Puffer. Selbst wenn das Puffern
                         der Ausgabe eine gute Taktik ist um auf Produktionsservern die Geschwindigkeit zu
                         Erhöhen, ist das Vertrauen auf das Puffern, um das Problem "headers already sent" zu
@@ -330,7 +330,7 @@ remember_me_seconds = 864000
             <title>Session-Entführung und Fixierung</title>
 
             <para>
-                Das Vermeiden von 
+                Das Vermeiden von
                 <ulink url="http://en.wikipedia.org/wiki/Cross_site_scripting">Seiten übergreifenden Script (XSS) Gefährdungen</ulink>
                 hilft bei der Vorbeugung von Session Entführungen. Laut
                 <ulink url="http://secunia.com/">Secunia's Statistik</ulink> kommen XSS Probleme häufig vor,
@@ -357,7 +357,7 @@ remember_me_seconds = 864000
                 die Session, die von einem Angreifer erstellt wurde um ein Opfer zu Emulieren, unterschieden werden.
                 Das könnte zuerst wiedersprüchlich klingen zu dem vorherigen Statement, solange angenommen wird
                 das ein Angreifer zuerst eine reale Session auf der Webseite initiiert. Die Session wird
-                "zuerst vom Angreifer benutzt", welche dann das Ergebnis der Initialisierung weiß 
+                "zuerst vom Angreifer benutzt", welche dann das Ergebnis der Initialisierung weiß
                 (<code>regenerateId()</code>). Der Angreifer verwendet dann diese neue Session Id in Kombination mit
                 der XSS Gefährdung, oder injiziert die Session Id über einen Link auf der Webseite des Angreifers
                 (funktioniert wenn <code>use_only_cookies = off</code>).
@@ -601,8 +601,8 @@ if (!isset($defaultNamespace->initialized))
 
         <para>
             DEPRECATED: <code>getIterator()</code> in Zend_Session_Namespace sollte verwendet werden. Diese Methode
-            gibt ein Array mit dem Inhlat von 
-            
+            gibt ein Array mit dem Inhlat von
+
             This method returns an array of the <code>$namespace</code> zurück. Wenn es logische Gründe gibt
             diese Methode öffentlich aufrufbar zu lassen bitte ein Feedback auf die
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Mailingliste geben.

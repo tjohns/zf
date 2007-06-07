@@ -25,7 +25,7 @@
                 Standardmodus zurückwechseln der nur ISO Zeichen für Datumsformate unterstützt. Für eine Liste von
                 unterstützten Zeichen Codes kann hier nachgelesen werden: <xref linkend="zend.date.constants.phpformats" />
             </para>
-            
+
         </sect3>
 
         <sect3 id="zend.date.options.fixdst">
@@ -49,7 +49,7 @@
                 und nicht auf Kalenderdaten mit Zeitkomponenten, verliert der Zeitpunkt eine Stunde was zu einem
                 Datum führt das einen Kalendertag weniger hat als erwartet. Um solche Problem zu verhindern kann
                 die Option <code>fix_dst</code> verwendet werden, welche standardmäßig wahr ist. Das führt
-                dazu das die Sommer-/Winterzeit keinen Einfluß mehr bei Datumsberechnungen zeigt 
+                dazu das die Sommer-/Winterzeit keinen Einfluß mehr bei Datumsberechnungen zeigt
                 (<code>addMOnth(), subMonth()</code>). <code>Zend_Date::setOptions(array('fix_dst' => false))</code>
                 kann benutzt werden um Hinzufügen oder Entfernen der Sommer-/Winterzeitanpassung zu gestatten wenn
                 Datumsberechnungen durchgeführt werden.
@@ -90,7 +90,7 @@
 
         <para>
             Sobald die Eingabe durch die Erstellung eines <code>Zend_Date</code> Objektes normalisiert wurde,
-            hat es eine zugeordnete Zeitzone aber eine Interne Darstellung durch Verwendung von 
+            hat es eine zugeordnete Zeitzone aber eine Interne Darstellung durch Verwendung von
             <ulink url="http://en.wikipedia.org/wiki/Unix_Time">UNIX Zeitpunkten</ulink>.
             Damit ein Datum in einer lokalisierten Art und Weise durchsucht werden kann, muß zuerst eine
             Zeitzone bekannt sein. Die Standardzeitzone ist immer GMT/UTC. Um die Zeitzone des Objektes zu
@@ -114,7 +114,7 @@
             <xref linkend="zend.date.constants.list" />.
             Wenn <code>$part</code> nicht spezifiziert wird, wird <code>Zend_Date::TIMESTAMP</code> angenommen.
             Alternativ kann ein benutzerdefiniertes Format für <code>$part</code> verwendet werden, mit Hilfe
-            der gleichen Mechanismen und Formatdefinitionen wie bei 
+            der gleichen Mechanismen und Formatdefinitionen wie bei
             <link linkend="zend.locale.date.normalize"><code>Zend_Locale_Format::getDate()</code>
             </link>. Wenn ein Datumsobjekt erstellt wird durch Verwendung eines offensichtlich falschen Datums
             (z.B. die Nummer des Monats größer als 12), wird <code>Zend_Date</code> eine Ausnahme werfen, solange
@@ -327,7 +327,7 @@ print $date;
                                 numerische Zeichenkette ist. Sonst wird versucht den Tag laut den dokumentierten
                                 Konventionen für diese Konstanten zu extrahieren:
                                 <code>Zend_Date::WEEKDAY_NARROW</code>, <code>Zend_Date::WEEKDAY_NAME</code>,
-                                <code>Zend_Date::WEEKDAY_SHORT</code>, <code>Zend_Date::WEEKDAY</code> 
+                                <code>Zend_Date::WEEKDAY_SHORT</code>, <code>Zend_Date::WEEKDAY</code>
                                 (Gregorianischer Kalender angenommen)
                             </entry>
                         </row>
@@ -375,7 +375,7 @@ print $date;
 
             <para>
                 Die unten angeführten Basisoperationen können statt den bequemlichen Operationen für spezielle
-                Datumsabschnitte verwendet werden.  Die 
+                Datumsabschnitte verwendet werden.  Die
                 <link linkend="zend.date.constants.list">entsprechenden Konstanten</link> werden für den
                 <code>$part</code> Parameter verwendet.
             </para>
@@ -404,7 +404,7 @@ print $date;
                                     nummerische Zeichenkettten statt Integer für große Werte zurückgegeben werden.
                                     <emphasis role="strong">NOTE:</emphasis> Anders als <code>get()</code> geben
                                     die anderen get*() bequemlichen Methoden nur Instanzen von <code>Zend_Date</code>
-                                    zurück welche nur das Datum oder die Zeit repräsentieren das ausgewählt oder berechnet 
+                                    zurück welche nur das Datum oder die Zeit repräsentieren das ausgewählt oder berechnet
                                     wurde.
                                 </para>
                             </entry>
@@ -599,7 +599,7 @@ print $date;
                             </para>
                             <para>
                                 This method checks if a given date is a real date and returns true if all checks are ok.
-                                It works like php's checkdate() function but can also check for localized month names and 
+                                It works like php's checkdate() function but can also check for localized month names and
                                 for dates extending the range of checkdate()
                                 false
                             </para>

@@ -34,12 +34,12 @@
         <para>
             Es gibt viele
             <ulink url="http://en.wikipedia.org/wiki/Numeral">Ziffernsysteme</ulink>
-            welche siche vom üblichen 
+            welche siche vom üblichen
             <ulink url="http://en.wikipedia.org/wiki/Decimal">Dezimalsystem</ulink>
             unterscheiden (z.B. "3.14"). Nummern können mit der Funktion <code>getNumber()</code>
             normalisiert werden um ein gleichwertiges Ergebnis in einer Schreibweise des Standard
             Dezimalsystems zu erhalten. Für alle Ziffern-Relevanten Diskussionen in diesem Handbuch
-            werden die 
+            werden die
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">Arabisch/Europäischen Ziffern (0,1,2,3,4,5,6,7,8,9)</ulink>
             verwendet, ausser es ist anders definiert. Das Options Array kann ein 'locale' Gebietsschema enthalten, um
             eine Gruppierung und Kommazeichen zu definieren. Das Array kann auch eine Genauigkeit 'precision' enthalten
@@ -254,7 +254,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
     print "Zahl";
 } else {
     print "keine Zahl";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -337,7 +337,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
     print "Gleitkommazahl";
 } else {
     print "keine Gleitkommazahl";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -410,7 +410,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
     print "Integerzahl";
 } else {
     print "keine Integerzahl";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -424,7 +424,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             <code>Zend_Locale_Format::convertNumerals()</code> kann die Ziffern zwischen den unterschiedlichen
             <ulink url="http://en.wikipedia.org/wiki/Arabic_numerals">Zahlensystemen</ulink> umwandeln.
             Das inkludiert auch das Standard Arabisch/Europäisch/Lateinische Zahlensystem (0,1,2,3,4,5,6,7,8,9).
-            Nicht zu verwechseln mit dem 
+            Nicht zu verwechseln mit dem
             <ulink url="http://en.wikipedia.org/wiki/Eastern_Arabic_numerals">Ost-arabischen Zahlensystem</ulink>
             welches in der Arabischen Sprache benutzt wird um Zahlen zu schreiben. Der Versuch ein nicht
             unterstütztes Zahlensystem zu benutzen führt zu einer Ausnahme um eine irrtümliche falsche Konvertierung
@@ -446,7 +446,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             Nehmen wir an eine Web Form erhält eine nummerische Eingabe welche Ost-Arabische Ziffern
             enthält "١‎٠٠". Die meisten Programme und PHP Funktionen erwarten Eingaben aber als Lateinische Ziffern.
             Glücklicherweise wird für die Konvertierung dieser Eingabe in gleichwertige Lateinische Ziffern "100"
-            sehr wenig Aufwand. Es muß nur 
+            sehr wenig Aufwand. Es muß nur
             <code>convertNumerals($inputNumeralString, $sourceNumeralSystem, $destNumeralSystem)</code> benutzt werden
             und hierbei die Ziffern der Schreibweise <code>$sourceNumeralSystem</code> in die Schreibweise
             <code>$destNumeralSystem</code> konvertiert werden.

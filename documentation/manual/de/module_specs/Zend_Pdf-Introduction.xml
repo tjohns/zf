@@ -2,12 +2,12 @@
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Einführung</title>
     <para>
-        Die Zend_Pdf Komponente ist ein komplett in PHP 5 geschriebenes Werkzeug für die Veränderung von 
-        PDF (Portable Document Format) Dateien. Es kann bestehende Dokumente laden, neue Dokumente 
+        Die Zend_Pdf Komponente ist ein komplett in PHP 5 geschriebenes Werkzeug für die Veränderung von
+        PDF (Portable Document Format) Dateien. Es kann bestehende Dokumente laden, neue Dokumente
         erstellen, Dokumente modifizieren und modifizierte Dokumente speichern. Dadurch kann es jede
         PHP-getriebene Anwendung unterstützen, Dokumente im PDF Format dynamisch aufzubereiten,
         indem bestehende Vorlagen modifiziert oder Dokumente von Grund auf neu erstellt werden.
-        Die Zend_Pdf Komponente stellt die folgenden Funktionen bereit: 
+        Die Zend_Pdf Komponente stellt die folgenden Funktionen bereit:
     <itemizedlist>
         <listitem>
             <para>
@@ -32,7 +32,7 @@
         </listitem>
         <listitem>
             <para>
-                Verschiedene einfache Grafikelemente (Linien, Rechtecke, Polygon, Kreise, Ellipsen 
+                Verschiedene einfache Grafikelemente (Linien, Rechtecke, Polygon, Kreise, Ellipsen
                 und Kreisausschnitte).
             </para>
         </listitem>

@@ -131,11 +131,11 @@ class SomeController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
-        
+
         // Set the default options for the redirector
         // Since the object is registered in the helper broker, these become
         // relevant for all actions from this point forward
@@ -143,7 +143,7 @@ class SomeController extends Zend_Controller_Action
                           ->setExit(false)
                           ->setGoto("this-action", "some-controller");
     }
-    
+
     public function myAction()
     {
         /* do some stuff */
@@ -176,12 +176,12 @@ class AlternativeController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     public function myAction()
     {
         /* do some stuff */
@@ -214,12 +214,12 @@ class ForwardController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     public function myAction()
     {
         /* do some stuff */
@@ -266,12 +266,12 @@ class BlogAdminController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     public function returnAction()
     {
         /* do some stuff */

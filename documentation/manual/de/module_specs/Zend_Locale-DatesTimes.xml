@@ -5,7 +5,7 @@
     <para>
         <code>Zend_Locale_Format</code> bietet verschiedene Methoden für das Arbeiten mit Daten und Zeiten und hilft
         bei der Konvertierung und Normalisierung zwischen verschiedenen Formaten und verschiedenen Gebietsschemata.
-        Für die Manipulation von Datumszeichenketten die bereits übereinstimmen mit 
+        Für die Manipulation von Datumszeichenketten die bereits übereinstimmen mit
         <link linkend="zend.date.constants">einem der vielen international erkannten Standardformate, oder einem der
         lokalisierten Datumsformat</link> welche von <code>Zend_Date</code> verwendet werden.
         Die Verwendung von vordefinierten Formate bietet Vorteile, wie die Benutzung von gut getestetem Code, und
@@ -302,7 +302,7 @@ print_r ($date);
                         <entry>dd.MM.yy</entry>
                         <entry>1.4.6</entry>
                         <entry>['day'] => 1,
-                                   ['month'] => 4, 
+                                   ['month'] => 4,
                                    ['year'] => 6</entry>
                     </row>
                     <row>
@@ -354,7 +354,7 @@ print_r ($date);
 
         <para>
             <code>checkDateFormat($inputString, array('date_format' => $format, $locale))</code> kann benutzt werden
-            um zu prüfen ob eine Zeichenkette alle erwarteten Datumsteile enthält. Die Methode 
+            um zu prüfen ob eine Zeichenkette alle erwarteten Datumsteile enthält. Die Methode
             <code>checkDateFormat()</code> benutzt <code>getDate()</code> aber ohne die Verwendung der Option
             <code>'fixdate'</code> um zu verhindern das wahr zurück gegeben wird wenn die Eingabe nicht dem
             Datumsformat entspricht. Wenn Fehler in der Eingabe gefunden werden, wie zum Beispiel getauschte
@@ -373,7 +373,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
     print "Datum";
 } else {
     print "kein Datum";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -400,7 +400,7 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
     print "Zeit";
 } else {
     print "keine Zeit";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -426,7 +426,7 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:m
     print "Zeit";
 } else {
     print "keine Zeit";
-} 
+}
 ?>]]></programlisting>
         </example>
 

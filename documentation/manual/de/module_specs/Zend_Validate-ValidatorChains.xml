@@ -31,7 +31,7 @@ if ($validatorChain->isValid($username)) {
         echo "$message\n";
     }
 }
-    
+
 ?>]]></programlisting>
 
         Validators are run in the order they were added to <code>Zend_Validate</code>. In the above example,

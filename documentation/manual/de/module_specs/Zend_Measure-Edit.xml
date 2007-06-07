@@ -94,7 +94,7 @@ require_once 'Zend/Measure/Length.php';
 $unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
-// $unit2 zu $unit1 addieren 
+// $unit2 zu $unit1 addieren
 $sum = $unit->add($unit2);
 
 echo $sum; // Ausgabe "300 cm"
@@ -106,7 +106,7 @@ echo $sum; // Ausgabe "300 cm"
             <title>Automatische Konvertierung</title>
             <para>
                 Beim Addieren eines Objektes zu einem anderen wird dieses automatisch in die richtige Einheit
-                konvertiert. Es ist nicht notwendig 
+                konvertiert. Es ist nicht notwendig
                 <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link> aufzurufen bevor
                 unterschiedliche Einheiten addiert werden.
             </para>

@@ -51,7 +51,7 @@
         löst das Problem des Verwaltens dieser Verbindung nicht, wenn sich ein Client zu einem beliebigen Server aus
         einem Cluster von Servern verbinden kann, da Sessiondaten nur im lokalen Server gespeichert werden. Eine Liste
         von zusätzlichen, geeigneten Speichermodule wird, sobald Sie vorhanden ist, zur Verfügung gestellt. Mitglieder
-        der Community werden ermutigt Speichermodule vorzuschlagen und an die 
+        der Community werden ermutigt Speichermodule vorzuschlagen und an die
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Mailing-Liste zu senden.
         Ein Zend_Db kompatibles Speichermodul wurde schon in der Liste veröffentlicht.
     </para>

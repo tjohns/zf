@@ -14,7 +14,7 @@
             einer Benutzereinfabe oder eines Arguments einer Methode basiert. Wenn
             eine Datei oder eine Klasse geladen werden soll deren Name konstant ist,
             gibt es keinen Vorteil durch die Verwendung von Zend_Loader gegenüber
-            traditionellen PHP Funktionen wie 
+            traditionellen PHP Funktionen wie
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
     </tip>

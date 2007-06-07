@@ -45,7 +45,7 @@
                           <entry><code>true</code></entry>
                           <entry>
                             Ein- / Ausschalten von read_control: eingeschaltet wird ein Kontrollschlüssel
-                            im Cache File inkludiert und dieser Schlüssel wird mit dem Schlüssel 
+                            im Cache File inkludiert und dieser Schlüssel wird mit dem Schlüssel
                             verglichen, der nach dem Lesen berechnet wird.
                           </entry>
                       </row>
@@ -86,9 +86,9 @@
                           <entry><code>string</code></entry>
                           <entry><code>'zend_cache'</code></entry>
                           <entry>
-                          	Präfix für Cache Dateien; man muss mit dieser Option sehr vorsichtig
-                          	umgehen, weil ein zu generischer Wert in einem System Cache Verzeichnis
-                          	(wie /tmp) kann beim Löschen des Caches zu großen Problemen führen.
+                              Präfix für Cache Dateien; man muss mit dieser Option sehr vorsichtig
+                              umgehen, weil ein zu generischer Wert in einem System Cache Verzeichnis
+                              (wie /tmp) kann beim Löschen des Caches zu großen Problemen führen.
                         </entry>
                       </row>
                   </tbody>
@@ -148,8 +148,8 @@
             wird ein Memcached Dämon benötigt und <ulink url="http://pecl.php.net/package/memcache">die Memcached PECL Erweiterung</ulink>.
         </para>
         <para>
-        	Vorsicht: mit diesem Backend werden zur Zeit "Marker" nicht unterstützt genauso wie das
-        	"doNotTestCacheValidity=true" Argument.
+            Vorsicht: mit diesem Backend werden zur Zeit "Marker" nicht unterstützt genauso wie das
+            "doNotTestCacheValidity=true" Argument.
         </para>
         <para>
             Mögliche Optionen sind :
@@ -198,8 +198,8 @@
             (welche natürlich für die Verwendung dieses Backends benötigt wird).
         </para>
         <para>
-        	Vorsicht: mit diesem Backend werden "Marker" zur Zeit nicht unterstützt genauso wie das
-        	"doNotTestCacheValidity=true" Argument.
+            Vorsicht: mit diesem Backend werden "Marker" zur Zeit nicht unterstützt genauso wie das
+            "doNotTestCacheValidity=true" Argument.
         </para>
         <para>
             Es gibt keine Optionen für dieses Backend.
@@ -211,17 +211,17 @@
             Dieses Backend verwendet die Content Caching API des
             <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> Produktes.
             Natürlich muss man die Zend Platform installiert haben, um dieses Backend verwenden zu
-			können.
+            können.
         </para>
         <para>
-			Dieses Backend unterstützt Tags, aber nicht den <code>CLEANING_MODE_NOT_MATCHING_TAG</code>
-			Löschmodus.
+            Dieses Backend unterstützt Tags, aber nicht den <code>CLEANING_MODE_NOT_MATCHING_TAG</code>
+            Löschmodus.
         </para>
         <para>
             Es gibt keine Optionen für dieses Backend.
         </para>
     </sect2>
-</sect1> 
+</sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->

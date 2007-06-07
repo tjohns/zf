@@ -39,7 +39,7 @@ class FooController extends Zend_Controller_Action
     }
 }
 ]]></programlisting>
-            
+
         <para>
             The above <code>FooController</code> class (controller
             <code>foo</code>) defines two actions, <code>bar</code> and
@@ -78,7 +78,7 @@ class FooController extends Zend_Controller_Action
         // Globally:
         $this->_helper->removeHelper('viewRenderer');
 
-        // Also globally, but would need to be in conjunction with the local 
+        // Also globally, but would need to be in conjunction with the local
         // version in order to propagate for this controller:
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
@@ -294,11 +294,11 @@ applicationOrModule/
         helpers/
         filters/
 ]]></programlisting>
-            
+
             <para>
                 In other words, view scripts are assumed to be in the
                 <code>views/scripts/</code> subdirectory, and the
-                <code>views</code> subdirectory is assumed to contain sibling 
+                <code>views</code> subdirectory is assumed to contain sibling
                 functionality (helpers, filters). When determining the view
                 script name and path, the <code>views/scripts/</code> directory
                 will be used as the base path, with a directories named after the
@@ -366,7 +366,7 @@ class MyController extends Zend_Controller_Action
 
         // Renders my/login.phtml to the 'form' segment of the response object
         $this->render('login', 'form');
-        
+
         // Renders site.phtml to the 'page' segment of the response object; does
         // not use the 'my/' subirectory
         $this->render('site', 'page', true);
@@ -518,7 +518,7 @@ class MyController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-            
+
             <para>
                 Another possibility is that you may want to forward on to a
                 default controller page:

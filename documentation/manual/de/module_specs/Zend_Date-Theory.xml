@@ -18,7 +18,7 @@
         von Datumsabschnitten, und vieles mehr). Das Aufteilen der Handhabung dieser Datumsabschnitte in verschiedene
         Klassen würde Komplikationen hervorrufen wenn einfaches gemeinsames Arbeiten und eine kleine Lernkurve
         gewünscht sind. Eine einzige Klasse reduziert die Verdopplung von Code für gleichartige Arbeiten, ohne die
-        Notwendigkeit einer komplexen Ableitungshirarchie. 
+        Notwendigkeit einer komplexen Ableitungshirarchie.
     </para>
 
     <sect2 id="zend.date.theory.internals">
@@ -38,7 +38,7 @@
                         deshalb möglich weil <code>Zend_Date</code> nicht durch UNIX Zeitpunkte limitiert ist und
                         auch nicht durch Integer Zahlen. Die BCMath Erweiterung wird benötigt um extrem große Daten
                         ausserhalb des Bereichs vom Freitag dem 13.Dezember 1901 20:45:54 GMT bis zum 19.Jänner 2038
-                        03:14:07 GMT zu unterstützen. Zusätzlich können kleine Mathematikfehler aufgrund der 
+                        03:14:07 GMT zu unterstützen. Zusätzlich können kleine Mathematikfehler aufgrund der
                         inhärenten Beschränkungen des Float-Datentyps sowie durch Rundung auftreten, es sei denn,
                         die BCMath Extension wird verwendet.
                     </para>

@@ -5,18 +5,18 @@
     <sect2 id="zend.db.profiler.introduction">
 
         <title>Einführung</title>
-        
+
         <para>
-            <code>Zend_Db_Profiler</code> kann aktiviert werden, um das Erstellen von Profilen für 
-            Abfragen zu erlauben. Die Profile enthalten die Abfragen, die durch den Adapter 
-            verarbeitet worden sind, sowie die Laufzeit der Abfragen, um die Kontrolle der 
-            verarbeiteten Abfragen zu ermöglichen, ohne das extra Code für das Debugging zu den 
-            Klassen hinzugefügt werden muß. Die erweiterte Verwendung ermöglicht den Entwickler 
-            sogar zu filtern, welche Abfragen aufgezeichnet werden sollen.  
+            <code>Zend_Db_Profiler</code> kann aktiviert werden, um das Erstellen von Profilen für
+            Abfragen zu erlauben. Die Profile enthalten die Abfragen, die durch den Adapter
+            verarbeitet worden sind, sowie die Laufzeit der Abfragen, um die Kontrolle der
+            verarbeiteten Abfragen zu ermöglichen, ohne das extra Code für das Debugging zu den
+            Klassen hinzugefügt werden muß. Die erweiterte Verwendung ermöglicht den Entwickler
+            sogar zu filtern, welche Abfragen aufgezeichnet werden sollen.
         </para>
 
         <para>
-            Der Profiler wird entweder durch die Übergabe eines Parameters an den Konstruktor des 
+            Der Profiler wird entweder durch die Übergabe eines Parameters an den Konstruktor des
             Adapters oder zu einem späteren Zeitpunkt direkt an den Adapter aktiviert.
         </para>
 
@@ -62,13 +62,13 @@ $profiler = $db->getProfiler();
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>getTotalNumQueries()</code> gibt die Gesamtzeit aller aufgezeichneten 
+                    <code>getTotalNumQueries()</code> gibt die Gesamtzeit aller aufgezeichneten
                     Abfragen zurück.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getTotalElapsedSecs()</code> gibt die gesamte Anzahl an Sekunden 
+                    <code>getTotalElapsedSecs()</code> gibt die gesamte Anzahl an Sekunden
                     für alle aufgezeichneten Abfragen zurück.
                 </para>
             </listitem>
@@ -80,7 +80,7 @@ $profiler = $db->getProfiler();
             </listitem>
             <listitem>
                 <para>
-                    <code>getLastQueryProfile()</code> gibt das Profil der letzten (neuesten) 
+                    <code>getLastQueryProfile()</code> gibt das Profil der letzten (neuesten)
                     Abfrage zurück, gleichgültig ob die Abfrage beendet werden konnte oder nicht (wenn
                     nicht, wird die Endzeit null sein)
                 </para>
@@ -93,7 +93,7 @@ $profiler = $db->getProfiler();
         </itemizedlist>
 
         <para>
-            Der Rückgabewert von <code>getLastQueryProfile()</code> und die einzelnen Elemente von 
+            Der Rückgabewert von <code>getLastQueryProfile()</code> und die einzelnen Elemente von
             <code>getQueryProfiles()</code> sind <code>Zend_Db_Profiler_Query</code> Objekte, welche
             die Möglichkeit bieten, die individuellen Abfragen zu untersuchen:
         </para>
@@ -113,9 +113,9 @@ $profiler = $db->getProfiler();
         </itemizedlist>
 
         <para>
-            Die Informationen, die <code>Zend_Db_Profiler</code> bereitstellt, sind nützlich, um 
+            Die Informationen, die <code>Zend_Db_Profiler</code> bereitstellt, sind nützlich, um
             Engpässe in der Anwendung zu ermitteln und um Abfragen zu überprüfen, die durchgeführt
-            worden sind. Um zum Beispiel die genaue Abfrage zu sehen, die zuletzt durchgeführt 
+            worden sind. Um zum Beispiel die genaue Abfrage zu sehen, die zuletzt durchgeführt
             worden ist:
         </para>
 
@@ -126,7 +126,7 @@ echo $query->getQuery();
 ?>]]></programlisting>
 
         <para>
-            Vielleicht wird eine Seite langsam erstellt; verwende den Profiler, um zuerst die 
+            Vielleicht wird eine Seite langsam erstellt; verwende den Profiler, um zuerst die
             gesamte Laufzeit aller Abfragen zu ermitteln und dann durchlaufe die Abfragen, um die
             am längsten laufende zu finden:
         </para>
@@ -158,8 +158,8 @@ echo "Longest query: \n" . $longestQuery . "\n";
         <title>Fortgeschrittene Profiler Verwendung</title>
 
         <para>
-            Zusätzlich zum Untersuchen von Anfragen erlaubt der Profiler dem Entwickler auch zu 
-            filtern, welche Abfragen aufgezeichnet werden sollen. Die folgenden Methoden arbeiten 
+            Zusätzlich zum Untersuchen von Anfragen erlaubt der Profiler dem Entwickler auch zu
+            filtern, welche Abfragen aufgezeichnet werden sollen. Die folgenden Methoden arbeiten
             mit einer <code>Zend_Db_Profiler</code> Instanz:
         </para>
 
@@ -167,7 +167,7 @@ echo "Longest query: \n" . $longestQuery . "\n";
             <title>Filtern anhand der Laufzeit der Abfragen</title>
 
             <para>
-                <code>setFilterElapsedSecs()</code> ermöglicht dem Entwickler, einen minimale 
+                <code>setFilterElapsedSecs()</code> ermöglicht dem Entwickler, einen minimale
                 Laufzeit anzugeben, bevor eine Abfrage aufzeichnet werden soll. Um den Filter zu
                 entfernen, muss nur der Wert null an die Methode übergeben werden.
             </para>
@@ -185,16 +185,16 @@ $profiler->setFilterElapsedSecs(null);
             <title>Filtern anhand des Abfragetyp</title>
 
             <para>
-                <code>setFilterQueryType()</code> ermöglicht dem Entwickler anzugeben, welche 
+                <code>setFilterQueryType()</code> ermöglicht dem Entwickler anzugeben, welche
                 Abfragetypen aufgezeichnet werden sollen; um mehrere Typen aufzuzeichnen, verwende
-                das logische OR. Abfragetypen sind mit den folgenden 
+                das logische OR. Abfragetypen sind mit den folgenden
                 <code>Zend_Db_Profiler</code> Konstanten definiert:
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Db_Profiler::CONNECT</code>: Verbindungsoperationen oder 
+                        <code>Zend_Db_Profiler::CONNECT</code>: Verbindungsoperationen oder
                         Auswahl einer Datenbank .
                     </para>
                 </listitem>
@@ -237,7 +237,7 @@ $profiler->setFilterElapsedSecs(null);
             </itemizedlist>
 
             <para>
-                Mit <code>setFilterElapsedSecs()</code> kannst du jeden vorhandenen Filtern 
+                Mit <code>setFilterElapsedSecs()</code> kannst du jeden vorhandenen Filtern
                 entfernen, indem du <code>null</code> als einziges Argument übergibst.
             </para>
 
@@ -261,13 +261,13 @@ $profiler->setFilterQueryType(null);
             <title>Hole Profil nach Abfragetyp zurück</title>
 
             <para>
-                Die Verwendung von <code>setFilterQueryType()</code> kann die Anzahl der 
+                Die Verwendung von <code>setFilterQueryType()</code> kann die Anzahl der
                 aufgezeichneten Abfragen reduzieren. Allerdings kann es sinnvoller sein, alle
-                Abfragen auzuzeichnen, baer nur diese anzuschauen, die im Moment gebraucht werden. 
-                Ein weiteres Feature von <code>getQueryProfiles()</code> ist das Filtern der 
-                Abfragen "on-the-fly" durch Übergabe eines Abfragetyps (oder eine logischen 
-                Kombination von Abfragetypen) als erstes Argument; beachte 
-                <xref linkend="zend.db.profiler.advanced.filtertype" /> für eine Liste der 
+                Abfragen auzuzeichnen, baer nur diese anzuschauen, die im Moment gebraucht werden.
+                Ein weiteres Feature von <code>getQueryProfiles()</code> ist das Filtern der
+                Abfragen "on-the-fly" durch Übergabe eines Abfragetyps (oder eine logischen
+                Kombination von Abfragetypen) als erstes Argument; beachte
+                <xref linkend="zend.db.profiler.advanced.filtertype" /> für eine Liste der
                 Konstanten für Abfragetypen.
             </para>
 

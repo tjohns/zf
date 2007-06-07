@@ -3,10 +3,10 @@
     <sect2 id="zend.controller.request.introduction">
         <title>Einführung</title>
         <para>
-            Das Request Objekt ist eine einfaches Wertobjekt, das zwischen 
+            Das Request Objekt ist eine einfaches Wertobjekt, das zwischen
             <code>Zend_Controller_Front</code> und den Router, Dispatcher und Controller Klassen
-            übergeben wird. Es enthält sowohl die Definition des Controllers, der Aktion und der 
-            Parameter, die an die Aktion übergeben werden sollen, als auch den Rest der 
+            übergeben wird. Es enthält sowohl die Definition des Controllers, der Aktion und der
+            Parameter, die an die Aktion übergeben werden sollen, als auch den Rest der
             Anfrageumgebung, seit es HTTP, CLI oder PHP-GTK.
         </para>
 
@@ -20,37 +20,37 @@
                 <code>setControllerName()</code> zugegriffen werden.
             </para></listitem>
             <listitem><para>
-                Auf den Namen der Aktion, die in diesem Controller aufgerufen wird, kann über 
-                accessed by <code>getActionName()</code> und <code>setActionName()</code> 
+                Auf den Namen der Aktion, die in diesem Controller aufgerufen wird, kann über
+                accessed by <code>getActionName()</code> und <code>setActionName()</code>
                 zugegriffen werden.
             </para></listitem>
             <listitem><para>
                 Parameter, die von der Aktion ansprechbar sind, bestehen aus einem assoziativen
-                Array mit Schlüssel/Wert Paaren, auf die komplett per <code>getParams()</code> und 
-                <code>setParams()</code> oder einzeln per <code>getParam()</code> und 
+                Array mit Schlüssel/Wert Paaren, auf die komplett per <code>getParams()</code> und
+                <code>setParams()</code> oder einzeln per <code>getParam()</code> und
                 <code>setParam()</code> zugegriffen werden kann.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Abhängig vom Typ der Anfrage können auch weitere Methoden verfügbar sein. Das 
+            Abhängig vom Typ der Anfrage können auch weitere Methoden verfügbar sein. Das
             verwendete Standard Request Object <code>Zend_Controller_Request_Http</code> stellt z.B.
-            Methoden zum Abfragen der Request URI, Pfadinformationen, <code>$_GET</code> und 
+            Methoden zum Abfragen der Request URI, Pfadinformationen, <code>$_GET</code> und
             <code>$_POST</code> Parameter usw. bereit.
         </para>
 
         <para>
-            Das Request Objekt wird an den Front Controller übergeben oder, wenn keines bereit 
-            gestellt wurde, am Anfang des Dispatcher Prozesses instanziert, bevor das Routing 
+            Das Request Objekt wird an den Front Controller übergeben oder, wenn keines bereit
+            gestellt wurde, am Anfang des Dispatcher Prozesses instanziert, bevor das Routing
             beginnt. Es wird an jedes Objekt in der Dispatcherkette übergeben.
         </para>
 
         <para>
             Zusätzlich ist das Request Object besonders beim Testen sehr nützlich. Der Entwickler
-            kann die Anfrageumgebung von Hand erstellen, inklusive Controller, Aktion, Parameter, 
+            kann die Anfrageumgebung von Hand erstellen, inklusive Controller, Aktion, Parameter,
             URI usw. und das Request Objekt an den Front Controller übrgeben, um den Ablauf der
-            Applikation zu testen. Zusammen mit dem 
-            <link linkend="zend.controller.response">Response Objekt</link> sind durchdachte und 
+            Applikation zu testen. Zusammen mit dem
+            <link linkend="zend.controller.response">Response Objekt</link> sind durchdachte und
             genaue Unit Tests für eine MVC Applikation möglich.
         </para>
     </sect2>
@@ -64,30 +64,30 @@
             <para>
                 <code>Zend_Controller_Request_Http</code> kapselt den Zugriff auf relevante Werte
                 wie der Schlüssel und Wert für Controller und Action Variablen des Routers und alle
-                zusätzlichen Parameter, die aus der URI ermittelt wurden. Es erlaubt zusätzlich 
-                den Zugriff auf superglobale Werte als öffentliche Eigenschaften und verwaltet 
-                die aktuelle Basis URL und Request URI. Superglobale Werte können in einem Request 
-                Objekt nicht gesetzt werden, stattdessen verwendet man die setParam/getParam 
+                zusätzlichen Parameter, die aus der URI ermittelt wurden. Es erlaubt zusätzlich
+                den Zugriff auf superglobale Werte als öffentliche Eigenschaften und verwaltet
+                die aktuelle Basis URL und Request URI. Superglobale Werte können in einem Request
+                Objekt nicht gesetzt werden, stattdessen verwendet man die setParam/getParam
                 Methoden um Benutzerparameter zu setzen oder zu erhalten.
             </para>
 
             <note>
                 <title>Superglobale Daten</title>
                 <para>
-                    Beim Zugriff auf superglobale Daten über die öffentlichen Eigenschaften von 
-                    <code>Zend_Controller_Request_Http</code> ist es notwendig, darauf zu achten, 
+                    Beim Zugriff auf superglobale Daten über die öffentlichen Eigenschaften von
+                    <code>Zend_Controller_Request_Http</code> ist es notwendig, darauf zu achten,
                     dass der Eigenschaftsname (der superglobale Arrayschlüssel) einem superglobalen
-                    Wert in einer bestimmten Reihenfolge entspricht: 1. GET, 2. POST, 3. COOKIE, 
+                    Wert in einer bestimmten Reihenfolge entspricht: 1. GET, 2. POST, 3. COOKIE,
                     4. SERVER, 5. ENV.
                 </para>
             </note>
 
             <para>
-                Auf spezifische superglobale Werte kann alternativ über eine öffentliche Methode 
-                zugegriffen werden. Zum Beispiel kann auf den unverarbeitete Wert von 
-                <code>$_POST['user']</code> durch Aufruf der <code>getPost('user')</code> Methode 
+                Auf spezifische superglobale Werte kann alternativ über eine öffentliche Methode
+                zugegriffen werden. Zum Beispiel kann auf den unverarbeitete Wert von
+                <code>$_POST['user']</code> durch Aufruf der <code>getPost('user')</code> Methode
                 des Request Objekts zugegriffen werden. Diese beinhalten <code>getQuery()</code>,
-                um <code>$_GET</code> Elemente zu erhalten und <code>getHeader()</code>, um 
+                um <code>$_GET</code> Elemente zu erhalten und <code>getHeader()</code>, um
                 Request Header zu erhalten.
             </para>
 
@@ -127,18 +127,18 @@
             <title>Basis Url und Unterverzeichnisse</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> erlaubt, dass Zend_Controller_Router_Rewrite 
-                in einem Unterverzeichnis verwendet werden kann. Zend_Controller_Request_Http 
+                <code>Zend_Controller_Request_Http</code> erlaubt, dass Zend_Controller_Router_Rewrite
+                in einem Unterverzeichnis verwendet werden kann. Zend_Controller_Request_Http
                 versucht, die Basis URL automatisch zu erkennen und entsprechend zu setzen.
             </para>
 
             <para>
-                Wenn man zum Beispiel seine <code>index.php</code> in einem Webserverunterverzeichnis 
+                Wenn man zum Beispiel seine <code>index.php</code> in einem Webserverunterverzeichnis
                 mit Namen <code>/projects/myapp/index.php</code> verwendet, sollte die Basis URL
                 (die Rewrite Basis) auf <code>/projects/myapp</code> gesetzt werden. Dieser String
-                wird dann vom Anfang des Pfades entfernt, bevor irgend welche Routingtreffer 
-                ermittelt werden. Dies befreit einem davon, es an den Anfang jeder Route setzen zu 
-                müssen. Eine Route <code>'user/:username'</code> passt auf URIs wie 
+                wird dann vom Anfang des Pfades entfernt, bevor irgend welche Routingtreffer
+                ermittelt werden. Dies befreit einem davon, es an den Anfang jeder Route setzen zu
+                müssen. Eine Route <code>'user/:username'</code> passt auf URIs wie
                 <code>http://localhost/projects/myapp/user/martel</code> und
                 <code>http://example.com/user/martel</code>.
             </para>
@@ -147,18 +147,18 @@
                 <title>URL Erkennung beachtet Groß- und Kleinschreibung</title>
                 <para>
                     Die automatische Erkennung der Basis URL beachtet die Groß- und Kleinschreibung,
-                    weshalb man sicherstellen sollte, dass die URL einem Unterverzeichnis im 
-                    Dateisystem entspricht (sogar auf einem Windows Rechner). Andernfalls wird eine 
+                    weshalb man sicherstellen sollte, dass die URL einem Unterverzeichnis im
+                    Dateisystem entspricht (sogar auf einem Windows Rechner). Andernfalls wird eine
                     Ausnahme geworfen.
                 </para>
             </note>
 
             <para>
                 Sollte die Basis URL falsch erkannt werden, kann man diese auch mit einem eigenen
-                Pfad mit Hilfe der <code>setBaseUrl()</code> Methode der 
-                <code>Zend_Controller_Request_Http</code> Klasse oder der 
-                <code>Zend_Controller_Front</code> Klasse überschreiben. Die einfachste Methode ist 
-                die von <code>Zend_Controller_Front</code>, welche es an das Request Object weiter 
+                Pfad mit Hilfe der <code>setBaseUrl()</code> Methode der
+                <code>Zend_Controller_Request_Http</code> Klasse oder der
+                <code>Zend_Controller_Front</code> Klasse überschreiben. Die einfachste Methode ist
+                die von <code>Zend_Controller_Front</code>, welche es an das Request Object weiter
                 leitet. Beispiel, um eine eigene Basis URL zu setzen:
             </para>
 
@@ -195,7 +195,7 @@ abstract class Zend_Controller_Request_Abstract
     public function getControllerName();
 
     /**
-     * @param string $value 
+     * @param string $value
      * @return self
      */
     public function setControllerName($value);
@@ -206,7 +206,7 @@ abstract class Zend_Controller_Request_Abstract
     public function getActionName();
 
     /**
-     * @param string $value 
+     * @param string $value
      * @return self
      */
     public function setActionName($value);
@@ -217,7 +217,7 @@ abstract class Zend_Controller_Request_Abstract
     public function getControllerKey();
 
     /**
-     * @param string $key 
+     * @param string $key
      * @return self
      */
     public function setControllerKey($key);
@@ -228,20 +228,20 @@ abstract class Zend_Controller_Request_Abstract
     public function getActionKey();
 
     /**
-     * @param string $key 
+     * @param string $key
      * @return self
      */
     public function setActionKey($key);
 
     /**
-     * @param string $key 
+     * @param string $key
      * @return mixed
      */
     public function getParam($key);
 
     /**
-     * @param string $key 
-     * @param mixed $value 
+     * @param string $key
+     * @param mixed $value
      * @return self
      */
     public function setParam($key, $value);
@@ -252,13 +252,13 @@ abstract class Zend_Controller_Request_Abstract
      public function getParams();
 
     /**
-     * @param array $array 
+     * @param array $array
      * @return self
      */
     public function setParams(array $array);
 
     /**
-     * @param boolean $flag 
+     * @param boolean $flag
      * @return self
      */
     public function setDispatched($flag = true);

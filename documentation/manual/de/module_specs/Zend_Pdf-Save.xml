@@ -7,7 +7,7 @@
 
     <para>
         Die <code>Zend_Pdf::save($filename, $updateOnly = false)</code> Methode speichert das
-        PDF Dokument in einer Datei. Wenn $updateOnly auf true gesetzt wird, wird das neue PDF 
+        PDF Dokument in einer Datei. Wenn $updateOnly auf true gesetzt wird, wird das neue PDF
         Segment nur an die Datei angehängt, ansonsten wird die Datei überschrieben.
     </para>
 

@@ -93,7 +93,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
 
             <para>
                 Der Memory Manager erzeugt Memory Objekte (gesperrt oder verschiebbar)
-                durch Anfrage der Anwendung des Benutzers und gibt diese 
+                durch Anfrage der Anwendung des Benutzers und gibt diese
                 in einem Memory Container Objekt zurück.
             </para>
 
@@ -106,7 +106,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
             <para>
                 Der Memory Container hat einen virtuellen oder aktuellen
                 <code>Wert</code>, Attribut oder Zeichenketten Typ. Dieses
-                Attribut enthält Datenwerte die bei der Erstellung des 
+                Attribut enthält Datenwerte die bei der Erstellung des
                 Memory Objektes definiert werden.
             </para>
 

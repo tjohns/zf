@@ -6,11 +6,11 @@
 
         <para>
             Das Response Objekt ist das logische Gegenstück zum <link
-                linkend="zend.controller.request">Request Objekt</link>. Sein Zweck ist es, 
-            Inhalte und / oder Header zu vereinigen, um sie in einem Rutsch zu versenden. 
+                linkend="zend.controller.request">Request Objekt</link>. Sein Zweck ist es,
+            Inhalte und / oder Header zu vereinigen, um sie in einem Rutsch zu versenden.
             Zusätzlich übergibt der Front Controller alle aufgefangenen Ausnahmen an das Response
-            Objekt, um dem Entwickler das Verarbeiten von Ausnahmen zu ermöglichen. Dies 
-            Funktionalität kann durch Setzen von 
+            Objekt, um dem Entwickler das Verarbeiten von Ausnahmen zu ermöglichen. Dies
+            Funktionalität kann durch Setzen von
             <code>Zend_Controller_Front::throwExceptions(true)</code> überschrieben werden.
         </para>
 
@@ -46,9 +46,9 @@ $response = $front->dispatch();
 $response->sendResponse();
 ?>]]></programlisting>
         </note>
-            
+
         <para>
-            Entwickler sollten das Response Objekt in ihren Aktionscontrollern verwenden. Statt 
+            Entwickler sollten das Response Objekt in ihren Aktionscontrollern verwenden. Statt
             die Ausgabe direkt zu machen und Header zu versenden, sollten diese an des Response
             Objekt übergeben werden:
         </para>
@@ -76,9 +76,9 @@ $this->getResponse()
         </note>
 
         <para>
-            Sollte in der Applikation eine Ausnahme auftreten, überprüft man den 
+            Sollte in der Applikation eine Ausnahme auftreten, überprüft man den
             <code>isException()</code> Schalter des Response Objektes und erhält die Ausnahme durch
-            Verwendung von <code>getException()</code>. Zusätzlich kann man ein eigenes Response 
+            Verwendung von <code>getException()</code>. Zusätzlich kann man ein eigenes Response
             Objekt erstellen, dass zu einer Fehlerseite umleitet, die Nachricht der Ausnahme loggt,
             die Nachricht der Ausnahme schön formatiert ausgibt (für Entwicklungsumgebungen), usw.
         </para>
@@ -108,10 +108,10 @@ $response->sendResponse();
 ]]></programlisting>
 
         <para>
-            Standardmäßig werden Ausnahmennachrichten nicht ausgegeben. Dieses Verhalten kann durch 
-            den Aufruf von <code>renderException()</code> überschrieben werden oder indem der 
+            Standardmäßig werden Ausnahmennachrichten nicht ausgegeben. Dieses Verhalten kann durch
+            den Aufruf von <code>renderException()</code> überschrieben werden oder indem der
             Front Controller aufgefordert wird, die Exceptions durch throwExceptions() auszuwerfen,
-            wie oben gezeigt: 
+            wie oben gezeigt:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -284,7 +284,7 @@ class MyController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-        
+
         <para>
             In the above example, a call to <code>/my/foo</code> will cause the
             final body content of the response object to have the following

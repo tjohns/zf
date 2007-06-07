@@ -4,7 +4,7 @@
     <sect2 id="zend.pdf.drawing.geometry">
         <title>Geometrie</title>
         <para>
-            PDF verwendet die selbe Geometrie wie PostScript. Sie beginnt an der linken unteren 
+            PDF verwendet die selbe Geometrie wie PostScript. Sie beginnt an der linken unteren
             Ecke der Seite und wird in Punkten (1/72 Zoll) gemessen.
         </para>
         <para>
@@ -19,9 +19,9 @@ $height = $pdfPage->getHeight();]]>
     <sect2 id="zend.pdf.drawing.color">
         <title>Farben</title>
         <para>
-            PDF bietet leistungsfähige Möglichkeiten für die Farbdarstellung. Die Zend_Pdf 
-            Komponente unterstützt die Grauskala sowie RGB und CYMK Farbräume. Jede kann überall 
-            verwendet werden, wo ein <code>Zend_Pdf_Color</code> Objekt benötigt wird. Die 
+            PDF bietet leistungsfähige Möglichkeiten für die Farbdarstellung. Die Zend_Pdf
+            Komponente unterstützt die Grauskala sowie RGB und CYMK Farbräume. Jede kann überall
+            verwendet werden, wo ein <code>Zend_Pdf_Color</code> Objekt benötigt wird. Die
             <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> und
             <code>Zend_Pdf_Color_Cmyk</code> Klassen stellen folgende Funktionalitäten bereit:
         </para>
@@ -155,10 +155,10 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
     <sect2 id="zend.pdf.drawing.text-drawing">
         <title>Zeichnen von Text</title>
         <para>
-            Auch alle Textoperationen können im Kontext einer PDF Seite durchgeführt werden. Du 
+            Auch alle Textoperationen können im Kontext einer PDF Seite durchgeführt werden. Du
             kannst eine einzige Textzeile an jeder Position auf der Seite durch Übergabe der X und
             Y Koordinaten für die Grundlinie zeichnen. Der aktuelle Zeichensatz und die aktuelle
-            Zeichengröße werden für die Textoperationen verwendet (beachte die detaillierte 
+            Zeichengröße werden für die Textoperationen verwendet (beachte die detaillierte
             Beschreibung unten).
         </para>
             <programlisting role="php"><![CDATA[<?php
@@ -184,13 +184,13 @@ $pdfPage->drawText('Hello world!', 72, 720);
             </programlisting>
         </example>
         <para>
-            Standardmäßig werden Textstrings unter Verwendung der Zeichenkodierungsmethode der 
-            aktuelle "locale" interpretiert. Wenn du einen String hast, der eine andere 
+            Standardmäßig werden Textstrings unter Verwendung der Zeichenkodierungsmethode der
+            aktuelle "locale" interpretiert. Wenn du einen String hast, der eine andere
             Zeichenkodierungsmethode verwendet (wie zum Beispiel ein UTF-8 String, der aus einer
             Datei auf der Platte gelesen wurde, oder ein MacRoman String, der aus einer älteren
-            Datenbank erhalten wurde), kannst du die Zeichenkodierung zum Zeitpunkt des Zeichnens 
+            Datenbank erhalten wurde), kannst du die Zeichenkodierung zum Zeitpunkt des Zeichnens
             angeben und Zend_Pdf wird die Konvertierung für dich durchführen. Du kannst Quellstrings
-            in jeder Kodierungsmethode übergeben, die von PHP's 
+            in jeder Kodierungsmethode übergeben, die von PHP's
             <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
             Funktion unterstützt wird.
         </para>
@@ -212,8 +212,8 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
     <sect2 id="zend.pdf.drawing.using-fonts">
         <title>Verwendung von Zeichensätzen</title>
         <para>
-            <code>Zend_Pdf_Page::drawText()</code> verwendet den aktuellen Zeichensatz und die 
-            aktuelle Zeichengröße der Seite, die mit der Methode <code>Zend_Pdf_Page::setFont()</code> 
+            <code>Zend_Pdf_Page::drawText()</code> verwendet den aktuellen Zeichensatz und die
+            aktuelle Zeichengröße der Seite, die mit der Methode <code>Zend_Pdf_Page::setFont()</code>
             festgelegt werden:
         </para>
             <programlisting role="php"><![CDATA[<?php
@@ -226,15 +226,15 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             </programlisting>
         <para>
-            PDF Dokumente unterstützt PostScript Type1 und TrueType Zeichensätze, sowie die zwei 
-            speziellen PDF Typen Type3 und zusammengesetzte Zeichensätze (composite fonts). Es gibt 
+            PDF Dokumente unterstützt PostScript Type1 und TrueType Zeichensätze, sowie die zwei
+            speziellen PDF Typen Type3 und zusammengesetzte Zeichensätze (composite fonts). Es gibt
             zudem 14 Type1 Standardzeichensätze, die von jedem PDF Viewer bereit gestellt werden:
-            Courier (4 Stile), Helvetica (4 Stile), Times (4 Stile), Symbol und Zapf Dingbats. 
+            Courier (4 Stile), Helvetica (4 Stile), Times (4 Stile), Symbol und Zapf Dingbats.
         </para>
         <para>
-            Die Zend_Pdf Komponente unterstützt derzeit diese 14 Standardzeichensätze sowie deine 
-            eigenen TrueType Zeichensätze. Zeichensatzobjekte können über eine der zwei 
-            Fabrikmethoden (factory methods) erhalten werden: 
+            Die Zend_Pdf Komponente unterstützt derzeit diese 14 Standardzeichensätze sowie deine
+            eigenen TrueType Zeichensätze. Zeichensatzobjekte können über eine der zwei
+            Fabrikmethoden (factory methods) erhalten werden:
             <code>Zend_Pdf_Font::fontWithName($fontName)</code> für die 14 PDF Standardzeichensätze
             oder <code>Zend_Pdf_Font::fontWithPath($filePath)</code> für eigene Zeichensätze.
         </para>
@@ -252,7 +252,7 @@ $pdfPage->setFont($font, 36);
             </programlisting>
         </example>
         <para>
-            Die Zeichensatzkonstanten für die 14 Standardzeichensätze sind innerhalb der 
+            Die Zeichensatzkonstanten für die 14 Standardzeichensätze sind innerhalb der
             <code>Zend_Pdf_Font</code> Klasse definiert:
         <itemizedlist>
             <listitem>
@@ -302,13 +302,13 @@ $pdfPage->setFont($font, 36);
         <para>
             Du kannst außerdem jeden individuellen TrueType Zeichensatz (welcher normalerweise eine
             '.ttf' Erweiterung hat) oder einen OpenType Zeichensatz ('.otf' Erweiterung) verwenden,
-            wenn er TrueType Konturen enthält. Bisher nicht unterstützt, aber für zukünftige 
+            wenn er TrueType Konturen enthält. Bisher nicht unterstützt, aber für zukünftige
             Versionen geplant, sind Mac OS X .dfont Dateien und Microsoft TrueType Collection
-            ('.ttc' Erweiterung) Dateien. 
+            ('.ttc' Erweiterung) Dateien.
         </para>
         <para>
             Um einen TrueType Zeichensatz zu verwenden, mußt du den kompletten Verzeichnispfad zum
-            Zeichensatzprogramm angeben. Wenn der Zeichensatz aus welchem Grund auch immer nicht 
+            Zeichensatzprogramm angeben. Wenn der Zeichensatz aus welchem Grund auch immer nicht
             gelesen werden kann oder wenn es kein TrueType Zeichensatz ist, wird the Fabrikmethode
             eine Ausnahme werfen:
         </para>
@@ -327,7 +327,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         </example>
         <para>
             Standardmäßig werden eigene Zeichensätze in das erstellte PDF Dokument eingebettet. Dies
-            ermöglicht den Empfänger, die Seite wie beabsichtigt anzuschauen, sogar wenn sie den 
+            ermöglicht den Empfänger, die Seite wie beabsichtigt anzuschauen, sogar wenn sie den
             entsprechenden Zeichensatz auf ihrem System gar nicht installiert haben. Wenn du dich
             über die Dateigröße sorgst, kannst du angeben, dass das Zeichensatzprogramm nicht
             eingebettet wird, indem du eine 'nicht einbetten' Option an die Fabrikmethode übergibst:
@@ -359,8 +359,8 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             Ausnahme werfen.
         </para>
         <para>
-            Du kannst diese Zeichensätze weiterhin verwenden, aber du mußt entweder die 'nicht 
-            einbetten' Option übergeben wie oben beschrieben oder du kannst einfach die Ausnahme 
+            Du kannst diese Zeichensätze weiterhin verwenden, aber du mußt entweder die 'nicht
+            einbetten' Option übergeben wie oben beschrieben oder du kannst einfach die Ausnahme
             unterdrücken:
         </para>
         <example>
@@ -374,8 +374,8 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
             </programlisting>
         </example>
         <para>
-            Diese Unterdrückungstechnik wird bevorzugt, wenn du einen Endnutzer erlaubst, seine 
-            eigenen Zeichensätze auszuwählen. Zeichensätze, die in ein PDF Dokument eingebettet 
+            Diese Unterdrückungstechnik wird bevorzugt, wenn du einen Endnutzer erlaubst, seine
+            eigenen Zeichensätze auszuwählen. Zeichensätze, die in ein PDF Dokument eingebettet
             werden können, werden eingebettet, andere nicht.
         </para>
         <para>
@@ -464,7 +464,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         <title>Stil der Strichzeichnungen</title>
         <para>
             Der Stil der Strichzeichnungen wurd durch die Linienbreite, die Linienfarbe und das
-            Strichmuster definiert. Alle diese Parameter können an die Klassenmethoden von 
+            Strichmuster definiert. Alle diese Parameter können an die Klassenmethoden von
             <code>Zend_Pdf_Page</code> übergeben werden:
         </para>
             <programlisting role="php"><![CDATA[<?php
@@ -490,9 +490,9 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
     <sect2 id="zend.pdf.drawing.fill-style">
         <title>Füllstil</title>
         <para>
-            Die Methoden <code>Zend_Pdf_Page::drawRectangle()</code>, 
-            <code>Zend_Pdf_Page::drawPolygon()</code>, <code>Zend_Pdf_Page::drawCircle()</code> und 
-            <code>Zend_Pdf_Page::drawEllipse()</code> akzeptieren das <code>$fillType</code> 
+            Die Methoden <code>Zend_Pdf_Page::drawRectangle()</code>,
+            <code>Zend_Pdf_Page::drawPolygon()</code>, <code>Zend_Pdf_Page::drawCircle()</code> und
+            <code>Zend_Pdf_Page::drawEllipse()</code> akzeptieren das <code>$fillType</code>
             Argument als optionalen Parameter. Es kann lauten:
         </para>
 
@@ -504,13 +504,13 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
                 <para>Zend_Pdf_Page::SHAPE_DRAW_FILL - fülle die Form</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fülle und strichele die Form 
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fülle und strichele die Form
                 (Standardverhalten)</para>
             </listitem>
         </itemizedlist>
 
         <para>
-            Die <code>Zend_Pdf_Page::drawPolygon()</code> Methode akzeptiert 
+            Die <code>Zend_Pdf_Page::drawPolygon()</code> Methode akzeptiert
             <code>$fillMethod</code> als zusätzlichen Parameter:
         </para>
         <itemizedlist>
@@ -576,7 +576,7 @@ regardless of the directions in which the circles are drawn.
     <sect2 id="zend.pdf.drawing.rotations">
         <title>Drehungen</title>
         <para>
-            Bevor eine Zeichenoperation angewendet wird, können PDF Seiten gedreht werden. Dies 
+            Bevor eine Zeichenoperation angewendet wird, können PDF Seiten gedreht werden. Dies
             kann mit Hilfe der <code>Zend_Pdf_Page::rotate()</code> Methode durchgeführt werden:
         </para>
             <programlisting role="php"><![CDATA[<?php
@@ -592,10 +592,10 @@ public function rotate($x, $y, $angle);]]>
     <sect2 id="zend.pdf.drawing.save-restore">
         <title>Speichern/Wiederherstellen des Grafikzustand</title>
         <para>
-            Jederzeit kann der Grafikzustand der Seite (aktueller Zeichensatz, Schriftgröße, 
-            Linienfarbe, Füllfarbe, Linienstil, Seitendrehung, Zeichenbereich) gespeichert und 
-            wiederhergestellt werden. Speicheroperationen legen die Daten auf einen Grafikzustand 
-            Stapel, Wiederherstelloperationen holen Sie daher zurück. 
+            Jederzeit kann der Grafikzustand der Seite (aktueller Zeichensatz, Schriftgröße,
+            Linienfarbe, Füllfarbe, Linienstil, Seitendrehung, Zeichenbereich) gespeichert und
+            wiederhergestellt werden. Speicheroperationen legen die Daten auf einen Grafikzustand
+            Stapel, Wiederherstelloperationen holen Sie daher zurück.
         </para>
         <para>
             In der <code>Zend_Pdf_Page</code> Klasse gibt es für diese Operationen zwei Methoden:
@@ -619,7 +619,7 @@ public function restoreGS();]]>
         <title>Zeichenbereich</title>
         <para>
             PDF und die Zend_Pdf Komponente unterstützen die Begrenzung des Zeichenbereichs. Der
-            aktuelle Zeichenbereich begrenzt den Seitenbereich, der von Zeichenoperationen 
+            aktuelle Zeichenbereich begrenzt den Seitenbereich, der von Zeichenoperationen
             beeinflusst werden kann. Zu Beginn ist dies die gesamte Seite.
         </para>
         <para>
@@ -686,7 +686,7 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
             Die <code>Zend_Pdf_Style</code> Klasse stellt Stilfunktionalitäten bereit.
         </para>
         <para>
-            Stile können verwendet werden, um mit einer Operation die Parameter für den 
+            Stile können verwendet werden, um mit einer Operation die Parameter für den
             Grafikzustand zu speichern und auf eine PDF Seite anzuwenden:
         </para>
             <programlisting role="php"><![CDATA[<?php
@@ -706,7 +706,7 @@ public function getStyle();]]>
             </programlisting>
 
         <para>
-            Die <code>Zend_Pdf_Style</code> Klasse stellt einen Satz von Methoden bereit, um 
+            Die <code>Zend_Pdf_Style</code> Klasse stellt einen Satz von Methoden bereit, um
             verschiedene Parameter des Grafikstadiums zu setzen und zu holen:
         </para>
             <programlisting role="php"><![CDATA[<?php

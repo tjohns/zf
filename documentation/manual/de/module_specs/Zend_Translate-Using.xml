@@ -16,7 +16,7 @@ print "Heute ist der " . date("d.m.Y") . "\n";
 print "\n";
 print "Fixe Sprache hier ist Zeile zwei\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         Das obige Beispiel zeigt eine Ausgabe ohne Unterstützung für Übersetzungen.
@@ -49,7 +49,7 @@ print "\n";
 $translation->setLanguage('fr');
 print $translate->_("Fixe Sprache hier ist Zeile zwei") . "\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         Nun nehmen wir einen tieferen Blick in was getan wurde und wie
@@ -66,7 +66,7 @@ $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
 ?>]]></programlisting>
 
         In diesem Beispiel wird der <emphasis role="strong">Gettext Adapter</emphasis> verwendet.
-        Die Übersetzungsdatei <emphasis role="strong">source-de.mo</emphasis> wird im Verzeichnis 
+        Die Übersetzungsdatei <emphasis role="strong">source-de.mo</emphasis> wird im Verzeichnis
         <emphasis role="strong">/my/path</emphasis> platziert.
         Diese Gettext Datei beinhaltet eine deutsche Übersetzung.
         Ausserdem steht eine zweite Sprachquelle für Französisch zur Verfügung.
@@ -90,7 +90,7 @@ print $translate->_("Hier ist die Zeile Eins")."\n";
     <para>
         Variable Werte in eine Übersetzung zu integrieren wird aber auch unterstützt durch die
         Verwendung von eingebetteten Parametern.
-        
+
 <programlisting role="php"><![CDATA[<?php
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 ?>]]></programlisting>
@@ -377,7 +377,7 @@ $translate->addTranslation('path/to/german.mo', 'de');
 
         <para>
             TMX Quellen sind der neue Industrie Standard. Sie haben den Vorteil
-            das sie XML Dateien sind und deswegen mit jedem Texteditor und 
+            das sie XML Dateien sind und deswegen mit jedem Texteditor und
             natürlich auch von Menschen direkt lesbar. Man kann TMX Dateien entweder
             per Hand erstellen oder man verwendet Tools dafür. Allerdings sind die
             meisten erhältlichen Tools die TMX Quellen erstellen können nicht kostenlos.

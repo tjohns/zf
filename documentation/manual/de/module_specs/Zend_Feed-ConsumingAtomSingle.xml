@@ -2,14 +2,14 @@
     <title>Einen einzelnen Atom Eintrag konsumieren</title>
 
     <para>
-        Einzelne Atom <code>&lt;entry&gt;</code> Elemente sind auch für sich selber gültig. 
-        Normalerweise ist die URL für einen Eintrag die URL des Feeds gefolgt von 
+        Einzelne Atom <code>&lt;entry&gt;</code> Elemente sind auch für sich selber gültig.
+        Normalerweise ist die URL für einen Eintrag die URL des Feeds gefolgt von
         <code>/&lt;entryId&gt;</code>, wie bei <code>http://atom.example.com/feed/1</code>, um
         das obige Beispiel zu verwenden.
     </para>
 
     <para>
-        Wenn Du einen einzelnen Eintrag liest, wirst du dennoch ein <code>Zend_Feed_Atom</code> 
+        Wenn Du einen einzelnen Eintrag liest, wirst du dennoch ein <code>Zend_Feed_Atom</code>
         Objekt erhalten, aber es wird automatisch ein "anonymer" Feed erstellt, welcher den Eintrag
         enthält.
     </para>
@@ -27,7 +27,7 @@ $entry = $feed->current();
     </example>
 
     <para>
-        Alternativ kannst du das Objekt für den Eintrag auch direkt instanziieren, wenn du weist, 
+        Alternativ kannst du das Objekt für den Eintrag auch direkt instanziieren, wenn du weist,
         dass du ein Dokument mit nur einem Eintrag abrufst:
     </para>
 

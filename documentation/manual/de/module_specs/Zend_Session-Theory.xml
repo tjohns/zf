@@ -18,7 +18,7 @@
         Das ganze Management und die Manipulation des globalen Session Managements finden statt, durch Verwendung von
         statischen "Klassen" Methoden, welche in Zend_Session definiert sind und das komplette Verhalten von Sessions,
         welche durch Zend_Session_Namespace verwaltet werden, beeinflußt. Die meisten Entwickler werden nicht in
-        Verlegenheit kommen Zend_Session direkt zu verwenden. 
+        Verlegenheit kommen Zend_Session direkt zu verwenden.
     </para>
 
     <para>

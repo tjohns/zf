@@ -23,15 +23,15 @@ $feedFromFile = Zend_Feed::importFile('feed.xml');
 $feedFromPHP = Zend_Feed::importString($feedString);]]></programlisting>
 
     <para>
-        In jedem der obigen Beispiele wird bei Erfolg abhängig vom Typ des Feeds ein Objekt einer 
+        In jedem der obigen Beispiele wird bei Erfolg abhängig vom Typ des Feeds ein Objekt einer
         Klasse zurück gegeben, welche <code>Zend_Feed_Abstract</code> erweitert. Wird ein RSS Feed
         durch eine der obigen Importiermethoden abgerufen, wird eine <code>Zend_Feed_Rss</code>
-        Objekt zurückgegeben. Auf der anderen Seite wird beim Importieren eines Atom Feeds ein 
+        Objekt zurückgegeben. Auf der anderen Seite wird beim Importieren eines Atom Feeds ein
         <code>Zend_Feed_Atom</code> Objekt zurückgegeben. Bei Fehlern, wie z.B. ein unlesbarer oder
-        nicht wohlgeformter Feed, werfen die Importiermethoden auch ein 
-        <code>Zend_Feed_Exception</code> Objekt. 
+        nicht wohlgeformter Feed, werfen die Importiermethoden auch ein
+        <code>Zend_Feed_Exception</code> Objekt.
     </para>
-    
+
     <sect2 id="zend.feed.importing.custom">
 
         <title>Custom feeds</title>

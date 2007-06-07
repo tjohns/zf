@@ -3,14 +3,14 @@
 
     <para>
         Schließlich kannst du die <code>Zend_Feed</code> Klasse erweitern, wenn du dein eigenes
-        Format oder Feinheiten wie die automatische Verarbeitung von Elementen, die in deinen 
+        Format oder Feinheiten wie die automatische Verarbeitung von Elementen, die in deinen
         eigenen Namensraum enthalten sein sollen, bereit stellen möchtest
     </para>
 
     <para>
         Hier ist ein Beispiel einer eigenen Klasse für Atom Einträge, die ihre eigenen Elemente für
-        den <code>myns:</code> Namensraum verwendet. Beachte, dass sie auch den 
-        <code>registerNamespace()</code> Aufruf für dich durchführt, so dass sich der Endbenutzer 
+        den <code>myns:</code> Namensraum verwendet. Beachte, dass sie auch den
+        <code>registerNamespace()</code> Aufruf für dich durchführt, so dass sich der Endbenutzer
         nicht um Namensräume kümmern muss.
     </para>
 
@@ -62,7 +62,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
 
 ?>]]>   </programlisting>
         <para>
-            Um diese Klasse zu verwenden, musst du sie nur direkt instanziieren und die 
+            Um diese Klasse zu verwenden, musst du sie nur direkt instanziieren und die
             <code>myUpdated</code> Eigenschaft setzen.
         </para>
         <programlisting role="php"><![CDATA[<?php

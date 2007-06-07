@@ -2,8 +2,8 @@
     <title>Einführung</title>
 
     <para>
-        Zend_Acl stellt Funktionalitäten für leichtgewichtige und flexible Zugriffskontrolllisten 
-        (englisch "access control list", ACL) sowie die Rechteverwaltung bereit. Im Allgemeinen 
+        Zend_Acl stellt Funktionalitäten für leichtgewichtige und flexible Zugriffskontrolllisten
+        (englisch "access control list", ACL) sowie die Rechteverwaltung bereit. Im Allgemeinen
         kann eine Anwendung derartige Funktionalitäten verwenden, um den Zugriff auf bestimmte,
         geschützte Objekte durch andere anfordernde Objekte zu kontrollieren.
     </para>
@@ -33,40 +33,40 @@
 
     <para>
         Durch die Spezifikation und die Verwendung einer Zugriffskontrollliste (ACL) kann eine
-        Anwendung kontrollieren, wie anfordernde Objekte (Rollen) den Zugriff auf geschützte 
+        Anwendung kontrollieren, wie anfordernde Objekte (Rollen) den Zugriff auf geschützte
         Objekte eingeräumt bekommen.
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
         <title>Über Ressourcen</title>
         <para>
-            In Zend_Acl ist das Erstellen einer Ressource sehr einfach. Zend_Acl stellt das 
-            <code>Zend_Acl_Resource_Interface</code> bereit, um Entwicklern das Erstellen von 
-            Ressourcen zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das 
+            In Zend_Acl ist das Erstellen einer Ressource sehr einfach. Zend_Acl stellt das
+            <code>Zend_Acl_Resource_Interface</code> bereit, um Entwicklern das Erstellen von
+            Ressourcen zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das
             nur aus einer einzelnen Methode, <code>getResourceId()</code>, besteht, damit Zend_Acl
-            das Objekt als Ressource erkennen kann. Zusätzlich ist <code>Zend_Acl_Resource</code> 
+            das Objekt als Ressource erkennen kann. Zusätzlich ist <code>Zend_Acl_Resource</code>
             in Zend_Acl als einfache Ressourcen Implementation enthalten, damit Entwickler sie bei
             Bedarf erweitern können.
         </para>
         <para>
-            Zend_Acl stellt eine Baumstruktur bereit, in die mehrere Ressourcen (oder "Bereiche 
-            unter Zugriffskontrolle") aufgenommen werden können. Weil Ressourcen in solch einer 
+            Zend_Acl stellt eine Baumstruktur bereit, in die mehrere Ressourcen (oder "Bereiche
+            unter Zugriffskontrolle") aufgenommen werden können. Weil Ressourcen in solch einer
             Baumstruktur abgelegt werden, können sie vom Allgemeinen (von der Baumwurzel) bis zum
-            Speziellen (zu den Baumblättern) organisiert werden. Abfragen für eine bestimmte 
-            Ressource durchsuchen automatisch die Ressourcenhierarchie nach Regeln, die einer 
-            übergeordneten Ressource zugeordnet wurden, um die einfache Vererbung von Regeln zu 
-            ermöglichen. Wenn zum Beispiel eine Standardregel für jedes Gebäude einer Stadt gelten 
-            soll, würde man diese Regel einfach der Stadt zuordnen, anstatt die selbe Regel jedem 
-            Gebäude zuzuordnen. Einige Gebäude können dennoch Ausnahmen zu solch einer Regel 
+            Speziellen (zu den Baumblättern) organisiert werden. Abfragen für eine bestimmte
+            Ressource durchsuchen automatisch die Ressourcenhierarchie nach Regeln, die einer
+            übergeordneten Ressource zugeordnet wurden, um die einfache Vererbung von Regeln zu
+            ermöglichen. Wenn zum Beispiel eine Standardregel für jedes Gebäude einer Stadt gelten
+            soll, würde man diese Regel einfach der Stadt zuordnen, anstatt die selbe Regel jedem
+            Gebäude zuzuordnen. Einige Gebäude können dennoch Ausnahmen zu solch einer Regel
             erfordern, und dies kann in Zend_Acl einfach durch die Zuordnung solcher Ausnahmeregeln
             to jedem der Gebäude erreicht werden, die eine Ausnahme zu der Regel erfordern. Eine
             Ressource kann nur von einer einziger übergeordneten Ressource erben, obwohl diese
-            übergeordnete Ressource seine eigenen übergeordneten Ressourcen haben kann, und so 
+            übergeordnete Ressource seine eigenen übergeordneten Ressourcen haben kann, und so
             weiter.
         </para>
         <para>
-            Zend_Acl unterstützt außerdem Rechte für Ressourcen (z.B. "erstellen", "lesen", 
-            "aktualisieren", "löschen") und der Entwickler kann Regeln zuordnen, die alle Rechte 
+            Zend_Acl unterstützt außerdem Rechte für Ressourcen (z.B. "erstellen", "lesen",
+            "aktualisieren", "löschen") und der Entwickler kann Regeln zuordnen, die alle Rechte
             oder bestimmte Rechte der Ressource beeinflussen.
         </para>
     </sect2>
@@ -75,36 +75,36 @@
         <title>Über Rollen</title>
         <para>
             Ähnlich wie bei den Ressourcen ist auch das Erstellen einer Rolle sehr einfach. Zend_Acl
-            stellt das <code>Zend_Acl_Role_Interface</code> bereit, um Entwicklern das Erstellen von 
-            Rollen  zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das nur 
-            aus einer einzelnen Methode, <code>getRoleId()</code>, besteht, damit Zend_Acl das 
-            Objekt als Rolle erkennen kann. Zusätzlich ist <code>Zend_Acl_Role</code> in Zend_Acl 
-            als einfache Rollen Implementation enthalten, damit Entwickler sie bei Bedarf erweitern 
+            stellt das <code>Zend_Acl_Role_Interface</code> bereit, um Entwicklern das Erstellen von
+            Rollen  zu ermöglichen. Eine Klasse muss nur dieses Interface implementieren, das nur
+            aus einer einzelnen Methode, <code>getRoleId()</code>, besteht, damit Zend_Acl das
+            Objekt als Rolle erkennen kann. Zusätzlich ist <code>Zend_Acl_Role</code> in Zend_Acl
+            als einfache Rollen Implementation enthalten, damit Entwickler sie bei Bedarf erweitern
             können.
         </para>
         <para>
-            In Zend_Acl kann eine Rolle von einer oder mehreren Rollen erben. Dies soll die 
-            Vererbung von Regeln zwischen den Rollen ermöglichen. Zum Beispiel kann eine 
-            Benutzerrolle, wie "Sally" zu einer oder mehreren übergeordneten Rollen gehören, wie 
-            "Editor" und "Administrator". Der Entwickler kann zu "Editor" und "Administrator" 
-            getrennt Regeln zuordnen und "Sally" würde diese Regeln von beiden erben, ohne dass 
+            In Zend_Acl kann eine Rolle von einer oder mehreren Rollen erben. Dies soll die
+            Vererbung von Regeln zwischen den Rollen ermöglichen. Zum Beispiel kann eine
+            Benutzerrolle, wie "Sally" zu einer oder mehreren übergeordneten Rollen gehören, wie
+            "Editor" und "Administrator". Der Entwickler kann zu "Editor" und "Administrator"
+            getrennt Regeln zuordnen und "Sally" würde diese Regeln von beiden erben, ohne dass
             "Sally" direkt Regeln zugeordnet werden müssen.
         </para>
         <para>
             Auch die Möglichkeit der Vererbung von verschiedenen Rollen sehr nützlich ist, führt
-            die mehrfache Vererbung auch einen gewissen Grad an Komplexität ein. Das folgende 
+            die mehrfache Vererbung auch einen gewissen Grad an Komplexität ein. Das folgende
             Beispiel illustriert die mehrdeutigen Bedingungen und wie Zend_Acl sie auflöst.
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>Mehrfache Vererbung zwischen Rollen</title>
             <para>
-                Der folgende Code definiert drei Basis Rollen - "<code>guest</code>", 
+                Der folgende Code definiert drei Basis Rollen - "<code>guest</code>",
                 "<code>member</code>" und "<code>admin</code>" - von denen andere Rollen erben
                 können. Dann wird eine Rolle "<code>someUser</code>" eingerichtet, die von den drei
-                anderen Rollen erbt. Die Reihenfolge, in der diese Rollen im <code>$parents</code> 
+                anderen Rollen erbt. Die Reihenfolge, in der diese Rollen im <code>$parents</code>
                 Array erscheinen, ist wichtig. Wenn notwendig, sucht Zend_Acl nach Zugriffsregeln
                 nicht nur für die abgefragte Rolle (hier "<code>someUser</code>"), sondern auch für
-                die Rollen, von denen die abgefragte Rolle erbt (hier "<code>guest</code>", 
+                die Rollen, von denen die abgefragte Rolle erbt (hier "<code>guest</code>",
                 "<code>member</code>" und "<code>admin</code>"):
             </para>
             <programlisting role="php"><![CDATA[<?php
@@ -127,34 +127,34 @@ $acl->allow('member', 'someResource');
 
 echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
             <para>
-                Da keine Regel speziell für die Rolle "<code>someUser</code>" und 
+                Da keine Regel speziell für die Rolle "<code>someUser</code>" und
                 "<code>someResource</code>" definiert wurde, muss Zend_Acl nach Regeln suchen, die
                 für Rollen definiert wurden, von denen "<code>someUser</code>" erbt. Zuerst wird
                 die "<code>admin</code>" Rolle besucht, aber dort ist keine Zugriffsregel definiert.
-                Als nächste wird die "<code>member</code>" Rolle besucht und Zend_Acl findet hier 
-                eine Regel, die angibt, dass "<code>member</code>" der Zugriff auf 
+                Als nächste wird die "<code>member</code>" Rolle besucht und Zend_Acl findet hier
+                eine Regel, die angibt, dass "<code>member</code>" der Zugriff auf
                 "<code>someResource</code>" erlaubt ist.
             </para>
             <para>
-                Wenn Zend_Acl fortfahren würde, die für weitere übergeordnete Rollen definierten 
+                Wenn Zend_Acl fortfahren würde, die für weitere übergeordnete Rollen definierten
                 Regeln zu untersuchen, würde heraus gefunden werden, dass "<code>guest</code>" der
-                Zugriff auf "<code>someResource</code>"´verboten ist. Diese Tatsache führt eine 
-                Mehrdeutigkeit ein, weil nun "<code>someUser</code>" der Zugriff auf 
+                Zugriff auf "<code>someResource</code>"´verboten ist. Diese Tatsache führt eine
+                Mehrdeutigkeit ein, weil nun "<code>someUser</code>" der Zugriff auf
                 "<code>someResource</code>" sowohl verboten als auch erlaubt ist, aufgrund der
                 vererbten Regeln von verschiedenen übergeordnete Rollen, die miteinander im Konflikt
                 stehen.
             </para>
             <para>
                 Zend_Acl löst diese Mehrdeutigkeit dadurch auf, dass eine Abfrage beendet wird, wenn
-                die erste Regel gefunden wird, die direkt auf die Abfrage passt. In diesem Fall 
-                würde der Beispiel Code "<code>allowed</code>" ausgeben, weil die 
+                die erste Regel gefunden wird, die direkt auf die Abfrage passt. In diesem Fall
+                würde der Beispiel Code "<code>allowed</code>" ausgeben, weil die
                 "<code>member</code>" Rolle vor der "<code>guest</code>" Rolle untersucht wird.
             </para>
         </example>
         <note>
             <para>
                 Wenn man mehrere übergeordnete Rollen angibt, sollte man beachten, dass die zuletzt
-                gelistete Rolle als erstes nach Regeln durchsucht wird, die auf die 
+                gelistete Rolle als erstes nach Regeln durchsucht wird, die auf die
                 Autorisierungsabfrage passen.
             </para>
         </note>
@@ -164,10 +164,10 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></progra
         <title>Erstellen einer Zugriffskontrollliste (ACL)</title>
 
         <para>
-            Eine Zugriffskontrollliste (im weiteren Verlauf nur ACL genannt) kann jeden gewünschten 
+            Eine Zugriffskontrollliste (im weiteren Verlauf nur ACL genannt) kann jeden gewünschten
             Satz von körperlichen oder virtuellen Objekten repräsentieren. Zu Demonstrationszwecken
-            werden wir eine grundlegende ACL für ein Redaktionssystem erstellen, die mehrere 
-            Schichten von Gruppen über eine Vielzahl von Bereichen verwaltet soll. Um ein ACL 
+            werden wir eine grundlegende ACL für ein Redaktionssystem erstellen, die mehrere
+            Schichten von Gruppen über eine Vielzahl von Bereichen verwaltet soll. Um ein ACL
             Objekt zu erstellen, instanzieren wir die ACL ohne Parameter:
         </para>
 
@@ -178,8 +178,8 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <note>
             <para>
-                Standardmäßig ist Zend_Acl eine "whitelist" Implementation, was bedeutet, dass 
-                Zend_Acl den Zugriff auf jedes Recht einer Ressource für jede Rolle verweigert, 
+                Standardmäßig ist Zend_Acl eine "whitelist" Implementation, was bedeutet, dass
+                Zend_Acl den Zugriff auf jedes Recht einer Ressource für jede Rolle verweigert,
                 solange dies nicht vom Entwickler anders angegeben wird.
             </para>
         </note>
@@ -191,14 +191,14 @@ $acl = new Zend_Acl();]]></programlisting>
         <para>
             Redaktionssysteme (CMS) brauchen fast immer eine Hierarchie von Genehmigungen, um die
             Autorenfähigkeiten seiner Benutzer festzulegen. Es kann eine 'Guest' Gruppe geben, um
-            beschränkten Zugriff zur Demonstration zu ermöglichen, eine 'Staff' Gruppe für die 
+            beschränkten Zugriff zur Demonstration zu ermöglichen, eine 'Staff' Gruppe für die
             Mehrheit der CMS Nutzer, welche die meisten der alltäglichen Aufgaben erledigen, eine
-            'Editor' Gruppe für diejenigen, die für das Veröffentlichen, Überprüfen, Archivieren 
-            und Löschen von Inhalten zuständig sind, sowie eine 'Administrator' Gruppe, dessen 
-            Aufgabenbereiche alle der anderen Gruppen sowie die Pflege sensibler Informationen, der 
-            Benutzerverwaltung, der Back-End Konfigurationsdaten und die Datensicherung sowie der 
+            'Editor' Gruppe für diejenigen, die für das Veröffentlichen, Überprüfen, Archivieren
+            und Löschen von Inhalten zuständig sind, sowie eine 'Administrator' Gruppe, dessen
+            Aufgabenbereiche alle der anderen Gruppen sowie die Pflege sensibler Informationen, der
+            Benutzerverwaltung, der Back-End Konfigurationsdaten und die Datensicherung sowie der
             Export beinhalten. Diese Genehmigungen können durch eine Rollenregistrierung
-            repräsentiert werden, die es jeder Gruppe erlaubt, die Rechte von 'übergeordneten' 
+            repräsentiert werden, die es jeder Gruppe erlaubt, die Rechte von 'übergeordneten'
             Gruppen zu erben sowie eindeutige Rechte nur für deren Gruppe bereit zu stellen. Diese
             Genehmigungen können wir folgt ausgedrückt werden:
         </para>
@@ -240,7 +240,7 @@ $acl = new Zend_Acl();]]></programlisting>
 
         <para>
             Für dieses Beispiel wird <code>Zend_Acl_Role</code> verwendet, aber jedes Objekt wird
-            akzeptiert, das <code>Zend_Acl_Role_Interface</code> implementiert. Diese Gruppen 
+            akzeptiert, das <code>Zend_Acl_Role_Interface</code> implementiert. Diese Gruppen
             können zur Rollenregistrierung wie folgt hinzugefügt werden:
         </para>
 
@@ -277,16 +277,16 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
         <para>
             Nun, da die ACL die relevanten Rollen enthält, können Regeln eingerichtet werden, die
             definieren, wie auf Ressourcen durch Rollen zugegriffen werden darf. Es ist zu beachten,
-            dass wir keine bestimmten Ressourcen in diesem Beispiel definiert haben, das 
+            dass wir keine bestimmten Ressourcen in diesem Beispiel definiert haben, das
             vereinfacht wurde, um zu illustrieren, dass die Regeln für alle Ressourcen gelten.
-            Zend_Acl stellt eine Implementation bereit, bei der Regeln nur vom Allgemeinen zum 
-            Speziellen definiert werden müssen, um die Anzahl der benötigten Regeln zu minimieren, 
+            Zend_Acl stellt eine Implementation bereit, bei der Regeln nur vom Allgemeinen zum
+            Speziellen definiert werden müssen, um die Anzahl der benötigten Regeln zu minimieren,
             weil Ressourcen und Rollen die Regeln erben, die in ihren Vorfahren definiert worden
             sind.
         </para>
 
         <para>
-            Folglich können wir einen einigermaßen komplexen Regelsatz mit sehr wenig Code 
+            Folglich können wir einen einigermaßen komplexen Regelsatz mit sehr wenig Code
             definieren. Um die grundlegenden Genehmigungen von oben anzugeben:
         </para>
 
@@ -331,7 +331,7 @@ $acl->allow('administrator');]]></programlisting>
         <title>Die ACL abfragen</title>
 
         <para>
-            Wir haben nun eine flexible ACL, die in der gesamten Anwendung verwendet werden kann, 
+            Wir haben nun eine flexible ACL, die in der gesamten Anwendung verwendet werden kann,
             um zu ermitteln, ob Anfragende die Genehmigung haben, Funktionen auszuführen. Abfragen
             durchzuführen ist recht einfach mit Hilfe der <code>isAllowed()</code> Methode:
         </para>

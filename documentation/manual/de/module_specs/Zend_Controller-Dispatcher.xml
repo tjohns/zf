@@ -12,7 +12,7 @@
             Wenn kein Modul, kein Controller oder keine Aktion gefunden wurde, werden dafür
             Standardwerte verwendet.  <code>Zend_Controller_Dispatcher_Standard</code> legt
             <code>index</code> für beide als Standardwert fest, aber erlaubt dem Entwickler auch,
-            diese durch Verwendung der <code>setDefaultController()</code>, 
+            diese durch Verwendung der <code>setDefaultController()</code>,
             <code>setDefaultAction()</code> und <code>setDefaultModule()</code> Methoden zu
             verändern.
         </para>
@@ -20,16 +20,16 @@
         <para>
             Dispatching läuft innerhalb einer Schleife im Front Controller ab. Vor dem Dispatching
             fragt der Front Controller den Request ab, um benutzerspezifizierte Werte für Modul,
-            Controller, Aktion und optionale Parameter zu finden. Dann startet er die Dispatch 
-            Schleife, um die Anfrage zu verarbeiten. 
+            Controller, Aktion und optionale Parameter zu finden. Dann startet er die Dispatch
+            Schleife, um die Anfrage zu verarbeiten.
         </para>
 
         <para>
             Zu Beginn jeden Durchlaufes setzt er im Request Objekt einen Schalter, der angibt, dass
             die Aktion verarbeitet worden ist. Wenn eine Aktion oder ein pre/postDispatch Plugin
             diesen Schalter zurücksetzt, wird die Dispatch Schleife fortgesetzt und versucht, die
-            neue Anfrage zu verarbeiten. Durch Ändern des Controllers und / oder der Aktion im 
-            Request Objekt und Zuürcksetzen des Verarbeitungsstatus, kann der Entwickler eine zu 
+            neue Anfrage zu verarbeiten. Durch Ändern des Controllers und / oder der Aktion im
+            Request Objekt und Zuürcksetzen des Verarbeitungsstatus, kann der Entwickler eine zu
             durchlaufende Anfragekette definieren.
         </para>
 
@@ -39,7 +39,7 @@
             oderAktionsmethode auf und übergebe Aktion, Controller, Modul und beliebige optionale
             Parameter, die du zur neuen Aktion übersenden möchtest:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 public function fooAction()
 {
@@ -67,7 +67,7 @@ public function bazAction()
         <title>Subclassing the Dispatcher</title>
 
         <para>
-            <code>Zend_Controller_Front</code> ruft zuerst den Router auf, um die erste Aktion 
+            <code>Zend_Controller_Front</code> ruft zuerst den Router auf, um die erste Aktion
             für den Request zu ermitteln. Danach startet es die Dispatch Schleife, welche
             den Dispatcher aufruft, um die Aktion zu verarbeiten.
         </para>
@@ -114,32 +114,32 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Set a user parameter (via front controller, or for local use)
-     * 
-     * @param string $name 
-     * @param mixed $value 
+     *
+     * @param string $name
+     * @param mixed $value
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function setParam($name, $value);
 
     /**
      * Set an array of user parameters
-     * 
-     * @param array $params 
+     *
+     * @param array $params
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function setParams(array $params);
 
     /**
      * Retrieve a single user parameter
-     * 
-     * @param string $name 
+     *
+     * @param string $name
      * @return mixed
      */
     public function getParam($name);
 
     /**
      * Retrieve all user parameters
-     * 
+     *
      * @return array
      */
     public function getParams();
@@ -154,23 +154,23 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Set the response object to use, if any
-     * 
-     * @param Zend_Controller_Response_Abstract|null $response 
+     *
+     * @param Zend_Controller_Response_Abstract|null $response
      * @return void
      */
     public function setResponse(Zend_Controller_Response_Abstract $response = null);
 
     /**
      * Retrieve the response object, if any
-     * 
+     *
      * @return Zend_Controller_Response_Abstract|null
      */
     public function getResponse();
 
     /**
      * Add a controller directory to the controller directory stack
-     * 
-     * @param string $path 
+     *
+     * @param string $path
      * @param string $args
      * @return Zend_Controller_Dispatcher_Interface
      */
@@ -179,14 +179,14 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Set the directory (or directories) where controller files are stored
      *
-     * @param string|array $dir 
+     * @param string|array $dir
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function setControllerDirectory($path);
 
     /**
      * Return the currently set directory(ies) for controller file lookup
-     * 
+     *
      * @return array
      */
     public function getControllerDirectory();
@@ -202,8 +202,8 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Whether or not a given module is valid
-     * 
-     * @param string $module 
+     *
+     * @param string $module
      * @return boolean
      */
     public function isValidModule($module);
