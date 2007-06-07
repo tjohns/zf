@@ -1,6 +1,72 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 1.0.0RC2 / 07-Jun-2007 / based on revision 5160 =
+Known issues:
+- Zend_Gdata has new usage, and existing application may need adjustment
+- Zend_Controller has new usage regarding the ViewRenderer helper; see docs
+This release resolves the following issues:
+- Documentation
+  ZF-860  Wiki manual - Change script to work with xincludes
+  ZF-1133 Wikification does not support BOLD ?
+- Zend_Config
+  ZF-1461 Deprecated method Zend_Config::toArray() still in use
+- Zend_Db
+  ZF-1474 Configuration option for identifier quoting
+- Zend_Db_Adapter_Mysqli
+  ZF-1501 Error in listTables() in MySQLi adapter if no table exists
+- Zend_Db_Select
+  ZF-1135 Zend_Db_Select does not preserve column order as specified
+  ZF-1510 Document use of empty array() in the from() method 
+- Zend_Db_Table
+  ZF-276  Table: fetchAll("","name") with blank string throw exception
+  ZF-1458 Zend_Db_Table throws notice on table wthout primary key
+  ZF-1464 findManyToManyRowset: rows behave as new records
+- Zend_Feed
+  ZF-1228 correct class names
+- Zend_Filter
+  ZF-1250 Zend_Filter_StringToLower to be encoding aware if capable
+  ZF-1483 Zend_Filter_Alpha has problems with utf8 strings
+  ZF-1496 Zend_Filter_StringToUpper
+- Zend_Filter_Input
+  ZF-1450 Manual describes getInvalid(), but method is not implemented
+  ZF-1451 getMessages() should return both missing and invalid messages
+  ZF-1470 Better Exception Message loading filters/validators
+- Zend_Loader
+  ZF-1388 Suppress warnings when calling is_readable()
+- Zend_Locale
+  ZF-1467 isEqual() does not exist
+- Zend_Mail
+  ZF-980  Zend_Mail Should Allow Users to Specifiy MIME Part Parameters
+  ZF-1189 Mime.php encodeQuotedPrintable - does not encode whitespace to '=20'
+  ZF-1393 Zend_Mail - 20.6. Attachments > false method addAttachment() used
+- Zend_Pdf
+  ZF-1342 Unit tests should be extended to get necessary code coverage
+  ZF-1472 PNG image processing causes a error
+- Zend_Search_Lucene
+  ZF-1432 Indexing for 2 documents produces invalid search results.
+  ZF-1471 Zend_Search_Lucene::open() throws fatal error if index does not exist
+  ZF-1492 Search result becomes invalid if index object goes out of scope
+- Zend_Service_Audioscrobbler
+  ZF-1436 Unit test failure with invalid URI
+- Zend_Service_StrikeIron
+  New web service component
+- Zend_Translate
+  ZF-1408 testIsTranslated(Zend_Translate_TmxTest) failing
+  ZF-1482 Gettext adapter doesn't work on 64 bit computer
+- Zend_Uri
+  ZF-1452 Support successive slash characters in URI path
+  ZF-1454 Zend_Http_Client_StaticTest failing
+- Zend_Validate
+  ZF-1484 Zend_Validate_LessThan failure message has missing value
+  ZF-1489 Update manual for Zend_Validate-WritingValidators.xml
+  ZF-1513 Validate classes incorrectly pass empty strings
+- Zend_Version
+  ZF-1449 Wrong version number in Zend_Version
+  ZF-1455 Zend_VersionTest failing
+- Total of 37 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 1.0.0RC1 / 28-May-2007 / based on revision 5029 =
 Known issues:
 - Binding parameters and results to PHP variables is broken (ZF-1440)
