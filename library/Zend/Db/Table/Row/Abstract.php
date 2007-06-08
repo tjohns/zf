@@ -389,7 +389,12 @@ abstract class Zend_Db_Table_Row_Abstract
                 $pkOld = $this->_getPrimaryKey(false);
                 $thisClass = get_class($this);
                 foreach ($depTables as $tableClass) {
-                    Zend_Loader::loadClass($tableClass);
+                    try {
+                        Zend_Loader::loadClass($tableClass);
+                    } catch (Zend_Exception $e) {
+                        require_once 'Zend/Db/Table/Row/Exception.php';
+                        throw new Zend_Db_Table_Row_Exception($e->getMessage());
+                    }
                     $t = new $tableClass(array('db' => $db));
                     $t->_cascadeUpdate($this->getTableClass(), $pkOld, $pkNew);
                 }
@@ -456,7 +461,12 @@ abstract class Zend_Db_Table_Row_Abstract
             $pk = $this->_getPrimaryKey();
             $thisClass = get_class($this);
             foreach ($depTables as $tableClass) {
-                Zend_Loader::loadClass($tableClass);
+                try {
+                    Zend_Loader::loadClass($tableClass);
+                } catch (Zend_Exception $e) {
+                    require_once 'Zend/Db/Table/Row/Exception.php';
+                    throw new Zend_Db_Table_Row_Exception($e->getMessage());
+                }
                 $t = new $tableClass(array('db' => $db));
                 $t->_cascadeDelete($this->getTableClass(), $pk);
             }
@@ -827,6 +837,12 @@ abstract class Zend_Db_Table_Row_Abstract
         );
 
         $rowsetClass = $matchTable->getRowsetClass();
+        try {
+            Zend_Loader::loadClass($rowsetClass);
+        } catch (Zend_Exception $e) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception($e->getMessage());
+        }
         $rowset = new $rowsetClass($config);
         return $rowset;
     }
