@@ -52,7 +52,7 @@
             Obsługa plików graficznych.
             <footnote>
                 <para>
-                Obecnie wspierane są pliki JPG, PNG [do 8bit+Alpha] oraz TIFF.
+                Obecnie wspierane są pliki JPG, PNG [do 8bit na kanał+Alpha] oraz TIFF.
                 </para>
             </footnote>
             </para>
