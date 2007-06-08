@@ -1,9 +1,0 @@
-<preface id="preface">
-    <title>Prefaţă</title>
-    <para>
-        Acest document este un ghid de referinţă pentru programatorii care folosesc Zend Framework.
-    </para>
-</preface>
-<!--
-vim:se ts=4 sw=4 et:
--->
