@@ -48,6 +48,13 @@ $myApplicationObject->databaseConnect($config->database->type,
         As illustrated in the example above, <code>Zend_Config</code> provides nested object property syntax to access
         configuration data passed to its constructor.
     </para>
+    <para>
+        Along with the object oriented access to the data values, <code>Zend_Config</code> also has <code>get()</code> which will return
+        the supplied default value if the data element doesn't exist. For example:
+    </para>
+    <programlisting role="php"><![CDATA[<?php
+    $host = $config->database->get('host', 'localhost');
+    ]]></programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
