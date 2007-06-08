@@ -303,8 +303,8 @@
         <xi:include href="module_specs/Zend_XmlRpc_Server.xml" />
     </chapter>
     <!-- <xi:include href="ref/faq.xml" /> -->
-    <xi:include href="ref/coding_standard.xml" />
     <xi:include href="ref/requirements.xml" />
+    <xi:include href="ref/coding_standard.xml" />
     <xi:include href="ref/copyrights.xml" />
     <index id="the.index" />
 </book>
