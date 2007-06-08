@@ -11,13 +11,56 @@
     <para>
         In addition to being able to extend the <code>Zend_Service</code> and
         use <code>Zend_Rest_Client</code> for REST-based web services, Zend also
-        provides support for popular web services such as
-        <link linkend="zend.service.akismet">Akismet</link>,
-        <link linkend="zend.service.amazon">Amazon</link>,
-        <link linkend="zend.service.flickr">Flickr</link>, and
-        <link linkend="zend.service.yahoo">Yahoo!</link>. Additional services
-        are coming in the future.
+        provides support for popular web services, such as:
     </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                <link linkend="zend.service.akismet">Akismet</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.amazon">Amazon</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.audioscrobbler">Audioscrobbler</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.delicious">Del.icio.us</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.flickr">Flickr</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.simpy">Simpy</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.strikeiron">StrikeIron</link>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <link linkend="zend.service.yahoo">Yahoo!</link>.
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <para>
+        Additional services are coming in the future.
+    </para>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
