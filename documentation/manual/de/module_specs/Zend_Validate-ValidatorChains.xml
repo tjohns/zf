@@ -1,32 +1,32 @@
 <sect1 id="zend.validate.validator_chains">
 
-    <title>Validator Chains</title>
+    <title>Kettenprüfungen</title>
 
     <para>
-        Often multiple validations should be applied to some value in a particular order. The following code
-        demonstrates a way to solve the example from the
-        <link linkend="zend.validate.introduction">introduction</link>, where a username must be between 6 and
-        12 alphanumeric characters:
+        Oft sollen mehrere Prüfungen an dem selben Wert in einer bestimmten Reihenfolge durchgeführt werden.
+        Der folgende Code demonstriert einen Weg um das Beispiel der
+        <link linkend="zend.validate.introduction">Einführung</link> zu Lösen, wo ein Benutzername zwischen
+        6 und 12 Alphanumerischen Zeichen lang sein muß:
 
         <programlisting role="php"><![CDATA[<?php
 
-// Provides validator chaining capability
+// Bietet Möglichkeit der Kettenprüfung
 require_once 'Zend/Validate.php';
 
-// Validators needed for the example
+// Benötigte Prüfungen für das Beispiel
 require_once 'Zend/Validate/StringLength.php';
 require_once 'Zend/Validate/Alnum.php';
 
-// Create a validator chain and add validators to it
+// Eine Prüfkette erstellen und die Prüfungen hinzufügen
 $validatorChain = new Zend_Validate();
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12))
                ->addValidator(new Zend_Validate_Alnum());
 
-// Validate the username
+// Den Benutzernamen prüfen
 if ($validatorChain->isValid($username)) {
-    // username passed validation
+    // Benutzername das die Prüfung bestanden
 } else {
-    // username failed validation; print reasons
+    // Der Benutzername hat die Prüfung nicht bestanden; Gründe ausdrucken
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
@@ -34,22 +34,23 @@ if ($validatorChain->isValid($username)) {
 
 ?>]]></programlisting>
 
-        Validators are run in the order they were added to <code>Zend_Validate</code>. In the above example,
-        the username is first checked to ensure that its length is between 6 and 12 characters, and then it is
-        checked to ensure that it contains only alphanumeric characters. The second validation, for
-        alphanumeric characters, is performed regardless of whether the first validation, for length between 6
-        and 12 characters, succeeds. This means that if both validations fail, <code>getMessages()</code> will
-        return failure messages from both validators.
+        Prüfungen werden in der Reihenfolge durchgeführt in der Sie <code>Zend_Validate</code> hinzugefügt
+        wurden. Im obigen Beispiel wird der Benutzername zuerst geprüft um sicherzustellen das die Länge
+        zwischen 6 und 12 Zeichen beträgt, und anschließend wird geprüft um sicherzustellen das er nur
+        alphanumerische Zeichen enthält. Die zweite Prüfung, für alphanumerische Zeichen, wird durchgeführt
+        egal ob die Prüfung der Länge zwischen 6 und 12 Zeichen erfolgreich war oder nicht. Das bedeutet, dass
+        wenn beide Prüfungen fehlschlagen, <code>getMessages()</code> die Fehlermeldungen von beiden
+        Prüfungen zurückgibt.
     </para>
 
     <para>
-        In some cases it makes sense to have a validator break the chain if its validation process
-        fails. <code>Zend_Validate</code> supports such use cases with the second parameter to the
-        <code>addValidator()</code> method. By setting <code>$breakChainOnFailure</code> to <code>true</code>,
-        the added validator will break the chain execution upon failure, which avoids running any other
-        validations that are determined to be unnecessary or inappropriate for the situation. If the above
-        example were written as follows, then the alphanumeric validation would not occur if the string length
-        validation fails:
+        In einigen Fällen macht es Sinn eine Prüfung die Kette abbrechen zu lassen wenn der Prüfprozess
+        fehlschlägt. <code>Zend_Validate</code> unterstützt solche Fälle mit dem zweiten Parameter der
+        <code>addValidator()</code> Methode. Durch Setzen von <code>$breakChainOnFailure</code> zu
+        <code>true</code> bricht die hinzugefügte Prüfung die Ausführung der Kette bei einem Fehler ab und
+        verhindert damit die Ausführung von jeglichen anderen Prüfungen welche für diese Situation als
+        unnötig oder nicht richtig erkannt werden. Wenn das obige Beispiel wie folgt geschrieben wird, wird
+        die alphanumerische Prüfung nicht stattfinden wenn die Prüfung der Stringlänge fehlschlägt:
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -61,7 +62,8 @@ $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
     <para>
-        Any object that implements <code>Zend_Validate_Interface</code> may be used in a validator chain.
+        Jegliches Objekt welches das <code>Zend_Validate_Interface</code> enthält kann in einer Prüfkette
+        verwendet werden.
     </para>
 
 </sect1>
