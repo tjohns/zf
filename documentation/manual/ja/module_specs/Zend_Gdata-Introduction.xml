@@ -26,6 +26,12 @@
         <itemizedlist>
             <listitem>
                 <para>
+                    <link linkend="zend.gdata.calendar">Google Calendar</link>
+                    は、オンラインカレンダーアプリケーションです。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <link linkend="zend.gdata.spreadsheets">Google Spreadsheets</link>
                     は、オンラインで共同作業を行えるスプレッドシートツールです。
                     アプリケーションで使用するデータの保存場所としても使用できます。
@@ -33,20 +39,20 @@
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="zend.gdata.blogger">Google Blogger</link>
+                    Google Blogger
                     は人気のあるインターネットプロバイダで、
                     "ボタンひとつで簡単に" 記事を配信することができます。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="zend.gdata.codesearch">Google CodeSearch</link>
+                    Google CodeSearch
                     を使用すると、さまざまなプロジェクトが公開しているソースコードを検索できます。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="zend.gdata.notebook">Google Notebook</link>
+                    Google Notebook
                     は、メモ帳の内容を一般に公開することができます。
                 </para>
             </listitem>
@@ -60,15 +66,6 @@
             Google Apps Provisioning などもサポートしています。
             しかし、今回のリリースでは Zend_Gdata は
             これらのプロダクト用のヘルパークラスを用意していません。
-        </para>
-
-        <para>
-            Google Calendar 用のコードはリリースまであと一歩のところまで来ており、
-            現在は Zend Framework の incubator ディレクトリにあります。
-            ここにあるコードは、安定性が保証されていないものです。
-            使用したい場合は、incubator/library ディレクトリを
-            include_path の先頭に置き、その後でコアの library
-            ディレクトリを指定するようにしてください。
         </para>
 
         <para>
