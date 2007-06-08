@@ -508,26 +508,25 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options); // löschen der S
 
     <sect2 id="zend.translate.using.istranslated">
 
-        <title>Checking for translations</title>
+        <title>Prüfen von Übersetzungen</title>
 
         <para>
-            Normally text will be translated without any computations. But sometimes it is necessary to
-            know if a text is translated or not within the source. Therefor the <code>isTranslated()</code>
-            method can be used.
+            Normalerweise wird Text ohne irgendwelche Berechnungen übersetzt. Aber manchmal ist es notwendig
+            zu wissen ob ein Text in der Quelle übersetzt ist oder nicht. Hierzu kann die Methode
+            <code>isTranslated()</code> verwendet werden.
         </para>
 
         <para>
-            <code>isTranslated($messageId, $original = false, $locale = null)</code> takes as first parameter
-            the text from which you want to know if it can be translated. And as optional third parameter the locale
-            for which you want to know the translation. The optional second parameter declares if translation
-            is fix to the declared language or a lower set of translations can be used. If you have a text which
-            can be translated by 'en' but not for 'en_US' you will normally get the translation returned, but by
-            setting <code>$original</code> to true, the <code>isTranslated()</code> method will return false in
-            such cases.
+            <code>isTranslated($messageId, $original = false, $locale = null)</code> nimmt als ersten Parameter
+            den Text bzw die Id von der man wissen will ob sie Übersetzbar ist. Der optionale zweite Parameter
+            definiert ob die Übersetzung fix für die definierte Sprache ist oder ob ein kleineres Set von
+            Übersetzungen verwendet werden kann. Wenn ein Text, welcher mit 'en' übersetzt werden kann, aber nicht
+            mit 'en_US', wird die Übersetzung normalerweise zurückgegeben, aber wenn <code>$original</code> auf
+            true gesetzt ist, gibt die <code>isTranslated()</code> Methode in solche Fällen false zurück.
         </para>
 
         <example id="zend.translate.using.istranslated.example">
-            <title>Checking if a text is translateable</title>
+            <title>Prüfen ob ein Text übersetzbar ist</title>
             <programlisting role="php"><![CDATA[
 $english = array('message1' => 'Nachricht 1',
                  'message2' => 'Nachricht 2',
@@ -535,13 +534,13 @@ $english = array('message1' => 'Nachricht 1',
 $translate = new Zend_Translate('array', $english, 'de_AT');
 
 if ($translate->isTranslated('message1')) {
-    print "'message1' can be translated";
+    print "'message1' kann übersetzt werden";
 }
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' can not be translated in 'de' as it's only avaiable in 'de_AT'";
+    print "'message1' kann nicht in 'de' übersetzt werden da es nur in 'de_AT' vorhanden ist";
 }
 if ($translate->isTranslated('message1', false, 'de')) {
-    print "'message1' can be translated in 'de_AT' falls back to 'de'";
+    print "'message1' kann in 'de_AT' übersetzt werden da es zu 'de' zurückfällt";
 }
 ]]></programlisting>
         </example>
