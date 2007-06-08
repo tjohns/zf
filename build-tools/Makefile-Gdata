@@ -42,7 +42,7 @@ PHPDOC=php c:/xampp/php/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=5181
+ZF_TAG=5189
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
@@ -99,7 +99,7 @@ tarball:
 	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) $(GDATA_PRODUCT))
 
 stage: stage-files stage-docs
-	@echo "$(GDATA_PRODUCT_NAME) Preview Release $(GDATA_VERSION) (build $(ZF_TAG))" > $(GDATA_STAGE_DIR)/VERSION.txt
+	@echo "$(GDATA_PRODUCT_NAME) Release Candidate $(GDATA_VERSION) (build $(ZF_TAG))" > $(GDATA_STAGE_DIR)/VERSION.txt
 
 stage-files:
 	@echo "== STAGING FILES =="
@@ -152,21 +152,21 @@ stage-docs: docbook phpdoc
 docbook: docbook-core
 
 docbook-core:
-	-mkdir -p $(GDATA_STAGE_DIR)/documentation/end-user/core
+	-mkdir -p $(GDATA_STAGE_DIR)/documentation/manual/core
 	@for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG) ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
 	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
-	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/end-user/core/$$lang ; \
+	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/manual/core/$$lang ; \
 	done
 
 docbook-incubator:
-	-mkdir -p $(GDATA_STAGE_DIR)/documentation/end-user/incubator
+	-mkdir -p $(GDATA_STAGE_DIR)/documentation/manual/incubator
 	@for language in $(GDATA_EXPORT_DIR)/incubator/documentation/manual/$(LANG) ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
 	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
-	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/end-user/incubator/$$lang ; \
+	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/manual/incubator/$$lang ; \
 	done
 
 phpdoc: phpdoc-core 
