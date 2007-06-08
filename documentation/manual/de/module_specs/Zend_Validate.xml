@@ -11,7 +11,7 @@
     <sect2 id="zend.validate.introduction.definition">
 
         <para>
-            <emphasis role="strong">What is a validator?</emphasis>
+            <emphasis role="strong">Was ist eine Prüfung?</emphasis>
         </para>
 
         <para>
@@ -33,7 +33,7 @@
 
     <sect2 id="zend.validate.introduction.using">
 
-        <title>Basic usage of validators</title>
+        <title>Standardnutzung von Prüfungen</title>
 
         <para>
             Prüfungen auf diesem Weg definiert zu haben, bietet die Sammlung für <code>Zend_Validate_Interface</code>
@@ -48,30 +48,27 @@
         </para>
 
         <para>
-            The <code>getErrors()</code> method returns an array of shorter
-            strings that identify the reason(s) for validation failure.  These
-            strings are meant to identify the errors.  These strings are
-            intended to be checked by your application code, not output to
-            users.  The error strings are class-dependent; each validate class
-            defines its own set of error strings to identify the cause of the
-            error.  Each class also provides <code>const</code> definitions to
-            match these error identifiers.
+            Die <code>getErrors()</code> Methode gibt ein Array von kurzen Strings zurück welche
+            die Gründe für den Fehlschlag der Prüfung identifizieren. Diese Strings sollen die Fehler
+            identifizieren. Diese String sind dazu vorgesehen im Code der Anwendung geprüft zu werden
+            und nicht als Ausgabe für den Benutzer. Die Fehler Strings sind klassenabhängig; jede Prüfklasse
+            definiert sein eigenes Set von Fehlerstrings um die Gründe der Fehler zu identifizieren. Jede Klasse
+            bietet ausserdem <code>const</code> Definitionen die diesen Fehler Identifizierern gleichen.
         </para>
 
         <note>
             <para>
-                The <code>getMessages()</code> and <code>getErrors()</code>
-                methods return validation failure information only for the most
-                recent <code>isValid()</code> call.  Each call to
-                <code>isValid()</code> clears any messages and errors caused by
-                a previous <code>isValid()</code> call, because it's likely
-                that each call to <code>isValid()</code> is made for a
-                different input value.
+                Die <code>getMessages()</code> und <code>getErrors()</code> Methoden geben die
+                Informationen für Prüfungsfehler nur für den zuletzt durchgeführten Aufruf von
+                <code>isValid()</code>. Jeder Aufruf von <code>isValid()</code> löscht jegliche
+                Nachricht und Fehler welche durch vorhergehende <code>isValid()</code> Aufrufe
+                vorhanden waren, weil normalerweise jeder Aufruf von <code>isValid()</code>
+                für einen unterschiedlichen Eingabewert gemacht wird.
             </para>
         </note>
 
         <para>
-            The following example illustrates validation of an e-mail address:
+            Das folgende Beispiel zeigt die Prüfung einer E-Mail Adresse:
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/EmailAddress.php';
@@ -80,11 +77,11 @@ $validator = new Zend_Validate_EmailAddress();
 
 if ($validator->isValid($email)) {
     //
-    // email appears to be valid
+    // E-Mail scheint gültig zu sein
     //
 } else {
     //
-    // email is invalid; print the reasons
+    // E-Mail ist ungültig; drucke die Gründe
     //
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
