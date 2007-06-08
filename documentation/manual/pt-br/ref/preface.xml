@@ -1,9 +1,0 @@
-<preface id="preface">
-    <title>Prefácio</title>
-    <para>
-        Este documento é um guia para programadores do Framework Zend.
-    </para>
-</preface>
-<!--
-vim:se ts=4 sw=4 et:
--->

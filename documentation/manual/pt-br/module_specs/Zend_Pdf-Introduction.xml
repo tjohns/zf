@@ -50,7 +50,7 @@
             Image drawing.
             <footnote>
                 <para>
-                JPG, PNG [Up to 8bit+Alpha] and TIFF images are supported.
+                JPG, PNG [Up to 8bit per channel+Alpha] and TIFF images are supported.
                 </para>
             </footnote>
             </para>

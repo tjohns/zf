@@ -306,6 +306,12 @@ $input->setData($newData);
 
             <programlisting role="php"><![CDATA[<?php
 
+if ($input->hasInvalid() || $input->hasMissing()) { 
+  $messages = $input->getMessages(); 
+} 
+
+// getMessages() simply returns the merge of getInvalid() and getMissing()
+
 if ($input->hasInvalid()) { 
   $invalidFields = $input->getInvalid(); 
 } 
@@ -320,13 +326,28 @@ if ($input->hasUnknown()) {
 ]]></programlisting>
 
             <para>
-                The results of the <code>getInvalid()</code> and
-                <code>getMissing()</code> methods is an associative array,
-                mapping a rule name to an array of error messages related
-                to that rule.
-                Note that the index of this array is the rule name used in the
-                rule declaration, which may be different from the names of
-                fields checked by the rule.
+                The results of the <code>getMessages()</code> method is an
+                associative array, mapping a rule name to an array of error
+                messages related to that rule.  Note that the index of this
+                array is the rule name used in the rule declaration, which may
+                be different from the names of fields checked by the rule.
+            </para>
+
+            <para>
+                The <code>getMessages()</code> method returns the merge of the
+                arrays returned by the <code>getInvalid()</code> and
+                <code>getMissing()</code>.  These methods return subsets of the
+                messages, related to validation failures, or fields that were
+                declared as required but missing from the input.
+            </para>
+
+            <para>
+                The <code>getErrors()</code> method returns an associative array,
+                mapping a rule name to an array of error identifiers.  Error
+                identifiers are fixed strings, to identify the reason for a
+                validation failure, while messages can be customized.
+                See <xref linkend="zend.validate.introduction.using" /> for
+                more information.
             </para>
 
             <para>
