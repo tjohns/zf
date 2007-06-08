@@ -1,4 +1,4 @@
-<sect1 id="zend.service.yahoo">
+﻿<sect1 id="zend.service.yahoo">
     <title>Zend_Service_Yahoo</title>
     <sect2 id="zend.service.yahoo.introduction">
         <title>Introduction</title>
@@ -14,7 +14,7 @@
         <title>Rechercher sur le Web avec Yahoo!</title>
         <para>
             <code>Zend_Service_Yahoo</code> vous permet d'effectuer des recherches sur le net avec Yahoo! en utilisant la méthode
-            <code>webSearch()</code>, qui accepte une chaîne de requête en paramètre, et un tableau d'options de recherches comme
+            <code>webSearch()</code>, qui accepte une chaîne de requête en paramètre, et un tableau d'options de recherche comme
             second paramètre. Pour la liste détaillée des options, veuillez vous référer à la documentation
             <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search</ulink>.            
             La méthode <code>webSearch()</code> retourne un objet <code>Zend_Service_Yahoo_WebResultSet</code>.
@@ -90,8 +90,8 @@ foreach ($results as $result) {
 <sect2 id="zend.service.yahoo.classes">
     <title>Classes Zend_Service_Yahoo</title>
     <para>
-        Les classes sont toutes retournées par les divers recherches Yahoo!. Chaque type de recherche retourne un jeu de résultat 
-        de spécifique sur lequel on peut facilement itérer, avec chaque résultat contenu dans un résultat du type de l'objet.
+        Les classes sont toutes retournées par les diverses recherches Yahoo!. Chaque type de recherche retourne un jeu de résultat 
+        spécifique sur lequel on peut facilement itérer, avec chaque résultat contenu dans un résultat du type de l'objet.
         Toutes les classes de jeu de résultat implémentent l'interface <code>SeekableIterator</code>, permettant des itérations et 
         une recherche sur un résultat particulier.
         <itemizedlist>
@@ -169,7 +169,7 @@ foreach ($results as $result) {
     <sect3 id="zend.service.yahoo.classes.webresultset">
         <title>Zend_Service_Yahoo_WebResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_WebResultSet</code> représent un jeu de résutat Yahoo! Web Search.
+            <code>Zend_Service_Yahoo_WebResultSet</code> représente un jeu de résutat Yahoo! Web Search.
         </para>
         <note>
             <para>
@@ -213,7 +213,7 @@ foreach ($results as $result) {
                     <row>
                         <entry>resultSetMapURL</entry>
                         <entry>string</entry>
-                        <entry>L'URL de la page Web contenant une carte graphique contenant tous les résultats affiché dessus.</entry>
+                        <entry>L'URL de la page Web contenant une carte graphique contenant tous les résultats affichés dessus.</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -285,7 +285,7 @@ foreach ($results as $result) {
      <sect3 id="zend.service.yahoo.classes.webresult">
         <title>Zend_Service_Yahoo_WebResult</title>
         <para>
-            Each Web Search result is returned as a <code>Zend_Service_Yahoo_WebResult</code> object.
+            Chaque résultat d'une recherche web est retourné comme un objet <code>Zend_Service_Yahoo_WebResult</code>.
         </para>
         <sect4 id="zend.service.yahoo.classes.webresult.properties">
             <title>Propriétés</title>
@@ -336,7 +336,7 @@ foreach ($results as $result) {
      <sect3 id="zend.service.yahoo.classes.imageresult">
         <title>Zend_Service_Yahoo_ImageResult</title>
         <para>
-            Each Image Search result is returned as a <code>Zend_Service_Yahoo_ImageResult</code> object.
+            Chaque recherche d'image est retournée comme un objet <code>Zend_Service_Yahoo_ImageResult</code>.
         </para>
         <sect4 id="zend.service.yahoo.classes.imageresult.properties">
             <title>Propriétés</title>
@@ -435,12 +435,12 @@ foreach ($results as $result) {
                         <row>
                             <entry>Rating</entry>
                             <entry>int</entry>
-                            <entry>Appréciation des utilisateur pour ce résultat</entry>
+                            <entry>Appréciation des utilisateurs pour ce résultat</entry>
                         </row>
                         <row>
                             <entry>Distance</entry>
                             <entry>float</entry>
-                            <entry>Distance entre l'endroit ou vous vous trouvez et le résultat</entry>
+                            <entry>Distance entre l'endroit où vous vous trouvez et le résultat</entry>
                         </row>
                         <row>
                             <entry>MapUrl</entry>
@@ -569,6 +569,3 @@ foreach ($results as $result) {
     </sect3>
 </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
