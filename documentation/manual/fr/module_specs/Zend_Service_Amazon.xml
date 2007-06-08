@@ -1,4 +1,4 @@
-<sect1 id="zend.service.amazon">
+﻿<sect1 id="zend.service.amazon">
     <title>Zend_Service_Amazon</title>
     <sect2 id="zend.service.amazon.introduction">
         <title>Introduction</title>
@@ -56,7 +56,7 @@
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY&');
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($response as $r) {
     echo $r->Title .'<br />';
