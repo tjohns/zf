@@ -1,9 +1,0 @@
-<preface id="preface">
-    <title>序文</title>
-    <para>
-        この文書は、Zend Framework プログラマ用のリファレンスガイドです。
-    </para>
-</preface>
-<!--
-vim:se ts=4 sw=4 et:
--->
