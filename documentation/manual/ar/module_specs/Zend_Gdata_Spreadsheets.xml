@@ -45,11 +45,16 @@ $feed = $spreadsheetService->getSpreadsheetFeed();
      <sect2 id="zend.gdata.spreadsheets.listworksheets">
         <title>Get a List of Worksheets</title>
         <para>
-            A given spreadsheet may contain multiple worksheets. For each spreadsheet, there's a worksheets metafeed listing all the worksheets in that spreadsheet.
+            A given spreadsheet may contain multiple worksheets. For each 
+            spreadsheet, there's a worksheets metafeed listing all the 
+            worksheets in that spreadsheet.
         </para>
         
         <para>
-            Given the spreadsheet key from the &lt;id&gt; of a <code>Zend_Gdata_Spreadsheets_SpreadsheetEntry</code> object you've already retrieved, you can fetch a feed containing a list of worksheets associated with that spreadsheet.
+            Given the spreadsheet key from the &lt;id&gt; of a 
+            <code>Zend_Gdata_Spreadsheets_SpreadsheetEntry</code> 
+            object you've already retrieved, you can fetch a feed 
+            containing a list of worksheets associated with that spreadsheet.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -59,10 +64,12 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
 ?>]]></programlisting>
 
         <para>
-            The resulting <code>Zend_Gdata_Spreadsheets_WorksheetFeed</code> object feed 
-            represents the response from the server. Among other things, this 
-            feed contains a list of <code>Zend_Gdata_Spreadsheets_WorksheetEntry </code>
-            objects (<code>$feed->entries</code>), each of which represents a single worksheet.
+            The resulting <code>Zend_Gdata_Spreadsheets_WorksheetFeed</code> 
+            object feed represents the response from the server. Among other 
+            things, this feed contains a list of 
+            <code>Zend_Gdata_Spreadsheets_WorksheetEntry </code>
+            objects (<code>$feed->entries</code>), each of which represents a 
+            single worksheet.
         </para>
 
     </sect2>
@@ -135,8 +142,8 @@ $listFeed = $spreadsheetService->getListFeed($query);
             
             <para>
               Each <code>Zend_Gdata_Spreadsheets_ListEntry</code> contains an
-              array, <code>custom</code>, which contains the data for that row.  You can
-              extract and display this array:
+              array, <code>custom</code>, which contains the data for that row.
+              You can extract and display this array:
             </para>
             
             <programlisting role="php"><![CDATA[<?php
