@@ -13,7 +13,7 @@
             Client Klasse erweitern oder ersetzen muss.
         </para>
         <para>
-            Derzeit stellt die Zend_Http_Client Klass zwei eingebaute Verbindungsadapter bereit:
+            Derzeit stellt die Zend_Http_Client Klasse zwei eingebaute Verbindungsadapter bereit:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -37,58 +37,55 @@
             'adapter' Konfigurationsoption gesetzt. Beim Instanzieren des Client Objektes kann man
             die 'adapter' Konfigurationsoption setzen mit einem String, der den Adapternamen (z.B.
             'Zend_Http_Client_Adapter_Socket') enthält, oder mit eine Variable, die ein
-            Adapterobjekt (z.B. <code>new Zend_Http_Client_Adapter_test</code>) enthält. Man kann
+            Adapterobjekt (z.B. <code>new Zend_Http_Client_Adapter_Test</code>) enthält. Man kann
             den Adapter auch danach setzen, indem man die Zend_Http_Client->setConfig() Methode
             verwendet.
         </para>
     </sect2>
 
     <sect2>
-        <title>The Socket Adapter</title>
+        <title>Der Socket Adapter</title>
         <para>
-            The default connection adapter is the Zend_Http_Client_Adapter_Socket
-            adapter - this adapter will be used unless you explicitly set the
-            connection adapter. The Socket adapter is based on PHP's built-in
-            fsockopen() function, and does not require any special extensions or
-            compilation flags.
+            Der Standard-Adapter von Zend_Http_Client ist der Zend_Http_Client_Adapter_Socket. Dieser
+            wird benutzt, wenn kein anderer angegeben wird. Der Socket-Adapter benutzt die native
+            PHP Funktion fsockopen(), um die Verbindung aufzubauen, dafür werden keine besonderen
+            PHP-Extensions oder Einstellungen benötigt.
         </para>
         <para>
-            The Socket adapter allows one extra configuration option (passed to
-            the <code>Zend_Http_Client->setConfig()</code> or to the constructor):
-            <code>'ssltransport'</code>. This parameter, if set, is expected to
-            be a string and defaults to 'sslv2'. Changing this will override the
-            stream transport layer used for HTTPS connections. Possible values are
-            'ssl', 'sslv2', 'sslv3' and 'tls'. Generally speaking, any other stream
-            transport layer supported by your PHP installation can also be used -
-            but the results might be unexpected, so you should only use such
-            values if you know exactly what you are doing.
+            Der Socket-Adapter kann über den Parameter <code>'ssltransport'</code> für verschiedene
+            Streams konfiguriert werden, um die aufgebaute Verbindung zu verschlüsseln. Mögliche 
+            Stream-Typen sind 'ssl', 'sslv2', 'sslv3' oder 'tls'. Grundsätzlich können auch andere
+            Stream-Typen
             <footnote>
                 <para>
-                    See Appendix O in the PHP manual for a list of supported socket transports:
-                    <ulink url="http://www.php.net/manual/en/transports.php" />
+                    Die Liste der unterstützten Socket-Stream-Typen ist im Anhang P der PHP Dokumentation abrufbar:
+                    <ulink url="http://www.php.net/manual/de/transports.php" />
                 </para>
-            </footnote>.
+            </footnote>            
+            benutzt werden, die bei der PHP Installation zur Verfügung stehen, jedoch
+            kann die einwandfreie Funktion mit diesen nicht gewährleistet werden.
+            Die Konfiguration kann entweder über <code>Zend_Http_Client->setConfig()</code> oder
+            über den Konstruktor übergeben werden.
         </para>
         <example>
-            <title>Changing the HTTPS transport layer</title>
+            <title>Den Stream-Typen für eine HTTPS Verbindung einstellen</title>
             <programlisting role="php">
 <![CDATA[<?php
-    // Set the configuration parameters
+    // Konfigurationsparameter setzen
     $config = array(
         'adapter'      => 'Zend_Http_Client_Adapter_Socket',
         'ssltransport' => 'tls'
     );
 
-    // Instantiate a client object
+    // Client-Instanz erzeugen
     $client = Zend_Http_Client('https://www.example.com', $config);
 
-    // The following request will be sent over a TLS secure connection.
+    // Jetzt wird der Request über eine verschlüsselte Verbindung verschickt
     $response = $client->request();
 ?>]]></programlisting>
         </example>
         <para>
-            The result of the example above will be similar to opening a TCP
-            connection using the following PHP command:
+            Ein ähnliches Ergebnis erzielt man mit folgendem Code:
         </para>
         <para>
             <code>fsockopen('tls://www.example.com', 443)</code>
@@ -96,87 +93,88 @@
     </sect2>
 
     <sect2 id="zend.http.client.adapter.proxy">
-        <title>The Proxy Adapter</title>
+        <title>Der Proxy Adapter</title>
         <para>
-            The Zend_Http_Client_Adapter_Proxy adapter is similar to the default
-            Socket adapter - only the connection is made through an HTTP proxy
-            server instead of a direct connection to the target server. This
-            allows usage of Zend_Http_Client behind proxy servers - which is
-            sometimes needed for security or performance reasons.
+						Der Proxy Adapter Zend_Http_Client_Adapter_Proxy verhält sich wie der
+						standard Zend_Http_Client_Adapter_Socket, mit dem Unterschied, dass
+						die Verbindung über einen Proxy-Server aufgebaut wird.
         </para>
 
         <para>
-            Using the Proxy adapter requires several additional configuration
-            parameters to be set, in addition to the default 'adapter' option:
+        		Der Proxy Adapter benötigt zusätzliche Konfigurationsvariablen, die
+        		nachfolgend gelistet sind.
             <table>
-                <title>Zend_Http_Client configuration parameters</title>
+                <title>Zend_Http_Client Konfigurationsparameter</title>
                 <tgroup cols="4">
                     <thead>
                         <row>
                             <entry>Parameter</entry>
-                            <entry>Description</entry>
-                            <entry>Expected Type</entry>
-                            <entry>Example Value</entry>
+                            <entry>Beschreibung</entry>
+                            <entry>Datentyp</entry>
+                            <entry>Beispielwert</entry>
                         </row>
                     </thead>
                     <tbody>
                         <row>
                             <entry>proxy_host</entry>
-                            <entry>Proxy server address</entry>
+                            <entry>Proxy-Server-Adresse</entry>
                             <entry>string</entry>
-                            <entry>'proxy.myhost.com' or '10.1.2.3'</entry>
+                            <entry>'proxy.myhost.com' oder '10.1.2.3'</entry>
                         </row>
                         <row>
                             <entry>proxy_port</entry>
-                            <entry>Proxy server TCP port</entry>
+                            <entry>TCP Port des Proxy-Servers</entry>
                             <entry>integer</entry>
-                            <entry>8080 (default) or 81</entry>
+                            <entry>8080 (Standardwert) oder 81</entry>
                         </row>
                         <row>
                             <entry>proxy_user</entry>
-                            <entry>Proxy user name, if required</entry>
+                            <entry>Benutzername für die Proxynutzung, falls nötig</entry>
                             <entry>string</entry>
-                            <entry>'shahar' or '' for none (default)</entry>
+                            <entry>'wulli' oder '' für keinen Namen (Standardwert)</entry>
                         </row>
                         <row>
                             <entry>proxy_pass</entry>
-                            <entry>Proxy password, if required</entry>
+                            <entry>Passwort für die Proxynutzung, falls nötig</entry>
                             <entry>string</entry>
-                            <entry>'secret' or '' for none (default)</entry>
+                            <entry>'geheim' oder '' für kein Passwort (Standardwert)</entry>
                         </row>
                         <row>
                             <entry>proxy_auth</entry>
-                            <entry>Proxy HTTP authentication type</entry>
+                            <entry>Proxy HTTP Authentifizierungs-Typ</entry>
                             <entry>string</entry>
-                            <entry>Zend_Http_Client::AUTH_BASIC (default)</entry>
+                            <entry>Zend_Http_Client::AUTH_BASIC (Standardwert)</entry>
                         </row>
                     </tbody>
                 </tgroup>
             </table>
         </para>
         <para>
-            proxy_host should always be set - if it is not set, the client will
-            fall back to a direct connection using Zend_Http_Client_Adapter_Socket.
-            proxy_port defaults to '8080' - if your proxy listens on a different
-            port you must set this one as well.
+						proxy_host muss immer gesetzt werden, ansonsten wird der Proxy-Adapter
+						auf Zend_Http_Client_Adapter_Socket zurückgreifen und keinen Proxy Server
+						benutzen.
+						Wird kein Prot mit übergeben, so versucht der Proxy-Adapter sich auf den
+						Standardport '8080' zu verbinden.
         </para>
         <para>
-            proxy_user and proxy_pass are only required if your proxy server
-            requires you to authenticate. Providing these will add a 'Proxy-Authentication'
-            header to the request. If your proxy does not require authentication,
-            you can leave these two options out.
+						proxy_user und proxy_pass werden nur dann benötigt, wenn der Proxy-Server
+						tatsächlich eine Authentifizierung erwartet. Werden diese Parameter mit 
+						übergeben, setzt der Proxy-Adapter zusätzlich den 'Proxy-Authentication'
+						Header bei Anfragen.
+						Wird keine Authentifizierung benötigt, sollten die beiden Parameter weggelassen werden.
         </para>
         <para>
-            proxy_auth sets the proxy authentication type, if your proxy server
-            requires authentication. Possibly values are similar to the ones
-            accepted by the Zend_Http_Client::setAuth() method. Currently, only
-            basic authentication (Zend_Http_Client::AUTH_BASIC) is supported.
+						proxy_auth setzt den Authentifizierungs-Typ. Dies ist nur nötig, wenn der
+						Proxy-Server eine Authentifizierung erwartet.
+						Mögliche Werte entsprechen denen der Zend_Http_Client::setAuth() Methode.
+						Zur Zeit wird nur die BASIC-Authentifizierung ((Zend_Http_Client::AUTH_BASIC)
+						unterstützt.
         </para>
         <example>
-            <title>Using Zend_Http_Client behind a proxy server</title>
+            <title>Zend_Http_Client hinter einem Proxy-Server nutzen</title>
             <programlisting role="php">
 <![CDATA[<?php
-    // Set the configuration parameters
+    // Konfigurationsparameter setzen
     $config = array(
         'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
         'proxy_host' => 'proxy.int.zend.com',
@@ -185,17 +183,17 @@
         'proxy_pass' => 'bananashaped'
     );
 
-    // Instantiate a client object
+    // Client-Objekt instanziieren
     $client = Zend_Http_Client('http://www.example.com', $config);
 
-    // Continue working...
+    // $client kann jetzt wie gewohnt benutzt werden
 ?>]]></programlisting>
         </example>
         <para>
-            As mentioned, if proxy_host is not set or is set to a blank string,
-            the connection will fall back to a regular direct connection. This
-            allows you to easily write your application in a way that allows a
-            proxy to be used optionally, according to a configuration parameter.
+						Wie vorher erwähnt, nutzt der Proxy-Adapter eine einfache Socket-Verbindung,
+						wenn proxy_host nicht gesetzt oder leer gelassen wurde. Dies ermöglicht
+						die optionale Nutzung eines Proxy-Servers, abhängig von dem proxy_host
+						Parameter.
         </para>
     </sect2>
 
@@ -255,23 +253,21 @@
             der Antwort verarbeitet..
         </para>
         <para>
-            Sometimes, a single method call to an object can result in that
-            object performing multiple HTTP transactions. In this case, it's
-            not possible to use setResponse() alone because there's no
-            opportunity to set the next response(s) your program might need
-            before returning to the caller.
+						Manchmal erfordert ein einziger Methoden-Aufruf mehrere HTTP-Übertragungen.
+						Um mehrere HTTP-Antworten zu erstellen, müssen mit setResponse() die erste
+						und mit addResponse() die nachfolgenden Antworten gesetzt werden.
         </para>
         <example>
-            <title>Testing Against Multiple HTTP Response Stubs</title>
+            <title>Test mit mehreren HTTP-Antworten</title>
             <programlisting role="php">
 <![CDATA[<?php
-    // Instantiate a new adapter and client
+    // Instanzen vom Adapter und Client erzeugen
     $adapter = new Zend_Http_Client_Adapter_Test();
     $client = Zend_Http_Client('http://www.example.com', array(
         'adapter' => $adapter
     ));
 
-    // Set the first expected response
+    // mit setResponse() die erste Antwort setzen
     $adapter->setResponse(
         "HTTP/1.1 302 Found"      . "\r\n" .
         "Location: /"             . "\r\n" .
@@ -282,80 +278,66 @@
         '  <body><p>This page has moved.</p></body>' .
         '</html>');
 
-    // Set the next successive response
+    // mit addResponse() nachfolgende Antworten setzen
     $adapter->addResponse(
         "HTTP/1.1 200 OK"         . "\r\n" .
         "Content-Type: text/html" . "\r\n" .
                                     "\r\n" .
         '<html>' .
-        '  <head><title>My Pet Store Home Page</title></head>' .
+        '  <head><title>Meine Haustierseite...</title></head>' .
         '  <body><p>...</p></body>' .
         '</html>');
 
-    // inject the http client object ($client) into your object
-    // being tested and then test your object's behavior below
+    // Das $client Objekt kann jetzt zu testzwecken herangezogen werden,
+    // indem es wie ein normales Client-Objekt benutzt wird.
 ?>]]></programlisting>
         </example>
 
         <para>
-            The setResponse() method clears any responses in the
-            Zend_Http_Client_Adapter_Test's buffer and sets the
-            first response that will be returned.  The addResponse()
-            method will add successive responses.
+        		Die HTTP-Antworten werden in der Reihenfolge zurückgegeben,
+        		in der sie angelegt worden sind. Gibt es mehr Anfragen als
+        		Antworten, so wird wieder bei der ersten Antwort angefangen.
         </para>
         <para>
-            The responses will be replayed in the order that they
-            were added.  If more requests are made than the number
-            of responses stored, the responses will cycle again
-            in order.
-        </para>
-        <para>
-            In the example above, the adapter is configured to test your
-            object's behavior when it encounters a 302 redirect. Depending on
-            your application, following a redirect may or may not be desired
-            behavior. In our example, we expect that the redirect will be
-            followed and we configure the test adapter to help us test this.
-            The initial 302 response is set up with the setResponse() method
-            and the 200 response to be returned next is added with the
-            addResponse() method. After configuring the test adapter, inject
-            the HTTP client containing the adapter into your object under test
-            and test its behavior.
+						Das oben angeführte Beispiel kann dazu benutzt werden, um die Reaktion
+						der eigenen Anwendung auf einen 302 Redirect (Weiterleitung) zu testen.
+						Abhängig  von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
+						dass dem Redirect gefolgt wird.
         </para>
     </sect2>
 
     <sect2 id="zend.http.client.adapter.extending">
-        <title>Creating your own connection adapters</title>
+        <title>Einen eigenen Adapter erstellen</title>
         <para>
-            You can create your own connection adapters and use them. You could, for
-            example, create a connection adapter that uses persistent sockets,
-            or a connection adapter with caching abilities, and use them as
-            needed in your application.
+            Es ist möglich eigene Verbindungs-Adapter zu schreiben, die spezielle
+            Bedürfnisse, wie persistente Sockets oder gecachte Verbindungen, abdecken.
+            Diese können dann, wie gewohnt mit dem Zend_Http_Client benutzt werden.
         </para>
         <para>
-            In order to do so, you must create your own adapter class that implements
-            the Zend_Http_Client_Adapter_Interface interface. The following example
-            shows the skeleton of a user-implemented adapter class. All the public
-            functions defined in this example must be defined in your adapter as well:
+						Um einen neuen Adapter zu erstellen, muss eine neue Klasse angelegt werden,
+						die das Zend_Http_Client_Adapter_Interface implementiert. Nachfolgend
+						finden Sie ein Gerüst für einen neuen Adapter. Die public-Methoden müssen
+						unbedingt implementiert werden.
         </para>
         <example>
-            <title>Creating your own connection adapter</title>
+            <title>Gerüst für einen eigenen Verbindungs-Adapter</title>
             <programlisting role="php">
 <![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**
-     * Set the configuration array for the adapter
+     * Konfigurationsarray für den Adapter
      *
      * @param array $config
      */
     public function setConfig($config = array())
     {
-        // This rarely changes - you should usually copy the implementation
-        // in Zend_Http_Client_Adapter_Socket.
+        // in den meisten Fällen kann die Implementierung von
+        // Zend_Http_Client_Adapter_Socket eins zu eins übernommen werden
     }
 
     /**
-     * Connect to the remote server
+     * Zum Server verbinden
      *
      * @param string  $host
      * @param int     $port
@@ -363,11 +345,11 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      */
     public function connect($host, $port = 80, $secure = false)
     {
-        // Set up the connection to the remote server
+        // Verbindung zum Server herstellen
     }
 
     /**
-     * Send request to the remote server
+     * Anfrage / Request an den Server stellen
      *
      * @param string        $method
      * @param Zend_Uri_Http $url
@@ -378,31 +360,31 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      */
     public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '')
     {
-        // Send request to the remote server.
-        // This function is expected to return the full request (headers and body) as a string
+        // Anfrage stellen
+        // Diese Methode muss die komplette Antwort zurückliefern, inklusive aller Header
     }
 
     /**
-     * Read response from server
+     * Antwort des Servers auslesen
      *
      * @return string
      */
     public function read()
     {
-        // Read response from remote server and return it as a string
+        // Antwort des Servers lesen und als String zurückgeben
     }
 
     /**
-     * Close the connection to the server
+     * Verbindung zum Server beenden
      *
      */
     public function close()
     {
-        // Close the connection to the remote server - called last.
+        // Verbindung beenden - wird zum Schluss aufgerufen
     }
 }
 
-// Then, you could use this adapter:
+// Jetzt kann der Adapter benutzt werden:
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
 ));
