@@ -247,6 +247,14 @@ $select = $db->select()
             </para>
 
             <para>
+                空の配列をカラムの引数として指定すると、
+                対応するテーブルからのカラムは結果セットに含まれなくなります。
+                <code>join()</code> メソッドの
+                <link linkend="zend.db.select.building.join.example-no-columns">コード例</link>
+                を参照ください。
+            </para>
+
+            <para>
                 カラム名を
                 "<code>correlationName.columnName</code>"
                 の形式で指定することもできます。この場合、
