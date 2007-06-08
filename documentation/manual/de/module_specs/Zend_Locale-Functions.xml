@@ -169,6 +169,21 @@ print $locale->toString();
             Code der Region des Gebietsschemas enthält.
         </para>
 
+        <example>
+            <title>getLanguage and getRegion</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// Wenn das Gebietsschema 'de_AT' ist, wird 'de' als Sprache zurückgegeben
+print $locale->getLanguage();
+
+// Wenn das Gebietsschema 'de_AT' ist, wird 'AT' als Region zurückgegeben
+print $locale->getRegion();
+?>]]></programlisting>
+        </example>
+
     </sect2>
 
     <sect2 id="zend.locale.getdata">
@@ -180,6 +195,33 @@ print $locale->toString();
             Diese Informationen sind sehr nützlich wenn man einem Benutzer lokalisierte Daten anzeigen will,
             ohne das man alles Übersetzen muß. Diese Informationen sind bereits für den Gebrauch vorhanden.
         </para>
+
+        <para>
+            Die angefragte Liste an Informationen wird immer als benanntes Array zurückgegeben. Die Schlüssel
+            des Arrays sind die internationalen Abkürzungen für die zurückgegebenen und übersetzten Werte.
+            Diese können daz uverwendet werden um eine einzelne Übersetzung mit der <code>getTranslation()</code>
+            Methode zu erhalten.
+        </para>
+
+        <example>
+            <title>getTranslationList</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('de_AT');
+$list = $locale->getTranslationList('language');
+
+print_r ($list);
+// Beispiel Schlüssel -> Werte Paare...
+// [de] -> Deutsch
+// [en] -> Englisch
+
+// Einen der zurückgegebenen Schlüssel als Wert für die getTranslation() Methode einer anderen Sprache verwenden
+print $locale->getTranslation('de', 'language', 'zh');
+// Gibt die Übversetzung für die Sprache 'de' in chinesisch zurück
+
+?>]]></programlisting>
+        </example>
 
         <para>
             Man kann diese Informationen für alle Sprachen auslesen. Aber nicht alle dieser Informationen sind
@@ -403,10 +445,9 @@ foreach ($lists as $list) {
         <para>
             Um von Zend_Locale eine Liste aller bekannten Sprachen zu bekommen wobei jede Sprache in Ihrer eigenen
             Sprache geschrieben wird, kann das untere Beispiel in einer Web Seite benutzt werden. Genauso können
-            <code>getCountryTranslationList()</code> und <code>getRegionDisplay()</code> benutzt werden um eine
+            <code>getCountryTranslationList()</code> und <code>getCountryTranslation()</code> benutzt werden um eine
             Tabelle zu erhalten die Namen für Muttersprachen einer Region und Namen für Regionen in einer anderen
-            Sprache zu erhalten. <code>getCalendarTranslationList()</code> und <code>getCalendarDisplay()</code>
-            arbeiten auf die gleiche Art und Weise. Man muß einen <code>try .. catch</code> Block benutzen um
+            Sprache zu erhalten. Man muß einen <code>try .. catch</code> Block benutzen um
             Ausnahmen abzufangen die auftreten wenn ein Gebietsschema benutzt wird das nicht existiert. Nicht alle
             Sprachen sind auch ein Gebietsschema. Im Beispiel werden die Ausnahmen ignoriert um einen frühen
             Abbruch zu verhindern.
@@ -423,7 +464,7 @@ $list = $locale->getLanguageTranslationList();
 
 foreach($list as $language => $content) {
     try {
-        $output = $locale->getLanguageDisplay($language, $language);
+        $output = $locale->getLanguageTranslation($language, $language);
         if (is_string($output)) {
             print "\n<br>[".$language."] ".$output;
         }
@@ -454,7 +495,6 @@ foreach($list as $language => $content) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
-
 // Zeichenketten für Fragen
 print_r($locale->getQuestion('de'));
 
