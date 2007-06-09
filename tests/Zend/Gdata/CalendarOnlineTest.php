@@ -21,6 +21,7 @@
  */
 
 require_once 'Zend/Gdata/Calendar.php';
+require_once 'Zend/Gdata/Calendar/EventEntry.php';
 require_once 'Zend/Gdata/ClientLogin.php';
 require_once 'Zend/Http/Client.php';
 
@@ -64,5 +65,96 @@ class Zend_Gdata_CalendarOnlineTest extends PHPUnit_Framework_TestCase
             $location = $event->where;
             $recurrence = $event->recurrence;
         }
+    }
+
+    function getEvent($eventId)
+    {
+        $query = $this->gdata->newEventQuery();
+        $query->setUser('default');
+        $query->setVisibility('private');
+        $query->setProjection('full');
+        $query->setEvent($eventId);
+
+        $eventEntry = $this->gdata->getCalendarEventEntry($query);
+        $this->assertTrue(
+                $eventEntry instanceof Zend_Gdata_Calendar_EventEntry);
+        return $eventEntry;
+    }
+
+    public function createEvent(
+            $title = 'Tennis with Beth',
+            $desc='Meet for a quick lesson', $where = 'On the courts',
+            $startDate = '2008-01-20', $startTime = '10:00',
+            $endDate = '2008-01-20', $endTime = '11:00', $tzOffset = '-08')
+    {
+        $newEntry = $this->gdata->newEventEntry();
+        $newEntry->title = $this->gdata->newTitle(trim($title));
+        $newEntry->where  = array($this->gdata->newWhere($where));
+
+        $newEntry->content = $this->gdata->newContent($desc);
+        $newEntry->content->type = 'text';
+
+        $when = $this->gdata->newWhen();
+        $when->startTime = "{$startDate}T{$startTime}:00.000{$tzOffset}:00";
+        $when->endTime = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
+        $reminder = $this->gdata->newReminder();
+        $reminder->minutes = '30';
+        $reminder->method = 'email';
+        $when->reminders = array($reminder);
+        $newEntry->when = array($when);
+
+        $createdEntry = $this->gdata->insertEvent($newEntry);
+
+        $this->assertEquals($title, $createdEntry->title->text);
+        $this->assertEquals($desc, $createdEntry->content->text);
+        $this->assertEquals(strtotime($when->startTime), 
+                strtotime($createdEntry->when[0]->startTime));
+        $this->assertEquals(strtotime($when->endTime), 
+                strtotime($createdEntry->when[0]->endTime));
+        $this->assertEquals($reminder->method, 
+                $createdEntry->when[0]->reminders[0]->method);
+        $this->assertEquals($reminder->minutes, 
+                $createdEntry->when[0]->reminders[0]->minutes);
+        $this->assertEquals($where, $createdEntry->where[0]->valueString);
+        
+        return $createdEntry;
+    }
+
+    function updateEvent ($eventId, $newTitle)
+    {
+        $eventOld = $this->getEvent($eventId);
+        $eventOld->title = $this->gdata->newTitle($newTitle);
+        $eventOld->save();
+        $eventNew = $this->getEvent($eventId);
+        $this->assertEquals($newTitle, $eventNew->title->text);
+        return $eventNew;
+    }
+
+    public function testCreateEvent()
+    {
+        $createdEntry = $this->createEvent();
+    }
+
+    public function testCreateAndUpdateEvent()
+    {
+        $newTitle = 'my new title';
+        $createdEntry = $this->createEvent();
+        preg_match('#.*/([A-Za-z0-9]+)$#', $createdEntry->id->text, $matches);
+        $id = $matches[1];
+        $updatedEvent = $this->updateEvent($id, $newTitle); 
+        $this->assertEquals($newTitle, $updatedEvent->title->text);
+    }
+
+    public function testCreateAndDeleteEvent()
+    {
+        /* deletion can be performed in several different ways-- test all */
+        $createdEntry = $this->createEvent();
+        $createdEntry->delete();
+
+        $createdEntry2 = $this->createEvent();
+        $this->gdata->delete($createdEntry2); 
+
+        $createdEntry3 = $this->createEvent();
+        $this->gdata->delete($createdEntry3->getEditLink()->href); 
     }
 }
