@@ -50,7 +50,6 @@ Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
-Zend_Loader::loadClass('Zend_Http_Client');
 
 /**
  * Returns the full URL of the current page, based upon env variables
@@ -58,7 +57,7 @@ Zend_Loader::loadClass('Zend_Http_Client');
  * Env variables used:
  * $_SERVER['HTTPS'] = (on|off|)
  * $_SERVER['HTTP_HOST'] = value of the Host: header
- * $_SERVER['HTTP_PORT'] = port number (only used if not http/80,https/443
+ * $_SERVER['SERVER_PORT'] = port number (only used if not http/80,https/443
  * $_SERVER['REQUEST_URI'] = the URI after the method of the HTTP request
  *
  * @return string Current URL
@@ -78,10 +77,10 @@ function getCurrentUrl()
     $protocol = 'http://';
   }
   $host = $_SERVER['HTTP_HOST'];
-  if ($_SERVER['HTTP_PORT'] != '' &&
-     (($protocol == 'http://' && $_SERVER['HTTP_PORT'] != '80') ||
-     ($protocol == 'https://' && $_SERVER['HTTP_PORT'] != '443'))) {
-    $port = ':' . $_SERVER['HTTP_PORT'];
+  if ($_SERVER['SERVER_PORT'] != '' &&
+     (($protocol == 'http://' && $_SERVER['SERVER_PORT'] != '80') ||
+     ($protocol == 'https://' && $_SERVER['SERVER_PORT'] != '443'))) {
+    $port = ':' . $_SERVER['SERVER_PORT'];
   } else {
     $port = '';
   }
@@ -187,8 +186,7 @@ function getClientLoginHttpClient($user, $pass)
  */
 function outputCalendarMagicCookie($user, $magicCookie) 
 {
-  $client = new Zend_Http_Client();
-  $gdataCal = new Zend_Gdata_Calendar($client);
+  $gdataCal = new Zend_Gdata_Calendar();
   $query = $gdataCal->newEventQuery();
   $query->setUser($user);
   $query->setVisibility('private-' . $magicCookie);
@@ -340,7 +338,7 @@ function outputCalendarByFullTextQuery($client, $fullTextQuery='tennis')
  * @param string $startTime The start time of the event in HH:MM 24hr format
  * @param string $endTime The end time of the event in HH:MM 24hr format
  * @param string $tzOffset The offset from GMT/UTC in [+-]DD format (eg -08)
- * @return void
+ * @return string The ID URL for the event.
  */
 function createEvent ($client, $title = 'Tennis with Beth', 
     $desc='Meet for a quick lesson', $where = 'On the courts', 
@@ -362,6 +360,24 @@ function createEvent ($client, $title = 'Tennis with Beth',
 
   $createdEntry = $gc->insertEvent($newEntry);
   return $createdEntry->id->text;
+}
+
+/**
+ * Creates an event on the authenticated user's default calendar using 
+ * the specified QuickAdd string.
+ *
+ * @param Zend_Http_Client $client The authenticated client object
+ * @param string $quickAddText The QuickAdd text for the event
+ * @return string The ID URL for the event
+ */
+function createQuickAddEvent ($client, $quickAddText) {
+  $gdataCal = new Zend_Gdata_Calendar($client);
+  $event = $gdataCal->newEventEntry();
+  $event->content = $gdataCal->newContent($quickAddText);
+  $event->quickAdd = $gdataCal->newQuickAdd(true);
+
+  $newEvent = $gdataCal->insertEvent($event);
+  return $newEvent->id->text;
 }
 
 /**
@@ -552,7 +568,7 @@ function deleteEventByUrl ($client, $url)
  *
  * Run without any arguments to get usage information
  */
-if ($argc >= 2) {
+if (isset($argc) && $argc >= 2) {
   switch ($argv[1]) {
     case 'outputCalendar':
       if ($argc == 4) { 
@@ -658,6 +674,18 @@ if ($argc >= 2) {
              "'2008-01-01' '10:00' '2008-01-01' '11:00' '-08'\n";
       }
       break;
+    case 'createQuickAddEvent':
+      if ($argc == 5) { 
+        $client = getClientLoginHttpClient($argv[2], $argv[3]);
+        $id = createQuickAddEvent($client, $argv[4]);
+        print "Event created with ID: $id\n";
+      } else {
+        echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
+             "<quickAddText>\n";
+        echo "EXAMPLE: php {$argv[0]} {$argv[1]} <username> <password> " . 
+             "'Dinner at Joe's on Thrusday at 8 PM'\n";
+      }
+      break;      
     case 'createRecurringEvent':
       if ($argc == 7) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
@@ -686,6 +714,7 @@ if ($argc >= 2) {
        "deleteEventById\n" .
        "deleteEventByUrl\n" .
        "createEvent\n" .
+       "createQuickAddEvent\n" .
        "createRecurringEvent\n";
 } else {
   // running through web server - demonstrate AuthSub
