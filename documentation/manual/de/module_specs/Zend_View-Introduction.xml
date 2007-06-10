@@ -108,19 +108,18 @@ echo $view->render('booklist.php');
     </sect2>
 
     <sect2 id="zend.view.introduction.options">
-        <title>Options</title>
+        <title>Optionen</title>
 
         <para>
-            <code>Zend_View</code> has several options that may be set to
-            configure the behaviour of your view scripts.
+            <code>Zend_View</code> hat einige Optionen die gesetzt werden können um
+            das Verhalten deiner View-Skripte zu konfigurieren.
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>basePath:</code> indicate a base path from which to set
-                    the script, helper, and filter path. It assumes a directory
-                    structure of:
+                    <code>basePath:</code> zeigt den Basispfad von dem der Skript-, Helfer-
+                    und Filterpfad gesetzt wird. Es nimmt folgende Verzeichnisstruktur an:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -131,109 +130,97 @@ base/path/
 ]]]></programlisting>
 
                 <para>
-                    This may be set via <code>setBasePath()</code>,
-                    <code>addBasePath()</code>, or the <code>basePath</code>
-                    option to the constructor.
+                    Das kann über <code>setBasePath()</code>,
+                    <code>addBasePath()</code>, oder die <code>basePath</code>
+                    Option dem Konstruktor gesetzt werden.
                 </para>
             </listitem>
 
             <listitem><para>
-                <code>encoding:</code> indicate the character encoding to use
-                with <code>htmlentities()</code>,
-                <code>htmlspecialchars()</code>, and other operations. Defaults
-                to ISO-8859-1 (latin1). May be set via
-                <code>setEncoding()</code> or the <code>encoding</code> option
-                to the constructor.
+                <code>encoding:</code> zeigt das Verschlüsseln der Zeichen für die Verwendung mit
+                <code>htmlentities()</code>, <code>htmlspecialchars()</code>, und anderen Operationen.
+                Standardwert ist ISO-8859-1 (latin1). Kann über <code>setEncoding()</code>, oder die
+                <code>encoding</code> Option im Konstruktor, gesetzt werden.
             </para></listitem>
 
             <listitem><para>
-                <code>escape:</code> indicate a callback to be used by
-                <code>escape()</code>. May be set via <code>setEscape()</code>
-                or the <code>escape</code> option to the constructor.
+                <code>escape:</code> zeigt einen Rückruf welche durch <code>escape()</code> benutzt wird.
+                Kann über <code>setEscape()</code>, oder die <code>escape</code> Option im Konstruktor,
+                gesetzt werden.
             </para></listitem>
 
             <listitem><para>
-                <code>filter:</code> indicate a filter to use after rendering
-                a view script. May be set via <code>setFilter()</code>,
-                <code>addFilter()</code>, or the <code>filter</code> option to
-                the constructor.
+                <code>filter:</code> zeigt einen Filter welcher nach dem Rendern des View Skripts verwendet wird.
+                Kann über <code>setFilter()</code>, <code>addFilter()</code>, oder die <code>filter</code>
+                Option im Konstruktor, gesetzt werden.
             </para></listitem>
 
             <listitem><para>
-                <code>strictVars:</code> force <code>Zend_View</code> to emit
-                notices and warnings when uninitialized view variables are
-                accessed. This may be set by calling
-                <code>strictVars(true)</code> or passing the
-                <code>strictVars</code> option to the constructor.
+                <code>strictVars:</code> zwingt <code>Zend_View</code> Notizen und Warnungen auszugeben wenn auf
+                nicht initialisierte View Variablen zugegriffen wird. Das kann durch den Aufruf von
+                <code>strictVars(true)</code>, oder der übergabe der <code>strictVars</code> Option im Konstruktor,
+                gesetzt werden.
             </para></listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.view.introduction.accessors">
-        <title>Utility Accessors</title>
+        <title>Zugriff auf Dienstprogramme</title>
 
         <para>
-            Typically, you'll only ever need to call on <code>assign()</code>,
-            <code>render()</code>, or one of the methods for setting/adding
-            filter, helper, and script paths. However, if you wish to extend
-            <code>Zend_View</code> yourself, or need access to some of its
-            internals, a number of accessors exist:
+            Typischerweise ist es nur notwendig <code>assign()</code>, <code>render()</code>, oder eine der
+            Methoden für das Setzen/Hinzufügen von Filtern, Helfern und Skript-Pfade aufzurufen. Trotzdem, wenn
+            <code>Zend_View</code> selbst erweitert werden soll, oder auf einige der Internas zugegriffen werden
+            soll, existieren hierfür einige Zugriffsmöglichkeiten:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>getVars()</code> will return all assigned variables.
+                    <code>getVars()</code> gibt alle zugeordneten Variablen zurück.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>clearVars()</code> will clear all assigned variables;
-                    useful when you wish to re-use a view object, but want to
-                    control what variables are available..
+                    <code>clearVars()</code> löscht alle zugeordneten Variablen; Nützlich wenn ein View-Objekt
+                    wiederverwendet werden, aber auch kontrolliert werden soll welche Variablen vorhanden sind..
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getScriptPath($script)</code> will retrieve the
-                    resolved path to a given view script.
+                    <code>getScriptPath($script)</code> empfängt den aufgelösten Pfad zu einem gegebenen View Skript.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getScriptPaths()</code> will retrieve all registered
-                    script paths.
+                    <code>getScriptPaths()</code> empfängt alle registrierten Skript-Pfade.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getHelperPath($helper)</code> will retrieve the
-                    resolved path to the named helper class.
+                    <code>getHelperPath($helper)</code> empfängt den aufgelösten Pfad zur angegebenen Helferklasse.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getHelperPaths()</code> will retrieve all registered
-                    helper paths.
+                    <code>getHelperPaths()</code> empfängt alle registrierten Helferpfade.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getFilterPath($filter)</code> will retrieve the
-                    resolved path to the named filter class.
+                    <code>getFilterPath($filter)</code> empfängt den aufgelösten Pfad zur angegebenen Filterklasse.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getFilterPaths()</code> will retrieve all registered
-                    filter paths.
+                    <code>getFilterPaths()</code> empfängt alle registrierten Filterpfade.
                 </para>
             </listitem>
         </itemizedlist>
