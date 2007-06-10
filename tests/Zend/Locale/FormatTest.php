@@ -198,7 +198,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::toFloat(1234567.12345, $options), '1.234.567,1234500', "value 1.234.567,12345 expected");
     }
 
-    
+
     /**
      * test isFloat
      * expected boolean
@@ -525,10 +525,10 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 6, 'Year 6 expected');
-        
+
         $this->assertEquals(is_array(Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss'))), true, "array expected");
         Zend_Locale_Format::setOptions(array('format_type' => 'iso'));
-        
+
         $value = Zend_Locale_Format::getDate('2006 Nov 10', array('locale' => 'de_AT', 'fix_date' => true));
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
@@ -663,7 +663,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'Latn', 'Arab'), '١١٠', "١١٠ expected");
         $this->assertEquals(Zend_Locale_Format::convertNumerals('110', 'latn', 'Arab'), '١١٠', "١١٠ expected");
     }
-    
+
     /**
      * test toNumberFormat
      * expected string
@@ -695,6 +695,16 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::toNumber(-1234567.123, array('number_format' => '#0.00-', 'locale' => 'de_AT')), '1234567,12-', "value 1234567,12 expected");
     }
 
+
+    /**
+     * test toNumberFormat2
+     * expected string
+     */
+    public function testToNumberFormat2()
+    {
+        $this->assertEquals((double) Zend_Locale_Format::toNumber(1.7, array('locale' => 'en')), (double) 1.7);
+        $this->assertEquals((double) Zend_Locale_Format::toNumber(2.3, array('locale' => 'en')), (double) 2.3);
+    }
 
     /**
      * test setOption
@@ -809,7 +819,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         try {
             // uses given locale with standard format from this locale
             $this->assertSame($result,
-                Zend_Locale_Format::getDate('July 4, 2007', 
+                Zend_Locale_Format::getDate('July 4, 2007',
                     array('locale' => 'en_US', 'date_format' => Zend_Locale_Format::STANDARD)));
         } catch (Zend_Locale_Exception $e) {
             $this->fail();
