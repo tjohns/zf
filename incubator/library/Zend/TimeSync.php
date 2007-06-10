@@ -44,7 +44,7 @@ require_once 'Zend/TimeSync/Exception.php';
 class Zend_TimeSync implements IteratorAggregate
 {
     /**
-     * Set the default timeserver protocol to "Ntp". This will be called 
+     * Set the default timeserver protocol to "Ntp". This will be called
      * when no protocol is specified
      */
     const DEFAULT_PROTOCOL = 'Ntp';
@@ -110,24 +110,24 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Add a timeserver or multiple timeservers
-     * 
-     * Server should be a single string representation of a timeserver, 
+     *
+     * Server should be a single string representation of a timeserver,
      * or a structured array listing multiple timeservers.
-     * 
-     * If you provide an array of timeservers in the $target variable, 
+     *
+     * If you provide an array of timeservers in the $target variable,
      * $alias will be ignored. you can enter these as the array key
      * in the provided array, which should be structured as follows:
-     * 
+     *
      * <code>
      * $example = array(
      *   'server_a' => 'ntp://127.0.0.1',
      *   'server_b' => 'ntp://127.0.0.1:123',
      *   'server_c' => 'ntp://[2000:364:234::2.5]',
      *   'server_d' => 'ntp://[2000:364:234::2.5]:123'
-     * ); 
+     * );
      * </code>
-     * 
-     * If no port number has been suplied, the default matching port 
+     *
+     * If no port number has been suplied, the default matching port
      * number will be used.
      *
      * Supported protocols are:
@@ -151,7 +151,7 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Sets the value for a given option
-     * 
+     *
      * This will replace any currently defined options.
      *
      * @param   integer|string $key - The option's identifier
@@ -169,13 +169,13 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Sets the value for the given options
-     * 
+     *
      * This will replace any currently defined options.
      *
      * @param   array $options - An array of options to be set
      * @throws  Zend_TimeSync_Exception
      */
-    public function setOptions($options = array())
+    public function setOptions(Array $options)
     {
         if (!is_array($options)) {
             throw new Zend_TimeSync_Exception("'$options' is expected to be an array, '" . gettype($options) . "' given");
@@ -192,7 +192,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @param   string|integer $alias - The alias from the timeserver to set as current
      * @throws  Zend_TimeSync_Exception
      */
-    public function setCurrent($alias = null)
+    public function setCurrent($alias)
     {
     	if (array_key_exists($alias, $this->_timeservers)) {
             $this->_current = $this->_timeservers[$alias];
@@ -224,7 +224,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
-    public function get($alias = null)
+    public function get($alias)
     {
     	if (array_key_exists($alias, $this->_timeservers)) {
             return $this->_timeservers[$alias];
@@ -250,19 +250,19 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Returns information sent/returned from the current timeserver
-     * 
+     *
      * @return  array
      */
     public function getInfo()
     {
-        return $this->getCurrent()->getInfo();   
+        return $this->getCurrent()->getInfo();
     }
 
     /**
      * Query the timeserver list using the fallback mechanism
-     * 
-     * If there are multiple servers listed, this method will act as a 
-     * facade and will try to return the date from the first server that 
+     *
+     * If there are multiple servers listed, this method will act as a
+     * facade and will try to return the date from the first server that
      * returns a valid result.
      *
      * @param   $locale - OPTIONAL locale
