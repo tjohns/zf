@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.introduction">
+﻿<sect1 id="zend.validate.introduction">
 
     <title>Introduction</title>
 
@@ -172,7 +172,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            <code>is()</code> retourne une valeur booléenne, la meme que la méthode <code>isValid()</code>. Lors de l'utilisation de la méthode statique <code>is()</code>, les erreurs et messages ne sont pas disponibles.
+            La méthode <code>is()</code> retourne une valeur booléenne, la meme que la méthode <code>isValid()</code>. Lors de l'utilisation de la méthode statique <code>is()</code>, les erreurs et messages ne sont pas disponibles.
         </para>
 
         <para>
