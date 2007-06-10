@@ -16,7 +16,7 @@ print "Aujourd'hui nous sommes le " . date("d/m/Y") . "\n";
 print "\n";
 print "Correction de la langue ceci est la ligne deux\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         L'exemple ci-dessus montre l'affichage sans le support de traduction. Vous écrivez probablement votre code dans votre langue maternelle. Généralement vous devez traduire non seulement l'affichage, mais également les messages d'erreur et les messages de log.
@@ -40,10 +40,10 @@ print $translate->_("Ceci la ligne une")."\n";
 printf($translate->_("Aujourd'hui nous sommes le %1\$s") . "\n", date("d/m/Y"));
 print "\n";
 
-$translation->setLanguage('fr');
+$translation->setLocale('fr');
 print $translate->_("Correction de la langue ceci est la ligne deux") . "\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         Maintenant regardons plus attentivement ce qui a été fait et la façon d'intégrer Zend_Translate dans votre code.
@@ -75,7 +75,7 @@ print $translate->_("Ceci la ligne une")."\n";
 
     <para>
         Avoir des valeurs de données intégrées dans une chaîne de traduction est également supporté par l'utilisation des paramètres inclus.
-        
+
 <programlisting role="php"><![CDATA[<?php
 printf($translate->_("Aujourd'hui nous sommes le %1\$s") . "\n", date("d/m/Y"));
 ?>]]></programlisting>

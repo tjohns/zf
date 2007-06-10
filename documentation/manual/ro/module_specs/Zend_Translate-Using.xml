@@ -16,7 +16,7 @@ print "Today is the " . date("d.m.Y") . "\n";
 print "\n";
 print "Fix language here is line two\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         The example above shows some output with no support for translation.
@@ -45,10 +45,10 @@ print $translate->_("Here is line one")."\n";
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
-$translation->setLanguage('fr');
+$translation->setLocale('fr');
 print $translate->_("Fix language here is line two") . "\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         Now let's get a deeper look into what has been done and how to
@@ -89,9 +89,9 @@ print $translate->_("Here is line one")."\n";
     </para>
 
     <para>
-        Having data values integrated into a translation string is also 
+        Having data values integrated into a translation string is also
         supported through the use of embedded parameters.
-        
+
 <programlisting role="php"><![CDATA[<?php
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 ?>]]></programlisting>
@@ -99,7 +99,7 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
         Instead of <code>print()</code>, use the <code>printf()</code>
         function and replace all parameters with <code>%1\$s</code> parts.
         The first is <code>%1\$s</code>, the second <code>%2\$s</code>,
-        and so on. This way a translation can be done without knowing 
+        and so on. This way a translation can be done without knowing
         the exact value. In our example, the date is always the actual day,
         but the string can be translated without the knowledge of the actual
         day.
@@ -127,7 +127,7 @@ print $translate->_(2)."\n";
         You always must imagine how translation works.
         First Zend_Translate looks if the set language has a translation
         for the given message id or string.
-        If no translation string has been found it refers to the next lower 
+        If no translation string has been found it refers to the next lower
         language as defined within Zend_Locale.
         So "<emphasis role="strong">de_AT</emphasis>" becomes
         "<emphasis role="strong">de</emphasis>" only.
@@ -334,9 +334,9 @@ $translate->addTranslation($deutsch, 'de');
             code files and create the needed gettext source files.
             These files have the ending <emphasis role="strong">*.mo</emphasis>
             and they are binary files.
-            One freeware tool for creating the files is 
+            One freeware tool for creating the files is
             <ulink url="http://sourceforge.net/projects/poedit/">poEdit</ulink>.
-            This tool also supports you for the translation process itself. 
+            This tool also supports you for the translation process itself.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -364,7 +364,7 @@ $translate->addTranslation('path/to/german.mo', 'de');
                  For example, if one of your source files is encoded
                  with ISO-8815-11 and another file is encoded with CP815.
                  You can set only one encoding for your source file,
-                 so one of your languages probably will not display correctly. 
+                 so one of your languages probably will not display correctly.
             </para>
             <para>
                  UTF-8 is a portable format which supports all languages.
@@ -485,14 +485,14 @@ $translate->addTranslation('path/to/other.csv', 'fr');
             Options can be used with all adapters. Of course the options are different for all adapters.
             You can set options when you create the adapter. Actually there is one option which is avaiable
             to all adapters. '<code>clear</code>' decides if translation data shold be added to existing
-            one or not. Standard behaviour is to add new translation data to existing one. But the 
-            translation data is only cleared for the selected language. So all other languages will not be 
+            one or not. Standard behaviour is to add new translation data to existing one. But the
+            translation data is only cleared for the selected language. So all other languages will not be
             touched.
         </para>
 
         <para>
             You can set options temporary when using <code>addTranslation($data, $locale, array $options = array())</code>.
-            as third and optional parameter. And you can use the <code>setOptions()</code> function to 
+            as third and optional parameter. And you can use the <code>setOptions()</code> function to
             set the options fix.
         </para>
 

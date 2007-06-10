@@ -16,7 +16,7 @@ print "Today is the " . date("d.m.Y") . "\n";
 print "\n";
 print "Fix language here is line two\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         上の例の出力は、翻訳に対応していません。
@@ -45,10 +45,10 @@ print $translate->_("Here is line one")."\n";
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
-$translation->setLanguage('fr');
+$translation->setLocale('fr');
 print $translate->_("Fix language here is line two") . "\n";
 ?>]]></programlisting>
-    </example>    
+    </example>
 
     <para>
         では、何が起こっているのか、そしてどうやって
@@ -91,7 +91,7 @@ print $translate->_("Here is line one")."\n";
     <para>
         データの値を翻訳文字列に組み込むこともできます。
         この場合は埋め込みパラメータを使用します。
-        
+
 <programlisting role="php"><![CDATA[<?php
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 ?>]]></programlisting>

@@ -46,7 +46,7 @@ print $translate->_("Hier steht Zeile eins")."\n";
 printf($translate->_("Heute ist der %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
-$translation->setLanguage('fr');
+$translation->setLocale('fr');
 print $translate->_("Fixe Sprache hier ist Zeile zwei") . "\n";
 ?>]]></programlisting>
     </example>
