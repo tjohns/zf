@@ -45,7 +45,7 @@ print $translate->_("Here is line one")."\n";
 printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
-$translation->setLocale('fr');
+$translate->setLocale('fr');
 print $translate->_("Fix language here is line two") . "\n";
 ?>]]></programlisting>
     </example>    

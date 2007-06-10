@@ -40,7 +40,7 @@ print $translate->_("Ceci la ligne une")."\n";
 printf($translate->_("Aujourd'hui nous sommes le %1\$s") . "\n", date("d/m/Y"));
 print "\n";
 
-$translation->setLocale('fr');
+$translate->setLocale('fr');
 print $translate->_("Correction de la langue ceci est la ligne deux") . "\n";
 ?>]]></programlisting>
     </example>
