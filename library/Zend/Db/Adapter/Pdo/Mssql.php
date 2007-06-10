@@ -61,9 +61,29 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         unset($dsn['username']);
         unset($dsn['password']);
         unset($dsn['driver_options']);
+
         if (isset($dsn['port'])) {
             $dsn['host'] .= ',' . $port;
             unset($dsn['port']);
+        }
+
+        // this driver supports multiple DSN prefixes
+        // @see http://www.php.net/manual/en/ref.pdo-dblib.connection.php
+        if (isset($dsn['pdoType'])) {
+            switch (strtolower($dsn['pdoType'])) {
+                'freetds':
+                'sybase':
+                    $this->_pdoType = 'sybase';
+                    break;
+                'mssql':
+                    $this->_pdoType = 'mssql';
+                    break;
+                'dblib':
+                default:
+                    $this->_pdoType = 'dblib';
+                    break;
+            }
+            unset($dsn['pdoType']);
         }
 
         // use all remaining parts in the DSN
@@ -71,8 +91,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
             $dsn[$key] = "$key=$val";
         }
 
-        // $dsn = $this->_pdoType . ':' . implode(';', $dsn);
-        $dsn = 'mssql' . ':' . implode(';', $dsn);
+        $dsn = $this->_pdoType . ':' . implode(';', $dsn);
         return $dsn;
     }
 

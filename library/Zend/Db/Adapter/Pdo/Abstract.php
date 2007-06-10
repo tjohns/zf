@@ -83,6 +83,9 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             return;
         }
 
+        // get the dsn first, because some adapters alter the $_pdoType
+        $dsn = $this->_dsn();
+
         // check for PDO extension
         if (!extension_loaded('pdo')) {
             /**
@@ -106,7 +109,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
         try {
             $this->_connection = new PDO(
-                $this->_dsn(),
+                $dsn,
                 $this->_config['username'],
                 $this->_config['password'],
                 $this->_config['driver_options']
