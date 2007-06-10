@@ -1,9 +1,10 @@
 <sect1 id="zend.feed.findFeeds">
     <title>Retrieving Feeds from Web Pages</title>
     <para>
-        Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant to
-        the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
-        page with one simple method call:
+        Web stránky často obsahujú <code>&lt;link&gt;</code> značku, ktorá odkazuje
+        na zdroje s obsahom ktoré sú relevantné ku konkrétnej stránke. <code>Zend_Feed</code>
+        umožňuje získať referencie na všetky uvedené zdroje na web stránke pomocou
+        jednoduchého volania metódy: 
     </para>
     <programlisting role="php"><![CDATA[
 <?php
@@ -12,11 +13,13 @@ $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
     <para>
-        Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
-        objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on
-        the type of each feed, each respective entry in the <code>$feedArray</code> array may be a
-        <code>Zend_Feed_Rss</code> or <code>Zend_Feed_Atom</code> instance. <code>Zend_Feed</code> will throw a
-        <code>Zend_Feed_Exception</code> upon failure, such as an HTTP 404 response code or a malformed feed.
+        Metóda <code>findFeeds()</code> vráti pole objektov typu <code>Zend_Feed_Abstract</code>
+        pre každý rozpoznaný <code>&lt;link&gt;</code> na stránke news.html
+        V závislosti od typu zdroja je každá položka v poli <code>$feedArray</code>
+        je inštancia objektu <code>Zend_Feed_Rss</code> alebo <code>Zend_Feed_Atom</code>.
+        <code>Zend_Feed</code> môže vyvolať výnimku <code>Zend_Feed_Exception</code>
+        v prípade chyby, napríklad chyba 404 v prípade HTTP alebo nespracovateľný 
+        (chybný) zdroj. 
     </para>
 </sect1>
 <!--

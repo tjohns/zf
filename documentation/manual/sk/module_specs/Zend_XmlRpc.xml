@@ -2,16 +2,15 @@
     <title>Introduction</title>
 
     <para>
-        From its <ulink url="http://www.xmlrpc.com/">home page</ulink>,
-        XML-RPC is described as a "...remote procedure calling using HTTP as the
-        transport and XML as the encoding. XML-RPC is designed to be as simple
-        as possible, while allowing complex data structures to be transmitted,
-        processed and returned."
+        Na <ulink url="http://www.xmlrpc.com/">domovskej stránke</ulink> je XML-RPC
+        popisované ako "... vzdialené volanie procedúr pomocou HTTP ako transportnej
+        vrstvy a XML na prenos. XML-RPC je navrhnuté najjednoduchšie ako je to len možné
+        pri zachovaní možnosti prenášať a spracovávať komplexné dátové štruktúry.
     </para>
 
     <para>
-        The Zend Framework provides support for both consuming remote XML-RPC
-        services and building new XML-RPC servers.
+        Zend Framework poskytuje podporu pre vytváranie XML-RPC služieb a
+        XML-RPC serverov.
     </para>
 </sect1>
 <!--

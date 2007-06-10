@@ -1,22 +1,23 @@
 <sect1 id="zend.pdf.save">
-    <title>Save changes to the PDF document.</title>
+    <title>Uloženie zmien do PDF dokumentu</title>
     <para>
-    There are two methods, which provide saving changes to the PDF document. These are <code>Zend_Pdf::save()</code> and
-    <code>Zend_Pdf::render()</code> methods.
+    Uloženie zmien do PDF dokumentu je možné pomocou dvoch metód. Sú to metódy
+    <code>Zend_Pdf::save()</code> a <code>Zend_Pdf::save()</code>.
     </para>
 
     <para>
-    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> saves the PDF document to a file. If $updateOnly 
-    is true, then only the new PDF file segment is appended to a file. Otherwise, the file is overwritten.
+    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> uloží PDF dokument do súboru.
+    Ak je $updateOnly nastavené na true, potom iba nové PDF segmenty sú pridané
+    do súboru. Ináč sa celý súbor prepíše.
     </para>
 
     <para>
-    <code>Zend_Pdf::render($newSegmentOnly = false)</code> returns the PDF document as a string.  If 
-    $newSegmentOnly is true, then only the new PDF file segment is returned.
+    <code>Zend_Pdf::render($newSegmentOnly = false)</code> vráti PDF dukument ako reťazec.
+    Ak je $updateOnly nastavené na true, potom iba nové PDF segmenty sú vrátené.     
     </para>
 
     <example>
-        <title>Save PDF document.</title>
+        <title>Uloženie PDF dokumentu</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Load PDF document.
