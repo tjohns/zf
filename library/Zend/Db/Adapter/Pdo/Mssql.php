@@ -71,14 +71,14 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         // @see http://www.php.net/manual/en/ref.pdo-dblib.connection.php
         if (isset($dsn['pdoType'])) {
             switch (strtolower($dsn['pdoType'])) {
-                'freetds':
-                'sybase':
+                case 'freetds':
+                case 'sybase':
                     $this->_pdoType = 'sybase';
                     break;
-                'mssql':
+                case 'mssql':
                     $this->_pdoType = 'mssql';
                     break;
-                'dblib':
+                case 'dblib':
                 default:
                     $this->_pdoType = 'dblib';
                     break;
