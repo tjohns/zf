@@ -1,38 +1,37 @@
 <appendix id="coding-standard">
-  <title>Zend Framework PHP Coding Standard</title>
+  <title>Zend Framework PHP Code Standard</title>
     <sect1 id="coding-standard.overview">
-        <title>Overview</title>
+        <title>Übersicht</title>
 
         <sect2 id="coding-standard.overview.scope">
-            <title>Scope</title>
+            <title>Geltungsbereich</title>
 
             <para>
-                This document provides the guidelines and resources for developers
-                and teams developing or developing on the Zend Framework. The
-                subjects covered are:
+                Dieses Dokument bietet Richtlinien und Ressourcen für Entwickler und Teams welche entwickeln
+                oder am Zend Framework entwickeln. Die enthaltenen Maßnahmen sind:
 
                 <itemizedlist>
                     <listitem>
-                        <para>PHP File Formatting</para>
+                        <para>PHP Datei Formatierung</para>
                     </listitem>
 
                     <listitem>
-                        <para>Naming Conventions</para>
+                        <para>Namens Konventionen</para>
                     </listitem>
 
                     <listitem>
-                        <para>Coding Style</para>
+                        <para>Code Stil</para>
                     </listitem>
 
                     <listitem>
-                        <para>Inline Documentation</para>
+                        <para>Inline Dokumentation</para>
                     </listitem>
                 </itemizedlist>
             </para>
         </sect2>
 
         <sect2 id="coding-standard.overview.goals">
-            <title>Goals</title>
+            <title>Ziele</title>
 
             <para>
                 Good coding standards are important in any development project, but particularly
