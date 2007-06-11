@@ -1,16 +1,15 @@
 <sect1 id="introduction.overview">
 
-    <title>Overview</title>
+    <title>Übersicht</title>
 
     <para>
-        Zend Framework is a high quality and open source framework for developing Web
-        Applications and Web Services with PHP.
+        Zend Framework ist ein hoch qualitativer Open Source Framework für die Entwicklung von Web Anwendungen
+        und Web Services mit PHP.
     </para>
 
     <para>
-        Built in the true PHP spirit, the Zend Framework delivers ease-of-use and
-        powerful functionality. It provides solutions for building modern, robust, and
-        secure websites.
+        Gebaut mit dem echten PHP Geist, erlaubt der Zend Framework einfachste Handhabung und mächtige
+        Funktionalitäten. Er bietet Lösungen für das erstellen moderner, robuster und sicherer WebSeiten.
     </para>
 
 </sect1>

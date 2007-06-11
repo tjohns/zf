@@ -53,7 +53,7 @@
         </para>
         <para>
             Der Socket-Adapter kann über den Parameter <code>'ssltransport'</code> für verschiedene
-            Streams konfiguriert werden, um die aufgebaute Verbindung zu verschlüsseln. Mögliche 
+            Streams konfiguriert werden, um die aufgebaute Verbindung zu verschlüsseln. Mögliche
             Stream-Typen sind 'ssl', 'sslv2', 'sslv3' oder 'tls'. Grundsätzlich können auch andere
             Stream-Typen
             <footnote>
@@ -61,7 +61,7 @@
                     Die Liste der unterstützten Socket-Stream-Typen ist im Anhang P der PHP Dokumentation abrufbar:
                     <ulink url="http://www.php.net/manual/de/transports.php" />
                 </para>
-            </footnote>            
+            </footnote>
             benutzt werden, die bei der PHP Installation zur Verfügung stehen, jedoch
             kann die einwandfreie Funktion mit diesen nicht gewährleistet werden.
             Die Konfiguration kann entweder über <code>Zend_Http_Client->setConfig()</code> oder
@@ -95,14 +95,14 @@
     <sect2 id="zend.http.client.adapter.proxy">
         <title>Der Proxy Adapter</title>
         <para>
-						Der Proxy Adapter Zend_Http_Client_Adapter_Proxy verhält sich wie der
-						standard Zend_Http_Client_Adapter_Socket, mit dem Unterschied, dass
-						die Verbindung über einen Proxy-Server aufgebaut wird.
+                        Der Proxy Adapter Zend_Http_Client_Adapter_Proxy verhält sich wie der
+                        standard Zend_Http_Client_Adapter_Socket, mit dem Unterschied, dass
+                        die Verbindung über einen Proxy-Server aufgebaut wird.
         </para>
 
         <para>
-        		Der Proxy Adapter benötigt zusätzliche Konfigurationsvariablen, die
-        		nachfolgend gelistet sind.
+                Der Proxy Adapter benötigt zusätzliche Konfigurationsvariablen, die
+                nachfolgend gelistet sind.
             <table>
                 <title>Zend_Http_Client Konfigurationsparameter</title>
                 <tgroup cols="4">
@@ -150,25 +150,25 @@
             </table>
         </para>
         <para>
-						proxy_host muss immer gesetzt werden, ansonsten wird der Proxy-Adapter
-						auf Zend_Http_Client_Adapter_Socket zurückgreifen und keinen Proxy Server
-						benutzen.
-						Wird kein Prot mit übergeben, so versucht der Proxy-Adapter sich auf den
-						Standardport '8080' zu verbinden.
+                        proxy_host muss immer gesetzt werden, ansonsten wird der Proxy-Adapter
+                        auf Zend_Http_Client_Adapter_Socket zurückgreifen und keinen Proxy Server
+                        benutzen.
+                        Wird kein Prot mit übergeben, so versucht der Proxy-Adapter sich auf den
+                        Standardport '8080' zu verbinden.
         </para>
         <para>
-						proxy_user und proxy_pass werden nur dann benötigt, wenn der Proxy-Server
-						tatsächlich eine Authentifizierung erwartet. Werden diese Parameter mit 
-						übergeben, setzt der Proxy-Adapter zusätzlich den 'Proxy-Authentication'
-						Header bei Anfragen.
-						Wird keine Authentifizierung benötigt, sollten die beiden Parameter weggelassen werden.
+                        proxy_user und proxy_pass werden nur dann benötigt, wenn der Proxy-Server
+                        tatsächlich eine Authentifizierung erwartet. Werden diese Parameter mit
+                        übergeben, setzt der Proxy-Adapter zusätzlich den 'Proxy-Authentication'
+                        Header bei Anfragen.
+                        Wird keine Authentifizierung benötigt, sollten die beiden Parameter weggelassen werden.
         </para>
         <para>
-						proxy_auth setzt den Authentifizierungs-Typ. Dies ist nur nötig, wenn der
-						Proxy-Server eine Authentifizierung erwartet.
-						Mögliche Werte entsprechen denen der Zend_Http_Client::setAuth() Methode.
-						Zur Zeit wird nur die BASIC-Authentifizierung ((Zend_Http_Client::AUTH_BASIC)
-						unterstützt.
+                        proxy_auth setzt den Authentifizierungs-Typ. Dies ist nur nötig, wenn der
+                        Proxy-Server eine Authentifizierung erwartet.
+                        Mögliche Werte entsprechen denen der Zend_Http_Client::setAuth() Methode.
+                        Zur Zeit wird nur die BASIC-Authentifizierung ((Zend_Http_Client::AUTH_BASIC)
+                        unterstützt.
         </para>
         <example>
             <title>Zend_Http_Client hinter einem Proxy-Server nutzen</title>
@@ -190,10 +190,10 @@
 ?>]]></programlisting>
         </example>
         <para>
-						Wie vorher erwähnt, nutzt der Proxy-Adapter eine einfache Socket-Verbindung,
-						wenn proxy_host nicht gesetzt oder leer gelassen wurde. Dies ermöglicht
-						die optionale Nutzung eines Proxy-Servers, abhängig von dem proxy_host
-						Parameter.
+                        Wie vorher erwähnt, nutzt der Proxy-Adapter eine einfache Socket-Verbindung,
+                        wenn proxy_host nicht gesetzt oder leer gelassen wurde. Dies ermöglicht
+                        die optionale Nutzung eines Proxy-Servers, abhängig von dem proxy_host
+                        Parameter.
         </para>
     </sect2>
 
@@ -253,9 +253,9 @@
             der Antwort verarbeitet..
         </para>
         <para>
-						Manchmal erfordert ein einziger Methoden-Aufruf mehrere HTTP-Übertragungen.
-						Um mehrere HTTP-Antworten zu erstellen, müssen mit setResponse() die erste
-						und mit addResponse() die nachfolgenden Antworten gesetzt werden.
+                        Manchmal erfordert ein einziger Methoden-Aufruf mehrere HTTP-Übertragungen.
+                        Um mehrere HTTP-Antworten zu erstellen, müssen mit setResponse() die erste
+                        und mit addResponse() die nachfolgenden Antworten gesetzt werden.
         </para>
         <example>
             <title>Test mit mehreren HTTP-Antworten</title>
@@ -294,15 +294,15 @@
         </example>
 
         <para>
-        		Die HTTP-Antworten werden in der Reihenfolge zurückgegeben,
-        		in der sie angelegt worden sind. Gibt es mehr Anfragen als
-        		Antworten, so wird wieder bei der ersten Antwort angefangen.
+                Die HTTP-Antworten werden in der Reihenfolge zurückgegeben,
+                in der sie angelegt worden sind. Gibt es mehr Anfragen als
+                Antworten, so wird wieder bei der ersten Antwort angefangen.
         </para>
         <para>
-						Das oben angeführte Beispiel kann dazu benutzt werden, um die Reaktion
-						der eigenen Anwendung auf einen 302 Redirect (Weiterleitung) zu testen.
-						Abhängig  von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
-						dass dem Redirect gefolgt wird.
+                        Das oben angeführte Beispiel kann dazu benutzt werden, um die Reaktion
+                        der eigenen Anwendung auf einen 302 Redirect (Weiterleitung) zu testen.
+                        Abhängig  von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
+                        dass dem Redirect gefolgt wird.
         </para>
     </sect2>
 
@@ -314,10 +314,10 @@
             Diese können dann, wie gewohnt mit dem Zend_Http_Client benutzt werden.
         </para>
         <para>
-						Um einen neuen Adapter zu erstellen, muss eine neue Klasse angelegt werden,
-						die das Zend_Http_Client_Adapter_Interface implementiert. Nachfolgend
-						finden Sie ein Gerüst für einen neuen Adapter. Die public-Methoden müssen
-						unbedingt implementiert werden.
+                        Um einen neuen Adapter zu erstellen, muss eine neue Klasse angelegt werden,
+                        die das Zend_Http_Client_Adapter_Interface implementiert. Nachfolgend
+                        finden Sie ein Gerüst für einen neuen Adapter. Die public-Methoden müssen
+                        unbedingt implementiert werden.
         </para>
         <example>
             <title>Gerüst für einen eigenen Verbindungs-Adapter</title>

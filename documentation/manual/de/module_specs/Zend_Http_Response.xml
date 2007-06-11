@@ -18,7 +18,7 @@
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
 $sock = fsockopen('www.example.com', 80);
-$req = 	"GET / HTTP/1.1\r\n" .
+$req =     "GET / HTTP/1.1\r\n" .
         "Host: www.example.com\r\n" .
         "Connectoin: close\r\n" .
         "\r\n";
