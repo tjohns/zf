@@ -1,12 +1,13 @@
 <sect1 id="zend.mail.sending">
-    <title>Sending via SMTP</title>
+    <title>Posielanie cez SMTP</title>
     <para>
-        To send mail via SMTP, <code>Zend_Mail_Transport_Smtp</code> needs to be created and registered with
-        <code>Zend_Mail</code> before the <code>send()</code> method is called. For all remaining
-        <code>Zend_Mail::send()</code> calls in the current script, the SMTP transport will then be used:
+        Pre posielanie e-mailov cez SMTP je potrebné vytvoriť <code>Zend_Mail_Transport_Smtp</code>
+        a registrovať s <code>Zend_Mail</code> pred zavolaním metódy <code>send()</code>.
+        Všetky nasledujúce volania <code>Zend_Mail::send()</code> v skripte budú
+        používať SMTP.  
     </para>
     <example>
-        <title>Sending E-Mail via SMTP</title>
+        <title>Posielanie cez SMTP</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
@@ -14,12 +15,11 @@ Zend_Mail::setDefaultTransport($tr);
 ?>]]>   </programlisting>
     </example>
     <para>
-        The <code>setDefaultTransport()</code> method and the constructor of
-        <code>Zend_Mail_Transport_Smtp</code> are not expensive. These two lines can be processed at script
-        setup time (e.g., config.inc or similar) to configure the behaviour of the <code>Zend_Mail</code> class
-        for the rest of the script. This keeps configuration information out of the application logic - whether
-        mail is sent via SMTP or <ulink url="http://php.net/mail"><code>mail()</code></ulink>, what mail server
-        to use, etc.
+        Volanie <code>setDefaultTransport()</code> a vytvorenie <code>Zend_Mail_Transport_Smtp</code>
+        nie sú náročné. Tieto dva riadky kódu môžu byť vykonané počas inicializácie skriptu
+        (napr. config.inc a podobne). Tento spôsob umožní oddeliť konfiguráciu od aplikačnej logiky -
+        bez ohľadu na to či je e-mail posielaný cez SMTP, alebo <ulink url="http://php.net/mail"><code>mail()</code></ulink>
+        , aký mail server je použitý, atď. 
     </para>
 </sect1>
 <!--

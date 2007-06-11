@@ -1,19 +1,21 @@
 <sect1 id="zend.feed.consuming-atom-single-entry">
-    <title>Consuming a Single Atom Entry</title>
+    <title>Získanie jednej položky z Atom</title>
 
     <para>
-        Single Atom <code>&lt;entry&gt;</code> elements are also valid by themselves. Usually the URL for an
-        entry is the feed's URL followed by <code>/&lt;entryId&gt;</code>, such as
-        <code>http://atom.example.com/feed/1</code>, using the example URL we used above.
+        Jednotlivé položky Atom (<code>&lt;entry&gt;</code>) sú validné aj samé o sebe.
+        Zvyčajne je URL týchto položiek nasledované <code>/&lt;entryId&gt;</code>,
+        ako napríklad URL <code>http://atom.example.com/feed/1</code>, ktoré sa bude
+        ďalej používať v príkladoch.   
     </para>
 
     <para>
-        If you read a single entry, you will still have a <code>Zend_Feed_Atom</code> object, but it will
-        automatically create an "anonymous" feed to contain the entry.
+        Ak získate jednu položku, stále budete mať <code>Zend_Feed_Atom</code> objekt, ale
+        automaticky bude vytvorený &quot;anonymný&quot; zdroj, ktorý bude obsahovať
+        túto položku.
     </para>
 
     <example id="zend.feed.consuming-atom-single-entry.example.atom">
-        <title>Reading a Single-Entry Atom Feed</title>
+        <title>Získanie jednej položky z Atom</title>
         <programlisting role="php"><![CDATA[<?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
@@ -25,14 +27,13 @@ $entry = $feed->current();
     </example>
 
     <para>
-        Alternatively, you could instantiate the entry object directly if you know you are accessing an
-        <code>&lt;entry&gt;</code>-only document:
+        Eventuálne je možné vytvoriť inštanciu objektu položky priamo ak je známe,
+        že sa pristupuje k jednopoložkovému dokumentu:
     </para>
 
     <example id="zend.feed.consuming-atom-single-entry.example.entryatom">
-        <title>Using the Entry Object Directly for a Single-Entry Atom Feed</title>
-        <programlisting role="php"><![CDATA[<?php
-
+        <title>Použitie objektu položky pre získanie položky z Atom zdroja</title>
+        <programlisting role="php"><![CDATA[<?phpi
 $entry = new Zend_Feed_Entry_Atom('http://atom.example.com/feed/1');
 echo $entry->title();
 

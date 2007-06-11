@@ -1,15 +1,16 @@
 <sect1 id="zend.mail.smtp-secure">
-  <title>Securing SMTP Transport</title>
+  <title>Zabezpečenie SMTP prenosu</title>
 
-  <para><code>Zend_Mail</code> also supports the use of either TLS or SSL to
-  secure a SMTP connection. This can be enabled be passing the 'ssl' parameter
-  to the configuration array in the <code>Zend_Mail_Transport_Smtp</code>
-  constructor with a value of either 'ssl' or 'tls'. A port can optionally be
-  supplied, otherwise it defaults to 25 for TLS or 465 for SSL.</para>
+  <para>
+  <code>Zend_Mail</code> takisto podporuje použitie TLS alebo SSL na zabezpečnie
+  SMTP spojenia. Pre zabezpečenie spojenia je potrebné nastaviť 'ssl' parameter
+  v konfiguračnom poli ktoré je predávané v konštruktore <code>Zend_Mail_Transport_Smtp</code>
+  s hodnotou 'ssl' alebo 'tls'. Takisto je možné nastaviť iný port ako 25 pre TLS,
+  alebo 465 pre SSL. 
+  </para>
 
   <example>
-    <title>Enabling a secure connection within
-    Zend_Mail_Transport_Smtp</title>
+    <title>Vytvorene zabezpečného spojenia pomocou Zend_Mail_Transport_Smtp</title>
 
     <programlisting role="php">&lt;?php
 

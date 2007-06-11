@@ -1,13 +1,14 @@
 <sect1 id="zend.filter.filter_chains">
 
-    <title>Filter Chains</title>
+    <title>Postupnosť filtrov</title>
 
     <para>
-        Often multiple filters should be applied to some value in a particular order. For example, a
-        login form accepts a username that should be only lowercase, alphabetic characters.
-        <code>Zend_Filter</code> provides a simple method by which filters may be chained together. The
-        following code illustrates how to chain together two filters for the submitted username:
-
+        Často je požadované aplikovanie viacerých filtrov v požadovanom poradí. Napríklad
+        prihlasovacií formulár akceptuje iba prihlasovacie meno ktoré môže byť len
+        z malých písmen. Trieda <code>Zend_Filter</code> poskytuje jednoduchý spôsob
+        ako vytvoriť postupnosť filtrov. Nasledujúci príklad ukazuje vytvorenie postupnosti
+        dvoch filtrov pre prihlasovacie meno:
+    
         <programlisting role="php"><![CDATA[<?php
 // Provides filter chaining capability
 require_once 'Zend/Filter.php';
@@ -24,14 +25,14 @@ $filterChain->addFilter(new Zend_Filter_Alpha())
 // Filter the username
 $username = $filterChain->filter($_POST['username']);]]></programlisting>
 
-        Filters are run in the order they were added to <code>Zend_Filter</code>. In the above example, the
-        username is first removed of any non-alphabetic characters, and then any uppercase characters are
-        converted to lowercase.
-
+        Filtre sú volané v poradí v ktorom boli pridané do <code>Zend_Filter</code>.
+        V predchádzajúcom príklade sú najprv odstránené všetky znaky okrem alfabetických a
+        následne prevedené na malé pismená.
     </para>
 
     <para>
-        Any object that implements <code>Zend_Filter_Interface</code> may be used in a filter chain.
+        Každý objekt ktorý implementuje <code>Zend_Filter_Interface</code> môže byť
+        použitý v postupnosti filtrov. 
     </para>
 
 </sect1>
