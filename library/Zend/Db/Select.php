@@ -140,16 +140,16 @@ class Zend_Db_Select
         foreach ($this->_parts[self::COLUMNS] as $columnEntry) {
             list($correlationName, $column, $alias) = $columnEntry;
             if ($column instanceof Zend_Db_Expr) {
-                $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
+                $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
             } else {
                 if ($column == '*') {
                     $column = new Zend_Db_Expr('*');
                     $alias = null;
                 }
                 if (empty($correlationName)) {
-                    $columns[] = $this->_adapter->quoteColumnAs($column, $alias);
+                    $columns[] = $this->_adapter->quoteColumnAs($column, $alias, true);
                 } else {
-                    $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias);
+                    $columns[] = $this->_adapter->quoteColumnAs(array($correlationName, $column), $alias, true);
                 }
             }
         }
@@ -166,7 +166,7 @@ class Zend_Db_Select
                         $tmp .= $this->_adapter->quoteIdentifier($table['schema'], true) . '.';
                     }
                     // First table is named alone ignoring join information
-                    $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
+                    $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName, true);
                 } else {
                     // Subsequent tables may have joins
                     if (! empty($table['joinType'])) {
@@ -176,7 +176,7 @@ class Zend_Db_Select
                     if (null !== $table['schema']) {
                         $tmp .= $this->_adapter->quoteIdentifier($table['schema'], true) . '.';
                     }
-                    $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName);
+                    $tmp .= $this->_adapter->quoteTableAs($table['tableName'], $correlationName, true);
                     if (! empty($table['joinCondition'])) {
                         $tmp .= ' ON ' . $table['joinCondition'];
                     }
