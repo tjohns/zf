@@ -237,7 +237,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            The <code>is()</code> returns a boolean value, the same as the
+            The <code>is()</code> method returns a boolean value, the same as the
             <code>isValid()</code> method.  When using the static
             <code>is()</code> method, errors and messages are not available.
         </para>

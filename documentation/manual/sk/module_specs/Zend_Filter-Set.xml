@@ -1,6 +1,7 @@
-<!-- $Id$ -->
 <sect1 id="zend.filter.set">
-    <title>Standard filter set</title>
+
+    <title>Standard Filter Classes</title>
+
     <para>
         The Zend Framework comes with a standard set of filters, which are ready for you to use.
     </para>
@@ -78,6 +79,13 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.filter.set.stringtoupper">
+        <title>StringToUpper</title>
+        <para>
+            Returns the string <code>$value</code>, converting alphabetic characters to uppercase as necessary.
+        </para>
+    </sect2>
+
     <sect2 id="zend.filter.set.stringtrim">
         <title>StringTrim</title>
         <para>
@@ -88,7 +96,8 @@
     <sect2 id="zend.filter.set.striptags">
         <title>StripTags</title>
         <para>
-            This filter tries to return a string with all HTML and PHP tags stripped from a given string.
+            This filter returns the input string, with all HTML and PHP tags stripped from it, except those that have
+            been explicitly allowed.
         </para>
     </sect2>
 
