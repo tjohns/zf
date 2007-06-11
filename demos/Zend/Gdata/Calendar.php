@@ -381,6 +381,56 @@ function createQuickAddEvent ($client, $quickAddText) {
 }
 
 /**
+ * Creates a new web content event on the authenticated user's default 
+ * calendar with the specified event details. For simplicity, the event 
+ * is created as an all day event and does not include a description.
+ *
+ * @param Zend_Http_Client $client The authenticated client object
+ * @param string $title The event title
+ * @param string $startDate The start date of the event in YYYY-MM-DD format
+ * @param string $endDate The end time of the event in HH:MM 24hr format
+ * @param string $icon URL pointing to a 16x16 px icon representing the event.
+ * @param string $url The URL containing the web content for the event.
+ * @param string $height The desired height of the web content pane.
+ * @param string $width The desired width of the web content pane.
+ * @param string $type The MIME type of the web content.
+ * @return string The ID URL for the event.
+ */
+function createWebContentEvent ($client, $title = 'World Cup 2006', 
+    $startDate = '2006-06-09', $endDate = '2006-06-09', 
+    $icon = 'http://www.google.com/calendar/images/google-holiday.gif',
+    $url = 'http://www.google.com/logos/worldcup06.gif',
+    $height  = '120', $width = '276', $type = 'image/gif'
+    )
+{
+  $gc = new Zend_Gdata_Calendar($client);
+  $newEntry = $gc->newEventEntry();
+  $newEntry->title = $gc->newTitle(trim($title));
+
+  $when = $gc->newWhen();
+  $when->startTime = $startDate;
+  $when->endTime = $endDate;
+  $newEntry->when = array($when);
+  
+  $wc = $gc->newWebContent();
+  $wc->url = $url;
+  $wc->height = $height;
+  $wc->width = $width;
+
+  $wcLink = $gc->newLink();
+  $wcLink->rel = "http://schemas.google.com/gCal/2005/webContent";
+  $wcLink->title = $title;
+  $wcLink->type = $type;
+  $wcLink->href = $icon;
+  
+  $wcLink->webContent = $wc;
+  $newEntry->link = array($wcLink);
+
+  $createdEntry = $gc->insertEvent($newEntry);
+  return $createdEntry->id->text;
+}
+
+/**
  * Creates a recurring event on the authenticated user's default calendar with
  * the specified event details.  
  *
@@ -683,9 +733,26 @@ if (isset($argc) && $argc >= 2) {
         echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
              "<quickAddText>\n";
         echo "EXAMPLE: php {$argv[0]} {$argv[1]} <username> <password> " . 
-             "'Dinner at Joe's on Thrusday at 8 PM'\n";
+             "'Dinner at the beach on Thursday 8 PM'\n";
       }
-      break;      
+      break;
+    case 'createWebContentEvent':
+        if ($argc == 12) { 
+          $client = getClientLoginHttpClient($argv[2], $argv[3]);
+          $id = createWebContentEvent($client, $argv[4], $argv[5], $argv[6], 
+              $argv[7], $argv[8], $argv[9], $argv[10], $argv[11]);
+          print "Event created with ID: $id\n";
+        } else {
+          echo "Usage: php {$argv[0]} {$argv[1]} <username> <password> " . 
+               "<title> <startDate> <endDate> <icon> <url> <height> <width> <type>\n\n";
+          echo "This creates a web content event on 2007/06/09.\n";
+          echo "EXAMPLE: php {$argv[0]} {$argv[1]} <username> <password> " . 
+               "'World Cup 2006' '2007-06-09' '2007-06-10' " . 
+               "'http://www.google.com/calendar/images/google-holiday.gif' " . 
+               "'http://www.google.com/logos/worldcup06.gif' " . 
+               "'120' '276' 'image/gif'\n";
+        }
+        break;
     case 'createRecurringEvent':
       if ($argc == 7) { 
         $client = getClientLoginHttpClient($argv[2], $argv[3]);
@@ -715,6 +782,7 @@ if (isset($argc) && $argc >= 2) {
        "deleteEventByUrl\n" .
        "createEvent\n" .
        "createQuickAddEvent\n" .
+       "createWebContentEvent\n" .
        "createRecurringEvent\n";
 } else {
   // running through web server - demonstrate AuthSub
