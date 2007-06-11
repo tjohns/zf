@@ -12,7 +12,7 @@
         <code>Zend_Service</code> を継承したクラスや <code>Zend_Rest_Client</code>
         を使用して REST ベースのウェブサービスにアクセスすることに加え、
         Zend では有名なウェブサービスも個別にサポートしています。
-        たとえば次のようなものです。
+        サポートするウェブサービスについての情報は、次のセクションを参照ください。
     </para>
 
     <itemizedlist>
@@ -53,7 +53,7 @@
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.service.yahoo">Yahoo!</link>.
+                <link linkend="zend.service.yahoo">Yahoo!</link>
             </para>
         </listitem>
     </itemizedlist>
