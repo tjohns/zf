@@ -1,6 +1,7 @@
-<!-- $Id$ -->
 <sect1 id="zend.filter.set">
-    <title>標準のフィルタセット</title>
+
+    <title>標準のフィルタクラス群</title>
+
     <para>
         Zend Framework には、すぐに使える標準のフィルタ群が同梱されています。
     </para>
@@ -84,6 +85,14 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.filter.set.stringtoupper">
+        <title>StringToUpper</title>
+        <para>
+            文字列 <code>$value</code>
+            の英字を大文字に変換したものを返します。
+        </para>
+    </sect2>
+
     <sect2 id="zend.filter.set.stringtrim">
         <title>StringTrim</title>
         <para>
@@ -95,7 +104,8 @@
     <sect2 id="zend.filter.set.striptags">
         <title>StripTags</title>
         <para>
-            指定した文字列からすべての HTML タグおよび PHP タグを取り除きます。
+            入力文字列からすべての HTML タグおよび PHP タグを取り除いた結果を返します。
+            ただし明示的に許可したタグは取り除きません。
         </para>
     </sect2>
 
