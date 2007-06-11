@@ -1,6 +1,6 @@
-<!-- $Id$ -->
+﻿<!-- $Id$ -->
 <sect1 id="zend.filter.set">
-    <title>Jeux de filtres standards</title>
+    <title>Classes de filtre standards</title>
     <para>
         Le Zend Framework est fourni avec un jeu de filtres standards, qui sont directement utilisables.
     </para>
@@ -71,6 +71,13 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.filter.set.stringtoupper">
+        <title>StringToUpper</title>
+        <para>
+            Retourne la chaîne <code>$value</code>, en convertissant les caractères alphabétiques en majuscules si nécessaire.
+        </para>
+    </sect2>
+
     <sect2 id="zend.filter.set.stringtrim">
         <title>StringTrim</title>
         <para>
@@ -81,7 +88,7 @@
     <sect2 id="zend.filter.set.striptags">
         <title>StripTags</title>
         <para>
-            Ce filtre tente de retourner une chaîne où toutes les balises HTML et PHP sont supprimées de la chaîne fournie.
+            Ce filtre retourne une chaîne, où toutes les balises HTML et PHP sont supprimées, exceptées celles qui sont expcitement autorisées.
         </para>
     </sect2>
 

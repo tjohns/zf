@@ -1,6 +1,5 @@
-﻿<sect1 id="zend.validate.validating_hostnames">
-
-    <title>Validation des noms de domaine</title>
+﻿<sect2 id="zend.validate.set.hostname">
+    <title>Hostname</title>
 
     <para>
         Zend_Validate_Hostname vous permet de valider un nom de domaine sur la base d'un ensemble de spécifications connues. Il est ainsi possible de valider trois types différents de noms de domaine : un nom de domaine qualifié (ex : domaine.com), une adresse IP (ex : 1.2.3.4) ou un nom de domaine local (ex : localhost). Par défaut, seul les noms de domaine qualifiés sont acceptés. 
@@ -104,4 +103,4 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true,
         Notez cependant que les TLDs sont seulement validés si vous autorisez la validation des noms de domaine.
     </para>
 
-</sect1>
+</sect2>
