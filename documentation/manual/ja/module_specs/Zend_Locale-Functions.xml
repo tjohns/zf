@@ -63,7 +63,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // ロケールが同一かどうかを調べます
-if ($locale->equals($mylocale) { 
+if ($locale->equals($mylocale) {
     print "これらのロケールは同一です";
 }
 ?>]]></programlisting>
@@ -174,6 +174,21 @@ print $locale->toString();
             ロケール識別文字列から取得します。
         </para>
 
+        <example>
+            <title>getLanguage および getRegion</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// ロケールが 'ja_JP' の場合は、'ja' が言語として返されます
+print $locale->getLanguage();
+
+// ロケールが 'ja_JP' の場合は、地域として 'JP' が返されます
+print $locale->getRegion();
+?>]]></programlisting>
+        </example>
+
     </sect2>
 
     <sect2 id="zend.locale.getdata">
@@ -186,6 +201,32 @@ print $locale->toString();
             翻訳の必要がなくなるので便利です。
             これらはすでに使用可能となっています。
         </para>
+
+        <para>
+            情報の一覧は、常に連想配列形式で返されます。配列のキーは、
+            翻訳された値の国際的な省略形となります。
+            <code>getTranslation()</code> メソッドでこれを使用すると、翻訳を取得することができます。
+        </para>
+
+        <example>
+            <title>getTranslationList</title>
+<programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('de_AT');
+$list = $locale->getTranslationList('language');
+
+print_r ($list);
+// キーと値の組み合わせの例...
+// [de] -> Deutsch
+// [en] -> Englisch
+
+// これらのキーのいずれかを getTranslation() メソッドで使用します
+print $locale->getTranslation('de', 'language', 'zh');
+// これは、言語 'de' を中国語で表した文字列を返します
+
+?>]]></programlisting>
+        </example>
 
         <para>
             すべての言語についてこの情報を取得できます。しかし、
@@ -405,12 +446,10 @@ foreach ($lists as $list) {
 
         <para>
             Zend_Locale で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
-            以下の例をウェブページで使用してみましょう
+            以下の例をウェブページで使用してみましょう。
             同様に <code>getCountryTranslationList()</code> および
-            <code>getRegionDisplay()</code> を使用すると、
+            <code>getCountryTranslation()</code> を使用すると、
             あなたのネイティブ言語での地域名と別の言語での地域名の対応表を作成できます。
-            また、<code>getCalendarTranslationList()</code> および
-            <code>getCalendarDisplay()</code> も同様に動作します。
             <code>try .. catch</code> ブロックで、
             存在しないロケールを使用した場合の例外を処理するようにしましょう。
             すべての言語がすべてのロケールに対応しているわけではありません。
@@ -429,7 +468,7 @@ $list = $locale->getLanguageTranslationList();
 
 foreach($list as $language => $content) {
     try {
-        $output = $locale->getLanguageDisplay($language, $language);
+        $output = $locale->getLanguageTranslation($language, $language);
         if (is_string($output)) {
             print "\n<br>[".$language."] ".$output;
         }
@@ -464,7 +503,6 @@ foreach($list as $language => $content) {
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
-
 // 設問の文字列
 print_r($locale->getQuestion('de'));
 
