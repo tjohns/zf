@@ -454,6 +454,12 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->_response->setHttpResponseCode(301);
         $this->assertTrue($this->_response->isRedirect());
     }
+
+    public function testIsNotRedirectWithSufficientlyLarge3xxResponseCodeSet()
+    {
+        $this->_response->setHttpResponseCode(309);
+        $this->assertFalse($this->_response->isRedirect());
+    }
 }
 
 require_once 'Zend/Controller/Action.php';
