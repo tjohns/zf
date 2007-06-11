@@ -85,8 +85,8 @@
     <chapter id="zend.date">
         <title>Zend_Date</title>
         <xi:include href="module_specs/Zend_Date-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Date-Basic.xml" />
         <xi:include href="module_specs/Zend_Date-Theory.xml" />
+        <xi:include href="module_specs/Zend_Date-Basic.xml" />
         <xi:include href="module_specs/Zend_Date-Overview.xml" />
         <xi:include href="module_specs/Zend_Date-Constants.xml" />
         <xi:include href="module_specs/Zend_Date-Additional.xml" />
@@ -254,10 +254,10 @@
         <xi:include href="module_specs/Zend_Service_Delicious.xml" />
         <xi:include href="module_specs/Zend_Service_Flickr.xml" />
         <xi:include href="module_specs/Zend_Service_Simpy.xml" />
-        <xi:include href="module_specs/Zend_Service_Yahoo.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-Overview.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-BundledServices.xml" />
         <xi:include href="module_specs/Zend_Service_StrikeIron-AdvancedUses.xml" />
+        <xi:include href="module_specs/Zend_Service_Yahoo.xml" />
     </chapter>
     <chapter id="zend.session">
         <title>Zend_Session</title>
@@ -280,10 +280,9 @@
     <chapter id="zend.validate">
         <title>Zend_Validate</title>
         <xi:include href="module_specs/Zend_Validate.xml" />
+        <xi:include href="module_specs/Zend_Validate-Set.xml" />
         <xi:include href="module_specs/Zend_Validate-ValidatorChains.xml" />
         <xi:include href="module_specs/Zend_Validate-WritingValidators.xml" />
-        <xi:include href="module_specs/Zend_Validate-EmailAddress.xml" />
-        <xi:include href="module_specs/Zend_Validate-Hostname.xml" />
     </chapter>
     <chapter id="zend.version">
         <title>Zend_Version</title>
