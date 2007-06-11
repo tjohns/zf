@@ -48,7 +48,7 @@ class Zend_Validate_Float extends Zend_Validate_Abstract
     /**
      * Defined by Zend_Validate_Interface
      *
-     * Returns true if and only if $value only contains digit characters
+     * Returns true if and only if $value is a floating-point value
      *
      * @param  string $value
      * @return boolean
