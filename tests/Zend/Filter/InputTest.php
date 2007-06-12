@@ -563,6 +563,35 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("You cannot give an empty value for field 'field1', according to rule 'field1Rule'", $messages['field1Rule'][0]);
     }
 
+    public function testValidatorNotAllowEmpty()
+    {
+        $filters = array(  
+            'field1'   => 'Digits',
+            'field2'   => 'Alnum'
+        );
+         
+        $validators = array(  
+            'field1'   => array('Digits'),
+            'field2'   => array('Alnum')
+        );
+        $data = array(
+            'field1' => 'asd1', // Valid data
+            'field2' => '$'     // Invalid data
+        );
+        $input = new Zend_Filter_Input($filters, $validators, $data); 
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+
+        $messages = $input->getMessages();
+        $this->assertType('array', $messages);
+        $this->assertEquals(array('field2'), array_keys($messages));
+        $this->assertType('array', $messages['field2']);
+        $this->assertEquals("'' is an empty string", $messages['field2'][0]);
+    }
+
     public function testValidatorMessagesSingle()
     {
         $data = array('month' => '13abc');
