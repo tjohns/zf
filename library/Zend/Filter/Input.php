@@ -647,7 +647,7 @@ class Zend_Filter_Input
          * We have to wait until all rules have been processed because
          * a given field may be referenced by multiple rules.
          */
-        foreach (array_keys($this->_missingFields) + array_keys($this->_invalidMessages) as $rule) {
+        foreach (array_merge(array_keys($this->_missingFields), array_keys($this->_invalidMessages)) as $rule) {
             foreach ((array) $this->_validatorRules[$rule][self::FIELDS] as $field) {
                 unset($this->_data[$field]);
             }

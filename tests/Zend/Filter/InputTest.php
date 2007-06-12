@@ -572,7 +572,8 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
          
         $validators = array(  
             'field1'   => array('Digits'),
-            'field2'   => array('Alnum')
+            'field2'   => array('Alnum'),
+            'field3'   => array('Alnum', 'presence' => 'required')
         );
         $data = array(
             'field1' => 'asd1', // Valid data
@@ -580,14 +581,14 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         );
         $input = new Zend_Filter_Input($filters, $validators, $data); 
 
-        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertTrue($input->hasMissing(), 'Expected hasMissing() to return true');
         $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
         $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
         $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
 
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
-        $this->assertEquals(array('field2'), array_keys($messages));
+        $this->assertEquals(array('field2', 'field3'), array_keys($messages));
         $this->assertType('array', $messages['field2']);
         $this->assertEquals("'' is an empty string", $messages['field2'][0]);
     }
