@@ -40,13 +40,13 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_TestUtil_Pdo_Ibm extends Zend_Db_TestUtil_Db2
 {
-	public function getSchema()
+    public function getSchema()
     {
-    	$desc = $this->_db->describeTable('zfproducts');
-    	return $desc['product_id']['SCHEMA_NAME'];
+        $desc = $this->_db->describeTable('zfproducts');
+        return $desc['product_id']['SCHEMA_NAME'];
     }
-	
-	protected function _rawQuery($sql)
+
+    protected function _rawQuery($sql)
     {
         $conn = $this->_db->getConnection();
         $retval = $conn->query($sql);

@@ -36,11 +36,11 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     public function getParams(array $constants = array())
     {
         $constants = array(
-            'host'     => 'TESTS_ZEND_DB_ADAPTER_DB2_HOSTNAME',
-            'username' => 'TESTS_ZEND_DB_ADAPTER_DB2_USERNAME',
-            'password' => 'TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD',
-            'dbname'   => 'TESTS_ZEND_DB_ADAPTER_DB2_DATABASE',
-            'port'     => 'TESTS_ZEND_DB_ADAPTER_DB2_PORT'
+        'host'     => 'TESTS_ZEND_DB_ADAPTER_DB2_HOSTNAME',
+        'username' => 'TESTS_ZEND_DB_ADAPTER_DB2_USERNAME',
+        'password' => 'TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD',
+        'dbname'   => 'TESTS_ZEND_DB_ADAPTER_DB2_DATABASE',
+        'port'     => 'TESTS_ZEND_DB_ADAPTER_DB2_PORT'
         );
         return parent::getParams($constants);
     }
@@ -58,8 +58,8 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _getColumnsProducts()
     {
         return array(
-            'product_id'   => 'INT NOT NULL PRIMARY KEY',
-            'product_name' => 'VARCHAR(100)'
+        'product_id'   => 'INT NOT NULL PRIMARY KEY',
+        'product_name' => 'VARCHAR(100)'
         );
     }
 
@@ -86,7 +86,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _getSqlCreateTable($tableName)
     {
         $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
-            . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
+        . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
         );
         if (in_array(strtoupper($tableName), $tableList)) {
             return null;
@@ -97,7 +97,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _getSqlDropTable($tableName)
     {
         $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
-            . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
+        . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
         );
         if (in_array(strtoupper($tableName), $tableList)) {
             return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
@@ -108,7 +108,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _getSqlCreateSequence($sequenceName)
     {
         $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
-            . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
+        . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
         );
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return null;
@@ -119,7 +119,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _getSqlDropSequence($sequenceName)
     {
         $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
-            . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
+        . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
         );
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' RESTRICT';
@@ -137,5 +137,4 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
             throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
         }
     }
-
 }

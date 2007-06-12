@@ -116,58 +116,58 @@ class Zend_Db_AllTests
         }
 
         $ext = array(
-            'Oracle' => 'oci8',
-            'Db2'    => 'ibm_db2',
-            'Mysqli' => 'mysqli',
-            /**
+        'Oracle' => 'oci8',
+        'Db2'    => 'ibm_db2',
+        'Mysqli' => 'mysqli',
+        /**
              * @todo: 'Odbc'
              */
-        );
+             );
 
-        if (isset($ext[$driver]) && !extension_loaded($ext[$driver])) {
-            self::_skipTestSuite($driver, "extension '{$ext[$driver]}' is not loaded");
-            return;
-        }
+             if (isset($ext[$driver]) && !extension_loaded($ext[$driver])) {
+                 self::_skipTestSuite($driver, "extension '{$ext[$driver]}' is not loaded");
+                 return;
+             }
 
-        if (preg_match('/^pdo_(.*)/i', $driver, $matches)) {
-            // check for PDO extension
-            if (!extension_loaded('pdo')) {
-                self::_skipTestSuite($driver, "extension 'PDO' is not loaded");
-                return;
-            }
+             if (preg_match('/^pdo_(.*)/i', $driver, $matches)) {
+                 // check for PDO extension
+                 if (!extension_loaded('pdo')) {
+                     self::_skipTestSuite($driver, "extension 'PDO' is not loaded");
+                     return;
+                 }
 
-            // check the PDO driver is available
-            $pdo_driver = strtolower($matches[1]);
-            if (!in_array($pdo_driver, PDO::getAvailableDrivers())) {
-                self::_skipTestSuite($driver, "PDO driver '{$pdo_driver}' is not available");
-                return;
-            }
-        }
+                 // check the PDO driver is available
+                 $pdo_driver = strtolower($matches[1]);
+                 if (!in_array($pdo_driver, PDO::getAvailableDrivers())) {
+                     self::_skipTestSuite($driver, "PDO driver '{$pdo_driver}' is not available");
+                     return;
+                 }
+             }
 
-        try {
+             try {
 
-            Zend_Loader::loadClass("Zend_Db_Adapter_{$driver}Test");
-            Zend_Loader::loadClass("Zend_Db_Statement_{$driver}Test");
-            Zend_Loader::loadClass("Zend_Db_Select_{$driver}Test");
-            Zend_Loader::loadClass("Zend_Db_Table_{$driver}Test");
-            Zend_Loader::loadClass("Zend_Db_Table_Rowset_{$driver}Test");
-            Zend_Loader::loadClass("Zend_Db_Table_Row_{$driver}Test");
-            Zend_Loader::loadClass("Zend_Db_Table_Relationships_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Adapter_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Statement_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Select_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Table_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Table_Rowset_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Table_Row_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Table_Relationships_{$driver}Test");
 
-            // if we get this far, there have been no exceptions loading classes
-            // so we can add them as test suites
+                 // if we get this far, there have been no exceptions loading classes
+                 // so we can add them as test suites
 
-            $suite->addTestSuite("Zend_Db_Adapter_{$driver}Test");
-            $suite->addTestSuite("Zend_Db_Statement_{$driver}Test");
-            $suite->addTestSuite("Zend_Db_Select_{$driver}Test");
-            $suite->addTestSuite("Zend_Db_Table_{$driver}Test");
-            $suite->addTestSuite("Zend_Db_Table_Rowset_{$driver}Test");
-            $suite->addTestSuite("Zend_Db_Table_Row_{$driver}Test");
-            $suite->addTestSuite("Zend_Db_Table_Relationships_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Adapter_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Statement_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Select_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Table_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Table_Rowset_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Table_Row_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Table_Relationships_{$driver}Test");
 
-        } catch (Zend_Exception $e) {
-            self::_skipTestSuite($driver, "cannot load test classes: " . $e->getMessage());
-        }
+             } catch (Zend_Exception $e) {
+                 self::_skipTestSuite($driver, "cannot load test classes: " . $e->getMessage());
+             }
     }
 
     protected static function _skipTestSuite($driver, $message = '')

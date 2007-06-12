@@ -30,24 +30,24 @@ class Zend_Db_Statement_Pdo_IbmTest extends Zend_Db_Statement_Pdo_TestCommon
     {
         return 'Pdo_Ibm';
     }
-    
-   	public function testStatementNextRowset()
+
+    public function testStatementNextRowset()
     {
         $select = $this->_db->select()
-            ->from('zfproducts');
+        ->from('zfproducts');
         $stmt = $this->_db->prepare($select->__toString());
-        
+
         $result = $stmt->nextRowset();
-        
-        // there is no next rowset so $result should be false     
-        $this->assertFalse($result);  
+
+        // there is no next rowset so $result should be false
+        $this->assertFalse($result);
         $stmt->closeCursor();
     }
-    
+
     public function testStatementColumnCountForSelect()
     {
         $select = $this->_db->select()
-            ->from('zfproducts');
+        ->from('zfproducts');
 
         $stmt = $this->_db->prepare($select->__toString());
 
@@ -62,22 +62,22 @@ class Zend_Db_Statement_Pdo_IbmTest extends Zend_Db_Statement_Pdo_TestCommon
         $this->assertType('integer', $n);
         $this->assertEquals(2, $n);
     }
-    
+
     public function testStatementBindParamByPosition()
     {
-    	$this->markTestIncomplete($this->getDriver() . ' support for bindParam to be implemented soon.');
+        $this->markTestIncomplete($this->getDriver() . ' support for bindParam to be implemented soon.');
     }
-    
+
     public function testStatementBindValueByPosition()
     {
         $this->markTestIncomplete($this->getDriver() . ' support for bindValue to be implemented soon.');
     }
-    
+
     public function testStatementBindValueByName()
     {
         $this->markTestIncomplete($this->getDriver() . ' support for bindValue to be implemented soon.');
     }
-    
+
     public function testStatementBindParamByName()
     {
         $this->markTestIncomplete($this->getDriver() . ' support for bindParam to be implemented soon.');

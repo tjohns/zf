@@ -14,9 +14,9 @@
  *
  * @package    Zend_Db
  * @subpackage Adapter
- * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. 
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc.
  * (http://www.zend.com)
- * @license  http://www.zend.com/license/framework/1_0.txt 
+ * @license  http://www.zend.com/license/framework/1_0.txt
  * Zend Framework License version 1.0
  *
  */
@@ -27,8 +27,9 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 /** Zend_Db_Statement_Pdo_Ibm */
 require_once 'Zend/Db/Statement/Pdo/Ibm.php';
 
-
-/** Zend_Db_Adapter_Exception */
+/**
+ * Zend_Db_Adapter_Exception
+ */
 require_once 'Zend/Db/Adapter/Exception.php';
 
 
@@ -66,13 +67,13 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         if (array_key_exists('host', $this->_config)) {
             // if the host is specified, use extended connection params
             $dsn = ';DATABASE=' . $this->_config['dbname']
-                 . ';HOSTNAME=' . $this->_config['host']
-                 . ';PORT='     . $this->_config['port']
-                   // PDO_IBM supports only DB2 TCPIP protocol
-                 . ';PROTOCOL=' . 'TCPIP'                      
-                 . ';UID='      . $this->_config['username']
-                 . ';PWD='      . $this->_config['password']
-                 . ';';
+            . ';HOSTNAME=' . $this->_config['host']
+            . ';PORT='     . $this->_config['port']
+            // PDO_IBM supports only DB2 TCPIP protocol
+            . ';PROTOCOL=' . 'TCPIP'
+            . ';UID='      . $this->_config['username']
+            . ';PWD='      . $this->_config['password']
+            . ';';
             // don't pass the username and password in the DSN
             // unset($dsn['username']);
             // unset($dsn['password']);
@@ -86,15 +87,14 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     protected function _checkRequiredOptions(array $config)
     {
         parent::_checkRequiredOptions($config);
-         
+
         if (array_key_exists('host', $this->_config) &&
-            !array_key_exists('port', $config)) {
-           require_once 'Zend/Db/Adapter/Db2/Exception.php';
-           throw new Zend_Db_Adapter_Db2_Exception("Configuration must have a key for 'port' when 'host' is specified");
+        !array_key_exists('port', $config)) {
+            throw new Zend_Db_Adapter_Exception("Configuration must have a key for 'port' when 'host' is specified");
         }
     }
-     
-     /**
+
+    /**
      * Prepares an SQL statement.
      *
      * @param string $sql The SQL statement with placeholders.
@@ -108,7 +108,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         $stmt->setFetchMode($this->_fetchMode);
         return $stmt;
     }
-    
+
     /**
      * Returns a list of the tables in the database.
      * NOTE: Currently only availabe on DB2 LUW.
@@ -118,7 +118,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     public function listTables()
     {
         $sql = "SELECT tabname "
-             . "FROM SYSCAT.TABLES ";
+        . "FROM SYSCAT.TABLES ";
         return $this->fetchCol($sql);
     }
 
@@ -177,7 +177,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
          * To avoid case issues, fetch using FETCH_NUM
          */
         $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
-     
+
         /**
          * The ordering of columns is defined by the query so we can map
          * to variables to improve readability
@@ -192,11 +192,11 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         $length         = 7;
         $scale          = 8;
         $identityCol    = 9;
-        $tabconstype    = 10; 
-        $colseq         = 11; 
-                
+        $tabconstype    = 10;
+        $colseq         = 11;
+
         foreach ($result as $key => $row) {
-            list ($primary, $primaryPosition, $identity) = array(false, null, false);   
+            list ($primary, $primaryPosition, $identity) = array(false, null, false);
             if ($row[$tabconstype] == 'P') {
                 $primary = true;
                 $primaryPosition = $row[$colseq];
@@ -212,31 +212,31 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
 
             // only colname needs to be case adjusted
             $desc[$this->foldCase($row[$colname])] = array(
-                'SCHEMA_NAME'      => $row[$tabschema],
-                'TABLE_NAME'       => $row[$tabname],
-                'COLUMN_NAME'      => $row[$colname],
-                'COLUMN_POSITION'  => $row[$colno]+1,
-                'DATA_TYPE'        => $row[$typename],
-                'DEFAULT'          => $row[$default],
-                'NULLABLE'         => (bool) ($row[$nulls] == 'Y'),
-                'LENGTH'           => $row[$length],
-                'SCALE'            => $row[$scale],
-                'PRECISION'        => ($row[$typename] == 'DECIMAL' ? $row[$length] : 0),
-                'UNSIGNED'         => null, // @todo
-                'PRIMARY'          => $primary,
-                'PRIMARY_POSITION' => $primaryPosition,
-                'IDENTITY'         => $identity
+            'SCHEMA_NAME'      => $row[$tabschema],
+            'TABLE_NAME'       => $row[$tabname],
+            'COLUMN_NAME'      => $row[$colname],
+            'COLUMN_POSITION'  => $row[$colno]+1,
+            'DATA_TYPE'        => $row[$typename],
+            'DEFAULT'          => $row[$default],
+            'NULLABLE'         => (bool) ($row[$nulls] == 'Y'),
+            'LENGTH'           => $row[$length],
+            'SCALE'            => $row[$scale],
+            'PRECISION'        => ($row[$typename] == 'DECIMAL' ? $row[$length] : 0),
+            'UNSIGNED'         => null, // @todo
+            'PRIMARY'          => $primary,
+            'PRIMARY_POSITION' => $primaryPosition,
+            'IDENTITY'         => $identity
             );
         }
 
         return $desc;
     }
- 
+
     /**
      *  Inserts a table row with specified data.
      *	Special handling for PDO_IBM
      * remove empty slots
-     * 
+     *
      * @param mixed $table The table to insert data into.
      * @param array $bind Column-value pairs.
      * @return int The number of affected rows.
@@ -246,14 +246,14 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         $newbind = array();
         if (is_array($bind)) {
             foreach ($bind as $name => $value) {
-				if(!is_null($value)) {
-					$newbind[$name] = $value;
-				}
+                if(!is_null($value)) {
+                    $newbind[$name] = $value;
+                }
             }
         }
         return parent::insert($table, $newbind);
     }
-    
+
     /**
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
@@ -266,20 +266,12 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     {
         $count = intval($count);
         if ($count <= 0) {
-            /**
-             * @see Zend_Db_Adapter_Db2_Exception
-             */
-            require_once 'Zend/Db/Adapter/Db2/Exception.php';
-            throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument count=$count is not valid");
+            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
-            /**
-             * @see Zend_Db_Adapter_Db2_Exception
-             */
-            require_once 'Zend/Db/Adapter/Db2/Exception.php';
-            throw new Zend_Db_Adapter_Db2_Exception("LIMIT argument offset=$offset is not valid");
+            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
         }
 
         if ($offset == 0) {
@@ -306,8 +298,8 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
 
 
     /**
-     * Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT 
-     * column. 
+     * Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT
+     * column.
      * The IDENTITY_VAL_LOCAL() function gives the last generated identity value
      * in the current process, even if it was for a GENERATED column.
      *
@@ -351,7 +343,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     }
 
     /**
-     * Generate a new value from the specified sequence in the database, 
+     * Generate a new value from the specified sequence in the database,
      * and return it.
      *
      * @param string $sequenceName
