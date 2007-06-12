@@ -1,10 +1,10 @@
-<sect1 id="zend.validate.validating_email_addresses">
+<sect2 id="zend.validate.set.email_address">
 
-    <title>Email Adressen prüfen</title>
+    <title>Email Adresse</title>
 
     <para>
-        Zend_Validate_Email erlaubt die Prüfung von Email Adressen. Der Prüfer teilt zuerst die Email Adresse in
-        lokalen Teil @ hostname und versucht diese mit bekannten Spezifikationen für Email Adressen und Hostnamen
+        <code>Zend_Validate_EmailAddress</code> erlaubt die Prüfung von Email Adressen. Der Prüfer teilt
+        zuerst die Email Adresse in lokalen Teil @ hostname und versucht diese mit bekannten Spezifikationen für Email Adressen und Hostnamen
         zu prüfen.
     </para>
 
@@ -39,9 +39,10 @@ if ($validator->isValid($email)) {
     </para>
 
     <para>
-        Zend_Validate_Email prüft jede gültige Email Adresse mit RFC2822. Gültige Email Adressen
-        sind zum Beispiel <code>bob@domain.com</code>, <code>bob+jones@domain.us</code>,
-        <code>"bob@jones"@domain.com</code> und <code>"bob jones"@domain.com</code>
+        <code>Zend_Validate_EmailAdress</code> prüft jede gültige Email Adresse mit RFC2822.
+        Gültige Email Adressen sind zum Beispiel <code>bob@domain.com</code>,
+        <code>bob+jones@domain.us</code>, <code>"bob@jones"@domain.com</code> und
+        <code>"bob jones"@domain.com</code>
     </para>
 
     <para>
@@ -54,16 +55,17 @@ if ($validator->isValid($email)) {
     </para>
 
     <para>
-        Der Teil des Hostnamens einer Email Adresse wird mit Zend_Validate_Hostname geprüft. Standardmäßig
+        Der Teil des Hostnamens einer Email Adresse wird mit
+        <link linkend="zend.validate.set.hostname"><code>Zend_Validate_Host</code></link> geprüft. Standardmäßig
         werden nur DNS Hostnamen in der Form <code>domain.com</code> akzeptiert, aber wenn es gewünscht ist,
         können auch IP Adressen und lokale Hostnamen auch akzeptiert werden.
     </para>
 
     <para>
-        Um das zu tun, muß eine Zend_Validate_EmailAddress Instanz erstellt werden der ein Parameter
+        Um das zu tun, muß eine <code>Zend_Validate_EmailAddress</code> Instanz erstellt werden der ein Parameter
         übergeben wird, um den Typ des Hostnamens anzugeben der akzeptiert werden soll. Mehr Details
-        sind in Zend_Validate_Hostname inkludiert, zusammen mit einem Beispiel, wie DNS und lokale Hostnamen,
-        akzeptiert werden wie im Beispiel das anbei steht:
+        sind in <code>Zend_Validate_Hostname</code> inkludiert, zusammen mit einem Beispiel, wie DNS
+        und lokale Hostnamen, akzeptiert werden wie im Beispiel das anbei steht:
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -95,7 +97,7 @@ if ($validator->isValid($email)) {
 
     <para>
         Die MX Prüfung ist standardmäßig nicht eingeschaltet und wird aktuell nur durch UNIX Platformen unterstützt.
-        Um die MX Prüfung einzuschalten kann ein zweiter Parameter an den Zend_Validate_EmailAddress
+        Um die MX Prüfung einzuschalten kann ein zweiter Parameter an den <code>Zend_Validate_EmailAddress</code>
         Konstruktor übergeben werden.
 
         <programlisting role="php"><![CDATA[<?php
@@ -119,10 +121,11 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
     </para>
 
     <para>
-        Zend_Validate_EmailAddress prüft auch internationale Zeichen prüfen, die in einigen Domains existieren.
-        Dies ist als Unterstützung für Internationale Domain Namen (IDN) bekannt. Standardmäßig ist das
-        eingeschaltet. Das kann aber ausgeschaltet werden indem eine Einstellung geändert wird über das interne
-        Zend_Validate_Hostname Objekt das innerhalb von Zend_Validate_EmailAddress existiert.
+        <code>Zend_Validate_EmailAddress</code> prüft auch internationale Zeichen prüfen, die in einigen
+        Domains existieren. Dies ist als Unterstützung für Internationale Domain Namen (IDN) bekannt.
+        Standardmäßig ist das eingeschaltet. Das kann aber ausgeschaltet werden indem eine Einstellung
+        geändert wird über das interne <code>Zend_Validate_Hostname</code> Objekt das innerhalb von
+        <code>Zend_Validate_EmailAddress</code> existiert.
 
     <programlisting role="php"><![CDATA[<?php
 
@@ -131,7 +134,7 @@ $validator->hostnameValidator->setValidateIdn(false);
 ?>]]></programlisting>
 
         Weitere Informationen über die Verwendung von <code>setValidateIdn()</code> gibt es
-        in der Zend_Validate_Hostname Dokumentation.
+        in der <code>Zend_Validate_Hostname</code> Dokumentation.
     </para>
 
     <para>
@@ -145,7 +148,8 @@ $validator->hostnameValidator->setValidateIdn(false);
     <para>
         Standardmäßig wird ein Hostname mit einer List von bekannten TLDs geprüft. Das ist standardmäßig
         aktiviert, kann aber ausgeschaltet werden indem die Einstellung über das interne
-        Zend_Validate_Hostname geändert wird, das innerhalb von Zend_Validate_EmailAddress existiert.
+        <code>Zend_Validate_Hostname</code> geändert wird, das innerhalb von
+        <code>Zend_Validate_EmailAddress</code> existiert.
 
     <programlisting role="php"><![CDATA[<?php
 
@@ -154,14 +158,14 @@ $validator->hostnameValidator->setValidateTld(false);
 ?>]]></programlisting>
 
         Mehr Informationen über die Verwendung von <code>setValidateTld()</code> gibt es in der
-        Zend_Validate_Hostname Dokumentation.
+        <code>Zend_Validate_Hostname</code> Dokumentation.
     </para>
 
     <para>
         Es sollte darauf geachtet werden das TLDs nur geprüft werden wenn es auch erlaubt ist DNS Hostnamen zu prüfen.
     </para>
 
-</sect1>
+</sect2>
 <!--
 vim:se ts=4 sw=4 et:
 -->

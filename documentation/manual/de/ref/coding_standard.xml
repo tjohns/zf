@@ -34,9 +34,10 @@
             <title>Ziele</title>
 
             <para>
-                Good coding standards are important in any development project, but particularly
-                when multiple developers are working on the same project. Having coding standards
-                helps ensure that the code is of high quality, has fewer bugs, and is easily maintained.
+                Gute Programmierstandards sind in jedem Entwicklungsprojekt wichtig, aber speziell wenn
+                mehrere Entwickler am gleichen Projekt arbeiten. Programmierstandards helfen einem
+                sicherzustellen das der Code von hoher Qualität ist, weniger Fehler hat, und einfach
+                zu warten ist.
             </para>
         </sect2>
     </sect1>
@@ -98,7 +99,7 @@
         <title>Naming Conventions</title>
 
         <sect2 id="coding-standard.naming-conventions.classes">
-            <title>Classes</title>
+            <title>Klassen</title>
 
             <para>
                 The Zend Framework employs a class naming convention whereby the names
@@ -537,7 +538,7 @@ class Foo
 class Foo
 {
     /**
-     * WRONG
+     * FALSCH
      */
     public function bar()
     {
@@ -545,7 +546,7 @@ class Foo
     }
 
     /**
-     * RIGHT
+     * RICHTIG
      */
     public function bar()
     {
@@ -704,7 +705,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Files</title>
+                <title>Dateien</title>
 
                 <para>
                     Every file that contains PHP code must have a header block at the top of the file that
@@ -735,22 +736,22 @@ switch ($numPeople) {
 
                     <programlisting role="php"><![CDATA[
 /**
- * Short description for class
+ * Kurze Beschreibung für die Klasse
  *
- * Long description for class (if any)...
+ * Lange Beschreibung für die Klasse (wenn vorhanden)...
  *
  * @copyright  2005 Zend Technologies
  * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
  * @version    Release: @package_version@
  * @link       http://dev.zend.com/package/PackageName
- * @since      Class available since Release 1.2.0
+ * @since      Klasse vorhanden seit Release 1.2.0
  * @deprecated Class deprecated in Release 2.0.0
  */]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.functions">
-                <title>Functions</title>
+                <title>Funktionen</title>
 
                 <para>
                 Every function, including object methods, must have a docblock that contains at a minimum:
@@ -771,7 +772,7 @@ switch ($numPeople) {
                     If a function/method may throw an exception, use @throws:
 
                     <programlisting role="php"><![CDATA[
-@throws exceptionclass [description]
+@throws exceptionclass [Beschreibung]
 ]]></programlisting>
                 </para>
             </sect3>

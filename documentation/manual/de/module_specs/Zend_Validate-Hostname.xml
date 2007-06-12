@@ -1,6 +1,6 @@
-<sect1 id="zend.validate.validating_hostnames">
+<sect2 id="zend.validate.set.hostname">
 
-    <title>Hostnamen prüfen</title>
+    <title>Hostname</title>
 
     <para>
         Zend_Validate_Hostname erlaubt die Prüfung von Hostnamen mit einem Set von bekannten Spezifikationen.
@@ -143,7 +143,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true,
         Es sollte beachtet werden das TLDs nur geprüft werden wenn es erlaubt ist DNS Hostnamen zu prüfen.
     </para>
 
-</sect1>
+</sect2>
 <!--
 vim:se ts=4 sw=4 et:
 -->
