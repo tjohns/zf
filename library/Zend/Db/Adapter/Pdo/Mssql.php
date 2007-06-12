@@ -154,7 +154,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         /**
          * Discover metadata information about this table.
          */
-        $sql = "exec sp_columns @table_name = " . $this->quoteIdentifier($tableName);
+        $sql = "exec sp_columns @table_name = " . $this->quoteIdentifier($tableName, true);
         $stmt = $this->query($sql);
         $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
@@ -171,7 +171,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         /**
          * Discover primary key column(s) for this table.
          */
-        $sql = "exec sp_pkeys @table_name = " . $this->quoteIdentifier($tableName);
+        $sql = "exec sp_pkeys @table_name = " . $this->quoteIdentifier($tableName, true);
         $stmt = $this->query($sql);
         $primaryKeysResult = $stmt->fetchAll(Zend_Db::FETCH_NUM);
         $pkey_column_name = 3;

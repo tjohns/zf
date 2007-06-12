@@ -101,9 +101,9 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
         // the version with this improvement is in wide use.
 
         if ($schemaName) {
-            $sql = 'DESCRIBE ' . $this->quoteIdentifier("$schemaName.$tableName");
+            $sql = 'DESCRIBE ' . $this->quoteIdentifier("$schemaName.$tableName", true);
         } else {
-            $sql = 'DESCRIBE ' . $this->quoteIdentifier($tableName);
+            $sql = 'DESCRIBE ' . $this->quoteIdentifier($tableName, true);
         }
         $stmt = $this->query($sql);
 

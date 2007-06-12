@@ -217,7 +217,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $value = $this->fetchOne('SELECT '.$this->quoteIdentifier($sequenceName).'.CURRVAL FROM dual');
+        $value = $this->fetchOne('SELECT '.$this->quoteIdentifier($sequenceName, true).'.CURRVAL FROM dual');
         return $value;
     }
 
@@ -232,7 +232,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $value = $this->fetchOne('SELECT '.$this->quoteIdentifier($sequenceName).'.NEXTVAL FROM dual');
+        $value = $this->fetchOne('SELECT '.$this->quoteIdentifier($sequenceName, true).'.NEXTVAL FROM dual');
         return $value;
     }
 
@@ -259,9 +259,9 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         if ($tableName !== null) {
             $sequenceName = $tableName;
             if ($primaryKey) {
-                $sequenceName .= "_$primaryKey";
+                $sequenceName .= $this->foldCase("_$primaryKey");
             }
-            $sequenceName .= '_seq';
+            $sequenceName .= $this->foldCase('_SEQ');
             return $this->lastSequenceId($sequenceName);
         }
         return $this->_connection->lastInsertId($tableName);

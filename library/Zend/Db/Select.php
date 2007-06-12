@@ -117,10 +117,6 @@ class Zend_Db_Select
     /**
      * Converts this object to an SQL SELECT string.
      *
-     * @todo use $this->_adapter->quoteColumns() for non-PDO adapters
-     * @todo use $this->_adapter->quoteTableNames() for non-PDO adapters
-     * @todo use prepared queries for PDO adapters instead of constructing all the SQL ourselves
-     *           like in Adapter/Abstract.php.html:query()
      * @return string This object as a SELECT string.
      */
     public function __toString()
