@@ -115,16 +115,6 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
         }
     }
 
-    public function testStatementBindColumnByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
-    }
-
-    public function testStatementBindColumnByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
-    }
-
     public function getDriver()
     {
         return 'Db2';

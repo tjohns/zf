@@ -400,6 +400,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                 break;
             case Zend_Db::FETCH_BOUND:
             default:
+                $this->closeCursor();
                 /**
                  * @see Zend_Db_Statement_Exception
                  */
@@ -407,6 +408,29 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                 throw new Zend_Db_Statement_Exception('invalid fetch mode');
                 break;
         }
+    }
+
+    /**
+     * Helper function to map retrieved row
+     * to bound column variables 
+     *
+     * @param array $row
+     * @return bool True
+     */
+    public function _fetchBound($row)
+    {
+        foreach ($row as $key => $value) {
+            // bindColumn() takes 1-based integer positions
+            // but fetch() returns 0-based integer indexes
+            if (is_int($key)) {
+                $key++;
+            }
+            // set results only to variables that were bound previously
+            if (isset($this->_bindColumn[$key])) {
+                $this->_bindColumn[$key] = $value;
+            }
+        }
+        return true;
     }
 
 }

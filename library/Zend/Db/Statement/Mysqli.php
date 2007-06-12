@@ -255,51 +255,36 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
             $values[] = $val;
         }
 
-        // bind back to external references
-        foreach ($this->_bindColumn as $key => &$val) {
-            if (is_integer($key)) {
-                // bind by column position
-                // note that vals are 0-based, but cols are 1-based
-                $val = $values[$key-1];
-            } else {
-                // bind by column name
-                $i = array_search($key, $this->_keys);
-                $val = $values[$i];
-            }
-        }
-
-        $data = false;
+        $row = false;
         switch ($style) {
             case Zend_Db::FETCH_NUM:
-                $data = $values;
+                $row = $values;
                 break;
             case Zend_Db::FETCH_ASSOC:
-                $data = array_combine($this->_keys, $values);
+                $row = array_combine($this->_keys, $values);
                 break;
             case Zend_Db::FETCH_BOTH:
                 $assoc = array_combine($this->_keys, $values);
-                $data = array_merge($values, $assoc);
+                $row = array_merge($values, $assoc);
                 break;
             case Zend_Db::FETCH_OBJ:
-                $data = (object) array_combine($this->_keys, $values);
+                $row = (object) array_combine($this->_keys, $values);
                 break;
             case Zend_Db::FETCH_BOUND:
-                /**
-                 * @see Zend_Db_Statement_Mysqli_Exception
-                 */
-                require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-                throw new Zend_Db_Statement_Mysqli_Exception("FETCH_BOUND is not supported yet");
+                $assoc = array_combine($this->_keys, $values);
+                $row = array_merge($values, $assoc);
+                return $this->_fetchBound($row);
                 break;
             default:
                 /**
                  * @see Zend_Db_Statement_Mysqli_Exception
                  */
                 require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-                throw new Zend_Db_Statement_Mysqli_Exception("Invalid fetch mode specified");
+                throw new Zend_Db_Statement_Mysqli_Exception("Invalid fetch mode '$style' specified");
                 break;
         }
 
-        return $data;
+        return $row;
     }
 
     /**

@@ -110,17 +110,6 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
         }
     }
 
-    public function testStatementBindColumnByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
-    }
-
-    public function testStatementBindColumnByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
-    }
-
-
     public function getDriver()
     {
         return 'Mysqli';

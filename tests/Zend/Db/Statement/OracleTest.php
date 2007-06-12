@@ -26,6 +26,16 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
 {
 
+    public function testStatementBindParamByPosition()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
+    }
+
+    public function testStatementBindValueByPosition()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
+    }
+
     public function testStatementConstruct()
     {
         $select = $this->_db->select()
@@ -72,26 +82,9 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $this->assertEquals(array(array('product_id'=>4, 'product_name'=>'Solaris')), $result);
     }
 
-    public function testStatementSetFetchModeBoth()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
-    }
-
     public function testStatementFetchAllStyleBoth()
     {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
-        $result = $stmt->fetchAll(Zend_Db::FETCH_BOTH);
-
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(2, count($result[0]));
-        $this->assertEquals(2, $result[0][0]);
-        $this->assertEquals('Linux', $result[0][1]);
-        $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
-        // $this->assertEquals(2, $result[0]['product_id']);
-        // $this->assertEquals('Linux', $result[0]['product_name']);
+        $this->markTestIncomplete($this->getDriver() . ' driver does not support fetchAll(FETCH_BOTH)');
     }
 
     public function testStatementNextRowset()
@@ -110,24 +103,9 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $stmt->closeCursor();
     }
 
-    public function testStatementBindParamByPosition()
+    public function testStatementSetFetchModeBoth()
     {
-        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
-    }
-
-    public function testStatementBindValueByPosition()
-    {
-        $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
-    }
-
-    public function testStatementBindColumnByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
-    }
-
-    public function testStatementBindColumnByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not support FETCH_BOUND yet');
+        $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
     }
 
     public function getDriver()

@@ -721,6 +721,34 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    public function testStatementBindColumnByPositionAndName()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $prodIdValue = -99;
+        $prodNameValue = 'AmigaOS';
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+
+        $this->assertTrue($stmt->bindColumn(1, $prodIdValue),
+            'Expected bindColumn(1) to return true');
+        $this->assertTrue($stmt->bindColumn('product_name', $prodNameValue),
+            'Expected bindColumn(product_name) to return true');
+
+        $this->assertTrue($stmt->fetch(Zend_Db::FETCH_BOUND),
+            'Expected fetch() call 1 to return true');
+        $this->assertEquals(2, $prodIdValue);
+        $this->assertEquals('Linux', $prodNameValue);
+
+        $this->assertTrue($stmt->fetch(Zend_Db::FETCH_BOUND),
+            'Expected fetch() call 2 to return true');
+        $this->assertEquals(3, $prodIdValue);
+        $this->assertEquals('OS X', $prodNameValue);
+
+        $stmt->closeCursor();
+    }
+
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()
