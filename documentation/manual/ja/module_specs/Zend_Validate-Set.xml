@@ -9,7 +9,7 @@
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
-            <code>$value</code> が英数字のみで構成されているときにのみ true を返します。
+            <code>$value</code> が英数字のみで構成されているときにのみ <code>true</code> を返します。
         </para>
     </sect2>
 
