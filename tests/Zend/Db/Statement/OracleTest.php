@@ -36,24 +36,6 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support bound parameters by position');
     }
 
-    public function testStatementConstruct()
-    {
-        $select = $this->_db->select()
-            ->from('zfproducts');
-        $sql = $select->__toString();
-        $stmt = new Zend_Db_Statement_Oracle($this->_db, $sql);
-        $this->assertType('Zend_Db_Statement_Oracle', $stmt);
-    }
-
-    public function testStatementConstructWithSelectObject()
-    {
-        $select = $this->_db->select()
-            ->from('zfproducts');
-        $stmt = new Zend_Db_Statement_Oracle($this->_db, $select);
-        $this->assertType('Zend_Db_Statement_Interface', $stmt);
-        $stmt->closeCursor();
-    }
-
     public function testStatementErrorCodeKeyViolation()
     {
         $this->markTestIncomplete($this->getDriver() . ' does not return error codes correctly.');

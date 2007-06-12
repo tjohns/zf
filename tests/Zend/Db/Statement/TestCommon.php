@@ -30,21 +30,23 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
 
     public function testStatementConstruct()
     {
-        $this->fail('This test should be overridden in all subclasses.');
+        $statementClass = 'Zend_Db_Statement_' . $this->getDriver();
+
         $select = $this->_db->select()
             ->from('zfproducts');
         $sql = $select->__toString();
-        $stmt = new Zend_Db_Statement($this->_db, $sql);
+        $stmt = new $statementClass($this->_db, $sql);
         $this->assertType('Zend_Db_Statement_Interface', $stmt);
         $stmt->closeCursor();
     }
 
     public function testStatementConstructWithSelectObject()
     {
-        $this->fail('This test should be overridden in all subclasses.');
+        $statementClass = 'Zend_Db_Statement_' . $this->getDriver();
+
         $select = $this->_db->select()
             ->from('zfproducts');
-        $stmt = new Zend_Db_Statement($this->_db, $select);
+        $stmt = new $statementClass($this->_db, $select);
         $this->assertType('Zend_Db_Statement_Interface', $stmt);
         $stmt->closeCursor();
     }
