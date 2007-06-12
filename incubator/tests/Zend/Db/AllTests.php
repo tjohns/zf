@@ -92,13 +92,12 @@ class Zend_Db_AllTests
         /**
          * @todo: self::_addDbTestSuites($suite, 'Odbc');
          */
-
-        // self::_addDbTestSuites($suite, 'Pdo_Db2');
         self::_addDbTestSuites($suite, 'Pdo_Mssql');
         self::_addDbTestSuites($suite, 'Pdo_Mysql');
         self::_addDbTestSuites($suite, 'Pdo_Oci');
         self::_addDbTestSuites($suite, 'Pdo_Pgsql');
         self::_addDbTestSuites($suite, 'Pdo_Sqlite');
+        self::_addDbTestSuites($suite, 'Pdo_Ibm');
 
         if (self::$_skipTestSuite !== null) {
             $suite->addTest(self::$_skipTestSuite);
