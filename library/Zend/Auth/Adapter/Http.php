@@ -755,12 +755,15 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         }
         $temp = null;
 
-        // Must match what the server sent out
+        // The spec says this should default to MD5 if omitted. OK, so how does 
+        // that square with the algo we send out in the WWW-Authenticate header, 
+        // if it can easily be overridden by the client?
         $ret = preg_match('/algorithm="?(' . $this->_algo . ')"?/', $header, $temp);
-        if (!$ret || empty($temp[1])) {
-            return false;
+        if ($ret && !empty($temp[1])
+                 && in_array($temp[1], $this->_supportedAlgos)) {
+            $data['algorithm'] = $temp[1];
         } else {
-            $data['algorithm'] = $this->_algo;
+            $data['algorithm'] = 'MD5';  // = $this->_algo; ?
         }
         $temp = null;
 
@@ -812,8 +815,10 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
         }
         $temp = null;
 
-        // Not optional in this implementation
-        $ret = preg_match('/nc=([0-9A-Fa-f]{8})/', $header, $temp);
+        // Not optional in this implementation. The spec says this value 
+        // shouldn't be a quoted string, but apparently some implementations 
+        // quote it anyway. See ZF-1544.
+        $ret = preg_match('/nc="?([0-9A-Fa-f]{8})"?/', $header, $temp);
         if (!$ret || empty($temp[1])) {
             return false;
         }

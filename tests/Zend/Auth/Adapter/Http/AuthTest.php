@@ -236,6 +236,30 @@ class Zend_Auth_Adapter_Http_AuthTest extends PHPUnit_Framework_TestCase
         $this->_checkOK($data);
     }
 
+    public function testDigestAuthDefaultAlgo()
+    {
+        // If the client omits the aglorithm argument, it should default to MD5, 
+        // and work just as above
+
+        $cauth = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $cauth = preg_replace('/algorithm="MD5", /', '', $cauth);
+
+        $data = $this->_doAuth($cauth, 'digest');
+        $this->_checkOK($data);
+    }
+
+    public function testDigestAuthQuotedNC()
+    {
+        // The nonce count isn't supposed to be quoted, but apparently some 
+        // clients do anyway.
+
+        $cauth = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $cauth = preg_replace('/nc=00000001/', 'nc="00000001"', $cauth);
+
+        $data = $this->_doAuth($cauth, 'digest');
+        $this->_checkOK($data);
+    }
+
     public function testDigestAuthBadCreds()
     {
         // Attempt Digest Authentication with a bad username and password
