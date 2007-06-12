@@ -192,13 +192,6 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             return false;
         }
 
-        if (!$this->_stmt) {
-            require_once 'Zend/Db/Statement/Db2/Exception.php';
-            throw new Zend_Db_Statement_Db2_Exception(
-                db2_conn_errormsg($connection),
-                db2_conn_error($connection));
-        }
-
         $retval = @db2_execute($this->_stmt, $params);
 
         if ($retval === false) {

@@ -120,7 +120,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function errorCode()
     {
         if (!$this->_stmt) {
-            return null;
+            return false;
         }
         return substr($this->_stmt->sqlstate, 0, 5);
     }
@@ -134,7 +134,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function errorInfo()
     {
         if (!$this->_stmt) {
-            return null;
+            return false;
         }
         return array(
             substr($this->_stmt->sqlstate, 0, 5),
@@ -230,7 +230,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function fetch($style = null, $cursor = null, $offset = null)
     {
         if (!$this->_stmt) {
-            return null;
+            return false;
         }
         // fetch the next result
         $retval = $this->_stmt->fetch();
@@ -314,7 +314,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function rowCount()
     {
         if (!$this->_adapter) {
-            return null;
+            return false;
         }
         $mysqli = $this->_adapter->getConnection();
         return $mysqli->affected_rows;
