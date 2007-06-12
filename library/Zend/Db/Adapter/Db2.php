@@ -238,7 +238,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
          * not present in my build of PHP 5.2.1.
          */
         if (function_exists('db2_escape_string')) {
-            return db2_escape_string($value);
+            return "'" . db2_escape_string($value) . "'";
         }
         return parent::_quote($value);
     }
