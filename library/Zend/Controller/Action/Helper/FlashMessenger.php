@@ -195,7 +195,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     public function getIterator()
     {
         if ($this->hasMessages()) {
-            return new ArrayObject(self::$_messages[$this->_namespace]);
+            return new ArrayObject($this->getMessages());
         }
         
         return ArrayObject();
@@ -209,7 +209,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
     public function count()
     {
         if ($this->hasMessages()) {
-            return count(self::$_messages[$this->_namespace]);
+            return count($this->getMessages());
         }
         
         return 0;
