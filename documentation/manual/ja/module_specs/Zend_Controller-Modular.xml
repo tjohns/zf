@@ -183,11 +183,11 @@ $front->addModuleDirectory('/path/to/application/modules');
         <para>
             デフォルトは常にグローバル名前空間のほうにしたい場合は、
             フロントコントローラでパラメータ
-            <code>useGlobalDefault</code> を指定します。
+            <code>useDefaultControllerAlways</code> を指定します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('useGlobalDefault', true);
+$front->setParam('useDefaultControllerAlways', true);
 ?>]]></programlisting>
     </sect2>
 </sect1>
