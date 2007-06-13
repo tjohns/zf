@@ -802,6 +802,20 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($filters));
         $this->assertEquals('foo', $filters[0]);
     }
+
+    public function testMissingViewScriptExceptionText()
+    {
+        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR;
+        $view = new Zend_View();
+        $view->setScriptPath($base . '_templates');
+
+        try {
+            $view->render('bazbatNotExists.php.tpl');
+            $this->fail('Non-existent view script should cause an exception');
+        } catch (Exception $e) {
+            $this->assertContains($base. '_templates', $e->getMessage());
+        }
+    }
 }
 
 class Zend_ViewTest_Extension extends Zend_View
