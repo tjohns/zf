@@ -83,6 +83,26 @@ class Zend_XmlRpc_FaultTest extends PHPUnit_Framework_TestCase
         return $dom->saveXML();
     }
 
+    protected function _createNonStandardXml()
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $response = $dom->appendChild($dom->createElement('methodResponse'));
+        $fault  = $response->appendChild($dom->createElement('fault'));
+        $value  = $fault->appendChild($dom->createElement('value'));
+        $struct = $value->appendChild($dom->createElement('struct'));
+
+        $member1 = $struct->appendChild($dom->createElement('member'));
+            $member1->appendChild($dom->createElement('name', 'faultCode'));
+            $value1 = $member1->appendChild($dom->createElement('value'));
+            $value1->appendChild($dom->createElement('int', 1000));
+
+        $member2 = $struct->appendChild($dom->createElement('member'));
+            $member2->appendChild($dom->createElement('name', 'faultString'));
+            $value2 = $member2->appendChild($dom->createElement('value', 'Error string'));
+
+        return $dom->saveXML();
+    }
+
     /**
      * loadXml() test
      */
@@ -185,5 +205,19 @@ class Zend_XmlRpc_FaultTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('UTF-8', $this->_fault->getEncoding());
         $this->_fault->setEncoding('ISO-8859-1');
         $this->assertEquals('ISO-8859-1', $this->_fault->getEncoding());
+    }
+
+    public function testFaultStringWithoutStringTypeDeclaration()
+    {
+        $xml = $this->_createNonStandardXml();
+
+        try {
+            $parsed = $this->_fault->loadXml($xml);
+        } catch (Exception $e) {
+            $this->fail('Failed to parse XML: ' . $e->getMessage());
+        }
+        $this->assertTrue($parsed, $xml);
+
+        $this->assertEquals('Error string', $this->_fault->getMessage());
     }
 }
