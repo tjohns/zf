@@ -1,7 +1,21 @@
 <?php
-require_once 'Zend/Controller/Dispatcher/Standard.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Zend_Controller_Dispatcher_StandardTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_Dispatcher_StandardTest::main");
 
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 4));
+
+    set_include_path(
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
+        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
+        . PATH_SEPARATOR . get_include_path()
+    );
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once 'Zend/Controller/Dispatcher/Standard.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
@@ -9,6 +23,20 @@ require_once 'Zend/Controller/Response/Cli.php';
 class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase 
 {
     protected $_dispatcher;
+
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Dispatcher_StandardTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
 
     public function setUp()
     {
@@ -173,6 +201,25 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
             $this->assertSame('index', $request->getActionName());
         } catch (Exception $e) {
             $this->fail('Exception should not be raised when useDefaultControllerAlways set');
+        }
+    }
+
+    public function testDispatchInvalidControllerUsingDefaultsWithDefaultModule()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('bogus')
+                ->setModuleName('default');
+        $response = new Zend_Controller_Response_Cli();
+
+        $this->_dispatcher->setParam('useDefaultControllerAlways', true);
+
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+            $this->assertSame('default', $request->getModuleName());
+            $this->assertSame('index', $request->getControllerName());
+            $this->assertSame('index', $request->getActionName());
+        } catch (Exception $e) {
+            $this->fail('Exception should not be raised when useDefaultControllerAlways set; exception: ' . $e->getMessage());
         }
     }
 
@@ -350,4 +397,9 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_dispatcher->isValidModule('admin'));
         $this->assertFalse($this->_dispatcher->isValidModule('bogus'));
     }
+}
+
+// Call Zend_Controller_Dispatcher_StandardTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Dispatcher_StandardTest::main") {
+    Zend_Controller_Dispatcher_StandardTest::main();
 }

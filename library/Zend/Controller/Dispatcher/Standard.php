@@ -125,6 +125,10 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
      */
     public function formatModuleName($unformatted)
     {
+        if ($this->_defaultModule == $unformatted) {
+            return $unformatted;
+        }
+
         return ucfirst($this->_formatName($unformatted));
     }
 
