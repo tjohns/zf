@@ -179,11 +179,11 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <para>
             If you wish to always default to the global namespace, set the
-            <code>useGlobalDefault</code> parameter in the front controller:
+            <code>useDefaultControllerAlways</code> parameter in the front controller:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('useGlobalDefault', true);
+$front->setParam('useDefaultControllerAlways', true);
 ?>]]></programlisting>
     </sect2>
 </sect1>
