@@ -173,7 +173,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            和<code>isValid()</code>方法一样，<code>is()</code>返回一个布尔值。当使用静态<code>is()</code>方法时，错误和消息不可用。
+            和<code>isValid()</code>方法一样，<code>is()</code>方法返回一个布尔值。当使用静态<code>is()</code>方法时，错误和消息不可用。
         </para>
 
         <para>

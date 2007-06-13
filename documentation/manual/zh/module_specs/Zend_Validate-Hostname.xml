@@ -1,6 +1,6 @@
-<sect1 id="zend.validate.validating_hostnames">
+<sect2 id="zend.validate.set.hostnames">
 
-    <title>校验主机名</title>
+    <title>主机名</title>
 
     <para>
         Zend_Validate_Hostname允许你根据一组已知的规范来校验主机名。它检查三种不同的主机名：DNS主机名（例如domain.com），IP地址（例如1.2.3.4），和本地主机名（例如localhost）。缺省地，只有DNS主机名被匹配。
@@ -110,7 +110,7 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true,
         请注意只有当你允许DNS主机名被校验，TLDs才能被校验。
     </para>
 
-</sect1>
+</sect2>
 <!--
 vim:se ts=4 sw=4 et:
 -->
