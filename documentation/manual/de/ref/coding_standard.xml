@@ -12,7 +12,7 @@
 
                 <itemizedlist>
                     <listitem>
-                        <para>PHP Datei Formatierung</para>
+                        <para>PHP Dateiformatierung</para>
                     </listitem>
 
                     <listitem>
@@ -96,7 +96,7 @@
     </sect1>
 
     <sect1 id="coding-standard.naming-conventions">
-        <title>Naming Conventions</title>
+        <title>Namens Konventionen</title>
 
         <sect2 id="coding-standard.naming-conventions.classes">
             <title>Klassen</title>
@@ -138,7 +138,7 @@ Zend_View
 Zend_View_Helper
 ]]></programlisting>
 
-                <emphasis>IMPORTANT:</emphasis> Code that operates with the framework but is not
+                <emphasis>WICHTIG:</emphasis> Code that operates with the framework but is not
                 part of the framework, e.g. code written by a framework end-user and not Zend or
                 one of the framework's partner companies, must never start with "Zend_".
             </para>
@@ -158,7 +158,7 @@ Zend_Controller_Dispatcher_Interface]]></programlisting>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.filenames">
-            <title>Filenames</title>
+            <title>Dateinamen</title>
 
             <para>
                 For all other files, only alphanumeric characters, underscores, and the dash
@@ -225,7 +225,7 @@ widgetFactory()]]></programlisting>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.variables">
-            <title>Variables</title>
+            <title>Variablen</title>
 
             <para>
                 Variable names may only contain alphanumeric characters. Underscores are not permitted.
@@ -253,7 +253,7 @@ widgetFactory()]]></programlisting>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.constants">
-            <title>Constants</title>
+            <title>Konstanten</title>
 
             <para>
                 Constants may contain both alphanumeric characters and the underscore. Numbers are permitted
@@ -272,7 +272,7 @@ widgetFactory()]]></programlisting>
     </sect1>
 
     <sect1 id="coding-standard.coding-style">
-        <title>Coding Style</title>
+        <title>Code Stil</title>
 
         <sect2 id="coding-standard.coding-style.php-code-demarcation">
             <title>PHP Code Demarcation</title>
@@ -418,7 +418,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
             <title>Classes</title>
 
             <sect3 id="coding-standard.coding-style.classes.declaration">
-                <title>Class Declaration</title>
+                <title>Klassen Deklarationen</title>
 
                 <para>
                     Classes must be named by following the naming conventions.
@@ -437,12 +437,12 @@ $sampleArray = array('firstKey'  => 'firstValue',
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Dokumentations Block hier
  */
 class SampleClass
 {
-    // entire content of class
-    // must be indented four spaces
+    // gesamter Inhalt der Klasse
+    // muss durch vier Leerzeichen eingerückt sein
 }]]></programlisting>
                 </para>
             </sect3>
@@ -490,17 +490,17 @@ class SampleClass
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Dokumentations Block hier
  */
 class Foo
 {
     /**
-     * Documentation Block Here
+     * Dokumentations Block hier
      */
     public function bar()
     {
-        // entire content of function
-        // must be indented four spaces
+        // gesamter Inhalt der Funktion
+        // muss durch view Leerzeichen eingerückt sein
     }
 }]]></programlisting>
                 </para>
@@ -510,12 +510,12 @@ class Foo
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Dokumentations Block hier
  */
 class Foo
 {
     /**
-     * Documentation Block Here
+     * Dokumentations Block hier
      */
     public function bar(&$baz)
     {}
@@ -533,7 +533,7 @@ class Foo
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Dokumentations Block hier
  */
 class Foo
 {

@@ -10,20 +10,19 @@
     </para>
 
     <para>
-        A helper is simply a class. Let's say we want a helper named 'fooBar'.
-        By default, the class is prefixed with <code>'Zend_View_Helper_'</code>
-        (you can specify a custom prefix when setting a helper path), and the
-        last segment of the class name is the helper name; this segment should
-        be TitleCapped; the full class name is then:
-        <code>Zend_View_Helper_FooBar</code>. This class should contain at the
-        minimum a single method, named after the helper, and camelCased:
-        <code>fooBar()</code>.
+        Ein Helfer ist einfach eine Klasse. Nehmen wir an wir wollen einen Helfer der 'fooBar' heißt.
+        Standardmäßig wird der Klasse <code>'Zend_View_Helper_'</code> vorangestellt (Es kann ein
+        eigener Prefix definiert werden wenn ein Pfad für die Helfer definiert wird), und das letzte
+        Segment des Klassennamens ist der Name des Helfers; Dieses Segment sollte TitelGroßgeschrieben
+        sein; der volle Klassenname ist dann: <code>Zend_View_Helper_FooBar</code>. Diese Klasse
+        sollte mindestens eine einzelne Methode enthalten, die nach dem Helfer benannt und
+        camelCased ist: <code>fooBar()</code>.
     </para>
 
     <note>
         <para>
-            Helper names are always camelCased, i.e., they never begin with an
-            uppercase character.
+            Namen von Helfern sind immer camelCased, bzw. beginnen Sie nie mit einem großgeschriebenen
+            Zeichen.
         </para>
     </note>
 
@@ -51,13 +50,12 @@
         <itemizedlist>
 
             <listitem><para>
-                <code>declareVars()</code>: Primarily for use when using
-                <code>strictVars()</code>, this helper can be used to declare
-                template variables that may or may not already be set in the
-                view object, as well as to set default values.  Arrays passed as
-                arguments to the method will be used to set default values;
-                otherwise, if the variable does not exist, it is set to an empty
-                string.
+                <code>declareVars()</code>: Primär benutzt mit
+                <code>strictVars()</code>, kann dieser Helfer verwendet werden um template Variablen
+                zu deklarieren welche bereits, oder noch nicht, im View Objekt bereits gesetzt sind,
+                sowie auch Standard Werte. Arrays welche als Argument dieser Methode übergeben werden,
+                werden verwendet um Standard Werte zu setzen; Andernfalls, wenn die Variable nicht
+                existiert, wird diese mit einem leeren String gesetzt.
             </para></listitem>
 
             <listitem><para>
@@ -125,17 +123,15 @@
             </para></listitem>
 
             <listitem><para>
-                <code>url($urlOptions, $name, $reset):</code> Creates a URL
-                string based on a named route. <code>$urlOptions</code> should
-                be an associative array of key/value pairs used by the
-                particular route.
+                <code>url($urlOptions, $name, $reset):</code> Erstelle einen URL String basierend
+                auf dem Namen der Route. <code>$urlOptions</code> sollte ein assoziatives Array von
+                Schlüßel/Werte Paaren sein, welche bon der speziellen Route verwendet wird.
             </para></listitem>
 
             <listitem><para>
-                <code>htmlList($items, $ordered, $attribs):</code> generates
-                unordered and ordered lists based on the <code>$items</code>
-                passed to it. If <code>$items</code> is a multidimensional
-                array, a nested list will be built.
+                <code>htmlList($items, $ordered, $attribs):</code> erzeugt ungeordnete und geordnete Listen
+                welche auf den <code>$items</code> basieren die übergeben wurden. Wenn <code>$items</code>
+                ein multidimensionales Array ist, wird eine verschachtelte Liste gebaut.
             </para></listitem>
 
         </itemizedlist>
@@ -177,9 +173,9 @@
     </label></p>
     <p><label>Dein Land:
         <select name="country">
-            <option value="us" selected="selected">United States</option>
+            <option value="us" selected="selected">Amerika</option>
             <option value="il">Israel</option>
-            <option value="de">Germany</option>
+            <option value="de">Deutschland</option>
         </select>
     </label></p>
     <p><label>Möchtest Du hinzugefügt werden?
@@ -324,11 +320,11 @@ Ich habe 'The Jerk' 3 Mal(e) gesehen.]]>
         </programlisting>
 
         <para>
-            Sometimes you will need access to the calling <code>Zend_View</code>
-            object -- for instance, if you need to use the registered encoding,
-            or want to render another view script as part of your helper. To get
-            access to the view object, your helper class should have a
-            <code>setView($view)</code> method, like the following:
+            Hier und da ist es notwendig das aufrufende <code>Zend_View</code> Objekt aufzurufen --
+            zum Beispiel, wenn es notwendig ist die registrierte Verschöüsselung zu verwenden, oder
+            wenn ein anderes View Skript gerendert werden soll, als Teil des eigenen Helfers. Um
+            Zugriff zum View Objekt zu erhalten, sollte die eigene Helfer Klasse eine
+            <code>setView($view)</code> Methode wie folgt besitzen:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -349,10 +345,10 @@ class My_View_Helper_ScriptPath
 ?>]]></programlisting>
 
         <para>
-            If your helper class has a <code>setView()</code> method, it will be
-            called when the helper class is first instantiated, and passed the
-            current view object. It is up to you to persist the object in your
-            class, as well as determine how it should be accessed.
+            Wenn die Helfer Klasse eine <code>setView()</code> Methode hat, wird diese aufgerufen wenn die
+            Helfer Klasse das erste Mal instanziert wird, und das aktuelle View Objekt übergeben wird.
+            Es liegt an einem selbst das Objekt in der Klasse zu fixieren, genau so wie herauszufinden
+            wie auf dieses zugegriffen werden sollte.
         </para>
     </sect2>
 
