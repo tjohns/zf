@@ -216,12 +216,61 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         foreach($autoloaders as $function) {
             if ($expected == $function) {
                 $found = true;
+                break;
             }
         }
+        $this->assertTrue($found, "Failed to register Zend_Loader::autoload() with spl_autoload");
 
-        if (!$found) {
-            $this->fail("Failed to register Zend_Loader::autoload() with spl_autoload");
+        spl_autoload_unregister($expected);
+    }
+
+    public function testLoaderRegisterAutoloadExtendedClassNeedsAutoloadMethod()
+    {
+        if (!function_exists('spl_autoload_register')) {
+            $this->markTestSkipped("spl_autoload not installed on this PHP installation");
         }
+
+        Zend_Loader::registerAutoload('Zend_Loader_MyLoader');
+        $autoloaders = spl_autoload_functions();
+        $expected    = array('Zend_Loader_MyLoader', 'autoload');
+        $found       = false;
+        foreach ($autoloaders as $function) {
+            if ($expected == $function) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertFalse($found, "Failed to register Zend_Loader_MyLoader::autoload() with spl_autoload");
+    }
+
+    public function testLoaderRegisterAutoloadExtendedClassWithAutoloadMethod()
+    {
+        if (!function_exists('spl_autoload_register')) {
+            $this->markTestSkipped("spl_autoload not installed on this PHP installation");
+        }
+
+        Zend_Loader::registerAutoload('Zend_Loader_MyOverloader');
+        $autoloaders = spl_autoload_functions();
+        $expected    = array('Zend_Loader_MyOverloader', 'autoload');
+        $found       = false;
+        foreach ($autoloaders as $function) {
+            if ($expected == $function) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, "Failed to register Zend_Loader_MyOverloader::autoload() with spl_autoload");
+
+        // try to instantiate a class that is known not to be loaded
+        $obj = new Zend_Loader_AutoloadableClass();
+
+        // now it should be loaded
+        $this->assertTrue(class_exists('Zend_Loader_AutoloadableClass'),
+            'Expected Zend_Loader_AutoloadableClass to be loaded');
+
+        // and we verify it is the correct type
+        $this->assertType('Zend_Loader_AutoloadableClass', $obj,
+            'Expected to instantiate Zend_Loader_AutoloadableClass, got '.get_class($obj));
 
         spl_autoload_unregister($expected);
     }
