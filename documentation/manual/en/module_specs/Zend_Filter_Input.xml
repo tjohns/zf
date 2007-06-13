@@ -273,6 +273,40 @@ $input->setData($newData);
             filters have been applied.
         </para>
 
+        <sect3 id="zend.filter.input.results.isvalid">
+
+            <title>Querying if the input is valid</title>
+
+            <para>
+                If all input data pass the validation rules, the
+                <code>isValid()</code> method returns <code>true</code>.
+                If any field is invalid or any required field is missing,
+                <code>isValid()</code> returns <code>false</code>.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+if ($input->isValid()) {
+  echo "OK\n";
+} 
+]]></programlisting>
+
+            <para>
+                This method accepts an optional string argument, naming
+                an individual field.  If the specified field passed validation
+                and is ready for fetching, <code>isValid('fieldName')</code>
+                returns <code>true</code>.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+if ($input->isValid('month')) {
+  echo "Field 'month' is OK\n";
+} 
+]]></programlisting>
+
+        </sect3>
+
         <sect3 id="zend.filter.input.results.reports">
 
             <title>Getting Invalid, Missing, or Unknown Fields</title>

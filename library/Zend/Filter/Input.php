@@ -322,6 +322,19 @@ class Zend_Filter_Input
      * @param string $fieldName
      * @return boolean
      */
+    public function isValid($fieldName = null)
+    {
+        $this->_process();
+        if ($fieldName === null) {
+            return !($this->hasMissing() || $this->hasInvalid());
+        }
+        return array_key_exists($fieldName, $this->_validFields);
+    }
+
+    /**
+     * @param string $fieldName
+     * @return boolean
+     */
     public function __isset($fieldName)
     {
         $this->_process();

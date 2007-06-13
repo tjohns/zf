@@ -881,6 +881,68 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertThat($unknown, $this->arrayHasKey('unknown'));
     }
 
+    public function testValidatorGetInvalid()
+    {
+        $data = array(
+            'month' => '6abc '
+        );
+        $validators = array(
+            'month' => 'digits',
+            'field2' => array('digits', 'presence' => 'required')
+        );
+        $input = new Zend_Filter_Input(null, $validators, $data);
+
+        $this->assertTrue($input->hasMissing(), 'Expected hasMissing() to return true');
+        $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertFalse($input->hasValid(), 'Expected hasValid() to return false');
+
+        $messages = $input->getMessages();
+        $invalid = $input->getInvalid();
+        $missing = $input->getMissing();
+
+        $this->assertType('array', $messages);
+        $this->assertEquals(array('month', 'field2'), array_keys($messages));
+        $this->assertType('array', $invalid);
+        $this->assertEquals(array('month'), array_keys($invalid));
+        $this->assertType('array', $missing);
+        $this->assertEquals(array('field2'), array_keys($missing));
+        $this->assertEquals(array_merge($invalid, $missing), $messages);
+    }
+
+    public function testValidatorIsValid()
+    {
+        $data = array(
+            'field1' => 'abc123',
+            'field2' => 'abcdef'
+        );
+        $validators = array(
+            'field1' => 'alpha',
+            'field2' => 'alpha'
+        );
+        $input = new Zend_Filter_Input(null, $validators, $data);
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+
+        $this->assertFalse($input->isValid());
+        $this->assertFalse($input->isValid('field1'));
+        $this->assertTrue($input->isValid('field2'));
+
+        $input->setData(array('field2' => 'abcdef'));
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+
+        $this->assertTrue($input->isValid());
+        $this->assertFalse($input->isValid('field1'));
+        $this->assertTrue($input->isValid('field2'));
+    }
+
     public function testAddNamespace()
     {
         $data = array(
