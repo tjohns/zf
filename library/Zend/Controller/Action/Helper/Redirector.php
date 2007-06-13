@@ -403,7 +403,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * @param  array $options 
      * @return void
      */
-    public function gotoUrlAndExit($url, array $options = null)
+    public function gotoUrlAndExit($url, array $options = array())
     {
         $this->gotoUrl($url, $options);
         $this->redirectAndExit();
