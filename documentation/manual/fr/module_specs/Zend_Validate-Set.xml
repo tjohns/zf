@@ -23,14 +23,14 @@
     <sect2 id="zend.validate.set.between">
         <title>Between</title>
         <para>
-            Retourne <code>true</code> si et seulement si <code>$value</code> est compris entre les valeurs minimum et maxium définies. La comparaison inclue par défaut les bornes (<code>$value</code> peut égaler le minimum ou le maximum), bien que ceci puisse être surchargé pour avoir une comparaison stricte, où <code>$value</code> doit être strictement supérieur au minimum et strictement inférieur au maximum.
+            Retourne <code>true</code> si et seulement si <code>$value</code> est compris entre les valeurs minimum et maximum définies. La comparaison inclue par défaut les bornes (<code>$value</code> peut égaler le minimum ou le maximum), bien que ceci puisse être surchargé pour avoir une comparaison stricte, où <code>$value</code> doit être strictement supérieur au minimum et strictement inférieur au maximum.
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.ccnum">
         <title>Ccnum</title>
         <para>
-            Retourne <code>true</code> si et seulement si <code>$value</code> respecte l'algorithme de Luhn ("module 10") pour les numéros de cartes de crédits.
+            Retourne <code>true</code> si et seulement si <code>$value</code> respecte <ulink url="http://fr.wikipedia.org/wiki/Luhn">l'algorithme de Luhn ("module 10")</ulink> pour les numéros de cartes de crédits.
         </para>
     </sect2>
 
