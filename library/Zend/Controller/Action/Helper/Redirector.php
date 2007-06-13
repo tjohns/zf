@@ -292,10 +292,10 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
         $code        = $this->getCode();
         if (null !== $options) {
             if (isset($options['exit'])) {
-                $exit = ($options['exit']) ? true : false;
+                $this->setExit(($options['exit']) ? true : false);
             }
             if (isset($options['prependBase'])) {
-                $prependBase = ($options['prependBase']) ? true : false;
+                $this->setPrependBase(($options['prependBase']) ? true : false);
             }
             if (isset($options['code'])) {
                 $this->setCode($options['code']);
