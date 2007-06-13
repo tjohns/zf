@@ -135,6 +135,13 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($this->client->getHeader('X-Fake-Header'), null, 'Non-existing header should not return a value');
 	}
 	
+	public function testUnsetHeader()
+	{
+		$this->client->setHeaders('Accept-Encoding', 'gzip,deflate');
+		$this->client->setHeaders('Accept-Encoding', null);
+		$this->assertNull($this->client->getHeader('Accept-encoding'), 'Returned value of header is expected to be null');
+	}
+	
 	/**
 	 * Authentication tests
 	 */
