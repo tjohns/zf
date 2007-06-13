@@ -189,11 +189,34 @@ Zend_Loader::registerAutoload();
 
         <example id="zend.loader.load.autoload.example-extended">
             <title>autoload コールバックメソッドを継承クラスから登録する例</title>
+            <para>
+                PHP における静的関数の参照の方法上、
+                <code>loadClass()</code> と <code>autoload()</code>
+                の両方のコードを実装する必要があります。
+                そして、<code>autoload()</code> では
+                <code>self::loadClass()</code> をコールしなければなりません。
+                作成する <code>autoload()</code> メソッドが親クラスに
+                <code>self::loadClass()</code> の処理を任せるのなら、
+                サブクラスのメソッドではなく親クラス側の同名のメソッドをコールします。
+            </para>
             <programlisting role="php"><![CDATA[<?php
 
 class My_Loader extends Zend_Loader
 {
-    // 独自の機能
+    public static function loadClass($class, $dirs = null)
+    {
+        parent::loadClass($class, $dirs);
+    }
+
+    public static function autoload($class)
+    {
+        try {
+            self::loadClass($class);
+            return $class;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 
 Zend_Loader::registerAutoload('My_Loader');
