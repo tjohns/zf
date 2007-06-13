@@ -1,23 +1,41 @@
 <sect1 id="zend.service.strikeiron">
-    <title>Overview</title>
+    <title>Zend_Service_StrikeIron</title>
 
     <para>
+<<<<<<< .mine
       <ulink url="http://www.strikeiron.com">StrikeIron</ulink>
       offers hundreds of commercial data services ("Data as a Service")
       such as Online Sales Tax, Currency Rates, Stock Quotes, Geocodes, Global
       Address Verification, Yellow/White Pages, MapQuest Driving Directions,
       Dun &amp; Bradstreet Business Credit Checks, and much, much more.
+=======
+        Zend_Service_StrikeIron provides a PHP 5 client to StrikeIron
+        web services.  See the following sections:
+>>>>>>> .r5238
     </para>
 
     <para>
+<<<<<<< .mine
       Each StrikeIron web service service shares a standard SOAP (and REST)
       API, making it easy to integrate and manage multiple services.
       StrikeIron also manages customer billing for all services in a single
       account, making it perfect for solution providers. Get
       started with free web services at
       <ulink url="http://www.strikeiron.com/sdp">http://www.strikeiron.com/sdp</ulink>.
+=======
+        <itemizedlist>
+            <listitem><para><xref linkend="zend.service.strikeiron" /></para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem><para><xref linkend="zend.service.strikeiron.bundled-services" /></para></listitem>
+        </itemizedlist>
+        <itemizedlist>
+            <listitem><para><xref linkend="zend.service.strikeiron.advanced-uses" /></para></listitem>
+        </itemizedlist>
+>>>>>>> .r5238
     </para>
 
+<<<<<<< .mine
     <para>
       StrikeIron's services may be used through the
       <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.
@@ -36,39 +54,81 @@
 
     <para>
       The Zend_Service_StrikeIron component provides:
+=======
+    <sect2 id="zend.service.strikeiron.overview">
+        <title>Overview</title>
+>>>>>>> .r5238
 
-      <itemizedlist>
-        <listitem>
+        <para>
+          <ulink url="http://www.strikeiron.com">StrikeIron</ulink> 
+          offers hundreds of commercial data services ("Data as a Service")
+          such as Online Sales Tax, Currency Rates, Stock Quotes, Geocodes, Global
+          Address Verification, Yellow/White Pages, MapQuest Driving Directions,
+          Dun &amp; Bradstreet Business Credit Checks, and much, much more. 
+        </para>
+
+        <para>
+          Each StrikeIron web service service shares a standard SOAP (and REST)
+          API, making it easy to integrate and manage multiple services.
+          StrikeIron also manages customer billing for all services in a single
+          account, making it perfect for solution providers. Get
+          started with free web services at 
+          <ulink url="http://www.strikeiron.com/sdp">http://www.strikeiron.com/sdp</ulink>.
+        </para>
+
+        <para>
+          StrikeIron's services may be used through the 
+          <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.  
+          However, using StrikeIron this way does not give an ideal PHP-like interface.
+          The Zend_Service_StrikeIron component provides a lightweight layer on
+          top of the SOAP extension for working with StrikeIron services in a
+          more convenient, PHP-like manner. 
+        </para>
+
+        <note>
           <para>
-            A single point for configuring your StrikeIron authentication credentials
-            that can be used across many StrikeIron services.
+            The PHP 5 SOAP extension must be installed and enabled to use
+            Zend_Service_StrikeIron.
           </para>
-        </listitem>
+        </note>
+          
+        <para>
+          The Zend_Service_StrikeIron component provides:
 
-        <listitem>
-          <para>
-            A standard way of retrieving your StrikeIron subscription information
-            such as license status and the number of hits remaining to a service.
-          </para>
-        </listitem>
+          <itemizedlist>
+            <listitem>
+              <para>
+                A single point for configuring your StrikeIron authentication credentials
+                that can be used across many StrikeIron services.
+              </para>
+            </listitem>
 
-        <listitem>
-          <para>
-            The ability to use any StrikeIron service from its WSDL without
-            creating a PHP wrapper class, and the option of creating a wrapper for
-            a more convenient interface.
-          </para>
-        </listitem>
+            <listitem>
+              <para>
+                A standard way of retrieving your StrikeIron subscription information
+                such as license status and the number of hits remaining to a service.
+              </para>
+            </listitem>
 
-        <listitem>
-          <para>
-            Wrappers for three popular StrikeIron services.
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
+            <listitem>
+              <para>
+                The ability to use any StrikeIron service from its WSDL without
+                creating a PHP wrapper class, and the option of creating a wrapper for
+                a more convenient interface.
+              </para>
+            </listitem>
 
-    <sect2 id="zend.service.strikeiron.overview.registering">
+            <listitem>
+              <para>
+                Wrappers for three popular StrikeIron services.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.service.strikeiron.registering">
       <title>Registering with StrikeIron</title>
       <para>
         Before you can get started with Zend_Service_StrikeIron, you must first
@@ -92,7 +152,7 @@
       </para>
     </sect2>
 
-    <sect2 id="zend.service.strikeiron.overview.getting-started">
+    <sect2 id="zend.service.strikeiron.getting-started">
       <title>Getting Started</title>
       <para>
         Once you have <ulink url="http://strikeiron.com/Register.aspx">registered</ulink>
@@ -154,7 +214,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
       </para>
     </sect2>
 
-    <sect2 id="zend.service.strikeiron.overview.making-first-query">
+    <sect2 id="zend.service.strikeiron.making-first-query">
       <title>Making Your First Query</title>
 
       <para>
@@ -205,7 +265,7 @@ echo $rateInfo->GST;
       </para>
     </sect2>
 
-    <sect2 id="zend.service.strikeiron.overview.examining-results">
+    <sect2 id="zend.service.strikeiron.examining-results">
       <title>Examining Results</title>
       <para>
         When learning or debugging the StrikeIron services, it's often useful to dump the
@@ -274,7 +334,7 @@ Zend_Service_StrikeIron_Decorator Object
       </para>
     </sect2>
 
-    <sect2 id="zend.service.strikeiron.overview.handling-errors">
+    <sect2 id="zend.service.strikeiron.handling-errors">
       <title>Handling Errors</title>
       <para>
         The previous examples are naive, i.e. no error handling was shown.
@@ -333,7 +393,7 @@ try {
       <para><!-- included for whitespace --></para>
     </sect2>
 
-    <sect2 id="zend.service.strikeiron.overview.checking-subscription">
+    <sect2 id="zend.service.strikeiron.checking-subscription">
       <title>Checking Your Subscription</title>
       <para>
         StrikeIron provides many different services.  Some of these are

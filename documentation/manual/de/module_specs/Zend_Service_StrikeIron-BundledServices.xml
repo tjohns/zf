@@ -1,5 +1,5 @@
 <sect1 id="zend.service.strikeiron.bundled-services">
-    <title>Bundled Services</title>
+    <title>Zend_Service_StrikeIron: Bundled Services</title>
 
     <para>
       Zend_Service_StrikeIron comes with wrapper classes for three popular StrikeIron services.
