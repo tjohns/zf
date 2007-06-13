@@ -105,6 +105,9 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowMagicGet()
     {
         $table = $this->_table['bugs'];
+        $bug_id = $this->_db->foldCase('bug_id');
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status = $this->_db->foldCase('bug_status');
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
@@ -114,14 +117,14 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
-            $this->assertEquals(1, $row1->bug_id);
-            $this->assertEquals('System needs electricity to run', $row1->bug_description);
-            $this->assertEquals('NEW', $row1->bug_status);
+            $this->assertEquals(1, $row1->$bug_id);
+            $this->assertEquals('System needs electricity to run', $row1->$bug_description);
+            $this->assertEquals('NEW', $row1->$bug_status);
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
 
-        if (!isset($row1->bug_id)) {
+        if (!isset($row1->$bug_id)) {
             $this->fail('Column "id" is set but isset() returns false');
         }
     }
@@ -129,6 +132,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowMagicSet()
     {
         $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
@@ -138,8 +142,8 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
-            $row1->bug_description = 'foo';
-            $this->assertEquals('foo', $row1->bug_description);
+            $row1->$bug_description = 'foo';
+            $this->assertEquals('foo', $row1->$bug_description);
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
@@ -148,10 +152,12 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowSetFromArray()
     {
         $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status = $this->_db->foldCase('bug_status');
 
         $data = array(
-            'bug_description' => 'New Description',
-            'bug_status'      => 'INVALID'
+            $bug_description => 'New Description',
+            $bug_status      => 'INVALID'
         );
 
         $rowset = $table->find(1);
@@ -166,8 +172,8 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertSame($result, $row1);
 
         try {
-            $this->assertEquals($data['bug_description'], $row1->bug_description);
-            $this->assertEquals($data['bug_status'], $row1->bug_status);
+            $this->assertEquals($data[$bug_description], $row1->$bug_description);
+            $this->assertEquals($data[$bug_status], $row1->$bug_status);
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
@@ -195,13 +201,16 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     {
         $table = $this->_getTable('Zend_Db_Table_TableProducts',
             array(Zend_Db_Table_Abstract::SEQUENCE => 'zfproducts_seq'));
+        $product_id   = $this->_db->foldCase('product_id');
+        $product_name = $this->_db->foldCase('product_name');
+
         $data = array (
-            'product_name' => 'Solaris'
+            $product_name => 'Solaris'
         );
         $row3 = $table->createRow($data);
         $row3->save();
         try {
-            $this->assertEquals(4, $row3->product_id);
+            $this->assertEquals(4, $row3->$product_id);
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
@@ -210,10 +219,13 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowSaveUpdate()
     {
         $table = $this->_table['bugs'];
+        $bug_id          = $this->_db->foldCase('bug_id');
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status      = $this->_db->foldCase('bug_status');
 
         $data = array(
-            'bug_description' => 'New Description',
-            'bug_status'      => 'INVALID'
+            $bug_description => 'New Description',
+            $bug_status      => 'INVALID'
         );
 
         $rowset = $table->find(1);
@@ -227,9 +239,9 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $row1->save();
 
         try {
-            $this->assertEquals(1, $row1->bug_id);
-            $this->assertEquals($data['bug_description'], $row1->bug_description);
-            $this->assertEquals($data['bug_status'], $row1->bug_status);
+            $this->assertEquals(1, $row1->$bug_id);
+            $this->assertEquals($data[$bug_description], $row1->$bug_description);
+            $this->assertEquals($data[$bug_status], $row1->$bug_status);
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
@@ -306,6 +318,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowSetPrimaryKey()
     {
         $table = $this->_table['bugs'];
+        $bug_id = $this->_db->foldCase('bug_id');
 
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
@@ -315,9 +328,9 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
         try {
-            $row1->bug_id = 6;
+            $row1->$bug_id = 6;
             $row1->save();
-            $this->assertEquals(6, $row1->bug_id);
+            $this->assertEquals(6, $row1->$bug_id);
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
@@ -350,7 +363,8 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $row1New = unserialize($serRow1);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1New,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1New));
-        $row1New->bug_description = 'New description';
+        $bug_description = $this->_db->foldCase('bug_description');
+        $row1New->$bug_description = 'New description';
 
         try {
             $row1New->save();
@@ -382,9 +396,11 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         }
         $this->assertTrue($connected);
 
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status      = $this->_db->foldCase('bug_status');
         $data = array(
-            'bug_description' => 'New Description',
-            'bug_status'      => 'INVALID'
+            $bug_description => 'New Description',
+            $bug_status      => 'INVALID'
         );
         $row1New->setFromArray($data);
 

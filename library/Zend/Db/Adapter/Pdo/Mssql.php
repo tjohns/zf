@@ -199,10 +199,10 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
                 $primaryPosition = null;
             }
 
-            $desc[$row[$column_name]] = array(
+            $desc[$this->foldCase($row[$column_name])] = array(
                 'SCHEMA_NAME'      => null, // @todo
-                'TABLE_NAME'       => $row[$table_name],
-                'COLUMN_NAME'      => $row[$column_name],
+                'TABLE_NAME'       => $this->foldCase($row[$table_name]),
+                'COLUMN_NAME'      => $this->foldCase($row[$column_name]),
                 'COLUMN_POSITION'  => (int) $row[$column_position],
                 'DATA_TYPE'        => $type,
                 'DEFAULT'          => $row[$column_def],

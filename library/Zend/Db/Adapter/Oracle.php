@@ -272,9 +272,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                 ON (CC.CONSTRAINT_NAME = C.CONSTRAINT_NAME AND CC.TABLE_NAME = C.TABLE_NAME AND C.CONSTRAINT_TYPE = 'P'))
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
             JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME AND TB.OWNER = TC.OWNER)
-            WHERE TC.TABLE_NAME = ".$this->quote($tableName);
+            WHERE "
+            . $this->quoteInto('UPPER(TC.TABLE_NAME) = UPPER(?)', $tableName);
         if ($schemaName) {
-            $sql .= " AND TB.OWNER = ".$this->quote($schemaName);
+            $sql .= $this->quoteInto(' AND UPPER(TB.OWNER) = UPPER(?)', $schemaName);
         }
         $sql .= ' ORDER BY TC.COLUMN_ID';
 
@@ -309,10 +310,10 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
                  */
                 $identity = false;
             }
-            $desc[$row[$column_name]] = array(
-                'SCHEMA_NAME'      => $row[$owner],
-                'TABLE_NAME'       => $row[$table_name],
-                'COLUMN_NAME'      => $row[$column_name],
+            $desc[$this->foldCase($row[$column_name])] = array(
+                'SCHEMA_NAME'      => $this->foldCase($row[$owner]),
+                'TABLE_NAME'       => $this->foldCase($row[$table_name]),
+                'COLUMN_NAME'      => $this->foldCase($row[$column_name]),
                 'COLUMN_POSITION'  => $row[$column_id],
                 'DATA_TYPE'        => $row[$data_type],
                 'DEFAULT'          => $row[$data_default],

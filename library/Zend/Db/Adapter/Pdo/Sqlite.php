@@ -211,10 +211,10 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
                 $identity = (bool) ($row[$type] == 'INTEGER');
                 ++$p;
             }
-            $desc[$row[$name]] = array(
-                'SCHEMA_NAME'      => $schemaName,
-                'TABLE_NAME'       => $tableName,
-                'COLUMN_NAME'      => $row[$name],
+            $desc[$this->foldCase($row[$name])] = array(
+                'SCHEMA_NAME'      => $this->foldCase($schemaName),
+                'TABLE_NAME'       => $this->foldCase($tableName),
+                'COLUMN_NAME'      => $this->foldCase($row[$name]),
                 'COLUMN_POSITION'  => $row[$cid]+1,
                 'DATA_TYPE'        => $row[$type],
                 'DEFAULT'          => $row[$dflt_value],

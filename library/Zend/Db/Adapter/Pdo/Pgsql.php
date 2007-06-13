@@ -164,10 +164,10 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
                 $primaryPosition = array_search($row[$attnum], explode(',', $row[$conkey])) + 1;
                 $identity = (bool) (preg_match('/^nextval/', $row[$default_value]));
             }
-            $desc[$row[$colname]] = array(
-                'SCHEMA_NAME'      => $row[$nspname],
-                'TABLE_NAME'       => $row[$relname],
-                'COLUMN_NAME'      => $row[$colname],
+            $desc[$this->foldCase($row[$colname])] = array(
+                'SCHEMA_NAME'      => $this->foldCase($row[$nspname]),
+                'TABLE_NAME'       => $this->foldCase($row[$relname]),
+                'COLUMN_NAME'      => $this->foldCase($row[$colname]),
                 'COLUMN_POSITION'  => $row[$attnum],
                 'DATA_TYPE'        => $row[$type],
                 'DEFAULT'          => $row[$default_value],

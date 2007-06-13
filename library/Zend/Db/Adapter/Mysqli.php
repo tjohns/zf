@@ -202,9 +202,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                 ++$p;
             }
             $desc[$this->foldCase($row['Field'])] = array(
-                'SCHEMA_NAME'      => null,
-                'TABLE_NAME'       => $tableName,
-                'COLUMN_NAME'      => $row['Field'],
+                'SCHEMA_NAME'      => null, // @todo
+                'TABLE_NAME'       => $this->foldCase($tableName),
+                'COLUMN_NAME'      => $this->foldCase($row['Field']),
                 'COLUMN_POSITION'  => $i,
                 'DATA_TYPE'        => $row['Type'],
                 'DEFAULT'          => $row['Default'],

@@ -319,9 +319,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
               ON (c.tabschema = k.tabschema
                 AND c.tabname = k.tabname
                 AND c.colname = k.colname)
-            WHERE c.tabname = ".$this->quote($tableName);
+            WHERE "
+            . $this->quoteInto('UPPER(c.tabname) = UPPER(?)', $tableName);
         if ($schemaName) {
-            $sql .= " AND c.tabschema = ".$this->quote($schemaName);
+            $sql .= $this->quoteInto(' AND UPPER(c.tabschema) = UPPER(?)', $schemaName);
         }
         $sql .= " ORDER BY c.colno";
 
@@ -364,12 +365,11 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 $identity = true;
             }
 
-
             // only colname needs to be case adjusted
             $desc[$this->foldCase($row[$colname])] = array(
-                'SCHEMA_NAME'      => $row[$tabschema],
-                'TABLE_NAME'       => $row[$tabname],
-                'COLUMN_NAME'      => $row[$colname],
+                'SCHEMA_NAME'      => $this->foldCase($row[$tabschema]),
+                'TABLE_NAME'       => $this->foldCase($row[$tabname]),
+                'COLUMN_NAME'      => $this->foldCase($row[$colname]),
                 'COLUMN_POSITION'  => $row[$colno]+1,
                 'DATA_TYPE'        => $row[$typename],
                 'DEFAULT'          => $row[$default],

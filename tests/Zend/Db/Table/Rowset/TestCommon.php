@@ -57,7 +57,8 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $row1 = $rows->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
-        $this->assertEquals(1, $row1->bug_id);
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(1, $row1->$bug_id);
 
         // advance to next row
         $rows->next();
@@ -68,7 +69,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $row2 = $rows->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row2,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row2));
-        $this->assertEquals(2, $row2->bug_id);
+        $this->assertEquals(2, $row2->$bug_id);
 
         // advance beyond last row
         $rows->next();
@@ -89,13 +90,13 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $row1Copy = $rows->current();
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
-        $this->assertEquals(1, $row1->bug_id);
+        $this->assertEquals(1, $row1->$bug_id);
         $this->assertSame($row1, $row1Copy);
     }
 
     public function testTableRowsetEmpty()
     {
-        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
 
         $table = $this->_table['bugs'];
 
@@ -107,6 +108,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowsetToArray()
     {
         $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
 
         $rows = $table->find(array(1, 2));
         $this->assertEquals(2, count($rows));
@@ -115,7 +117,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         // to force it to instantiate the individual Rows
         foreach ($rows as $row)
         {
-            $row->bug_description = 'foo';
+            $row->$bug_description = 'foo';
         }
 
         $a = $rows->toArray();
@@ -124,7 +126,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(count($a), count($rows));
         $this->assertTrue(is_array($a[0]));
         $this->assertEquals(8, count($a[0]));
-        $this->assertEquals('foo', $a[0]['bug_description']);
+        $this->assertEquals('foo', $a[0][$bug_description]);
     }
 
     public function testTableSerializeRowset()
@@ -147,6 +149,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableSerializeRowsetExceptionWrongTable()
     {
         $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
 
         $rows = $table->find(1);
 
@@ -154,7 +157,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         // to force it to instantiate the individual Rows
         foreach ($rows as $row)
         {
-            $row->bug_description = $row->bug_description;
+            $row->$bug_description = $row->$bug_description;
         }
 
         $serRows = serialize($rows);

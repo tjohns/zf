@@ -710,7 +710,7 @@ abstract class Zend_Db_Table_Row_Abstract
 
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $cond = $db->quoteIdentifier($map[Zend_Db_Table_Abstract::COLUMNS][$i], true) . ' = ?';
-            $where[$cond] = $this->_data[$map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]];
+            $where[$cond] = $this->_data[$db->foldCase($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i])];
         }
         return $dependentTable->fetchAll($where);
     }
@@ -749,7 +749,7 @@ abstract class Zend_Db_Table_Row_Abstract
 
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $cond = $db->quoteIdentifier($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i], true) . ' = ?';
-            $where[$cond] = $this->_data[$map[Zend_Db_Table_Abstract::COLUMNS][$i]];
+            $where[$cond] = $this->_data[$db->foldCase($map[Zend_Db_Table_Abstract::COLUMNS][$i])];
         }
         return $parentTable->fetchRow($where);
     }
@@ -824,7 +824,7 @@ abstract class Zend_Db_Table_Row_Abstract
 
         for ($i = 0; $i < count($callerMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $interCol = $db->quoteIdentifier('i', true) . '.' . $db->quoteIdentifier($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i], true);
-            $value = $this->_data[$callerMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]];
+            $value = $this->_data[$db->foldCase($callerMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i])];
             $select->where("$interCol = ?", $value);
         }
         $stmt = $select->query();

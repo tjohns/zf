@@ -148,10 +148,10 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
                 }
                 ++$p;
             }
-            $desc[$row[$field]] = array(
-                'SCHEMA_NAME'      => null,
-                'TABLE_NAME'       => $tableName,
-                'COLUMN_NAME'      => $row[$field],
+            $desc[$this->foldCase($row[$field])] = array(
+                'SCHEMA_NAME'      => null, // @todo
+                'TABLE_NAME'       => $this->foldCase($tableName),
+                'COLUMN_NAME'      => $this->foldCase($row[$field]),
                 'COLUMN_POSITION'  => $i,
                 'DATA_TYPE'        => $row[$type],
                 'DEFAULT'          => $row[$default],

@@ -186,10 +186,10 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
                  */
                 $identity = false;
             }
-            $desc[$row[$column_name]] = array(
-                'SCHEMA_NAME'      => $row[$owner],
-                'TABLE_NAME'       => $row[$table_name],
-                'COLUMN_NAME'      => $row[$column_name],
+            $desc[$this->foldCase($row[$column_name])] = array(
+                'SCHEMA_NAME'      => $this->foldCase($row[$owner]),
+                'TABLE_NAME'       => $this->foldCase($row[$table_name]),
+                'COLUMN_NAME'      => $this->foldCase($row[$column_name]),
                 'COLUMN_POSITION'  => $row[$column_id],
                 'DATA_TYPE'        => $row[$data_type],
                 'DEFAULT'          => $row[$data_default],
