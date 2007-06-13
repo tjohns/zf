@@ -323,6 +323,12 @@ class Zend_Controller_Front
             }
 
             $module    = $file->getFilename();
+
+            // Don't use SCCS directories as modules
+            if (preg_match('/^[^a-z]/', $module) || ('CVS' == $module)) {
+                continue;
+            }
+
             $moduleDir = $file->getPathname() . DIRECTORY_SEPARATOR . $this->getModuleControllerDirectoryName();
             $this->addControllerDirectory($moduleDir, $module);
         }

@@ -483,6 +483,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($controllerDirs['foo']));
         $this->assertTrue(isset($controllerDirs['bar']));
         $this->assertTrue(isset($controllerDirs['default']));
+        $this->assertFalse(isset($controllerDirs['.svn']));
 
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'foo', $controllerDirs['foo']);
         $this->assertContains('modules' . DIRECTORY_SEPARATOR . 'bar', $controllerDirs['bar']);
