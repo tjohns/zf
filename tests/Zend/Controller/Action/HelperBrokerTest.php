@@ -20,6 +20,8 @@ require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
+require_once 'Zend/Controller/Action/Helper/Redirector.php';
 
 class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
 {
@@ -188,6 +190,18 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         
         $response = $this->front->dispatch($request);
         $this->assertEquals('MyApp_TestHelper', $response->getBody());
+    }
+
+    public function testGetExistingHelpers()
+    {
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_Redirector());
+        Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+
+        $helpers = Zend_Controller_Action_HelperBroker::getExistingHelpers();
+        $this->assertTrue(is_array($helpers));
+        $this->assertEquals(2, count($helpers));
+        $this->assertContains('ViewRenderer', array_keys($helpers));
+        $this->assertContains('Redirector', array_keys($helpers));
     }
 }
 

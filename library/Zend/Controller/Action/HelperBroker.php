@@ -232,7 +232,18 @@ class Zend_Controller_Action_HelperBroker
 
         throw new Zend_Controller_Action_Exception('Action helper "' . $name . '" has not been registered with the helper broker');
     }
-     /**
+
+    /**
+     * Return all registered helpers as helper => object pairs
+     * 
+     * @return array
+     */
+    public static function getExistingHelpers()
+    {
+        return self::$_helpers;
+    }
+
+    /**
      * Is a particular helper loaded in the broker?
      * 
      * @param  string $name 
