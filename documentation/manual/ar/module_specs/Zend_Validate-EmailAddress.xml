@@ -76,7 +76,7 @@ if ($validator->isValid($email)) {
         echo "$message\n";
     }
 }
-    
+
 ?>]]></programlisting>
     </para>
 

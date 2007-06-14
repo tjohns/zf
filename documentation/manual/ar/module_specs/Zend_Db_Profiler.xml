@@ -272,7 +272,7 @@ $profiler->setFilterQueryType(null);
                 moment. Another feature of <code>getQueryProfiles()</code> is
                 that it can do this filtering on-the-fly, by passing a query
                 type (or logical combination of query types) as its first
-                argument; see <xref linkend="zend.db.profiler.advanced.filtertype" /> 
+                argument; see <xref linkend="zend.db.profiler.advanced.filtertype" />
                 for a list of the query type constants.
             </para>
 

@@ -46,7 +46,7 @@
         <note>
             <title>Attention</title>
             <para>
-                Your Amazon developer API key is linked to your Amazon identity, 
+                Your Amazon developer API key is linked to your Amazon identity,
                 so take appropriate measures to keep your API key private.
             </para>
         </note>
@@ -127,9 +127,9 @@ $item = $amazon->itemLookup('B0000A432X');
         <note>
             <title>Image information</title>
             <para>
-            	To retrieve images information for your search results, you must set 
-            	<code>ResponseGroup</code> option to <code>Medium</code> or <code>Large</code>.
-        	</para>
+                To retrieve images information for your search results, you must set
+                <code>ResponseGroup</code> option to <code>Medium</code> or <code>Large</code>.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">

@@ -1,14 +1,14 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
-    
+
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            هذا الـ backend يقوم بحفظ الـ cache records فى ملفات (داخل مجلد يتم تحديده). 
+            هذا الـ backend يقوم بحفظ الـ cache records فى ملفات (داخل مجلد يتم تحديده).
         </para>
         <para>
            الـ options المتوفرة
-        </para>          
+        </para>
         <table>
             <title>الـ options المتوفرة لـ Zend_Cache_Backend_File</title>
             <tgroup cols="4">
@@ -26,7 +26,7 @@
                           <entry><code>string</code></entry>
                           <entry><code>'/tmp/'</code></entry>
                           <entry>
-                              المجلد حيث سيتم حفظ ملفات الـ cache  
+                              المجلد حيث سيتم حفظ ملفات الـ cache
                           </entry>
                       </row>
                       <row>
@@ -34,7 +34,7 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                           تفعيل او إيقاف خاصية الـ fileLocking : تساعد فى تجنب تلف ملفات الـ cache 
+                           تفعيل او إيقاف خاصية الـ fileLocking : تساعد فى تجنب تلف ملفات الـ cache
                             و لكن لا تساعد عند العمل على multithread webservers او نظام ملفات NFS...
                           </entry>
                       </row>
@@ -43,9 +43,9 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            تقوم بتفعيل او ايقاف الـ read control : 
-                            إن تم تشغيله, سيتم اضافة control key فى ملف الـ cache و هذا الـ key "مفتاح" 
-                            سيتم مقارنته مع الأخر الذى سيتم حسابه بعد قرائة الملف.       
+                            تقوم بتفعيل او ايقاف الـ read control :
+                            إن تم تشغيله, سيتم اضافة control key فى ملف الـ cache و هذا الـ key "مفتاح"
+                            سيتم مقارنته مع الأخر الذى سيتم حسابه بعد قرائة الملف.
                           </entry>
                       </row>
                       <row>
@@ -53,9 +53,9 @@
                           <entry><code>string</code></entry>
                           <entry><code>'crc32'</code></entry>
                           <entry>
-                            نوع الـ read control (متوفر فقط إذا كانت read control مفعلة). 
-                            القيم المتوفرة هى : 
-                            "md5" الأفضل لكن الأبطء, "crc32" (اقل امانا لكن اسرع, الأختيار الأفضل), 
+                            نوع الـ read control (متوفر فقط إذا كانت read control مفعلة).
+                            القيم المتوفرة هى :
+                            "md5" الأفضل لكن الأبطء, "crc32" (اقل امانا لكن اسرع, الأختيار الأفضل),
                             "strlen" لعمل اختبار طول فقط (الأسرع).
                         </entry>
                       </row>
@@ -64,10 +64,10 @@
                           <entry><code>int</code></entry>
                           <entry><code>0</code></entry>
                           <entry>
-                            Hashed directory structure level :     0 تعنى "no hashed directory 
-                             structure", 1 تعنى "one level of directory", 2 تعنى "two levels"... 
-                             هذا الـ option يمكن ان يرفع من سرعة اداء عملية الـ cache و ذلك فقط إن كنت تعمل مع 
-                            الاف من ملفات الـ cache. ربما بعض القياسات ستساعدك فى تحديد افضل قيمة مناسبة لك. 
+                            Hashed directory structure level :     0 تعنى "no hashed directory
+                             structure", 1 تعنى "one level of directory", 2 تعنى "two levels"...
+                             هذا الـ option يمكن ان يرفع من سرعة اداء عملية الـ cache و ذلك فقط إن كنت تعمل مع
+                            الاف من ملفات الـ cache. ربما بعض القياسات ستساعدك فى تحديد افضل قيمة مناسبة لك.
                             ربما 1 او 2 تعتبر بداية جيدة.
                           </entry>
                       </row>
@@ -117,12 +117,12 @@
                           <entry><code>10</code></entry>
                           <entry>
                             تقوم بـ إيقاف / إدارة عملية تنظيم الفراغات التلقائية.
-                            عملية تنظيم الفراغات التلقائية تقوم بعمل defragment لملف قاعدة البيانات 
-                            (و تجعله أصغر) عند إستدعاء ()clean أو ()delete : 
-                            و 0 تعنى إيقاف عملية تنظيم الفراغات التلقائية ; 
+                            عملية تنظيم الفراغات التلقائية تقوم بعمل defragment لملف قاعدة البيانات
+                            (و تجعله أصغر) عند إستدعاء ()clean أو ()delete :
+                            و 0 تعنى إيقاف عملية تنظيم الفراغات التلقائية ;
                             1 تعنى تشغيل عملية الإدارة (عند إستدعاء ()delete أو ()clean ) ;
-                            x (integer) > 1  => ستتم عملية تنظيم الفراغات عشوائياً مرة لكل 
-                            x مرة من إستدعاء ()clean أو ()delete . 
+                            x (integer) > 1  => ستتم عملية تنظيم الفراغات عشوائياً مرة لكل
+                            x مرة من إستدعاء ()clean أو ()delete .
                           </entry>
                         </row>
                   </tbody>
@@ -132,14 +132,14 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-           هذه الـ backend تقوم بحفظ الـ cache records فى memcached server. 
-<ulink url="http://www.danga.com/memcached/">memcached</ulink> 
-عبارة عن نظام caching للبيانات فى الذاكرة و يتميز بكفائته العالية. 
-لتستخدم هذا الـ backend انت تحتاج memcached daemon و 
+           هذه الـ backend تقوم بحفظ الـ cache records فى memcached server.
+<ulink url="http://www.danga.com/memcached/">memcached</ulink>
+عبارة عن نظام caching للبيانات فى الذاكرة و يتميز بكفائته العالية.
+لتستخدم هذا الـ backend انت تحتاج memcached daemon و
 <ulink url="http://pecl.php.net/package/memcache">الـ memcache PECL extension</ulink>.
         </para>
         <para>
-        	احترس: مع هذا الـ backend الـ tags غير مدعومة الى الأن . 
+            احترس: مع هذا الـ backend الـ tags غير مدعومة الى الأن .
 (لأن "doNotTestCacheValidity=true")
         </para>
         <para>
@@ -163,8 +163,8 @@
                           <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
                           <entry>
                               An array of memcached servers ; each memcached server is described by an associative array :
-                              'host' => (string) : اسم الـ memcached server, 
-                              'port' => (int) : الـ port الخاص بالـ memcached server, 
+                              'host' => (string) : اسم الـ memcached server,
+                              'port' => (int) : الـ port الخاص بالـ memcached server,
                               'persistent' => (bool) : استخدام او عدم استخدام الـ persistant connections مع هذا الـ server.
                           </entry>
                       </row>
@@ -183,20 +183,20 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_APC</title>
         <para>
-            هذه الـ backend تقوم بحفظ الـ cache records فى ذاكرة مشتركة من خلال الـ extension 
-المسمى 
-<ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache). 
+            هذه الـ backend تقوم بحفظ الـ cache records فى ذاكرة مشتركة من خلال الـ extension
+المسمى
+<ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache).
 (بالطبع ستحتاج هذه الـ extension لتستطيع استخدام هذه الـ backend)
         </para>
         <para>
-        	احترس: مع هذا الـ backend الـ tags غير مدعومة الى الأن . 
+            احترس: مع هذا الـ backend الـ tags غير مدعومة الى الأن .
 (لأن "doNotTestCacheValidity=true")
         </para>
         <para>
             لا يوجد options لهذه الـ backend
         </para>
     </sect2>
-</sect1> 
+</sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->

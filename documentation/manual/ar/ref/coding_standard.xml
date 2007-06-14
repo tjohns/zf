@@ -50,8 +50,8 @@
 
             <para>
                 For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
-				not required by PHP.  Not including it prevents trailing whitespace from being accidentally
-				injected into the output.
+                not required by PHP.  Not including it prevents trailing whitespace from being accidentally
+                injected into the output.
             </para>
 
             <para>
@@ -264,7 +264,7 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                To enhance readablity, words in constant names must be separated by underscore characters. For 
+                To enhance readablity, words in constant names must be separated by underscore characters. For
                 example, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> is permitted but
                 <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> is not.
             </para>

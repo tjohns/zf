@@ -421,7 +421,7 @@ echo $rowClone->bug_description;
                 method is a valid object of type Zend_Db_Table_Abstract,
                 which you create.  Creating a Table object requires a
                 live connection to the database, so by reassociating
-                the Table with the Row, the Row gains access to 
+                the Table with the Row, the Row gains access to
                 the database.  Subsequently, you can change values in
                 the Row object and save the changes to the database.
             </para>
@@ -499,9 +499,9 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));
             </para>
 
             <para>
-                If you need to do custom logic in a specific table, and 
+                If you need to do custom logic in a specific table, and
                 the custom logic must occur for every operation on that table,
-                it may make more sense to implement your custom code 
+                it may make more sense to implement your custom code
                 in the <code>insert()</code>, <code>update()</code> and
                 <code>delete()</code> methods of your Table class.
                 However, sometimes it may be necessary to do custom logic

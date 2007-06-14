@@ -75,7 +75,7 @@ $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
             You need to execute a statement object if you create it using its
             constructor, or if you want to execute the same statement multiple
             times.  Use the <code>execute()</code> method of the statement
-            object.  The single argument is an array of value to bind to 
+            object.  The single argument is an array of value to bind to
             parameter placeholders in the statement.
         </para>
 

@@ -47,7 +47,7 @@ $response = $front->dispatch();
 $response->sendResponse();
 ?>]]></programlisting>
         </note>
-            
+
         <para>
             Developers should make use of the response object in their action
             controllers. Instead of directly rendering output and sending
@@ -286,7 +286,7 @@ class MyController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-        
+
         <para>
             In the above example, a call to <code>/my/foo</code> will cause the
             final body content of the response object to have the following

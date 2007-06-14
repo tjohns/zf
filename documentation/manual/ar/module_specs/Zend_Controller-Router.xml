@@ -101,7 +101,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
 
         <para>
             Rewrite Router comes with four basic types of routes (one of which
-            is special): 
+            is special):
         </para>
 
         <itemizedlist mark="opencircle">
@@ -110,7 +110,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
-        
+
         <para>
             Routes may be used numerous times to create a chain or user defined
             application routing schema. You may use any number of routes in any
@@ -130,7 +130,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
                 The most common use of the route name is through the means of
                 Zend_View url helper:
             </para>
-                
+
             <programlisting role="php"><![CDATA[
 <a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]></programlisting>
 
@@ -148,7 +148,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             controllers. On a negative match result, the next route in the chain
             is checked.
         </para>
-            
+
         <note>
             <title>Reverse matching</title>
             <para>
@@ -186,7 +186,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         </note>
 
     </sect2>
-    
+
     <sect2 id="zend.controller.router.default-routes">
         <title>Default routes</title>
 
@@ -297,7 +297,7 @@ $request->setBaseUrl(/~user/application-root/);]]></programlisting>
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
     </sect2>
-    
+
     <sect2 id="zend.controller.router.add-config">
         <title>Using Zend_Config with the RewriteRouter</title>
 
@@ -330,7 +330,7 @@ routes.archive.type = "Zend_Controller_Router_Route_Regex"
 routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
-routes.archive.map.1 = "year" 
+routes.archive.map.1 = "year"
 ; OR: routes.archive.map.year = 1
 ]]></programlisting>
 

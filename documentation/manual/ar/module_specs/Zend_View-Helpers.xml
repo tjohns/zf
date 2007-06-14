@@ -1,7 +1,7 @@
 <sect1 id="zend.view.helpers">
-    
+
     <title>View Helpers</title>
-    
+
     <para>
         In your view scripts, often it is necessary to perform certain
         complex functions over and over: e.g., formatting a date,
@@ -19,7 +19,7 @@
         minimum a single method, named after the helper, and camelCased:
         <code>fooBar()</code>.
     </para>
-    
+
     <note>
         <para>
             Helper names are always camelCased, i.e., they never begin with an
@@ -38,10 +38,10 @@
         <code>$this->helperName()</code>.
     </para>
 
-   
+
     <sect2 id="zend.view.helpers.initial">
         <title>Initial Helpers</title>
-        
+
         <para>
             <code>Zend_View</code> comes with an initial set of helper classes,
             most of which relate to form element generation and perform
@@ -49,9 +49,9 @@
             are helpers for creating route-based URLs and HTML lists, as well as
             declaring variables. The currently shipped helpers include:
         </para>
-        
+
         <itemizedlist>
-            
+
             <listitem><para>
                 <code>declareVars():</code> Primarily for use when using
                 <code>strictVars()</code>, this helper can be used to declare
@@ -66,7 +66,7 @@
                 <code>formButton($name, $value, $attribs):</code> Creates an
                 &lt;input type="button" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formCheckbox($name, $value, $attribs, $options):</code>
                 Creates an &lt;input type="checkbox" /&gt; element.  The
@@ -75,17 +75,17 @@
                 defaults are '1' and '0').  If $value matches the "checked"
                 value, the box will be checked for you.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formFile($name, $value, $attribs):</code> Creates an
                 &lt;input type="file" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formHidden($name, $value, $attribs):</code> Creates an
                 &lt;input type="hidden" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formLabel($name, $value, $attribs):</code> Creates a
                 &lt;label&gt; element, setting the <code>for</code> attribute to
@@ -98,7 +98,7 @@
                 <code>formPassword($name, $value, $attribs):</code> Creates an
                 &lt;input type="password" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formRadio($name, $value, $attribs, $options):</code>
                 Creates a series of &lt;input type="radio" /&gt; elements, one
@@ -106,12 +106,12 @@
                 element key is the radio value, and the element value is the
                 radio label.  The $value radio will be preselected for you.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formReset($name, $value, $attribs):</code> Creates an
                 &lt;input type="reset" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formSelect($name, $value, $attribs, $options):</code>
                 Creates a &lt;select&gt;...&lt;/select&gt; block, with one
@@ -120,17 +120,17 @@
                 element value is the option label.  The $value option(s) will be
                 preselected for you.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formSubmit($name, $value, $attribs):</code> Creates an
                 &lt;input type="submit" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formText($name, $value, $attribs):</code> Creates an
                 &lt;input type="text" /&gt; element.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formTextarea($name, $value, $attribs):</code> Creates a
                 &lt;textarea&gt;...&lt;/textarea&gt; block.
@@ -151,16 +151,16 @@
             </para></listitem>
 
         </itemizedlist>
-        
+
         <para>
             Using these in your view scripts is very easy, here is an example.
             Note that you all you need to do is call them; they will load
             and instantiate themselves as they are needed.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // inside your view script, $this refers to the Zend_View instance.
-// 
+//
 // say that you have already assigned a series of select options under
 // the name $countries as array('us' => 'United States', 'il' =>
 // 'Israel', 'de' => 'Germany').
@@ -177,11 +177,11 @@
     </label></p>
 </form>]]>
         </programlisting>
-        
+
         <para>
             The resulting output from the view script will look something like this:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
     <p><label>Your Email:
         <input type="text" name="email" value="you@example.com" size="32" />
@@ -199,12 +199,12 @@
     </label></p>
 </form>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.paths">
         <title>Helper Paths</title>
-        
+
         <para>
             As with view scripts, your controller can specify a stack of paths
             for <code>Zend_View</code> to search for helper classes. By default,
@@ -216,7 +216,7 @@
             allow namespacing your helper classes. By default, if no class
             prefix is provided, 'Zend_View_Helper_' is assumed.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
@@ -225,7 +225,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
 
-        
+
         <para>
             In fact, you can "stack" paths using the
             <code>addHelperPath()</code> method. As you add paths to the stack,
@@ -234,7 +234,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
             override) the initial distribution of helpers with your own custom
             helpers.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 // Add /path/to/some/helpers with class prefix 'My_View_Helper'
@@ -243,23 +243,23 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // now when you call $this->helperName(), Zend_View will look first for
-// "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName", 
-// then for "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName", 
+// "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName",
+// then for "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName",
 // and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".
 ?>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.custom">
         <title>Writing Custom Helpers</title>
-        
+
         <para>
             Writing custom helpers is easy; just follow these rules:
         </para>
-        
+
         <itemizedlist>
-            
+
             <listitem><para>
                 The class name must, at the very minimum, end with the helper
                 name itself, using CamelCaps.  E.g., if you were writing a
@@ -271,41 +271,41 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
                 underscore, to <code>addHelperPath()</code> or
                 <code>setHelperPath()</code>).
             </para></listitem>
-            
+
             <listitem><para>
                 The class must have a public method that matches the
                 helper name; this is the method that will be called when
                 your template calls "$this->specialPurpose()".  In our
                 "specialPurpose" helper example, the required method
-                declaration would be "public function specialPurpose()". 
+                declaration would be "public function specialPurpose()".
             </para></listitem>
-            
+
             <listitem><para>
                 In general, the class should not echo or print or otherwise
                 generate output.  Instead, it should return values to be
                 printed or echoed.  The returned values should be escaped
                 appropriately.
             </para></listitem>
-            
+
             <listitem><para>
                 The class must be in a file named after the helper class.  Again
                 using our "specialPurpose" helper example, the file has to be
                 named "SpecialPurpose.php".
             </para></listitem>
         </itemizedlist>
-        
+
         <para>
             Place the helper class file somewhere in your helper path stack, and
             <code>Zend_View</code> will automatically load, instantiate,
             persist, and execute it for you.
         </para>
-        
+
         <para>
             Here is an example of our <code>SpecialPurpose</code> helper code:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-class My_View_Helper_SpecialPurpose 
+class My_View_Helper_SpecialPurpose
 {
     protected $_count = 0;
     public function specialPurpose()
@@ -317,14 +317,14 @@ class My_View_Helper_SpecialPurpose
 }
 ?>]]>
         </programlisting>
-        
+
         <para>
             Then in a view script, you can call the <code>SpecialPurpose</code>
             helper as many times as you like; it will be instantiated once, and
             then it persists for the life of that <code>Zend_View</code>
             instance.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // remember, in a view script, $this refers to the Zend_View instance.
 echo $this->specialPurpose();
@@ -332,7 +332,7 @@ echo $this->specialPurpose();
 echo $this->specialPurpose();
 ?>]]>
         </programlisting>
-        
+
         <para>
             The output would look something like this:
         </para>
@@ -340,7 +340,7 @@ echo $this->specialPurpose();
 I have seen 'The Jerk' 2 time(s).
 I have seen 'The Jerk' 3 time(s).]]>
         </programlisting>
-        
+
         <para>
             Sometimes you will need access to the calling <code>Zend_View</code>
             object -- for instance, if you need to use the registered encoding,
