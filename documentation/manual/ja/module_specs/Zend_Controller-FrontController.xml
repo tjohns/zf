@@ -455,6 +455,23 @@ Zend_Controller_Front::run('../application/controllers');
                     レスポンスオブジェクトに追加しています。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>noViewRenderer</code> を使用して、<link
+                        linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                    を無効にします。このパラメータを true に設定すると、無効となります。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>noErrorHandler</code> を使用して、<link
+                        linkend="zend.controller.plugins.standard.errorhandler">
+                    エラーハンドラプラグイン</link> を無効にします。
+                    このパラメータを true に設定すると、無効となります。
+                </para>
+            </listitem>
         </itemizedlist>
     </sect2>
 
