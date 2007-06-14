@@ -23,7 +23,7 @@ try {
     </example>
 
     <para>
-        See the documentation for each respective Zend Framework 
+        See the documentation for each respective Zend Framework
         component for more specific information on which methods
         throw exceptions, the circumstances for the exceptions,
         and which exception classes derive from Zend_Exception.

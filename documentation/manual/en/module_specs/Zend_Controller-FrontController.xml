@@ -97,7 +97,7 @@ $front->setParam('noViewRenderer', true);
 
         <sect3 id="zend.controller.front.methods.primary.getinstance">
             <title>getInstance()</title>
-            
+
             <para>
                 <code>getInstance()</code> is used to retrieve a front
                 controller instance. As the front controller implements a
@@ -156,7 +156,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
                 array of module/directory pairs.
             </para>
         </sect3>
-            
+
         <sect3 id="zend.controller.front.methods.primary.dispatch">
             <title>dispatch()</title>
 
@@ -524,7 +524,7 @@ class My_Controller_Front extends Zend_Controller_Front
             <code>Zend_Controller_Front::getInstance()</code> will return an
             instance of your new subclass instead of a
             <code>Zend_Controller_Front</code> instance -- this is particularly
-            useful for some of the alternate routers and view helpers. 
+            useful for some of the alternate routers and view helpers.
         </para>
 
         <para>

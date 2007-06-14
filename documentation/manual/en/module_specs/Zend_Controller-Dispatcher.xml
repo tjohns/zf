@@ -43,7 +43,7 @@
             module, and optionally any additional parameters you may wish to
             send to the new action:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 public function fooAction()
 {
@@ -118,32 +118,32 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Set a user parameter (via front controller, or for local use)
-     * 
-     * @param string $name 
-     * @param mixed $value 
+     *
+     * @param string $name
+     * @param mixed $value
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function setParam($name, $value);
 
     /**
      * Set an array of user parameters
-     * 
-     * @param array $params 
+     *
+     * @param array $params
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function setParams(array $params);
 
     /**
      * Retrieve a single user parameter
-     * 
-     * @param string $name 
+     *
+     * @param string $name
      * @return mixed
      */
     public function getParam($name);
 
     /**
      * Retrieve all user parameters
-     * 
+     *
      * @return array
      */
     public function getParams();
@@ -158,23 +158,23 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Set the response object to use, if any
-     * 
-     * @param Zend_Controller_Response_Abstract|null $response 
+     *
+     * @param Zend_Controller_Response_Abstract|null $response
      * @return void
      */
     public function setResponse(Zend_Controller_Response_Abstract $response = null);
 
     /**
      * Retrieve the response object, if any
-     * 
+     *
      * @return Zend_Controller_Response_Abstract|null
      */
     public function getResponse();
 
     /**
      * Add a controller directory to the controller directory stack
-     * 
-     * @param string $path 
+     *
+     * @param string $path
      * @param string $args
      * @return Zend_Controller_Dispatcher_Interface
      */
@@ -183,14 +183,14 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Set the directory (or directories) where controller files are stored
      *
-     * @param string|array $dir 
+     * @param string|array $dir
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function setControllerDirectory($path);
 
     /**
      * Return the currently set directory(ies) for controller file lookup
-     * 
+     *
      * @return array
      */
     public function getControllerDirectory();
@@ -206,8 +206,8 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Whether or not a given module is valid
-     * 
-     * @param string $module 
+     *
+     * @param string $module
      * @return boolean
      */
     public function isValidModule($module);

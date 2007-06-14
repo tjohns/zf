@@ -112,10 +112,10 @@
 
         <programlisting role="php"><![CDATA[<?php
 
-$filters = array( 
+$filters = array(
     'month'   => 'Digits',
     'account' => 'StringTrim'
-); 
+);
 
 $validators = array(
     'account' => 'Alpha'
@@ -139,9 +139,9 @@ $validators = array(
                     A single string scalar, which is mapped to a class name.
                     <programlisting role="php"><![CDATA[<?php
 
-$validators = array( 
+$validators = array(
     'month'   => 'Digits',
-); 
+);
 ]]></programlisting>
                 </para>
             </listitem>
@@ -153,9 +153,9 @@ $validators = array(
 
 $digits = new Zend_Validate_Digits();
 
-$validators = array( 
+$validators = array(
     'month'   => $digits
-); 
+);
 ]]></programlisting>
                 </para>
             </listitem>
@@ -170,13 +170,13 @@ $validators = array(
 
                     <programlisting role="php"><![CDATA[<?php
 
-$validators = array( 
+$validators = array(
     'month'   => array(
         'Digits',                // string
         new Zend_Validate_Int(), // object instance
         array('Between', 1, 12)  // string with constructor arguments
     )
-); 
+);
 ]]></programlisting>
                 </para>
             </listitem>
@@ -238,7 +238,7 @@ $input = new Zend_Filter_Input($filters, $validators);
 
 $data = $_GET;
 
-$input = new Zend_Filter_Input($filters, $validators, $data); 
+$input = new Zend_Filter_Input($filters, $validators, $data);
 ]]></programlisting>
 
         <para>
@@ -248,9 +248,9 @@ $input = new Zend_Filter_Input($filters, $validators, $data);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
- 
+
 $input = new Zend_Filter_Input($filters, $validators);
-$input->setData($newData); 
+$input->setData($newData);
 ]]></programlisting>
 
         <para>
@@ -288,7 +288,7 @@ $input->setData($newData);
 
 if ($input->isValid()) {
   echo "OK\n";
-} 
+}
 ]]></programlisting>
 
             <para>
@@ -302,7 +302,7 @@ if ($input->isValid()) {
 
 if ($input->isValid('month')) {
   echo "Field 'month' is OK\n";
-} 
+}
 ]]></programlisting>
 
         </sect3>
@@ -340,23 +340,23 @@ if ($input->isValid('month')) {
 
             <programlisting role="php"><![CDATA[<?php
 
-if ($input->hasInvalid() || $input->hasMissing()) { 
-  $messages = $input->getMessages(); 
-} 
+if ($input->hasInvalid() || $input->hasMissing()) {
+  $messages = $input->getMessages();
+}
 
 // getMessages() simply returns the merge of getInvalid() and getMissing()
 
-if ($input->hasInvalid()) { 
-  $invalidFields = $input->getInvalid(); 
-} 
- 
-if ($input->hasMissing()) { 
-  $missingFields = $input->getMissing(); 
-} 
- 
-if ($input->hasUnknown()) { 
-  $unknownFields = $input->getUnknown(); 
-} 
+if ($input->hasInvalid()) {
+  $invalidFields = $input->getInvalid();
+}
+
+if ($input->hasMissing()) {
+  $missingFields = $input->getMissing();
+}
+
+if ($input->hasUnknown()) {
+  $unknownFields = $input->getUnknown();
+}
 ]]></programlisting>
 
             <para>
@@ -430,7 +430,7 @@ $input->setOptions($options);
 
 $m = $input->month;                 // escaped output from magic accessor
 $m = $input->getEscaped('month');   // escaped output
-$m = $input->getUnescaped('month'); // not escaped 
+$m = $input->getUnescaped('month'); // not escaped
 ]]></programlisting>
 
             <para>
@@ -457,8 +457,8 @@ $m = $input->getUnescaped('month'); // not escaped
 
             <programlisting role="php"><![CDATA[<?php
 
-$options = array('escapeFilter' => 'StringTrim'); 
-$input = new Zend_Filter_Input($filters, $validators, $data, $options); 
+$options = array('escapeFilter' => 'StringTrim');
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
 
             <para>
@@ -535,12 +535,12 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 
             <programlisting role="php"><![CDATA[<?php
 
-$filters = array( 
-    'month' = array( 
-        'Digits',        // filter name at integer index [0] 
-        'fields' => 'mo' // field name at string index ['field'] 
-    ) 
-); 
+$filters = array(
+    'month' = array(
+        'Digits',        // filter name at integer index [0]
+        'fields' => 'mo' // field name at string index ['field']
+    )
+);
 ]]></programlisting>
 
             <para>
@@ -573,12 +573,12 @@ $filters = array(
 
             <programlisting role="php"><![CDATA[<?php
 
-$validators = array( 
-    'password' = array( 
+$validators = array(
+    'password' = array(
         'StringEquals',
         'fields' => array('password1', 'password2')
-    ) 
-); 
+    )
+);
 // Invokes hypothetical class Zend_Validate_StringEquals, passing an array argument
 // containing the values of the two input data fields named 'password1' and 'password2'.
 ]]></programlisting>
@@ -611,12 +611,12 @@ $validators = array(
 
             <programlisting role="php"><![CDATA[<?php
 
-$validators = array( 
-    'month' = array( 
+$validators = array(
+    'month' = array(
         'digits',
         'presence' => 'required'
-    ) 
-); 
+    )
+);
 ]]></programlisting>
 
             <para>
@@ -654,12 +654,12 @@ $validators = array(
 
             <programlisting role="php"><![CDATA[<?php
 
-$validators = array( 
-    'address2' = array( 
+$validators = array(
+    'address2' = array(
         'Alnum',
         'allowEmpty' => true
-    ) 
-); 
+    )
+);
 ]]></programlisting>
 
             <para>
@@ -785,7 +785,7 @@ $input = new Zend_Filter_Input(null, $validators);
             </para>
 
             <para>
-                Below is a simple example of setting the default error message 
+                Below is a simple example of setting the default error message
                 for a single validator.
             </para>
 
@@ -926,8 +926,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 
         <programlisting role="php"><![CDATA[<?php
 
-$options = array('namespace' => 'My_Namespace'); 
-$input = new Zend_Filter_Input($filters, $validators, $data, $options); 
+$options = array('namespace' => 'My_Namespace');
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
 
         <para>
@@ -935,14 +935,14 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
- 
-$input->addNamespace('Other_Namespace'); 
- 
+
+$input->addNamespace('Other_Namespace');
+
 // Now the search order is:
 // 1. My_Namespace
 // 2. Other_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate 
+// 4. Zend_Validate
 ]]></programlisting>
 
         <para>

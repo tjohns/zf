@@ -155,7 +155,7 @@ $feed = $gdataBlog->getBloggerFeed();
 
         <para>
             You can use the <code>post()</code> method to post entries
-            to your blog.  
+            to your blog.
             To post entries, you must be using an authenticated
             Zend_Http_Client that you created using the Zend_Gdata_AuthSub
             or Zend_Gdata_ClientLogin classes.

@@ -25,7 +25,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifetime' => 7200, // cache lifetime of 2 hours 
+   'lifetime' => 7200, // cache lifetime of 2 hours
    'automatic_serialization' => true
 );
 
@@ -50,18 +50,18 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 if(!$result = $cache->load('myresult')) {
 
     // cache miss; connect to the database
-    
+
     $db = Zend_Db::factory( [...] );
-    
+
     $result = $db->fetchAll('SELECT * FROM huge_table');
-    
+
     $cache->save($result, 'myresult');
-    
+
 } else {
 
     // cache hit! shout so that we know
     echo "This one is from cache!\n\n";
-    
+
 }
 
 print_r($result);
@@ -76,7 +76,7 @@ print_r($result);
             resembles the first example and is the core strategy for caching).
         </para><para>
             Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
-            method. On the next run, the whole section will be skipped in favor of fetching data from cache 
+            method. On the next run, the whole section will be skipped in favor of fetching data from cache
             (as long as the cache record is valid).
         </para>
             <programlisting role="php"><![CDATA[<?php
@@ -93,10 +93,10 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 // we pass a unique identifier to the start() method
 if(!$cache->start('mypage')) {
     // output as usual:
-    
+
     echo 'Hello world! ';
     echo 'This is cached ('.time().') ';
-    
+
     $cache->end(); // the output is saved and sent to the browser
 }
 

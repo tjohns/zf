@@ -193,7 +193,7 @@ Zend_Loader::registerAutoload();
                 Because of the semantics of static function references in PHP,
                 you must implement code for both <code>loadClass()</code>
                 and <code>autoload()</code>, and the <code>autoload()</code>
-                must call <code>self::loadClass()</code>.  If your 
+                must call <code>self::loadClass()</code>.  If your
                 <code>autoload()</code> method delegates to its parent to
                 call <code>self::loadClass()</code>, then it calls the
                 method of that name in the parent class, not the subclass.
