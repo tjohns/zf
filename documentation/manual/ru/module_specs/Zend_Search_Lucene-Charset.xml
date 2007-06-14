@@ -1,7 +1,7 @@
 <sect1 id="zend.search.lucene.charset">
-	<title>Кодировки<!--Character set.--></title>
+    <title>Кодировки<!--Character set.--></title>
 
-	<sect2 id="zend.search.lucene.charset.description">
+    <sect2 id="zend.search.lucene.charset.description">
         <title>Поддержка UTF-8 и однобайтных наборов символов<!--UTF-8 and single-byte character sets support.--></title>
 
         <para>
@@ -50,7 +50,7 @@
         <para>
             Действующая кодировка для входных данных может быть указана через
             API Zend_Search_Lucene. Данные будут автоматически преобразованы в
-            кодировку UTF-8.  
+            кодировку UTF-8.
 <!--
             Actual input data encoding may be specified through Zend_Search_Lucene API. Data will
             be automatically converted into UTF-8 encoding.
@@ -75,7 +75,7 @@
         <para>
             <code>ctype_alpha()</code> не является совместимым с UTF-8, поэтому
             анализатор конвертирует текст в кодировку 'ASCII//TRANSLIT' до
-            индексации. То же самое выполняется при парсинге запросов.  
+            индексации. То же самое выполняется при парсинге запросов.
 <!--
             ctype_alpha() is not UTF-8 compatible, so analyzer converts text to 'ASCII//TRANSLIT' encoding before
             indexing. The same processing is performed during query parsing, so it's done
@@ -110,7 +110,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             Он разбивает на лексемы данные для индексации в режиме UTF-8, не
-            испытывая проблем с любыми входящими в UTF-8 символами.   
+            испытывая проблем с любыми входящими в UTF-8 символами.
 <!--
             It tokenizes data for indexing in UTF-8 mode and has no problems with any UTF-8 compatible character.
 -->
@@ -179,7 +179,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]></progr
         </para>
 
         <para>
-            То же самое преобразование должно выполняться и для запросов: 
+            То же самое преобразование должно выполняться и для запросов:
 <!--
             The same conversion has to be performed with query string:
 -->

@@ -23,7 +23,7 @@
 
         <para>
             Для того, чтобы создать экземпляр <code>Zend_Db_Adapter</code> для
-            вашей конкретной СУБД, вам нужно вызвать метод 
+            вашей конкретной СУБД, вам нужно вызвать метод
             <code>Zend_Db::factory()</code> с именем адаптера и массивом
             параметров, описывающих соединение. Например, подключение к
             базе данных MySQL "camelot" на локальном хосте под именем
@@ -103,7 +103,7 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
             метод вернет строку, содержащую заключенные в кавычки и разделенные
             запятыми значения массива (это полезно при использовании
             функций, принимающих список параметров).
-<!--        
+<!--
             The first of these is the <code>quote()</code> method.  It will quote a
             scalar value appropriately for your database adapter; if you
             attempt to quote an array, it will return a comma-separated
@@ -145,7 +145,7 @@ $value = $db->quote(array('a', 'b', 'c');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // создается объект $db, предполагается, что адаптером является Mysql
 
 // подстановка скалярного значения в условие WHERE
@@ -182,7 +182,7 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // создается объект $db и затем производится запрос к БД
 // с оператором SQL, в который подставлено значение с заключением в кавычки
 $sql = $db->quoteInto(
@@ -214,7 +214,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // создается объект $db и затем делается запрос к БД
 // на этот раз используется связывание меток заполнения
 $result = $db->query(
@@ -233,7 +233,7 @@ $rows = $result->fetchAll();
             SQL вручную. Для этого используйте метод <code>prepare()</code> для
             получения подготовленного <code>PDOStatement</code>, с которым вы
             можете работать непосредственно.
-<!--        
+<!--
             Optionally, you may wish to prepare and bind data to SQL statements
             manually.  To do so, use the <code>prepare()</code> method to get a prepared
             <code>PDOStatement</code> that you can manipulate directly.
@@ -241,7 +241,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // создается объект $db и затем делается запрос к БД
 // на этот раз подготавливается PDOStatement для связки значений вручную
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
@@ -270,7 +270,7 @@ $rows = $stmt->fetchAll();
             отмены изменений. <code>Zend_Db_Adapter</code> вернется в режим
             автоматического завершения транзакций до тех пор, пока вы снова не
             вызовете <code>beginTransaction()</code>.
-<!--        
+<!--
             By default, PDO (and thus <code>Zend_Db_Adapter</code>) are in "auto-commit" mode.
             This means that all queries are committed as they are executed.
             If you wish to execute within a transaction, simply call the
@@ -281,7 +281,7 @@ $rows = $stmt->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // создается объект $db и затем устанавливается начало транзакции
 $db->beginTransaction();
 
@@ -308,7 +308,7 @@ try {
             оператора INSERT и связки данных для вставки. Данные для связывания
             автоматически заключаются в кавычки для предотвращения атак с
             использованием SQL-инъекций.
-<!--        
+<!--
             As a convenience, you may use the <code>insert()</code> method to create
             an INSERT statement for you and bind data to be inserted into it.
             (The bound data is quoted for you automatically to help prevent
@@ -333,7 +333,7 @@ try {
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // INSERT INTO round_table
 //     (noble_title, first_name, favorite_color)
@@ -386,7 +386,7 @@ $last_insert_id = $db->lastInsertId();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // UPDATE round_table
 //     SET favorite_color = "yellow"
@@ -476,7 +476,7 @@ $count        = $db->update('round_table', $set, $where);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // DELETE FROM round_table
 //     WHERE first_name = "Patsy";
@@ -513,7 +513,7 @@ $rows_affected = $db->delete($table, $where);
                 идентификаторы, требующие заключения в кавычки, то вы должны
                 произвести его самостоятельно. Используйте методы
                 <code>quote()</code>, <code>quoteInto()</code> и
-                <code>quoteIdentifier()</code> адаптера БД.                
+                <code>quoteIdentifier()</code> адаптера БД.
 <!--
                 The values and identifiers of the WHERE clause(s) are not quoted for you.  If you have values or
                 identifiers that require quoting, you are responsible for doing this. Use the <code>quote()</code>,
@@ -537,7 +537,7 @@ $rows_affected = $db->delete($table, $where);
             вы используете именованные метки замещения, то можете передавать
             также массив значений связывания для замещения в данном операторе с
             заключением в кавычки. Методами <code>fetch*()</code> являются:
-<!--        
+<!--
             Although you may query the database directly with the <code>query()</code>
             method, frequently all you need to do is select rows and get
             the results.  The <code>fetch*()</code> series of methods does this for you.
@@ -558,7 +558,7 @@ $rows_affected = $db->delete($table, $where);
         </itemizedlist>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // создается объект $db
 
 // извлечение всех столбцов и всех строк в виде индексного массива

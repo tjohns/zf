@@ -13,7 +13,7 @@
         предоставяет полное информационное содержимое внутри самой ленты, разделив
         для этой цели тег <code>&lt;description&gt;</code> в RSS на два элемента —
         <code>&lt;summary&gt;</code> (анонс) и <code>&lt;content&gt;</code> (содержимое).
-<!--    
+<!--
         <code>Zend_Feed_Atom</code> is used in much the same way as <code>Zend_Feed_Rss</code>. It provides
         the same access to feed-level properties and iteration over entries in the feed. The main
         difference is in the structure of the Atom protocol itself. Atom is a successor to RSS; it is more
@@ -159,7 +159,7 @@ foreach ($feed as $entry) {
             </listitem>
             <listitem>
                 <para>
-                    <code>updated</code> — дата последнего изменения публикации в формате RFC 3339 
+                    <code>updated</code> — дата последнего изменения публикации в формате RFC 3339
                     <!-- the date the entry was last updated, in RFC 3339 format -->
                 </para>
             </listitem>

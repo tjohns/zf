@@ -23,7 +23,7 @@
             remains the same:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/path/to/controllers');
@@ -44,7 +44,7 @@ Zend_Controller_Front::run('/path/to/controllers');
             <listitem>
 
                 <para>
-                    <code>Zend_Controller_Router</code> удален в пользу 
+                    <code>Zend_Controller_Router</code> удален в пользу
                     использования Rewrite Router.
 <!--
                     <code>Zend_Controller_Router</code> was removed in favor of
@@ -146,7 +146,7 @@ final protected function _forward($action, $controller = null, $module = null, a
 
         <para>
             Самые основы использования компонент системы MVC не изменились,
-            следующий код будет корректно выполняться и в версии 0.6.0:  
+            следующий код будет корректно выполняться и в версии 0.6.0:
 <!--
             The most basic usage of the MVC components has not changed; you can
             still do each of the following:
@@ -198,7 +198,7 @@ $ctrl->dispatch();
 
         <para>
             Есть также много дополнительных инструментов, расширяющих
-            существующий API, они описаны в этой документации. 
+            существующий API, они описаны в этой документации.
 <!--
             There are many additional features that extend the existing API,
             and these are noted in the documentation.
@@ -304,7 +304,7 @@ echo $response;
                 <itemizedlist>
                     <listitem><para>
                         Его конструктор теперь включает в себя три аргумента,
-                        <code>Zend_Controller_Request_Abstract $request</code>, 
+                        <code>Zend_Controller_Request_Abstract $request</code>,
                         <code>Zend_Controller_Response_Abstract $response</code>,
                         и <code>array $params</code> (необязательный).
                         <code>Zend_Controller_Action::__construct()</code>
@@ -315,8 +315,8 @@ echo $response;
                         как этот метод вызывается в конце конструктора.
 <!--
                         The constructor now accepts exactly three arguments,
-                        <code>Zend_Controller_Request_Abstract $request</code>, 
-                        <code>Zend_Controller_Response_Abstract $response</code>, 
+                        <code>Zend_Controller_Request_Abstract $request</code>,
+                        <code>Zend_Controller_Response_Abstract $response</code>,
                         and <code>array $params (optional)</code>.
                         <code>Zend_Controller_Action::__construct()</code> uses
                         these to set the request, response, and invokeArgs
@@ -334,14 +334,14 @@ echo $response;
                         фронт-контроллере; единственным его назначением
                         является использование класса как контроллера страниц.
                         Теперь он принимает два необязательных аргумента –
-                        <code>Zend_Controller_Request_Abstract $request</code> 
+                        <code>Zend_Controller_Request_Abstract $request</code>
                         и <code>Zend_Controller_Response_Abstract $response</code>.
 <!--
                         <code>run()</code> is no longer defined as final, but is
                         also no longer used by the front controller; it's sole
                         purpose is for using the class as a page controller. It
                         now takes two optional arguments, a
-                        <code>Zend_Controller_Request_Abstract $request</code> 
+                        <code>Zend_Controller_Request_Abstract $request</code>
                         and a <code>Zend_Controller_Response_Abstract $response</code>.
 -->
                     </para></listitem>
@@ -351,7 +351,7 @@ echo $response;
                         определения, но рекомендуется определять его в качестве
                         действия по умолчанию. Это позволяет использовать
                         RewriteRouter и контроллеры для указания различных
-                        методов действий, используемых по умолчанию. 
+                        методов действий, используемых по умолчанию.
 <!--
                         <code>indexAction()</code> no longer needs to be
                         defined, but is encouraged as the default action. This
@@ -362,7 +362,7 @@ echo $response;
 
                     <listitem><para>
                         <code>__call()</code> должен замещаться для обработки
-                        вызовов не определенных в классе действий.  
+                        вызовов не определенных в классе действий.
 <!--
                         <code>__call()</code> should be overridden to handle any
                         undefined actions automatically.
@@ -394,10 +394,10 @@ echo $response;
                 удален. Вместо него используйте
                 <code>Zend_Controller_Front::setBaseUrl()</code> (или
                 Zend_Controller_Request_Http::setBaseUrl(), если используется
-                объект запроса). 
+                объект запроса).
 <!--
                 <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> has
-                been removed. Use <code>Zend_Controller_Front::setBaseUrl()</code> 
+                been removed. Use <code>Zend_Controller_Front::setBaseUrl()</code>
                 instead (or Zend_Controller_Request_Http::setBaseUrl(), if using
                 that request class).
 -->

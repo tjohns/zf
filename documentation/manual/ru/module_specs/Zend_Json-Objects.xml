@@ -2,8 +2,8 @@
     <title>Объекты JSON</title>
     <para>
         Когда объекты PHP закодировываются в JSON, все публичные свойства этого
-        объекта будут закодированы в объект JSON. 
-<!--    
+        объекта будут закодированы в объект JSON.
+<!--
         When encoding PHP objects as JSON, all public properties of that object
         will be encoded in a JSON object.
 -->
@@ -32,7 +32,7 @@
         класса должен быть создан и заполнен парами ключ/значение объекта JSON;
         другие считают, что это может представлять собой серьезную угрозу
         безопасности.
-<!--    
+<!--
         Decoding JSON objects poses an additional difficulty, however, since
         Javascript objects correspond most closesly to PHP's associative array.
         Some suggest that a class identifier should be passed, and an object
@@ -44,7 +44,7 @@
     <para>
         По умолчанию <code>Zend_Json</code> будет декодировать объекты JSON как
         ассоциативные массивы. Но если вы хотите получить объект, то можете
-        указать это: 
+        указать это:
 <!--
         By default, <code>Zend_Json</code> will decode JSON objects as
         associative arrays. However, if you desire an object returned, you can

@@ -7,7 +7,7 @@
 <!--
         Usage of <code>Zend_Json</code> involves using the two public static
         methods available: <code>Zend_Json::encode()</code> and
-        <code>Zend_Json::decode()</code>. 
+        <code>Zend_Json::decode()</code>.
 -->
     </para>
     <programlisting role="php"><![CDATA[<?php

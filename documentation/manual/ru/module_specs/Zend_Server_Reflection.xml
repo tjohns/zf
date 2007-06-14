@@ -11,7 +11,7 @@
             в PHP 5 и расширяет его для предоставления методов
             получения типов и описаний параметров и возвращаемых значений,
             полного списка прототипов функций и методов (т.е. комбинации всех
-            возможных валидных вызовов), описаний функций/методов.   
+            возможных валидных вызовов), описаний функций/методов.
 <!--
             Zend_Server_Reflection provides a standard mechanism for performing
             function and class introspection for use with server classes. It is
@@ -48,12 +48,12 @@ $function = Zend_Server_Reflection::reflectFunction('my_function');
 // Получение прототипов
 $prototypes = $reflection->getPrototypes();
 
-// Обход полученных прототипов 
+// Обход полученных прототипов
 foreach ($prototypes as $prototype) {
 
     // Получение типа возращаемого прототипом значения
     echo "Return type: ", $prototype->getReturnType(), "\n";
-    
+
     // Получение параметров прототипа
     $parameters = $prototype->getParameters();
 

@@ -39,7 +39,7 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
         Если хотите иметь больший контроль над частями MIME, генерируемыми
         для данного вложения, то можете использовать возвращаемое методом
         <code>addAttachment()</code> значение для изменения атрибутов.
-        Метод <code>addAttachment()</code> возвращает объект <code>Zend_Mime_Part</code>. 
+        Метод <code>addAttachment()</code> возвращает объект <code>Zend_Mime_Part</code>.
 <!--
         If you want more control over the MIME part generated for this attachment you can use the return value
         of <code>addAttachment()</code> to modify its attributes. The <code>addAttachment()</code> method

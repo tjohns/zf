@@ -1,7 +1,7 @@
 <sect1 id="zend.view.scripts">
-    
+
     <title>Скрипты вида<!--View Scripts--></title>
-        
+
     <para>
         После того, как ваш контроллер определил переменные и вызвал
         метод <code>render()</code>, <code>Zend_View</code> включает
@@ -17,14 +17,14 @@
         Zend_View instance itself.
 -->
     </para>
-    
+
     <para>
         Переменные, объявленные для вида в контроллере, ссылаются на
         свойства экземпляра. Например, если контроллер объявил
         переменную 'something', вы можете ссылаться на нее как
         на <code>$this->something</code> в скрипте вида (это дает
         вам возможность отслеживать, какие переменные были объявлены
-        для скрипта, и какие были объявлены самим скриптом). 
+        для скрипта, и какие были объявлены самим скриптом).
 <!--
         Variables assigned to the view from the controller are referred
         to as instance properties.  For example, if the controller were
@@ -34,7 +34,7 @@
         internal to the script itself.)
 -->
     </para>
-    
+
     <para>
         Для напоминания, здесь приведен пример скрипта представления из
         введения.
@@ -43,36 +43,36 @@
         Zend_View introduction.
 -->
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- Таблица нескольких книг. -->
     <table>
         <tr>
             <th>Author</th>
             <th>Title</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['author']) ?></td>
             <td><?php echo $this->escape($val['title']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>Нет книг для отображения.</p>
-    
+
 <?php endif; ?>]]>
     </programlisting>
-        
+
     <sect2 id="zend.view.scripts.escaping">
-        
+
         <title>Экранирование вывода<!--Escaping Output--></title>
-        
+
         <para>
             Одной из наиважнейших задач, которую должен решать скрипт вида,
             является обеспечение того, что выходные данные должным образом
@@ -84,22 +84,22 @@
 <!--
             One of the most important tasks to perform in a view script
             is to make sure that output is escaped properly; among other
-            things, this helps to avoid cross-site scripting attacks. 
+            things, this helps to avoid cross-site scripting attacks.
             Unless you are using a function, method, or helper that does
             escaping on its own, you should always escape variables when
             you output them.
 -->
         </para>
-        
+
         <para>
             <code>Zend_View</code> снабжен методом <code>escape()</code>,
-            который выполняет экранирование. 
+            который выполняет экранирование.
 <!--
             Zend_View comes with a method called escape() that does such
             escaping for you.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // плохая практика для скриптов вида
 echo $this->variable;
@@ -108,7 +108,7 @@ echo $this->variable;
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
-        
+
         <para>
             По умолчанию метод <code>escape()</code> использует функцию PHP
             <code>htmlspecialchars()</code> для экранирования. Но, в зависимости
@@ -124,7 +124,7 @@ echo $this->escape($this->variable);
             what escaping callback to use.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // создание экземпляра Zend_View
 $view = new Zend_View();
@@ -144,7 +144,7 @@ $view->setEscape(array($obj, 'methodName'));
 echo $view->render(...);
 ?>]]>
         </programlisting>
-        
+
         <para>
             Функции или методы обратного вызова должны принимать значение,
             которое требуется экранировать как первый параметр,
@@ -155,20 +155,20 @@ echo $view->render(...);
             be optional.
 -->
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
-    
+
         <title>Использование других шаблонизаторов<!--Using Alternate Template Systems--></title>
-        
+
         <para>
             Хотя PHP сам по себе представляет собой мощный шаблонизатор,
             многие разработчики считают его избыточным или слишком сложным для
             верстальщиков и поэтому предпочитают использовать другие
             шаблонизаторы. Zend_View предоставляет 2 пути для этого: первый –
             через скрипты вида, второй - посредством реализации интерфейса
-            Zend_View_Interface. 
+            Zend_View_Interface.
 <!--
             Although PHP is itself a powerful template system, many developers
             feel it is too powerful or complex for their template designers and
@@ -177,10 +177,10 @@ echo $view->render(...);
             second by implementing Zend_View_Interface.
 -->
         </para>
-        
+
         <sect3 id="zend.view.scripts.templates.scripts">
             <title>Шаблонизаторы c использованием скриптов видов<!--Template Systems Using View Scripts--></title>
-            
+
             <para>
                 Скрипт вида может использоваться для инстанцирования и
                 манипулирования отдельным объектом шаблона (это могут быть
@@ -192,7 +192,7 @@ echo $view->render(...);
                 this:
 -->
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 include_once 'template.inc';
 $tpl = new Template();
@@ -202,27 +202,27 @@ if ($this->books) {
         "booklist" => "booklist.tpl",
         "eachbook" => "eachbook.tpl",
     ));
-    
+
     foreach ($this->books as $key => $val) {
         $tpl->set_var('author', $this->escape($val['author']);
         $tpl->set_var('title', $this->escape($val['title']);
         $tpl->parse("books", "eachbook", true);
     }
-    
+
     $tpl->pparse("output", "booklist");
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
 ?>]]></programlisting>
-        
+
             <para>
                 Это может соответствовать следующему файлу шаблона:
 <!--
                 These would be the related template files:
 -->
             </para>
-        
+
             <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
@@ -252,7 +252,7 @@ if ($this->books) {
                 Некоторым может быть удобнее использовать совместимый с
                 Zend_View шаблонизатор. <code>Zend_View_Interface</code>
                 предоставляет минимальный интерфейс, необходимый для
-                совместимости: 
+                совместимости:
 <!--
                 Some may find it easier to simply provide a Zend_View-compatible
                 template engine. <code>Zend_View_Interface</code> defines the
@@ -315,7 +315,7 @@ require_once 'Smarty.class.php';
 class Zend_View_Smarty implements Zend_View_Interface
 {
     /**
-     * Объект Smarty 
+     * Объект Smarty
      * @var Smarty
      */
     protected $_smarty;
@@ -418,7 +418,7 @@ class Zend_View_Smarty implements Zend_View_Interface
      * пар ключ => значение
      *
      * @see __set()
-     * @param string|array $spec Ключ или массив пар ключ => значение 
+     * @param string|array $spec Ключ или массив пар ключ => значение
      * @param mixed $value (необязательный) Если присваивается значение одной
      * переменной, то через него передается значение переменной
      * @return void
@@ -458,9 +458,9 @@ class Zend_View_Smarty implements Zend_View_Interface
 
             <para>
                 В этом примере вы можете инстанцировать класс
-                <code>Zend_View_Smarty</code> вместо <code>Zend_View</code> и 
+                <code>Zend_View_Smarty</code> вместо <code>Zend_View</code> и
                 использовать его подобно тому, как используется
-                <code>Zend_View</code>.  
+                <code>Zend_View</code>.
 <!--
                 In this example, you would instantiate the
                 <code>Zend_View_Smarty</code> class instead of
@@ -478,9 +478,9 @@ $rendered = $view->render('bookinfo.tpl');
 ]]></programlisting>
 
         </sect3>
-        
+
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

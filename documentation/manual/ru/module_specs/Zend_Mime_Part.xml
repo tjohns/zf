@@ -1,29 +1,29 @@
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
-    
-	<sect2 id="zend.mime.part.introduction">
-	  <title>Введение</title>
-	
-	  <para>
-	    Этот класс представляет отдельную часть сообщения MIME. он содержит
-	    фактическое содержимое части сообщения и информацию об его кодировке,
-	    типе содержимого и имени файла оригинала. Он предоставляет методы для
-	    генерации строки из сохраненных данных. Объекты <code>Zend_Mime_Part</code>
-	    могут быть добавлены в <link
-	    linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>
-	    для компоновки целого сообщения с типом multipart. 
+
+    <sect2 id="zend.mime.part.introduction">
+      <title>Введение</title>
+
+      <para>
+        Этот класс представляет отдельную часть сообщения MIME. он содержит
+        фактическое содержимое части сообщения и информацию об его кодировке,
+        типе содержимого и имени файла оригинала. Он предоставляет методы для
+        генерации строки из сохраненных данных. Объекты <code>Zend_Mime_Part</code>
+        могут быть добавлены в <link
+        linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>
+        для компоновки целого сообщения с типом multipart.
 <!--
       This class represents a single part of a MIME message. It contains the
-	    actual content of the message part plus information about its encoding,
-	    content type and original filename. It provides a method for generating a
-	    string from the stored data. <code>Zend_Mime_Part</code> objects can be
-	    added to <link
-	    linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> to
-	    assemble a complete multipart message.
+        actual content of the message part plus information about its encoding,
+        content type and original filename. It provides a method for generating a
+        string from the stored data. <code>Zend_Mime_Part</code> objects can be
+        added to <link
+        linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> to
+        assemble a complete multipart message.
 -->
     </para>
-	</sect2>
-  
+    </sect2>
+
   <sect2 id="zend.mime.part.instantiation">
     <title>Инстанцирование<!--Instantiation--></title>
 
@@ -42,7 +42,7 @@
 -->
     </para>
 
-    <programlisting role="php"><![CDATA[<?php            
+    <programlisting role="php"><![CDATA[<?php
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;
@@ -51,7 +51,7 @@ public $filename;
 public $description;
 public $charset;
 ?>]]></programlisting>
-	</sect2>
+    </sect2>
 
   <sect2 id="zend.mime.part.methods">
     <title>
@@ -76,7 +76,7 @@ public $charset;
       <code>-&gt;getHeaders()</code> возвращает заголовки MIME для части сообщения
        такими, какими они были сгенерированы из информации в открытых
        атрибутах. Нужно правильно установить атрибуты объекта, прежде чем
-       будет вызван метод. 
+       будет вызван метод.
 <!--
       <code>-&gt;getHeaders()</code> returns the Mime-Headers for the
       MimePart as generated from the information in the publicly accessable
@@ -88,10 +88,10 @@ public $charset;
             <para>
                 <code>$charset</code>
                 должен соответствовать текущему набору символов содержимого, если это
-                содержимое имеет текстовый тип (простой текст или HTML). 
+                содержимое имеет текстовый тип (простой текст или HTML).
 <!--
                 has to be set to the actual charset of the content if it is a text type (Text or HTML).
---> 
+-->
             </para>
         </listitem>
 
@@ -102,7 +102,7 @@ public $charset;
                 изображений в сообщении HTML.
 <!--
                 may be set to identify a content-id for inline images in a HTML mail.
---> 
+-->
             </para>
         </listitem>
 
@@ -112,7 +112,7 @@ public $charset;
                 содержит имя файла, которое будет получено при загрузке.
 <!--
                 contains the name the file will get when downloading it.
---> 
+-->
             </para>
         </listitem>
 
@@ -123,7 +123,7 @@ public $charset;
                 использоваться внутри сообщения HTML.
 <!--
                 defines if the file should be treated as an attachment or if it is used inside the (HTML-) mail (inline).
---> 
+-->
             </para>
         </listitem>
 
@@ -134,7 +134,7 @@ public $charset;
 <!--
                 is only used for informational purposes.
 -->
-            </para> 
+            </para>
         </listitem>
       </itemizedlist></para>
   </sect2>

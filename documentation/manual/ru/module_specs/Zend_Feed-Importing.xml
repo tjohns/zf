@@ -17,7 +17,7 @@
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 
 ?>]]></programlisting>
-    
+
     <para>
         Еще вы можете использовать <code>Zend_Feed</code> для извлечения содержимого
         ленты из файла или строки:

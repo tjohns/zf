@@ -19,7 +19,7 @@
 
     <para>
         Zend Framework поддерживает как использование удаленных XML-RPC
-        сервисов, так и создание новых XML-RPC серверов. 
+        сервисов, так и создание новых XML-RPC серверов.
 <!--
         The Zend Framework provides support for both consuming remote XML-RPC
         services and building new XML-RPC servers.

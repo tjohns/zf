@@ -1,26 +1,26 @@
 <sect1 id="zend.view.controllers">
     <title>Скрипты контроллера<!--Controller Scripts--></title>
-    
+
     <para>
         В контроллере вы создаете и конфигурируете экземпляр <code>Zend_View</code>.
         Затем вы объявляете переменные для этого экземпляра и подаете ему команду
         воспроизвести выходные данные, используя указанный скрипт.
 <!--
         The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to 
+        You then assign variables to the view, and tell the view to
         render output using a particular script.
 -->
     </para>
-    
+
     <sect2 id="zend.view.controllers.assign">
-    
+
         <title>Объявление переменных<!--Assigning Variables--></title>
-        
+
         <para>
             Ваш скрипт контроллера должен объявить
             необходимые переменные для вида до того, как будет передан
             контроль скрипту вида. Обычно вы можете делать одно объявление
-            за раз посредством объявления свойств экземпляра вида. 
+            за раз посредством объявления свойств экземпляра вида.
 <!--
             Your controller script should assign necessary variables to the view
             before it hands over control to the view script.  Normally, you
@@ -28,7 +28,7 @@
             of the view instance:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->a = "Hay";
@@ -36,16 +36,16 @@ $view->b = "Bee";
 $view->c = "Sea";
 ?>]]>
         </programlisting>
-        
+
         <para>
             Однако это может оказаться утомительным, если вы уже имеете
-            набор значений для присвоения в массиве или объекте.  
+            набор значений для присвоения в массиве или объекте.
 <!--
             However, this can be tedious when you have already collected the
             values to be assigned into an array or object.
 -->
         </para>
-        
+
         <para>
             Методы <code>assign()</code> дают возможность присваивать значения
             из массива или объекта "партиями". Следующий пример делает
@@ -57,7 +57,7 @@ $view->c = "Sea";
             one-by-one property assignments.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
@@ -80,7 +80,7 @@ $obj->c = "Sea";
 $view->assign((array) $obj);
 ?>]]>
         </programlisting>
-        
+
         <para>
             В качестве альтернативы вы можете использовать методы для
             последовательного объявления посредством передачи строки с
@@ -91,7 +91,7 @@ $view->assign((array) $obj);
             variable value.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->assign('a', "Hay");
@@ -99,13 +99,13 @@ $view->assign('b', "Bee");
 $view->assign('c', "Sea");
 ?>]]>
         </programlisting>
-        
+
     </sect2>
 
     <sect2 id="zend.view.controllers.render">
-        
+
         <title>Выполнение скрипта вида<!--Rendering a View Script--></title>
-        
+
         <para>
             После того, как вы определили все необходимые переменные, контроллер
             должен дать <code>Zend_View</code> команду выполнить указанный
@@ -113,7 +113,7 @@ $view->assign('c', "Sea");
             <code>render()</code>. Обратите внимание, что этот метод будет
             возвращать результат выполнения, но не выводить его,
             поэтому вам нужно самостоятельно вывести его посредством функции
-            <code>echo()</code> или <code>print()</code> в подходящее время. 
+            <code>echo()</code> или <code>print()</code> в подходящее время.
 <!--
             Once you have assigned all needed variables, the controller
             should tell Zend_View to render a particular view script.
@@ -122,7 +122,7 @@ $view->assign('c', "Sea");
             echo it yourself at the appropriate time.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->a = "Hay";
@@ -131,13 +131,13 @@ $view->c = "Sea";
 echo $view->render('someView.php');
 ?>]]>
         </programlisting>
-    
+
     </sect2>
-    
+
     <sect2 id="zend.view.controllers.script-paths">
-        
+
         <title>Пути к скриптам вида<!--View Script Paths--></title>
-        
+
         <para>
             По умолчанию <code>Zend_View</code> ищет скрипты
             вида относительно вызывающего скрипта.
@@ -145,7 +145,7 @@ echo $view->render('someView.php');
             <code>/path/to/app/controllers</code> и он вызывает
             <code>$view->render('someView.php')</code>, то
             <code>Zend_View</code> будет искать
-            <code>/path/to/app/controllers/someView.php</code>.    
+            <code>/path/to/app/controllers/someView.php</code>.
 <!--
             By default, Zend_View expects your view scripts to be relative to
             your calling script.  For example, if your controller script is at
@@ -154,7 +154,7 @@ echo $view->render('someView.php');
             "/path/to/app/controllers/someView.php".
 -->
         </para>
-        
+
         <para>
             Очевидно, что ваши скрипты вида могут находиться в другом месте.
             Чтобы указать <code>Zend_View</code>, где искать скрипты вида,
@@ -165,13 +165,13 @@ echo $view->render('someView.php');
             setScriptPath() method.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->setScriptPath('/path/to/app/views');
 ?>]]>
         </programlisting>
-        
+
         <para>
             Теперь вы можете вызывать <code>$view->render('someView.php')</code>,
             он будет искать <code>/path/to/app/views/someView.php</code>.
@@ -180,7 +180,7 @@ $view->setScriptPath('/path/to/app/views');
             for "/path/to/app/views/someView.php".
 -->
         </para>
-        
+
         <para>
             Вы можете "складывать" в стек пути,
             используя метод <code>addScriptPath()</code>. Если вы добавили
@@ -199,7 +199,7 @@ $view->setScriptPath('/path/to/app/views');
             some views, while leaving others alone.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->addScriptPath('/path/to/app/views');
@@ -207,11 +207,11 @@ $view->addScriptPath('/path/to/custom/');
 
 // теперь, когда вы вызываете $view->render('booklist.php'), Zend_View
 // будет искать "/path/to/custom/booklist.php",
-// затем "/path/to/app/views/booklist.php", 
-// и под конец "booklist.php" в текущем каталоге.    
+// затем "/path/to/app/views/booklist.php",
+// и под конец "booklist.php" в текущем каталоге.
 ?>]]>
         </programlisting>
-        
+
     </sect2>
 
 </sect1>

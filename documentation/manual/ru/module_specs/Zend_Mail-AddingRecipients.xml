@@ -13,7 +13,7 @@
         <itemizedlist>
         <listitem>
         <para><code>addTo()</code>:
-            Добавляет получателя в почтовое сообщение с помощью заголовка "To" 
+            Добавляет получателя в почтовое сообщение с помощью заголовка "To"
 <!--
             Adds a recipient to the mail with a "To" header
 -->
@@ -21,14 +21,14 @@
         </listitem>
         <listitem>
         <para><code>addCc()</code>:
-            Добавляет получателя в сообщение с помощью заголовка "Cc" 
+            Добавляет получателя в сообщение с помощью заголовка "Cc"
 <!--
             Adds a recipient to the mail with a "Cc" header
 -->
         </para>
         </listitem>
         <listitem>
-        <para><code>addBcc()</code>: 
+        <para><code>addBcc()</code>:
             Добавляет получателя в сообщение, при этом он не отображается
             в заголовке
 <!--

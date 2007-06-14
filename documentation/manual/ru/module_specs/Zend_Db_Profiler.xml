@@ -2,7 +2,7 @@
 
     <title>Zend_Db_Profiler</title>
 
-    <sect2 id="zend.db.profiler.introduction">  
+    <sect2 id="zend.db.profiler.introduction">
 
         <title>Введение</title>
 
@@ -27,7 +27,7 @@
         <para>
             Включение профайлера производится либо передачей директивы
             конструктору адаптера, либо более поздним обращением к адаптеру
-            для включения. 
+            для включения.
 <!--
             Enable the profiler by either passing a directive to the adapter
             constructor, or by asking the adapter to enable it later.
@@ -74,7 +74,7 @@ $profiler = $db->getProfiler();
 ?>]]></programlisting>
 
         <para>
-            Это вернет экземпляр класса <code>Zend_Db_Profiler</code>. 
+            Это вернет экземпляр класса <code>Zend_Db_Profiler</code>.
             С помощью этого экземпляра разработчик может изучать запросы,
             используя различные методы:
 <!--
@@ -145,7 +145,7 @@ $profiler = $db->getProfiler();
             Возвращаемое <code>getLastQueryProfile()</code> значение и
             отдельные элементы <code>getQueryProfiles()</code> являются объектами
             <code>Zend_Db_Profiler_Query</code>, которые дают возможность
-            исследовать отдельные запросы:   
+            исследовать отдельные запросы:
 <!--
             The return value of <code>getLastQueryProfile()</code> and the
             individual elements of <code>getQueryProfiles()</code> are
@@ -198,7 +198,7 @@ echo $query->getQuery();
             Возможно, страница генерируется медленно. Используйте профайлер
             для того, чтобя сначала определить общее количество секунд для
             всех запросов, затем выполните обход всех запросов, чтобы найти
-            тот, который выполняется дольше всех:  
+            тот, который выполняется дольше всех:
 <!--
             Perhaps a page is generating slowly; use the profiler to determine
             first the total number of seconds of all queries, and then step
@@ -347,7 +347,7 @@ $profiler->setFilterElapsedSecs(null);
                 <listitem>
                     <para>
                         <code>Zend_Db_Profiler::SELECT</code>: любые запросы, которые
-                        извлекают существующие данные, обычно это команда SELECT. 
+                        извлекают существующие данные, обычно это команда SELECT.
 <!--
                         <code>Zend_Db_Profiler::SELECT</code>: any query that
                         retrieves existing data, usually SQL SELECT.
@@ -371,7 +371,7 @@ $profiler->setFilterElapsedSecs(null);
             <para>
                 Как и в случае <code>setFilterElapsedSecs()</code>, вы можете
                 удалить все фильтры посредством передачи <code>NULL</code> в
-                качестве единственного аргумента. 
+                качестве единственного аргумента.
 <!--
                 As with <code>setFilterElapsedSecs()</code>, you can remove any
                 existing filters by passing <code>null</code> as the sole
@@ -399,14 +399,14 @@ $profiler->setFilterQueryType(null);
             <title>Получение профайлов по типу запроса</title>
 
             <para>
-                Использование <code>setFilterQueryType()</code> может 
+                Использование <code>setFilterQueryType()</code> может
                 сократить количество генерируемых профайлов. Тем не менее,
                 иногда может быть полезным хранить все профайлы, но просматривать
                 только те, которые нужны в данный момент. Другой метод
                 <code>getQueryProfiles()</code> — это то, что может делать такую
                 фильтрацию "на лету", ему передается тип запроса (или
                 логическая комбинация типов запросов) в качестве его первого
-                аргумента; список констант типов запросов см. 
+                аргумента; список констант типов запросов см.
                 <xref linkend="zend.db.profiler.advanced.filtertype" />.
 <!--
                 Using <code>setFilterQueryType()</code> can cut down on the
@@ -415,7 +415,7 @@ $profiler->setFilterQueryType(null);
                 moment. Another feature of <code>getQueryProfiles()</code> is
                 that it can do this filtering on-the-fly, by passing a query
                 type (or logical combination of query types) as its first
-                argument; see <xref linkend="zend.db.profiler.advanced.filtertype" /> 
+                argument; see <xref linkend="zend.db.profiler.advanced.filtertype" />
                 for a list of the query type constants.
 -->
             </para>

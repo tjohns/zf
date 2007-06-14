@@ -3,7 +3,7 @@
 
     <para>
         В дополнение к автоматическому парсингу запросов есть возможность
-        строить запросы через API. 
+        строить запросы через API.
 <!--
         In addition to parsing query automatically it's also possible to constract them through API.
 -->
@@ -11,7 +11,7 @@
 
     <para>
         Пользовательские запросы могут быть объединены с запросами, созданными
-        через API. Используйте парсер запросов для построения запроса из строки. 
+        через API. Используйте парсер запросов для построения запроса из строки.
 <!--
         User query can be combined with queries created through API. Use query parser to construct query from a string:
 -->
@@ -50,7 +50,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></program
         </itemizedlist>
         Будет хорошей идеей отлавливать запросы
         Zend_Search_Lucene_Search_QueryParserException и выводить
-        соответствующее сообщение.          
+        соответствующее сообщение.
 <!--
         Thus that's good idea to catch Zend_Search_Lucene_Search_QueryParserException and make appropriate message:
 -->
@@ -64,7 +64,7 @@ try {
 
         <para>
             Тот же самый подход может (и должен) применяться для метода
-            find() объекта Zend_Search_Lucene.  
+            find() объекта Zend_Search_Lucene.
 <!--
             The same technique may (and should) be used for find() method of Zend_Search_Lucene object.
 -->
@@ -72,7 +72,7 @@ try {
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.term-query">
-		    <title>Простой запрос (запрос по одному ключевому слову)<!--Term Query--></title>
+            <title>Простой запрос (запрос по одному ключевому слову)<!--Term Query--></title>
         <para>
         Простые запросы предназначены для поиска по одному элементу.
 <!--
@@ -92,7 +92,7 @@ try {
         <para>или</para>
 
         <para>
-        Построение запроса через API: 
+        Построение запроса через API:
 <!--
         Query construction by API:
 -->
@@ -115,10 +115,10 @@ $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);]]></programlisting>
         </para>
 
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.multiterm-query">
-		<title>Составной запрос (запрос по нескольким ключевым словам)<!--Multi-Term Query--></title>
+    <sect2 id="zend.search.lucene.queries.multiterm-query">
+        <title>Составной запрос (запрос по нескольким ключевым словам)<!--Multi-Term Query--></title>
         <para>
             Составные запросы предназначены для поиска по набору элементов.
 <!--
@@ -161,7 +161,7 @@ $hits  = $index->find($query);]]></programlisting>
                          документы не обязательно должны соответствовать
                          (или не иметь соответствия) элементу. Тем не менее,
                          документ должен соответствовать хотя бы одному элементу, чтобы
-                         соответствовать запросу. 
+                         соответствовать запросу.
 <!--
                         neither, in which case matched documents are neither prohibited from
                         nor required to match the term. However, a document must match at least
@@ -187,7 +187,7 @@ $hits  = $index->find($query);]]></programlisting>
 
         <para>
             Для составных запросов могут использоваться оба метода поиска.
-            
+
 <!--
             Both of a search method can be used for multi term queries.
 -->
@@ -217,7 +217,7 @@ $hits  = $index->find($query);]]></programlisting>
             <listitem>
                 <para>
                     Приставка 'field:' используется, чтобы указать поле документа
-                    для поиска. Если она опущена, то используется поле 'contents'.  
+                    для поиска. Если она опущена, то используется поле 'contents'.
 <!--
                     'field:' prefix is used to indicate document field for a search.
                     If it's omitted, then 'contents' is used.
@@ -257,7 +257,7 @@ $hits  = $index->find($query);]]></programlisting>
 -->
                     </para>
                 </listitem>
-                
+
                 <listitem>
                     <para>
                         <code>false</code> используется для определения запрещенных элементов.
@@ -278,10 +278,10 @@ $hits  = $index->find($query);]]></programlisting>
                 </listitem>
             </itemizedlist>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.phrase-query">
-		<title>Фразовый запрос<!--Phrase Query--></title>
+    <sect2 id="zend.search.lucene.queries.phrase-query">
+        <title>Фразовый запрос<!--Phrase Query--></title>
         <para>
             Фразовые запросы предназначены для поиска по фразам.
 <!--
@@ -296,7 +296,7 @@ $hits  = $index->find($query);]]></programlisting>
             Phrase Queries are very flexible and allow to search exact phrases as well as sloppy phrases.
 -->
         </para>
-        
+
         <para>
             Фразы могут содержать пропуски или несколько
             слов в одной и той же позиции. (Это может быть сгенерировано анализатором
@@ -344,7 +344,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <para>
             Фразовый запрос может строиться сразу с помощью конструктора класса
             или пошагово с помощью метода
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>. 
+            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>.
 <!--
             Phrase query can be constructed by one step with a class constructor or step by step with a
             <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> method.
@@ -353,7 +353,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Конструктор класса <code>Zend_Search_Lucene_Search_Query_Phrase</code>
-            принимает три необязательных параметра: 
+            принимает три необязательных параметра:
 <!--
             Zend_Search_Lucene_Search_Query_Phrase class constructor takes
             three optional arguments:
@@ -429,7 +429,7 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), a
 
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
-        
+
         <para>
             будет искать фразу 'zend framework' в поле 'title'.
 <!--
@@ -441,7 +441,7 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), 
             Метод <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>
             принимает два аргумента — объект элемента
             <code>Zend_Search_Lucene_Index_Term</code> в качестве обязательного
-            параметра и позицию элемента в качестве необязательного:  
+            параметра и позицию элемента в качестве необязательного:
 <!--
             <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> method
             takes two arguments.
@@ -519,14 +519,14 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             then this is an exact phrase search.  For larger values this works like a WITHIN or NEAR operator.
 -->
         </para>
-        
+
         <para>
             По сути, это управляемое расстояние, где единицы соответствуют
             перемене мест элементов относительно их позиции во фразе поиска.
             Например, для переключения порядка двух слов требуются две перемены мест
             (первое перемещение помещает слова друг над другом). Поэтому
             для того, чтобы разрешить изменение порядка фраз, коэффициент
-            расстояния должен быть равен, как минимум, двум. 
+            расстояния должен быть равен, как минимум, двум.
 <!--
             The slop is in fact an edit-distance, where the units correspond to
             moves of terms in the query phrase
@@ -536,7 +536,7 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             the slop must be at least two.
 -->
         </para>
-        
+
         <para>
             Более точные соответствия имеют бОльшую релевантность, чем менее точные,
             таким образом, результаты сортируются по точности. По умолчанию
@@ -547,14 +547,14 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             The slop is zero by default, requiring exact matches.
 -->
         </para>
-        
+
         <para>
             Коэффициент расстояния может быть указан после создания запроса:
 <!--
             Sloop factor can be assigned after query creation:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // Запрос без пропусков.
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
@@ -568,7 +568,7 @@ $hits1 = $index->find($query);
 $query->setSlop(2);
 $hits2 = $index->find($query);]]></programlisting>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

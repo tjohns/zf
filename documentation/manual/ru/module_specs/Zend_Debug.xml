@@ -28,7 +28,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     <para>
         Аргумент <code>$var</code> соответствует выражению или переменной,
         информацию о которой должен вывести метод
-        <code>Zend_Debug::dump()</code>. 
+        <code>Zend_Debug::dump()</code>.
 <!--
         The <code>$var</code> argument specifies the expression or variable
         about which the <code>Zend_Debug::dump()</code> method outputs
@@ -54,12 +54,12 @@ Zend_Debug::dump($var, $label=null, $echo=true)
         вывод метода <code>Zend_Debug::dump()</code> или нет. Если
         он равен <code>true</code>, то вывод будет отображен. Независимо от
         значения этого аргумента, возвращаемое методом значение будет содержать
-        его вывод.  
+        его вывод.
 <!--
         The boolean <code>$echo</code> argument specifies whether the output
         of <code>Zend_Debug::dump()</code> is echoed or not.
         If <code>true</code>, the output is echoed.
-        Regardless of the value of the <code>$echo</code> argument, the 
+        Regardless of the value of the <code>$echo</code> argument, the
         return value of this method contains the output.
 -->
     </para>
@@ -74,10 +74,10 @@ Zend_Debug::dump($var, $label=null, $echo=true)
         <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink>
         и окружен (X)HTML тегами <code>&lt;pre&gt;</code>.
 <!--
-        It may be helpful to understand that internally, 
+        It may be helpful to understand that internally,
         <code>Zend_Debug::dump()</code> method wraps the PHP function
         <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.
-        If the output stream is detected as a web presentation, 
+        If the output stream is detected as a web presentation,
         the output of <code>var_dump()</code> is escaped using
         <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink>
         and wrapped with (X)HTML <code>&lt;pre&gt;</code> tags.
@@ -89,9 +89,9 @@ Zend_Debug::dump($var, $label=null, $echo=true)
         <para>
             <code>Zend_Debug::dump()</code> хорошо применять
             во время разработки приложения для отладки. Вы можете очень быстро
-            добавлять код для дампа переменной и удалять его. 
+            добавлять код для дампа переменной и удалять его.
 <!--
-            Using <code>Zend_Debug::dump()</code> is best for ad hoc 
+            Using <code>Zend_Debug::dump()</code> is best for ad hoc
             debugging during software development.  You can add code to dump
             a variable and then remove the code very quickly.
 -->

@@ -224,7 +224,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 посредством метода <code>describeTable()</code>.
 <!--
                 If you don't specify the primary key, Zend_Db_Table_Abstract
-                tries to discover the primary key based on the information 
+                tries to discover the primary key based on the information
                 provided by the <code>describeTable()</code> method.
 -->
             </para>
@@ -315,7 +315,7 @@ class Bugs extends Zend_Db_Table_Abstract
                         метод, вы можете устанавливать столбцы самостоятельно.
 <!--
                         <code>_setupMetadata()</code>
-                        sets the schema if the table name contains the 
+                        sets the schema if the table name contains the
                         pattern "schema.table";
                         calls <code>describeTable()</code> to get metadata
                         information; defaults the <code>$_cols</code>
@@ -362,7 +362,7 @@ class Bugs extends Zend_Db_Table_Abstract
             соединение к какой-либо СУРБД. Есть три способа передачи адаптера БД
             классу таблицы, и эти три способа описаны ниже:
 <!--
-            Before you use a Table class, create an instance using its 
+            Before you use a Table class, create an instance using its
             constructor.  The constructor's argument is an array of options.
             The most important option to a Table constructor is the
             database adapter instance, representing a live connection
@@ -408,7 +408,7 @@ $table = new Bugs(array('db' => $db));
                 Вторым способом предоставления адаптера БД классу таблицы
                 является декларирование объекта типа Zend_Db_Adapter_Abstract
                 как используемого по умолчанию для всех экземпляров таблиц в
-                вашем приложении. Вы можете делать это через статический метод 
+                вашем приложении. Вы можете делать это через статический метод
                 <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code>. Его
                 аргументом является объект типа Zend_Db_Adapter_Abstract.
 <!--
@@ -560,7 +560,7 @@ $table->insert($data);
             объекты типа Zend_Db_Expr.
 <!--
             By default, the values in your data array are inserted as
-            literal values, using parameters.  If you need them to be 
+            literal values, using parameters.  If you need them to be
             treated as SQL expressions, you must make sure they are distinct
             from plain strings.  Use an object of type Zend_Db_Expr to do this.
 -->
@@ -664,12 +664,12 @@ class Bugs extends Zend_Db_Table_Abstract
                 defines a sequence based on the table and column name, and uses
                 the sequence to generate key values for new rows.
                 IBM DB2 has an <code>IDENTITY</code> notation that works similarly.
-                If you use either of these notations, treat your Zend_Db_Table 
+                If you use either of these notations, treat your Zend_Db_Table
                 class as having an auto-incrementing column with respect to
                 declaring the <code>$_sequence</code> member as <code>true</code>.
 -->
             </para>
-            
+
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
@@ -799,7 +799,7 @@ class BugStatus extends Zend_Db_Table_Abstract
                     Примеры таблиц, часто объявляемых как имеющие естетственные
                     ключи: справочные таблицы, таблицы пересечений в отношениях
                     "многие-ко-многим", большинство таблиц с составными
-                    ключами. 
+                    ключами.
 <!--
                     All RDBMS brands support tables with natural keys.
                     Examples of tables that are often declared as having
@@ -894,7 +894,7 @@ $table->update($data, $where);
 
         <para>
             Вы можете удалять строки из таблицы базы данных, используя метод
-            <code>delete()</code>. Этот метод принимает один аргумент, 
+            <code>delete()</code>. Этот метод принимает один аргумент,
             являющийся SQL-выражением, который используется в предложении
             <code>WHERE</code> в качестве условия, по которому удаляются строки.
 <!--
@@ -930,7 +930,7 @@ $table->delete($where);
             operator.
 -->
         </para>
-        
+
         <note>
             <para>
                 Значения и идентификаторы в SQL-выражении не заключаются в
@@ -1110,7 +1110,7 @@ $rows = $table->fetchAll($where);
 <!--
             The first argument to this method is an SQL expression that
             is used in a <code>WHERE</code> clause, like those used in the
-            <code>update()</code> and <code>delete()</code> methods 
+            <code>update()</code> and <code>delete()</code> methods
             described earlier.
 -->
         </para>
@@ -1228,10 +1228,10 @@ $row = $table->fetchRow($where, $order);
             Этот метод возвращает объект типа Zend_Db_Table_Row_Abstract. Если
             по заданному вами условию поиска не найдено ни одной строки в
             таблице БД, то <code>fetchRow()</code> вернет значение
-            <code>null</code>. 
+            <code>null</code>.
 <!--
             This method returns an object of type Zend_Db_Table_Row_Abstract.
-            If the search criteria you specified match no rows in the 
+            If the search criteria you specified match no rows in the
             database table, then <code>fetchRow()</code> returns PHP's
             <code>null</code> value.
 -->
@@ -1476,7 +1476,7 @@ echo "The table name is " . $info['name'] . "\n";
             <title>Кэширование метаданных по умолчанию для всех объектов таблиц<!--Using a Default Metadata Cache for all Table Objects--></title>
 
             <para>
-                Следующий код показывает, как установить объект кэша, 
+                Следующий код показывает, как установить объект кэша,
                 используемый по умолчанию во всех объектах таблиц:
 <!--
                 The following code demonstrates how to set a default metadata cache to be used for all table objects:
@@ -1801,7 +1801,7 @@ class Bugs extends Zend_Db_Table_Abstract
                 <code>fetchAll()</code>, but this requires that you duplicate
                 code to form the query conditions if you need to run the
                 query in several places in your application.
-                Therefore it can be convenient to implement a method 
+                Therefore it can be convenient to implement a method
                 in the Table class to perform frequently-used queries
                 against this table.
 -->

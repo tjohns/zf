@@ -16,7 +16,7 @@
             Методы
             <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> и
             <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code>
-            используются для получения и установки анализатора по умолчанию. 
+            используются для получения и установки анализатора по умолчанию.
 <!--
             <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> and <code>
             Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> methods are used
@@ -31,7 +31,7 @@
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
             (по умолчанию). Оба интерпретируют лексему как последовательность
             букв. <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
-            приводит лексемы к нижнему регистру. 
+            приводит лексемы к нижнему регистру.
 <!--
             Thus you can assign your own text analyzer or choose it from the set of predefined analyzers:
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> and
@@ -62,7 +62,7 @@ $index->addDocument($doc);]]></programlisting>
             достаточно определить методы <code>reset()</code> и
             <code>nextToken()</code>, которые берут строку из свойства $_input
             и возвращают лексемы шаг за шагом (<code>null</code> означает конец
-            потока). 
+            потока).
 <!--
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> is designed to be a parent for all user
             defined analyzers. User should only define the <code>reset()</code> and <code>nextToken()</code> methods,
@@ -163,12 +163,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             </example>
         </para>
     </sect2>
-    
+
     <sect2 id="zend.search.lucene.extending.filters">
         <title>Фильтрация лексем<!--Tokens Filtering--></title>
         <para>
             Анализатор <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code>
-            также предоставляет механизм фильтрации лексем. 
+            также предоставляет механизм фильтрации лексем.
 <!--
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> analyzer also offers tokens filtering
             mechanism.
@@ -178,7 +178,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         <para>
             Класс <code>Zend_Search_Lucene_Analysis_TokenFilter</code> является
             уровнем абстракции для таких фильтров. Он должен использоваться как
-            предок для ваших собственных фильтров. 
+            предок для ваших собственных фильтров.
 <!--
             <code>Zend_Search_Lucene_Analysis_TokenFilter</code> class is an abstract level for such filters.
             It should be used as an ancestor for your own filters.
@@ -248,7 +248,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             analyzers like this:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
 $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
@@ -270,7 +270,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
             Конструктор
             <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
             принимает массив стоп-слов в качестве аргумента. Но стоп-слова можно
-            также загружать и из файла: 
+            также загружать и из файла:
 <!--
             <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> constructor takes an array of stop-words
             as an input. But stop-words may be also loaded from a file:
@@ -296,7 +296,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
 
         <para>
             Конструктор
-            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> 
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
             имеет один необязательный параметр, это ограничение длины слова.
             Его значение по умолчанию равно 2.
 <!--
@@ -326,7 +326,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
         <para>
             tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code>
             - коэффициент ранга, основанный на том, насколько часто встречается
-            элемент или фраза в документе. 
+            элемент или фраза в документе.
 <!--
             tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code>
             - a score factor based on a term or phrase's frequency in a document.
@@ -336,7 +336,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
         <para>
             idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code>
             - коэффициент ранга для простого элемента применительно к определенному
-            индексу. 
+            индексу.
 <!--
             idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code>
             - a score factor for a simple term for the specified index.
@@ -355,7 +355,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
             общего количества элементов, содержащихся в поле. Это значение
             хранится внутри индекса. Эти значения вместе с коэффициентом усиления поля
             хранятся в индексе, результатом их умножения является
-            ранг для каждого поля. 
+            ранг для каждого поля.
 <!--
             lengthNorm($term) - the normalization value for a field given the total
             number of terms contained in a field. This value is stored within the index.
@@ -503,7 +503,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
         данных испольуется строка, то считыватель индекса (объект
         <code>Zend_Search_Lucene</code>) рассматривает ее как путь в файловой
         системе и сама инстанцирует объекты
-        <code>Zend_Search_Lucene_Storage_Directory_Filesystem</code>. 
+        <code>Zend_Search_Lucene_Storage_Directory_Filesystem</code>.
 <!--
         If a string is used as an input for the <code>Zend_Search_Lucene</code> constructor, then the index
         reader (<code>Zend_Search_Lucene</code> object) treats it as a file system path and instantiates
@@ -526,7 +526,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
         <code>Zend_Search_Lucene_Storage_Directory</code> methods:
 -->
         </para>
-        
+
         <programlisting><![CDATA[<?php
 
 abstract class Zend_Search_Lucene_Storage_Directory {
@@ -640,13 +640,13 @@ abstract function getFileObject($filename);
         </para>
         <para>
         Только два метода класса <code>Zend_Search_Lucene_Storage_File</code> должны быть
-        перегружены в вашей реализации: 
+        перегружены в вашей реализации:
 <!--
         Only two methods of <code>Zend_Search_Lucene_Storage_File</code> must be overloaded in your
         implementation:
 -->
         </para>
-        
+
         <programlisting><![CDATA[<?php
 
 class MyFile extends Zend_Search_Lucene_Storage_File {

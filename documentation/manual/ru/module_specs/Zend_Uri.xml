@@ -18,7 +18,7 @@
       also useful as a standalone utility.
 -->
     </para>
-  
+
     <para>
       URI всегда начинаются со схемы, после которой следует двоеточие. Структура
       для разных схем может сильно отличаться. Класс <code>Zend_Uri</code>
@@ -46,16 +46,16 @@
 
     <para>
       <code>Zend_Uri</code> будет строить с нуля новый URI, если
-      <code>Zend_Uri::factory()</code> была передана только схема.     
+      <code>Zend_Uri::factory()</code> была передана только схема.
 <!--
       <code>Zend_Uri</code> will build a new URI from scratch if only a scheme
       is passed to <code>Zend_Uri::factory()</code>.
 -->
     </para>
-    
+
     <example>
       <title>Создание нового URI с <code>Zend_Uri::factory()</code><!--Creating a New URI with <code>Zend_Uri::factory()</code>--></title>
-      
+
       <programlisting role="php"><![CDATA[
 <?php
 
@@ -65,7 +65,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http');
 
 // $uri является экземпляром Zend_Uri_Http
- 
+
 ?>]]></programlisting>
     </example>
 
@@ -95,22 +95,22 @@ $uri = Zend_Uri::factory('http');
 -->
     </para>
   </sect2>
-  
+
   <sect2 id="zend.uri.manipulation">
     <title>Работа с существующим URI<!--Manipulating an Existing URI--></title>
-    
+
     <para>
       Для того, чтобы работать с существующим URI, передайте его весь целиком
       <code>Zend_Uri::factory()</code>.
 <!--
       To manipulate an existing URI, pass the entire URI to
       <code>Zend_Uri::factory()</code>.
---> 
+-->
     </para>
 
     <example>
       <title>Работа с существующим URI с <code>Zend_Uri::factory()</code><!--Manipulating an Existing URI with <code>Zend_Uri::factory()</code>--></title>
-      
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -120,8 +120,8 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 // $uri является экземпляром Zend_Uri_Http
- 
-?>]]></programlisting>    
+
+?>]]></programlisting>
     </example>
 
     <para>
@@ -137,22 +137,22 @@ $uri = Zend_Uri::factory('http://www.zend.com');
 -->
     </para>
   </sect2>
-  
+
   <sect2 id="zend.uri.validation">
     <title>Проверка URI<!--URI Validation--></title>
 
     <para>
       Функция <code>Zend_Uri::check()</code> может использоваться в том случае,
-      когда нужна только проверка существующего URI. 
+      когда нужна только проверка существующего URI.
 <!--
       The <code>Zend_Uri::check()</code> function can be used if only
       validation of an existing URI is needed.
 -->
     </para>
-    
+
     <example>
       <title>Проверка URI с помощью <code>Zend_Uri::check()</code><!--URI Validation with <code>Zend_Uri::check()</code>--></title>
-      
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -162,8 +162,8 @@ require_once 'Zend/Uri.php';
 $valid = Zend_Uri::check('http://uri.in.question');
 
 // $valid равен TRUE при валидном URI, иначе FALSE
- 
-?>]]></programlisting>    
+
+?>]]></programlisting>
     </example>
 
     <para>
@@ -180,7 +180,7 @@ $valid = Zend_Uri::check('http://uri.in.question');
 
   <sect2 id="zend.uri.instance-methods">
     <title>Общие методы<!--Common Instance Methods--></title>
-    
+
     <para>
       Каждый экземпляр подкласса <code>Zend_Uri</code> (т.е.
       <code>Zend_Uri_Http</code>) имеет несколько методов экземпляров, которые
@@ -191,10 +191,10 @@ $valid = Zend_Uri::check('http://uri.in.question');
       for working with any kind of URI.
 -->
     </para>
-    
+
     <sect3 id="zend.uri.instance-methods.getscheme">
       <title>Получение схемы URI<!--Getting the Scheme of the URI--></title>
-      
+
       <para>
         Схема URI – часть URI, завершающаяся двоеточием. Например, схемой в
         <code>http://www.zend.com</code> является <code>http</code>.
@@ -203,10 +203,10 @@ $valid = Zend_Uri::check('http://uri.in.question');
         the scheme of <code>http://www.zend.com</code> is <code>http</code>.
 -->
       </para>
-      
+
       <example>
         <title>Получение схемы из объекта <code>Zend_Uri_*</code><!--Getting the Scheme from a <code>Zend_Uri_*</code> Object--></title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -215,7 +215,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $scheme = $uri->getScheme();  // "http"
- 
+
 ?>]]></programlisting>
     </example>
 
@@ -228,13 +228,13 @@ $scheme = $uri->getScheme();  // "http"
       </para>
 
     </sect3>
-    
+
     <sect3 id="zend.uri.instance-methods.geturi">
       <title>Получение всего URI<!--Getting the Entire URI--></title>
 
       <example>
         <title>Получение всего URI из объекта <code>Zend_Uri_*</code><!--Getting the Entire URI from a <code>Zend_Uri_*</code> Object--></title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -243,8 +243,8 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 echo $uri->getUri();  // "http://www.zend.com"
- 
-?>]]></programlisting>      
+
+?>]]></programlisting>
       </example>
 
       <para>
@@ -256,17 +256,17 @@ echo $uri->getUri();  // "http://www.zend.com"
 -->
       </para>
     </sect3>
-    
+
     <sect3 id="zend.uri.instance-methods.valid">
       <title>Проверка URI на валидность<!--Validating the URI--></title>
-      
+
       <para>
         <code>Zend_Uri::factory()</code> всегда производит синтаксическую
         проверку переданных ему URI и не будет создавать новый экземпляр
         подкласса <code>Zend_Uri</code>, если данный URI не прошел проверку.
         Тем не менее, после того, как был инстанцирован подкласс
         <code>Zend_Uri</code> для нового URI или на основе уже существующего,
-        в результате манипуляций с ним этот URI может стать невалидным.   
+        в результате манипуляций с ним этот URI может стать невалидным.
 <!--
         <code>Zend_Uri::factory()</code> will always validate any URI passed
         to it and will not instantiate a new <code>Zend_Uri</code> subclass
@@ -279,7 +279,7 @@ echo $uri->getUri();  // "http://www.zend.com"
 
       <example>
         <title>Проверка объекта <code>Zend_Uri_*</code><!--Validating a <code>Zend_Uri_*</code> Object--></title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -288,7 +288,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $isValid = $uri->valid();  // TRUE
- 
+
 ?>]]></programlisting>
       </example>
 

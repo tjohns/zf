@@ -10,7 +10,7 @@
         частей сообщения обычно генерируется случайным образом. Тем не менее,
         в некоторых случаях может потребоваться указать, какие разделители
         MIME использовать. Это можно сделать, используя метод
-        <code>setMimeBoundary()</code>, как показано в следующем примере:  
+        <code>setMimeBoundary()</code>, как показано в следующем примере:
 <!--
         In a multipart message a MIME boundary for separating the different parts of the message is normally
         generated at random. In some cases, however, you might want to specify the MIME boundary that is used.
@@ -19,7 +19,7 @@
     </para>
     <example>
         <title>
-            Изменение разделителей MIME 
+            Изменение разделителей MIME
 <!--
             Changing the MIME Boundary
 -->

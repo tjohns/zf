@@ -43,7 +43,7 @@ echo $server->handle();]]></programlisting>
 
         <para>
             Zend_XmlRpc_Server состоит из множества компонент от собственно
-            сервера до объектов запросов, ответов и сообщений об ошибке.  
+            сервера до объектов запросов, ответов и сообщений об ошибке.
 <!--
             Zend_XmlRpc_Server is composed of a variety of components, ranging
             from the server itself to request, response, and fault objects.
@@ -66,7 +66,7 @@ echo $server->handle();]]></programlisting>
             методу <code>Zend_XmlRpc_Server::handle()</code>; если он не был
             передан, то будет проинциализирован объект
             <code>Zend_XmlRpc_Request_Http</code>, при этом данные запроса
-            берутся из <code>php://input</code>. 
+            берутся из <code>php://input</code>.
 <!--
             Once done, you may either pass a <code>Zend_XmlRpc_Request</code>
             object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
@@ -145,7 +145,7 @@ echo $server->handle();]]></programlisting>
         </itemizedlist>
 
         <para>
-            Пример того, как указывается XML-RPC тип 
+            Пример того, как указывается XML-RPC тип
 <!--
             An example of how to hint follows:
 -->
@@ -166,7 +166,7 @@ function myFunc($val1, $val2, $val3)
 
         <para>
             PhpDocumentor не проводит валидацию типов, определенных для
-            параметров или возвращаемых значений, поэтому это не должно 
+            параметров или возвращаемых значений, поэтому это не должно
             повлиять на вашу документацию по API. Указание типов необходимо,
             если сервер проводит валидацию передаваемых методу параметров.
 <!--
@@ -184,7 +184,7 @@ function myFunc($val1, $val2, $val3)
             system.methodSignature возвращал массив всех
             возможных сигнатур метода (т.е. все возможные комбинации параметров
             и возвращаемых значений). Вы можете делать это точно так же, как
-            обычно делаете для PhpDocumentor, используя оператор '|'. 
+            обычно делаете для PhpDocumentor, используя оператор '|'.
 <!--
             It is perfectly valid to specify multiple types for both params and
             return values; the XML-RPC specification even suggests that
@@ -212,7 +212,7 @@ function myFunc($val1, $val2, $val3)
             Тем не менее, следует учесть, что множество сигнатур может сбить с
             толку разработчиков, использующих данный веб-сервис; иначе говоря,
             следует стремится к тому, чтобы XML-RPC метод имел только одну
-            сигнатуру.    
+            сигнатуру.
 <!--
             One note, however: allowing multiple signatures can lead to
             confusion for developers using the services; generally speaking, an
@@ -247,7 +247,7 @@ function myFunc($val1, $val2, $val3)
 
         <para>
             В нашем случае они соответствуют методам с теми же именами в
-            Zend_XmlRpc_Server. 
+            Zend_XmlRpc_Server.
 <!--
             Internally, these map to the methods of the same name in
             Zend_XmlRpc_Server.
@@ -258,7 +258,7 @@ function myFunc($val1, $val2, $val3)
             Если необходимо добавить пространства имен для обслуживаемых
             методов, то просто укажите пространство имен в качестве параметра
             при вызове соответствующего метода для прикрепления функции или
-            класса: 
+            класса:
 <!--
             If you want to add namespaces to the methods you serve, simply
             provide a namespace to the appropriate method when attaching a
@@ -328,7 +328,7 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
 <!--
             To use a custom response class, use
             Zend_XmlRpc_Server::setResponseClass() prior to calling handle().
--->            
+-->
         </para>
     </sect2>
 
@@ -359,7 +359,7 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
             Тем не менее, можно включать классы исключений в список разрешенных
             для отображения в ответах с сообщением об ошибке. Для этого
             используйте Zend_XmlRpc_Server_Fault::attachFaultException() для
-            включения данного класса исключения в список разрешенных.   
+            включения данного класса исключения в список разрешенных.
 <!--
             Exception classes can be whitelisted to be used as fault responses,
             however. To do so, simply utilize
@@ -404,7 +404,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
             сервера может отнимать много ресурсов – каждый класс должен
             проверяться с использованием Reflection API (через
             Zend_Server_Reflection), который создает список всех возможных
-            сигнатур методов для передачи классу сервера. 
+            сигнатур методов для передачи классу сервера.
 <!--
             Attaching many classes to an XML-RPC server instance can utilize a
             lot of resources; each class must introspect using the Reflection
@@ -460,7 +460,7 @@ echo $server->handle();]]></programlisting>
             файла xmlrpc.cache, находящегося в той же директории, что и скрипт.
             Если попытка не удалась, то загружаются нужные классы и
             прикрепляются к экземпляру сервера, затем создается новый файл кэша
-            с определением сервера. 
+            с определением сервера.
 <!--
             The above example attempts to retrieve a server definition from
             xmlrpc.cache in the same directory as the script. If unsuccessful,
@@ -567,7 +567,7 @@ echo $server->handle();]]></programlisting>
             <para>
                 Пример ниже позволяет любым наследующим от Services_Exception
                 классам предоставлять свои коды и сообщения для подстановки в
-                ответ с сообщением об ошибке.  
+                ответ с сообщением об ошибке.
 <!--
                 The example below allows any Services_Exception-derived class to
                 report its code and message in the fault response.
@@ -632,7 +632,7 @@ echo $server->handle($request);]]></programlisting>
 
             <para>
                 Пример ниже демонстрирует указание специального класса ответа
-                для возвращаемого ответа.  
+                для возвращаемого ответа.
 <!--
                 The example below illustrates specifying a custom response class
                 for the returned response.
@@ -670,7 +670,7 @@ echo $server->handle($request);]]></programlisting>
             <title>Кэширование определений сервера между запросами<!--Cache server definitions between requests--></title>
 
             <para>
-                Пример ниже демонстрирует кэширование определений сервера между 
+                Пример ниже демонстрирует кэширование определений сервера между
                 запросами.
 <!--
                 The example below illustrates caching server definitions
@@ -699,7 +699,7 @@ $server = new Zend_XmlRpc_Server();
 
 // Попытка получить определение сервера из кэша
 if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
-    $server->setClass('Services_Comb', 'comb'); 
+    $server->setClass('Services_Comb', 'comb');
     $server->setClass('Services_Brush', 'brush');
     $server->setClass('Services_Pick', 'pick');
 

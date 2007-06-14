@@ -17,7 +17,7 @@
         <para>
             Приведенный ниже листинг кода PHP дает пример того, как
             индексировать файл, используя программный интерфейс Zend_Search_Lucene
-            для индексирования.  
+            для индексирования.
 <!--
             The PHP code listing below provides an example of how to index a file
             using Zend_Search_Lucene indexing API:
@@ -82,7 +82,7 @@ $index->addDocument($doc);
 
         <para>
             Формат файлов индекса Lucene не поддерживает обновление документов.
-            Для обновления документ должен быть удален и добавлен снова. 
+            Для обновления документ должен быть удален и добавлен снова.
 <!--
             Lucene index file format doesn't support document updating. Document should be removed and re-added to do this.
 -->
@@ -91,7 +91,7 @@ $index->addDocument($doc);
         <para>
             Метод <code>Zend_Search_Lucene::delete()</code> оперирует с внутренним
             идентификатором индекса документа. Он может быть получен из результата
-            запроса ("хит") через свойство 'id': 
+            запроса ("хит") через свойство 'id':
 <!--
             <code>Zend_Search_Lucene::delete()</code> method operates with an internal index document id. It can be retrieved
             from a query hit by 'id' property:
@@ -106,7 +106,7 @@ foreach ($hits as $hit) {
 }
 ?>]]></programlisting>
     </sect2>
-    
+
     <sect2 id="zend.search.lucene.index-creation.counting">
         <title>Получение размера индекса<!--Retrieving Index size--></title>
 
@@ -145,7 +145,7 @@ $documents = $index->numDocs();
 
         <para>
             Метод <code>Zend_Search_Lucene::isDeleted($id)</code> может
-            использоваться для проверки того, был ли документ удален.  
+            использоваться для проверки того, был ли документ удален.
 <!--
             <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
 -->
@@ -313,7 +313,7 @@ $index->optimize();
 -->
             </para>
             <para>
-                Значение опции по умолчанию равно PHP_INT_MAX. 
+                Значение опции по умолчанию равно PHP_INT_MAX.
 <!--
                 Default value is PHP_INT_MAX.
 -->
@@ -325,7 +325,7 @@ $index->optimize();
             <para>
                 <emphasis>MergeFactor</emphasis> определяет, как часто
                 сегменты индекса объединяются с помощью addDocument().
-                Чем менше значение, тем меньше и объем 
+                Чем менше значение, тем меньше и объем
                 оперативной памяти, используемой в процессе индексации, и поиск
                 по неоптимизированному индексу производится быстрее,
                 но скорость индексации снижается. Чем больше значение,
@@ -393,7 +393,7 @@ $index->optimize();
             </para>
         </sect3>
     </sect2>
-    
+
     <sect2 id="zend.search.lucene.index-creation.limitations">
         <title>Ограничения<!--Limitationas--></title>
 
@@ -405,7 +405,7 @@ $index->optimize();
         </para>
 
         <para>
-            Для 32-битной платформы максимальный размер индекса составляет 2Гб. 
+            Для 32-битной платформы максимальный размер индекса составляет 2Гб.
 <!--
             Maximum index size is 2GB for 32-bit platforms.
 -->

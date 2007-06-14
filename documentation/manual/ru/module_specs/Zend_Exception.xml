@@ -32,7 +32,7 @@ try {
         наследуют от Zend_Exception, можно найти в документации по
         соответсвующей компоненте Zend Framework.
 <!--
-        See the documentation for each respective Zend Framework 
+        See the documentation for each respective Zend Framework
         component for more specific information on which methods
         throw exceptions, the circumstances for the exceptions,
         and which exception classes derive from Zend_Exception.

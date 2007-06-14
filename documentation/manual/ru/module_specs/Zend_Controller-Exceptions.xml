@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.exceptions">
     <title>Исключения<!--MVC Exceptions--></title>
 
-	<sect2 id="zend.controller.exceptions.introduction">
-		<title>Введение</title>
+    <sect2 id="zend.controller.exceptions.introduction">
+        <title>Введение</title>
 
         <para>
             Компоненты MVC в Zend Framework используют фронт-контроллер, это
@@ -95,7 +95,7 @@ try {
                     исключений и данные обратной трассировки. В этом случае
                     любые исключения, сгенерированные вашим приложением, будут
                     отображены пользователю. Это рекомендуется только для
-                    непроизводственной среды.                       
+                    непроизводственной среды.
 <!--
                     By passing a boolean true value to this method, you tell the
                     response object that it should render an exception message
@@ -140,7 +140,7 @@ if ($response->isException()) {
     $response->outputBody();
 }
 ]]></programlisting>
-                
+
                 <para>
                     Основное преимущество этого метода по сравнению с
                     Zend_Controller_Front::throwExceptions() состоит в том, что
@@ -220,7 +220,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                             использовать контроллер и действие приятые по
                             умолчанию вместо генерации исключения. Недостаток
                             этого метода состоит в том, что на любые опечатки
-                            посетителя вашего сайта будет выводиться ваша 
+                            посетителя вашего сайта будет выводиться ваша
                             главная страница, что может нанести вред в плане
                             поисковой оптимизации сайта.
 <!--
@@ -385,7 +385,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                             или Zend_Controller_Plugin_Abstract::preDispatch()
                             для определения ошибочно запрошенных действий.
 <!--
-                            Use Zend_Controller_Action::preDispatch() or 
+                            Use Zend_Controller_Action::preDispatch() or
                             Zend_Controller_Plugin_Abstract::preDispatch() to
                             identify invalid actions.
 -->
@@ -416,7 +416,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                             независимости действий контроллеров. Если ваше
                             приложение содержит различные контроллеры действий и
                             не все из них наследуют от одного и того же класса,
-                            то этот метод может обеспечить единнобразие в                            
+                            то этот метод может обеспечить единнобразие в
                             обработке различных классов.
 <!--
                             Alternatively, you can check this information in a
@@ -459,7 +459,7 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
     }
 }
 ]]></programlisting>
-                        
+
                         <para>
                             В этом примере мы проверяем, доступно ли в
                             контроллере запрошенное действие. Если нет, то

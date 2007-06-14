@@ -33,7 +33,7 @@ class MyFilter implements Zend_Filter_Interface
 {
     public function filter($value)
     {
-        // Выполнение преобразований над $value, 
+        // Выполнение преобразований над $value,
         // результатом которых является $valueFiltered
 
         return $valueFiltered;

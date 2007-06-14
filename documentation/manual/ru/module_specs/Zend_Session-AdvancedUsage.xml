@@ -51,7 +51,7 @@ Zend_Session::start();
             отображение испорченной страницы посетителю сайта. Некоторые
             расширенные возможности Zend_Session требуют вызова
             <code>Zend_Session_Core::start()</code> в начале (больше о
-            расширенных возможностях будет написано позднее).    
+            расширенных возможностях будет написано позднее).
 <!--
             By starting the session in the bootstrap file, you avoid the possibility that your session might be started
             after headers have been sent to the browser, which results in an exception, and possibly a broken page for
@@ -145,7 +145,7 @@ Zend_Session::start();
                             Вызывайте <code>Zend_Session::start()</code>
                             только при тех запросах, для которых нужны сессии,
                             и до того, как будет произведен первый вызов
-                            <code>new Zend_Session_Namespace()</code>. 
+                            <code>new Zend_Session_Namespace()</code>.
 <!--
                             Call <code>Zend_Session::start()</code>, only for requests that need to use sessions, before
                             the first call to <code>new Zend_Session_Namespace()</code>.
@@ -170,7 +170,7 @@ Zend_Session::start();
                     Опция <code>strict</code> предотвращает автоматический
                     старт сессии с использованием
                     <code>Zend_Session::start()</code> при вызове
-                    <code>new Zend_Session_Namespace()</code>. Эта опция 
+                    <code>new Zend_Session_Namespace()</code>. Эта опция
                     помогает разработчикам пользовательских областей приложений
                     ZF следовать принятому при проектировании решению не
                     использовать сессии для определенных запросов, т.к. при
@@ -217,7 +217,7 @@ Zend_Session::start();
                     быть улучшена производительность. Например, в
                     <code>php.ini</code>
                     "<code>output_buffering = 65535</code>" включает буферизацию
-                    вывода с размером буфера 64K. 
+                    вывода с размером буфера 64K.
 <!--
                     4. Correct: Just use <code>new Zend_Session_Namespace()</code> whenever needed, and the session will
                     be automatically started within Zend_Session. This offers extremely simple usage that works well in
@@ -256,7 +256,7 @@ Zend_Session::start();
             объектов, сохраненных непосредственно в пространстве имен.
             Также блокирование пространств имен Zend_Session_Namespace не
             препятствует использованию ссылок на те же данные
-            (см. <ulink url="http://www.php.net/references">PHP references</ulink>). 
+            (см. <ulink url="http://www.php.net/references">PHP references</ulink>).
 <!--
             Session namespaces can be locked, to prevent further alterations to the data in that namespace. Use
             <code>Zend_Session_Namespace's lock()</code> to make a specific namespace read-only, <code>unLock()</code>
@@ -296,7 +296,7 @@ Zend_Session::start();
             этой задачи. Для того, чтобы предотвратить изменение таких данных,
             используйте блокировку пространств имен сессий до того, как
             предоставить видам доступ к этим подмножествам вашей модели
-            представления.   
+            представления.
 <!--
             There are numerous ideas for how to manage models in MVC paradigms for the Web, including creating
             presentation models for use by views. Sometimes existing data, whether part of your domain model or not, is
@@ -381,7 +381,7 @@ $s->setExpirationHops(5);
 $s->setExpirationSeconds(60);
 // Пространство имен "expireAll" будет помечено как с истекшим временем жизни
 // при первом запросе, произведенном после того, как прошло 60 секунд,
-// или после 5 "прыжков" - в зависимости от того, что произошло раньше  
+// или после 5 "прыжков" - в зависимости от того, что произошло раньше
 ?>]]></programlisting>
         </example>
 
@@ -413,7 +413,7 @@ $s->setExpirationSeconds(60);
             Пространства имен могут также использоваться для разделения доступа
             контроллеров к сессиям, чтобы защитить переменные от повреждения.
             Например, контроллер 'Zend_Auth' может хранить свои постоянные
-            данные сессии отдельно от всех остальных контроллеров.     
+            данные сессии отдельно от всех остальных контроллеров.
 <!--
             Namespaces can also be used to separate session access by controllers to protect variables from
             contamination. For example, the 'Zend_Auth' controller might keep its session state data separate from all
@@ -432,7 +432,7 @@ $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, "accept_answer");
 $testSpace->accept_answer = true;
 
--- 
+--
 
 // контроллер для обработки ответа на вопрос
 $testSpace = new Zend_Session_Namespace('testSpace');
@@ -457,7 +457,7 @@ else {
             функциональной возможности, которая накладывает дополнительное бремя
             на разработчика, состоящее в передаче экземпляров
             Zend_Session_Namespace во все функции и объекты, нуждающихся в
-            использовании этих пространств имен. 
+            использовании этих пространств имен.
 <!--
             We recommend using session locking (see above) instead of the feature below, which places extra management
             burden on the developer to pass any Zend_Session_Namespace instances into whatever functions and objects
@@ -526,7 +526,7 @@ else {
             необходим доступ к этому пространству имен сессии.
             Например, вы можете сохранять экземпляр в статической переменной или
             передавать его другим методам, которым нужен доступ к данному
-            пространству имен. 
+            пространству имен.
 <!--
             The second parameter in the constructor above will tell Zend_Session_Namespace that any future
             Zend_Session's that are instantiated with the 'Zend_Auth' namespace are not allowed, and will thus cause an
@@ -551,7 +551,7 @@ else {
             значения были установлены. <ulink url="http://framework.zend.com/issues/browse/ZF-800">ZF-800</ulink>
             подтверждает известный баг, затрагивающий многие PHP-приложения,
             использующие "магические" методы и массивы.
-             
+
 <!--
             Modifying an array inside a namespace does not work. The simplest solution is to store arrays after all
             desired values have been set.
@@ -594,7 +594,7 @@ else {
 
         <para>
             Можно также сохранить массив, содержащий ссылку на желаемый массив
-            и косвенно работать с ним. 
+            и косвенно работать с ним.
 <!--
             Alternatively, store an array containing a reference to the desired array, and then access it indirectly.
 -->
@@ -743,7 +743,7 @@ else {
         <para>
             Zend Framework использует PHPUnit для своего тестирования. Многие
             разработчики расширяют существующие наборы
-            юнит-тестов для покрытия кода в своих приложениях. 
+            юнит-тестов для покрытия кода в своих приложениях.
             Если при выполнении юнит-тестирований после завершения сессии были
             использованы любые связанные с записью методы, то генерируется
             исключение "<emphasis role="strong">Zend_Session is currently marked

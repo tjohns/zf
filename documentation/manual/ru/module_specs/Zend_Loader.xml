@@ -19,7 +19,7 @@
             или класс, чье имя является константой, то использование Zend_Loader
             не дает каких-либо преимуществ по сравнению использованием обычных
             функций PHP, таких, как
-            <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>. 
+            <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
 <!--
             The Zend_Loader methods are best used if the filename you need to
             load is variable.  For example, if it is based on a parameter from
@@ -238,7 +238,7 @@ if (Zend_Loader::isReadable($filename)) {
 
         <para>
             Класс Zend_Loader содержит метод, который вы можете регистрировать
-            через автозагрузчик PHP SPL. <code>Zend_Loader::autoload()</code> 
+            через автозагрузчик PHP SPL. <code>Zend_Loader::autoload()</code>
             является методом обратного вызова. Для удобства Zend_Loader
             предоставляет метод <code>registerAutoload()</code> для регистрации
             своего метода <code>autoload()</code>. Если в среде PHP отсутствует

@@ -50,7 +50,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifetime' => 7200, // время жизни кэша - 2 часа 
+   'lifetime' => 7200, // время жизни кэша - 2 часа
    'automatic_serialization' => true
 );
 
@@ -64,10 +64,10 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 ?>]]>  </programlisting>
        <para>
            Теперь, имея фронтэнд, мы можем кэшировать любые типы данных,
-           используя сериализацию. Например, мы можем кэшировать результат 
+           используя сериализацию. Например, мы можем кэшировать результат
            очень ресурсоемкого запроса к БД. После его добавления
            в кэш не нужно будет даже подключаться к базе данных: записи
-           извлекаются из кэша и выполняется процедура, обратная сериализации.              
+           извлекаются из кэша и выполняется процедура, обратная сериализации.
 <!--
             Now that we have a frontend, we can cache any type of data (we turned on serialization). For
             example, we can cache a result from a very expensive database query. After it is cached, there
@@ -83,18 +83,18 @@ if(!$result = $cache->load('myresult')) {
 
     // промах кэша
     // установка соединения с базой данных
-    
+
     $db = Zend_Db::factory( [...] );
-    
+
     $result = $db->fetchAll('SELECT * FROM huge_table');
-    
+
     $cache->save($result, 'myresult');
-    
+
 } else {
 
     // попадание в кэш
     echo "This one is from cache!\n\n";
-    
+
 }
 
 print_r($result);
@@ -123,7 +123,7 @@ print_r($result);
             данные из кэша (до тех пор, пока записи действительны).
 <!--
             Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
-            method. On the next run, the whole section will be skipped in favor of fetching data from cache 
+            method. On the next run, the whole section will be skipped in favor of fetching data from cache
             (as long as the cache record is valid).
 -->
        </para>
@@ -141,10 +141,10 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 // передаем уникальный идентификатор методу start()
 if(!$cache->start('mypage')) {
     // производим вывод, как обычно:
-    
+
     echo 'Hello world! ';
     echo 'This is cached ('.time().') ';
-    
+
     $cache->end(); // выходные данные сохранены и отправлены броузеру
 }
 

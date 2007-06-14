@@ -15,7 +15,7 @@
             Многие ситуации требуют некоторой интерактивной поддержки от ACL, и
             Zend_Acl предоставляет методы для настройки, произведения запросов,
             контроля доступа приложением.
-<!-- 	Zend_Acl was designed in such a way that it does not require any particular backend technology such
+<!--     Zend_Acl was designed in such a way that it does not require any particular backend technology such
         as a database or cache server for storage of the ACL data. Its complete PHP implementation enables
         customized administration tools to be built upon Zend_Acl with relative ease and flexibility. Many
         situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods
@@ -35,8 +35,8 @@
         with PHP's <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> function, and the
         results may be stored anywhere the developer should desire, such as a file, database, or caching
         mechanism.
- -->        
- 	</para>
+ -->
+     </para>
 
     </sect2>
 

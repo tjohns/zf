@@ -1,7 +1,7 @@
 <sect1 id="zend.view.introduction">
 
     <title>Введение</title>
-    
+
     <para>
         <code>Zend_View</code> является классом для работы с частью view (вид)
         паттерна MVC (model-view-controller). То есть он предназначен для
@@ -15,12 +15,12 @@
         filters, and variable escaping.
 -->
     </para>
-    
+
     <para>
         <code>Zend_View</code> является независимым от выбранной системы шаблонов,
         вы можете использовать PHP как язык шаблонов или создавать
         экземпляры других шаблонизаторов и работать с ними
-        с помощью ваших скриптов вида. 
+        с помощью ваших скриптов вида.
 <!--
         Zend_View is template system agnostic; you may use PHP as
         your template language, or create instances of other
@@ -32,7 +32,7 @@
     <para>
         Использование <code>Zend_View</code> заключается главным образом в двух
         основных шагах:
-        
+
         1.  Ваш скрипт контроллера создает экземпляр <code>Zend_View</code> и
         объявляет переменные этого экземпляра.
         2. Контроллер приказывает <code>Zend_View</code> воспроизвести
@@ -40,20 +40,20 @@
         вида, который генерирует выходные данные вида.
 <!--
         Essentially, using Zend_View happens in two major steps:
-        
+
         1.  Your controller script creates an instance of
         Zend_View and assigns variables to that instance.
-        
+
         2. The controller tells the Zend_View to render a particular
-        view, thereby handing control over the view script, which 
+        view, thereby handing control over the view script, which
         generates the view output.
 -->
     </para>
-    
+
     <sect2 id="zend.view.introduction.controller">
-        
+
         <title>Скрипт контроллера<!--Controller Script--></title>
-        
+
         <para>
             В качестве простого примера предположим, что ваш контроллер имеет
             список данных по книгам, который нужно воспроизвести через вид.
@@ -64,7 +64,7 @@
             controller script might look something like this:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // использование модели для получения данных для заголовков и авторов книг
 $data = array(
@@ -82,7 +82,7 @@ $data = array(
     )
 );
 
-// теперь объявляем данные по книгам экземпляру Zend_View 
+// теперь объявляем данные по книгам экземпляру Zend_View
 Zend_Loader::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
@@ -91,13 +91,13 @@ $view->books = $data;
 echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.introduction.view">
-    
+
         <title>Скрипт вида<!--View Script--></title>
-        
+
         <para>
             Теперь нам нужен сопутствующий скрипт вида "booklist.php".
             Это такой же скрипт PHP, как и остальные, за одним исключением:
@@ -106,9 +106,9 @@ echo $view->render('booklist.php');
             и методы экземпляра <code>Zend_View</code> (переменные, объявляемые
             контроллером для экземпляра, являются открытыми
             свойствами экземпляра <code>Zend_View</code>). Таким образом,
-            базовый скрипт вида может похожим на этот: 
+            базовый скрипт вида может похожим на этот:
 <!--
-            Now we need the associated view script, "booklist.php". 
+            Now we need the associated view script, "booklist.php".
             This is a PHP script like any other, with one exception:  it
             executes inside the scope of the Zend_View instance, which
             means that references to $this point to the Zend_View
@@ -118,32 +118,32 @@ echo $view->render('booklist.php');
             look like this:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- Таблица нескольких книг. -->
     <table>
         <tr>
             <th>Author</th>
             <th>Title</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['author']) ?></td>
             <td><?php echo $this->escape($val['title']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>Нет книг для отображения.</p>
-    
+
 <?php endif; ?>]]>
         </programlisting>
-        
+
         <para>
             Обратите внимание, что мы используем метод <code>escape()</code>
             для экранирования переменных.
@@ -152,9 +152,9 @@ echo $view->render('booklist.php');
             escaping to variables.
 -->
         </para>
-        
+
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

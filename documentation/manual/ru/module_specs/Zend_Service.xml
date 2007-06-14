@@ -10,11 +10,11 @@
     </para>
     <para>
         Если вам нужна общая поддержка основанных на XML REST-сервисов, то
-        см. <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.    
+        см. <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.
 <!--
         If you need support for generic, XML-based REST services, you may want
         to look at <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.
--->        
+-->
     </para>
     <para>
         Кроме возможности наследования от класса <code>Zend_Service</code>

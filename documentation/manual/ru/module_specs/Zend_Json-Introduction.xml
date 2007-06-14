@@ -17,7 +17,7 @@
         данными между JavaScript и другими языками программирования.
         Так как JSON может вычисляться непосредственно JavaScript,
         это более эффективный и легковесный формат для обмена данными
-        с клиентами JavaScript, чем XML.     
+        с клиентами JavaScript, чем XML.
 <!--
         JSON, JavaScript Object Notation, can be used for data
         interchange between JavaScript and other languages. Since JSON can be

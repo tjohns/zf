@@ -16,15 +16,15 @@
             <title>Selecting the date format type</title>
 
             <para>
-                Several methods use date format strings, in a way similar to PHP's <code>date()</code>. 
-                If you are more comfortable with PHP's date format specifier than with ISO format specifiers, 
+                Several methods use date format strings, in a way similar to PHP's <code>date()</code>.
+                If you are more comfortable with PHP's date format specifier than with ISO format specifiers,
                 then you can use <code>Zend_Date::setOptions(array('format_type' => 'php'))</code>.
                 Afterward, use PHP's date format specifiers for all functions which accept a <code>$format</code> parameter.
                 Use <code>Zend_Date::setOptions(array('format_type' => 'iso'))</code> to switch back to the default mode of
                 supporting only ISO date format tokens. For a list of supported format codes, see
                 <xref linkend="zend.date.constants.phpformats" />
             </para>
-            
+
         </sect3>
 
         <sect3 id="zend.date.options.fixdst">
@@ -516,7 +516,7 @@ print $date;
                             </para>
                             <para>
                                 This method checks if a given date is a real date and returns true if all checks are ok.
-                                It works like php's checkdate() function but can also check for localized month names and 
+                                It works like php's checkdate() function but can also check for localized month names and
                                 for dates extending the range of checkdate()
                                 false
                             </para>

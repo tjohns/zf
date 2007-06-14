@@ -4,7 +4,7 @@
         <code>Zend_Mime</code> является вспомогательным классом для работы
         с сообщениями MIME, имеющими тип носителя multipart. Он используется
         <link linkend="zend.mail"><code>Zend_Mail</code></link>
-        и может использоваться приложениями, требующими поддержки MIME.   
+        и может использоваться приложениями, требующими поддержки MIME.
 <!--
         <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
         linkend="zend.mail"><code>Zend_Mail</code></link>, and may be used by applications requiring
@@ -13,7 +13,7 @@
     </para>
     <para>
         <code>Zend_Mime</code> предоставляет простой набор методов для работы
-        с MIME: 
+        с MIME:
 <!--
         <code>Zend_Mime</code> provides a simple set of methods to work with MIME:
 -->
@@ -51,7 +51,7 @@
             </listitem>
             <listitem>
                 <para>
-                    <code>mimeEnd()</code>: Возвращает полную завершающую строку с разделителем MIME. 
+                    <code>mimeEnd()</code>: Возвращает полную завершающую строку с разделителем MIME.
                     <!--Returns the complete MIME end boundary line.-->
                 </para>
             </listitem>

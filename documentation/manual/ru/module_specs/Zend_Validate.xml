@@ -19,7 +19,7 @@
     </para>
 
     <para>
-        Валидатор проверяет входные данные на предмет соответствия некоторым требованиям и возвращает результат булевого типа. Если входные данные не соответствуют требованиям, то валидатор может предоставить информацию о том, какому требованию (требованиям) не соответствуют входные данные. 
+        Валидатор проверяет входные данные на предмет соответствия некоторым требованиям и возвращает результат булевого типа. Если входные данные не соответствуют требованиям, то валидатор может предоставить информацию о том, какому требованию (требованиям) не соответствуют входные данные.
 <!--
         A validator examines its input with respect to some requirements and produces a boolean result -
         whether the input successfully validates against the requirements. If the input does not meet the
@@ -47,7 +47,7 @@
         value, returning <code>true</code> if and only if the value passes against the validation criteria. If
         <code>isValid()</code> returns <code>false</code>, the <code>getMessages()</code> is provided to
         return an array of messages explaining the reason(s) for validation failure.
--->        
+-->
     </para>
 
     <note>

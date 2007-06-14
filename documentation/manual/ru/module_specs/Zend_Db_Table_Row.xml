@@ -299,7 +299,7 @@ $newRow->save();
 
 ?>]]></programlisting>
             </example>
-            
+
             <para>
                 Опциональный аргумент метода является ассоциативным массивом, через который вы можете заполнить поля новой строки.
 <!--
@@ -357,7 +357,7 @@ $newRow->save();
                 Этот метод может быть удобным как при создании новых строк, так
                 и при обновлении существующих.
 <!--
-                Zend_Db_Table_Row_Abstract provides the 
+                Zend_Db_Table_Row_Abstract provides the
                 <code>setFromArray()</code> method to enable you to set several
                 columns at once, specified in an associative array
                 mapping column names to values.
@@ -487,7 +487,7 @@ $serializedRow = serialize($row);
             <para>
                 Используйте функцию <code>unserialize()</code> для
                 восстановления из строки, содержащей представление объекта в
-                виде последовательности байт. 
+                виде последовательности байт.
 <!--
                 Use PHP's <code>unserialize()</code> function to
                 restore a string containing a byte-stream representation
@@ -528,7 +528,7 @@ echo $rowClone->bug_description;
                 <para>
                     Сериализованный объект является строкой, которая доступна
                     для чтения всем, кто ею обладает.
-                    Это создает угрозу безопасности, которая состоит в 
+                    Это создает угрозу безопасности, которая состоит в
                     том, что в сериализованной строке сохраняются такие
                     параметры, как логин и пароль для соединения с БД, в
                     незашифрованном виде.
@@ -574,7 +574,7 @@ echo $rowClone->bug_description;
                 method is a valid object of type Zend_Db_Table_Abstract,
                 which you create.  Creating a Table object requires a
                 live connection to the database, so by reassociating
-                the Table with the Row, the Row gains access to 
+                the Table with the Row, the Row gains access to
                 the database.  Subsequently, you can change values in
                 the Row object and save the changes to the database.
 -->
@@ -671,9 +671,9 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));
                 собственной логики внутри методов <code>insert()</code>,
                 <code>update()</code> и <code>delete()</code> вашего класса
                 таблицы. Тем не менее, иногда может быть необходимым выполнять
-                собственную логику в классе строки. 
+                собственную логику в классе строки.
 <!--
-                If you need to do custom logic in a specific table, and 
+                If you need to do custom logic in a specific table, and
                 the custom logic must occur for every operation on that table,
                 it may make more sense to implement your custom code belongs
                 in the <code>insert()</code>, <code>update()</code> and
@@ -686,7 +686,7 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));
             <para>
                 Ниже приведены примеры некоторых случаев, в которых имеет смысл
                 реализовать свою логику в классе строки вместо класса
-                таблицы: 
+                таблицы:
 <!--
                 Below are some example cases where it might make sense to
                 implement custom logic in a Row class instead of in the
@@ -703,7 +703,7 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));
                     свою логику в классе строки и создавать экземпляр класса
                     таблицы с указанием этого класса строки в качестве
                     используемого. Иначе в объекте таблицы используется класс
-                    строки по умолчанию. 
+                    строки по умолчанию.
 <!--
                     The custom logic may not apply in all cases
                     of operations on the respective Table.
@@ -716,7 +716,7 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));
                 </para>
 
                 <para>
-                    Вам нужно, чтобы операции над данными в этой таблице 
+                    Вам нужно, чтобы операции над данными в этой таблице
                     журналировались через объект Zend_Log, но только если в
                     конфигурации приложения включено это поведение.
 <!--
@@ -880,7 +880,7 @@ $bugs = new Bugs();
 $row = $bugs->createRow();
 
 // Используются имена столбцов в формате CamelCase, преобразующая функция
-// изменяет их представление на "родное"  
+// изменяет их представление на "родное"
 $row->bugDescription = 'New description';
 
 ?>]]></programlisting>
@@ -889,7 +889,7 @@ $row->bugDescription = 'New description';
             <para>
                 Вы отвественны за написание функций для выполнения
                 инфлекционного преобразования. Zend Framework не предоставляет
-                таких функций.  
+                таких функций.
 <!--
                 You are responsible for writing the functions to
                 perform inflection transformation.

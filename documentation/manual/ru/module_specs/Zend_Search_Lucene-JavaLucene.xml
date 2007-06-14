@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Взаимодействие с Java Lucene<!--Interoperating with Java Lucene--></title>
 
-	<sect2 id="zend.search.lucene.index-creation.file-formats">
-		<title>Форматы файлов<!--File Formats--></title>
+    <sect2 id="zend.search.lucene.index-creation.file-formats">
+        <title>Форматы файлов<!--File Formats--></title>
         <para>
         Форматы файлов индекса Zend_Search_Lucene являются совместимыми с Lucene
         версии 1.4 и выше.
@@ -11,7 +11,7 @@
           version 1.4 and above.
 -->
         </para>
-    
+
         <para>
         Подробное описание этого формата можно прочитать здесь:
 <!--
@@ -19,18 +19,18 @@
 -->
           <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
         </para>
-	</sect2>	
-    
+    </sect2>
+
     <sect2 id="zend.search.lucene.index-creation.index-directory">
         <title>Директория для индекса<!--Index Directory--></title>
-    
+
         <para>
         После создания индекса директория для индекса будет содержать несколько файлов:
 <!--
         After index creation, the index directory will contain several files:
 -->
         </para>
-    
+
         <itemizedlist>
             <listitem>
                 <para>
@@ -53,7 +53,7 @@
             <listitem>
                 <para>
                 файл <filename>deletable</filename> является списком файлов,
-                которые больше не используются индексом, но которые нельзя было удалить. 
+                которые больше не используются индексом, но которые нельзя было удалить.
 <!--
                 <filename>deletable</filename> file is a list of files that are no longer used
                 by the index, but which could not be deleted.
@@ -61,19 +61,19 @@
                 </para>
             </listitem>
         </itemizedlist>
-    </sect2>	
-	
-	<sect2 id="zend.search.lucene.java-lucene.source-code">
-		<title>Исходный код Java<!--Java Source Code--></title>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.java-lucene.source-code">
+        <title>Исходный код Java<!--Java Source Code--></title>
         <para>
             Приведенный ниже листинг программы на Java представляет собой пример
-            того, как индексировать файл, используя Java Lucene: 
+            того, как индексировать файл, используя Java Lucene:
 <!--
             The Java program listing below provides an example of how to index a file
             using Java Lucene:
 -->
         </para>
-    
+
         <programlisting role="java"><![CDATA[
 /**
 * Создание индекса:
@@ -85,7 +85,7 @@ import java.io.*
 
 ...
 
-IndexWriter indexWriter = new IndexWriter("/data/my_index", 
+IndexWriter indexWriter = new IndexWriter("/data/my_index",
                                           new SimpleAnalyzer(), true);
 
 ...

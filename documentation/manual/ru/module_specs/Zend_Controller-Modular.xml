@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.modular">
     <title>Модульная структуры директорий<!--Using a Conventional Modular Directory Structure--></title>
 
-	<sect2 id="zend.controller.modular.introduction">
-		<title>Введение</title>
+    <sect2 id="zend.controller.modular.introduction">
+        <title>Введение</title>
         <para>
             Модульная структура директорий позволяет делить различные
             MVC-приложения в самодостаточные единицы и повторно использовать их
@@ -35,7 +35,7 @@ application/
         models/
         views/
 ]]></programlisting>
-        
+
         <para>
             В этой парадигме имена модулей используются как префиксы к
             контроллерам в этих модулях. Пример выше содержит три контроллера в

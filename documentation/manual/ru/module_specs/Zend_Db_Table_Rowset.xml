@@ -112,7 +112,7 @@ if ($rowCount > 0) {
                 Наиболее простой способ получения доступа к строке из набора
                 состоит в использовании метода <code>current()</code>. Этот
                 способ особенно подходит для тех случаев, когда набор строк
-                содержит только одну строку.  
+                содержит только одну строку.
 <!--
                 The simplest way to access a Row from a Rowset is to use the <code>current()</code> method. This is
                 particularly appropriate when the Rowset contains exactly one Row.
@@ -204,7 +204,7 @@ foreach ($rowset as $row) {
         <para>
             Вы можете работать во всеми данными в наборе строк как с массивом,
             используя метод <code>toArray()</code> объекта набора строк. Он
-            возвращает массив, содержащий по одной записи на строку. Каждая 
+            возвращает массив, содержащий по одной записи на строку. Каждая
             запись является ассоциативным массивом, в котором ключи
             соответствуют именам столбцов, а элементы - значениям этих столбцов.
 <!--
@@ -312,7 +312,7 @@ $serializedRowset = serialize($rowset);
 
             <para>
                 Внимание: объект набора строк возвращается <emphasis>без
-                соединения с БД</emphasis>. Вы можете производить циклический 
+                соединения с БД</emphasis>. Вы можете производить циклический
                 обход набора строк, читать объекты строк и их свойства, но не
                 изменять значения в строках или выполнять другие методы,
                 требующие соединения с БД (например, запросы к связанным
@@ -342,7 +342,7 @@ echo $row->bug_description;
             <para>
                 Сериализованный объект является строкой, которая доступна
                 для чтения всем, кто ею обладает.
-                Это создает угрозу безопасности, которая состоит в 
+                Это создает угрозу безопасности, которая состоит в
                 том, что в сериализованной строке сохраняются такие
                 параметры, как логин и пароль для соединения с БД, в
                 незашифрованном виде.
@@ -392,7 +392,7 @@ $rowset = unserialize($serializedRowset);
 $bugs = new Bugs();
 
 // Переустановка таблицы для набора строк,
-// заодно восстанавливается соединение с БД 
+// заодно восстанавливается соединение с БД
 $rowset->setTable($bugs);
 
 $row = $rowset->current();
@@ -480,7 +480,7 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
             Typically, the standard Zend_Db_Rowset concrete class is
             sufficient for most usage.  However, you might find it useful
             to add new logic to a Rowset, specific to a given Table.
-            For example, a new method could calculate an aggregate 
+            For example, a new method could calculate an aggregate
             over all the Rows in the Rowset.
 -->
         </para>

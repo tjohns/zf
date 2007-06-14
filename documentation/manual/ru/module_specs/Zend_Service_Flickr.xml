@@ -18,7 +18,7 @@
         </para>
         <para>
             В следующем примере мы используем метод <code>tagSearch()</code>
-            для поиска фотографий со словом "php" в тегах. 
+            для поиска фотографий со словом "php" в тегах.
 <!--
             In the following example, we use the <code>tagSearch()</code> method
             to search for photos having "php" in the tags.
@@ -52,7 +52,7 @@ foreach ($results as $result) {
         <title>Поиск фотографий и информации о пользователе Flickr<!--Finding Flickr Users' Photos and Information--></title>
         <para>
             <code>Zend_Service_Flickr</code> предоставляет несколько
-            способов получения информации о пользователях Flickr: 
+            способов получения информации о пользователях Flickr:
 <!--
             <code>Zend_Service_Flickr</code> provides several ways to get
             information about Flickr users:
@@ -100,7 +100,7 @@ foreach ($results as $result) {
             <title>Поиск открытых фотографий пользователя по адресу e-mail<!--Finding a Flickr User's Public Photos by E-Mail Address--></title>
             <para>
                 В этом примере мы, имея e-mail пользователя Flickr, ищем его
-                открытые фотографии, используя метод <code>userSearch()</code>:    
+                открытые фотографии, используя метод <code>userSearch()</code>:
 <!--
                 In this example, we have a Flickr user's e-mail address, and we search for the user's public photos by
                 using the <code>userSearch()</code> method:

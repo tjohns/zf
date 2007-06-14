@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.searching">
-	<title>Поиск по индексу<!--Searching an Index--></title>
+    <title>Поиск по индексу<!--Searching an Index--></title>
 
-	<sect2 id="zend.search.lucene.searching.query_building">
-		<title>Построение запросов<!--Building Queries--></title>
+    <sect2 id="zend.search.lucene.searching.query_building">
+        <title>Построение запросов<!--Building Queries--></title>
 
         <para>
             Производить поиск по индексу можно двумя способами. Первый способ
@@ -30,7 +30,7 @@
                         ее с помощью парсера запросов, то вам следует серьезно подумать
                         о построении запросов непосредственно через программный интерфейс.
                         Другими словами, парсер запросов предназначен для текста, вводимого
-                        пользователем, а не генерируемого программным способом. 
+                        пользователем, а не генерируемого программным способом.
 <!--
                         If you are programmatically generating a query string and then parsing
                         it with the query parser then you should seriously consider building
@@ -48,7 +48,7 @@
                         парсером запросов, предназначен для преобразования
                         введенного пользователем текста в элементы запроса.
                         Программно генерируемые значения, такие, как даты, ключевые слова
-                        и т.д., должны генерироваться единообразно.                    
+                        и т.д., должны генерироваться единообразно.
 <!--
                         Untokenized fields are best added directly to queries, and not through
                         the query parser. If a field's values are generated programmatically
@@ -82,7 +82,7 @@
                         Булевы запросы позволяют объединять несколько запросов в
                         один. Таким образом, это является наилучшим путем
                         добавления дополнительных критериев пользовательского
-                        поиска, определяемых строкой запроса. 
+                        поиска, определяемых строкой запроса.
 <!--
                         Boolean queries allow to mix several other queries into new one.
                         Thus it's the best way to add some additional criteria to user search, defined by
@@ -101,7 +101,7 @@
             Both ways use the same API method to search through the index:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 require_once('Zend/Search/Lucene.php');
 
@@ -128,7 +128,7 @@ $index->find($query);]]>   </programlisting>
 <!--
             It is important to note that query parser uses standard analyzer to tokenize separate parts of query string.
             Thus all transformations, which are done on indexed text are also done on query string entries.
--->            
+-->
         </para>
         <para>
             Это могут быть приведение к нижнему регистру для того, чтобы сделать
@@ -149,13 +149,13 @@ $index->find($query);]]>   </programlisting>
             computer generated or untokenized fields.
 -->
         </para>
-        
+
         <sect3 id="zend.search.lucene.searching.query_building.parsing">
             <title>Парсинг запроса<!--Query parsing--></title>
             <para>
                 Метод <code>Zend_Search_Lucene_Search_QueryParser::parse()</code>
                 может использоваться для парсинга строки запроса и
-                преобразования ее в объект запроса. 
+                преобразования ее в объект запроса.
 <!--
                 <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query string
                 into query object.
@@ -165,7 +165,7 @@ $index->find($query);]]>   </programlisting>
             <para>
                 Этот объект может использоваться в методах программного
                 интерфейса для объединения программно сгенерированных
-                запросов с введенными пользователем. 
+                запросов с введенными пользователем.
 <!--
                 This object may be used in query construction API methods to combine user entered queries with
                 machine generated queries.
@@ -196,7 +196,7 @@ $hits = $index->find($query);]]></programlisting>
             <para>
                 Метод <code>Zend_Search_Lucene_Search_QueryParser::parse()</code>
                 также принимает необязательный параметр, через который
-                указывается кодировка строки запроса. 
+                указывается кодировка строки запроса.
 <!--
                 <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
                 which can specify query string encoding:
@@ -228,7 +228,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]></progra
             <para>
                 <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code>
                 возвращает используемую по умолчанию кодировку для строки
-                запроса (пустая строка означает "текущая локаль"). 
+                запроса (пустая строка означает "текущая локаль").
 <!--
                 <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns current default query
                 string encoding (empty string means "current locale").
@@ -246,7 +246,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]></progra
             <code>$hit->score</code> - ранг "хита" в результате поиска.
             Результат упорядочен по рангу ("хиты" с наибольшим рангом идут
             первыми).
-               
+
 <!--
             The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
             two properties: <code>$hit->document</code> is a document number within
@@ -281,7 +281,7 @@ foreach ($hits as $hit) {
 ?>]]></programlisting>
 
         <para>
-            Сохраненные в индексе поля всегда возвращаются в кодировке UTF-8. 
+            Сохраненные в индексе поля всегда возвращаются в кодировке UTF-8.
 <!--
             Stored fields are always returned in UTF-8 encoding.
 -->
@@ -302,7 +302,7 @@ foreach ($hits as $hit) {
             <code>getFieldValue()</code> method:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 require_once('Zend/Search/Lucene.php');
 
@@ -347,17 +347,17 @@ foreach ($hits as $hit) {
 -->
         </para>
 
-	</sect2>
+    </sect2>
 
 
-	<sect2 id="zend.search.lucene.searching.results-scoring">
-		<title>Ранжирование результата<!--Results Scoring--></title>
+    <sect2 id="zend.search.lucene.searching.results-scoring">
+        <title>Ранжирование результата<!--Results Scoring--></title>
         <para>
             Zend_Search_Lucene использует тот же самый алгоритм ранжирования,
             что и Java Lucene. Результаты поиска по умолчанию сортируются по
             рангу (релевантности). "Хиты" с наибольшим рангом идут первыми, и
             документы, имеющие больший ранг, болльше соответствуют запросу, чем
-            документы с меньшим рангом. 
+            документы с меньшим рангом.
 <!--
             Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
             Hits in search result are ordered by score by default. Hits with greater score come first, and
@@ -376,12 +376,12 @@ foreach ($hits as $hit) {
 
         <para>
             Число, соответствующее рангу, может быть получено через
-            свойство <code>score</code>: 
+            свойство <code>score</code>:
 <!--
             Score can be retrived by <code>score</code> property of hit:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -393,14 +393,14 @@ foreach ($hits as $hit) {
         <para>
             Для вычисления ранга используется класс Zend_Search_Lucene_Search_Similarity.
             За подробностями см. раздел
-            <link linkend="zend.search.lucene.extending.scoring">Расширяемость. Алгоритмы ранжирования</link>. 
+            <link linkend="zend.search.lucene.extending.scoring">Расширяемость. Алгоритмы ранжирования</link>.
 <!--
             Zend_Search_Lucene_Search_Similarity class is used to calculate score.
             See <link linkend="zend.search.lucene.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
 -->
         </para>
 
-	</sect2>
+    </sect2>
 
     <sect2 id="zend.search.lucene.searching.sorting">
         <title>Сортировка результатов поиска<!--Search Result Sorting--></title>
@@ -504,7 +504,7 @@ $highlightedHTML = $query->highlightMatches($sourceHTML);]]></programlisting>
             класс <code>Zend_Search_Lucene_Document_Html</code> (см.
             <link linkend="zend.search.lucene.index-creation.html-documents">раздел
             "HTML-документы"</link>). Поэтому этот метод предъявляет те же
-            требования к HTML-коду, что и используемый класс.  
+            требования к HTML-коду, что и используемый класс.
 <!--
             <code>highlightMatches()</code> method utilizes
             <code>Zend_Search_Lucene_Document_Html</code> class

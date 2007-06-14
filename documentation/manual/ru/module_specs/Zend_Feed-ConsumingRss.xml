@@ -35,7 +35,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
         on the object:
 -->
     </para>
-    
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -93,7 +93,7 @@ echo $channel->category['domain'];
         titles of articles in a channel is just a matter of:
 -->
     </para>
-    
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -246,7 +246,7 @@ foreach ($channel as $item) {
         In your code you can always test to see if an element is non-empty with:
 -->
     </para>
-    
+
     <programlisting role="php"><![CDATA[
 <?php
 

@@ -48,7 +48,7 @@
             рекомендуемые опции, затем установки по умолчанию из php.ini.
             Предложения по оптимизации работы с опциями отправляйте в список
             рассылки
-            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.    
+            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
 <!--
             To pass the options just pass the basename (the non <code>session.</code> part) as part of an array to
             <code>Zend_Session::setOptions()</code>. Without setting any options, Zend_Session will utilize the
@@ -61,7 +61,7 @@
 
         <para>
             "Автоматическое" конфигурипрование этой компоненты с использованием
-            Zend_Config_Ini:   
+            Zend_Config_Ini:
 <!--
             To "automatically" configure this component using an ".ini" file with Zend_Config_Ini:
 -->
@@ -70,7 +70,7 @@
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->toArray()); 
+Zend_Session::setOptions($config->toArray());
 ?>]]></programlisting>
             </example>
             Используемый файл "myapp.ini":
@@ -251,7 +251,7 @@ remember_me_seconds = 864000
                         от системы и должно устанавливаться разработчиком, с
                         использованием короткого значения,
                         <emphasis role="strong">уникального</emphasis> для
-                        приложения ZF.     
+                        приложения ZF.
 <!--
                         string <code>name</code> - The correct value is system dependent, and should be provided by
                         the developer using a short value <emphasis role="strong">unique</emphasis> to the ZF
@@ -269,11 +269,11 @@ remember_me_seconds = 864000
                             <code>http://www.somewebhost.com/~youraccount/index.php</code>),
                             то они будут использовать одни и те же данные
                             сессий для посетителей, посещающих оба сайта. Это
-                            может привести к разрушению данных сессий. 
+                            может привести к разрушению данных сессий.
 <!--
                             If the <code>php.ini</code> setting for <code>session.name</code>
                             is the same (e.g. the default "PHPSESSID"), and there are two or more PHP applications
-                            accessible through the same domain name (e.g. 
+                            accessible through the same domain name (e.g.
                             <code>http://www.somewebhost.com/~youraccount/index.php</code>), then they will share
                             the same session data for website visitors that visit both websites.  Additionally,
                             possible corruption of session data may result.
@@ -388,7 +388,7 @@ remember_me_seconds = 864000
                 new session id in their attempts to hijack the visitor's session. Even if an attacker gains access to an
                 old session id, <code>regenerateId()</code> also moves the session data from the old session id "handle"
                 to the new one, so no data remains accessible via the old session id.
--->                
+-->
             </para>
 
             <para>
@@ -557,7 +557,7 @@ remember_me_seconds = 864000
                         </para>
                     </listitem>
                 </itemizedlist>
-                
+
                 Пример кода ниже намного затрудняет получение атакующим текущего идентификатора сессии жертвы, за исключением тех случаев, когда атакующий уже выполнил первые два шага из приведенных выше.
 <!--
                 The sample code below makes it much harder for an attacker to know the current victim's session id,
@@ -570,12 +570,12 @@ remember_me_seconds = 864000
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session.php';
 $defaultNamespace = new Zend_Session_Namespace();
- 
+
 if (!isset($defaultNamespace->initialized))
-{ 
-    Zend_Session::regenerateId(); 
+{
+    Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-} 
+}
 ?>]]></programlisting>
             </example>
 
@@ -664,7 +664,7 @@ if (!isset($defaultNamespace->initialized))
             этом будет удалена кука с идентификатором сессии в агенте
             пользователя. Установленный в <code>true</code> необязательный
             параметр <code>$readonly</code> блокирует возможность записи в
-            данные сессии (т.е. в $_SESSION) для экземпляров 
+            данные сессии (т.е. в $_SESSION) для экземпляров
             Zend_Session_Namespace и методов Zend_Session.
 <!--
             <code>Zend_Session::destroy()</code> destroys all of the persistent data associated with the current

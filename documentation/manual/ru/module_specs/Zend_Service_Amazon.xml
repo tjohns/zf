@@ -28,7 +28,7 @@
                 <listitem>
                     <para>
                         Информацию о товарной позиции, такую, как изображения,
-                        описания, цены и т.д. 
+                        описания, цены и т.д.
 <!--
                         Store item information, such as images, descriptions, pricing, and more
 -->
@@ -52,7 +52,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Предложения Amazon.com 
+                        Предложения Amazon.com
 <!--
                         Amazon.com offers
 -->
@@ -60,7 +60,7 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Списки ListMania 
+                        Списки ListMania
 <!--
                         ListMania lists
 -->
@@ -83,7 +83,7 @@
             <title>Внимание</title>
             <para>
                 Ваш ключ разработчика к API Amazon связан с вашим аккаунтом в Amazon,
-                поэтому позаботьтесь о том, чтобы хранить ваш ключ в безопасности. 
+                поэтому позаботьтесь о том, чтобы хранить ваш ключ в безопасности.
 <!--
                 Your Amazon developer API key is linked to your Amazon identity, so
                 take appropriate measures to keep your API key private.
@@ -112,7 +112,7 @@ foreach ($response as $r) {
         <example>
             <title>Поиск с использованием API запросов<!--Search Amazon Using the Query API--></title>
             <para>
-                Здесь мы также ищем книги по PHP на Amazon, но используя 
+                Здесь мы также ищем книги по PHP на Amazon, но используя
                 API запросов, который имеет сходство с паттерном
                 проектирования Fluent Interface.
 <!--
@@ -315,7 +315,7 @@ foreach ($results as $result) {
 -->
                 </para>
                 <para>
-                    За более подробной информацией про доступные опции обратитесь к 
+                    За более подробной информацией про доступные опции обратитесь к
                     <ulink
                         url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">соответствующей документации Amazon</ulink>.
 <!--
@@ -418,7 +418,7 @@ foreach ($results as $result) {
                 <title>Свойства класса<!--Properties--></title>
                 <para>
                     <code>Zend_Service_Amazon_Item</code> имеет несколько свойств,
-                    напрямую связанных с их аналогами в стандартном API. 
+                    напрямую связанных с их аналогами в стандартном API.
 <!--
                     <code>Zend_Service_Amazon_Item</code> has a number of properties
                     directly related to their standard Amazon API counterparts.
@@ -484,7 +484,7 @@ foreach ($results as $result) {
                                 <entry>CustomerReviews</entry>
                                 <entry>array</entry>
                                 <entry>
-                                    Отзывы покупателей в виде массива объектов 
+                                    Отзывы покупателей в виде массива объектов
                                     <code>
                                         <link
                                             linkend="zend.service.amazon.classes.customerreview">Zend_Service_Amazon_CustomerReview</link>
@@ -503,7 +503,7 @@ foreach ($results as $result) {
                                 <entry>EditorialReviews</entry>
                                 <entry>array</entry>
                                 <entry>
-                                    Рецензии в виде массива объектов 
+                                    Рецензии в виде массива объектов
                                     <code>
                                         <link
                                             linkend="zend.service.amazon.classes.editorialreview">Zend_Service_Amazon_EditorialReview</link>
@@ -571,7 +571,7 @@ foreach ($results as $result) {
                                 <entry>array</entry>
                                 <entry>
                                     Связанные с данным товаром списки Listmania
-                                    в виде массива объектов 
+                                    в виде массива объектов
                                     <code>
                                         <link
                                             linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmainList</link>
@@ -603,7 +603,7 @@ foreach ($results as $result) {
             <title>Zend_Service_Amazon_Image</title>
             <para>
                 Класс <code>Zend_Service_Amazon_Image</code> представляет удаленное
-                изображение для продукта. 
+                изображение для продукта.
 <!--
                 <code>Zend_Service_Amazon_Image</code> represents a remote Image for a product.
 -->
@@ -762,7 +762,7 @@ foreach ($results as $result) {
                                 <entry>TotalNew</entry>
                                 <entry>int</entry>
                                 <entry>
-                                    Общее количество нового товара, доступного для данной позиции  
+                                    Общее количество нового товара, доступного для данной позиции
                                     <!--Total number of &quot;new&quot; condition available for the item-->
                                 </entry>
                             </row>
@@ -916,8 +916,8 @@ foreach ($results as $result) {
 -->
             </para>
             <para>
-                Каждый объект содержит в себе информацию, которая позволяет делать 
-                дополнительные запросы для получения более полной информации о товаре. 
+                Каждый объект содержит в себе информацию, которая позволяет делать
+                дополнительные запросы для получения более полной информации о товаре.
 <!--
                 Each object contains the information to allow you to make
                 sub-sequent requests to get the full information
@@ -941,7 +941,7 @@ foreach ($results as $result) {
                                 <entry>ASIN</entry>
                                 <entry>string</entry>
                                 <entry>
-                                    Уникальный ID товара Amazon (ASIN) 
+                                    Уникальный ID товара Amazon (ASIN)
                                     <!--Products Amazon Unique ID (ASIN)-->
                                 </entry>
                             </row>
@@ -987,7 +987,7 @@ foreach ($results as $result) {
                                 <entry>ASIN</entry>
                                 <entry>string</entry>
                                 <entry>
-                                    Уникальный ID товара Amazon (ASIN) 
+                                    Уникальный ID товара Amazon (ASIN)
                                     <!--Products Amazon Unique ID (ASIN)-->
                                 </entry>
                             </row>
@@ -1011,7 +1011,7 @@ foreach ($results as $result) {
             <title>Zend_Service_Amazon_CustomerReview</title>
             <para>
                 Каждый покупательский отзыв возвращается в виде объекта
-                <code>Zend_Service_Amazon_CustomerReview</code>  
+                <code>Zend_Service_Amazon_CustomerReview</code>
 <!--
                 Each Customer Review is returned as a
                 <code>Zend_Service_Amazon_CustomerReview</code> object.
@@ -1042,7 +1042,7 @@ foreach ($results as $result) {
                                 <entry>HelpfulVotes</entry>
                                 <entry>string</entry>
                                 <entry>
-                                    Голоса за то, что отзыв является полезным 
+                                    Голоса за то, что отзыв является полезным
                                     <!--Votes on how helpful the review is-->
                                 </entry>
                             </row>

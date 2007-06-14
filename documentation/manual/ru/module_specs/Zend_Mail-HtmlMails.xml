@@ -1,6 +1,6 @@
 <sect1 id="zend.mail.html-mails">
     <title>
-        Сообщение в формате HTML 
+        Сообщение в формате HTML
 <!--
         HTML E-Mail
 -->
@@ -21,7 +21,7 @@
     </para>
     <example>
         <title>
-            Отправка сообщения в формате HTML  
+            Отправка сообщения в формате HTML
 <!--
             Sending HTML E-Mail
 -->

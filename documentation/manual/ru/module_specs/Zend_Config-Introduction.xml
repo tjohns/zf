@@ -32,7 +32,7 @@
             Но если конфигурационные данные доступны в виде массива PHP,
             то можно просто передавать эти данные конструктору <code>Zend_Config</code>,
             чтобы использовать преимущества простого объектно-ориентированного
-            интерфейса.  
+            интерфейса.
 <!--
             Normally it is expected that users would use one of the adapter
             classes such as
@@ -73,7 +73,7 @@ $myApplicationObject->databaseConnect($config->database->type,
     <para>
         Как показано в предыдущем примере, в <code>Zend_Config</code> для
         доступа к конфигурационным данным, переданным его конструктору,
-        используется синтаксис вложенных свойств объектов.  
+        используется синтаксис вложенных свойств объектов.
 <!--
         As illustrated in the example above, <code>Zend_Config</code> provides
         nested object property syntax to access configuration data passed to

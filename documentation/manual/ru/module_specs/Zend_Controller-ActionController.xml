@@ -1,9 +1,9 @@
 <sect1 id="zend.controller.action">
-	<title>Контроллеры действий<!--Action Controllers--></title>
+    <title>Контроллеры действий<!--Action Controllers--></title>
 
-	<sect2 id="zend.controller.action.introduction">
-		<title>Введение<!--Introduction--></title>
-		<para>
+    <sect2 id="zend.controller.action.introduction">
+        <title>Введение<!--Introduction--></title>
+        <para>
             <code>Zend_Controller_Action</code> является абстрактным классом,
             который можно использовать в реализации контроллеров действий для
             последующего их использования с фронт-контроллером при разработке
@@ -14,9 +14,9 @@
             Controller when building a website based on the
             Model-View-Controller (MVC) pattern.
 -->
-		</para>
+        </para>
 
-		<para>
+        <para>
             Для того, чтобы использовать Zend_Controller_Action, нужно создать
             его подкласс в действующей директории контроллеров (или расширить
             его для создания своего базового класса контроллеров действий).
@@ -38,7 +38,7 @@
         </para>
 
         <para>
-            Для примера предположим, что ваш класс определен следующим образом: 
+            Для примера предположим, что ваш класс определен следующим образом:
 <!--
             For example, let's say your class is defined as follows:
 -->
@@ -58,7 +58,7 @@ class FooController extends Zend_Controller_Action
     }
 }
 ]]></programlisting>
-            
+
         <para>
             Приведенный выше класс FooController (контроллер 'foo') определяет
             два действия - 'bar' и 'baz'.
@@ -83,7 +83,7 @@ class FooController extends Zend_Controller_Action
         </para>
     </sect2>
 
-	<sect2 id="zend.controller.action.initialization">
+    <sect2 id="zend.controller.action.initialization">
         <title>Инициализация объекта<!--Object initialization--></title>
 
         <para>
@@ -275,7 +275,7 @@ $this->getResponse()->appendBody($content);
                         после выполнения текущего действия.
 <!--
                     <emphasis>_forward($action, $controller = null, $module =
-                        null, array $params = null)</emphasis>: 
+                        null, array $params = null)</emphasis>:
                     perform another action. If called in preDispatch(), the
                     currently requested action will be skipped in favor of the
                     new one. Otherwise, after the current action is processed,
@@ -289,7 +289,7 @@ $this->getResponse()->appendBody($content);
                     <emphasis>_redirect($url, array $options = array())</emphasis>:
                     перенаправляет по другому URL. Этот метод принимает URL и
                     необязательный набор опций. По умолчанию он выполняет
-                    перенаправление HTTP 302.  
+                    перенаправление HTTP 302.
 <!--
                     <emphasis>_redirect($url, array $options =
                         array())</emphasis>: redirect to another location. This
@@ -388,7 +388,7 @@ class MyController extends Zend_Controller_Action
 
         // Renders foo/login.phtml to the 'form' segment of the response object
         $this->render('login', 'form');
-        
+
         // Renders site.phtml to the 'page' segment of the response object
         $this->render('site', 'page', true);
     }
@@ -423,7 +423,7 @@ applicationOrModule/
         helpers/
         filters/
 ]]></programlisting>
-                
+
                 <para>
                     In other words, view scripts are assumed to be in the
                     <code>views/scripts/</code> subdirectory, and the

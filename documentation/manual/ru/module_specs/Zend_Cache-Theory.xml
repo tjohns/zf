@@ -56,16 +56,16 @@
         <para>
             Корректным способом создания рабочего экземпляра
             фронтэнда <code>Zend_Cache</code> является код показанный в
-            следующем примере:  
+            следующем примере:
 <!--
             A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
             in the following example :
 -->
-        </para> 
+        </para>
         <programlisting role="php"><![CDATA[<?php
-        
-# Загружаем фабрику Zend_Cache 
-require 'Zend/Cache.php'; 
+
+# Загружаем фабрику Zend_Cache
+require 'Zend/Cache.php';
 
 # Выбираем бэкэнд (например, 'File' или 'Sqlite'...)
 $backendName = '[...]';
@@ -79,16 +79,16 @@ $frontendOptions = array([...]);
 # Устанавливаем массив опций для выбранного бэкэнда
 $backendOptions = array([...]);
 
-# Создаем экземпляр 
+# Создаем экземпляр
 # (два последних аргумента являются необязательными)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
-?>]]>   </programlisting> 
+?>]]>   </programlisting>
         <para>
             В следующих примерах мы предполагаем, что переменная <code>$cache</code>
             содержит инстанцированный, как показано в примере, фронтэнд,
             и что вы понимаете, как передавать параметры выбранному вами
-            бэкэнду. 
+            бэкэнду.
 <!--
             In the following examples we will assume that the <code>$cache</code> variable holds a
             valid, instantiated frontend as shown and that you understand how to pass parametres
@@ -105,24 +105,24 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 -->
         </para></note>
     </sect2>
-    
+
     <sect2 id="zend.cache.tags">
         <title>Добавление тегов к записям<!--Tagging records--></title>
         <para>
             Теги являются средством категоризации записей кэша. Когда вы производите
             сохранение в кэш методом <code>save()</code>, то можете установить массив
             тегов к данной записи. После этого вы можете удалить все записи
-            кэша, помеченные данным тегом (тегами).   
+            кэша, помеченные данным тегом (тегами).
 <!--
             Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
-            method, you can set an array of tags to apply for this record. Then you will be 
+            method, you can set an array of tags to apply for this record. Then you will be
             able to clean all cache records tagged with a given tag (or tags):
 -->
         </para>
         <programlisting role="php"><![CDATA[<?php
-             
+
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
-            
+
 ?>]]>   </programlisting>
         <note>
             <para>
@@ -147,11 +147,11 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             method :
 -->
         </para>
-        <programlisting role="php"><![CDATA[<?php 
-             
+        <programlisting role="php"><![CDATA[<?php
+
 $cache->remove('idToRemove');
-            
-?>]]>   </programlisting>            
+
+?>]]>   </programlisting>
         <para>
             Для того, чтобы за одну операцию удалить или сделать недействительными
             несколько записей кэша, вы можете использовать
@@ -161,14 +161,14 @@ $cache->remove('idToRemove');
             method. For example to remove all cache records :
 -->
         </para>
-        <programlisting role="php"><![CDATA[<?php 
+        <programlisting role="php"><![CDATA[<?php
 
 // удаление всех записей
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // удаление только устаревших записей
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
-            
+
 ?>]]>   </programlisting>
         <para>
             Если вы хотите удалить записи кэша, помеченные тегами 'tagA' и 'tagC':
@@ -176,10 +176,10 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             If you want to remove cache entries matching the tags 'tagA' and 'tagC':
 -->
         </para>
-        <programlisting role="php"><![CDATA[<?php 
-             
+        <programlisting role="php"><![CDATA[<?php
+
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
-            
+
 ?>]]>   </programlisting>
         <para>
             Доступные режимы очищения: <code>CLEANING_MODE_ALL</code> (удалить все),

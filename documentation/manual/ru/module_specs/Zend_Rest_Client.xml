@@ -156,10 +156,10 @@ echo $result->firstname() .' '. $result->lastname();
         </note>
     </sect2>
 
-	<sect2 id="zend.rest.client.args">
-		<title>Request Arguments</title>
+    <sect2 id="zend.rest.client.args">
+        <title>Request Arguments</title>
 
-		<para>
+        <para>
             Unless you are making a request to a <code>Zend_Rest_Server</code>
             based service, chances are you will need to send multiple arguments
             with your request. This is done by calling a method with the name of
@@ -168,12 +168,12 @@ echo $result->firstname() .' '. $result->lastname();
             chaining, or "fluent" usage. The first call, or the first argument
             if you pass in more than one argument, is always assumed to be the
             method when calling a <code>Zend_Rest_Server</code> service.
-		</para>
+        </para>
 
-		<example>
-			<title>Setting Request Arguments</title>
+        <example>
+            <title>Setting Request Arguments</title>
 
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $client = new Zend_Rest_Client('http://example.org/rest');
 
 $client->arg('value1');
@@ -184,33 +184,33 @@ $client->get();
 
 $client->arg('value1')->arg2('value2')->get();
 ?>]]></programlisting>
-		</example>
+        </example>
 
-		<para>
+        <para>
             Both of the methods in the example above, will result in the
             following get args:
             <code>?method=arg&amp;arg1=value1&amp;arg=value1&amp;arg2=value2</code>
-		</para>
+        </para>
 
-		<para>
+        <para>
             You will notice that the first call of
             <code>$client->arg('value1');</code> resulted in both
             <code>method=arg&amp;arg1=value1</code> and <code>arg=value1</code>;
             this is so that <code>Zend_Rest_Server</code> can understand the
             request properly, rather than requiring pre-existing knowledge of
             the service.
-		</para>
+        </para>
 
-		<warning>
-		    <title>Strictness of Zend_Rest_Client</title>
+        <warning>
+            <title>Strictness of Zend_Rest_Client</title>
 
-		    <para>
-				Any REST service that is strict about the arguments it receives will likely fail
-				using <code>Zend_Rest_Client</code>, because of the behavior described
-				above. This is not a common practice and should not cause problems.
-		    </para>
+            <para>
+                Any REST service that is strict about the arguments it receives will likely fail
+                using <code>Zend_Rest_Client</code>, because of the behavior described
+                above. This is not a common practice and should not cause problems.
+            </para>
         </warning>
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

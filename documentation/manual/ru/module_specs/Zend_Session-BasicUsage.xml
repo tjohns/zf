@@ -41,7 +41,7 @@
             использование пространства имен по умолчанию и показывает, как
             подсчитывать количество просмотров страниц пользователем на сайте.
             Для тестирования этого примера добавьте следующий код в
-            файл загрузки:    
+            файл загрузки:
 <!--
             If no namespace is specified when instantiating Zend_Session, all data will be transparently stored in a
             namespace called "<code>Default</code>". <code>Zend_Session</code> is not intended to work directly on the
@@ -62,7 +62,7 @@
     // используется "магический" метод __isset() в Zend_Session_Namespace:
     if (isset($defaultNamespace->numberOfPageRequests)) {
         // будет увеличиваться на единицу при каждой загрузке страницы.
-        $defaultNamespace->numberOfPageRequests++; 
+        $defaultNamespace->numberOfPageRequests++;
     } else {
         $defaultNamespace->numberOfPageRequests = 1; // начальное значение
     }
@@ -172,7 +172,7 @@
             methods) __set(), __unset(), __isset() и __get(). "Магические"
             методы не должны использоваться напрямую, кроме как внутри
             подклассов Zend_Session. Вместо этого используйте обычные операторы
-            для вызова этих "магических" методов, например: 
+            для вызова этих "магических" методов, например:
 <!--
             The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods. The
             magic methods should not be used directly, except from within a subclass of Zend_Session. Instead, use the

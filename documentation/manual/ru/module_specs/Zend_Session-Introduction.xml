@@ -6,7 +6,7 @@
         См.
         <ulink url="http://framework.zend.com/wiki/x/iVc">
         самую последнюю опубликованную версию этого документа</ulink>.
-        Приветствуются отзывы и предложения в списке рассылки <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>. 
+        Приветствуются отзывы и предложения в списке рассылки <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
 <!--
         See
         <ulink url="http://framework.zend.com/wiki/x/iVc">the most recently published version of this document</ulink>.
@@ -29,7 +29,7 @@
         <emphasis role="bold">Пространства имен сессий</emphasis> предоставляют
         доступ к данным сессий с использованиием классических
         <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">пространств имен</ulink>,
-        логически реализованным как именованные группы ассоциативных массивов. 
+        логически реализованным как именованные группы ассоциативных массивов.
 <!--
         With web applications written using PHP, a <emphasis role="bold">session</emphasis> represents a logical,
         one-to-one connection between server-side, persistent state data and a particular user agent client (e.g. web
@@ -58,7 +58,7 @@
         Поскольку внутри себя <code>Zend_Session</code> использует обычные
         PHP-функции, предназначенные для работы со сессиями, то используются
         соответствующие опции конфигурации PHP (см.
-        <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>). 
+        <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>).
         Стандартный идентификатор сессии, сохраненный в куках или встроенный
         в URL, поддерживает ассоциацию между клиентом и постоянными данными
         сессии.

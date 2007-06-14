@@ -16,7 +16,7 @@
         PHP-приложения) совместно использует или пререкрывают постоянные данные
         сессий. Поэтому рекомендуется следовать лучшей практике
         программирования, описанной в следующих разделах, во избежание
-        осложнений. 
+        осложнений.
 <!--
         <code>Zend_Session</code> provides an internal interface to encapsulate all access to the singleton
         <code>$_SESSION</code> using all static methods. In general, developers should not directly access
@@ -57,7 +57,7 @@
         Zend_Session_Namespace помогают ограничить область видимости посредством
         введения переменных с локальной областью видимости (объект
         Zend_Session_Namespace), фактически это импорт определенного
-        пространства имен в локальную область видимости.   
+        пространства имен в локальную область видимости.
 <!--
         Unlike <code>$_SESSION</code>, Zend_Session_Namespace logically segregates all session data into separate
         namespaces, by storing data in a PHP array and storing the array in <code>$_SESSION</code> using the namespace

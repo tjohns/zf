@@ -38,7 +38,7 @@ Zend_Mail::setDefaultTransport($tr);
         для остальной части скрипта. Это позволит держать конфигурационные данные
         отдельно от логики приложения — отправляется ли почта через SMTP или
         <ulink url="http://php.net/mail"><code>mail()</code></ulink>,
-        какой почтовый сервер используется и т.д.    
+        какой почтовый сервер используется и т.д.
 <!--
         The <code>setDefaultTransport()</code> method and the constructor of
         <code>Zend_Mail_Transport_Smtp</code> are not expensive. These two lines can be processed at script

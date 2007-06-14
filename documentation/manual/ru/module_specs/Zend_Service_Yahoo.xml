@@ -4,7 +4,7 @@
         <title>Введение<!--Introduction--></title>
         <para>
             <code>Zend_Service_Yahoo</code> является простым программным интерфейсом
-            (API) для использования многих программных интерфейсов 
+            (API) для использования многих программных интерфейсов
             портала Yahoo! (Yahoo! REST API). <code>Zend_Service_Yahoo</code>
             позволяет искать через Yahoo! Web search, Yahoo! News, Yahoo! Local
             и Yahoo! Images. Для того, чтобы использовать Yahoo! REST API, вы
@@ -27,7 +27,7 @@
         <title>Поиск веб-страниц с помощью Yahoo!<!--Searching the Web with Yahoo!--></title>
         <para>
             <code>Zend_Service_Yahoo</code> дает возможность поиска веб-страниц
-            через Yahoo! с помощью метода <code>webSearch()</code>. Этот метод 
+            через Yahoo! с помощью метода <code>webSearch()</code>. Этот метод
             принимает строку запроса в качестве первого параметра и
             массив опций в качестве необязательного второго параметра.
             За полной информацией и списком поддерживаемых опций см.
@@ -117,7 +117,7 @@ foreach ($results as $result) {
         <para>
             Поиск новостей через Yahoo! News довольно простой —
             используйте метод <code>newsSearch()</code>, как показано в
-            следующем примере. За подробностями см. <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">документацию Yahoo! News Search</ulink>. 
+            следующем примере. За подробностями см. <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">документацию Yahoo! News Search</ulink>.
 <!--
             Searching Yahoo! News is simple; just use the <code>newsSearch()</code> method, as in the following
             example. For full details, please see the
@@ -143,9 +143,9 @@ foreach ($results as $result) {
             Все следующие классы возвращаются различными средствами поиска Yahoo!.
             Каждое средство поиска возвращает набор результатов определенного типа,
             с которым легко производить итерацию. Каждый отдельный результат поиска
-            заключен в объекте. Все классы наборов результатов реализуют интерфейс 
-            <code>SeekableIterator</code>, что позволяет легко производить итерацию и 
-            извлечение определенного результата.          
+            заключен в объекте. Все классы наборов результатов реализуют интерфейс
+            <code>SeekableIterator</code>, что позволяет легко производить итерацию и
+            извлечение определенного результата.
 <!--
             The following classes are all returned by the various Yahoo! searches.
             Each search type returns a
@@ -180,7 +180,7 @@ foreach ($results as $result) {
             </para>
             <para>
                 Все наборы результатов поиска возвращают объекты наследников
-                класса <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link>. 
+                класса <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link>.
 <!--
                 Each of the specific result sets returns a search specific
                 <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link> objects.
@@ -612,7 +612,7 @@ foreach ($results as $result) {
             <title>Zend_Service_Yahoo_NewsResult</title>
             <para>
                 Каждый отдельный результат News Search возвращается в виде объекта
-                <code>Zend_Service_Yahoo_NewsResult</code>. 
+                <code>Zend_Service_Yahoo_NewsResult</code>.
 <!--
                 Each News Search result is returned as a <code>Zend_Service_Yahoo_NewsResult</code> object.
 -->

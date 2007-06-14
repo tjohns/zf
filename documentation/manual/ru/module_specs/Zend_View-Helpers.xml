@@ -1,7 +1,7 @@
 <sect1 id="zend.view.helpers">
-    
+
     <title>Вспомогательные классы вида<!--View Helpers--></title>
-    
+
     <para>
         В скрипте вида часто бывает так, что необходимо выполнять
         определенный набор функций повторно; например, формирование даты,
@@ -14,14 +14,14 @@
         use helper classes to perform these behaviors for you.
 -->
     </para>
-    
+
     <para>
         Чтобы применять вспомогательные классы ("помощников") в своем скрипте вида,
         вызывайте их, используя <code>$this->имяПомощника()</code>.
         <code>Zend_View</code> загрузит класс <code>Zend_View_Helper_ИмяПомощника</code>,
         создаст его объект, и вызовет его метод <code>имяПомощника()</code>.
         Этот объект находится постоянно внутри экземпляра <code>Zend_View</code>
-        и повторно используется во всех вызовах <code>$this->имяПомощника()</code>.       
+        и повторно используется во всех вызовах <code>$this->имяПомощника()</code>.
 <!--
         To use a helper in your view script, call it using
         $this->helperName(). Behind the scenes, Zend_View will load the
@@ -31,34 +31,34 @@
         future calls to $this->helperName().
 -->
     </para>
-    
+
     <sect2 id="zend.view.helpers.initial">
-    
+
         <title>Начальные вспомогательные классы<!--Initial Helpers--></title>
-        
+
         <para>
             <code>Zend_View</code> снабжен начальным набором вспомогательных
             классов, все они имеют отношение к генерации элементов форм.
             Каждый из них автоматически выполняет соответствующее экранирование
-            выходных данных. Это:   
+            выходных данных. Это:
 <!--
             Zend_View comes with an initial set of helper classes, all of
             which relate to form element generation.  They each perform the
             appopriate output escaping automatically.  They are:
 -->
         </para>
-        
+
         <itemizedlist>
-            
+
             <listitem><para>
                 <code>formButton($name, $value, $attribs)</code>: Создает элемент
-                <code>&lt;input type="button" /&gt;</code>. 
+                <code>&lt;input type="button" /&gt;</code>.
 <!--
                 Creates an &lt;input
                 type="button" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formCheckbox($name, $value, $attribs, $options)</code>:
                 Создает элемент <code>&lt;input type="checkbox" /&gt;</code>
@@ -76,7 +76,7 @@
                 "checked" value, the box will be checked for you.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formFile($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="file" /&gt;</code>.
@@ -85,16 +85,16 @@
                 type="file" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formHidden($name, $value, $attribs)</code>: Создает
-                элемент <code>&lt;input type="hidden" /&gt;</code>. 
+                элемент <code>&lt;input type="hidden" /&gt;</code>.
 <!--
                 Creates an &lt;input
                 type="hidden" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formPassword($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="password" /&gt;</code>.
@@ -103,7 +103,7 @@
                 type="password" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formRadio($name, $value, $attribs, $options)</code>: Создает
                 последовательность элементов <code>&lt;input type="radio" /&gt;</code>
@@ -119,7 +119,7 @@
                 radio label.  The $value radio will be preselected for you.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formReset($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="password" /&gt;</code>.
@@ -128,11 +128,11 @@
                 type="reset" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formSelect($name, $value, $attribs, $options)</code>:
                 Создает блок <code>&lt;select&gt;...&lt;/select&gt;</code>,
-                с одной опцией <code>&lt;option&gt;</code> на каждый 
+                с одной опцией <code>&lt;option&gt;</code> на каждый
                 элемент массива <code>$options</code>. В массиве
                 <code>$options</code> ключ элемента является значением опции,
                 значение элемента является текстом опции. Опция со значением
@@ -146,7 +146,7 @@
                 option(s) will be preselected for you.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formSubmit($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="submit" /&gt;</code>.
@@ -155,7 +155,7 @@
                 type="submit" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formText($name, $value, $attribs)</code>: Создает
                 элемент <code>&lt;input type="text" /&gt;</code>.
@@ -164,7 +164,7 @@
                 type="text" /&gt; element.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 <code>formTextarea($name, $value, $attribs)</code>: Создает
                 блок <code>&lt;textarea&gt;...&lt;/textarea&gt;</code>.
@@ -173,22 +173,22 @@
                 &lt;textarea&gt;...&lt;/textarea&gt; block.
 -->
             </para></listitem>
-            
+
         </itemizedlist>
-        
+
         <para>
             Использование их в скрипте вида очень простое, вот пример.
             Обратите внимание, что это все, что вам нужно для их вызова — они
             будут загружаться и инстанцироваться самостоятельно, когда
             будут нужны.
-            
+
 <!--
             Using these in your view scripts is very easy, here is an example.
             Note that you all you need to to is call them; they will load
             and instantiate themselves as they are needed.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // внутри вашего скрипта вида $this ссылается на экземпляр Zend_View
 //
@@ -197,7 +197,7 @@
 // 'Israel', 'de' => 'Germany') именем $countries
 <!--
 // inside your view script, $this refers to the Zend_View instance.
-// 
+//
 // say that you have already assigned a series of select options under
 // the name $countries as array('us' => 'United States', 'il' =>
 // 'Israel', 'de' => 'Germany').
@@ -215,7 +215,7 @@
     </label></p>
 </form>]]>
         </programlisting>
-        
+
         <para>
             Результирующие выходные данные этого скрипта вида будут выглядеть
             наподобие этого:
@@ -223,7 +223,7 @@
             The resulting output from the view script will look something like this:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
     <p><label>Your Email:
         <input type="text" name="email" value="you@example.com" size="32" />
@@ -241,13 +241,13 @@
     </label></p>
 </form>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.paths">
-        
+
         <title>Пути к вспомогательным классам<!--Helper Paths--></title>
-        
+
         <para>
             Как и для скриптов вида, ваш контроллер может задать
             стек путей, в которых <code>Zend_View</code> должен искать
@@ -258,7 +258,7 @@
             <code>addHelperPath()</code>. Кроме этого, вы можете указать префикс
             класса, используемый для вспомогательных классов, он
             обеспечивает пространство имен. Если префикс не указан, то по
-            умолчанию используется 'Zend_View_Helper_'. 
+            умолчанию используется 'Zend_View_Helper_'.
 <!--
             As with view scripts, your controller can specify a stack of paths
             for Zend_View to search for helper classes. By default, Zend_View
@@ -270,7 +270,7 @@
             'Zend_View_Helper_' is assumed.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
@@ -278,14 +278,14 @@ $view = new Zend_View();
 $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
-        
+
         <para>
             Вы можете "складывать" в стек пути, используя метод
             <code>addHelperPath()</code>. Если вы добавили
             пути в стек, то <code>Zend_View</code> будет искать запрошенный
             вспомогательный класс в этих путях, начиная с пути, добавленного
             последним. Это дает возможность добавлять (или даже замещать)
-            к начальному набору свои собственные вспомогательные классы. 
+            к начальному набору свои собственные вспомогательные классы.
 <!--
             In fact, you can "stack" paths using the addHelperPath()
             method. As you add paths to the stack, Zend_View will look
@@ -295,7 +295,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
             helpers.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 // Добавить /path/to/some/helpers с префиксом для классов 'My_View_Helper'
@@ -304,18 +304,18 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // теперь, когда вы вызываете $this->helperName(), Zend_View будет искать
-// "/other/path/to/helpers/HelperName.php" с классом "My_View_Helper_HelperName", 
-// затем "/path/to/some/helpers/HelperName" с классом "Your_View_Helper_HelperName", 
+// "/other/path/to/helpers/HelperName.php" с классом "My_View_Helper_HelperName",
+// затем "/path/to/some/helpers/HelperName" с классом "Your_View_Helper_HelperName",
 // и под конец "Zend/View/Helper/HelperName.php" с классом "Zend_View_Helper_HelperName".
 ?>]]>
         </programlisting>
 
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.custom">
-        
+
         <title>Написание собственных вспомогательных классов<!--Writing Custom Helpers--></title>
-        
+
         <para>
             Написание собственных вспомогательных классов является довольно простым делом —
             просто следуйте этим правилам:
@@ -323,16 +323,16 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
             Writing custom helpers is easy; just follow these rules:
 -->
         </para>
-        
+
         <itemizedlist>
-            
+
             <listitem><para>
                 Имя класса должно быть <code>Zend_View_Helper_*</code>,
                 где * является именем самого "помощника". Например, если
                 вы написали "помощника", называющегося "specialPurpose",
                 имя класса должно быть "Zend_View_Helper_SpecialPurpose"
                 (обратите внимание на использование главных букв).
-                
+
                 Имя класса должно быть, как минимум, заканчиваться именем
                 "помощника", в котором имена начинаются с заглавной буквы. Т.е.
                 если вы написали "помощника" с именем "specialPurpose", то
@@ -352,27 +352,27 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
                 <code>setHelperPath()</code>).
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 Класс должен иметь открытый метод, имя которого
                 соответствует имени "помощника". Это метод, который будет
                 вызываться, когда ваш шаблон вызывает
                 <code>$this->specialPurpose()</code>. В нашем примере с помощником
                 "specialPurpose" объявление требуемого метода должно быть
-                <code>public function specialPurpose()</code>. 
+                <code>public function specialPurpose()</code>.
 <!--
                 The class must have a public method that matches the
                 helper name; this is the method that will be called when
                 your template calls "$this->specialPurpose()".  In our
                 "specialPurpose" helper example, the required method
                 declaration would be "public function specialPurpose()".
---> 
+-->
             </para></listitem>
-            
+
             <listitem><para>
                 Обычно класс не должен выполнять вывод, вместо этого
                 он должен возвращать значение для вывода. Возвращаемое значение
-                должно быть экранировано должным образом. 
+                должно быть экранировано должным образом.
 <!--
                 In general, the class should not echo or print or otherwise
                 generate output.  Instead, it should return values to be
@@ -380,7 +380,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
                 appropriately.
 -->
             </para></listitem>
-            
+
             <listitem><para>
                 Класс должен быть в файле, названном по имени метода.
                 Снова используя пример с помощником "specialPurpose", мы
@@ -392,25 +392,25 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 -->
             </para></listitem>
         </itemizedlist>
-        
+
         <para>
             Размещайте вспомогательный класс где-либо в одном из находящихся в стеке путей
             к "помощникам", и <code>Zend_View</code> будет автоматически загружать,
-            инстанцировать, сохранять и выполнять его. 
+            инстанцировать, сохранять и выполнять его.
 <!--
             Place the helper class file somewhere in your helper path stack,
             and Zend_View will automatically load, instantiate, persist,
             and execute it for you.
 -->
         </para>
-        
+
         <para>
             Вот пример кода нашего помощника "SpecialPurpose":
 <!--
             Here is an example of our SpecialPurpose helper code:
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 class My_View_Helper_SpecialPurpose {
     protected $_count = 0;
@@ -423,7 +423,7 @@ class My_View_Helper_SpecialPurpose {
 }
 ?>]]>
         </programlisting>
-        
+
         <para>
             Далее в скрипте вида вы можете вызывать помощника SpecialPurpose
             столько раз, сколько вам нужно. Он будет инстанцирован один раз,
@@ -434,7 +434,7 @@ class My_View_Helper_SpecialPurpose {
             then it persists for the life of that Zend_View instance.
 -->
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // помните, что в скрипте вида $this ссылается на экземпляр Zend_View
 echo $this->specialPurpose();
@@ -442,7 +442,7 @@ echo $this->specialPurpose();
 echo $this->specialPurpose();
 ?>]]>
         </programlisting>
-        
+
         <para>
             Результат должен выглядеть наподобие этого:
 <!--
@@ -453,9 +453,9 @@ echo $this->specialPurpose();
 I have seen 'The Jerk' 2 time(s).
 I have seen 'The Jerk' 3 time(s).]]>
         </programlisting>
-        
+
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
