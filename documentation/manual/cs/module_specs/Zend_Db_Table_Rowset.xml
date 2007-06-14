@@ -334,7 +334,7 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
             Typically, the standard Zend_Db_Rowset concrete class is
             sufficient for most usage.  However, you might find it useful
             to add new logic to a Rowset, specific to a given Table.
-            For example, a new method could calculate an aggregate 
+            For example, a new method could calculate an aggregate
             over all the Rows in the Rowset.
         </para>
 

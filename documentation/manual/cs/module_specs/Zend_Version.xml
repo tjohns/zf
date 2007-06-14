@@ -1,15 +1,15 @@
 <sect1 id="zend.version.reading">
 
     <title>Získávání informací o verzi Zend Frameworku</title>
-    
+
     <para>
-        Hodnotou konstanty <code>Zend_Version::VERSION</code> je 
+        Hodnotou konstanty <code>Zend_Version::VERSION</code> je
         řetězec označující aktuální číslo verze, např. "0.9.0beta".
     </para>
-    
+
     <para>
         Statická metoda <code>Zend_Version::compareVersion($version)</code>
-        pracuje s funkcí 
+        pracuje s funkcí
         <ulink url="http://php.net/version_compare"><code>version_compare()</code></ulink>.
         Tato metoda vrací -1 v případě, že parametr <code>$version</code> udává starší
         verzi, než je aktuální verze Zend Frameworku, 0 pokud je verze stejná

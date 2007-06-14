@@ -217,7 +217,7 @@ $s->setExpirationSeconds(5, 'a'); // expire only the key "a" in 5 seconds
 // expire entire namespace in 5 "hops"
 $s->setExpirationHops(5);
 
-$s->setExpirationSeconds(60);                  
+$s->setExpirationSeconds(60);
 // The "expireAll" namespace will be marked "expired" on
 // the first request received after 60 seconds have elapsed,
 // or in 5 hops, whichever happens first.
