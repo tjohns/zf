@@ -4,14 +4,14 @@
     <para>
       A Filter object blocks a message from being written to the log.
     </para>
-    
+
     <sect2 id="zend.log.filters.all-writers">
       <title>Filtering for All Writers</title>
-    
+
       <para>
         To filter before all writers, you can add any number of Filters to a
         Log object using the <code>addFilter()</code> method:
-        
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -34,14 +34,14 @@ $logger->emerg('Emergency message');
         through all of the Filters before any Writers receives it.
       </para>
     </sect2>
-    
+
     <sect2 id="zend.log.filters.single-writer">
       <title>Filtering for a Writer Instance</title>
-      
+
       <para>
         To filter only on a specific Writer instance, use the
         <code>addFilter</code> method of that Writer:
-      
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -62,7 +62,7 @@ $logger->info('Informational message');
 // logged by both writers
 $logger->emerg('Emergency message');
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
   </sect2>
 </sect1>

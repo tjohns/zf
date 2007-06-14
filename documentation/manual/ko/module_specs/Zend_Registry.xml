@@ -317,7 +317,7 @@ Zend_Registry::set('index', $value);
         </note>
 
         <para>
-            You might use this method, for example, if you want to 
+            You might use this method, for example, if you want to
             use <code>setInstance()</code> or <code>setClassName()</code>
             after the static registry object has been initialized.
             Unsetting the static instance allows you to use these methods.
