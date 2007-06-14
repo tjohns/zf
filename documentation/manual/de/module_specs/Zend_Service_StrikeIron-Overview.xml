@@ -60,11 +60,11 @@
 >>>>>>> .r5238
 
         <para>
-          <ulink url="http://www.strikeiron.com">StrikeIron</ulink> 
+          <ulink url="http://www.strikeiron.com">StrikeIron</ulink>
           offers hundreds of commercial data services ("Data as a Service")
           such as Online Sales Tax, Currency Rates, Stock Quotes, Geocodes, Global
           Address Verification, Yellow/White Pages, MapQuest Driving Directions,
-          Dun &amp; Bradstreet Business Credit Checks, and much, much more. 
+          Dun &amp; Bradstreet Business Credit Checks, and much, much more.
         </para>
 
         <para>
@@ -72,17 +72,17 @@
           API, making it easy to integrate and manage multiple services.
           StrikeIron also manages customer billing for all services in a single
           account, making it perfect for solution providers. Get
-          started with free web services at 
+          started with free web services at
           <ulink url="http://www.strikeiron.com/sdp">http://www.strikeiron.com/sdp</ulink>.
         </para>
 
         <para>
-          StrikeIron's services may be used through the 
-          <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.  
+          StrikeIron's services may be used through the
+          <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.
           However, using StrikeIron this way does not give an ideal PHP-like interface.
           The Zend_Service_StrikeIron component provides a lightweight layer on
           top of the SOAP extension for working with StrikeIron services in a
-          more convenient, PHP-like manner. 
+          more convenient, PHP-like manner.
         </para>
 
         <note>
@@ -91,7 +91,7 @@
             Zend_Service_StrikeIron.
           </para>
         </note>
-          
+
         <para>
           The Zend_Service_StrikeIron component provides:
 
