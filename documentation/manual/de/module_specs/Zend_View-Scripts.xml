@@ -196,6 +196,21 @@ public function getEngine();
 public function setScriptPath($path);
 
 /**
+ * Setze den Pfad zu allen View Ressourcen
+ */
+public function setBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Füge einen zusätzlichen Basispfad den View ressourcen hinzu
+ */
+public function addBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Empfange die aktuellen Skript Pfade
+ */
+public function getScriptPaths();
+
+/**
  * Überladungsmethoden zum Zuordnen von Templatevariablen als Objekteigenschaften
  */
 public function __set($key, $value);
@@ -282,6 +297,40 @@ class Zend_View_Smarty implements Zend_View_Interface
         }
 
         throw new Exception('Invalid path provided');
+    }
+
+    /**
+     * Empfange das aktuelle template Verzeichnis
+     *
+     * @return string
+     */
+    public function getScriptPaths()
+    {
+        return $this->_smarty->template_dir;
+    }
+
+    /**
+     * Alias für setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix nicht verwendet
+     * @return void
+     */
+    public function setBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
+    }
+
+    /**
+     * Alias für setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix nicht verwendet
+     * @return void
+     */
+    public function addBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
     }
 
     /**

@@ -103,7 +103,7 @@ $viewRenderer->setView($view)
         <programlisting role="php"><![CDATA[<?php
 Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
 ]]></programlisting>
-
+        
         <para>
             The first time an action controller is instantiated, it will trigger
             the <code>ViewRenderer</code> to instantiate a view object. Each
@@ -113,12 +113,12 @@ Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper
             <code>addScriptPath()</code> with a path relative to the current
             module; this will be called with a class prefix named after the
             current module, effectively namespacing all helper and filter
-            classes you define for the module.
+            classes you define for the module. 
         </para>
 
         <para>
             Each time <code>postDispatch()</code> is called, it will call
-            <code>render()</code> for the current action.
+            <code>render()</code> for the current action. 
         </para>
 
         <para>
@@ -156,7 +156,7 @@ class Foo_BarController extends Zend_Controller_Action
             <listitem>
                 <para>
                     <code>setView($view)</code> allows you to set the view
-                    object for the <code>ViewRenderer</code>. It gets set as
+                    object for the <code>ViewRenderer</code>. It gets set as 
                     the public class property <code>$view</code>.
                 </para>
             </listitem>
@@ -191,6 +191,16 @@ class Foo_BarController extends Zend_Controller_Action
                     tell <code>render()</code> not to look for the action script
                     in a subdirectory named after the controller (which is the
                     default behaviour). <code>getNoController()</code> retrieves
+                    the current value.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setNeverController($flag = true)</code> is analogous
+                    to <code>setNoController()</code>, but works on a global
+                    level -- i.e., it will not be reset for each dispatched
+                    action. <code>getNeverController()</code> retrieves
                     the current value.
                 </para>
             </listitem>
@@ -480,8 +490,23 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <para>
                 At its most basic, you simply add the <code>ViewRenderer</code>
                 helper to the helper broker in your bootstrap, and then set
-                variables in your action methods.
+                variables in your action methods. 
             </para>
+
+            <note>
+                <title>Naming Conventions: Word delimiters in controller and
+                    action names</title>
+                <para>
+                    If your controller or action name is composed of several
+                    words, the dispatcher requires that these are separated on
+                    the URL by specific word delimiter characters. The
+                    <code>ViewRenderer</code> replaces any word delimiter found
+                    with a dash ('-') when creating paths. Thus, a call to the
+                    action <code>/foo.bar/baz.bat</code> would dispatch to
+                    <code>FooBarController::bazBatAction()</code>, which would
+                    render <code>foo-bar/baz-bat.phtml</code>.
+                </para>
+            </note>
 
             <programlisting role="php"><![CDATA[<?php
 // In your bootstrap:

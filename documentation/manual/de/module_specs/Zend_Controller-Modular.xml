@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.modular">
     <title>Using a Conventional Modular Directory Structure</title>
 
-    <sect2 id="zend.controller.modular.introduction">
-        <title>Introduction</title>
+	<sect2 id="zend.controller.modular.introduction">
+		<title>Introduction</title>
         <para>
             The Conventional Modular directory structure allows you to separate
             different MVC applications into self-contained units, and re-use
@@ -30,7 +30,7 @@ application/
         models/
         views/
 ]]></programlisting>
-
+        
         <para>
             In this paradigm, the module name serves as a prefix to the
             controllers it contains. The above example contains three
@@ -40,6 +40,18 @@ application/
             namespaced. This directory structure will be used for examples in
             this chapter.
         </para>
+
+        <note>
+            <title>No namespacing in the default module</title>
+            <para>
+                Note that in the default module, controllers do not need a
+                namespace prefix. Thus, in the example above, the controllers in
+                the default module do not need a prefix of 'Default_' -- they
+                are simply dispatched according to their base controller name:
+                'IndexController' and 'FooController'. A namespace prefix is
+                used in all other modules, however.
+            </para>
+        </note>
 
         <para>
             So, how do you implement such a directory layout using the Zend
@@ -88,7 +100,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 
         <para>
             Saving the best for last, the easiest way to specify module
-            directories is to do so en masses, with all modules under a common
+            directories is to do so en masse, with all modules under a common
             directory and sharing the same structure. This can be done with
             <code>addModuleDirectory()</code>:
         </para>
@@ -134,7 +146,7 @@ $front->addModuleDirectory('/path/to/application/modules');
 $front->setModuleControllerDirectoryName('con');
 $front->addModuleDirectory('/path/to/application/modules');
 ?>]]></programlisting>
-
+        
         <note><para>
             You can indicate that no controller subdirectory be used for your
             modules by passing an empty value to
@@ -179,11 +191,11 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <para>
             If you wish to always default to the global namespace, set the
-            <code>useGlobalDefault</code> parameter in the front controller:
+            <code>useDefaultControllerAlways</code> parameter in the front controller:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('useGlobalDefault', true);
+$front->setParam('useDefaultControllerAlways', true);
 ?>]]></programlisting>
     </sect2>
 </sect1>
