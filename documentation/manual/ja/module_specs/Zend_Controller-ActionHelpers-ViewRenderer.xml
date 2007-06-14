@@ -207,6 +207,16 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
+                    <code>setNeverController($flag = true)</code>
+                    は <code>setNoController()</code> と似ていますが、
+                    こちらは全体に影響を与えます。つまり、
+                    ディスパッチ処理を行っても設定はリセットされません。
+                    <code>getNeverController()</code> は、現在の設定を取得します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
                     <code>setScriptAction($name)</code>
                     を使用すると、レンダリングするアクションスクリプトを指定することができます。
                     <code>$name</code> は、スクリプト名から拡張子を除いたもの
