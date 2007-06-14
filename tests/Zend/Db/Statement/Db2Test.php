@@ -38,7 +38,23 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
 
     public function testStatementColumnCountForSelect()
     {
-        $this->markTestIncomplete($this->getDriver() . ' gets the wrong result in this test.');
+        $select = $this->_db->select()
+            ->from('zfproducts');
+
+        $stmt = $this->_db->prepare($select->__toString());
+
+        $n = $stmt->columnCount();
+        // DB2 returns the column count once the query has been prepared
+        // while PDO returns it only after it has been executed
+        $this->assertEquals(2, $n);
+
+        $stmt->execute();
+
+        $n = $stmt->columnCount();
+        $stmt->closeCursor();
+
+        $this->assertType('integer', $n);
+        $this->assertEquals(2, $n);
     }
 
     public function testStatementBindParamByPosition()
