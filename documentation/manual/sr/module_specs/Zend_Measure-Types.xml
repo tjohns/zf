@@ -24,7 +24,7 @@
                     <entry>Zend_Measure_Acceleration</entry>
                     <entry>Meter per square second | <code>m/s²</code>
                     </entry>
-                    <entry><code>Zend_Measure_Acceleration</code> covers the 
+                    <entry><code>Zend_Measure_Acceleration</code> covers the
                             physical factor of acceleration.
                         </entry>
                 </row>
@@ -62,7 +62,7 @@
                     <entry>Zend_Measure_Cooking_Volume</entry>
                     <entry>Cubic meter | <code>m³</code>
                     </entry>
-                    <entry><code>Zend_Measure_Cooking_Volume</code> covers volumes 
+                    <entry><code>Zend_Measure_Cooking_Volume</code> covers volumes
                             which are used for cooking or written in cookbooks.
                         </entry>
                 </row>
@@ -71,7 +71,7 @@
                     <entry>Zend_Measure_Cooking_Weight</entry>
                     <entry>Gram | <code>g</code>
                     </entry>
-                    <entry><code>Zend_Measure_Cooking_Weight</code> covers the weights 
+                    <entry><code>Zend_Measure_Cooking_Weight</code> covers the weights
                             which are used for cooking or written in cookbooks.
                         </entry>
                 </row>

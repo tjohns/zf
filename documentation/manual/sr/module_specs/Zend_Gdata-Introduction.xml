@@ -2,15 +2,15 @@
     <title>Introduction to Gdata</title>
     <para>
         Google Data APIs provide programmatic interface to some of Google's
-        online services.  The Google data Protocol is based upon the 
+        online services.  The Google data Protocol is based upon the
         <ulink url="http://ietfreport.isoc.org/idref/draft-ietf-atompub-protocol/">Atom Publishing Protocol</ulink>
-        and allows client applications to retrieve data matching queries, 
-        post data, update data and delete data using standard HTTP and the 
+        and allows client applications to retrieve data matching queries,
+        post data, update data and delete data using standard HTTP and the
         Atom syndication formation.
 
         The Zend_Gdata component is a PHP 5 interface for accessing Google Data
         from PHP.  The Zend_Gdata component also supports accessing other services
-        implementing the Atom Publishing Protocol.  
+        implementing the Atom Publishing Protocol.
     </para>
 
     <para>
@@ -53,7 +53,7 @@
             <listitem>
                 <para>
                     Google Notebook
-                    allows you to view public Notebook content. 
+                    allows you to view public Notebook content.
                 </para>
             </listitem>
         </itemizedlist>
@@ -62,8 +62,8 @@
     <note>
         <title>Unsupported services</title>
         <para>
-            Google Data API also supports Google Base, Picasa Web Albums, 
-            Google Apps Provisioning, but Zend_Gdata does not provide helper 
+            Google Data API also supports Google Base, Picasa Web Albums,
+            Google Apps Provisioning, but Zend_Gdata does not provide helper
             classes for these products in this release.
         </para>
 
@@ -77,31 +77,31 @@
     <sect2 id="zend.gdata.introduction.structure">
         <title>Structure of Zend_Gdata</title>
         <para>
-            Zend_Gata is composed of several types of classes:    
+            Zend_Gata is composed of several types of classes:
             <itemizedlist>
                 <listitem>
                     <para>
-                        Service classes - inheriting from Zend_Gdata_App. 
+                        Service classes - inheriting from Zend_Gdata_App.
                         These also include other classes such as Zend_Gdata,
                         Zend_Gdata_Spreadsheets, etc.  These classes enable
                         interacting with APP or GData services and provide the
                         ability to retrieve feeds, retrieve entries, post
-                        entries, update entries and delete entries.  
+                        entries, update entries and delete entries.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         Query classes - inheriting from Zend_Gdata_Query.
                         These also include other classes for specific services,
-                        such as Zend_Gdata_Spreadsheets_ListQuery and 
+                        such as Zend_Gdata_Spreadsheets_ListQuery and
                         Zend_Gdata_Spreadsheets_CellQuery.  Query classes
                         provide methods used to construct a query for data
                         to be redtrieved from GData services.  Methods include
                         getters and setters like <code>setUpdatedMin()</code>,
                         <code>setStartIndex()</code>, and
                         <code>getPublishedMin()</code>.  The query classes also
-                        have a method to generate a URL representing the 
-                        constructed query -- <code>getQueryUrl</code>.  
+                        have a method to generate a URL representing the
+                        constructed query -- <code>getQueryUrl</code>.
                         Alternatively, the query string component of the URL
                         can be retrieved used the <code>getQueryString()</code>
                         method.
@@ -110,8 +110,8 @@
                 <listitem>
                     <para>
                         Feed classes - inheriting from Zend_Gdata_App_Feed.
-                        These also include other classes such as 
-                        Zend_Gdata_Feed, 
+                        These also include other classes such as
+                        Zend_Gdata_Feed,
                         Zend_Gdata_Spreadsheets_SpreadsheetFeed,
                         and Zend_Gdata_Spreadsheets_ListFeed.
                         These classes represent feeds of entries retrieved
@@ -125,12 +125,12 @@
                         These also include other classes such as
                         Zend_Gdata_Entry, and Zend_Gdata_Spreadsheets_ListEntry.
                         These classes represent entries retrieved from
-                        services or used for constructing data to send to 
+                        services or used for constructing data to send to
                         services.  In addition to being able to set the
                         properties of an entry (such as the spreadsheet cell
                         value), you can use an entry object to send update
-                        or delete requests to a service.  For example, 
-                        you can call <code>$entry->save()</code> to save 
+                        or delete requests to a service.  For example,
+                        you can call <code>$entry->save()</code> to save
                         changes made to an entry back to service from which
                         the entry initiated, or <code>$entry->delete()</code>
                         to delete an entry from the server.
@@ -141,11 +141,11 @@
                         Other Data model classes - inheriting from
                         Zend_Gdata_App_Extension.  These include classes such
                         as Zend_Gdata_App_Extension_Title (representing the
-                        atom:title XML element), Zend_Gdata_Extension_When 
-                        (representing the gd:when XML element used by the 
+                        atom:title XML element), Zend_Gdata_Extension_When
+                        (representing the gd:when XML element used by the
                         GData Event "Kind"), and
                         Zend_Gdata_Extension_Cell (representing the gs:cell
-                        XML element used by Google Spreadsheets).  These 
+                        XML element used by Google Spreadsheets).  These
                         classes are used purely to store the data retrieved
                         back from services and for constructing data to be
                         sent to services.  These include getters and seetters
@@ -159,25 +159,25 @@
                         <code>getDOM()</code> to retrieve a DOM representation
                         of the element and all children and
                         <code>transferFromDOM()</code> to construct a data
-                        model representation of a DOM tree. 
+                        model representation of a DOM tree.
                     </para>
                 </listitem>
             </itemizedlist>
-        </para>                
+        </para>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.services">
         <title>Interacting with Google Services</title>
         <para>
-            Google data services are based upon the Atom Publishing Protocol 
-            (APP) and the Atom syndication format.  To interact with APP or 
+            Google data services are based upon the Atom Publishing Protocol
+            (APP) and the Atom syndication format.  To interact with APP or
             Google services using the Zend_Gdata component, you need to use
-            the service classes such as Zend_Gdata_App, Zend_Gdata, 
-            Zend_Gdata_Spreadsheets, etc.  These service classes provide 
+            the service classes such as Zend_Gdata_App, Zend_Gdata,
+            Zend_Gdata_Spreadsheets, etc.  These service classes provide
             methods to retrieve data from services as feeds, insert new
             entries into feeds, update entries, and delete entries.
         </para>
-        
+
         <para>
             Note; A full example of working with Zend_Gdata is available in the
             <code>demos/Zend/Gdata</code> directory.  This example is runnable
@@ -193,9 +193,9 @@
             named based upon the directory structure in which they are located.
             For instance, extensions related to Spreadsheets are stored in:
             <code>Zend/Gdata/Spreadsheets/Extension/...</code> and, as a result
-            of this, are named 
+            of this, are named
             <code>Zend_Gdata_Spreadsheets_Extension_...</code>.
-            This causes a lot of typing if you're trying to construct a new 
+            This causes a lot of typing if you're trying to construct a new
             instance of a spreadsheet cell element!
         </para>
         <para>
@@ -216,7 +216,7 @@ Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
 $ss = new Zend_Gdata_Spreadsheets();
 
 // creates a Zend_Gdata_App_Spreadsheets_CellEntry
-$entry = $ss->newCellEntry(); 
+$entry = $ss->newCellEntry();
 
 // creates a Zend_Gdata_App_Spreadsheets_Extension_Cell
 $cell = $ss->newCell();
@@ -225,7 +225,7 @@ $cell->setRow('1');
 $cell->setColumn('3');
 $entry->cell = $cell;
 
-// ... $entry can then be used to send an update to a Google Spreadsheet, 
+// ... $entry can then be used to send an update to a Google Spreadsheet,
 ?>]]></programlisting>
 
         <para>
@@ -258,10 +258,10 @@ $entry->cell = $cell;
     <sect2 id="zend.gdata.introduction.dependencies">
         <title>Dependencies</title>
         <para>
-            Zend_Gdata makes use of 
+            Zend_Gdata makes use of
             <link linkend="zend.http.client">Zend_Http_Client</link> to send
             requests to google.com and fetch results.  The response to most
-            Google Data requests is returned as a subclass of the 
+            Google Data requests is returned as a subclass of the
             Zend_Gdata_App_Feed or Zend_Gdata_App_Entry classes.
         </para>
 
@@ -277,18 +277,18 @@ $entry->cell = $cell;
         <title>Creating a new Gdata client</title>
 
         <para>
-            Create a new object of class Zend_Gdata_App, Zend_Gdata, or one 
+            Create a new object of class Zend_Gdata_App, Zend_Gdata, or one
             of the subclasses available that offer helper methods for
             service-specific behavior.
         </para>
 
         <para>
             The single optional parameter to the Zend_Gdata_App constructor
-            is an instance of 
+            is an instance of
             <link linkend="zend.http.client">Zend_Http_Client</link>.
             If you don't pass this parameter, Zend_Gdata creates a default
             Zend_Http_Client object, which will not have associated
-            credentials to access private feeds.  Specifying the 
+            credentials to access private feeds.  Specifying the
             Zend_Http_Client object also allows you to
             pass configuration options to that client object.
         </para>
@@ -317,9 +317,9 @@ $gdata = new Zend_Gdata($client);
         <para>
             You can specify parameters to customize queries with Zend_Gdata.
             Query parameters are specified using subclasses of Zend_Gdata_Query.
-            The Zend_Gdata_Query class includes methods to set all query 
+            The Zend_Gdata_Query class includes methods to set all query
             parameters used throughout GData services.  Individual services,
-            such as Spreadsheets, also provide query classes to defined 
+            such as Spreadsheets, also provide query classes to defined
             parameters which are custom to the particular service and feeds.
             Spreadsheets includes a CellQuery class to query the Cell Feed
             and a ListQuery class to query the List Feed, as different
@@ -349,8 +349,8 @@ $gdata = new Zend_Gdata($client);
                     <code>json</code>,
                     or <code>json-in-script</code>.
                     If you don't specify this parameter, the default feed type
-                    is <code>atom</code>.  NOTE: Only the output of the 
-                    atom feed format can be processed using 
+                    is <code>atom</code>.  NOTE: Only the output of the
+                    atom feed format can be processed using
                     <code>Zend_Gdata</code>.
                     The <code>Zend_Http_Client</code> could be used to retrieve
                     feeds in other formats, using query URLs generated by the
@@ -366,7 +366,7 @@ $gdata = new Zend_Gdata($client);
                 <para>
                     The <code>maxResults</code> parameter limits the number
                     of entries in the feed.  The value of the parameter is
-                    an integer.  The number of entries returned in the feed 
+                    an integer.  The number of entries returned in the feed
                     will not exceed this value.
                 </para>
                 <para>
@@ -424,7 +424,7 @@ echo $query->getMaxResults();   // returns 10
         <para>
             The Zend_Gdata class also implements "magic" getter and
             setter methods, so you can use the name of the parameter
-            as a virtual member of the class. 
+            as a virtual member of the class.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -458,7 +458,7 @@ $query->resetParameters();      // clears all parameters
             a feed from a specified URI.
             This function returns an instance of class specified
             as the second argument to getFeed, which defaults to
-            Zend_Gdata_Feed.  
+            Zend_Gdata_Feed.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -480,11 +480,11 @@ $feed = $gdata->getFeed($query);
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
         <title>Working with data in feeds and entries</title>
-    
+
         <para>
             After retrieving a feed, you can read the data from the feed
             or the entries contained in the feed using either the accessors
-            defined in each of the data model classes or the magic 
+            defined in each of the data model classes or the magic
             accessors.  Here's an example:
         </para>
 
@@ -506,7 +506,7 @@ foreach ($feed as $entry) {
 
     <sect2 id="zend.gdata.introduction.updateentry">
         <title>Updating entries</title>
-    
+
         <para>
             After retrieving an entry, you can update that entry and save
             changes back to the server.  Here's an example:
@@ -542,7 +542,7 @@ foreach ($feed as $entry) {
 
         <para>
             You can use the data model classes for each service to
-            construct the appropriate entry to post to Google's 
+            construct the appropriate entry to post to Google's
             services.  The <code>post()</code> function will
             accept a child of Zend_Gdata_App_Entry as data to
             post to the service.  The method returns a child
@@ -565,7 +565,7 @@ $content = $gdata->newContent('We will visit the park and play a few football ma
 $content->setType('text');
 $entry->content = $content;
 
-$entryResult = $gdata->insertEntry($entry, 
+$entryResult = $gdata->insertEntry($entry,
         'http://www.blogger.com/feeds/blogID/posts/default');
 
 echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;
@@ -614,5 +614,5 @@ foreach ($feed as $feedEntry) {
         </para>
 
     </sect2>
- 
-</sect1> 
+
+</sect1>

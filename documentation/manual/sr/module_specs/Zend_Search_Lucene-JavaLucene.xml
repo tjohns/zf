@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Interoperating with Java Lucene</title>
 
-	<sect2 id="zend.search.lucene.index-creation.file-formats">
-		<title>File Formats</title>
+    <sect2 id="zend.search.lucene.index-creation.file-formats">
+        <title>File Formats</title>
         <para>
           Zend_Search_Lucene index file formats are binary compatible with a Lucene
           version 1.4 and above.
@@ -13,7 +13,7 @@
           <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
           <footnote><para>Currently supported Lucene index file format version is v2.0</para></footnote>.
         </para>
-	</sect2>
+    </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.index-directory">
         <title>Index Directory</title>
@@ -43,8 +43,8 @@
         </itemizedlist>
     </sect2>
 
-	<sect2 id="zend.search.lucene.java-lucene.source-code">
-		<title>Java Source Code</title>
+    <sect2 id="zend.search.lucene.java-lucene.source-code">
+        <title>Java Source Code</title>
         <para>
             The Java program listing below provides an example of how to index a file
             using Java Lucene:

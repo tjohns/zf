@@ -1,23 +1,23 @@
 <sect1 id="zend.view.controllers">
     <title>Controller Scripts</title>
-    
+
     <para>
         The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to 
+        You then assign variables to the view, and tell the view to
         render output using a particular script.
     </para>
-    
+
     <sect2 id="zend.view.controllers.assign">
-    
+
         <title>Assigning Variables</title>
-        
+
         <para>
             Your controller script should assign necessary variables to the view
             before it hands over control to the view script.  Normally, you
             can do assignments one at a time by assigning to property names
             of the view instance:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->a = "Hay";
@@ -25,18 +25,18 @@ $view->b = "Bee";
 $view->c = "Sea";
 ?>]]>
         </programlisting>
-        
+
         <para>
             However, this can be tedious when you have already collected the
             values to be assigned into an array or object.
         </para>
-        
+
         <para>
             The assign() method lets you assign from an array or object "in
             bulk."  The following examples have the same effect as the above
             one-by-one property assignments.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
@@ -59,13 +59,13 @@ $obj->c = "Sea";
 $view->assign((array) $obj);
 ?>]]>
         </programlisting>
-        
+
         <para>
             Alternatively, you can use the assign method to assign
             one-by-one by passing a string variable name, and then the
             variable value.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->assign('a', "Hay");
@@ -73,13 +73,13 @@ $view->assign('b', "Bee");
 $view->assign('c', "Sea");
 ?>]]>
         </programlisting>
-        
+
     </sect2>
 
     <sect2 id="zend.view.controllers.render">
-        
+
         <title>Rendering a View Script</title>
-        
+
         <para>
             Once you have assigned all needed variables, the controller
             should tell Zend_View to render a particular view script.
@@ -87,7 +87,7 @@ $view->assign('c', "Sea");
             return the rendered view, not print it, so you need to print or
             echo it yourself at the appropriate time.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->a = "Hay";
@@ -96,13 +96,13 @@ $view->c = "Sea";
 echo $view->render('someView.php');
 ?>]]>
         </programlisting>
-    
+
     </sect2>
-    
+
     <sect2 id="zend.view.controllers.script-paths">
-        
+
         <title>View Script Paths</title>
-        
+
         <para>
             By default, Zend_View expects your view scripts to be relative to
             your calling script.  For example, if your controller script is at
@@ -110,24 +110,24 @@ echo $view->render('someView.php');
             $view->render('someView.php'), Zend_View will look for
             "/path/to/app/controllers/someView.php".
         </para>
-        
+
         <para>
             Obviously, your view scripts are probably located elsewhere.  To
             tell Zend_View where it should look for view scripts, use the
             setScriptPath() method.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->setScriptPath('/path/to/app/views');
 ?>]]>
         </programlisting>
-        
+
         <para>
             Now when you call $view->render('someView.php'), it will look
             for "/path/to/app/views/someView.php".
         </para>
-        
+
         <para>
             In fact, you can "stack" paths using the addScriptPath()
             method. As you add paths to the stack, Zend_View will look
@@ -136,19 +136,19 @@ $view->setScriptPath('/path/to/app/views');
             views so that you may create custom "themes" or "skins" for
             some views, while leaving others alone.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 $view->addScriptPath('/path/to/app/views');
 $view->addScriptPath('/path/to/custom/');
 
-// now when you call $view->render('booklist.php'), Zend_View will 
+// now when you call $view->render('booklist.php'), Zend_View will
 // look first for "/path/to/custom/booklist.php", then for
 // "/path/to/app/views/booklist.php", and finally in the current
 // directory for "booklist.php".
 ?>]]>
         </programlisting>
-        
+
     </sect2>
 
 </sect1>

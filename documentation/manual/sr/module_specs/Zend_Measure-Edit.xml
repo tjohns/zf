@@ -99,7 +99,7 @@ require_once 'Zend/Measure/Length.php';
 $unit = new Zend_Measure_Length(200, Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 
-// Add $unit2 to $unit 
+// Add $unit2 to $unit
 $sum = $unit->add($unit2);
 
 echo $sum; // outputs "300 cm"

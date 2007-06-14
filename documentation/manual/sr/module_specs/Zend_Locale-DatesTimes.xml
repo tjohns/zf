@@ -29,8 +29,8 @@
         </para>
 
         <para>
-            If <code>setOption('fix_date' => true)</code> is set the <code>getDate()</code> method adds a key 'fixed' 
-            with a whole number value indicating if the input date string required "fixing" by rearranging the day, 
+            If <code>setOption('fix_date' => true)</code> is set the <code>getDate()</code> method adds a key 'fixed'
+            with a whole number value indicating if the input date string required "fixing" by rearranging the day,
             month, or year in the input to fit the format used.
         </para>
 
@@ -79,7 +79,7 @@
             <code>toString()</code>. If you need to use PHP <code>date()</code> compatible format specifiers, then first
             call <code>setOptions('format_type' => 'php')</code>. And if you want to convert only one special format
             string from PHP <code>date()</code> compatible format to "ISO" format use <code>convertPhpToIsoFormat()</code>.
-            Currently, the only practical difference relates to the specifier for minutes ('m' using the ISO default, 
+            Currently, the only practical difference relates to the specifier for minutes ('m' using the ISO default,
             and 'i' using the PHP date format).
         </para>
 
@@ -180,8 +180,8 @@ Array
             Since <code>getDate()</code> is "locale-aware", specifying the <code>$locale</code> is sufficient for date
             strings adhering to that locale's format. The option '<code>fix_date</code>' uses simple tests to
             determine if the day or month is not valid, and then applies heuristics to try and correct any detected
-            problems. Note the use of '<code>Zend_Locale_Format::STANDARD</code>' as the value for 
-            '<code>date_format</code>' to prevent the use of a class-wide default date format set using 
+            problems. Note the use of '<code>Zend_Locale_Format::STANDARD</code>' as the value for
+            '<code>date_format</code>' to prevent the use of a class-wide default date format set using
             <code>setOptions()</code>. This forces getDate to use the default date format for <code>$locale</code>.
         </para>
 
@@ -295,7 +295,7 @@ print_r ($date);
                         <entry>dd.MM.yy</entry>
                         <entry>1.4.6</entry>
                         <entry>['day'] => 1,
-                                   ['month'] => 4, 
+                                   ['month'] => 4,
                                    ['year'] => 6</entry>
                     </row>
                     <row>
@@ -364,7 +364,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
     print "date";
 } else {
     print "not a date";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -390,7 +390,7 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
     print "time";
 } else {
     print "not a time";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -416,7 +416,7 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:m
     print "time";
 } else {
     print "not a time";
-} 
+}
 ?>]]></programlisting>
         </example>
 
