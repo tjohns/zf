@@ -41,6 +41,18 @@ application/
             this chapter.
         </para>
 
+        <note>
+            <title>No namespacing in the default module</title>
+            <para>
+                Note that in the default module, controllers do not need a
+                namespace prefix. Thus, in the example above, the controllers in
+                the default module do not need a prefix of 'Default_' -- they
+                are simply dispatched according to their base controller name:
+                'IndexController' and 'FooController'. A namespace prefix is
+                used in all other modules, however.
+            </para>
+        </note>
+
         <para>
             So, how do you implement such a directory layout using the Zend
             Framework MVC components?
@@ -88,7 +100,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 
         <para>
             Saving the best for last, the easiest way to specify module
-            directories is to do so en masses, with all modules under a common
+            directories is to do so en masse, with all modules under a common
             directory and sharing the same structure. This can be done with
             <code>addModuleDirectory()</code>:
         </para>
@@ -179,11 +191,11 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <para>
             If you wish to always default to the global namespace, set the
-            <code>useGlobalDefault</code> parameter in the front controller:
+            <code>useDefaultControllerAlways</code> parameter in the front controller:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('useGlobalDefault', true);
+$front->setParam('useDefaultControllerAlways', true);
 ?>]]></programlisting>
     </sect2>
 </sect1>

@@ -1,191 +1,114 @@
-<sect1 id="zend.controller.request">
-    <title>The Request Object</title>
+﻿<sect1 id="zend.controller.request">
+    <title>L'objet Requête</title>
     <sect2 id="zend.controller.request.introduction">
         <title>Introduction</title>
         <para>
-            The request object is a simple value object that is passed between
-            <code>Zend_Controller_Front</code> and the router, dispatcher, and
-            controller classes.  It packages the names of the requested module,
-            controller, action, and optional parameters, as well as the rest of
-            the request environment, be it HTTP, the CLI, or PHP-GTK.
+            L'objet requête est un objet simple de valeur qui est passé entre <code>Zend_Controller_Front</code> et le routeur, le dispatcheur, et les classes de contrôleur. Il empaquette les noms du module demandé, du contrôleur, de l'action, et des paramètres facultatifs, aussi bien que le reste de l'environnement de requête, que ce soit le HTTP, du CLI, ou de PHP-GTK.
         </para>
 
         <itemizedlist>
             <listitem><para>
-                The module name is accessed by
-                <code>getModuleName()</code> and
-                <code>setModuleName()</code>.
+                Le nom de module est accessible par <code>getModuleName()</code> et <code>setModuleName()</code>.
             </para></listitem>
 
             <listitem><para>
-                The controller name is accessed by
-                <code>getControllerName()</code> and
-                <code>setControllerName()</code>.
+                Le nom de contrôleur est accessible par <code>getControllerName()</code> et <code>setControllerName()</code>.
             </para></listitem>
 
             <listitem><para>
-                The name of the action to call within that controller is
-                accessed by <code>getActionName()</code> and
-                <code>setActionName()</code>.
+                Le nom de l'action à appeler dans le contrôleur est accesible par <code>getActionName()</code> et <code>setActionName()</code>.
             </para></listitem>
 
             <listitem><para>
-                Parameters to be accesible by the action are an associative array
-                of key/value pairs that are retrieved by <code>getParams()</code>
-                and set with <code>setParams()</code>, or individually by
-                <code>getParam()</code> and <code>setParam()</code>.
+                Les paramètres accessibles par l'action sont dans un tableau associatif de paires clés/valeurs qui sont récupérables par <code>getParams()</code> et modifiables par <code>setParams()</code>, ou individuellement par <code>getParam()</code> et <code>setParam()</code>.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            Based on the type of request, there may be more methods available.
-            The default request used, <code>Zend_Controller_Request_Http</code>,
-            for instance, has methods for retrieving the request URI, path
-            information, <code>$_GET</code> and <code>$_POST</code> parameters,
-            etc.
+            En fonction du type de requête, il peut y avoir plus de méthodes disponibles. La requête par défaut utilisée, <code>Zend_Controller_Request_Http</code>, par exemple, a des méthodes pour rechercher l'URI de le requête, l'information sur le chemin, les paramètres <code>$_GET</code> et <code>$_POST</code>, etc.
         </para>
 
         <para>
-            The request object is passed to the front controller, or if none is
-            provided, it is instantiated at the beginning of the dispatch
-            process, before routing occurs. It is passed through to every object
-            in the dispatch chain.
+            L'objet requête est passé au contrôleur frontal, ou si aucun n'est fourni, il est instancié au début du processus de dispatchage, avant que le routage ne se produise. Il est passé à travers chaque objet dans la chaîne de dispatchage.
         </para>
 
         <para>
-            Additionally, the request object is particularly useful in testing.
-            The developer may craft the request environment, including module,
-            controller, action, parameters, URI, etc, and pass the request
-            object to the front controller to test application flow. When paired
-            with the <link linkend="zend.controller.response">response
-                object</link>, elaborate and precise unit testing of MVC
-            applications becomes possible.
+            De plus, l'objet requête est particulièrement utile pour les tests. Le développeur peut simuler l'environnement de requête, y compris le module, le contrôleur, l'action, les paramètres, l'URI, etc., et passe l'objet requête au contrôleur frontal pour tester une application. Une fois appairé avec <link linkend="zend.controller.response">l'objet réponse</link>, les tests unitaires élaboré et précis d'application MVC deviennent possible.
         </para>
     </sect2>
 
     <sect2 id="zend.controller.request.http">
-        <title>HTTP Requests</title>
+        <title>Les requêtes HTTP</title>
 
         <sect3 id="zend.controller.request.http.dataacess">
-            <title>Accessing Request Data</title>
+            <title>Accéder aux données de la requête</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> encapsulates access to
-                relevant values such as the key name and value for the
-                controller and action router variables, and all additional
-                parameters parsed from the URI. It additionally allows access to
-                values contained in the superglobals as public members, and
-                manages the current Base URL and Request URI.  Superglobal
-                values cannot be set on a request object, instead use the
-                setParam/getParam methods to set or retrieve user parameters.
+                <code>Zend_Controller_Request_Http</code> encapsule l'accès aux valeurs appropriées telles que le nom de la clé et la valeur pour les variables contrôleur d'action et routeur , et tous les paramètres additionnels analysés à partir de l'URI. Il permet en plus l'accès aux valeurs contenues dans les superglobals en tant que membres publics, et contrôle l'URL de base et l'URI courants de la requête. Des valeurs superglobales ne peuvent pas être placées dans un objet requête, au lieu de cela utilisez les méthodes setParam/getParam pour régler ou pour récupérer des paramètres d'utilisateur.
             </para>
 
             <note>
-                <title>Superglobal data</title>
+                <title>Données superglobales</title>
                 <para>
-                    When accessing superglobal data through
-                    <code>Zend_Controller_Request_Http</code> as public member
-                    properties, it is necessary to keep in mind that the
-                    property name (superglobal array key) is matched to a
-                    superglobal in a specific order of precedence: 1. GET, 2.
-                    POST, 3. COOKIE, 4. SERVER, 5. ENV.
+                    En accédant à des données superglobales par <code>Zend_Controller_Request_Http</code> en tant que propriétés publiques de membre, il est nécessaire de maintenir dans l'esprit que le nom de propriété (clé du tableau des superglobales) est assorti à une superglobale dans un ordre spécifique de priorité : 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV.
                 </para>
             </note>
 
             <para>
-                Specific superglobals can be accessed using a public method as
-                an alternative. For example, the raw value of
-                <code>$_POST['user']</code> can be accessed by calling
-                <code>getPost('user')</code> on the request object. These
-                include <code>getQuery()</code> for retrieving
-                <code>$_GET</code> elements, and <code>getHeader()</code> for
-                retrieving request headers.
+                Des superglobales spécifiques peuvent être accédées en utilisant une méthode publique comme alternative. Par exemple, la valeur directe <code>$_POST['user']</code> peut être accédée en appelant <code>getPost('user')</code> sur l'objet de requête. Ceci inclue <code>getQuery()</code> pour rechercher des éléments $<code>$_GET</code>, et <code>getHeader()</code> pour récupérer les entêtes de la requête.
             </para>
 
             <note>
-                <title>GET and POST data</title>
+                <title>Données GET et POST</title>
                 <para>
-                    Be cautious when accessing data from the request object as
-                    it is not filtered in any way. The router and dispatcher
-                    validate and filter data for use with their tasks, but leave
-                    the data untouched in the request object.
+                    Soyez prudent en accédant à des données de l'objet de requête car il n'est pas du tout filtré. Le routeur et le dispatcheur valident et filtrent les données pour leur usage, mais laissent les données intactes dans l'objet de requête.
                 </para>
             </note>
 
             <para>
-                You may also set user parameters in the request object using
-                <code>setParam()</code> and retrieve these later using
-                <code>getParam()</code>. The router makes use of this
-                functionality to set parameters matched in the request URI into
-                the request object.
+                Vous pouvez également placer des paramètres d'utilisateur dans l'objet de requête en utilisant <code>setParam()</code> et récupérer ces derniers en tuilisant plus tard <code>getParam()</code>. Le routeur se sert de cette fonctionnalité pour faire correspondre des paramètres de l'URI de la requête dans l'objet requête.
             </para>
 
             <note>
-                <title>getParam() retrieves more than user params</title>
+                <title>getParam() retrouve plus que les paramètres d'utilisateur</title>
 
                 <para>
-                    In order to do some of its work, <code>getParam()</code> actually
-                    retrieves from several sources. In order of priority, these
-                    include: user parameters set via <code>setParam()</code>,
-                    <code>GET</code> parameters, <code>POST</code> parameters,
-                    and finally <code>COOKIE</code> parameters. Be aware of this
-                    when pulling data via this method.
+                    Afin d'effectuer une partie de son travail, <code>getParam()</code> recherche réellement dans plusieurs sources. Dans l'ordre de priorité, ceux-ci incluent : l'ensemble de paramètres d'utilisateur régléspar l'intermédiaire de <code>setParam()</code>, les paramètres <code>GET</code>, les paramètres <code>POST</code>, et finalement les paramètres <code>COOKIE</code>. Faites attention à ceci lorsque vous récupérez des données par l'intermédiaire de cette méthode.
                 </para>
             </note>
         </sect3>
 
         <sect3 id="zend.controller.request.http.baseurl">
-            <title>Base Url and Subdirectories</title>
+            <title>Base de l'URL et sous-dossiers</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> allows
-                Zend_Controller_Router_Rewrite to be used in subdirectories.
-                Zend_Controller_Request_Http will attempt to automatically
-                detect your base URL and set it accordingly.
+                <code>Zend_Controller_Request_Http</code> permet à <code>Zend_Controller_Router_Rewrite</code> d'être employé dans des sous-répertoires. <code>Zend_Controller_Request_Http</code> essayera de détecter automatiquement votre base d'URL et de la régler en conséquence.
             </para>
 
             <para>
-                For example, if you keep your <code>index.php</code> in a
-                webserver subdirectory named
-                <code>/projects/myapp/index.php</code>, base URL (rewrite base)
-                should be set to <code>/projects/myapp</code>. This string will
-                then be stripped from the beginning of the path before
-                calculating any route matches. This frees one from the necessity
-                of prepending it to any of your routes. A route of
-                <code>'user/:username'</code> will match URIs like
-                <code>http://localhost/projects/myapp/user/martel</code> and
-                <code>http://example.com/user/martel</code>.
+                Par exemple, si vous maintenez votre <code>index.php</code> dans un sous-répertoire du serveur web appelé <code>/projects/myapp/index.php</code>, la base d'URL (rewrite base) devrait être réglé à <code>/projects/myapp</code>. Cette chaîne sera alors dépouillée du début du chemin avant de calculer tous les routes correspondantes. Ceci libère de la nécessité de l'ajouter au début de n'importe laquelle de vos routes. Une route <code>'user/:username'</code> correspondra à des URIs comme <code>http://localhost/projects/myapp/user/martel</code> et <code>http://example.com/user/martel</code>.
             </para>
 
             <note>
-                <title>URL detection is case sensitive</title>
+                <title>La détection d'URL est sensible à la casse</title>
                 <para>
-                    Automatic base URL detection is case sensitive, so make sure your URL
-                    will match a subdirectory name in a filesystem (even on Windows
-                    machines). If it doesn't, an exception will be raised.
+                    La détection automatique d'URL de base est sensible à la casse, ainsi assurez vous que votre URL correspond à un nom de sous-répertoire dans le système de fichiers (même sur les machines Windows). S'il n'y en a pas, une exception sera levée.
                 </para>
             </note>
 
             <para>
-                Should base URL be detected incorrectly you can override it
-                with your own base path with the help of the
-                <code>setBaseUrl()</code> method of either the
-                <code>Zend_Controller_Request_Http</code> class, or the
-                <code>Zend_Controller_Front</code> class. The easiest
-                method is to set it in <code>Zend_Controller_Front</code>,
-                which will proxy it into the request object. Example usage to
-                set a custom base URL:
+                Si la base de l'URL est détectée de manière inexacte vous pouvez la surcharger avec votre propre chemin de base graâce à la méthode <code>setBaseUrl()</code> soit de la classe de <code>Zend_Controller_Request_Http</code>, soit de la classe de <code>Zend_Controller_Front</code>. La méthode la plus facile est de la régler dans <code>Zend_Controller_Front</code>, qui le transmets dans l'objet de requête. Exemple d'utilisation pour régler une base d'URL personnalisée :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 /**
- * Dispatch Request with custom base URL with Zend_Controller_Front.
+ * Dispatche la requête avec une base d'URL réglé avec Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
-           ->setBaseUrl('/projects/myapp'); // set the base url!
+           ->setBaseUrl('/projects/myapp'); // affecte la base d'url
 $response   = $controller->dispatch();
 ?>]]></programlisting>
 
@@ -193,12 +116,10 @@ $response   = $controller->dispatch();
     </sect2>
 
     <sect2 id="zend.controller.request.subclassing">
-        <title>Subclassing the Request Object</title>
+        <title>Sous-classer l'objet Requête</title>
 
         <para>
-            The base request class used for all request objects is the abstract
-            class <code>Zend_Controller_Request_Abstract</code>. At its most
-            basic, it defines the following methods:
+            La classe de requête de base utilisée pour tous les objets de requête est la classe abstraite <code>Zend_Controller_Request_Abstract</code>. Au minimum, elle définit les méthodes suivantes :
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -286,23 +207,11 @@ abstract class Zend_Controller_Request_Abstract
 ]]></programlisting>
 
         <para>
-            The request object is a container for the request environment. The
-            controller chain really only needs to know how to set and retrieve the
-            controller, action, optional parameters, and dispatched status. By
-            default, the request will search its own parameters using the
-            controller or action keys in order to determine the controller and
-            action.
+            L'objet de requête est un conteneur pour l'environnement de la requête. La chaîne de contrôleur doit seulement savoir régler et récupérer le contrôleur, l'action, les paramètres facultatifs, et le statut dispatché. Par défaut, la demande recherchera ses propres paramètres en utilisant les clés de contrôleur ou d'action afin de déterminer le contrôleur et l'action.
         </para>
 
         <para>
-            Extend this class, or one of its derivatives, when you need the
-            request class to interact with a specific environment in order to
-            retrieve data for use in the above tasks. Examples include <link
-                linkend="zend.controller.request.http">the HTTP
-                environment</link>, a CLI environment, or a PHP-GTK environment.
+            Etendez cette classe, ou une de ses dérivés, quand vous avez besoin de la classe de requête pour interagir avec un environnement spécifique afin de récupérer des données pour les utiliser dans les tâches ci-dessus. Les exemples incluent <link linkend="zend.controller.request.http">l'environnement HTTP</link>, un environnement CLI, ou un environnement PHP-GTK.
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
