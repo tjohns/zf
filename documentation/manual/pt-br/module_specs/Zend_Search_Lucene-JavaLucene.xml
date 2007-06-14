@@ -54,7 +54,7 @@ import java.io.*
 
 ...
 
-IndexWriter indexWriter = new IndexWriter("/data/my_index", 
+IndexWriter indexWriter = new IndexWriter("/data/my_index",
                                           new SimpleAnalyzer(), true);
 
 ...

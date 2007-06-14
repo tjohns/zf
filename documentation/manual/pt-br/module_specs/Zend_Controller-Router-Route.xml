@@ -1,6 +1,6 @@
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
-    
+
     <para>
         <code>Zend_Controller_Router_Route</code> is the standard framework
         route. It combines ease of use with flexible route definition.  Each
@@ -8,7 +8,7 @@
         (variables)) and may be initialized with defaults as well as with
         variable requirements.
     </para>
-    
+
     <para>
         Let's imagine our fictional application will need some informational
         page about the content authors. We want to be able to point our web
@@ -16,17 +16,17 @@
         information about this "martel" guy. And the route for such
         functionality could look like:
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php
 $route = new Zend_Controller_Router_Route(
-    'author/:username', 
+    'author/:username',
     array(
-        'controller' => 'profile', 
+        'controller' => 'profile',
         'action'     => 'userinfo'
     )
 );
 
-$router->addRoute('user', $route);]]></programlisting>            
+$router->addRoute('user', $route);]]></programlisting>
 
     <para>
         The first parameter in the <code>Zend_Controller_Router_Route</code>
@@ -62,7 +62,7 @@ $values = array(
     'username'   => 'martel',
     'controller' => 'profile',
     'action'     => 'userinfo'
-);]]></programlisting>            
+);]]></programlisting>
 
     <para>
         Later on, <code>Zend_Controller_Dispatcher_Standard</code> should invoke
@@ -72,16 +72,16 @@ $values = array(
         the <code>Zend_Controller_Action::_getParam()</code> or
         <code>Zend_Controller_Request::getParam()</code> methods:
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php
-public function userinfoAction() 
+public function userinfoAction()
 {
     $request = $this->getRequest();
     $username = $request->getParam('username');
 
     $username = $this->_getParam('username');
 }
-]]></programlisting>    
+]]></programlisting>
 
     <para>
         Route definition can contain one more special character - a wildcard
@@ -89,14 +89,14 @@ public function userinfoAction()
         to the default Module route (var => value pairs defined in the URI).  The
         following route more-or-less mimics the Module route behavior:
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php
 $route = new Zend_Controller_Router_Route(
-    ':module/:controller/:action/*', 
+    ':module/:controller/:action/*',
     array('module' => 'default')
 );
-$router->addRoute('default', $route);]]></programlisting>            
-        
+$router->addRoute('default', $route);]]></programlisting>
+
     <sect4 id="zend.controller.router.routes.standard.variable-defaults">
         <title>Variable defaults</title>
 
@@ -109,7 +109,7 @@ $router->addRoute('default', $route);]]></programlisting>
 
         <programlisting role="php"><![CDATA[<?php
 $route = new Zend_Controller_Router_Route(
-    'archive/:year', 
+    'archive/:year',
     array('year' => 2006)
 );
 $router->addRoute('archive', $route);]]></programlisting>
@@ -133,9 +133,9 @@ $router->addRoute('archive', $route);]]></programlisting>
 
         <programlisting role="php"><![CDATA[<?php
 $route = new Zend_Controller_Router_Route(
-    'archive/:year', 
+    'archive/:year',
     array(
-        'year'       => 2006, 
+        'year'       => 2006,
         'controller' => 'archive',
         'action'     => 'show'
     )
@@ -162,9 +162,9 @@ $router->addRoute('archive', $route);]]></programlisting>
 
         <programlisting role="php"><![CDATA[<?php
 $route = new Zend_Controller_Router_Route(
-    'archive/:year', 
+    'archive/:year',
     array(
-        'year'       => 2006, 
+        'year'       => 2006,
         'controller' => 'archive',
         'action'     => 'show'
     ),
@@ -180,7 +180,7 @@ $router->addRoute('archive', $route);]]></programlisting>
             control will be passed to the next route in the chain instead.
         </para>
     </sect4>
-</sect3>        
+</sect3>
 <!--
 vim:se ts=4 sw=4 et:
 -->

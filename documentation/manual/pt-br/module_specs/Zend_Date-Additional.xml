@@ -15,10 +15,10 @@
         <para>
             Probably most dates you will get as input are strings. But the problem with strings is that
             you can not be sure if the string is a real date. Therefor <code>Zend_Date</code> has spend
-            a own static function to check date strings. <code>Zend_Locale</code> has a own function 
+            a own static function to check date strings. <code>Zend_Locale</code> has a own function
             <code>getDate($date, $locale);</code> which parses a date and returns the proper and normalized
             date parts. A monthname for example will be recognised and returned just a month number.
-            But as <code>Zend_Locale</code> does not know anything about dates because it is a 
+            But as <code>Zend_Locale</code> does not know anything about dates because it is a
             normalizing and localizing class we have integrated a own function <code>isDate($date);</code>
             which checks this.
         </para>

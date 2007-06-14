@@ -279,7 +279,7 @@ $temp = new Zend_Measure_Temperature('100,10',Zend_Measure::TEMPERATURE, $locale
             CLDR/ISO date format specifier tokens and PHP's date() tokens. The 'fix_date' option enables or disables
             heuristics that attempt to correct invalid dates. The 'number_format' option specifies a default number
             format for use with <code>toNumber()</code> (see
-            <xref 
+            <xref
                 linkend= "zend.locale.number.localize"/>
             ).
         </para>

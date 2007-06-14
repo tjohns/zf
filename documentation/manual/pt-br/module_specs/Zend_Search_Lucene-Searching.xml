@@ -13,19 +13,19 @@
     seguinte: <orderedlist>
         <listitem>
             <para>
-                Se você pretende primeiro gerar programaticamente a string de consulta para depois submetê-la ao analisador então você deve considerar cuidadosamente a possibilidade a criação de suas consultas diretamente pela API. Em outras palavras, o analisador foi projetado para trabalhar com entradas de texto fornecidas por seres humanos e não com entradas geradas por software. 
+                Se você pretende primeiro gerar programaticamente a string de consulta para depois submetê-la ao analisador então você deve considerar cuidadosamente a possibilidade a criação de suas consultas diretamente pela API. Em outras palavras, o analisador foi projetado para trabalhar com entradas de texto fornecidas por seres humanos e não com entradas geradas por software.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                Campos não tokenizados funcionam melhor se adicionados diretamente às consultas, do que pela ação do analisador. Se o conteúdo de um campo é gerado pela aplicação, então deveria haver um cláusula de consulta para este campo. Um interpretador, que é utilizado pelo analisador de consultas, é projetado para converter entradas de texto provenientes de seres humanos para cláusulas de busca. Valores gerados por programas, tais como datas, palavras-chave, etc.,  deveriam ser consistentes o suficiente para não necessitar do interpretador. 
+                Campos não tokenizados funcionam melhor se adicionados diretamente às consultas, do que pela ação do analisador. Se o conteúdo de um campo é gerado pela aplicação, então deveria haver um cláusula de consulta para este campo. Um interpretador, que é utilizado pelo analisador de consultas, é projetado para converter entradas de texto provenientes de seres humanos para cláusulas de busca. Valores gerados por programas, tais como datas, palavras-chave, etc.,  deveriam ser consistentes o suficiente para não necessitar do interpretador.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                Em um formulário de busca, somente os campos designados para receber texto deveriam ser submentidos ao analisador de consultas. Todo o resto (datas, tokens, etc.), pode ser submetido diretamente através da API de consulta. Um campo contendo um conjunto de valores, que pode ser exibido como um menu de persiana (pull-down), não deveria ser incluído na string de busca (e consequentemente submetido ao analisador), mas classificado como uma cláusula de busca. 
+                Em um formulário de busca, somente os campos designados para receber texto deveriam ser submentidos ao analisador de consultas. Todo o resto (datas, tokens, etc.), pode ser submetido diretamente através da API de consulta. Um campo contendo um conjunto de valores, que pode ser exibido como um menu de persiana (pull-down), não deveria ser incluído na string de busca (e consequentemente submetido ao analisador), mas classificado como uma cláusula de busca.
             </para>
         </listitem>
       </orderedlist></para>

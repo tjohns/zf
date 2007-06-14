@@ -46,20 +46,20 @@ foreach ($results as $result) {
       <listitem>
           <para>
               <code>userSearch()</code>
-              : Aceita uma string de busca com tags delimitadas por espaços e um array de opções como segundo parâmetro opcional, retornando um objeto 
+              : Aceita uma string de busca com tags delimitadas por espaços e um array de opções como segundo parâmetro opcional, retornando um objeto
               <code>Zend_Service_Flickr_ResultSet</code>.
           </para>
       </listitem>
       <listitem>
           <para>
               <code>getIdByUsername()</code>
-              : Retorna um user ID associado ao nome de usuário informado. 
+              : Retorna um user ID associado ao nome de usuário informado.
           </para>
       </listitem>
       <listitem>
           <para>
               <code>getIdByEmail()</code>
-              : Retorna um user ID associado ao endereço de email informado. 
+              : Retorna um user ID associado ao endereço de email informado.
           </para>
       </listitem>
     </itemizedlist>
@@ -86,20 +86,20 @@ foreach ($results as $result) {
   </sect2>
 
   <sect2 id="zend.service.flickr.getimagedetails">
-     
+
 
     <title>Recuperando Detalhes de Imagens Flickr Image Details</title>
 
-     
+
 
     <para>
     <code>Zend_Service_Flickr</code>
 
-     torna fácil e rápida a recuperação de detalhes de imagens baseada em um dado "image ID". Basta usar o método 
+     torna fácil e rápida a recuperação de detalhes de imagens baseada em um dado "image ID". Basta usar o método
 
     <code>getImageDetails()</code>
 
-    , como mostrado no exemplo seguinte: 
+    , como mostrado no exemplo seguinte:
     </para>
 
     <example>
@@ -120,7 +120,7 @@ echo "&lt;a href=\"$image-&gt;clickUri\"&gt;Click for Image&lt;/a&gt;\n";
 ?&gt;       </programlisting>
     </example>
 
-     
+
   </sect2>
 
 <sect2 id="zend.service.flickr.classes">

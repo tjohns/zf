@@ -31,19 +31,19 @@ print_r( $server-&gt;system-&gt;listMethods() );
     </example>
 
     <note><para>
-         
+
 
         <code>Zend_XmlRpc_Client</code>
 
-         tenta, na medida do possível, utilizar métodos remotos como se fossem nativos. Se um método remoto contiver namespaces, como por exemplo 
+         tenta, na medida do possível, utilizar métodos remotos como se fossem nativos. Se um método remoto contiver namespaces, como por exemplo
 
         <code>system.listMethods()</code>
 
-         , a chamada é feita usando encadeamento de objetos em PHP: 
+         , a chamada é feita usando encadeamento de objetos em PHP:
 
         <code>$server-&gt;system-&gt;listMethods()</code>
 
-         . 
+         .
      </para></note>
   </sect2>
 
@@ -126,7 +126,7 @@ print_r( $server-&gt;system-&gt;listMethods() );
       <programlisting role="php">...
 /** 2 parameters are passed in this procedure
  *  The first parameter is a string that will be auto-converted into an XML-RPC string type
- *  The second parameter is an assosiative array that will be converted into an XML-RPC struct 
+ *  The second parameter is an assosiative array that will be converted into an XML-RPC struct
  */
 
 $p1 = 'parameter 1';
@@ -148,17 +148,17 @@ $service-&gt;serviceProcedure($p1, $p2);
       <itemizedlist>
         <listitem>
             <para>
-                 Quando você quer assegurar que o tipo correto do parâmetro seja passado ao procedimento (ex: o procedimento exige um inteiro e você pode receber o parâmetro do array $_GET como string) 
+                 Quando você quer assegurar que o tipo correto do parâmetro seja passado ao procedimento (ex: o procedimento exige um inteiro e você pode receber o parâmetro do array $_GET como string)
             </para>
           </listitem>
           <listitem>
             <para>
-                 Quando o procedimento exige um tipo datetime ou um base64 (que não são tipos nativos do PHP). 
+                 Quando o procedimento exige um tipo datetime ou um base64 (que não são tipos nativos do PHP).
             </para>
           </listitem>
           <listitem>
             <para>
-                 Quando a existe a possibilidade da conversão automática falhar (ex: você quer passar uma estrutura XML-RPC vazia como parâmetro. Estruturas vazias são representadas como arrays vazios em PHP, mas, se você fornecer um array vazio como parãmetro ele irá ser automaticamente convertido para um array XML-RPC, desde que não seja um array associativo) 
+                 Quando a existe a possibilidade da conversão automática falhar (ex: você quer passar uma estrutura XML-RPC vazia como parâmetro. Estruturas vazias são representadas como arrays vazios em PHP, mas, se você fornecer um array vazio como parãmetro ele irá ser automaticamente convertido para um array XML-RPC, desde que não seja um array associativo)
             </para>
           </listitem>
         </itemizedlist></para>
@@ -267,15 +267,15 @@ $service-&gt;serviceProcedure($p1, $p2);
             </programlisting>
 
        <note><para>
-           O valor do parâmetro é cedido por uma variável PHP mas irá ser convertido para o tipo específico usando as técnicas de conversão do PHP (ex: se uma string é informada como um valor para o objeto 
+           O valor do parâmetro é cedido por uma variável PHP mas irá ser convertido para o tipo específico usando as técnicas de conversão do PHP (ex: se uma string é informada como um valor para o objeto
 
           <code>Zend_XmlRpc_Value_Integer</code>
 
-          , ele irá ser convertido usando 
+          , ele irá ser convertido usando
 
           <code>(int)$value</code>
 
-          ). 
+          ).
       </para></note>
     </sect3>
 
@@ -312,7 +312,7 @@ $service-&gt;serviceProcedure($p1, $p2);
     requerido e do valor de retorno do procedimento.</para>
 
     <note>
-      <para>Nem todos os servidores XML-RPC suportam o procedimento especial 
+      <para>Nem todos os servidores XML-RPC suportam o procedimento especial
 
       <code>system.methodSignature</code>
 
@@ -395,21 +395,21 @@ $service-&gt;serviceProcedure($param);
         <listitem>
             <para>
                 <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code>
-                - Devolve o valor de retorno do procedimento convertido para um tipo nativo do PHP (converte o tipo XML-RPC em um tipo PHP). 
+                - Devolve o valor de retorno do procedimento convertido para um tipo nativo do PHP (converte o tipo XML-RPC em um tipo PHP).
             </para>
         </listitem>
         <listitem>
             <para>
                 <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code>
-                - Retorna a string XML representando a resposta XML-RPC. 
+                - Retorna a string XML representando a resposta XML-RPC.
             </para>
         </listitem>
         <listitem>
             <para>
 ´               <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code>
-                - Retorna um objeto 
+                - Retorna um objeto
                 <code>Zend_XmlRpc_Value</code>
-                object que representa o tipo XML-RPC retornado. 
+                object que representa o tipo XML-RPC retornado.
             </para>
         </listitem>
       </itemizedlist></para>
@@ -419,7 +419,7 @@ $service-&gt;serviceProcedure();
 
 $response = $service-&gt;__getResponse();
 // $response is the PHP variable converted from the XML-RPC type return value
-  
+
 $response = $service-&gt;__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
 // $response is a string containing the XML representing the procedure return value
 

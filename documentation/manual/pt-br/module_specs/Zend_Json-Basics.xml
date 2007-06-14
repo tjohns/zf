@@ -1,8 +1,8 @@
 <sect1 id="zend.json.basics">
     <title>Uso básico</title>
     <para>
-		O uso do <code>Zend_Json</code> envolve usar os dois métodos públicos 
-		estáticos disponíveis: <code>Zend_Json::encode()</code> e
+        O uso do <code>Zend_Json</code> envolve usar os dois métodos públicos
+        estáticos disponíveis: <code>Zend_Json::encode()</code> e
         <code>Zend_Json::decode()</code>.
         <programlisting role="php"><![CDATA[<?php
 // Recupera um valor:

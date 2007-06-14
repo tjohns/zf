@@ -17,12 +17,12 @@
     <itemizedlist>
         <listitem>
             <para>
-                Armazenar informações de ítens, como imagens, descrições, preços, entre outros. 
+                Armazenar informações de ítens, como imagens, descrições, preços, entre outros.
             </para>
         </listitem>
         <listitem>
             <para>
-                Revisões editoriais e por parte do cliente. 
+                Revisões editoriais e por parte do cliente.
             </para>
         </listitem>
         <listitem>
@@ -32,12 +32,12 @@
         </listitem>
         <listitem>
             <para>
-                Ofertas do Amazon.com. 
+                Ofertas do Amazon.com.
             </para>
         </listitem>
         <listitem>
             <para>
-                Listas do tipo ListMania. 
+                Listas do tipo ListMania.
             </para>
         </listitem>
       </itemizedlist></para>
@@ -51,7 +51,7 @@
     <note>
         <title>Attention</title>
         <para>
-            Sua chave de desenvolvedor Amazon API está ligada à sua identificação Amazon, então, tome medidas de segurança apropriadas para garantir a privacidade de sua chave. 
+            Sua chave de desenvolvedor Amazon API está ligada à sua identificação Amazon, então, tome medidas de segurança apropriadas para garantir a privacidade de sua chave.
         </para>
     </note>
 
@@ -137,7 +137,7 @@ $item = $amazon-&gt;itemLookup('B0000A432X');
     </example>
 
     <para>O método <code>itemLookup()</code> também aceita um segundo parâmetro opcional para lidar com as opções de busca. Para maiores detalhes, incluíndo uma lista de opções disponíveis, por favor consulte a <ulink
-    url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation"> respectiva documentação do Amazon 
+    url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation"> respectiva documentação do Amazon
     </ulink>.</para>
   </sect2>
 
@@ -164,7 +164,7 @@ foreach($response as $r) {
     documentação do Amazon</ulink></para>
 
     <tip>
-      <para>A classe  
+      <para>A classe
 
       <link linkend="zend.service.amazon.query">
         <code>Zend_Service_Amazon_Query</code>
