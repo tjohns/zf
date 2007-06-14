@@ -50,6 +50,9 @@ require_once 'Zend/Service/StrikeIron/USAddressVerificationTest.php';
 /** Zend_Service_StrikeIron_ZipCodeInfoTest.php */
 require_once 'Zend/Service/StrikeIron/ZipCodeInfoTest.php';
 
+/** Zend_Service_StrikeIron_NoSoapTest.php */
+require_once 'Zend/Service/StrikeIron/NoSoapTest.php';
+
 /**
  * @category   Zend
  * @package    Zend_Service
@@ -67,6 +70,12 @@ class Zend_Service_StrikeIron_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_StrikeIron');
+
+        $suite->addTestSuite('Zend_Service_StrikeIron_NoSoapTest');
+
+        if (!extension_loaded('soap')) {
+            return $suite;
+        }
 
         $suite->addTestSuite('Zend_Service_StrikeIron_StrikeIronTest');
         $suite->addTestSuite('Zend_Service_StrikeIron_DecoratorTest');
