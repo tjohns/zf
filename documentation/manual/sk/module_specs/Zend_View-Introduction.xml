@@ -1,6 +1,6 @@
 <sect1 id="zend.view.introduction">
     <title>Introduction</title>
-    
+
     <para>
         Zend_View is a class for working with the "view" portion of
         the model-view-controller pattern.  That is, it exists to
@@ -8,7 +8,7 @@
         controller scripts.  It provides a system of helpers, output
         filters, and variable escaping.
     </para>
-    
+
     <para>
         Zend_View is template system agnostic; you may use PHP as
         your template language, or create instances of other
@@ -18,24 +18,24 @@
 
     <para>
         Essentially, using Zend_View happens in two major steps:
-        
+
         1.  Your controller script creates an instance of
         Zend_View and assigns variables to that instance.
-        
+
         2. The controller tells the Zend_View to render a particular
-        view, thereby handing control over the view script, which 
+        view, thereby handing control over the view script, which
         generates the view output.
     </para>
-    
+
     <sect2 id="zend.view.introduction.controller">
         <title>Controller Script</title>
-        
+
         <para>
             As a simple example, let us say your controller has a list
             of book data that it wants to have rendered by a view.  The
             controller script might look something like this:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // use a model to get the data for book authors and titles.
 $data = array(
@@ -64,13 +64,13 @@ echo $view->render('booklist.php');
         </programlisting>
 
     </sect2>
-    
+
     <sect2 id="zend.view.introduction.view">
-    
+
         <title>View Script</title>
-        
+
         <para>
-            Now we need the associated view script, "booklist.php". 
+            Now we need the associated view script, "booklist.php".
             This is a PHP script like any other, with one exception:  it
             executes inside the scope of the Zend_View instance, which
             means that references to $this point to the Zend_View
@@ -79,39 +79,39 @@ echo $view->render('booklist.php');
             Zend_View instance.)  Thus, a very basic view script could
             look like this:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- A table of some books. -->
     <table>
         <tr>
             <th>Author</th>
             <th>Title</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['author']) ?></td>
             <td><?php echo $this->escape($val['title']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>There are no books to display.</p>
-    
+
 <?php endif; ?>]]>
         </programlisting>
-        
+
         <para>
             Note how we use the "escape()" method to apply output
             escaping to variables.
         </para>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.introduction.options">
         <title>Options</title>
 

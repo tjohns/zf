@@ -5,7 +5,7 @@
         Jednotlivé položky Atom (<code>&lt;entry&gt;</code>) sú validné aj samé o sebe.
         Zvyčajne je URL týchto položiek nasledované <code>/&lt;entryId&gt;</code>,
         ako napríklad URL <code>http://atom.example.com/feed/1</code>, ktoré sa bude
-        ďalej používať v príkladoch.   
+        ďalej používať v príkladoch.
     </para>
 
     <para>

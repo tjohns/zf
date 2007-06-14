@@ -15,11 +15,11 @@
         Deserializácia JSON objektov nie je jednoduchá, pretože Javascript objekty
         sú podobné asociatívnym poliam v PHP. Niekto navrhuje odovzdať meno triedy
         a následnej vytvoriť jej inštanciu, ktorá bude obsahovať vlastnosti a hodnoty
-        z JSON objektu - ostatným sa to zdá ako značná bezpečnostná diera.          
+        z JSON objektu - ostatným sa to zdá ako značná bezpečnostná diera.
     </para>
     <para>
         <code>Zend_Json</code> primárne vracia asociatívne pole, ak chcete aby bol
-        vrátený objekt, môžete to urobiť nasledovne: 
+        vrátený objekt, môžete to urobiť nasledovne:
     </para>
     <programlisting role="php"><![CDATA[<?php
 // Decode objects as objects

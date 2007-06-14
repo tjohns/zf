@@ -2,16 +2,16 @@
     <title>Filtre</title>
 
     <para>
-      Filter umožňuje blokovať správy pred zapísaním do záznamu (Log). 
+      Filter umožňuje blokovať správy pred zapísaním do záznamu (Log).
     </para>
-    
+
     <sect2 id="zend.log.filters.all-writers">
       <title>Filtrovanie pre všetky zapisovače (Writers)</title>
-    
+
       <para>
         Pre filtrovanie pred zapísaním je možné docieliť pridaním filtrov pomocou
-        metódy <code>addFilter()</code> objektu <code>Zend_Log</code>:  
-        
+        metódy <code>addFilter()</code> objektu <code>Zend_Log</code>:
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -29,17 +29,17 @@ $logger->info('Informational message');
 $logger->emerg('Emergency message');
 
 ?>]]></programlisting>
-        Správa musí prejsť cez všetky filtre predtým ako bude zapísaná pomocou zapisovača 
+        Správa musí prejsť cez všetky filtre predtým ako bude zapísaná pomocou zapisovača
       </para>
     </sect2>
-    
+
     <sect2 id="zend.log.filters.single-writer">
       <title>Filtrovanie pre konkrétnu inštanciu zapisovača</title>
-      
+
       <para>
         Filtrovanie pre jednotlivé inštancie zapisovača je potrebné zavolať
         metódu <code>addFilter</code> konkrétneho zapisovača:
-      
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -60,7 +60,7 @@ $logger->info('Informational message');
 // logged by both writers
 $logger->emerg('Emergency message');
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
   </sect2>
 </sect1>

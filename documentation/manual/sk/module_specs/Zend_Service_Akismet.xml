@@ -245,7 +245,7 @@ $akismet->submitSpam($data));
             For this reason, you should probably keep a log of all data
             trapped as spam by Akismet and review it periodically. If you find
             such occurrences, you can submit the data to Akismet as "ham", or a
-            false positive (ham is good, spam is not). 
+            false positive (ham is good, spam is not).
         </para>
 
         <para>

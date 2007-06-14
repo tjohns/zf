@@ -36,13 +36,13 @@
         </listitem>
       </itemizedlist>
     </para>
-    
+
     <sect2 id="zend.log.overview.creating-a-logger">
       <title>Creating a Log</title>
       <para>
         To get started logging, instantiate a Writer and then pass it to a Log
         instance:
-        
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -59,7 +59,7 @@ $logger->addWriter($writer);
 
       <para>
         Alternatively, you can pass a Writer directly to constructor of Log as
-        a shortcut:        
+        a shortcut:
 
       <programlisting role="php"><![CDATA[<?php
 
@@ -68,13 +68,13 @@ $logger = new Zend_Log($writer);
 
 ?>]]></programlisting>
 
-        The Log is now ready to use.  
+        The Log is now ready to use.
       </para>
     </sect2>
 
     <sect2 id="zend.log.overview.logging-messages">
       <title>Logging Messages</title>
-      
+
       <para>
         To log a message, call the <code>log()</code> method of a Log instance
         and pass it the message with a corresponding priority:
@@ -89,11 +89,11 @@ $logger->log('Informational message', Zend_Log::INFO);
       parameter is an integer <code>priority</code>.  The priority must be one of the priorities recognized
       by the Log instance.  This is explained in the next section.
     </para>
-      
+
     <para>
       A shortcut is also available. Instead of calling the <code>log()</code> method, you can
-      call a method by the same name as the priority:      
-      
+      call a method by the same name as the priority:
+
       <programlisting role="php"><![CDATA[<?php
 
 $logger->log('Informational message', Zend_Log::INFO);
@@ -113,7 +113,7 @@ $logger->emerg('Emergency message');
       <code>null</code> to destroy it. This will automatically call the
       <code>shutdown()</code> instance method of each attached Writer before
       the Log object is destroyed:
-      
+
       <programlisting role="php"><![CDATA[<?php
 
 $logger = null;
@@ -124,7 +124,7 @@ $logger = null;
       automatically at PHP shutdown.
     </para>
   </sect2>
-  
+
   <sect2 id="zend.log.overview.builtin-priorities">
     <title>Using Built-in Priorities</title>
     <para>
@@ -144,16 +144,16 @@ DEBUG   = 7;  // Debug: debug messages
       These priorities are always available, and a convenience method of the same name
       is available for each one.
     </para>
-    
+
     <para>
       The priorities are not arbitrary. They come from the BSD <code>syslog</code> protocol,
       which is described in <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink>.
       The names and corresponding priority numbers are also
-      compatible with another PHP logging system, 
+      compatible with another PHP logging system,
       <ulink url="http://pear.php.net/package/log">PEAR Log</ulink>,
       which perhaps promotes interoperability between it and <code>Zend_Log</code>.
     </para>
-    
+
     <para>
       Priority numbers descend in order of importance. <code>EMERG</code> (0)
       is the most important priority. <code>DEBUG</code> (7) is the least
@@ -163,23 +163,23 @@ DEBUG   = 7;  // Debug: debug messages
       hierarchy and choose appropriately.
     </para>
   </sect2>
-  
+
   <sect2 id="zend.log.overview.user-defined-priorities">
     <title>Adding User-defined Priorities</title>
-    
+
     <para>
       User-defined priorities can be added at runtime using the Log's
       <code>addPriority()</code> method:
 
       <programlisting role="php"><![CDATA[<?php
-        
-$logger->addPriority('FOO', 8);      
+
+$logger->addPriority('FOO', 8);
 
 ?>]]></programlisting>
 
       The snippet above creates a new priority, <code>FOO</code>, whose
       value is <code>8</code>. The new priority is then available for logging:
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $logger->log('Foo message', 8);
@@ -187,13 +187,13 @@ $logger->foo('Foo Message');
 
 ?>]]></programlisting>
 
-      New priorities cannot overwrite existing ones.  
-    </para>    
+      New priorities cannot overwrite existing ones.
+    </para>
   </sect2>
 
   <sect2 id="zend.log.overview.understanding-fields">
     <title>Understanding Log Events</title>
-    
+
     <para>
       When you call the <code>log()</code> method or one of its shortcuts, a
       log event is created. This is simply an associative array with data
@@ -208,15 +208,15 @@ $logger->foo('Foo Message');
       However, knowledge of the <code>event</code> array is required for adding an
       item that does not exist in the default set above.
     </para>
-    
+
     <para>
       To add a new item to every future event, call the <code>setEventItem()</code>
       method giving a key and a value:
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $logger->setEventItem('pid', getmypid());
-        
+
 ?>]]></programlisting>
 
       The example above sets a new item named <code>pid</code> and populates
@@ -225,7 +225,7 @@ $logger->setEventItem('pid', getmypid());
       other data event data during logging. An item can be overwritten at any
       time by calling the <code>setEventItem()</code> method again.
     </para>
-    
+
     <para>
       Setting a new event item with <code>setEventItem()</code> causes the
       new item to be sent to all writers of the logger. However, this does

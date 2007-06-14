@@ -6,7 +6,7 @@
   SMTP spojenia. Pre zabezpečenie spojenia je potrebné nastaviť 'ssl' parameter
   v konfiguračnom poli ktoré je predávané v konštruktore <code>Zend_Mail_Transport_Smtp</code>
   s hodnotou 'ssl' alebo 'tls'. Takisto je možné nastaviť iný port ako 25 pre TLS,
-  alebo 465 pre SSL. 
+  alebo 465 pre SSL.
   </para>
 
   <example>

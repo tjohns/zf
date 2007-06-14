@@ -13,7 +13,7 @@
 
     <para>
     <code>Zend_Pdf::render($newSegmentOnly = false)</code> vráti PDF dukument ako reťazec.
-    Ak je $updateOnly nastavené na true, potom iba nové PDF segmenty sú vrátené.     
+    Ak je $updateOnly nastavené na true, potom iba nové PDF segmenty sú vrátené.
     </para>
 
     <example>

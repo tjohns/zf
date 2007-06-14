@@ -2,8 +2,8 @@
     <title>Úvod</title>
     <para>
         <code>Zend_Json</code> poskytuje vyhovujúce metódy pre prenos
-        PHP do JSON a dekódovanie JSON do PHP. Pre viac informácií o JSON 
-        <ulink url="http://www.json.org/">si pozri stránku JSON projektu</ulink>  
+        PHP do JSON a dekódovanie JSON do PHP. Pre viac informácií o JSON
+        <ulink url="http://www.json.org/">si pozri stránku JSON projektu</ulink>
     </para>
     <para>
         JSON, JavaScript Object Notation, môže byť použité pre výmenu dát medzi

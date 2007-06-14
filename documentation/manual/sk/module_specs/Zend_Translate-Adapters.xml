@@ -98,7 +98,7 @@
             <para>
                 The Csv Adapter is the Adapter which is simplest to use for
                 customers.
-                CSV files are readable by standard text editors, but 
+                CSV files are readable by standard text editors, but
                 text editors often do not support utf8 character sets.
             </para>
 
@@ -128,7 +128,7 @@
 
             <para>
                 Most people will use this adapter.
-                With the available tools, professional translation is 
+                With the available tools, professional translation is
                 very simple.  But gettext data are is stored in a
                 machine-readable format, which is not readable without tools.
             </para>

@@ -6,7 +6,7 @@
   byť povolená nastavením parametra 'auth' v konfiguračnom poli konštruktora
   <code>Zend_Mail_Transport_Smtp</code>. Dostupné autentifikačné metódy su
   PLAIN, LOGIN a CRAM-MD5 a všetky očakávajú zadané 'username' a 'password'
-  v konfiguračnom poli. 
+  v konfiguračnom poli.
   </para>
 
   <example>
@@ -35,7 +35,7 @@ $mail-&gt;send($transport);</programlisting>
     <title>Druhy autentifikácie</title>
 
     <para>
-    Typy autentifikácie sú nezávislé na veľkosti písmen ale bez interpunkcie. Pre použitie napr. 
+    Typy autentifikácie sú nezávislé na veľkosti písmen ale bez interpunkcie. Pre použitie napr.
     CRAM-MD5 zadajte 'auth' =&gt; 'crammd5' v konštruktore <code>Zend_Mail_Transport_Smtp</code>.
     </para>
   </note>

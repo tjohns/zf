@@ -44,7 +44,7 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
             <programlisting role="php"><![CDATA[<?php
 
 $memoryManager = Zend_Memory::factory('None');
-                
+
 ?>]]></programlisting>
         </para>
 
@@ -109,7 +109,7 @@ $memObject = $memoryManager->createLocked($data);
 
             <para>
                 The <code>$data</code> argument is optional and used to
-                initialize the object value.  If the <code>$data</code> 
+                initialize the object value.  If the <code>$data</code>
                 argument is omitted, the value is an empty string.
             </para>
 

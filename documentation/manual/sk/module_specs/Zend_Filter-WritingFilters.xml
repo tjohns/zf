@@ -5,18 +5,18 @@
     <para>
         Zend_Filter poskytuje často používané filtre, ale vývojári často potrebujú
         napísať filtre pre špecifické prípady. Úloha napísania filtra je zjednodušená
-        implementáciou rozhrania <code>Zend_Filter_Interface</code>. 
+        implementáciou rozhrania <code>Zend_Filter_Interface</code>.
     </para>
 
     <para>
-        Rozhranie <code>Zend_Filter_Interface</code> definuje len jednu metodu 
-        <code>filter()</code> ktorá je implementovaná odvodenou triedou. Objekt, 
+        Rozhranie <code>Zend_Filter_Interface</code> definuje len jednu metodu
+        <code>filter()</code> ktorá je implementovaná odvodenou triedou. Objekt,
         ktorý implementuje rozhranie môže byť zaradený do postupnosti filtrov pomocou
         <code>Zend_Filter::addFilter()</code>.
     </para>
 
     <para>
-        Nasledujúci príklad ukazuje ako vytvoriť vlastný filter: 
+        Nasledujúci príklad ukazuje ako vytvoriť vlastný filter:
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/Interface.php';
@@ -25,7 +25,7 @@ class MyFilter implements Zend_Filter_Interface
 {
     public function filter($value)
     {
-        // vykonanie príkazov na $value pre získanie $valueFiltered  
+        // vykonanie príkazov na $value pre získanie $valueFiltered
 
         return $valueFiltered;
     }
