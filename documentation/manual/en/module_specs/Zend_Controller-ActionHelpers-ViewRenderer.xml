@@ -483,6 +483,21 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 variables in your action methods. 
             </para>
 
+            <note>
+                <title>Naming Conventions: Word delimiters in controller and
+                    action names</title>
+                <para>
+                    If your controller or action name is composed of several
+                    words, the dispatcher requires that these are separated on
+                    the URL by specific word delimiter characters. The
+                    <code>ViewRenderer</code> replaces any word delimiter found
+                    with a dash ('-') when creating paths. Thus, a call to the
+                    action <code>/foo.bar/baz.bat</code> would dispatch to
+                    <code>FooBarController::bazBatAction()</code>, which would
+                    render <code>foo-bar/baz-bat.phtml</code>.
+                </para>
+            </note>
+
             <programlisting role="php"><![CDATA[<?php
 // In your bootstrap:
 Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
