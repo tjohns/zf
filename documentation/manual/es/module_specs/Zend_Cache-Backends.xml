@@ -1,14 +1,14 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
-    
+
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            This backends stores cache records into files (in a choosen directory). 
+            This backends stores cache records into files (in a choosen directory).
         </para>
         <para>
             Available options are :
-        </para>          
+        </para>
         <table>
             <title>Available options</title>
             <tgroup cols="4">
@@ -26,7 +26,7 @@
                           <entry><code>string</code></entry>
                           <entry><code>'/tmp/'</code></entry>
                           <entry>
-                              Directory where to store cache files    
+                              Directory where to store cache files
                           </entry>
                       </row>
                       <row>
@@ -34,8 +34,8 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            Enable / disable fileLocking : Can avoid cache corruption under 
-                            bad circumstances but it doesn't help on multithread webservers 
+                            Enable / disable fileLocking : Can avoid cache corruption under
+                            bad circumstances but it doesn't help on multithread webservers
                             or on NFS filesystems...
                           </entry>
                       </row>
@@ -44,9 +44,9 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            Enable / disable read control : if enabled, a control key is 
-                            embeded in the cache file and this key is compared with the 
-                            one calculated after the reading.        
+                            Enable / disable read control : if enabled, a control key is
+                            embeded in the cache file and this key is compared with the
+                            one calculated after the reading.
                           </entry>
                       </row>
                       <row>
@@ -64,10 +64,10 @@
                           <entry><code>int</code></entry>
                           <entry><code>0</code></entry>
                           <entry>
-                            Hashed directory structure level :     0 means "no hashed directory 
-                             structure", 1 means "one level of directory", 2 means "two levels"... 
-                             This option can speed up the cache only when you have many thousands of 
-                             cache files. Only specific benchs can help you to choose the perfect 
+                            Hashed directory structure level :     0 means "no hashed directory
+                             structure", 1 means "one level of directory", 2 means "two levels"...
+                             This option can speed up the cache only when you have many thousands of
+                             cache files. Only specific benchs can help you to choose the perfect
                              value for you. Maybe, 1 or 2 is a good start.
                           </entry>
                       </row>
@@ -119,12 +119,12 @@
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
             This backends stores cache records into a memcached server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
-            is a high-performance, distributed memory object caching system. To use this backend, 
+            is a high-performance, distributed memory object caching system. To use this backend,
             you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
         </para>
         <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
+            Be careful : with this backend, "tags" are not supported for the moment as
+            the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
             Available options are :
@@ -147,8 +147,8 @@
                           <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
                           <entry>
                               An array of memcached servers ; each memcached server is described by an associative array :
-                              'host' => (string) : the name of the memcached server, 
-                              'port' => (int) : the port of the memcached server, 
+                              'host' => (string) : the name of the memcached server,
+                              'port' => (int) : the port of the memcached server,
                               'persistent' => (bool) : use or not persistent connections to this memcached server
                           </entry>
                       </row>
@@ -167,19 +167,19 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_APC</title>
         <para>
-            This backends stores cache records in shared memory through 
+            This backends stores cache records in shared memory through
             the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
             (which is of course need for using this backend).
         </para>
         <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
+            Be careful : with this backend, "tags" are not supported for the moment as
+            the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
             There is no option for this backend.
         </para>
     </sect2>
-</sect1> 
+</sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->

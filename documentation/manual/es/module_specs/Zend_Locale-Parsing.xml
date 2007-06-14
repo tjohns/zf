@@ -245,7 +245,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
     print "Number";
 } else {
     print "not a Number";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -328,7 +328,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
     print "float";
 } else {
     print "not a float";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -400,7 +400,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
     print "integer";
 } else {
     print "not a integer";
-} 
+}
 ?>]]></programlisting>
         </example>
 

@@ -153,7 +153,7 @@ $p_parameter = $opts->p; // null if not set
         <para>
             After option arguments and their parameters have been
             parsed from the command-line, there may be additional arguments
-            remaining.  You can query these arguments using the 
+            remaining.  You can query these arguments using the
             <code>getRemainingArgs()</code> method.  This method returns
             an array of the strings that were not part of any options.
         </para>
@@ -166,7 +166,7 @@ $args = $opts->getRemainingArgs(); // returns array('filename')
 ?>]]></programlisting>
         </example>
         <para>
-            <code>Zend_Console_Getopt</code> supports the GNU convention that 
+            <code>Zend_Console_Getopt</code> supports the GNU convention that
             an argument consisting of a double-dash signifies the end of
             options.  Any arguments following this signifier must be treated as
             non-option arguments.  This is useful if you might have a non-option
