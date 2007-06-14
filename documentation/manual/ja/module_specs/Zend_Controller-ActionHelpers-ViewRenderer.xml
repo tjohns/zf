@@ -494,6 +494,20 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 ヘルパーをヘルパーブローカに渡し、アクションメソッドで変数の値を設定するというものです。
             </para>
 
+            <note>
+                <title>命名規約: コントローラ名やアクション名の単語の区切り</title>
+                <para>
+                    コントローラやアクションの名前が複数の単語からなるものである場合、
+                    ディスパッチャは特定の区切り文字を単語の切れ目と判断し、
+                    そこで区切って URL を作成します。
+                    <code>ViewRenderer</code> は、単語の区切り文字をすべてダッシュ
+                    ('-') に変換して URL を作成します。したがって、
+                    アクション <code>/foo.bar/baz.bat</code> をコールすると
+                    <code>FooBarController::bazBatAction()</code> へディスパッチし、
+                    その結果 <code>foo-bar/baz-bat.phtml</code> をレンダリングします。
+                </para>
+            </note>
+
             <programlisting role="php"><![CDATA[<?php
 // 起動ファイル内で
 Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());

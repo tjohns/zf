@@ -201,6 +201,21 @@ public function getEngine();
 public function setScriptPath($path);
 
 /**
+ * すべてのビューリソースへのベースパスを設定します
+ */
+public function setBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * ビューリソースへのベースパスを追加します
+ */
+public function addBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * 現在のスクリプトのパスを取得します
+ */
+public function getScriptPaths();
+
+/**
  * テンプレート変数をオブジェクトのプロパティとして代入するためのオーバーロードメソッド
  */
 public function __set($key, $value);
@@ -288,6 +303,40 @@ class Zend_View_Smarty implements Zend_View_Interface
         }
 
         throw new Exception('無効なパスが指定されました');
+    }
+
+    /**
+     * 現在のテンプレートディレクトリを取得します
+     *
+     * @return string
+     */
+    public function getScriptPaths()
+    {
+        return $this->_smarty->template_dir;
+    }
+
+    /**
+     * setScriptPath へのエイリアス
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function setBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
+    }
+
+    /**
+     * setScriptPath へのエイリアス
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function addBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
     }
 
     /**
