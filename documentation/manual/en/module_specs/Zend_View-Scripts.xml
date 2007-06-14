@@ -202,6 +202,21 @@ public function getEngine();
 public function setScriptPath($path);
 
 /**
+ * Set a base path to all view resources
+ */
+public function setBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Add an additional base path to view resources
+ */
+public function addBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Retrieve the current script paths
+ */
+public function getScriptPaths();
+
+/**
  * Overloading methods for assigning template variables as object properties
  */
 public function __set($key, $value);
@@ -288,6 +303,40 @@ class Zend_View_Smarty implements Zend_View_Interface
         }
 
         throw new Exception('Invalid path provided');
+    }
+
+    /**
+     * Retrieve the current template directory
+     *
+     * @return string
+     */
+    public function getScriptPaths()
+    {
+        return $this->_smarty->template_dir;
+    }
+
+    /**
+     * Alias for setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function setBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
+    }
+
+    /**
+     * Alias for setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function addBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
     }
 
     /**
