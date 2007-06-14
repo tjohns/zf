@@ -43,7 +43,7 @@
             à une requête de manière à ce qu'aucune modification directe de l'entête
             ne soit nécessaire. Ceci est réalisé via la méthode setCookie(). Cette
             méthode peut être utilisée de plusieurs manières :
-        	<example>
+            <example>
                 <title>Définition de cookies via setCookie()</title>
                 <programlisting role="php">
 <![CDATA[<?php
@@ -60,7 +60,7 @@
 ?>]]></programlisting>
             </example>
             Pour plus d'information sur les objets Zend_Http_Cookie, voir
-        	<xref linkend="zend.http.cookies" />.
+            <xref linkend="zend.http.cookies" />.
         </para>
         <para>
             Zend_Http_Client permet également la persistance des cookies -
@@ -92,7 +92,7 @@
 ?>]]></programlisting>
             </example>
             Pour plus d'information sur la classe Zend_Http_CookieJar, voir
-        	<xref linkend="zend.http.cookies.cookiejar" />.
+            <xref linkend="zend.http.cookies.cookiejar" />.
         </para>
     </sect2>
 

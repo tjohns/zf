@@ -62,7 +62,7 @@ html/
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-            
+
             <para>
                 Les règles ci-dessus vont redirigées toute requête non-ressource (images, feuilles de style CSS) vers le contrôleur frontal. S'il y a d'autres extensions que vous souhaitez exclure du contrôleur frontal (PDFs, fichiers textes, etc.), ajoutez leurs extensions au commutateur, ou créez vos propres règles de réécriture.
             </para>
@@ -85,7 +85,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/chemin/vers/application/controllers');
 ?>]]></programlisting>
-            
+
             <para>
                 Ceci va instancier et dispatcher le contrôleur frontal, qui conduira les demandes vers les contrôleurs d'action.
             </para>
@@ -168,7 +168,7 @@ class ErrorController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-            
+
             <para>
                 En considérant l'architecture des dossiers vu ci-dessus, le fichier sera dans <code>application/controllers/ErrorController.php</code>. Vous devez aussi créer une script de vue dans <code>application/views/scripts/error/error.phtml</code> ; exemple de contenu possible :
             </para>
@@ -189,7 +189,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </html>
 ]]></programlisting>
         </sect3>
-        
+
         <sect3 id="zend.controller.quickstart.go.finish">
             <title>Voir le site !</title>
 

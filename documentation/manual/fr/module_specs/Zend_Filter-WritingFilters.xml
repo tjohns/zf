@@ -9,7 +9,7 @@
     </para>
 
     <para>
-        <code>Zend_Filter_Interface</code> définit une méthode unique, <code>filter()</code>, qui peut 
+        <code>Zend_Filter_Interface</code> définit une méthode unique, <code>filter()</code>, qui peut
         être implémentée dans les classes créées. Un objet qui implémente cette interface peut être
         ajouté à une chaîne de filtrage via <code>Zend_Filter::addFilter()</code>.
     </para>
@@ -33,7 +33,7 @@ class MonFiltre implements Zend_Filter_Interface
     </para>
 
     <para>
-        Pour ajouter une instance du filtre défini ci-dessus à une chaîne de filtrage : 
+        Pour ajouter une instance du filtre défini ci-dessus à une chaîne de filtrage :
 
         <programlisting role="php"><![CDATA[<?php
 $filtreChaine = new Zend_Filter();

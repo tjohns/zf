@@ -1,7 +1,7 @@
 <sect1 id="zend.json.basics">
     <title>Utilisation de base</title>
     <para>
-        L'utilisation de <code>Zend_Json</code> implique l'emploi des deux méthodes statiques publiques disponibles : 
+        L'utilisation de <code>Zend_Json</code> implique l'emploi des deux méthodes statiques publiques disponibles :
         <code>Zend_Json::encode()</code> et <code>Zend_Json::decode()</code>.
         <programlisting role="php"><![CDATA[<?php
 // Obtention d'une valeur

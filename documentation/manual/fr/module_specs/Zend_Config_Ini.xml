@@ -18,7 +18,7 @@ require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $config);?>]]></programlisting>
         </para>
-    </note>    
+    </note>
     <example id="zend.config.adapters.ini.example.using">
         <title>Utiliser Zend_Config_Ini</title>
         <para>

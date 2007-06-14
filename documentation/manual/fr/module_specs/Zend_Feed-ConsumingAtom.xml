@@ -2,23 +2,23 @@
 <title>Consommer un flux Atom</title>
 
     <para>
-    La classe <code>Zend_Feed_Atom</code> est utilisée pratiquement de la 
-    même manière que <code>Zend_Feed_Rss</code>. Tout comme 
-    <code>Zend_Feed_Rss</code>, elle offre aussi un accès aux propriétés du 
-    flux et elle permet d'itérer sur les entrées du flux. La différence 
-    principale réside dans la structure du protocole Atom lui-même. Atom est 
-    le successeur de RSS; c'est un protocole plus général et il est conçu 
-    pour prendre en charge plus facilement les flux qui incluent directement 
-    leur contenu, et ce en divisant la balise RSS <code>description</code> 
-    en deux éléments : <code>summary</code> (résumé) et <code>content</code> 
+    La classe <code>Zend_Feed_Atom</code> est utilisée pratiquement de la
+    même manière que <code>Zend_Feed_Rss</code>. Tout comme
+    <code>Zend_Feed_Rss</code>, elle offre aussi un accès aux propriétés du
+    flux et elle permet d'itérer sur les entrées du flux. La différence
+    principale réside dans la structure du protocole Atom lui-même. Atom est
+    le successeur de RSS; c'est un protocole plus général et il est conçu
+    pour prendre en charge plus facilement les flux qui incluent directement
+    leur contenu, et ce en divisant la balise RSS <code>description</code>
+    en deux éléments : <code>summary</code> (résumé) et <code>content</code>
     (contenu).
     </para>
 
     <example id="zend.feed.consuming-atom.example.usage">
         <title>Emploi basique de Zend_Feed_Atom</title>
         <para>
-            Pour lire un flux Atom et afficher le titre (propriété 
-            <code>title</code>) et le résumé (propriété <code>summary</code>) de 
+            Pour lire un flux Atom et afficher le titre (propriété
+            <code>title</code>) et le résumé (propriété <code>summary</code>) de
             chaque entrée :
         </para>
         <programlisting role="php"><![CDATA[
@@ -47,11 +47,11 @@ foreach ($flux as $entree) {
                 <para><code>id</code> (identifiant) - Avec Atom, chaque flux et entrée possède un identifiant unique</para>
             </listitem>
             <listitem>
-                <para><code>link</code> (lien) - Les flux peuvent posséder plusieurs liens, qui se distinguent les uns 
+                <para><code>link</code> (lien) - Les flux peuvent posséder plusieurs liens, qui se distinguent les uns
                 des autres par un attribut <code>type</code>
                 </para>
                 <para>
-                    Le lien équivalent au lien d'un canal RSS aurait pour type <code>"text/html"</code>. Si le lien désigne une version 
+                    Le lien équivalent au lien d'un canal RSS aurait pour type <code>"text/html"</code>. Si le lien désigne une version
                     alternative du contenu présent dans le flux, il possèdera un attribut <code>rel="alternate"</code>
                 </para>
             </listitem>
@@ -70,7 +70,7 @@ foreach ($flux as $entree) {
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>id</code> (identifiant) - L'identifiant unique de 
+                <para><code>id</code> (identifiant) - L'identifiant unique de
 l'entrée</para>
             </listitem>
             <listitem>
@@ -98,7 +98,7 @@ l'entrée</para>
     </para>
 
     <para>
-         Pour plus d'informations sur Atom ainsi qu'un grand nombre de ressources, voyez le site 
+         Pour plus d'informations sur Atom ainsi qu'un grand nombre de ressources, voyez le site
         <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
     </para>
 </sect1>

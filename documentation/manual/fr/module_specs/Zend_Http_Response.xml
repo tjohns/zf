@@ -3,7 +3,7 @@
     <sect2 id="zend.http.response.introduction">
         <title>Introduction</title>
         <para>
-            La classe <code>Zend_Http_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.http.client" />. 
+            La classe <code>Zend_Http_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.http.client" />.
             Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue suite à une requête :
             <itemizedlist>
                 <listitem>

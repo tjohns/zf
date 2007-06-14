@@ -130,7 +130,7 @@ for ($count = 0; $count < strlen($value); $count++) {
 public function touch();
 ?>]]></programlisting>
             <para>
-                La méthode <code>touch()</code> devrait être employée en commun avec <code>getRef()</code>. Elle signale que la valeur d'objet a été changé : 
+                La méthode <code>touch()</code> devrait être employée en commun avec <code>getRef()</code>. Elle signale que la valeur d'objet a été changé :
                 <programlisting role="php"><![CDATA[<?php
 $memObject = $memoryManager->create($data);
 ...

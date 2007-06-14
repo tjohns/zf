@@ -420,131 +420,131 @@ $res = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-    	<title>Zend_Cache_Frontend_Page</title>
-    	<sect3 id="zend.cache.frontends.page.introduction">
-        	<title>Introduction</title>
-        	<para>
-	            <code>Zend_Cache_Frontend_Page</code> est comme <code>Zend_Cache_Frontend_Output</code> mais créé pour une page complète. Il est impossible d'utiliser <code>Zend_Cache_Frontend_Page</code> pour mettre en cacher un bloc unique.
-	        </para>
-	        <para>
-	            D'un autre côté, la "cache id", est calculé automatiquement avec <code>$_SERVER['REQUEST_URI']</code> et (en fonction des options) <code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>. De plus, vous avez seulement une méthode pour appeler (<code>start()</code>) parce que l'appel à <code>end()</code> est totalement automatique lorsque la page est terminé.
-	        </para>
-	        <para>
-	            Pour le moment, ceci n'est pas implémenté mais nous prévoyons d'ajouter un système de condition HTTP pour économiser de la bande passant (le système enverra une entête HTTP 304 Not Modified si le cache est trouvé, et si le navigateur a déjà la bonne version).
-	        </para>
-    	</sect3>
-    	<sect3 id="zend.cache.frontends.page.options">
-	        <title>Options disponibles (pour ce frontend dans la fabrique Zend_Cache)</title>
-	        <table>
-	            <title>Options disponibles</title>
-	            <tgroup cols="4">
-	                 <thead>
-	                      <row>
-	                        <entry>Option</entry>
-	                        <entry>Type de données</entry>
-	                        <entry>Valeur par défaut</entry>
-	                        <entry>Description</entry>
-	                    </row>
-	                 </thead>
-	                 <tbody>
-	                 	 <row>
-	                          <entry><code>http_conditional</code></entry>
-	                          <entry><code>booléen</code></entry>
-	                          <entry><code>false</code></entry>
-	                          <entry>
-	                              utilisez le système httpConditionnal ou pas (pas encore implémenté)
-	                          </entry>
-	                     </row>
-	                     <row>
-	                          <entry><code>debug_header</code></entry>
-	                          <entry><code>booléen</code></entry>
-	                          <entry><code>false</code></entry>
-	                          <entry>
-	                              si true, un text de débogage est ajouté avant chaque page de cache
-	                          </entry>
-	                     </row>
-	                     <row>
-	                     	  <entry><code>default_options</code></entry>
-	                          <entry><code>array</code></entry>
-	                          <entry><code>array(...see below...)</code></entry>
-	                          <entry>
-	                              un tableau associatif d'options par défaut:
-	                              <itemizedlist>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, true par défaut) cache</code> : le cache est activé si true
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, false par défaut) cache_with_get_variables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_GET</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, false par défaut) cache_with_post_variables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_POST</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, false par défaut) cache_with_session_variables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_SESSION</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, false par défaut) cache_with_files_variables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_FILES</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, false par défaut) cache_with_cookie_variables</code> : si true, le cache est toujours activé s'il y a des variables dans leétableau <code>$_COOKIE</code>
-	                                      </para>
-	                                  </listitem>
-									  <listitem>
-									      <para>
-									          <code>(booléen, true par défaut) make_id_with_get_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_GET</code>
-									      </para>
-									  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, true par défaut) make_id_with_post_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_POST</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, true par défaut) make_id_with_session_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_SESSION</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, true par défaut) make_id_with_files_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_FILES</code>
-	                                      </para>
-	                                  </listitem>
-	                                  <listitem>
-	                                      <para>
-	                                          <code>(booléen, true par défaut) make_id_with_cookie_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_COOKIE</code>
-	                                      </para>
-	                                  </listitem>
-	                              </itemizedlist>
-	                          </entry>
-	                     </row>
-	                     <row>
-	                          <entry><code>regexps</code></entry>
-	                          <entry><code>array</code></entry>
-	                          <entry><code>array()</code></entry>
-	                          <entry>
-	                              un tableau associatif pour définir les options, uniquement pour certaines REQUEST_URI, les clés sont des regex PCRE, les valeurs sont des tableaus associatifs avec des options spécifiques pour définir si les regexs correspondent dans $_SERVER['REQUEST_URI'] (voir les options par défaut pour la liste des options disponibles) ; si plusieurs regex correspondent à un $_SERVER['REQUEST_URI'], seul la dernière sera utilisée.
-	                          </entry>
-	                     </row>
-	                  </tbody>
-	              </tgroup>
-	          </table>
-	    </sect3>
-    	<sect3 id="zend.cache.frontends.page.examples">
-        	<title>Exemples</title>
-	        <para>
-	            L'utilisation de Zend_Cache_Frontend_Page est vraiment trivial :
-	            <programlisting role="php"><![CDATA[<?php
+        <title>Zend_Cache_Frontend_Page</title>
+        <sect3 id="zend.cache.frontends.page.introduction">
+            <title>Introduction</title>
+            <para>
+                <code>Zend_Cache_Frontend_Page</code> est comme <code>Zend_Cache_Frontend_Output</code> mais créé pour une page complète. Il est impossible d'utiliser <code>Zend_Cache_Frontend_Page</code> pour mettre en cacher un bloc unique.
+            </para>
+            <para>
+                D'un autre côté, la "cache id", est calculé automatiquement avec <code>$_SERVER['REQUEST_URI']</code> et (en fonction des options) <code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>. De plus, vous avez seulement une méthode pour appeler (<code>start()</code>) parce que l'appel à <code>end()</code> est totalement automatique lorsque la page est terminé.
+            </para>
+            <para>
+                Pour le moment, ceci n'est pas implémenté mais nous prévoyons d'ajouter un système de condition HTTP pour économiser de la bande passant (le système enverra une entête HTTP 304 Not Modified si le cache est trouvé, et si le navigateur a déjà la bonne version).
+            </para>
+        </sect3>
+        <sect3 id="zend.cache.frontends.page.options">
+            <title>Options disponibles (pour ce frontend dans la fabrique Zend_Cache)</title>
+            <table>
+                <title>Options disponibles</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Option</entry>
+                            <entry>Type de données</entry>
+                            <entry>Valeur par défaut</entry>
+                            <entry>Description</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                          <row>
+                              <entry><code>http_conditional</code></entry>
+                              <entry><code>booléen</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  utilisez le système httpConditionnal ou pas (pas encore implémenté)
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>debug_header</code></entry>
+                              <entry><code>booléen</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  si true, un text de débogage est ajouté avant chaque page de cache
+                              </entry>
+                         </row>
+                         <row>
+                               <entry><code>default_options</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array(...see below...)</code></entry>
+                              <entry>
+                                  un tableau associatif d'options par défaut:
+                                  <itemizedlist>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, true par défaut) cache</code> : le cache est activé si true
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, false par défaut) cache_with_get_variables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_GET</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, false par défaut) cache_with_post_variables</code> : si true, le cache est toujours activé même s'il y a des variables dans le tableau <code>$_POST</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, false par défaut) cache_with_session_variables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_SESSION</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, false par défaut) cache_with_files_variables</code> : si true, le cache est toujours activé s'il y a des variables dans le tableau <code>$_FILES</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, false par défaut) cache_with_cookie_variables</code> : si true, le cache est toujours activé s'il y a des variables dans leétableau <code>$_COOKIE</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, true par défaut) make_id_with_get_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_GET</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, true par défaut) make_id_with_post_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_POST</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, true par défaut) make_id_with_session_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_SESSION</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, true par défaut) make_id_with_files_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_FILES</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(booléen, true par défaut) make_id_with_cookie_variables</code> : si true, l'identifiant du cache sera dépendant du contenu du tableau <code>$_COOKIE</code>
+                                          </para>
+                                      </listitem>
+                                  </itemizedlist>
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>regexps</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>
+                                  un tableau associatif pour définir les options, uniquement pour certaines REQUEST_URI, les clés sont des regex PCRE, les valeurs sont des tableaus associatifs avec des options spécifiques pour définir si les regexs correspondent dans $_SERVER['REQUEST_URI'] (voir les options par défaut pour la liste des options disponibles) ; si plusieurs regex correspondent à un $_SERVER['REQUEST_URI'], seul la dernière sera utilisée.
+                              </entry>
+                         </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>
+        <sect3 id="zend.cache.frontends.page.examples">
+            <title>Exemples</title>
+            <para>
+                L'utilisation de Zend_Cache_Frontend_Page est vraiment trivial :
+                <programlisting role="php"><![CDATA[<?php
 // [...] // require, configuration et factory
 
 $cache->start();
@@ -552,10 +552,10 @@ $cache->start();
 
 // reste de la page ...
 ?>]]>           </programlisting>
-	        </para>
-	        <para>
-	            un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un fichier d'amorçage (pour utiliser avec Zend_Controller par exemple)
-	        	<programlisting role="php"><![CDATA[<?php
+            </para>
+            <para>
+                un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un fichier d'amorçage (pour utiliser avec Zend_Controller par exemple)
+                <programlisting role="php"><![CDATA[<?php
 // vous devriez éviter de mettre trop de lignes avant la section de cache
 // [...] par exemple, pour des performances optimales, "require_once" ou "Zend_Loader::loadClass" devrait être
 // [...] après la section de cache
@@ -588,9 +588,9 @@ $cache->start();
 
 // [...] la fin du fichier de démarrage (ces lignes ne seront pas exécutée si on trouve un cache)
 ?>]]>           </programlisting>
-	        </para>
-    	</sect3>
-	</sect2>
+            </para>
+        </sect3>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -2,7 +2,7 @@
     <title>Utilistion de Google Blogger</title>
 
     <para>
-	Le service l'hebergement de Blogs Blogger.com fait partie des API Google Data. 
+    Le service l'hebergement de Blogs Blogger.com fait partie des API Google Data.
 Vous pouvez écrire des applications PHP utilisant Zend_Gdata_Blogger pour interroger des blogs existants, et poster de nouvelles entrées sur des blogs sur lesquels vous avez des droits d'accès.
     </para>
 
@@ -16,7 +16,7 @@ Vous pouvez écrire des applications PHP utilisant Zend_Gdata_Blogger pour inter
         <title>Comprendre la compatibilité de version Blogger</title>
 
         <para>
-Il existe des différences d'utilisation des API Google Data vis à vis des blogs hébérgés sur la version actuelle de Blogger, et de ceux hébérgés sur la version beta du service Blogger. 
+Il existe des différences d'utilisation des API Google Data vis à vis des blogs hébérgés sur la version actuelle de Blogger, et de ceux hébérgés sur la version beta du service Blogger.
 La plus grosse diférence relève de l'authentification.
 Voir tableau ci-dessous:
         </para>

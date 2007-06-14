@@ -3,7 +3,7 @@
     <title>Introduction</title>
 
     <para>
-        Le composant Zend_Validate fournit un ensemble de validateurs fréquemment utiles. Il fournit également un mécanisme simple de chaînage permettant d'appliquer de multiples validateurs à une donnée dans un ordre défini par l'utilisateur. 
+        Le composant Zend_Validate fournit un ensemble de validateurs fréquemment utiles. Il fournit également un mécanisme simple de chaînage permettant d'appliquer de multiples validateurs à une donnée dans un ordre défini par l'utilisateur.
     </para>
 
     <sect2 id="zend.validate.introduction.definition">

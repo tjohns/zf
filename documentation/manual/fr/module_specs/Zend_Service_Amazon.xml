@@ -9,7 +9,7 @@
         </para>
         <para>
             <code>Zend_Service_Amazon</code> permet aux développeurs de récupérer des informations disponible sur le site Amazon.com
-            directement à  traver l'API Amazon Web Services. 
+            directement à  traver l'API Amazon Web Services.
             Les exemples incluent :
             <itemizedlist>
                 <listitem>
@@ -40,7 +40,7 @@
             </itemizedlist>
         </para>
         <para>
-            Pour pouvoir utiliser <code>Zend_Service_Amazon</code>, vous devez avant tout avoir une clé 'developer API' Amazon. Pour obtenir une telle clé et 
+            Pour pouvoir utiliser <code>Zend_Service_Amazon</code>, vous devez avant tout avoir une clé 'developer API' Amazon. Pour obtenir une telle clé et
             pour plus d'informattions, vous pouvez visitez le site Web <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink>.
         </para>
         <note>
@@ -85,7 +85,7 @@ foreach ($results as $result) {
         <para>
             Par défaut, <code>Zend_Service_Amazon</code> se connecte au web service Amazon américain ("<code>US</code>").
             Pour se connecter depuis un pays différent, il vous suffit simplement de définir, comme second paramètre du constructeur,
-            la chaîne de carcatère correspondant au code du pays : 
+            la chaîne de carcatère correspondant au code du pays :
         </para>
         <example>
             <title>Choisir un service Web Amazon d'un pays</title>
@@ -119,7 +119,7 @@ $item = $amazon->itemLookup('B0000A432X');
         </example>
         <para>
             La méthode <code>itemLookup()</code>  accepte aussi un second paramètre optionnel pour gérer les options de recherche.
-            Pour les détails complet et une liste des options disponibles, visitez 
+            Pour les détails complet et une liste des options disponibles, visitez
             <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">
             la documentation Amazon correspondante.
             </ulink>.
@@ -137,7 +137,7 @@ $item = $amazon->itemLookup('B0000A432X');
         <title>Lancer des recherches de produits sur Amazon</title>
         <para>
             Rechercher des produits basés sur tous les divers critères disponible sont rendus simples grà¢ce à  la méthode
-            <code>itemSearch()</code>, comme le montre l'exemple suivant : 
+            <code>itemSearch()</code>, comme le montre l'exemple suivant :
         </para>
         <example>
             <title>Lancer des recherches de produits sur Amazon</title>
@@ -152,7 +152,7 @@ foreach($response as $r) {
         </example>
         <para>
             La méthode <code>itemSearch()</code> accepte un seul tableau en paramètre pour gérer les options de recheche.
-            Pour plus de détails et une liste des options disponibles, visitez 
+            Pour plus de détails et une liste des options disponibles, visitez
             <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">
               la documentation Amazon correspondante
             </ulink>
@@ -196,7 +196,7 @@ foreach ($results as $result) {
                 Cela définit l'option <code>Category</code> à  &quot;Livres&quot; et <code>Keywords</code> à  &quot;PHP&quot;.
             </para>
             <para>
-                Pour plus d'information sur les options disponibles, vous pouvez vous référer à  la 
+                Pour plus d'information sur les options disponibles, vous pouvez vous référer à  la
                 <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">documentation spécifique</ulink>.
             </para>
         </example>
@@ -205,8 +205,8 @@ foreach ($results as $result) {
 <sect2 id="zend.service.amazon.classes">
     <title>Classes Zend_Service_Amazon</title>
     <para>
-        Les classes suivantes sont toutes retournées par    
-    
+        Les classes suivantes sont toutes retournées par
+
         <link linkend="zend.service.amazon.itemlookup"><code>Zend_Service_Amazon::itemLookup()</code></link>
         et
         <link linkend="zend.service.amazon.itemsearch"><code>Zend_Service_Amazon::itemSearch()</code></link>:

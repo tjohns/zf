@@ -2,17 +2,17 @@
     <title>Classes personnalisées pour les flux et entrées</title>
 
     <para>
-                Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si 
-vous souhaitez créer votre propre format ou implémenter des gâteries 
-comme par exemple la gestion automatique des éléments situés dans un 
+                Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si
+vous souhaitez créer votre propre format ou implémenter des gâteries
+comme par exemple la gestion automatique des éléments situés dans un
 espace de noms personnalisé.
     </para>
 
     <para>
-         Voici un exemple d'entrée Atom personnalisée qui gère son propre espace 
-        de noms <code>monen</code>. Notez aussi que la classe se charge 
-        d'appeler la méthode <code>registerNamespace()</code> pour que 
-        l'utilisateur n'ait au final pas du tout à se soucier des espaces de 
+         Voici un exemple d'entrée Atom personnalisée qui gère son propre espace
+        de noms <code>monen</code>. Notez aussi que la classe se charge
+        d'appeler la méthode <code>registerNamespace()</code> pour que
+        l'utilisateur n'ait au final pas du tout à se soucier des espaces de
         noms.
     </para>
 

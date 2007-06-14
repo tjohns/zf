@@ -12,15 +12,15 @@
     <title>Formatage simple</title>
     <para>
       <code>Zend_Log_Formatter_Simple</code> est le formateur par défaut. Il est configuré automatiquement quand vous n'indiquez aucun formateur. La configuration par défaut est équivalente à ce qui suit :
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
 $formatter = new Zend_Log_Formatter_Simple($format);
 
-?>]]></programlisting>         
+?>]]></programlisting>
     </para>
-      
+
     <para>
         Un formateur est affecté à un objet individuel de rédacteur en utilisant la méthode <code>setFormatter()</code> du rédacteur :
 
@@ -37,7 +37,7 @@ $logger->info('Monde');
 
 // affiche "Bonjour Monde"
 
-?>]]></programlisting>         
+?>]]></programlisting>
     </para>
 
     <para>
@@ -61,9 +61,9 @@ $logger->addWriter($redacteur);
 
 $logger->info("Message d'information");
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
-    
+
     <para>
         Le code ci-dessus affiche le XML suivant (des espaces supplémentaires sont ajoutés pour la clarté) :
 
@@ -74,12 +74,12 @@ $logger->info("Message d'information");
   <priority>6</priority>
   <priorityName>INFO</priorityName>
 </logEntry>
-]]></programlisting>      
-    </para>    
-    
+]]></programlisting>
+    </para>
+
     <para>
         Il est possible d'adapter l'élément racine comme indiquent faire coorespondre les éléments XML au tableau de données d'évènements. Le constructeur de <code>Zend_Log_Formatter_Xml</code> accepte une chaîne avec le nom de l'élément racine comme premier paramètre et un tableau associatif avec les éléments de correspondance comme deuxième paramètre :
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $redacteur = new Zend_Log_Writer_Stream('php://output');
@@ -91,17 +91,17 @@ $logger->addWriter($redacteur);
 
 $logger->info("Message d'information");
 
-?>]]></programlisting>          
+?>]]></programlisting>
 
         Le code ci-dessus change l'élément racine par défaut de logEntry <code>logEntry</code> en <code>log</code>. Il fait correspondre également les éléments <code>msg</code> au <code>message</code> de l'item de donnée d'événement. Ceci a comme conséquence l'affichage suivant :
-      
+
       <programlisting role="xml"><![CDATA[
 <log>
   <msg>Message d'information</msg>
   <niveau>INFO</niveau>
 </log>
-]]></programlisting>      
-    </para>          
-    
+]]></programlisting>
+    </para>
+
   </sect2>
 </sect1>

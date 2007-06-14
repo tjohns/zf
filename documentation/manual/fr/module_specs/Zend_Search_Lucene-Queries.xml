@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.queries">
-	<title>Types de requêtes</title>
+    <title>Types de requêtes</title>
 
-	<sect2 id="zend.search.lucene.queries.term-query">
-		<title>Recherche avec un seul terme</title>
+    <sect2 id="zend.search.lucene.queries.term-query">
+        <title>Recherche avec un seul terme</title>
         <para>
             Le requêtes par terme permettent de chercher un simple terme.
         </para>
@@ -30,10 +30,10 @@
 
 ?>]]></programlisting>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.multiterm-query">
-		<title>Recherche avec plusieurs termes</title>
+    <sect2 id="zend.search.lucene.queries.multiterm-query">
+        <title>Recherche avec plusieurs termes</title>
         <para>
             Les recherches multi termes permettent de rechercher suivant un jeu de terme donné.
         </para>
@@ -63,8 +63,8 @@
         </para>
 
         <para>
-            Cela signifie que si des termes optionnels sont ajouté à la recherche avec les termes requis, 
-            alors il y aura les même résultats, mais la seconde requête aura des résultats qui corresponderont 
+            Cela signifie que si des termes optionnels sont ajouté à la recherche avec les termes requis,
+            alors il y aura les même résultats, mais la seconde requête aura des résultats qui corresponderont
             aux termes optionnels, qui seront placés en haut des résultats.
         </para>
 
@@ -93,7 +93,7 @@ $hits = $index->find('+mot1 auteur:mot2 -mot3');
             </listitem>
             <listitem>
                 <para>
-                    Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche. 
+                    Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche.
                     Si ce n'est pas indiqué, alors le champs 'contents' est utilisé.
                 </para>
             </listitem>
@@ -137,20 +137,20 @@ $hits = $index->find('+mot1 auteur:mot2 -mot3');
                 </listitem>
             </itemizedlist>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.phrase-query">
-		<title>Requêtes de phrases</title>
+    <sect2 id="zend.search.lucene.queries.phrase-query">
+        <title>Requêtes de phrases</title>
         <para>
             Les requêtes de phrases permettent de rechercher des phrases.
         </para>
 
         <para>
-            Les requêtes de phrases sont très flexible et permettent de chercher des phrases exactes, 
-            comme des morceau de phrases. 
+            Les requêtes de phrases sont très flexible et permettent de chercher des phrases exactes,
+            comme des morceau de phrases.
         </para>
         <para>
-            Les phrases exactes peuvent aussi contenir des espaces ou des termes au même endroits. 
+            Les phrases exactes peuvent aussi contenir des espaces ou des termes au même endroits.
             (Elles peuvent être générées par Analyser pour différentes utilisation.
             Ex. un terme peut être duppliqué pour améliorer le
             poid du terme, ou plusieurs synonymes peuvent-être placé en première position).
@@ -296,7 +296,7 @@ $hits2 = $index->find($query);
 
 ?>]]></programlisting>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

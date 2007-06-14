@@ -131,7 +131,7 @@ abstract class Zend_Controller_Request_Abstract
     public function getControllerName();
 
     /**
-     * @param string $value 
+     * @param string $value
      * @return self
      */
     public function setControllerName($value);
@@ -142,7 +142,7 @@ abstract class Zend_Controller_Request_Abstract
     public function getActionName();
 
     /**
-     * @param string $value 
+     * @param string $value
      * @return self
      */
     public function setActionName($value);
@@ -153,7 +153,7 @@ abstract class Zend_Controller_Request_Abstract
     public function getControllerKey();
 
     /**
-     * @param string $key 
+     * @param string $key
      * @return self
      */
     public function setControllerKey($key);
@@ -164,20 +164,20 @@ abstract class Zend_Controller_Request_Abstract
     public function getActionKey();
 
     /**
-     * @param string $key 
+     * @param string $key
      * @return self
      */
     public function setActionKey($key);
 
     /**
-     * @param string $key 
+     * @param string $key
      * @return mixed
      */
     public function getParam($key);
 
     /**
-     * @param string $key 
-     * @param mixed $value 
+     * @param string $key
+     * @param mixed $value
      * @return self
      */
     public function setParam($key, $value);
@@ -188,13 +188,13 @@ abstract class Zend_Controller_Request_Abstract
      public function getParams();
 
     /**
-     * @param array $array 
+     * @param array $array
      * @return self
      */
     public function setParams(array $array);
 
     /**
-     * @param boolean $flag 
+     * @param boolean $flag
      * @return self
      */
     public function setDispatched($flag = true);

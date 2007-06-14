@@ -3,8 +3,8 @@
     <title>Chaînes de validation</title>
 
     <para>
-        Souvent, de multiples validations doivent être appliquées à une valeur dans un ordre particulier. 
-        Le code suivant décrit une méthode permettant de solutionner l'exemple de 
+        Souvent, de multiples validations doivent être appliquées à une valeur dans un ordre particulier.
+        Le code suivant décrit une méthode permettant de solutionner l'exemple de
         <link linkend="zend.validate.introduction">l'introduction</link>, dans lequel un identifiant doit
         contenir précisemment entre 6 et 12 caractères alphanumériques.
 
@@ -34,14 +34,14 @@ if ($validateurChaine->isValid($identifiant)) {
 
         Les validateurs sont exécutés dans leur ordre d'ajout à <code>Zend_Validate</code>. Dans l'exemple
         ci-dessus, l'identifiant est d'abord testé pour vérifier que sa longueur est bien comprise entre 6
-        et 12 caractères, puis ensuite testé pour vérifier qu'il ne contient bien que des caractères 
+        et 12 caractères, puis ensuite testé pour vérifier qu'il ne contient bien que des caractères
         alphanumériques. Le second test est exécuté quelque soit le résultat du précédent. Ainsi, dans le
         cas où les deux tests échouent, <code>getMessages()</code> retournera un message d'échec pour chacun
         des validateurs.
     </para>
 
     <para>
-        Dans certains cas, il peut être utile d'interrompre le processus si l'un des tests échoue. 
+        Dans certains cas, il peut être utile d'interrompre le processus si l'un des tests échoue.
         <code>Zend_Validate</code> permet ce cas de figure via l'usage du deuxième paramètre de la
         méthode <code>addValidator()</code>. En positionnant <code>$breakChainOnFailure</code> sur
         <code>true</code>, le validateur ajouté interrompra la procédure de test si il échoue, ce qui

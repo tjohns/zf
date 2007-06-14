@@ -11,7 +11,7 @@
         <title>Qu'est-ce qu'un filtre ?</title>
 
         <para>
-            Généralement parlant, une filtre est utilisé pour supprimer les parties non désirées de ce qui lui est soumis tout en laissant passer la partie désiré. Dans ce cas de figure, un filtre est une opération qui restitue une partie de la donnée soumise. Ce type de filtrage est utile pour les applications web : suppression des données soumises non conformes, élimination des espaces inutiles, etc. 
+            Généralement parlant, une filtre est utilisé pour supprimer les parties non désirées de ce qui lui est soumis tout en laissant passer la partie désiré. Dans ce cas de figure, un filtre est une opération qui restitue une partie de la donnée soumise. Ce type de filtrage est utile pour les applications web : suppression des données soumises non conformes, élimination des espaces inutiles, etc.
         </para>
 
         <para>
@@ -29,7 +29,7 @@
         </para>
 
         <para>
-            L'exemple simple ci-dessous démontre l'utilisation d'un filtre sur les caractères esperluette (<code>&amp;</code>, "ampersand" en anglais) et guillemet double (<code>&quot;</code>) : 
+            L'exemple simple ci-dessous démontre l'utilisation d'un filtre sur les caractères esperluette (<code>&amp;</code>, "ampersand" en anglais) et guillemet double (<code>&quot;</code>) :
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/HtmlEntities.php';
@@ -61,7 +61,7 @@ echo Zend_Filter::get('&', 'HtmlEntities');
 
         <para>
             Vous pouvez aussi fournir un tableau destiné au constructeur de la classe, s'ils sont nécessaires pour votre classe de filtre.
-            
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 

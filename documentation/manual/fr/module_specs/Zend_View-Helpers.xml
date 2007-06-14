@@ -9,13 +9,13 @@
     <para>
         Une aide est simplement une classe. Par exemple, nous voulons une aide nommée "foobar". Par défaut, la classe est préfixée avec <code>'Zend_View_Helper_'</code> (vous pouvez spécifier un préfixe personnalisé en paramètrant votre chemin d'aide), et le dernier segment du nom de classe est le nom de l'aide ; ce segment peut être avec des CaractereMajuscule ; le nom complet de la classe est alors : <code>Zend_View_Helper_FooBar</code>. Cette classe doit contenir au moins une méthode, nommée comme l'aide avec la notationCamel : <code>fooBar()</code>.
     </para>
-    
+
     <note>
         <para>
             Les noms des aides sont toujours en notationCamel, c'est-à-dire qu'ils ne commencent pas avec une caractère majuscules.
         </para>
     </note>
-    
+
     <para>
         Pour utiliser une aide dans votre script de vue, appelez la en utilisant <code>$this->helperName()</code>. Dans les coulisses, <code>Zend_View</code> va charger la classe <code>Zend_View_Helper_HelperName</code>, créer une instance de cet objet, et appeler sa méthode <code>helperName()</code>. L'instance de l'objet est persistante dans l'instance de <code>Zend_View</code>, et est réutilisée pour tous les appels futurs à <code>$this->helperName()</code>.
     </para>

@@ -3,10 +3,10 @@
     <sect2 id="zend.service.flickr.introduction">
         <title>Introduction à la recherche sur Flickr</title>
         <para>
-            <code>Zend_Service_Flickr</code> est une API simple pour utiliser le service Wev REST de Flick. Pour 
+            <code>Zend_Service_Flickr</code> est une API simple pour utiliser le service Wev REST de Flick. Pour
             pouvoir utiliser lew services Web Flickr, vous devez avoir une clé d'utilisation de l'API. Pour obtenir
             une telle clé, et pour plus d'information sur le service Web REST de Flickr, veuillez vous référrez à la
-            <ulink url="http://www.flickr.com/services/api/">documentation de l'API Flickr</ulink>.            
+            <ulink url="http://www.flickr.com/services/api/">documentation de l'API Flickr</ulink>.
         </para>
         <para>
             Dans l'exemple suivant, nous allons utiliser la méthode <code>tagSearch()</code> pour rechercher des photos
@@ -36,7 +36,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.finding-users">
         <title>Trouver les photos et les informations des utilisateurs Flickr</title>
         <para>
-            <code>Zend_Service_Flickr</code>fournit plusieurs façons différentes de récupérer des informations sur les 
+            <code>Zend_Service_Flickr</code>fournit plusieurs façons différentes de récupérer des informations sur les
             utilisateurs.
         </para>
         <itemizedlist>
@@ -79,7 +79,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Récupérer les détails d'une image</title>
         <para>
-            <code>Zend_Service_Flickr</code> permet de récupérer facilement et rapidement, les détails d'une image 
+            <code>Zend_Service_Flickr</code> permet de récupérer facilement et rapidement, les détails d'une image
             grâce à son ID. Utilisez simplement la méthode <code>getImageDetails()</code>, comme dans l'exemple suivant :
         </para>
         <example>

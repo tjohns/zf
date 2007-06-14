@@ -4,13 +4,13 @@
     <para>
         Un objet Filter bloque les messages avant l'écriture dans le log.
     </para>
-    
+
     <sect2 id="zend.log.filters.all-writers">
       <title>Filtrer pour tous les rédacteurs (Writers)</title>
-    
+
       <para>
         Pour filtrer avant tous les rédacteurs, vous pouvez ajouter autant de filtres que vous souhaitez à l'objet enregistreur en utilisant la méthode <code>addFilter()</code> :
-        
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -32,13 +32,13 @@ $logger->emerg("Message d'urgence");
         Quand vous ajoutez un ou plusieurs filtres à l'objet enregistreur, le message doit passer par tous les filtres avant que tous les rédacteurs le reçoive.
       </para>
     </sect2>
-    
+
     <sect2 id="zend.log.filters.single-writer">
       <title>Filtrer pour une seule instance de rédacteur</title>
-      
+
       <para>
         Pour filtrer seulement sur un instance spécifique de rédacteur, employer la méthode <code>addFilter</code> de ce rédacteur :
-      
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -59,7 +59,7 @@ $logger->info("Message d'information");
 // écrit dans les 2 logs
 $logger->emerg("Message d'urgence");
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
   </sect2>
 </sect1>

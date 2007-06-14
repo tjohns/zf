@@ -7,7 +7,7 @@
     <para>
      La méthode <code>Zend_Pdf::save($filename, $updateOnly = false)</code> sauvegarde un document dans un fichier.
      Si <code>$updateOnly</code> est à true, alors seulement les nouvelles sections PDF sont ajoutées au fichier.
-	 Sinon le fichier est écrasé.
+     Sinon le fichier est écrasé.
     </para>
 
     <para>

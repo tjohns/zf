@@ -1,7 +1,7 @@
 <sect1 id="zend.search.lucene.extending">
-	<title>Extensibilité</title>
+    <title>Extensibilité</title>
 
-	<sect2 id="zend.search.lucene.extending.analysis">
+    <sect2 id="zend.search.lucene.extending.analysis">
         <title>Analyse textuelle</title>
         <para>
             La classe <code>Zend_Search_Lucene_Analysis_Analyzer</code> est utilisée par l'indexeur pour tokenizer les champs
@@ -76,7 +76,7 @@ class Mon_Analyseur extends Zend_Search_Lucene_Analysis_Analyzer_Common
 
             $termStartPosition = $position;
 
-            // lecture du token 
+            // lecture du token
             while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
                 $position++;
             }
@@ -107,7 +107,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </sect2>
 
     <sect2 id="zend.search.lucene.extending.scoring">
-		<title>Algorithme de scoring</title>
+        <title>Algorithme de scoring</title>
         <para>
             Le score d'une requête <literal>q</literal> pour un document <literal>d</literal> est définis comme ceci :
         </para>
@@ -144,8 +144,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            La présence d'une large portion de termes de requête indique une meilleure correspondance avec la requête, 
-            ainsi les implémentations de cette méthode retournent des plus grandes valeurs quand le ratio entre 
+            La présence d'une large portion de termes de requête indique une meilleure correspondance avec la requête,
+            ainsi les implémentations de cette méthode retournent des plus grandes valeurs quand le ratio entre
             ces paramètres est élevé, et des plus petites valeurs quand le ratio entre eux est faible.
         </para>
 
@@ -200,10 +200,10 @@ $mySimilarity = new MaSimilarite();
 Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 
 ?>]]></programlisting>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.extending.storage">
-		<title>API de Stockage</title>
+    <sect2 id="zend.search.lucene.extending.storage">
+        <title>API de Stockage</title>
         <para>
             Une classe abstraite Zend_Search_Lucene_Storage_Directory définit les fonctionnalités relatives au répertoires.
         </para>
@@ -217,8 +217,8 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
         </para>
 
         <para>
-            Si une chaîne est utilisée comme entrée dans le constructeur de Zend_Search_Lucene, 
-            alors le lecteur d'index (objet Zend_Search_Lucene) le traite comme un chemin du système de fichier, 
+            Si une chaîne est utilisée comme entrée dans le constructeur de Zend_Search_Lucene,
+            alors le lecteur d'index (objet Zend_Search_Lucene) le traite comme un chemin du système de fichier,
             et instantie un objet Zend_Search_Lucene_Storage_Directory_Filesystem de lui-même.
         </para>
 
@@ -318,18 +318,18 @@ abstract function getFileObject($filename);
         </para>
 
         <para>
-            La méthode <code>getFileObject($filename)</code> de la classe Zend_Search_Lucene_Storage_Directory 
+            La méthode <code>getFileObject($filename)</code> de la classe Zend_Search_Lucene_Storage_Directory
             retourne un objet Zend_Search_Lucene_Storage_File.
         </para>
         <para>
-            La classe abstraite Zend_Search_Lucene_Storage_File implemente l'abstraction des 
+            La classe abstraite Zend_Search_Lucene_Storage_File implemente l'abstraction des
             fichiers et de la lecture des fichiers d'index.
         </para>
         <para>
             Vous devez bien sur étendre la classe Zend_Search_Lucene_Storage_File pour votre implémentation de Directory.
         </para>
         <para>
-            Seules deux méthodes de la classe Zend_Search_Lucene_Storage_File doit être surchargé 
+            Seules deux méthodes de la classe Zend_Search_Lucene_Storage_File doit être surchargé
             dans votre implementation:
 
         <programlisting><![CDATA[<?php
@@ -369,7 +369,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
 ?>]]></programlisting>
         </para>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

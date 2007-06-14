@@ -18,7 +18,7 @@
         <title>Charger des fichiers</title>
 
         <para>
-            La méthode statique <code>Zend_Loader::loadFile()</code> charge un fichier PHP, qui peut contenir du code PHP arbitraire. Cette méthode enveloppe la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink>, et lance une exception <code>Zend_Exception</code> si le fichier n'existe pas. 
+            La méthode statique <code>Zend_Loader::loadFile()</code> charge un fichier PHP, qui peut contenir du code PHP arbitraire. Cette méthode enveloppe la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink>, et lance une exception <code>Zend_Exception</code> si le fichier n'existe pas.
         </para>
 
         <example id="zend.loader.file.example">
@@ -31,15 +31,15 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
     </example>
 
         <para>
-            L'argument <code>$filename</code> définit le nom du fichier à charger, et il ne doit contenir aucune information concernant son chemin d'accès. Une vérification de sécurité est effectuée sur <code>$filename</code>. Le fichier <code>$filename</code> ne peut contenir que des caractères alphanumérique, des tirets ("-"), des tirets-bas ("_") ou des points ("."). Aucune de ces restrictions ne s'applique à l'argument <code>$dirs</code>. 
+            L'argument <code>$filename</code> définit le nom du fichier à charger, et il ne doit contenir aucune information concernant son chemin d'accès. Une vérification de sécurité est effectuée sur <code>$filename</code>. Le fichier <code>$filename</code> ne peut contenir que des caractères alphanumérique, des tirets ("-"), des tirets-bas ("_") ou des points ("."). Aucune de ces restrictions ne s'applique à l'argument <code>$dirs</code>.
         </para>
 
         <para>
-            L'argument <code>$dirs</code> définit les dossiers où rechercher le fichier. Si <code>NULL</code>, la recherche s'effectuera uniquement dans les dossiers définis par la variable <code>include_path</code>. Si c'est une chaîne ou un tableau, le ou les répertoires spécifiés seront scannés, ainsi que les dossiers définis par la variable <code>include_path</code>. 
+            L'argument <code>$dirs</code> définit les dossiers où rechercher le fichier. Si <code>NULL</code>, la recherche s'effectuera uniquement dans les dossiers définis par la variable <code>include_path</code>. Si c'est une chaîne ou un tableau, le ou les répertoires spécifiés seront scannés, ainsi que les dossiers définis par la variable <code>include_path</code>.
         </para>
 
         <para>
-            L'argument <code>$once</code> est un booléen. Si <code>TRUE</code>, <code>Zend_Loader::loadFile()</code> utilise la fonction PHP <ulink url="http://php.net/include"><code>include_once()</code></ulink> pour charger le fichier sinon la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink> est utilisée. 
+            L'argument <code>$once</code> est un booléen. Si <code>TRUE</code>, <code>Zend_Loader::loadFile()</code> utilise la fonction PHP <ulink url="http://php.net/include"><code>include_once()</code></ulink> pour charger le fichier sinon la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink> est utilisée.
         </para>
 
     </sect2>
@@ -104,7 +104,7 @@ if (Zend_Loader::isReadable($filename)) {
         </example>
 
         <para>
-            L'argument <code>$filename</code> spécifie le nom du fichier à vérifier. Il peut contenir des informations concernant le chemin d'accès. Cette méthode enveloppe la fonction PHP <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>. La fonction PHP ne recherche pas le fichier spécifié dans les répertoires de l'<code>include_path</code>, contrairement à <code>Zend_Loader::isReadable()</code>. 
+            L'argument <code>$filename</code> spécifie le nom du fichier à vérifier. Il peut contenir des informations concernant le chemin d'accès. Cette méthode enveloppe la fonction PHP <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>. La fonction PHP ne recherche pas le fichier spécifié dans les répertoires de l'<code>include_path</code>, contrairement à <code>Zend_Loader::isReadable()</code>.
         </para>
 
     </sect2>

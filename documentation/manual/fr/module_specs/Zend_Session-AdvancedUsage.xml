@@ -157,7 +157,7 @@ $s->setExpirationSeconds(5, 'a'); // expire seulement pour la clé "a" dans 5 se
 // expiration de tout l'espace de nommage dans 5 "hops"
 $s->setExpirationHops(5);
 
-$s->setExpirationSeconds(60);                  
+$s->setExpirationSeconds(60);
 // L'espace de nommage "expireAll" sera marqué "expired"
 // soit à la première requête reçue après 60 secondes,
 // soit dans 5 hops,

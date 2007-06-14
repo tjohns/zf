@@ -97,10 +97,10 @@ echo $view->render(...);
         <para>
             Bien que PHP lui-même un moteur de gabarit puissant, beaucoup de développeurs pensent que c'est beaucoup trop puissant ou complexe pour les graphistes/intégrateurs et veulenbt utiliser un moteur de template alternatif. Zend_View fournit deux méchanismes pour faire cela, le premier au travers les scripts de vues, le second en implémentant Zend_View_Interface.
         </para>
-    
+
         <sect3 id="zend.view.scripts.templates.scripts">
             <title>Système de gabarit utilisant les scripts de vues</title>
-            
+
             <para>
                 Un script de vue peut être utilisé pour instancier et manipuler un objet de gabarit séparé, comme un gabarit de type PHPLIB. Le script de vue pour ce type d'activité pourrait ressembler à ceci :
             </para>
@@ -368,7 +368,7 @@ $rendered = $view->render('bookinfo.tpl');
 ]]></programlisting>
 
         </sect3>
-    
+
     </sect2>
 
 </sect1>

@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.searching">
-	<title>Rechercher dans l'index</title>
+    <title>Rechercher dans l'index</title>
 
-	<sect2 id="zend.search.lucene.searching.query-parser">
-		<title>Créer des requêtes</title>
+    <sect2 id="zend.search.lucene.searching.query-parser">
+        <title>Créer des requêtes</title>
 
         <para>
             Il existe deux méthode pour rechercher dans l'index.
@@ -11,10 +11,10 @@
         </para>
 
         <para>
-            
+
             Avant de choisir d'utiliser le Query Parser fournit, veuillez prendre en compte
             les points suivants :
-            
+
             <orderedlist>
                 <listitem>
                     <para>
@@ -24,21 +24,21 @@
                         &quot;human-entered&quot;, pas pour du texte &quot;program-generated&quot;.
                     </para>
                 </listitem>
-                <listitem>                
+                <listitem>
                     <para>
                         Untokenized fields are best added directly to queries, and not through
                         the query parser. If a field's values are generated programmatically
                         by the application, then so should query clauses for this field.
-                    
+
                         Un analyseur utilisé par le Query Parser est créé pour convertir le texte
-                        &quot;human-entered&quot; en termes. Les valeurs générées par le programme, 
+                        &quot;human-entered&quot; en termes. Les valeurs générées par le programme,
                         comme des dates, des mots-clés, etc, devraient être constamment générée par le programme.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         Dans la formulation d'une requête, les champs généralement texte devraient
-                        utiliser le Query Parser. Il est mieux d'ajouter tous les autres, 
+                        utiliser le Query Parser. Il est mieux d'ajouter tous les autres,
                         comme les dates, les mots-clés, etc au traver de l'API que requête.
                         Un champ avec un jeu de valeurs limites, qui peut-être défini via un menu déroulant,
                         ne devrait pas être ajouté à la requête qui sera ensuite parsée, mais devrait
@@ -75,10 +75,10 @@ $index->find($query);
             à <code>find()</code> doit être passé dans <code>strtolower()</code>, sinon il n'y aura peut-être
             aucune correspondance.
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.searching.results">
-		<title>Résultats de recherche</title>
+    <sect2 id="zend.search.lucene.searching.results">
+        <title>Résultats de recherche</title>
         <para>
             Le résultat de recherche est un tableau d'objets Zend_Search_Lucene_Search_QueryHit. Chacun possède deux
             propriétés : <code>$hit->document</code> est le nombre de document dans l'index et <code>$hit->score</code>
@@ -87,9 +87,9 @@ $index->find($query);
 
         <para>
             L'objet Zend_Search_Lucene_Search_QueryHit expose aussi chaque champ de Zend_Search_Lucene_Document trouvé par le hit,
-            comme une propriété de ce hit. Dans cet exempl, un hit est retourné et le document correspondant à deux champs : 
+            comme une propriété de ce hit. Dans cet exempl, un hit est retourné et le document correspondant à deux champs :
             titre et auteur.
-            
+
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -112,15 +112,15 @@ foreach ($hits as $hit) {
         <para>
           Optionnellement, l'objet Zend_Search_Lucene_Document orginial peut-être retourné à partir de
           Zend_Search_Lucene_Search_QueryHit.
-          
+
           Vous pouvez retrouver les parties stockées du document en utilisant la méthode <code>getDocument()</code>
           de l'objet index, et ensuite les récupérer par la méthode <code>getFieldValue()</code> :
         <programlisting role="php"><![CDATA[<?php
 
     require_once('Zend/Search/Lucene.php');
-    
+
     $index = new Zend_Search_Lucene('/donnees/mon-index');
-    
+
     $hits = $index->find($query);
     foreach ($hits as $hit) {
 
@@ -150,11 +150,11 @@ foreach ($hits as $hit) {
             dans les indexes et doit être retrouvé à partir d'eux.
         </para>
 
-	</sect2>
+    </sect2>
 
 
-	<sect2 id="zend.search.lucene.searching.results-scoring">
-		<title>Score de résultats</title>
+    <sect2 id="zend.search.lucene.searching.results-scoring">
+        <title>Score de résultats</title>
         <para>
             Zend_Search_Lucene utilise le même algorithme de scoring que Java Lucene.
             Les résultats de recherche sont triés par score, dans l'ordre décroissant.
@@ -184,11 +184,11 @@ foreach ($hits as $hit) {
 
         <para>
             La classe Zend_Search_Lucene_Search_Similarity est utilisée pour calculer le score.
-            Pour plus de détails, lisez <link linkend="zend.search.lucene.extending.scoring">Extensibilité. Algorithme des score.</link>          
+            Pour plus de détails, lisez <link linkend="zend.search.lucene.extending.scoring">Extensibilité. Algorithme des score.</link>
             Zend_Search_Lucene_Search_Similarity class is used to calculate score.
         </para>
 
-	</sect2>
+    </sect2>
 
 </sect1>
 

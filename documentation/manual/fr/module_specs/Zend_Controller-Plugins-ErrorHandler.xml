@@ -47,14 +47,14 @@
 
         <listitem>
             <para>
-                <code>setErrorHandlerController()</code> sets the controller 
+                <code>setErrorHandlerController()</code> sets the controller
                 to use.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <code>setErrorHandlerAction()</code> sets the controller action 
+                <code>setErrorHandlerAction()</code> sets the controller action
                 to use.
             </para>
         </listitem>

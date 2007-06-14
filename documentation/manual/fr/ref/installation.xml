@@ -18,7 +18,7 @@
             </listitem>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/snapshot">Téléchargement du dernier instantané nocturne :</ulink> 
+                    <ulink url="http://framework.zend.com/download/snapshot">Téléchargement du dernier instantané nocturne :</ulink>
                     Pour ceux qui veulent être à l'avant-garde, les instantanés nocturnes représentent le dernier progrès de développement du Zend Framework. Ces instantanés sont empaquetés avec la documentation en anglais seulement ou dans toutes les langues disponibles. Si vous prévoyez de travailler avec les derniers développements du Zend Framework, considérer plutôt l'emploi d'un client subversion (SVN).
                 </para>
             </listitem>

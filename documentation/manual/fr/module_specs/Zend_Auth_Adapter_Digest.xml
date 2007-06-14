@@ -46,7 +46,7 @@
         <title>Spécifications</title>
 
         <para>
-            L'adaptateur d'authentification Digest, <code>Zend_Auth_Adapter_Digest</code> requiert plusieurs paramètres d'entrée : 
+            L'adaptateur d'authentification Digest, <code>Zend_Auth_Adapter_Digest</code> requiert plusieurs paramètres d'entrée :
             <itemizedlist>
                 <listitem>
                     <para>

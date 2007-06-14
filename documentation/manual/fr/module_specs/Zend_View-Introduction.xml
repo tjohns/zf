@@ -93,7 +93,7 @@ echo $view->render('booklist.php');
         </para>
 
     </sect2>
-    
+
     <sect2 id="zend.view.introduction.options">
         <title>Options</title>
 

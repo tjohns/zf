@@ -65,7 +65,7 @@ $front->setParam('noViewRenderer', true);
 
         <sect3 id="zend.controller.front.methods.primary.getinstance">
             <title>getInstance()</title>
-            
+
             <para>
                 <code>getInstance()</code> est utilisé pour récupérer une instance du contrôleur frontal. Comme le contrôleur frontal implémente un motif de Singleton, c'est aussi le seul moyen possible pour instancier un objet de contrôleur frontal.
             </para>
@@ -111,7 +111,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
                 Vous pouvez récupérer les réglages courants des répertoires du contrôleur en utilisant <code>getControllerDirectory()</code> ; ceci retournera un tableau des paires modules/chemins.
             </para>
         </sect3>
-            
+
         <sect3 id="zend.controller.front.methods.primary.dispatch">
             <title>dispatch()</title>
 
@@ -146,7 +146,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <title>run()</title>
 
             <para>
-                <code>Zend_Controller_Front::run($path)</code> est une méthode statique prenant simplement un chemin vers un répertoire contenant des contrôleurs. Elle recupère l'instance de contrôleur frontal (via <link linkend="zend.controller.front.methods.primary.getinstance">getInstance()</link>), enregistre le chemin fourni par l'intermédiaire de <link linkend="zend.controller.front.methods.primary.setcontrollerdirectory">setControllerDirectory()</link>, et finalement réalise le <link linkend="zend.controller.front.methods.primary.dispatch">dispatchage</link>.                
+                <code>Zend_Controller_Front::run($path)</code> est une méthode statique prenant simplement un chemin vers un répertoire contenant des contrôleurs. Elle recupère l'instance de contrôleur frontal (via <link linkend="zend.controller.front.methods.primary.getinstance">getInstance()</link>), enregistre le chemin fourni par l'intermédiaire de <link linkend="zend.controller.front.methods.primary.setcontrollerdirectory">setControllerDirectory()</link>, et finalement réalise le <link linkend="zend.controller.front.methods.primary.dispatch">dispatchage</link>.
             </para>
 
             <para>

@@ -92,7 +92,7 @@ print_r( $server->system->listMethods() );
             <programlisting role="php"><![CDATA[...
 /** 2 paramètres sont passés dans cette procédure
  *  Le premier paramètre est une chaîne qui va être convertie automatiquement dans un type XML-RPC
- *  Le second paramètres et un tableau associatif qui va être converti dans une structure XML-RPC 
+ *  Le second paramètres et un tableau associatif qui va être converti dans une structure XML-RPC
  */
 
 $p1 = 'parameter 1';
@@ -233,7 +233,7 @@ $service->serviceProcedure($p1, $p2);
             Sans le fichier WSDL, l'utilisateur risque d'avoir un problème pour connaitre ces types.
         </para>
         <para>
-            La façon dont cela a été résolu dans le protocole XML-RPC est avec une procédure spéciale du service appelée <code>system.methodSignature</code>. 
+            La façon dont cela a été résolu dans le protocole XML-RPC est avec une procédure spéciale du service appelée <code>system.methodSignature</code>.
             Cette procédure prend un nom de procédure en paramètre, et retourne sa signature, la signature est le type de paramètre nécéssaire, et le
             type de la valeur de retour de cette procédure.
         </para>
@@ -270,7 +270,7 @@ $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc');
 file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXml());
 
 /*
-  L'objet $service contient toutes les signatures du server XML-RPC, 
+  L'objet $service contient toutes les signatures du server XML-RPC,
   lorsque serviceProcedure est appelé, son paramètre ($param) est converti
   dans le type nécessaire, conformément à la signature de la procédure.
 */
@@ -288,7 +288,7 @@ $signature_file_xml = file_get_contents('/tmp/xmlrpc-signatures/example.xml');
 $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', $signature_file_xml);
 
 /*
-  L'objet $service contient toutes les signatures du server XML-RPC, 
+  L'objet $service contient toutes les signatures du server XML-RPC,
   lorsque serviceProcedure est appelé, son paramètre ($param) est converti
   dans le type nécessaire, conformément à la signature de la procédure.
 */
@@ -333,7 +333,7 @@ $service->serviceProcedure();
 
 $response = $service->__getResponse();
 // $response est la variable PHP convertie depuis la valeur de retour XML-RPC
-  
+
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
 // $response est une chaîne XML représentant la valeur de retour de la procédure
 

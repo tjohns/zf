@@ -36,25 +36,25 @@
         <para>
             Avec Zend_Acl, créer une Ressource est très simple. Zend_Acl fournit
             <code>Zend_Acl_Resource_Interface</code> pour faciliter la tâche aux développeurs.
-            Une classe a simplement besoin d'implémenter cette interface, qui consiste en une seule méthode, <code>getResourceId()</code>, pour que 
+            Une classe a simplement besoin d'implémenter cette interface, qui consiste en une seule méthode, <code>getResourceId()</code>, pour que
             Zend_Acl considère l'objet comme étant une Ressource.
             Par ailleurs, <code>Zend_Acl_Resource</code> est inclu dans Zend_Acl comme une implémentation basique de Ressource que les développeurs peuvent étendre si besoin.
         </para>
         <para>
-            Zend_Acl fournit une structure en arbre à laquelle plusieurs Ressources (ou "zone sous contrôle d'accès") 
-            peuvent être ajoutées. Puisque les Ressources sont sauvées dans cet arbre, elles peuvent être organisées 
-            du général (via la racine de l'arbre) jusqu'au particulier (via les feuilles de l'arbre). Les requêtes envers 
-            une Ressource spécifique vont automatiquement entraîner la recherche de règles sur ses parents au sein de 
+            Zend_Acl fournit une structure en arbre à laquelle plusieurs Ressources (ou "zone sous contrôle d'accès")
+            peuvent être ajoutées. Puisque les Ressources sont sauvées dans cet arbre, elles peuvent être organisées
+            du général (via la racine de l'arbre) jusqu'au particulier (via les feuilles de l'arbre). Les requêtes envers
+            une Ressource spécifique vont automatiquement entraîner la recherche de règles sur ses parents au sein de
             la structure hiérarchique des Ressources, ce qui permet un héritage simple des règles.
-            Par exemple, si une règle par défaut doit être appliquée à tous les batiments d'une ville, on pourra simplement 
-            assigner la règle à la ville elle-même, au lieu de la répéter à tous les batiments. Mais certains batiments 
-            peuvent nécessiter des règles spécifiques, et ceci peut se faire aisément avec Zend_Acl en assignant les règles 
-            nécessaires à chaque batiment de la ville qui nécessite une exception. Une Ressource peut hériter d'un seul 
+            Par exemple, si une règle par défaut doit être appliquée à tous les batiments d'une ville, on pourra simplement
+            assigner la règle à la ville elle-même, au lieu de la répéter à tous les batiments. Mais certains batiments
+            peuvent nécessiter des règles spécifiques, et ceci peut se faire aisément avec Zend_Acl en assignant les règles
+            nécessaires à chaque batiment de la ville qui nécessite une exception. Une Ressource peut hériter d'un seul
             parent Ressource, qui hérite lui même de son propre parent, et ainsi de suite.
         </para>
         <para>
-            Zend_Acl supporte aussi des privilèges pour chaque Ressources (e.g., "créer", "lire", "modifier", "supprimer"), 
-            et le développeur peut assigner des règles qui affectent tous les privilèges ou seuls certains privilèges d'une 
+            Zend_Acl supporte aussi des privilèges pour chaque Ressources (e.g., "créer", "lire", "modifier", "supprimer"),
+            et le développeur peut assigner des règles qui affectent tous les privilèges ou seuls certains privilèges d'une
             Ressource.
         </para>
     </sect2>
@@ -62,17 +62,17 @@
     <sect2 id="zend.acl.introduction.roles">
         <title>A propos des Rôles</title>
         <para>
-            Comme pour les Ressources, créer un Rôle est très simple. Zend_Acl propose 
-            <code>Zend_Acl_Role_Interface</code> pour faciliter le travail des développeurs. Une classe doit uniquement 
-            implémenter cette interface qui consiste en une seule méthode <code>getRoleId()</code>, pour que Zend_Acl 
-            considère l'objet comme un Rôle. De plus, <code>Zend_Acl_Role</code> est inclu dans Zend_Acl comme une 
+            Comme pour les Ressources, créer un Rôle est très simple. Zend_Acl propose
+            <code>Zend_Acl_Role_Interface</code> pour faciliter le travail des développeurs. Une classe doit uniquement
+            implémenter cette interface qui consiste en une seule méthode <code>getRoleId()</code>, pour que Zend_Acl
+            considère l'objet comme un Rôle. De plus, <code>Zend_Acl_Role</code> est inclu dans Zend_Acl comme une
             implémentation basique de Rôle que les développeurs peuvent étendre si besoin.
         </para>
         <para>
-            Dans Zend_Acl, un Rôle peut hériter de un ou plusieurs Rôles. Ceci permet de supporter l'héritage de règles 
-            à travers plusieurs Rôles. Par exemple, un Rôle utilisateur, comme "eric", peut appartenir à un ou plusieurs 
-            Rôles d'action, tels que "éditeur" ou "administrateur". Le développeur peut créer des règles pour "éditeur" et 
-            "administrateur" séparément, et "eric" va hériter des règles des deux sans avoir à définir des règles 
+            Dans Zend_Acl, un Rôle peut hériter de un ou plusieurs Rôles. Ceci permet de supporter l'héritage de règles
+            à travers plusieurs Rôles. Par exemple, un Rôle utilisateur, comme "eric", peut appartenir à un ou plusieurs
+            Rôles d'action, tels que "éditeur" ou "administrateur". Le développeur peut créer des règles pour "éditeur" et
+            "administrateur" séparément, et "eric" va hériter des règles des deux sans avoir à définir des règles
             directement pour "eric".
         </para>
         <para>
@@ -83,42 +83,42 @@
             <title>Héritages multiples entre Rôles</title>
              <para>
                  Le code ci-dessous définit trois Rôles de base - "<code>invite</code>", "<code>membre</code>", et
-                 "<code>admin</code>" - desquels d'autres Rôles peuvent hériter. Ensuite, un Rôle identifié par 
-                 "<code>unUser</code>" est créé et hérite des trois autres Rôles. 
-                 
+                 "<code>admin</code>" - desquels d'autres Rôles peuvent hériter. Ensuite, un Rôle identifié par
+                 "<code>unUser</code>" est créé et hérite des trois autres Rôles.
+
                  L'ordre selon lequel ces Rôles apparaissent dans le tableau <code>$parents</code>  est important.
                  Lorsque cela est nécessaire Zend_Acl recherche les règles d'accès définies non seulement pour le Rôle demandé (ici "<code>unUser</code>"), mais aussi pour les autres Rôles desquels le Rôle recherché hérite (ici "<code>invite</code>", "<code>membre</code>", et "<code>admin</code>"):
              </para>
              <programlisting role="php"><![CDATA[<?php
  require_once 'Zend/Acl.php';
  $acl = new Zend_Acl();
- 
+
  require_once 'Zend/Acl/Role.php';
  $acl->addRole(new Zend_Acl_Role('invite'))
      ->addRole(new Zend_Acl_Role('membre'))
      ->addRole(new Zend_Acl_Role('admin'));
- 
+
  $parents = array('invite', 'membre', 'admin');
  $acl->addRole(new Zend_Acl_Role('unUtilisateur'), $parents);
- 
+
  require_once 'Zend/Acl/Resource.php';
  $acl->add(new Zend_Acl_Resource('uneResource'));
- 
+
  $acl->deny('invite', 'uneResource');
  $acl->allow('membre', 'uneResource');
- 
+
  echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';?>]]></programlisting>
              <para>
-                 Puisqu'il n'y a pas de règle spécifiquement définie pour le Rôle "<code>unUser</code>" et 
+                 Puisqu'il n'y a pas de règle spécifiquement définie pour le Rôle "<code>unUser</code>" et
                  "<code>uneResource</code>", Zend_Acl doit rechercher des règles qui pourraient être définies
                  pour des Rôles dont "<code>unUser</code>" hérite.
                  Premièrement, le Rôle "<code>admin</code>" est contrôlé, et il n'y a pas de règle d'accès définie pour lui.
-                 Ensuite, le Rôle "<code>membre</code>" est visité, et Zend_Acl trouve qu'il y a une règle qui spécifie que 
+                 Ensuite, le Rôle "<code>membre</code>" est visité, et Zend_Acl trouve qu'il y a une règle qui spécifie que
                  "<code>membre</code>" a un accès autorisé à "<code>uneResource</code>".
              </para>
              <para>
-                 Si Zend_Acl continuait à examiner toutes les règles de tous les Rôles parents, il trouverait que 
-                 "<code>invite</code>" est interdit d'accès à "<code>uneResource</code>". Ceci introduit une ambiguité puisque maintenant 
+                 Si Zend_Acl continuait à examiner toutes les règles de tous les Rôles parents, il trouverait que
+                 "<code>invite</code>" est interdit d'accès à "<code>uneResource</code>". Ceci introduit une ambiguité puisque maintenant
                  "<code>unUser</code>" est à la fois autorisé et interdit d'accès à "<code>uneResource</code>", puisqu'il
                  hérite de règles opposées de ses différents parents.
              </para>
@@ -163,13 +163,13 @@ $acl = new Zend_Acl();?>]]></programlisting>
         <para>
         Les systèmes de gestion de contenu vont pratiquement toujours nécessiter une hiérarchie de permissions afin de déterminer
         les droits de rédaction de ses utilisateurs.
-        Il pourrait y avoir un groupe "Invités" qui donne accès aux démonstrations, un groupe "Staff" pour la majorité des utilisateurs du CMS 
+        Il pourrait y avoir un groupe "Invités" qui donne accès aux démonstrations, un groupe "Staff" pour la majorité des utilisateurs du CMS
         qui réalisent la plupart du travail quotidien, un groupe "editeur" pour ceux qui sont responsables de la publication, l'archivage,
-        la relecture et la suppression, et enfin un groupe "administrateur" dont les tâches incluent toutes les tâches des autres groupes 
+        la relecture et la suppression, et enfin un groupe "administrateur" dont les tâches incluent toutes les tâches des autres groupes
         plus des tâches de maintenance, de gestion des utilisateurs, configuration et backup/export.
         Cet ensemble de permissions peut être représenté dans un registre de Rôles, permettant à chaque groupe d'hériter des privilèges des groupes "parents".
-	Les permissions peuvent être rendues de la manière suivante :
-	</para>
+    Les permissions peuvent être rendues de la manière suivante :
+    </para>
 
         <table>
           <title>Contrôles d'Accès pour un exemple de CMS</title>
@@ -208,7 +208,7 @@ $acl = new Zend_Acl();?>]]></programlisting>
 
         <para>
             Pour cet exemple, <code>Zend_Acl_Role</code> est utilisé, mais n'importe quel objet qui implémente
-            <code>Zend_Acl_Role_Interface</code> est acceptable. Ces groupes peuvent être ajoutés au registre 
+            <code>Zend_Acl_Role_Interface</code> est acceptable. Ces groupes peuvent être ajoutés au registre
             des Rôles comme suit:
         </para>
 
@@ -243,11 +243,11 @@ $acl->addRole(new Zend_Acl_Role('administrateur'));?>]]></programlisting>
         <title>Définir les Contrôles d'Accès</title>
 
         <para>
-        Maintenant que l'ACL contient les Rôles nécessaires, on peut établir des règles qui définissent 
-        comment les Ressources accèdent aux Rôles. Vous avez sans doute noté que nous n'avons défini aucune 
-        Ressource particulière pour cet exemple, ce qui est plus simple pour illustrer comment les règles 
+        Maintenant que l'ACL contient les Rôles nécessaires, on peut établir des règles qui définissent
+        comment les Ressources accèdent aux Rôles. Vous avez sans doute noté que nous n'avons défini aucune
+        Ressource particulière pour cet exemple, ce qui est plus simple pour illustrer comment les règles
         s'appliquent à toutes les Ressources.
-        Zend_Acl fournit une implémentation dans laquelle les règles doivent simplement être assignées du général 
+        Zend_Acl fournit une implémentation dans laquelle les règles doivent simplement être assignées du général
         au particulier, ce qui réduit le nombre de règles spécifiques à ajouter. Ceci grâce à l'héritage.
         </para>
 
@@ -287,7 +287,7 @@ $acl->allow('editeur', null, array('publier', 'archiver', 'supprimer'));
 $acl->allow('administrateur');?>]]></programlisting>
 
         <para>
-            Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont utilisées 
+            Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont utilisées
             pour indiquer que les règles s'appliquent à toutes les Ressources.
         </para>
 

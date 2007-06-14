@@ -11,14 +11,14 @@
         <title>Version de PHP requise</title>
 
         <para>
-            Zend Framework requière au minimum la version 5.1.4 de PHP. 
+            Zend Framework requière au minimum la version 5.1.4 de PHP.
             Quelques interfaces SPL comme <code>Countable</code> ne sont pas
             stables dans les versions précédentes de PHP.
         </para>
 
         <para>
             Zend Framework possède une collection étendue de tests automatisés,
-            que vous pouvez lancer avec PHPUnit 3.0 ou plus. Cette version de PHPUnit 
+            que vous pouvez lancer avec PHPUnit 3.0 ou plus. Cette version de PHPUnit
             nécessitent aussi une version 5.14 ou plus de PHP.
         </para>
 

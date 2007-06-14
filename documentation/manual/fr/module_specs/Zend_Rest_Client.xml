@@ -124,17 +124,17 @@ echo $result->firstname() .' '. $result->lastname();
         </note>
     </sect2>
 
-	<sect2 id="zend.rest.client.args">
-		<title>Arguments de requêtes</title>
+    <sect2 id="zend.rest.client.args">
+        <title>Arguments de requêtes</title>
 
-		<para>
+        <para>
             A moins que vous ne fassiez une demande à un service basé sur <code>Zend_Rest_Server</code>, il y a des chances que vous devez envoyer des arguments multiples avec votre requête. Ceci est fait en appelant une méthode avec le nom de l'argument, en passant la valeur comme premier (et seul) argument. Chacun de ces appels de méthode renvoie l'objet lui-même, tenant compte de l'enchaînement, ou de l'utilisation habituelle. Le premier appel, ou le premier argument si vous passez plus d'un argument, est toujours considéré comme la méthode en appelant un service <code>Zend_Rest_Server</code>.
-		</para>
+        </para>
 
-		<example>
-			<title>Affecter des arguments de requêtes</title>
+        <example>
+            <title>Affecter des arguments de requêtes</title>
 
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $client = new Zend_Rest_Client('http://example.org/rest');
 
 $client->arg('value1');
@@ -145,24 +145,24 @@ $client->get();
 
 $client->arg('value1')->arg2('value2')->get();
 ?>]]></programlisting>
-		</example>
+        </example>
 
-		<para>
+        <para>
             Les deux méthodes dans l'exemple ci-dessus, auront comme conséquence l'obtention des arguments suivants : <code>?method=arg&amp;arg1=value1&amp;arg=value1&amp;arg2=value2</code>
-		</para>
+        </para>
 
-		<para>
+        <para>
             Vous noterez que le premier appel de <code>$client->arg('value1');</code> a eu comme conséquence <code>method=arg&amp;arg1=value1</code> et <code>arg=value1</code> ; ceci afin que <code>Zend_Rest_Server</code> puisse comprendre la demande correctement, plutôt que d'exiger la connaissance préalable du service.
-		</para>
+        </para>
 
-		<warning>
-		    <title>Sévérité de Zend_Rest_Client</title>
+        <warning>
+            <title>Sévérité de Zend_Rest_Client</title>
 
-		    <para>
+            <para>
                 Tout service REST qui est strict au sujet des arguments qu'il reçoit échouera probablement en utilisant <code>Zend_Rest_Client</code>, en raison du comportement décrit ci-dessus. Ce n'est pas une pratique courante et ne devrait pas poser des problèmes.
-		    </para>
+            </para>
         </warning>
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

@@ -14,7 +14,7 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </example>
 
     <para>
-        L'argument <code>$var</code> définit l'expression ou la variable que l'on veut examiner avec <code>Zend_Debug::dump()</code>. 
+        L'argument <code>$var</code> définit l'expression ou la variable que l'on veut examiner avec <code>Zend_Debug::dump()</code>.
     </para>
 
     <para>
@@ -22,11 +22,11 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </para>
 
     <para>
-        Le booléen <code>$echo</code> indique s'il faut (ou non) afficher la sortie de <code>Zend_Debug::dump()</code>. Si <code>true</code>, la sortie sera affichée. Quel que soit l'état de <code>$echo</code>, la sortie est toujours retournée. 
+        Le booléen <code>$echo</code> indique s'il faut (ou non) afficher la sortie de <code>Zend_Debug::dump()</code>. Si <code>true</code>, la sortie sera affichée. Quel que soit l'état de <code>$echo</code>, la sortie est toujours retournée.
     </para>
 
     <para>
-        Il peut être utile de savoir que la méthode <code>Zend_Debug::dump()</code> enveloppe la fonction PHP <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>. Si le flux est reconnu à destination d'un contenu web, l'affichage de <code>var_dump()</code> est échappé avec <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink> et est enveloppé entre des balises (X)HTML <code>&lt;pre&gt; et &lt;/pre&gt;</code>. 
+        Il peut être utile de savoir que la méthode <code>Zend_Debug::dump()</code> enveloppe la fonction PHP <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>. Si le flux est reconnu à destination d'un contenu web, l'affichage de <code>var_dump()</code> est échappé avec <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink> et est enveloppé entre des balises (X)HTML <code>&lt;pre&gt; et &lt;/pre&gt;</code>.
     </para>
 
     <tip>

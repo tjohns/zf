@@ -31,7 +31,7 @@ foreach ($prototypes as $prototype) {
 
     // Récupère les prototypes des types de retour
     echo "Return type: ", $prototype->getReturnType(), "\n";
-    
+
     // Récupère les paramètres
     $parameters = $prototype->getParameters();
 

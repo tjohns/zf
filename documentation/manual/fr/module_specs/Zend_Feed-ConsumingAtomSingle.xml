@@ -2,16 +2,16 @@
     <title>Consommer une entrée Atom particulière</title>
 
     <para>
-        Les éléments Atom <code>&lt;entry&gt;</code> sont aussi valides tout 
-        seuls. Généralement l'URL d'une entrée constitue l'URL du flux suivie de 
-        <code>/&lt;idEntree&gt;</code>, par exemple 
-        <code>http://atom.exemple.com/flux/1</code> si on reprend l'URL que nous 
+        Les éléments Atom <code>&lt;entry&gt;</code> sont aussi valides tout
+        seuls. Généralement l'URL d'une entrée constitue l'URL du flux suivie de
+        <code>/&lt;idEntree&gt;</code>, par exemple
+        <code>http://atom.exemple.com/flux/1</code> si on reprend l'URL que nous
         avons utilisée ci-dessus.
     </para>
 
     <para>
-       Si vous lisez une entrée seule, vous obtiendrez toujours un objet 
-        <code>Zend_Feed_Atom</code> mais cette classe crééra automatiquement un 
+       Si vous lisez une entrée seule, vous obtiendrez toujours un objet
+        <code>Zend_Feed_Atom</code> mais cette classe crééra automatiquement un
         flux "anonyme" pour contenir l'entrée.
     </para>
 
@@ -29,8 +29,8 @@ $entree = $flux->current();
     </example>
 
     <para>
-        Vous pouvez aussi instancier directement la classe représentant les 
-entrées si vous êtes sûr que vous accédez à un document contenant une 
+        Vous pouvez aussi instancier directement la classe représentant les
+entrées si vous êtes sûr que vous accédez à un document contenant une
 seule balise <code>&lt;entry&gt;</code> :
     </para>
 

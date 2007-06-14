@@ -1,12 +1,12 @@
 <sect1 id="zend.json.introduction">
     <title>Introduction</title>
     <para>
-         <code>Zend_Json</code> fournit des méthodes pratiques permettant de convertir du code PHP natif en notation JSON, et vice versa. 
+         <code>Zend_Json</code> fournit des méthodes pratiques permettant de convertir du code PHP natif en notation JSON, et vice versa.
          Pour plus d'informations concernant JSON, visitez le site du <ulink url="http://www.json.org/">projet JSON</ulink>.
     </para>
     <para>
-        La notation JSON (JavaScript Object Notation [Ndt : Notation-Objet JavaScript]) peut être utilisée comme un système 
-        d'échange de données entre JavaScript et d'autres langages. Comme la notation JSON peut être évaluée directement par 
+        La notation JSON (JavaScript Object Notation [Ndt : Notation-Objet JavaScript]) peut être utilisée comme un système
+        d'échange de données entre JavaScript et d'autres langages. Comme la notation JSON peut être évaluée directement par
         JavaScript, c'est une alternative plus simple que XML pour les interfaces AJAX.
     </para>
 </sect1>

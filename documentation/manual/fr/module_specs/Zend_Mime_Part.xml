@@ -1,31 +1,31 @@
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
-    
-	<sect2 id="zend.mime.part.introduction">
-	  <title>Introduction</title>
-	
-	  <para>
-	    Cette classe représente une seule partie d'une message MIME. 
-	    Elle contient le contenu actuel de la partie du message ainsi que des informations
-	    sur son encodage, le content type et le nom de fichier original.
-	    Elle fournie une méthode pour générer une chaîne de caractères à partir de données
-	    stockées. Les objets <code>Zend_Mime_Part</code> peuvent-être ajoutés à 
-	    <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> pour assembler
-	    un message multipart complet.
-	  </para>
-	</sect2>
-	  
-	<sect2 id="zend.mime.part.instantiation">
-		<title>Instantiation</title>
-	
-		<para>
-		<code>Zend_Mime_Part</code> est instantiée avec une chaîne de caractères qui
-		représente le contenu de cette nouvelle partie. Le type doit être OCTET-STREAM, 
-		et l'encodage 8 bits. Après instantiation de <code>Zend_Mime_Part</code>, les métas-informations
-		peuvent être définies en accédant directement aux attributs :
-		</para>
-	
-	<programlisting role="php"><![CDATA[<?php
+
+    <sect2 id="zend.mime.part.introduction">
+      <title>Introduction</title>
+
+      <para>
+        Cette classe représente une seule partie d'une message MIME.
+        Elle contient le contenu actuel de la partie du message ainsi que des informations
+        sur son encodage, le content type et le nom de fichier original.
+        Elle fournie une méthode pour générer une chaîne de caractères à partir de données
+        stockées. Les objets <code>Zend_Mime_Part</code> peuvent-être ajoutés à
+        <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> pour assembler
+        un message multipart complet.
+      </para>
+    </sect2>
+
+    <sect2 id="zend.mime.part.instantiation">
+        <title>Instantiation</title>
+
+        <para>
+        <code>Zend_Mime_Part</code> est instantiée avec une chaîne de caractères qui
+        représente le contenu de cette nouvelle partie. Le type doit être OCTET-STREAM,
+        et l'encodage 8 bits. Après instantiation de <code>Zend_Mime_Part</code>, les métas-informations
+        peuvent être définies en accédant directement aux attributs :
+        </para>
+
+    <programlisting role="php"><![CDATA[<?php
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;
@@ -34,52 +34,52 @@ public $filename;
 public $description;
 public $charset;
 ?>]]></programlisting>
-	</sect2>
-	
+    </sect2>
+
   <sect2 id="zend.mime.part.methods">
     <title>Méthods for générer la partie du message part en une chaîne de caractères</title>
 
     <para>
     <code>-&gt;getContent()</code> retourne le contenu encodé de MimePart en une chaîne de caractères
-    en utilisant l'encodage spécifié dans l'attribut $encoding. 
+    en utilisant l'encodage spécifié dans l'attribut $encoding.
     Les valeurs valides sont ZMime::ENCODING_*, le conversions de jeux de caractères ne sont pas effectuées.
     </para>
 
     <para>
-	    <code>-&gt;getHeaders()</code> returns the Mime-Headers for the
-	    MimePart as generated from the information in the publicly accessable
-	    attributes. The attributes of the object need to be set correctly before
-	    this method is called. 
-	    <itemizedlist>
-	        <listitem>
+        <code>-&gt;getHeaders()</code> returns the Mime-Headers for the
+        MimePart as generated from the information in the publicly accessable
+        attributes. The attributes of the object need to be set correctly before
+        this method is called.
+        <itemizedlist>
+            <listitem>
                 <para>
                     <code>$charset</code> doit être définit dans le charset actuel du contenu, si c'est un type text (Text ou HTML).
                 </para>
-	        </listitem>
-	        <listitem>
+            </listitem>
+            <listitem>
                 <para>
                     <code>$id</code> doit être définit pour identifier un content-id pour les images d'une mail HTML.
                 </para>
-	        </listitem>
-	        <listitem>
+            </listitem>
+            <listitem>
                 <para>
-	                <code>$filename</code> contient le nom que le fichier aura lors du téléchargement.
+                    <code>$filename</code> contient le nom que le fichier aura lors du téléchargement.
                 </para>
-	        </listitem>
-	        <listitem>
+            </listitem>
+            <listitem>
                 <para>
-	                <code>$disposition</code> définit si le fichier doit être traité comme une pièce jointe ou s'il est utilisé
-	                dans le mail (HTML).
+                    <code>$disposition</code> définit si le fichier doit être traité comme une pièce jointe ou s'il est utilisé
+                    dans le mail (HTML).
                 </para>
-	        </listitem>
-	        <listitem>
+            </listitem>
+            <listitem>
                 <para>
-	                <code>$description</code> sert uniquement pour information.
+                    <code>$description</code> sert uniquement pour information.
                 </para>
-	        </listitem>
-	      </itemizedlist>
+            </listitem>
+          </itemizedlist>
       </para>
-	</sect2>
+    </sect2>
 
 </sect1>
 <!--

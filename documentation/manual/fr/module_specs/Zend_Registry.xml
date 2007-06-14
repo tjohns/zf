@@ -153,7 +153,7 @@ var_dump( $registry['index'] );
             <title>Exemple d'accès de type objet</title>
             <programlisting role="php"><![CDATA[<?php
 
-// Dans votre fichier de lancement de l'application 
+// Dans votre fichier de lancement de l'application
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
 $registry->tree='apple';

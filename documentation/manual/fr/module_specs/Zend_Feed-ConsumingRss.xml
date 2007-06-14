@@ -1,7 +1,7 @@
 <sect1 id="zend.feed.consuming-rss">
     <title>Consommer un flux RSS</title>
     <para>
-       Lire un flux RSS se résume à instancier un objet 
+       Lire un flux RSS se résume à instancier un objet
 <code>Zend_Feed_Rss</code> en passant l'URL du flux :
         <programlisting role="php"><![CDATA[
 <?php
@@ -13,7 +13,7 @@ $canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');
     </para>
 
     <para>
-        Une fois que vous disposez d'un objet "flux RSS", vous pouvez accéder aux propriétés RSS standard 
+        Une fois que vous disposez d'un objet "flux RSS", vous pouvez accéder aux propriétés RSS standard
         du canal, et ce directement à partir de l'objet :
         <programlisting role="php"><![CDATA[
 <?php
@@ -21,17 +21,17 @@ $canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');
 echo $canal->title();
 
 ?>]]></programlisting>
-    Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code> 
-    utilise une convention selon laquelle les propriétés sont traitées comme 
-    des objets XML si elles sont demandées au moyen de la syntaxe 
-    <code>$obj->propriété</code> et comme des chaînes si elles sont 
-    demandées au moyen de la syntaxe <code>$obj->propriété()</code>. Ceci 
-    permet d'accéder à la totalité du contenu textuel d'un nœud particulier 
+    Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code>
+    utilise une convention selon laquelle les propriétés sont traitées comme
+    des objets XML si elles sont demandées au moyen de la syntaxe
+    <code>$obj->propriété</code> et comme des chaînes si elles sont
+    demandées au moyen de la syntaxe <code>$obj->propriété()</code>. Ceci
+    permet d'accéder à la totalité du contenu textuel d'un nœud particulier
     tout comme à l'ensemble des enfants de ce nœud.
     </para>
 
     <para>
-    Si les propriétés du canal possèdent des attributs, ils sont accessibles 
+    Si les propriétés du canal possèdent des attributs, ils sont accessibles
     à l'aide de l'indiçage PHP :
         <programlisting role="php"><![CDATA[
 <?php
@@ -39,15 +39,15 @@ echo $canal->title();
 echo $canal->category['domain'];
 
 ?>]]></programlisting>
-        Comme les attributs XML ne peuvent avoir des enfants, la syntaxe 
-<code>$obj->propriété['attribut']()</code> n'est pas nécessaire pour 
+        Comme les attributs XML ne peuvent avoir des enfants, la syntaxe
+<code>$obj->propriété['attribut']()</code> n'est pas nécessaire pour
 accéder aux valeurs des attributs.
     </para>
 
     <para>
-        La plupart du temps vous voudrez itérer sur le flux et réaliser quelque 
-chose avec ses entrées. <code>Zend_Feed_Abstract</code> implémente 
-l'interface <code>iterator</code> de PHP, ce qui résume au code suivant 
+        La plupart du temps vous voudrez itérer sur le flux et réaliser quelque
+chose avec ses entrées. <code>Zend_Feed_Abstract</code> implémente
+l'interface <code>iterator</code> de PHP, ce qui résume au code suivant
 l'affichage des titres de tous les articles du canal :
         <programlisting role="php"><![CDATA[
 <?php
@@ -57,7 +57,7 @@ foreach ($canal as $elem) {
 }
 
 ?>]]></programlisting>
-        Si vous n'êtes pas un familier de RSS, voici les éléments standard 
+        Si vous n'êtes pas un familier de RSS, voici les éléments standard
 associés au canal RSS et à ses éléments pris séparément (les entrées).
     </para>
 
@@ -92,14 +92,14 @@ associés au canal RSS et à ses éléments pris séparément (les entrées).
                 <para><code>language</code> (langue) - La langue dans laquelle est écrit le canal</para>
             </listitem>
             <listitem>
-                <para><code>category</code> (catégorie) - Un ou plusieurs noms de catégorie 
+                <para><code>category</code> (catégorie) - Un ou plusieurs noms de catégorie
                 (spécifiés au moyen de plusieurs balises) auquel appartient le canal</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        Les éléments RSS <code>&lt;item&gt;</code> n'ont pas d'éléments requis particulier. Cependant soit 
+        Les éléments RSS <code>&lt;item&gt;</code> n'ont pas d'éléments requis particulier. Cependant soit
         <code>title</code> soit <code>description</code> doivent être présents.
     </para>
 
@@ -146,13 +146,13 @@ if ($elemt->nomPropriete()) {
     </para>
 
     <para>
-        Si vous utilisez à la place de la condition 
-<code>$elem->nomPropriete</code>, vous obtiendrez toujours un objet qui, 
+        Si vous utilisez à la place de la condition
+<code>$elem->nomPropriete</code>, vous obtiendrez toujours un objet qui,
 même vide, sera évalué comme <code>TRUE</code>, donc le test échouera.
     </para>
 
     <para>
-        Pour plus d'informations, la spécification RSS 2.0 officielle est disponible à l'adresse : 
+        Pour plus d'informations, la spécification RSS 2.0 officielle est disponible à l'adresse :
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
     </para>
 </sect1>

@@ -1,7 +1,7 @@
 ﻿<sect1 id="zend.search.lucene.charset">
-	<title>Jeux de caractères.</title>
+    <title>Jeux de caractères.</title>
 
-	<sect2 id="zend.search.lucene.charset.description">
+    <sect2 id="zend.search.lucene.charset.description">
         <title>Support d'UTF-8 et de jeux de caractères mono-octet.</title>
 
         <para>

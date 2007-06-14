@@ -6,7 +6,7 @@
             <code>Zend_Service_Yahoo</code> est une API simple pour utiliser les APIs REST de Yahoo!
             <code>Zend_Service_Yahoo</code> vous permet de rechercher dans Yahoo! Web search, Yahoo! News,
             Yahoo! Local et Yahoo! Images. Pour pouvoir utiliser l'API REST de Yahoo!, vous devez avoir un identifiant Yahoo Application.
-            Pour obtenir un identifiant Yahoo Application, veuillez compléter et soumettre le 
+            Pour obtenir un identifiant Yahoo Application, veuillez compléter et soumettre le
             <ulink url="http://api.search.yahoo.com/webservices/register_application">formulaire de demande d'identifiant Yahoo! Application</ulink>.
         </para>
     </sect2>
@@ -16,7 +16,7 @@
             <code>Zend_Service_Yahoo</code> vous permet d'effectuer des recherches sur le net avec Yahoo! en utilisant la méthode
             <code>webSearch()</code>, qui accepte une chaîne de requête en paramètre, et un tableau d'options de recherche comme
             second paramètre. Pour la liste détaillée des options, veuillez vous référer à la documentation
-            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search</ulink>.            
+            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search</ulink>.
             La méthode <code>webSearch()</code> retourne un objet <code>Zend_Service_Yahoo_WebResultSet</code>.
         </para>
         <example>
@@ -72,7 +72,7 @@ foreach ($results as $result) {
         <title>Rechercher dans Yahoo! News</title>
         <para>
             Rechercher dans Yahoo! News est simple, il vous suffit simplement d'utiliser la méthode <code>newsSearch()</code>, comme
-            le montre l'exemple suivant. Pour plus de détails, veuillez vous référer à la documentation 
+            le montre l'exemple suivant. Pour plus de détails, veuillez vous référer à la documentation
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search</ulink>.
         </para>
         <example>
@@ -90,9 +90,9 @@ foreach ($results as $result) {
 <sect2 id="zend.service.yahoo.classes">
     <title>Classes Zend_Service_Yahoo</title>
     <para>
-        Les classes sont toutes retournées par les diverses recherches Yahoo!. Chaque type de recherche retourne un jeu de résultat 
+        Les classes sont toutes retournées par les diverses recherches Yahoo!. Chaque type de recherche retourne un jeu de résultat
         spécifique sur lequel on peut facilement itérer, avec chaque résultat contenu dans un résultat du type de l'objet.
-        Toutes les classes de jeu de résultat implémentent l'interface <code>SeekableIterator</code>, permettant des itérations et 
+        Toutes les classes de jeu de résultat implémentent l'interface <code>SeekableIterator</code>, permettant des itérations et
         une recherche sur un résultat particulier.
         <itemizedlist>
             <listitem><para><link linkend="zend.service.yahoo.classes.resultset"><code>Zend_Service_Yahoo_ResultSet</code></link></para></listitem>
