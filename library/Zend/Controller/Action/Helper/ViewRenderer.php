@@ -43,7 +43,7 @@ require_once 'Zend/View.php';
  * determines the path to the class file, and then determines the view base 
  * directory from there. It also uses the module name as a class prefix for 
  * helpers and views such that if your module name is 'Search', it will set the 
- * helper class prefix to 'Search_View_Helper' and the filter class prefix to 
+ * helper class prefix to 'Search_View_Helper' and the filter class prefix to ;
  * 'Search_View_Filter'.
  *
  * Usage:
@@ -197,7 +197,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected function _generateDefaultPrefix()
     {
         if ((null === $this->_actionController) || !strstr(get_class($this->_actionController), '_')) {
-            $prefix = 'Zend_View_Helper';
+            $prefix = 'Zend_View';
         } else {
             $class = get_class($this->_actionController);
             $prefix = substr($class, 0, strpos($class, '_')) . '_View';
