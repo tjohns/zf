@@ -197,6 +197,16 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
+                    <code>setNeverController($flag = true)</code> is analogous
+                    to <code>setNoController()</code>, but works on a global
+                    level -- i.e., it will not be reset for each dispatched
+                    action. <code>getNeverController()</code> retrieves
+                    the current value.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
                     <code>setScriptAction($name)</code> can be used to
                     specify the action script to render. <code>$name</code>
                     should be the name of the script minus the file suffix (and

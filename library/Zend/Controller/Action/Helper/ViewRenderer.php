@@ -88,6 +88,13 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected $_frontController;
 
     /**
+     * Whether or not to autorender using controller name as subdirectory; 
+     * global setting (not reset at next invocation)
+     * @var boolean
+     */
+    protected $_neverController = false;
+
+    /**
      * Whether or not to autorender postDispatch; global setting (not reset at 
      * next invocation)
      * @var boolean
@@ -233,6 +240,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         {
             switch ($key) {
                 case 'neverRender':
+                case 'neverController':
                 case 'noController':
                 case 'noRender':
                     $property = '_' . $key;
@@ -447,7 +455,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $vars['action'] = $action;
         }
 
-        $path = ($this->getNoController())
+        $path = ($this->getNoController() || $this->getNeverController())
               ? $this->_translateSpec($this->getViewScriptPathNoControllerSpec(), $vars)
               : $this->_translateSpec($this->getViewScriptPathSpec(), $vars);
 
@@ -567,6 +575,28 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     public function getNoController()
     {
         return $this->_noController;
+    }
+
+    /**
+     * Set the neverController flag (i.e., whether or not to render into controller subdirectories)
+     * 
+     * @param  boolean $flag 
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setNeverController($flag = true)
+    {
+        $this->_neverController = ($flag) ? true : false;
+        return $this;
+    }
+
+    /**
+     * Retrieve neverController flag value
+     * 
+     * @return boolean
+     */
+    public function getNeverController()
+    {
+        return $this->_neverController;
     }
 
     /**

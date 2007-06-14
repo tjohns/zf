@@ -331,6 +331,17 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertTrue($this->helper->getNoController());
     }
 
+    public function testNeverControllerFlag()
+    {
+        $this->assertFalse($this->helper->getNeverController());
+        $this->helper->setNeverController();
+        $this->assertTrue($this->helper->getNeverController());
+        $this->helper->setNeverController(false);
+        $this->assertFalse($this->helper->getNeverController());
+        $this->helper->setNeverController(true);
+        $this->assertTrue($this->helper->getNeverController());
+    }
+
     protected function _checkRenderProperties()
     {
         $this->assertEquals('foo', $this->helper->getScriptAction());
@@ -395,6 +406,20 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
                       ->setControllerName('index')
                       ->setActionName('test')
                       ->setDispatched(true);
+        $this->helper->postDispatch();
+
+        $content = $this->response->getBody();
+        $this->assertNotContains('Rendered index/test.phtml in bar module', $content);
+        $this->assertTrue(empty($content));
+    }
+
+    public function testPostDispatchDoesNothingWithNeverController()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test')
+                      ->setDispatched(true);
+        $this->helper->setNeverController(true);
         $this->helper->postDispatch();
 
         $content = $this->response->getBody();
