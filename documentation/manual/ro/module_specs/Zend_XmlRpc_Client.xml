@@ -3,7 +3,7 @@
 
     <sect2 id="zend.xmlrpc.client.introduction">
         <title>Introduction</title>
-        
+
         <para>
             The Zend Framework provides support for consuming remote XML-RPC
             services as a client in the <code>Zend_XmlRpc_Client</code>
@@ -13,18 +13,18 @@
         </para>
 
     </sect2>
-    
-    
+
+
     <sect2 id="zend.xmlrpc.client.method-calls">
         <title>Method Calls</title>
-        
+
         <para>
             The constructor of <code>Zend_XmlRpc_Client</code> receives the
             URL of the remote XML-RPC server endpoint as its first parameter.
             The new instance returned may be used to call any number of
             remote methods at that endpoint.
         </para>
-                
+
         <para>
             To call a remote method with the XML-RPC client, instantiate it
             and use the <code>call()</code> instance method. The code sample
@@ -41,7 +41,7 @@ require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
-echo $client->call('test.sayHello'); 
+echo $client->call('test.sayHello');
 
 // hello
 
@@ -74,13 +74,13 @@ $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 $arg1 = 1.1;
 $arg2 = 'foo';
 
-$result = $client->call('test.sayHello', array($arg1, $arg2)); 
+$result = $client->call('test.sayHello', array($arg1, $arg2));
 
 // $result is a native PHP type
 
 ?>]]></programlisting>
         </example>
-        
+
         <para>
             If the remote method doesn't require parameters, this optional
             parameter may either be left out or an empty <code>array()</code>
@@ -120,7 +120,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 be auto-detected and converted into one of the XML-RPC types
                 according to this table:
             </para>
-            
+
             <table>
                 <title>PHP and XML-RPC Type Conversions</title>
                 <tgroup cols="2">
@@ -163,7 +163,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 </tgroup>
             </table>
         </sect3>
-        
+
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
             <title><code>Zend_XmlRpc_Value</code> Objects as Parameters</title>
             <para>
@@ -206,7 +206,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 subclasses directly, or use the static factory method
                 <code>Zend_XmlRpc_Value::getXmlRpcValue()</code>.
             </para>
-            
+
             <table>
                 <title><code>Zend_XmlRpc_Value</code> Objects for XML-RPC Types</title>
                 <tgroup cols="3">
@@ -282,7 +282,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
     <sect2 id="zend.xmlrpc.client.requests-and-responses">
         <title>Server Proxy Object</title>
         <para>
-            Another way to call remote methods with the XML-RPC client is to 
+            Another way to call remote methods with the XML-RPC client is to
             use the server proxy.  This is a PHP object that proxies a remote
             XML-RPC namespace, making it work as close to a native PHP object
             as possible.
@@ -335,7 +335,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
 
 ?>]]></programlisting>
         </example>
-        
+
         <para>
             If the remote server supports nested namespaces of any depth,
             these can also be used through the server proxy. For example, if
@@ -344,7 +344,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
             <code>$test->foo->bar()</code>.
         </para>
     </sect2>
-    
+
 
     <sect2 id="zend.xmlrpc.client.error-handling">
         <title>Error Handling</title>
@@ -366,7 +366,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
 
             <example>
                 <title>Handling HTTP Errors</title>
-                
+
                 <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/XmlRpc/Client.php';
@@ -378,14 +378,14 @@ try {
     $client->call('bar', array($arg1, $arg2));
 
 } catch (Zend_XmlRpc_HttpException $e) {
-    
+
     // $e->getCode() returns 404
     // $e->getMessage() returns "Not Found"
-    
+
 }
 
 ?>]]></programlisting>
-            </example>                
+            </example>
 
             <para>
                 Regardless of how the XML-RPC client is used, the
@@ -393,10 +393,10 @@ try {
                 whenever an HTTP error occurs.
             </para>
         </sect3>
-        
+
         <sect3 id="zend.xmlrpc.client.error-handling.faults">
             <title>XML-RPC Faults</title>
-            
+
             <para>
                 An XML-RPC fault is analogous to a PHP exception. It is a
                 special type returned from an XML-RPC method call that has
@@ -404,7 +404,7 @@ try {
                 handled differently depending on the context of how the
                 <code>Zend_XmlRpc_Client</code> is used.
             </para>
-            
+
             <para>
                 When the <code>call()</code> method or the server
                 proxy object is used, an XML-RPC fault will result in a
@@ -413,12 +413,12 @@ try {
                 their respective values in the original XML-RPC fault
                 response.
             </para>
-            
+
             <example>
                 <title>Handling XML-RPC Faults</title>
-                
+
                 <programlisting role="php"><![CDATA[<?php
-                                
+
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
@@ -428,10 +428,10 @@ try {
     $client->call('badMethod');
 
 } catch (Zend_XmlRpc_FaultException $e) {
-    
+
     // $e->getCode() returns 1
     // $e->getMessage() returns "Unknown method"
-    
+
 }
 
 ?>]]></programlisting>
@@ -444,7 +444,7 @@ try {
                 containing the fault will also be available by calling
                 <code>getLastResponse()</code>.
             </para>
-            
+
             <para>
                 When the <code>doRequest()</code> method is used to make the
                 request, it will not throw the exception. Instead, it will
@@ -453,7 +453,7 @@ try {
                 <code>isFault()</code> instance method of
                 <code>Zend_XmlRpc_Response</code>.
             </para>
-        </sect3>        
+        </sect3>
 
     </sect2>
 
@@ -464,7 +464,7 @@ try {
             <code>system.</code> namespace.  <code>Zend_XmlRpc_Client</code> provides special
             support for servers with these capabilities.
         </para>
-        
+
         <para>
             A <code>Zend_XmlRpc_Client_ServerIntrospection</code> instance may be retrieved by calling
             the <code>getIntrospector()</code> method of <code>Zend_XmlRpcClient</code>.  It can
@@ -479,16 +479,16 @@ try {
             builds a request object (<code>Zend_XmlRpc_Request</code>) and sends it to another method,
             <code>doRequest()</code>, that returns a response object (<code>Zend_XmlRpc_Response</code>).
         </para>
-            
+
         <para>
             The <code>doRequest()</code> method is also available for use directly:
         </para>
-        
+
         <example>
             <title>Processing Request to Response</title>
-            
+
             <programlisting role="php"><![CDATA[<?php
-                                
+
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
@@ -504,7 +504,7 @@ $client->doRequest($request);
 
 ?>]]></programlisting>
         </example>
-                    
+
         <para>
             Whenever an XML-RPC method call is made by the client through any
             means, either the <code>call()</code> method,
@@ -524,7 +524,7 @@ $client->doRequest($request);
             <code>Zend_Http_Client</code> will be created with its default
             options and used by <code>Zend_XmlRpc_Client</code> automatically.
         </para>
-        
+
         <para>
             The HTTP client can be retrieved at any time with the
             <code>getHttpClient()</code> method. For most cases, the default
@@ -532,7 +532,7 @@ $client->doRequest($request);
             <code>setHttpClient()</code> method allows for a different HTTP
             client instance to be injected.
         </para>
-        
+
         <para>
             The <code>setHttpClient()</code> is particularly useful for unit testing.  When combined
             with the <code>Zend_Http_Client_Adapter_Test</code>, remote services can be mocked

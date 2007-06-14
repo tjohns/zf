@@ -17,7 +17,7 @@ require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
 Zend_Mail::setDefaultTransport($tr);
 $tr->connect();
-for ($i = 0; $i < 5; $i++) {    
+for ($i = 0; $i < 5; $i++) {
 $mail->send();
 }
 $tr->disconnect();
