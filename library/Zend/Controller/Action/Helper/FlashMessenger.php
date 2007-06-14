@@ -160,6 +160,21 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
         
         return array();
     }
+
+    /**
+     * Clear all messages from the current namespace
+     * 
+     * @return bool True if messages were cleared, false if none existed
+     */
+    public function clearMessages()
+    {
+        if ($this->hasMessages()) {
+            unset(self::$_messages[$this->_namespace]);
+            return true;
+        }
+
+        return false;
+    }
     
     /**
      * hasCurrentMessages() - check to see if messages have been added to current
