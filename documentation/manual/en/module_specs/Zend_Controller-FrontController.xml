@@ -476,6 +476,23 @@ Zend_Controller_Front::run('../application/controllers');
                     it to the response object body content.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>noViewRenderer</code> is used to disable the <link
+                        linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>.
+                    Set this parameter to true to disable it.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>noErrorHandler</code> is used to disable the <link
+                        linkend="zend.controller.plugins.standard.errorhandler">Error
+                        Handler plugin</link>. Set this parameter to true to
+                    disable it.
+                </para>
+            </listitem>
         </itemizedlist>
     </sect2>
 
