@@ -230,6 +230,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
+        if (is_int($value) || is_float($value)) {
+            return $value;
+        }
         /**
          * Some releases of the IBM DB2 extension appear
          * to be missing the db2_escape_string() method.

@@ -567,6 +567,9 @@ abstract class Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
+        if (is_int($value) || is_float($value)) {
+            return $value;
+        }
         return "'" . addcslashes($value, "\000\n\r\\'\"\032") . "'";
     }
 
@@ -582,20 +585,19 @@ abstract class Zend_Db_Adapter_Abstract
     public function quote($value)
     {
         $this->_connect();
+
         if ($value instanceof Zend_Db_Expr) {
             return $value->__toString();
-        } else if (is_array($value)) {
+        }
+
+        if (is_array($value)) {
             foreach ($value as &$val) {
                 $val = $this->quote($val);
             }
             return implode(', ', $value);
-        } else {
-            if (is_int($value) || is_float($value)) {
-                return $value;
-            } else {
-                return $this->_quote($value);
-            }
         }
+
+        return $this->_quote($value);
     }
 
     /**

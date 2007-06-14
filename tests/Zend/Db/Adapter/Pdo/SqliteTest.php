@@ -140,6 +140,29 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
     }
 
     /**
+     * test that quote() accepts an integer and
+     * returns an unquoted integer.
+     */
+    public function testAdapterQuoteInteger()
+    {
+        $int = 123;
+        $value = $this->_db->quote($int);
+        $this->assertEquals('123', $value);
+    }
+
+    /**
+     * test that quote() accepts an array and returns
+     * an imploded string of quoted elements, or non-quoted
+     * elements if they are integers.
+     */
+    public function testAdapterQuoteIntegerArray()
+    {
+        $array = array(1,'2',3);
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'1', '2', '3'", $value);
+    }
+
+    /**
      * test that quoteInto() escapes a double-quote
      * character in a string.
      */

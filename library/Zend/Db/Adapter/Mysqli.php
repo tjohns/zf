@@ -61,6 +61,9 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
+        if (is_int($value) || is_float($value)) {
+            return $value;
+        }
         $this->_connect();
         return "'" . $this->_connection->real_escape_string($value) . "'";
     }
