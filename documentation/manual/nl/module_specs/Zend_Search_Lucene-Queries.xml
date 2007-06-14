@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.queries">
-	<title>Query Types</title>
+    <title>Query Types</title>
 
-	<sect2 id="zend.search.lucene.queries.term-query">
-		<title>Term Query</title>
+    <sect2 id="zend.search.lucene.queries.term-query">
+        <title>Term Query</title>
         <para>
         Term queries zijn bedoeld voor het zoeken met een enkele term.
         </para>
@@ -26,10 +26,10 @@
     $hits  = $index->find($query);
 
 ?>]]></programlisting>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.multiterm-query">
-		<title>Multi-Term Query</title>
+    <sect2 id="zend.search.lucene.queries.multiterm-query">
+        <title>Multi-Term Query</title>
         <para>
             Multi term queries zijn bedoeld voor het zoeken op een set met termen.
         </para>
@@ -40,7 +40,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                    noodzakelijk betekent dat documenten waar de term niet in voorkomt, niet in het resultaat 
+                    noodzakelijk betekent dat documenten waar de term niet in voorkomt, niet in het resultaat
                     terugkomen;
                     </para>
                 </listitem>
@@ -51,8 +51,8 @@
                 </listitem>
                 <listitem>
                     <para>
-                    geen van beiden betekent dat de term niet verboden is voor documenten, maar de term ook niet 
-                    noodzakelijk is. Een document moet in dit geval minimaal een term bevatten om in het resultaat 
+                    geen van beiden betekent dat de term niet verboden is voor documenten, maar de term ook niet
+                    noodzakelijk is. Een document moet in dit geval minimaal een term bevatten om in het resultaat
                     terug te komen.
                     </para>
                 </listitem>
@@ -60,8 +60,8 @@
         </para>
 
         <para>
-            Dit betekent dat wanneer een optionele term aan een query wordt toegevoerd met noodzakelijke termen, 
-            de documenten in het resultaat hetzelfde blijven, maar documenten waarin de optionele term gevonden word 
+            Dit betekent dat wanneer een optionele term aan een query wordt toegevoerd met noodzakelijke termen,
+            de documenten in het resultaat hetzelfde blijven, maar documenten waarin de optionele term gevonden word
             bovenaan de result set komen te staan.
         </para>
 
@@ -135,18 +135,18 @@ $hits = $index->find('+word1 author:word2 -word3');
                 </listitem>
             </itemizedlist>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.queries.phrase-query">
-		<title>Phrase Query</title>
+    <sect2 id="zend.search.lucene.queries.phrase-query">
+        <title>Phrase Query</title>
         <para>
             Phrase Queries zijn bedoeld voor het zoeken op zinnen (uitdrukkingen?).
         </para>
 
         <para>
-            Phrase Queries zijn erg flexibel en staan toe om te zoeken op zowel exacte als 'slordige' zinnen. 
-            Zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden 
-            aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde 
+            Phrase Queries zijn erg flexibel en staan toe om te zoeken op zowel exacte als 'slordige' zinnen.
+            Zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden
+            aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde
             term extra gewicht te geven of verschillende synoniemen kunnen op een plek worden geplaatst).
             De volgende phrase queries kunnen alleen door de API worden aangemaakt:
         </para>
@@ -183,7 +183,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
 
         <para>
-            Phrase query kunnen worden aangemaakt met een enkele stap in de klasse constructor of stap voor stap met de 
+            Phrase query kunnen worden aangemaakt met een enkele stap in de klasse constructor of stap voor stap met de
             <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> methode.
         </para>
 
@@ -205,7 +205,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <para>
             <code>$field</code> is een string, welke aangeeft welk document veld doorzocht moet worden.
             Wanneer het niet wordt meegegeven of null is, dan wordt het standaard veld doorzicht.
-            Deze versie van Zend_Search_Lucene behandelt het 'contents' veld als standaard, maar het plan is dit aan 
+            Deze versie van Zend_Search_Lucene behandelt het 'contents' veld als standaard, maar het plan is dit aan
             te passen tot "ieder veld" in volgende versies.
         </para>
 
@@ -236,7 +236,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
 
         <para>
-            <code>$term</code> omschrijft de volgende term binnen de uitdrukking. Het moet hetzelfde veld als eerdere 
+            <code>$term</code> omschrijft de volgende term binnen de uitdrukking. Het moet hetzelfde veld als eerdere
             termen omschrijven.
             Anders wordt er een exceptie opgeworpen.
         </para>
@@ -272,21 +272,21 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
 
 
         <para>
-            Slop factor zet het aantal woorden dat is toegestaan binnen een query uitdrukking. Wanneer deze nul is, 
+            Slop factor zet het aantal woorden dat is toegestaan binnen een query uitdrukking. Wanneer deze nul is,
             wordt er op een exacte uitdrukking gezocht. Voor hogere waardes werkt het als een WITHIN of NEAR operator.
         </para>
         <para>
             De 'slop' is eigenlijk een editie-afstand, waar de eenheden overeenkomen met wijzigingen in de
-            positie van termen in de query uitdrukking. Voorbeeld: om de volgorde van twee woorden aan te passen is 
+            positie van termen in de query uitdrukking. Voorbeeld: om de volgorde van twee woorden aan te passen is
             twee wijzigingen (de eerste wijzigingen zet beide termen op dezelfde positie), om het herschikken
             van uitdrukkingen toe te staan dient 'slop' minstens twee te zijn.
         </para>
         <para>
-            Exactere overeenkomsten krijgen een hogere score dan slordigere overeenkomsten, dus zoekresultaten worden 
+            Exactere overeenkomsten krijgen een hogere score dan slordigere overeenkomsten, dus zoekresultaten worden
             geordend op exactheid. 'Slop' staat standaard op nul, waardoor exacte overeenkomsten noodzakelijk zijn.
         </para>
         <para>
-            Slop factor kan na het aanmaken van een query worden aangegeven: 
+            Slop factor kan na het aanmaken van een query worden aangegeven:
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -304,5 +304,5 @@ $hits2 = $index->find($query);
 
 ?>]]></programlisting>
 
-	</sect2>
+    </sect2>
 </sect1>

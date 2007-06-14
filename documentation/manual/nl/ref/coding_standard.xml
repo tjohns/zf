@@ -49,14 +49,14 @@
 
       <para>Voor bestanden die alleen PHP code bevatten
       is de sluitende tag ("?&gt;") nooit toegelaten. Die wordt niet geëist
-      door PHP. Het niet schrijven van deze afbakening voorkomt het toevoegen 
-	  van spaties in de output.</para>
+      door PHP. Het niet schrijven van deze afbakening voorkomt het toevoegen
+      van spaties in de output.</para>
 
-      <para><emphasis>BELANGRIJK</emphasis>: Toevoegen van binaire gegevens 
-	  zoals toegelaten door <code>__HALT_COMPILER()</code> is niet toegelaten 
-	  in eender welk Zend Framework PHP bestand of bestanden die daarvan zijn 
-	  afgeleid. Het gebruik van deze mogelijkheid is alleen toegelaten in 
-	  speciale installatie scripts.</para>
+      <para><emphasis>BELANGRIJK</emphasis>: Toevoegen van binaire gegevens
+      zoals toegelaten door <code>__HALT_COMPILER()</code> is niet toegelaten
+      in eender welk Zend Framework PHP bestand of bestanden die daarvan zijn
+      afgeleid. Het gebruik van deze mogelijkheid is alleen toegelaten in
+      speciale installatie scripts.</para>
     </sect2>
 
     <sect2 id="coding-standard.php-file-formatting.indentation">
@@ -160,9 +160,9 @@ Zend_Controller_Dispatcher_Interface</programlisting></para>
 
 Zend/Controller/Front.php
 
-Zend/View/Helper/FormRadio.php</programlisting> Bestandsnamen moeten de 
-	  overeenkomst met de klassenamen respecteren, zoals hierboven 
-	  beschreven.</para>
+Zend/View/Helper/FormRadio.php</programlisting> Bestandsnamen moeten de
+      overeenkomst met de klassenamen respecteren, zoals hierboven
+      beschreven.</para>
     </sect2>
 
     <sect2 id="coding-standard.naming-conventions.functions-and-methods">
@@ -221,8 +221,8 @@ widgetFactory()</programlisting></para>
       <para>Langsprekendheid is aangeraden. Variabelen zouden zoveel
       woorden moeten bevatten als praktisch is. Beknopte variabelnamen zoals
       "$i" en "$n" worden afgeraden voor alles behalve de kleinst mogelijke
-      loops. Als een loop meer dan 20 coderegels bevat, moeten de index 
-	  variabelen meer beschrijvende namen hebben.</para>
+      loops. Als een loop meer dan 20 coderegels bevat, moeten de index
+      variabelen meer beschrijvende namen hebben.</para>
     </sect2>
 
     <sect2 id="coding-standard.naming-conventions.constants">
@@ -247,8 +247,8 @@ widgetFactory()</programlisting></para>
     <sect2 id="coding-standard.coding-style.php-code-demarcation">
       <title>PHP Code Afbakening</title>
 
-      <para>PHP code moet altijd worden afgebakend met de volledige standaard PHP 
-	  markeringen: <programlisting role="php">
+      <para>PHP code moet altijd worden afgebakend met de volledige standaard PHP
+      markeringen: <programlisting role="php">
 &lt;?php
 
 ?&gt;</programlisting></para>
@@ -264,7 +264,7 @@ widgetFactory()</programlisting></para>
 
         <para>Wanneer een string letterlijk is (hij bevat geen variabelvervanging),
         moet altijd de apostroof of "enkele quote" gebruikt worden om de string
-		af te bakenen: <programlisting role="php">
+        af te bakenen: <programlisting role="php">
 $a = 'Voorbeeld String';</programlisting></para>
       </sect3>
 
@@ -272,7 +272,7 @@ $a = 'Voorbeeld String';</programlisting></para>
         <title>Letterlijke strings die apostrofen bevatten</title>
 
         <para>Wanneer een letterlijke string zelf apostrofen bevat is het
-		toegelaten de string af te bakenen met aanhalingstekens ("double
+        toegelaten de string af te bakenen met aanhalingstekens ("double
         quotes"). Dit is dringend aangeraden voor SQL verklaringen:
         <programlisting role="php">
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";</programlisting>
@@ -296,13 +296,13 @@ $greeting = "Hello ${name}, welcome back!";</programlisting></para>
         <title>String samenvoeging</title>
 
         <para>Strings kunnen samengevoegd worden met de "." operator. Er moet steeds een spatie
-		vòòr en na de "." operator worden ingevoegd om de leesbaarheid te verbeteren: <programlisting role="php">
+        vòòr en na de "." operator worden ingevoegd om de leesbaarheid te verbeteren: <programlisting role="php">
 $company = 'Zend' . 'Technologies';</programlisting></para>
 
         <para>Wanneer men strings samenvoegt met de "." operator is het toegelaten
-		de verklaring in meerdere regels op te breken om de leesbaarheid te vergroten.
-		In dat geval moet elke opeenvolgende regel met spaties worden opgevuld zodat
-		de "." operator uitgelijnd is onder de "=" operator: <programlisting role="php">
+        de verklaring in meerdere regels op te breken om de leesbaarheid te vergroten.
+        In dat geval moet elke opeenvolgende regel met spaties worden opgevuld zodat
+        de "." operator uitgelijnd is onder de "=" operator: <programlisting role="php">
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
      . "ORDER BY `name` ASC ";</programlisting></para>
@@ -318,18 +318,18 @@ $sql = "SELECT `id`, `name` FROM `people` "
         <para>Negatieve nummers zijn verboden voor indexen.</para>
 
         <para>Een geïndexeerde array mag starten met eender welk niet negatief nummer.
-		Dit wordt evenwel afgeraden. Het is aangeraden dat alle arrays een 
-		basisindex van 0 hebben.</para>
+        Dit wordt evenwel afgeraden. Het is aangeraden dat alle arrays een
+        basisindex van 0 hebben.</para>
 
         <para>Wanneer men een geïndexeerde array definieert met het <code>array</code>
         concept moet er een spatie worden ingevoegd na elke komma afbakening om
-		de leesbaarheid te verbeteren: <programlisting role="php">
+        de leesbaarheid te verbeteren: <programlisting role="php">
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');</programlisting></para>
 
         <para>Het is ook toegelaten om een geïndexeerde array op meerdere
-		regels te definieren. In dat geval moet elke opeenvolgende regel met spaties
-		worden opgevuld zodanig dat het begin van elke regel als volgt is uitgelijnd:
-		<programlisting role="php">
+        regels te definieren. In dat geval moet elke opeenvolgende regel met spaties
+        worden opgevuld zodanig dat het begin van elke regel als volgt is uitgelijnd:
+        <programlisting role="php">
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
                      56.44, $d, 500);</programlisting></para>
@@ -340,8 +340,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
 
         <para>Wanneer men associatieve arrays met het <code>array</code>
         concept definieert is het aangeraden de verklaring in meerdere regels op te
-		breken. In dat geval moet elke opeenvolgende regel met spaties worden
-		opgevuld zodat de indexen (keys) en waarden (values) uitgelijnd zijn:
+        breken. In dat geval moet elke opeenvolgende regel met spaties worden
+        opgevuld zodat de indexen (keys) en waarden (values) uitgelijnd zijn:
         <programlisting role="php">
 $sampleArray = array('firstKey'  =&gt; 'firstValue',
                      'secondKey' =&gt; 'secondValue');</programlisting></para>
@@ -356,19 +356,19 @@ $sampleArray = array('firstKey'  =&gt; 'firstValue',
 
         <para>Klassebenaming moet de volgende overeenkomsten volgen.</para>
 
-        <para>De accolade wordt steeds op de regel onder de klassenaam geschreven 
-		("one true brace" vorm).</para>
+        <para>De accolade wordt steeds op de regel onder de klassenaam geschreven
+        ("one true brace" vorm).</para>
 
         <para>Elke klasse moet een documentatieblok hebben dat de PHPDocumentor
-		standaard volgt.</para>
+        standaard volgt.</para>
 
         <para>Code in een klasse moet geïndenteerd zijn met vier spaties.</para>
 
         <para>Eén klasse, éen bestand.</para>
 
-        <para>Bijkomende code schrijven in een klassebestand is toegelaten maar wordt 
-		afgeraden. Indien men het toch doet moet de bijkomende code met twee lege
-		regels worden gescheiden van de klassecode.</para>
+        <para>Bijkomende code schrijven in een klassebestand is toegelaten maar wordt
+        afgeraden. Indien men het toch doet moet de bijkomende code met twee lege
+        regels worden gescheiden van de klassecode.</para>
 
         <para>Dit is een voorbeeld van een aanvaardbare klasseverklaring:
         <programlisting role="php">
@@ -385,17 +385,17 @@ class SampleClass
       <sect3 id="coding-standard.coding-style.classes.member-variables">
         <title>Klasse lidvariabelen</title>
 
-        <para>Lidvariabelen moeten benaamd worden volgens de variabele 
-		benamingsovereenkomst.</para>
+        <para>Lidvariabelen moeten benaamd worden volgens de variabele
+        benamingsovereenkomst.</para>
 
         <para>Variabelen die in de klasse worden verklaard moeten bovenaan
-		in de klasse worden opgesomd, vòòrdat functies worden verklaard.</para>
+        in de klasse worden opgesomd, vòòrdat functies worden verklaard.</para>
 
         <para>Het concept <code>var</code> is niet toegestaan. Lidvariabelen
-		moeten steeds hun zichtbaarheid verklaren door één van de <code>private</code>, 
-		<code>protected</code>, of <code>public</code> concepten te gebruiken.
-		Toegang verlenen aan lidvariabelen door hen publiek te maken is toegestaan
-		maar wordt afgeraden ten voordele van de databenaderingsmethodes (set/get).</para>
+        moeten steeds hun zichtbaarheid verklaren door één van de <code>private</code>,
+        <code>protected</code>, of <code>public</code> concepten te gebruiken.
+        Toegang verlenen aan lidvariabelen door hen publiek te maken is toegestaan
+        maar wordt afgeraden ten voordele van de databenaderingsmethodes (set/get).</para>
       </sect3>
     </sect2>
 
@@ -407,14 +407,14 @@ class SampleClass
 
         <para>Functiebenaming moet de benamingsovereenkomsten volgen.</para>
 
-        <para>Functies binnen klasses moeten steeds hun zichtbaarheid verklaren 
-		door één van de <code>private</code>, <code>protected</code>, of
+        <para>Functies binnen klasses moeten steeds hun zichtbaarheid verklaren
+        door één van de <code>private</code>, <code>protected</code>, of
         <code>public</code> concepten te gebruiken.</para>
 
         <para>Net zoals klassen, moet de accolade steeds op de regel onder de functienaam
-		worden geschreven ("one true brace" vorm). Er is geen spatie tussen de functienaam
-		en de haakjes voor de argumenten. Er is één spatie tussen de sluitende haakjes en de
-		accolade.</para>
+        worden geschreven ("one true brace" vorm). Er is geen spatie tussen de functienaam
+        en de haakjes voor de argumenten. Er is één spatie tussen de sluitende haakjes en de
+        accolade.</para>
 
         <para>Functies in het globale bereik zijn zeer sterk afgeraden.</para>
 
@@ -429,17 +429,17 @@ function sampleMethod($a)
     // moet geindenteerd worden met vier spaties
 }</programlisting></para>
 
-        <para><emphasis>NOTA:</emphasis> Doorgeven per verwijzing (pass by reference) is 
-		alleen toegestaan in de functieverklaring: <programlisting role="php">
+        <para><emphasis>NOTA:</emphasis> Doorgeven per verwijzing (pass by reference) is
+        alleen toegestaan in de functieverklaring: <programlisting role="php">
 function sampleMethod(&amp;$a)
 {}</programlisting></para>
 
         <para>Call-time pass by reference is verboden.</para>
 
         <para>De terugkeerwaarde mag niet tussen haakjes worden ingesloten.
-		Dat kan de leesbaarheid hinderen en kan ook de code breken indien een
-		methode later wordt veranderd om per verwijzing terug te sturen. 
-		<programlisting role="php">
+        Dat kan de leesbaarheid hinderen en kan ook de code breken indien een
+        methode later wordt veranderd om per verwijzing terug te sturen.
+        <programlisting role="php">
 function foo()
 {
     // FOUT
@@ -454,20 +454,20 @@ function foo()
         <title>Functie- en Methodegebruik</title>
 
         <para>Functie-argumenten worden gescheiden door één enkele spatie
-		na de komma afbakening. Dit is een voorbeeld van een aanvaardbare
-		functie-aanroep voor een functie die drie argumenten heeft:
+        na de komma afbakening. Dit is een voorbeeld van een aanvaardbare
+        functie-aanroep voor een functie die drie argumenten heeft:
         <programlisting role="php">
 threeArguments(1, 2, 3);</programlisting></para>
 
         <para>Call-time pass by reference is verboden. Zie de sectie over
-		functieverklaringen voor de juiste wijze om argumenten per verwijzing door te
-		sturen.</para>
+        functieverklaringen voor de juiste wijze om argumenten per verwijzing door te
+        sturen.</para>
 
-        <para>Voor functies welke arrays als argument aanvaardden mag de 
-		functieaanroep het "array" concept bevatten en kan deze in meerdere 
-		regels worden opgesplitst om de leesbaarheid te vergroten.
-		In deze gevallen blijven de regels voor het schrijven van arrays van
-		kracht: <programlisting role="php">
+        <para>Voor functies welke arrays als argument aanvaardden mag de
+        functieaanroep het "array" concept bevatten en kan deze in meerdere
+        regels worden opgesplitst om de leesbaarheid te vergroten.
+        In deze gevallen blijven de regels voor het schrijven van arrays van
+        kracht: <programlisting role="php">
 threeArguments(array(1, 2, 3), 2, 3);
 
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
@@ -484,24 +484,24 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
 
         <para>Control statements gebaseerd op <code>if</code> en
         <code>elseif</code> concepten moeten een enkele spatie voor de openende
-		haakjes van de conditie, en een enkele spatie na de sluitende haakjes.</para>
+        haakjes van de conditie, en een enkele spatie na de sluitende haakjes.</para>
 
-        <para>In de voorwaardeverklaringen tussen de haakjes moeten 
-		operators gescheiden worden met spaties om de leesbaarheid te 
-		bevorderen. Binnenhaakjes zijn aangeraden voor het groeperen van
-		meer complexe voorwaarden.</para>
+        <para>In de voorwaardeverklaringen tussen de haakjes moeten
+        operators gescheiden worden met spaties om de leesbaarheid te
+        bevorderen. Binnenhaakjes zijn aangeraden voor het groeperen van
+        meer complexe voorwaarden.</para>
 
-        <para>De openingsaccolade wordt op dezelfde regel als de 
-		voorwaardeverklaring geschreven. De sluitende accolade wordt altijd op 
-		een alleenstaande regel geschreven. Alle inhoud binnenin de accolades
-		moet steeds met vier spaties geïndenteerd worden.
+        <para>De openingsaccolade wordt op dezelfde regel als de
+        voorwaardeverklaring geschreven. De sluitende accolade wordt altijd op
+        een alleenstaande regel geschreven. Alle inhoud binnenin de accolades
+        moet steeds met vier spaties geïndenteerd worden.
         <programlisting role="php">
 if ($a != 2) {
     $a = 2;
 }</programlisting></para>
 
         <para>Voor "if" verklaringen die "else if" of "else" inhouden moet de vorm
-		zoals in de volgende voorbeelden zijn: <programlisting role="php">
+        zoals in de volgende voorbeelden zijn: <programlisting role="php">
 if ($a != 2) {
     $a = 2;
 } else {
@@ -517,22 +517,22 @@ if ($a != 2) {
    $a = 7;
 }</programlisting> PHP laat het toe om in bepaalde gevallen deze verklaringen zonder
         accolades te schrijven. De codestandaard maakt geen verschil en alle "if",
-		"else if" of "else" verklaringen moeten accolades gebruiken.</para>
+        "else if" of "else" verklaringen moeten accolades gebruiken.</para>
 
         <para>Het gebruik van "elseif" is toegestaan maar "else if" wordt sterk
-		aanbevolen.</para>
+        aanbevolen.</para>
       </sect3>
 
       <sect3 id="coding-standards.coding-style.control-statements.switch">
         <title>Switch</title>
 
         <para>Control statements geschreven met "switch" moeten een enkele spatie
-		voor de openende haakjes van de voorwaardeverklaring hebben, en een enkele
-		spatie na de sluitende haakjes.</para>
+        voor de openende haakjes van de voorwaardeverklaring hebben, en een enkele
+        spatie na de sluitende haakjes.</para>
 
         <para>Alle inhoud binnen een "switch" verklaring moet met vier spaties
-		geïndenteerd worden. Inhoud onder elke "case" moet geïndenteerd worden
-		met vier extra spaties.</para>
+        geïndenteerd worden. Inhoud onder elke "case" moet geïndenteerd worden
+        met vier extra spaties.</para>
 
         <programlisting role="php">
 switch ($numPeople) {
@@ -547,15 +547,15 @@ switch ($numPeople) {
 }</programlisting>
 
         <para><code>default</code> mag nooit weggelaten worden van een
-		<code>switch</code> verklaring.</para>
+        <code>switch</code> verklaring.</para>
 
         <para><emphasis>NOTA:</emphasis> Het is soms handig een <code>case</code>
-		verklaring te hebben die doorvalt naar de volgende <code>case</code>
-		verklaring door het weglaten van <code>break</code> of <code>return</code>
-		in de verklaring. Om deze gevallen van bugs te onderscheiden moet elk
-		van de gevallen waarin een <code>break</code> of <code>return</code>
-		wordt weggelaten een commentaar "// break intentionally omitted"
-		bevatten.</para>
+        verklaring te hebben die doorvalt naar de volgende <code>case</code>
+        verklaring door het weglaten van <code>break</code> of <code>return</code>
+        in de verklaring. Om deze gevallen van bugs te onderscheiden moet elk
+        van de gevallen waarin een <code>break</code> of <code>return</code>
+        wordt weggelaten een commentaar "// break intentionally omitted"
+        bevatten.</para>
       </sect3>
     </sect2>
 
@@ -566,23 +566,23 @@ switch ($numPeople) {
         <title>Documentatie Formaat</title>
 
         <para>Alle documentatieblokken ("docblocks") moeten compatibel zijn
-		met het phpDocumentor formaat. Een beschrijving van het
-		phpDocumentor formaat is buiten het bereik van dit document.
-		Voor meer informatie kunt u terecht op: <ulink
+        met het phpDocumentor formaat. Een beschrijving van het
+        phpDocumentor formaat is buiten het bereik van dit document.
+        Voor meer informatie kunt u terecht op: <ulink
         url="http://phpdoc.org/">http://phpdoc.org"</ulink></para>
 
         <para>Alle broncodebestanden geschreven voor het Zend Framework of dat
-		ermee samenwerkt moet een "file-level" docblock bevatten aan het begin
-		van elk bestand en een "class-level" docblock onmiddellijk boven elke
-		klasse. Hierna enkele voorbeelden van zulke docblocks.</para>
+        ermee samenwerkt moet een "file-level" docblock bevatten aan het begin
+        van elk bestand en een "class-level" docblock onmiddellijk boven elke
+        klasse. Hierna enkele voorbeelden van zulke docblocks.</para>
       </sect3>
 
       <sect3 id="coding-standards.inline-documentation.files">
         <title>Bestanden</title>
 
         <para>Elk bestand dat PHP code bevat moet een hoofdblok aan het
-		begin van het bestand bevatten dat minstens de volgende
-		phpDocumentor gegevens bevat: <programlisting role="php">
+        begin van het bestand bevatten dat minstens de volgende
+        phpDocumentor gegevens bevat: <programlisting role="php">
 /**
  * Korte beschrijving van het bestand
  *
@@ -602,7 +602,7 @@ switch ($numPeople) {
         <title>Klassen</title>
 
         <para>Elke klasse moet een docblock bevatten dat minstens
-		de volgende phpDocumentor gegevens bevat: <programlisting role="php">
+        de volgende phpDocumentor gegevens bevat: <programlisting role="php">
 /**
  * Korte beschrijving van de klasse
  *
@@ -621,7 +621,7 @@ switch ($numPeople) {
         <title>Functies</title>
 
         <para>Elke functie, methodes inbegrepen, moet een docblock hebben
-		dat minstens het volgende bevat: <itemizedlist>
+        dat minstens het volgende bevat: <itemizedlist>
             <listitem>
               <para>Een beschrijving van de functie</para>
             </listitem>
@@ -636,12 +636,12 @@ switch ($numPeople) {
           </itemizedlist></para>
 
         <para>Het is niet nodig om de "@access" tags te gebruiken
-		want de zichtbaarheid is reeds bekend via het gebruik van
-		"public", "private", of "protected" bij het verklaren van de 
-		functie.</para>
+        want de zichtbaarheid is reeds bekend via het gebruik van
+        "public", "private", of "protected" bij het verklaren van de
+        functie.</para>
 
         <para>Indien een functie of methode een exception mag teruggeven,
-		gebruik @throws:
+        gebruik @throws:
         <programlisting role="php">
 @throws exceptionClass [beschrijving]
 </programlisting></para>

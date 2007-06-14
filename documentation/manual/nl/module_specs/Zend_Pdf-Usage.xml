@@ -1,14 +1,14 @@
 <sect1 id="zend.pdf.usage">
     <title>Een gebruiksvoorbeeld voor de Zend_Pdf module</title>
     <para>
-	Deze sectie geeft een voorbeeld van het gebruik van de Zend_Pdf module.
+    Deze sectie geeft een voorbeeld van het gebruik van de Zend_Pdf module.
     </para>
 
     <para>
-	Dit voorbeeld kan teruggevonden worden in een <filename>demos/Zend/Pdf/demo.php</filename> bestand.
+    Dit voorbeeld kan teruggevonden worden in een <filename>demos/Zend/Pdf/demo.php</filename> bestand.
     </para>
     <para>
-	Er is ook een <filename>test.pdf</filename> bestand dat met dit voorbeeld kan gebruikt worden om te testen.
+    Er is ook een <filename>test.pdf</filename> bestand dat met dit voorbeeld kan gebruikt worden om te testen.
     </para>
 
     <example>

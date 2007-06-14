@@ -2,18 +2,18 @@
     <title>Maken en laden van PDF documenten</title>
     <para>
     De <code>Zend_Pdf</code> klasse stelt het PDF document zelf op en verstrekt functionaliteit op document
-	niveau.
+    niveau.
     </para>
 
     <para>
-	Om een nieuw document aan te maken moet je een nieuw <code>Zend_Pdf</code> object aanmaken.
+    Om een nieuw document aan te maken moet je een nieuw <code>Zend_Pdf</code> object aanmaken.
     </para>
 
     <para>
     De <code>Zend_Pdf</code> klasse verstrekt ook twee statische methodes om bestaande
-	PDF documenten te laden. Deze zijn de <code>Zend_Pdf::load()</code> en <code>Zend_Pdf::parse()</code>
-	methodes. Beiden geven een <code>Zend_Pdf</code> object als resultaat terug of werpen een
-	exceptie op indien er een probleem optrad.
+    PDF documenten te laden. Deze zijn de <code>Zend_Pdf::load()</code> en <code>Zend_Pdf::parse()</code>
+    methodes. Beiden geven een <code>Zend_Pdf</code> object als resultaat terug of werpen een
+    exceptie op indien er een probleem optrad.
     </para>
 
     <example>
@@ -33,17 +33,17 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     </example>
 
     <para>
-	Het PDF bestandsformaat ondersteund incremental document update. Dus elke keer als een
-	document wordt aangepast word er een nieuwe revisie van het document gemaakt.
-	De <code>Zend_Pdf</code> module ondersteunt het opvragen van een bepaalde revisie.
+    Het PDF bestandsformaat ondersteund incremental document update. Dus elke keer als een
+    document wordt aangepast word er een nieuwe revisie van het document gemaakt.
+    De <code>Zend_Pdf</code> module ondersteunt het opvragen van een bepaalde revisie.
     </para>
     <para>
-	De revisie kan worden bepaald als een tweede parameter voor de <code>Zend_Pdf::load()</code> en
+    De revisie kan worden bepaald als een tweede parameter voor de <code>Zend_Pdf::load()</code> en
     <code>Zend_Pdf::parse()</code> methodes of worden opgevraagd door <code>Zend_Pdf::rollback()</code>
         <footnote>
             <para>
             De <code>Zend_Pdf::rollback()</code> methode moet aangeroepen worden voor er enige veranderingen
-			aan het document worden doorgevoerd. Indien dit niet het geval is is het gedrag onvoorspelbaar.
+            aan het document worden doorgevoerd. Indien dit niet het geval is is het gedrag onvoorspelbaar.
             </para>
         </footnote>
     </para>

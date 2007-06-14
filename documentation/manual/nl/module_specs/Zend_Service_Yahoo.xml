@@ -6,7 +6,7 @@
             <code>Zend_Service_Yahoo</code> is een eenvoudige API om veel van de Yahoo! REST APIs te gebruiken.
             <code>Zend_Service_Yahoo</code> laat je toe om Yahoo! Web search, Yahoo! News, Yahoo! Local en Yahoo!
             Images te doorzoeken. Om de Yahoo! REST API te gebruiken, moet je een Yahoo! Application ID hebben. Om die te verkrijgen
-			kan je volgende formulier invullen en opsturen:
+            kan je volgende formulier invullen en opsturen:
             <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID Request Form</ulink>.
         </para>
     </sect2>
@@ -15,10 +15,10 @@
         <para>
             <code>Zend_Service_Yahoo</code> laat je toe het web te doorzoeken met Yahoo! door de
             <code>webSearch()</code> methode te gebruiken die een string query parameter aanvaardt, plus een
-			optionele tweede parameter als een array van zoekopties. Voor volledige details en een lijst van opties
-			verwijzen we je graag door naar de
+            optionele tweede parameter als een array van zoekopties. Voor volledige details en een lijst van opties
+            verwijzen we je graag door naar de
             <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
-            Documentatie</ulink>. De <code>webSearch()</code> methode geeft een 
+            Documentatie</ulink>. De <code>webSearch()</code> methode geeft een
             <code>Zend_Service_Yahoo_WebResultSet</code> object terug.
         </para>
         <example>
@@ -36,9 +36,9 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.imagesearch">
         <title>Beelden vinden met Yahoo!</title>
         <para>
-			Je kan beelden zoeken met Yahoo! door <code>Zend_Service_Yahoo</code>'s <code>imageSearch()</code>
+            Je kan beelden zoeken met Yahoo! door <code>Zend_Service_Yahoo</code>'s <code>imageSearch()</code>
             methode te gebruiken. Deze methode aanvaardt een string query parameter en een optionele array van
-			zoekopties zoals voor de 
+            zoekopties zoals voor de
             <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> methode</link>. Voor alle details
             en een lijst van opties kan je terecht op de
             <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Beeldzoeken
@@ -59,8 +59,8 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.localsearch">
         <title>Plaatselijke bedrijven en diensten vinden met Yahoo!</title>
         <para>
-			Je kan plaatselijke bedrijven en diensten opzoeken met Yahoo! door de <code>localSearch()</code> methode te
-			gebruiken. Voor alle details kan je terecht op de
+            Je kan plaatselijke bedrijven en diensten opzoeken met Yahoo! door de <code>localSearch()</code> methode te
+            gebruiken. Voor alle details kan je terecht op de
             <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Plaatselijk zoeken
             Documentatie</ulink>.
         </para>
@@ -80,7 +80,7 @@ foreach ($results as $result) {
         <title>Yahoo! News zoeken</title>
         <para>
             Yahoo! News zoeken is eenvoudig; gebruik eenvoudigweg de <code>newsSearch()</code> methode zoals in het
-			volgende voorbeeld. Voor alle details verwijzen we je door naar de 
+            volgende voorbeeld. Voor alle details verwijzen we je door naar de
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News zoeken
             Documentatie</ulink>.
         </para>
@@ -99,11 +99,11 @@ foreach ($results as $result) {
 <sect2 id="zend.service.yahoo.classes">
     <title>Zend_Service_Yahoo Klassen</title>
     <para>
-		De volgende klassen worden allemaal teruggestuurd door de verschillende Yahoo! zoekopdrachten. Elk zoektype
-		stuurt een set resultaten terug die specifiek zijn aan het zoektype. Deze kunnen gemakkelijk worden
-		doorlopen omdat elk resultaat in een resultaattype object zit. Alle klassen voor resultaatsets
-		implementeren de <code>SeekableIterator</code> interface die ervoor zorgt dat je gemakkelijk door een
-		set resultaten kan lopen en een specifiek resultaat erin kan zoeken.
+        De volgende klassen worden allemaal teruggestuurd door de verschillende Yahoo! zoekopdrachten. Elk zoektype
+        stuurt een set resultaten terug die specifiek zijn aan het zoektype. Deze kunnen gemakkelijk worden
+        doorlopen omdat elk resultaat in een resultaattype object zit. Alle klassen voor resultaatsets
+        implementeren de <code>SeekableIterator</code> interface die ervoor zorgt dat je gemakkelijk door een
+        set resultaten kan lopen en een specifiek resultaat erin kan zoeken.
         <itemizedlist>
             <listitem><para><link linkend="zend.service.yahoo.classes.resultset"><code>Zend_Service_Yahoo_ResultSet</code></link></para></listitem>
             <listitem><para><link linkend="zend.service.yahoo.classes.webresultset"><code>Zend_Service_Yahoo_WebResultSet</code></link></para></listitem>
@@ -121,10 +121,10 @@ foreach ($results as $result) {
     <sect3 id="zend.service.yahoo.classes.resultset">
         <title>Zend_Service_Yahoo_ResultSet</title>
         <para>
-			Elk van de aan de zoekopdracht specifieke resultaten is uitgebreid vanaf deze basisklasse.
+            Elk van de aan de zoekopdracht specifieke resultaten is uitgebreid vanaf deze basisklasse.
         </para>
         <para>
-			Elk van de specifieke set resultaten geeft een specifiek
+            Elk van de specifieke set resultaten geeft een specifiek
             <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link> object terug.
         </para>
         <sect4 id="zend.service.yahoo.classes.resultset.totalResults">
@@ -137,7 +137,7 @@ foreach ($results as $result) {
                 </methodsynopsis>
             </para>
             <para>
-				Geeft het aantal resultaten terug die de zoekopdracht terug stuurde.
+                Geeft het aantal resultaten terug die de zoekopdracht terug stuurde.
             </para>
         </sect4>
         <sect4 id="zend.service.yahoo.classes.resultset.properties">
@@ -226,7 +226,7 @@ foreach ($results as $result) {
                         <entry>resultSetMapURL</entry>
                         <entry>string</entry>
                         <entry>De URL van een webpagina die een grafische kaart bevat met alle teruggestuurde resultaten erop
-						afgebeeld.</entry>
+                        afgebeeld.</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -257,7 +257,7 @@ foreach ($results as $result) {
     <sect3 id="zend.service.yahoo.classes.result">
         <title>Zend_Service_Yahoo_Result</title>
         <para>
-			Elk van de aan de zoekopdracht specifieke resultaten is uitgebreid van deze basis klasse.
+            Elk van de aan de zoekopdracht specifieke resultaten is uitgebreid van deze basis klasse.
         </para>
         <sect4 id="zend.service.yahoo.classes.result.properties">
             <title>Eigenschappen</title>
@@ -298,7 +298,7 @@ foreach ($results as $result) {
      <sect3 id="zend.service.yahoo.classes.webresult">
         <title>Zend_Service_Yahoo_WebResult</title>
         <para>
-			Elk Web Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_WebResult</code> object.
+            Elk Web Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_WebResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.webresult.properties">
             <title>Eigenschappen</title>
@@ -349,7 +349,7 @@ foreach ($results as $result) {
      <sect3 id="zend.service.yahoo.classes.imageresult">
         <title>Zend_Service_Yahoo_ImageResult</title>
         <para>
-			Elk Image Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_ImageResult</code> object.
+            Elk Image Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_ImageResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.imageresult.properties">
             <title>Eigenschappen</title>
@@ -410,7 +410,7 @@ foreach ($results as $result) {
      <sect3 id="zend.service.yahoo.classes.localresult">
         <title>Zend_Service_Yahoo_LocalResult</title>
         <para>
-			Elk Local Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_LocalResult</code> object.
+            Elk Local Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_LocalResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.localresult.properties">
             <title>Eigenschappen</title>
@@ -542,7 +542,7 @@ foreach ($results as $result) {
      <sect3 id="zend.service.yahoo.classes.image">
         <title>Zend_Service_Yahoo_Image</title>
         <para>
-			Alle beelden die door de Yahoo! Image Search of de Yahoo! News Search worden teruggestuurd
+            Alle beelden die door de Yahoo! Image Search of de Yahoo! News Search worden teruggestuurd
             worden voorgesteld als <code>Zend_Service_Yahoo_Image</code> objecten
         </para>
         <sect4 id="zend.service.yahoo.classes.image.properties">

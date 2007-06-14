@@ -1,8 +1,8 @@
 <sect1 id="zend.mime.introduction">
     <title>Inleiding</title>
     <para>
-        <code>Zend_Mime</code> is een hulpklasse voor het afhandelen van multipart MIME berichten. 
-        Ze wordt gebruikt door <link linkend="zend.mail"><code>Zend_Mail</code></link>, en 
+        <code>Zend_Mime</code> is een hulpklasse voor het afhandelen van multipart MIME berichten.
+        Ze wordt gebruikt door <link linkend="zend.mail"><code>Zend_Mail</code></link>, en
         kan gebruikt worden door toepassingen die MIME ondersteuning nodig hebben.
     </para>
     <sect2 id="zend.mime.static">
@@ -12,19 +12,19 @@
         <itemizedlist>
             <listitem>
               <para>
-                <code>isPrintable()</code>: Geeft TRUE terug indien de gegeven string geen onafdrukbare tekens bevat, 
-				anders FALSE.
-		      </para>
+                <code>isPrintable()</code>: Geeft TRUE terug indien de gegeven string geen onafdrukbare tekens bevat,
+                anders FALSE.
+              </para>
             </listitem>
             <listitem>
               <para>
                 <code>encodeBase64()</code>: Encodeert een string met base64.
-		      </para>
+              </para>
             </listitem>
             <listitem>
               <para>
                 <code>encodeQuotedPrintable()</code>: Encodeert een string met het quoted-printable mechanisme.
-		      </para>
+              </para>
             </listitem>
         </itemizedlist>
     </para>
@@ -35,47 +35,47 @@
             <listitem>
               <para>
                 <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
-				<code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
-		      </para>
+            <listitem>
+              <para>
+                <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
-		      </para>
+              </para>
             </listitem>
-			<listitem>
-			  <para>
+            <listitem>
+              <para>
                 <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
-		      </para>
+              </para>
             </listitem>
         </itemizedlist>
     </para>
@@ -83,12 +83,12 @@
     <sect2 id="zend.mime.instatiation">
     <title>Zend_Mime Instantiëren</title>
     <para>
-    	Wanneer je een <code>Zend_Mime</code> object instantieert word er een MIME boundary
-    	opgeslaan die word gebruikt voor alle volgende niet-statische oproepen naar het 
-    	object.
-    	Als de constructor word opgeroepen met een string parameter zal de gegeven string
-    	worden gebruikt als MIME boundary. Indien niet zal er een willekeurige MIME boundary
-    	worden gegenereerd tijdens het opbouwen van het object.
+        Wanneer je een <code>Zend_Mime</code> object instantieert word er een MIME boundary
+        opgeslaan die word gebruikt voor alle volgende niet-statische oproepen naar het
+        object.
+        Als de constructor word opgeroepen met een string parameter zal de gegeven string
+        worden gebruikt als MIME boundary. Indien niet zal er een willekeurige MIME boundary
+        worden gegenereerd tijdens het opbouwen van het object.
     </para>
     <para>
         Een <code>Zend_Mime</code> object heeft de volgende methodes:
@@ -96,17 +96,17 @@
             <listitem>
               <para>
                 <code>boundary()</code>: Geeft de MIME boundary string terug.
-		      </para>
+              </para>
             </listitem>
             <listitem>
               <para>
                 <code>boundaryLine()</code>: Geeft de gehele MIME boundary regel terug.
-		      </para>
+              </para>
             </listitem>
             <listitem>
               <para>
                 <code>mimeEnd()</code>: Geeft de gehele MIME einde boundary regel terug.
-		      </para>
+              </para>
             </listitem>
         </itemizedlist>
     </para>

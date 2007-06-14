@@ -52,18 +52,18 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 if(!$result = $cache->get('mijnresultaat')) {
 
     // geen cache; verbind met de database
-    
+
     $db = Zend_Db::factory( [...] );
-    
+
     $result = $db->fetchAll('SELECT * FROM enorme_tabel');
-    
+
     $cache->save($result, 'mijnresultaat');
-    
+
 } else {
 
     // cache bestaat! laat het weten
     echo "Dit komt uit de cache!\n\n";
-    
+
 }
 
 print_r($result);
@@ -80,7 +80,7 @@ print_r($result);
         </para>
         <para>
             Tussen de twee methodes output je je data zoals gewoonlijk - alle output zal worden gecached als
-            de uitvoering de <code>end()</code> methode tegenkomt. Bij de volgende uitvoering zal de hele 
+            de uitvoering de <code>end()</code> methode tegenkomt. Bij de volgende uitvoering zal de hele
             sectie worden overgeslagen ten voordele van het verkrijgen van de data uit de cache (zolang de
             cache record geldig is).
         </para>
@@ -98,10 +98,10 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 // we geven een unieke id door aan de start() methode
 if(!$cache->start('mijnpagina')) {
     // output zoals gewoonlijk:
-    
+
     echo 'Hallo wereld! ';
     echo 'Dit is gecached ('.time().') ';
-    
+
     $cache->end(); // de output wordt opgeslagen en naar de browser gestuurd
 }
 
@@ -119,7 +119,7 @@ echo 'Dit word nooit gecached ('.time().').';
        </para>
     </example>
     <note><para>
-        Als je <code>Zend_Cache</code> gebruikt, let dan op de belangrijke cache id (doorgegeven aan 
+        Als je <code>Zend_Cache</code> gebruikt, let dan op de belangrijke cache id (doorgegeven aan
         <code>save()</code> en <code>start()</code>. Die moet uniek zijn voor elk deel data die je wil
         cachen, anders kunnen cache records die niets met elkaar te maken hebben elkaar uitwissen of,
         erger nog, afgebeeld worden in plaats van de ander.

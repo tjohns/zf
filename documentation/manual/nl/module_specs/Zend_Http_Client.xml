@@ -125,7 +125,7 @@
         <title>POST, PUT en DELETE HTTP verzoeken maken</title>
         <para>
             Het maken van POST, PUT en DELETE HTTP verzoeken wordt vereenvoudigd in <code>Zend_Http_Client</code>
-            door middel van drie methodes: <code>post()</code>, <code>put()</code>, en <code>delete()</code>, 
+            door middel van drie methodes: <code>post()</code>, <code>put()</code>, en <code>delete()</code>,
             respectievelijk. De <code>post()</code> en <code>put()</code> methodes aanvaarden elk één string
             parameter, <code>$data</code>, waarin een string met de data correct ge-encodeerd zoals volgt:
             <emphasis><code>name=value&amp;foo=bar</code></emphasis>. De <code>delete()</code> methode heeft

@@ -6,7 +6,7 @@
     <para>
         <code>Zend_Config</code> implementeert de <code>Countable</code> en <code>Iterator</code> interfaces om eenvoudige toegang tot de configuratiedata te vergemakkeliken. Je kan dus de <ulink url="http://php.net/count"><code>count()</code></ulink> functie en PHP constructies zoals <ulink url="http://php.net/foreach"><code>foreach</code></ulink> gebruiken op <code>Zend_Config</code> objecten.
     </para>
-    
+
     <para>
         Standaard is de configuratiedata die beschikbaar wordt gemaakt via <code>Zend_Config</code> read-only, en het toewijzen van een waarde (bv: <code><![CDATA[$config->database->host = 'example.com']]></code>) resulteert in het opwerpen van een uitzondering (exception). Deze standaardeigenschap kan evenwel worden gewijzigd via de constructor om het wijzigen van waarden toe te staan.
     </para>

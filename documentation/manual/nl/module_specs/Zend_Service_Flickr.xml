@@ -4,13 +4,13 @@
         <title>Inleiding voor het zoeken in Flickr</title>
         <para>
             <code>Zend_Service_Flickr</code> is een eenvoudige API om de Flickr REST web service te gebruiken. Om de Flickr
-			web services te gebruiken moet je een API key hebben. Om deze te verkrijgen en voor meer informatie over de
-			Flickr REST Web Service, kan je terecht bij de
+            web services te gebruiken moet je een API key hebben. Om deze te verkrijgen en voor meer informatie over de
+            Flickr REST Web Service, kan je terecht bij de
             <ulink url="http://www.flickr.com/services/api/">Flickr API documentatie</ulink>.
         </para>
         <para>
-			In het volgende voorbeeld gebruiken we de <code>tagSearch()</code> methode om foto's te zoeken die &quot;php&quot; in
-			de tags hebben.
+            In het volgende voorbeeld gebruiken we de <code>tagSearch()</code> methode om foto's te zoeken die &quot;php&quot; in
+            de tags hebben.
         </para>
         <example>
             <title>Eenvoudige Flickr Photo zoekopdracht</title>
@@ -35,14 +35,14 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.finding-users">
         <title>Flickr gebruikers vinden</title>
         <para>
-            <code>Zend_Service_Flickr</code> biedt drie verschillende mogelijkheden om Flickr gebruikersinformatie 
-			te verkrijgen:
+            <code>Zend_Service_Flickr</code> biedt drie verschillende mogelijkheden om Flickr gebruikersinformatie
+            te verkrijgen:
         </para>
         <itemizedlist>
             <listitem>
               <para>
                 <code>userSearch()</code>: Aanvaardt een string query van spatiegescheiden vermeldingen en een optionele
-				tweede parameter als een array van zoekopties, en geeft een <code>Zend_Service_Flickr_ResultSet</code>
+                tweede parameter als een array van zoekopties, en geeft een <code>Zend_Service_Flickr_ResultSet</code>
                 object terug.
               </para>
             </listitem>
@@ -60,8 +60,8 @@ foreach ($results as $result) {
         <example>
             <title>Een Flickr gebruiker vinden door middel van zijn e-mailadres</title>
             <para>
-				In dit voorbeeld hebben we het e-mailadres van de Flickr gebruiker, en we verkrijgen de gebruikersinformatie
-				door de <code>userSearch()</code> methode te gebruiken:
+                In dit voorbeeld hebben we het e-mailadres van de Flickr gebruiker, en we verkrijgen de gebruikersinformatie
+                door de <code>userSearch()</code> methode te gebruiken:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
@@ -85,7 +85,7 @@ foreach ($results as $result) {
         <example>
             <title>Flickr beelddetails verkrijgen</title>
             <para>
-				Wanneer je een Flickr beeld ID hebt is het eenvoudig informatie over dat beeld te verkrijgen:
+                Wanneer je een Flickr beeld ID hebt is het eenvoudig informatie over dat beeld te verkrijgen:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
@@ -174,7 +174,7 @@ echo "<a href=\"$image->clickUri\">Klik hier voor het beeld</a>\n";
     <sect3 id="zend.service.flickr.classes.result">
         <title>Zend_Service_Flickr_Result</title>
         <para>
-			Een enkel beeldresultaat van een Flickr zoekopdracht
+            Een enkel beeldresultaat van een Flickr zoekopdracht
         </para>
         <sect4 id="zend.service.flickr.classes.result.properties">
             <title>Eigenschappen</title>

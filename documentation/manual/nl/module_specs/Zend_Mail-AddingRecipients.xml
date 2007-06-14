@@ -1,7 +1,7 @@
 <sect1 id="zend.mail.adding-recipients">
     <title>Geadresseerde bijvoegen</title>
     <para>
-		Geadresseerden kunnen op drie manieren worden bijgevoegd:
+        Geadresseerden kunnen op drie manieren worden bijgevoegd:
         <itemizedlist>
         <listitem>
         <para><code>addTo()</code>: Voegt een geadresseerde aan het bericht toe met een "To:" header</para>
@@ -17,7 +17,7 @@
     <note>
       <para>
         <code>addTo()</code> en <code>addCc()</code> aanvaarden een tweede optionele parameter die gebruikt word als een
-		voor de mens leesbare naam van de geadresseerde.
+        voor de mens leesbare naam van de geadresseerde.
       </para>
     </note>
 </sect1>

@@ -1,14 +1,14 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
-    
+
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            Deze backends slaat cache records op in bestanden (in een gekozen map). 
+            Deze backends slaat cache records op in bestanden (in een gekozen map).
         </para>
         <para>
             Beschikbare opties zijn :
-        </para>          
+        </para>
         <table>
             <title>Beschikbare opties</title>
             <tgroup cols="4">
@@ -145,7 +145,7 @@
                           <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
                           <entry>
                             Een array van memcached servers ; elke memcached server is beschreven door een associatieve
-                            array : 
+                            array :
                             'host' => (string) : de naam van een memcached server,
                             'port' => (int) : de poort van een memcached server,
                             'persistent' => (bool) : gebruik of niet van persistante verbindingen met deze memcached server
@@ -177,7 +177,7 @@
             Er zijn geen opties voor deze backend.
         </para>
     </sect2>
-</sect1> 
+</sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->

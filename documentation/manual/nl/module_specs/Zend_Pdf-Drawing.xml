@@ -4,11 +4,11 @@
     <sect2 id="zend.pdf.drawing.geometry">
         <title>Geometrie</title>
         <para>
-		PDF gebruikt dezelfde geometrie als PostScript. Het begint van de beneden-linkse
-		hoek van de pagina en is standaard afgemeten in points (1/72 van een duim).
+        PDF gebruikt dezelfde geometrie als PostScript. Het begint van de beneden-linkse
+        hoek van de pagina en is standaard afgemeten in points (1/72 van een duim).
         </para>
         <para>
-		De grootte van een pagina kan worden verkregen van het pagina object:
+        De grootte van een pagina kan worden verkregen van het pagina object:
         </para>
         <programlisting role="php"><![CDATA[
 $width  = $pdfPage->getWidth();
@@ -19,9 +19,9 @@ $height = $pdfPage->getHeight();]]>
     <sect2 id="zend.pdf.drawing.color">
         <title>Kleur</title>
         <para>
-		PDF heeft geweldig goede kleurweergavemogelijkheden. Zend_Pdf ondersteunt grijsschalen, RGB en CMYK
-		kleuren. Elk van deze notaties kan worden gebruikt daar waar een <code>Zend_Pdf_Color</code> object
-		nodig is. De <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> en
+        PDF heeft geweldig goede kleurweergavemogelijkheden. Zend_Pdf ondersteunt grijsschalen, RGB en CMYK
+        kleuren. Elk van deze notaties kan worden gebruikt daar waar een <code>Zend_Pdf_Color</code> object
+        nodig is. De <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> en
         <code>Zend_Pdf_Color_CMYK</code> klassen verstrekken deze functionaliteit:
         </para>
         <programlisting role="php"><![CDATA[
@@ -40,7 +40,7 @@ $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
     <sect2 id="zend.pdf.drawing.shape-drawing">
         <title>Vormen tekenen</title>
         <para>
-		Alle tekenoperaties kunnen worden uitgevoerd in de context van een PDF pagina.
+        Alle tekenoperaties kunnen worden uitgevoerd in de context van een PDF pagina.
         </para>
         <para>
         De <code>Zend_Pdf_Page</code> klasse verstrekt een set van teken methodes:
@@ -146,7 +146,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
     <sect2 id="zend.pdf.drawing.text-drawing">
         <title>Tekst schrijven</title>
         <para>
-		Ook tekst wordt geschreven in de paginacontext:
+        Ook tekst wordt geschreven in de paginacontext:
         </para>
         <programlisting role="php"><![CDATA[
 /**
@@ -160,8 +160,8 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
 public function drawText($text, $x, $y );]]>
         </programlisting>
         <para>
-		Het huidige lettertype en de lettertypegrootte worden gebruikt om tekst te schrijven. Zie de gedetailleerde beschrijving
-		hieronder.
+        Het huidige lettertype en de lettertypegrootte worden gebruikt om tekst te schrijven. Zie de gedetailleerde beschrijving
+        hieronder.
         </para>
     </sect2>
 
@@ -181,10 +181,10 @@ public function drawText($text, $x, $y );]]>
 public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
         </programlisting>
         <para>
-		PDF ondersteunt Type1, TrueType, Type3 and composite lettertypes. Er zijn ook 14 standaard Type1 lettertypes
+        PDF ondersteunt Type1, TrueType, Type3 and composite lettertypes. Er zijn ook 14 standaard Type1 lettertypes
         voorzien in PDF. De Zend_Pdf module verstrekt op dit moment alleen de 14 standaard lettertypes. Die kunnen
-		verkregen worden door de <code>Zend_Pdf_Font_Standard</code> klasse te gebruiken. Een bepaalde lettertype
-		moet worden gebruikt als argument:
+        verkregen worden door de <code>Zend_Pdf_Font_Standard</code> klasse te gebruiken. Een bepaalde lettertype
+        moet worden gebruikt als argument:
         </para>
         <example>
             <title>Een standaard lettertype maken</title>
@@ -200,7 +200,7 @@ $pdfPage->setFont($font, 36);
             </programlisting>
         </example>
         <para>
-		De <code>Zend_Pdf_Const</code> verstrekt constanten voor de 14 standaard lettertypes:
+        De <code>Zend_Pdf_Const</code> verstrekt constanten voor de 14 standaard lettertypes:
         <itemizedlist>
             <listitem>
                 <para>Zend_Pdf_Const::FONT_TIMES_ROMAN</para>
@@ -266,10 +266,10 @@ $pdfPage->setFont($font, 36);
 public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
         </programlisting>
         <para>
-		Beeldobjecten worden door afstammelingen van de <code>Zend_Pdf_Image</code> klasse voorgesteld.
+        Beeldobjecten worden door afstammelingen van de <code>Zend_Pdf_Image</code> klasse voorgesteld.
         </para>
         <para>
-		Alleen JPG beelden zijn momenteel ondersteund:
+        Alleen JPG beelden zijn momenteel ondersteund:
         </para>
         <example>
             <title>Beelden tekenen</title>
@@ -286,7 +286,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);;
             <emphasis>Belangrijk! De <code>Zend_Pdf_Image_JPEG</code> klasse heeft de PHP GD extensie nodig.</emphasis>
         </para>
         <para>
-			Zie de PHP documentatie voor meer informatie
+            Zie de PHP documentatie voor meer informatie
             (<ulink url="http://www.php.net/manual/nl/ref.image.php">http://www.php.net/manual/nl/ref.image.php</ulink>).
         </para>
     </sect2>
@@ -294,7 +294,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);;
     <sect2 id="zend.pdf.drawing.line-drawing-style">
         <title>Lijnstijl tekenen</title>
         <para>
-		De lijnstijl wordt gedefinieerd door lijndikte, lijnkleur en lijnstippenpatroon. Al deze parameters kunnen door de <code>Zend_Pdf_Page</code> klasse methodes worden aangegeven:
+        De lijnstijl wordt gedefinieerd door lijndikte, lijnkleur en lijnstippenpatroon. Al deze parameters kunnen door de <code>Zend_Pdf_Page</code> klasse methodes worden aangegeven:
         </para>
         <programlisting role="php"><![CDATA[
 /** Zet lijnkleur. */
@@ -405,8 +405,8 @@ regardless of the directions in which the circles are drawn.
     <sect2 id="zend.pdf.drawing.rotations">
         <title>Rotaties</title>
         <para>
-		Een PDF pagina kan geroteerd worden zo lang er nog niets op werd geschreven of getekend.
-		Het wordt gedaan door de <code>Zend_Pdf_Page::rotate()</code> methode:
+        Een PDF pagina kan geroteerd worden zo lang er nog niets op werd geschreven of getekend.
+        Het wordt gedaan door de <code>Zend_Pdf_Page::rotate()</code> methode:
         </para>
         <programlisting role="php"><![CDATA[
 /**
@@ -421,13 +421,13 @@ public function rotate($x, $y, $angle);]]>
     <sect2 id="zend.pdf.drawing.save-restore">
         <title>Opslaan/herstellen van een grafische staat</title>
         <para>
-		Op eender welk moment kan een grafische staat van een pagina (huidig lettertype, lettertype
-		grootte, lijnkleur, vulkleur, lijnstijl, paginarotatie, clip area) worden opgeslagen
-		en worden hersteld. De opsla-operatie slaat de data in een grafische staatstapel op,
-		de hersteloperatie haalt ze er weer uit.
+        Op eender welk moment kan een grafische staat van een pagina (huidig lettertype, lettertype
+        grootte, lijnkleur, vulkleur, lijnstijl, paginarotatie, clip area) worden opgeslagen
+        en worden hersteld. De opsla-operatie slaat de data in een grafische staatstapel op,
+        de hersteloperatie haalt ze er weer uit.
         </para>
         <para>
-		Dit zijn de <code>Zend_Pdf_Page</code> klassemethodes om deze operaties uit te voeren:
+        Dit zijn de <code>Zend_Pdf_Page</code> klassemethodes om deze operaties uit te voeren:
         </para>
         <programlisting role="php"><![CDATA[
 /**
@@ -447,9 +447,9 @@ public function restoreGS();]]>
     <sect2 id="zend.pdf.drawing.clipping">
         <title>Clipping draw area</title>
         <para>
-		PDF en de Zend_Pdf module ondersteunen clippen van een teken area.
-		De actieve clip area begrenst de regios van de pagina die door tekenoperaties worden beïnvloed.
-		Initieel is het de volledige pagina.
+        PDF en de Zend_Pdf module ondersteunen clippen van een teken area.
+        De actieve clip area begrenst de regios van de pagina die door tekenoperaties worden beïnvloed.
+        Initieel is het de volledige pagina.
         </para>
         <para>
         De <code>Zend_Pdf_Page</code> klasse verstrekt een set methodes voor clipoperaties.
@@ -514,8 +514,8 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
         De <code>Zend_Pdf_Style</code> klasse voorziet in stijlen
         </para>
         <para>
-		Stijlen kunnen gebruikt worden om een set grafische parameters op te slaan en ze toe te brengen op een
-		PDF pagina in één operatie:
+        Stijlen kunnen gebruikt worden om een set grafische parameters op te slaan en ze toe te brengen op een
+        PDF pagina in één operatie:
         </para>
         <programlisting role="php"><![CDATA[
 /**
@@ -535,7 +535,7 @@ public function getStyle();]]>
 
         <para>
         De <code>Zend_Pdf_Style</code> klasse voorziet in een set methodes om verschillende grafische
-		staat parameters te zetten of te verkrijgen:
+        staat parameters te zetten of te verkrijgen:
         </para>
         <programlisting role="php"><![CDATA[
 /**

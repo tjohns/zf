@@ -6,9 +6,9 @@
     </para>
 
     <para>
-		Hier is een voorbeeld van een aangepaste Atom entry klasse die zijn eigen <code>myns:</code>
-		namespace behandeld. Merk op dat het ook de oproep <code>registerNamespace()</code> voor je
-		afhandelt, zodanig dat de eindgebruiker zich helemaal niet met namespaces hoeft bezig te houden.
+        Hier is een voorbeeld van een aangepaste Atom entry klasse die zijn eigen <code>myns:</code>
+        namespace behandeld. Merk op dat het ook de oproep <code>registerNamespace()</code> voor je
+        afhandelt, zodanig dat de eindgebruiker zich helemaal niet met namespaces hoeft bezig te houden.
     </para>
 
     <example>
@@ -35,7 +35,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
     {
         switch ($var) {
             case 'myUpdated':
-				// Vertaal myUpdated naar myns:updated.
+                // Vertaal myUpdated naar myns:updated.
                 return parent::__get('myns:updated');
 
             default:
@@ -47,7 +47,7 @@ class MyEntry extends Zend_Feed_Entry_Atom
     {
         switch ($var) {
             case 'myUpdated':
-				// Vertaal myUpdated naar myns:updated.
+                // Vertaal myUpdated naar myns:updated.
                 parent::__set('myns:updated', $value);
                 break;
 
@@ -60,8 +60,8 @@ class MyEntry extends Zend_Feed_Entry_Atom
 
 ?>]]>   </programlisting>
         <para>
-			Om deze klasse nu te gebruiken moet je ze gewoon direct instantiëren en de <code>myUpdated</code>
-			eigenschap zetten:
+            Om deze klasse nu te gebruiken moet je ze gewoon direct instantiëren en de <code>myUpdated</code>
+            eigenschap zetten:
         </para>
         <programlisting role="php"><![CDATA[
 <?php

@@ -2,9 +2,9 @@
     <title>Feed en Entry structuren wijzigen</title>
 
     <para>
-		De intuïtieve syntax van <code>Zend_Feed</code> breidt zich uit voor het bouwen en wijzigen van feeds en
-		entries, naast het lezen ervan. Je kan gemakkelijk je nieuwe of gewijzigde objecten in
-		goedgevormde XML terugsturen om het in een bestand op te slaan of naar een server te sturen.
+        De intuïtieve syntax van <code>Zend_Feed</code> breidt zich uit voor het bouwen en wijzigen van feeds en
+        entries, naast het lezen ervan. Je kan gemakkelijk je nieuwe of gewijzigde objecten in
+        goedgevormde XML terugsturen om het in een bestand op te slaan of naar een server te sturen.
     </para>
 
     <example>
@@ -22,22 +22,22 @@ echo $entry->saveXML();
 
 ?>]]>   </programlisting>
         <para>
-			Dit zal een volledige (inclusief <code>&lt;?xml ... &gt;</code> proloog) XML representatie van de
-			nieuwe entry weergeven, met inbegrip van alle nodige XML namespaces.
+            Dit zal een volledige (inclusief <code>&lt;?xml ... &gt;</code> proloog) XML representatie van de
+            nieuwe entry weergeven, met inbegrip van alle nodige XML namespaces.
         </para>
         <para>
-			Merk op dat het bovenstaande zelfs zal werken indien de oorspronkelijke entry nog geen <code>author</code>
-			afbakening heeft. Je kan zoveel niveaus van <code>-&gt;</code> aandoen als je wil voor een toewijzing te
-			doen; alle niveaus zullen automatisch worden aangemaakt indien nodig.
+            Merk op dat het bovenstaande zelfs zal werken indien de oorspronkelijke entry nog geen <code>author</code>
+            afbakening heeft. Je kan zoveel niveaus van <code>-&gt;</code> aandoen als je wil voor een toewijzing te
+            doen; alle niveaus zullen automatisch worden aangemaakt indien nodig.
         </para>
     </example>
 
     <para>
-		Als je een andere namespace wil gebruiken dan <code>atom:</code>, <code>rss:</code> of <code>osrss:</code>
-		in je entry, moet je de namespace registreren aan <code>Zend_Feed</code> door 
-		<code>Zend_Feed::registerNamespace()</code> te gebruiken. Als je een bestaand element wil wijzigen zal het
-		steeds zijn oorspronkelijke namespace behouden. Als je een nieuw element toevoegt zal het in de standaard
-		namespace gaan als je niet uitdrukkelijk een andere namespace toewijst.
+        Als je een andere namespace wil gebruiken dan <code>atom:</code>, <code>rss:</code> of <code>osrss:</code>
+        in je entry, moet je de namespace registreren aan <code>Zend_Feed</code> door
+        <code>Zend_Feed::registerNamespace()</code> te gebruiken. Als je een bestaand element wil wijzigen zal het
+        steeds zijn oorspronkelijke namespace behouden. Als je een nieuw element toevoegt zal het in de standaard
+        namespace gaan als je niet uitdrukkelijk een andere namespace toewijst.
     </para>
 
     <example>

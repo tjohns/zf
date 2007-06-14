@@ -1,18 +1,18 @@
 <sect1 id="zend.search.lucene.index-creation">
-	<title>Indexes Bouwen</title>
+    <title>Indexes Bouwen</title>
 
-	<sect2 id="zend.search.lucene.index-creation.creating">
+    <sect2 id="zend.search.lucene.index-creation.creating">
         <title>Een Nieuwe Index Maken</title>
 
         <para>
-		    De mogelijkheid om nieuwe Indexes te maken en ze up te daten is geïmplementeerd in de Zend_Search_Lucene 
-			module en Java Lucene.
+            De mogelijkheid om nieuwe Indexes te maken en ze up te daten is geïmplementeerd in de Zend_Search_Lucene
+            module en Java Lucene.
             Je kan beide mogelijkheden gebruiken.
         </para>
 
         <para>
-			Het volgende PHP code voorbeeld geeft een voorbeeld van hoe een bestand
-			kan worden geïndexeerd door de Zend_Search_Lucene indexing API te gebruiken:
+            Het volgende PHP code voorbeeld geeft een voorbeeld van hoe een bestand
+            kan worden geïndexeerd door de Zend_Search_Lucene indexing API te gebruiken:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -36,15 +36,15 @@ $index->commit();
 ?>]]></programlisting>
 
         <para>
-		    Nieuw toegevoegde documenten kunnen na de commit operatie van de index worden
-			verkregen.
+            Nieuw toegevoegde documenten kunnen na de commit operatie van de index worden
+            verkregen.
         </para>
         <para>
             <code>Zend_Search_Lucene::commit()</code> wordt automatisch opgeroepen aan het einde
-			van de script uitvoering en vòòr elke zoekopdracht.
+            van de script uitvoering en vòòr elke zoekopdracht.
         </para>
         <para>
-			Elke oproep van commit() genereert een nieuw index segment.
+            Elke oproep van commit() genereert een nieuw index segment.
             <footnote>
             <para>
             Lucene index segment bestanden zijn niet updatebaar. Segment update noodzaakt een volledige
@@ -67,8 +67,8 @@ $index->commit();
             Aan de andere hand, het comitten van een groot aantal documenten in één keer verbruikt meer geheugen.
         </para>
         <para>
-		    Automatisch segment management optimalisatie is onderdeel van de toekomstige Zend_Search_Lucene 
-			verbeteringen.
+            Automatisch segment management optimalisatie is onderdeel van de toekomstige Zend_Search_Lucene
+            verbeteringen.
         </para>
     </sect2>
 
@@ -76,8 +76,8 @@ $index->commit();
         <title>Index Updaten</title>
 
         <para>
-			Dezelfde procedure wordt gebruikt om een bestaande index up te daten. Het enige verschil is dat de index
-			zou moeten worden geopend zonder tweede parameter:
+            Dezelfde procedure wordt gebruikt om een bestaande index up te daten. Het enige verschil is dat de index
+            zou moeten worden geopend zonder tweede parameter:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -101,15 +101,15 @@ $index->commit();
 ?>]]></programlisting>
 
         <para>
-			Elke oproep (impliciet of expliciet) aan commit() genereert een nieuw index segment.
+            Elke oproep (impliciet of expliciet) aan commit() genereert een nieuw index segment.
         </para>
         <para>
-			Zend_Search_Lucene beheert segmenten niet automatisch. Je moet dus rekening houden met segmentgroottes.
-			Een groot segment is meer optimaal, maar heeft meer geheugen nodig tijdens zijn creatie.
+            Zend_Search_Lucene beheert segmenten niet automatisch. Je moet dus rekening houden met segmentgroottes.
+            Een groot segment is meer optimaal, maar heeft meer geheugen nodig tijdens zijn creatie.
         </para>
         <para>
-			Lucene Java en Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-			kunnen worden geraadpleegd om indexes te optimaliseren met deze versie van Zend_Search_Lucene.
+            Lucene Java en Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+            kunnen worden geraadpleegd om indexes te optimaliseren met deze versie van Zend_Search_Lucene.
         </para>
     </sect2>
     <sect2 id="zend.search.lucene.index-creation.document-updating">
@@ -121,7 +121,7 @@ $index->commit();
         </para>
 
         <para>
-            De <code>Zend_Search_Lucene::delete()</code> methode werkt met een intern document id index. Deze kan worden 
+            De <code>Zend_Search_Lucene::delete()</code> methode werkt met een intern document id index. Deze kan worden
             bekomen via een query hit per 'id' eigenschap:
         </para>
 

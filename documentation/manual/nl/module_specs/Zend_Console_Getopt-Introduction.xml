@@ -25,7 +25,7 @@
                 "argument": a string that occurs on the command-line
                 following the name of the command.  Arguments may be
                 options or else may appear without an option, to name
-                resources on which the command operates.  
+                resources on which the command operates.
             </para>
         </listitem>
         <listitem>
@@ -51,7 +51,7 @@
                 "parameter": the secondary part of an option; a data value
                 that may accompany a flag, if it is applicable to the
                 given option.  For example, many commands accept a
-                "<code>--verbose</code>" option, but typically 
+                "<code>--verbose</code>" option, but typically
                 this option has no parameter.  However, an option like
                 "<code>--user</code>" almost always requires
                 a following parameter.

@@ -5,54 +5,54 @@
         <para>
             <code>Zend_Service_Amazon</code> is een eenvoudige API om Amazon webservices te gebruiken.
             <code>Zend_Service_Amazon</code> heeft twee APIs: een meer traditionele die Amazons eigen API volgt,
-			en een eenvoudigere "Query API" om nog meer complexe zoekqueries gemakkelijk op te bouwen.
+            en een eenvoudigere "Query API" om nog meer complexe zoekqueries gemakkelijk op te bouwen.
         </para>
         <para>
             <code>Zend_Service_Amazon</code> staat ontwikkelaars toe om informatie die door Amazon.com web sites worden verstrekt
-			direct op te vragen via de Amazon Web Services API. Voorbeelden:
+            direct op te vragen via de Amazon Web Services API. Voorbeelden:
             <itemizedlist>
                 <listitem>
                   <para>
-					Item informatie opvragen, zoals beelden, beschrijvingen, prijzen, en meer
+                    Item informatie opvragen, zoals beelden, beschrijvingen, prijzen, en meer
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-					Klant- en uitgeversrecensies
+                    Klant- en uitgeversrecensies
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-					Gelijksoortige producten en accessoires
+                    Gelijksoortige producten en accessoires
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-					Amazon.com aanbiedingen
+                    Amazon.com aanbiedingen
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-					ListMania lijsten
+                    ListMania lijsten
                   </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-			Om <code>Zend_Service_Amazon</code> te gebruiken dien je een Amazon developer API key moeten hebben. Om die
-			te verkrijgen, en voor meer informatie, kan je terecht op de
+            Om <code>Zend_Service_Amazon</code> te gebruiken dien je een Amazon developer API key moeten hebben. Om die
+            te verkrijgen, en voor meer informatie, kan je terecht op de
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> website.
         </para>
         <note>
           <para>
-			Je Amazon developer API key is aan je Amazon identiteit verbonden, neem dus de nodige maatregelen om je key
-			te beveiligen en privé te houden.
-	      </para>
+            Je Amazon developer API key is aan je Amazon identiteit verbonden, neem dus de nodige maatregelen om je key
+            te beveiligen en privé te houden.
+          </para>
         </note>
         <example>
             <title>Amazon doorzoeken met de traditionele API</title>
             <para>
-				In dit voorbeeld zoeken we naar PHP boeken op Amazon en doorlopen we de resultaten door ze uit te printen.
+                In dit voorbeeld zoeken we naar PHP boeken op Amazon en doorlopen we de resultaten door ze uit te printen.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
@@ -66,8 +66,8 @@ foreach ($response as $r) {
         <example>
             <title>Amazon doorzoeken met de Query API</title>
             <para>
-				Hier zoeken we ook naar PHP boeken op Amazon, maar we gebruiken de Query API, die lijkt
-				op het Fluent Interface ontwerp patroon.
+                Hier zoeken we ook naar PHP boeken op Amazon, maar we gebruiken de Query API, die lijkt
+                op het Fluent Interface ontwerp patroon.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -83,9 +83,9 @@ foreach ($results as $result) {
     <sect2 id="zend.service.amazon.countrycodes">
         <title>Landcodes</title>
         <para>
-			Standaard maakt <code>Zend_Service_Amazon</code> een verbinding met de Amazon web service in de Verenigde Staten ("<code>US</code>"). 
-			Om verbinding te maken met een ander land geef je eenvoudigweg de landcode van dit land op als de tweede parameter van de
-			constructor:
+            Standaard maakt <code>Zend_Service_Amazon</code> een verbinding met de Amazon web service in de Verenigde Staten ("<code>US</code>").
+            Om verbinding te maken met een ander land geef je eenvoudigweg de landcode van dit land op als de tweede parameter van de
+            constructor:
         </para>
         <example>
             <title>Een Amazon Web Service land kiezen</title>
@@ -106,7 +106,7 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');
         <title>Een specifiek item opzoeken met ASIN code</title>
         <para>
             De <code>itemLookup()</code> methode biedt de mogelijkheid om een specifiek Amazon item op te halen als
-			de ASIN bekend is.
+            de ASIN bekend is.
         </para>
         <example>
             <title>Een specifiek Amazon item ophalen per ASIN</title>
@@ -117,22 +117,22 @@ $item = $amazon->itemLookup('B0000A432X');
 ?>]]>       </programlisting>
         </example>
         <para>
-			De <code>itemLookup()</code> methode aanvaardt ook een optionele tweede parameter om zoekopties af te handelen.
-			Voor alle details, inclusief een lijst van beschikbare opties, zie de
+            De <code>itemLookup()</code> methode aanvaardt ook een optionele tweede parameter om zoekopties af te handelen.
+            Voor alle details, inclusief een lijst van beschikbare opties, zie de
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon documentatie</ulink>.
-		<note>
-		    <para>
-    			Om informatie over de beelden te verkrijgen voor je zoekresultaten, moet je de optie <code>ResponseGroup</code> tot <code>Medium</code> of <code>Large</code> zetten.
-			</para>
-		</note>
+        <note>
+            <para>
+                Om informatie over de beelden te verkrijgen voor je zoekresultaten, moet je de optie <code>ResponseGroup</code> tot <code>Medium</code> of <code>Large</code> zetten.
+            </para>
+        </note>
         </para>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Amazon Item zoekopdrachten uitvoeren</title>
         <para>
-			Het zoeken naar items gebaseerd op een van de verschillende voorhande criteria wordt eenvoudig
-			gemaakt door de <code>itemSearch()</code> methode, zoals in het volgende voorbeeld:
+            Het zoeken naar items gebaseerd op een van de verschillende voorhande criteria wordt eenvoudig
+            gemaakt door de <code>itemSearch()</code> methode, zoals in het volgende voorbeeld:
         </para>
         <example>
             <title>Uitvoeren van Amazon Item Zoekopdrachten</title>
@@ -147,7 +147,7 @@ foreach($response as $r) {
         </example>
         <para>
             De <code>itemSearch()</code> methode aanvaardt een enkele array array parameter om zoekopties af te handelen.
-			Voor alle details, inclusief een lijst van beschikbare opties, zie de
+            Voor alle details, inclusief een lijst van beschikbare opties, zie de
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon documentatie</ulink>
         </para>
@@ -164,20 +164,20 @@ foreach($response as $r) {
         <title>Inleiding</title>
         <para>
             <code>Zend_Service_Amazon_Query</code> bied een alternatieve API om de Amazon Web Service te gebruiken.
-			De alternatieve API gebruikt het Fluent Interface ontwerppatroon. Dus, alle oproepen kunnen gemaakt worden
-			door aaneengeregen methode-oproepen te maken.
-			(bv: <code>$obj->method()->method2($arg)</code>)
+            De alternatieve API gebruikt het Fluent Interface ontwerppatroon. Dus, alle oproepen kunnen gemaakt worden
+            door aaneengeregen methode-oproepen te maken.
+            (bv: <code>$obj->method()->method2($arg)</code>)
         </para>
         <para>
-			De <code>Zend_Service_Amazon_Query</code> API gebruikt overloading om gemakkelijk een item zoekopdracht op te zetten
-			en laat je dan toe te zoeken op de gespecifieerde criteria. Elk van de opties is als een methode-oproep
-			aangeboden, en elk argument van een methode komt overeen met de benoemde waarde van de optie:
+            De <code>Zend_Service_Amazon_Query</code> API gebruikt overloading om gemakkelijk een item zoekopdracht op te zetten
+            en laat je dan toe te zoeken op de gespecifieerde criteria. Elk van de opties is als een methode-oproep
+            aangeboden, en elk argument van een methode komt overeen met de benoemde waarde van de optie:
         </para>
         <example>
             <title>Doorzoek Amazon met gebruik van de Alternatieve Query API</title>
             <para>
-				In dit voorbeeld wordt de alternatieve query API gebruikt als een Fluent Interface om opties en hun
-				respectievelijke waarden te specificeren:
+                In dit voorbeeld wordt de alternatieve query API gebruikt als een Fluent Interface om opties en hun
+                respectievelijke waarden te specificeren:
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -189,10 +189,10 @@ foreach ($results as $result) {
 }
 ?>]]>       </programlisting>
             <para>
-				Dit zet de optie <code>Category</code> tot "Books" en <code>Keywords</code> tot "PHP".
+                Dit zet de optie <code>Category</code> tot "Books" en <code>Keywords</code> tot "PHP".
             </para>
             <para>
-				Voor meer informatie over de beschikbare opties verwijzen we je graag door naar de
+                Voor meer informatie over de beschikbare opties verwijzen we je graag door naar de
                 <ulink
                     url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon documentatie</ulink>.
             </para>
@@ -223,7 +223,7 @@ foreach ($results as $result) {
         <title>Zend_Service_Amazon_Item</title>
         <para>
             <code>Zend_Service_Amazon_Item</code> is de typeklasse die gebruikt wordt om een Amazon item voor te stellen dat
-			werd teruggestuurd door de web service. Het omvat alle item eigenschappen, inclusief de titel, beschrijving, recensies enz...
+            werd teruggestuurd door de web service. Het omvat alle item eigenschappen, inclusief de titel, beschrijving, recensies enz...
         </para>
         <sect4 id="zend.service.amazon.classes.item.asxml">
             <title>Zend_Service_Amazon_Item::asXML()</title>
@@ -240,7 +240,7 @@ foreach ($results as $result) {
             <title>Eigenschappen</title>
             <para>
                 <code>Zend_Service_Amazon_Item</code> heeft een aantal eigenschappen die onmiddellijk verwant zijn aan hun
-				Amazon API tegenhangers.
+                Amazon API tegenhangers.
             </para>
             <table>
                 <title>Zend_Service_Amazon_Item Eigenschappen</title>
@@ -314,7 +314,7 @@ foreach ($results as $result) {
                             <entry>EditorialReviews</entry>
                             <entry>array</entry>
                             <entry>
-								Uitgeversrecensies voorgesteld als een array van
+                                Uitgeversrecensies voorgesteld als een array van
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.editorialreview">Zend_Service_Amazon_EditorialReview</link>
@@ -326,7 +326,7 @@ foreach ($results as $result) {
                             <entry>SimilarProducts</entry>
                             <entry>array</entry>
                             <entry>
-								Gelijksoortige producten voorgesteld als een array van
+                                Gelijksoortige producten voorgesteld als een array van
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.similarproduct">Zend_Service_Amazon_SimilarProduct</link>
@@ -355,7 +355,7 @@ foreach ($results as $result) {
                             <entry>ListmaniaLists</entry>
                             <entry>array</entry>
                             <entry>
-								ListMania lijsten verwant met het item als een array van
+                                ListMania lijsten verwant met het item als een array van
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmainList</link>
@@ -424,8 +424,8 @@ foreach ($results as $result) {
         </para>
         <note>
             <para>
-				Implementeert de <code>SeekableIterator</code> voor gemakkelijke iteratie (bijvoorbeeld door <code>foreach</code> te
-				gebruiken) evenals onmiddellijke toegang tot een specifiek resultaat door <code>seek()</code> te gebruiken.
+                Implementeert de <code>SeekableIterator</code> voor gemakkelijke iteratie (bijvoorbeeld door <code>foreach</code> te
+                gebruiken) evenals onmiddellijke toegang tot een specifiek resultaat door <code>seek()</code> te gebruiken.
             </para>
         </note>
         <sect4 id="zend.service.amazon.classes.resultset.totalresults">
@@ -595,13 +595,13 @@ foreach ($results as $result) {
     <sect3 id="zend.service.amazon.classes.similarproduct">
         <title>Zend_Service_Amazon_SimilarProduct</title>
         <para>
-			Wanneer je naar items zoekt geeft Amazon ook een lijst van gelijksoortige producten terug die de
-			zoekende persoon zouden kunnen interesseren. Elk van deze items is een 
-			<code>Zend_Service_Amazon_SimilarProduct</code> object.
+            Wanneer je naar items zoekt geeft Amazon ook een lijst van gelijksoortige producten terug die de
+            zoekende persoon zouden kunnen interesseren. Elk van deze items is een
+            <code>Zend_Service_Amazon_SimilarProduct</code> object.
         </para>
         <para>
-			Elk object bevat de informatie die je toelaat opeenvolgende verzoeken te maken om de volledige informatie
-			van het item te verkrijgen.
+            Elk object bevat de informatie die je toelaat opeenvolgende verzoeken te maken om de volledige informatie
+            van het item te verkrijgen.
         </para>
         <sect4 id="zend.service.amazon.classes.similarproduct.properties">
             <title>Eigenschappen</title>
@@ -637,8 +637,8 @@ foreach ($results as $result) {
     <sect3 id="zend.service.amazon.classes.accessories">
         <title>Zend_Service_Amazon_Accessories</title>
         <para>
-			Accessoires voor het teruggegeven item worden vertegenwoordigd door 
-			<code>Zend_Service_Amazon_Accessories</code> objecten
+            Accessoires voor het teruggegeven item worden vertegenwoordigd door
+            <code>Zend_Service_Amazon_Accessories</code> objecten
         </para>
         <sect4 id="zend.service.amazon.classes.accessories.properties">
             <title>Eigenschappen</title>
@@ -674,7 +674,7 @@ foreach ($results as $result) {
     <sect3 id="zend.service.amazon.classes.customerreview">
         <title>Zend_Service_Amazon_CustomerReview</title>
         <para>
-			Elke klantrecensie wordt teruggegeven als een <code>Zend_Service_Amazon_CustomerReview</code> object.
+            Elke klantrecensie wordt teruggegeven als een <code>Zend_Service_Amazon_CustomerReview</code> object.
         </para>
         <sect4 id="zend.service.amazon.classes.customerreview.properties">
             <title>Eigenschappen</title>
@@ -735,7 +735,7 @@ foreach ($results as $result) {
     <sect3 id="zend.service.amazon.classes.editorialreview">
         <title>Zend_Service_Amazon_EditorialReview</title>
         <para>
-			Elke uitgeversrecensie van een item is een <code>Zend_Service_Amazon_EditorialReview</code> object
+            Elke uitgeversrecensie van een item is een <code>Zend_Service_Amazon_EditorialReview</code> object
         </para>
         <sect4 id="zend.service.amazon.classes.editorialreview.properties">
             <title>Eigenschappen</title>
@@ -771,7 +771,7 @@ foreach ($results as $result) {
     <sect3 id="zend.service.amazon.classes.listmania">
         <title>Zend_Service_Amazon_Listmania</title>
         <para>
-			Elke ListMania resultaatlijst is een <code>Zend_Service_Amazon_Listmania</code> object.
+            Elke ListMania resultaatlijst is een <code>Zend_Service_Amazon_Listmania</code> object.
         </para>
         <sect4 id="zend.service.amazon.classes.listmania.properties">
             <title>Eigenschappen</title>

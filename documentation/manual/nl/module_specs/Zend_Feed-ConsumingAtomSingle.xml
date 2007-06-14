@@ -2,14 +2,14 @@
     <title>Een enkele Atom entry lezen</title>
 
     <para>
-		Een Atom <code>&lt;entry&gt;</code> element is ook alleenstaand geldig. Gewoonlijk is de URL van 
-		een entry gelijk aan de URL van de feed gevolgd door <code>&lt;entryId&gt;</code> zoals
-		<code>http://atom.example.com/feed/1</code>, het voorbeeld van hierboven volgend.
+        Een Atom <code>&lt;entry&gt;</code> element is ook alleenstaand geldig. Gewoonlijk is de URL van
+        een entry gelijk aan de URL van de feed gevolgd door <code>&lt;entryId&gt;</code> zoals
+        <code>http://atom.example.com/feed/1</code>, het voorbeeld van hierboven volgend.
     </para>
 
     <para>
-		Als je een enkele entry leest zal je nog altijd een <code>Zend_Feed_Atom</code> object hebben maar
-		het zal automatisch een "anonieme" feed aanmaken om de entry in te kapselen.
+        Als je een enkele entry leest zal je nog altijd een <code>Zend_Feed_Atom</code> object hebben maar
+        het zal automatisch een "anonieme" feed aanmaken om de entry in te kapselen.
     </para>
 
     <example>
@@ -26,8 +26,8 @@ $entry = $feed->current();
     </example>
 
     <para>
-		Op een andere manier zou je het entry objekt direct kunnen instantiëren indien je weet dat je 
-		een document opent dat alleen <code>&lt;entry&gt;</code> elementen bevat:
+        Op een andere manier zou je het entry objekt direct kunnen instantiëren indien je weet dat je
+        een document opent dat alleen <code>&lt;entry&gt;</code> elementen bevat:
     </para>
 
     <example>

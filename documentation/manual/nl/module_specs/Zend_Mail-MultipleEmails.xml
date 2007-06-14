@@ -1,10 +1,10 @@
 <sect1 id="zend.mail.multiple-emails">
     <title>Meerdere e-mails sturen via een SMTP verbinding</title>
     <para>
-		Standaard wordt een SMTP verbinding gemaakt voor elke e-mail die wordt gestuurd. Indien je meerdere
-		e-mails via eenzelfde SMTP verbinding wil sturen moet je zelf <code>connect()</code> afhandelen. Als de
-		transportwijze reeds vastgesteld is voor <code>send()</code> word opgeroepen zal dat transport
-		worden gebruikt en de verbinding zal niet afgesloten worden:
+        Standaard wordt een SMTP verbinding gemaakt voor elke e-mail die wordt gestuurd. Indien je meerdere
+        e-mails via eenzelfde SMTP verbinding wil sturen moet je zelf <code>connect()</code> afhandelen. Als de
+        transportwijze reeds vastgesteld is voor <code>send()</code> word opgeroepen zal dat transport
+        worden gebruikt en de verbinding zal niet afgesloten worden:
     </para>
     <example>
         <title>Meerdere e-mails sturen via een SMTP verbinding</title>

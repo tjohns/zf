@@ -7,21 +7,21 @@
         <title>Inleiding</title>
 
         <para>
-			Zend_Db_Select is een werktuig dat je helpt SQL SELECT verklaringen
-			te bouwen op een manier waardoor deze niet database gebonden zijn.
-			Het kan uiteraard niet perfect zijn, maar het helpt je een goed
-			stuk om je queries database-onafhankelijk te maken, en daardoor
-			overdraagbaar van een database naar een andere. Bovendien helpt het
-			je je queries beter bestand te maken tegen SQL injectie aanvallen.
+            Zend_Db_Select is een werktuig dat je helpt SQL SELECT verklaringen
+            te bouwen op een manier waardoor deze niet database gebonden zijn.
+            Het kan uiteraard niet perfect zijn, maar het helpt je een goed
+            stuk om je queries database-onafhankelijk te maken, en daardoor
+            overdraagbaar van een database naar een andere. Bovendien helpt het
+            je je queries beter bestand te maken tegen SQL injectie aanvallen.
         </para>
 
         <para>
-			De gemakkelijkste manier om een instantie van de Zend_Db_Select te
-			verkrijgen is het gebruik van de Zend_Db_Adapter::select() methode.
+            De gemakkelijkste manier om een instantie van de Zend_Db_Select te
+            verkrijgen is het gebruik van de Zend_Db_Adapter::select() methode.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 require_once 'Zend/Db.php';
 
 $params = array (
@@ -39,13 +39,13 @@ $select = $db->select();
 ?>]]></programlisting>
 
         <para>
-			Dan maak je een SELECT query via dat object en zijn methodes en
-			die maakt dan een string die je aan Zend_Db_Adapter kan doorgeven
-			om queries of ophalingen uit te voeren.
+            Dan maak je een SELECT query via dat object en zijn methodes en
+            die maakt dan een string die je aan Zend_Db_Adapter kan doorgeven
+            om queries of ophalingen uit te voeren.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // SELECT *
 //     FROM round_table
@@ -79,12 +79,12 @@ $result = $db->fetchAll($select);
 ?>]]></programlisting>
 
         <para>
-			Je kan ook gebonden parameters gebruiken in je queries plaats
-			van ze één per één te quoten.
+            Je kan ook gebonden parameters gebruiken in je queries plaats
+            van ze één per één te quoten.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // SELECT *
 //     FROM round_table
@@ -111,14 +111,14 @@ $result = $db->fetchAll($select, $params);
         <title>Kolommen FROM een tabel</title>
 
         <para>
-			Om kolommen van een bepaalde tabel de selecteren gebruik je de
-			from() methode, de tabel en de kolommen die je ervan wil
-			verkijgen specificerend. Je kan zowel tabel als kolom aliassen
-			gebruiken en je kan from() zoveel gebruiken als nodig is.
+            Om kolommen van een bepaalde tabel de selecteren gebruik je de
+            from() methode, de tabel en de kolommen die je ervan wil
+            verkijgen specificerend. Je kan zowel tabel als kolom aliassen
+            gebruiken en je kan from() zoveel gebruiken als nodig is.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // maak een $db object en neem aan dat we de Mysql adapter gebruiken
 $select = $db->select();
 
@@ -142,15 +142,15 @@ $select->from('bar', 'bar.col AS col2');
         <title>Kolommen van geJOINde tabellen</title>
 
         <para>
-			Om kolommen van gejoinde tabellen te selecteren kan je de
-			join() methode gebruiken. Geef eerst de gejoinde tabelnaam op,
-			dan de join voorwaarde en uiteindelijk de kolommen die je van
-			de join wil terugkrijgen. Je kan join() zoveel maal gebruiken
-			als dat nodig is.
+            Om kolommen van gejoinde tabellen te selecteren kan je de
+            join() methode gebruiken. Geef eerst de gejoinde tabelnaam op,
+            dan de join voorwaarde en uiteindelijk de kolommen die je van
+            de join wil terugkrijgen. Je kan join() zoveel maal gebruiken
+            als dat nodig is.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // maak een $db object en neem aan dat we de Mysql adapter gebruiken
 $select = $db->select();
 
@@ -165,9 +165,9 @@ $select->join('bar', 'foo.id = bar.id', '*');
 ?>]]></programlisting>
 
         <para>
-			Voor het moment is alleen de JOIN syntax ondersteund; geen
-			LEFT JOINs, RIGHT JOINs enz. Latere versies zullen deze
-			concepten in een database-onafhankelijke manier ondersteunen.
+            Voor het moment is alleen de JOIN syntax ondersteund; geen
+            LEFT JOINs, RIGHT JOINs enz. Latere versies zullen deze
+            concepten in een database-onafhankelijke manier ondersteunen.
         </para>
 
     </sect2>
@@ -177,20 +177,20 @@ $select->join('bar', 'foo.id = bar.id', '*');
         <title>WHERE voorwaarden</title>
 
         <para>
-			Om WHERE voorwaarden toe te voegen gebruik je de where() methode.
-			Je kan een gewone string doorgeven, of een string met de
-			vraagteken plaatshouder en een waarde die er moet worden ingequote
-			(de waarde zal in qoutes worden gewikkeld door 
-			Zend_Db_Adapter::quoteInto() te gebruiken.
+            Om WHERE voorwaarden toe te voegen gebruik je de where() methode.
+            Je kan een gewone string doorgeven, of een string met de
+            vraagteken plaatshouder en een waarde die er moet worden ingequote
+            (de waarde zal in qoutes worden gewikkeld door
+            Zend_Db_Adapter::quoteInto() te gebruiken.
         </para>
 
         <para>
-			Meerdere aanvragen aan where() zal de voorwaarden aan elkaar AND-en;
-			als je een OR voorwaarde nodig hebt, gebruik dan orWhere().
+            Meerdere aanvragen aan where() zal de voorwaarden aan elkaar AND-en;
+            als je een OR voorwaarde nodig hebt, gebruik dan orWhere().
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // maak a $db object en verkrijg een SELECT werktuig.
 $select = $db->select();
 
@@ -223,12 +223,12 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
         <title>GROUP BY clausule</title>
 
         <para>
-			Om rijen te groeperen gebruik je de group() methode zoveel maal
-			als dat nodig is.
+            Om rijen te groeperen gebruik je de group() methode zoveel maal
+            als dat nodig is.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // maak a $db object en verkrijg een SELECT werktuig.
 $select = $db->select();
 
@@ -256,17 +256,17 @@ $select->group(array('bar', 'baz'));
         <title>HAVING voorwaarden</title>
 
         <para>
-			Om HAVING voorwaarden aan de selectieregels toe te voegen gebruik
-			je de having() methode. Deze methode heeft een identieke werking
-			als de where() methode.
+            Om HAVING voorwaarden aan de selectieregels toe te voegen gebruik
+            je de having() methode. Deze methode heeft een identieke werking
+            als de where() methode.
         </para>
 
         <para>
-			Indien je having() meerdere malen oproept worden de voorwaarden
-			aaneen ge-AND; om OR voorwaarden te verkrijgen gebruik je orHaving().
+            Indien je having() meerdere malen oproept worden de voorwaarden
+            aaneen ge-AND; om OR voorwaarden te verkrijgen gebruik je orHaving().
         </para>
         <programlisting role="php"><![CDATA[<?php
-	
+
 // maak a $db object en verkrijg een SELECT werktuig.
 $select = $db->select();
 
@@ -288,12 +288,12 @@ $select->having('count_id > ?', 1);
         <title>ORDER BY clausule</title>
 
         <para>
-			Om kolommen te ordenen gebruik je de order() methode zoveel maal als
-			dat nodig is.
+            Om kolommen te ordenen gebruik je de order() methode zoveel maal als
+            dat nodig is.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // maak a $db object en verkrijg een SELECT werktuig.
 $select = $db->select();
 
@@ -320,29 +320,29 @@ $select->order(array('noble_title DESC', 'first_name'));
         <title>LIMIT per Count en Offset</title>
 
         <para>
-			Zend_Db_Select ondersteunt een database onafhankelijke LIMIT clausule.
-			Voor vele databases, zoals MySQL en PostgreSQL is dit relatief
-			eenvoudig omdat ze de "LIMIT :count [OFFSET :offset]" syntax
-			ondersteunen.
+            Zend_Db_Select ondersteunt een database onafhankelijke LIMIT clausule.
+            Voor vele databases, zoals MySQL en PostgreSQL is dit relatief
+            eenvoudig omdat ze de "LIMIT :count [OFFSET :offset]" syntax
+            ondersteunen.
         </para>
 
         <para>
-			Voor andere databases, zoals Microsoft SQL en Oracle is dit niet zo
-			eenvoudig omdat zij helemaal geen LIMIT clausule ondersteunen.
-			MS-SQL heeft alleen een TOP-clausule, en voor Oracle moet de query
-			op een specifieke manier worden geschreven om LIMIT te emuleren.
-			Vanwege de innerlijke werking van Zend_Db_Select kunnen we de SELECT
-			query on-the-fly herschrijven om de LIMIT functionaliteit van de
-			voornoemde open source database systemen te emuleren.
+            Voor andere databases, zoals Microsoft SQL en Oracle is dit niet zo
+            eenvoudig omdat zij helemaal geen LIMIT clausule ondersteunen.
+            MS-SQL heeft alleen een TOP-clausule, en voor Oracle moet de query
+            op een specifieke manier worden geschreven om LIMIT te emuleren.
+            Vanwege de innerlijke werking van Zend_Db_Select kunnen we de SELECT
+            query on-the-fly herschrijven om de LIMIT functionaliteit van de
+            voornoemde open source database systemen te emuleren.
         </para>
 
         <para>
-			Om het teruggestuurde resultaat te LIMITeren per count en offset
-			gebruik je de limit() methode met een count en een optionele offset.
+            Om het teruggestuurde resultaat te LIMITeren per count en offset
+            gebruik je de limit() methode met een count en een optionele offset.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // eerst een eenvoudige "LIMIT :count"
 $select = $db->select();
 $select->from('foo', '*');
@@ -397,14 +397,14 @@ $select->limit(10, 20);
         <title>LIMIT per Pagina en Count</title>
 
         <para>
-			Zend_Db_Select biedt eveneens pagina-gebaseerde limits. Indien
-			je een zeker aantal "pagina's" resultaten wil ophalen gebruik
-			je de limitPage() methode; geef eerste het paginanummer aan en
-			dan het aantal rijen dat op elke pagina moet worden afgebeeld.
+            Zend_Db_Select biedt eveneens pagina-gebaseerde limits. Indien
+            je een zeker aantal "pagina's" resultaten wil ophalen gebruik
+            je de limitPage() methode; geef eerste het paginanummer aan en
+            dan het aantal rijen dat op elke pagina moet worden afgebeeld.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // bouw de basis select...
 $select = $db->select();
 $select->from('foo', '*');

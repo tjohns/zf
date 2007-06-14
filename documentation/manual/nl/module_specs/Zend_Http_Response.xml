@@ -4,9 +4,9 @@
     <sect2 id="zend.http.response.introduction">
         <title>Inleiding</title>
         <para>
-            <code>Zend_Http_Response</code> verstrekt eenvoudige toegang tot de antwoorden die 
-			door <xref linkend="zend.http.client" /> worden teruggestuurd. Het verstrekt een intuïtieve set
-			van methodes om met de HTTP antwoorddata die van een verzoek wordt ontvangen te werken:
+            <code>Zend_Http_Response</code> verstrekt eenvoudige toegang tot de antwoorden die
+            door <xref linkend="zend.http.client" /> worden teruggestuurd. Het verstrekt een intuïtieve set
+            van methodes om met de HTTP antwoorddata die van een verzoek wordt ontvangen te werken:
             <itemizedlist>
                 <listitem>
                   <para>

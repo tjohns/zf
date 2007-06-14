@@ -9,7 +9,7 @@
             <code>addRules()</code> method.  The argument to
             <code>addRules()</code> is the same as the first argument to the
             class constructor.  It is either a string in the format of the
-            short syntax options specification, or else an associative array 
+            short syntax options specification, or else an associative array
             in the format of a long syntax options specification.
             See <link linkend="zend.console.getopt.rules">Declaring Getopt Rules</link>
             for details on the syntax for specifying options.
@@ -27,7 +27,7 @@ $opts->addRules(
         </example>
         <para>
             The example above shows adding the "<code>--verbose</code>" option
-            with an alias of "<code>-v</code>" to a set of options 
+            with an alias of "<code>-v</code>" to a set of options
             defined in the call to the constructor.  Notice that you can mix
             short format options and long format options in the same instance
             of <code>Zend_Console_Getopt</code>.
@@ -58,7 +58,7 @@ $opts->setHelp(
 ?>]]></programlisting>
         </example>
         <para>
-            If you declared options with aliases, you can use any of the 
+            If you declared options with aliases, you can use any of the
             aliases as the key of the associative array.
         </para>
         <para>
@@ -151,14 +151,14 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Clarifying the term "option"</title>
             <para>
                 The term "option" is used for configuration of the
-                <code>Zend_Console_Getopt</code> class to match terminology 
+                <code>Zend_Console_Getopt</code> class to match terminology
                 used elsewhere in the Zend Framework.  These are not the same
                 things as the command-line options that are parsed by
                 the <code>Zend_Console_Getopt</code> class.
             </para>
         </note>
         <para>
-            The currently supported 
+            The currently supported
             options have const definitions in the class.  The options,
             their const identifiers (with literal values in parentheses)
             are listed below:

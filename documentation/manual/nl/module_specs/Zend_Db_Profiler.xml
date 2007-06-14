@@ -9,7 +9,7 @@
         <para>
             <code>Zend_Db_Profiler</code> kan worden geactiveerd om queries te profileren.
             Profielen bevatten de door de adapter uitgevoerde queries evenals de tijd die
-            nodig was om de queries uit te voeren. Dit laat inspectie van de uitgevoerde 
+            nodig was om de queries uit te voeren. Dit laat inspectie van de uitgevoerde
             queries toe zonder bijkomende debug code aan de klassen toe te voegen.
             Geavanceerd gebruik laat de ontwikkelaar filteren welke queries geprofileerd worden.
         </para>
@@ -55,7 +55,7 @@ $profiler = $db->getProfiler();
 ?>]]></programlisting>
 
         <para>
-            Dit geeft een objectinstantie van <code>Zend_Db_Profiler</code> terug. 
+            Dit geeft een objectinstantie van <code>Zend_Db_Profiler</code> terug.
             Met deze instantie kan de ontwikkelaar je queries inspecteren via
             verscheidene methodes:
         </para>
@@ -95,7 +95,7 @@ $profiler = $db->getProfiler();
 
         <para>
             De teruggegeven waarde van <code>getLastQueryProfile()</code> en de individuele
-            elementen van <code>getQueryProfiles()</code> zijn <code>Zend_Db_Profiler_Query</code> 
+            elementen van <code>getQueryProfiles()</code> zijn <code>Zend_Db_Profiler_Query</code>
             objecten die je de mogelijkheid geven om de individuele queries zelf te inspecteren:
         </para>
 
@@ -159,7 +159,7 @@ echo "Langste query: \n" . $longestQuery . "\n";
 
         <para>
             Bovenop query inspectie staat de profiler je ook toe de queries die worden
-            geprofileerd te filteren. De volgende methodes kunnen op een 
+            geprofileerd te filteren. De volgende methodes kunnen op een
             <code>Zend_Db_Profiler</code> instantie worden uitgevoerd:
         </para>
 
@@ -194,7 +194,7 @@ $profiler->setFilterElapsedSecs(null);
             <itemizedlist>
                 <listitem>
                   <para>
-                    <code>Zend_Db_Profiler::CONNECT</code>: verbindingsoperaties, of het 
+                    <code>Zend_Db_Profiler::CONNECT</code>: verbindingsoperaties, of het
                     selecteren van een database.
                   </para>
                 </listitem>
@@ -231,7 +231,7 @@ $profiler->setFilterElapsedSecs(null);
                 <listitem>
                   <para>
                     <code>Zend_Db_Profiler::TRANSACTION</code>: eender welke transactionele
-                    operatie, zoals een transactie starten, bevestigen (commit) of annuleren 
+                    operatie, zoals een transactie starten, bevestigen (commit) of annuleren
                     (rollback).
                   </para>
                 </listitem>
@@ -262,12 +262,12 @@ $profiler->setFilterQueryType(null);
             <title>Profielen per type query verkrijgen</title>
 
             <para>
-                Het gebruik van <code>setFilterQueryType()</code> kan het aantal gegenereerde profielen 
+                Het gebruik van <code>setFilterQueryType()</code> kan het aantal gegenereerde profielen
                 beperken. Soms is het echter handiger om alle profielen te behouden, maar enkel die te
                 bekijken die je op dat moment nodig hebt. Een andere eigenschap van <code>getQueryProfiles()</code>
                 is dat het kan filteren terwijl de code loopt, door het een type query (of een logische
                 combinatie van querytypes) als eerste argument door te geven; zie
-                <xref linkend="zend.db.profiler.advanced.filtertype" /> voor een lijst van de querytype 
+                <xref linkend="zend.db.profiler.advanced.filtertype" /> voor een lijst van de querytype
                 constanten.
             </para>
 

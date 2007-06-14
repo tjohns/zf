@@ -1,9 +1,9 @@
 <sect1 id="zend.json.basics">
     <title>Basisgebruik</title>
     <para>
-		Het gebruik van <code>Zend_Json</code> impliceert het gebruik van de
-		volgende twee publiek beschikbare methodes: <code>Zend_Json::encode()</code> 
-		en <code>Zend_Json::decode()</code>. 
+        Het gebruik van <code>Zend_Json</code> impliceert het gebruik van de
+        volgende twee publiek beschikbare methodes: <code>Zend_Json::encode()</code>
+        en <code>Zend_Json::decode()</code>.
         <programlisting role="php"><![CDATA[<?php
 // Een waarde verkrijgen:
 $phpNative = Zend_Json::decode($encodedValue);
