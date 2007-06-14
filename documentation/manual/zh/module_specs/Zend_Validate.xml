@@ -74,7 +74,7 @@ if ($validator->isValid($email)) {
 
         <para>
             校验类提供了一个<code>setMessage()</code>方法，你可以指定校验失败后由<code>getMessages()</code>返回的消息的格式。这个方法的第一个参数是一个包含错误信息的的字符串。你可以在字符串中包含令牌，它将被和校验器相关的数据替换。所有的校验器都支持令牌 <code>%value%</code>；这被你传递给<code>isValid()</code>的值替换。其它的令牌按情况在每个校验类中被支持。例如，<code>%max%</code>是一个被Zend_Validate_LessThan支持的令牌。
-            
+
         </para>
 
         <para>
@@ -117,8 +117,8 @@ $validator->setMessages( array(
         </para>
 
         <para>
-            如果你的应用程序要求更灵活的错误报告，你可以访问和消息令牌同名的属性，这个消息令牌由给定的校验类支持。<code>value</code>属性在校验器中总是有效；它是一个你指定作为<code>isValid()</code>的参数的值。其他属性按照情况在每个校验类中被支持。 
-             
+            如果你的应用程序要求更灵活的错误报告，你可以访问和消息令牌同名的属性，这个消息令牌由给定的校验类支持。<code>value</code>属性在校验器中总是有效；它是一个你指定作为<code>isValid()</code>的参数的值。其他属性按照情况在每个校验类中被支持。
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/StringLength.php';
 
@@ -182,7 +182,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
 
         <para>
             并且，Zend_Filter_Input 类允许你按需求实例化和运行多个过滤器和校验器类来处理输入数据集合，参见<xref linked="zend.filter.input" />。
-            
+
         </para>
 
     </sect2>

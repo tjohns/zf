@@ -1,56 +1,56 @@
 <sect1 id="zend.view.scripts">
-    
+
     <title>视图脚本</title>
-        
+
     <para>
         一旦你的Controller已经完成了变量赋值和调用render()，Zend_View就会调用视图脚本并在Zend_View的实例内部执行。因此，在你的视图脚本内，$this是指向Zend_View的实例的。
     </para>
-    
-    <para>   
-		从控制器传递到视图的变量以对象属性的形式来调用。如果控制器有一个变量"something" ，那么视图代码中就要用$this->something来调用。这样的作法可以让你分清哪些是来自Zend_View实例的变量，哪些是视图自身的变量。
+
+    <para>
+        从控制器传递到视图的变量以对象属性的形式来调用。如果控制器有一个变量"something" ，那么视图代码中就要用$this->something来调用。这样的作法可以让你分清哪些是来自Zend_View实例的变量，哪些是视图自身的变量。
     </para>
-    
+
     <para>
         为了说明，这里有一个例子：
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- A table of some books. -->
     <table>
         <tr>
             <th>Author</th>
             <th>Title</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['author']) ?></td>
             <td><?php echo $this->escape($val['title']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>There are no books to display.</p>
-    
+
 <?php endif; ?>]]>
     </programlisting>
-        
+
     <sect2 id="zend.view.scripts.escaping">
-        
+
         <title>转义输出（Escaping Output）</title>
-        
-        <para>       
-			View脚本的最重要的工作之一是保证输出的内容是合适的，比如需要避免跨站攻击漏洞。除非你已经使用一个函数，类方法或协助器（helper）来转义内容，你需要在输出时对变量进行转义。
+
+        <para>
+            View脚本的最重要的工作之一是保证输出的内容是合适的，比如需要避免跨站攻击漏洞。除非你已经使用一个函数，类方法或协助器（helper）来转义内容，你需要在输出时对变量进行转义。
         </para>
-        
+
         <para>
             Zend_View带有一个escape()方法来提供这个功能：
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // 不好的做法：
 echo $this->variable;
@@ -59,11 +59,11 @@ echo $this->variable;
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
-        
+
         <para>
             默认地，escape()方法使用PHP函数htmlspecialchars()来过滤，但你也可以通过setEscape()方法来在Controller内告诉Zend_View需要怎么过滤。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 //创建一个Zend_View实例
 $view = new Zend_View();
@@ -82,29 +82,29 @@ $view->setEscape(array($obj, 'methodName'));
 echo $view->render(...);
 ?>]]>
         </programlisting>
-        
+
         <para>
-            
-			设定的转义函数会将需要转义的变量作为其第一个参数，其它参数是可选的。
+
+            设定的转义函数会将需要转义的变量作为其第一个参数，其它参数是可选的。
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
         <title>使用模板系统</title>
 
-        <para>          
+        <para>
 
-			许多开发者觉得尽管PHP本身就是一个强大的模板系统，但对模板设计师来说，使用PHP标签过于复杂。Zend_View提供了两套机制来同时满足这两种要求，一种是直接通过通过视图脚本，另一种是实现Zend_View_Interface接口。
+            许多开发者觉得尽管PHP本身就是一个强大的模板系统，但对模板设计师来说，使用PHP标签过于复杂。Zend_View提供了两套机制来同时满足这两种要求，一种是直接通过通过视图脚本，另一种是实现Zend_View_Interface接口。
         </para>
-    
+
         <sect3 id="zend.view.scripts.templates.scripts">
             <title>使用View脚本的模板系统</title>
-            
+
             <para>
-              				View脚本可能要被用来初始化和操作一个其它模板对象的实例，例如PHPLIB风格的模板。这时View脚本可能是这样的：
+                              View脚本可能要被用来初始化和操作一个其它模板对象的实例，例如PHPLIB风格的模板。这时View脚本可能是这样的：
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 include_once 'template.inc';
 $tpl = new Template();
@@ -114,24 +114,24 @@ if ($this->books) {
         "booklist" => "booklist.tpl",
         "eachbook" => "eachbook.tpl",
     ));
-    
+
     foreach ($this->books as $key => $val) {
         $tpl->set_var('author', $this->escape($val['author']);
         $tpl->set_var('title', $this->escape($val['title']);
         $tpl->parse("books", "eachbook", true);
     }
-    
+
     $tpl->pparse("output", "booklist");
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
 ?>]]></programlisting>
-        
+
             <para>
                 下面是相关的模板文件：
             </para>
-        
+
             <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
@@ -158,8 +158,8 @@ if ($this->books) {
             <title>通过Zend_View_Interface接口使用模板系统</title>
 
             <para>
-               
-				实现一个与Zend_View兼容的模板系统是很简单的。你只需要实现<code>Zend_View_Interface</code>接口即可，该接口定义了要实现兼容的最低要求。
+
+                实现一个与Zend_View兼容的模板系统是很简单的。你只需要实现<code>Zend_View_Interface</code>接口即可，该接口定义了要实现兼容的最低要求。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -203,7 +203,7 @@ public function render($name);
 ]]></programlisting>
 
             <para>
-                				使用这个接口，把第三方的模板系统封装成Zend_View兼容的类是相当容易的。例如，下面是封装Smarty的示例代码：
+                                使用这个接口，把第三方的模板系统封装成Zend_View兼容的类是相当容易的。例如，下面是封装Smarty的示例代码：
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -294,8 +294,8 @@ class Zend_View_Smarty implements Zend_View_Interface
      * @return boolean
      */
     public function __isset($key)
-    {       
-		 return (null !== $this->_smarty->get_template_vars($key));
+    {
+         return (null !== $this->_smarty->get_template_vars($key));
     }
 
     /**
@@ -358,9 +358,9 @@ class Zend_View_Smarty implements Zend_View_Interface
 }
 ]]></programlisting>
 
-            <para>              
+            <para>
 
-				在这个示例中，实例化<code>Zend_View_Smarty</code>而不是<code>Zend_View</code>，然后就像使用 <code>Zend_View</code>一样地使用它。
+                在这个示例中，实例化<code>Zend_View_Smarty</code>而不是<code>Zend_View</code>，然后就像使用 <code>Zend_View</code>一样地使用它。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -373,7 +373,7 @@ $rendered = $view->render('bookinfo.tpl');
 
         </sect3>
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

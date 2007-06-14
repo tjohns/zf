@@ -1,33 +1,33 @@
 <sect1 id="zend.controller.quickstart">
-    <title>Zend_Controller ¿ìËÙÈëÃÅ</title>
+    <title>Zend_Controller ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</title>
 
     <sect2 id="zend.controller.quickstart.introduction">
-        <title>¼ò½é</title>
-        <para>       
+        <title>ï¿½ï¿½ï¿½</title>
+        <para>
 
-		<code>Zend_Controller</code>ÊÇZend FrameworkµÄMVCÌåÏµµÄºËÐÄ²¿·Ý¡£MVCÖ¸<ulink
-                url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink>£¬ÊÇÒ»¸öÓÃÓÚ·ÖÀëÓ¦ÓÃÂß¼­ºÍ±íÏÖÂß¼­µÄÉè¼ÆÄ£Ê½¡£<code>Zend_Controller_Front</code>ÊµÏÖÁË<ulink
-                url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink>Éè¼ÆÄ£Ê½£¬ËùÓÐµÄÇëÇó¶¼Í¨¹ýfront controller(Ç°¶Ë¿ØÖÆÆ÷)²¢·Ö·¢(dispatch)µ½²»Í¬µÄ¿ØÖÆÆ÷À´´¦Àí£¬·Ö·¢µÄ¹ý³Ì»ùÓÚÇëÇóµÄURL¡£
+        <code>Zend_Controller</code>ï¿½ï¿½Zend Frameworkï¿½ï¿½MVCï¿½ï¿½Ïµï¿½Äºï¿½ï¿½Ä²ï¿½ï¿½Ý¡ï¿½MVCÖ¸<ulink
+                url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink>ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Í±ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½<code>Zend_Controller_Front</code>Êµï¿½ï¿½ï¿½ï¿½<ulink
+                url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink>ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½front controller(Ç°ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½Ö·ï¿½(dispatch)ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½?ï¿½Ö·ï¿½ï¿½Ä¹ï¿½Ì»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½URLï¿½ï¿½
         </para>
-        <para>           
+        <para>
 
-			<code>Zend_Controller</code>ÌåÏµ¾ßÓÐ¿ÉÀ©Õ¹ÐÔ£¬¿ÉÒÔÍ¨¹ý¼Ì³ÐÒÑÓÐµÄÀà»òÕß×Ô¼ºÐ´¸öÐÂµÄÀàÀ´ÊµÏÖ¸÷ÖÖ½Ó¿ÚºÍ³éÏóÀà£¬Ò²¿ÉÒÔ±àÐ´²å¼þ»òÕßÖúÊÖÀà(helper)À´ÔöÇ¿ÏµÍ³µÄ¹¦ÄÜ¡£
+            <code>Zend_Controller</code>ï¿½ï¿½Ïµï¿½ï¿½ï¿½Ð¿ï¿½)Õ¹ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½Ì³ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½Ð´ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½4Êµï¿½Ö¸ï¿½ï¿½Ö½Ó¿ÚºÍ³ï¿½ï¿½ï¿½ï¿½à£¬Ò²ï¿½ï¿½ï¿½Ô±ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(helper)4ï¿½ï¿½Ç¿ÏµÍ³ï¿½Ä¹ï¿½ï¿½Ü¡ï¿½
 
         </para>
     </sect2>
 
     <sect2 id="zend.controller.quickstart.go">
-        <title>ÈëÃÅ</title>
+        <title>ï¿½ï¿½ï¿½ï¿½</title>
 
-        <para>     
-			Èç¹ûÄãÏëÉîÈëÁË½â¿ØÖÆÆ÷£¬ÇëÈÏÕæ¿´ÏÂÃæ¼¸½ÚÄÚÈÝ£¬Èç¹ûÄãÖ»ÊÇÏë¿ìËÙµØ°ÑÏµÍ³´î½¨ÆðÀ´£¬¿´ÕâÒ»½Ú¡£
+        <para>
+            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¿´ï¿½ï¿½ï¿½æ¼¸ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÙµØ°ï¿½ÏµÍ³ï¿½î½¨ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ú¡ï¿½
         </para>
 
         <sect3 id="zend.controller.quickstart.go.directory">
-            <title>ÎÄ¼þÏµÍ³µÄ×éÖ¯½á¹¹</title>
+            <title>ï¿½Ä¼ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½Ö¯ï¿½á¹¹</title>
 
-            <para>              
-				Ê×ÏÈÄãÒª¹æ»®ºÃ×Ô¼ºµÄÎÄ¼þ½á¹¹²¼¾Ö£¬µäÐÍµÄ½á¹¹ÊÇÕâÑùµÄ£º
+            <para>
+                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½æ»®ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ÍµÄ½á¹¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -49,43 +49,43 @@ html/
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.docroot">
-            <title>ÉèÖÃÎÄ¼þ¸ùÄ¿Â¼</title>
+            <title>ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¿Â¼</title>
 
-            <para>             
-				½«ÄãµÄWEB·þÎñÆ÷ÎÄ¼þ¸ùÄ¿Â¼Ö¸ÏòÉÏÃæÎÄ¼þ²¼¾ÖÖÐµÄ<code>html</code>Ä¿Â¼¡£
+            <para>
+                ï¿½ï¿½ï¿½ï¿½ï¿½WEBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¿Â¼Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½<code>html</code>Ä¿Â¼ï¿½ï¿½
             </para>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.rewrite">
-            <title>´´½¨URLÖØÐ´¹æÔò</title>
+            <title>ï¿½ï¿½ï¿½ï¿½URLï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½</title>
 
-            <para>              
-				´´½¨<code>html/.htaccess</code>£¬±à¼­ÆäÄÚÈÝÎª£º
+            <para>
+                ï¿½ï¿½ï¿½ï¿½<code>html/.htaccess</code>ï¿½ï¿½ï¿½à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
             </para>
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-            
-            <para>                
-				ÔÚÉÏÀýÖÐ£¬ËùÓÐÇëÇó(³ýÁË¶ÔÄÇ¼¸¸öÀ©Õ¹ÃûµÄÎÄ¼þµÄÇëÇó)¶¼±»×ªÏòµ½index.php¡£Èç¹ûÄãÏëÔÚ·ÃÎÊÄ³Ð©À©Õ¹ÃûµÄÎÄ¼þÊ±²»×ªÏòµ½index.php£¬Äã¿ÉÒÔ½¨Á¢×Ô¼ºµÄURLÖØÐ´¹æÔò£¬»òÕßÖ±½Ó°ÑÀ©Õ¹ÃûÌí¼Óµ½(|)Ö®ÖÐÈ¥¡£
+
+            <para>
+                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ë¶ï¿½ï¿½Ç¼ï¿½ï¿½ï¿½)Õ¹ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½index.phpï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½Ä³Ð©)Õ¹ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Ê±ï¿½ï¿½×ªï¿½ï¿½index.phpï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½bï¿½Ô¼ï¿½ï¿½ï¿½URLï¿½ï¿½Ð´ï¿½ï¿½ï¿½ò£¬»ï¿½ï¿½ï¿½Ö±ï¿½Ó°ï¿½)Õ¹ï¿½ï¿½ï¿½ï¿½Óµï¿½(|)Ö®ï¿½ï¿½È¥ï¿½ï¿½
             </para>
 
             <note>
-                <para>                  
+                <para>
 
-				ÉÏÃæµÄÖØÐ´¹æÔòÖ»ÄÜÓÃÓÚApache·þÎñÆ÷£¬Èç¹ûÄãÊ¹ÓÃµÄÊÇÆäËü·þÎñÆ÷£¬Çë²é¿´ <link                         linkend="zend.controller.router.introduction">routerµÄÎÄµµ</link>.
+                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Apacheï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¿´ <link                         linkend="zend.controller.router.introduction">routerï¿½ï¿½ï¿½Äµï¿½</link>.
                 </para>
             </note>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.bootstrap">
-            <title>´´½¨ÄãµÄbootstrapÎÄ¼þ</title>
+            <title>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bootstrapï¿½Ä¼ï¿½</title>
 
             <para>
-			(ËùÎ½Bootstrap£¬¾ÍÏàµ±ÓÚÒ»Ð¡¶ÎÒýµ¼³ÌÐò»òÕßÈë¿Ú³ÌÐò£¬ÔÚZFÖÐ£¬Í¨³£¼´Ö¸index.php£¬ÒòÎªÎÒÃÇËùÓÐµÄÇëÇó¶¼ÊÇ´Óindex.php½øÈëµÄ¡£--Haohappy×¢)      
-			ÔÚÉèÖÃºÃ .htaccessÎÄ¼þÖ®ºó£¬½¨Á¢Ò»¸öÐÂµÄÎÄ¼þindex.php£º
+            (ï¿½ï¿½Î½Bootstrapï¿½ï¿½ï¿½ï¿½ï¿½àµ±ï¿½ï¿½Ò»Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½ï¿½ZFï¿½Ð£ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Ö¸index.phpï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½index.phpï¿½ï¿½ï¿½ï¿½Ä¡ï¿½--Haohappy×¢)
+            ï¿½ï¿½ï¿½ï¿½ï¿½Ãºï¿½ .htaccessï¿½Ä¼ï¿½Ö®ï¿½ó£¬½ï¿½bÒ»ï¿½ï¿½ï¿½Âµï¿½ï¿½Ä¼ï¿½index.phpï¿½ï¿½
 
             </para>
 
@@ -93,35 +93,35 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/path/to/app/controllers');
 ]]></programlisting>
-            
-            <para>                
-				ÕâÊÇÒ»¸öÈë¿ÚÎÄ¼þ£¬Ä¿µÄ½öÔÚÓÚÆô¶¯Zend_Controller_Front¡£Zend_Controller_FrontÓÃÓÚ·ÖÅäÇëÇóµ½²»Í¬µÄ¿ØÖÆÆ÷¡£
+
+            <para>
+                ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¿ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zend_Controller_Frontï¿½ï¿½Zend_Controller_Frontï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½óµ½²ï¿½Í¬ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½
             </para>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.controller">
-            <title>´´½¨Ä¬ÈÏµÄ¿ØÖÆÆ÷£¨Action Controller£©</title>
+            <title>ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ÏµÄ¿ï¿½ï¿½ï¿½ï¿½ï¿½Action Controllerï¿½ï¿½</title>
 
-            <para>               
+            <para>
 
-				ÔÚÌÖÂÛ¿ØÖÆÆ÷Ö®Ç°£¬ÄãÓ¦¸ÃÏÈÀí½âZend FrameworkÊÇÈçºÎ´¦ÀíHTTPÇëÇóµÄ¡£Ä¬ÈÏÇé¿öÏÂ£¬URLµÄµÚÒ»¸ö²¿·Ý»áÓ³Éäµ½Ò»¸ö¿ØÖÆÆ÷£¬µÚ¶þ¸ö²¿·ÝÔòÓ³Éäµ½¿ØÖÆÆ÷ÀàÖÐµÄAction£¨¼´¿ØÖÆÆ÷ÀàÄÚ²¿µÄÒ»¸ö·½·¨£©¡£ÀýÈç£ºURL<code>http://framework.zend.com/roadmap/components</code>£¬Æä·þÎñÆ÷Â·¾¶Îª<code>/roadmap/components</code>£¬Ôò»áÓ³Éäµ½<code>roadmap</code>¿ØÖÆÆ÷ºÍ<code>components</code>¡¡Action¡£Èç¹û²»´æÔÚaction£¬Ôò»áµ÷ÓÃindexÕâ¸öaction¡£Èç¹û¿ØÖÆÆ÷²»´æÔÚ£¬Ôò»á×Ô¶¯µ÷ÓÃindex¿ØÖÆÆ÷¡£(°´ÕÕApacheµÄÃüÃû¹ßÀý£¬×Ô¶¯Ó³Éäµ½<code>DirectoryIndex</code>ÎÄ¼þ)
+                ï¿½ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zend Frameworkï¿½ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½HTTPï¿½ï¿½ï¿½ï¿½Ä¡ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½URLï¿½Äµï¿½Ò»ï¿½ï¿½Ý»ï¿½Ó³ï¿½äµ½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½äµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Actionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç£ºURL<code>http://framework.zend.com/roadmap/components</code>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½Îª<code>/roadmap/components</code>ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½äµ½<code>roadmap</code>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>components</code>ï¿½ï¿½Actionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½actionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½indexï¿½ï¿½ï¿½actionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½indexï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Apacheï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ó³ï¿½äµ½<code>DirectoryIndex</code>ï¿½Ä¼ï¿½)
 
 
             </para>
 
             <para>
-                
-				 ½ÓÏÂÀ´£¬<code>Zend_Controller</code>µÄdispatcher»á¸ù¾Ý¿ØÖÆÆ÷µÄÃû³ÆÕÒµ½¾ßÌåµÄ¿ØÖÆÆ÷Àà¡£Í¨³£Ëü»á°Ñ¿ØÖÆÆ÷Ãû³Æ¼ÓÉÏ<code>Controller</code>¡£Òò´Ë£¬ÉÏÀýÖÐ<code>roadmap</code>¿ØÖÆÆ÷ÓëÀà<code>RoadmapController</code>Ïà¶ÔÓ¦¡£
+
+                 ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½<code>Zend_Controller</code>ï¿½ï¿½dispatcherï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¡£Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½<code>Controller</code>ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>roadmap</code>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>RoadmapController</code>ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
 
             </para>
 
             <para>
-               	ÀàËÆµØ£¬action»áÓ³Éäµ½¿ØÖÆÆ÷ÀàÖÐµÄÒ»¸öÀà·½·¨¡£Ä¬ÈÏÇéÏÂ£¬»á±»×ª³ÉÐ¡Ð´×ÖÄ¸£¬È»ºó¼ÓÉÏ<code>Action</code>×Ö·û´®¡£Òò´Ë£¬ÉÏÀýÖÐ<code>components</code>Õâ¸öactionÓë <code>componentsAction</code>Ïà¶ÔÓ¦¡£×îÖÕÎÒÃÇ·ÃÎÊURLµ÷ÓÃµÄÊÇ<code>RoadmapController->componentsAction()</code>
-			
+                   ï¿½ï¿½ï¿½ÆµØ£ï¿½actionï¿½ï¿½Ó³ï¿½äµ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ò»ï¿½ï¿½ï¿½à·½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½á±»×ªï¿½ï¿½Ð¡Ð´ï¿½ï¿½Ä¸ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½ï¿½<code>Action</code>ï¿½Ö·ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>components</code>ï¿½ï¿½ï¿½actionï¿½ï¿½ <code>componentsAction</code>ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½URLï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½<code>RoadmapController->componentsAction()</code>
+
             </para>
 
-            <para>               
-				ÏÖÔÚÈÃÎÒÃÇÀ´´´½¨Ò»¸öÄ¬ÈÏµÄ¿ØÖÆÆ÷ºÍAction·½·¨°É¡£ÉÏÃæËµ¹ý£¬Ä¬ÈÏµÄ¿ØÖÆÆ÷ºÍ·½·¨¶¼ÒÔ¡°index¡±ÃüÃû¡£´ò¿ªÎÄ¼þ<code>application/controllers/IndexController.php</code>£¬ÊäÈë£º
+            <para>
+                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ä¬ï¿½ÏµÄ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Actionï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ä¬ï¿½ÏµÄ¿ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½indexï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½<code>application/controllers/IndexController.php</code>ï¿½ï¿½ï¿½ï¿½ï¿½ë£º
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -136,18 +136,18 @@ class IndexController extends Zend_Controller_Action
 }
 ]]></programlisting>
 
-            <para>                
+            <para>
 
-				Ä¬ÈÏÇé¿öÏÂ£¬<link
-                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>»á±»ÆôÓÃ¡£ÕâÒâÎ¶×ÅÖ»ÐèÒª¼òµ¥µØÏÂ¶¨ÒåÒ»¸öaction·½·¨£¬¾Í»á×Ô¶¯Ö¸¶¨Ò»¸ö¶ÔÓ¦µÄView½Å±¾£¬Äã¿ÉÔÚactionÖÐÖ±½Ó°ÑÄÚÈÝÊä³ö¡£Ä¬ÈÏÇé¿öÏÂ£¬ÎÒÃÇ²ÉÓÃZend_View×÷ÎªMVC¿ª·¢µÄ±íÏÖ²ã²¿·Ý¡£<code>ViewRenderer</code>¸ù¾Ý¿ØÖÆÆ÷µÄÃû³Æ£¨ÀýÈçindex£©ºÍµ±Ç°µÄactionµÄÃû³Æ£¨ÀýÈçindex£©À´¾ö¶¨Ê¹ÓÃÄÄ¸öÄ£°åÎÄ¼þ¡£Ä¬ÈÏÇé¿öÏÂ£¬Ä£°åÎÄ¼þÊ¹ÓÃ.phtml×÷ÎªÀ©Õ¹Ãû¡£¡¡Ò²¾ÍÊÇËµ£¬ÉÏÀýÖÐ£¬ÎÒÃÇ½«Ê¹ÓÃ<code>index/index.phtml</code>Ä£°åÎÄ¼þ¡£¡¡ÁíÍâ£¬<code>ViewRenderer</code>×Ô¶¯¼ÙÉè<code>views</code>Ä¿Â¼Óë¿ØÖÆÆ÷Ä¿Â¼Æ½¼¶£¬×÷ÎªÊÓÍ¼²ãµÄ»ù´¡Ä¿Â¼£¬¶øÊµ¼ÊµÄÄ£°åÎÄ¼þÔò·ÅÖÃÔÚ<code>views/scripts/</code> ×ÓÄ¿Â¼ÏÂ¡£ÒòÎªÎÒÃÇµÄÄ£°åÎÄ¼þÓ¦¸ÃÊÇ <code>application/views/scripts/index/index.phtml</code>¡£
+                Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½<link
+                    linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>ï¿½á±»ï¿½ï¿½ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½Î¶ï¿½ï¿½Ö»ï¿½ï¿½Òªï¿½òµ¥µï¿½ï¿½Â¶ï¿½ï¿½ï¿½Ò»ï¿½ï¿½actionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½Ô¶ï¿½Ö¸ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Viewï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½actionï¿½ï¿½Ö±ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½Zend_Viewï¿½ï¿½ÎªMVCï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½Ö²ã²¿ï¿½Ý¡ï¿½<code>ViewRenderer</code>ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½indexï¿½ï¿½ï¿½Íµï¿½Ç°ï¿½ï¿½actionï¿½ï¿½ï¿½ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½indexï¿½ï¿½4ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ä¸ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½Ê¹ï¿½ï¿½.phtmlï¿½ï¿½Îª)Õ¹ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ç½ï¿½Ê¹ï¿½ï¿½<code>index/index.phtml</code>Ä£ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¬<code>ViewRenderer</code>ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½<code>views</code>Ä¿Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í¼ï¿½ï¿½Ä»ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½Êµï¿½Êµï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>views/scripts/</code> ï¿½ï¿½Ä¿Â¼ï¿½Â¡ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Çµï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ <code>application/views/scripts/index/index.phtml</code>ï¿½ï¿½
             </para>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.view">
-            <title>´´½¨ÄãµÄÊÓÍ¼½Å±¾</title>
+            <title>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½Å±ï¿½</title>
 
-            <para>              
-				Ö®Ç°Ëµ¹ý£¬ÊÓÍ¼½Å±¾£¨¼´Ä£°åÎÄ¼þ£©·ÅÔÚ<code>application/views/scripts/</code>Ä¿Â¼ÏÂ£¬¶øÄ¬ÈÏµÄÄ£°åÊÇ<code>application/views/scripts/index/index.phtml</code>¡£ÎÒÃÇÀ´´´½¨Õâ¸öÎÄ¼þ£¬¼ÓÈëÒ»Ð©HTML´úÂë£º
+            <para>
+                Ö®Ç°Ëµï¿½ï¿½ï¿½ï¿½Í¼ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>application/views/scripts/</code>Ä¿Â¼ï¿½Â£ï¿½ï¿½ï¿½Ä¬ï¿½Ïµï¿½Ä£ï¿½ï¿½ï¿½ï¿½<code>application/views/scripts/index/index.phtml</code>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Ð©HTMLï¿½ï¿½ï¿½ë£º
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -167,12 +167,12 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
-            <title>´´½¨Äã×Ô¼ºµÄ´íÎó¿ØÖÆÆ÷</title>
+            <title>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</title>
 
-            <para>              
-				Ä¬ÈÏÇé¿öÏÂ£¬<link
-                    linkend="zend.controller.plugins.standard.errorhandler">¡°´íÎó´¦ÀíÆ÷¡±²å¼þ</link>
-            </para>ÊÇÒÑ¾­±»×¢²áµÄ¡£Õâ¸ö²å¼þÒªÇó´æÔÚÒ»¸öÓÃÓÚ´¦Àí´íÎóµÄ¿ØÖÆÆ÷¡£Ëü¼ÙÉè´æÔÚÒ»¸ö<code>ErrorController</code>£¬²¢ÇÒÆäÖÐÓÐÒ»¸öÃûÎª<code>errorAction</code>µÄAction¡£
+            <para>
+                Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½<link
+                    linkend="zend.controller.plugins.standard.errorhandler">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</link>
+            </para>ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½×¢ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½<code>ErrorController</code>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Îª<code>errorAction</code>ï¿½ï¿½Actionï¿½ï¿½
 
             <programlisting role="php"><![CDATA[<?php
 /** Zend_Controller_Action */
@@ -185,10 +185,10 @@ class ErrorController extends Zend_Controller_Action
     }
 }
 ]]></programlisting>
-            
+
             <para>
-               
-				Ê¹ÓÃÎÒÃÇÖ®Ç°ÌÖÂÛµÄÄ¿Â¼²¼¾Ö£¬Õâ¸öÎÄ¼þ½«ÊÇ<code>application/controllers/ErrorController.php</code>£¬ÄãÒ²ÐèÒªÎªËü´´½¨Ò»¸öÄ£°åÎÄ¼þ£¬¼´<code>application/views/scripts/error/error.phtml</code>¡£ÆäÖÐµÄÄÚÈÝÈçÏÂ£º
+
+                Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½ï¿½ï¿½Ûµï¿½Ä¿Â¼ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½<code>application/controllers/ErrorController.php</code>ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ÒªÎªï¿½ï¿½Ò»ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½<code>application/views/scripts/error/error.phtml</code>ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â£ï¿½
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -198,21 +198,21 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>´íÎó</title>
+  <title>ï¿½ï¿½ï¿½ï¿½</title>
 </head>
 <body>
-    <h1>³ö´íÁË£¡</h1>
-    <p>An error occurred; please try again later. ³öÏÖÁËÒ»¸ö´íÎó£¬ÇëÖØÊÔ¡£</p>
+    <h1>ï¿½ï¿½ï¿½ï¿½Ë£ï¿½</h1>
+    <p>An error occurred; please try again later. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½</p>
 </body>
 </html>
 ]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">
-            <title>·ÃÎÊÕ¾µã£¡</title>
+            <title>ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ã£¡</title>
 
-            <para>                
-				´´½¨ºÃÁËÄãµÄµÚÒ»¸ö¿ØÖÆÆ÷ºÍÄ£°å£¬ÄãÏÖÔÚ¿ÉÒÔ´ò¿ªä¯ÀÀÆ÷À´·ÃÎÊ¿´¿´ÁË£¡¡¡¼ÙÉè<code>example.com</code>ÊÇÄãµÄÕ¾µãÓòÃû£¬ÄÇÃ´ÏÂÃæµÄURL¶¼»á´øÄã·ÃÎÊÄã¸Õ²Å´´½¨µÄÒ³Ãæ£º
+            <para>
+                ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<code>example.com</code>ï¿½ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½URLï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ²Å´ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½æ£º
             </para>
 
             <itemizedlist>
@@ -221,8 +221,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 <listitem><para><code>http://example.com/index/index</code></para></listitem>
             </itemizedlist>
 
-            <para>            
-				¹§Ï²Äã£¡¡¡ÄãÒÑ¾­×¼±¸ºÃÁË£¬¿ÉÒÔ¿ªÊ¼´´½¨¸ü¶àµÄ¿ØÖÆÆ÷ºÍAction£¡
+            <para>
+                ï¿½ï¿½Ï²ï¿½ã£¡ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Actionï¿½ï¿½
             </para>
         </sect3>
     </sect2>

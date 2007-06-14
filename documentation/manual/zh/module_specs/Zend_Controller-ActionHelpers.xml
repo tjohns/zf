@@ -31,7 +31,7 @@
 
         <para>
             A helper can be initialized in several different ways, based on
-            your needs as well as the functionality of that helper.  
+            your needs as well as the functionality of that helper.
         </para>
 
         <para>
@@ -167,7 +167,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
     </sect2>
-    
+
     <sect2 id="zend.controller.actionhelper.writingyourown">
         <title>Writing Your Own Helpers</title>
 
@@ -251,7 +251,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
 // Redirect to /blog/view/item/id/42
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
 ?>]]></programlisting>
-        
+
         <para>
             Internally, the helper broker's <code>__call()</code> method looks
             for a helper named <code>redirector</code>, then checks to see if

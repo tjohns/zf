@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.searching">
-	<title>搜索索引</title>
+    <title>搜索索引</title>
 
-	<sect2 id="zend.search.lucene.searching.query-parser">
-		<title>建立查询</title>
+    <sect2 id="zend.search.lucene.searching.query-parser">
+        <title>建立查询</title>
 
         <para>
             有两种方式可以在索引中进行搜索。第一个方式是使用查询分析程序(Query Parser)来从字符串中创建查询。第二个方式通过 Zend_Search_Lucene API 提供了创建自己的查询的可能。
@@ -53,10 +53,10 @@ $index->find($query);
             命令来获取帮助)。提供给 <code>find()</code> 的文本大小写必须和索引中的相匹配。如果索引被正常设置为全小写，那么提供给
           <code>find()</code> 的文本必须用 <code>strtolower()</code>处理，否则它可能无法被匹配。
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.searching.results">
-		<title>搜索结果</title>
+    <sect2 id="zend.search.lucene.searching.results">
+        <title>搜索结果</title>
         <para>
             搜索结果是一个 Zend_Search_Lucene_Search_QueryHit 对象数组。每一个数组元素具有两个属性：
           <code>$hit->document</code> 是索引中的文档编号，<code>$hit->score</code> 是其在搜索结果中的分值。搜索结果是按照分值排序的(最高分的搜索结果位于最前面)。
@@ -119,11 +119,11 @@ foreach ($hits as $hit) {
         请注意，文档标识(在本例中是'path')也保存在索引中，它必须被提取出来。
         </para>
 
-	</sect2>
+    </sect2>
 
 
-	<sect2 id="zend.search.lucene.searching.results-scoring">
-		<title>结果评分</title>
+    <sect2 id="zend.search.lucene.searching.results-scoring">
+        <title>结果评分</title>
         <para>
             Zend_Search_Lucene 使用和 Java Lucene 一样的评分算法。搜索结果是按照分值进行排序的。分值越大，相应的搜索结果点击排在排位越靠前。
         </para>
@@ -153,7 +153,7 @@ foreach ($hits as $hit) {
             类 Zend_Search_Lucene_Search_Similarity 用于计算分值。请参阅<link linkend="zend.search.lucene.extending.scoring">“扩展性”中“评分算法”</link>一节了解详情。
         </para>
 
-	</sect2>
+    </sect2>
 
 </sect1>
 

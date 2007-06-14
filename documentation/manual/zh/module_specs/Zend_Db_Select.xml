@@ -19,7 +19,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 require_once 'Zend/Db.php';
 
 $params = array (
@@ -42,7 +42,7 @@ $select = $db->select();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // SELECT *
 //     FROM round_table
@@ -79,7 +79,7 @@ $result = $db->fetchAll($select);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // SELECT *
 //     FROM round_table
@@ -112,7 +112,7 @@ $result = $db->fetchAll($select, $params);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象，假定adapter为Mysql
 $select = $db->select();
 
@@ -143,7 +143,7 @@ $select->from('bar', 'bar.col AS col2');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象，假定adapter为Mysql.
 $select = $db->select();
 
@@ -180,7 +180,7 @@ $select->join('bar', 'foo.id = bar.id', '*');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
@@ -217,7 +217,7 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
@@ -254,7 +254,7 @@ $select->group(array('bar', 'baz'));
            假如你需要实现“或 ”操作，可以使用orHaving()方法
         </para>
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
@@ -280,7 +280,7 @@ $select->having('count_id > ?', 1);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
@@ -326,7 +326,7 @@ $select->order(array('noble_title DESC', 'first_name'));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 首先，一个简单的 "LIMIT :count"
 $select = $db->select();
 $select->from('foo', '*');
@@ -386,7 +386,7 @@ $select->limit(10, 20);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 构造基础的select方法:
 $select = $db->select();
 $select->from('foo', '*');

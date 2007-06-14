@@ -8,7 +8,7 @@
 
         <para>
             Zend_Db_Table 是Zend Framework的表模块.它通过zend_db_adapter连接到
-            数据库,为数据库模式检查表对象,并对该表进行操作和查询.  
+            数据库,为数据库模式检查表对象,并对该表进行操作和查询.
         </para>
 
     </sect2>
@@ -21,7 +21,7 @@
             首先需要为抽象类zend_db_table(ares注:该类为抽象类,所以不能直接实例
             化,只能先继承该类,然后实例化子类)设定一个默认对数据库adapter;除非你
             指定其他类型数据库adapter,否则,所有的zend_db_table类实例都会使用
-            默认adapter. 
+            默认adapter.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -330,7 +330,7 @@ $rowset = $table->fetchAll($where, $order, $count, $offset);
         <para>
             作为Zend Framework的表模块,Zend_Db_Table将它自己很好的封装到独特的domain logic下.
             例如,你可以重载insert()和update()方法,以实现在数据更改提交前的操作和验证.
-            
+
         </para>
 
         <programlisting role="php"><![CDATA[<?php

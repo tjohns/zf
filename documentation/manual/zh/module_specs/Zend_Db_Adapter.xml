@@ -87,7 +87,7 @@ $value = $db->quote(array('a', 'b', 'c');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象,假设数据库adapter为mysql.
 
 // 在where语句中为标量加上引号
@@ -113,7 +113,7 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象,然后查询数据库
 // 使用完整的sql语句直接进行查询.
 $sql = $db->quoteInto(
@@ -135,7 +135,7 @@ $rows = $result->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象,然后查询数据库.
 // 这一次，使用绑定的占位符.
 $result = $db->query(
@@ -149,13 +149,13 @@ $rows = $result->fetchAll();
 ?>]]></programlisting>
 
         <para>
-            或者,你也可以手工设置sql语句和绑定数据到sql语句。这一功能通过 
+            或者,你也可以手工设置sql语句和绑定数据到sql语句。这一功能通过
             <code>prepare()</code> 方法得到一个设定好的PDOStatement对象，以便直
             接进行数据库操作.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个$db对象,然后查询数据库.
 // 这次, 设定一个 PDOStatement 对象进行手工绑定.
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
@@ -181,7 +181,7 @@ $rows = $stmt->fetchAll();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个 $db对象, 然后开始做一个事务处理.
 $db->beginTransaction();
 
@@ -211,11 +211,11 @@ try {
         <para>
             返回值并 <emphasis>不是 </emphasis> 最后插入的数据的id，这样做的原因在于一些表
             并没有一个自增的字段；相反的，这个插入的返回值是改变的数据行数(通常情况为1)。
-            假如你需要最后插入的数据id，可以在insert执行后调用 <code>lastInsertId() </code>方法。 
+            假如你需要最后插入的数据id，可以在insert执行后调用 <code>lastInsertId() </code>方法。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // INSERT INTO round_table
 //     (noble_title, first_name, favorite_color)
@@ -255,7 +255,7 @@ $last_insert_id = $db->lastInsertId();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // UPDATE round_table
 //     SET favorite_color = "yellow"
@@ -291,7 +291,7 @@ $rows_affected = $db->update($table, $set, $where);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // 需要删除数据的表
 //     WHERE first_name = "Patsy";
@@ -320,7 +320,7 @@ $rows_affected = $db->delete($table, $where);
             方法可以实现这个要求。对于每一种 <code>fetch系列 </code>的方法来说，你需
             要传送一个select的sql语句；假如你在操作语句中使用指定的占位符，你也可以
             传送一个绑定数据的数组对你的操作语句进行处理和替换。 <code>Fetch系列 </code>
-            的方法包括： 
+            的方法包括：
          </para>
 
         <itemizedlist>
@@ -333,7 +333,7 @@ $rows_affected = $db->delete($table, $where);
         </itemizedlist>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // 创建一个 $db对象, 然后...
 
 // 取回结果集中所有字段的值,作为连续数组返回

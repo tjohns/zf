@@ -8,8 +8,8 @@
 
         <para>
             Zend_Db_Table_Rowset是 Zend_Db_Table_Row对象集合的迭代器.通常来说,你不可以自己实例化Zend_Db_Table_Rowset,
-			而是通过调用Zend_Db_Table::find()方法或者fetchAll()方法将Zend_Db_Table_Rowset作为
-			结果数据返回过来.接下来就可以遍历Zend_Db_Table_Row对象集合并进行修改.
+            而是通过调用Zend_Db_Table::find()方法或者fetchAll()方法将Zend_Db_Table_Rowset作为
+            结果数据返回过来.接下来就可以遍历Zend_Db_Table_Row对象集合并进行修改.
         </para>
 
     </sect2>
@@ -34,7 +34,7 @@ $params = array (
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-// 为所有的Zend_Db_Table对象设置默认 
+// 为所有的Zend_Db_Table对象设置默认
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
@@ -45,7 +45,7 @@ $table = new RoundTable();
         </programlisting>
 
         <para>
-		    接下来,可以使用Zend_Db_Table::find()方法和多个键值,或者使用Zend_Db_Table::fetchAll()方法对数据库进行查询,
+            接下来,可以使用Zend_Db_Table::find()方法和多个键值,或者使用Zend_Db_Table::fetchAll()方法对数据库进行查询,
             返回的结果是一个Zend_Db_Table_Rowset对象,可以通过该对象遍历结果集中的每一个Zend_Db_Table_Row对象.
          </para>
 
@@ -66,9 +66,9 @@ $rowset = $table->fetchAll();
         <title>遍历结果集</title>
 
         <para>
-		    Zend_Db_Table_Rowset实现了简单程序设计语言的迭代器接口,也就是说,可以对Zend_Db_Table_Rowset
-			对象进行循环处理,就像使用foreach()函数处理数组一样.使用这种方法取回的每一个值都是一个对应表
-			中数据的Zend_Db_Table_Row对象,你可以查看,修改和保存该对象的属性(即表中的字段值.)
+            Zend_Db_Table_Rowset实现了简单程序设计语言的迭代器接口,也就是说,可以对Zend_Db_Table_Rowset
+            对象进行循环处理,就像使用foreach()函数处理数组一样.使用这种方法取回的每一个值都是一个对应表
+            中数据的Zend_Db_Table_Row对象,你可以查看,修改和保存该对象的属性(即表中的字段值.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php

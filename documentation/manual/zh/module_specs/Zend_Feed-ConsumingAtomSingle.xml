@@ -2,8 +2,8 @@
     <title>单个Atom条目的处理</title>
 
     <para>
-        单个Atom <code>&lt;entry&gt;</code> 元素自身也是有效的。通常在Feed的URL后带上<code>/&lt;entryId&gt;</code>就是一个条目的URL。就像<code>http://atom.example.com/feed/1</code>， 
-		我们就以上述的URL作为例子。
+        单个Atom <code>&lt;entry&gt;</code> 元素自身也是有效的。通常在Feed的URL后带上<code>/&lt;entryId&gt;</code>就是一个条目的URL。就像<code>http://atom.example.com/feed/1</code>，
+        我们就以上述的URL作为例子。
     </para>
 
     <para>

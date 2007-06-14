@@ -10,7 +10,7 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 
 ?>]]>   </programlisting>
     <para>
-    	你也能用<code>Zend_Feed</code>从一个文件或者一个PHP字符串变量来获得一个feed的内容:
+        你也能用<code>Zend_Feed</code>从一个文件或者一个PHP字符串变量来获得一个feed的内容:
     </para>
     <programlisting role="php"><![CDATA[
 <?php
@@ -23,8 +23,8 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
     <para>
-    	在上面的例子中，根据feed类型的不同，一个从<code>Zend_Feed_Abstract</code>继承而来的类对象被返回。
-    	如果导入方法获得的是一个RSS feed，那么一个<code>Zend_Feed_Rss</code>对象将被返回(Seateng译注:以Factory模式实现)。另一方面，如果一个Atom feed被导入，那么将返回一个<code>Zend_Feed_Atom</code>对象。如果feed不可读或者不符合规范，导致导入失败那么Zend_Feed将抛出一个<code>Zend_Feed_Exception</code>异常。
+        在上面的例子中，根据feed类型的不同，一个从<code>Zend_Feed_Abstract</code>继承而来的类对象被返回。
+        如果导入方法获得的是一个RSS feed，那么一个<code>Zend_Feed_Rss</code>对象将被返回(Seateng译注:以Factory模式实现)。另一方面，如果一个Atom feed被导入，那么将返回一个<code>Zend_Feed_Atom</code>对象。如果feed不可读或者不符合规范，导致导入失败那么Zend_Feed将抛出一个<code>Zend_Feed_Exception</code>异常。
     </para>
 </sect1>
 <!--

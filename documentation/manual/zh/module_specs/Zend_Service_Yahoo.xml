@@ -4,9 +4,9 @@
         <title>简介</title>
         <para>
             <code>Zend_Service_Yahoo</code> 是一个实现多个Yahoo! REST 接口的API.
-            <code>Zend_Service_Yahoo</code> 允许你使用Yahoo! 网页搜索, Yahoo! 新闻, 
-			Yahoo! 本地(Local), Yahoo! 图片. 为了使用 Yahoo! REST API,
-			你必须拥有一个 Yahoo! Application ID. 要获得它, 请访问
+            <code>Zend_Service_Yahoo</code> 允许你使用Yahoo! 网页搜索, Yahoo! 新闻,
+            Yahoo! 本地(Local), Yahoo! 图片. 为了使用 Yahoo! REST API,
+            你必须拥有一个 Yahoo! Application ID. 要获得它, 请访问
             <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID Request Form</ulink>.
         </para>
     </sect2>
@@ -15,7 +15,7 @@
         <para>
             <code>Zend_Service_Yahoo</code> 允许你用
             <code>webSearch()</code> 方法来进行Yahoo! 网页搜索, 它接受一个查询字符串作为参数 ，
-			用一个可选的数组传递搜索选项. 更多的细节和搜索选项的信息, 请访问
+            用一个可选的数组传递搜索选项. 更多的细节和搜索选项的信息, 请访问
             <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
             Documentation</ulink>.  <code>webSearch()</code> 方法返回一个
             <code>Zend_Service_Yahoo_WebResultSet</code> 对象.
@@ -37,8 +37,8 @@ foreach ($results as $result) {
         <para>
             你可以使用<code>Zend_Service_Yahoo</code>的 <code>imageSearch()</code>
             方法来在Yahoo上搜索图片。  。 它接受一个查询字符串作为参数 ，用一个可选的数组传递搜索选项, 就像
-            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> method</link>. 
-			更多的细节和搜索选项的信息, 请访问 
+            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> method</link>.
+            更多的细节和搜索选项的信息, 请访问
             <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
             Documentation</ulink>.
         </para>
@@ -77,8 +77,8 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.newssearch">
         <title>搜索Yahoo! 新闻</title>
         <para>
-            搜索Yahoo! 新闻非常简单; 使用  <code>newsSearch()</code> 方法, 
-			如下面的例子. 更多的细节和搜索选项的信息, 请访问
+            搜索Yahoo! 新闻非常简单; 使用  <code>newsSearch()</code> 方法,
+            如下面的例子. 更多的细节和搜索选项的信息, 请访问
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
             Documentation</ulink>.
         </para>
@@ -97,9 +97,9 @@ foreach ($results as $result) {
 <sect2 id="zend.service.yahoo.classes">
     <title>Zend_Service_Yahoo 类</title>
     <para>
-        不同的Yahoo! 搜索类型会返回下面的这些类. 每个搜索类型返回指定类型的结果集, 我们可以很方便的对它们进行遍历, 
-		每个结果被包含在一种类型的结果集对象中. 所有这些对象都实现了 
-		<code>SeekableIterator</code> 接口, 可以很容易的进行遍历和寻找指定结果。
+        不同的Yahoo! 搜索类型会返回下面的这些类. 每个搜索类型返回指定类型的结果集, 我们可以很方便的对它们进行遍历,
+        每个结果被包含在一种类型的结果集对象中. 所有这些对象都实现了
+        <code>SeekableIterator</code> 接口, 可以很容易的进行遍历和寻找指定结果。
         <itemizedlist>
             <listitem><para><link linkend="zend.service.yahoo.classes.resultset"><code>Zend_Service_Yahoo_ResultSet</code></link></para></listitem>
             <listitem><para><link linkend="zend.service.yahoo.classes.webresultset"><code>Zend_Service_Yahoo_WebResultSet</code></link></para></listitem>
@@ -120,7 +120,7 @@ foreach ($results as $result) {
             每类搜索特定的结果集都由这个基类扩展而成
         </para>
         <para>
-            每类搜索特定的结果集都会返回这个搜索特定的 
+            每类搜索特定的结果集都会返回这个搜索特定的
             <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link> 对象.
         </para>
         <sect4 id="zend.service.yahoo.classes.resultset.totalResults">

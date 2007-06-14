@@ -8,7 +8,7 @@
     一个灵活的IDs和Tags系统(标识符和标记系统)存储缓存纪录.使用此方法,易于删除特定类型的纪录(例如:"删除所有标记为tag的纪录")
     </para>
     <para>
-        模块(<code>Zend_Cache_Core</code>) 的核心是通用,灵活和可配置.对于特定的需要,为了便捷,这里有一些继承自<code>Zend_Cache_Core</code>的前端: 
+        模块(<code>Zend_Cache_Core</code>) 的核心是通用,灵活和可配置.对于特定的需要,为了便捷,这里有一些继承自<code>Zend_Cache_Core</code>的前端:
         <code>Output</code>, <code>File</code>, <code>Function</code> 和 <code>Class</code>.
     </para>
     <example>
@@ -21,7 +21,7 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // cache lifetime of 2 hours 
+   'lifeTime' => 7200, // cache lifetime of 2 hours
    'automaticSerialization' => true
 );
 
@@ -44,18 +44,18 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 if(!$result = $cache->load('myresult')) {
 
     // 缓存不命中;连接到数据库
-    
+
     $db = Zend_Db::factory( [...] );
-    
+
     $result = $db->fetchAll('SELECT * FROM huge_table');
-    
+
     $cache->save($result, 'myresult');
-    
+
 } else {
 
     // cache hit! shout so that we know
     echo "This one is from cache!\n\n";
-    
+
 }
 
 print_r($result);
@@ -83,10 +83,10 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 // 传递一个唯一标识符给start()方法
 if(!$cache->start('mypage')) {
     // output as usual:
-    
+
     echo 'Hello world! ';
     echo 'This is cached ('.time().') ';
-    
+
     $cache->end(); // the output is saved and sent to the browser
 }
 

@@ -1,7 +1,7 @@
 <sect1 id="zend.feed.consuming-rss">
     <title>RSS Feed的使用</title>
     <para>
-    	用一个<code>Zend_Feed_Rss</code>对象实例和一个Feed的URL来读取一个RSS Feed再简单不过了:
+        用一个<code>Zend_Feed_Rss</code>对象实例和一个Feed的URL来读取一个RSS Feed再简单不过了:
     </para>
     <programlisting role="php"><![CDATA[
 <?php
@@ -14,7 +14,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
     </para>
 
     <para>
-    	一旦你获得一个Feed对象，那么你就能在这个对象上直接访问任何RSS 标准定义的channel属性:
+        一旦你获得一个Feed对象，那么你就能在这个对象上直接访问任何RSS 标准定义的channel属性:
     </para>
     <programlisting role="php"><![CDATA[
 <?php
@@ -52,7 +52,7 @@ foreach ($channel as $item) {
 
 ?>]]></programlisting>
     <para>
-		如果你对RSS不是很熟，那这有一分关于RSS channel和各个RSS item(条目)标准元素的列表可能对你有帮助。
+        如果你对RSS不是很熟，那这有一分关于RSS channel和各个RSS item(条目)标准元素的列表可能对你有帮助。
     </para>
 
     <para>
@@ -138,11 +138,11 @@ if ($item->propname()) {
 ?>]]></programlisting>
 
     <para>
-    	如果你用<code>$item->propname</code>代替<code>$item->propname()</code>，那么你将总是得到一个空对象使条件判断为<code>TRUE</code>，因此条件判断将失效。
+        如果你用<code>$item->propname</code>代替<code>$item->propname()</code>，那么你将总是得到一个空对象使条件判断为<code>TRUE</code>，因此条件判断将失效。
     </para>
 
     <para>
-    	更多信息，请参看RSS 2.0的官方说明:<ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>。
+        更多信息，请参看RSS 2.0的官方说明:<ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>。
     </para>
 </sect1>
 <!--

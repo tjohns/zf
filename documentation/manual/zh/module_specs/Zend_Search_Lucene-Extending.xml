@@ -1,7 +1,7 @@
 <sect1 id="zend.search.lucene.extending">
-	<title>扩展性</title>
+    <title>扩展性</title>
 
-	<sect2 id="zend.search.lucene.extending.analysis">
+    <sect2 id="zend.search.lucene.extending.analysis">
         <title>文本分析</title>
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer</code> 类被索引建立程序用于记号化文档的文本字段。
@@ -12,7 +12,7 @@
         </para>
 
         <para>
-            因此你可以使用你自己的文本分析程序或者从预设的分析程序中选择一个： 
+            因此你可以使用你自己的文本分析程序或者从预设的分析程序中选择一个：
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> 和 <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>(缺省的)。两者都把记号解释为一个字母序列。
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>将记号转化为小写。
         </para>
@@ -104,7 +104,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </sect2>
 
     <sect2 id="zend.search.lucene.extending.scoring">
-		<title> 评分算法</title>
+        <title> 评分算法</title>
         <para>
             查询 <literal>q</literal> 的在文档 <literal>d</literal> 中的分值 score 定义如下：
         </para>
@@ -190,10 +190,10 @@ $mySimilarity = new MySimilarity();
 Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 
 ?>]]></programlisting>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.lucene.extending.storage">
-		<title>存储容器</title>
+    <sect2 id="zend.search.lucene.extending.storage">
+        <title>存储容器</title>
         <para>
         抽象类 Zend_Search_Lucene_Storage_Directory 定义了目录功能。
         </para>
@@ -354,7 +354,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
 ?>]]></programlisting>
         </para>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

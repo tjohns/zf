@@ -5,16 +5,16 @@
     <para>
         <code>Zend_Validate_EmailAddress</code>允许你校验一个email地址。首先校验器把email地址分成local-part和@hostname并试图按照email地址和主机名的规范来匹配它。
     </para>
-    
+
     <para>
         <emphasis role="strong">基本用法</emphasis>
     </para>
-    
+
     <para>
         一个基本用法的例子如下：
-        
+
         <programlisting role="php"><![CDATA[<?php
-        
+
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
@@ -29,28 +29,28 @@ if ($validator->isValid($email)) {
 ?>]]></programlisting>
 
         这个例子匹配email地址<code>$email</code>并在匹配失败的时候用<code>$validator->getMessages()</code>来获得有用的错误信息。
-                
+
     </para>
-    
-    
+
+
     <para>
         <emphasis role="strong">复杂的local parts</emphasis>
-    </para>    
-    
+    </para>
+
     <para>
         <code>Zend_Validate_EmailAddress</code>根据RFC2822来匹配任何有效的email地址。例如，有效的email地址包括<code>bob@domain.com</code>, <code>bob+jones@domain.us</code>, <code>"bob@jones"@domain.com</code> 和 <code>"bob jones"@domain.com</code>。一些过时的email格式目前不再校验（例如email地址中的回车符或"\"符）。
     </para>
-    
+
     <para>
         <emphasis role="strong">校验不同类型的主机名</emphasis>
     </para>
-    
+
     <para>
         Email地址中的主机名部分依靠<link linkend="zend.validate.set.hostname"><code>Zend_Validate_Hostname</code></link>来校验。尽管你希望IP地址和本地主机名也被接受，但缺省地只有像<code>domain.com</code>格式的DNS主机名被接受。
         当然如果你想如愿，需要实例化<code>Zend_Validate_EmailAddress</code>并传递一个参数来指明哪种主机名你想接受。更多的细节包含在<code>Zend_Validate_Hostname</code>中。
         下面的例子显示如何同时接受DNS和本地主机名：
         <programlisting role="php"><![CDATA[<?php
-        
+
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
@@ -119,7 +119,7 @@ $validator->hostnameValidator->setValidateIdn(false);
 $validator->hostnameValidator->setValidateTld(false);
 
 ?>]]></programlisting>
-        
+
         关于 <code>setValidateTld()</code> 更多的信息在<code>Zend_Validate_Hostname</code> 文档中。
     </para>
 

@@ -123,7 +123,7 @@ if ($response->isException()) {
     $response->outputBody();
 }
 ]]></programlisting>
-                
+
                 <para>
                     The primary advantage this method offers over
                     <code>Zend_Controller_Front::throwExceptions()</code> is to
@@ -340,7 +340,7 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
     }
 }
 ]]></programlisting>
-                        
+
                         <para>
                             In this example, we check to see if the action
                             requested is available in the controller. If not, we

@@ -19,11 +19,11 @@
     </para>
 
     <para>
-	    确立了这样的过滤器定义，为<code>Zend_Filter_Interface</code>接口奠定了理论基础，需要过滤器类实现一个名为<code>filter()</code>的方法。
+        确立了这样的过滤器定义，为<code>Zend_Filter_Interface</code>接口奠定了理论基础，需要过滤器类实现一个名为<code>filter()</code>的方法。
     </para>
 
     <para>
-	    下面一个简单的例子，示范了在2个输入数据上使用过滤器，"<code>&amp;</code>"符号和双引号(<code>&quot;</code>)字符：
+        下面一个简单的例子，示范了在2个输入数据上使用过滤器，"<code>&amp;</code>"符号和双引号(<code>&quot;</code>)字符：
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter/HtmlEntities.php';

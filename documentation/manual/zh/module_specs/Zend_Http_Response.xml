@@ -4,8 +4,8 @@
     <sect2 id="zend.http.response.introduction">
         <title>简介</title>
         <para>
-            对于由<xref linkend="zend.http.client" />返回的应答(Response)信息，<code>Zend_Http_Response</code> 
-			可以提供简单的访问方式。 它提供一组友好的方法来获得从请求返回的应答信息:
+            对于由<xref linkend="zend.http.client" />返回的应答(Response)信息，<code>Zend_Http_Response</code>
+            可以提供简单的访问方式。 它提供一组友好的方法来获得从请求返回的应答信息:
             <itemizedlist>
                 <listitem>
                     <para>

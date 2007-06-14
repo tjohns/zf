@@ -7,11 +7,11 @@
     </para>
 
     <para>
-    	<code>Zend_Feed</code>由一个<code>Zend_Feed</code>基类、一个<code>Zend_Feed_Abstract</code>抽象类以及一个用于表示Feed和条目的<code>Zend_Feed_Entry_Abstract</code>基类组成。这些类封装了 RSS 和 Atom 的feed和条目特性的，提供了一套自然的方法使他们用起来变得异常简单。
+        <code>Zend_Feed</code>由一个<code>Zend_Feed</code>基类、一个<code>Zend_Feed_Abstract</code>抽象类以及一个用于表示Feed和条目的<code>Zend_Feed_Entry_Abstract</code>基类组成。这些类封装了 RSS 和 Atom 的feed和条目特性的，提供了一套自然的方法使他们用起来变得异常简单。
     </para>
 
     <para>
-    	在下面的例子中，我们示范了一个获得一个RSS feed并将其中的一般部分相关数据保存到一个PHP数组中的简单实例，这样这些数据就能方便的用于输出、保存到数据库等等。
+        在下面的例子中，我们示范了一个获得一个RSS feed并将其中的一般部分相关数据保存到一个PHP数组中的简单实例，这样这些数据就能方便的用于输出、保存到数据库等等。
     </para>
 
     <note>
@@ -20,7 +20,7 @@
         许多RSS中的channel和item属性是不同的。RSS的规范中提供了许多可选的属性，因此在编写RSS相关应用代码时要充分考虑这点。
         </para>
     </note>
-    
+
     <example>
         <title>用Zend_Feed来处理RSS Feed数据</title>
         <programlisting role="php"><![CDATA[

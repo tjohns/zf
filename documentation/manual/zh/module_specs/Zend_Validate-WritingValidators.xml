@@ -13,7 +13,7 @@
     <para>
         下面的例子示范如何写定制的校验器：
         <programlisting role="php"><![CDATA[<?php
-        
+
 require_once 'Zend/Validate/Interface.php';
 
 class MyValidator implements Zend_Validate_Interface
@@ -48,7 +48,7 @@ class MyValidator implements Zend_Validate_Interface
         把上面校验器的实例添加到校验器链：
 
         <programlisting role="php"><![CDATA[<?php
-        
+
 $validatorChain = new Zend_Validate();
 $validatorChain->addValidator(new MyValidator());
 

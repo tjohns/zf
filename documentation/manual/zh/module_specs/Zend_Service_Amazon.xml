@@ -5,11 +5,11 @@
         <para>
             <code>Zend_Service_Amazon</code> 是一个简单的用来操作Amazon web services的API.
             <code>Zend_Service_Amazon</code> 含两组不同的API,　一组是传统的遵循 Amazon's自身标准的API；
-			另一个是一组相对简单的API,通过它我们可以非常容易的构建哪怕是很复杂的搜索请求。
+            另一个是一组相对简单的API,通过它我们可以非常容易的构建哪怕是很复杂的搜索请求。
         </para>
         <para>
             <code>Zend_Service_Amazon</code> 允许开发者通过Amazon的Web Services的API来直接得到Amazon.com网站中的信息
-			． 例子包括：
+            ． 例子包括：
             <itemizedlist>
                 <listitem>
                     <para>
@@ -40,7 +40,7 @@
         </para>
         <para>
             为了使用 <code>Zend_Service_Amazon</code>, 你应当已经拥有了Amazon开发者API key
-			, 如果你要了解更多信息，请访问
+            , 如果你要了解更多信息，请访问
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> .
         </para>
         <note><para>
@@ -80,7 +80,7 @@ foreach ($results as $result) {
         <title>国家代码</title>
         <para>
             默认情况下,  <code>Zend_Service_Amazon</code> 会选择连接到 Amazon 美国("US") 的web service. 如果你希望它连接到其他的国家,
-			 可以简单的指定一个适当的国家代码作为构造函数的第二的参数来实现:
+             可以简单的指定一个适当的国家代码作为构造函数的第二的参数来实现:
         </para>
         <example>
             <title>选择一个 Amazon Web Service 国家</title>
@@ -148,11 +148,11 @@ foreach($response as $r) {
         <title>简介</title>
         <para>
             <code>Zend_Service_Amazon_Query</code> 为Amazon Web Service 提供另一个可选的查询 API. 这个API 使用Fluent Interface 模式.
-			 就是说, 你可以使用一个方法链表来实现所有的调用.  (e.g., <code>$obj->method()->method2($arg)</code>)
+             就是说, 你可以使用一个方法链表来实现所有的调用.  (e.g., <code>$obj->method()->method2($arg)</code>)
         </para>
         <para>
-            <code>Zend_Service_Amazon_Query</code> 用过载来简单的构建一个出版物查询，然后允许你基于指定的标准进行搜索. 
-			用方法调用来提供每一个查询参数, 每个方法的参数对应那个查询参数的值：
+            <code>Zend_Service_Amazon_Query</code> 用过载来简单的构建一个出版物查询，然后允许你基于指定的标准进行搜索.
+            用方法调用来提供每一个查询参数, 每个方法的参数对应那个查询参数的值：
         </para>
         <example>
             <title>Search Amazon Using the Alternative Query API</title>
@@ -292,7 +292,7 @@ foreach ($results as $result) {
                             <entry>EditorialReviews</entry>
                             <entry>array</entry>
                             <entry>
-                                代表出版物的编辑评论的一组 
+                                代表出版物的编辑评论的一组
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.editorialreview">Zend_Service_Amazon_EditorialReview</link>
@@ -316,7 +316,7 @@ foreach ($results as $result) {
                             <entry>Accessories</entry>
                             <entry>array</entry>
                             <entry>
-                                代表出版物的附属产品列表的一组  
+                                代表出版物的附属产品列表的一组
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.accessories">Zend_Service_Amazon_Accessories</link>
@@ -574,7 +574,7 @@ foreach ($results as $result) {
         <title>Zend_Service_Amazon_SimilarProduct</title>
         <para>
             当我们搜索一个出版物时, Amazon 同时会返回一个相似产品的列表，
-			使顾客更容易找到他们喜欢的商品。这些类似产品的列表由<code>Zend_Service_Amazon_SimilarProduct</code> 对相返回.
+            使顾客更容易找到他们喜欢的商品。这些类似产品的列表由<code>Zend_Service_Amazon_SimilarProduct</code> 对相返回.
         </para>
         <para>
             每个对象包含相关的类似产品,并允许你进行进一步的请求来获得类似产品的全部信息
@@ -710,7 +710,7 @@ foreach ($results as $result) {
     <sect3 id="zend.service.amazon.classes.editorialreview">
         <title>Zend_Service_Amazon_EditorialReview</title>
         <para>
-            出版物的编辑评论由 <code>Zend_Service_Amazon_EditorialReview</code> 对相返回 
+            出版物的编辑评论由 <code>Zend_Service_Amazon_EditorialReview</code> 对相返回
         </para>
         <sect4 id="zend.service.amazon.classes.editorialreview.properties">
             <title>属性</title>

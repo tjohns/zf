@@ -1,91 +1,91 @@
 <sect1 id="zend.view.helpers">
-    
+
     <title>视图助手（View Helper）</title>
-    
+
     <para>
         在你的视图脚本中，经常需要执行某些特定的复杂的函数，例如，格式化日期，生成表单对象，或者显示action的链接等等。你可以使用助手类来完成这些工作。
     </para>
-    
+
     <para>
         你可以用$this->helperName()来调用helper。这时Zend_View会加载 Zend_View_Helper_HelperName类，建立一个对象实例，并调用它的helperName()方法。对象的实例会在 Zend_View的实例内一直存在，并可以被$this->helperName()重复调用。
     </para>
 
-   
+
     <sect2 id="zend.view.helpers.initial">
-    
+
         <title>基本的助手</title>
-        
+
         <para>
             Zend_View自带了几个helper类，都是用来生成组件的。每个都有自动过滤变量的功能。
         </para>
-        
+
         <itemizedlist>
-            
-            <listitem><para>                
-				formButton($name, $value, $attribs): 生成&lt;input
-                type="button" /&gt; 
-            </para></listitem>
-            
+
             <listitem><para>
-                
-				formCheckbox($name, $value, $attribs, $options): 生成&lt;input type="checkbox" /&gt;，$options参数是一个数组，第一个值是“checked”,第二个值是"unchecked"(默认为“1”和"0")。如果$value匹配"checked"值，则这个checkbox显示为已选中。
+                formButton($name, $value, $attribs): 生成&lt;input
+                type="button" /&gt;
             </para></listitem>
-            
+
+            <listitem><para>
+
+                formCheckbox($name, $value, $attribs, $options): 生成&lt;input type="checkbox" /&gt;，$options参数是一个数组，第一个值是“checked”,第二个值是"unchecked"(默认为“1”和"0")。如果$value匹配"checked"值，则这个checkbox显示为已选中。
+            </para></listitem>
+
             <listitem><para>
                 formFile($name, $value, $attribs): 生成&lt;input
-                type="file" /&gt; 
+                type="file" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formHidden($name, $value, $attribs): 生成&lt;input
                 type="hidden" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formPassword($name, $value, $attribs): 生成&lt;input
-                type="password" /&gt; 
+                type="password" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formRadio($name, $value, $attribs, $options): 生成一系列&lt;input type="button" /&gt;，每个$options数组元素一个，key为radio的值，并且元素的值是radio的标签。
             </para></listitem>
-            
+
             <listitem><para>
                 formReset($name, $value, $attribs): 生成&lt;input
                 type="reset" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formSelect($name, $value, $attribs, $options): 建立一个&lt;select&gt;...&lt;/select&gt;标签，其中的每个&lt;option&gt;对应于一个$option数组元素。元素的key是option的值，元素的值是option的标签。$value这个值的option默认为选中。
             </para></listitem>
-            
+
             <listitem><para>
                 formSubmit($name, $value, $attribs): 生成&lt;input
-                type="submit" /&gt; 
+                type="submit" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formText($name, $value, $attribs): 生成&lt;input
-                type="text" /&gt; 
+                type="text" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
-                formTextarea($name, $value, $attribs): 生成&lt;textarea&gt;...&lt;/textarea&gt; 
+                formTextarea($name, $value, $attribs): 生成&lt;textarea&gt;...&lt;/textarea&gt;
             </para></listitem>
-            
+
         </itemizedlist>
-        
+
         <para>
             Using these in your view scripts is very easy, here is an example.
             Note that you all you need to do is call them; they will load
             and instantiate themselves as they are needed.
 
-			使用非常简单，下面是个例子。注意你只需要调用即可，它们会自己加载并实例化。
+            使用非常简单，下面是个例子。注意你只需要调用即可，它们会自己加载并实例化。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // inside your view script, $this refers to the Zend_View instance.
-// 
+//
 // say that you have already assigned a series of select options under
 // the name $countries as array('us' => 'United States', 'il' =>
 // 'Israel', 'de' => 'Germany').
@@ -102,11 +102,11 @@
     </label></p>
 </form>]]>
         </programlisting>
-        
+
         <para>
             以上视图脚本会输出这样的结果：
         </para>
-        
+
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
     <p><label>Your Email:
         <input type="text" name="email" value="you@example.com" size="32" />
@@ -124,17 +124,17 @@
     </label></p>
 </form>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.paths">
-        
+
         <title>Helper 的路径</title>
-        
-        <para>    
-			就像视图脚本那样，你的控制器也可以设定helper的路径给Zend_View。默认地，Zend_View会到 “Zend/View/Helper/”下查找helper类。你可以用setHelperPath() 和 addHelperPath()来定义自己的路径。另外，你可以指定类名的前缀，用于指定助手类所在的路径。默认情况下，如果没有给出前缀，会假设使用“Zend_View_Helper_”。
+
+        <para>
+            就像视图脚本那样，你的控制器也可以设定helper的路径给Zend_View。默认地，Zend_View会到 “Zend/View/Helper/”下查找helper类。你可以用setHelperPath() 和 addHelperPath()来定义自己的路径。另外，你可以指定类名的前缀，用于指定助手类所在的路径。默认情况下，如果没有给出前缀，会假设使用“Zend_View_Helper_”。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
@@ -143,11 +143,11 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
 
-        
-        <para>         
-			你可以用addHelperPath()来增加helper的路径， Zend_View将使用最近增加的路径。这样你可以使用自己的helper。
+
+        <para>
+            你可以用addHelperPath()来增加helper的路径， Zend_View将使用最近增加的路径。这样你可以使用自己的helper。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 // Add /path/to/some/helpers with class prefix 'My_View_Helper'
@@ -156,50 +156,50 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // now when you call $this->helperName(), Zend_View will look first for
-// "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName", 
-// then for "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName", 
+// "/other/path/to/helpers/HelperName.php" using class name "My_View_Helper_HelperName",
+// then for "/path/to/some/helpers/HelperName" using class name "Your_View_Helper_HelperName",
 // and finally for "Zend/View/Helper/HelperName.php" using class name "Zend_View_Helper_HelperName".
 ?>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.custom">
-        
+
         <title>编写自定义的Helper类</title>
-        
+
         <para>
             编写自定义的Helper类很容易，只要遵循以下几个原则即可：
         </para>
-        
-        <itemizedlist>
-            
-            <listitem><para>             
 
-				类名必须是 Zend_View_Helper_*，*是helper的名称。例如，你在写一个名为“specialPurpose”的类，类名将至少是"SpecialPurpose"，另外你还应该给类名加上前缀，建议将“View_Helper”作为前缀的一部份：“My_View_Helper_SpecialPurpose”。（注意大小写）你将需要将前缀（不包含下划线）传递给<code>addHelperPath()</code> 或 <code>setHelperPath()</code>。
+        <itemizedlist>
+
+            <listitem><para>
+
+                类名必须是 Zend_View_Helper_*，*是helper的名称。例如，你在写一个名为“specialPurpose”的类，类名将至少是"SpecialPurpose"，另外你还应该给类名加上前缀，建议将“View_Helper”作为前缀的一部份：“My_View_Helper_SpecialPurpose”。（注意大小写）你将需要将前缀（不包含下划线）传递给<code>addHelperPath()</code> 或 <code>setHelperPath()</code>。
             </para></listitem>
-            
-            <listitem><para>               
-				类中必须有一个public的方法，该方法名与helper类名相同。这个方法将在你的模板调用"$this->specialPurpose()"时执行。在我们的“specialPurpose”例子中，相应的方法声明可以是“public function specialPurpose()”。
+
+            <listitem><para>
+                类中必须有一个public的方法，该方法名与helper类名相同。这个方法将在你的模板调用"$this->specialPurpose()"时执行。在我们的“specialPurpose”例子中，相应的方法声明可以是“public function specialPurpose()”。
             </para></listitem>
-            
-            <listitem><para>                
-				一般来说，Helper类不应该echo或print或有其它形式的输出。它只需要返回值就可以了。返回的数据应当被转义。
+
+            <listitem><para>
+                一般来说，Helper类不应该echo或print或有其它形式的输出。它只需要返回值就可以了。返回的数据应当被转义。
             </para></listitem>
-            
-            <listitem><para>         
-				类文件的命名应该是helper方法的名称，比如在"specialPurpose"例子中，文件要存为“SpecialPurpose.php”。
+
+            <listitem><para>
+                类文件的命名应该是helper方法的名称，比如在"specialPurpose"例子中，文件要存为“SpecialPurpose.php”。
             </para></listitem>
         </itemizedlist>
-        
+
         <para>
             把helper类的文件放在你的helper路径下， Zend_View就会自动加载，实例化，持久化，并执行。
         </para>
-        
+
         <para>
             下面是一个例子：
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 class My_View_Helper_SpecialPurpose {
     protected $_count = 0;
@@ -212,15 +212,15 @@ class My_View_Helper_SpecialPurpose {
 }
 ?>]]>
         </programlisting>
-        
+
         <para>
             Then in a view script, you can call the SpecialPurpose helper
             as many times as you like; it will be instantiated once, and
             then it persists for the life of that Zend_View instance.
 
-			在视图代码中，你可以调用SpecialPurpose助手任意次。它将被实例化一次，并且会在Zend_View实例的生命周期内持久存在。
+            在视图代码中，你可以调用SpecialPurpose助手任意次。它将被实例化一次，并且会在Zend_View实例的生命周期内持久存在。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // remember, in a view script, $this refers to the Zend_View instance.
 echo $this->specialPurpose();
@@ -228,7 +228,7 @@ echo $this->specialPurpose();
 echo $this->specialPurpose();
 ?>]]>
         </programlisting>
-        
+
         <para>
             输出结果如下所示：
         </para>
@@ -236,9 +236,9 @@ echo $this->specialPurpose();
 I have seen 'The Jerk' 2 time(s).
 I have seen 'The Jerk' 3 time(s).]]>
         </programlisting>
-        
+
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

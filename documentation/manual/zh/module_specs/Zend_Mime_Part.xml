@@ -1,15 +1,15 @@
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
-    
-	<sect2 id="zend.mime.part.introduction">
-	  <title>简介</title>
-	  <para>
-	      <code>Zend_Mime_Part</code>表示MIME消息的一个段。它包含了MIME消息段的实际内容以及编码、内容类型和原始的文件名等一些附加信息。
-	      它也提供了一个方法，用来从存储的数据产生字符串。<code>Zend_Mime_Part</code>对象可以被添加到<link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>中去，
-	      来聚合产生一个完整的多段的MIME消息。
-	  </para>
-	</sect2>
-  
+
+    <sect2 id="zend.mime.part.introduction">
+      <title>简介</title>
+      <para>
+          <code>Zend_Mime_Part</code>表示MIME消息的一个段。它包含了MIME消息段的实际内容以及编码、内容类型和原始的文件名等一些附加信息。
+          它也提供了一个方法，用来从存储的数据产生字符串。<code>Zend_Mime_Part</code>对象可以被添加到<link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>中去，
+          来聚合产生一个完整的多段的MIME消息。
+      </para>
+    </sect2>
+
   <sect2 id="zend.mime.part.instantiation">
     <title>实例化</title>
 
@@ -18,7 +18,7 @@
        在<code>Zend_Mime_Part</code>实例化之后, 可以直接访问它的属性来设置元信息：
     </para>
 
-    <programlisting role="php"><![CDATA[<?php            
+    <programlisting role="php"><![CDATA[<?php
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;
@@ -27,7 +27,7 @@ public $filename;
 public $description;
 public $charset;
 ?>]]></programlisting>
-	</sect2>
+    </sect2>
 
   <sect2 id="zend.mime.part.methods">
     <title>渲染消息段为字符串的方法</title>
@@ -42,19 +42,19 @@ public $charset;
             <listitem>
                 <para>
                     <code>$charset</code>
-                    如果内容为Text类型(纯文本或HTML)，该属性被设置为实际的字符集。 
+                    如果内容为Text类型(纯文本或HTML)，该属性被设置为实际的字符集。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>$id</code>
-                    可能被设置，用来标识HTML邮件中内嵌图片的content-id。 
+                    可能被设置，用来标识HTML邮件中内嵌图片的content-id。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>$filename</code>
-                       给出了当文件被下载时的文件名。 
+                       给出了当文件被下载时的文件名。
                 </para>
             </listitem>
             <listitem>

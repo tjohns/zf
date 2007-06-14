@@ -19,9 +19,9 @@
             下面的示例给出了一个构造<code>Zend_Cache</code>前端实例的好方法:
         </para>
             <programlisting role="php"><![CDATA[<?php
-        
-# "load" Zend_Cache 工厂 
-require 'Zend/Cache.php'; 
+
+# "load" Zend_Cache 工厂
+require 'Zend/Cache.php';
 
 # 选择一个后端(例如'File'或者'Sqlite'...)
 $backendName = '[...]';
@@ -38,7 +38,7 @@ $backendOptions = array([...]);
 # 创建实例(当然,最后两个参数是可选的)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
-?>]]></programlisting> 
+?>]]></programlisting>
         <para>
             在下面的例子中我们假设变量<code>$cache</code>保存有一个有效的,已实例化的前端,并且你知道该如何给你选择的后端传递参数.
         </para>
@@ -46,7 +46,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             必须使用<code>Zend_Cache::factory()</code>来得到前端实例.你自己 直接实例化的 前端或者后端 不能按照期望工作.
         </para></note>
     </sect2>
-    
+
     <sect2 id="zend.cache.tags">
         <title>标记纪录</title>
         <para>
@@ -54,9 +54,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         此后你不再需要该缓存纪录使,你可以清除所有指定标记的缓存纪录.
         </para>
         <programlisting role="php"><![CDATA[<?php
-             
+
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
-            
+
 ?>]]></programlisting>
     </sect2>
     <sect2 id="zend.cache.clean">
@@ -64,30 +64,30 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
         <para>
             删除特定id的Cache纪录,使用<code>remove()</code>方法:
         </para>
-        <programlisting role="php"><![CDATA[<?php 
-             
+        <programlisting role="php"><![CDATA[<?php
+
 $cache->remove('idToRemove');
-            
-?>]]></programlisting>            
+
+?>]]></programlisting>
         <para>
             在单个操作中删除多个Cache纪录,可以使用<code>clean()</code>方法.例如,删除所有的缓存纪录:
         </para>
-        <programlisting role="php"><![CDATA[<?php 
+        <programlisting role="php"><![CDATA[<?php
 
 // 清除所有缓存纪录
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // 仅清除过期的
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
-            
-?>]]>   </programlisting>    
+
+?>]]>   </programlisting>
         <para>
             如果你想删除标记为'tagA'和'tagC'的缓存项:
         </para>
-        <programlisting role="php"><![CDATA[<?php 
-             
+        <programlisting role="php"><![CDATA[<?php
+
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
-            
+
 ?>]]>   </programlisting>
         <para>
             可用的清除模式有:<code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,

@@ -211,7 +211,7 @@ $service->serviceProcedure($p1, $p2);
             如果没有WSDL文件，那么用户可能在对变量类型的判断上会有些问题。
         </para>
         <para>
-            XML-RPC协议解决这个问题的办法是调用一个特殊的远程过程<code>system.methodSignature</code>。这个过程得到一个过程名作为参数并返回一个该过程的签名。这个签名中包含这个过程需要传递的参数类型和返回值的类型。 
+            XML-RPC协议解决这个问题的办法是调用一个特殊的远程过程<code>system.methodSignature</code>。这个过程得到一个过程名作为参数并返回一个该过程的签名。这个签名中包含这个过程需要传递的参数类型和返回值的类型。
         </para>
         <note>
             <para>
@@ -297,7 +297,7 @@ $service->serviceProcedure();
 
 $response = $service->__getResponse();
 // $response 是一个从XML-RPC类型返回值转化而来的PHP变量
-  
+
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
 // $response 是一个描述过程返回值的XML字符串
 

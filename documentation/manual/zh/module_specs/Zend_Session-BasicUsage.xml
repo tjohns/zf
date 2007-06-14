@@ -3,7 +3,7 @@
     <title>基本用法</title>
 
     <para>
-	    在Zend Framework中，<code>Zend_Session_Namespace</code>实例，提供了操作会话数据主要的API。命名空间常用于隔离所有的会话数据，但也为所有会话数据只需要一个命名空间的情况提供了一个默认的命名空间。Zend_Session利用了PHP内置的会话模块，以及它特有的<code>$_SESSION</code>超级数组做为会话状态数据的存储机制。虽然<code>$_SESSION</code>在全局命名空间内仍然可以访问，但是开发者不应该直接访问它，因为Zend_Session和Zend_Session_Namespace可以提供一组最可靠、安全的处理会话相关的功能。
+        在Zend Framework中，<code>Zend_Session_Namespace</code>实例，提供了操作会话数据主要的API。命名空间常用于隔离所有的会话数据，但也为所有会话数据只需要一个命名空间的情况提供了一个默认的命名空间。Zend_Session利用了PHP内置的会话模块，以及它特有的<code>$_SESSION</code>超级数组做为会话状态数据的存储机制。虽然<code>$_SESSION</code>在全局命名空间内仍然可以访问，但是开发者不应该直接访问它，因为Zend_Session和Zend_Session_Namespace可以提供一组最可靠、安全的处理会话相关的功能。
     </para>
 
     <sect2 id="zend.session.basicexamples">
@@ -11,7 +11,7 @@
         <title>教程实例</title>
 
         <para>
-		    在初始化Zend_Session时，如果没有指定命名空间，所有的数据将被储存在<code>'Default'</code>命名空间下。<code>Zend_Session</code>不打算直接处理会话命名空间容器的内容，我们可以使用<code>Zend_Session_Namespace</code>。下面的例子，演示了默认命名空间<code>'Default'</code>的使用，和怎样计算用户访问页面的次数。为了测试一下这个例子，把下面的代码添加到你的ZF应用程序的引导(bootstrap)文件中：
+            在初始化Zend_Session时，如果没有指定命名空间，所有的数据将被储存在<code>'Default'</code>命名空间下。<code>Zend_Session</code>不打算直接处理会话命名空间容器的内容，我们可以使用<code>Zend_Session_Namespace</code>。下面的例子，演示了默认命名空间<code>'Default'</code>的使用，和怎样计算用户访问页面的次数。为了测试一下这个例子，把下面的代码添加到你的ZF应用程序的引导(bootstrap)文件中：
         </para>
 
         <example>
@@ -34,7 +34,7 @@
         </example>
 
         <para>
-			其中一点使用Zend_Session_Namespace的好处是不同的模块可以使用Zend_Session_Namespace，且提供了一定程度的数据封装。可以传递给Zend_Session的构造函数一个可选的$namespace参数，确保其他一些组件、模块以及开发者特定的代码的会话数据各自隔离，从而受到保护。命名空间机制提供了一个有效的、流行的方法来确保处于命名空间之下的会话数据不遭到意外地改变。命名空间的名字是一个字符序列，不能空也不能以下划线('_')开头。只有Zend Framework的核心组件才能使用以'Zend_'开头的命名空间。
+            其中一点使用Zend_Session_Namespace的好处是不同的模块可以使用Zend_Session_Namespace，且提供了一定程度的数据封装。可以传递给Zend_Session的构造函数一个可选的$namespace参数，确保其他一些组件、模块以及开发者特定的代码的会话数据各自隔离，从而受到保护。命名空间机制提供了一个有效的、流行的方法来确保处于命名空间之下的会话数据不遭到意外地改变。命名空间的名字是一个字符序列，不能空也不能以下划线('_')开头。只有Zend Framework的核心组件才能使用以'Zend_'开头的命名空间。
         </para>
 
         <example>
@@ -72,7 +72,7 @@
         <title>迭代会话命名空间</title>
 
         <para>
-		    Zend_Session提供了<ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate接口</ulink>所有的能力，包括对<code>foreach</code>语句的支持：
+            Zend_Session提供了<ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate接口</ulink>所有的能力，包括对<code>foreach</code>语句的支持：
         </para>
 
         <example>

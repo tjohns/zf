@@ -2,8 +2,8 @@
 
     <title>使用“异常”</title>
 
-    <para>    
-		Zend Framework抛出的所有异常都必须是Zend_Exception的子类的对象。
+    <para>
+        Zend Framework抛出的所有异常都必须是Zend_Exception的子类的对象。
     </para>
 
     <example id="zend.exception.using.example">
@@ -15,15 +15,15 @@ try {
 } catch (Zend_Exception $e) {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
-   
-	//处理错误的代码
+
+    //处理错误的代码
 }
 
 ?>]]></programlisting>
     </example>
 
-    <para>       
-		请仔细查看ZF手册，了解具体的每种异常是由哪些方法抛出的，其抛出条件，还有具体是Zend_Exception的哪个子类的实例。
+    <para>
+        请仔细查看ZF手册，了解具体的每种异常是由哪些方法抛出的，其抛出条件，还有具体是Zend_Exception的哪个子类的实例。
     </para>
 
 </sect1>

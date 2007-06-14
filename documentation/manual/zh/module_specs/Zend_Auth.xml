@@ -9,7 +9,7 @@
     <para>
         Zend_Auth 只涉及 <emphasis role="strong">认证</emphasis>而不是<emphasis role="strong">授权</emphasis>。认证被宽松地定义为基于一些证书（credential）来确定一个实体（例如，身份）是否确实是它所声称的。授权是一个过程，它决定是否允许一个实体对其他实体进行访问、执行操作，它超出了Zend_Auth的范围。更多关于Zend Framework 授权和访问控制的信息，参见<link linkend="zend.acl">Zend_Acl</link>.
     </para>
-    
+
     <note>
         <para>
             <code>Zend_Auth</code> 类通过它的<code>getInstance()</code>方法实现 Singleton 模式 - 只有一个实例可用。这意味着使用 <code>new</code>操作符和 <code>clone</code> 关键字将不能在<code>Zend_Auth</code> 类中工作，而要使用 <code>Zend_Auth::getInstance()</code>来代替。
@@ -91,7 +91,7 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
                 </listitem>
             </itemizedlist>
         </para>
-       <para>       
+       <para>
            为了执行更多的操作，开发者可能希望基于认证结果的类型来分支化。一些开发者可能发信有用的操作是：在太多的不成功的密码尝试之后锁住帐号，在太多不存在的身份尝试后标记IP地址，并提供专用的，定制的认证结果信息给用户。下面的结果代码是可用的：
 
             <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
@@ -164,7 +164,7 @@ switch ($result->getCode()) {
 
                 <para>
                     <code>Zend_Auth_Storage_Session</code>使用<code>'Zend_Auth'</code>的seesion名字空间。通过给<code>Zend_Auth_Storage_Session</code>的构造器传递不同的值，这个名字空间可以被替换，并且这个值被从内部传递给<code>Zend_Session_Namespace</code>的构造器。这应该发生在认证尝试之前，因为<code>Zend_Auth::authenticate()</code>执行身份的自动存储。
-                      
+
                     <programlisting role="php"><![CDATA[<?php
 // Save a reference to the Singleton instance of Zend_Auth
 require_once 'Zend/Auth.php';
@@ -349,7 +349,7 @@ Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
         </para>
 
         <para>
-            当自动使用持久存储空间对特定的用例不合适，开发者可简单地忽略<code>Zend_Auth</code>类，直接使用适配器类。直接使用适配器类需要配置和准备适配器对象和调用它的<code>authenticate()</code>方法。适配器规范细节将在每个适配器的文档中讨论。下面的例子直接使用 <code>MyAuthAdapter</code>：  
+            当自动使用持久存储空间对特定的用例不合适，开发者可简单地忽略<code>Zend_Auth</code>类，直接使用适配器类。直接使用适配器类需要配置和准备适配器对象和调用它的<code>authenticate()</code>方法。适配器规范细节将在每个适配器的文档中讨论。下面的例子直接使用 <code>MyAuthAdapter</code>：
             <programlisting role="php"><![CDATA[<?php
 // Set up the authentication adapter
 $authAdapter = new MyAuthAdapter($username, $password);
