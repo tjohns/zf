@@ -14,7 +14,7 @@
 
     <para>
     <code>Zend_Pdf::render($newSegmentOnly = false)</code> zwraca dokument PDF
-    jako łańcuch znaków. Jeśli zmienna $newSegmentOnly ma wartość true, wtedy 
+    jako łańcuch znaków. Jeśli zmienna $newSegmentOnly ma wartość true, wtedy
     zwracany jest nowy segment pliku PDF.
     </para>
 

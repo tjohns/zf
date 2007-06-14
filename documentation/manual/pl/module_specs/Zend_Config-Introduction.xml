@@ -4,8 +4,8 @@
         Klasa <code>Zend_Config</code> została stworzona aby uprościć użycie danych
         konfiguracyjnych w aplikacjach. Dostarcza ona interfejs bazujący na właściwościach
         obiektów służący do odczytywania danych konfiguracyjnych wewnątrz kodu aplikacji.
-        Dane konfiguracyjne  mogą pochodzić z różnego rodzaju źródeł, w których dane 
-        konfiguracyjne są przechowywane hierarchiczne. Obecnie <code>Zend_Config</code> dostarcza 
+        Dane konfiguracyjne  mogą pochodzić z różnego rodzaju źródeł, w których dane
+        konfiguracyjne są przechowywane hierarchiczne. Obecnie <code>Zend_Config</code> dostarcza
         klasy obsługujące dane konfiguracyjne przechowywane w plikach tekstowych:
         <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>, oraz
         <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
@@ -14,9 +14,9 @@
     <example id="zend.config.introduction.example.using">
         <title>Użycie Zend_Config</title>
         <para>
-            Normalnie jest tak, że użytkownicy użyliby jednej z klas adaptera, 
+            Normalnie jest tak, że użytkownicy użyliby jednej z klas adaptera,
             takiej jak <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
-            czy <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>, 
+            czy <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>,
             ale dane konfiguracyjne mogą być też dostępne w tablicy PHP. Można w prosty
             sposób przekazać tablicę do konstruktora <code>Zend_Config</code> w celu
             uzyskania obiektu zawierającego dane konfiguracyjne:
@@ -49,7 +49,7 @@ $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->name);]]></programlisting>
     </example>
     <para>
-        Jak zostało pokazane w powyższym przykładzie, klasa <code>Zend_Config</code> 
+        Jak zostało pokazane w powyższym przykładzie, klasa <code>Zend_Config</code>
         zapewnia składnię zagnieżdżonych właściwości obiektów w celu uzyskania
         dostępu do danych konfiguracyjnych przekazanych do konstruktora.
     </para>

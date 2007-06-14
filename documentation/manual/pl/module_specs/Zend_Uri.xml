@@ -6,13 +6,13 @@
 
     <para>
       <code>Zend_Uri</code> jest komponentem, który pomaga w manipulowaniu i
-      sprawdzaniu poprawności adresem 
-      <ulink url="http://www.w3.org/Addressing/">Uniform Resource Identifier</ulink> 
-      (URI). Klasa <code>Zend_Uri</code> istnieje głownie aby obsłużyć inne 
-      komponenty takie jak na przykład <code>Zend_Http_Client</code> ale także 
+      sprawdzaniu poprawności adresem
+      <ulink url="http://www.w3.org/Addressing/">Uniform Resource Identifier</ulink>
+      (URI). Klasa <code>Zend_Uri</code> istnieje głownie aby obsłużyć inne
+      komponenty takie jak na przykład <code>Zend_Http_Client</code> ale także
       jest użyteczna jako osobne narzędzie.
     </para>
-  
+
     <para>
       Adresy URI zawsze zaczynają się nazwą schematu zakończoną średnikiem.
       Konstrukcje różnych schematów różnią się od siebie znacząco. Klasa
@@ -21,7 +21,7 @@
       <code>Zend_Uri_&lt;scheme&gt;</code>, gdzie
       <code>&lt;scheme&gt;</code> jest nazwą schematu zamienioną na małe litery
       z pierwszą literą zamienioną na wielką. Wyjątkiem od tej reguły jest
-      schemat HTTPS, który także jest obsługiwany przez klasę 
+      schemat HTTPS, który także jest obsługiwany przez klasę
       <code>Zend_Uri_Http</code>.
     </para>
   </sect2>
@@ -30,13 +30,13 @@
     <title>Tworzenie nowego URI</title>
 
     <para>
-      <code>Zend_Uri</code> zbuduje nowy URI z szablonu jeśli do metody 
+      <code>Zend_Uri</code> zbuduje nowy URI z szablonu jeśli do metody
       <code>Zend_Uri::factory()</code> przekazana jest tylko nazwa schematu.
     </para>
-    
+
     <example>
       <title>Tworzenie nowego URI za pomocą <code>Zend_Uri::factory()</code></title>
-      
+
       <programlisting role="php"><![CDATA[
 <?php
 
@@ -46,14 +46,14 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http');
 
 // $uri jest instancją Zend_Uri_Http
- 
+
 ?>]]></programlisting>
     </example>
 
     <para>
       Aby utworzyć nowy URI z szablonu, przekaż tylko nazwę schematu do metody
-      <code>Zend_Uri::factory()</code><footnote><para>Obecnie, Zend_Uri 
-      obsługuje tylko schematy HTTP oraz HTTPS.</para></footnote>. Jeśli 
+      <code>Zend_Uri::factory()</code><footnote><para>Obecnie, Zend_Uri
+      obsługuje tylko schematy HTTP oraz HTTPS.</para></footnote>. Jeśli
       przekazana jest nazwa nieobsługiwanego schematu, wyrzucony będzie
       wyjątek <code>Zend_Uri_Exception</code>.
     </para>
@@ -64,18 +64,18 @@ $uri = Zend_Uri::factory('http');
       się w schemacie który ma zostać utworzony.
     </para>
   </sect2>
-  
+
   <sect2 id="zend.uri.manipulation">
     <title>Manipulowanie istniejącym URI</title>
-    
+
     <para>
       Aby manipulować istniejącym URI, przekaż cały URI do
-      <code>Zend_Uri::factory()</code>. 
+      <code>Zend_Uri::factory()</code>.
     </para>
 
     <example>
       <title>Manipulowanie istniejącym URI za pomocą <code>Zend_Uri::factory()</code></title>
-      
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -85,19 +85,19 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 // $uri jest instancją Zend_Uri_Http
- 
-?>]]></programlisting>    
+
+?>]]></programlisting>
     </example>
 
     <para>
       URI zostanie przetworzony i zostanie sprawdzona jego poprawność. Jeśli
       okaże się, że jest niepoprawny, od razu zostanie wyrzucony wyjątek
-      <code>Zend_Uri_Exception</code>. W przeciwnym wypadku, metoda 
+      <code>Zend_Uri_Exception</code>. W przeciwnym wypadku, metoda
       <code>Zend_Uri::factory()</code> zwróci swoją podklasę specjalizującą
       się w schemacie URI, którym chcemy manipulować.
     </para>
   </sect2>
-  
+
   <sect2 id="zend.uri.validation">
     <title>Sprawdzanie poprawności URI</title>
 
@@ -105,10 +105,10 @@ $uri = Zend_Uri::factory('http://www.zend.com');
       Funkcja <code>Zend_Uri::check()</code> może być użyta jeśli potrzebne
       jest tylko sprawdzenie poprawności istniejącego URI.
     </para>
-    
+
     <example>
       <title>Sprawdzanie poprawności URI za pomocą <code>Zend_Uri::check()</code></title>
-      
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -118,8 +118,8 @@ require_once 'Zend/Uri.php';
 $valid = Zend_Uri::check('http://uri.in.question');
 
 // $valid ma wartość TRUE dla poprawnego URI, lub FALSE w przeciwnym wypadku.
- 
-?>]]></programlisting>    
+
+?>]]></programlisting>
     </example>
 
     <para>
@@ -131,24 +131,24 @@ $valid = Zend_Uri::check('http://uri.in.question');
 
   <sect2 id="zend.uri.instance-methods">
     <title>Wspólne metody instancji</title>
-    
+
     <para>
       Każda instancja podklasy <code>Zend_Uri</code> (np.
       <code>Zend_Uri_Http</code>) ma kilka metod, ktore są użyteczne do pracy
       z rożnego rodzaju URI.
     </para>
-    
+
     <sect3 id="zend.uri.instance-methods.getscheme">
       <title>Pobieranie schematu URI</title>
-      
+
       <para>
         Nazwa schematu URI jest częścią URI, która znajduje się przed dwukropkiem. Na przykład
         nazwą schematu adresu <code>http://www.zend.com</code> jest <code>http</code>.
       </para>
-      
+
       <example>
         <title>Pobieranie schematu z obiektu <code>Zend_Uri_*</code></title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -157,7 +157,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $scheme = $uri->getScheme();  // "http"
- 
+
 ?>]]></programlisting>
     </example>
 
@@ -167,13 +167,13 @@ $scheme = $uri->getScheme();  // "http"
       </para>
 
     </sect3>
-    
+
     <sect3 id="zend.uri.instance-methods.geturi">
       <title>Pobieranie całego URI</title>
 
       <example>
         <title>Pobieranie całego URI z obiektu <code>Zend_Uri_*</code></title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -182,8 +182,8 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 echo $uri->getUri();  // "http://www.zend.com"
- 
-?>]]></programlisting>      
+
+?>]]></programlisting>
       </example>
 
       <para>
@@ -191,12 +191,12 @@ echo $uri->getUri();  // "http://www.zend.com"
         łańcuch znaków.
       </para>
     </sect3>
-    
+
     <sect3 id="zend.uri.instance-methods.valid">
       <title>Sprawdzanie poprawności URI</title>
-      
+
       <para>
-        <code>Zend_Uri::factory()</code> zawsze sprawdzi poprawność przekazanego 
+        <code>Zend_Uri::factory()</code> zawsze sprawdzi poprawność przekazanego
         do niej URI i nie utworzy nowej instancji podklasy <code>Zend_Uri</code>
         jeśli podany adres URI jest niepoprawny. Jakkolwiek, po tym jak zostanie
         utworzona instancja podklasy <code>Zend_Uri</code> dla nowego URI lub
@@ -206,7 +206,7 @@ echo $uri->getUri();  // "http://www.zend.com"
 
       <example>
         <title>Sprawdzanie poprawności obiektu <code>Zend_Uri_*</code></title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -215,7 +215,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $isValid = $uri->valid();  // TRUE
- 
+
 ?>]]></programlisting>
       </example>
 

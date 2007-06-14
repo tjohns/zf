@@ -3,9 +3,9 @@
     <title>Łańcuchy walidatorów</title>
 
     <para>
-        Często do pewnej wartości potrzebujemy zastosować wiele walidatorów w 
-        określonej kolejności. Poniższy kod demonstruje sposób rozwiązania 
-        przykładu z 
+        Często do pewnej wartości potrzebujemy zastosować wiele walidatorów w
+        określonej kolejności. Poniższy kod demonstruje sposób rozwiązania
+        przykładu z
         <link linkend="zend.validate.introduction">wprowadzenia</link>, gdzie
         nazwa użytkownika musi mieć długość między 6 a 12 alfanumerycznych
         znaków:
@@ -37,10 +37,10 @@ if ($validatorChain->isValid($username)) {
 ?>]]></programlisting>
 
         Walidatory są uruchamiane w takiej kolejności, w jakiej zostały dodane
-        do <code>Zend_Validate</code>. W powyższym przykładzie, wpierw jest 
+        do <code>Zend_Validate</code>. W powyższym przykładzie, wpierw jest
         sprawdzane jest to, czy długość nazwy użytkownika mieści się miedzy 6 a
-        12 znaków, a następnie sprawdzane jest czy zawiera ona tylko znaki 
-        alfanumeryczne. Druga walidacja, dla alfanumerycznych znaków, jest 
+        12 znaków, a następnie sprawdzane jest czy zawiera ona tylko znaki
+        alfanumeryczne. Druga walidacja, dla alfanumerycznych znaków, jest
         przeprowadzana niezależnie od tego, czy pierwsza walidacja, dla długości
         pomiędzy 6 a 12 znaków udała się. Oznacza to, że jeśli nie udadzą się
         obie walidacje, to metoda <code>getMessages()</code> zwróci wiadomości
@@ -49,15 +49,15 @@ if ($validatorChain->isValid($username)) {
 
     <para>
         W niektórych przypadkach sensowna może być możliwość przerwania
-        łańcucha walidatorów w przypadku, gdy proces walidacji nie uda się. 
-        <code>Zend_Validate</code> obsługuje takie przypadki za pomocą 
-        ustawienia drugiego parametru w metodzie <code>addValidator()</code>. 
-        Ustawiając wartość zmiennej <code>$breakChainOnFailure</code> na 
-        <code>true</code>, dodany walidator przerwie łańcuchowe wywoływanie 
+        łańcucha walidatorów w przypadku, gdy proces walidacji nie uda się.
+        <code>Zend_Validate</code> obsługuje takie przypadki za pomocą
+        ustawienia drugiego parametru w metodzie <code>addValidator()</code>.
+        Ustawiając wartość zmiennej <code>$breakChainOnFailure</code> na
+        <code>true</code>, dodany walidator przerwie łańcuchowe wywoływanie
         przy wystąpieniu błędu, co zapobiegnie uruchamianiu innych walidacji,
-        które w danej sytuacji zostaną uznane za bezużyteczne. Jeśli powyższy 
-        przykład byłby napisany tak jak poniżej, wtedy walidacja znaków 
-        alfanumerycznych nie byłaby przeprowadzona jeśli długość łańcucha znaków 
+        które w danej sytuacji zostaną uznane za bezużyteczne. Jeśli powyższy
+        przykład byłby napisany tak jak poniżej, wtedy walidacja znaków
+        alfanumerycznych nie byłaby przeprowadzona jeśli długość łańcucha znaków
         byłaby nieodpowiednia:
 
         <programlisting role="php"><![CDATA[<?php

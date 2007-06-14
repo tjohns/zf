@@ -27,7 +27,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]></programlisting>
         We wszystkich powyższych przykładach w razie powodzenia operacji zwracany
         jest obiekt klasy rozszerzającej <code>Zend_Feed_Abstract</code>, zależenie
         od typu kanału. Jeśli zostały odebrane dane RSS za pomocą jednej z powyższych
-        metod importu, wtedy będzie zwrócony obiekt <code>Zend_Feed_Rss</code>. 
+        metod importu, wtedy będzie zwrócony obiekt <code>Zend_Feed_Rss</code>.
         Z drugiej strony, gdy będą importowane dane kanału Atom, zwrócony zostanie
         obiekt <code>Zend_Feed_Atom</code>. Metody importu w razie niepowodzenia
         wyrzucają wyjątek <code>Zend_Feed_Exception</code>, czyli na przykład wtedy
@@ -39,12 +39,12 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]></programlisting>
         <title>Własne kanały</title>
 
         <para>
-            <code>Zend_Feed</code> pozwala programistom na bardzo łatwe 
-            tworzenie własnych kanałów. Musisz jedynie utworzyć tablicę i 
-            zaimportować ją za pomocą Zend_Feed. Ta tablica może być 
+            <code>Zend_Feed</code> pozwala programistom na bardzo łatwe
+            tworzenie własnych kanałów. Musisz jedynie utworzyć tablicę i
+            zaimportować ją za pomocą Zend_Feed. Ta tablica może być
             zaimportowana za pomocą metody <code>Zend_Feed::importArray()</code>
-            lub <code>Zend_Feed::importBuilder()</code>. W tym drugim przypadku 
-            tablica zostanie utworzona w locie, przez własne źródło danych 
+            lub <code>Zend_Feed::importBuilder()</code>. W tym drugim przypadku
+            tablica zostanie utworzona w locie, przez własne źródło danych
             implementujące interfejs <code>Zend_Feed_Builder_Interface</code>.
         </para>
 
@@ -186,7 +186,7 @@ array(
                     <listitem>
                         <para>
                             Specyfikacja iTunes:
-                            <ulink url="http://www.apple.com/itunes/store/podcaststechspecs.html">Specyfikacja 
+                            <ulink url="http://www.apple.com/itunes/store/podcaststechspecs.html">Specyfikacja
                             Techniczna iTunes</ulink>
                         </para>
                     </listitem>
@@ -200,18 +200,18 @@ array(
             <title>Importowanie własnego źródła danych</title>
 
             <para>
-                Możesz utworzyć instancję Zend_Feed z dowolnego źródła danych 
-                implementując interfejs <code>Zend_Feed_Builder_Interface</code>. 
-                Aby użyć swojego obiektu za pomocą metody 
-                <code>Zend_Feed::importBuilder()</code> musisz po prostu 
-                zaimplementować metody <code>getHeader()</code> oraz 
-                <code>getEntries()</code>. Jako przykład implementacji możesz 
-                użyć klasy <code>Zend_Feed_Builder</code>, która przyjmuje 
-                tablicę jako argument konstruktora, przeprowadza pewną 
-                walidację, a następnie może być użyta za pomocą metody 
-                <code>importBuilder()</code>. Metoda <code>getHeader()</code> 
-                musi zwracać instancję klasy 
-                <code>Zend_Feed_Builder_Header</code>, a metoda 
+                Możesz utworzyć instancję Zend_Feed z dowolnego źródła danych
+                implementując interfejs <code>Zend_Feed_Builder_Interface</code>.
+                Aby użyć swojego obiektu za pomocą metody
+                <code>Zend_Feed::importBuilder()</code> musisz po prostu
+                zaimplementować metody <code>getHeader()</code> oraz
+                <code>getEntries()</code>. Jako przykład implementacji możesz
+                użyć klasy <code>Zend_Feed_Builder</code>, która przyjmuje
+                tablicę jako argument konstruktora, przeprowadza pewną
+                walidację, a następnie może być użyta za pomocą metody
+                <code>importBuilder()</code>. Metoda <code>getHeader()</code>
+                musi zwracać instancję klasy
+                <code>Zend_Feed_Builder_Header</code>, a metoda
                 <code>getEntries()</code> musi zwracać tablicę instancji klasy
                 <code>Zend_Feed_Builder_Entry</code>.
             </para>
@@ -220,7 +220,7 @@ array(
                 <para>
                     <code>Zend_Feed_Builder</code> jest konkretną implementacją
                     pokazującą sposób użycia. Namawiamy użytkownika do napisania
-                    własnej klasy, implementującej interfejs 
+                    własnej klasy, implementującej interfejs
                     <code>Zend_Feed_Builder_Interface</code>.
                 </para>
             </note>
@@ -246,7 +246,7 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
             <title>Zrzucanie zawartości kanału</title>
 
             <para>
-                Aby zrzucić zawartość instancji <code>Zend_Feed_Abstract</code>, 
+                Aby zrzucić zawartość instancji <code>Zend_Feed_Abstract</code>,
                 możesz użyć metody <code>send()</code> lub <code>saveXml()</code>.
             </para>
 
@@ -262,7 +262,7 @@ $feed->send();]]></programlisting>
         </sect3>
 
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

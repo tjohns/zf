@@ -1,17 +1,17 @@
 <sect1 id="zend.mail.introduction">
     <title>Wprowadzenie</title>
     <para>
-        <code>Zend_Mail</code> zapewnia możliwość tworzenia i wysyłania tekstowych 
+        <code>Zend_Mail</code> zapewnia możliwość tworzenia i wysyłania tekstowych
         wiadomości e-mail oraz wieloczęściowych wiadomości e-mail zgodnych z MIME.
         Wiadomość może być wysłana przez <code>Zend_Mail</code> za pomocą wbudowanej
-        funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> 
+        funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink>
         lub za pomocą zdalnego połączenia SMTP.
     </para>
     <example>
         <title>Wysyłanie prostego e-maila za pomocą Zend_Mail</title>
         <para>
-            Prosty e-mail składa się z odbiorców, z tematu, treści i z nadawcy. Aby wysłać taki 
-            e-mail używając funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> 
+            Prosty e-mail składa się z odbiorców, z tematu, treści i z nadawcy. Aby wysłać taki
+            e-mail używając funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink>
             możesz zrobić to w ten sposób:
         </para>
         <programlisting role="php"><![CDATA[<?php
@@ -33,14 +33,14 @@ $mail->send();
         </para>
     </note>
     <para>
-         Dla większości atrybutów obiektu mail są dostępne metody "get" w służące do 
+         Dla większości atrybutów obiektu mail są dostępne metody "get" w służące do
          odczytywania przechowywanych w nim informacji. Więcej informacji można znaleść
          w dokumentacji API. Specjalną metodą jest <code>getRecipients()</code>. Zwraca
          ona tablicę w wszystkimi adresami e-mail odbiorców, które zostały dodane.
     </para>
     <para>
         Ze względów bezpieczeństwa, <code>Zend_Mail</code> filtruje wszystkie nagłówki
-        aby zapobiec dołączeniu niechcianych nagłówków za pomocą znaku nowej linii 
+        aby zapobiec dołączeniu niechcianych nagłówków za pomocą znaku nowej linii
         (<code>\n</code>).
     </para>
     <para>

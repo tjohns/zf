@@ -10,7 +10,7 @@
             zdarzenia w trakcie trwania procesu kontrolera. Kontroler frontowy
             używa agenta wtyczek jako rejeestru dla wtyczek programisty,
             a agent wtyczek jest odpowiedzialny za to, że metody zdarzeń są
-            wywoływane dla każdej wtyczki zarejestrowanej w kontrolerze 
+            wywoływane dla każdej wtyczki zarejestrowanej w kontrolerze
             frontowym.
         </para>
 
@@ -19,7 +19,7 @@
             <code>Zend_Controller_Plugin_Abstract</code>, z której dziedziczy
             każda klasa wtyczki:
         </para>
-        
+
         <itemizedlist>
             <listitem>
                 <para>
@@ -32,7 +32,7 @@
 
             <listitem>
                 <para>
-                    Metoda <code>routeShutdown()</code> jest wywoływana po tym 
+                    Metoda <code>routeShutdown()</code> jest wywoływana po tym
                     jak <link linkend="zend.controller.router">router</link>
                     zakończy routing żądania.
                 </para>
@@ -48,11 +48,11 @@
 
             <listitem>
                 <para>
-                    Metoda <code>preDispatch()</code> jest wywoływana zanim 
-                    akcja zostanie uruchomiona przez 
-                    <link linkend="zend.controller.dispatcher">obiekt 
-                    uruchamiający</link>. Pozwala to na stworzenie 
-                    funkcjonalności proxy lub filtra. Nadpisując żądanie i 
+                    Metoda <code>preDispatch()</code> jest wywoływana zanim
+                    akcja zostanie uruchomiona przez
+                    <link linkend="zend.controller.dispatcher">obiekt
+                    uruchamiający</link>. Pozwala to na stworzenie
+                    funkcjonalności proxy lub filtra. Nadpisując żądanie i
                     resetując flagę uruchomienia (za pomocą
                     <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
                     obecna akcja może być pominięta lub zastąpiona.
@@ -62,10 +62,10 @@
             <listitem>
                 <para>
                     <code>postDispatch()</code> jest wywoływana po tym jak akcja
-                    zostanie uruchomiona przez 
-                    <link linkend="zend.controller.dispatcher">obiekt 
-                        uruchamiający</link>. Pozwala to na stworzenie 
-                    funkcjonalności proxy lub filtra. Nadpisując żądanie i 
+                    zostanie uruchomiona przez
+                    <link linkend="zend.controller.dispatcher">obiekt
+                        uruchamiający</link>. Pozwala to na stworzenie
+                    funkcjonalności proxy lub filtra. Nadpisując żądanie i
                     resetując flagę uruchomienia (za pomocą
                     <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
                     można określić nową akcję do uruchomienia.
@@ -75,7 +75,7 @@
             <listitem>
                 <para>
                     Metoda <code>dispatchLoopShutdown()</code> jest wywoływana
-                    po tym jak <code>Zend_Controller_Front</code> zakończy 
+                    po tym jak <code>Zend_Controller_Front</code> zakończy
                     pętlę uruchamiania.
                 </para>
             </listitem>
@@ -86,7 +86,7 @@
         <title>Pisanie wtyczek</title>
 
         <para>
-            W celu napisania klasy wtyczki, w prosty sposób rozszerz klasę 
+            W celu napisania klasy wtyczki, w prosty sposób rozszerz klasę
             abstrakcyjną <code>Zend_Controller_Plugin_Abstract</code>:
         </para>
 
@@ -100,15 +100,15 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 ?>]]></programlisting>
 
         <para>
-            Żadna z metod klasy <code>Zend_Controller_Plugin_Abstract</code> nie 
-            jest abstrakcyjna, co oznacza, że nie jest konieczne implementowanie 
-            wszystkich dostępnych metod zdarzeń opisanych powyżej. Autor wtyczki 
-            może zaimplementować tylko te metody zdarzeń, które są mu 
+            Żadna z metod klasy <code>Zend_Controller_Plugin_Abstract</code> nie
+            jest abstrakcyjna, co oznacza, że nie jest konieczne implementowanie
+            wszystkich dostępnych metod zdarzeń opisanych powyżej. Autor wtyczki
+            może zaimplementować tylko te metody zdarzeń, które są mu
             rzeczywiście potrzebne.
         </para>
         <para>
-            <code>Zend_Controller_Plugin_Abstract</code> udostępnia także 
-            obiekty żądania i odpowiedzi wtyczkom kontrolera za pomocą metod 
+            <code>Zend_Controller_Plugin_Abstract</code> udostępnia także
+            obiekty żądania i odpowiedzi wtyczkom kontrolera za pomocą metod
             <code>getRequest()</code> oraz <code>getResponse()</code>, odpowiednio.
         </para>
     </sect2>
@@ -116,12 +116,12 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
     <sect2 id="zend.controller.plugins.using">
         <title>Użycie wtyczek</title>
         <para>
-            Klasy wtyczek są rejestrowane za pomocą metody 
-            <code>Zend_Controller_Front::registerPlugin()</code> i mogą być 
-            rejestrowane w dowolnym momencie. Poniższy kod pokazuje w jaki 
+            Klasy wtyczek są rejestrowane za pomocą metody
+            <code>Zend_Controller_Front::registerPlugin()</code> i mogą być
+            rejestrowane w dowolnym momencie. Poniższy kod pokazuje w jaki
             sposób wtyczka może być użyta przez kontroler:
         </para>
-            
+
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Router.php';
@@ -184,8 +184,8 @@ $front->dispatch();
 
         <note>
             Wtyczki mogą być zarejestrowane w dowolnym momencie podczas
-            uruchomienia kontrolera frontowego. Jednak jeśli zdarzenie dla 
-            którego we wtyczce była zarejestrowana metoda już minęło, to metoda 
+            uruchomienia kontrolera frontowego. Jednak jeśli zdarzenie dla
+            którego we wtyczce była zarejestrowana metoda już minęło, to metoda
             ta będzie ominięta.
         </note>
     </sect2>
@@ -194,7 +194,7 @@ $front->dispatch();
         <title>Wtyczki dołączone do standardowej dystrybucji</title>
 
         <para>
-            Zend Framework w standardowej dystrybucji zawiera wtyczkę służącą do 
+            Zend Framework w standardowej dystrybucji zawiera wtyczkę służącą do
             obsługi błędów.
         </para>
 

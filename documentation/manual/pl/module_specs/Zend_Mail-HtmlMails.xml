@@ -1,8 +1,8 @@
 <sect1 id="zend.mail.html-mails">
     <title>E-mail w postaci HTML</title>
     <para>
-        Aby wysłać e-mail w formacie HTML, ustaw treść za pomocą metody <code>setBodyHTML()</code> 
-        zamiast <code>setBodyText()</code>. Typ MIME zostanie automatycznie ustawiony na 
+        Aby wysłać e-mail w formacie HTML, ustaw treść za pomocą metody <code>setBodyHTML()</code>
+        zamiast <code>setBodyText()</code>. Typ MIME zostanie automatycznie ustawiony na
         <code>text/html</code>. Jeśli używasz zarówno treści HTML jak i tekstowej to
         automatycznie zostanie wygenerowana wiadomość o typie MIME <code>multipart/alternative</code>:
     </para>

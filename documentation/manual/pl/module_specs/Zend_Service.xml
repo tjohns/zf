@@ -1,19 +1,19 @@
 <sect1 id="zend.service.introduction">
     <title>Wprowadzenie</title>
     <para>
-        <code>Zend_Service</code> jest klasą abstrakcyjną, która zapewnia 
+        <code>Zend_Service</code> jest klasą abstrakcyjną, która zapewnia
         wsparcie dla implementacji web serwisów, takich jak SOAP albo REST.
     </para>
     <para>
-        Jeśli potrzebujesz obsługi dla zwykłych, opartych na XML serwisów REST, 
+        Jeśli potrzebujesz obsługi dla zwykłych, opartych na XML serwisów REST,
         możesz sprawdzić <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link>.
     </para>
     <para>
-        Oprócz tego, że możesz rozszerzyć klasę <code>Zend_Service</code> oraz 
-        użyć klasy <code>Zend_Rest_Client</code> dla serwisów opartych o REST, 
+        Oprócz tego, że możesz rozszerzyć klasę <code>Zend_Service</code> oraz
+        użyć klasy <code>Zend_Rest_Client</code> dla serwisów opartych o REST,
         Zend zapewnia także obsługę popularnych serwisów takich jak:
     </para>
-    
+
     <itemizedlist>
         <listitem>
             <para>

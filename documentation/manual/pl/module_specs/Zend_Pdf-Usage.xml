@@ -34,7 +34,7 @@ try {
     if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
         // Utworzenie nowego pliku PDF jeśli plik nie istnieje
         $pdf = new Zend_Pdf();
-        
+
         if (!isset($argv[2])) {
             // Całkowicie nadpisujemy plik (zamiast aktualizować)
             $argv[2] = $argv[1];

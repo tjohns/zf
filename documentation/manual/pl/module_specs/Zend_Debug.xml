@@ -4,8 +4,8 @@
 
     <para>
         Statyczna metoda <code>Zend_Debug::dump()</code> wyświetla lub zwraca
-        informacje o wyrażeniu. Ta prosta technika usuwania błędów jest często 
-        używana, ponieważ jest łatwa w użyciu, nie wymaga inicjowania, użycia 
+        informacje o wyrażeniu. Ta prosta technika usuwania błędów jest często
+        używana, ponieważ jest łatwa w użyciu, nie wymaga inicjowania, użycia
         specjalnych narzędzi czy środowiska testowego.
     </para>
 
@@ -19,14 +19,14 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </example>
 
     <para>
-        Argument <code>$var</code> określa wyrażenie lub zmienną, na temat 
+        Argument <code>$var</code> określa wyrażenie lub zmienną, na temat
         której metoda <code>Zend_Debug::dump()</code> ma wyświetlić informacje.
     </para>
 
     <para>
-        Argument <code>$label</code> jest łańcuchem znaków, który zostanie 
-        dołączony na początku wyniku użycia metody <code>Zend_Debug::dump()</code>.  
-        Użycie takich etykiet może być użyteczne na przykład wtedy, gdy 
+        Argument <code>$label</code> jest łańcuchem znaków, który zostanie
+        dołączony na początku wyniku użycia metody <code>Zend_Debug::dump()</code>.
+        Użycie takich etykiet może być użyteczne na przykład wtedy, gdy
         wyświetlasz informacje o wielu zmiennych na jednym ekranie.
     </para>
 
@@ -38,11 +38,11 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </para>
 
     <para>
-        Użyteczna może być informacja o tym, że metoda 
-        <code>Zend_Debug::dump()</code> używa funkcji PHP 
+        Użyteczna może być informacja o tym, że metoda
+        <code>Zend_Debug::dump()</code> używa funkcji PHP
         <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.
-        Jeśli dane wyjsciowe mają być wyświetlone w przeglądarce, to w wyniku 
-        zwróconym przez wywołanie metody <code>var_dump()</code> znaki 
+        Jeśli dane wyjsciowe mają być wyświetlone w przeglądarce, to w wyniku
+        zwróconym przez wywołanie metody <code>var_dump()</code> znaki
         specjalne cytowane są za pomocą funkcji
         <ulink url="http://php.net/htmlspecialchars"><code>htmlspecialchars()</code></ulink>,
         a cały wynik zostaje objęty znacznikami (X)HTML <code>&lt;pre&gt;</code>.
@@ -53,16 +53,16 @@ Zend_Debug::dump($var, $label=null, $echo=true)
         <para>
             Użycie metody <code>Zend_Debug::dump()</code> jest najlepsze do
             doraźnego usuwania błędów podczas tworzenia oprogramowania.
-            Możesz dodać kod, aby wyświetlić informacje o zmiennej, a potem 
+            Możesz dodać kod, aby wyświetlić informacje o zmiennej, a potem
             szybko go usunąć.
         </para>
         <para>
-            Zapoznaj się także z komponentem 
+            Zapoznaj się także z komponentem
             <link linkend="zend.log.overview">Zend_Log</link> jeśli chcesz
-            aby kod służący do usuwania błędów był umieszczony w aplikacji na 
-            stałe. Na przykład, możesz użyć poziomu raportowania błędów 
-            <code>DEBUG</code> i obiektu <code>Zend_Log_Writer_Stream</code>, 
-            aby wyświetlać łańcuchy znaków zwracane przez metodę 
+            aby kod służący do usuwania błędów był umieszczony w aplikacji na
+            stałe. Na przykład, możesz użyć poziomu raportowania błędów
+            <code>DEBUG</code> i obiektu <code>Zend_Log_Writer_Stream</code>,
+            aby wyświetlać łańcuchy znaków zwracane przez metodę
             <code>Zend_Debug::dump()</code>.
         </para>
     </tip>

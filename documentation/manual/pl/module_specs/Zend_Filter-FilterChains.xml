@@ -3,10 +3,10 @@
     <title>Łańcuchy filtrów</title>
 
     <para>
-        Często do pewnej wartości potrzebujemy zastosować wiele filtrów w 
-        określonej kolejności. Przykładem może być formularz logowania 
-        akceptujący jedynie małe znaki alfabetu. <code>Zend_Filter</code> 
-        zapewnia prostą metodę dzięki której filtry mogą być wywoływane 
+        Często do pewnej wartości potrzebujemy zastosować wiele filtrów w
+        określonej kolejności. Przykładem może być formularz logowania
+        akceptujący jedynie małe znaki alfabetu. <code>Zend_Filter</code>
+        zapewnia prostą metodę dzięki której filtry mogą być wywoływane
         łańcuchowo. Poniższy kod ilustruje łańcuchowe wywołanie dwóch filtrów
         dla wysłanej nazwy użytkownika:
 

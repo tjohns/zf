@@ -9,8 +9,8 @@
 
     <para>
         Oto przykład własnej klasy wpisu Atom która obsługuje własną przestrzeń
-        nazw <code>myns:</code> wpisów. Zauważ, że ona także wywołuje za Ciebie 
-        metodę <code>registerNamespace()</code>, dzięki czemu użytkownik końcowy 
+        nazw <code>myns:</code> wpisów. Zauważ, że ona także wywołuje za Ciebie
+        metodę <code>registerNamespace()</code>, dzięki czemu użytkownik końcowy
         nie musi w ogóle martwić się o przestrzenie nazw.
     </para>
 

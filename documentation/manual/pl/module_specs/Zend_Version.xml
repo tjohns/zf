@@ -10,7 +10,7 @@
 
     <para>
         Statyczna metoda <code>Zend_Version::compareVersion($version)</code>
-        jest oparta na funkcji 
+        jest oparta na funkcji
         <ulink url="http://php.net/version_compare"><code>version_compare()</code></ulink>.
         Metoda zwraca -1 gdy wersja ze zmiennej <code>$version</code>
         jest starsza niż wersja Zend Framework, 0 jeśli są takie same,

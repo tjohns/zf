@@ -1,7 +1,7 @@
 <sect1 id="zend.search.lucene.charset">
-	<title>Character set.</title>
+    <title>Character set.</title>
 
-	<sect2 id="zend.search.lucene.charset.description">
+    <sect2 id="zend.search.lucene.charset.description">
         <title>UTF-8 and single-byte character sets support.</title>
 
         <para>

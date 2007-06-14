@@ -5,10 +5,10 @@
     </para>
     <para>
       Buforowanie w Zend Framework jest przeprowadzane przez frontendy, a
-      rekordy bufora są przechowywane za pomocą backendów (<code>File</code>, 
+      rekordy bufora są przechowywane za pomocą backendów (<code>File</code>,
       <code>Sqlite</code>, <code>Memcache</code>...) przy użyciu uniwersalnego
       systemu identyfikatorów ID oraz etykiet. Używając ich, łatwe jest
-      kasowanie specyficznych typów rekordów (na przykład: "usuń wszystkie 
+      kasowanie specyficznych typów rekordów (na przykład: "usuń wszystkie
       rekordy bufora oznaczone podaną etykietą").
     </para>
     <para>
@@ -41,9 +41,9 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]></programlisting>
        <para>
-            Teraz gdy mamy frontend, możemy buforować dowolny typ danych 
-            (włączyliśmy serializację). Na przykład, możemy buforować rezultat 
-            bardzo obciążającego zapytania do bazy danych. Kiedy jest buforowane, 
+            Teraz gdy mamy frontend, możemy buforować dowolny typ danych
+            (włączyliśmy serializację). Na przykład, możemy buforować rezultat
+            bardzo obciążającego zapytania do bazy danych. Kiedy jest buforowane,
             nie ma nawet potrzeby aby łączyć się z bazą; rekordy są pobierane z
             bufora, a następnie odserializowane.
         </para>
@@ -57,16 +57,16 @@ if(!$result = $cache->load('myresult')) {
     // bufor nie istnieje; łączymy się z bazą
 
     $db = Zend_Db::factory( [...] );
-    
+
     $result = $db->fetchAll('SELECT * FROM huge_table');
-    
+
     $cache->save($result, 'myresult');
-    
+
 } else {
 
     // bufor istnieje! dajmy o tym znać
     echo "To pochodzi z bufora!\n\n";
-    
+
 }
 
 print_r($result);
@@ -77,12 +77,12 @@ print_r($result);
         <title>Buforowanie danych wyjściowych przy użyciu frontendu <code>Zend_Cache</code></title>
         <para>
             Sekcje w których chcemy buforować dane wyjściowe oznaczamy dodając
-            pewną warunkową logikę, ograniczającą sekcję za pomocą metod 
-            <code>start()</code> oraz <code>end()</code> (to odpowiada 
+            pewną warunkową logikę, ograniczającą sekcję za pomocą metod
+            <code>start()</code> oraz <code>end()</code> (to odpowiada
             pierwszemu przykładowi i jest główną strategią buforowania).
         </para><para>
             Wewnątrz wyświetlaj dane jak zawsze - wszystkie dane wyjściowe będą
-            buforowane aż do napotkania metody <code>end()</code>. Podczas 
+            buforowane aż do napotkania metody <code>end()</code>. Podczas
             następnego wywołania, cała sekcja będzie ominięta, a użyte zostaną
             dane z bufora. (tak długo jak rekord bufora jest prawidłowy).
         </para>
@@ -100,10 +100,10 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 // przekazujemy unikalny identyfikator do metody start()
 if(!$cache->start('mypage')) {
     // wyświetlamy jak zawsze:
-    
+
     echo 'Witajcie! ';
     echo 'To jest buforowane ('.time().') ';
-    
+
     $cache->end(); // dane wyjściowe są zapisywane i wysyłane do przeglądarki
 }
 
@@ -111,22 +111,22 @@ echo 'To nie jest nigdy buforowane ('.time().').';
 
 ?>]]>       </programlisting>
        <para>
-           Zauważ, że wyświetlamy rezultat funkcji <code>time()</code> dwa razy; 
+           Zauważ, że wyświetlamy rezultat funkcji <code>time()</code> dwa razy;
            jest to coś dynamicznego, aby zademenstrować przeznaczenie. Spróbuj
            uruchomić to i odświeżyć kilka razy; zauważysz, że pierwsza liczba
            się nie zmienia, a druga za każdym razem jest inna. Tak jest ponieważ
            pierwsza liczba była wyświetlona w sekcji buforowanej więc została
-           zapisana. Po upływie pół minuty (ustawiliśmy okres ważności bufora na 
+           zapisana. Po upływie pół minuty (ustawiliśmy okres ważności bufora na
            30 sekund) powinny ponownie się zgadzać ponieważ bufor wygasł -- i
-           został zapisany ponownie. Powinieneś to sprawdzić w swojej 
+           został zapisany ponownie. Powinieneś to sprawdzić w swojej
            przeglądarce lub w konsoli.
        </para>
     </example>
     <note><para>
         Kiedy używasz Zend_Cache, zwracaj uwagę na ważny identyfikator bufora
-        (przekazany do metod <code>save()</code> oraz <code>start()</code>). 
+        (przekazany do metod <code>save()</code> oraz <code>start()</code>).
         Musi być unikalny dla każdego zasobum, który buforujesz, inaczej nie
-        powiązane buforowane rekordy mogą się nawzajem ścierać, lub gorzej, 
+        powiązane buforowane rekordy mogą się nawzajem ścierać, lub gorzej,
         jeden może wyświetlić się w miejscu drugiego.
     </para></note>
 </sect1>

@@ -8,7 +8,7 @@
 
         <para>
             <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Uwierzytelnianie Digest</ulink>
-            jest metodą uwierzytelniania HTTP, która udoskonala 
+            jest metodą uwierzytelniania HTTP, która udoskonala
             <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">uwierzytelnianie Basic</ulink>
             dostarczając sposób uwierzytelniania bez konieczności przesyłania
             hasła w postaci czystego tekstu poprzez sieć.
@@ -49,7 +49,7 @@
         <title>Parametry</title>
 
         <para>
-            Adapter uwierzytelniania digest, <code>Zend_Auth_Adapter_Digest</code>, 
+            Adapter uwierzytelniania digest, <code>Zend_Auth_Adapter_Digest</code>,
             wymaga ustawienia kilku wejściowych parametrów:
             <itemizedlist>
                 <listitem>

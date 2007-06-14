@@ -22,8 +22,8 @@ $height = $pdfPage->getHeight();]]>
         <title>Kolory.</title>
         <para>
         PDF ma bardzo rozbudowane możliwości reprezentowania kolorów. Zend_Pdf
-        wspiera palety Grey Scale, RGB oraz CMYK. Każda z nich może być użyta 
-        wszędzie, gdzie jest wymagany obiekt <code>Zend_Pdf_Color</code>. Klasy 
+        wspiera palety Grey Scale, RGB oraz CMYK. Każda z nich może być użyta
+        wszędzie, gdzie jest wymagany obiekt <code>Zend_Pdf_Color</code>. Klasy
         <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> oraz
         <code>Zend_Pdf_Color_Cmyk</code> zapewniają taką funkcjonalność:
         </para>
@@ -189,9 +189,9 @@ $pdfPage->drawText('Hello world!', 72, 720);
         <para>
         Domyślnie, łańcuchy znaków są interpretowane przy użyciu metod kodowania
         znaków biężacych ustawień lokalnych. Jeśli masz łańcuch znaków używający
-        innych metod kodowania (na przykład dane jako łańcuch znaków UTF-8 odczytany 
-        z pliku na dysku, lub łańcuch znaków MacRoman pobrany z bazy danych), 
-        możesz wskazać kodowanie znaków podczas wypisywania tekstu i Zend_Pdf 
+        innych metod kodowania (na przykład dane jako łańcuch znaków UTF-8 odczytany
+        z pliku na dysku, lub łańcuch znaków MacRoman pobrany z bazy danych),
+        możesz wskazać kodowanie znaków podczas wypisywania tekstu i Zend_Pdf
         przeprowadzi dla ciebie konwersję. Możesz użyć źródłowego łańcucha znaków
         w dowolnym kodowaniu obsługiwanym przez funkcję PHP <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>:
         </para>
@@ -214,7 +214,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
         <title>Użycie czcionek.</title>
         <para>
         Metoda <code>Zend_Pdf_Page::drawText()</code> używa bieżącego kroju
-        oraz rozmiaru czcionki dla strony, które ustawia się za pomocą metody 
+        oraz rozmiaru czcionki dla strony, które ustawia się za pomocą metody
         <code>Zend_Pdf_Page::setFont()</code>:
         </para>
         <programlisting role="php"><![CDATA[<?php
@@ -229,14 +229,14 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
         <para>
         Dokumenty PDF obsługują czionki PostScript Type 1 oraz TrueType, tak samo
         dobrze jak dwa wyspecjalizowane typy PDF, Type 3 oraz czcionki złożone Type 0. Jest
-        także 14 standardowych czcionek Type 1 wbudowanych w każdą przeglądarkę PDF: 
+        także 14 standardowych czcionek Type 1 wbudowanych w każdą przeglądarkę PDF:
         Courier (4 style), Helvetica (4 style), Times (4 style), Symbol, and Zapf Dingbats.
         </para>
         <para>
         Zend_Pdf obecnie obsługuje 14 standardowych czcionek PDF tak samo dobrze
-        jak twoje własne czcionki TrueType. Obiekty czcionek są obsługiwane za pomocą 
+        jak twoje własne czcionki TrueType. Obiekty czcionek są obsługiwane za pomocą
         jednej z dwóch metod fabryk: <code>Zend_Pdf_Font::fontWithName($fontName)</code>
-        dla 14 standardowych czcionek PDF lub <code>Zend_Pdf_Font::fontWithPath($filePath)</code> 
+        dla 14 standardowych czcionek PDF lub <code>Zend_Pdf_Font::fontWithPath($filePath)</code>
         dla własnych czcionek.
         </para>
         <example>
@@ -300,14 +300,14 @@ $pdfPage->setFont($font, 36);
         </itemizedlist>
         </para>
         <para>
-        Możesz także użyć dowolnej czcionki TrueType (która najcześciej ma rozszerzenie 
+        Możesz także użyć dowolnej czcionki TrueType (która najcześciej ma rozszerzenie
         '.ttf') lub czcionki OpenType (rozszerzenie '.otf') jeśli zawiera czcionke
-        zrobioną według wytycznych TrueType. Obecnie nieobsługiwane, ale planowane 
-        w przyszłych wersjach są pliki czcionek Mac OS X .dfont oraz pliki Microsoft 
+        zrobioną według wytycznych TrueType. Obecnie nieobsługiwane, ale planowane
+        w przyszłych wersjach są pliki czcionek Mac OS X .dfont oraz pliki Microsoft
         TrueType Collection (rozszerzenie '.ttc').
         </para>
         <para>
-        Aby użyć czcionki TrueType, musisz podać pełną ścieżke do pliku czcionki. 
+        Aby użyć czcionki TrueType, musisz podać pełną ścieżke do pliku czcionki.
         Jeśli z jakiegoś powodu nie może on być odczytany, lub nie jest to czcionka
         TrueType, metoda fabryki wyrzuci wyjątek:
         </para>
@@ -348,7 +348,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         <para>
         Jeśli plik czcionki nie jest osadzony, ale odbiorca pliku PDF posiada taką
         czcionkę zainstalowaną w swoim systemie, zobaczy on dokument w sposób
-        identyczny z zamierzonym. Jeśli nie ma zainstalowanej odpowiedniej czcionki, 
+        identyczny z zamierzonym. Jeśli nie ma zainstalowanej odpowiedniej czcionki,
         przeglądarka PDF użyje najlepszej aby zastąpić czcionkę.
         </para>
         <para>
@@ -358,7 +358,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         metoda fabryki wyrzuci wyjątek.
         </para>
         <para>
-        Możesz wciąż użyć tych czcionek, ale musisz przekazać odpowiedni parametr 
+        Możesz wciąż użyć tych czcionek, ale musisz przekazać odpowiedni parametr
         w celu nieosadzenia czcionki, lub w prosty sposób zignorować wyjątek:
         </para>
         <example>
@@ -372,14 +372,14 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
             </programlisting>
         </example>
         <para>
-        Ta technika zignorowania wyjątku jest przydatna, gdy pozwalasz użytkownikowi 
-        końcowemu wybierać własne czcionki. Czcionki, ktore mogą być osadzone, 
+        Ta technika zignorowania wyjątku jest przydatna, gdy pozwalasz użytkownikowi
+        końcowemu wybierać własne czcionki. Czcionki, ktore mogą być osadzone,
         będą osadzone w dokumencie PDF; te które nie mogą, nie będą.
         </para>
         <para>
         Pliki czcionek mogą być duże, czasem osiągająć dziesiątki megabajtów. Domyślnie
-        wszystkie osadzane czcionki są kompresowane przy użyciu schematu kompresji Flate, 
-        co powoduje zaoszczędzenie średnio 50% miejsca. Jeśli z jakiegoś powodu 
+        wszystkie osadzane czcionki są kompresowane przy użyciu schematu kompresji Flate,
+        co powoduje zaoszczędzenie średnio 50% miejsca. Jeśli z jakiegoś powodu
         nie chcesz kompresować plików czcionek, możesz to zablokować opcją:
         </para>
         <example>
@@ -429,7 +429,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
         </programlisting>
         <para>
         Obiekty obrazów powinny być tworzone za pomocą metody
-        <code>Zend_Pdf_Image::imageWithPath($filePath)</code> (obecnie 
+        <code>Zend_Pdf_Image::imageWithPath($filePath)</code> (obecnie
         obsługiwane są obrazy JPG, PNG oraz TIFF):
         </para>
         <example>
@@ -487,7 +487,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
         <title>Styl wypełnienia.</title>
         <para>
         Metody <code>Zend_Pdf_Page::drawRectangle()</code>, <code>Zend_Pdf_Page::drawPoligon()</code>,
-        <code>Zend_Pdf_Page::drawCircle()</code> oraz <code>Zend_Pdf_Page::drawEllipse()</code> 
+        <code>Zend_Pdf_Page::drawCircle()</code> oraz <code>Zend_Pdf_Page::drawEllipse()</code>
         przyjmują argument <code>$fillType</code> jako opcjonalny parametr. Może
         on mieć wartość:
         </para>
@@ -571,8 +571,8 @@ regardless of the directions in which the circles are drawn.
     <sect2 id="zend.pdf.drawing.rotations">
         <title>Obracanie.</title>
         <para>
-        Strony PDF mogą być obracane zanim zostaną wykonane jakiekolwiek 
-        operacje rysowania. Może być to zrobione za pomocą metody 
+        Strony PDF mogą być obracane zanim zostaną wykonane jakiekolwiek
+        operacje rysowania. Może być to zrobione za pomocą metody
         <code>Zend_Pdf_Page::rotate()</code>:
         </para>
         <programlisting role="php"><![CDATA[<?php
@@ -588,7 +588,7 @@ public function rotate($x, $y, $angle);]]>
     <sect2 id="zend.pdf.drawing.save-restore">
         <title>Zapisywanie/odczytywanie stanu grafiki.</title>
         <para>
-        W dowolnej chwili stan grafiki (bieżąca czcionka, rozmiar czcionki, kolor linii, 
+        W dowolnej chwili stan grafiki (bieżąca czcionka, rozmiar czcionki, kolor linii,
         kolor wypełnienia, styl linii, obrót strony, obszar przycinania) może być zapisany
         a potem przywrócony. Operacja zapisu zapisuje dane na stos stanu grafiki,
         operacja przywrócenia przywraca je ze stosu.
@@ -615,7 +615,7 @@ public function restoreGS();]]>
         <title>Przycięcie obszaru rysowania.</title>
         <para>
         PDF oraz moduł Zend_Pdf obsługują przycięcie obszaru rysowania. Obecny
-        przycięty obszar ogranicza obszar strony, na który wpływają operacje 
+        przycięty obszar ogranicza obszar strony, na który wpływają operacje
         rysowania. Na początku jest to cała strona.
         </para>
         <para>

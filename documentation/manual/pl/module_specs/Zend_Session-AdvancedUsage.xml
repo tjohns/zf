@@ -5,10 +5,10 @@
     <para>
         Chociaż przykłady podstawowego użycia sesji są całkowicie zadowalającym
         sposobem wykorzystania sesji Zend Framework, to jest kilka dobrych
-        zwyczajów, ktore powinieneś przeanalizować. Przeanalizuj 
+        zwyczajów, ktore powinieneś przeanalizować. Przeanalizuj
         <link linkend="zend.auth.introduction.using">przykład użycia <code>Zend_Auth</code></link>,
         który domyślnie używa Zend_Session_Namespace do przechowywania
-        danych uwierzytelniania. Ten przykład pokazuje jeden sposób szybkiego i 
+        danych uwierzytelniania. Ten przykład pokazuje jeden sposób szybkiego i
         łatwego zintegrowania Zend_Session_Namespace oraz Zend_Auth.
     </para>
 
@@ -34,11 +34,11 @@ Zend_Session::start();
 
         <para>
             Rozpoczynając sesję w pliku ładującym zapobiegasz przypadkowym
-            próbom rozpoczęcia sesji po wysłaniu nagłówków do przeglądarki, 
+            próbom rozpoczęcia sesji po wysłaniu nagłówków do przeglądarki,
             co powodowałoby wyrzucenie wyjątku i prawdopodobnie wyświetlenie
-            nieprawidłowo wygenerowanej strony. Wiele zaawansowanych 
-            funkcjonalności wymaga wcześniejszego wywołania metody 
-            <code>Zend_Session::start()</code>. (więcej informacji o 
+            nieprawidłowo wygenerowanej strony. Wiele zaawansowanych
+            funkcjonalności wymaga wcześniejszego wywołania metody
+            <code>Zend_Session::start()</code>. (więcej informacji o
             zaawansowanych funkcjonalnościach pojawi się później)
         </para>
 
@@ -52,11 +52,11 @@ Zend_Session::start();
                 <para>
                     1. Źle: Nie ustawiaj parametru PHP session.auto_start w pliku
                     php.ini lub .htaccess
-                    (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start). 
-                    Jeśli nie masz możliwości zablokowania tego parametru w 
-                    pliku php.ini, a używasz modułu mod_php (lub jego odpowiednika), 
-                    a ustawienie to jest obecnie włączone w pliku php.ini, to 
-                    dodaj <code>php_value session.auto_start 0</code> w twoim 
+                    (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start).
+                    Jeśli nie masz możliwości zablokowania tego parametru w
+                    pliku php.ini, a używasz modułu mod_php (lub jego odpowiednika),
+                    a ustawienie to jest obecnie włączone w pliku php.ini, to
+                    dodaj <code>php_value session.auto_start 0</code> w twoim
                     pliku .htaccess (najczęściej w twoim głównym katalogu serwera).
                 </para>
             </listitem>
@@ -64,32 +64,32 @@ Zend_Session::start();
                 <para>
                     2. Źle: Nie używaj bezpośrednio funkcji PHP <code>
                     <ulink url="http://www.php.net/session_start">session_start()</ulink>
-                    </code>. Jeśli użyjesz funkcji <code>session_start()</code> 
-                    bezpośrednio, a potem rozpoczniesz sesję używając obiektu 
-                    Zend_Session_Namespace, metoda <code>Zend_Session::start()</code> 
-                    wyrzuci wyjątek ("session has already been started"). 
-                    Jeśli wywołasz funkcję <code>session_start()</code>, po 
+                    </code>. Jeśli użyjesz funkcji <code>session_start()</code>
+                    bezpośrednio, a potem rozpoczniesz sesję używając obiektu
+                    Zend_Session_Namespace, metoda <code>Zend_Session::start()</code>
+                    wyrzuci wyjątek ("session has already been started").
+                    Jeśli wywołasz funkcję <code>session_start()</code>, po
                     użyciu obiektu Zend_Session_Namespace lub po rozpoczęciu
-                    sesji za pomocą metody <code>Zend_Session::start()</code>, 
+                    sesji za pomocą metody <code>Zend_Session::start()</code>,
                     zostanie wygenerowany błąd poziomu E_NOTICE, a wywołanie
                     funkcji zostanie zignorowane.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    3. Dobrze: Użyj <code>Zend_Session::start()</code>. Jeśli 
-                    chcesz aby wszystkie żądania używały sesji, bezwarunkowo 
-                    umieść wywołanie tej funkcji na początku, w twoim pliku 
-                    ładującym ZF. 
+                    3. Dobrze: Użyj <code>Zend_Session::start()</code>. Jeśli
+                    chcesz aby wszystkie żądania używały sesji, bezwarunkowo
+                    umieść wywołanie tej funkcji na początku, w twoim pliku
+                    ładującym ZF.
 
-                    Sessions have some overhead. If some requests need 
-                    sessions, but other requests will not need to use sessions, 
+                    Sessions have some overhead. If some requests need
+                    sessions, but other requests will not need to use sessions,
                     then:
                 </para>
                 <itemizedlist mark='opencircle'>
                     <listitem>
                         <para>
-                            Unconditionally, set the <code>strict</code> option 
+                            Unconditionally, set the <code>strict</code> option
                             to true (zobacz <link
                         linkend="zend.session.startingasession"><code>Zend_Session::setOptions()</code>
                             </link>) in your userland bootstrap.
@@ -107,7 +107,7 @@ Zend_Session::start();
                         <para>
                             Użyj <code>new Zend_Session_Namespace()</code>,
                             normalnie, wtedy gdy będzie to potrzebne, ale upewnij
-                            się, że wcześniej zostanie wywołana metoda 
+                            się, że wcześniej zostanie wywołana metoda
                             <code>Zend_Session::start()</code>.
                         </para>
                     </listitem>
@@ -115,32 +115,32 @@ Zend_Session::start();
                 <para>
                     Opcja <code>strict</code> zapobiega automatycznemu
                     rozpoczęciu sesji za pomocą metody
-                    <code>Zend_Session::start()</code> w konstruktorze 
+                    <code>Zend_Session::start()</code> w konstruktorze
                     <code>new Zend_Session_Namespace()</code>.
-                    Thus, this option helps developers of userland ZF applications 
-                    enforce a design decision to avoid using sessions for certain 
-                    requests, since an error will be thrown when using this option 
-                    and instantiating Zend_Session_Namespace, before an explicit 
-                    call to <code>Zend_Session::start()</code>. Do not use this 
-                    option in ZF core library code, because only userland 
+                    Thus, this option helps developers of userland ZF applications
+                    enforce a design decision to avoid using sessions for certain
+                    requests, since an error will be thrown when using this option
+                    and instantiating Zend_Session_Namespace, before an explicit
+                    call to <code>Zend_Session::start()</code>. Do not use this
+                    option in ZF core library code, because only userland
                     developers should make this design choice. Similarly, all
-                    "library" developers should carefully consider the impact of 
-                    using <code>Zend_Session::setOptions()</code> on users of 
-                    their library code, since these options have global 
+                    "library" developers should carefully consider the impact of
+                    using <code>Zend_Session::setOptions()</code> on users of
+                    their library code, since these options have global
                     side-effects (as do the underlying options for ext/session).
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    4. Dobrze: Po prostu użyj <code>new Zend_Session_Namespace()</code> 
+                    4. Dobrze: Po prostu użyj <code>new Zend_Session_Namespace()</code>
                     kiedy tylko będziesz potrzebował, a sesja zostanie automatycznie
                     rozpoczęta przez Zend_Session. To pozwala na ekstremalnie
                     proste użycie, działające w większości sytuacji.
-                    However, you then become responsible for ensuring that the 
-                    first <code>new Zend_Session_Namespace()</code> happens 
+                    However, you then become responsible for ensuring that the
+                    first <code>new Zend_Session_Namespace()</code> happens
                     <emphasis role="strong">before</emphasis> any output (i.e.
                     <ulink url="http://www.php.net/headers_sent">HTTP headers</ulink>
-                    ) has been sent by PHP to the client, if you are using the 
+                    ) has been sent by PHP to the client, if you are using the
                     default, cookie-based sessions (strongly recommended). See
                     <xref linkend="zend.session.errors.headerssent" />
                     for more information.
@@ -155,16 +155,16 @@ Zend_Session::start();
         <title>Blokowanie przestrzeni nazw sesji</title>
 
         <para>
-            Session namespaces can be locked, to prevent further alterations to 
-            the data in that namespace. Use <code>Zend_Session_Namespace's lock()</code> 
-            to make a specific namespace read-only, <code>unLock()</code> to 
-            make a read-only namespace read-write, and <code>isLocked()</code> 
-            to test if a namespace has been previously locked. Locks are 
-            transient and do not persist from one request to the next. Locking 
-            the namespace has no effect on setter methods of objects stored in 
-            the namespace, but does prevent the use of the namespace's setter 
-            method to remove or replace objects stored directly in the namespace. 
-            Similarly, locking Zend_Session_Namespace namespaces does not prevent 
+            Session namespaces can be locked, to prevent further alterations to
+            the data in that namespace. Use <code>Zend_Session_Namespace's lock()</code>
+            to make a specific namespace read-only, <code>unLock()</code> to
+            make a read-only namespace read-write, and <code>isLocked()</code>
+            to test if a namespace has been previously locked. Locks are
+            transient and do not persist from one request to the next. Locking
+            the namespace has no effect on setter methods of objects stored in
+            the namespace, but does prevent the use of the namespace's setter
+            method to remove or replace objects stored directly in the namespace.
+            Similarly, locking Zend_Session_Namespace namespaces does not prevent
             the use of symbol table aliases to the same data (see
             <ulink url="http://www.php.net/references">PHP references</ulink>).
         </para>
@@ -187,12 +187,12 @@ Zend_Session::start();
         </example>
 
         <para>
-            There are numerous ideas for how to manage models in MVC paradigms 
-            for the Web, including creating presentation models for use by 
-            views. Sometimes existing data, whether part of your domain model or 
-            not, is adequate for the task. To discourage views from applying any 
-            processing logic to alter such data, consider locking session 
-            namespaces before permitting views to access this subset of your 
+            There are numerous ideas for how to manage models in MVC paradigms
+            for the Web, including creating presentation models for use by
+            views. Sometimes existing data, whether part of your domain model or
+            not, is adequate for the task. To discourage views from applying any
+            processing logic to alter such data, consider locking session
+            namespaces before permitting views to access this subset of your
             "presentation" model.
         </para>
 
@@ -251,7 +251,7 @@ $s->setExpirationSeconds(5, 'a'); // expire only the key "a" in 5 seconds
 // expire entire namespace in 5 "hops"
 $s->setExpirationHops(5);
 
-$s->setExpirationSeconds(60);                  
+$s->setExpirationSeconds(60);
 // The "expireAll" namespace will be marked "expired" on
 // the first request received after 60 seconds have elapsed,
 // or in 5 hops, whichever happens first.
@@ -274,9 +274,9 @@ $s->setExpirationSeconds(60);
         <title>Session Encapsulation and Controllers</title>
 
         <para>
-            Namespaces can also be used to separate session access by 
-            controllers to protect variables from contamination. For example, 
-            the 'Zend_Auth' controller might keep its session state data 
+            Namespaces can also be used to separate session access by
+            controllers to protect variables from contamination. For example,
+            the 'Zend_Auth' controller might keep its session state data
             separate from all other controllers.
         </para>
 
@@ -290,7 +290,7 @@ $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, "accept_answer"); // expire only this variable
 $testSpace->accept_answer = true;
 
--- 
+--
 
 // answer processing controller
 $testSpace = new Zend_Session_Namespace('testSpace');
@@ -420,24 +420,24 @@ else {
         <title>Using Sessions with Authentication</title>
 
         <para>
-            If your authentication adapter for <code>Zend_Auth</code> returns a 
-            result where the authorization identity is an object (not 
-            recommended), instead of an array, then make sure to require your 
-            authorization identity class definition before starting the session. 
-            Instead, we recommend storing the authorization ids computed within 
-            an authentication adapter inside a well-known key in a session 
-            namespace. For example, the default behavior of <code>Zend_Auth</code> 
+            If your authentication adapter for <code>Zend_Auth</code> returns a
+            result where the authorization identity is an object (not
+            recommended), instead of an array, then make sure to require your
+            authorization identity class definition before starting the session.
+            Instead, we recommend storing the authorization ids computed within
+            an authentication adapter inside a well-known key in a session
+            namespace. For example, the default behavior of <code>Zend_Auth</code>
             places this in the 'storage' key of the 'Zend_Auth' namespace.
         </para>
 
         <para>
-            If you tell <code>Zend_Auth</code> to not persist authentication 
-            tokens in sessions, then you can manually store the authorization id 
-            in the session namespace, in a well-known location in a session namespace of 
-            your choice. Often, applications have specific needs about where to 
-            store credentials used (if any) and "authorization" identity. 
-            Applications often map authentication identities (e.g. usernames) to 
-            authorization identities (e.g. a uniquely assigned integer) during 
+            If you tell <code>Zend_Auth</code> to not persist authentication
+            tokens in sessions, then you can manually store the authorization id
+            in the session namespace, in a well-known location in a session namespace of
+            your choice. Often, applications have specific needs about where to
+            store credentials used (if any) and "authorization" identity.
+            Applications often map authentication identities (e.g. usernames) to
+            authorization identities (e.g. a uniquely assigned integer) during
             authentication, which would occur in the Zend_Auth authentication
             adapter's <code>authenticate()</code> method.
         </para>
@@ -473,7 +473,7 @@ else {
         (empty($namespace->date) ? 'No' : date(DATE_ATOM, $namespace->date), "\n"';
 ?>]]></programlisting>
         </example>
-        
+
         <para>
             Authorization ids stored client-side are subject to privilege escalation vulnerabilities, if these ids are
             used and trusted by the server, unless, for example, the id is duplicated on the server-side (e.g. in the

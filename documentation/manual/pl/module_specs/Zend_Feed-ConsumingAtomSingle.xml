@@ -5,12 +5,12 @@
         Pojedyncze elementy <code>&lt;entry&gt;</code> kanału Atom są same w sobie
         poprawne. Zazwyczaj URL do pojedynczego wpisu jest adresem URL kanału
         z dodanym identyfikatorem <code>/&lt;entryId&gt;</code> wpisu, na przykład
-        <code>http://atom.example.com/feed/1</code>, dla przykładowego URL, 
+        <code>http://atom.example.com/feed/1</code>, dla przykładowego URL,
         który był użyty wcześniej.
     </para>
 
     <para>
-        Gdy odczytujesz pojedynczy wpis, wciąż masz obiekt <code>Zend_Feed_Atom</code>, 
+        Gdy odczytujesz pojedynczy wpis, wciąż masz obiekt <code>Zend_Feed_Atom</code>,
         ale automatycznie tworzy on "anonimowy" kanał zawierający ten wpis.
     </para>
 

@@ -3,7 +3,7 @@
     <para>
         Strony internetowe często zawierają tagi <code>&lt;link&gt;</code>, które
         odwołują się do kanałów informacyjnych odpowiadających danej stronie.
-        <code>Zend_Feed</code> pozwala odebrać wszystkie kanały informacyjne 
+        <code>Zend_Feed</code> pozwala odebrać wszystkie kanały informacyjne
         do których odwołuje się dana strona za pomocą wywołania prostej metody:
     </para>
     <programlisting role="php"><![CDATA[

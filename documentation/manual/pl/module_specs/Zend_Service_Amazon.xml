@@ -3,13 +3,13 @@
     <sect2 id="zend.service.amazon.introduction">
         <title>Wprowadzenie</title>
         <para>
-            <code>Zend_Service_Amazon</code> jest prostym API do użycia z web serwisami 
+            <code>Zend_Service_Amazon</code> jest prostym API do użycia z web serwisami
             Amazon. <code>Zend_Service_Amazon</code> ma dwa API: bardziej tradycyjne,
-            które jest oparte na własnym API serwisu Amazon, oraz prostsze API zapytań do 
+            które jest oparte na własnym API serwisu Amazon, oraz prostsze API zapytań do
             łatwego tworzenia nawet skomplikowanych zapytań wyszukiwania.
         </para>
         <para>
-            <code>Zend_Service_Amazon</code> pozwala programistom odbierać 
+            <code>Zend_Service_Amazon</code> pozwala programistom odbierać
             informacje dostępne na stronach Amazon.com bezpośrednio za pomocą
             API web serwisów Amazon. Przykłady zawierają:
             <itemizedlist>
@@ -48,14 +48,14 @@
         <note>
             <title>Uwaga</title>
             <para>
-                Twój klucz do API serwisu Amazon jest połączony z twoją tożsamością 
+                Twój klucz do API serwisu Amazon jest połączony z twoją tożsamością
                 w Amazon, więc staraj się przechowywać twój klucz API bezpiecznie.
             </para>
         </note>
         <example>
             <title>Przeszukiwanie Amazon używając tradycyjnego API</title>
             <para>
-                W tym przykładzie, szukamy książek o PHP w Amazon i przechodzimy 
+                W tym przykładzie, szukamy książek o PHP w Amazon i przechodzimy
                 przez nie w pętli, wyświetlając je.
             </para>
             <programlisting><![CDATA[<?php
@@ -88,9 +88,9 @@ foreach ($results as $result) {
     <sect2 id="zend.service.amazon.countrycodes">
         <title>Kody państw</title>
         <para>
-            Domyślnie, <code>Zend_Service_Amazon</code> łączy się z web serwisem 
-            Amazon w Stanach Zjednoczonych ("<code>US</code>"). Aby połączyć się 
-            z innym krajem, w prosty sposób podaj kod odpowiedniego państwa jako 
+            Domyślnie, <code>Zend_Service_Amazon</code> łączy się z web serwisem
+            Amazon w Stanach Zjednoczonych ("<code>US</code>"). Aby połączyć się
+            z innym krajem, w prosty sposób podaj kod odpowiedniego państwa jako
             drugi parametr konstruktora:
         </para>
         <example>
@@ -133,16 +133,16 @@ $item = $amazon->itemLookup('B0000A432X');
         <note>
             <title>Informacje o zdjęciach</title>
             <para>
-            	Aby odebrać informacje o zdjęciach dla twoich wyników wyszukiwania, musisz ustawić
-            	opcję <code>ResponseGroup</code> na <code>Medium</code> lub <code>Large</code>.
-        	</para>
+                Aby odebrać informacje o zdjęciach dla twoich wyników wyszukiwania, musisz ustawić
+                opcję <code>ResponseGroup</code> na <code>Medium</code> lub <code>Large</code>.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Wykonywanie wyszukiwań przedmiotów Amazon</title>
         <para>
-            Wyszukiwanie przedmiotów oparte na różnych dostępnych kryteriach 
-            jest przeprowadzane za pomocą metody <code>itemSearch()</code>, tak 
+            Wyszukiwanie przedmiotów oparte na różnych dostępnych kryteriach
+            jest przeprowadzane za pomocą metody <code>itemSearch()</code>, tak
             jak w poniższym przykładzie:
         </para>
         <example>
@@ -157,15 +157,15 @@ foreach($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <para>
-            Metoda <code>itemSearch()</code> akceptuje jeden parametr w postaci 
-            tablicy do obsługi opcji wyszukiwania. Aby poznać wszystkie 
+            Metoda <code>itemSearch()</code> akceptuje jeden parametr w postaci
+            tablicy do obsługi opcji wyszukiwania. Aby poznać wszystkie
             szczegóły włączając w to listę dostępnych opcji, proszę zobacz
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">dokumentację Amazon</ulink>
         </para>
         <tip>
             <para>
-                Klasa <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> 
+                Klasa <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link>
                 jest nakładką na tę metodę ułatwiającą tworzenie zapytań wyszukiwania.
             </para>
         </tip>
@@ -177,21 +177,21 @@ foreach($response as $r) {
             <para>
                 <code>Zend_Service_Amazon_Query</code> zapewnia alternatywne API
                 do użycia z web serwisami Amazon. Alternatywne API używa wzorca
-                projektowego płynnych interfejsów. Oznacza to, że wszystkie 
-                wywołania mogą być przeprowadzone przez łańcuchowe wywołania 
+                projektowego płynnych interfejsów. Oznacza to, że wszystkie
+                wywołania mogą być przeprowadzone przez łańcuchowe wywołania
                 metod. (np. <code>$obj->method()->method2($arg)</code>)
             </para>
             <para>
                 API <code>Zend_Service_Amazon_Query</code> używa przeładowania
                 w celu łatwego ustawiania wyszukiwania przedmiotów i pozwala na
-                wyszukiwanie na podstawie określonych kryteriów. Każda z opcji 
-                jest udostępniana jako wywołanie metody, a każdy argument metody 
+                wyszukiwanie na podstawie określonych kryteriów. Każda z opcji
+                jest udostępniana jako wywołanie metody, a każdy argument metody
                 odpowiada wartości opcji o tej nazwie:
             </para>
             <example>
                 <title>Przeszukiwanie serwisu Amazon używając alternatywnego API zapytań</title>
                 <para>
-                    W tym przykładzie alternatywne API zapytań używane jest jako 
+                    W tym przykładzie alternatywne API zapytań używane jest jako
                     płynny interfejs służący do określania opcji i odpowiadającym
                     im wartościom:
                 </para>
@@ -438,8 +438,8 @@ foreach($response as $r) {
             <note>
                 <title>SeekableIterator</title>
                 <para>
-                    Implementuje interfejs <code>SeekableIterator</code> dla łatwej iteracji 
-                    (np. używając <code>foreach</code>), tak samo jak i dla bezpośredniego 
+                    Implementuje interfejs <code>SeekableIterator</code> dla łatwej iteracji
+                    (np. używając <code>foreach</code>), tak samo jak i dla bezpośredniego
                     dostępu do specyficznego wyniku używając metody <code>seek()</code>.
                 </para>
             </note>
@@ -610,13 +610,13 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.similarproduct">
             <title>Zend_Service_Amazon_SimilarProduct</title>
             <para>
-                Kiedy wyszukujemy przedmiotów, Amazon także zwraca listę 
+                Kiedy wyszukujemy przedmiotów, Amazon także zwraca listę
                 podobnych produktów, które także mogą odpowiadać szukającemu.
                 Każdy z nich jest zwracany jako obiekt
                 <code>Zend_Service_Amazon_SimilarProduct</code>.
             </para>
             <para>
-                Każdy obiekt zawiera informacje pozwalające ci na 
+                Każdy obiekt zawiera informacje pozwalające ci na
                 przeprowadzenie kolejnego żądania w celu pobrania pełnych
                 informacji o przedmiocie.
             </para>
@@ -751,7 +751,7 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.editorialreview">
             <title>Zend_Service_Amazon_EditorialReview</title>
             <para>
-                Każda recenzja redaktora jest zwracana jako obiekt 
+                Każda recenzja redaktora jest zwracana jako obiekt
                 <code>Zend_Service_Amazon_EditorialReview</code>
             </para>
             <sect4 id="zend.service.amazon.classes.editorialreview.properties">
@@ -788,7 +788,7 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.listmania">
             <title>Zend_Service_Amazon_Listmania</title>
             <para>
-                Wyniki wyszukiwania elementów List Mania są zwracane jako 
+                Wyniki wyszukiwania elementów List Mania są zwracane jako
                 obiekty <code>Zend_Service_Amazon_Listmania</code>.
             </para>
             <sect4 id="zend.service.amazon.classes.listmania.properties">

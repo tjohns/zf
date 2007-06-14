@@ -3,13 +3,13 @@
     <sect2 id="zend.service.yahoo.introduction">
         <title>Wprowadzenie</title>
         <para>
-            <code>Zend_Service_Yahoo</code> jest prostym API do użycia z wieloma 
-            Yahoo! REST API. <code>Zend_Service_Yahoo</code> pozwala ci na 
-            przeszukiwanie sieci za pomocą Yahoo! Web search, Yahoo! News, 
-            Yahoo! Local, Yahoo! Images. Aby użyć Yahoo! REST API, musisz 
-            posiadać Yahoo! Application ID. Aby otrzymać Application ID, proszę 
-            wypełnij i wyślij <ulink 
-            url="http://api.search.yahoo.com/webservices/register_application">formularz 
+            <code>Zend_Service_Yahoo</code> jest prostym API do użycia z wieloma
+            Yahoo! REST API. <code>Zend_Service_Yahoo</code> pozwala ci na
+            przeszukiwanie sieci za pomocą Yahoo! Web search, Yahoo! News,
+            Yahoo! Local, Yahoo! Images. Aby użyć Yahoo! REST API, musisz
+            posiadać Yahoo! Application ID. Aby otrzymać Application ID, proszę
+            wypełnij i wyślij <ulink
+            url="http://api.search.yahoo.com/webservices/register_application">formularz
             rejestracji aplikacji</ulink>.
         </para>
     </sect2>
@@ -18,9 +18,9 @@
         <para>
             <code>Zend_Service_Yahoo</code> pozwala przeszukiwać sieć poprzez Yahoo! używając
             metody <code>webSearch()</code>, która akceptuje treść zapytania w pierwszym
-            parametrze oraz jako opcjonalny drugi parametr tablicę opcji wyszukiwania. 
-            Pełne informacje i listę opcji możesz znaleźć w 
-            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">dokumentacji 
+            parametrze oraz jako opcjonalny drugi parametr tablicę opcji wyszukiwania.
+            Pełne informacje i listę opcji możesz znaleźć w
+            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">dokumentacji
             Yahoo! Web Search</ulink>. Metoda <code>webSearch()</code> zwraca obiekt
             <code>Zend_Service_Yahoo_WebResultSet</code>.
         </para>
@@ -40,11 +40,11 @@ foreach ($results as $result) {
         <title>Wyszukiwanie obrazków z Yahoo!</title>
         <para>
             Możesz szukać obrazków poprzez Yahoo używając metody <code>imageSearch()</code>
-            klasy <code>Zend_Service_Yahoo</code>. Ta metoda akceptuje treść zapytania w 
-            pierwszym parametrze oraz jako opcjonalny drugi parametr tablicę opcji 
+            klasy <code>Zend_Service_Yahoo</code>. Ta metoda akceptuje treść zapytania w
+            pierwszym parametrze oraz jako opcjonalny drugi parametr tablicę opcji
             wyszukiwania, tak jak metoda
-            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code></link>. 
-            Pełne informacje i listę opcji możesz znaleźć w 
+            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code></link>.
+            Pełne informacje i listę opcji możesz znaleźć w
             <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">dokumentacji
             Yahoo! Image Search</ulink>.
         </para>
@@ -82,7 +82,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.newssearch">
         <title>Przeszukiwanie Yahoo! News</title>
         <para>
-            Przeszukiwanie Yahoo! News jest proste; po prostu użyj metody <code>newsSearch()</code> method, 
+            Przeszukiwanie Yahoo! News jest proste; po prostu użyj metody <code>newsSearch()</code> method,
             tak jak w poniższym przykładzie. Aby dowiedzięc sę więcej, sprawdź
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">dokumentację Yahoo! News Search</ulink>.
         </para>
@@ -101,8 +101,8 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.classes">
         <title>Klasy Zend_Service_Yahoo</title>
         <para>
-            Poniższe klasy są zwracane przez różne wyszukiwania Yahoo!. Każdy typ 
-            wyszukiwania zwraca zestaw wyników o specyficznym typie, który można łatwo 
+            Poniższe klasy są zwracane przez różne wyszukiwania Yahoo!. Każdy typ
+            wyszukiwania zwraca zestaw wyników o specyficznym typie, który można łatwo
             iterować poprzez poszczególne obiekty wyników. Wszystkie klasy zestawów
             wyników implementują interfejs <code>SeekableIterator</code>, pozwalając
             na łatwą iterację i szukanie specyficznego wyniku.
@@ -128,7 +128,7 @@ foreach ($results as $result) {
             </para>
             <para>
                 Każdy ze specyficznych zestawów wyników wyszukiwania zwraca
-                obiekty wyniku 
+                obiekty wyniku
                 <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link>.
             </para>
             <sect4 id="zend.service.yahoo.classes.resultset.totalResults">
@@ -172,7 +172,7 @@ foreach ($results as $result) {
                             <row>
                                 <entry>firstResultPosition</entry>
                                 <entry>int</entry>
-                                <entry>Pozycja pierwszego wyniku w tym zestawie, 
+                                <entry>Pozycja pierwszego wyniku w tym zestawie,
                                 relatywna do całkowitej ilości wyników.</entry>
                             </row>
                         </tbody>
@@ -190,7 +190,7 @@ foreach ($results as $result) {
             </para>
             <note>
                 <para>
-                    <code>Zend_Service_Yahoo_WebResultSet</code> rozszerza klasę <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link> 
+                    <code>Zend_Service_Yahoo_WebResultSet</code> rozszerza klasę <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
                 </para>
             </note>
             <para>

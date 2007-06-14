@@ -25,9 +25,9 @@
 
         <para>
             Dodatkowo Akismet wymaga aby wszystkie żądania zawierały adres URL
-            do zasobu, dla którego dane są filtrowane, i z tego względu, że 
+            do zasobu, dla którego dane są filtrowane, i z tego względu, że
             Akismet pochodzi z WordPress, ten zasób nazywany jest adresem bloga
-            (blog url). Ta wartość powinna być przekazana jako drugi argument do 
+            (blog url). Ta wartość powinna być przekazana jako drugi argument do
             konstruktora, ale może być zresetowana w dowolnej chwili za pomocą
             metody dostępowej <code>setBlogUrl()</code> lub nadpisana przez
             określenie klucza 'blog' w różnych wywołaniach metod.
@@ -41,7 +41,7 @@
             Metoda <code>Zend_Service_Akismet::verifyKey($key)</code> jest
             używana do weryfikowania poprawności klucza API Akismet.
             W większości przypadków nie musisz tego sprawdzać, ale jeśli chcesz
-            przeprowadzić test dla pewności lub sprawdzić czy otrzymany klucz 
+            przeprowadzić test dla pewności lub sprawdzić czy otrzymany klucz
             jest aktywny, możesz to zrobić za pomocą tej metody.
         </para>
 
@@ -74,7 +74,7 @@ echo "Key is not valid\n";
 
         <para>
             Metoda <code>Zend_Service_Akismet::isSpam($data)</code> jest używana
-            do sprawdzenia, czy przekazane dane są uznane przez Akismet jako 
+            do sprawdzenia, czy przekazane dane są uznane przez Akismet jako
             spam. Metoda przyjmuje tablicę asocjacyjną jako jedyny argument.
             Tablica ta wymaga zdefiniowania poniższych kluczy:
         </para>
@@ -89,7 +89,7 @@ echo "Key is not valid\n";
 
             <listitem>
                 <para>
-                    <code>user_agent</code>, nazwa klienta HTTP (przeglądarka 
+                    <code>user_agent</code>, nazwa klienta HTTP (przeglądarka
                     oraz wersja) użytkownika wysyłającego dane.
                 </para>
             </listitem>
@@ -118,7 +118,7 @@ echo "Key is not valid\n";
 
             <listitem>
                 <para>
-                    <code>permalink</code>, bezpośredni odnośnik do wpisu, dla 
+                    <code>permalink</code>, bezpośredni odnośnik do wpisu, dla
                     którego dane są przesyłane.
                 </para>
             </listitem>
@@ -126,9 +126,9 @@ echo "Key is not valid\n";
             <listitem>
                 <para>
                     <code>comment_type</code>, typ przesyłanych danych.
-                    Możliwe wartości określone w API to 'comment', 'trackback', 
-                    'pingback', oraz pusty łańcuch znaków (''), ale wartość 
-                    może być dowolna. 
+                    Możliwe wartości określone w API to 'comment', 'trackback',
+                    'pingback', oraz pusty łańcuch znaków (''), ale wartość
+                    może być dowolna.
                 </para>
             </listitem>
 
@@ -161,8 +161,8 @@ echo "Key is not valid\n";
         </itemizedlist>
 
         <para>
-            Możesz także przesłać dowolne inne zmienne opisujące środowisko, 
-            ktore według ciebie mogą być pomocne w zweryfikowaniu danych pod 
+            Możesz także przesłać dowolne inne zmienne opisujące środowisko,
+            ktore według ciebie mogą być pomocne w zweryfikowaniu danych pod
             kątem spamu. Serwis Akismet sugeruje, aby była to cała zawartość
             tablicy $_SERVER.
         </para>
@@ -203,8 +203,8 @@ if ($akismet->isSpam($data)) {
 
         <para>
             Czasem dane, które są spamem mogą przejść przez filtr. Jeśli
-            będziesz przeglądał przychodzące dane i znajdziesz dane, które 
-            według ciebie powinny być uznane za spam, możesz wysłać je do 
+            będziesz przeglądał przychodzące dane i znajdziesz dane, które
+            według ciebie powinny być uznane za spam, możesz wysłać je do
             Akismet aby pomóc ulepszyć filtr.
         </para>
 
@@ -244,15 +244,15 @@ $akismet->submitSpam($data));
             Czasem dane zostaną przez Akismet błędnie uznane za spam. Z tego
             względu, powinieneś zapisywać dane uznane przez Akismet za spam i
             regularnie je przeglądać. Jeśli znajdziesz takie przypadki, możesz
-            wysłać takie dane do Akismet jako "ham" czyli poprawne dane błędnie 
+            wysłać takie dane do Akismet jako "ham" czyli poprawne dane błędnie
             uznane  za spam (ham jest dobry, spam nie jest).
         </para>
 
         <para>
             Metoda <code>Zend_Service_Akismet::submitHam()</code> przyjmuje
             taką samą tablicę danych jak metody <code>isSpam()</code> oraz
-            <code>submitSpam()</code> i tak samo jak metoda 
-            <code>submitSpam()</code> nie zwraca wartości. Jeśli klucz API jest 
+            <code>submitSpam()</code> i tak samo jak metoda
+            <code>submitSpam()</code> nie zwraca wartości. Jeśli klucz API jest
             nieprawidłowy, zostanie wyrzucony wyjątek.
         </para>
 
@@ -283,7 +283,7 @@ $akismet->submitHam($data));
 
         <para>
             O ile API serwisu Akismet określa jedynie cztery metody,
-            komponent <code>Zend_Service_Akismet</code> posiada kilka 
+            komponent <code>Zend_Service_Akismet</code> posiada kilka
             dodatkowych metod dostępowych, które mogą być użyte do modyfikowania
             wewnętrznych właściwości.
         </para>
@@ -323,11 +323,11 @@ $akismet->submitHam($data));
 
             <listitem>
                 <para>
-                    Metody <code>getUserAgent()</code> oraz 
+                    Metody <code>getUserAgent()</code> oraz
                     <code>setUserAgent()</code> pozwalają ci na pobranie oraz
-                    modyfikowanie informacji o kliencie HTTP używanym do 
+                    modyfikowanie informacji o kliencie HTTP używanym do
                     przeprowadzenia żądania.
-                    Nota: nie jest to ta sama wartość co user_agent, która jest 
+                    Nota: nie jest to ta sama wartość co user_agent, która jest
                     używana w danych wysyłanych do serwisu, ale raczej wartość,
                     która będzie wysłana w nagłówku HTTP User-Agent podczas
                     przeprowadzania żądania do serwisu.
@@ -335,7 +335,7 @@ $akismet->submitHam($data));
 
                 <para>
                     Wartość użyta do ustawienia nazwy klienta HTTP powinna być
-                    w formacie <code>nazwa klienta/wersja | Akismet/wersja</code>. 
+                    w formacie <code>nazwa klienta/wersja | Akismet/wersja</code>.
                     Domyślna wartość to <code>Zend Framework/0.7.0 | Akismet/1.11</code>.
                 </para>
             </listitem>

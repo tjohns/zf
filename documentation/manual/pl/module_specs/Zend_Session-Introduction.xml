@@ -11,48 +11,48 @@
     </para>
 
     <para>
-        W aplikacjach web używających PHP, a <emphasis role="bold">sesja</emphasis> 
+        W aplikacjach web używających PHP, a <emphasis role="bold">sesja</emphasis>
         reprezentuje logiczne połączenie jeden-do-jednego pomiędzy danymi o stanie
-        użytkownika znajdującymi się na serwerze, a konkretną aplikacją 
-        użytkownika (np. przeglądarka stron internetowych). 
-        <code>Zend_Session</code> pomaga w zarządzaniu i zabezpieczaniu danych 
+        użytkownika znajdującymi się na serwerze, a konkretną aplikacją
+        użytkownika (np. przeglądarka stron internetowych).
+        <code>Zend_Session</code> pomaga w zarządzaniu i zabezpieczaniu danych
         sesji, które są logicznym dopełnieniem danych w ciasteczku, pomiędzy
-        wieloma żądaniami do serwisu przez tego samego klienta. W 
-        przeciwieństwie do danych z ciasteczka, dane sesji nie są przechowywane 
-        po stronie klienta i są one dostępne dla klienta tylko wtedy, gdy kod po 
-        stronie serwera dobrowolnie udostępni dane poprzez obiekt odpowiedzi na 
-        żądanie klienta. Dla celów tego komponentu oraz dokumentacji, dane sesji 
-        odnoszą się do danych przechowywanych po stronie serwera w tablicy 
-        <code>$_SESSION[]</code>, zarządzanych przez <code>Zend_Session</code>, 
-        oraz indywidualnie manipulowanych przez obiekty dostępowe 
+        wieloma żądaniami do serwisu przez tego samego klienta. W
+        przeciwieństwie do danych z ciasteczka, dane sesji nie są przechowywane
+        po stronie klienta i są one dostępne dla klienta tylko wtedy, gdy kod po
+        stronie serwera dobrowolnie udostępni dane poprzez obiekt odpowiedzi na
+        żądanie klienta. Dla celów tego komponentu oraz dokumentacji, dane sesji
+        odnoszą się do danych przechowywanych po stronie serwera w tablicy
+        <code>$_SESSION[]</code>, zarządzanych przez <code>Zend_Session</code>,
+        oraz indywidualnie manipulowanych przez obiekty dostępowe
         <code>Zend_Session_Namespace</code>.
-        <emphasis role="bold">Przestrzenie nazw sesji</emphasis> zapewniają 
-        dostęp do danych sesji używając klasycznych 
+        <emphasis role="bold">Przestrzenie nazw sesji</emphasis> zapewniają
+        dostęp do danych sesji używając klasycznych
         <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">przestrzeni nazw</ulink>
         implementowanych logicznie jako nazwane grupy asocjacyjnych tablic, o
         kluczach będących łańcuchami znaków. (analogicznie jak tablice PHP).
     </para>
 
     <para>
-        <code>Zend_Session_Namespace</code> tworzy instancje obiektów 
-        dostępowych dla przestrzeni nazw będących wycinkami <code>$_SESSION[]</code>. 
-        Komponent <code>Zend_Session</code> wraps the existing PHP ext/session 
-        with an administration and management interface, as well as providing an 
-        API for <code>Zend_Session_Namespace</code> to persist session namespaces. 
+        <code>Zend_Session_Namespace</code> tworzy instancje obiektów
+        dostępowych dla przestrzeni nazw będących wycinkami <code>$_SESSION[]</code>.
+        Komponent <code>Zend_Session</code> wraps the existing PHP ext/session
+        with an administration and management interface, as well as providing an
+        API for <code>Zend_Session_Namespace</code> to persist session namespaces.
         <code>Zend_Session_Namespace</code> zapewnia ustandaryzowany zorientowany
         obiektowo interfejs do pracy z przestrzeniami nazw istniejącymi wewnątrz
-        standardowego mechanizmu sesji PHP. Wspierane są zarówno przestrzenie 
-        nazw dla anonimowych użytkowników, jak i dla zalogowanych. 
-        <code>Zend_Auth</code>, komponent autentykacji w ZF używa 
-        <code>Zend_Session_Namespace</code> do przechowywania informacji 
-        związanych z autentykowanymi użytkownikami w przestrzeni nazw "Zend_Auth". 
-        Z tego względu, że <code>Zend_Session</code> używa normalnych 
+        standardowego mechanizmu sesji PHP. Wspierane są zarówno przestrzenie
+        nazw dla anonimowych użytkowników, jak i dla zalogowanych.
+        <code>Zend_Auth</code>, komponent autentykacji w ZF używa
+        <code>Zend_Session_Namespace</code> do przechowywania informacji
+        związanych z autentykowanymi użytkownikami w przestrzeni nazw "Zend_Auth".
+        Z tego względu, że <code>Zend_Session</code> używa normalnych
         wewnętrznych funkcji modułu sesji, oraz umożliwia użycie wszystkich
         znanych opcji konfiguracyjnych i ustawień (zobacz
-        <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>), 
+        <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>),
         a dodatkowo umożliwia dostęp za pomocą zorientowanego obiektowo
         interfejsu, to użycie tego modułu jest przykładem dobrej praktyki
-        programowania, a także gładko integruje się z  Zend Framework. 
+        programowania, a także gładko integruje się z  Zend Framework.
         Zatem standardowy identyfikator sesji PHP przechowywany albo w
         ciasteczku klienta, albo dołączony do adresów URL, umożliwia połączenie
         klienta oraz danych stanu sesji.
@@ -60,14 +60,14 @@
 
     <para>
         Domyślna <ulink
-      url="http://www.php.net/manual/en/function.session-set-save-handler.php">obsługa 
-        zapisu sesji</ulink> nie rozwiązuje problemu zarządzania tym powiązaniem, 
-        gdy klient może połączyć się z dowolnym serwerem w klastrze serwerów, 
-        ponieważ dane stanu sesji są zapisywane jedynie na danym serwerze z tego 
+      url="http://www.php.net/manual/en/function.session-set-save-handler.php">obsługa
+        zapisu sesji</ulink> nie rozwiązuje problemu zarządzania tym powiązaniem,
+        gdy klient może połączyć się z dowolnym serwerem w klastrze serwerów,
+        ponieważ dane stanu sesji są zapisywane jedynie na danym serwerze z tego
         klastra. Dodatkowe odpowiednie możliwości obsługi zapisu będą zapewnione,
-        gdy będą dostępne. Namawiamy członków społeczności aby wysyłali 
+        gdy będą dostępne. Namawiamy członków społeczności aby wysyłali
         propozycje możliwości obsługi zapisu na listę
-        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>. 
+        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
         Obsługa zapisu kompatybilna z Zend_Db została opisana na liście.
     </para>
 

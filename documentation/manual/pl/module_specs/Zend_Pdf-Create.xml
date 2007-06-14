@@ -10,8 +10,8 @@
     </para>
 
     <para>
-    Klasa <code>Zend_Pdf</code> zapewnia także dwie statyczne metody do ładowania 
-    istniejącego dokumentu PDF. Te metody to <code>Zend_Pdf::load()</code> oraz 
+    Klasa <code>Zend_Pdf</code> zapewnia także dwie statyczne metody do ładowania
+    istniejącego dokumentu PDF. Te metody to <code>Zend_Pdf::load()</code> oraz
     <code>Zend_Pdf::parse()</code>. Obie zwracają obiekt Zend_Pdf lub wyrzucają
     wyjątek, jeśli wystąpi błąd.
     </para>
@@ -33,17 +33,17 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     </example>
 
     <para>
-    Format pliku PDF obsługuję inkrementalne uaktualnianie dokumentu. Wtedy za 
+    Format pliku PDF obsługuję inkrementalne uaktualnianie dokumentu. Wtedy za
     każdym razem gdy dokument jest uaktualniony, tworzona jest nowa wersja
     dokumentu. Moduł Zend_Pdf umożliwia następnie ładowanie określonej wersji
     dokumentu.
     </para>
     <para>
-    Wersja może być określona jako drugi parametr w metodach <code>Zend_Pdf::load()</code> 
+    Wersja może być określona jako drugi parametr w metodach <code>Zend_Pdf::load()</code>
     oraz <code>Zend_Pdf::parse()</code> lub za pomocą wywołania <code>Zend_Pdf::rollback()</code>
         <footnote>
             <para>
-            Metoda <code>Zend_Pdf::rollback()</code> musi być wywołana przed 
+            Metoda <code>Zend_Pdf::rollback()</code> musi być wywołana przed
             jakimikolwiek zmianami. W przeciwnym wypadku zachowanie nie jest
             zdefiniowane.
             </para>

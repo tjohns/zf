@@ -61,7 +61,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // Check if locales are equal
-if ($locale->equals($mylocale) { 
+if ($locale->equals($mylocale) {
     print "Locales are equal";
 }
 ?>]]></programlisting>

@@ -9,9 +9,9 @@
     </para>
 
     <para>
-    Nowa strona może być dodana przez utworzenie obiektu <code>Zend_Pdf_Page</code> 
+    Nowa strona może być dodana przez utworzenie obiektu <code>Zend_Pdf_Page</code>
     lub wywołanie metody <code>Zend_Pdf::newPage()</code>, która zwraca obiekt <code>Zend_Pdf_Page</code>.
-    Różnicą jest to, że metoda <code>Zend_Pdf::newPage()</code> tworzy stronę dołączoną 
+    Różnicą jest to, że metoda <code>Zend_Pdf::newPage()</code> tworzy stronę dołączoną
     do dokumentu. W przeciwieństwie to luźnych stron, niepołączonych z żadnym dokumentem,
     nie może ona być użyta z kilkoma dokumentami PDF, ale ma ona trochę lepszą wydajność.
     <footnote>
@@ -24,8 +24,8 @@
     </para>
 
     <para>
-    Metoda <code>Zend_Pdf::newPage()</code> oraz konstruktor klasy <code>Zend_Pdf_Page</code> 
-    przyjmują ten sam zestaw parametrów. W obydwóch jest to rozmiar strony ($x, $y) 
+    Metoda <code>Zend_Pdf::newPage()</code> oraz konstruktor klasy <code>Zend_Pdf_Page</code>
+    przyjmują ten sam zestaw parametrów. W obydwóch jest to rozmiar strony ($x, $y)
     w punktach (1/72 cala), lub definiowana stała, która jest traktowana jako typ
     strony:
         <itemizedlist>
@@ -45,7 +45,7 @@
     </para>
 
     <para>
-    Strony dokumentu są przechowywane w tablicy <code>$pages</code> będącej 
+    Strony dokumentu są przechowywane w tablicy <code>$pages</code> będącej
     publiczną właściwością klasy <code>Zend_Pdf</code>. Jest to tablica obiektów
     <code>Zend_Pdf_Page</code>. Kompletnie definiuje ona zbiór oraz kolejność
     stron dokumentu, a także możemy nią manipulować jak zwykłą tablicą:

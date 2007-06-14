@@ -4,8 +4,8 @@
     <sect2 id="zend.http.response.introduction">
         <title>Introduction</title>
         <para>
-            Zend_Http_Response provides easy access to an HTTP responses 
-            message, as well as a set of static methods for parsing HTTP 
+            Zend_Http_Response provides easy access to an HTTP responses
+            message, as well as a set of static methods for parsing HTTP
             response messages. Usually, Zend_Http_Response is used as an object
             returned by a Zend_Http_Client request.
         </para>
@@ -18,15 +18,15 @@
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
 $sock = fsockopen('www.example.com', 80);
-$req = 	"GET / HTTP/1.1\r\n" . 
-		"Host: www.example.com\r\n" . 
-		"Connectoin: close\r\n" . 
-		"\r\n";
-		
+$req =     "GET / HTTP/1.1\r\n" .
+        "Host: www.example.com\r\n" .
+        "Connectoin: close\r\n" .
+        "\r\n";
+
 fwrite($sock, $req);
-while ($buff = fread($sock, 1024)) 
-	$str .= $sock;
-	
+while ($buff = fread($sock, 1024))
+    $str .= $sock;
+
 $response = Zend_Http_Response::factory($str);
 ?>]]></programlisting>
             </example>
@@ -63,10 +63,10 @@ $response = Zend_Http_Response::factory($str);
             </listitem>
             <listitem>
                 <para>
-                    <code>$message</code>: The HTTP response message (eg 'OK', 'Internal Server Error'). 
+                    <code>$message</code>: The HTTP response message (eg 'OK', 'Internal Server Error').
                     If not specified, the message will be set according to the response code
                 </para>
-            </listitem>      
+            </listitem>
         </itemizedlist>
     </sect2>
     <sect2 id="zend.http.response.testers">
@@ -111,7 +111,7 @@ if ($response->isError()) {
         <title>Accessor Methods</title>
         <para>
             The main goal of the response object is to provide easy access to
-            various response parameters. 
+            various response parameters.
             <itemizedlist>
                 <listitem>
                     <para>
@@ -143,7 +143,7 @@ if ($response->isError()) {
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string|array getHeader($header)</code>: Get a specific HTTP response header, specified 
+                        <code>string|array getHeader($header)</code>: Get a specific HTTP response header, specified
                         by $header
                     </para>
                 </listitem>
@@ -199,60 +199,60 @@ echo $body;
             </example>
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.response.static_parsers">
         <title>Static HTTP Response Parsers</title>
         <para>
-            The Zend_Http_Response class also includes several internally-used 
-            methods for processing and parsing HTTP response messages. These 
+            The Zend_Http_Response class also includes several internally-used
+            methods for processing and parsing HTTP response messages. These
             methods are all exposed as static methods, which means they can be
             used externally, even if you do not need to instantiate a response
             object, and just want to extract a specific part of the response.
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>int Zend_Http_Response::extractCode($response_str)</code>: Extract 
+                        <code>int Zend_Http_Response::extractCode($response_str)</code>: Extract
                         and return the HTTP response code (eg. 200 or 404) from $response_str
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::extractMessage($response_str)</code>: Extract 
+                        <code>string Zend_Http_Response::extractMessage($response_str)</code>: Extract
                         and return the HTTP response message (eg. "OK" or "File Not Found") from $response_str
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::extractVersion($response_str)</code>: : Extract 
+                        <code>string Zend_Http_Response::extractVersion($response_str)</code>: : Extract
                         and return the HTTP version (eg. 1.1 or 1.0) from $response_str
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>array Zend_Http_Response::extractHeaders($response_str)</code>: Extract 
+                        <code>array Zend_Http_Response::extractHeaders($response_str)</code>: Extract
                         and return the HTTP response headers from $response_str as an array
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::extractBody($response_str)</code>: Extract 
+                        <code>string Zend_Http_Response::extractBody($response_str)</code>: Extract
                         and return the HTTP response body from $response_str
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>: 
-                        Get the standard HTTP response message for a response code $code. For example, 
+                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>:
+                        Get the standard HTTP response message for a response code $code. For example,
                         will return "Internal Server Error" if $code is 500. If $http11 is true (default),
                         will return HTTP/1.1 standard messages - otherwise HTTP/1.0 messages will be returned.
-                        If $code is not specified, this method will return all known HTTP response codes as an 
-                        associative (code => message) array. 
+                        If $code is not specified, this method will return all known HTTP response codes as an
+                        associative (code => message) array.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            Apart from parser methods, the class also includes a set of decoders for common HTTP 
+            Apart from parser methods, the class also includes a set of decoders for common HTTP
             response transfer encodings:
             <itemizedlist>
                 <listitem>
@@ -269,7 +269,7 @@ echo $body;
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::decodeDeflate($body)</code>: Decode 
+                        <code>string Zend_Http_Response::decodeDeflate($body)</code>: Decode
                         a "Content-Encoding: deflate" body
                     </para>
                 </listitem>

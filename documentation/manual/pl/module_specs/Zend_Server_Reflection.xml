@@ -6,11 +6,11 @@
 
         <para>
             Klasa Zend_Server_Reflection zapewnia standardowy mechanizm dla
-            przeprowadzania introspekcji funkcji i klas dla potrzeb klas 
-            serwerów. Jest oparta na API Reflection PHP5 i rozszerza je aby 
+            przeprowadzania introspekcji funkcji i klas dla potrzeb klas
+            serwerów. Jest oparta na API Reflection PHP5 i rozszerza je aby
             zapewnić metody pobierania typów parametrów jakie przyjmuje funkcja,
-            typów zwracanych wartości oraz opisów, pełnej listy prototypów 
-            funkcji i metod (np. wszystkie możliwe poprawne kombinacje 
+            typów zwracanych wartości oraz opisów, pełnej listy prototypów
+            funkcji i metod (np. wszystkie możliwe poprawne kombinacje
             wywołania), oraz opisów funkcji/metod.
         </para>
         <para>
@@ -38,7 +38,7 @@ foreach ($prototypes as $prototype) {
 
     // Pobierz typ zwracanej wartości prototypu
     echo "Zwracany typ: ", $prototype->getReturnType(), "\n";
-    
+
     // Pobierz parametry prototypu
     $parameters = $prototype->getParameters();
 

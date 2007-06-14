@@ -4,7 +4,7 @@
     <sect2 id="zend.xmlrpc.server.introduction">
         <title>Wprowadzenie</title>
 
-        <para>Klasa Zend_XmlRpc_Server jest przeznaczona do użycia jako 
+        <para>Klasa Zend_XmlRpc_Server jest przeznaczona do użycia jako
             pełnofunkcjonalny serwer XML-RPC, zgodny ze
             <ulink url="http://www.xmlrpc.com/spec">specyfikacją przedstawioną
             na www.xmlrpc.com</ulink>. Dodatkowo implementuje ona metodę
@@ -34,7 +34,7 @@ echo $server->handle();]]></programlisting>
 
         <para>
             Zend_XmlRpc_Server składa się z wielu różnych komponentów, od
-            samego serwera, przez obiekty żądania, obiekty odpowiedzi aż do 
+            samego serwera, przez obiekty żądania, obiekty odpowiedzi aż do
             obiektów błędów.
         </para>
 
@@ -45,8 +45,8 @@ echo $server->handle();]]></programlisting>
         </para>
 
         <para>
-            Kiedy jest to już zrobione, możesz przekazać obiekt 
-            <code>Zend_XmlRpc_Request</code> do metody 
+            Kiedy jest to już zrobione, możesz przekazać obiekt
+            <code>Zend_XmlRpc_Request</code> do metody
             <code>Zend_XmlRpc_Server::handle()</code>, lub zostanie utworzona
             instancja obiektu <code>Zend_XmlRpc_Request_Http</code> w przypadku
             gdy nie zostanie zapewniony żaden obiekt -- spowoduje to pobieranie
@@ -67,15 +67,15 @@ echo $server->handle();]]></programlisting>
         <title>Konwencje</title>
         <para>
             Zend_XmlRpc_Server pozwala programiście dołączać funkcje oraz metody
-            klas jako uruchamialne metody XML-RPC. Poprzez Zend_Server_Reflection, 
-            przeprowadzana jest introspekcja dla wszystkich dołączanych metod, 
+            klas jako uruchamialne metody XML-RPC. Poprzez Zend_Server_Reflection,
+            przeprowadzana jest introspekcja dla wszystkich dołączanych metod,
             używając bloków dokumentacji funkcji i metod do określenia opisów
             pomocy dla metod oraz sygnatur metod.
         </para>
 
         <para>
             XML-RPC nie mają w typach PHP dokładnych odpowiedników. Jednak skrypt
-            spróbuje dopasować najlepszy typ na podstawie wartości znajdujących 
+            spróbuje dopasować najlepszy typ na podstawie wartości znajdujących
             się w polach @param oraz @return. Niektóre typy XML-RPC nie mają
             dokładnych odpowiedników w typach PHP, więc powinny być rzutowane
             używając typów XML-RPC w komentarzach phpdoc. Są to:
@@ -116,8 +116,8 @@ function myFunc($val1, $val2, $val3)
         <para>
             Poprawne jest określenie wielu typów zarówno dla parametrów jak i
             dla zwracanych wartości; specyfikacja XML-RPC sugeruje nawet, że
-            metoda system.methodSignature powinna zwracać tablicę wszystkich 
-            możliwych sygnatur metody (np. wszystkie możliwe kombinacje 
+            metoda system.methodSignature powinna zwracać tablicę wszystkich
+            możliwych sygnatur metody (np. wszystkie możliwe kombinacje
             parametrów i zwracanych wartości). Możesz to zrobić tak jak robisz
             to w PhpDocumentor, używając operatora '|':
         </para>
@@ -137,7 +137,7 @@ function myFunc($val1, $val2, $val3)
 
         <para>
             Jedna uwaga: dopuszczanie do utworzenia wielu różnych sygnatur może
-            doprowadzić do dezorientacji programistów używających serwisów; 
+            doprowadzić do dezorientacji programistów używających serwisów;
             W zasadzie metoda XML-RPC powinna mieć tylko jedną sygnaturę.
         </para>
     </sect2>
@@ -146,10 +146,10 @@ function myFunc($val1, $val2, $val3)
         <title>Używanie przestrzeni nazw</title>
 
         <para>
-            XML-RPC posiada system przestrzeni nazw; najprościej mówiąc, pozwala 
-            to na grupowanie metod XML-RPC w przestrzenie nazw oddzielone 
-            znakiem kropki. Ułatwia to zapobieganie konfliktom pomiędzy metodami 
-            pochodzącymi z rożnych klas. Przykładowo, serwer XML-RPC powinien 
+            XML-RPC posiada system przestrzeni nazw; najprościej mówiąc, pozwala
+            to na grupowanie metod XML-RPC w przestrzenie nazw oddzielone
+            znakiem kropki. Ułatwia to zapobieganie konfliktom pomiędzy metodami
+            pochodzącymi z rożnych klas. Przykładowo, serwer XML-RPC powinien
             udostępniać kilka metod w przestrzeni nazw 'system':
         </para>
 
@@ -160,12 +160,12 @@ function myFunc($val1, $val2, $val3)
         </itemizedlist>
 
         <para>
-            Wewnątrz odpowiada to metodom o tych samych w obiekcie 
+            Wewnątrz odpowiada to metodom o tych samych w obiekcie
             Zend_XmlRpc_Server.
         </para>
 
         <para>
-            Jeśli chcesz dodać przestrzenie nazw do metod, które oferujesz, po 
+            Jeśli chcesz dodać przestrzenie nazw do metod, które oferujesz, po
             prostu podaj przestrzeń nazw do odpowiedniej metody wtedy, gdy
             dołączasz funkcję lub klasę:
         </para>
@@ -183,15 +183,15 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         <title>Własny obiekt żądania</title>
 
         <para>
-            W większości przypadków będziesz używał domyślnego obiektu żądania 
+            W większości przypadków będziesz używał domyślnego obiektu żądania
             dostarczanego przez Zend_XmlRpc_Server, którym jest obiekt
-            Zend_XmlRpc_Request_Http. Jednak czasem możesz chcieć aby usługa 
-            XML-RPC była dostępna przez CLI, GUI lub inne środowisko, lub możesz 
-            chcieć zapisywać informacje o przychodzących żądaniach. Aby to 
-            zrobić, możesz utworzyć własny obiekt żądania, który rozszerza 
-            obiekt Zend_XmlRpc_Request. Najważniejszą rzeczą jest zapamiętanie 
-            aby zawsze implementować metody getMethod() oraz getParams() co 
-            pozwoli na to, że serwer XML-RPC będzie mógł pobrać te informacje w 
+            Zend_XmlRpc_Request_Http. Jednak czasem możesz chcieć aby usługa
+            XML-RPC była dostępna przez CLI, GUI lub inne środowisko, lub możesz
+            chcieć zapisywać informacje o przychodzących żądaniach. Aby to
+            zrobić, możesz utworzyć własny obiekt żądania, który rozszerza
+            obiekt Zend_XmlRpc_Request. Najważniejszą rzeczą jest zapamiętanie
+            aby zawsze implementować metody getMethod() oraz getParams() co
+            pozwoli na to, że serwer XML-RPC będzie mógł pobrać te informacje w
             celu uruchomienia żądania.
         </para>
     </sect2>
@@ -201,10 +201,10 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
 
         <para>
             Podobnie jak obiekty żądania, Zend_XmlRpc_Server może zwracać własne
-            obiekty odpowiedzi; domyślnie zwracany jest obiekt 
+            obiekty odpowiedzi; domyślnie zwracany jest obiekt
             Zend_XmlRpc_Response_Http, który wysyła odpowiedni nagłówek HTPP
             Content-Type do użycia z XML-RPC. Możliwym powodem użycia własnego
-            obiektu może być potrzeba logowania odpowiedzi, lub wysyłanie 
+            obiektu może być potrzeba logowania odpowiedzi, lub wysyłanie
             odpowiedzi spowrotem do STDOUT.
         </para>
 
@@ -218,19 +218,19 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         <title>Obsługa wyjątków poprzez odpowiedzi błędów</title>
 
         <para>
-            Obiekt Zend_XmlRpc_Server łapie wyjątki wyrzucone przez uruchomioną 
+            Obiekt Zend_XmlRpc_Server łapie wyjątki wyrzucone przez uruchomioną
             metodę i generuje odpowiedź błędu (fault) wtedy gdy taki wyjątek
-            zostanie złapany. Domyślnie informacje o wyjątkach i ich kody nie są 
-            używane w odpowiedzi błędu. Jest to celowe zachowanie chroniące twój 
-            kod; wiele wyjątków ujawnia dużo informacji o kodzie oraz środowisku, 
-            czemu programista powinien zapobiec (dobrym przykładem mogą być 
+            zostanie złapany. Domyślnie informacje o wyjątkach i ich kody nie są
+            używane w odpowiedzi błędu. Jest to celowe zachowanie chroniące twój
+            kod; wiele wyjątków ujawnia dużo informacji o kodzie oraz środowisku,
+            czemu programista powinien zapobiec (dobrym przykładem mogą być
             informacje o wyjątkach związanych z bazą danych)
         </para>
 
         <para>
             Klasy wyjątków, które mają być użyte jako odpowiedzi błędów mogą być
             dodane do listy dozwolonych wyjątków. Aby to zrobić wystarczy użyć
-            metody Zend_XmlRpc_Server_Fault::attachFaultException() w celu 
+            metody Zend_XmlRpc_Server_Fault::attachFaultException() w celu
             przekazania klasy wyjątku do listy dozwolonych wyjątków:
         </para>
 
@@ -239,16 +239,16 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
 
         <para>
             Jeśli dodasz do listy wyjątków klasę wyjątku z którego dziedziczą
-            inne wyjątki, możesz w ten sposób dodać do listy całą rodzinę 
-            wyjątków za jednym razem. Wyjątki Zend_XmlRpc_Server_Exceptions 
-            zawsze znajdują się na liście dozwolonych wyjątków, aby pozwolić na 
-            informowanie o specyficznych wewnętrznych błędach (niezdefiniowanie 
+            inne wyjątki, możesz w ten sposób dodać do listy całą rodzinę
+            wyjątków za jednym razem. Wyjątki Zend_XmlRpc_Server_Exceptions
+            zawsze znajdują się na liście dozwolonych wyjątków, aby pozwolić na
+            informowanie o specyficznych wewnętrznych błędach (niezdefiniowanie
             metody itp.).
         </para>
 
         <para>
-            Każdy wyjątek spoza listy dozwolonych wyjątków spowoduje 
-            wygenerowanie odpowiedzi błędu o kodzie '404' i informacji 
+            Każdy wyjątek spoza listy dozwolonych wyjątków spowoduje
+            wygenerowanie odpowiedzi błędu o kodzie '404' i informacji
             'Unknown error' (Nieznany błąd).
         </para>
     </sect2>
@@ -263,9 +263,9 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
             do klasy serwera.
         </para>
         <para>
-            Aby zredukować straty wydajności, możemy użyć obiektu 
-            Zend_XmlRpc_Server_Cache do buforowania definicji serwera pomiędzy 
-            żądaniami. Gdy połączymy to z funkcją __autoload(), może to mocno 
+            Aby zredukować straty wydajności, możemy użyć obiektu
+            Zend_XmlRpc_Server_Cache do buforowania definicji serwera pomiędzy
+            żądaniami. Gdy połączymy to z funkcją __autoload(), może to mocno
             zwiększyć wydajność.
         </para>
         <para>
@@ -309,7 +309,7 @@ echo $server->handle();]]></programlisting>
     <sect2 id="zend.xmlrpc.server.use">
         <title>Przykład użycia</title>
         <para>
-            Poniżej znajduje się kilka przykładów użycia, pokazując pełne 
+            Poniżej znajduje się kilka przykładów użycia, pokazując pełne
             spektrum opcji dostępnych dla programistów. Każdy z przykładów
             użycia jest oparty na poprzednich przykładach.
         </para>
@@ -344,7 +344,7 @@ echo $server->handle();]]></programlisting>
             <title>Dołączanie klasy</title>
 
             <para>
-                Poniższy przykład pokazuje dołączanie publicznych metod klasy 
+                Poniższy przykład pokazuje dołączanie publicznych metod klasy
                 jako uruchamialnych metod XML-RPC.
             </para>
 
@@ -361,7 +361,7 @@ echo $server->handle();]]></programlisting>
             <title>Dołączanie wielu klas używając przestrzeni nazw</title>
 
             <para>
-                Poniższy przykład pokazuje dołączanie kilku klas, każdej z 
+                Poniższy przykład pokazuje dołączanie kilku klas, każdej z
                 własną przestrzenią nazw.
             </para>
 

@@ -9,13 +9,13 @@
         <para>
             <code>Zend_Db_Profiler</code> może być włączony aby pozwolić na
             profilowanie zapytań. Profilowanie umożliwia zbadanie czasu trwania
-            zapytań pozwalając na inspekcję przeprowadzonych zapytań bez potrzeby 
+            zapytań pozwalając na inspekcję przeprowadzonych zapytań bez potrzeby
             dodawania dodatkowego kodu do klas. Zaawansowane użycie pozwala także
             programiście decydować o tym, jakich typów zapytania mają być profilowane.
         </para>
 
         <para>
-            Włącz profiler przekazując odpowiednią dyrektywę do konstruktora 
+            Włącz profiler przekazując odpowiednią dyrektywę do konstruktora
             adaptera, lub wywołując później metodę adaptera.
         </para>
 
@@ -45,7 +45,7 @@ $db->getProfiler()->setEnabled(true);
         <title>Użycie profilera</title>
 
         <para>
-            W dowolnym momencie możesz pobrać profiler używając metody 
+            W dowolnym momencie możesz pobrać profiler używając metody
             adaptera <code>getProfiler()</code>:
         </para>
 
@@ -80,8 +80,8 @@ $profiler = $db->getProfiler();
             </listitem>
             <listitem>
                 <para>
-                    <code>getLastQueryProfile()</code> zwraca ostatni (najnowszy) 
-                    profil zapytania, niezależnie od tego czy zostało ono zakończone czy 
+                    <code>getLastQueryProfile()</code> zwraca ostatni (najnowszy)
+                    profil zapytania, niezależnie od tego czy zostało ono zakończone czy
                     nie (jeśli nie zostało, to czas zakończenia będzie miał wartość null)
                 </para>
             </listitem>
@@ -95,7 +95,7 @@ $profiler = $db->getProfiler();
 
         <para>
             Wartość zwracana przez <code>getLastQueryProfile()</code> oraz
-            pojedyncze elementy tablicy zwracanej przez <code>getQueryProfiles()</code> 
+            pojedyncze elementy tablicy zwracanej przez <code>getQueryProfiles()</code>
             są obiektami <code>Zend_Db_Profiler_Query</code>, które dają możliwość
             sprawdzenia osobno każdego zapytania.
         </para>
@@ -114,7 +114,7 @@ $profiler = $db->getProfiler();
         </itemizedlist>
 
         <para>
-            Informacja której dostarcza <code>Zend_Db_Profiler</code> jest 
+            Informacja której dostarcza <code>Zend_Db_Profiler</code> jest
             użyteczna przy profilowaniu wąskich gardeł w aplikacjach oraz
             do szukania błędów w wykonanych zapytaniach. Na przykład aby
             zobaczyć ostatnie zapytanie jakie było wykonane:
@@ -159,7 +159,7 @@ echo "Najdłuższe zapytanie: \n" . $longestQuery . "\n";
         <title>Zaawansowane użycie profilera</title>
 
         <para>
-            Oprócz sprawdzania zapytań, profiler pozwala także programiście na 
+            Oprócz sprawdzania zapytań, profiler pozwala także programiście na
             określenie typów zapytań które mają być profilowane. Poniższe
             metody operują na instancji <code>Zend_Db_Profiler</code>:
         </para>
@@ -169,8 +169,8 @@ echo "Najdłuższe zapytanie: \n" . $longestQuery . "\n";
 
             <para>
                 <code>setFilterElapsedSecs()</code> pozwala programiście ustalić
-                minimalny czas trwania zapytania jaki jest potrzebny do tego by 
-                zostało ono profilowane. Aby usunąć filtr, wywołaj metodę z 
+                minimalny czas trwania zapytania jaki jest potrzebny do tego by
+                zostało ono profilowane. Aby usunąć filtr, wywołaj metodę z
                 wartością null w parametrze.
             </para>
 
@@ -188,7 +188,7 @@ $profiler->setFilterElapsedSecs(null);
 
             <para>
                 <code>setFilterQueryType()</code> pozwala programiście określić,
-                które typy zapytań powinny być profilowane; aby profilować 
+                które typy zapytań powinny być profilowane; aby profilować
                 zapytania wielu typów użyj logicznego operatora OR. Typy zapytań
                 są zdefiniowane jako stałe w <code>Zend_Db_Profiler</code>:
             </para>
@@ -202,7 +202,7 @@ $profiler->setFilterElapsedSecs(null);
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Db_Profiler::QUERY</code>: ogólne zapytania 
+                        <code>Zend_Db_Profiler::QUERY</code>: ogólne zapytania
                          które nie pasują do pozostałych typów.
                     </para>
                 </listitem>
@@ -252,7 +252,7 @@ $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 // profiluj zapytania SELECT, INSERT, oraz UPDATE
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
 
-// profiluj zapytania DELETE 
+// profiluj zapytania DELETE
 $profiler->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // Usuń wszystkie filtry
@@ -272,7 +272,7 @@ $profiler->setFilterQueryType(null);
                 metody <code>getQueryProfiles()</code> jest to, że może ona
                 przeprowadzić te filtrowanie w locie, po przekazaniu typu
                 zapytań (lub logicznej kombinacji typów zapytań) jako pierwszego
-                argumentu; przejdź do <xref linkend="zend.db.profiler.advanced.filtertype" /> 
+                argumentu; przejdź do <xref linkend="zend.db.profiler.advanced.filtertype" />
                 aby zobaczyć listę stałych określających typy zapytań.
             </para>
 

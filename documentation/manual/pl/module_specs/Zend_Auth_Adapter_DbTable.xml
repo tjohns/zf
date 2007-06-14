@@ -7,14 +7,14 @@
         <title>Wprowadzenie</title>
 
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> zapewnia możliwość 
+            <code>Zend_Auth_Adapter_DbTable</code> zapewnia możliwość
             przeprowadzenia uwierzytelniania w oparciu o dane przechowywane w
-            tabeli bazy danych. Z tego względu, że klasa 
-            <code>Zend_Auth_Adapter_DbTable</code> wymaga przekazania instancji 
-            klasy <code>Zend_Db_Adapter_Abstract</code> do jej konstruktora, 
-            każda ta instancja jest powiązana z konkretnym połączeniem do bazy 
-            danych. Inne opcje konfiguracyjne mogą być ustawione za pomocą 
-            konstruktora lub za pomocą metod instancji, po jednej dla każdej z 
+            tabeli bazy danych. Z tego względu, że klasa
+            <code>Zend_Auth_Adapter_DbTable</code> wymaga przekazania instancji
+            klasy <code>Zend_Db_Adapter_Abstract</code> do jej konstruktora,
+            każda ta instancja jest powiązana z konkretnym połączeniem do bazy
+            danych. Inne opcje konfiguracyjne mogą być ustawione za pomocą
+            konstruktora lub za pomocą metod instancji, po jednej dla każdej z
             opcji.
         </para>
 
@@ -33,32 +33,32 @@
                         <code>identityColumn</code>: Jest to nazwa kolumny
                         tabeli bazy danych, która reprezentuje tożsamość.
                         Kolumna tożsamości musi zawierać unikalne wartości,
-                        na przykład takie jak nazwa użytkownika czy adres 
+                        na przykład takie jak nazwa użytkownika czy adres
                         e-mail.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>credentialColumn</code>: Jest to nazwa kolumny 
+                        <code>credentialColumn</code>: Jest to nazwa kolumny
                         tabeli bazy danych, która reprezentuje wartość
-                        uwierzytelniającą. W prostym schemacie uwierzytelniania 
-                        opartym o nazwę tożsamości i hasło, wartość 
-                        uwierzytelniająca odpowiada hasłu. Zobacz także opcję 
-                        <code>credentialTreatment</code>. 
+                        uwierzytelniającą. W prostym schemacie uwierzytelniania
+                        opartym o nazwę tożsamości i hasło, wartość
+                        uwierzytelniająca odpowiada hasłu. Zobacz także opcję
+                        <code>credentialTreatment</code>.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>credentialTreatment</code>: W wielu przypadkach, 
+                        <code>credentialTreatment</code>: W wielu przypadkach,
                         hasło i inne wrażliwe dane są zszyfrowane, haszowane,
-                        zakodowane, zakryte lub w inny sposób przetworzone przez 
-                        jakąś funkcję lub algorytm. Określając metodę 
-                        przerobienia danych, taką jak na przykład 
-                        <code>'MD5(?)'</code> czy <code>'PASSWORD(?)'</code>, 
-                        programista może użyć konkretnej funkcji SQL na danych 
+                        zakodowane, zakryte lub w inny sposób przetworzone przez
+                        jakąś funkcję lub algorytm. Określając metodę
+                        przerobienia danych, taką jak na przykład
+                        <code>'MD5(?)'</code> czy <code>'PASSWORD(?)'</code>,
+                        programista może użyć konkretnej funkcji SQL na danych
                         uwierzytelniających. Z tego względu, że te funkcje są
                         specyficzne dla konkretnych systemów baz danych, zajrzyj
-                        do odpowiednich dokumentacji aby sprawdzić dostępność 
+                        do odpowiednich dokumentacji aby sprawdzić dostępność
                         takich funkcji dla twojego systemu bazy danych.
                     </para>
                 </listitem>
@@ -70,19 +70,19 @@
             <title>Podstawowe użycie</title>
 
             <para>
-                Jak wyjaśniono we wprowadzeniu, konstruktor klasy 
+                Jak wyjaśniono we wprowadzeniu, konstruktor klasy
                 <code>Zend_Auth_Adapter_DbTable</code> wymaga przekazania mu
                 instancji klasy <code>Zend_Db_Adapter_Abstract</code>,
-                zapewniającej połączenie do bazy danych, z którym powiązana jest 
-                instancja adaptera uwierzytelniania. Na początku powinno być 
+                zapewniającej połączenie do bazy danych, z którym powiązana jest
+                instancja adaptera uwierzytelniania. Na początku powinno być
                 utworzone połączenie do bazy danych.
             </para>
 
             <para>
                 Poniższy kod tworzy adapter bazy danych przechowywanej w pamięci,
                 tworzy prostą strukturę tabeli, a następnie wstawia wiersz, w
-                oparciu o który przeprowadzimy później zapytanie 
-                uwierzytelniające. Ten przykład wymaga dostępnego rozszerzenia 
+                oparciu o który przeprowadzimy później zapytanie
+                uwierzytelniające. Ten przykład wymaga dostępnego rozszerzenia
                 PDO SQLite:
 
                 <programlisting role="php"><![CDATA[<?php
@@ -111,8 +111,8 @@ $dbAdapter->query($sqlInsert);]]></programlisting>
             </para>
 
             <para>
-                Gdy połączenie do bazy danych oraz dane w tabeli są już 
-                dostępne, może być utworzona instancja 
+                Gdy połączenie do bazy danych oraz dane w tabeli są już
+                dostępne, może być utworzona instancja
                 <code>Zend_Auth_Adapter_DbTable</code>. Opcje konfiguracyjne
                 mogą być przekazane do konstruktora lub przekazane jako
                 parametry do metod dostępowych już po utworzeniu instancji:
@@ -133,9 +133,9 @@ $authAdapter->setTableName('users')
 
             <para>
                 W tym momencie intancja adaptera uwierzytelniania jest gotowa
-                do przeprowadzenia zapytań uwierzytelniających. W celu 
-                utworzenia zapytania, wejściowe dane uwierzytelniania 
-                są przekazywane do adaptera przed wywołaniem metody 
+                do przeprowadzenia zapytań uwierzytelniających. W celu
+                utworzenia zapytania, wejściowe dane uwierzytelniania
+                są przekazywane do adaptera przed wywołaniem metody
                 <code>authenticate()</code>:
 
                 <programlisting role="php"><![CDATA[<?php
@@ -149,7 +149,7 @@ $result = $authAdapter->authenticate();]]></programlisting>
             </para>
 
             <para>
-                Oprócz możliwości użycia metody <code>getIdentity()</code> 
+                Oprócz możliwości użycia metody <code>getIdentity()</code>
                 obiektu rezultatu uwierzytelniania, obiekt
                 <code>Zend_Auth_Adapter_DbTable</code> pozwala także na
                 odebranie wiersza tabeli po udanym uwierzytelnieniu.
@@ -181,19 +181,19 @@ Array
         </example>
 
     </sect2>
-    
+
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
 
         <title>Zaawansowane użycie: Stałe przechowywanie obiektu DbTable Result</title>
 
         <para>
-            Domyślnie <code>Zend_Auth_Adapter_DbTable</code> po udanym 
+            Domyślnie <code>Zend_Auth_Adapter_DbTable</code> po udanym
             uwierzytelnieniu zwraca do obiektu uwierzytelniającego spowrotem
-            tę samą tożsamość. W innym przykładzie użycia programista może 
-            chcieć przechować w stałym mechanizmie przechowywania 
-            <code>Zend_Auth</code> obiekt tożsamości zawierający inne użyteczne 
-            informacje. W takim przypadku może użyć metody 
-            <code>getResultRowObject()</code> aby zwrócić obiekt klasy 
+            tę samą tożsamość. W innym przykładzie użycia programista może
+            chcieć przechować w stałym mechanizmie przechowywania
+            <code>Zend_Auth</code> obiekt tożsamości zawierający inne użyteczne
+            informacje. W takim przypadku może użyć metody
+            <code>getResultRowObject()</code> aby zwrócić obiekt klasy
             <code>stdClass</code>. Poniższy kod ilustruje sposób jego użycia:
 
             <programlisting role="php"><![CDATA[<?php

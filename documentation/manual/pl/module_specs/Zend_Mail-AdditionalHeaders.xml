@@ -1,7 +1,7 @@
 <sect1 id="zend.mail.additional-headers">
     <title>Dodatkowe nagłówki</title>
     <para>
-        Dodatkowe nagłówki wiadomości mogą być ustawione za pomocą metody 
+        Dodatkowe nagłówki wiadomości mogą być ustawione za pomocą metody
         <code>addHeader()</code>. Wymaga ona dwóch parametrów: nazwy nagłówka oraz
         jej wartości. Trzeci opcjonalny parametr decyduje o tym, czy nagłówek
         powinien mieć jedną czy wiele wartości:

@@ -7,34 +7,34 @@
         <title>Precyzyjna kontrola dostępu</title>
 
         <para>
-        Podstawowe ACL zdefiniowane w 
+        Podstawowe ACL zdefiniowane w
         <link linkend="zend.acl.introduction">poprzedniej sekcji</link> pokazują
-        jakie rozmaite uprawnienia mogą być dozwolone dla ACL (dla wszystkich 
-        zasobów). W praktyce, kontrola dostępu ma skłonność do posiadania 
-        wyjątków od reguł oraz różnych stopni skomplikowania. Zend_Acl pozwoli 
+        jakie rozmaite uprawnienia mogą być dozwolone dla ACL (dla wszystkich
+        zasobów). W praktyce, kontrola dostępu ma skłonność do posiadania
+        wyjątków od reguł oraz różnych stopni skomplikowania. Zend_Acl pozwoli
         ci przeprowadzić te analizy w przystępny i elastyczny sposób.
         </para>
 
         <para>
-        W przykładowej aplikacji CMS, zostało zdecydowane, że podczas gdy 
+        W przykładowej aplikacji CMS, zostało zdecydowane, że podczas gdy
         grupa 'staff' pokryje potrzeby większości użytkowników, potrzebna jest
-        jeszcze jedna nowa grupa 'marketing', która wymaga dostępu do 
-        newslettera oraz ostatnich nowości w CMS. Ta grupa jest naprawdę 
-        samowystarczalna i będzie dawała możliwość publikowania oraz 
+        jeszcze jedna nowa grupa 'marketing', która wymaga dostępu do
+        newslettera oraz ostatnich nowości w CMS. Ta grupa jest naprawdę
+        samowystarczalna i będzie dawała możliwość publikowania oraz
         archiwizowania zarówno newsletterów jak i ostatnich nowości.
         </para>
 
         <para>
-        Dodatkowo, zażądano także aby grupa 'staff' miała pozwolenie do 
+        Dodatkowo, zażądano także aby grupa 'staff' miała pozwolenie do
         przeglądania nowości, ale żeby nie mogła przeglądać ostatnich nowości.
         Dodatkowo, archiwizowanie 'zapowiedzi' nie powinno być w ogóle możliwe
         (nawet przez administratora), ponieważ ich okres ważności to 1-2 dni.
         </para>
 
         <para>
-        Wpierw przejrzymy rejestr ról, aby rozważyć te zmiany. Określiliśmy, że 
-        grupa 'marketing' ma te same podstawowe uprawnienia co grupa 'staff', 
-        więc zdefiniujemy grupę 'marketing' w taki sposób, aby dziedziczyła 
+        Wpierw przejrzymy rejestr ról, aby rozważyć te zmiany. Określiliśmy, że
+        grupa 'marketing' ma te same podstawowe uprawnienia co grupa 'staff',
+        więc zdefiniujemy grupę 'marketing' w taki sposób, aby dziedziczyła
         uprawnienia od grupy 'staff':
         </para>
 
@@ -44,7 +44,7 @@ $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
 
         <para>
         Zauważ, że powyższa kontrola dostępu odnosi się do określonych zasobów
-        (np., "newsletter", "ostatnie nowości", "zapowiedzi"). Teraz dodamy te 
+        (np., "newsletter", "ostatnie nowości", "zapowiedzi"). Teraz dodamy te
         zasoby:
         </para>
 
@@ -132,7 +132,7 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
 
         <para>
         Przywileje mogą być modyfikowane inkrementalnie jak pokazano wyżej, ale
-        wartość <code>null</code> dla przywilejów nadpisuje te inkrementalne 
+        wartość <code>null</code> dla przywilejów nadpisuje te inkrementalne
         zmiany:
         </para>
 

@@ -1,12 +1,12 @@
 <sect1 id="zend.controller.modular">
     <title>Użycie konwencjonalnej modularnej struktury katalogów</title>
 
-	<sect2 id="zend.controller.modular.introduction">
-		<title>Wprowadzenie</title>
+    <sect2 id="zend.controller.modular.introduction">
+        <title>Wprowadzenie</title>
         <para>
-            Konwencjonalna modularna struktura katalogów pozwala ci na 
+            Konwencjonalna modularna struktura katalogów pozwala ci na
             oddzielenie różnych aplikacji MVC w osobne jednostki i użycie ich
-            z różnymi kontrolerami frontowymi. Przykładem może być taka 
+            z różnymi kontrolerami frontowymi. Przykładem może być taka
             struktura katalogów:
         </para>
 
@@ -30,19 +30,19 @@ application/
         models/
         views/
 ]]></programlisting>
-        
+
         <para>
-            W tym modelu, nazwa modułu uwidacznia się jako przedrostek nazw 
+            W tym modelu, nazwa modułu uwidacznia się jako przedrostek nazw
             kontrolerów, ktore zawiera moduł. Powyższy przykład zawiera trzy
             kontrolery modułów, 'Blog_IndexController', 'News_IndexController',
             oraz 'News_ListController'. Dwa globalne kontrolery, 'IndexController'
             oraz 'FooController' są także zdefiniowane; żaden z nich nie posiada
-            własnej przestrzeni nazw. Ta struktura katalogów będzie używana w 
+            własnej przestrzeni nazw. Ta struktura katalogów będzie używana w
             przykładach w tym rozdziale.
         </para>
 
         <para>
-            Więc jak implementujesz taką strukturę katalogów używając 
+            Więc jak implementujesz taką strukturę katalogów używając
             komponentów MVC Zend Framework?
         </para>
     </sect2>
@@ -51,21 +51,21 @@ application/
         <title>Określanie ścieżek kontrolera modułów</title>
 
         <para>
-            Pierwszym krokiem użycia modułów jest zmodyfikowanie sposobu 
+            Pierwszym krokiem użycia modułów jest zmodyfikowanie sposobu
             określania listy ścieżek do kontrolerów w kontrolerze frontowym.
             W podstawowej wersji MVC, przekazujesz tablicę lub łańcuch znaków
-            do metody <code>setControllerDirectory()</code>, lub ścieżkę do 
-            metody <code>addControllerDirectory()</code>. Gdy używasz modułów, 
+            do metody <code>setControllerDirectory()</code>, lub ścieżkę do
+            metody <code>addControllerDirectory()</code>. Gdy używasz modułów,
             musisz także odpowiednio zmienić wywołania tych metod.
         </para>
 
         <para>
-            W metodzie <code>setControllerDirectory()</code>, musisz przekazać 
-            tablicę asocjacyjną i określić pary klucz/wartość w postaci 
-            moduł/ścieżka. Specjalny klucz <code>default</code> będzie użyty dla 
-            globalnych kontrolerów (tych, które nie potrzebują przestrzeni nazw). 
-            Wszystkie wpisy powinny zawierać łańcuch znaków wskazujący na 
-            pojedynczą ścieżkę, a klucz <code>default</code> musi istnieć. Na 
+            W metodzie <code>setControllerDirectory()</code>, musisz przekazać
+            tablicę asocjacyjną i określić pary klucz/wartość w postaci
+            moduł/ścieżka. Specjalny klucz <code>default</code> będzie użyty dla
+            globalnych kontrolerów (tych, które nie potrzebują przestrzeni nazw).
+            Wszystkie wpisy powinny zawierać łańcuch znaków wskazujący na
+            pojedynczą ścieżkę, a klucz <code>default</code> musi istnieć. Na
             przykład:
         </para>
 
@@ -77,9 +77,9 @@ $front->setControllerDirectory(array(
 ?>]]></programlisting>
 
         <para>
-            Metoda <code>addControllerDirectory()</code> przyjmuje opcjonalny 
-            drugi argument. Gdy używasz modułów, przekaż nazwę modułu jak drugi 
-            argument; jeśli nie określisz drugiego argumentu, ścieżka zostanie 
+            Metoda <code>addControllerDirectory()</code> przyjmuje opcjonalny
+            drugi argument. Gdy używasz modułów, przekaż nazwę modułu jak drugi
+            argument; jeśli nie określisz drugiego argumentu, ścieżka zostanie
             dodana dla domyślnej przestrzeni nazw. Na przykład:
         </para>
 
@@ -89,9 +89,9 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
 
         <para>
             Zostawiając najlepsze na koniec, najprostszym sposobem określenia
-            katalogu modułów jest określenie ich wszystkich na raz, gdy 
-            wszystkie moduły znajdują się w jednym katalogu i posiadają taką 
-            samą strukturę. Można to zrobić za pomocą metody 
+            katalogu modułów jest określenie ich wszystkich na raz, gdy
+            wszystkie moduły znajdują się w jednym katalogu i posiadają taką
+            samą strukturę. Można to zrobić za pomocą metody
             <code>addModuleDirectory()</code>:
         </para>
 
@@ -112,7 +112,7 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <para>
             Powyższy przykład definiuje moduły <code>default</code>,
-            <code>foo</code>, oraz <code>bar</code>, każdy wskazujący na 
+            <code>foo</code>, oraz <code>bar</code>, każdy wskazujący na
             podkatalog <code>controllers</code> danego modułu.
         </para>
 
@@ -136,10 +136,10 @@ $front->addModuleDirectory('/path/to/application/modules');
 $front->setModuleControllerDirectoryName('con');
 $front->addModuleDirectory('/path/to/application/modules');
 ?>]]></programlisting>
-        
+
         <note><para>
-            Możesz określić aby podkatalog kontrolerów nie był używany w 
-            modułach, przekazując pustą wartość do metody 
+            Możesz określić aby podkatalog kontrolerów nie był używany w
+            modułach, przekazując pustą wartość do metody
             <code>setModuleControllerDirectoryName()</code>.
         </para></note>
     </sect2>
@@ -173,17 +173,17 @@ $front->addModuleDirectory('/path/to/application/modules');
         <title>Moduł lub globalny domyślny kontroler</title>
 
         <para>
-            W domyślnym routerze jeśli w URL nie został określony kontroler, 
-            użyty zostanie domyślny kontroler (<code>IndexController</code>, 
-            jeśli nie określono inaczej). Gdy używamy kontrolerów modularnych, 
-            jeśli moduł został określony, ale kontroler nie, obiekt 
-            uruchamiający wpierw będzie szukał domyślnego kontrolera w ścieżce 
-            modułu, a w drugiej kolejności będzie szukał w ścieżce dla domyślnej 
+            W domyślnym routerze jeśli w URL nie został określony kontroler,
+            użyty zostanie domyślny kontroler (<code>IndexController</code>,
+            jeśli nie określono inaczej). Gdy używamy kontrolerów modularnych,
+            jeśli moduł został określony, ale kontroler nie, obiekt
+            uruchamiający wpierw będzie szukał domyślnego kontrolera w ścieżce
+            modułu, a w drugiej kolejności będzie szukał w ścieżce dla domyślnej
             globalnej przestrzeni nazw 'default'.
         </para>
 
         <para>
-            Jeśli chcesz zawsze używać domyślnej przestrzeni nazw, ustaw 
+            Jeśli chcesz zawsze używać domyślnej przestrzeni nazw, ustaw
             parametr <code>useGlobalDefault</code> w kontrolerze frontowym:
         </para>
 

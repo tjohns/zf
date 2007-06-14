@@ -4,13 +4,13 @@
         <title>Wprowadzenie do przeszukiwania Flickr</title>
         <para>
             <code>Zend_Service_Flickr</code> jest prostym API do użycia z serwisem
-            Flickr REST Web Service. W celu użycia web serwisów Flickr, musisz 
+            Flickr REST Web Service. W celu użycia web serwisów Flickr, musisz
             posiadać klucz API. Aby zdoby klucz i uzyskać więcej informacji o
             Flickr REST Web Service, odwiedź
             <ulink url="http://www.flickr.com/services/api/">dokumentację Flickr API</ulink>.
         </para>
         <para>
-            W poniższym przykladzie, używamy metody <code>tagSearch()</code> do 
+            W poniższym przykladzie, używamy metody <code>tagSearch()</code> do
             wyszukiwania zdjęć zawierających etykietę "php".
         </para>
         <example>
@@ -30,7 +30,7 @@ foreach ($results as $result) {
         <note>
             <title>Opcjonalny parametr</title>
             <para>
-                Metoda <code>tagSearch()</code> akceptuje tablicę opcji jako 
+                Metoda <code>tagSearch()</code> akceptuje tablicę opcji jako
                 opcjonalny drugi parametr.
             </para>
         </note>
@@ -44,22 +44,22 @@ foreach ($results as $result) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>userSearch()</code>: akceptuje w parametrze treść 
-                    zapytania w postaci etykiet oddzielonych spacją oraz tablicę 
-                    opcji wyszukiwania jako opcjonalny drugi parametr, a zwraca 
-                    zestaw zdjęć jako obiekt 
+                    <code>userSearch()</code>: akceptuje w parametrze treść
+                    zapytania w postaci etykiet oddzielonych spacją oraz tablicę
+                    opcji wyszukiwania jako opcjonalny drugi parametr, a zwraca
+                    zestaw zdjęć jako obiekt
                     <code>Zend_Service_Flickr_ResultSet</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByUsername()</code>: Zwraca ID użytkownika powiązane 
+                    <code>getIdByUsername()</code>: Zwraca ID użytkownika powiązane
                     z podaną nazwą użytkownika.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByEmail()</code>:Zwraca ID użytkownika powiązane z 
+                    <code>getIdByEmail()</code>:Zwraca ID użytkownika powiązane z
                     podanym adresem email.
                 </para>
             </listitem>
@@ -67,8 +67,8 @@ foreach ($results as $result) {
         <example>
             <title>Wyszukiwanie publicznych zdjęć użytkownika serwisu Flickr na podstawie adresu e-mail</title>
             <para>
-                W tym przykładzie, posiadamy adres e-mail użytkownika serwisu 
-                Flickr i szukamy publicznych zdjęć użytkownika używając metody 
+                W tym przykładzie, posiadamy adres e-mail użytkownika serwisu
+                Flickr i szukamy publicznych zdjęć użytkownika używając metody
                 <code>userSearch()</code>:
             </para>
             <programlisting role="php"><![CDATA[<?php
@@ -87,14 +87,14 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Pobieranie szczegółów zdjęcia Flickr</title>
         <para>
-            <code>Zend_Service_Flickr</code> ułatwia pobieranie informacji o 
-            zdjęciu na podstawie podanego ID zdjęcia. Po prostu użyj metody 
+            <code>Zend_Service_Flickr</code> ułatwia pobieranie informacji o
+            zdjęciu na podstawie podanego ID zdjęcia. Po prostu użyj metody
             <code>getImageDetails()</code>, tak jak w poniższym przykładzie:
         </para>
         <example>
             <title>Pobieranie szczegółów zdjęcia Flickr</title>
             <para>
-                Jeśli posiadasz ID zdjęcia Flickr, pobranie informacji o zdjęciu 
+                Jeśli posiadasz ID zdjęcia Flickr, pobranie informacji o zdjęciu
                 jest bardzo proste:
             </para>
             <programlisting role="php"><![CDATA[<?php
@@ -125,7 +125,7 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
             <note>
                 <para>
                     Implementuje interfejs <code>SeekableIterator</code>
-                    dla łatwej iteracji (np., używając <code>foreach</code>), 
+                    dla łatwej iteracji (np., używając <code>foreach</code>),
                     tak samo jak i dla bezpośredniego dostępu do specyficznego
                     wyniku używając metody <code>seek()</code>.
                 </para>

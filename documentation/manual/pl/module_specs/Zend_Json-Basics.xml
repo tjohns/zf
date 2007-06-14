@@ -1,9 +1,9 @@
 <sect1 id="zend.json.basics">
     <title>Podstawowe użycie</title>
     <para>
-        Użycie <code>Zend_Json</code> sprowadza się do dwóch dostępnych 
+        Użycie <code>Zend_Json</code> sprowadza się do dwóch dostępnych
         statycznych metod: <code>Zend_Json::encode()</code> oraz
-        <code>Zend_Json::decode()</code>. 
+        <code>Zend_Json::decode()</code>.
     </para>
     <programlisting role="php"><![CDATA[<?php
 // Odkoduj wartość:

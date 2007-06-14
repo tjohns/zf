@@ -4,15 +4,15 @@
 
     <para>
         Instancje <code>Zend_Session_Namespace</code> zapewniają główne API do
-        manipulowania danymi sesji w Zend Framework. Przestrzenie nazw są 
-        używane do segregowania wszystkich danych sesji, chociaż dla tych, 
-        którzy potrzebują tylko jednej przestrzeni nazw dla wszystkich danych 
-        sesji, istnieje domyślna przestrzeń nazw. <code>Zend_Session</code> 
+        manipulowania danymi sesji w Zend Framework. Przestrzenie nazw są
+        używane do segregowania wszystkich danych sesji, chociaż dla tych,
+        którzy potrzebują tylko jednej przestrzeni nazw dla wszystkich danych
+        sesji, istnieje domyślna przestrzeń nazw. <code>Zend_Session</code>
         używa rozszerzenia session i jego specjalnej superglobalnej tablicy
         <code>$_SESSION</code> jako mechanizmu składowania danych stanu sesji.
         Dopóki tablica <code>$_SESSION</code> jest wciąż dostępna w globalnej
         przestrzeni nazw PHP, programiści powinni wystrzegać się uzyskiwania
-        bezpośredniego dostępu do niej, więc dlatego <code>Zend_Session</code> 
+        bezpośredniego dostępu do niej, więc dlatego <code>Zend_Session</code>
         oraz <code>Zend_Session_Namespace</code> mogą najbardziej efektywnie
         i bezpiecznie zapewniać zbiór funkcjonalności związanych z sesją.
     </para>
@@ -23,11 +23,11 @@
 
         <para>
             Jeśli przestrzeń nazw nie zostanie określona przy tworzeniu
-            instancji Zend_Session, wszystkie dane będą przechowywane w 
-            przestrzeni nazw "<code>Default</code>". Klasa 
-            <code>Zend_Session</code> nie jest przeznaczona do bezpośredniej 
-            pracy z zawartością przestrzeni nazw sesji. Zamiast niej używamy 
-            klasy <code>Zend_Session_Namespace</code>. Poniższy przykład 
+            instancji Zend_Session, wszystkie dane będą przechowywane w
+            przestrzeni nazw "<code>Default</code>". Klasa
+            <code>Zend_Session</code> nie jest przeznaczona do bezpośredniej
+            pracy z zawartością przestrzeni nazw sesji. Zamiast niej używamy
+            klasy <code>Zend_Session_Namespace</code>. Poniższy przykład
             demonstruje użycie domyślnej przestrzeni nazw, pokazując jak
             obliczyć ile razy użytkownik oglądał strony w twoim serwisie.
             Aby przetestować ten przykład, dodaj poniższy kod do twojego pliku
@@ -54,18 +54,18 @@
 
         <para>
             Jedną z wielu zalet klasy Zend_Session_Namespace widać wtedy, gdy
-            wiele modułów używa Zend_Session_Namespace i uzyskuje dostęp do 
-            hermetyzacji danych sesji. Do konstruktora Zend_Session można 
-            przekazać opcjonalny argument $namespace, który pozwala innym 
-            komponentom, modułom oraz specyficznemu kodowi programisty na 
-            uzyskanie gwarancji tego, że ich dane będą zabezpieczone przegrodą 
-            od obszarów danych używanych przez inne komponenty, moduły oraz 
-            inny kod programisty. Przestrzenie nazw zapewniają efektywny i 
-            popularny sposób do zabezpieczenia podzbiorów danych stanu sesji 
-            przed przypadkowymi zmianami. Nazwy przestrzeni nazw mogą składać 
-            się tylko z niepustych łańcuchów znaków PHP, ktęre nie zaczynają się 
-            od znaku podkreślnika ('_'). Jedynie rdzenne komponenty zawarte w 
-            Zend Framework powinny używać przestrzeni nazw o nazwach 
+            wiele modułów używa Zend_Session_Namespace i uzyskuje dostęp do
+            hermetyzacji danych sesji. Do konstruktora Zend_Session można
+            przekazać opcjonalny argument $namespace, który pozwala innym
+            komponentom, modułom oraz specyficznemu kodowi programisty na
+            uzyskanie gwarancji tego, że ich dane będą zabezpieczone przegrodą
+            od obszarów danych używanych przez inne komponenty, moduły oraz
+            inny kod programisty. Przestrzenie nazw zapewniają efektywny i
+            popularny sposób do zabezpieczenia podzbiorów danych stanu sesji
+            przed przypadkowymi zmianami. Nazwy przestrzeni nazw mogą składać
+            się tylko z niepustych łańcuchów znaków PHP, ktęre nie zaczynają się
+            od znaku podkreślnika ('_'). Jedynie rdzenne komponenty zawarte w
+            Zend Framework powinny używać przestrzeni nazw o nazwach
             zaczynających się od 'Zend_'.
         </para>
 
@@ -132,9 +132,9 @@
 
         <para>
             Standardowe metody dostępowe są dostępne za pomocą magicznych metod
-            __set(), __unset(), __isset(), oraz __get(). Magiczne metody nie 
+            __set(), __unset(), __isset(), oraz __get(). Magiczne metody nie
             powinny być używane bezpośrednio, z wyjątkiem wnętrza klasy
-            rozszerzającej Zend_Session. Zamiast tego, używaj normalnych 
+            rozszerzającej Zend_Session. Zamiast tego, używaj normalnych
             operatorów aby wywoływać te magiczne metody, na przykład:
         </para>
 

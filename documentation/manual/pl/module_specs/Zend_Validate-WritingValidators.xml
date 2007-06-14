@@ -3,24 +3,24 @@
     <title>Pisanie walidatorów</title>
 
     <para>
-        Zend_Validate zapewnia zestaw najczęściej potrzebnych walidatorów, ale 
-        programiści często potrzebują napisać własne walidatory dla ich 
+        Zend_Validate zapewnia zestaw najczęściej potrzebnych walidatorów, ale
+        programiści często potrzebują napisać własne walidatory dla ich
         szczególnych zastosowań. Zadanie pisania własnego filtru jest opisane w
         tej sekcji.
     </para>
 
     <para>
-        Interfejs <code>Zend_Validate_Interface</code> definiuje trzy metody, 
-        <code>isValid()</code>, <code>getMessages()</code> oraz 
-        <code>getErrors()</code>, które mogą być zaimplementowane przez klasę 
-        użytkownika w celu utworzenia własnych obiektów walidujących. Obiekt, 
+        Interfejs <code>Zend_Validate_Interface</code> definiuje trzy metody,
+        <code>isValid()</code>, <code>getMessages()</code> oraz
+        <code>getErrors()</code>, które mogą być zaimplementowane przez klasę
+        użytkownika w celu utworzenia własnych obiektów walidujących. Obiekt,
         który implementuje interfejs <code>Zend_Validate_Interface</code>
         może być dodany do łańcucha walidatorów za pomocą metody
         <code>Zend_Validate::addValidator()</code>.
-        Taki obiekt może być także użyty przez klasę 
- 	 	<link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.
+        Taki obiekt może być także użyty przez klasę
+          <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.
     </para>
-    
+
     <para>
         As you may already have inferred from the above description of <code>Zend_Validate_Interface</code>,
         validation classes provided with Zend Framework return a boolean value for whether or not a value validates
@@ -28,7 +28,7 @@
         validation. The availability of the reasons for validation failures may be valuable to an application for
         various purposes, such as providing statistics for usability analysis.
     </para>
-    
+
     <para>
         Basic validation failure message functionality is implemented in <code>Zend_Validate_Abstract</code>. To
         include this functionality when creating a validation class, simply extend

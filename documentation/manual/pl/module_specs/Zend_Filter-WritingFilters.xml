@@ -3,17 +3,17 @@
     <title>Pisanie filtrów</title>
 
     <para>
-        Zend_Filter zapewnia zestaw najczęściej potrzebnych filtrów, ale 
+        Zend_Filter zapewnia zestaw najczęściej potrzebnych filtrów, ale
         programiści często potrzebują napisać własne filtry dla ich szczególnych
-        zastosowań. Zadanie pisania własnego filtru jest ułatwione przez 
+        zastosowań. Zadanie pisania własnego filtru jest ułatwione przez
         implementację interfejsu <code>Zend_Filter_Interface</code>.
     </para>
 
     <para>
-        <code>Zend_Filter_Interface</code> definiuje jedną metodę, 
+        <code>Zend_Filter_Interface</code> definiuje jedną metodę,
         <code>filter()</code>, która może być implementowana przez klasy
         użytkownika. Obiekt, który implementuje ten interfejs może być dodany
-        do łańcucha filtrów za pomocą metody 
+        do łańcucha filtrów za pomocą metody
         <code>Zend_Filter::addFilter()</code>.
     </para>
 

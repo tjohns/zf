@@ -11,7 +11,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
     <para>
-        Jeśli wystąpi jakiś błąd podczas obróbki danych pochodzących z kanału, 
+        Jeśli wystąpi jakiś błąd podczas obróbki danych pochodzących z kanału,
         zostanie wyrzucony wyjątek <code>Zend_Feed_Exception</code>.
     </para>
 
@@ -26,10 +26,10 @@ echo $channel->title();
 
 ?>]]></programlisting>
     <para>
-        Zwróć uwagę na składnie funkcji. <code>Zend_Feed</code> używa konwencji 
+        Zwróć uwagę na składnie funkcji. <code>Zend_Feed</code> używa konwencji
         traktującej właściwości jak obiekt XML gdy próbujemy uzyskać do nich dostęp
         za pomocą składni "getter" (<code>$obj->property</code>) i jako łańcuch
-        znaków gdy próbujemy uzyskać dostęp jak do metody (<code>$obj->property()</code>). 
+        znaków gdy próbujemy uzyskać dostęp jak do metody (<code>$obj->property()</code>).
         To pozwala na pełny dostęp do danych tekstowych przy jednoczesnym dostępie
         do wszystkich niższych składników.
     </para>
@@ -155,7 +155,7 @@ if ($item->propname()) {
 
     <para>
         Jeśli zamiast tego użyjesz <code>$item->propname</code>, zawsze dostaniesz
-        pusty obiekt który zostanie skonwertowany do wartości <code>TRUE</code>, 
+        pusty obiekt który zostanie skonwertowany do wartości <code>TRUE</code>,
         więc test zawiedzie.
     </para>
 
