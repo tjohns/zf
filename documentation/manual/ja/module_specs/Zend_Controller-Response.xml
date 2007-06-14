@@ -48,7 +48,7 @@ $response = $front->dispatch();
 $response->sendResponse();
 ?>]]></programlisting>
         </note>
-            
+
         <para>
             開発者は、アクションコントローラの中でレスポンスオブジェクトを使用しなければなりません。
             出力を直接レンダリングしたり直接ヘッダを送信したりするのではなく、
@@ -285,7 +285,7 @@ class MyController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-        
+
         <para>
             上の例で <code>/my/foo</code> をコールすると、
             レスポンスオブジェクトに最終的に格納されるコンテンツは次のようになります。

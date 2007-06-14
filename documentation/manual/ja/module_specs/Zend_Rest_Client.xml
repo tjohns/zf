@@ -157,10 +157,10 @@ echo $result->firstname() .' '. $result->lastname();
         </note>
     </sect2>
 
-	<sect2 id="zend.rest.client.args">
-		<title>リクエストの引数</title>
+    <sect2 id="zend.rest.client.args">
+        <title>リクエストの引数</title>
 
-		<para>
+        <para>
             <code>Zend_Rest_Server</code> ベースのサービスにリクエストを送るのではない場合は、
             リクエストの際に複数の引数を指定する必要があります。
             これを行うには、引数名と同じ名前のメソッドをコールし、
@@ -170,12 +170,12 @@ echo $result->firstname() .' '. $result->lastname();
             最初のコール (あるいは複数の引数を指定した場合の最初の引数)
             は常に、<code>Zend_Rest_Server</code>
             サービスをコールする際のメソッドとみなされます。
-		</para>
+        </para>
 
-		<example>
-			<title>リクエストの引数の設定</title>
+        <example>
+            <title>リクエストの引数の設定</title>
 
-			<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $client = new Zend_Rest_Client('http://example.org/rest');
 
 $client->arg('value1');
@@ -186,32 +186,32 @@ $client->get();
 
 $client->arg('value1')->arg2('value2')->get();
 ?>]]></programlisting>
-		</example>
+        </example>
 
-		<para>
+        <para>
             上の例の二通りの方法はいずれも、次のような get 引数となります。
             <code>?method=arg&amp;arg1=value1&amp;arg=value1&amp;arg2=value2</code>
-		</para>
+        </para>
 
-		<para>
+        <para>
             最初の <code>$client->arg('value1');</code> のコールが
             <code>method=arg&amp;arg1=value1</code> および <code>arg=value1</code>
             の二通りの結果となることにお気づきでしょう。これによって、
             <code>Zend_Rest_Server</code> がリクエストを適切に理解できるようになるのです。
             そのサービスを使用するにあたっての前提知識を必要としなくなります。
-		</para>
+        </para>
 
-		<warning>
-		    <title>Zend_Rest_Client の厳格性</title>
+        <warning>
+            <title>Zend_Rest_Client の厳格性</title>
 
-		    <para>
-				受け取る引数について厳格な REST サービスでは、
-				<code>Zend_Rest_Client</code> の使用に失敗することがあります。
-				これは上で説明した挙動のせいです。
-				これはそう頻繁に起こることではないので、特に問題とはならないでしょう。
-		    </para>
+            <para>
+                受け取る引数について厳格な REST サービスでは、
+                <code>Zend_Rest_Client</code> の使用に失敗することがあります。
+                これは上で説明した挙動のせいです。
+                これはそう頻繁に起こることではないので、特に問題とはならないでしょう。
+            </para>
         </warning>
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

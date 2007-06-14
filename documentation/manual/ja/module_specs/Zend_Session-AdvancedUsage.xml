@@ -245,7 +245,7 @@ $s->setExpirationSeconds(5, 'a'); // キー "a" だけは 5 秒で有効期限�
 // 名前空間全体は、5 "ホップ" で有効期限切れとなります
 $s->setExpirationHops(5);
 
-$s->setExpirationSeconds(60);                  
+$s->setExpirationSeconds(60);
 // "expireAll" 名前空間は、60 秒が経過するか
 // 5 ホップに達するかのどちらかが発生した時点で
 // "有効期限切れ" となります
@@ -350,7 +350,7 @@ else {
             上の例で Zend_Session_Namespace のコンストラクタの第二パラメータで指定しているのは、
             今後 'Zend_Auth' 名前空間で新たに Zend_Session を作成することができないということです。
             作成しようとすると、例外がスローされます。
-            上のコードを実行した後は <code>new Zend_Session_Namespace('Zend_Auth')</code> 
+            上のコードを実行した後は <code>new Zend_Session_Namespace('Zend_Auth')</code>
             ができなくなります。そのため、
             同一リクエスト内でその名前空間のセッションを使用するには、
             最初に作成したインスタンス

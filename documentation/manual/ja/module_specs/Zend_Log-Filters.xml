@@ -4,14 +4,14 @@
     <para>
       フィルタオブジェクトは、ログに書き出されるメッセージをブロックします。
     </para>
-    
+
     <sect2 id="zend.log.filters.all-writers">
       <title>すべてのライターに対するフィルタリング</title>
-    
+
       <para>
         すべてのライターの前にフィルタをかけるには、任意の数のフィルタを
         <code>addFilter()</code> メソッドでログオブジェクトに追加します。
-        
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -34,14 +34,14 @@ $logger->emerg('緊急メッセージ');
         すべてのフィルタを通貨したものだけをライターが受け取るようになります。
       </para>
     </sect2>
-    
+
     <sect2 id="zend.log.filters.single-writer">
       <title>ライターのインスタンスに対するフィルタリング</title>
-      
+
       <para>
         特定のライターインスタンスに対してだけフィルタをかけるには、ライターの
         <code>addFilter</code> メソッドを使用します。
-      
+
         <programlisting role="php"><![CDATA[<?php
 
 $logger = new Zend_Log();
@@ -62,7 +62,7 @@ $logger->info('通知メッセージ');
 // 両方のライターに記録されます
 $logger->emerg('緊急メッセージ');
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
   </sect2>
 </sect1>

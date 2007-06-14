@@ -68,7 +68,7 @@ print $number; // 13524.678 を返します
                 <code>getNumber($value, array $options = array())</code> では非常に大きな数値も正規化できるので、
                 PHP の通常の数値計算のように精度が限られている計算をする前には注意しましょう。
                 たとえば <code>if
-                ((string)int_val($number) != $number) { 
+                ((string)int_val($number) != $number) {
                 <ulink url="http://www.php.net/bc">BCMath</ulink>
                 あるいは
                 <ulink url="http://www.php.net/gmp">GMP</ulink>
@@ -264,7 +264,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
     print "数値です";
 } else {
     print "数値ではありません";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -349,7 +349,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
     print "float です";
 } else {
     print "float ではありません";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -423,7 +423,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
     print "integer です";
 } else {
     print "integer ではありません";
-} 
+}
 ?>]]></programlisting>
         </example>
 

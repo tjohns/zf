@@ -1,9 +1,9 @@
 <sect3 id="zend.controller.actionhelpers.flashmessenger">
-	<title>FlashMessenger</title>
+    <title>FlashMessenger</title>
 
-	<sect4 id="zend.controller.actionhelper.flashmessenger.introduction">
-		<title>導入</title>
-		<para>
+    <sect4 id="zend.controller.actionhelper.flashmessenger.introduction">
+        <title>導入</title>
+        <para>
             <code>FlashMessenger</code> ヘルパーは、
             次のリクエストの際にユーザに見せる必要のあるメッセージを渡すためのものです。
             この機能を実現するため、<code>FlashMessenger</code> は
@@ -13,19 +13,19 @@
             <code>Zend_Session::start()</code> を実行するようにしましょう
             (詳細な使用例は <link linkend="zend.session.startingasession">Zend Session</link>
             を参照ください)。
-		</para>
+        </para>
 
     </sect4>
 
-	<sect4 id="zend.controller.actionhelper.flashmessenger.basicusage">
-		<title>基本的な使用例</title>
-		<para>
+    <sect4 id="zend.controller.actionhelper.flashmessenger.basicusage">
+        <title>基本的な使用例</title>
+        <para>
             以下の使用例は、もっとも基本的なフラッシュメッセンジャーの使用法を示すものです。
             アクション <code>/some/my</code> がコールされると、フラッシュメッセージに
             "Record Saved!" が保存されます。そして、その次のアクション
             <code>/some/my-next-request</code> へのリクエストの際にそれを取得
             (そして削除) します。
-		</para>
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 class SomeController extends Zend_Controller_Action
@@ -36,14 +36,14 @@ class SomeController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_FlashMessenger
      */
     protected $_flashMessenger = null;
-    
-    
+
+
     public function init()
     {
         $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
         $this->initView();
     }
-    
+
     public function myAction()
     {
         /**

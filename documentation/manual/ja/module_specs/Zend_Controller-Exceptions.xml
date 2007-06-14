@@ -124,7 +124,7 @@ if ($response->isException()) {
     $response->outputBody();
 }
 ]]></programlisting>
-                
+
                 <para>
                     <code>Zend_Controller_Front::throwExceptions()</code>
                     に比べてこの方法が優れている点は、例外を処理した後で、
@@ -336,7 +336,7 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
     }
 }
 ]]></programlisting>
-                        
+
                         <para>
                             この例では、
                             リクエストされたアクションがそのコントローラに存在するかどうかを調べます。

@@ -93,14 +93,14 @@ foreach ($channel as $item) {
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>pubDate</code> - 
+                <para><code>pubDate</code> -
                 コンテンツの発行日を RFC 822 の日付書式で表したもの</para>
             </listitem>
             <listitem>
                 <para><code>language</code> - チャネルで使用している言語</para>
             </listitem>
             <listitem>
-                <para><code>category</code> - 
+                <para><code>category</code> -
                 チャネルの所属するカテゴリ (複数の場合は複数のタグで指定)</para>
             </listitem>
         </itemizedlist>

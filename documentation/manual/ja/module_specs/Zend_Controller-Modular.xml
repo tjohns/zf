@@ -1,8 +1,8 @@
 <sect1 id="zend.controller.modular">
     <title>モジュラーディレクトリ構造の規約の使用</title>
 
-	<sect2 id="zend.controller.modular.introduction">
-		<title>導入</title>
+    <sect2 id="zend.controller.modular.introduction">
+        <title>導入</title>
         <para>
             モジュラーディレクトリ構造の規約 (The Conventional Modular directory structure)
             により、さまざまな MVC アプリケーションを自己完結した単位にまとめることができます。
@@ -30,7 +30,7 @@ application/
         models/
         views/
 ]]></programlisting>
-        
+
         <para>
             この考え方では、モジュール名が、
             その中に含まれるコントローラのプレフィックスとなります。
@@ -148,7 +148,7 @@ $front->addModuleDirectory('/path/to/application/modules');
 $front->setModuleControllerDirectoryName('con');
 $front->addModuleDirectory('/path/to/application/modules');
 ?>]]></programlisting>
-        
+
         <note><para>
             モジュール内でコントローラディレクトリを使用しない場合は、
             <code>setModuleControllerDirectoryName()</code>

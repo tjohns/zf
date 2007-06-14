@@ -11,7 +11,7 @@
 
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> および
-            <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> 
+            <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code>
             メソッドで、デフォルトの解析器を取得あるいは設定します。
         </para>
 
@@ -352,7 +352,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 
         <para>
         Zend_Search_Lucene コンストラクタの入力に文字列を使用すると、
-        インデックスリーダ (Zend_Search_Lucene オブジェクト) 
+        インデックスリーダ (Zend_Search_Lucene オブジェクト)
         はそれをファイルシステムのパスと解釈し、
         Zend_Search_Lucene_Storage_Directory_Filesystem
         オブジェクトのインスタンスを作成します。

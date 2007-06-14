@@ -309,7 +309,7 @@ print_r ($date);
                         <entry>dd.MM.yy</entry>
                         <entry>1.4.6</entry>
                         <entry>['day'] => 1,
-                                   ['month'] => 4, 
+                                   ['month'] => 4,
                                    ['year'] => 6</entry>
                     </row>
                     <row>
@@ -382,7 +382,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
     print "日付です";
 } else {
     print "日付ではありません";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -410,7 +410,7 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
     print "時刻です";
 } else {
     print "時刻ではありません";
-} 
+}
 ?>]]></programlisting>
         </example>
 
@@ -437,7 +437,7 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:m
     print "時刻です";
 } else {
     print "時刻ではありません";
-} 
+}
 ?>]]></programlisting>
         </example>
 

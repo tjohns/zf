@@ -1,7 +1,7 @@
 <sect1 id="zend.search.lucene.charset">
-	<title>文字セット</title>
+    <title>文字セット</title>
 
-	<sect2 id="zend.search.lucene.charset.description">
+    <sect2 id="zend.search.lucene.charset.description">
         <title>UTF-8 およびシングルバイト文字セットのサポート</title>
 
         <para>

@@ -197,7 +197,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
     </sect2>
-    
+
     <sect2 id="zend.controller.actionhelper.writingyourown">
         <title>独自のヘルパーの作成</title>
 
@@ -285,7 +285,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 // /blog/view/item/id/42 にリダイレクトします
 $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
 ?>]]></programlisting>
-        
+
         <para>
             内部的には、まずヘルパーブローカの <code>__call()</code>
             メソッドが <code>redirector</code> という名前のヘルパーを探し、

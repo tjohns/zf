@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Java Lucene との相互運用</title>
 
-	<sect2 id="zend.search.lucene.index-creation.file-formats">
-		<title>ファイルフォーマット</title>
+    <sect2 id="zend.search.lucene.index-creation.file-formats">
+        <title>ファイルフォーマット</title>
         <para>
           Zend_Search_Lucene のインデックスファイルのフォーマットは、
           Lucene バージョン 1.4 以降とバイナリ互換性があります。
@@ -14,7 +14,7 @@
           にあります。
           <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.0 です</para></footnote>。
         </para>
-	</sect2>
+    </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.index-directory">
         <title>インデックスディレクトリ</title>
@@ -45,8 +45,8 @@
         </itemizedlist>
     </sect2>
 
-	<sect2 id="zend.search.lucene.java-lucene.source-code">
-		<title>Java のソースコード</title>
+    <sect2 id="zend.search.lucene.java-lucene.source-code">
+        <title>Java のソースコード</title>
         <para>
             以下の Java プログラムリストは、Java Lucene
             を使用してファイルのインデックスを作成する方法を示す例です。

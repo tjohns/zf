@@ -19,15 +19,15 @@
       <code>Zend_Log_Formatter_Simple</code> はデフォルトのフォーマッタです。
       これは、何もフォーマッタを指定しなかった場合に自動的に設定されます。
       デフォルトの設定は、次のようになります。
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
 $formatter = new Zend_Log_Formatter_Simple($format);
 
-?>]]></programlisting>         
+?>]]></programlisting>
     </para>
-      
+
     <para>
       フォーマッタを個々のライターオブジェクトに対して設定するには、ライターの
       <code>setFormatter()</code> メソッドを使用します。
@@ -45,7 +45,7 @@ $logger->info('there');
 
 // "hello there" と出力します
 
-?>]]></programlisting>         
+?>]]></programlisting>
     </para>
 
     <para>
@@ -74,9 +74,9 @@ $logger->addWriter($writer);
 
 $logger->info('通知メッセージ');
 
-?>]]></programlisting>      
+?>]]></programlisting>
     </para>
-    
+
     <para>
       上のコードの出力は、次のような XML になります (可読性を確保するため空白を補っています)。
 
@@ -87,15 +87,15 @@ $logger->info('通知メッセージ');
   <priority>6</priority>
   <priorityName>INFO</priorityName>
 </logEntry>
-]]></programlisting>      
-    </para>    
-    
+]]></programlisting>
+    </para>
+
     <para>
       ルート要素を変更したり、XML の要素名とイベントデータ配列の項目名の対応を指定したりすることも可能です。
       <code>Zend_Log_Formatter_Xml</code> のコンストラクタの最初のパラメータには、
       ルート要素の名前を指定します。また、
       二番目のパラメータには要素名の対応を表す連想配列を指定します。
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $writer = new Zend_Log_Writer_Stream('php://output');
@@ -107,20 +107,20 @@ $logger->addWriter($writer);
 
 $logger->info('通知メッセージ');
 
-?>]]></programlisting>          
+?>]]></programlisting>
 
       上のコードは、ルート要素の名前をデフォルトの
       <code>logEntry</code> から <code>log</code> に変更します。また、要素名
       <code>msg</code> をイベントデータの項目 <code>message</code> に対応させます。
       出力結果は次のようになります。
-      
+
       <programlisting role="xml"><![CDATA[
 <log>
   <msg>通知メッセージ</msg>
   <level>INFO</level>
 </log>
-]]></programlisting>      
-    </para>          
-    
+]]></programlisting>
+    </para>
+
   </sect2>
 </sect1>

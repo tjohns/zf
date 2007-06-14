@@ -3,7 +3,7 @@
     <title>基本的な使用法</title>
 
     <para>
-        <code>Zend_Session_Namespace</code> 
+        <code>Zend_Session_Namespace</code>
         のインスタンスが、Zend Framework
         のセッションデータを操作するための基本的な API を提供します。
         名前空間を使用するとセッションデータを個別に扱うことができますが、
@@ -24,7 +24,7 @@
             何も名前空間をしていせずに Zend_Session のインスタンスを作成すると、
             すべてのデータは透過的に "<code>Default</code>" という名前の名前空間に保存されます。
             <code>Zend_Session</code> は、セッション名前空間コンテナの内容を
-			直接操作するためのものではあります。そのかわりとして
+            直接操作するためのものではあります。そのかわりとして
             <code>Zend_Session_Namespace</code> を使用します。
             以下の例は、このデフォルトの名前空間を使用して
             ユーザがそのページを何回閲覧したかを数える方法を示すものです。

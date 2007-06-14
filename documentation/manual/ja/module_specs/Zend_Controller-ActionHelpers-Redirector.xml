@@ -132,11 +132,11 @@ class SomeController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
-        
+
         // リダイレクタのデフォルトのオプションを設定します
         // このオブジェクトはヘルパーブローカに登録されるので、
         // これ以降のすべてのアクションで有効となります
@@ -144,7 +144,7 @@ class SomeController extends Zend_Controller_Action
                           ->setExit(false)
                           ->setGoto("this-action", "some-controller");
     }
-    
+
     public function myAction()
     {
         /* 何かを行います */
@@ -177,12 +177,12 @@ class AlternativeController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     public function myAction()
     {
         /* 何かを行います */
@@ -215,12 +215,12 @@ class ForwardController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     public function myAction()
     {
         /* 何かを行います */
@@ -268,12 +268,12 @@ class BlogAdminController extends Zend_Controller_Action
      * @var Zend_Controller_Action_Helper_Redirector
      */
     protected $_redirector = null;
-    
+
     public function init()
     {
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     public function returnAction()
     {
         /* 何かを行います */

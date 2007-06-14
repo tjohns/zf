@@ -40,7 +40,7 @@ class FooController extends Zend_Controller_Action
     }
 }
 ]]></programlisting>
-            
+
         <para>
             この <code>FooController</code> クラス (<code>foo</code> コントローラ)
             では、ふたつのアクション <code>bar</code> および <code>baz</code>
@@ -301,7 +301,7 @@ applicationOrModule/
         helpers/
         filters/
 ]]></programlisting>
-            
+
             <para>
                 言い換えると、ビュースクリプトが
                 <code>views/scripts/</code> ディレクトリ内にあり、かつ
@@ -372,7 +372,7 @@ class MyController extends Zend_Controller_Action
 
         // my/login.phtml をレンダリングし、レスポンスオブジェクトの 'form' の部分に返します
         $this->render('login', 'form');
-        
+
         // site.phtml をレンダリングし、レスポンスオブジェクトの 'page' の部分に返します
         // 'my/' ディレクトリは使用しません
         $this->render('site', 'page', true);
@@ -403,7 +403,7 @@ class MyController extends Zend_Controller_Action
             <listitem>
                 <para>
                     <code>_forward($action, $controller = null, $module =
-                        null, array $params = null)</code>: 
+                        null, array $params = null)</code>:
                     別のアクションを実行します。<code>preDispatch()</code> の中でコールすると、
                     リクエストされていたアクションは飛ばされ、
                     新しいアクションを実行します。それ以外の場合は、
@@ -440,7 +440,7 @@ class MyController extends Zend_Controller_Action
 
                     <listitem>
                         <para>
-                            <emphasis>prependBase:</emphasis> 
+                            <emphasis>prependBase:</emphasis>
                             リクエストオブジェクトに登録されている基底 URL を
                             この URL の先頭に付加するかどうか。
                         </para>
@@ -521,7 +521,7 @@ class MyController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
-            
+
             <para>
                 もうひとつの例として、デフォルトコントローラに転送する処理を見てみましょう。
             </para>

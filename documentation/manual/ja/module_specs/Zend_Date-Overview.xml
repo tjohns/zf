@@ -28,7 +28,7 @@
                 サポートする書式コードの一覧は、
                 <xref linkend="zend.date.constants.phpformats" /> を参照ください。
             </para>
-            
+
         </sect3>
 
         <sect3 id="zend.date.options.fixdst">

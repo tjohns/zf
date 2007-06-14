@@ -108,7 +108,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
-        
+
         <para>
             これらのルーティングは、チェインやユーザ定義のルーティング方式を作成する際に何度も使用します。
             任意の設定でお好みの数のルーティングを使用することができますが、
@@ -129,7 +129,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
                 ルート名のもっとも一般的な使用例は、
                 Zend_View の url ヘルパーです。
             </para>
-                
+
             <programlisting role="php"><![CDATA[
 <a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]></programlisting>
 
@@ -146,7 +146,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             これを、後にディスパッチャやユーザが作成したコントローラで使用します。
             マッチするものが見つからない場合は、チェイン内の次のルートを調べます。
         </para>
-            
+
         <note>
             <title>定義の順番</title>
             <para>
@@ -182,7 +182,7 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         </note>
 
     </sect2>
-    
+
     <sect2 id="zend.controller.router.default-routes">
         <title>デフォルトのルート</title>
 
@@ -291,7 +291,7 @@ $request->setBaseUrl(/~user/application-root/);]]></programlisting>
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
     </sect2>
-    
+
     <sect2 id="zend.controller.router.add-config">
         <title>RewriteRouter での Zend_Config の使用法</title>
 
@@ -324,7 +324,7 @@ routes.archive.type = "Zend_Controller_Router_Route_Regex"
 routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
-routes.archive.map.1 = "year" 
+routes.archive.map.1 = "year"
 ; あるいは: routes.archive.map.year = 1
 ]]></programlisting>
 

@@ -36,7 +36,7 @@ foreach ($prototypes as $prototype) {
 
     // 返り値の型を取得します
     echo "返り値の型: ", $prototype->getReturnType(), "\n";
-    
+
     // パラメータを取得します
     $parameters = $prototype->getParameters();
 

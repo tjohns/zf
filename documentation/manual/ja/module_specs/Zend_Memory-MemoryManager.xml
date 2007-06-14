@@ -44,7 +44,7 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
             <programlisting role="php"><![CDATA[<?php
 
 $memoryManager = Zend_Memory::factory('None');
-                
+
 ?>]]></programlisting>
         </para>
 

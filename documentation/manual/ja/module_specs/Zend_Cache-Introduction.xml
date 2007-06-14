@@ -56,18 +56,18 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 if(!$result = $cache->load('myresult')) {
 
     // キャッシュが見つかりませんでした。データベースに接続します
-    
+
     $db = Zend_Db::factory( [...] );
-    
+
     $result = $db->fetchAll('SELECT * FROM huge_table');
-    
+
     $cache->save($result, 'myresult');
-    
+
 } else {
 
     // キャッシュが見つかりました! 大声で叫びましょう
     echo "これはキャッシュからのデータです!\n\n";
-    
+
 }
 
 print_r($result);
@@ -100,10 +100,10 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 // start() メソッドに一意な ID を渡します
 if(!$cache->start('mypage')) {
     // 通常通りに出力します
-    
+
     echo 'Hello world! ';
     echo 'これはキャッシュされます ('.time().') ';
-    
+
     $cache->end(); // 出力が保存され、ブラウザに送信されます
 }
 

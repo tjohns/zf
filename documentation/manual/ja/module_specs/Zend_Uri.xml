@@ -12,7 +12,7 @@
       <code>Zend_Http_Client</code> のような他のコンポーネントを支援することですが、
       単体で使用しても便利です。
     </para>
-  
+
     <para>
       URI の最初は常にスキームから始まり、その後にコロンが続きます。
       スキームにはさまざまなものがあります。
@@ -33,10 +33,10 @@
       スキームのみを <code>Zend_Uri::factory()</code> に渡すと、
       <code>Zend_Uri</code> は新しい URI をゼロから作成します。
     </para>
-    
+
     <example>
       <title><code>Zend_Uri::factory()</code> による新しい URI の作成</title>
-      
+
       <programlisting role="php"><![CDATA[
 <?php
 
@@ -46,7 +46,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http');
 
 // $uri は Zend_Uri_Http のインスタンスとなります
- 
+
 ?>]]></programlisting>
     </example>
 
@@ -65,10 +65,10 @@ $uri = Zend_Uri::factory('http');
       これは、指定したスキームに特化したものとなります。
     </para>
   </sect2>
-  
+
   <sect2 id="zend.uri.manipulation">
     <title>既存の URI の操作</title>
-    
+
     <para>
       既存の URI を操作するには、完全な URI を
       <code>Zend_Uri::factory()</code> に渡します。
@@ -76,7 +76,7 @@ $uri = Zend_Uri::factory('http');
 
     <example>
       <title><code>Zend_Uri::factory()</code> による既存の URI の操作</title>
-      
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -86,8 +86,8 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 // $uri は Zend_Uri_Http のインスタンスです
- 
-?>]]></programlisting>    
+
+?>]]></programlisting>
     </example>
 
     <para>
@@ -98,7 +98,7 @@ $uri = Zend_Uri::factory('http://www.zend.com');
       これは、操作するスキームに特化したものとなります。
     </para>
   </sect2>
-  
+
   <sect2 id="zend.uri.validation">
     <title>URI の検証</title>
 
@@ -106,10 +106,10 @@ $uri = Zend_Uri::factory('http://www.zend.com');
       <code>Zend_Uri::check()</code> 関数を使用すると、
       既存の URI の検証のみを行うことができます。
     </para>
-    
+
     <example>
       <title><code>Zend_Uri::check()</code> による URI の検証</title>
-      
+
     <programlisting role="php"><![CDATA[
 <?php
 
@@ -119,8 +119,8 @@ require_once 'Zend/Uri.php';
 $valid = Zend_Uri::check('http://uri.in.question');
 
 // $valid は、正しければ TRUE、そうでなければ FALSE となります
- 
-?>]]></programlisting>    
+
+?>]]></programlisting>
     </example>
 
     <para>
@@ -132,25 +132,25 @@ $valid = Zend_Uri::check('http://uri.in.question');
 
   <sect2 id="zend.uri.instance-methods">
     <title>共通のインスタンスメソッド</title>
-    
+
     <para>
       すべての <code>Zend_Uri</code> のサブクラス (例
       <code>Zend_Uri_Http</code>) のインスタンスには、
       URI 操作のために便利なインスタンスメソッドがいくつか提供されています。
     </para>
-    
+
     <sect3 id="zend.uri.instance-methods.getscheme">
       <title>URI のスキームの取得</title>
-      
+
       <para>
         URI のスキームとは、URI でカンマの前にくる部分のことです。
         たとえば <code>http://www.zend.com</code> のスキームは
         <code>http</code> となります。
       </para>
-      
+
       <example>
         <title><code>Zend_Uri_*</code> オブジェクトからのスキームの取得</title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -159,7 +159,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $scheme = $uri->getScheme();  // "http"
- 
+
 ?>]]></programlisting>
     </example>
 
@@ -169,13 +169,13 @@ $scheme = $uri->getScheme();  // "http"
       </para>
 
     </sect3>
-    
+
     <sect3 id="zend.uri.instance-methods.geturi">
       <title>URI 全体の取得</title>
 
       <example>
         <title><code>Zend_Uri_*</code> オブジェクトからの URI 全体の取得</title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -184,18 +184,18 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 echo $uri->getUri();  // "http://www.zend.com"
- 
-?>]]></programlisting>      
+
+?>]]></programlisting>
       </example>
 
       <para>
         <code>getUri()</code> メソッドは、URI 全体を文字列として返します。
       </para>
     </sect3>
-    
+
     <sect3 id="zend.uri.instance-methods.valid">
       <title>URI の検証</title>
-      
+
       <para>
         <code>Zend_Uri::factory()</code> は渡された URI を常に検証しており、
         渡された URI が無効な場合は <code>Zend_Uri</code>
@@ -207,7 +207,7 @@ echo $uri->getUri();  // "http://www.zend.com"
 
       <example>
         <title><code>Zend_Uri_*</code> オブジェクトの検証</title>
-        
+
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -216,7 +216,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $isValid = $uri->valid();  // TRUE
- 
+
 ?>]]></programlisting>
       </example>
 

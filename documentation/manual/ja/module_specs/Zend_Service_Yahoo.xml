@@ -85,7 +85,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.yahoo.newssearch">
         <title>Yahoo! News の検索</title>
         <para>
-            Yahoo! News を検索するのは簡単です。単に <code>newsSearch()</code> 
+            Yahoo! News を検索するのは簡単です。単に <code>newsSearch()</code>
             メソッドを下の例のように使用すればよいのです。詳細は
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
             ドキュメント</ulink> を参照ください。

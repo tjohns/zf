@@ -12,17 +12,17 @@
         サンプルとして、archive ルートを作成してみましょう。
         これは先ほど定義したものとほぼ同じですが、今回は Regex ルートを使用しています。
     </para>
-    
+
     <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive/(\d+)', 
+    'archive/(\d+)',
     array(
         'controller' => 'archive',
         'action'     => 'show'
     )
 );
 $router->addRoute('archive', $route);]]></programlisting>
-        
+
     <para>
         定義された正規表現のパターンが、リクエストオブジェクトに注入されます。
         上の例では、<code>http://domain.com/archive/2006</code>
@@ -34,7 +34,7 @@ $values = array(
     1            => '2006',
     'controller' => 'archive',
     'action'     => 'show'
-);]]></programlisting>            
+);]]></programlisting>
 
     <note>
         <para>
@@ -69,17 +69,17 @@ $values = array(
     </para>
 
     <programlisting role="php"><![CDATA[
-public function showAction() 
+public function showAction()
 {
     $request = $this->getRequest();
     $year    = $request->getParam(1); // $year = '2006';
 }
-]]></programlisting>    
+]]></programlisting>
 
     <note>
         <para>このキーは、文字列 ('1') ではなく数値の 1 であることに注意しましょう。</para>
     </note>
-    
+
     <para>
         このルートは、標準のルートとまったく同様に動作するわけではありません。
         'year' のデフォルトが設定されていないからです。
@@ -88,10 +88,10 @@ public function showAction()
         これを解決するには、year 部をスラッシュを含めてオプションにし、
         その数値部のみを取得するようにします。
     </para>
-    
+
     <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive(?:/(\d+))?', 
+    'archive(?:/(\d+))?',
     array(
         'year'       => '2006',
         'controller' => 'archive',
@@ -99,7 +99,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     )
 );
 $router->addRoute('archive', $route);]]></programlisting>
-        
+
     <para>
         まだ問題が残っていることにおそらくお気づきでしょう。
         パラメータとして数値のキーを使用するのはなかなか難しく、
@@ -111,7 +111,7 @@ $router->addRoute('archive', $route);]]></programlisting>
 
     <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive/(\d+)', 
+    'archive/(\d+)',
     array(
         'controller' => 'archive',
         'action' => 'show'
@@ -131,30 +131,30 @@ $values = array(
     'year'       => '2006',
     'controller' => 'archive',
     'action'     => 'show'
-);]]></programlisting>            
+);]]></programlisting>
 
     <para>
         関連付けは両方の方法で定義でき、任意の環境 (例. Zend_Config) で動作します。
         キーには変数名あるいはサブパターン番号のいずれかを含めることができます。
     </para>
-    
-   
+
+
     <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive/(\d+)', 
+    'archive/(\d+)',
     array( ... ),
     array(1 => 'year')
 );
 
 // あるいは
-        
+
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive/(\d+)', 
+    'archive/(\d+)',
     array( ... ),
     array('year' => 1)
-);       
+);
 ]]></programlisting>
-        
+
     <note>
         <para>
             サブパターンのキーは整数値でなければなりません。
@@ -168,10 +168,10 @@ $route = new Zend_Controller_Router_Route_Regex(
 
     <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive/(\d+)/page/(\d+)', 
+    'archive/(\d+)/page/(\d+)',
     array( ... ),
     array('year' => 1)
-);       
+);
 ]]></programlisting>
 
     <para>
@@ -186,7 +186,7 @@ $values = array(
     2            => 10,
     'controller' => 'archive',
     'action'     => 'show'
-);]]></programlisting>            
+);]]></programlisting>
 
     <para>
         正規表現を簡単に反転させることはできないので、
@@ -198,11 +198,11 @@ $values = array(
 
     <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route_Regex(
-    'archive/(\d+)', 
+    'archive/(\d+)',
     array( ... ),
     array('year' => 1),
     'archive/%s'
-);       
+);
 ]]></programlisting>
 
     <para>
@@ -222,11 +222,11 @@ $route = new Zend_Controller_Router_Route_Regex(
 $route = new Zend_Controller_Router_Route_Regex(
     'blog/archive/(\d+)-(.+)\.html',
     array(
-        'controller' => 'blog', 
+        'controller' => 'blog',
         'action'     => 'view'
-    ), 
+    ),
     array(
-        1 => 'id', 
+        1 => 'id',
         2 => 'description'
     ),
     'blog/archive/%d-%s.html'

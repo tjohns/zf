@@ -27,7 +27,7 @@
     $client = new Zend_Http_Client('http://example.org', array(
         'maxredirects' => 0,
         'timeout'      => 30));
-        
+
     // これは、上とまったく同じことです
     $client = new Zend_Http_Client();
     $client->setUri('http://example.org');
@@ -131,7 +131,7 @@
               <para>
                 RFC 2616 - <ulink url="http://www.w3.org/Protocols/rfc2616/rfc2616.html" /> を参照ください。
               </para>
-            </footnote>. 
+            </footnote>.
             利便性を高めるため、これらはすべてクラス定数として定義されています。たとえば
             Zend_Http_Request::GET、Zend_Http_Request::POST などのようになっています。
         </para>
@@ -145,15 +145,15 @@
 <![CDATA[<?php
     // POST リクエストを実行します
     $response = $client->request('POST');
-    
+
     // POST リクエストを実行するためのもうひとつの方法です
     $client->setMethod(Zend_Http_Client::POST);
     $response = $client->request();
-?>]]></programlisting>            
+?>]]></programlisting>
             </example>
         </para>
     </sect2>
-        
+
     <sect2 id="zend.http.client.parameters">
         <title>GET や POST へのパラメータの追加</title>
         <para>
@@ -173,7 +173,7 @@
 
     // このような URL を指定するのと同じことです
     $client->setUri('http://example.com/index.php?knight=lancelot');
-    
+
     // 複数のパラメータを一度に追加します
     $client->setParameterGet(array(
         'first_name'  => 'Bender',
@@ -196,7 +196,7 @@
 <![CDATA[<?php
     // POST パラメータを設定します
     $client->setParameterPost('language', 'fr');
-    
+
     // 複数の POST パラメータを設定します。そのうちのひとつは複数の値を持ちます。
     $client->setParameterPost(array(
         'language'  => 'es',
@@ -212,7 +212,7 @@
             POST パラメータを指定しても無視されます。
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.client.accessing_last">
         <title>直近のリクエストやレスポンスへのアクセス</title>
         <para>
@@ -226,9 +226,9 @@
             クライアントが直近に受信した HTTP レスポンスを
             <link linkend="zend.http.response">Zend_Http_Response</link>
             オブジェクトで返します。
-        </para>    
+        </para>
     </sect2>
-    
+
 </sect1>
 
 <!--

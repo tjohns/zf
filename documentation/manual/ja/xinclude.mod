@@ -12,8 +12,8 @@
 
 <!-- inside chapter or section elements -->
 <!ENTITY % local.divcomponent.mix "| xi:include">
-<!-- inside para, programlisting, literallayout, etc. -->   
+<!-- inside para, programlisting, literallayout, etc. -->
 <!ENTITY % local.para.char.mix "| xi:include">
-<!-- inside bookinfo, chapterinfo, etc. -->      
-<!ENTITY % local.info.class "| xi:include"> 
+<!-- inside bookinfo, chapterinfo, etc. -->
+<!ENTITY % local.info.class "| xi:include">
 <!ENTITY % local.chapter.class "| xi:include">

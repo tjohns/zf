@@ -1,6 +1,6 @@
 <sect1 id="zend.gdata.spreadsheets">
     <title>Google Spreadsheets の使用法</title>
-    
+
     <para>
         Google Spreadsheets データ API を使用すると、
         スプレッドシートの中身を Google データ API フィード形式で閲覧したり
@@ -9,13 +9,13 @@
         既存のスプレッドシートのワークシートを編集・削除したり、
         ワークシートの中身を問い合わせたりといったことも可能です。
     </para>
-    
+
     <para>
         Google Spreadsheets API についての詳細な情報は
         <ulink url="http://code.google.com/apis/spreadsheets/overview.html">http://code.google.com/apis/spreadsheets/overview.html</ulink>
         を参照ください。
     </para>
-    
+
     <sect2 id="zend.gdata.spreadsheets.creating">
         <title>スプレッドシートの作成</title>
         <para>
@@ -23,7 +23,7 @@
             作成・削除はサポートしていません。
         </para>
     </sect2>
-    
+
     <sect2 id="zend.gdata.spreadsheets.listspreadsheets">
         <title>スプレッドシートの一覧の取得</title>
         <para>
@@ -32,7 +32,7 @@
             このサービスが返す <code>Zend_Gdata_Spreadsheets_SpreadsheetFeed</code>
             オブジェクトに、認証済みユーザのスプレッドシート一覧が格納されます。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $service = Zend_Gdata_Spreadsheets::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -40,21 +40,21 @@ $spreadsheetService = new Zend_Gdata_Spreadsheets($client);
 $feed = $spreadsheetService->getSpreadsheetFeed();
 ?>]]></programlisting>
     </sect2>
-    
+
      <sect2 id="zend.gdata.spreadsheets.listworksheets">
         <title>ワークシートの一覧の取得</title>
         <para>
             ひとつのスプレッドシートの中には複数のワークシートがあります。
             各スプレッドシートは、その内部のすべてのワークシートをあらわすメタフィード含んでいます。
         </para>
-        
+
         <para>
             スプレッドシートのキー
             (すでに取得済みの <code>Zend_Gdata_Spreadsheets_SpreadsheetEntry</code>
             オブジェクトの &lt;id&gt;)
             を指定すると、そのスプレッドシートのワークシート一覧を含むフィードを取得できます。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
@@ -71,7 +71,7 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
         </para>
 
     </sect2>
-    
+
     <sect2 id="zend.gdata.spreadsheets.listfeeds">
         <title>リストベースのフィードの扱い</title>
         <para>
@@ -82,16 +82,16 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
             セルベースのフィードについては、「セルベースのフィードの扱い」
             を参照ください。
         </para>
-        
+
         <para>
             以下の節では、リストベースのフィードを取得して行を追加し、
             さまざまなパラメータを指定してクエリを送信する方法を説明します。
         </para>
-        
+
         <para>
             リストフィードでは、スプレッドシート内のデータについていくつかの前提条件があります。
         </para>
-        
+
         <para>
             リストフィードでは、ワークシートの最初の行をヘッダ行として扱います。
             Spreadsheets は、ヘッダ行のセルの名前をもとにして
@@ -99,7 +99,7 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
             Gdata フィードを提供したいユーザは、
             ワークシートの一行目にカラムヘッダ以外を書いてはいけません。
         </para>
-        
+
         <para>
             リストフィードには、先頭行の次の行から最初に空行が現れるまでのすべての行が含まれます。
             空行が登場した時点でデータセットが終了します。
@@ -107,18 +107,18 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
             ワークシートの内容を確認して途中に空行がないかどうかを見てみましょう。
             特に、二行目が空行だったりするとリストフィードには一切データが含まれなくなります。
         </para>
-        
+
         <para>
             リストフィードの行は、そのワークシートが持っているのと同じだけのカラムを保持します。
         </para>
-        
+
         <sect3 id="zend.gdata.spreadsheets.listfeeds.get">
             <title>リストベースのフィードの取得</title>
             <para>
                 ワークシートのリストフィードを取得するには、Spreadsheets サービスの
                 <code>getListFeed</code> メソッドを使用します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
@@ -133,13 +133,13 @@ $listFeed = $spreadsheetService->getListFeed($query);
                 オブジェクトの配列 (<code>$listFeed->entries</code>)
                 を含んでおり、この配列の各要素がワークシートのひとつの行を表します。
             </para>
-            
+
             <para>
               各 <code>Zend_Gdata_Spreadsheets_ListEntry</code> には配列
               <code>custom</code> が含まれ、これがその行のデータを保持します。
               この配列の内容を取り出して表示するには次のようにします。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $rowData = $listFeed->entries[1]->getCustom();
 foreach($rowData as $customEntry) {
@@ -147,17 +147,17 @@ foreach($rowData as $customEntry) {
 }
 ?>]]></programlisting>
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.listfeeds.reverse">
             <title>逆順での行の並べ替え</title>
-            
+
             <para>
                 デフォルトでは、フィード内の行の並び順は GUI
                 で見たときの行の並び順と同じです。つまり行番号順ということです。
                 行を逆順で取得するには、<code>Zend_Gdata_Spreadsheets_ListQuery</code>
                 オブジェクトの reverse プロパティを true に設定します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
@@ -175,10 +175,10 @@ $listFeed = $spreadsheetService->getListFeed($query);
                 とします。
             </para>
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.listfeeds.sq">
             <title>構造化問い合わせ</title>
-            
+
             <para>
                 <code>Zend_Gdata_Spreadsheets_ListQuery</code> の
                 <code>sq</code> を設定することで、
@@ -188,7 +188,7 @@ $listFeed = $spreadsheetService->getListFeed($query);
                 この中から名前が "John" で年齢が 25 才より大きい人のデータだけを抜き出したい場合は、
                 次のように <code>sq</code> を設定します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
@@ -197,19 +197,19 @@ $query->setSpreadsheetQuery('name=John and age>25');
 $listFeed = $spreadsheetService->getListFeed($query);
 ?>]]></programlisting>
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.listfeeds.addrow">
             <title>行の追加</title>
-            
+
             <para>
                 スプレッドシートに行を追加するには、Spreadsheet サービスの
                 <code>insertRow</code> メソッドを使用します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $worksheetId);
 ?>]]></programlisting>
-            
+
             <para>
                 <code>$rowData</code> パラメータには、
                 カラムのキーとその値を関連付けた配列を指定します。
@@ -217,22 +217,22 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $
                 <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code>
                 オブジェクトを返します。
             </para>
-            
+
             <para>
                 Spreadsheets は、リストベースのフィードの一番最後の行の直後に新しい行を追加します。
                 つまり、最初に登場する空行の直前ということです。
             </para>
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.listfeeds.editrow">
             <title>行の編集</title>
-            
+
             <para>
                 <code>Zend_Gdata_Spreadsheets_ListEntry</code>
                 オブジェクトを取得したら、Spreadsheet サービスの
                 <code>updateRow</code> メソッドを使用してその中身を更新することができます。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);
 ?>]]></programlisting>
@@ -245,17 +245,17 @@ $updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);
                 オブジェクトを返します。
             </para>
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.listfeeds.deleterow">
             <title>行の削除</title>
-            
+
             <para>
                 行を削除するには、単に
                 <code>Zend_Gdata_Spreadsheets</code> オブジェクトの
                 <code>deleteRow</code> メソッドをコールするだけです。
                 削除したい既存のエントリを指定します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $spreadsheetService->deleteRow($listEntry);
 ?>]]></programlisting>
@@ -264,17 +264,17 @@ $spreadsheetService->deleteRow($listEntry);
                 あるいは、そのエントリ自身の <code>delete</code>
                 メソッドをコールするという手もあります。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $listEntry->delete();
 ?>]]></programlisting>
         </sect3>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.gdata.spreadsheets.cellfeeds">
         <title>セルベースのフィードの扱い</title>
-    
+
         <para>
             セルベースのフィードでは、各エントリがひとつのセルを表します。
         </para>
@@ -283,15 +283,15 @@ $listEntry->delete();
             ひとつのワークシートで
             セルベースのフィードとリストベースのフィードを同時に使用するのはやめておきましょう。
         </para>
-        
-        
+
+
         <sect3 id="zend.gdata.spreadsheets.cellfeeds.get">
             <title>セルベースのフィードの取得</title>
             <para>
                 ワークシートのセルフィードを取得するには、Spreadsheets サービスの
                 <code>getCellFeed</code> メソッドを使用します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
@@ -307,7 +307,7 @@ $cellFeed = $spreadsheetService->getCellFeed($query);
                 を含んでおり、この配列の各要素がワークシートのひとつのセルを表します。
                 この情報を表示するには次のようにします。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 foreach($cellFeed as $cellEntry) {
   $row = $cellEntry->cell->getRow();
@@ -318,15 +318,15 @@ foreach($cellFeed as $cellEntry) {
 ?>]]></programlisting>
 
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.cellfeeds.cellrangequery">
             <title>セルの範囲の問い合わせ</title>
-            
+
             <para>
                 ワークシートの最初のカラムのセルを取得したいとしましょう。
                 次のようにすると、最初のカラムだけを含むセルフィードを取得することができます。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setMinCol(1);
@@ -339,16 +339,16 @@ $feed = $spreadsheetService->getCellsFeed($query);
                 これは、二行目以降のデータの最初のカラムのみのデータを返します。
             </para>
         </sect3>
-        
+
         <sect3 id="zend.gdata.spreadsheets.cellfeeds.updatecell">
             <title>セルの内容の変更</title>
-            
+
             <para>
                 セルの内容を変更するには、
                 行、カラム、そして新しい値を指定して
                 <code>updateCell</code> をコールします。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 $updatedCell = $spreadsheetService->updateCell($row, $col, $inputValue, $spreadsheetKey, $worksheetId);
 ?>]]></programlisting>
@@ -360,7 +360,7 @@ $updatedCell = $spreadsheetService->updateCell($row, $col, $inputValue, $spreads
                 もともとそのセルが空であった場合もデータを更新します。
             </para>
         </sect3>
-        
+
     </sect2>
-    
+
 </sect1>

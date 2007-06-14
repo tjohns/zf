@@ -129,7 +129,7 @@ echo $cookie;
             </example>
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.cookies.cookie.accessors">
         <title>Zend_Http_Cookie のゲッターメソッド</title>
         <para>
@@ -201,16 +201,16 @@ echo $cookie->getValue();  // これは 'two words' を表示します
 echo $cookie->getDomain(); // これは '.example.com' を表示します
 echo $cookie->getPath();   // これは '/' を表示します
 
-echo date('Y-m-d', $cookie->getExpiryTime()); 
+echo date('Y-m-d', $cookie->getExpiryTime());
 // これは '2005-02-28' を表示します
 
-echo ($cookie->isExpired() ? 'Yes' : 'No');     
+echo ($cookie->isExpired() ? 'Yes' : 'No');
 // これは 'Yes' を表示します
 
-echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No'); 
+echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No');
 // これは 'No' を表示します
 
-echo ($cookie->isSessionCookie() ? 'Yes' : 'No'); 
+echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
 // これは 'No' を表示します
 ?>]]></programlisting>
             </example>
@@ -256,22 +256,22 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
 // まずクッキーオブジェクトを作成します。これはセキュアなセッションクッキーです。
 $cookie = Zend_Http_Client('foo=two+words; domain=.example.com; path=/somedir; secure;');
 
-$cookie->match('https://www.example.com/somedir/foo.php'); 
+$cookie->match('https://www.example.com/somedir/foo.php');
 // これは true を返します。
 
-$cookie->match('http://www.example.com/somedir/foo.php'); 
+$cookie->match('http://www.example.com/somedir/foo.php');
 // これは false を返します。接続がセキュアでないからです。
 
-$cookie->match('https://otherexample.com/somedir/foo.php'); 
+$cookie->match('https://otherexample.com/somedir/foo.php');
 // これは false を返します。ドメインが違っているからです。
 
-$cookie->match('https://example.com/foo.php'); 
+$cookie->match('https://example.com/foo.php');
 // これは false を返します。パスが違っているからです。
 
-$cookie->match('https://www.example.com/somedir/foo.php', false); 
+$cookie->match('https://www.example.com/somedir/foo.php', false);
 // これは false を返します。セッションクッキーはマッチさせないようにしているからです。
 
-$cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php'); 
+$cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php');
 // これは true を返します。
 
 // 別のクッキーオブジェクトを作成します。今度はセキュアではなく、二時間で有効期限切れとなります。
@@ -292,7 +292,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             </example>
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.cookies.cookiejar">
         <title>Zend_Http_CookieJar のインスタンスの作成</title>
         <para>
@@ -316,7 +316,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             参照先 URI を使用して設定します。
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.cookies.cookiejar.adding_cookies">
         <title>Zend_Http_CookieJar オブジェクトへのクッキーの追加</title>
         <para>
@@ -337,7 +337,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</code>: 
+                    <code>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</code>:
                     HTTP レスポンス内のすべてのクッキーをジャーに追加します。
                     $response は Set-Cookie ヘッダつきの Zend_Http_Response オブジェクトです。
                     $ref_uri は参照先 URI で、文字列あるいは Zend_Uri_Http オブジェクトとなります。
@@ -396,7 +396,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>: 
+                    <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>:
                     その URI (ドメインおよびパス) と名前にもとづいて、
                     ジャーから単一のクッキーを取得します。
                     $uri は文字列か Zend_Uri_Http オブジェクトで、URI を表します。
@@ -407,7 +407,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getAllCookies($ret_as)</code>: 
+                    <code>Zend_Http_CookieJar->getAllCookies($ret_as)</code>:
                     ジャーからすべてのクッキーを取得します。
                     $ret_as は先ほど説明したように返り値の型を指定します。
                     指定しなかった場合の $ret_type のデフォルトは、COOKIE_OBJECT となります。
@@ -457,7 +457,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             </itemizedlist>
         </para>
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

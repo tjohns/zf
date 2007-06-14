@@ -49,7 +49,7 @@ $front->setParam('noErrorHandler', true);
             一番手っ取り早いのは、フロントコントローラの起動時に
             <code>ViewRenderer</code> を無効にしてからディスパッチを行うことです。
         </para>
-            
+
         <programlisting role="php"><![CDATA[<?php
 // $front は Zend_Controller_Front のインスタンスであるとします
 $front->setParam('noViewRenderer', true);
@@ -235,7 +235,7 @@ $viewRenderer->setView($view);
         <para>
             前回変更された、もっとも基本的な MVC コンポーネントの使用法は、そのまま同じです。
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/path/to/controllers');
@@ -443,7 +443,7 @@ echo $response;
                         しかし、このメソッドはもはやフロントコントローラでは使用されません。
                         これは、クラスをページコントローラとして使用する場合にのみ使用します。
                         オプションの引数
-                        <code>Zend_Controller_Request_Abstract $request</code> 
+                        <code>Zend_Controller_Request_Abstract $request</code>
                         および <code>Zend_Controller_Response_Abstract $response</code>
                         を受け取ります。
                     </para></listitem>
@@ -515,7 +515,7 @@ public function __call($method, $args)
     if ('Action' == substr($method, -6)) {
         return $this->defaultAction();
     }
-    
+
     throw new Zend_Controller_Exception('無効なメソッド呼び出しです');
 }
 ]]></programlisting>

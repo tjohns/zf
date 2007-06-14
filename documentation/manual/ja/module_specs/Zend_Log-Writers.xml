@@ -18,7 +18,7 @@
       ログのデータを PHP の出力バッファに書き出すには、URL <code>php://output</code>
       を使用します。一方、ログのデータを直接 <code>STDERR</code>
       のようなストリームに送ることもできます (<code>php://stderr</code>)。
-      
+
       <programlisting role="php"><![CDATA[<?php
 
 $writer = new Zend_Log_Writer_Stream('php://output');
@@ -26,14 +26,14 @@ $logger = new Zend_Log($writer);
 
 $logger->info('Informational message');
 
-?>]]></programlisting>        
+?>]]></programlisting>
     </para>
 
     <para>
       データをファイルに書き出すには、
       <ulink url="http://www.php.net/manual/ja/wrappers.php#wrappers.file">ファイルシステム
       URL</ulink> のいずれかを使用します。
-      
+
       <programlisting role="php"><![CDATA[<?php
 
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
@@ -47,7 +47,7 @@ $logger->info('Informational message');
       別のモードでオープンするには、Zend_Log_Writer_Stream
       のコンストラクタで二番目のオプション引数にモードを指定します。
     </para>
-  
+
     <para>
       <code>Zend_Log_Writer_Stream</code> のコンストラクタには、
       既存のストリームリソースを指定することもできます。
@@ -57,7 +57,7 @@ $logger->info('Informational message');
 $stream = @fopen('/path/to/logfile', 'a', false);
 if (! $stream) {
     throw new Exception('ストリームのオープンに失敗しました');
-}        
+}
 
 $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
@@ -129,7 +129,7 @@ $logger->info('通知メッセージ');
     <para>
       <code>Zend_Log_Writer_Mock</code> は非常にシンプルなライターです。
       受け取った生のデータを配列に格納し、それを public プロパティとして公開します。
-      
+
       <programlisting role="php"><![CDATA[<?php
 
 $mock = new Zend_Log_Writer_Mock;
@@ -158,12 +158,12 @@ var_dump($mock->events[0]);
 
   <sect2 id="zend.log.writers.compositing">
     <title>ライターを組み合わせる</title>
-    
+
     <para>
       合成ライターオブジェクトはありません。
       しかし、ログのインスタンスは任意の数のライターに書き出すことができます。そのためには
       <code>addWriter()</code> メソッドを使用します。
-    
+
       <programlisting role="php"><![CDATA[<?php
 
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
@@ -174,7 +174,7 @@ $logger->addWriter($writer1);
 $logger->addWriter($writer2);
 
 // 両方のライターに書き出されます
-$logger->info('通知メッセージ');      
+$logger->info('通知メッセージ');
 
 ?>]]></programlisting>
     </para>

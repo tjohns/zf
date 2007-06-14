@@ -1,7 +1,7 @@
 <sect1 id="zend.view.scripts">
-    
+
     <title>ビュースクリプト</title>
-        
+
     <para>
         コントローラが変数を代入して render() をコールすると、
         指定されたビュースクリプトを Zend_View が読み込み、Zend_View
@@ -9,7 +9,7 @@
         ビュースクリプトの中で $this を参照すると、
         実際には Zend_View のインスタンスを指すことになります。
     </para>
-    
+
     <para>
         コントローラからビューに代入された変数は、
         ビューインスタンスのプロパティとして参照できます。例えば、
@@ -18,40 +18,40 @@
         (これにより、どの値がコントローラから代入されたもので、
         どの値がスクリプト内部で作成されたものなのかを追いかけられるようになります)。
     </para>
-    
+
     <para>
         Zend_View の導入の部分で示したビュースクリプトの例を思い出してみましょう。
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- 本の一覧 -->
     <table>
         <tr>
             <th>著者</th>
             <th>タイトル</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['author']) ?></td>
             <td><?php echo $this->escape($val['title']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>表示する本がありません。</p>
-    
+
 <?php endif; ?>]]>
     </programlisting>
-        
+
     <sect2 id="zend.view.scripts.escaping">
-        
+
         <title>出力のエスケープ</title>
-        
+
         <para>
             ビュースクリプトで行うべき仕事のうち最も重要なもののひとつは、
             出力を適切にエスケープすることです。これは、
@@ -60,11 +60,11 @@
             あるいはヘルパーを使用しているのでない限り、
             変数を出力する際には常にそれをエスケープしなければなりません。
         </para>
-        
+
         <para>
             Zend_View の escape() というメソッドが、このエスケープを行います。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // ビュースクリプトの悪い例
 echo $this->variable;
@@ -73,7 +73,7 @@ echo $this->variable;
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
-        
+
         <para>
             デフォルトでは、escape() メソッドは PHP の htmlspecialchars()
             関数でエスケープを行います。しかし環境によっては、
@@ -81,7 +81,7 @@ echo $this->escape($this->variable);
             コントローラから setEscape() メソッドを実行することで、
             エスケープに使用するコールバックを Zend_View に通知することができます。
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // Zend_View のインスタンスを作成します
 $view = new Zend_View();
@@ -100,13 +100,13 @@ $view->setEscape(array($obj, 'methodName'));
 echo $view->render(...);
 ?>]]>
         </programlisting>
-        
+
         <para>
             コールバック関数あるいはメソッドは、
             エスケープする値を最初のパラメータとして受け取ります。
             それ以外のパラメータはオプションとなります。
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
@@ -120,17 +120,17 @@ echo $view->render(...);
             ビュースクリプトを使用することによるものと、
             Zend_View_Interface 実装することによるものです。
         </para>
-    
+
         <sect3 id="zend.view.scripts.templates.scripts">
             <title>ビュースクリプトを使用したテンプレートシステム</title>
-            
+
             <para>
                 ビュースクリプトを使用して、PHPLIB 形式のテンプレートのような
                 別のテンプレートオブジェクトのインスタンスを作成し、
                 それを操作することができます。ビュースクリプトをこのように使用する方法は、
                 以下のようになります。
             </para>
-            
+
             <programlisting role="php"><![CDATA[<?php
 include_once 'template.inc';
 $tpl = new Template();
@@ -140,24 +140,24 @@ if ($this->books) {
         "booklist" => "booklist.tpl",
         "eachbook" => "eachbook.tpl",
     ));
-    
+
     foreach ($this->books as $key => $val) {
         $tpl->set_var('author', $this->escape($val['author']);
         $tpl->set_var('title', $this->escape($val['title']);
         $tpl->parse("books", "eachbook", true);
     }
-    
+
     $tpl->pparse("output", "booklist");
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
 ?>]]></programlisting>
-        
+
             <para>
                 関連するテンプレートファイルは、このようになります。
             </para>
-        
+
             <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
@@ -447,7 +447,7 @@ $rendered = $view->render('bookinfo.tpl');
 
         </sect3>
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

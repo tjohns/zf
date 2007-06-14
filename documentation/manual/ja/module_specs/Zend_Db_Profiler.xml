@@ -273,7 +273,7 @@ $profiler->setFilterQueryType(null);
                 <code>getQueryProfiles()</code> のもうひとつの機能として、
                 最初の引数にクエリの型 (あるいは複数の型の論理和)
                 を指定することによるその場での絞り込みが可能です。
-                クエリの型を表す定数については <xref linkend="zend.db.profiler.advanced.filtertype" /> 
+                クエリの型を表す定数については <xref linkend="zend.db.profiler.advanced.filtertype" />
                 を参照ください。
             </para>
 

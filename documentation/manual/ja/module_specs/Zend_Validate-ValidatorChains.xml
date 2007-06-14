@@ -32,7 +32,7 @@ if ($validatorChain->isValid($username)) {
         echo "$message\n";
     }
 }
-    
+
 ?>]]></programlisting>
 
         バリデータは、<code>Zend_Validate</code> に追加した順に適用されます。

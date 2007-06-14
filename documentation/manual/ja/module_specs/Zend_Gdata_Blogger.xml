@@ -19,7 +19,7 @@
         <title>Blogger のバージョン間の互換性について理解する</title>
 
         <para>
-            Google Data API を使用して現在のバージョンの 
+            Google Data API を使用して現在のバージョンの
             Blogger にアクセスする際とベータ版の Blogger
             にアクセスする際には、いくつかの違いがあります。
             最大の違いは認証に関する点です。以下の表を参照ください。

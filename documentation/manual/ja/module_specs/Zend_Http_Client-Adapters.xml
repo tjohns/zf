@@ -1,6 +1,6 @@
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - 接続アダプタ</title>
-    
+
     <sect2 id="zend.http.client.adapters.overview">
         <title>概要</title>
         <para>
@@ -45,7 +45,7 @@
     </sect2>
 
     <sect2>
-        <title>ソケットアダプタ</title>    
+        <title>ソケットアダプタ</title>
         <para>
             デフォルトの接続アダプタは Zend_Http_Client_Adapter_Socket
             です。明示的に接続アダプタを指定しない場合は、これが使用されます。
@@ -67,7 +67,7 @@
                     PHP マニュアルの付録 O に、サポートされるソケットトランスポートの一覧があります。
                     <ulink url="http://www.php.net/manual/en/transports.php" />
                 </para>
-            </footnote>. 
+            </footnote>.
         </para>
         <example>
             <title>HTTPS トランスポート層の変更</title>
@@ -78,10 +78,10 @@
         'adapter'      => 'Zend_Http_Client_Adapter_Socket',
         'ssltransport' => 'tls'
     );
-    
+
     // クライアントオブジェクトのインスタンスを作成します
     $client = Zend_Http_Client('https://www.example.com', $config);
-    
+
     // これ以降のリクエストは、TLS セキュア接続上で行われます
     $response = $client->request();
 ?>]]></programlisting>
@@ -94,7 +94,7 @@
             <code>fsockopen('tls://www.example.com', 443)</code>
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.client.adapter.proxy">
         <title>プロキシアダプタ</title>
         <para>
@@ -104,7 +104,7 @@
             これにより、Zend_Http_Client をプロキシサーバの中から使用できるようになります。
             セキュリティやパフォーマンス上の理由により、これが必要となる場合もあるでしょう。
         </para>
-        
+
         <para>
             プロキシアダプタを使用するには、
             デフォルトの 'adapter' オプション以外に
@@ -186,10 +186,10 @@
         'proxy_user' => 'shahar.e',
         'proxy_pass' => 'bananashaped'
     );
-    
+
     // クライアントオブジェクトのインスタンスを作成します
     $client = Zend_Http_Client('http://www.example.com', $config);
-    
+
     // 作業を続けます...
 ?>]]></programlisting>
         </example>
@@ -199,7 +199,7 @@
             オプションでプロキシを使用できるようなアプリケーションを書くことが可能となります。
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.client.adapter.test">
         <title>テストアダプタ</title>
         <para>
@@ -229,21 +229,21 @@
     $client = Zend_Http_Client('http://www.example.com', array(
         'adapter' => $adapter
     ));
-    
+
     // 想定するレスポンスを設定します
     $adapter->setResponse(
         "HTTP/1.1 200 OK"        . "\r\n" .
         "Content-type: text/xml" . "\r\n" .
-                                   "\r\n" . 
-        '<?xml version="1.0" encoding="UTF-8"?>' . 
-        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' . 
-        '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' . 
-        '     xmlns:dc="http://purl.org/dc/elements/1.1/">' . 
-        '  <channel>' . 
-        '    <title>Premature Optimization</title>' . 
+                                   "\r\n" .
+        '<?xml version="1.0" encoding="UTF-8"?>' .
+        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+        '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
+        '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
+        '  <channel>' .
+        '    <title>Premature Optimization</title>' .
         // などなど...
         '</rss>');
-    
+
     $response = $client->request('GET');
     // .. $response の処理を続けます...
 ?>]]></programlisting>
@@ -254,7 +254,7 @@
             この場合、このテストでテストするのは、
             レスポンス本文の XML をアプリケーションが正しくパースできるかどうかということです。
         </para>
-        
+
         <para>
             時には、オブジェクトに対するひとつのメソッド呼び出しの中で複数の
             HTTP トランザクションを行うこともあるでしょう。そのような場合は
@@ -270,26 +270,26 @@
     $client = Zend_Http_Client('http://www.example.com', array(
         'adapter' => $adapter
     ));
-    
+
     // 最初の応答として期待する値を設定します
     $adapter->setResponse(
         "HTTP/1.1 302 Found"      . "\r\n" .
         "Location: /"             . "\r\n" .
         "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" . 
-        '<html>' . 
+                                    "\r\n" .
+        '<html>' .
         '  <head><title>Moved</title></head>' .
-        '  <body><p>This page has moved.</p></body>' . 
+        '  <body><p>This page has moved.</p></body>' .
         '</html>');
 
     // それに続くレスポンスを設定します
     $adapter->addResponse(
         "HTTP/1.1 200 OK"         . "\r\n" .
         "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" . 
-        '<html>' . 
-        '  <head><title>My Pet Store Home Page</title></head>' . 
-        '  <body><p>...</p></body>' . 
+                                    "\r\n" .
+        '<html>' .
+        '  <head><title>My Pet Store Home Page</title></head>' .
+        '  <body><p>...</p></body>' .
         '</html>');
 
     // HTTP クライアントオブジェクト ($client) をテスト対象の
@@ -319,7 +319,7 @@
             クライアントをテスト対象オブジェクトに注入し、その挙動をテストします。
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.client.adapter.extending">
         <title>独自の接続アダプタの作成</title>
         <para>
@@ -340,7 +340,7 @@
             <programlisting role="php">
 <![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
-{    
+{
     /**
      * アダプタの設定配列を設定する
      *
@@ -351,7 +351,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
         // ここはほとんど変更することはありません -
         // 通常は Zend_Http_Client_Adapter_Socket の実装をコピーします
     }
-    
+
     /**
      * リモートサーバに接続する
      *
@@ -363,7 +363,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
     {
         // リモートサーバとの接続を確立します
     }
-    
+
     /**
      * リクエストをリモートサーバに送信する
      *
@@ -379,7 +379,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
         // リクエストをリモートサーバに送信します。
         // この関数は、リクエスト全体 (ヘッダおよび本文) を文字列で返します。
     }
-    
+
     /**
      * サーバからのレスポンスを読み込む
      *
@@ -389,7 +389,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
     {
         // リモートサーバからのレスポンスを読み込み、それを文字列で返します。
     }
-    
+
     /**
      * サーバとの接続を閉じる
      *
@@ -398,7 +398,7 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
     {
         // リモートサーバとの接続を閉じます。最後にコールされます。
     }
-}    
+}
 
 // そして、このアダプタを使用します
 $client = new Zend_Http_Client(array(

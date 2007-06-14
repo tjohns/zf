@@ -19,15 +19,15 @@
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
 $sock = fsockopen('www.example.com', 80);
-$req = 	"GET / HTTP/1.1\r\n" . 
-		"Host: www.example.com\r\n" . 
-		"Connectoin: close\r\n" . 
-		"\r\n";
-		
+$req =     "GET / HTTP/1.1\r\n" .
+        "Host: www.example.com\r\n" .
+        "Connectoin: close\r\n" .
+        "\r\n";
+
 fwrite($sock, $req);
-while ($buff = fread($sock, 1024)) 
-	$str .= $sock;
-	
+while ($buff = fread($sock, 1024))
+    $str .= $sock;
+
 $response = Zend_Http_Response::factory($str);
 ?>]]></programlisting>
             </example>
@@ -67,7 +67,7 @@ $response = Zend_Http_Response::factory($str);
                     <code>$message</code>: HTTP レスポンスメッセージ (たとえば 'OK' や 'Internal Server Error' など)。
                     指定しなかった場合は、レスポンスコードに応じたメッセージが設定されます。
                 </para>
-            </listitem>      
+            </listitem>
         </itemizedlist>
     </sect2>
     <sect2 id="zend.http.response.testers">
@@ -202,7 +202,7 @@ echo $body;
             </example>
         </para>
     </sect2>
-    
+
     <sect2 id="zend.http.response.static_parsers">
         <title>静的 HTTP レスポンスパーサ</title>
         <para>
@@ -247,7 +247,7 @@ echo $body;
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>: 
+                        <code>string Zend_Http_Response::responseCodeAsText($code = null, $http11 = true)</code>:
                         レスポンスコード $code に対応する、標準的な HTTP レスポンスメッセージを取得します。
                         たとえば $code が 500 の場合は "Internal Server Error" を返します。
                         $http11 が true の場合 (デフォルト) は HTTP/1.1 のメッセージを、

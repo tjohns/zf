@@ -113,7 +113,7 @@ $viewRenderer->setView($view)
         <programlisting role="php"><![CDATA[<?php
 Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
 ]]></programlisting>
-        
+
         <para>
             アクションコントローラのインスタンスが最初に作成されたときに、
             <code>ViewRenderer</code> がビューオブジェクトのインスタンスを作成します。

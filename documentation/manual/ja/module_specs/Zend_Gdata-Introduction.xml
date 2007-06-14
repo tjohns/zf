@@ -154,7 +154,7 @@
                     </para>
                 </listitem>
             </itemizedlist>
-        </para>                
+        </para>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.services">
@@ -169,7 +169,7 @@
             新しいエントリをフィードに挿入したり
             既存のエントリを更新したり削除したりといったメソッドがあります。
         </para>
-        
+
         <para>
             注意: Zend_Gdata を用いた実際に動作するサンプルプログラムは
             <code>demos/Zend/Gdata</code> ディレクトリにあります。
@@ -209,7 +209,7 @@ Zend_Loader::loadClass('Zend_Gdata_Spreadsheets');
 $ss = new Zend_Gdata_Spreadsheets();
 
 // Zend_Gdata_App_Spreadsheets_CellEntry を作成します
-$entry = $ss->newCellEntry(); 
+$entry = $ss->newCellEntry();
 
 // Zend_Gdata_App_Spreadsheets_Extension_Cell を作成します
 $cell = $ss->newCell();
@@ -472,7 +472,7 @@ $feed = $gdata->getFeed($query);
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
         <title>フィードやエントリ内のデータの操作</title>
-    
+
         <para>
             フィードを取得したら、次はそのデータを読み込んだり
             そこに含まれるエントリを読み込んだりする番です。
@@ -498,7 +498,7 @@ foreach ($feed as $entry) {
 
     <sect2 id="zend.gdata.introduction.updateentry">
         <title>エントリの更新</title>
-    
+
         <para>
             エントリを取得したら、それを更新してサーバに保存することができます。以下に例を示します。
         </para>
@@ -555,7 +555,7 @@ $content = $gdata->newContent('We will visit the park and play a few football ma
 $content->setType('text');
 $entry->content = $content;
 
-$entryResult = $gdata->insertEntry($entry, 
+$entryResult = $gdata->insertEntry($entry,
         'http://www.blogger.com/feeds/blogID/posts/default');
 
 echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;
@@ -607,5 +607,5 @@ foreach ($feed as $feedEntry) {
         </para>
 
     </sect2>
- 
-</sect1> 
+
+</sect1>

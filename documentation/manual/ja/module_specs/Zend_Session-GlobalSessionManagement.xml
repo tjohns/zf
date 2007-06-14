@@ -174,7 +174,7 @@ remember_me_seconds = 864000
                 </listitem>
                 <listitem>
                     <para>
-                        string <code>name</code> - 
+                        string <code>name</code> -
                         正しい値はシステムに依存します。
                         ZF アプリケーション間で <emphasis role="strong">一意</emphasis>
                         な短い値を開発者側で指定する必要があります。

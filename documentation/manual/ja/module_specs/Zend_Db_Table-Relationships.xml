@@ -29,7 +29,7 @@
             抽象クラス Zend_Db_Table_Abstract を継承して、各テーブル用のクラスを作成します。
             詳細は <xref linkend="zend.db.table.defining" /> を参照ください。
         </para>
-        
+
         <para>
             以下に、これらのテーブルに対応する PHP クラス定義を示します。
         </para>

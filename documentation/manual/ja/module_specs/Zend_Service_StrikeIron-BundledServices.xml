@@ -4,13 +4,13 @@
     <para>
       Zend_Service_StrikeIron comes with wrapper classes for three popular StrikeIron services.
     </para>
-    
+
     <sect2 id="zend.service.strikeiron.bundled-services.zip-code-information">
       <title>ZIP Code Information</title>
-      
+
       <para>
         <code>Zend_Service_StrikeIron_ZipCodeInfo</code> provides a client for StrikeIron's
-        Zip Code Information Service.  For more information on this service, visit these 
+        Zip Code Information Service.  For more information on this service, visit these
         StrikeIron resources:
 
         <itemizedlist>
@@ -52,35 +52,35 @@ if ($zips->count == 0) {
     if (! is_array($zips->zipCodes)) {
         $zips->zipCodes = array($zips->zipCodes);
     }
-    
+
     // print all of the possible results
     foreach ($zips->zipCodes as $z) {
         $info = $z->zipCodeInfo;
-        
+
         // show all properties
         print_r($info);
-        
+
         // or just the city name
         echo $info->preferredCityName;
     }
 }
 
-// Detailed status information 
+// Detailed status information
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
 $status = $response->serviceStatus;
 
 ?>]]></programlisting>
       </para>
     </sect2>
-    
+
     <sect2 id="zend.service.strikeiron.bundled-services.us-address-verification">
       <title>U.S. Address Verification</title>
-      
+
       <para>
         <code>Zend_Service_StrikeIron_USAddressVerification</code> provides a client for
         StrikeIron's U.S. Address Verification Service.  For more information on this
         service, visit these StrikeIron resources:
-        
+
         <itemizedlist>
           <listitem>
             <para>
@@ -94,7 +94,7 @@ $status = $response->serviceStatus;
           </listitem>
         </itemizedlist>
       </para>
-      
+
       <para>
         The service contains a <code>verifyAddressUSA()</code> method that will verify
         an address in the United States:
@@ -140,7 +140,7 @@ if ($result->addressErrorNumber != 0) {
 
     <sect2 id="zend.service.strikeiron.bundled-services.sales-use-tax-basic">
       <title>Sales &amp; Use Tax Basic</title>
-      
+
       <para>
         <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code> provides a client for
         StrikeIron's Sales &amp; Use Tax Basic service.  For more information on this
@@ -162,17 +162,17 @@ if ($result->addressErrorNumber != 0) {
 
       <para>
         The service contains two methods, <code>getTaxRateUSA()</code> and <code>getTaxRateCanada()</code>,
-        that will retrieve sales and use tax data for the United States and Canada, respectively. 
+        that will retrieve sales and use tax data for the United States and Canada, respectively.
 
         <programlisting role="php"><![CDATA[<?php
-          
+
 require_once 'Zend/Service/StrikeIron.php';
 
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username', 
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Get a client for the Sales & Use Tax Basic service
-$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic')); 
+$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
 // Query tax rate for Ontario, Canada
 $rateInfo = $taxBasic->getTaxRateCanada(array('province' => 'foo'));

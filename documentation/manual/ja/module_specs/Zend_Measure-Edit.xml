@@ -91,7 +91,7 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
             このクラスがもとのオブジェクトを変更することはありません。
             新しいオブジェクトは、もとのオブジェクトと同じ型になります。
             Dynamic objects support a fluid style of
-            programming, where complex sequences of operations 
+            programming, where complex sequences of operations
             can be nested without risk of side-effects altering the
             input objects.
         </para>

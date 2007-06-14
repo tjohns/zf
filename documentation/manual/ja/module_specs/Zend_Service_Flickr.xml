@@ -45,7 +45,7 @@ foreach ($results as $result) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>userSearch()</code>: 
+                    <code>userSearch()</code>:
                     タグをスペースで区切ったクエリ文字列、
                     そしてオプションの二番目のパラメータで検索オプションの配列を指定して検索し、
                     結果の写真を <code>Zend_Service_Flickr_ResultSet</code> オブジェクトで返します。
@@ -53,13 +53,13 @@ foreach ($results as $result) {
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByUsername()</code>: 
+                    <code>getIdByUsername()</code>:
                     指定したユーザ名に対応するユーザ ID を文字列で返します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getIdByEmail()</code>: 
+                    <code>getIdByEmail()</code>:
                     指定したメールアドレスに対応するユーザ ID を文字列で返します。
                 </para>
             </listitem>

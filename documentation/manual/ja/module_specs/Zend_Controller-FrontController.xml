@@ -92,7 +92,7 @@ $front->setParam('noViewRenderer', true);
 
         <sect3 id="zend.controller.front.methods.primary.getinstance">
             <title>getInstance()</title>
-            
+
             <para>
                 <code>getInstance()</code> は、フロントコントローラのインスタンスを取得します。
                 フロントコントローラはシングルトンパターンを実装しているので、
@@ -150,7 +150,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
                 これは、モジュールとディレクトリの組を配列で返します。
             </para>
         </sect3>
-            
+
         <sect3 id="zend.controller.front.methods.primary.dispatch">
             <title>dispatch()</title>
 

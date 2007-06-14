@@ -10,7 +10,7 @@
         </para>
 
         <para>
-            パラメータ <code>MaxBufferedDocs</code> 
+            パラメータ <code>MaxBufferedDocs</code>
             の内容に応じて、メモリ内に追加されたドキュメントを保存したり
             新しいインデックスセグメントをディスクに書き出したりします。
         </para>

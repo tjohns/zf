@@ -1,6 +1,6 @@
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
-    
+
     <sect2 id="zend.cache.core">
         <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.core.introduction">
@@ -101,7 +101,7 @@
                   </tgroup>
               </table>
         </sect3>
-        
+
         <sect3 id="zend.cache.core.examples">
             <title>例</title>
             <para>
@@ -112,32 +112,32 @@
                 ("automatic_serialization" オプションを使用すると boolean も保存できるので)、
                 このようにもう少しコンパクトに作成することが可能です。
             </para>
-            <programlisting role="php"><![CDATA[<?php  
-             
+            <programlisting role="php"><![CDATA[<?php
+
 // すでに $cache が存在するものとします
 
 $id = 'myBigLoop'; //「キャッシュしたい内容」のキャッシュ ID
 
 if (!($data = $cache->load($id))) {
     // キャッシュが存在しませんでした
-    
+
     $data = '';
     for ($i = 0; $i < 10000; $i++) {
         $data = $data . $i;
     }
-    
+
     $cache->save($data);
-    
-} 
+
+}
 
 // [...] $data を用いて何かをします (echo したり、何かに渡したりなど)
-             
-?>]]>       </programlisting> 
+
+?>]]>       </programlisting>
             <para>
                 複数のブロックやデータのインスタンスをキャッシュしたい場合も、考え方は同じです。
             </para>
-            <programlisting role="php"><![CDATA[<?php  
-             
+            <programlisting role="php"><![CDATA[<?php
+
 // 一意な ID を使用するようにしましょう
 $id1 = 'foo';
 $id2 = 'bar';
@@ -145,15 +145,15 @@ $id2 = 'bar';
 // ブロック 1
 if (!($data = $cache->load($id1))) {
     // キャッシュが存在しませんでした
-    
+
     $data = '';
     for ($i=0;$i<10000;$i++) {
         $data = $data . $i;
     }
-    
+
     $cache->save($data);
-    
-} 
+
+}
 echo($data);
 
 // これは、キャッシュ処理の影響を受けません
@@ -162,21 +162,21 @@ echo('キャッシュされません !');
 // ブロック 2
 if (!($data = $cache->load($id2))) {
     // キャッシュが存在しませんでした
-    
+
     $data = '';
     for ($i=0;$i<10000;$i++) {
         $data = $data . '!';
     }
-    
+
     $cache->save($data);
-    
-} 
+
+}
 echo($data);
 
-?>]]>       </programlisting>             
-        </sect3>   
+?>]]>       </programlisting>
+        </sect3>
     </sect2>
-    
+
     <sect2 id="zend.cache.frontend.output">
         <title>Zend_Cache_Frontend_Output</title>
         <sect3 id="zend.cache.frontend.output.introduction">
@@ -195,7 +195,7 @@ echo($data);
                 このフロントエンドが独自に使用するオプションはありません。
             </para>
         </sect3>
-        
+
         <sect3 id="zend.cache.frontend.output.examples">
             <title>例</title>
             <para>
@@ -221,9 +221,9 @@ echo 'これはキャッシュされません ('.time().')';
                 この形式を使用すると、既存のプロジェクトに簡単に出力キャッシュ処理を追加することができます。
                 コードのリファクタリングもほとんど行わずにすませられるでしょう。
             </para>
-        </sect3>   
+        </sect3>
     </sect2>
-    
+
     <sect2 id="zend.cache.frontend.function">
         <title>Zend_Cache_Frontend_Function</title>
         <sect3 id="zend.cache.frontend.function.introduction">
@@ -276,7 +276,7 @@ echo 'これはキャッシュされません ('.time().')';
                   </tgroup>
               </table>
         </sect3>
-        
+
         <sect3 id="zend.cache.frontend.function.examples">
             <title>例</title>
             <para>
@@ -302,9 +302,9 @@ $cache->call('veryExpensiveFunc', $params);
                 および <code>unset()</code> 以外なら、
                 任意の組み込み関数やユーザ定義関数を渡すことができます。
             </para></note>
-        </sect3>   
+        </sect3>
     </sect2>
-    
+
     <sect2 id="zend.cache.frontend.class">
         <title>Zend_Cache_Frontend_Class</title>
         <sect3 id="zend.cache.frontend.class.introduction">
@@ -365,7 +365,7 @@ $cache->call('veryExpensiveFunc', $params);
                   </tgroup>
               </table>
         </sect3>
-        
+
         <sect3 id="zend.cache.frontend.class.examples">
             <title>例</title>
             <para>
@@ -374,11 +374,11 @@ $cache->call('veryExpensiveFunc', $params);
             <programlisting role="php"><![CDATA[<?php
 
 class test {
-   
+
     # スタティックメソッド
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
-        return "foobar_return($param1, $param2)";   
+        return "foobar_return($param1, $param2)";
     }
 
 }
@@ -399,13 +399,13 @@ $res = $cache->foobar('1', '2');
             <programlisting role="php"><![CDATA[<?php
 
 class test {
-   
+
     private $_string = 'hello !';
-      
+
     public function foobar2($param1, $param2) {
         echo($this->_string);
         echo "foobar2_output($param1, $param2)";
-        return "foobar2_return($param1, $param2)";   
+        return "foobar2_return($param1, $param2)";
     }
 
 }
@@ -420,9 +420,9 @@ $frontendOptions = array(
 $res = $cache->foobar2('1', '2');
 
 ?>]]>       </programlisting>
-        </sect3>   
+        </sect3>
     </sect2>
-    
+
     <sect2 id="zend.cache.frontends.file">
         <title>Zend_Cache_Frontend_File</title>
         <sect3 id="zend.cache.frontends.file.introduction">
@@ -432,7 +432,7 @@ $res = $cache->foobar2('1', '2');
                 「更新時刻」にもとづいて動作するフロントエンドです。
                 これは、例えば設定ファイルやテンプレートなどで有効に使えるでしょう。
             </para>
-            <para> 
+            <para>
                 例えば、XML の設定ファイルを使用しており、それが「設定オブジェクト」
                 (<code>Zend_Config</code> など) を返す関数でパースされるとしましょう。
                 <code>Zend_Cache_Frontend_File</code> を使用すると、その「設定オブジェクト」
@@ -467,7 +467,7 @@ $res = $cache->foobar2('1', '2');
                       </tbody>
                   </tgroup>
               </table>
-        </sect3>   
+        </sect3>
         <sect3 id="zend.cache.frontends.file.examples">
             <title>例</title>
             <para>
@@ -478,7 +478,7 @@ $res = $cache->foobar2('1', '2');
             </para>
         </sect3>
     </sect2>
-    
+
     <sect2 id="zend.cache.frontends.page">
         <title>Zend_Cache_Frontend_Page</title>
         <sect3 id="zend.cache.frontends.page.introduction">
@@ -491,7 +491,7 @@ $res = $cache->foobar2('1', '2');
             </para>
             <para>
                 一方、「キャッシュ ID」は自動的に生成されます。この ID は、
-                <code>$_SERVER['REQUEST_URI']</code> および (オプションの設定によっては) 
+                <code>$_SERVER['REQUEST_URI']</code> および (オプションの設定によっては)
                 <code>$_GET</code>、<code>$_POST</code>、<code>$_SESSION</code>、
                 <code>$_COOKIE</code>、<code>$_FILES</code> をもとにして生成されます。
                 さらに、ひとつのメソッド (<code>start()</code>) をコールするだけで使用できます。
@@ -628,21 +628,21 @@ $res = $cache->foobar2('1', '2');
                       </tbody>
                   </tgroup>
               </table>
-        </sect3>   
+        </sect3>
         <sect3 id="zend.cache.frontends.page.examples">
             <title>例</title>
             <para>
                 Zend_Cache_Frontend_Page の使用法は、きわめて簡単です。
             </para>
             <programlisting role="php"><![CDATA[<?php
-               
+
 // [...] // require、設定そしてファクトリ
-    
+
 $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、処理はここで停止します
-    
+
 // ページの残りの部分 ...
-    
+
 ?>]]>       </programlisting>
             <para>
                 もう少し複雑な例を見てみましょう。これは、起動ファイル
@@ -668,10 +668,10 @@ $frontendOptions = array(
            'cache_with_post_variables' => true,    // 変数が含まれていてもキャッシュを行います
            'make_id_with_post_variables' => true,   // (しかし、そのキャッシュは $_POST 配列に依存します)。
        )
-   )      
+   )
 );
 $backendOptions = array(
-    'cache_dir' => '/tmp/' 
+    'cache_dir' => '/tmp/'
 );
 
 // Zend_Cache_Frontend_Page オブジェクトを取得します
@@ -681,7 +681,7 @@ $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、スクリプトの処理はここで停止します。
 
 // [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)。
-                
+
 ?>]]>       </programlisting>
         </sect3>
     </sect2>

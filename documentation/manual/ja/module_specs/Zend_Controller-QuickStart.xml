@@ -80,7 +80,7 @@ html/
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-            
+
             <para>
                 このルールは、リソース (画像やスタイルシート)
                 以外のすべてのリクエストをフロントコントローラに転送します。
@@ -112,7 +112,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/path/to/app/controllers');
 ]]></programlisting>
-            
+
             <para>
                 これは、フロントコントローラのインスタンスとディスパッチを行います。
                 この結果、アクア本コントローラへリクエストが転送されます。
@@ -252,7 +252,7 @@ class ErrorController extends Zend_Controller_Action
     }
 }
 ]]></programlisting>
-            
+
             <para>
                 先ほど説明したディレクトリ構成により、このファイルは
                 <code>application/controllers/ErrorController.php</code>

@@ -229,7 +229,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                         <emphasis role="strong">driver_options</emphasis>:
                         this parameter is an associative array of additional
                         options that are specific to a given database
-                        extension.  One typical use of this parameter is to 
+                        extension.  One typical use of this parameter is to
                         set attributes of a PDO driver.
                     </para>
                 </listitem>
@@ -1322,7 +1322,7 @@ try {
     $db->commit();
 
 } catch (Exception $e) {
-    // If any of the queries failed and threw an exception, 
+    // If any of the queries failed and threw an exception,
     // we want to roll back the whole transaction, reversing
     // changes made in the transaction, even those that succeeded.
     // Thus all changes are committed together, or none are.
@@ -1348,7 +1348,7 @@ try {
             array of metadata about a table.  Specify the name of the table
             as a string in the first argument to this method.  The keys
             of the associative array returned are the column names of the
-            table.  The value corresponding to each column is also an 
+            table.  The value corresponding to each column is also an
             associative array, with the following keys and values:
         </para>
 
@@ -1470,7 +1470,7 @@ $db->closeConnection();
             <title>Does Zend_Db support persistent connections?</title>
             <para>
                 The usage of persistent connections is not supported
-                or encouraged in Zend_Db.  
+                or encouraged in Zend_Db.
             </para>
             <para>
                 Using persistent connections can cause an excess of idle
