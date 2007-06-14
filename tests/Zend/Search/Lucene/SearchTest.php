@@ -179,6 +179,22 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testBooleanQueryWithPhraseSubquery()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $hits = $index->find('"PEAR developers" AND Home');
+
+        $this->assertEquals(count($hits), 1);
+        $expectedResultset = array(array(1, 0.168270, 'IndexSource/contributing.wishlist.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
     public function testDefaultSearchField()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
