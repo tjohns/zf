@@ -75,8 +75,8 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // このコントローラでのみ無効にします
-        $this->_invokeArgs['noViewRenderer'] = true;
+        // このコントローラでのみ無効にします。初期化時に読み込まれるので、全アクションに影響を及ぼします
+        $this->_helper->viewRenderer->setNoRender(true);
 
         // 全体で無効にします
         $this->_helper->removeHelper('viewRenderer');
@@ -107,7 +107,7 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // このアクションでの自動レンダリングを無効にします
+        // このアクションでのみ自動レンダリングを無効にします
         $this->_helper->viewRenderer->setNoRender();
     }
 }
