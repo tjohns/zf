@@ -113,6 +113,8 @@ if ($validator->isValid($email)) {
             その他、バリデータによっていろいろなトークンをサポートしています。
             たとえば、Zend_Validate_LessThan では
             <code>%max%</code> というトークンをサポートしています。
+            <code>getMessageVariables()</code> メソッドは、
+            そのバリデータがサポートする変数トークンの配列を返します。
         </para>
 
         <para>
