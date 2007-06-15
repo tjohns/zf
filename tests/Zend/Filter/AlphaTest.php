@@ -85,4 +85,34 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 );
         }
     }
+
+    /**
+     * Ensures that the filter follows expected behavior
+     *
+     * @return void
+     */
+    public function testAllowWhiteSpace()
+    {
+        $this->_filter->allowWhiteSpace = true;
+
+        $valuesExpected = array(
+            'abc123'        => 'abc',
+            'abc 123'       => 'abc ',
+            'abcxyz'        => 'abcxyz',
+            'četně'         => 'četně',
+            'لعربية'        => 'لعربية',
+            'grzegżółka'    => 'grzegżółka',
+            'België'        => 'België',
+            ''              => '',
+            "\n"            => "\n",
+            " \t "          => " \t "
+            );
+        foreach ($valuesExpected as $input => $output) {
+            $this->assertEquals(
+                $output,
+                $result = $this->_filter->filter($input),
+                "Expected '$input' to filter to '$output', but received '$result' instead"
+                );
+        }
+    }
 }

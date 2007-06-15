@@ -36,6 +36,24 @@ require_once 'Zend/Filter/Interface.php';
 class Zend_Filter_Alpha implements Zend_Filter_Interface
 {
     /**
+     * Whether to allow white space characters; off by default
+     *
+     * @var boolean
+     */
+    public $allowWhiteSpace;
+
+    /**
+     * Sets default option values for this instance
+     *
+     * @param  boolean $allowWhiteSpace
+     * @return void
+     */
+    public function __construct($allowWhiteSpace = false)
+    {
+        $this->allowWhiteSpace = (boolean) $allowWhiteSpace;
+    }
+
+    /**
      * Defined by Zend_Filter_Interface
      *
      * Returns the string $value, removing all but alphabetic characters
@@ -45,6 +63,8 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return preg_replace('/[\p{^L}]/u', '', (string) $value);
+        $pattern = '/[^\p{L}' . ($this->allowWhiteSpace ? '\s' : '') . ']/u';
+
+        return preg_replace($pattern, '', (string) $value);
     }
 }

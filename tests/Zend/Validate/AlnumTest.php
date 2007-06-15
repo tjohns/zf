@@ -73,7 +73,9 @@ class Zend_Validate_AlnumTest extends PHPUnit_Framework_TestCase
             'abcxyz'  => true,
             'AZ@#4.3' => false,
             'aBc123'  => true,
-            ''        => false
+            ''        => false,
+            ' '       => false,
+            "\n"      => false
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->_validator->isValid($input));
@@ -88,5 +90,34 @@ class Zend_Validate_AlnumTest extends PHPUnit_Framework_TestCase
     public function testGetMessages()
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
+    }
+
+    /**
+     * Ensures that the allowWhiteSpace option works as expected
+     *
+     * @return void
+     */
+    public function testAllowWhiteSpace()
+    {
+        $this->_validator->allowWhiteSpace = true;
+
+        $valuesExpected = array(
+            'abc123'  => true,
+            'abc 123' => true,
+            'abcxyz'  => true,
+            'AZ@#4.3' => false,
+            'aBc123'  => true,
+            ''        => false,
+            ' '       => true,
+            "\n"      => true,
+            " \t "    => true
+            );
+        foreach ($valuesExpected as $input => $result) {
+            $this->assertEquals(
+                $result,
+                $this->_validator->isValid($input),
+                "Expected '$input' to be considered " . ($result ? '' : 'in') . "valid"
+                );
+        }
     }
 }

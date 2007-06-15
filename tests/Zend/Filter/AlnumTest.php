@@ -82,4 +82,31 @@ class Zend_Filter_AlnumTest extends PHPUnit_Framework_TestCase
                 );
         }
     }
+
+    /**
+     * Ensures that the allowWhiteSpace option works as expected
+     *
+     * @return void
+     */
+    public function testAllowWhiteSpace()
+    {
+        $this->_filter->allowWhiteSpace = true;
+
+        $valuesExpected = array(
+            'abc123'  => 'abc123',
+            'abc 123' => 'abc 123',
+            'abcxyz'  => 'abcxyz',
+            'AZ@#4.3' => 'AZ43',
+            ''        => '',
+            "\n"      => "\n",
+            " \t "    => " \t "
+            );
+        foreach ($valuesExpected as $input => $output) {
+            $this->assertEquals(
+                $output,
+                $result = $this->_filter->filter($input),
+                "Expected '$input' to filter to '$output', but received '$result' instead"
+                );
+        }
+    }
 }

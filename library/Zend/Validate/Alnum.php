@@ -46,6 +46,13 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
     const STRING_EMPTY = 'stringEmpty';
 
     /**
+     * Whether to allow white space characters; off by default
+     *
+     * @var boolean
+     */
+    public $allowWhiteSpace;
+
+    /**
      * Alphanumeric filter used for validation
      *
      * @var Zend_Filter_Alnum
@@ -61,6 +68,17 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
         self::NOT_ALNUM    => "'%value%' has not only alphabetic and digit characters",
         self::STRING_EMPTY => "'%value%' is an empty string"
     );
+
+    /**
+     * Sets default option values for this instance
+     *
+     * @param  boolean $allowWhiteSpace
+     * @return void
+     */
+    public function __construct($allowWhiteSpace = false)
+    {
+        $this->allowWhiteSpace = (boolean) $allowWhiteSpace;
+    }
 
     /**
      * Defined by Zend_Validate_Interface
@@ -88,6 +106,8 @@ class Zend_Validate_Alnum extends Zend_Validate_Abstract
             require_once 'Zend/Filter/Alnum.php';
             self::$_filter = new Zend_Filter_Alnum();
         }
+
+        self::$_filter->allowWhiteSpace = $this->allowWhiteSpace;
 
         if ($valueString !== self::$_filter->filter($valueString)) {
             $this->_error(self::NOT_ALNUM);

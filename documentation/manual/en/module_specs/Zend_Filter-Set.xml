@@ -9,14 +9,16 @@
     <sect2 id="zend.filter.set.alnum">
         <title>Alnum</title>
         <para>
-            Returns the string <code>$value</code>, removing all but alphabetic and digit characters.
+            Returns the string <code>$value</code>, removing all but alphabetic and digit characters. This filter
+            includes an option to also allow white space characters.
         </para>
     </sect2>
 
     <sect2 id="zend.filter.set.alpha">
         <title>Alpha</title>
         <para>
-            Returns the string <code>$value</code>, removing all but alphabetic characters.
+            Returns the string <code>$value</code>, removing all but alphabetic characters. This filter includes an
+            option to also allow white space characters.
         </para>
     </sect2>
 
