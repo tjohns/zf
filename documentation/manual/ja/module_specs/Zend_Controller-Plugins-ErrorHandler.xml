@@ -173,6 +173,28 @@ class ErrorController extends Zend_Controller_Action
 ?>]]></programlisting>
     </sect4>
 
+    <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
+        <title>前回のレンダリング結果の扱い</title>
+
+        <para>
+            ひとつのリクエストで複数のアクションにディスパッチする場合、
+            あるいはアクション内で <code>render()</code> を複数回コールする場合などは、
+            レスポンスオブジェクト内にすでに内容が格納されていることがあります。
+            これをうまく処理しないと、本当に必要な内容と
+            それ以外の内容が混じってしまう恐れがあります。
+        </para>
+
+        <para>
+            そのような場合にページの中でエラー処理をしたい場合は、とくに何も手を加える必要はありません。
+            そのような内容をレンダリングしたくないという場合は、
+            ビューのレンダリング前に以前の内容を消去しておく必要があります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$this->getResponse()->clearBody();
+?>]]></programlisting>
+    </sect4>
+
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
         <title>プラグインの使用例</title>
 
@@ -252,9 +274,11 @@ EOH;
 EOH;
                 break;
         }
-        $this->initView();
+
+        // 前回の内容を消去します
+        $this->getResponse()->clearBody();
+
         $this->view->content = $content;
-        $this->render();
     }
 }
 ?>]]></programlisting>
