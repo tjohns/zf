@@ -127,6 +127,14 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
+     * @return array
+     */
+    public function getMessageVariables()
+    {
+        return array_keys($this->_messageVariables);
+    }
+
+    /**
      * @param string $messageString
      * @param string $messageKey    OPTIONAL
      * @return Zend_Validate_Abstract

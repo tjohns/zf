@@ -274,4 +274,26 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Validate_StringLength::TOO_LONG, $errors[0]);
     }
 
+    /**
+     * Ensures that getMessageVariables() returns an array of
+     * strings and that these strings that can be used as variables
+     * in a message.
+     */
+    public function testGetMessageVariables()
+    {
+        $vars = $this->_validator->getMessageVariables();
+
+        $this->assertType('array', $vars);
+        $this->assertEquals(array('min', 'max'), $vars);
+        $message = 'variables: %notvar% ';
+        foreach ($vars as $var) {
+            $message .= "%$var% ";
+        }
+        $this->_validator->setMessage($message);
+
+        $this->assertFalse($this->_validator->isValid('abc'));
+        $messages = $this->_validator->getMessages();
+        $this->assertEquals('variables: %notvar% 4 8 ', $messages[0]);
+    }
+
 }
