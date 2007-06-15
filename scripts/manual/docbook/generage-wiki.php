@@ -321,7 +321,7 @@ foreach ($book->appendix as $chapter) {
 if (count($book->chapter)) {
     $diff = array_diff($prev, $new);
     foreach ($diff as $key => $pagename) {
-        if ($pagename != 'Home' && $pagename != 'manual-template' && $pagename != 'Appendix') {
+        if ($pagename != 'Home' && $pagename != 'manual-template' && $pagename != 'Appendix' && $pagename != 'manual-note') {
             echo 'Removing ' . $pagename . "\n";
             try {
                 $page = $soap->getPage($token, $space, $pagename);
