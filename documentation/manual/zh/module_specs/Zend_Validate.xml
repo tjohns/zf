@@ -73,7 +73,7 @@ if ($validator->isValid($email)) {
         <title> 定制消息 </title>
 
         <para>
-            校验类提供了一个<code>setMessage()</code>方法，你可以指定校验失败后由<code>getMessages()</code>返回的消息的格式。这个方法的第一个参数是一个包含错误信息的的字符串。你可以在字符串中包含令牌，它将被和校验器相关的数据替换。所有的校验器都支持令牌 <code>%value%</code>；这被你传递给<code>isValid()</code>的值替换。其它的令牌按情况在每个校验类中被支持。例如，<code>%max%</code>是一个被Zend_Validate_LessThan支持的令牌。
+            校验类提供了一个<code>setMessage()</code>方法，你可以指定校验失败后由<code>getMessages()</code>返回的消息的格式。这个方法的第一个参数是一个包含错误信息的的字符串。你可以在字符串中包含令牌，它将被和校验器相关的数据替换。所有的校验器都支持令牌 <code>%value%</code>；这被你传递给<code>isValid()</code>的值替换。其它的令牌按情况在每个校验类中被支持。例如，<code>%max%</code>是一个被Zend_Validate_LessThan支持的令牌。The <code>getMessageVariables()</code>方法返回一个被校验器支持的令牌变量的数组。
 
         </para>
 
