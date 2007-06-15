@@ -172,6 +172,27 @@ class ErrorController extends Zend_Controller_Action
 ?>]]></programlisting>
     </sect4>
 
+    <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
+        <title>Handling Previously Rendered Output</title>
+
+        <para>
+            If you dispatch multiple actions in a request, or if your action
+            makes multiple calls to <code>render()</code>, its possible that the
+            response object already has content stored within it. This can lead
+            to rendering a mixture of expected content and error content.
+        </para>
+
+        <para>
+            If you wish to render errors inline in such pages, no changes will
+            be necessary. If you do not wish to render such content, you should
+            clear the response body prior to rendering any views:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$this->getResponse()->clearBody();
+?>]]></programlisting>
+    </sect4>
+
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
         <title>Plugin Usage Examples</title>
 
@@ -217,6 +238,7 @@ $front->registerPlugin($plugin);
 ?>]]></programlisting>
         </example>
     </sect4>
+
     <sect4 id="zend.controller.plugins.standard.errorhandler.controllerexamples">
         <title>Error Controller Example</title>
 
@@ -251,9 +273,11 @@ EOH;
 EOH;
                 break;
         }
-        $this->initView();
+
+        // Clear previous content
+        $this->getResponse()->clearBody();
+
         $this->view->content = $content;
-        $this->render();
     }
 }
 ?>]]></programlisting>

@@ -228,10 +228,26 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
 
         // by default, buffer output
         $disableOb = $this->getParam('disableOutputBuffering');
+        $obLevel   = ob_get_level();
         if (empty($disableOb)) {
             ob_start();
         }
-        $controller->dispatch($action);
+
+        try {
+            $controller->dispatch($action);
+        } catch (Exception $e) {
+            // Clean output buffer on error
+            $curObLevel = ob_get_level();
+            if ($curObLevel > $obLevel) {
+                do {
+                    ob_get_clean();
+                    $curObLevel = ob_get_level();
+                } while ($curObLevel > $obLevel);
+            }
+
+            throw $e;
+        }
+
         if (empty($disableOb)) {
             $content = ob_get_clean();
             $response->appendBody($content);

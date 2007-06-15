@@ -156,7 +156,6 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
 
-    /*
     public function testDispatchValidControllerWithInvalidAction()
     {
         $request = new Zend_Controller_Request_Http();
@@ -171,7 +170,6 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
-     */
 
     public function testDispatchInvalidController()
     {
@@ -396,6 +394,25 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_dispatcher->isValidModule('default'));
         $this->assertTrue($this->_dispatcher->isValidModule('admin'));
         $this->assertFalse($this->_dispatcher->isValidModule('bogus'));
+    }
+
+    public function testSanelyDiscardOutputBufferOnException()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('ob');
+        $request->setActionName('exception');
+
+        $this->assertTrue($this->_dispatcher->isDispatchable($request), var_export($this->_dispatcher->getControllerDirectory(), 1));
+
+        $response = new Zend_Controller_Response_Cli();
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+            $this->fail('Exception should have been rethrown');
+        } catch (Exception $e) {
+        }
+        $body = $this->_dispatcher->getResponse()->getBody();
+        $this->assertNotContains("In exception action", $body, $body);
+        $this->assertNotContains("Foo", $body, $body);
     }
 }
 
