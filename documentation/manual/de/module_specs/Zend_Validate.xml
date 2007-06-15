@@ -106,6 +106,8 @@ if ($validator->isValid($email)) {
             es ist verbunden mit dem Wert der an <code>isValid()</code> übergeben wird.
             Andere Kürzel können unterstützt werden von Fall-zu-Fall in jeder Prüfer-Klasse. Zum Beispiel ist
             <code>%max%</code> das Kürzel welches von Zend_Validate_LessThan unterstützt wird.
+            Die <code>getMessageVariables()</code> Methode give ein Array von variablen Kürzel zurück
+            welche vom Prüfer unterstützt werden.
         </para>
 
         <para>
