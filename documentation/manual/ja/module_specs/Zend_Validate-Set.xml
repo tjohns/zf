@@ -1,15 +1,16 @@
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2003/XInclude">
 
-    <title>標準の検証クラス群</title>
+    <title>標準のバリデーションクラス群</title>
 
     <para>
-        Zend Framework には、すぐに使える標準の検証クラス群が同梱されています。
+        Zend Framework には、すぐに使える標準のバリデーションクラス群が同梱されています。
     </para>
 
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
             <code>$value</code> が英数字のみで構成されているときにのみ <code>true</code> を返します。
+            このバリデータでは、オプションとして空白文字を認めることもできます。
         </para>
     </sect2>
 
@@ -17,6 +18,7 @@
         <title>Alpha</title>
         <para>
              <code>$value</code> が英字のみで構成されているときにのみ <code>true</code> を返します。
+            このバリデータでは、オプションとして空白文字を認めることもできます。
         </para>
     </sect2>
 

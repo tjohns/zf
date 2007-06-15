@@ -542,7 +542,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
 $filters = array( 
     'month' = array( 
         'Digits',        // 数値インデックスのフィルタ名 [0] 
-        'fields' => 'mo' // 文字列インデックスのフィールド名 ['field'] 
+        'fields' => 'mo' // 文字列インデックスのフィールド名 ['fields'] 
     ) 
 ); 
 ]]></programlisting>
@@ -623,6 +623,60 @@ $validators = array(
 
             <para>
                 このメタコマンドのデフォルト値は 'optional' です。
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.filter.input.metacommands.default">
+
+            <title><code>DEFAULT_VALUE</code> メタコマンド</title>
+
+            <para>
+                入力データにそのフィールドが存在しない場合に、もしメタコマンド
+                'default' がルールで指定されていれば
+                そのメタコマンドの値がフィールドの値となります。
+            </para>
+
+            <para>
+                このメタコマンドを指定する際に、文字列ではなくクラス定数
+                <code>Zend_Filter_Input::DEFAULT_VALUE</code> を使用することができます。
+            </para>
+
+            <para>
+                このデフォルト値は、バリデータを適用する前にフィールドの代入されます。
+                また、そのフィールドのデフォルト値は現在のルールでのみ適用されます。
+                もしそのフィールドが別のルールから参照されていた場合には、
+                別のルールを評価する際にはそのフィールドには値が入っていないことになります。
+                つまり、個々のルールで別々のデフォルト値を宣言できるということです。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+$validators = array(
+    'month' = array(
+        'digits',
+        'default' => '1'
+    )
+);
+
+// 'month' フィールドの値がありません
+$data = array();
+
+$input = new Zend_Filter_Input(null, $validators, $data);
+echo $input->month; // 1 を出力します
+]]></programlisting>
+
+            <para>
+                <code>FIELDS</code> メタコマンドで複数のフィールドをルールに定義している場合、
+                <code>DEFAULT_VALUE</code> メタコマンドに配列を指定することができます。
+                対応するキーのフィールドの値が存在しない場合に、デフォルト値が用いられます。
+                <code>FIELDS</code> で複数のフィールドを定義しているのに
+                <code>DEFAULT_VALUE</code> がスカラーだった場合は、
+                配列内のすべてのフィールドに対してその値がデフォルト値として用いられます。
+            </para>
+
+            <para>
+                このメタコマンドにはデフォルト値はありません。
             </para>
 
         </sect3>
@@ -891,7 +945,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
 
             <para>
-                メタコマンド 'fields' と 'messages' については、
+                メタコマンド 'fields'、'messages' と 'default' については、
                 このテクニックを使うことができません。
             </para>
 
