@@ -46,6 +46,7 @@ class Zend_Filter_Input
 
     const ALLOW_EMPTY       = 'allowEmpty';
     const BREAK_CHAIN       = 'breakChainOnFailure';
+    const DEFAULT_VALUE     = 'default';
     const MESSAGES          = 'messages';
     const ESCAPE_FILTER     = 'escapeFilter';
     const FIELDS            = 'fields';
@@ -683,17 +684,27 @@ class Zend_Filter_Input
     {
         /**
          * Get one or more data values from input, and check for missing fields.
+         * Apply defaults if fields are missing.
          */
         $data = array();
         foreach ((array) $validatorRule[self::FIELDS] as $field) {
-            if (!array_key_exists($field, $this->_data)) {
-                if ($validatorRule[self::PRESENCE] == self::PRESENCE_REQUIRED) {
-                    $this->_missingFields[$validatorRule[self::RULE]][] =
-                        $this->_getMissingMessage($validatorRule[self::RULE], $field);
+            if (array_key_exists($field, $this->_data)) {
+                $data[$field] = $this->_data[$field];
+            } else
+            if (array_key_exists(self::DEFAULT_VALUE, $validatorRule)) {
+                if (is_array($validatorRule[self::DEFAULT_VALUE])) {
+                    $key = array_search($field, $validatorRule[self::FIELDS]);
+                    if (array_key_exists($key, $validatorRule[self::DEFAULT_VALUE])) {
+                        $data[$field] = $validatorRule[self::DEFAULT_VALUE][$key];
+                    }
+                } else {
+                    $data[$field] = $validatorRule[self::DEFAULT_VALUE];
                 }
-                continue;
+            } else
+            if ($validatorRule[self::PRESENCE] == self::PRESENCE_REQUIRED) {
+                $this->_missingFields[$validatorRule[self::RULE]][] =
+                    $this->_getMissingMessage($validatorRule[self::RULE], $field);
             }
-            $data[$field] = $this->_data[$field];
         }
 
         /**
@@ -751,8 +762,8 @@ class Zend_Filter_Input
          * If we got this far, the inputs for this rule pass validation.
          */
         foreach ((array) $validatorRule[self::FIELDS] as $field) {
-            if (array_key_exists($field, $this->_data)) {
-                $this->_validFields[$field] = $this->_data[$field];
+            if (array_key_exists($field, $data)) {
+                $this->_validFields[$field] = $data[$field];
             }
         }
     }

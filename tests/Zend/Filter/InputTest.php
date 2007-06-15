@@ -563,6 +563,68 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("You cannot give an empty value for field 'field1', according to rule 'field1Rule'", $messages['field1Rule'][0]);
     }
 
+    public function testValidatorDefault()
+    {
+        $validators = array(  
+            'field1'   => array('presence' => 'required', 'allowEmpty' => false),
+            'field2'   => array('presence' => 'optional', 'allowEmpty' => false),
+            'field3'   => array('presence' => 'required', 'allowEmpty' => true),
+            'field4'   => array('presence' => 'optional', 'allowEmpty' => true),
+            'field5'   => array('presence' => 'required', 'allowEmpty' => false, 'default' => 'field5default'),
+            'field6'   => array('presence' => 'optional', 'allowEmpty' => false, 'default' => 'field6default'),
+            'field7'   => array('presence' => 'required', 'allowEmpty' => true, 'default' => 'field7default'),
+            'field8'   => array('presence' => 'optional', 'allowEmpty' => true, 'default' => 'field8default'),
+        );
+        $data = array();
+        $input = new Zend_Filter_Input(null, $validators, $data); 
+
+        $this->assertTrue($input->hasMissing(), 'Expected hasMissing() to return true');
+        $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+
+        $missing = $input->getMissing();
+        $this->assertType('array', $missing);
+        // make sure field5 and field7 are not counted as missing
+        $this->assertEquals(array('field1', 'field3'), array_keys($missing));
+
+        $this->assertNull($input->field1);
+        $this->assertNull($input->field2);
+        $this->assertNull($input->field3);
+        $this->assertNull($input->field4);
+        $this->assertEquals('field5default', $input->field5, 'Expected field5 to be non-null');
+        $this->assertEquals('field6default', $input->field6, 'Expected field6 to be non-null');
+        $this->assertEquals('field7default', $input->field7, 'Expected field7 to be non-null');
+        $this->assertEquals('field8default', $input->field8, 'Expected field8 to be non-null');
+    }
+
+    public function testValidatorDefaultDoesNotOverwriteData()
+    {
+        $validators = array(  
+            'field1'   => array('presence' => 'required', 'allowEmpty' => false, 'default' => 'abcd'),
+            'field2'   => array('presence' => 'optional', 'allowEmpty' => false, 'default' => 'abcd'),
+            'field3'   => array('presence' => 'required', 'allowEmpty' => true, 'default' => 'abcd'),
+            'field4'   => array('presence' => 'optional', 'allowEmpty' => true, 'default' => 'abcd'),
+        );
+        $data = array(
+            'field1' => 'ABCD',
+            'field2' => 'ABCD',
+            'field3' => 'ABCD',
+            'field4' => 'ABCD'
+        );
+        $input = new Zend_Filter_Input(null, $validators, $data); 
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(), 'Expected hasValid() to return true');
+
+        $this->assertEquals('ABCD', $input->field1);
+        $this->assertEquals('ABCD', $input->field2);
+        $this->assertEquals('ABCD', $input->field3);
+        $this->assertEquals('ABCD', $input->field4);
+    }
+
     public function testValidatorNotAllowEmpty()
     {
         $filters = array(  
