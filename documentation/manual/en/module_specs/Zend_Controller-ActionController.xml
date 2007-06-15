@@ -72,8 +72,8 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Local to this controller only:
-        $this->_invokeArgs['noViewRenderer'] = true;
+        // Local to this controller only; affects all actions, as loaded in init:
+        $this->_helper->viewRenderer->setNoRender(true);
 
         // Globally:
         $this->_helper->removeHelper('viewRenderer');
@@ -103,7 +103,7 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // disable autorendering for this action:
+        // disable autorendering for this action only:
         $this->_helper->viewRenderer->setNoRender();
     }
 }
