@@ -72,6 +72,12 @@ class Zend_View_Helper_FormLabelTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->helper->view instanceof Zend_View_Interface);
         $this->assertSame($this->view, $this->helper->view);
     }
+
+    public function testAttribsAreSet()
+    {
+        $label = $this->helper->formLabel('foo', 'bar', array('class' => 'baz'));
+        $this->assertEquals('<label for="foo" class="baz">bar</label>', $label);
+    }
 }
 
 // Call Zend_View_Helper_FormLabelTest::main() if this source file is executed directly.
