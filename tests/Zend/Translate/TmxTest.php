@@ -58,6 +58,7 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Tmx(dirname(__FILE__) . '/_files/translation_en.tmx', 'en');
 
         $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (en)');
+        $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (it)', 'it');
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5 (en)');
         $this->assertEquals($adapter->translate('Cooking furniture'), 'Küchen Möbel (en)');
         $this->assertEquals($adapter->translate('Küchen Möbel'), 'Cooking furniture (en)');
@@ -132,10 +133,10 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
     public function testList()
     {
         $adapter = new Zend_Translate_Adapter_Tmx(dirname(__FILE__) . '/_files/translation_en.tmx', 'en');
-
+        $adapter->setOptions(array('defined_language' => true));
         $this->assertEquals($adapter->getList(), array('en' => 'en'));
         $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_en.tmx', 'de');
-        $this->assertEquals($adapter->getList(), array('en' => 'en', 'de' => 'de'));
+        $this->assertEquals($adapter->getList(), array('en' => 'en', 'de' => 'de', 'it' => 'it'));
 
         $this->assertTrue($adapter->isAvailable('de'));
         $locale = new Zend_Locale('en');

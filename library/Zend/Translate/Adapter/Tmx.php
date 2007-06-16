@@ -92,6 +92,8 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
                       xml_get_current_line_number($this->_file)));
             xml_parser_free($this->_file);
         }
+//print_r($this->_languages);
+print_r($this->_translate);
     }
 
     private function _startElement($file, $name, $attrib)
@@ -105,9 +107,12 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
             case 'tuv':
                 if (array_key_exists('xml:lang', $attrib)) {
                     $this->_tuv = $attrib['xml:lang'];
-                    if ((!array_key_exists($this->_tuv, $this->_translate)) and
-                        ($options['defined_language'])) {
+                    if (!array_key_exists($this->_tuv, $this->_translate)) {
                         $this->_translate[$this->_tuv] = array();
+                    }
+                    if (!array_key_exists($this->_tuv, $this->_languages) and
+                       !empty($this->_options['defined_language'])) {
+                        $this->_languages[$this->_tuv] = $this->_tuv;
                     }
                 }
                 break;

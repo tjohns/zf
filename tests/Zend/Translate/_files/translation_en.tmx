@@ -7,6 +7,7 @@
   <tu tuid='Message 1'>
    <tuv xml:lang="de"><seg>Message 1</seg></tuv>
    <tuv xml:lang="en"><seg>Message 1 (en)</seg></tuv>
+   <tuv xml:lang="it"><seg>Message 1 (it)</seg></tuv>
   </tu>
   <tu tuid='Message 2'>
    <tuv xml:lang="de"><seg>Message 2</seg></tuv>
