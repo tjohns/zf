@@ -66,7 +66,7 @@ print_r($result);
             A l'intérieur, affichez vos données comme d'habitude toutes les sorties seront misent en cache quand la méthode <code>end()</code> est appelée. A la prochaine exécution, la section complète sera évitée, au profit de la récupération de son cache (si le cache est encore valide).
             <programlisting role="php"><![CDATA[<?php
 $frontendOptions = array(
-   'lifetime' => 30,                  // temps de vue du cache de 30 secondes
+   'lifetime' => 30,                   // temps de vue du cache de 30 secondes
    'automatic_serialization' => false  // par défaut
 );
 
@@ -95,6 +95,3 @@ echo 'Ceci n\' jamais mis en cache ('.time().').';
         Lorsque vous utilisez Zend_Cache, faîtes attention à l'identifiant du cache (passé à <code>save()</code> et <code>start()</code>). Il doit être unique pour chaque ressource que vous mettez en cache, sinon il est possible que des caches en efface d'autres, ou encore pire, s'affiche en lieu et place d'autres.
     </para></note>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

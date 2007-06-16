@@ -10,7 +10,7 @@
         Par défaut, les données de configuration fournies par <code>Zend_Config</code> ne sont pas modifiables (lecture seule), et une affectation (par exemple, <code><![CDATA[$config->database->host = 'example.com']]></code>) lèvera une exception. Ce comportement par défaut peut cependant être surchargé par le constructeur pour permettre la modification des valeurs de données.
         <note>
             <para>
-                Il est important de ne pas confondre des modifications en cours de script avec l'enregistrement des données de configuration dans le support de stockage spécifique. Les outils pour créer et modifier des données de configuration pour différents supports de stockage ne concerne pas <code>Zend_Config</code>. Les solutions tiers open-source sont facilement disponibles afin de créer et/ou de modifier les données de configuration pour différents supports de stockage.
+                Il est important de ne pas confondre des modifications en cours de script avec l'enregistrement des données de configuration dans le support de stockage spécifique. Les outils pour créer et modifier des données de configuration pour différents supports de stockage ne concernent pas <code>Zend_Config</code>. Des solutions tiers open-source sont facilement disponibles afin de créer et/ou de modifier les données de configuration pour différents supports de stockage.
             </para>
         </note>
     </para>
@@ -24,6 +24,3 @@
         Les classes d'adaptateurs <code>Zend_Config</code> supporte un modèle d'héritage simple qui permet à des données de configuration d'être héritées d'une section de données de configuration dans d'autres. Ceci afin de réduire ou d'éliminer le besoin de reproduire des données de configuration pour différents cas. Une section héritante peut également surchargée les valeurs dont elle hérite de sa section parente. Comme l'héritage des classes PHP, une section peut hériter d'une section parent, qui peut hériter d'une section grand-parent, et ainsi de suite, mais l'héritage multiple (c.-à-d., la section C héritant directement des sections parents A et B) n'est pas supporté.
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

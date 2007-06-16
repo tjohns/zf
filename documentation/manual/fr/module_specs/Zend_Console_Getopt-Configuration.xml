@@ -4,7 +4,7 @@
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>Ajouter des règles d'options</title>
         <para>
-             Vous pouvez ajouter plus de règles d'option en complément de celles indiquées dans le constructeur de <code>Zend_Console_Getopt</code>, en utilisant la méthode <code>addRules()</code>. L'argument d'<code>addRules()</code> est identique au premier argument du constructeur de classe. C'est soit une chaîne dans le format d'options de syntaxe courte, soit un tableau associatif dans le format d'options de syntaxe longue. Voir <link linkend="zend.console.getopt.rules">Déclarer les règles Getopt</link> pour les détails sur la syntaxe de déclaration des options.
+            Vous pouvez ajouter plus de règles d'option en complément de celles indiquées dans le constructeur de <code>Zend_Console_Getopt</code>, en utilisant la méthode <code>addRules()</code>. L'argument d'<code>addRules()</code> est identique au premier argument du constructeur de classe. C'est soit une chaîne dans le format d'options de syntaxe courte, soit un tableau associatif dans le format d'options de syntaxe longue. Voir <link linkend="zend.console.getopt.rules">Déclarer les règles Getopt</link> pour les détails sur la syntaxe de déclaration des options.
         </para>
         <example>
             <title>Utiliser addRules()</title>
@@ -18,7 +18,7 @@ $opts->addRules(
 ?>]]></programlisting>
         </example>
         <para>
-            L'exemple au-dessus montre comment ajouter l'option "<code>--verbose</code>" avec l'alias "<code>-v</code>" à un ensemble d'options définies dans l'appel au constructeur. Noter que vous pouvez mélanger des options de syntaxe courte et de syntaxe longue dans la même instance de <code>Zend_Console_Getopt</code>.
+            L'exemple au-dessus montre comment ajouter l'option "<code>--verbose</code>" avec l'alias "<code>-v</code>" à un ensemble d'options définies dans l'appel au constructeur. Notez que vous pouvez mélanger des options de syntaxe courte et de syntaxe longue dans la même instance de <code>Zend_Console_Getopt</code>.
         </para>
     </sect2>
 
@@ -34,7 +34,7 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
         'a' => 'Cette option choisit abricot, sans parametres',
-        'b' => Cette option choisit banane, avec un parametre obligatoire de type entier,
+        'b' => 'Cette option choisit banane, avec un parametre obligatoire de type entier',
         'p' => 'Cette option choisit pear, avec un parametre optionel de type chaine de caracteres'
     )
 );
@@ -70,10 +70,10 @@ $opts->setAliases(
 ?>]]></programlisting>
         </example>
         <para>
-            Dans l'exemple ci-dessus, après la déclaration de ces alias, "<code>-a</code>", "<code>--apple</code>" et "<code>--apfel</code>" sont des alias les un pour les autres. En outre "<code>-p</code>" et "<code>--pear</code>" sont des alias l'un pour l'autre.
+            Dans l'exemple ci-dessus, après leurs déclarations, "<code>-a</code>", "<code>--apple</code>" et "<code>--apfel</code>" sont des alias les un pour les autres. En outre "<code>-p</code>" et "<code>--pear</code>" sont des alias l'un pour l'autre.
         </para>
         <para>
-            La méthode <code>setAliases()</code> est la seule manière de définir des aliassi vous déclarez les options en utilisant la syntaxe courte.
+            La méthode <code>setAliases()</code> est la seule manière de définir des alias si vous déclarez les options en utilisant la syntaxe courte.
         </para>
     </sect2>
 
@@ -100,12 +100,12 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
     <sect2 id="zend.console.getopt.configuration.config">
         <title>Ajouter une configuration</title>
         <para>
-            Le troisième paramètre du constructeur de <code>Zend_Console_Getopt</code> est un tableau d'options de configuration qui affectent le comportement de l'instance d'objet retourné. Vous pouvez également indiquer des options de configuration en utilisant la méthode <code>setOption()</code>, ou vous pouvez placer une option individuelle en utilisant la méthode <code>setOption()</code>.
+            Le troisième paramètre du constructeur de <code>Zend_Console_Getopt</code> est un tableau d'options de configuration qui affectent le comportement de l'instance d'objet retournée. Vous pouvez également indiquer des options de configuration en utilisant la méthode <code>setOption()</code>, ou vous pouvez placer une option individuelle en utilisant la méthode <code>setOption()</code>.
         </para>
         <note>
             <title>Clarifier le terme "option"</title>
             <para>
-                Le terme "option" est employé pour la configuration de la classe <code>Zend_Console_Getopt</code> afin de correspondre à la termiminologie utilisée reste du Zend Framework. Ce n'est pas la même chose que les options de la ligne de commande qui sont analysées par la classe <code>Zend_Console_Getopt</code>.
+                Le terme "option" est employé pour la configuration de la classe <code>Zend_Console_Getopt</code> afin de correspondre à la terminologie utilisée dans le reste du Zend Framework. Ce n'est pas la même chose que les options de la ligne de commande qui sont analysées par la classe <code>Zend_Console_Getopt</code>.
             </para>
         </note>
         <para>
@@ -119,12 +119,12 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"), si "true", fait correspondre des alias même s'ils différent en terme de casse. C'est-à-dire,"<code>-a</code>" et "<code>-A</code>" seront considérés commes des  synonymes. Cette option de configuration vaut "false" par défaut.
+                    <code>Zend_Console_Getopt::CONFIG_IGNORECASE</code> ("ignoreCase"), si "true", fait correspondre des alias même s'ils différent en terme de casse. C'est-à-dire,"<code>-a</code>" et "<code>-A</code>" seront considérés commes des synonymes. Cette option de configuration vaut "false" par défaut.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code> ("ruleMode") peut avoir les valeurs <code>Zend_Console_Getopt::MODE_ZEND</code> ("zend") ou <code>Zend_Console_Getopt::MODE_GNU</code> ("gnu"). Il ne devrait pas être nécessaire d'employer cette option à moins que vous étendiez la classe avec les formes additionnelles de syntaxe. Les deux modes supportés dans la classe <code>Zend_Console_Getopt</code> de base sont sans équivoque. Si le spécificateur est une chaîne de caractère, la classe passe en <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>. Mais si vous étendez la classe et ajoutez plus de nouvelles formes de syntaxe, vous pouvez avoir à indiquer le mode en utilisant cette option.
+                    <code>Zend_Console_Getopt::CONFIG_RULEMODE</code> ("ruleMode") peut avoir les valeurs <code>Zend_Console_Getopt::MODE_ZEND</code> ("zend") ou <code>Zend_Console_Getopt::MODE_GNU</code> ("gnu"). Il ne devrait pas être nécessaire d'employer cette option à moins que vous n'étendiez la classe avec les formes additionnelles de syntaxe. Les deux modes supportés dans la classe <code>Zend_Console_Getopt</code> de base sont sans équivoque. Si le spécificateur est une chaîne de caractère, la classe passe en <code>MODE_GNU</code>, autrement elle est en <code>MODE_ZEND</code>. Mais si vous étendez la classe et ajoutez de nouvelles formes de syntaxe, vous pouvez avoir à indiquer le mode en utilisant cette option.
                 </para>
             </listitem>
         </itemizedlist>
