@@ -412,6 +412,15 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
             含まれている言語はすべて自動的に追加されるので、
             <code>addLanguage()</code> をコールする必要はありません。
         </para>
+
+        <para>
+            ソース中の特定の言語のみを翻訳対象としたい場合は、オプション
+            <code>defined_language</code> を <code>true</code>
+            に設定します。このオプションを指定した場合は、
+            対象としたい言語を <code>addLanguage()</code>
+            で明示的に指定します。このオプションのデフォルト設定は、
+            全言語を対象とするようになっています。
+        </para>
     </sect2>
 
     <sect2 id="zend.translate.using.source.csv">
