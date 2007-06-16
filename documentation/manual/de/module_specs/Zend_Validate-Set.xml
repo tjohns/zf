@@ -10,7 +10,8 @@
         <title>Alnum</title>
         <para>
             Gibt nur dann <code>true</code> zurück wenn <code>$value</code> nur alphabetische
-            und digitale Zeichen enthält.
+            und digitale Zeichen enthält. Dieser Prüfer enthält eine Option um auszuwählen ob
+            Leerzeichen als gültig anzusehen sind.
         </para>
     </sect2>
 
@@ -18,7 +19,8 @@
         <title>Alpha</title>
         <para>
             Gibt nur dann <code>true</code> zurück wenn <code>$value</code> nur alphabetische
-            Zeichen enthält.
+            Zeichen enthält. Dieser Prüfer enthält eine Option um auszuwählen ob Leerzeichen
+            als gültig anzusehen sind.
         </para>
     </sect2>
 

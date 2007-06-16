@@ -11,12 +11,10 @@
     <para>
         <code>Zend_Validate_Interface</code> definiert drei Methoden, <code>isValid()</code>,
         <code>getMessages()</code>, und <code>getErrors()</code>, welche von Benutzerklassen implementiert
-        werden können um eigene Prüfobjekte zu erstellen. Ein Objekt welches
-
-        that may be implemented by user classes in order to
-        create custom validation objects. An object that implements <code>Zend_Validate_Interface</code> interface
-        may be added to a validator chain with <code>Zend_Validate::addValidator()</code>. Such objects may also be
-        used with <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.
+        werden können um eigene Prüfobjekte zu erstellen. Ein Objekt welches das
+        <code>Zend_Validate_Interface</code> Interface implementiert kann einer Prüfkette mit
+        <code>Zend_Validate::addValidator()</code> hinzugefügt werden. Solche Objekte können auch mit
+        <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link> verwendet werden.
     </para>
 
     <para>
