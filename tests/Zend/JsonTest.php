@@ -1,23 +1,37 @@
 <?php
-
 /**
- * @package    Zend_Json
- * @subpackage UnitTests
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Json
+ * @see Zend_Json
  */
 require_once 'Zend/Json.php';
 
 /**
- * Zend_Json_Encoder
+ * @see Zend_Json_Encoder
  */
 require_once 'Zend/Json/Encoder.php';
 
 /**
- * Zend_Json_Decoder
+ * @see Zend_Json_Decoder
  */
 require_once 'Zend/Json/Decoder.php';
 
@@ -28,29 +42,54 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
- * @package    Zend_Feed
+ * @package    Zend_Json
  * @subpackage UnitTests
- *
  */
 class Zend_JsonTest extends PHPUnit_Framework_TestCase
 {
+
+    public function testJsonWithPhpJsonExtension()
+    {
+        if (!extension_loaded('json')) {
+            $this->markTestSkipped('JSON extension is not loaded');
+        }
+        $u = Zend_Json::$useBuiltinEncoderDecoder;
+        Zend_Json::$useBuiltinEncoderDecoder = false;
+        $this->_testJson(array('string', 327, true, null));
+        Zend_Json::$useBuiltinEncoderDecoder = $u;
+    }
+
+    public function testJsonWithBuiltins()
+    {
+        $u = Zend_Json::$useBuiltinEncoderDecoder;
+        Zend_Json::$useBuiltinEncoderDecoder = true;
+        $this->_testJson(array('string', 327, true, null));
+        Zend_Json::$useBuiltinEncoderDecoder = $u;
+    }
+
+    /**
+     * Test encoding and decoding in a single step
+     * @param array $values   array of values to test against encode/decode 
+     */
+    protected function _testJson($values) 
+    {
+        foreach ($values as $value) {
+            $encoded = Zend_Json::encode($value);
+            $this->assertEquals($value, Zend_Json::decode($encoded));
+        }
+    }
+
     /**
      * test null encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
-	public function testNull()
-	{
-		$this->_testEncodeDecode(array(null));
-	}
+    public function testNull()
+    {
+        $this->_testEncodeDecode(array(null));
+    }
 
-	
+
     /**
      * test boolean encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
     public function testBoolean()
     {
@@ -61,122 +100,94 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * test integer encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
-	public function testInteger()
-	{
-		$this->_testEncodeDecode(array(-2));
-		$this->_testEncodeDecode(array(-1));
+    public function testInteger()
+    {
+        $this->_testEncodeDecode(array(-2));
+        $this->_testEncodeDecode(array(-1));
 
         $zero = Zend_Json_Decoder::decode(Zend_Json_Encoder::encode(0));
-		$this->assertEquals(0, $zero, 'Failed 0 integer test. Encoded: ' . serialize(Zend_Json_Encoder::encode(0)));
-	}
+        $this->assertEquals(0, $zero, 'Failed 0 integer test. Encoded: ' . serialize(Zend_Json_Encoder::encode(0)));
+    }
 
 
     /**
      * test float encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
-	public function testFloat()
-	{
-		$this->_testEncodeDecode(array(-2.1, 1.2));
-	}
-	
-	
+    public function testFloat()
+    {
+        $this->_testEncodeDecode(array(-2.1, 1.2));
+    }
+
     /**
      * test string encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
-	public function testString()
-	{
-		$this->_testEncodeDecode(array('string'));
-		$this->assertEquals('', Zend_Json_Decoder::decode(Zend_Json_Encoder::encode('')), 'Empty string encoded: ' . serialize(Zend_Json_Encoder::encode('')));
-	}
+    public function testString()
+    {
+        $this->_testEncodeDecode(array('string'));
+        $this->assertEquals('', Zend_Json_Decoder::decode(Zend_Json_Encoder::encode('')), 'Empty string encoded: ' . serialize(Zend_Json_Encoder::encode('')));
+    }
 
     /**
      * Test backslash escaping of string
-     * 
-     * @access public
-     * @return void
      */
-	public function testString2()
+    public function testString2()
     {
         $string   = 'INFO: Path \\\\test\\123\\abc';
         $expected = '"INFO: Path \\\\\\\\test\\\\123\\\\abc"';
         $encoded = Zend_Json_Encoder::encode($string);
-		$this->assertEquals($expected, $encoded, 'Backslash encoding incorrect: expected: ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
+        $this->assertEquals($expected, $encoded, 'Backslash encoding incorrect: expected: ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
         $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
-	
+
     /**
      * Test newline escaping of string
-     * 
-     * @access public
-     * @return void
      */
-	public function testString3()
+    public function testString3()
     {
         $expected = '"INFO: Path\nSome more"';
         $string   = "INFO: Path\nSome more";
         $encoded  = Zend_Json_Encoder::encode($string);
-		$this->assertEquals($expected, $encoded, 'Newline encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
+        $this->assertEquals($expected, $encoded, 'Newline encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
         $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 
     /**
      * Test tab/non-tab escaping of string
-     * 
-     * @access public
-     * @return void
      */
-	public function testString4()
+    public function testString4()
     {
         $expected = '"INFO: Path\\t\\\\tSome more"';
         $string   = "INFO: Path\t\\tSome more";
         $encoded  = Zend_Json_Encoder::encode($string);
-		$this->assertEquals($expected, $encoded, 'Tab encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
+        $this->assertEquals($expected, $encoded, 'Tab encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
         $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 
     /**
      * Test double-quote escaping of string
-     * 
-     * @access public
-     * @return void
      */
-	public function testString5()
+    public function testString5()
     {
         $expected = '"INFO: Path \"Some more\""';
         $string   = 'INFO: Path "Some more"';
         $encoded  = Zend_Json_Encoder::encode($string);
-		$this->assertEquals($expected, $encoded, 'Quote encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
+        $this->assertEquals($expected, $encoded, 'Quote encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
         $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 
     /**
      * test indexed array encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
-	public function testArray()
-	{
+    public function testArray()
+    {
         $array = array(1, 'one', 2, 'two');
         $encoded = Zend_Json_Encoder::encode($array);
         $this->assertSame($array, Zend_Json_Decoder::decode($encoded), 'Decoded array does not match: ' . serialize($encoded));
-	}
+    }
 
     /**
      * test associative array encoding/decoding
-     * 
-     * @access public
-     * @return void
      */
     public function testAssocArray() 
     {
@@ -185,34 +196,25 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * test associative array encoding/decoding, with mixed key types
-     * 
-     * @access public
-     * @return void
      */
     public function testAssocArray2() 
     {
         $this->_testEncodeDecode(array(array('one' => 1, 2 => 2)));
     }
-	
+
     /**
-     * test associative array encoding/decoding, with integer keys not starting
-     * at 0
-     * 
-     * @access public
-     * @return void
+     * test associative array encoding/decoding, with integer keys not starting at 0
      */
     public function testAssocArray3() 
     {
         $this->_testEncodeDecode(array(array(1 => 'one', 2 => 'two')));
     }
-	    /**
+
+    /**
      * test object encoding/decoding (decoding to array)
-     * 
-     * @access public
-     * @return void
      */
-	public function testObject()
-	{
+    public function testObject()
+    {
         $value = new stdClass();
         $value->one = 1;
         $value->two = 2;
@@ -221,13 +223,10 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
         $encoded = Zend_Json_Encoder::encode($value);
         $this->assertSame($array, Zend_Json_Decoder::decode($encoded));
-	}
+    }
 
     /**
      * test object encoding/decoding (decoding to stdClass)
-     * 
-     * @access public
-     * @return void
      */
     public function testObjectAsObject()
     {
@@ -245,9 +244,6 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test that arrays of objects decode properly; see issue #144
-     * 
-     * @access public
-     * @return void
      */
     public function testDecodeArrayOfObjects()
     {
@@ -258,9 +254,6 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test that objects of arrays decode properly; see issue #107
-     * 
-     * @access public
-     * @return void
      */
     public function testDecodeObjectOfArrays()
     {
@@ -276,19 +269,18 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEquals($expect, Zend_Json_Decoder::decode($value));
     }
-	
-	/**
+
+    /**
      * Test encoding and decoding in a single step
-     *
-	 * @param array $values   array of values to test against encode/decode 
-	 */
-	protected function _testEncodeDecode($values) 
-	{
-		foreach ($values as $value) {
-			$encoded = Zend_Json_Encoder::encode($value);
-			$this->assertEquals($value, Zend_Json_Decoder::decode($encoded));
-		}
-	}
+     * @param array $values   array of values to test against encode/decode 
+     */
+    protected function _testEncodeDecode($values) 
+    {
+        foreach ($values as $value) {
+            $encoded = Zend_Json_Encoder::encode($value);
+            $this->assertEquals($value, Zend_Json_Decoder::decode($encoded));
+        }
+    }
 
     /**
      * Test that version numbers such as 4.10 are encoded and decoded properly; 
@@ -404,7 +396,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $this->assertContains('variables:{foo:"bar",bar:"baz"}', $encoded);
         $this->assertContains('constants : {FOO: "bar"}', $encoded);
     }
-    
+
     public function testEncodeClasses()
     {
         $encoded = Zend_Json_Encoder::encodeClasses(array('Zend_JsonTest_Object', 'Zend_JsonTest'));
