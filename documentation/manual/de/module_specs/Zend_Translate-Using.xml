@@ -414,6 +414,13 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
             hinzugefügt und müssen nicht durch einen extra Aufruf von <code>addLanguage()</code>
             ergänzt werden.
         </para>
+
+        <para>
+            Wenn man nur spezielle Sprache aus der Quelle übersetzen will, kann  die Option
+            <code>defined_language</code> auf <code>true</code> gesetzt werden. Mit dieser
+            Option können gewünschte Sprachen explizit mit <code>addLanguage()</code>
+            hinzugefügt werden. Der Standardwert für diese Option fügt alle Sprachen hinzu.
+        </para>
     </sect2>
 
     <sect2 id="zend.translate.using.source.csv">
