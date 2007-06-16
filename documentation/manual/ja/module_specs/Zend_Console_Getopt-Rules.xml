@@ -43,7 +43,7 @@ $opts = new Zend_Console_Getopt('abp:');
         </example>
         <para>
             上の例は、<code>Zend_Console_Getopt</code> を用いて、
-            使用するオプションを "<code>-a</code>"、
+            使用するオプションを "<code>-a</code>" や
             "<code>-b</code>" あるいは "<code>-p</code>" と宣言するものです。
             最後のフラグにはパラメータが必要となります。
         </para>

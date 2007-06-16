@@ -1,9 +1,9 @@
 <sect1 id="zend.json.basics">
     <title>基本的な使用法</title>
     <para>
-        <code>Zend_Json</code> を使用するために、静的な public
-        メソッドが 2 つ公開されています。名前は
-        <code>Zend_Json::encode()</code> および
+        <code>Zend_Json</code> を使用するために、
+        静的な publicメソッドが 2 つ公開されています。
+        名前は <code>Zend_Json::encode()</code> および
         <code>Zend_Json::decode()</code> となります。
     </para>
     <programlisting role="php"><![CDATA[<?php

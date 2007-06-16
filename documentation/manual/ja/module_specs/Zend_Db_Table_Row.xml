@@ -16,8 +16,8 @@
 
         <para>
             Zend_Db_Table_Row は、
-            <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">行データゲートウェイ</ulink>
-            パターンを実装したものです。
+            <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">
+            行データゲートウェイ</ulink>パターンを実装したものです。
         </para>
 
     </sect2>

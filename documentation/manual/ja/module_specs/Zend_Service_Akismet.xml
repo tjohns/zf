@@ -5,8 +5,8 @@
         <title>導入</title>
 
         <para>
-            <code>Zend_Service_Akismet</code> は、<ulink
-                url="http://akismet.com/development/api/">Akismet API</ulink>
+            <code>Zend_Service_Akismet</code> は、
+            <ulink url="http://akismet.com/development/api/">Akismet API</ulink>
             のクライアント機能を提供します。Akismet サービスは、
             入力データがスパムかどうかを判定するために用いられます。
             また、あるデータを「スパムである」とか「無実である (ハム)」

@@ -11,8 +11,8 @@
             短い形式のオプション指定を表す文字列、
             あるいは長い形式のオプション指定を表す連想配列となります。
             オプションを指定する構文の詳細は、
-            <link linkend="zend.console.getopt.rules">Getopt の規則の宣言</link>
-            を参照ください。
+            <link linkend="zend.console.getopt.rules">Getopt
+            の規則の宣言</link>を参照ください。
         </para>
         <example id="zend.console.getopt.configuration.addrules.example">
             <title>addRules() の使用法</title>

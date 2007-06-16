@@ -2,9 +2,9 @@
     <title>Gdata の例外処理</title>
 
     <para>
-        <code>Zend_Gdata__App_Exception</code> は、Zend_Gdata
-        がスローする例外の基底クラスです。Zedn_Gdata
-        がスローする例外は、すべて Zend_Gdata_App_Exception でキャッチできます。
+        <code>Zend_Gdata__App_Exception</code> は、
+        Zend_Gdata がスローする例外の基底クラスです。
+        Zedn_Gdata がスローする例外は、すべて Zend_Gdata_App_Exception でキャッチできます。
     </para>
 
     <programlisting role="php"><![CDATA[<?php

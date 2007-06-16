@@ -23,7 +23,7 @@ try {
     </example>
 
     <para>
-        各 Zend Framework コンポーネントのドキュメントには、
+        Zend Framework の各コンポーネントのドキュメントには、
         どのメソッドでどんな場合に例外をスローするのかや、
         どのような Zend_Exception の派生クラスをスローするのかが記載されています。
     </para>
