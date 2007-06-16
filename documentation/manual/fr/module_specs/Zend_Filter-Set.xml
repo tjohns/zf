@@ -8,14 +8,15 @@
     <sect2 id="zend.filter.set.alnum">
         <title>Alnum</title>
         <para>
-            Retourne la chaîne <code>$value</code>, en retirant tout sauf les caractères alphabétiques et numériques.
+            Retourne la chaîne <code>$value</code>, en retirant tout sauf les caractères alphabétiques et numériques. Ce filtre inclue une option permettant d'autoriser ou non les caractères espace.
         </para>
     </sect2>
 
     <sect2 id="zend.filter.set.alpha">
         <title>Alpha</title>
         <para>
-            Retourne la chaîne <code>$value</code>, en retirant tout sauf les caractères alphabétiques.
+            Retourne la chaîne <code>$value</code>, en retirant tout sauf les caractères alphabétiques. Ce filtre inclue une option permettant d'autoriser ou non les caractères espace.
+        </para>
         </para>
     </sect2>
 

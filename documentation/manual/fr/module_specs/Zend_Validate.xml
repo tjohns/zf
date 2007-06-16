@@ -73,7 +73,7 @@ if ($validator->isValid($email)) {
         <title>Messages personnalisés</title>
 
         <para>
-            Les classes de validation fournissent une méthode <code>setMessage()</code> avec laquellevous pouvez spécifier le format du message retourné par <code>getMessages()</code> dans le cas d'un échec de validation. Le premier argument de cette méthode est une chaîne contenant le message d'erreur. Vous pouvez inclure des marques dans cette chaîne qui seront substituées avec les données appropriées du validateur. La marque <code>%value%</code> est supportée par tous les validateurs ; elle est substituée par la valeur fournie à <code>isValid()</code>. D'autres marques peuvent être supportées aux cas par cas par chaque classe de validation. Par exemple, <code>%max%</code> est une marque supportée par Zend_Validate_LessThan.
+            Les classes de validation fournissent une méthode <code>setMessage()</code> avec laquelle vous pouvez spécifier le format du message retourné par <code>getMessages()</code> dans le cas d'un échec de validation. Le premier argument de cette méthode est une chaîne contenant le message d'erreur. Vous pouvez inclure des marques dans cette chaîne qui seront substituées avec les données appropriées du validateur. La marque <code>%value%</code> est supportée par tous les validateurs ; elle est substituée par la valeur fournie à <code>isValid()</code>. D'autres marques peuvent être supportées aux cas par cas par chaque classe de validation. Par exemple, <code>%max%</code> est une marque supportée par Zend_Validate_LessThan. La méthode <code>getMessageVariables()</code> retourne un tableau des marques de variables supportés par le validateur.
         </para>
 
         <para>
