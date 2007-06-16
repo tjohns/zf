@@ -1677,6 +1677,22 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         delimiting identifiers.
                     </para>
                 </listitem>
+                <listitem>
+                    <para>
+                        You can specify <code>pdoType</code> as a key in the
+                        options array.  The value can be "mssql" (the default),
+                        "dblib", "freetds", or "sybase".  This option affects
+                        the DSN prefix the adapter uses when constructing the
+                        DSN string.  Both "freetds" and "sybase" imply a prefix
+                        of "sybase:", which is used for the
+                        <ulink url="http://www.freetds.org/">FreeTDS</ulink> set
+                        of libraries.
+                        See also
+                        <ulink url="http://www.php.net/manual/en/ref.pdo-dblib.connection.php">
+                        http://www.php.net/manual/en/ref.pdo-dblib.connection.php</ulink>
+                        for more information on the DSN prefixes used in this driver.
+                    </para>
+                </listitem>
             </itemizedlist>
         </sect3>
 
