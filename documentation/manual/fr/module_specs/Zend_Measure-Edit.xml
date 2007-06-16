@@ -3,44 +3,38 @@
     <title>Manipuler des mesures</title>
 
     <para>
-        L'analyse et la normalisation de l'entrée, combinées avec le récupération suivant les notations régionalisées rend des données accessibles aux utilisateurs dans différentes régions. Beaucoup de méthodes additionnelles existent dans des composants <code>Zend_Measure_*</code> pour manipuler et travailler ces données, après qu'elles aient été normalisées.
+        L'analyse et la normalisation de l'entrée, combinées avec la récupération suivant les notations régionalisées rend des données accessibles aux utilisateurs dans différentes régions. Beaucoup de méthodes additionnelles existent dans les composants <code>Zend_Measure_*</code> pour manipuler et travailler ces données, après qu'elles aient été normalisées.
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.convert"><code>Convertir</code>
-                </link>
+                <link linkend="zend.measure.edit.convert"><code>Convertir</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.add"><code>Ajouter et soustraire</code>
-                </link>
+                <link linkend="zend.measure.edit.add"><code>Ajouter et soustraire</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.equal"><code>Comparer avec un booléen</code>
-                </link>
+                <link linkend="zend.measure.edit.equal"><code>Comparer avec un booléen</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.compare"><code>Comparer "plus/moins grand que"</code>
-                </link>
+                <link linkend="zend.measure.edit.compare"><code>Comparer "plus/moins grand que"</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changevalue"><code>Changer manuellement des valeurs</code>
-                </link>
+                <link linkend="zend.measure.edit.changevalue"><code>Changer manuellement des valeurs</code></link>
             </para>
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.measure.edit.changetype"><code>Changer manuellement de type</code>
-                </link>
+                <link linkend="zend.measure.edit.changetype"><code>Changer manuellement de type</code></link>
             </para>
         </listitem>
     </itemizedlist>
@@ -50,7 +44,7 @@
         <title>Convertir</title>
 
         <para>
-            Le dispositif le plus important est probablement la conversion dans différentes unités de la mesure. La conversion d'une unité peut être faite à tout moment en utilisant la méthode <code>convertTo()</code>. Des unités de mesure peuvent seulement être converties en d'autres unités du même type (classe). Par conséquent, il n'est pas possible de convertir (par exemple : une longueur en poids), qui encouragerait des pratiques de programmation pauvres et entraînerait la propagation d'erreurs sans lever d'exceptions.
+            Le dispositif le plus important est probablement la conversion dans différentes unités de la mesure. La conversion d'une unité peut être faite à tout moment en utilisant la méthode <code>convertTo()</code>. Des unités de mesure peuvent seulement être converties en d'autres unités du même type (classe). Par conséquent, il n'est pas possible de convertir (par exemple : une longueur en poids), qui encouragerait des pratiques de programmation pauvres et entraînerait la propagation d'erreurs sans lever d'exception.
         </para>
 
         <example>
@@ -76,7 +70,7 @@ print "Tonne : ".$unite->convertTo(Zend_Measure_Weight::TON); // affiche "Tonne 
         <title>Ajouter et soustraire</title>
 
         <para>
-            Les mesures peuvent être ajoutées en utilisant <code>add()</code> et soustraites en utilisant <code>sub()</code>. Chaque addition créera un nouvel objet pour le résultat. L'objet courant ne sera jamais changé par la classe. Le nouvel objet sera du même type que l'objet de début. Les objets dynamiques soutiennent un modèle fluide de la programmation, où des ordres complexes des opérations peuvent être imbriqués sans risque d'effets secondaires changeant les objets d'entrée.
+            Les mesures peuvent être ajoutées en utilisant <code>add()</code> et soustraites en utilisant <code>sub()</code>. Chaque addition créera un nouvel objet pour le résultat. L'objet courant ne sera jamais changé par la classe. Le nouvel objet sera du même type que l'objet de début. Les objets dynamiques supportent un modèle fluide de programmation, où des ordres complexes d'opération peuvent être imbriqués sans risque d'effets secondaires changeant les objets d'entrée.
         </para>
 
         <para>
@@ -100,7 +94,7 @@ echo $somme; // affiche "300 cm"
         <note>
             <title>Conversion automatique</title>
             <para>
-                Ajouter un objet à l'autre le convertira automatiquement en dans l'unité correcte. Il n'est pas nécessaire d'appeler <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link> avant d'ajouter des unités différentes.
+                Ajouter un objet à l'autre le convertira automatiquement dans l'unité correcte. Il n'est pas nécessaire d'appeler <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link> avant d'ajouter des unités différentes.
             </para>
         </note>
 
@@ -256,6 +250,3 @@ echo $unite; // affiche "1000 km"
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

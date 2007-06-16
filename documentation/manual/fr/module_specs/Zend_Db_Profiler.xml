@@ -7,7 +7,7 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Db_Profiler</code> peut être activé pour permettre le profilage de requêtes. Les profils incluent les requête exécutées par l'adaptateur, ainsi que leur temps d'exécution, permettant l'inspection des requêtes qui ont été exécutées sans avoir besoin de rajouter du code spécifique de débogage aux classes. L'utilisation avancée permet aussi au développeur de filtrer quelles requêtes il souhaite profiler.
+            <code>Zend_Db_Profiler</code> peut être activé pour permettre le profilage de requête. Les profils incluent les requêtes exécutées par l'adaptateur, ainsi que leur temps d'exécution, permettant l'inspection des requêtes qui ont été exécutées sans avoir besoin de rajouter le code spécifique de débogage aux classes. L'utilisation avancée permet aussi au développeur de filtrer quelles requêtes il souhaite profiler.
         </para>
 
         <para>
@@ -22,12 +22,12 @@ $params = array (
     'username' => 'malory',
     'password' => '******',
     'dbname'   => 'camelot',
-    'profiler' => true  // active le profiler; mettre à false pour désactiver (valeur par défaut)
+    'profiler' => true  // active le profileur ; mettre à false pour désactiver (valeur par défaut)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-// coupe le profileur :
+// stoppe le profileur :
 $db->getProfiler()->setEnabled(false);
 
 // active le profileur :
@@ -97,7 +97,7 @@ $profileur = $db->getProfiler();
         </itemizedlist>
 
         <para>
-            L'information que <code>Zend_Db_Profiler</code> founi est utile pour profiler des goulets d'étranglement dans les applications, ainsi que pour déboguer les requêtes qui viennent d'être exécutées. Par exemple, pour voir la dernière requête qui vient de s'exécuter :
+            L'information que <code>Zend_Db_Profiler</code> fourni est utile pour profiler des goulots d'étranglement dans les applications, ainsi que pour déboguer les requêtes qui viennent d'être exécutées. Par exemple, pour voir la dernière requête qui vient de s'exécuter :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -151,7 +151,7 @@ echo "Requête la plus lente (SQL) : \n" . $requeteLaPlusLongue . "\n";
 // Seules les requêtes qui durent au moins 5 secondes sont profilées:
 $profileur->setFilterElapsedSecs(5);
 
-// Profil de toutes les requête, peu importe leur longueur:
+// Profil de toutes les requêtes, peu importe leur durée :
 $profileur->setFilterElapsedSecs(null);
 ?>]]></programlisting>
         </sect3>
@@ -160,7 +160,7 @@ $profileur->setFilterElapsedSecs(null);
             <title>Filtrer par type de requête</title>
 
             <para>
-                <code>setFilterQueryType()</code> permet au développeur de définir quels types de requêtes doivent être profilés ; pour profiler des types multiples vous pouvez utiliser le OU logique. Les types de requêtes sont définis sous forme de constantes de <code>Zend_Db_Profiler</code> :
+                <code>setFilterQueryType()</code> permet au développeur de définir quels types de requêtes doivent être profilées ; pour profiler des types multiples vous pouvez utiliser le OU logique. Les types de requêtes sont définis sous forme de constantes de <code>Zend_Db_Profiler</code> :
             </para>
 
             <itemizedlist>
@@ -224,7 +224,7 @@ $profileur->setFilterQueryType(null);
             <title>Récupérer les profils par type de requête</title>
 
             <para>
-                Utiliser <code>setFilterQueryType()</code> peut réduire les profils générés. Cependant il est parfois utile de garder tous les profils et voir uniquement ceux dont on a besoin, à un moment donné. Une autre possibilité de <code>getQueryProfiles()</code> est qu'il est possible de filtrer à la volée, en passant un type de requête (ou une combinaison logique de types de requête) comme premier argument ; voir <xref linkend="zend.db.profiler.advanced.filtertype" /> pour une liste des constantes de types de requête.
+                Utiliser <code>setFilterQueryType()</code> peut réduire les profils générés. Cependant il est parfois utile de garder tous les profils et voir uniquement ceux dont on a besoin, à un moment donné. Une autre possibilité de <code>getQueryProfiles()</code> est qu'il est possible de filtrer à la volée, en passant un type de requête (ou une combinaison logique de types de requête) comme premier argument ; voir <xref linkend="zend.db.profiler.advanced.filtertype" /> pour la liste des constantes de types de requête.
             </para>
 
             <programlisting role="php">
@@ -246,6 +246,3 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -1,15 +1,11 @@
 <sect1 id="zend.mail.multiple-emails">
     <title>Envoyer plusieurs emails par connexion SMTP</title>
     <para>
-        Par défaut, une connexion SMTP est établie pour chaque email à envoyer. Si vous voulez envoyer
-        plusieurs emails avec une seule connexion SMTP, vous pouvez gérer la méthode <code>connect()</code> vous-même.
-        Si le transport a établit une connexion avant que la méthode <code>send()</code> soit appelée, il sera utilisé et ne sera
-        pas fermé :
+        Par défaut, une connexion SMTP est établie pour chaque email à envoyer. Si vous voulez envoyer plusieurs emails avec une seule connexion SMTP, vous pouvez gérer la méthode <code>connect()</code> vous-même. Si le transport a établi une connexion avant que la méthode <code>send()</code> ne soit appelée, il sera utilisé et ne sera pas fermé :
     </para>
     <example>
         <title>Envoyer plusieurs emails par connexion SMTP</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // construction du message
@@ -21,9 +17,6 @@ for ($i = 0; $i < 5; $i++) {
     $mail->send();
 }
 $tr->disconnect();
-?>]]>   </programlisting>
+?>]]></programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

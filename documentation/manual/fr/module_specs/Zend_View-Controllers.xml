@@ -2,7 +2,7 @@
     <title>Scripts de contrôleur</title>
 
     <para>
-        Le contrôleur est l'endroit où vous instantiez et configurez <code>Zend_View</code>. Vous assignez ensuite des variables à la vue, et lui dites comment effectuer la sortie en utilisant un script particulier.
+        Le contrôleur est l'endroit où vous instanciez et configurez <code>Zend_View</code>. Vous assignez ensuite des variables à la vue, et lui dites comment effectuer le rendu en utilisant un script particulier.
     </para>
 
     <sect2 id="zend.view.controllers.assign">
@@ -10,7 +10,7 @@
         <title>Assigner des variables</title>
 
         <para>
-            Votre script de contrôleur devrait assigner les variables nécessaires à la vue avant de passer le contrôle au script de vue. Normalement vous pouvez faire des assignations une par une en assignant les noms des propriétés de l'instance de la vue :
+            Votre script de contrôleur devrait assigner les variables nécessaires à la vue avant de passer le contrôle au script de vue. Normalement vous pouvez faire les assignations une par une en assignant les noms des propriétés de l'instance de la vue :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -89,11 +89,11 @@ echo $view->render('uneVue.php');
         <title>Chemin des scripts de vue</title>
 
         <para>
-            Par défaut, <code>Zend_View</code> attend que vos scripts de vues soient dans le même dossier que le celui du contrôleur. Par exemple, si le script du contrôleur est dans &quot;/chemin/des/controleurs&quot; et qu'il appelle $view->render('uneVue.php'), <code>Zend_View</code> va rechercher &quot;/chemin/des/controleurs/uneVue.php&quot;
+            Par défaut, <code>Zend_View</code> s'attend à ce que vos scripts de vues soient dans le même dossier que le celui du contrôleur. Par exemple, si le script du contrôleur est dans &quot;/chemin/des/controleurs&quot; et qu'il appelle $view->render('uneVue.php'), <code>Zend_View</code> va rechercher &quot;/chemin/des/controleurs/uneVue.php&quot;
         </para>
 
         <para>
-            Evidemment, vos script sont peut-être localisé ailleurs. Pour dire à <code>Zend_View</code> ou il doit chercher, utilisez la méthode <code>setScriptPath()</code>.
+            Evidemment, vos scripts sont peut-être localisé ailleurs. Pour dire à <code>Zend_View</code> ou il doit chercher, utilisez la méthode <code>setScriptPath()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -107,7 +107,7 @@ $view->setScriptPath('/chemin/des/vues');
         </para>
 
         <para>
-            En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>setScriptPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va rechercher le script de vue dans le le chemin le plus récemment ajouté. Cela vous permet de passer outre les vues par défaut, pour des vues personnalisées. Ainsi vous pouvez créer des &quot;thèmes&quot; ou des &quot;skins&quot; pour certaines vues, pendant que vous laissez les autres intactes.
+            En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>setScriptPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va rechercher le script de vue dans le chemin le plus récemment ajouté. Cela vous permet de passer outre les vues par défaut, pour des vues personnalisées. Ainsi vous pouvez créer des &quot;thèmes&quot; ou des &quot;skins&quot; pour certaines vues, pendant que vous laissez les autres intactes.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -125,6 +125,3 @@ $view->addScriptPath('/chemin/des/vues-personnalisees');
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
