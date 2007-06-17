@@ -330,6 +330,10 @@ $translate = new Zend_Translate('tmx', 'chemin/vers/mytranslation.tmx', 'en');
         <para>
             Les fichiers TMX peuvent avoir plusieurs langues dans le même fichier. Toutes autres langues incluses sont ajoutées automatiquement, ainsi vous n'avez pas à appeler <code>addLanguage()</code>.
         </para>
+
+        <para>
+            Si vous voulez avoir seulement les langues spécifiées de la source traduite, vous pouvez régler l'option <code>defined_language</code> à <code>true</code>. Avec cette option vous pouvez ajouter les langues souhaitées explicitement avec <code>addLanguage()</code>. La valeur par défaut pour cette option est d'ajouter toutes les langues.
+        </para>
     </sect2>
 
     <sect2 id="zend.translate.using.source.csv">
