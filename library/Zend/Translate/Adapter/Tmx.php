@@ -44,6 +44,7 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
     private $_tuv         = null;
     private $_seg         = null;
     private $_content     = null;
+    private $_defined     = false;
 
     /**
      * Generates the tmx adapter
@@ -76,6 +77,10 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
             $this->_translate = array();
         }
 
+        if ((in_array('defined_language', $options)) and !empty($options['defined_language'])) {
+            $this->_defined = true;
+        }
+
         if (!is_readable($filename)) {
             throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
         }
@@ -92,8 +97,6 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
                       xml_get_current_line_number($this->_file)));
             xml_parser_free($this->_file);
         }
-//print_r($this->_languages);
-print_r($this->_translate);
     }
 
     private function _startElement($file, $name, $attrib)
@@ -111,7 +114,7 @@ print_r($this->_translate);
                         $this->_translate[$this->_tuv] = array();
                     }
                     if (!array_key_exists($this->_tuv, $this->_languages) and
-                       !empty($this->_options['defined_language'])) {
+                       ($this->_defined === true)) {
                         $this->_languages[$this->_tuv] = $this->_tuv;
                     }
                 }
