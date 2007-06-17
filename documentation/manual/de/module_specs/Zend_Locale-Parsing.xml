@@ -74,11 +74,20 @@ print $number; // wird 13524.678 zurückgeben
             </para>
 
             <para>
-                Auch die Genauigkeit des dezimalen Ergebnisses kann zu einer gewünschten Länge abgeschnitten werden
-                mithilfe von <code>getNumber()</code>. Wenn keine Genauigkeit angegeben wurde, wird nichts
-                abgeschnitten. Für die Angabe der Genauigkeit dürfen nur PHP Interger Zahlen verwendet werden.
+                Auch die Genauigkeit des dezimalen Ergebnisses kann zu einer gewünschten Länge abgerundet werden
+                bei <code>getNumber()</code> mit der Option <code>'precision'</code>. Wenn keine Genauigkeit
+                angegeben wurde, wird nicht abgerundet. Für die Angabe der Genauigkeit dürfen nur PHP Integer
+                Zahlen verwendet werden.
                 Das Ergebnis wird nicht gerundet. Deswegen wird "1.6" auch "1" und nicht "2" zurückgeben, wenn als
                 Genauigkeit null angegeben wurde.
+            </para>
+
+            <para>
+                Wenn das dezimale Ergebnis zu einer gewünschten Länge abgeschnitten statt gerundet werden soll kann
+                stattdessen die Option <code>'number_format'</code> verwendet werden. Die Länge des gewünschten
+                dezimalen Ergebnisses kann mit der gewünschten Länge von Nullen bestimmt werden. Das Ergebnis wird
+                dann nicht gerundet. Wenn also die definierte Genauigkeit innerhalb von <code>number_format</code>
+                Null ist wird "1.6" den Wert "1" und nicht "2" zurückgeben. Siehe das folgende Beispiel:
             </para>
 
             <example>
@@ -88,8 +97,10 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', array('precision' => 1, 'locale' => $locale));
+print $number; // will 13524.7 zurückgeben
 
-print $number; // wird 13524.6 zurückgeben
+$number = Zend_Locale_Format::getNumber('13.524,678', array('number_format' => '#.00', 'locale' => $locale));
+print $number; // will 13524.67 zurückgeben
 ?>]]></programlisting>
             </example>
 
@@ -145,20 +156,10 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, array('precision' => 2, 'locale' => $locale));
 
-// gibt 13.547,36 zurück
+// gibt 13.547,37 zurück
 print $number;
 ?>]]></programlisting>
         </example>
-
-        <para>
-            <note>
-                <title>Achtung</title>
-                <para>
-                    <code>toNumber()</code> kürzt die Ausgabe. Das Ergebnis wird nicht gerundet.
-                    Deswegen wird 1.6 nicht zu 2 sondern zu 1.
-                </para>
-            </note>
-        </para>
 
         <para>
             Wird die Option 'number_format' benutzt, kann ein selbst definiertes Format für das erstellen
@@ -277,7 +278,7 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getFloat('13.524,678', array('precision' => 2, 'locale' => $locale));
 
-// gibt 13524.67 zurück
+// gibt 13524.68 zurück
 print $number;
 ?>]]></programlisting>
         </example>
@@ -301,20 +302,10 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toFloat(13547.3655, array('precision' => 1, 'locale' => $locale));
 
-// gibt 13.547,3 zurück
+// gibt 13.547,4 zurück
 print $number;
 ?>]]></programlisting>
         </example>
-
-        <para>
-            <note>
-                <title>Achtung</title>
-                <para>
-                    <code>toFloat()</code> kürzt die Ausgabe. Das Ergebnis wird nicht gerundet.
-                    Deswegen wird 1.6 nicht zu 2 sondern zu 1.
-                </para>
-            </note>
-        </para>
 
     </sect2>
 

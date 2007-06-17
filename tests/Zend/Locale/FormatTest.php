@@ -694,6 +694,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend_Locale_Format::toNumber(1234567, array('number_format' => '#,##0.00', 'locale' => 'de_AT')), '1.234.567,00', "value 1234567,00 expected");
         $this->assertEquals(Zend_Locale_Format::toNumber(1234567.123, array('precision' => 2, 'locale' => 'de_AT')), '1.234.567,12', "value 1234567,12 expected");
         $this->assertEquals(Zend_Locale_Format::toNumber(-1234567.123, array('number_format' => '#0.00-', 'locale' => 'de_AT')), '1234567,12-', "value 1234567,12 expected");
+        $this->assertEquals(Zend_Locale_Format::toNumber(-12345.67, array('precision' => 0, 'locale' => 'de_AT')), '-12.345', "value -12.345 expected");
     }
 
 
