@@ -414,7 +414,7 @@ class Zend_Locale_Format
             $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         } else {
             $format = iconv_substr($format, 0, $point) . $symbols['decimal']
-                               . iconv_substr($prec, 2) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
+                               . iconv_substr($prec, 2) . iconv_substr($format, iconv_strrpos($format, '#') + 2 + strlen($prec) - 2);
         }
         if (($value < 0) and ($rest != '0') and ($rest != '#')) {
             $format .= $rest;
