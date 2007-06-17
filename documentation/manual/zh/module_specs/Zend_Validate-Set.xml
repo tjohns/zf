@@ -9,14 +9,14 @@
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
-            当且仅当<code>$value</code>只包含字母和数字字符，返回 <code>true</code>。
+            当且仅当<code>$value</code>只包含字母和数字字符，返回 <code>true</code>。这个校验器包括一个考虑空白字符是否有效的选项。
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.alpha">
         <title>Alpha</title>
         <para>
-            当且仅当<code>$value</code>只包含字母字符，返回 <code>true</code>。
+            当且仅当<code>$value</code>只包含字母字符，返回 <code>true</code>。这个校验器包括一个考虑空白字符是否有效的选项。
         </para>
     </sect2>
 
