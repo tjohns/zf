@@ -65,6 +65,11 @@ public function getAllPosts($tag = null);
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
         <para>
+            <code>Zend_Service_Delicious</code> のメソッド <code>getPosts()</code>、<code>getAllPosts()</code>、
+            <code>getRecentPosts()</code> および <code>getUserPosts()</code>
+            が、このクラスのインスタンスを返します。
+        </para>
+        <para>
             データへのアクセスを簡単に行うため、このクラスは
             <code>Countable</code>、<code>Iterator</code> および
             <code>ArrayAccess</code> の三つのインターフェイスを実装しています。
@@ -97,6 +102,45 @@ echo $posts[0]->getTitle();
                 というのも、これらのプロパティは読み込み専用だからです。
             </para>
         </note>
+        <para>
+            投稿一覧オブジェクトには、二種類のフィルタリング機能が組み込まれています。
+            タグによるフィルタリングと、URL によるフィルタリングです。
+        </para>
+        <example id="zend.service.delicious.postlist.example.withTags">
+            <title>タグの指定による投稿一覧のフィルタリング</title>
+            <para>
+                特定のタグで投稿を絞り込むには、<code>withTags()</code> を使用します。
+                ひとつのタグでだけ絞り込みを行う際に便利なように、
+                <code>withTag()</code> も用意されています。
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+$delicious = new Zend_Service_Delicious('username', 'password');
+$posts = $delicious->getAllPosts();
+
+// タグ "php" および "zend" が指定されている投稿のみを表示します
+foreach ($posts->withTags(array('php', 'zend')) as $post) {
+    echo "タイトル: {$post->getTitle()}\n";
+    echo "URL: {$post->getUrl()}\n";
+}
+?>]]></programlisting>
+        </example>
+        <example id="zend.service.delicious.postlist.example.withTags">
+            <title>URL の指定による投稿一覧のフィルタリング</title>
+            <para>
+                指定した正規表現にマッチする URL で投稿を絞り込むには
+                <code>withUrl()</code> メソッドを使用します。
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+$delicious = new Zend_Service_Delicious('username', 'password');
+$posts = $delicious->getAllPosts();
+
+// URL に "help" を含む投稿のみを表示します
+foreach ($posts->withUrl('/help/') as $post) {
+    echo "タイトル: {$post->getTitle()}\n";
+    echo "URL: {$post->getUrl()}\n";
+}
+?>]]></programlisting>
+        </example>
     </sect2>
     <sect2 id="zend.service.delicious.editing_posts">
         <title>投稿の編集</title>
