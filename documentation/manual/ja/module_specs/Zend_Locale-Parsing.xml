@@ -79,12 +79,20 @@ print $number; // 13524.678 を返します
             </para>
 
             <para>
-                また、結果の十進表現の精度も、
-                <code>getNumber()</code> で指定した長さに切り詰められます。
-                精度を指定しなかった場合は、切り詰められることはありません。
+                また、結果の十進表現の精度も、<code>getNumber()</code>
+                のオプション <code>'precision'</code> で指定した長さに丸められます。
+                精度を指定しなかった場合は、丸め処理は行われません。
                 精度を指定するには、PHP の整数のみを使用します。
-                結果の丸めは行われません。つまり、もし精度がゼロなら、
+            </para>
+
+            <para>
+                十進表現で表した結果を丸めるのではなく指定した桁数で切り詰めたい場合は、
+                オプション <code>'number_format'</code> を代わりに使用します。
+                十進表現の精度を定義するには、必要な桁数ぶんのゼロを指定します。
+                結果の丸めは行われません。つまり、もし <code>number_format</code>
+                で定義した精度がゼロなら、
                 "1.6" は "1" であり、"2" とはなりません。
+                例を参照ください。
             </para>
 
             <example>
@@ -94,8 +102,10 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', array('precision' => 1, 'locale' => $locale));
+print $number; // 13524.7 を返します
 
-print $number; // 13524.6 を返します
+$number = Zend_Locale_Format::getNumber('13.524,678', array('number_format' => '#.00', 'locale' => $locale));
+print $number; // 13524.67 を返します
 ?>]]></programlisting>
             </example>
 
@@ -153,21 +163,10 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, array('precision' => 2, 'locale' => $locale));
 
-// 13.547,36 を返します
+// 13.547,37 を返します
 print $number;
 ?>]]></programlisting>
         </example>
-
-        <para>
-            <note>
-                <title>注意</title>
-                <para>
-                    <code>toNumber()</code> は結果を切り詰めます。
-                    結果の丸めは行われません。つまり、1.6 は
-                    2 ではなく 1 となります。
-                </para>
-            </note>
-        </para>
 
         <para>
             オプション 'number_format' を使用すると、
@@ -287,7 +286,7 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getFloat('13.524,678', array('precision' => 2, 'locale' => $locale));
 
-// 13524.67 を返します
+// 13524.68 を返します
 print $number;
 ?>]]></programlisting>
         </example>
@@ -311,21 +310,10 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toFloat(13547.3655, array('precision' => 1, 'locale' => $locale));
 
-// 13.547,3 を返します
+// 13.547,4 を返します
 print $number;
 ?>]]></programlisting>
         </example>
-
-        <para>
-            <note>
-                <title>注意</title>
-                <para>
-                    <code>toFloat()</code> は結果を切り詰めます。
-                    結果の丸めは行われません。つまり、1.6 は
-                    2 ではなく 1 となります。
-                </para>
-            </note>
-        </para>
 
     </sect2>
 
