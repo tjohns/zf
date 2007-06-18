@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<tvshows>
+    <show>
+        <name>The Simpsons</name>
+    </show>
+    
+    <show>
+        <name><![CDATA[Lois & Clark]]></name>
+    </show>
+</tvshows>

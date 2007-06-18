@@ -1,0 +1,9 @@
+This is an invalid XML file.
+Use this file to test the xml2json feature in the Zend_Json class.
+Since it is an invalid XML file, an appropriate exception should be
+thrown by the Zend_Json::fromXml function.
+<?xml version="1.0"?>
+<invalidxml>
+        </code>
+    </listing>
+</invalidxml>
