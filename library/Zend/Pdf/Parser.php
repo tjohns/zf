@@ -62,8 +62,8 @@ require_once 'Zend/Pdf/Element/Reference/Table.php';
 /** Zend_Pdf_Trailer_Keeper */
 require_once 'Zend/Pdf/Trailer/Keeper.php';
 
-/** Zend_Pdf_ElementFactory */
-require_once 'Zend/Pdf/ElementFactory.php';
+/** Zend_Pdf_ElementFactory_Interface */
+require_once 'Zend/Pdf/ElementFactory/Interface.php';
 
 /** Zend_Pdf_PhpArray */
 require_once 'Zend/Pdf/PhpArray.php';
@@ -364,11 +364,11 @@ class Zend_Pdf_Parser
      * Thus we don't need to care about overhead
      *
      * @param mixed $source
-     * @param Zend_Pdf_ElementFactory $factory
+     * @param Zend_Pdf_ElementFactory_Interface $factory
      * @param boolean $load
      * @throws Zend_Exception
      */
-    public function __construct($source, Zend_Pdf_ElementFactory $factory, $load)
+    public function __construct($source, Zend_Pdf_ElementFactory_Interface $factory, $load)
     {
         if ($load) {
             if (($pdfFile = @fopen($source, 'rb')) === false ) {

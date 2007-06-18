@@ -28,6 +28,9 @@ require_once 'Zend/Pdf/Element/Reference/Context.php';
 /** Zend_Pdf_Element_Reference_Table */
 require_once 'Zend/Pdf/Element/Reference/Table.php';
 
+/** Zend_Pdf_ElementFactory */
+require_once 'Zend/Pdf/ElementFactory.php';
+
 
 /**
  * PDF file 'reference' element implementation

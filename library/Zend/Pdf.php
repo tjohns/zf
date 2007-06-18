@@ -158,7 +158,7 @@ class Zend_Pdf
     /**
      * PDF objects factory.
      *
-     * @var Zend_Pdf_ElementFactory
+     * @var Zend_Pdf_ElementFactory_Interface
      */
     private $_objFactory = null;
 
@@ -260,7 +260,7 @@ class Zend_Pdf
      */
     public function __construct($source = null, $revision = null, $load = false)
     {
-        $this->_objFactory = new Zend_Pdf_ElementFactory(1);
+        $this->_objFactory = Zend_Pdf_ElementFactory::createFactory(1);
 
         if ($source !== null) {
             $parser  = new Zend_Pdf_Parser($source, $this->_objFactory, $load);

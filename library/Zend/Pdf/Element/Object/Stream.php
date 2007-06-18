@@ -37,6 +37,9 @@ require_once 'Zend/Pdf/Filter/Compression/Flate.php';
 /** Zend_Pdf_Filter_Compression_Lzw */
 require_once 'Zend/Pdf/Filter/Compression/Lzw.php';
 
+/** Zend_Pdf_ElementFactory */
+require_once 'Zend/Pdf/ElementFactory.php';
+
 
 /**
  * PDF file 'stream object' element implementation

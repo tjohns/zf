@@ -24,9 +24,6 @@ require_once 'Zend/Pdf/Element.php';
 /** Zend_Pdf_Element_Object */
 require_once 'Zend/Pdf/Element/Object.php';
 
-/** Zend_Pdf_ElementFactory */
-require_once 'Zend/Pdf/ElementFactory.php';
-
 
 /**
  * PDF file element implementation
