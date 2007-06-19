@@ -87,6 +87,7 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
 
         $this->redirector->setExit(false)
                          ->setActionController($this->controller);
+        $this->_server = $_SERVER;
     }
 
     /**
@@ -98,6 +99,7 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         unset($this->controller);
         unset($this->request);
         unset($this->response);
+        $_SERVER = $this->_server;
     }
 
     public function testCode()
@@ -320,6 +322,34 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
 
         $this->redirector->direct('error');
         $this->assertEquals('/blog/list/error', $this->redirector->getRedirectUrl());
+    }
+
+    public function testUseAbsoluteUriFlag()
+    {
+        $this->assertFalse($this->redirector->getUseAbsoluteUri());
+        $this->redirector->setUseAbsoluteUri(true);
+        $this->assertTrue($this->redirector->getUseAbsoluteUri());
+    }
+
+    public function testUseAbsoluteUriSetsFullUriInResponse()
+    {
+        $_SERVER['HTTP_HOST']   = 'foobar.example.com';
+        $_SERVER['SERVER_PORT'] = '4443';
+        $_SERVER['HTTPS']       = 1;
+        $this->redirector->setUseAbsoluteUri(true);
+        $this->redirector->gotoUrl('/bar/baz');
+        $headers = $this->response->getHeaders();
+        $uri = false;
+        foreach ($headers as $header) {
+            if ('Location' == $header['name']) {
+                $uri = $header['value'];
+            }
+        }
+        if (!$uri) {
+            $this->fail('No redirect header set in response');
+        }
+
+        $this->assertEquals('https://foobar.example.com:4443/bar/baz', $uri);
     }
 }
 
