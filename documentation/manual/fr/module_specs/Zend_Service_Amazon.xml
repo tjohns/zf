@@ -9,7 +9,7 @@
         </para>
         <para>
             <code>Zend_Service_Amazon</code> permet aux développeurs de récupérer des informations disponible sur le site Amazon.com
-            directement à  traver l'API Amazon Web Services.
+            directement à travers l'API Amazon Web Services.
             Les exemples incluent :
             <itemizedlist>
                 <listitem>
@@ -41,15 +41,15 @@
         </para>
         <para>
             Pour pouvoir utiliser <code>Zend_Service_Amazon</code>, vous devez avant tout avoir une clé 'developer API' Amazon. Pour obtenir une telle clé et
-            pour plus d'informattions, vous pouvez visitez le site Web <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink>.
+            pour plus d'informations, vous pouver visitez le site Web <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink>.
         </para>
         <note>
             <title>Attention</title>
             <para>
-                Votre clé 'developer API' est liée à  votre identité Amazon, donc faites en sorte de conserver votre clé d'API privée.
+                Votre clé 'developer API' est liée à votre identité Amazon, donc faites en sorte de conserver votre clé d'API privée.
             </para>
         </note>
-        <example>
+        <example id="zend.service.amazon.introduction.example.itemsearch">
             <title>Recherche sur Amazon en utilisant l'API traditionnelle</title>
             <para>
                 Dans cet exemple, nous recherchons les livres sur PHP disponibles chez Amazon et boucler sur les résultats pour les afficher.
@@ -58,12 +58,13 @@
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
-foreach ($response as $r) {
-    echo $r->Title .'<br />';
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
-        <example>
+        <example id="zend.service.amazon.introduction.example.query_api">
             <title>Recherche sur Amazon en utilisant l'API de requête</title>
             <para>
                 Ici nous cherchons aussi les livres sur PHP disponibles chez Amazon, mais en utilisant l'API de requête, qui ressemble au modèle de conception
@@ -75,9 +76,9 @@ $query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
 $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
@@ -85,20 +86,20 @@ foreach ($results as $result) {
         <para>
             Par défaut, <code>Zend_Service_Amazon</code> se connecte au web service Amazon américain ("<code>US</code>").
             Pour se connecter depuis un pays différent, il vous suffit simplement de définir, comme second paramètre du constructeur,
-            la chaîne de carcatère correspondant au code du pays :
+            la chaîne de caractère correspondant au code du pays :
         </para>
-        <example>
+        <example id="zend.service.amazon.countrycodes.example.country_code">
             <title>Choisir un service Web Amazon d'un pays</title>
             <programlisting><![CDATA[<?php
-// Connexion à  Amazon France
+// Connexion à Amazon France
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
         <note>
-            <title>Country codes</title>
+            <title>Codes de pays</title>
             <para>
-                Les codes de payx valides sont <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                Les codes de pays valides sont <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
                 <code>UK</code>, et <code>US</code>.
             </para>
         </note>
@@ -118,14 +119,14 @@ $item = $amazon->itemLookup('B0000A432X');
 ?>]]>       </programlisting>
         </example>
         <para>
-            La méthode <code>itemLookup()</code>  accepte aussi un second paramètre optionnel pour gérer les options de recherche.
-            Pour les détails complet et une liste des options disponibles, visitez
+            La méthode <code>itemLookup()</code> accepte aussi un second paramètre optionnel pour gérer les options de recherche.
+            Pour les détails complets et une liste des options disponibles, visitez
             <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">
             la documentation Amazon correspondante.
             </ulink>.
         </para>
         <note>
-            <title>Image information</title>
+            <title>Information sur les images</title>
             <para>
                 Pour récupérer les informations d'images pour vos résultats de recherche,
                 vous devez définir l'option <code>ResponseGroup</code> à <code>Medium</code>
@@ -136,22 +137,41 @@ $item = $amazon->itemLookup('B0000A432X');
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Lancer des recherches de produits sur Amazon</title>
         <para>
-            Rechercher des produits basés sur tous les divers critères disponible sont rendus simples grà¢ce à  la méthode
+            Rechercher des produits basés sur tous les divers critères disponibles sont rendus simples grâce à la méthode
             <code>itemSearch()</code>, comme le montre l'exemple suivant :
         </para>
-        <example>
+        <example id="zend.service.amazon.itemsearch.example.basic">
             <title>Lancer des recherches de produits sur Amazon</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
-foreach($response as $r) {
-    echo $r->Title .'<br />';
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
+        </example>
+        <example id="zend.service.amazon.itemsearch.example.responsegroup">
+            <title>Utilisation de l'option <code>ResponseGroup</code></title>
+            <para>
+                L'option <code>ResponseGroup</code> est utilisée pour contrôler les informations spécifiques qui sont
+                retournées dans la réponse.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$results = $amazon->itemSearch(array(
+    'SearchIndex'   => 'Books',
+    'Keywords'      => 'php',
+    'ResponseGroup' => 'Small,ItemAttributes,Images,SalesRank,Reviews,EditorialReview,Similarities,ListmaniaLists';
+    ));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
+}
+?>]]></programlisting>
         </example>
         <para>
-            La méthode <code>itemSearch()</code> accepte un seul tableau en paramètre pour gérer les options de recheche.
+            La méthode <code>itemSearch()</code> accepte un seul tableau en paramètre pour gérer les options de recherche.
             Pour plus de détails et une liste des options disponibles, visitez
             <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">
               la documentation Amazon correspondante
@@ -169,34 +189,34 @@ foreach($response as $r) {
         <title>Introduction</title>
         <para>
             <code>Zend_Service_Amazon_Query</code> fournit une API alternative pour utiliser le service Web Amazon.
-            L'API alternative utilise le modèle de conception 'Interface Fluide'. C'est à  dire que les apells peuvent-être
-            fait en utilisant une chaà®ne d'appels de méthodes (ie <code>$obj->method()->method2($arg)</code>)
+            L'API alternative utilise le modèle de conception 'Interface Fluide'. C'est à dire que les appels peuvent-être
+            fait en utilisant une chaîne d'appels de méthodes (ie <code>$obj->method()->method2($arg)</code>)
         </para>
         <para>
             L'API <code>Zend_Service_Amazon_Query</code> utilise la surcharge pour mettre en place facilement une recherche
-            d'article, and ainsi vous permettre de chercher en se basant sur les critères spécifiés. Chacune de ces options
-            est fournie en tant qu'appel de méthode, et chaque paramètre de méthode correspond à  la valeur des options nommées.
+            d'article, et ainsi vous permettre de chercher en se basant sur les critères spécifiés. Chacune de ces options
+            est fournie en tant qu'appel de méthode, et chaque paramètre de méthode correspond à la valeur des options nommées.
         </para>
-        <example>
+            <example id="zend.service.amazon.query.introduction.example.basic">
             <title>Rechercher sur Amazon en utilisant l'API alternative de requêtes</title>
             <para>
                 Dans cet exemple, l'API de requêtes alternative est utilisée comme une interface fluide pour spécifier les options
-                et leurs valeurs respective :
+                et leurs valeurs respectives :
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
-$query = new Zend_Service_Amazon_Query('MA_CLE_API');
-$query->Category('Livres')->Keywords('PHP');
+$query = new Zend_Service_Amazon_Query('MY_API_KEY');
+$query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
             <para>
-                Cela définit l'option <code>Category</code> à  &quot;Livres&quot; et <code>Keywords</code> à  &quot;PHP&quot;.
+                Cela définit l'option <code>Category</code> à &quot;Livres&quot; et <code>Keywords</code> à &quot;PHP&quot;.
             </para>
             <para>
-                Pour plus d'information sur les options disponibles, vous pouvez vous référer à  la
+                Pour plus d'information sur les options disponibles, vous pouvez vous référer à la
                 <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">documentation spécifique</ulink>.
             </para>
         </example>
@@ -243,7 +263,7 @@ foreach ($results as $result) {
         <sect4 id="zend.service.amazon.classes.item.properties">
             <title>Propriétés</title>
             <para>
-                <code>Zend_Service_Amazon_Item</code> a un nombre de propriétés directement relié à  leur contre-parties de l'API standard Amazon.
+                <code>Zend_Service_Amazon_Item</code> a un nombre de propriétés directement relié à leur contre-parties de l'API standard Amazon.
             </para>
             <table>
                 <title>Propriétés de Zend_Service_Amazon_Item</title>
@@ -304,7 +324,7 @@ foreach ($results as $result) {
                             <entry>CustomerReviews</entry>
                             <entry>array</entry>
                             <entry>
-                                Les revues clients sont représentée comme un tableau d'objets
+                                Les revues clients sont représentées comme un tableau d'objets
                                 <code>
                                     <link linkend="zend.service.amazon.classes.customerreview">Zend_Service_Amazon_CustomerReview</link>
                                 </code>
@@ -350,9 +370,9 @@ foreach ($results as $result) {
                             <entry>ListmaniaLists</entry>
                             <entry>array</entry>
                             <entry>
-                                Les listes Listmania reliées à  un article, comme un tableau d'objets
+                                Les listes Listmania reliées à un article, comme un tableau d'objets
                                 <code>
-                                    <link linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmainList</link>
+                                    <link linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmaniaList</link>
                                 </code>
                             </entry>
                         </row>
@@ -365,7 +385,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -389,7 +409,7 @@ foreach ($results as $result) {
                     <tbody>
                         <row>
                             <entry>Url</entry>
-                            <entry>Zend Uri</entry>
+                            <entry>Zend_Uri</entry>
                             <entry>Url distante de l'image</entry>
                         </row>
                         <row>
@@ -406,7 +426,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -414,13 +434,13 @@ foreach ($results as $result) {
         <title>Zend_Service_Amazon_ResultSet</title>
         <para>
             Des objets <code>Zend_Service_Amazon_ResultSet</code> sont retournés par <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
-            et vous permettent de gérer facilement les plusieurs résultats retournés.
+            et vous permettent de gérer facilement les différents résultats retournés.
         </para>
         <note>
             <title>SeekableIterator</title>
             <para>
                 Implémente l'itérateur <code>SeekableIterator</code> pour une itération simple (en utilisant <code>foreach</code>), aussi bien
-                que l'accès direct à  une URL spécifique en utilisant <code>seek()</code>.
+                que l'accès direct à une URL spécifique en utilisant <code>seek()</code>.
             </para>
         </note>
         <sect4 id="zend.service.amazon.classes.resultset.totalresults">
@@ -430,23 +450,22 @@ foreach ($results as $result) {
                 <methodname>totalResults</methodname>
                 <void />
             </methodsynopsis>
-            <para>Retourne le nombre total des résultats de la recherche</para>
+            <para>Retourne le nombre total de résultats de la recherche</para>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
     <sect3 id="zend.service.amazon.classes.offerset">
         <title>Zend_Service_Amazon_OfferSet</title>
         <para>
-            Chaque résultat retourné pas
-            Each result returned by
+            Chaque résultat retourné par
             <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
             et
             <link linkend="zend.service.amazon.itemlookup">Zend_Service_Amazon::itemLookup()</link>
             contient un objet
             <code>Zend_Service_Amazon_OfferSet</code>
-            au travers duquel il est possible de récupérer les information de prix de l'article.
+            au travers duquel il est possible de récupérer les informations de prix de l'article.
         </para>
         <sect4 id="zend.service.amazon.classes.offerset.parameters">
             <title>Propriétés</title>
@@ -469,12 +488,12 @@ foreach ($results as $result) {
                         <row>
                             <entry>LowestNewPriceCurrency</entry>
                             <entry>string</entry>
-                            <entry>La devise pour le  <code>LowestNewPrice</code></entry>
+                            <entry>La devise pour le <code>LowestNewPrice</code></entry>
                         </row>
                         <row>
                             <entry>LowestOldPrice</entry>
                             <entry>int</entry>
-                            <entry>Le plus bas prix pour l'article en codition &quot;Used&quot; (ie les articles d'occasion)</entry>
+                            <entry>Le plus bas prix pour l'article en condition &quot;Used&quot; (ie les articles d'occasion)</entry>
                         </row>
                         <row>
                             <entry>LowestOldPriceCurrency</entry>
@@ -484,22 +503,22 @@ foreach ($results as $result) {
                         <row>
                             <entry>TotalNew</entry>
                             <entry>int</entry>
-                            <entry>Le nombre total de contions &quot;new&quot; disponibles pour cet article (ie le nombre de modèles neufs en stock)</entry>
+                            <entry>Le nombre total des conditions &quot;new&quot; disponibles pour cet article (ie le nombre de modèles neufs en stock)</entry>
                         </row>
                         <row>
                             <entry>TotalUsed</entry>
                             <entry>int</entry>
-                            <entry>Le nombre total de conditions &quot;used&quot; disponible pour cet article (ie le nombre de modèles d'occasion en stock)</entry>
+                            <entry>Le nombre total des conditions &quot;used&quot; disponible pour cet article (ie le nombre de modèles d'occasion en stock)</entry>
                         </row>
                         <row>
                             <entry>TotalCollectible</entry>
                             <entry>int</entry>
-                            <entry>??? Total number of &quot;collectible&quot; condition available for the item ???</entry>
+                            <entry>Le nombre total des conditions &quot;collectible&quot; disponible pour cet article (ie le nombre de pièces de collection en stock)</entry>
                         </row>
                         <row>
                             <entry>TotalRefurbished</entry>
                             <entry>int</entry>
-                            <entry>??? Total number of &quot;refurbished&quot; condition available for the item ???</entry>
+                            <entry>Le nombre total des conditions &quot;refurbished&quot; disponible pour cet article (ie le nombre de pièces remise à neuf en stock)</entry>
                         </row>
                         <row>
                             <entry>Offers</entry>
@@ -510,7 +529,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -576,7 +595,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -587,7 +606,7 @@ foreach ($results as $result) {
             Chacun d'entre eux est retourné dans un objet <code>Zend_Service_Amazon_SimilarProduct</code>.
         </para>
         <para>
-            Chaque objet contient l'information qui vous permet de faire les requàªtes suivantes pour obtenir les informations complète sur un article.
+            Chaque objet contient l'information qui vous permet de faire les requêtes suivantes pour obtenir les informations complètes sur un article.
         </para>
         <sect4 id="zend.service.amazon.classes.similarproduct.properties">
             <title>Propriétés</title>
@@ -616,14 +635,14 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
     <sect3 id="zend.service.amazon.classes.accessories">
         <title>Zend_Service_Amazon_Accessories</title>
         <para>
-            Les accessoires pour un article retournés sont représentés comme un objet <code>Zend_Service_Amazon_Accessories</code>.
+            Les accessoires pour un article retourné sont représentés comme un objet <code>Zend_Service_Amazon_Accessories</code>.
         </para>
         <sect4 id="zend.service.amazon.classes.accessories.properties">
             <title>Propriétés</title>
@@ -652,7 +671,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -702,7 +721,7 @@ foreach ($results as $result) {
                         <row>
                             <entry>Summary</entry>
                             <entry>string</entry>
-                            <entry>Sommaire de la revues</entry>
+                            <entry>Sommaire de la revue</entry>
                         </row>
                         <row>
                             <entry>Content</entry>
@@ -713,7 +732,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -749,7 +768,7 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
@@ -785,12 +804,9 @@ foreach ($results as $result) {
                 </tgroup>
             </table>
             <para>
-                <link linkend="zend.service.amazon.classes">Retour à  la liste des classes</link>
+                <link linkend="zend.service.amazon.classes">Retour à la liste des classes</link>
             </para>
         </sect4>
     </sect3>
 </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
