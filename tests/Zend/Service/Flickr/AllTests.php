@@ -81,7 +81,7 @@ class Zend_Service_Flickr_AllTests
 
         $suite->addTestSuite('Zend_Service_Flickr_OfflineTest');
         if (defined('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED') &&
-            constant('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED') !== false) {
+            constant('TESTS_ZEND_SERVICE_FLICKR_ONLINE_ENABLED')) {
             $suite->addTestSuite('Zend_Service_Flickr_OnlineTest');
         } else {
             $suite->addTestSuite('Zend_Service_Flickr_OnlineTest_Skip');

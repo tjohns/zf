@@ -166,9 +166,9 @@ class Zend_Service_Flickr_OnlineTest extends PHPUnit_Framework_TestCase
 }
 
 
-class Zend_Service_Flickr_OnlineTest_Skip extends Zend_Service_Flickr_OnlineTest
+class Zend_Service_Flickr_OnlineTest_Skip extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
+    public function testNothing()
     {
         $this->markTestSkipped('Zend_Service_Flickr online tests not enabled in TestConfiguration.php');
     }
