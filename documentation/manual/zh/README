@@ -1,34 +1,33 @@
-Required software:
+需要的软件：
 
 - autoconf
 - make
 - xsltproc
 - xmllint
 
-On Windows, you should use Cygwin software or another port of GNU 
-development tools.
+在 Windows 下，应当使用 Cygwin 或其他 GNU 开发工具。
 
-How to build the DocBook documentation:
+如何从 DocBook 生成文档：
 
 - run "autoconf" in this dir
 - run "./configure" in this dir
 - run "make"
 
-The HTML files are rendered in the "html" dir.
+HTML 文件生成并存放在“html”文件夹。
 
-When developing content, you can verify your changes by running:
+在编写内容时，可以通过执行下面的命令来验证改动：
 
   "make check"
 
-This verifies the XML for the whole manual is valid.
+这可以验证整个手册的 XML 是否正确。
 
-You can verify your changes in a single file by running:
+也可以通过执行命令验证单个文件是否正确：
 
   "make XMLFILE=filename.xml check1"
 
-The filename.xml is relative to the "module_specs" directory.
+filename.xml 可以用相对“module_specs”目录的路径指定。
 
-DocBook resources:
+DocBook 资源：
 
 http://www.ibiblio.org/godoy/sgml/docbook/howto/index.html
 http://opensource.bureau-cornavin.com/crash-course/index.html

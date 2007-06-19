@@ -1,75 +1,69 @@
 <chapter id="requirements">
 
-    <title>System Requirements</title>
+    <title>系统需求</title>
 
     <para>
-        This section documents requirements for Zend Framework.
+        这部分描述了 Zend Framework 对系统的需求。
     </para>
 
     <sect1 id="requirements.extensions">
 
-        <title>PHP Version Required</title>
+        <title>PHP 版本需求</title>
 
         <para>
-            Zend Framework requires PHP 5.1.4 or later.  Some SPL interfaces
-            such as <code>Countable</code> were not stable in earlier versions
-            of PHP.
+            Zend Framework 需要 PHP 5.1.4 或更高版本。例如 <code>Countable</code> 
+            这样一些 SPL 接口在 PHP 之前的版本中没有被正式使用。
         </para>
 
         <para>
-            Zend Framework has an extensive collection of automated tests,
-            which you can run using PHPUnit 3.0 or later.  This version of
-            PHPUnit also requires PHP 5.1.4 or later.
+            Zend Framework 提供了大量自动化测试，可以使用 PHPUnit 3.0 或更高版本运行。
+            这个版本的 PHPUnit 同样也需要 PHP 5.1.4 或更高版本。
         </para>
 
         <para>
-            Although Zend Framework will function correctly with the PHP version
-            mentioned above, you are strongly recommended to use PHP 5.2.2 or
-            later.  There are important security and performance improvements
-            available in the newer version of PHP.
+            虽然 Zend Framework 可以在上面提到的 PHP 版本下正确工作，但是强烈建议使用 PHP 5.2.2 或更高版本。
+            新版本的 PHP 有许多重要的安全更新和性能提升。
         </para>
 
     </sect1>
 
     <sect1 id="requirements.extensions">
 
-        <title>PHP Extensions</title>
+        <title>PHP 扩展</title>
 
         <para>
-            Below is a table that lists all extensions typically found in PHP,
-            and how they are used in Zend Framework.  This can help guide you
-            to know which extensions are required for your application.
-            Not all extensions used by Zend Framework are required for every
-            application.
+            下面列出了所有 PHP 内建支持的扩展，以及它们在 Zend Framework 中如何应用。
+            这个可以帮助了解哪个扩展需要在应用中使用。
+            不是每一个被 Zend Framework 使用的扩展都要应用在程序中。
         </para>
 
         <table frame='all'>
-            <title>PHP Extensions Used in Zend Framework</title>
+            <title>Zend Framework 使用的 PHP 扩展</title>
             <tgroup cols='3'>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='3in'/>
                 <thead>
                     <row>
-                        <entry>Extension</entry>
-                        <entry>Usage Type</entry>
-                        <entry>Used by Zend Framework Components</entry>
+                        <entry>扩展</entry>
+                        <entry>使用方式</entry>
+                        <entry>使用扩展的 Zend Framework 组件</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>apc</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Cache_Backend_Apc</entry>
                     </row>
                     <row>
                         <entry>bcmath</entry>
-                        <entry>Optional</entry>
+                        <entry>可选</entry>
                         <entry>Zend_Locale_Math</entry>
                     </row>
                     <row>
                         <entry>bitset</entry>
-                        <entry>Optional</entry>
+                        <entry>可选</entry>
                         <entry>Zend_Search_Lucene</entry>
                     </row>
                     <row>
@@ -89,12 +83,12 @@
                     </row>
                     <row>
                         <entry>ctype</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Auth_Adapter_Http, Zend_Gdata_App, Zend_Http_Client, Zend_Pdf, Zend_Rest_Client, Zend_Rest_Server, Zend_Search_Lucene, Zend_Uri, Zend_Validate</entry>
                     </row>
                     <row>
                         <entry>curl</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Http_Client_Adapter_Curl</entry>
                     </row>
                     <row>
@@ -114,7 +108,7 @@
                     </row>
                     <row>
                         <entry>dom</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Feed, Zend_Gdata, Zend_Log_Formatter_Xml, Zend_Rest_Server, Zend_Search_Lucene, Zend_Service_Amazon, Zend_Service_Delicious, Zend_Service_Flickr, Zend_Service_Simpy, Zend_Service_Yahoo, Zend_XmlRpc</entry>
                     </row>
                     <row>
@@ -144,7 +138,7 @@
                     </row>
                     <row>
                         <entry>gd</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Pdf</entry>
                     </row>
                     <row>
@@ -164,12 +158,12 @@
                     </row>
                     <row>
                         <entry>ibm_db2</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Db2</entry>
                     </row>
                     <row>
                         <entry>iconv</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Locale_Format, Zend_Mime_Decode, Zend_Pdf, Zend_Search_Lucene, Zend_Service_Audioscrobbler, Zend_Service_Flickr, Zend_XmlRpc_Client</entry>
                     </row>
                     <row>
@@ -189,7 +183,7 @@
                     </row>
                     <row>
                         <entry>json</entry>
-                        <entry>Optional</entry>
+                        <entry>可选</entry>
                         <entry>Zend_Json</entry>
                     </row>
                     <row>
@@ -199,12 +193,12 @@
                     </row>
                     <row>
                         <entry>libxml</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>DOM, SimpleXML, XSLT</entry>
                     </row>
                     <row>
                         <entry>mbstring</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Feed</entry>
                     </row>
                     <row>
@@ -214,7 +208,7 @@
                     </row>
                     <row>
                         <entry>memcache</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Cache_Backend_Memcached</entry>
                     </row>
                     <row>
@@ -224,7 +218,7 @@
                     </row>
                     <row>
                         <entry>mime_magic</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Http_Client</entry>
                     </row>
                     <row>
@@ -249,7 +243,7 @@
                     </row>
                     <row>
                         <entry>mysqli</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Mysqli</entry>
                     </row>
                     <row>
@@ -259,7 +253,7 @@
                     </row>
                     <row>
                         <entry>oci8</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Oracle</entry>
                     </row>
                     <row>
@@ -279,12 +273,12 @@
                     </row>
                     <row>
                         <entry>pcre</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
                         <entry>pdo</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>All PDO database adapters</entry>
                     </row>
                     <row>
@@ -299,27 +293,27 @@
                     </row>
                     <row>
                         <entry>pdo_mssql</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Pdo_Mssql</entry>
                     </row>
                     <row>
                         <entry>pdo_mysql</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Pdo_Mysql</entry>
                     </row>
                     <row>
                         <entry>pdo_oci</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Pdo_Oci</entry>
                     </row>
                     <row>
                         <entry>pdo_pgsql</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Pdo_Pgsql</entry>
                     </row>
                     <row>
                         <entry>pdo_sqlite</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Db_Adapter_Pdo_Sqlite</entry>
                     </row>
                     <row>
@@ -329,7 +323,7 @@
                     </row>
                     <row>
                         <entry>posix</entry>
-                        <entry>Optional</entry>
+                        <entry>可选</entry>
                         <entry>Zend_Mail</entry>
                     </row>
                     <row>
@@ -349,12 +343,12 @@
                     </row>
                     <row>
                         <entry>Reflection</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Controller, Zend_Filter, Zend_Filter_Input, Zend_Json, Zend_Log, Zend_Rest_Server, Zend_Server_Reflection, Zend_Validate, Zend_View, Zend_XmlRpc_Server</entry>
                     </row>
                     <row>
                         <entry>session</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Controller_Action_Helper_Redirector, Zend_Session</entry>
                     </row>
                     <row>
@@ -364,7 +358,7 @@
                     </row>
                     <row>
                         <entry>SimpleXML</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Config_Xml, Zend_Feed, Zend_Rest_Client, Zend_Service_Audioscrobbler, Zend_XmlRpc</entry>
                     </row>
                     <row>
@@ -379,12 +373,12 @@
                     </row>
                     <row>
                         <entry>SPL</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
                         <entry>standard</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Virtuall all components</entry>
                     </row>
                     <row>
@@ -424,7 +418,7 @@
                     </row>
                     <row>
                         <entry>xml</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Translate_Adapter_Qt, Zend_Translate_Adapter_Tmx, Zend_Translate_Adapter_Xliff</entry>
                     </row>
                     <row>
@@ -454,7 +448,7 @@
                     </row>
                     <row>
                         <entry>zlib</entry>
-                        <entry>Dependency</entry>
+                        <entry>依赖</entry>
                         <entry>Zend_Pdf, Memcache</entry>
                     </row>
                 </tbody>

@@ -1,16 +1,13 @@
 <sect1 id="introduction.overview">
 
-    <title>Overview</title>
+    <title>概述</title>
 
     <para>
-        Zend Framework is a high quality and open source framework for developing Web
-        Applications and Web Services with PHP.
+        Zend Framework 是用于 PHP 开发 Web 应用程序和 Web Service 程序 的高品质开源框架。
     </para>
 
     <para>
-        Built in the true PHP spirit, the Zend Framework delivers ease-of-use and
-        powerful functionality. It provides solutions for building modern, robust, and
-        secure websites.
+        利用 PHP 自身特性，Zend Framework 有很高的易用性和强大的功能。它提供了先进、健壮和安全的开发网站的解决方案。
     </para>
 
 </sect1>
