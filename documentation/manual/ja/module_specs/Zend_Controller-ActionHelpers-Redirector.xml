@@ -71,6 +71,21 @@
                     で指定した URL の前にリクエストのベース URL を追加します。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>setUseAbsoluteUri()</code> を使用すると、
+                    <code>Redirector</code> がリダイレクトの際に絶対
+                    URL を使用するようになります。
+                    このオプションを設定すると、
+                    <code>$_SERVER['HTTP_HOST']</code> や
+                    <code>$_SERVER['SERVER_PORT']</code>、そして
+                    <code>$_SERVER['HTTPS']</code> の内容をもとにして
+                    リダイレクト用の完全な URL を作成します。
+                    このオプションのデフォルト値はオフですが、
+                    将来のリリースではデフォルトで有効になるかもしれません。
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
