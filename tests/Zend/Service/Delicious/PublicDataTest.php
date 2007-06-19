@@ -124,7 +124,7 @@ class Zend_Service_Delicious_PublicDataTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetPosts()
+    public function testGetUserPosts()
     {
         $posts = $this->_delicious->getUserPosts(self::TEST_UNAME, 10);
 

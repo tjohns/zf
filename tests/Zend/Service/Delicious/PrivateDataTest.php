@@ -85,7 +85,7 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testTagsAndBoundles()
+    public function testTagsAndBundles()
     {
         // get tags
         $tags = $this->_delicious->getTags();
@@ -124,12 +124,12 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey($newBundleName, $bundles);
         $this->assertEquals($tags, $bundles[$newBundleName]);
 
-        // delete boundle
+        // delete bundle
         $this->_delicious->deleteBundle($newBundleName);
 
         sleep(15);
 
-        // check if boundle was deleted
+        // check if bundle was deleted
         $bundles = $this->_delicious->getBundles();
         $this->assertArrayNotHasKey($newBundleName, $bundles);
     }
@@ -194,10 +194,11 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that getAllPosts() provides expected behavior
      *
      * @return void
      */
-    public function testGetPosts()
+    public function testGetAllPosts()
     {
         $posts = $this->_delicious->getAllPosts('zfSite');
         $this->assertType('Zend_Service_Delicious_PostList', $posts);
@@ -205,8 +206,32 @@ class Zend_Service_Delicious_PrivateDataTest extends PHPUnit_Framework_TestCase
         foreach ($posts as $post) {
             $this->assertContains('zfSite', $post->getTags());
         }
+    }
 
+    /**
+     * Ensures that getRecentPosts() provides expected behavior
+     *
+     * @return void
+     */
+    public function testGetRecentPosts()
+    {
         $posts = $this->_delicious->getRecentPosts('zfSite', 10);
+        $this->assertType('Zend_Service_Delicious_PostList', $posts);
+        $this->assertTrue(count($posts) <= 10);
+
+        foreach ($posts as $post) {
+            $this->assertContains('zfSite', $post->getTags());
+        }
+    }
+
+    /**
+     * Ensures that getPosts() provides expected behavior
+     *
+     * @return void
+     */
+    public function testGetPosts()
+    {
+        $posts = $this->_delicious->getPosts('zfSite', new Zend_Date(), 'help');
         $this->assertType('Zend_Service_Delicious_PostList', $posts);
         $this->assertTrue(count($posts) <= 10);
 

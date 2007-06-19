@@ -97,6 +97,18 @@ class Zend_Service_Delicious_AllTests
             $suite->addTestSuite('Zend_Service_Delicious_PrivateDataTest');
         }
 
+        /**
+         * @see Zend_Service_Delicious_SimplePostTest
+         */
+        require_once 'Zend/Service/Delicious/SimplePostTest.php';
+        $suite->addTestSuite('Zend_Service_Delicious_SimplePostTest');
+
+        /**
+         * @see Zend_Service_Delicious_PostTest
+         */
+        require_once 'Zend/Service/Delicious/PostTest.php';
+        $suite->addTestSuite('Zend_Service_Delicious_PostTest');
+
         return $suite;
     }
 }
