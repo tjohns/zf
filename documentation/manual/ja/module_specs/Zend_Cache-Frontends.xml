@@ -457,7 +457,7 @@ $res = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                          <row>
-                              <entry><code>masterFile (必須)</code></entry>
+                              <entry><code>master_file (必須)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
@@ -474,7 +474,7 @@ $res = $cache->foobar2('1', '2');
                 このフロントエンドの使用法は <code>Zend_Cache_Core</code> と同じです。
                 そのため、特に例は用意していません。唯一しなければならないことは、
                 ファクトリを使用する際に、バックエンドのオプションとして
-                <code>masterFile</code> を設定することだけです。
+                <code>master_file</code> を設定することだけです。
             </para>
         </sect3>
     </sect2>
