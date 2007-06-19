@@ -446,7 +446,7 @@ $res = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>masterFile (mandatory)</code></entry>
+                              <entry><code>master_file (mandatory)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
@@ -462,7 +462,7 @@ $res = $cache->foobar2('1', '2');
             <para>
                 Use of this frontend is the same than of <code>Zend_Cache_Core</code>. There
                 is no need of a specific example - the only thing to do is to
-                define the <code>masterFile</code> when using the factory.
+                define the <code>master_file</code> when using the factory.
             </para>
         </sect3>
     </sect2>
