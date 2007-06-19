@@ -1,4 +1,19 @@
 <?php
+// Call Zend_Controller_Router_Route_ModuleTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_Router_Route_ModuleTest::main");
+
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 4));
+
+    set_include_path(
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
+        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
+        . PATH_SEPARATOR . get_include_path()
+    );
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
 /**
  * @category   Zend
  * @package    Zend_Controller
@@ -10,9 +25,6 @@ require_once 'Zend/Controller/Router/Route/Module.php';
 
 /** Zend_Controller_Front */
 require_once 'Zend/Controller/Front.php';
-
-/** PHPUnit test case */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend
@@ -26,10 +38,26 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
     protected $_dispatcher; 
     protected $route; 
     
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Router_Route_ModuleTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $front = Zend_Controller_Front::getInstance();
         $front->resetInstance();
+        $front->setParam('noErrorHandler', true)
+              ->setParam('noViewRenderer', true);
 
         $this->_dispatcher = $front->getDispatcher();
         
@@ -389,4 +417,9 @@ class Zend_Controller_Router_Route_ModuleTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Controller_Router_Route_Module', $route);
     }
 
+}
+
+// Call Zend_Controller_Router_Route_ModuleTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Router_Route_ModuleTest::main") {
+    Zend_Controller_Router_Route_ModuleTest::main();
 }

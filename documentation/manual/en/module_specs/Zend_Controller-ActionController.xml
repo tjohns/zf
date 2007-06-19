@@ -89,7 +89,8 @@ class FooController extends Zend_Controller_Action
                 <code>initView()</code>, <code>getViewScript()</code>,
                 <code>render()</code>, and <code>renderScript()</code> each
                 proxy to the <code>ViewRenderer</code> unless the helper is not
-                in the helper broker or the noViewRenderer flag has been set.
+                in the helper broker or the <code>noViewRenderer</code> flag has
+                been set.
             </para>
 
             <para>

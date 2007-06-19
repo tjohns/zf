@@ -43,6 +43,8 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
     {
         $this->front = Zend_Controller_Front::getInstance();
         $this->front->resetInstance();
+        $this->front->setParam('noViewRenderer', true)
+                    ->setParam('noErrorHandler', true);
         Zend_Controller_Action_HelperBroker::resetHelpers();
     }
     
@@ -202,6 +204,16 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($helpers));
         $this->assertContains('ViewRenderer', array_keys($helpers));
         $this->assertContains('Redirector', array_keys($helpers));
+    }
+
+    public function testGetHelperStatically()
+    {
+        $helper = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $this->assertTrue($helper instanceof Zend_Controller_Action_Helper_ViewRenderer);
+
+        $helpers = Zend_Controller_Action_HelperBroker::getExistingHelpers();
+        $this->assertTrue(is_array($helpers));
+        $this->assertEquals(1, count($helpers));
     }
 }
 

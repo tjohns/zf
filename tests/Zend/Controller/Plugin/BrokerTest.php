@@ -1,7 +1,21 @@
 <?php
-require_once 'Zend/Controller/Front.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Zend_Controller_Plugin_BrokerTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_Plugin_BrokerTest::main");
 
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 3));
+
+    set_include_path(
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
+        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
+        . PATH_SEPARATOR . get_include_path()
+    );
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
+require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
@@ -10,11 +24,26 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
 {
     public $controller;
 
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Plugin_BrokerTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $this->controller = Zend_Controller_Front::getInstance();
         $this->controller->resetInstance();
-        Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
+        $this->controller->setParam('noViewRenderer', true)
+                         ->setParam('noErrorHandler', true);
     }
 
     public function testDuplicatePlugin()
@@ -112,6 +141,16 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $this->assertSame($plugin, $retrieved[0]);
         $this->assertSame($plugin2, $retrieved[1]);
     }
+
+    public function testHasPlugin()
+    {
+        $broker = new Zend_Controller_Plugin_Broker();
+        $this->assertFalse($broker->hasPlugin('Zend_Controller_Plugin_BrokerTest_TestPlugin'));
+
+        $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+        $this->assertTrue($broker->hasPlugin('Zend_Controller_Plugin_BrokerTest_TestPlugin'));
+    }
 }
 
 class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugin_Abstract
@@ -145,4 +184,9 @@ class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugi
     {
         $this->getResponse()->appendBody('6');
     }
+}
+
+// Call Zend_Controller_Plugin_BrokerTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Plugin_BrokerTest::main") {
+    Zend_Controller_Plugin_BrokerTest::main();
 }

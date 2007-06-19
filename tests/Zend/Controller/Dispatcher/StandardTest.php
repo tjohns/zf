@@ -414,6 +414,18 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains("In exception action", $body, $body);
         $this->assertNotContains("Foo", $body, $body);
     }
+
+    public function testGetDefaultControllerClassResetsRequestObject()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setModuleName('foobar')
+                ->setControllerName('bazbatbegone')
+                ->setActionName('bebop');
+        $this->_dispatcher->getDefaultControllerClass($request);
+        $this->assertEquals($this->_dispatcher->getDefaultModule(), $request->getModuleName());
+        $this->assertEquals($this->_dispatcher->getDefaultControllerName(), $request->getControllerName());
+        $this->assertNull($request->getActionName());
+    }
 }
 
 // Call Zend_Controller_Dispatcher_StandardTest::main() if this source file is executed directly.

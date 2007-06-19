@@ -52,37 +52,24 @@
             </para>
 
             <para>
-                To disable the error handler, simply perform one of the
-                following actions at any point prior to calling
-                <code>dispatch()</code>:
+                To disable the <code>ErrorHandler</code>, perform the following
+                at any point prior to calling <code>dispatch()</code>:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Unregister the plugin:
-$front->unregisterPlugin('Zend_Controller_Plugin_ErrorHandler');
-
-// Or simply disable it:
+// Disable the ErrorHandler plugin:
 $front->setParam('noErrorHandler', true);
 ]]></programlisting>
 
             <para>
-                To disable the view renderer, do one of the following actions
-                point prior to calling <code>dispatch()</code>:
+                To disable the <code>ViewRenderer</code>, do the following prior
+                to calling <code>dispatch()</code>:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Remove the action helper from the broker:
-Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
-
-// Or simply disable it:
+// Disable the ViewRenderer helper:
 $front->setParam('noViewRenderer', true);
 ]]></programlisting>
-
-            <para>
-                In each case, setting the front controller parameter is probably
-                the easiest and fastest method, and also allows your controllers
-                to easily override the setting at any point.
-            </para>
         </note>
     </sect2>
 

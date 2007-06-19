@@ -365,9 +365,12 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
             $moduleDir = $controllerDirs[$module];
             $fileSpec  = $moduleDir . DIRECTORY_SEPARATOR . $this->classToFilename($default);
             if (Zend_Loader::isReadable($fileSpec)) {
+                $request->setModuleName($module);
                 $this->_curModule    = $this->formatModuleName($module);
                 $this->_curDirectory = $moduleDir;
             }
+        } else {
+            $request->setModuleName($this->_defaultModule);
         }
 
         return $default;

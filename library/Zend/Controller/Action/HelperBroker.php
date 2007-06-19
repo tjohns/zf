@@ -206,6 +206,29 @@ class Zend_Controller_Action_HelperBroker
         
         return $helper;
     }
+
+    /**
+     * Retrieve or initialize a helper statically
+     *
+     * Retrieves a helper object statically, loading on-demand if the helper 
+     * does not already exist in the stack. Always returns a helper, unless
+     * the helper class cannot be found.
+     * 
+     * @param  string $name 
+     * @return Zend_Controller_Action_Helper_Abstract
+     */
+    public static function getStaticHelper($name)
+    {
+        $name = self::_normalizeHelperName($name);
+        
+        if (!array_key_exists($name, self::$_helpers)) {
+            self::_loadHelper($name);
+        }
+        
+        $helper = self::$_helpers[$name];
+
+        return $helper;
+    }
     
     /**
      * getExistingHelper() - get helper by name

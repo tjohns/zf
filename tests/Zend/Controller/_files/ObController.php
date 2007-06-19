@@ -11,4 +11,12 @@ class ObController extends Zend_Controller_Action
     {
         echo "OB index action called\n";
     }
+
+    public function exceptionAction()
+    {
+        echo "In exception action\n";
+        $view = new Zend_View();
+        $view->addBasePath(dirname(dirname(__FILE__)) . '/views');
+        $view->render('ob.phtml');
+    }
 }

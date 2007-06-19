@@ -45,9 +45,11 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     {
         $this->_controller = Zend_Controller_Front::getInstance();
         $this->_controller->resetInstance();
-        $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
-        $this->_controller->returnResponse(true);
-        $this->_controller->throwExceptions(false);
+        $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files')
+                          ->setParam('noErrorHandler', true)
+                          ->setParam('noViewRenderer', true)
+                          ->returnResponse(true) 
+                          ->throwExceptions(false);
         Zend_Controller_Action_HelperBroker::resetHelpers();
     }
 
@@ -160,22 +162,36 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     public function testGetSetParams()
     {
         $this->_controller->setParams(array('foo' => 'bar'));
-        $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
+        $params = $this->_controller->getParams();
+        $this->assertTrue(isset($params['foo']));
+        $this->assertEquals('bar', $params['foo']);
 
         $this->_controller->setParam('baz', 'bat');
-        $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_controller->getParams());
+        $params = $this->_controller->getParams();
+        $this->assertTrue(isset($params['foo']));
+        $this->assertEquals('bar', $params['foo']);
+        $this->assertTrue(isset($params['baz']));
+        $this->assertEquals('bat', $params['baz']);
 
         $this->_controller->setParams(array('foo' => 'bug'));
-        $this->assertSame(array('foo' => 'bug', 'baz' => 'bat'), $this->_controller->getParams());
+        $params = $this->_controller->getParams();
+        $this->assertTrue(isset($params['foo']));
+        $this->assertEquals('bug', $params['foo']);
+        $this->assertTrue(isset($params['baz']));
+        $this->assertEquals('bat', $params['baz']);
     }
 
     public function testClearParams()
     {
         $this->_controller->setParams(array('foo' => 'bar', 'baz' => 'bat'));
-        $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_controller->getParams());
+        $params = $this->_controller->getParams();
+        $this->assertTrue(isset($params['foo']));
+        $this->assertTrue(isset($params['baz']));
 
         $this->_controller->clearParams('foo');
-        $this->assertSame(array('baz' => 'bat'), $this->_controller->getParams());
+        $params = $this->_controller->getParams();
+        $this->assertFalse(isset($params['foo']));
+        $this->assertTrue(isset($params['baz']));
 
         $this->_controller->clearParams();
         $this->assertSame(array(), $this->_controller->getParams());
@@ -516,16 +532,26 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($dispatcher->getDefaultModule(), $this->_controller->getDefaultModule());
     }
 
-    public function testErrorHandlerPluginRegisteredByDefault()
+    public function testErrorHandlerPluginRegisteredWhenDispatched()
     {
-        $plugins = $this->_controller->getPlugins();
-        $this->assertEquals(1, count($plugins));
-        $this->assertTrue($plugins[0] instanceof Zend_Controller_Plugin_ErrorHandler);
+        $this->assertFalse($this->_controller->hasPlugin('Zend_Controller_Plugin_ErrorHandler'));
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
+        $this->_controller->setParam('noErrorHandler', false) 
+                          ->setResponse(new Zend_Controller_Response_Cli());
+        $response = $this->_controller->dispatch($request);
 
-        $this->_controller->resetInstance();
-        $plugins = $this->_controller->getPlugins();
-        $this->assertEquals(1, count($plugins));
-        $this->assertTrue($plugins[0] instanceof Zend_Controller_Plugin_ErrorHandler);
+        $this->assertTrue($this->_controller->hasPlugin('Zend_Controller_Plugin_ErrorHandler'));
+    }
+
+    public function testErrorHandlerPluginNotRegisteredIfNoErrorHandlerSet()
+    {
+        $this->assertFalse($this->_controller->hasPlugin('Zend_Controller_Plugin_ErrorHandler'));
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
+        $this->_controller->setParam('noErrorHandler', true) 
+                          ->setResponse(new Zend_Controller_Response_Cli());
+        $response = $this->_controller->dispatch($request);
+
+        $this->assertFalse($this->_controller->hasPlugin('Zend_Controller_Plugin_ErrorHandler'));
     }
 
     public function testReplaceRequestAndResponseMidStream()
@@ -544,10 +570,28 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains('Reset action called', $response->getBody());
     }
 
-    public function testViewRendererHelperRegisteredByDefault()
+    public function testViewRendererHelperRegisteredWhenDispatched()
     {
-        $this->_controller->resetInstance();
+        $this->assertFalse(Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer'));
+        $this->_controller->setParam('noViewRenderer', false);
+
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $response = $this->_controller->dispatch($request);
+
         $this->assertTrue(Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer'));
+    }
+
+    public function testViewRendererHelperNotRegisteredIfNoViewRendererSet()
+    {
+        $this->assertFalse(Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer'));
+        $this->_controller->setParam('noViewRenderer', true);
+
+        $request = new Zend_Controller_Request_Http('http://example.com/index/index');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $response = $this->_controller->dispatch($request);
+
+        $this->assertFalse(Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer'));
     }
 }
 
