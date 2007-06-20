@@ -90,7 +90,8 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     protected function _error($messageKey = null, $value = null)
     {
         if ($messageKey === null) {
-            $messageKey = current(array_keys($this->_messageTemplates));
+            $keys = array_keys($this->_messageTemplates);
+            $messageKey = current($keys);
         }
         if ($value === null) {
             $value = $this->_value;
