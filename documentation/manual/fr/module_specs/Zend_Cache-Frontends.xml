@@ -108,7 +108,7 @@ if (!($data = $cache->get($id))) {
 }
 
 // [...] fait quelque chose avec $data (affichage, passage ailleurs, etc, etc)
-?>]]>       </programlisting>
+?>]]></programlisting>
             </para>
             <para>
                 Si vous voulez cacher des blocs multiples ou des instances de données, l'idée reste la même:
@@ -147,7 +147,7 @@ if (!($data = $cache->get($id2))) {
 
 }
 echo($data);
-?>]]>       </programlisting>
+?>]]></programlisting>
             </para>
         </sect3>
     </sect2>
@@ -183,7 +183,7 @@ if (!$cache->start('mypage')) {
 }
 
 echo 'This is never cached ('.time().').';
-?>]]>       </programlisting>
+?>]]></programlisting>
             </para>
             <para>
                 Utiliser cette forme est assez simple pour définir une mise de cache de sortie dans vos projets déjà en production, avec peu de refactorisation de code.
@@ -253,7 +253,7 @@ $cache->call('veryExpensiveFunc', $params);
 # par exemple, pour appeler (avec mise en cache) veryExpensiveFunc(1, 'foo', 'bar')
 #vous devriez utiliser
 $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
-?>]]>       </programlisting>
+?>]]></programlisting>
             </para>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> est assez intelligente pour mettre en cache la valeur de retour de la fonction, aisi que sa sortie interne.
@@ -369,7 +369,7 @@ $frontendOptions = array(
 
 # L'appel mis en cache
 $res = $cache->foobar2('1', '2');
-?>]]>           </programlisting>
+?>]]></programlisting>
             </para>
         </sect3>
     </sect2>
@@ -414,7 +414,7 @@ $res = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.examples">
             <title>Exemples</title>
             <para>
-                L'utilisation de ce frontend est la même que celle de<code>Zend_Cache_Core</code>. Il n'y a pas besoin d'exemple spéifique - la seule chose à faire est de définir le <code>masterFile</code> lors de l'utilisation de la fabrique.
+                L'utilisation de ce frontend est la même que celle de<code>Zend_Cache_Core</code>. Il n'y a pas besoin d'exemple spéifique - la seule chose à faire est de définir le <code>master_file</code> lors de l'utilisation de la fabrique.
             </para>
         </sect3>
     </sect2>
@@ -551,7 +551,7 @@ $cache->start();
 // si le cache est trouvé, le résultat est envoyé au navigateur et le script s'arrête là
 
 // reste de la page ...
-?>]]>           </programlisting>
+?>]]></programlisting>
             </para>
             <para>
                 un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un fichier d'amorçage (pour utiliser avec Zend_Controller par exemple)
@@ -587,11 +587,8 @@ $cache->start();
 // si nous trouvons un cache, le résultat est envoyé au navigateur, et le script s'arrête là
 
 // [...] la fin du fichier de démarrage (ces lignes ne seront pas exécutée si on trouve un cache)
-?>]]>           </programlisting>
+?>]]></programlisting>
             </para>
         </sect3>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

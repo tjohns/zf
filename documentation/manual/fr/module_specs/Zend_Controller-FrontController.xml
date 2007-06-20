@@ -27,32 +27,23 @@
             </para>
 
             <para>
-                Pour désactiver la gestion d'erreur, éxécutez simplement l'une des actions suivantes à n'importe quel point précédent l'appel à <code>dispatch()</code> :
+                Pour désactiver <code>ErrorHandler</code>, éxécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Déinscrit le plugin:
-$front->unregisterPlugin('Zend_Controller_Plugin_ErrorHandler');
-
-// Ou simplement le désactive :
+// Désactivez le plugin ErrorHandler :
 $front->setParam('noErrorHandler', true);
 ?>]]></programlisting>
 
             <para>
-                Pour désactiver le rendu des vues, éxécutez l'une des actions suivantes à n'importe quel point précédent l'appel à <code>dispatch()</code> :
+                Pour désactiver <code>ViewRenderer</code>, éxécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Efface l'aide d'action du broker:
-Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
-
-// Ou simplement le désactive :
+// Désactivez l'aide ViewRenderer :
 $front->setParam('noViewRenderer', true);
 ?>]]></programlisting>
 
-            <para>
-                Dans tous le cas, régler le paramètre de contrôleur frontal est probablement la méthode la plus facile et la plus rapide et permet aussi à vos contrôleurs de facilement surcharger le réglage à n'importe quel moment.
-            </para>
         </note>
     </sect2>
 

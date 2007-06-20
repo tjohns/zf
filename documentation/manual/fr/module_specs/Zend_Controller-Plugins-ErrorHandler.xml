@@ -1,8 +1,8 @@
 <sect3 id="zend.controller.plugins.standard.errorhandler">
-    <title>Zend_Controller_Plugins_ErrorHandler</title>
+    <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugins_ErrorHandler</code> provides a drop-in
+        <code>Zend_Controller_Plugin_ErrorHandler</code> provides a drop-in
         plugin for handling exceptions thrown by your application, including
         those resulting from missing controllers or actions; it is an
         alternative to the methods listed in the <link
@@ -25,13 +25,14 @@
     </itemizedlist>
 
     <para>
-        In other words, the ErrorHandler plugin is designed to handle HTTP
-        404-type errors (page missing) and 500-type errors (internal error). It
-        is not intended to catch exceptions raised in other plugins or routing.
+        In other words, the <code>ErrorHandler</code> plugin is designed to
+        handle HTTP 404-type errors (page missing) and 500-type errors (internal
+        error). It is not intended to catch exceptions raised in other plugins
+        or routing.
     </para>
 
     <para>
-        By default, <code>Zend_Controller_Plugins_ErrorHandler</code> will
+        By default, <code>Zend_Controller_Plugin_ErrorHandler</code> will
         forward to <code>ErrorController::errorAction()</code> in the default
         module. You may set alternate values for these by using the various
         accessors available to the plugin:
@@ -91,11 +92,11 @@
         <title>Using the ErrorHandler as a 404 Handler</title>
 
         <para>
-            Since the ErrorHandler plugin captures not only application errors,
-            but also errors in the controller chain arising from missing
-            controller classes and/or action methods, it can be used as a 404
-            handler. To do so, you will need to have your error controller check
-            the exception type.
+            Since the <code>ErrorHandler</code> plugin captures not only
+            application errors, but also errors in the controller chain arising
+            from missing controller classes and/or action methods, it can be
+            used as a 404 handler. To do so, you will need to have your error
+            controller check the exception type.
         </para>
 
         <para>
