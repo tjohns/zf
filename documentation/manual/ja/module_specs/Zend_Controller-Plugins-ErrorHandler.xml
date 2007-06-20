@@ -172,6 +172,41 @@ class ErrorController extends Zend_Controller_Action
     }
 }
 ?>]]></programlisting>
+
+        <para>
+            エラーハンドラで発生した礼儀を取得するには、
+            <code>error_handler</code> オブジェクトのプロパティ
+            <code>exception</code> を使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+public function errorAction()
+{
+        $errors = $this->_getParam('error_handler');
+
+
+        switch ($errors->type) {
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+                // 404 エラー -- コントローラあるいはアクションが見つかりません
+                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+
+                // ... 何か、表示する内容を作成します ...
+                break;
+            default:
+                // アプリケーションのエラー。エラーページを表示しますが、
+                // ステータスコードは変更しません
+
+                // ...
+
+                // 例外をログに記録します
+                $exception = $errors->exception;
+                $log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/applicationException.log'));
+                $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
+                break;
+        }
+}
+?>]]></programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">

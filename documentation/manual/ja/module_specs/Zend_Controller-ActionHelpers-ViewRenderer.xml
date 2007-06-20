@@ -56,7 +56,7 @@
                 <code>ViewRenderer</code> はデフォルトで有効になっています。
                 これを無効にするには、フロントコントローラのパラメータ
                 <code>noViewRenderer</code> を指定する
-                (<code>$front->setParam('noViewRenderer')</code>) か、
+                (<code>$front->setParam('noViewRenderer', true)</code>) か、
                 あるいはヘルパーブローカからヘルパーを削除
                 (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>)
                 します。
@@ -720,7 +720,7 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_View_Controller_HelperBroker::addHelper($viewRenderer);
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 ]]></programlisting>
         </example>
 
