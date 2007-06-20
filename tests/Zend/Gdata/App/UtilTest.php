@@ -33,8 +33,23 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
 
     public function testFormatTimestampFromString()
     {
+        // assert that a correctly formatted timestamp is not modified
         $date = Zend_Gdata_App_Util::formatTimestamp('2006-12-01');
-        $this->assertEquals('2006-12-01T00:00:00', $date);
+        $this->assertEquals('2006-12-01', $date);
+    }
+
+    public function testFormatTimestampFromStringWithTimezone()
+    {
+        // assert that a correctly formatted timestamp is not modified
+        $date = Zend_Gdata_App_Util::formatTimestamp('2007-01-10T13:31:12-04:00');
+        $this->assertEquals('2007-01-10T13:31:12-04:00', $date);
+    }
+
+    public function testFormatTimestampFromStringWithNonCompliantDate()
+    {
+        // assert that a correctly formatted timestamp is not modified
+        $date = Zend_Gdata_App_Util::formatTimestamp('2007/07/13');
+        $this->assertEquals('2007-07-13T00:00:00', $date);
     }
 
     public function testFormatTimestampFromInteger()

@@ -46,7 +46,7 @@ class Zend_Gdata_QueryTest extends PHPUnit_Framework_TestCase
     {
         $query = new Zend_Gdata_Query();
         $query->setUpdatedMax('2007-01-01');
-        $this->assertEquals('2007-01-01T00:00:00', $query->getUpdatedMax());
+        $this->assertEquals('2007-01-01', $query->getUpdatedMax());
         $this->assertTrue(strpos($query->getQueryUrl(), 
                 'updated-max=2007-01-01') !== false); 
     }
@@ -55,7 +55,7 @@ class Zend_Gdata_QueryTest extends PHPUnit_Framework_TestCase
     {
         $query = new Zend_Gdata_Query();
         $query->setUpdatedMin('2007-01-01');
-        $this->assertEquals('2007-01-01T00:00:00', $query->getUpdatedMin());
+        $this->assertEquals('2007-01-01', $query->getUpdatedMin());
         $this->assertTrue(strpos($query->getQueryUrl(), 
                 'updated-min=2007-01-01') !== false); 
     }
