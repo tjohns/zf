@@ -46,7 +46,7 @@
             <para>
                 The <code>ViewRenderer</code> is enabled by default. You may
                 disable it via the front controller <code>noViewRenderer</code>
-                param (<code>$front->setParam('noViewRenderer')</code>) or
+                param (<code>$front->setParam('noViewRenderer', true)</code>) or
                 removing the helper from the helper broker stack
                 (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).
             </para>
@@ -707,7 +707,7 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_View_Controller_HelperBroker::addHelper($viewRenderer);
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 ]]></programlisting>
         </example>
 
