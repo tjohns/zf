@@ -75,7 +75,7 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
             $this->_label = $attribute->nodeValue;
             break;
         case 'rel':
-            $this->_rel = $attribute->rel;
+            $this->_rel = $attribute->nodeValue;
             break;
         case 'valueString':
             $this->_valueString = $attribute->nodeValue;

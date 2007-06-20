@@ -46,6 +46,26 @@ require_once 'Zend/Gdata/App/GeneratorTest.php';
 require_once 'Zend/Gdata/GdataTest.php';
 require_once 'Zend/Gdata/QueryTest.php';
 
+require_once 'Zend/Gdata/AttendeeStatusTest.php';
+require_once 'Zend/Gdata/AttendeeTypeTest.php';
+require_once 'Zend/Gdata/CommentsTest.php';
+require_once 'Zend/Gdata/EntryLinkTest.php';
+require_once 'Zend/Gdata/EventStatusTest.php';
+require_once 'Zend/Gdata/ExtendedPropertyTest.php';
+require_once 'Zend/Gdata/FeedLinkTest.php';
+require_once 'Zend/Gdata/OpenSearchItemsPerPageTest.php';
+require_once 'Zend/Gdata/OpenSearchStartIndexTest.php';
+require_once 'Zend/Gdata/OpenSearchTotalResultsTest.php';
+require_once 'Zend/Gdata/OriginalEventTest.php';
+require_once 'Zend/Gdata/RecurrenceTest.php';
+require_once 'Zend/Gdata/RecurrenceExceptionTest.php';
+require_once 'Zend/Gdata/ReminderTest.php';
+require_once 'Zend/Gdata/TransparencyTest.php';
+require_once 'Zend/Gdata/VisibilityTest.php';
+require_once 'Zend/Gdata/WhenTest.php';
+require_once 'Zend/Gdata/WhereTest.php';
+require_once 'Zend/Gdata/WhoTest.php';
+
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/CalendarFeedTest.php';
 require_once 'Zend/Gdata/CalendarEventTest.php';
@@ -117,6 +137,26 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_GdataTest');
         $suite->addTestSuite('Zend_Gdata_QueryTest');
         
+        $suite->addTestSuite('Zend_Gdata_AttendeeStatusTest');
+        $suite->addTestSuite('Zend_Gdata_AttendeeTypeTest');
+        $suite->addTestSuite('Zend_Gdata_CommentsTest');
+        $suite->addTestSuite('Zend_Gdata_EntryLinkTest');
+        $suite->addTestSuite('Zend_Gdata_EventStatusTest');
+        $suite->addTestSuite('Zend_Gdata_ExtendedPropertyTest');
+        $suite->addTestSuite('Zend_Gdata_FeedLinkTest');
+        $suite->addTestSuite('Zend_Gdata_OpenSearchItemsPerPageTest');
+        $suite->addTestSuite('Zend_Gdata_OpenSearchStartIndexTest');
+        $suite->addTestSuite('Zend_Gdata_OpenSearchTotalResultsTest');
+        $suite->addTestSuite('Zend_Gdata_OriginalEventTest');
+        $suite->addTestSuite('Zend_Gdata_RecurrenceTest');
+        $suite->addTestSuite('Zend_Gdata_RecurrenceExceptionTest');
+        $suite->addTestSuite('Zend_Gdata_ReminderTest');
+        $suite->addTestSuite('Zend_Gdata_TransparencyTest');
+        $suite->addTestSuite('Zend_Gdata_VisibilityTest');
+        $suite->addTestSuite('Zend_Gdata_WhenTest');
+        $suite->addTestSuite('Zend_Gdata_WhereTest');
+        $suite->addTestSuite('Zend_Gdata_WhoTest');
+
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
         $suite->addTestSuite('Zend_Gdata_CalendarFeedTest');
         $suite->addTestSuite('Zend_Gdata_CalendarEventTest');

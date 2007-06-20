@@ -20,7 +20,6 @@
  */
 
 require_once 'Zend/Gdata/Calendar/Extension/WebContent.php';
-require_once 'Zend/Gdata/Calendar/Extension/WebContent.php';
 require_once 'Zend/Gdata/Calendar.php';
 
 /**
@@ -60,18 +59,18 @@ class Zend_Gdata_Calendar_WebContentTest extends PHPUnit_Framework_TestCase
         $newWebContent->extensionElements = array(
                 new Zend_Gdata_App_Extension_Element('foo', 'atom', null, 'bar'));
         $this->assertEquals(count($newWebContent->extensionElements), 1);
-        $this->assertEquals($this->webContent->url, "http://nowhere.invalid/");
-        $this->assertEquals($this->webContent->height, "100");
-        $this->assertEquals($this->webContent->width, "200");
+        $this->assertEquals($newWebContent->url, "http://nowhere.invalid/");
+        $this->assertEquals($newWebContent->height, "100");
+        $this->assertEquals($newWebContent->width, "200");
 
         /* try constructing using magic factory */
         $cal = new Zend_Gdata_Calendar();
         $newWebContent2 = $cal->newWebContent();
         $newWebContent2->transferFromXML($newWebContent->saveXML());
         $this->assertEquals(count($newWebContent2->extensionElements), 1);
-        $this->assertEquals($this->webContent->url, "http://nowhere.invalid/");
-        $this->assertEquals($this->webContent->height, "100");
-        $this->assertEquals($this->webContent->width, "200");
+        $this->assertEquals($newWebContent2->url, "http://nowhere.invalid/");
+        $this->assertEquals($newWebContent2->height, "100");
+        $this->assertEquals($newWebContent2->width, "200");
     }
 
     public function testEmptyWebContentToAndFromStringShouldMatch() {

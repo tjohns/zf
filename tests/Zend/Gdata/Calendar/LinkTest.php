@@ -66,26 +66,26 @@ class Zend_Gdata_Calendar_LinkTest extends PHPUnit_Framework_TestCase
         $newLink->extensionElements = array(
                 new Zend_Gdata_App_Extension_Element('foo', 'atom', null, 'bar'));
         $this->assertEquals(count($newLink->extensionElements), 1);
-        $this->assertEquals($this->link->rel, "http://nowhere.invalid/");
-        $this->assertEquals($this->link->title, "Somewhere");
-        $this->assertEquals($this->link->href, "http://somewhere.invalid/");
-        $this->assertEquals($this->link->type, "text/plain");
-        $this->assertEquals($this->link->webcontent->url, "a");
-        $this->assertEquals($this->link->webcontent->height, "1");
-        $this->assertEquals($this->link->webcontent->width, "2");
+        $this->assertEquals($newLink->rel, "http://nowhere.invalid/");
+        $this->assertEquals($newLink->title, "Somewhere");
+        $this->assertEquals($newLink->href, "http://somewhere.invalid/");
+        $this->assertEquals($newLink->type, "text/plain");
+        $this->assertEquals($newLink->webcontent->url, "a");
+        $this->assertEquals($newLink->webcontent->height, "1");
+        $this->assertEquals($newLink->webcontent->width, "2");
 
         /* try constructing using magic factory */
         $cal = new Zend_Gdata_Calendar();
         $newLink2 = $cal->newLink();
         $newLink2->transferFromXML($newLink->saveXML());
         $this->assertEquals(count($newLink2->extensionElements), 1);
-        $this->assertEquals($this->link->rel, "http://nowhere.invalid/");
-        $this->assertEquals($this->link->title, "Somewhere");
-        $this->assertEquals($this->link->href, "http://somewhere.invalid/");
-        $this->assertEquals($this->link->type, "text/plain");
-        $this->assertEquals($this->link->webcontent->url, "a");
-        $this->assertEquals($this->link->webcontent->height, "1");
-        $this->assertEquals($this->link->webcontent->width, "2");
+        $this->assertEquals($newLink2->rel, "http://nowhere.invalid/");
+        $this->assertEquals($newLink2->title, "Somewhere");
+        $this->assertEquals($newLink2->href, "http://somewhere.invalid/");
+        $this->assertEquals($newLink2->type, "text/plain");
+        $this->assertEquals($newLink2->webcontent->url, "a");
+        $this->assertEquals($newLink2->webcontent->height, "1");
+        $this->assertEquals($newLink2->webcontent->width, "2");
     }
 
     public function testEmptyLinkToAndFromStringShouldMatch() {
