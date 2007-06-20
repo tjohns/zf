@@ -85,15 +85,12 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
                 <listitem>
                     <para>
-                        フロントコントローラのインスタンスが作成された後で、
-                        ヘルパーブローカに登録されている <code>ViewRenderer</code>
-                        オブジェクトを取得する。
+                        <code>ViewRenderer</code> オブジェクトを、
+                        ヘルパーブローカから必要に応じて作成、取得する。
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
-$front = Zend_Controller_Front::getInstance();
-
-$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 ]]></programlisting>
@@ -108,10 +105,12 @@ $viewRenderer->setView($view)
         <para>
             もっとも基本的な使用法は、単に <code>ViewRenderer</code>
             のインスタンスを作成してそれをヘルパーブローカに渡すというものです。
+            インスタンスの作成と登録を一度に行うには、ヘルパーブローカの
+            <code>getStaticHelper()</code> メソッドを使用するのがいちばん簡単です。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ]]></programlisting>
 
         <para>
@@ -501,7 +500,8 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
             <para>
                 最も基本的な使用法は、起動ファイル内で <code>ViewRenderer</code>
-                ヘルパーをヘルパーブローカに渡し、アクションメソッドで変数の値を設定するというものです。
+                を作成してヘルパーブローカに登録し、
+                アクションメソッドで変数の値を設定するというものです。
             </para>
 
             <note>
@@ -520,7 +520,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
             <programlisting role="php"><![CDATA[<?php
 // 起動ファイル内で
-Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ?>
 
 <?php

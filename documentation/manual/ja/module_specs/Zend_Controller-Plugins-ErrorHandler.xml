@@ -1,8 +1,8 @@
 <sect3 id="zend.controller.plugins.standard.errorhandler">
-    <title>Zend_Controller_Plugins_ErrorHandler</title>
+    <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugins_ErrorHandler</code>
+        <code>Zend_Controller_Plugin_ErrorHandler</code>
         は、アプリケーションからスローされた例外を処理するためのプラグインです。
         たとえば、指定したコントローラやアクションが見つからないといったエラーを処理します。
         これは、<link linkend="zend.controller.exceptions">MVC の例外についてのセクション</link>
@@ -24,14 +24,14 @@
     </itemizedlist>
 
     <para>
-        言い換えると、ErrorHandler プラグインが想定しているのは、HTTP
+        言い換えると、<code>ErrorHandler</code> プラグインが想定しているのは、HTTP
         404 型のエラー (ページが存在しない) と 500 型のエラー (内部エラー)
         ということになります。
         他のプラグインやルーティング時に発生したそれ以外の例外の処理は、想定していません。
     </para>
 
     <para>
-        デフォルトでは、<code>Zend_Controller_Plugins_ErrorHandler</code>
+        デフォルトでは、<code>Zend_Controller_Plugin_ErrorHandler</code>
         はデフォルトモジュールの <code>ErrorController::errorAction()</code>
         に処理を転送します。これを変更するには、以下のようなアクセス用メソッドを使用します。
     </para>
@@ -92,7 +92,8 @@
         <title>404 ハンドラとしての ErrorHandler の使用</title>
 
         <para>
-            ErrorHandler プラグインが捕捉するのは、アプリケーションのエラーだけではありません。
+            <code>ErrorHandler</code> プラグインが捕捉するのは、
+            アプリケーションのエラーだけではありません。
             コントローラチェインが次のコントローラクラスやアクションメソッドを
             見つけられなかった場合に、404 ハンドラとして動作させることもできます。
             そのためには、エラーコントローラ内で例外の型を調べる必要があります。

@@ -187,10 +187,12 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>組み込みのアクションヘルパー</title>
 
         <para>
-            Zend Framework には、デフォルトで二種類のアクションヘルパーが組み込まれています。
-            セッション単位のフラッシュメッセージを扱う FlashMessenger と、
+            Zend Framework には、デフォルトで三種類のアクションヘルパーが組み込まれています。
+            セッション単位のフラッシュメッセージを扱う <code>FlashMessenger</code> と、
             アプリケーション内から内部あるいは外部へのリダイレクトを実装できるようにする
-            Redirector です。
+            <code>Redirector</code>、そして、
+            コントローラ内でのビューオブジェクトの設定とビューのレンダリングを自動化する
+            <code>ViewRenderer</code> です。
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />

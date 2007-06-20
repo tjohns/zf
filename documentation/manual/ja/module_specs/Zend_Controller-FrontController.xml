@@ -50,35 +50,24 @@
             </para>
 
             <para>
-                エラーハンドラを無効にするには、
-                <code>dispatch()</code> をコールする前に以下のいずれかの方法を使用します。
+                <code>ErrorHandler</code> を無効にするには、
+                <code>dispatch()</code> をコールする前のどこかで以下のようにします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// プラグインの登録を解除します
-$front->unregisterPlugin('Zend_Controller_Plugin_ErrorHandler');
-
-// あるいは単に無効にします
+// ErrorHandler プラグインを無効にします
 $front->setParam('noErrorHandler', true);
 ]]></programlisting>
 
             <para>
-                ビューレンダラを無効にするには、
-                <code>dispatch()</code> をコールする前に以下のいずれかの方法を使用します。
+                <code>ViewRenderer</code> を無効にするには、
+                <code>dispatch()</code> をコールする前に以下を実行します。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// アクションヘルパーをブローカから削除します
-Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
-
-// あるいは単に無効にします
+// ViewRenderer ヘルパーを無効にします
 $front->setParam('noViewRenderer', true);
 ]]></programlisting>
-
-            <para>
-                どちらの場合についても、フロンとコントローラのパラメータを設定する方法のほうが
-                手っ取り早く高速です。また、この方法なら、設定を変更することも簡単です。
-            </para>
         </note>
     </sect2>
 

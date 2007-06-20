@@ -93,7 +93,7 @@ class FooController extends Zend_Controller_Action
                 <code>render()</code> および <code>renderScript()</code>
                 は、それぞれ <code>ViewRenderer</code> へのプロキシとなります。
                 ただしヘルパーブローカ内にこのヘルパーが登録されていない場合や
-                noViewRenderer フラグが設定されている場合は除きます。
+                <code>noViewRenderer</code> フラグが設定されている場合は除きます。
             </para>
 
             <para>

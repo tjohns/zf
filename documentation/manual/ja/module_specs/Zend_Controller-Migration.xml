@@ -61,7 +61,7 @@ $front->setParam('noViewRenderer', true);
         </para>
 
         <para>
-            ViewRenderer の機能を把握したら、コントローラのコードを見てみましょう。
+            <code>ViewRenderer</code> の機能を把握したら、コントローラのコードを見てみましょう。
             まず、アクションメソッド (名前が 'Action' で終わっているメソッド)
             を探し、その中でどんな処理をしているかを確認しましょう。
             もし次に挙げるいずれの内容も行っていない場合は、コードに手を加える必要があります。
@@ -71,7 +71,7 @@ $front->setParam('noViewRenderer', true);
             <listitem><para><code>$this-&gt;render()</code> のコール</para></listitem>
             <listitem><para><code>$this-&gt;_forward()</code> のコール</para></listitem>
             <listitem><para><code>$this-&gt;_redirect()</code> のコール</para></listitem>
-            <listitem><para>Redirector アクションヘルパーのコール</para></listitem>
+            <listitem><para><code>Redirector</code> アクションヘルパーのコール</para></listitem>
         </itemizedlist>
 
         <para>
@@ -147,7 +147,7 @@ public function preDispatch()
         <itemizedlist>
             <listitem>
                 <para>
-                    フロントコントローラのインスタンスを最初に作成する前なら
+                    フロントコントローラのインスタンスをディスパッチする前なら
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -159,23 +159,23 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
             <listitem>
                 <para>
-                    フロントコントローラのインスタンスを取得した後なら
+                    起動処理の中ならどこでも
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);
 ]]></programlisting>
             </listitem>
         </itemizedlist>
 
         <para>
-            ViewRenderer を変更するにはさまざまな方法があります。
+            <code>ViewRenderer</code> を変更するにはさまざまな方法があります。
             たとえばレンダリングするビュースクリプトを別のものに変更したり
             ビュースクリプトパスの置換可能な要素（サフィックスを含む）
             を置換する内容を指定したり、使用するレスポンスセグメントを選択したりなどのことができます。
             規約どおりのディレクトリ構造以外を使用する場合は、
-            ViewRenderer でのパスの決定方法を変更することもできます。
+            <code>ViewRenderer</code> でのパスの決定方法を変更することもできます。
         </para>
 
         <para>
