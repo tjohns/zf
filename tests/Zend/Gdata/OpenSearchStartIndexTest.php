@@ -38,11 +38,28 @@ class Zend_Gdata_OpenSearchStartIndexTest extends PHPUnit_Framework_TestCase
         $this->openSearchStartIndex = new Zend_Gdata_Extension_OpenSearchStartIndex();
     }
     
-    public function testEmptyOpenSearchStartIndexShouldHaveEmptyExtensionsList() {
+    public function testEmptyOpenSearchStartIndexShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->openSearchStartIndex->extensionElements));
-        $this->assertEquals(0, count($this->openSearchStartIndex->extensionElements));
+        $this->assertTrue(count($this->openSearchStartIndex->extensionElements) == 0);
     }
-      
+
+    public function testEmptyOpenSearchStartIndexShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->openSearchStartIndex->extensionAttributes));
+        $this->assertTrue(count($this->openSearchStartIndex->extensionAttributes) == 0);
+    }
+
+    public function testSampleOpenSearchStartIndexShouldHaveNoExtensionElements() {
+        $this->openSearchStartIndex->transferFromXML($this->openSearchStartIndexText);
+        $this->assertTrue(is_array($this->openSearchStartIndex->extensionElements));
+        $this->assertTrue(count($this->openSearchStartIndex->extensionElements) == 0);
+    }
+
+    public function testSampleOpenSearchStartIndexShouldHaveNoExtensionAttributes() {
+        $this->openSearchStartIndex->transferFromXML($this->openSearchStartIndexText);
+        $this->assertTrue(is_array($this->openSearchStartIndex->extensionAttributes));
+        $this->assertTrue(count($this->openSearchStartIndex->extensionAttributes) == 0);
+    }
+    
     public function testNormalOpenSearchStartIndexShouldHaveNoExtensionElements() {
         $this->openSearchStartIndex->text = "20";
         

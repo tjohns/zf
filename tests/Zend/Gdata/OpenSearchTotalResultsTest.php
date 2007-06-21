@@ -38,11 +38,28 @@ class Zend_Gdata_OpenSearchTotalResultsTest extends PHPUnit_Framework_TestCase
         $this->openSearchTotalResults = new Zend_Gdata_Extension_OpenSearchTotalResults();
     }
     
-    public function testEmptyOpenSearchTotalResultsShouldHaveEmptyExtensionsList() {
+    public function testEmptyOpenSearchTotalResultsShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->openSearchTotalResults->extensionElements));
-        $this->assertEquals(0, count($this->openSearchTotalResults->extensionElements));
+        $this->assertTrue(count($this->openSearchTotalResults->extensionElements) == 0);
     }
-      
+
+    public function testEmptyOpenSearchTotalResultsShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->openSearchTotalResults->extensionAttributes));
+        $this->assertTrue(count($this->openSearchTotalResults->extensionAttributes) == 0);
+    }
+
+    public function testSampleOpenSearchTotalResultsShouldHaveNoExtensionElements() {
+        $this->openSearchTotalResults->transferFromXML($this->openSearchTotalResultsText);
+        $this->assertTrue(is_array($this->openSearchTotalResults->extensionElements));
+        $this->assertTrue(count($this->openSearchTotalResults->extensionElements) == 0);
+    }
+
+    public function testSampleOpenSearchTotalResultsShouldHaveNoExtensionAttributes() {
+        $this->openSearchTotalResults->transferFromXML($this->openSearchTotalResultsText);
+        $this->assertTrue(is_array($this->openSearchTotalResults->extensionAttributes));
+        $this->assertTrue(count($this->openSearchTotalResults->extensionAttributes) == 0);
+    }
+    
     public function testNormalOpenSearchTotalResultsShouldHaveNoExtensionElements() {
         $this->openSearchTotalResults->text = "42";
         

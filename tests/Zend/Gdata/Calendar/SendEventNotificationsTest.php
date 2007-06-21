@@ -38,11 +38,28 @@ class Zend_Gdata_Calendar_SendEventNotificationsTest extends PHPUnit_Framework_T
         $this->sendEventNotifications = new Zend_Gdata_Calendar_Extension_SendEventNotifications();
     }
       
-    public function testEmptySendEventNotificationsShouldHaveEmptyExtensionsList() {
+    public function testEmptySendEventNotificationsShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->sendEventNotifications->extensionElements));
         $this->assertTrue(count($this->sendEventNotifications->extensionElements) == 0);
     }
-      
+
+    public function testEmptySendEventNotificationsShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->sendEventNotifications->extensionAttributes));
+        $this->assertTrue(count($this->sendEventNotifications->extensionAttributes) == 0);
+    }
+
+    public function testSampleSendEventNotificationsShouldHaveNoExtensionElements() {
+        $this->sendEventNotifications->transferFromXML($this->sendEventNotificationsText);
+        $this->assertTrue(is_array($this->sendEventNotifications->extensionElements));
+        $this->assertTrue(count($this->sendEventNotifications->extensionElements) == 0);
+    }
+
+    public function testSampleSendEventNotificationsShouldHaveNoExtensionAttributes() {
+        $this->sendEventNotifications->transferFromXML($this->sendEventNotificationsText);
+        $this->assertTrue(is_array($this->sendEventNotifications->extensionAttributes));
+        $this->assertTrue(count($this->sendEventNotifications->extensionAttributes) == 0);
+    }
+    
     public function testNormalSendEventNotificationsShouldHaveNoExtensionElements() {
         $this->sendEventNotifications->value = true;
         $this->assertEquals($this->sendEventNotifications->value, true);

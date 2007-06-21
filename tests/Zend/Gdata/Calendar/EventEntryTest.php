@@ -37,11 +37,28 @@ class Zend_Gdata_Calendar_EventEntryTest extends PHPUnit_Framework_TestCase
         $this->entry = new Zend_Gdata_Calendar_EventEntry();
     }
       
-    public function testEmptyEventEntryShouldHaveEmptyExtensionsList() {
+    public function testEmptyEntryShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->entry->extensionElements));
         $this->assertTrue(count($this->entry->extensionElements) == 0);
     }
-      
+
+    public function testEmptyEntryShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->entry->extensionAttributes));
+        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+    }
+
+    public function testSampleEntryShouldHaveNoExtensionElements() {
+        $this->entry->transferFromXML($this->entryText);
+        $this->assertTrue(is_array($this->entry->extensionElements));
+        $this->assertTrue(count($this->entry->extensionElements) == 0);
+    }
+
+    public function testSampleEntryShouldHaveNoExtensionAttributes() {
+        $this->entry->transferFromXML($this->entryText);
+        $this->assertTrue(is_array($this->entry->extensionAttributes));
+        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+    }
+    
     public function testEmptyEventEntryToAndFromStringShouldMatch() {
         $entryXml = $this->entry->saveXML();
         $newEventEntry = new Zend_Gdata_Calendar_EventEntry();

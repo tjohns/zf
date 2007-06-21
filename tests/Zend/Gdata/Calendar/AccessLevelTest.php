@@ -38,11 +38,28 @@ class Zend_Gdata_Calendar_AccessLevelTest extends PHPUnit_Framework_TestCase
         $this->accessLevel = new Zend_Gdata_Calendar_Extension_AccessLevel();
     }
       
-    public function testEmptyAccessLevelShouldHaveEmptyExtensionsList() {
+    public function testEmptyAccessLevelShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->accessLevel->extensionElements));
         $this->assertTrue(count($this->accessLevel->extensionElements) == 0);
     }
-      
+
+    public function testEmptyAccessLevelShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->accessLevel->extensionAttributes));
+        $this->assertTrue(count($this->accessLevel->extensionAttributes) == 0);
+    }
+
+    public function testSampleAccessLevelShouldHaveNoExtensionElements() {
+        $this->accessLevel->transferFromXML($this->accessLevelText);
+        $this->assertTrue(is_array($this->accessLevel->extensionElements));
+        $this->assertTrue(count($this->accessLevel->extensionElements) == 0);
+    }
+
+    public function testSampleAccessLevelShouldHaveNoExtensionAttributes() {
+        $this->accessLevel->transferFromXML($this->accessLevelText);
+        $this->assertTrue(is_array($this->accessLevel->extensionAttributes));
+        $this->assertTrue(count($this->accessLevel->extensionAttributes) == 0);
+    }
+    
     public function testNormalAccessLevelShouldHaveNoExtensionElements() {
         $this->accessLevel->value = 'freebusy';
         $this->assertEquals($this->accessLevel->value, 'freebusy');

@@ -38,11 +38,28 @@ class Zend_Gdata_CommentsTest extends PHPUnit_Framework_TestCase
         $this->comments = new Zend_Gdata_Extension_Comments();
     }
     
-    public function testEmptyCommentsShouldHaveEmptyExtensionsList() {
+    public function testEmptyCommentsShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->comments->extensionElements));
-        $this->assertEquals(0, count($this->comments->extensionElements));
+        $this->assertTrue(count($this->comments->extensionElements) == 0);
     }
-      
+
+    public function testEmptyCommentsShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->comments->extensionAttributes));
+        $this->assertTrue(count($this->comments->extensionAttributes) == 0);
+    }
+
+    public function testSampleCommentsShouldHaveNoExtensionElements() {
+        $this->comments->transferFromXML($this->commentsText);
+        $this->assertTrue(is_array($this->comments->extensionElements));
+        $this->assertTrue(count($this->comments->extensionElements) == 0);
+    }
+
+    public function testSampleCommentsShouldHaveNoExtensionAttributes() {
+        $this->comments->transferFromXML($this->commentsText);
+        $this->assertTrue(is_array($this->comments->extensionAttributes));
+        $this->assertTrue(count($this->comments->extensionAttributes) == 0);
+    }
+    
     public function testNormalCommentsShouldHaveNoExtensionElements() {
         $this->comments->rel = "http://schemas.google.com/g/2005#regular";
         

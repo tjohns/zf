@@ -38,11 +38,28 @@ class Zend_Gdata_VisibilityTest extends PHPUnit_Framework_TestCase
         $this->visibility = new Zend_Gdata_Extension_Visibility();
     }
     
-    public function testEmptyVisibilityShouldHaveEmptyExtensionsList() {
+    public function testEmptyVisibilityShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->visibility->extensionElements));
-        $this->assertEquals(0, count($this->visibility->extensionElements));
+        $this->assertTrue(count($this->visibility->extensionElements) == 0);
     }
-      
+
+    public function testEmptyVisibilityShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->visibility->extensionAttributes));
+        $this->assertTrue(count($this->visibility->extensionAttributes) == 0);
+    }
+
+    public function testSampleVisibilityShouldHaveNoExtensionElements() {
+        $this->visibility->transferFromXML($this->visibilityText);
+        $this->assertTrue(is_array($this->visibility->extensionElements));
+        $this->assertTrue(count($this->visibility->extensionElements) == 0);
+    }
+
+    public function testSampleVisibilityShouldHaveNoExtensionAttributes() {
+        $this->visibility->transferFromXML($this->visibilityText);
+        $this->assertTrue(is_array($this->visibility->extensionAttributes));
+        $this->assertTrue(count($this->visibility->extensionAttributes) == 0);
+    }
+    
     public function testNormalVisibilityShouldHaveNoExtensionElements() {
         $this->visibility->value = "http://schemas.google.com/g/2005#event.private";
         

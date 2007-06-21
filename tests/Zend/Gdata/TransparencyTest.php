@@ -38,11 +38,28 @@ class Zend_Gdata_TransparencyTest extends PHPUnit_Framework_TestCase
         $this->transparency = new Zend_Gdata_Extension_Transparency();
     }
     
-    public function testEmptyTransparencyShouldHaveEmptyExtensionsList() {
+    public function testEmptyTransparencyShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->transparency->extensionElements));
-        $this->assertEquals(0, count($this->transparency->extensionElements));
+        $this->assertTrue(count($this->transparency->extensionElements) == 0);
     }
-      
+
+    public function testEmptyTransparencyShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->transparency->extensionAttributes));
+        $this->assertTrue(count($this->transparency->extensionAttributes) == 0);
+    }
+
+    public function testSampleTransparencyShouldHaveNoExtensionElements() {
+        $this->transparency->transferFromXML($this->transparencyText);
+        $this->assertTrue(is_array($this->transparency->extensionElements));
+        $this->assertTrue(count($this->transparency->extensionElements) == 0);
+    }
+
+    public function testSampleTransparencyShouldHaveNoExtensionAttributes() {
+        $this->transparency->transferFromXML($this->transparencyText);
+        $this->assertTrue(is_array($this->transparency->extensionAttributes));
+        $this->assertTrue(count($this->transparency->extensionAttributes) == 0);
+    }
+    
     public function testNormalTransparencyShouldHaveNoExtensionElements() {
         $this->transparency->value = "http://schemas.google.com/g/2005#event.opaque";
         

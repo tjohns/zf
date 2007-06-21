@@ -38,11 +38,28 @@ class Zend_Gdata_RecurrenceTest extends PHPUnit_Framework_TestCase
         $this->recurrence = new Zend_Gdata_Extension_Recurrence();
     }
     
-    public function testEmptyRecurrenceShouldHaveEmptyExtensionsList() {
+    public function testEmptyRecurrenceShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->recurrence->extensionElements));
-        $this->assertEquals(0, count($this->recurrence->extensionElements));
+        $this->assertTrue(count($this->recurrence->extensionElements) == 0);
     }
-      
+
+    public function testEmptyRecurrenceShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->recurrence->extensionAttributes));
+        $this->assertTrue(count($this->recurrence->extensionAttributes) == 0);
+    }
+
+    public function testSampleRecurrenceShouldHaveNoExtensionElements() {
+        $this->recurrence->transferFromXML($this->recurrenceText);
+        $this->assertTrue(is_array($this->recurrence->extensionElements));
+        $this->assertTrue(count($this->recurrence->extensionElements) == 0);
+    }
+
+    public function testSampleRecurrenceShouldHaveNoExtensionAttributes() {
+        $this->recurrence->transferFromXML($this->recurrenceText);
+        $this->assertTrue(is_array($this->recurrence->extensionAttributes));
+        $this->assertTrue(count($this->recurrence->extensionAttributes) == 0);
+    }
+    
     public function testNormalRecurrenceShouldHaveNoExtensionElements() {
         $this->recurrence->text = "Foo";
         

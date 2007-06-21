@@ -38,11 +38,28 @@ class Zend_Gdata_RecurrenceExceptionTest extends PHPUnit_Framework_TestCase
         $this->recurrenceException = new Zend_Gdata_Extension_RecurrenceException();
     }
     
-    public function testEmptyRecurrenceExceptionShouldHaveEmptyExtensionsList() {
+    public function testEmptyRecurrenceExceptionShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->recurrenceException->extensionElements));
-        $this->assertEquals(0, count($this->recurrenceException->extensionElements));
+        $this->assertTrue(count($this->recurrenceException->extensionElements) == 0);
     }
-      
+
+    public function testEmptyRecurrenceExceptionShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->recurrenceException->extensionAttributes));
+        $this->assertTrue(count($this->recurrenceException->extensionAttributes) == 0);
+    }
+
+    public function testSampleRecurrenceExceptionShouldHaveNoExtensionElements() {
+        $this->recurrenceException->transferFromXML($this->recurrenceExceptionText);
+        $this->assertTrue(is_array($this->recurrenceException->extensionElements));
+        $this->assertTrue(count($this->recurrenceException->extensionElements) == 0);
+    }
+
+    public function testSampleRecurrenceExceptionShouldHaveNoExtensionAttributes() {
+        $this->recurrenceException->transferFromXML($this->recurrenceExceptionText);
+        $this->assertTrue(is_array($this->recurrenceException->extensionAttributes));
+        $this->assertTrue(count($this->recurrenceException->extensionAttributes) == 0);
+    }
+    
     public function testNormalRecurrenceExceptionShouldHaveNoExtensionElements() {
         $this->recurrenceException->specialized = "false";
         

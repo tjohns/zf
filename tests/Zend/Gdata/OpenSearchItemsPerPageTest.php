@@ -38,11 +38,28 @@ class Zend_Gdata_OpenSearchItemsPerPageTest extends PHPUnit_Framework_TestCase
         $this->openSearchItemsPerPage = new Zend_Gdata_Extension_OpenSearchItemsPerPage();
     }
     
-    public function testEmptyOpenSearchItemsPerPageShouldHaveEmptyExtensionsList() {
+    public function testEmptyOpenSearchItemsPerPageShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->openSearchItemsPerPage->extensionElements));
-        $this->assertEquals(0, count($this->openSearchItemsPerPage->extensionElements));
+        $this->assertTrue(count($this->openSearchItemsPerPage->extensionElements) == 0);
     }
-      
+
+    public function testEmptyOpenSearchItemsPerPageShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->openSearchItemsPerPage->extensionAttributes));
+        $this->assertTrue(count($this->openSearchItemsPerPage->extensionAttributes) == 0);
+    }
+
+    public function testSampleOpenSearchItemsPerPageShouldHaveNoExtensionElements() {
+        $this->openSearchItemsPerPage->transferFromXML($this->openSearchItemsPerPageText);
+        $this->assertTrue(is_array($this->openSearchItemsPerPage->extensionElements));
+        $this->assertTrue(count($this->openSearchItemsPerPage->extensionElements) == 0);
+    }
+
+    public function testSampleOpenSearchItemsPerPageShouldHaveNoExtensionAttributes() {
+        $this->openSearchItemsPerPage->transferFromXML($this->openSearchItemsPerPageText);
+        $this->assertTrue(is_array($this->openSearchItemsPerPage->extensionAttributes));
+        $this->assertTrue(count($this->openSearchItemsPerPage->extensionAttributes) == 0);
+    }
+    
     public function testNormalOpenSearchItemsPerPageShouldHaveNoExtensionElements() {
         $this->openSearchItemsPerPage->text = "200";
         

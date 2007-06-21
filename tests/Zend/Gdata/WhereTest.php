@@ -38,11 +38,28 @@ class Zend_Gdata_WhereTest extends PHPUnit_Framework_TestCase
         $this->where = new Zend_Gdata_Extension_Where();
     }
     
-    public function testEmptyWhereShouldHaveEmptyExtensionsList() {
+    public function testEmptyWhereShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->where->extensionElements));
-        $this->assertEquals(0, count($this->where->extensionElements));
+        $this->assertTrue(count($this->where->extensionElements) == 0);
     }
-      
+
+    public function testEmptyWhereShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->where->extensionAttributes));
+        $this->assertTrue(count($this->where->extensionAttributes) == 0);
+    }
+
+    public function testSampleWhereShouldHaveNoExtensionElements() {
+        $this->where->transferFromXML($this->whereText);
+        $this->assertTrue(is_array($this->where->extensionElements));
+        $this->assertTrue(count($this->where->extensionElements) == 0);
+    }
+
+    public function testSampleWhereShouldHaveNoExtensionAttributes() {
+        $this->where->transferFromXML($this->whereText);
+        $this->assertTrue(is_array($this->where->extensionAttributes));
+        $this->assertTrue(count($this->where->extensionAttributes) == 0);
+    }
+    
     public function testNormalWhereShouldHaveNoExtensionElements() {
         $this->where->valueString = "Test Value String";
         $this->where->rel = "http://schemas.google.com/g/2005#event.alternate";

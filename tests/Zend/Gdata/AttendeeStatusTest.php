@@ -38,11 +38,28 @@ class Zend_Gdata_AttendeeStatusTest extends PHPUnit_Framework_TestCase
         $this->attendeeStatus = new Zend_Gdata_Extension_AttendeeStatus();
     }
     
-    public function testEmptyAttendeeStatusShouldHaveEmptyExtensionsList() {
+    public function testEmptyAttendeeStatusShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->attendeeStatus->extensionElements));
-        $this->assertEquals(0, count($this->attendeeStatus->extensionElements));
+        $this->assertTrue(count($this->attendeeStatus->extensionElements) == 0);
     }
-      
+
+    public function testEmptyAttendeeStatusShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->attendeeStatus->extensionAttributes));
+        $this->assertTrue(count($this->attendeeStatus->extensionAttributes) == 0);
+    }
+
+    public function testSampleAttendeeStatusShouldHaveNoExtensionElements() {
+        $this->attendeeStatus->transferFromXML($this->attendeeStatusText);
+        $this->assertTrue(is_array($this->attendeeStatus->extensionElements));
+        $this->assertTrue(count($this->attendeeStatus->extensionElements) == 0);
+    }
+
+    public function testSampleAttendeeStatusShouldHaveNoExtensionAttributes() {
+        $this->attendeeStatus->transferFromXML($this->attendeeStatusText);
+        $this->assertTrue(is_array($this->attendeeStatus->extensionAttributes));
+        $this->assertTrue(count($this->attendeeStatus->extensionAttributes) == 0);
+    }
+    
     public function testNormalAttendeeStatusShouldHaveNoExtensionElements() {
         $this->attendeeStatus->value = "http://schemas.google.com/g/2005#event.accepted";
         

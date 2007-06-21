@@ -38,11 +38,28 @@ class Zend_Gdata_EventStatusTest extends PHPUnit_Framework_TestCase
         $this->eventStatus = new Zend_Gdata_Extension_EventStatus();
     }
     
-    public function testEmptyEventStatusShouldHaveEmptyExtensionsList() {
+    public function testEmptyEventStatusShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->eventStatus->extensionElements));
-        $this->assertEquals(0, count($this->eventStatus->extensionElements));
+        $this->assertTrue(count($this->eventStatus->extensionElements) == 0);
     }
-      
+
+    public function testEmptyEventStatusShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->eventStatus->extensionAttributes));
+        $this->assertTrue(count($this->eventStatus->extensionAttributes) == 0);
+    }
+
+    public function testSampleEventStatusShouldHaveNoExtensionElements() {
+        $this->eventStatus->transferFromXML($this->eventStatusText);
+        $this->assertTrue(is_array($this->eventStatus->extensionElements));
+        $this->assertTrue(count($this->eventStatus->extensionElements) == 0);
+    }
+
+    public function testSampleEventStatusShouldHaveNoExtensionAttributes() {
+        $this->eventStatus->transferFromXML($this->eventStatusText);
+        $this->assertTrue(is_array($this->eventStatus->extensionAttributes));
+        $this->assertTrue(count($this->eventStatus->extensionAttributes) == 0);
+    }
+    
     public function testNormalEventStatusShouldHaveNoExtensionElements() {
         $this->eventStatus->value = "http://schemas.google.com/g/2005#event.tentative";
         

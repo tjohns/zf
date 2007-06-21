@@ -38,11 +38,28 @@ class Zend_Gdata_EntryLinkTest extends PHPUnit_Framework_TestCase
         $this->entryLink = new Zend_Gdata_Extension_EntryLink();
     }
     
-    public function testEmptyEntryLinkShouldHaveEmptyExtensionsList() {
+    public function testEmptyEntryLinkShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->entryLink->extensionElements));
-        $this->assertEquals(0, count($this->entryLink->extensionElements));
+        $this->assertTrue(count($this->entryLink->extensionElements) == 0);
     }
-      
+
+    public function testEmptyEntryLinkShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->entryLink->extensionAttributes));
+        $this->assertTrue(count($this->entryLink->extensionAttributes) == 0);
+    }
+
+    public function testSampleEntryLinkShouldHaveNoExtensionElements() {
+        $this->entryLink->transferFromXML($this->entryLinkText);
+        $this->assertTrue(is_array($this->entryLink->extensionElements));
+        $this->assertTrue(count($this->entryLink->extensionElements) == 0);
+    }
+
+    public function testSampleEntryLinkShouldHaveNoExtensionAttributes() {
+        $this->entryLink->transferFromXML($this->entryLinkText);
+        $this->assertTrue(is_array($this->entryLink->extensionAttributes));
+        $this->assertTrue(count($this->entryLink->extensionAttributes) == 0);
+    }
+    
     public function testNormalEntryLinkShouldHaveNoExtensionElements() {
         $this->entryLink->href = "http://gmail.com/jo/contacts/Bob";
         $this->entryLink->rel = "self";

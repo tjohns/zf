@@ -32,14 +32,37 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $eventFeedText = file_get_contents(
+        $this->eventFeedText = file_get_contents(
                 'Zend/Gdata/Calendar/_files/TestDataEventFeedSample1.xml',
                 true);
-        $this->eventFeed = new Zend_Gdata_Calendar_EventFeed($eventFeedText);
+        $this->eventFeed = new Zend_Gdata_Calendar_EventFeed();
+    }
+    
+    public function testEmptyEventFeedShouldHaveNoExtensionElements() {
+        $this->assertTrue(is_array($this->eventFeed->extensionElements));
+        $this->assertTrue(count($this->eventFeed->extensionElements) == 0);
     }
 
+    public function testEmptyEventFeedShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->eventFeed->extensionAttributes));
+        $this->assertTrue(count($this->eventFeed->extensionAttributes) == 0);
+    }
+
+    public function testSampleEventFeedShouldHaveNoExtensionElements() {
+        $this->eventFeed->transferFromXML($this->eventFeedText);
+        $this->assertTrue(is_array($this->eventFeed->extensionElements));
+        $this->assertTrue(count($this->eventFeed->extensionElements) == 0);
+    }
+
+    public function testSampleEventFeedShouldHaveNoExtensionAttributes() {
+        $this->eventFeed->transferFromXML($this->eventFeedText);
+        $this->assertTrue(is_array($this->eventFeed->extensionAttributes));
+        $this->assertTrue(count($this->eventFeed->extensionAttributes) == 0);
+    }
+    
     public function testEventFeedToAndFromString()
     {
+        $this->eventFeed->transferFromXML($this->eventFeedText);
         $entryCount = 0;
         foreach ($this->eventFeed as $entry) {
             $entryCount++;
@@ -60,6 +83,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
 
     public function testEntryCount()
     {
+        $this->eventFeed->transferFromXML($this->eventFeedText);
         //TODO feeds implementing ArrayAccess would be helpful here
         $entryCount = 0;
         foreach ($this->eventFeed as $entry) {

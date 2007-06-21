@@ -38,11 +38,28 @@ class Zend_Gdata_ExtendedPropertyTest extends PHPUnit_Framework_TestCase
         $this->extendedProperty = new Zend_Gdata_Extension_ExtendedProperty();
     }
     
-    public function testEmptyExtendedPropertyShouldHaveEmptyExtensionsList() {
+    public function testEmptyExtendedPropertyShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->extendedProperty->extensionElements));
-        $this->assertEquals(0, count($this->extendedProperty->extensionElements));
+        $this->assertTrue(count($this->extendedProperty->extensionElements) == 0);
     }
-      
+
+    public function testEmptyExtendedPropertyShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->extendedProperty->extensionAttributes));
+        $this->assertTrue(count($this->extendedProperty->extensionAttributes) == 0);
+    }
+
+    public function testSampleExtendedPropertyShouldHaveNoExtensionElements() {
+        $this->extendedProperty->transferFromXML($this->extendedPropertyText);
+        $this->assertTrue(is_array($this->extendedProperty->extensionElements));
+        $this->assertTrue(count($this->extendedProperty->extensionElements) == 0);
+    }
+
+    public function testSampleExtendedPropertyShouldHaveNoExtensionAttributes() {
+        $this->extendedProperty->transferFromXML($this->extendedPropertyText);
+        $this->assertTrue(is_array($this->extendedProperty->extensionAttributes));
+        $this->assertTrue(count($this->extendedProperty->extensionAttributes) == 0);
+    }
+    
     public function testNormalExtendedPropertyShouldHaveNoExtensionElements() {
         $this->extendedProperty->name = "http://www.example.com/schemas/2007#mycal.foo";
         $this->extendedProperty->value = "5678";

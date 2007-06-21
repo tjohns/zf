@@ -38,11 +38,28 @@ class Zend_Gdata_AttendeeTypeTest extends PHPUnit_Framework_TestCase
         $this->attendeeType = new Zend_Gdata_Extension_AttendeeType();
     }
     
-    public function testEmptyAttendeeTypeShouldHaveEmptyExtensionsList() {
+    public function testEmptyAttendeeTypeShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->attendeeType->extensionElements));
-        $this->assertEquals(0, count($this->attendeeType->extensionElements));
+        $this->assertTrue(count($this->attendeeType->extensionElements) == 0);
     }
-      
+
+    public function testEmptyAttendeeTypeShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->attendeeType->extensionAttributes));
+        $this->assertTrue(count($this->attendeeType->extensionAttributes) == 0);
+    }
+
+    public function testSampleAttendeeTypeShouldHaveNoExtensionElements() {
+        $this->attendeeType->transferFromXML($this->attendeeTypeText);
+        $this->assertTrue(is_array($this->attendeeType->extensionElements));
+        $this->assertTrue(count($this->attendeeType->extensionElements) == 0);
+    }
+
+    public function testSampleAttendeeTypeShouldHaveNoExtensionAttributes() {
+        $this->attendeeType->transferFromXML($this->attendeeTypeText);
+        $this->assertTrue(is_array($this->attendeeType->extensionAttributes));
+        $this->assertTrue(count($this->attendeeType->extensionAttributes) == 0);
+    }
+    
     public function testNormalAttendeeTypeShouldHaveNoExtensionElements() {
         $this->attendeeType->value = "http://schemas.google.com/g/2005#event.optional";
         

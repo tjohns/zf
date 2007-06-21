@@ -38,11 +38,28 @@ class Zend_Gdata_Calendar_ColorTest extends PHPUnit_Framework_TestCase
         $this->color = new Zend_Gdata_Calendar_Extension_Color();
     }
       
-    public function testEmptyColorShouldHaveEmptyExtensionsList() {
+    public function testEmptyColorShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->color->extensionElements));
         $this->assertTrue(count($this->color->extensionElements) == 0);
     }
-      
+
+    public function testEmptyColorShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->color->extensionAttributes));
+        $this->assertTrue(count($this->color->extensionAttributes) == 0);
+    }
+
+    public function testSampleColorShouldHaveNoExtensionElements() {
+        $this->color->transferFromXML($this->colorText);
+        $this->assertTrue(is_array($this->color->extensionElements));
+        $this->assertTrue(count($this->color->extensionElements) == 0);
+    }
+
+    public function testSampleColorShouldHaveNoExtensionAttributes() {
+        $this->color->transferFromXML($this->colorText);
+        $this->assertTrue(is_array($this->color->extensionAttributes));
+        $this->assertTrue(count($this->color->extensionAttributes) == 0);
+    }
+    
     public function testNormalColorShouldHaveNoExtensionElements() {
         $this->color->value = '#abcdef';
         $this->assertEquals($this->color->value, '#abcdef');

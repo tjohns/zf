@@ -39,11 +39,28 @@ class Zend_Gdata_Calendar_LinkTest extends PHPUnit_Framework_TestCase
         $this->link = new Zend_Gdata_Calendar_Extension_Link();
     }
       
-    public function testEmptyLinkShouldHaveEmptyExtensionsList() {
+    public function testEmptyLinkShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->link->extensionElements));
         $this->assertTrue(count($this->link->extensionElements) == 0);
     }
-      
+
+    public function testEmptyLinkShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->link->extensionAttributes));
+        $this->assertTrue(count($this->link->extensionAttributes) == 0);
+    }
+
+    public function testSampleLinkShouldHaveNoExtensionElements() {
+        $this->link->transferFromXML($this->linkText);
+        $this->assertTrue(is_array($this->link->extensionElements));
+        $this->assertTrue(count($this->link->extensionElements) == 0);
+    }
+
+    public function testSampleLinkShouldHaveNoExtensionAttributes() {
+        $this->link->transferFromXML($this->linkText);
+        $this->assertTrue(is_array($this->link->extensionAttributes));
+        $this->assertTrue(count($this->link->extensionAttributes) == 0);
+    }
+    
     public function testNormalLinkShouldHaveNoExtensionElements() {
         $this->link->rel = "http://nowhere.invalid/";
         $this->link->title = "Somewhere";

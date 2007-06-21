@@ -38,11 +38,28 @@ class Zend_Gdata_FeedLinkTest extends PHPUnit_Framework_TestCase
         $this->feedLink = new Zend_Gdata_Extension_FeedLink();
     }
     
-    public function testEmptyFeedLinkShouldHaveEmptyExtensionsList() {
+    public function testEmptyFeedLinkShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->feedLink->extensionElements));
-        $this->assertEquals(0, count($this->feedLink->extensionElements));
+        $this->assertTrue(count($this->feedLink->extensionElements) == 0);
     }
-      
+
+    public function testEmptyFeedLinkShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->feedLink->extensionAttributes));
+        $this->assertTrue(count($this->feedLink->extensionAttributes) == 0);
+    }
+
+    public function testSampleFeedLinkShouldHaveNoExtensionElements() {
+        $this->feedLink->transferFromXML($this->feedLinkText);
+        $this->assertTrue(is_array($this->feedLink->extensionElements));
+        $this->assertTrue(count($this->feedLink->extensionElements) == 0);
+    }
+
+    public function testSampleFeedLinkShouldHaveNoExtensionAttributes() {
+        $this->feedLink->transferFromXML($this->feedLinkText);
+        $this->assertTrue(is_array($this->feedLink->extensionAttributes));
+        $this->assertTrue(count($this->feedLink->extensionAttributes) == 0);
+    }
+    
     public function testNormalFeedLinkShouldHaveNoExtensionElements() {
         $this->feedLink->href = "http://www.google.com/calendar/feeds/default/private/full";
         $this->feedLink->rel = "via";

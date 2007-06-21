@@ -38,11 +38,28 @@ class Zend_Gdata_Calendar_HiddenTest extends PHPUnit_Framework_TestCase
         $this->hidden = new Zend_Gdata_Calendar_Extension_Hidden();
     }
       
-    public function testEmptyHiddenShouldHaveEmptyExtensionsList() {
+    public function testEmptyHiddenShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->hidden->extensionElements));
         $this->assertTrue(count($this->hidden->extensionElements) == 0);
     }
-      
+
+    public function testEmptyHiddenShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->hidden->extensionAttributes));
+        $this->assertTrue(count($this->hidden->extensionAttributes) == 0);
+    }
+
+    public function testSampleHiddenShouldHaveNoExtensionElements() {
+        $this->hidden->transferFromXML($this->hiddenText);
+        $this->assertTrue(is_array($this->hidden->extensionElements));
+        $this->assertTrue(count($this->hidden->extensionElements) == 0);
+    }
+
+    public function testSampleHiddenShouldHaveNoExtensionAttributes() {
+        $this->hidden->transferFromXML($this->hiddenText);
+        $this->assertTrue(is_array($this->hidden->extensionAttributes));
+        $this->assertTrue(count($this->hidden->extensionAttributes) == 0);
+    }
+    
     public function testNormalHiddenShouldHaveNoExtensionElements() {
         $this->hidden->value = true;
         $this->assertEquals($this->hidden->value, true);

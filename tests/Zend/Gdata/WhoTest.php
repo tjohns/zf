@@ -38,11 +38,28 @@ class Zend_Gdata_WhoTest extends PHPUnit_Framework_TestCase
         $this->who = new Zend_Gdata_Extension_Who();
     }
     
-    public function testEmptyWhoShouldHaveEmptyExtensionsList() {
+    public function testEmptyWhoShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->who->extensionElements));
-        $this->assertEquals(0, count($this->who->extensionElements));
+        $this->assertTrue(count($this->who->extensionElements) == 0);
     }
-      
+
+    public function testEmptyWhoShouldHaveNoExtensionAttributes() {
+        $this->assertTrue(is_array($this->who->extensionAttributes));
+        $this->assertTrue(count($this->who->extensionAttributes) == 0);
+    }
+
+    public function testSampleWhoShouldHaveNoExtensionElements() {
+        $this->who->transferFromXML($this->whoText);
+        $this->assertTrue(is_array($this->who->extensionElements));
+        $this->assertTrue(count($this->who->extensionElements) == 0);
+    }
+
+    public function testSampleWhoShouldHaveNoExtensionAttributes() {
+        $this->who->transferFromXML($this->whoText);
+        $this->assertTrue(is_array($this->who->extensionAttributes));
+        $this->assertTrue(count($this->who->extensionAttributes) == 0);
+    }
+    
     public function testNormalWhoShouldHaveNoExtensionElements() {
         $this->who->valueString = "Test Value String";
         $this->who->rel = "http://schemas.google.com/g/2005#event.speaker";
