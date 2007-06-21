@@ -1,9 +1,11 @@
 <sect1 id="introduction.overview">
+<!-- EN-Revision: 5154 Maintainer: mikespook Status: ready -->
+<!-- $Revision:$-->   
 
     <title>概述</title>
 
     <para>
-        Zend Framework 是用于 PHP 开发 Web 应用程序和 Web Service 程序 的高品质开源框架。
+        Zend Framework 是用于 PHP 开发 Web 应用程序和 Web Service 程序的高品质开源框架。
     </para>
 
     <para>
