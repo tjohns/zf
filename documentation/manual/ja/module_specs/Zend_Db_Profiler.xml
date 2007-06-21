@@ -105,6 +105,19 @@ $profiler = $db->getProfiler();
             <listitem>
                 <para>
                     <code>getQuery()</code> は、クエリの SQL テキストを返します。
+                    パラメータつきのプリペアドステートメントの場合、
+                    クエリがプリペアされた時点のテキストを返します。
+                    つまり、プレースホルダを含んだままの形式ということです。
+                    実行時に置き換えられた値を知ることはできません。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryParams()</code> は、
+                    プリペアドクエリを実行する際に使用する、パラメータの値の配列を返します。
+                    ここには、バインドパラメータだけでなく
+                    <code>execute()</code> メソッドへの引数も含まれます。
+                    配列のキーは、(1 から始まる) 数値かあるいは (文字列の) パラメータ名となります。
                 </para>
             </listitem>
             <listitem>
