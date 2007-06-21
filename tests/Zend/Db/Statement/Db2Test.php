@@ -59,7 +59,7 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
 
     public function testStatementBindParamByPosition()
     {
-        $this->markTestIncomplete($this->getDriver() . ' crashes when binding params');
+        $this->markTestIncomplete($this->getDriver() . ' is having trouble with binding params');
     }
 
     public function testStatementBindParamByName()
@@ -87,7 +87,7 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
 
     public function testStatementBindValueByPosition()
     {
-        $this->markTestIncomplete($this->getDriver() . ' crashes when binding params');
+        $this->markTestIncomplete($this->getDriver() . ' is having trouble with binding params');
     }
 
     public function testStatementBindValueByName()

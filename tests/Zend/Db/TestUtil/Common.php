@@ -218,7 +218,11 @@ abstract class Zend_Db_TestUtil_Common
         if (!isset($this->_tableName)) {
             throw new Exception("Invalid table id '$tableId'");
         }
-        return $this->_tableName[$tableId];
+        if (array_key_exists($tableId, $this->_tableName)) {
+            return $this->_tableName[$tableId];
+        } else {
+            return $tableId;
+        }
     }
 
     protected function _getColumnsBugs()
