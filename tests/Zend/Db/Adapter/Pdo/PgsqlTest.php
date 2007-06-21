@@ -75,6 +75,31 @@ class Zend_Db_Adapter_Pdo_PgsqlTest extends Zend_Db_Adapter_Pdo_TestCommon
             'Expected new id to be 4');
     }
 
+    public function testAdapterInsertDbExpr()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+        $bug_description = $this->_db->quoteIdentifier('bug_description', true);
+
+        $expr = new Zend_Db_Expr('2+3');
+
+        $row = array (
+            'bug_id'          => $expr,
+            'bug_description' => 'New bug 5',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
+        );
+        $rowsAffected = $this->_db->insert('zfbugs', $row);
+        $this->assertEquals(1, $rowsAffected);
+
+        $value = $this->_db->fetchOne("SELECT $bug_description FROM $bugs WHERE $bug_id = 5");
+        $this->assertEquals('New bug 5', $value);
+    }
+
     /**
      * Test that quote() takes an array and returns
      * an imploded string of comma-separated, quoted elements.
