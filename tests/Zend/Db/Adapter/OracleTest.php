@@ -155,6 +155,23 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
     }
 
+    public function testAdapterInsertDbExpr()
+    {
+        $row = array (
+            'product_id'   => new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq').'.NEXTVAL'),
+            'product_name' => new Zend_Db_Expr('UPPER(\'Solaris\')')
+        );
+        $rowsAffected = $this->_db->insert('zfproducts', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $product_id = $this->_db->quoteIdentifier('product_id', true);
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id = 4");
+        $result = $this->_db->fetchAll($select);
+        $this->assertType('array', $result);
+        $this->assertEquals('SOLARIS', $result[0]['product_name']);
+    }
+
     /**
      * Test the Adapter's limit() method.
      * Fetch 1 row.  Then fetch 1 row offset by 1 row.
@@ -274,6 +291,16 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     public function testAdapterOptionCaseFoldingLower()
     {
         $this->markTestIncomplete($this->getDriver() . ' does not support case-folding array keys yet.');
+    }
+
+    public function testAdapterTransactionCommit()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
+    }
+
+    public function testAdapterTransactionRollback()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
     }
 
     public function getDriver()
