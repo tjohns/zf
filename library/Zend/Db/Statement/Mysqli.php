@@ -62,14 +62,17 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     protected $_values;
 
     /**
+     * @var array
+     */
+    protected $_meta = null;
+
+    /**
      * @param  string $sql
      * @return void
      * @throws Zend_Db_Statement_Mysqli_Exception
      */
-    public function _prepSql($sql)
+    public function _prepare($sql)
     {
-        parent::_prepSql($sql);
-
         $mysqli = $this->_adapter->getConnection();
 
         $this->_stmt = $mysqli->prepare($sql);
@@ -84,6 +87,22 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     }
 
     /**
+     * Binds a parameter to the specified variable name.
+     *
+     * @param mixed $parameter Name the parameter, either integer or string.
+     * @param mixed $variable  Reference to PHP variable containing the value.
+     * @param mixed $type      OPTIONAL Datatype of SQL parameter.
+     * @param mixed $length    OPTIONAL Length of SQL parameter.
+     * @param mixed $options   OPTIONAL Other options.
+     * @return bool
+     * @throws Zend_Db_Statement_Db2_Exception
+     */
+    protected function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
+    {
+        return true;
+    }
+
+    /**
      * Closes the cursor, allowing the statement to be executed again.
      *
      * @return bool
@@ -93,7 +112,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
         if (!$this->_stmt) {
             return false;
         }
-        $this->_stmt->close();
+        $this->_stmt->reset();
         return true;
     }
 
@@ -150,19 +169,21 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
      * @return bool
      * @throws Zend_Db_Statement_Mysqli_Exception
      */
-    public function execute(array $params = null)
+    public function _execute(array $params = null)
     {
         if (!$this->_stmt) {
             return false;
         }
         // retain metadata
-        $this->_meta = $this->_stmt->result_metadata();
-        if ($this->_stmt->errno) {
-            /**
-             * @see Zend_Db_Statement_Mysqli_Exception
-             */
-            require_once 'Zend/Db/Statement/Mysqli/Exception.php';
-            throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error);
+        if ($this->_meta === null) {
+            $this->_meta = $this->_stmt->result_metadata();
+            if ($this->_stmt->errno) {
+                /**
+                 * @see Zend_Db_Statement_Mysqli_Exception
+                 */
+                require_once 'Zend/Db/Statement/Mysqli/Exception.php';
+                throw new Zend_Db_Statement_Mysqli_Exception("Mysqli statement metadata error: " . $this->_stmt->error);
+            }
         }
 
         // statements that have no result set do not return metadata
@@ -194,7 +215,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
 
         // if no params were given as an argument to execute(),
         // then default to the _bindParam array
-        if (!$params) {
+        if ($params === null) {
             $params = $this->_bindParam;
         }
         // send $params as input parameters to the statement
@@ -237,7 +258,7 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
         switch ($retval) {
         case null: // end of data
         case false: // error occurred
-            $this->closeCursor();
+            $this->_stmt->reset();
             return $retval;
         default:
             // fallthrough

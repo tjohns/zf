@@ -57,14 +57,16 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      * @return void
      * @throws Zend_Db_Statement_Db2_Exception
      */
-    public function _prepSql($sql)
+    public function _prepare($sql)
     {
-        parent::_prepSql($sql);
         $connection = $this->_adapter->getConnection();
 
         $this->_stmt = db2_prepare($connection, $sql);
 
         if (!$this->_stmt) {
+            /**
+             * @see Zend_Db_Statement_Db2_Exception
+             */
             require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
@@ -84,12 +86,8 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      * @return bool
      * @throws Zend_Db_Statement_Db2_Exception
      */
-    public function bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
+    public function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
-        $position = $this->_normalizeBindParam($parameter, $variable, true, true);
-        // the value is returned 0-indexed, but db2_bind_param() wants it to be 1-indexed
-        $position++;
-
         if ($type === null) {
             $type = DB2_PARAM_IN;
         }
@@ -101,6 +99,9 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         }
 
         if (!db2_bind_param($this->_stmt, $position, "variable", $type, $datatype)) {
+            /**
+             * @see Zend_Db_Statement_Db2_Exception
+             */
             require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg($this->_stmt),
@@ -186,15 +187,23 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      * @return bool
      * @throws Zend_Db_Statement_Db2_Exception
      */
-    public function execute(array $params = array())
+    public function _execute(array $params = null)
     {
         if (!$this->_stmt) {
             return false;
         }
 
-        $retval = @db2_execute($this->_stmt, $params);
+        $retval = true;
+        if ($params !== null) {
+            $retval = @db2_execute($this->_stmt, $params);
+        } else {
+            $retval = @db2_execute($this->_stmt);
+        }
 
         if ($retval === false) {
+            /**
+             * @see Zend_Db_Statement_Db2_Exception
+             */
             require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg($this->_stmt),

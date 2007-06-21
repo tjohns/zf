@@ -58,7 +58,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      * @return void
      * @throws Zend_Db_Statement_Oracle_Exception
      */
-    protected function _prepSql($sql)
+    protected function _prepare($sql)
     {
         $connection = $this->_adapter->getConnection();
         $this->_stmt = oci_parse($connection, $sql);
@@ -82,57 +82,27 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
-    public function bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
+    protected function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
-        if (is_integer($parameter)) {
+        // default value
+        if ($type === NULL) {
+            $type = SQLT_CHR;
+        }
+
+        // default value
+        if ($length === NULL) {
+            $length = -1;
+        }
+
+        $retval = @oci_bind_by_name($this->_stmt, $parameter, $variable, $length, $type);
+        if ($retval === false) {
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception(
-                array(
-                    'code'    => 'ORA-28553',
-                    'message' => 'Invalid bind-variable position'
-                )
-            );
+            throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
         }
 
-        if (is_string($parameter)) {
-            // bind by name. make sure it has a colon on it.
-            if ($parameter[0] != ':') {
-                $parameter = ":$parameter";
-            }
-
-            // default value
-            if ($type === NULL) {
-                $type = SQLT_CHR;
-            }
-
-            // default value
-            if ($length === NULL) {
-                $length = -1;
-            }
-
-            $retval = @oci_bind_by_name($this->_stmt, $parameter, $variable, $length, $type);
-            if ($retval === false) {
-                /**
-                 * @see Zend_Db_Adapter_Oracle_Exception
-                 */
-                require_once 'Zend/Db/Statement/Oracle/Exception.php';
-                throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
-            }
-        } else {
-            /**
-             * @see Zend_Db_Adapter_Oracle_Exception
-             */
-            require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception(
-                array(
-                    'code'    => 'ORA-28553',
-                    'message' => 'Invalid bind-variable position'
-                )
-            );
-        }
         return true;
     }
 
@@ -230,7 +200,7 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
-    public function execute(array $params = null)
+    public function _execute(array $params = null)
     {
         $connection = $this->_adapter->getConnection();
         if (!$this->_stmt) {

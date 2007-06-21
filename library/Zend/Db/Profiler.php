@@ -217,6 +217,19 @@ class Zend_Db_Profiler
     }
 
     /**
+     * @param  integer $queryId
+     * @return integer or null
+     */
+    public function queryClone(Zend_Db_Profiler_Query $query)
+    {
+        $this->_queryProfiles[] = clone $query;
+
+        end($this->_queryProfiles);
+
+        return key($this->_queryProfiles);
+    }
+
+    /**
      * Starts a query.  Creates a new query profile object (Zend_Db_Profiler_Query)
      * and returns the "query profiler handle".  Run the query, then call
      * queryEnd() and pass it this handle to make the query as ended and
