@@ -86,7 +86,12 @@ $profileur = $db->getProfiler();
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>getQuery()</code> retourne le SQL de la requête sous forme de texte.
+                    <code>getQuery()</code> retourne le SQL de la requête sous forme de texte. Le texte de SQL d'une requête préparée avec des paramètres est le texte au moment où la requête a été préparée, donc il contient les emplacements de paramètre, mais pas les valeurs utilisées quand la déclaration est exécutée.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryParams()</code> retourne un tableau des valeurs de paramètres utilisées lors de l'exécution d'une requête préparée. Ceci inclue à la fois les paramètres attachés et les arguments de de la méthode <code>execute()</code>. Les clés du tableau sont les positions (base 1) ou les noms des paramètres.
                 </para>
             </listitem>
             <listitem>
