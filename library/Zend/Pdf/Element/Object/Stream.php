@@ -397,4 +397,13 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
              .  $this->_value->toString($factory) . "\n"
              . "endobj\n";
     }
+
+    /**
+     * Clean up resources, used by object
+     */
+    public function cleanUp()
+    {
+        $this->_dictionary = null;
+        $this->_value      = null;
+    }
 }

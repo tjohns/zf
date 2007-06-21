@@ -113,6 +113,18 @@ class Zend_Pdf_StringParser
 
 
     /**
+     * Clean up resources.
+     *
+     * Clear current state to remove cyclic object references
+     */
+    public function cleanUp()
+    {
+        $this->_context = null;
+        $this->_elements = array();
+        $this->_objFactory = null;
+    }
+
+    /**
      * Character with code $chCode is white space
      *
      * @param integer $chCode

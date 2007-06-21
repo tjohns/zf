@@ -67,7 +67,7 @@ class Zend_Pdf_Element_Reference extends Zend_Pdf_Element
     /**
      * Reference context
      *
-     * @var Zend_Pdf_Reference_Context
+     * @var Zend_Pdf_Element_Reference_Context
      */
     private $_context;
 
@@ -180,6 +180,8 @@ class Zend_Pdf_Element_Reference extends Zend_Pdf_Element
 
         $this->_ref = $obj;
         $this->setParentObject($obj);
+
+        $this->_factory->registerObject($this);
     }
 
     /**
@@ -252,5 +254,13 @@ class Zend_Pdf_Element_Reference extends Zend_Pdf_Element
             default:
                 throw new Zend_Pdf_Exception('Unsupported number of arguments');
         }
+    }
+
+    /**
+     * Clean up resources
+     */
+    public function cleanUp()
+    {
+        $this->_ref = null;
     }
 }

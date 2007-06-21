@@ -82,7 +82,7 @@ class Zend_Pdf_ElementFactory implements Zend_Pdf_ElementFactory_Interface
      *
      * @var array
      */
-    private $_modifiedObjects;
+    private $_modifiedObjects = array();
 
     /**
      * List of the removed objects
@@ -91,7 +91,17 @@ class Zend_Pdf_ElementFactory implements Zend_Pdf_ElementFactory_Interface
      *
      * @var array
      */
-    private $_removedObjects;
+    private $_removedObjects = array();
+
+    /**
+     * List of registered objects.
+     * Used for resources clean up when factory is destroyed.
+     *
+     * Array of Zend_Pdf_Element objects
+     *
+     * @var array
+     */
+    private $_registeredObjects = array();
 
     /**
      * PDF object counter.
@@ -108,7 +118,7 @@ class Zend_Pdf_ElementFactory implements Zend_Pdf_ElementFactory_Interface
      *
      * @var array
      */
-    private $_attachedFactories;
+    private $_attachedFactories = array();
 
 
     /**
@@ -141,9 +151,6 @@ class Zend_Pdf_ElementFactory implements Zend_Pdf_ElementFactory_Interface
      */
     public function __construct($objCount)
     {
-        $this->_modifiedObjects   = array();
-        $this->_removedObjects    = array();
-        $this->_attachedFactories = array();
         $this->_objectCount       = (int)$objCount;
         $this->_factoryId         = self::$_identity++;
     }
@@ -170,6 +177,11 @@ class Zend_Pdf_ElementFactory implements Zend_Pdf_ElementFactory_Interface
         $this->_modifiedObjects   = null;
         $this->_removedObjects    = null;
         $this->_attachedFactories = null;
+
+        foreach ($this->_registeredObjects as $obj) {
+            $obj->cleanUp();
+        }
+        $this->_registeredObjects = null;
     }
 
     /**
@@ -394,6 +406,17 @@ class Zend_Pdf_ElementFactory implements Zend_Pdf_ElementFactory_Interface
         return $result;
     }
 
+    /**
+     * Register object in the factory
+     *
+     * It's used to clear "parent object" referencies when factory is closed and clean up resources
+     *
+     * @param Zend_Pdf_Element_Object $obj
+     */
+    public function registerObject($obj)
+    {
+        $this->_registeredObjects[] = $obj;
+    }
 
     /**
      * Check if PDF file was modified

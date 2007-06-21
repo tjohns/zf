@@ -91,6 +91,8 @@ class Zend_Pdf_Element_Object extends Zend_Pdf_Element
         $this->_objNum  = $objNum;
         $this->_genNum  = $genNum;
         $this->_factory = $factory;
+
+        $factory->registerObject($this);
     }
 
 
@@ -228,4 +230,11 @@ class Zend_Pdf_Element_Object extends Zend_Pdf_Element
         $this->_factory->markAsModified($this);
     }
 
+    /**
+     * Clean up resources, used by object
+     */
+    public function cleanUp()
+    {
+        $this->_value = null;
+    }
 }

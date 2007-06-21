@@ -304,18 +304,21 @@ class Zend_Pdf_Parser
                         case 0:
                             // Free object
                             $refTable->addReference($objNum . ' ' . $field3 . ' R', $field2, false);
-                            echo "Free object - $objNum $field3 R, next free - $field2\n";
+                            // Debug output:
+                            // echo "Free object - $objNum $field3 R, next free - $field2\n";
                             break;
 
                         case 1:
                             // In use object
                             $refTable->addReference($objNum . ' ' . $field3 . ' R', $field2, true);
-                            echo "In-use object - $objNum $field3 R, offset - $field2\n";
+                            // Debug output:
+                            // echo "In-use object - $objNum $field3 R, offset - $field2\n";
                             break;
 
                         case 2:
                             // Object in an object stream
-                            echo "Compressed object - $objNum 0 R, object stream - $field2 0 R, offset - $field3\n";
+                            // Debug output:
+                            // echo "Compressed object - $objNum 0 R, object stream - $field2 0 R, offset - $field3\n";
                             break;
                     }
 
@@ -323,9 +326,9 @@ class Zend_Pdf_Parser
                 }
             }
 
-            echo $streamOffset . ' ' . strlen($xrefStreamData) . "\n";
-            echo "$entries\n";
-            exit;
+            // $streamOffset . ' ' . strlen($xrefStreamData) . "\n";
+            // "$entries\n";
+            throw new Zend_Pdf_Exception('Cross-reference streams are not supported yet.');
         }
 
 
@@ -451,5 +454,14 @@ class Zend_Pdf_Parser
 
         $this->_trailer = $this->_loadXRefTable($startXref);
         $factory->setObjectCount($this->_trailer->Size->value);
+    }
+
+
+    /**
+     * Object destructor
+     */
+    public function __destruct()
+    {
+        $this->_stringParser->cleanUp();
     }
 }
