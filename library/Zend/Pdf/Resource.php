@@ -93,5 +93,15 @@ abstract class Zend_Pdf_Resource
     {
         return $this->_resource;
     }
+
+    /**
+     * Get factory.
+     *
+     * @return Zend_Pdf_ElementFactory_Interface
+     */
+    public function getFactory()
+    {
+        return $this->_objectFactory;
+    }
 }
 
