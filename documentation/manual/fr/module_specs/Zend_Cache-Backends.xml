@@ -1,5 +1,5 @@
 ﻿<sect1 id="zend.cache.backends">
-    <title>Zend_Cache backends</title>
+    <title>Les backends Zend_Cache</title>
 
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
@@ -31,7 +31,7 @@
                       </row>
                       <row>
                           <entry><code>file_locking</code></entry>
-                          <entry><code>booléen</code></entry>
+                          <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
                             Active / désactive le verrou de fichier : peut éviter la corruption du cache dans de mauvaises circonstances, mais il n'aide en rien sur des serveur multithreadés ou sur des systèmes de fichier NFS...
@@ -39,7 +39,7 @@
                       </row>
                       <row>
                           <entry><code>read_control</code></entry>
-                          <entry><code>booléen</code></entry>
+                          <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
                             Active / désactive le contrôle de lecture : si activé, une clé de contrôle est embarquée dans le fichier de cache et cette clé est comparée avec celle calculée après la lecture.
@@ -58,7 +58,7 @@
                           <entry><code>int</code></entry>
                           <entry><code>0</code></entry>
                           <entry>
-                            Niveau de structure du hash du répertoire : 0 signifie "pas de hashage de la structure du répertoire", 1 signifie "un niveau de répertoire", 2 signifie "deux niveaux"... Cette option peut accélérer le cache seulement lorsque vous avez plusieurs centaines de fichiers de cache. Seuls des benchs spécifiques peuvent vous aider à choisir la meilleure valeur pour vous. 1 ou 2, peut-être un bon départ.
+                            Niveau de structure du hash du répertoire : 0 signifie "pas de hashage de la structure du répertoire", 1 signifie "un niveau de répertoire", 2 signifie "deux niveaux"... Cette option peut accélérer le cache seulement lorsque vous avez plusieurs centaines de fichiers de cache. Seuls des tests de performance spécifiques peuvent vous aider à choisir la meilleure valeur pour vous. 1 ou 2, peut-être un bon départ.
                           </entry>
                       </row>
                       <row>
@@ -102,7 +102,7 @@
                  </thead>
                  <tbody>
                       <row>
-                          <entry><code>cache_db_complete_path (mandatory)</code></entry>
+                          <entry><code>cache_db_complete_path (obligatoire)</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>null</code></entry>
                           <entry>
@@ -114,7 +114,7 @@
                           <entry><code>int</code></entry>
                           <entry><code>10</code></entry>
                           <entry>
-                            Désactive / Paramètre le processus de vidange automatique. Celui-ci défragemente le fichier de base de données (et diminue sa taille) quand clean() ou delete() est appelé : 0 pour une vidange automatique ; 1 pour une vidange systématique (quand clean() ou delete() est appelé) ; x (entier) > 1 pour une vidange automatique aléatoirement 1 fois sur x clean() ou delete().
+                            Désactive / Active le processus de vidange automatique. Celui-ci défragmente le fichier de base de données (et diminue sa taille) quand clean() ou delete() est appelé : 0 pour une vidange automatique ; 1 pour une vidange systématique (quand clean() ou delete() est appelé) ; x (entier) > 1 pour une vidange automatique aléatoirement 1 fois sur x clean() ou delete().
                           </entry>
                       </row>
                   </tbody>
@@ -124,7 +124,7 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-            Ces backends stockent les enregistrements de cache dans un serveur memcached. <ulink url="http://www.danga.com/memcached/">memcached</ulink> est un système de cache en mémoire distribuée, de haute performance. Pour utiliser ce backend, vous devez avoir un démon memcached et l'extension PECL <ulink url="http://pecl.php.net/package/memcache">memcache</ulink>.
+            Ces backends stockent les enregistrements de cache dans un serveur memcached. <ulink url="http://www.danga.com/memcached/">Memcached</ulink> est un système de cache en mémoire distribuée, de haute performance. Pour utiliser ce backend, vous devez avoir un démon memcached et l'extension PECL <ulink url="http://pecl.php.net/package/memcache">memcache</ulink>.
         </para>
         <para>
             ATTENTION : avec ce backend, les balises ("tags") ne sont pas supportées pour le moment comme l'argument "doNotTestCacheValidity=true".
@@ -149,12 +149,12 @@
                           <entry><code>array</code></entry>
                           <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
                           <entry>
-                              Un tableau de serveurs memcached ; chaque serveur memcached est décrit par un tableau associatif : 'host' => (string) : le nom du serveur memcached, 'port' => (int) : le port du serveur memcached, 'persistent' => (bool) : utilisation ou pas des connexions persistentes pour ce serveur memcached.
+                              Un tableau de serveurs memcached ; chaque serveur memcached est décrit par un tableau associatif : 'host' => (string) : le nom du serveur memcached, 'port' => (int) : le port du serveur memcached, 'persistent' => (bool) : utilisation ou pas des connexions persistantes pour ce serveur memcached.
                           </entry>
                       </row>
                       <row>
                           <entry><code>compression</code></entry>
-                          <entry><code>booléen</code></entry>
+                          <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
                              vrai si vous voulez utiliser la compression à la volée
@@ -189,6 +189,3 @@
         </para>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
