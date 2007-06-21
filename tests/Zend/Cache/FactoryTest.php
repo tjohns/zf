@@ -44,6 +44,18 @@ class Zend_Cache_FactoryTest extends PHPUnit_Framework_TestCase
         $generated_frontend = Zend_Cache::factory('Core', 'File');
         $this->assertEquals('Zend_Cache_Core', get_class($generated_frontend));
     }
+
+    public function testFactoryLoadsPlatformBackend()
+    {
+        try {
+            $cache = Zend_Cache::factory('Core', 'Zend-Platform');
+        } catch (Zend_Cache_Exception $e) {
+            $message = $e->getMessage();
+            if (strstr($message, 'Incorrect backend')) {
+                $this->fail('Zend Platform is a valid backend');
+            }
+        }
+    }
     
     public function testBadFrontend()
     {

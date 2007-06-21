@@ -211,6 +211,14 @@
     This backend supports tags, but does not support <code>CLEANING_MODE_NOT_MATCHING_TAG</code> cleaning mode.
         </para>
         <para>
+            Specify this backend using a word separator -- '-', '.', ' ', or '_'
+            -- between the words 'Zend' and 'Platform' when using the
+            <code>Zend_Cache::factory()</code> method:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+?>]]></programlisting>
+        <para>
             There is no options for this backend.
         </para>
     </sect2>
