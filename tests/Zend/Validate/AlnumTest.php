@@ -75,7 +75,8 @@ class Zend_Validate_AlnumTest extends PHPUnit_Framework_TestCase
             'aBc123'  => true,
             ''        => false,
             ' '       => false,
-            "\n"      => false
+            "\n"      => false,
+            'foobar1' => true
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->_validator->isValid($input));
@@ -110,7 +111,8 @@ class Zend_Validate_AlnumTest extends PHPUnit_Framework_TestCase
             ''        => false,
             ' '       => true,
             "\n"      => true,
-            " \t "    => true
+            " \t "    => true,
+            'foobar1' => true
             );
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals(
