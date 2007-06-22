@@ -540,7 +540,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
             <programlisting role="php"><![CDATA[<?php
 
 $filters = array( 
-    'month' = array( 
+    'month' => array( 
         'Digits',        // 数値インデックスのフィルタ名 [0] 
         'fields' => 'mo' // 文字列インデックスのフィールド名 ['fields'] 
     ) 
@@ -576,7 +576,7 @@ $filters = array(
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array(
-    'password' = array(
+    'password' => array(
         'StringEquals',
         'fields' => array('password1', 'password2')
     )
@@ -614,7 +614,7 @@ $validators = array(
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array(
-    'month' = array(
+    'month' => array(
         'digits',
         'presence' => 'required'
     )
@@ -653,7 +653,7 @@ $validators = array(
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array(
-    'month' = array(
+    'month' => array(
         'digits',
         'default' => '1'
     )
@@ -710,7 +710,7 @@ echo $input->month; // 1 を出力します
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array(
-    'address2' = array(
+    'address2' => array(
         'Alnum',
         'allowEmpty' => true
     )
@@ -775,7 +775,7 @@ $input->setOptions($options);
             <programlisting role="php"><![CDATA[<?php
 
 $validators = array(
-    'month' = array(
+    'month' => array(
         'Digits',
         new Zend_Validate_Between(1,12),
         new Zend_Validate_GreaterThan(0),
