@@ -230,6 +230,14 @@
             クリーニングモード <code>CLEANING_MODE_NOT_MATCHING_TAG</code> はサポートしていません。
         </para>
         <para>
+            <code>Zend_Cache::factory()</code> メソッドでこのバックエンドを指定する場合は、
+            'Zend' と 'Platform' の間に区切り文字を入れます。区切り文字としては
+            '-'、'.'、' ' あるいは '_' が使用できます。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+?>]]></programlisting>
+        <para>
             このバックエンドではオプションを使用しません。
         </para>
     </sect2>

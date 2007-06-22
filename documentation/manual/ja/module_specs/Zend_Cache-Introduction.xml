@@ -25,6 +25,17 @@
             この最初の例では、フロントエンドに <code>Core</code>、バックエンドに <code>File</code>
             を使用します。
         </para>
+
+        <note>
+            <title>複数の単語からなるフロントエンドやバックエンドについて</title>
+            <para>
+                'ZendPlatform' のように複数の単語からなるフロントエンドやバックエンドもあります。
+                これをファクトリで指定する場合は、単語の間に区切り文字を指定します。
+                区切り文字としては スペース (' ')、ハイフン ('-') あるいはピリオド ('.')
+                が使用できます。
+            </para>
+        </note>
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
