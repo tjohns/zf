@@ -12,10 +12,17 @@
     <example>
         <title>Créer un frontend avec <code>Zend_Cache::factory()</code></title>
         <para>
-            <code>Zend_Cache::factory()</code> instancie les objets corrects et les lie ensemble. Dans le premier exemple, nous allons utiliser le frontend <code>Core</code> avec le backend <code>File</code>
+            <code>Zend_Cache::factory()</code> instancie les objets corrects et les lie ensemble. Dans le premier exemple, nous allons utiliser le frontend <code>Core</code> avec le backend <code>File</code>.
+        </para>
 
-       </para>
-            <programlisting role="php"><![CDATA[<?php
+        <note>
+            <title>Frontends et Backends consistitués de plusieurs mots</title>
+            <para>
+                Certains frontends et backends sont nommés en utilisant plusieurs mots, comme "ZendPlatform". En les spécifiant à la fabrique, séparez les en utilisant un séparateur de mot, comme l'espace (" "), le tiret ("-") ou le point (".").
+            </para>
+        </note>
+
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(

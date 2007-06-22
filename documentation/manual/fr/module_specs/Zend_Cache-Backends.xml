@@ -185,6 +185,12 @@
             Ce backend supporte les balises ("tags") mais ne supporte pas le mode de nettoyage <code>CLEANING_MODE_NOT_MATCHING_TAG</code>.
         </para>
         <para>
+            Spécifiez ce backend en utilisant un séparateur de mot - "-", ".", " " ou "_" - entre les mots "Zend" et "Platform" quand vous utilisez la méthode <code>Zend_Cache::factory()</code> :
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+?>]]></programlisting>
+        <para>
             Il n'y a pas d'options pour ce backend.
         </para>
     </sect2>
