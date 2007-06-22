@@ -271,7 +271,7 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
             }
         }
 
-        $this->_streamDecoded = true;
+        $this->_streamDecoded = false;
     }
 
     /**
