@@ -144,7 +144,8 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     public function setMessage($messageString, $messageKey = null)
     {
         if ($messageKey === null) {
-            $messageKey = current(array_keys($this->_messageTemplates));
+            $keys = array_keys($this->_messageTemplates);
+            $messageKey = current($keys);
         }
         if (!isset($this->_messageTemplates[$messageKey])) {
             require_once 'Zend/Validate/Exception.php';
