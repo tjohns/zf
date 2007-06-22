@@ -93,10 +93,10 @@ class Zend_Gdata_CalendarEventTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($entryCount > 0);
 
         /* Grab XML from $this->eventFeed and convert back to objects */ 
-        $neweventFeed = new Zend_Gdata_Calendar_eventFeed( 
+        $newEventFeed = new Zend_Gdata_Calendar_EventFeed( 
                 $this->eventFeed->saveXML());
         $newEntryCount = 0;
-        foreach ($neweventFeed as $entry) {
+        foreach ($newEventFeed as $entry) {
             $newEntryCount++;
             $this->assertTrue($entry instanceof Zend_Gdata_Calendar_EventEntry);
         }
