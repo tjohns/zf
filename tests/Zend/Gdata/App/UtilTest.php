@@ -54,9 +54,9 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
 
     public function testFormatTimestampFromInteger()
     {
-        $ts = strtotime('2006-12-01');
+        $ts = 1164960000; // Fri Dec  1 00:00:00 PST 2006
         $date = Zend_Gdata_App_Util::formatTimestamp($ts);
-        $this->assertEquals('2006-12-01T00:00:00', $date);
+        $this->assertEquals('2006-12-01T08:00:00+00:00', $date);
     }
 
     public function testExceptionFormatTimestampInvalid()
