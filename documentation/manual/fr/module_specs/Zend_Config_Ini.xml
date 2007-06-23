@@ -6,7 +6,7 @@
     <note>
         <title>parse_ini_file</title>
         <para>
-            <code>Zend_Config_Ini</code> utilise la fonction <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> de PHP. Veuillez prendre connaissance de la documentation pour apréhender ses comportements spécifiques, qui se propagent à <code>Zend_Config_Ini</code>, tel que la façon dont les valeurs spéciales : <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> et <code>null</code> sont manipulées.
+            <code>Zend_Config_Ini</code> utilise la fonction <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> de PHP. Veuillez prendre connaissance de la documentation pour appréhender ses comportements spécifiques, qui se propagent à <code>Zend_Config_Ini</code>, tel que la façon dont les valeurs spéciales : <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> et <code>null</code> sont manipulées.
         </para>
     </note>
     <note>
@@ -40,7 +40,7 @@ database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]></programlisting>
         <para>
-            Ensuite, supposons que le développeur a besoin des données de configuration de test issues du fichier INI. Il est facile de charger ces données en indiquant le fichier INI et la section de test :
+            Ensuite, supposons que le développeur ait besoin des données de configuration de test issues du fichier INI. Il est facile de charger ces données en indiquant le fichier INI et la section de test :
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
@@ -67,7 +67,7 @@ echo $config->database->name; // affiche "dbname"?>]]></programlisting>
                 </row>
                 <row>
                     <entry><code>$section</code></entry>
-                    <entry>La [section] dans le fichier ini qui doit être chargé. L'affectation de null à ce paramètre au nul chargera toutes les sections. Alternativement, un tableau de noms de section peut être fourni pour charger des sections multiples.</entry>
+                    <entry>La [section] dans le fichier ini qui doit être chargé. L'affectation de null à ce paramètre chargera toutes les sections. Alternativement, un tableau de noms de section peut être fourni pour charger des sections multiples.</entry>
                 </row>
                 <row>
                     <entry><code>$config = false</code></entry>
@@ -87,6 +87,3 @@ echo $config->database->name; // affiche "dbname"?>]]></programlisting>
     </table>
     </note>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

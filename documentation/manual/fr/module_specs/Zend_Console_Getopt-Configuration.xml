@@ -4,10 +4,10 @@
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>Ajouter des règles d'options</title>
         <para>
-            Vous pouvez ajouter plus de règles d'option en complément de celles indiquées dans le constructeur de <code>Zend_Console_Getopt</code>, en utilisant la méthode <code>addRules()</code>. L'argument d'<code>addRules()</code> est identique au premier argument du constructeur de classe. C'est soit une chaîne dans le format d'options de syntaxe courte, soit un tableau associatif dans le format d'options de syntaxe longue. Voir <link linkend="zend.console.getopt.rules">Déclarer les règles Getopt</link> pour les détails sur la syntaxe de déclaration des options.
+            Vous pouvez ajouter de nouvelles règles d'option en complément de celles indiquées dans le constructeur de <code>Zend_Console_Getopt</code>, en utilisant la méthode <code>addRules()</code>. L'argument d'<code>addRules()</code> est identique au premier argument du constructeur de classe. C'est soit une chaîne dans le format d'options de syntaxe courte, soit un tableau associatif dans le format d'options de syntaxe longue. Voir <link linkend="zend.console.getopt.rules">"Déclarer les règles Getopt"</link> pour les détails sur la syntaxe de déclaration des options.
         </para>
         <example>
-            <title>Utiliser addRules()</title>
+            <title>Utilisation d'addRules()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
@@ -25,7 +25,7 @@ $opts->addRules(
     <sect2 id="zend.console.getopt.configuration.addhelp">
         <title>Ajouter des messages d'aide</title>
         <para>
-            En plus d'indiquer les messages d'aide en déclarant les règles d'option dans le long format, vous pouvez associer des messages d'aide aux règles d'option en utilisant la méthode <code>setHelp()</code>. L'argument de la méthode de <code>setHelp()</code> est un tableau associatif, dans laquelle la clé est un drapeau, et la valeur est le message d'aide correspondant.
+            En plus d'indiquer les messages d'aide en déclarant les règles d'option dans le long format, vous pouvez associer des messages d'aide aux règles d'option en utilisant la méthode <code>setHelp()</code>. L'argument de la méthode <code>setHelp()</code> est un tableau associatif, dans laquelle la clé est un drapeau, et la valeur est le message d'aide correspondant.
         </para>
         <example>
             <title>Utiliser setHelp()</title>
@@ -83,7 +83,7 @@ $opts->setAliases(
             Par défaut, <code>Zend_Console_Getopt</code> utilise <code>$_SERVER['argv']</code> comme tableau des arguments de ligne de commande à analyser. De manière alternative, vous pouvez indiquer le tableau d'arguments comme deuxième argument de constructeur. En conclusion, vous pouvez ajouter de nouveaux d'arguments à ceux déjà utilisés en utilisant la méthode <code>addArguments()</code>, ou vous pouvez remplacer le choix courant d'arguments en utilisant la méthode <code>setArguments()</code>. Dans les deux cas, le paramètre de ces méthodes est un simple tableau de chaîne. L'ancienne méthode ajoutait le tableau aux arguments courants, et la nouvelle méthode substitue le tableau aux arguments courants.
         </para>
         <example>
-            <title>Utiliser addArguments() et setArguments()</title>
+            <title>Utilisation de addArguments() et setArguments()</title>
             <programlisting role="php"><![CDATA[<?php
 // Par défaut, le constructeur utilise $_SERVER['argv']
 $opts = new Zend_Console_Getopt('abp:');
@@ -100,7 +100,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
     <sect2 id="zend.console.getopt.configuration.config">
         <title>Ajouter une configuration</title>
         <para>
-            Le troisième paramètre du constructeur de <code>Zend_Console_Getopt</code> est un tableau d'options de configuration qui affectent le comportement de l'instance d'objet retournée. Vous pouvez également indiquer des options de configuration en utilisant la méthode <code>setOption()</code>, ou vous pouvez placer une option individuelle en utilisant la méthode <code>setOption()</code>.
+            Le troisième paramètre du constructeur de <code>Zend_Console_Getopt</code> est un tableau d'options de configuration qui affectent le comportement de l'instance d'objet retournée. Vous pouvez également indiquer des options de configuration en utilisant la méthode <code>setOptions()</code>, ou vous pouvez placer une option individuelle en utilisant la méthode <code>setOption()</code>.
         </para>
         <note>
             <title>Clarifier le terme "option"</title>
@@ -135,7 +135,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             Les deux arguments de la méthode <code>setOption()</code> sont un nom d'option de configuration et une valeur d'option.
         </para>
         <example>
-            <title>Utiliser setOption()</title>
+            <title>Utilisation de setOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOption('ignoreCase', true);
@@ -145,7 +145,7 @@ $opts->setOption('ignoreCase', true);
             L'argument de la méthode <code>setOptions()</code> est un tableau associatif. Les clés de ce tableau sont les noms d'option de configuration, et les valeurs sont des valeurs de configuration. C'est également le format de tableau utilisé par le constructeur de classe. Les valeurs de configuration que vous indiquez sont fusionnées avec la configuration courante ; vous n'avez pas à énumérer toutes les options.
         </para>
         <example>
-            <title>Utiliser setOptions()</title>
+            <title>Utilisation de setOptions()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setOptions(

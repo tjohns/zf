@@ -1,4 +1,4 @@
-<sect1 id="zend.auth.adapter.digest">
+﻿<sect1 id="zend.auth.adapter.digest">
 
     <title>Authentification "Digest"</title>
 
@@ -7,15 +7,11 @@
         <title>Introduction</title>
 
         <para>
-            <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">L'authentification "Digest"</ulink>
-            est une méthode d'authentification HTTP qui améliore
-            <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">l'authentication basique</ulink>
-            en fournissant un moyen d'authentifier sans avoir à transmettre le mot de passe en clair sur le réseau.
+            <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">L'authentification "Digest"</ulink> est une méthode d'authentification HTTP qui améliore <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">l'authentication basique</ulink> en fournissant un moyen d'authentifier sans avoir à transmettre le mot de passe en clair sur le réseau.
         </para>
 
         <para>
-            Cet adaptateur permet l'authentification en utilisant un fichier texte contenant des lignes comportant
-            les éléments de base d'une authentification Digest :
+            Cet adaptateur permet l'authentification en utilisant un fichier texte contenant des lignes comportant les éléments de base d'une authentification Digest :
             <itemizedlist>
                 <listitem>
                     <para>
@@ -33,8 +29,7 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            Les éléments ci-dessus sont séparés par des virgules, comme dans l'exemple suivant (dans lequel
-            le mot de passe est "<code>unMotdepasse</code>") :
+            Les éléments ci-dessus sont séparés par des virgules, comme dans l'exemple suivant (dans lequel le mot de passe est "<code>unMotdepasse</code>") :
         </para>
 
         <programlisting><![CDATA[unUtilisateur:Un domaine:fde17b91c3a510ecbaf7dbd37f59d4f8]]></programlisting>
@@ -50,22 +45,22 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        nomFichier - Fichier utilisé pour réaliser l'authentification
+                        filename - Fichier utilisé pour réaliser l'authentification
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        domaine - Domaine d'authentification Digest ("realm" en anglais)
+                        realm - Domaine d'authentification Digest ("realm" en anglais)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        identifiant - Identifiant d'authentification Digest ("username" en anglais)
+                        username - Identifiant d'authentification Digest ("username" en anglais)
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        motdepasse - mot de passe pour l'identifiant dans le domaine
+                        password - mot de passe pour l'identifiant dans le domaine
                     </para>
                 </listitem>
             </itemizedlist>
@@ -79,10 +74,7 @@
         <title>Identité</title>
 
         <para>
-            L'adaptateur d'authentification Digest retourne un objet <code>Zend_Auth_Result</code>, lequel a
-            été alimenté avec l'identité sous la forme d'un tableau ayant pour clés <code>realm</code> (domaine) et
-            <code>username</code> (identifiant). Les valeurs respectives associées à ces clés correspondent aux
-            valeurs définies avant l'appel à <code>authenticate()</code>.
+            L'adaptateur d'authentification Digest retourne un objet <code>Zend_Auth_Result</code>, lequel a été alimenté avec l'identité sous la forme d'un tableau ayant pour clés <code>realm</code> (domaine) et <code>username</code> (identifiant). Les valeurs respectives associées à ces clés correspondent aux valeurs définies avant l'appel à <code>authenticate()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -102,11 +94,8 @@ Array
     [realm] => Un domaine
     [username] => unUtilisateur
 )
-*/]]></programlisting>
+*/?>]]></programlisting>
 
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
