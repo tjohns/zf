@@ -17,7 +17,6 @@
         <para>
             Retourne la chaîne <code>$value</code>, en retirant tout sauf les caractères alphabétiques. Ce filtre inclue une option permettant d'autoriser ou non les caractères espace.
         </para>
-        </para>
     </sect2>
 
     <sect2 id="zend.filter.set.basename">
