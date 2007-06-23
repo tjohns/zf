@@ -67,10 +67,17 @@ print $number; // will return 13524.678
             </para>
 
             <para>
-                Also, the precision of the resulting decimal representation can be truncated to a desired length with
-                <code>getNumber()</code>. If no precision is given, no truncation occurs. Use only PHP integers to
-                specify the precision. The result will not be rounded. So "1.6" will return "1", not "2", if the
-                precision is zero.
+                Also, the precision of the resulting decimal representation can be rounded to a desired length with
+                <code>getNumber()</code> with the option <code>'precision'</code>. If no precision is given,
+                no rounding occurs. Use only PHP integers to specify the precision.
+            </para>
+
+            <para>
+                If the resulting decimal representation should be truncated to a desired length instead of rounded
+                the option <code>'number_format'</code> can be used instead. Define the length of the decimal
+                representation with the desired length of zeros. The result will then not be rounded.
+                So if the defined precision within <code>number_format</code> is zero the value "1.6" will
+                return "1", not "2. See the example nearby:
             </para>
 
             <example>
@@ -80,8 +87,10 @@ require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', array('precision' => 1, 'locale' => $locale));
+print $number; // will return 13524.7
 
-print $number; // will return 13524.6
+$number = Zend_Locale_Format::getNumber('13.524,678', array('number_format' => '#.00', 'locale' => $locale));
+print $number; // will return 13524.67
 ?>]]></programlisting>
             </example>
 
@@ -137,20 +146,10 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, array('precision' => 2, 'locale' => $locale));
 
-// will return 13.547,36
+// will return 13.547,37
 print $number;
 ?>]]></programlisting>
         </example>
-
-        <para>
-            <note>
-                <title>Be aware</title>
-                <para>
-                    <code>toNumber()</code> will truncate the output. The result will not be rounded. So 1.6 will not
-                    return 2 but 1 instead.
-                </para>
-            </note>
-        </para>
 
         <para>
             Using the option 'number_format' a self defined format for generating a number can be defined.
@@ -268,7 +267,7 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getFloat('13.524,678', array('precision' => 2, 'locale' => $locale));
 
-// will return 13524.67
+// will return 13524.68
 print $number;
 ?>]]></programlisting>
         </example>
@@ -292,20 +291,10 @@ require_once 'Zend/Locale.php';
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toFloat(13547.3655, array('precision' => 1, 'locale' => $locale));
 
-// will return 13.547,3
+// will return 13.547,4
 print $number;
 ?>]]></programlisting>
         </example>
-
-        <para>
-            <note>
-                <title>Be aware</title>
-                <para>
-                    <code>toFloat()</code> will truncate the output. The result will not be rounded. So 1.6 will not
-                    return 2 but 1 instead.
-                </para>
-            </note>
-        </para>
 
     </sect2>
 

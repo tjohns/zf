@@ -189,11 +189,33 @@ Zend_Loader::registerAutoload();
         <example id="zend.loader.load.autoload.example-extended">
             <title>Example of registering the autoload callback method from an
                 extended class</title>
+            <para>
+                Because of the semantics of static function references in PHP,
+                you must implement code for both <code>loadClass()</code>
+                and <code>autoload()</code>, and the <code>autoload()</code>
+                must call <code>self::loadClass()</code>.  If your
+                <code>autoload()</code> method delegates to its parent to
+                call <code>self::loadClass()</code>, then it calls the
+                method of that name in the parent class, not the subclass.
+            </para>
             <programlisting role="php"><![CDATA[<?php
 
 class My_Loader extends Zend_Loader
 {
-    // custom functionality
+    public static function loadClass($class, $dirs = null)
+    {
+        parent::loadClass($class, $dirs);
+    }
+
+    public static function autoload($class)
+    {
+        try {
+            self::loadClass($class);
+            return $class;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 
 Zend_Loader::registerAutoload('My_Loader');

@@ -21,6 +21,17 @@
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
             backend.
         </para>
+
+        <note>
+            <title>Frontends and Backends consisting of multiple words</title>
+            <para>
+                Some frontends and backends are named using multiple words, such
+                as 'ZendPlatform'. When specifying them to the factory, separate
+                them using a word separator, such as a space (' '), hyphen
+                ('-'), or period ('.').
+            </para>
+        </note>
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 

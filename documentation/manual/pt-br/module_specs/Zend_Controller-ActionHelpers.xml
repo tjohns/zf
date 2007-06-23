@@ -184,11 +184,11 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             Zend Framework includes three action helpers by default: a
-            FlashMessenger for handling session flash messages; a
-            Redirector, to provide different implementations for redirecting to
-            internal and external pages from your application; and a
-            ViewRenderer to automate the process of setting up the view object
-            in your controllers and rendering views.
+            <code>FlashMessenger</code> for handling session flash messages; a
+            <code>Redirector</code>, to provide different implementations for
+            redirecting to internal and external pages from your application;
+            and a <code>ViewRenderer</code> to automate the process of setting
+            up the view object in your controllers and rendering views.
         </para>
 
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />

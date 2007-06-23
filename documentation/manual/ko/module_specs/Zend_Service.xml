@@ -11,7 +11,8 @@
     <para>
         In addition to being able to extend the <code>Zend_Service</code> and
         use <code>Zend_Rest_Client</code> for REST-based web services, Zend also
-        provides support for popular web services, such as:
+        provides support for popular web services.  See the following sections
+        for specific information on each supported web service.
     </para>
 
     <itemizedlist>
@@ -52,7 +53,7 @@
         </listitem>
         <listitem>
             <para>
-                <link linkend="zend.service.yahoo">Yahoo!</link>.
+                <link linkend="zend.service.yahoo">Yahoo!</link>
             </para>
         </listitem>
     </itemizedlist>

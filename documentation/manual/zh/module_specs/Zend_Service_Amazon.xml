@@ -3,67 +3,72 @@
     <sect2 id="zend.service.amazon.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Amazon</code> 是一个简单的用来操作Amazon web services的API.
-            <code>Zend_Service_Amazon</code> 含两组不同的API,　一组是传统的遵循 Amazon's自身标准的API；
-            另一个是一组相对简单的API,通过它我们可以非常容易的构建哪怕是很复杂的搜索请求。
+            <code>Zend_Service_Amazon</code> is a simple API for using Amazon web services.
+            <code>Zend_Service_Amazon</code> has two APIs: a more traditional one that follows Amazon's own API, and a
+            simpler "Query API" for constructing even complex search queries easily.
         </para>
         <para>
-            <code>Zend_Service_Amazon</code> 允许开发者通过Amazon的Web Services的API来直接得到Amazon.com网站中的信息
-            ． 例子包括：
+            <code>Zend_Service_Amazon</code> enables developers to retrieve information appearing throughout Amazon.com
+            web sites directly through the Amazon Web Services API. Examples include:
             <itemizedlist>
                 <listitem>
                     <para>
-                        保存出版物的信息, 如 图片, 描述, 价格,　等
+                        Store item information, such as images, descriptions, pricing, and more
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        顾客和编辑的评
+                        Customer and editorial reviews
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        类似的产品或附属产品
+                        Similar products and accessories
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Amazon.com 报价
+                        Amazon.com offers
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        ListMania 列表
+                        ListMania lists
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            为了使用 <code>Zend_Service_Amazon</code>, 你应当已经拥有了Amazon开发者API key
-            , 如果你要了解更多信息，请访问
-            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> .
+            In order to use <code>Zend_Service_Amazon</code>, you should already have an Amazon developer API key. To
+            get a key and for more information, please visit the
+            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> web site.
         </para>
-        <note><para>
-            你的Amazon开发者API key是和你的Amazon Id相联系的， 所以请小心使用，不要随便泄漏啦 .
-        </para></note>
-        <example>
-            <title>用传统的API搜索Amazon</title>
+        <note>
+            <title>Attention</title>
             <para>
-                在这个例子中, 我们在Amazon中搜索PHP图书，然后遍历结果并打印出它们.
+                Your Amazon developer API key is linked to your Amazon identity,
+                so take appropriate measures to keep your API key private.
+            </para>
+        </note>
+        <example id="zend.service.amazon.introduction.example.itemsearch">
+            <title>Search Amazon Using the Traditional API</title>
+            <para>
+                In this example, we search for PHP books at Amazon and loop through the results, printing them.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY&');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
-foreach ($response as $r) {
-    echo $r->Title .'<br />';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
-        <example>
-            <title> 使用Query API搜索来Amazon</title>
+        <example id="zend.service.amazon.introduction.example.query_api">
+            <title>Search Amazon Using the Query API</title>
             <para>
-                这里, 我们同样在Amazon中搜索PHP图书, 但是我们将使用Query API来代替上面的方式, 类似 Fluent Interface 设计模式.
+                Here, we also search for PHP books at Amazon, but we instead use the Query API, which
+                resembles the Fluent Interface design pattern.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -71,715 +76,760 @@ $query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
 $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
-        <title>国家代码</title>
+        <title>Country Codes</title>
         <para>
-            默认情况下,  <code>Zend_Service_Amazon</code> 会选择连接到 Amazon 美国("US") 的web service. 如果你希望它连接到其他的国家,
-             可以简单的指定一个适当的国家代码作为构造函数的第二的参数来实现:
+            By default, <code>Zend_Service_Amazon</code> connects to the United States ("<code>US</code>") Amazon
+            web service. To connect from a different country, simply specify the appropriate country code string
+            as the second parameter to the constructor:
         </para>
-        <example>
-            <title>选择一个 Amazon Web Service 国家</title>
+        <example id="zend.service.amazon.countrycodes.example.country_code">
+            <title>Choosing an Amazon Web Service Country</title>
             <programlisting><![CDATA[<?php
 // Connect to Amazon in Japan
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
-        <note><para>
-            有效的国家代码: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-            <code>UK</code>, 和 <code>US</code>.
-        </para></note>
+        <note>
+            <title>Country codes</title>
+            <para>
+                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, and <code>US</code>.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
-        <title>用ASIN来搜索指定的Amazon出版物</title>
+        <title>Looking up a Specific Amazon Item by ASIN</title>
         <para>
-            如果你知道一个出版物的ASIN,你可以通过<code>itemLookup()</code> 方法来获得这个出版物.
+            The <code>itemLookup()</code> method provides the ability to fetch a particular Amazon item when
+            the ASIN is known.
         </para>
-        <example>
-            <title>用ASIN来搜索指定的Amazon出版物</title>
+        <example id="zend.service.amazon.itemlookup.example.asin">
+            <title>Looking up a Specific Amazon Item by ASIN</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $item = $amazon->itemLookup('B0000A432X');
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
         <para>
-            <code>itemLookup()</code> 方法还可以接受第二个参数（可选）来传递搜索选项 . 更多细节, 包括现有的选项列表, 请参考
+            The <code>itemLookup()</code> method also accepts an optional second parameter for handling search
+            options. For full details, including a list of available options, please see the
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
         </para>
+        <note>
+            <title>Image information</title>
+            <para>
+                To retrieve images information for your search results, you must set
+                <code>ResponseGroup</code> option to <code>Medium</code> or <code>Large</code>.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
-        <title>对Amazon出版物的搜索</title>
+        <title>Performing Amazon Item Searches</title>
         <para>
-            基于现有的各种条件来查询一个出版物可以简单的通过
-            <code>itemSearch()</code> 方法来实现．如下面的例子:
+            Searching for items based on any of various available criteria are made simple using the
+            <code>itemSearch()</code> method, as in the following example:
         </para>
-        <example>
-            <title>对Amazon出版物的搜索</title>
+        <example id="zend.service.amazon.itemsearch.example.basic">
+            <title>Performing Amazon Item Searches</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
-foreach($response as $r) {
-    echo $r->Title .'<br />';
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
+        </example>
+        <example id="zend.service.amazon.itemsearch.example.responsegroup">
+            <title>Using the <code>ResponseGroup</code> Option</title>
+            <para>
+                The <code>ResponseGroup</code> option is used to control the specific information that will be returned
+                in the response.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$results = $amazon->itemSearch(array(
+    'SearchIndex'   => 'Books',
+    'Keywords'      => 'php',
+    'ResponseGroup' => 'Small,ItemAttributes,Images,SalesRank,Reviews,EditorialReview,Similarities,ListmaniaLists';
+    ));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
+}
+?>]]></programlisting>
         </example>
         <para>
-            The <code>itemSearch()</code> 方法接受一个数组作为参数来处理搜索请求.　更多细节, 包括现有的选项列表, 请参考
+            The <code>itemSearch()</code> method accepts a single array parameter for handling search
+            options. For full details, including a list of available options, please see the
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
         </para>
         <tip>
             <para>
-            The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> 类是对这个方法的简单包装.
+                The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
+                is an easy to use wrapper around this method.
             </para>
         </tip>
     </sect2>
-<sect2 id="zend.service.amazon.query">
-    <title>另一个可选的查询 API</title>
-    <sect3 id="zend.service.amazon.query.introduction">
-        <title>简介</title>
-        <para>
-            <code>Zend_Service_Amazon_Query</code> 为Amazon Web Service 提供另一个可选的查询 API. 这个API 使用Fluent Interface 模式.
-             就是说, 你可以使用一个方法链表来实现所有的调用.  (e.g., <code>$obj->method()->method2($arg)</code>)
-        </para>
-        <para>
-            <code>Zend_Service_Amazon_Query</code> 用过载来简单的构建一个出版物查询，然后允许你基于指定的标准进行搜索.
-            用方法调用来提供每一个查询参数, 每个方法的参数对应那个查询参数的值：
-        </para>
-        <example>
-            <title>Search Amazon Using the Alternative Query API</title>
+    <sect2 id="zend.service.amazon.query">
+        <title>Using the Alternative Query API</title>
+        <sect3 id="zend.service.amazon.query.introduction">
+            <title>Introduction</title>
             <para>
-                在这个例子中, 使用新的查询 API 作为fluent interface来指定查询参数和值:
+                <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
+                The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
+                calls. (e.g., <code>$obj->method()->method2($arg)</code>)
             </para>
-            <programlisting><![CDATA[<?php
+            <para>
+                The <code>Zend_Service_Amazon_Query</code> API uses overloading to easily set up an item search and then
+                allows you to search based upon the criteria specified. Each of the options is provided as a method call,
+                and each method's argument corresponds to the named option's value:
+            </para>
+            <example id="zend.service.amazon.query.introduction.example.basic">
+                <title>Search Amazon Using the Alternative Query API</title>
+                <para>
+                    In this example, the alternative query API is used as a fluent interface to specify options and their
+                    respective values:
+                </para>
+                <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
 $query = new Zend_Service_Amazon_Query('MY_API_KEY');
 $query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
-            <para>
-                它设定查询参数<code>Category</code> 为 "Books" ， <code>Keywords</code> 为 "PHP".
-            </para>
-            <para>
-                关于查询参数的更多信息, 请参考
-                <ulink
-                    url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>.
-            </para>
-        </example>
-    </sect3>
-</sect2>
-<sect2 id="zend.service.amazon.classes">
-    <title>Zend_Service_Amazon 类</title>
-    <para>
-        下面的类都是由
-        <link linkend="zend.service.amazon.itemlookup"><code>Zend_Service_Amazon::itemLookup()</code></link>
-        和
-        <link linkend="zend.service.amazon.itemsearch"><code>Zend_Service_Amazon::itemSearch()</code></link>这两个方法返回的:
-        <itemizedlist>
-            <listitem><para><link linkend="zend.service.amazon.classes.item"><code>Zend_Service_Amazon_Item</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.image"><code>Zend_Service_Amazon_Image</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.resultset"><code>Zend_Service_Amazon_ResultSet</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.offerset"><code>Zend_Service_Amazon_OfferSet</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.offer"><code>Zend_Service_Amazon_Offer</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.similarproduct"><code>Zend_Service_Amazon_SimilarProduct</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.accessories"><code>Zend_Service_Amazon_Accessories</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.customerreview"><code>Zend_Service_Amazon_CustomerReview</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.editorialreview"><code>Zend_Service_Amazon_EditorialReview</code></link></para></listitem>
-            <listitem><para><link linkend="zend.service.amazon.classes.listmania"><code>Zend_Service_Amazon_ListMania</code></link></para></listitem>
-        </itemizedlist>
-    </para>
-    <sect3 id="zend.service.amazon.classes.item">
-        <title>Zend_Service_Amazon_Item</title>
+?>]]></programlisting>
+                <para>
+                    This sets the option <code>Category</code> to "Books" and <code>Keywords</code> to "PHP".
+                </para>
+                <para>
+                    For more information on the available options, please refer to the
+                    <ulink
+                        url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>.
+                </para>
+            </example>
+        </sect3>
+    </sect2>
+    <sect2 id="zend.service.amazon.classes">
+        <title>Zend_Service_Amazon Classes</title>
         <para>
-            <code>Zend_Service_Amazon_Item</code> 一个用来代表由Amazon web service返回的出版物的类. 它包含了出版物的所有属性, 包括 标题, 描述, 评论, 等.
+            The following classes are all returned by
+            <link linkend="zend.service.amazon.itemlookup"><code>Zend_Service_Amazon::itemLookup()</code></link>
+            and
+            <link linkend="zend.service.amazon.itemsearch"><code>Zend_Service_Amazon::itemSearch()</code></link>:
+            <itemizedlist>
+                <listitem><para><link linkend="zend.service.amazon.classes.item"><code>Zend_Service_Amazon_Item</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.image"><code>Zend_Service_Amazon_Image</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.resultset"><code>Zend_Service_Amazon_ResultSet</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.offerset"><code>Zend_Service_Amazon_OfferSet</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.offer"><code>Zend_Service_Amazon_Offer</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.similarproduct"><code>Zend_Service_Amazon_SimilarProduct</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.accessories"><code>Zend_Service_Amazon_Accessories</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.customerreview"><code>Zend_Service_Amazon_CustomerReview</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.editorialreview"><code>Zend_Service_Amazon_EditorialReview</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.amazon.classes.listmania"><code>Zend_Service_Amazon_ListMania</code></link></para></listitem>
+            </itemizedlist>
         </para>
-        <sect4 id="zend.service.amazon.classes.item.asxml">
-            <title>Zend_Service_Amazon_Item::asXML()</title>
+        <sect3 id="zend.service.amazon.classes.item">
+            <title>Zend_Service_Amazon_Item</title>
             <para>
+                <code>Zend_Service_Amazon_Item</code> is the class type used to represent an Amazon item returned by the
+                web service. It encompasses all of the items attributes, including title, description, reviews, etc.
+            </para>
+            <sect4 id="zend.service.amazon.classes.item.asxml">
+                <title>Zend_Service_Amazon_Item::asXML()</title>
+                <para>
+                    <methodsynopsis>
+                        <type>string</type>
+                        <methodname>asXML</methodname>
+                        <void />
+                    </methodsynopsis>
+                </para>
+                <para>Return the original XML for the item</para>
+            </sect4>
+            <sect4 id="zend.service.amazon.classes.item.properties">
+                <title>Properties</title>
+                <para>
+                    <code>Zend_Service_Amazon_Item</code> has a number of properties directly related to their standard
+                    Amazon API counterparts.
+                </para>
+                <table>
+                    <title>Zend_Service_Amazon_Item Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>ASIN</entry>
+                                <entry>string</entry>
+                                <entry>Amazon Item ID</entry>
+                            </row>
+                            <row>
+                                <entry>DetailPageURL</entry>
+                                <entry>string</entry>
+                                <entry>URL to the Items Details Page</entry>
+                            </row>
+                            <row>
+                                <entry>SalesRank</entry>
+                                <entry>string</entry>
+                                <entry>Sales Rank for the Item</entry>
+                            </row>
+                            <row>
+                                <entry>SmallImage</entry>
+                                <entry>Zend_Service_Amazon_Image</entry>
+                                <entry>Small Image of the Item</entry>
+                            </row>
+                            <row>
+                                <entry>MediumImage</entry>
+                                <entry>Zend_Service_Amazon_Image</entry>
+                                <entry>Medium Image of the Item</entry>
+                            </row>
+                            <row>
+                                <entry>LargeImage</entry>
+                                <entry>Zend_Service_Amazon_Image</entry>
+                                <entry>Large Image of the Item</entry>
+                            </row>
+                            <row>
+                                <entry>Subjects</entry>
+                                <entry>array</entry>
+                                <entry>Item Subjects</entry>
+                            </row>
+                            <row>
+                                <entry>Offers</entry>
+                                <entry>
+                                    <code>
+                                        <link
+                                            linkend="zend.service.amazon.classes.offerset">Zend_Service_Amazon_OfferSet</link>
+                                    </code>
+                                </entry>
+                                <entry>Offer Summary and Offers for the Item</entry>
+                            </row>
+                            <row>
+                                <entry>CustomerReviews</entry>
+                                <entry>array</entry>
+                                <entry>
+                                    Customer reviews represented as an array of
+                                    <code>
+                                        <link
+                                            linkend="zend.service.amazon.classes.customerreview">Zend_Service_Amazon_CustomerReview</link>
+                                    </code>
+                                    objects
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>EditorialReviews</entry>
+                                <entry>array</entry>
+                                <entry>
+                                    Editorial reviews represented as an array of
+                                    <code>
+                                        <link
+                                            linkend="zend.service.amazon.classes.editorialreview">Zend_Service_Amazon_EditorialReview</link>
+                                    </code>
+                                    objects
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>SimilarProducts</entry>
+                                <entry>array</entry>
+                                <entry>
+                                    Similar Products represented as an array of
+                                    <code>
+                                        <link
+                                            linkend="zend.service.amazon.classes.similarproduct">Zend_Service_Amazon_SimilarProduct</link>
+                                    </code>
+                                    objects
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>Accessories</entry>
+                                <entry>array</entry>
+                                <entry>
+                                    Accessories for the item represented as an array of
+                                    <code>
+                                        <link
+                                            linkend="zend.service.amazon.classes.accessories">Zend_Service_Amazon_Accessories</link>
+                                    </code>
+                                    objects
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>Tracks</entry>
+                                <entry>array</entry>
+                                <entry>An array of track numbers and names for Music CDs and DVDs</entry>
+                            </row>
+                            <row>
+                                <entry>ListmaniaLists</entry>
+                                <entry>array</entry>
+                                <entry>
+                                    Item related Listmania Lists as an array of
+                                    <code>
+                                        <link
+                                            linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmainList</link>
+                                    </code>
+                                    objects
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>PromotionalTag</entry>
+                                <entry>string</entry>
+                                <entry>Item Promotional Tag</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.image">
+            <title>Zend_Service_Amazon_Image</title>
+            <para><code>Zend_Service_Amazon_Image</code> represents a remote Image for a product.</para>
+            <sect4 id="zend.service.amazon.classes.image.properties">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_Image Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>Url</entry>
+                                <entry>Zend_Uri</entry>
+                                <entry>Remote URL for the Image</entry>
+                            </row>
+                            <row>
+                                <entry>Height</entry>
+                                <entry>int</entry>
+                                <entry>The Height of the image in pixels</entry>
+                            </row>
+                            <row>
+                                <entry>Width</entry>
+                                <entry>int</entry>
+                                <entry>The Width of the image in pixels</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.resultset">
+            <title>Zend_Service_Amazon_ResultSet</title>
+            <para>
+                <code>Zend_Service_Amazon_ResultSet</code> objects are returned by
+                <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
+                and allow you to easily handle the multiple results returned.
+            </para>
+            <note>
+                <title>SeekableIterator</title>
+                <para>
+                    Implements the <code>SeekableIterator</code> for easy iteration (e.g. using <code>foreach</code>), as
+                    well as direct access to a specific result using <code>seek()</code>.
+                </para>
+            </note>
+            <sect4 id="zend.service.amazon.classes.resultset.totalresults">
+                <title>Zend_Service_Amazon_ResultSet::totalResults()</title>
                 <methodsynopsis>
-                    <type>string</type>
-                    <methodname>asXML</methodname>
+                    <type>int</type>
+                    <methodname>totalResults</methodname>
                     <void />
                 </methodsynopsis>
-            </para>
-            <para>返回出版物原始请求的xml字符串</para>
-        </sect4>
-        <sect4 id="zend.service.amazon.classes.item.properties">
-            <title>属性</title>
+                <para>Returns the total number of results returned by the search</para>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.offerset">
+            <title>Zend_Service_Amazon_OfferSet</title>
             <para>
-                <code>Zend_Service_Amazon_Item</code> 有一组直接与 Amazon标准的API 对应的属性.
+                Each result returned by
+                <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
+                and
+                <link linkend="zend.service.amazon.itemlookup">Zend_Service_Amazon::itemLookup()</link>
+                contains a
+                <code>Zend_Service_Amazon_OfferSet</code>
+                object through which pricing information for the item can be retrieved.
             </para>
-            <table>
-                <title>Zend_Service_Amazon_Item 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>ASIN</entry>
-                            <entry>string</entry>
-                            <entry>Amazon 出版物 ID</entry>
-                        </row>
-                        <row>
-                            <entry>DetailPageURL</entry>
-                            <entry>string</entry>
-                            <entry>到相关细节页面url</entry>
-                        </row>
-                        <row>
-                            <entry>SalesRank</entry>
-                            <entry>string</entry>
-                            <entry>出版物的销售等级</entry>
-                        </row>
-                        <row>
-                            <entry>SmallImage</entry>
-                            <entry>Zend_Service_Amazon_Image</entry>
-                            <entry>出版物的小图片</entry>
-                        </row>
-                        <row>
-                            <entry>MediumImage</entry>
-                            <entry>Zend_Service_Amazon_Image</entry>
-                            <entry>出版物的中等大小图片</entry>
-                        </row>
-                        <row>
-                            <entry>LargeImage</entry>
-                            <entry>Zend_Service_Amazon_Image</entry>
-                            <entry>出版物的大图片</entry>
-                        </row>
-                        <row>
-                            <entry>Subjects</entry>
-                            <entry>array</entry>
-                            <entry>出版物的主题</entry>
-                        </row>
-                        <row>
-                            <entry>Offers</entry>
-                            <entry>
-                                <code>
-                                    <link
-                                        linkend="zend.service.amazon.classes.offerset">Zend_Service_Amazon_OfferSet</link>
-                                </code>
-                            </entry>
-                            <entry>提供出版物的小图片的简介和报价</entry>
-                        </row>
-                        <row>
-                            <entry>CustomerReviews</entry>
-                            <entry>array</entry>
-                            <entry>
-                                代表出版物的编辑评论的一组
-                                <code>
-                                    <link
-                                        linkend="zend.service.amazon.classes.customerreview">Zend_Service_Amazon_CustomerReview</link>
-                                </code>
-                                对象构成的数组
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>EditorialReviews</entry>
-                            <entry>array</entry>
-                            <entry>
-                                代表出版物的编辑评论的一组
-                                <code>
-                                    <link
-                                        linkend="zend.service.amazon.classes.editorialreview">Zend_Service_Amazon_EditorialReview</link>
-                                </code>
-                                对象构成的数组
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>SimilarProducts</entry>
-                            <entry>array</entry>
-                            <entry>
-                                代表出版物的类似产品列表的一组
-                                <code>
-                                    <link
-                                        linkend="zend.service.amazon.classes.similarproduct">Zend_Service_Amazon_SimilarProduct</link>
-                                </code>
-                                对象构成的数组
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>Accessories</entry>
-                            <entry>array</entry>
-                            <entry>
-                                代表出版物的附属产品列表的一组
-                                <code>
-                                    <link
-                                        linkend="zend.service.amazon.classes.accessories">Zend_Service_Amazon_Accessories</link>
-                                </code>
-                                对象构成的数组
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>Tracks</entry>
-                            <entry>array</entry>
-                            <entry>代表ＣＤ或ＤＶＤ中歌曲数量和名称的数组</entry>
-                        </row>
-                        <row>
-                            <entry>ListmaniaLists</entry>
-                            <entry>array</entry>
-                            <entry>
-                                与指定出版物相关的Listmania列表 ，用
-                                <code>
-                                    <link
-                                        linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmainList</link>
-                                </code>
-                                对象的数组表示
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>PromotionalTag</entry>
-                            <entry>string</entry>
-                            <entry>指定出版物的促销Tag</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            <sect4 id="zend.service.amazon.classes.offerset.parameters">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_OfferSet Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>LowestNewPrice</entry>
+                                <entry>int</entry>
+                                <entry>Lowest Price for the item in &quot;New&quot; condition</entry>
+                            </row>
+                            <row>
+                                <entry>LowestNewPriceCurrency</entry>
+                                <entry>string</entry>
+                                <entry>
+                                    The currency for the
+                                    <code>LowestNewPrice</code>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>LowestOldPrice</entry>
+                                <entry>int</entry>
+                                <entry>Lowest Price for the item in &quot;Used&quot; condition</entry>
+                            </row>
+                            <row>
+                                <entry>LowestOldPriceCurrency</entry>
+                                <entry>string</entry>
+                                <entry>
+                                    The currency for the
+                                    <code>LowestOldPrice</code>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>TotalNew</entry>
+                                <entry>int</entry>
+                                <entry>Total number of &quot;new&quot; condition available for the item</entry>
+                            </row>
+                            <row>
+                                <entry>TotalUsed</entry>
+                                <entry>int</entry>
+                                <entry>Total number of &quot;used&quot; condition available for the item</entry>
+                            </row>
+                            <row>
+                                <entry>TotalCollectible</entry>
+                                <entry>int</entry>
+                                <entry>Total number of &quot;collectible&quot; condition available for the item</entry>
+                            </row>
+                            <row>
+                                <entry>TotalRefurbished</entry>
+                                <entry>int</entry>
+                                <entry>Total number of &quot;refurbished&quot; condition available for the item</entry>
+                            </row>
+                            <row>
+                                <entry>Offers</entry>
+                                <entry>array</entry>
+                                <entry>
+                                    An array of
+                                    <code>Zend_Service_Amazon_Offer</code>
+                                    objects.
+                                </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.offer">
+            <title>Zend_Service_Amazon_Offer</title>
             <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                Each offer for an item is returned as an
+                <code>Zend_Service_Amazon_Offer</code>
+                object.
             </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.image">
-        <title>Zend_Service_Amazon_Image</title>
-        <para><code>Zend_Service_Amazon_Image</code> 代表产品的远程图片.</para>
-        <sect4 id="zend.service.amazon.classes.image.properties">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_Image 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>Url</entry>
-                            <entry>string</entry>
-                            <entry>图片的远程url</entry>
-                        </row>
-                        <row>
-                            <entry>Height</entry>
-                            <entry>int</entry>
-                            <entry>图片的高度(像素)</entry>
-                        </row>
-                        <row>
-                            <entry>Width</entry>
-                            <entry>int</entry>
-                            <entry>图片的宽度(像素)</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            <sect4 id="zend.service.amazon.classes.offer.properties">
+                <title>Zend_Service_Amazon_Offer Properties</title>
+                <table>
+                    <title>Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>MerchantId</entry>
+                                <entry>string</entry>
+                                <entry>Merchants Amazon ID</entry>
+                            </row>
+                            <row>
+                                <entry>GlancePage</entry>
+                                <entry>string</entry>
+                                <entry>URL for a page with a summary of the Merchant</entry>
+                            </row>
+                            <row>
+                                <entry>Condition</entry>
+                                <entry>string</entry>
+                                <entry>Condition of the item</entry>
+                            </row>
+                            <row>
+                                <entry>OfferListingId</entry>
+                                <entry>string</entry>
+                                <entry>ID of the Offer Listing</entry>
+                            </row>
+                            <row>
+                                <entry>Price</entry>
+                                <entry>int</entry>
+                                <entry>Price for the item</entry>
+                            </row>
+                            <row>
+                                <entry>CurrencyCode</entry>
+                                <entry>string</entry>
+                                <entry>Currency Code for the price of the item</entry>
+                            </row>
+                            <row>
+                                <entry>Availability</entry>
+                                <entry>string</entry>
+                                <entry>Availability of the item</entry>
+                            </row>
+                            <row>
+                                <entry>IsEligibleForSuperSaverShipping</entry>
+                                <entry>boolean</entry>
+                                <entry>Whether the item is eligible for Super Saver Shipping or not</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.similarproduct">
+            <title>Zend_Service_Amazon_SimilarProduct</title>
             <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                When searching for items, Amazon also returns a list of similar products that the searcher may find to
+                their liking. Each of these is returned as a <code>Zend_Service_Amazon_SimilarProduct</code> object.
             </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.resultset">
-        <title>Zend_Service_Amazon_ResultSet</title>
-        <para>
-            <code>Zend_Service_Amazon_ResultSet</code> 对象由
-            <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
-            方法返回，并且允许你更容易的处理返回的结果集.
-        </para>
-        <note>
             <para>
-                该对象实现了 <code>SeekableIterator</code> 接口,我们可以很方便的进行遍历，也可以用<code>seek()</code>直接访问指定的结果.
+                Each object contains the information to allow you to make sub-sequent requests to get the full information
+                on the item.
             </para>
-        </note>
-        <sect4 id="zend.service.amazon.classes.resultset.totalresults">
-            <title>Zend_Service_Amazon_ResultSet::totalResults()</title>
-            <methodsynopsis>
-                <type>int</type>
-                <methodname>totalResults</methodname>
-                <void />
-            </methodsynopsis>
-            <para>返回返回的搜索结果的总数</para>
+            <sect4 id="zend.service.amazon.classes.similarproduct.properties">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_SimilarProduct Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>ASIN</entry>
+                                <entry>string</entry>
+                                <entry>Products Amazon Unique ID (ASIN)</entry>
+                            </row>
+                            <row>
+                                <entry>Title</entry>
+                                <entry>string</entry>
+                                <entry>Products Title</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.accessories">
+            <title>Zend_Service_Amazon_Accessories</title>
             <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                Accessories for the returned item are represented as <code>Zend_Service_Amazon_Accessories</code> objects
             </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.offerset">
-        <title>Zend_Service_Amazon_OfferSet</title>
-        <para>
-            每一个由
-            <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
-            和
-            <link linkend="zend.service.amazon.itemlookup">Zend_Service_Amazon::itemLookup()</link>
-            返回的结果都包含一个
-            <code>Zend_Service_Amazon_OfferSet</code>
-            对象 ,通过他我们可以得到出版物价格信息.
-        </para>
-        <sect4 id="zend.service.amazon.classes.offerset.parameters">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_OfferSet 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>LowestNewPrice</entry>
-                            <entry>int</entry>
-                            <entry>在&quot;New&quot;条件下，出版物的最低价</entry>
-                        </row>
-                        <row>
-                            <entry>LowestNewPriceCurrency</entry>
-                            <entry>string</entry>
-                            <entry>
-                                <code>LowestNewPrice</code>所使用的货币
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>LowestOldPrice</entry>
-                            <entry>int</entry>
-                            <entry>在&quot;Used&quot;条件下，出版物的最低价</entry>
-                        </row>
-                        <row>
-                            <entry>LowestOldPriceCurrency</entry>
-                            <entry>string</entry>
-                            <entry>
-                                <code>LowestOldPrice</code>的货币
-                            </entry>
-                        </row>
-                        <row>
-                            <entry>TotalNew</entry>
-                            <entry>int</entry>
-                            <entry>Total number of &quot;new&quot; condition available for the item</entry>
-                        </row>
-                        <row>
-                            <entry>TotalUsed</entry>
-                            <entry>int</entry>
-                            <entry>出版物可用的所有 &quot;used&quot; 条件的数量</entry>
-                        </row>
-                        <row>
-                            <entry>TotalCollectible</entry>
-                            <entry>int</entry>
-                            <entry>出版物可用的所有 &quot;collectible&quot; 条件的数量</entry>
-                        </row>
-                        <row>
-                            <entry>TotalRefurbished</entry>
-                            <entry>int</entry>
-                            <entry>出版物可用的所有 &quot;refurbished&quot; 条件的数量</entry>
-                        </row>
-                        <row>
-                            <entry>Offers</entry>
-                            <entry>array</entry>
-                            <entry>
-                                <code>Zend_Service_Amazon_Offer</code>
-                                对象的数组
-                            </entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            <sect4 id="zend.service.amazon.classes.accessories.properties">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_Accessories Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>ASIN</entry>
+                                <entry>string</entry>
+                                <entry>Products Amazon Unique ID (ASIN)</entry>
+                            </row>
+                            <row>
+                                <entry>Title</entry>
+                                <entry>string</entry>
+                                <entry>Products Title</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.customerreview">
+            <title>Zend_Service_Amazon_CustomerReview</title>
             <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                Each Customer Review is returned as a <code>Zend_Service_Amazon_CustomerReview</code> object.
             </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.offer">
-        <title>Zend_Service_Amazon_Offer</title>
-        <para>
-            出版物的价格信息都由Zend的
-            <code>Zend_Service_Amazon_Offer</code>
-            对象返回。
-        </para>
-        <sect4 id="zend.service.amazon.classes.offer.properties">
-            <title>Zend_Service_Amazon_Offer 属性</title>
-            <table>
-                <title>属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>MerchantId</entry>
-                            <entry>string</entry>
-                            <entry>商品的 Amazon ID</entry>
-                        </row>
-                        <row>
-                            <entry>GlancePage</entry>
-                            <entry>string</entry>
-                            <entry>商品的的摘要页的URL</entry>
-                        </row>
-                        <row>
-                            <entry>Condition</entry>
-                            <entry>string</entry>
-                            <entry>出版物的情况</entry>
-                        </row>
-                        <row>
-                            <entry>OfferListingId</entry>
-                            <entry>string</entry>
-                            <entry>ID 和价格列表</entry>
-                        </row>
-                        <row>
-                            <entry>Price</entry>
-                            <entry>int</entry>
-                            <entry>出版物的报价</entry>
-                        </row>
-                        <row>
-                            <entry>CurrencyCode</entry>
-                            <entry>string</entry>
-                            <entry>出版物价格的货币代码</entry>
-                        </row>
-                        <row>
-                            <entry>Availability</entry>
-                            <entry>string</entry>
-                            <entry>出版物的有效性</entry>
-                        </row>
-                        <row>
-                            <entry>IsEligibleForSuperSaverShipping</entry>
-                            <entry>boolean</entry>
-                            <entry>判断这个出版物是否符合Super Saver Shipping的条件</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            <sect4 id="zend.service.amazon.classes.customerreview.properties">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_CustomerReview Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>Rating</entry>
+                                <entry>string</entry>
+                                <entry>Item Rating</entry>
+                            </row>
+                            <row>
+                                <entry>HelpfulVotes</entry>
+                                <entry>string</entry>
+                                <entry>Votes on how helpful the review is</entry>
+                            </row>
+                            <row>
+                                <entry>CustomerId</entry>
+                                <entry>string</entry>
+                                <entry>Customer ID</entry>
+                            </row>
+                            <row>
+                                <entry>TotalVotes</entry>
+                                <entry>string</entry>
+                                <entry>Total Votes</entry>
+                            </row>
+                            <row>
+                                <entry>Date</entry>
+                                <entry>string</entry>
+                                <entry>Date of the Review</entry>
+                            </row>
+                            <row>
+                                <entry>Summary</entry>
+                                <entry>string</entry>
+                                <entry>Review Summary</entry>
+                            </row>
+                            <row>
+                                <entry>Content</entry>
+                                <entry>string</entry>
+                                <entry>Review Content</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.editorialreview">
+            <title>Zend_Service_Amazon_EditorialReview</title>
             <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                Each items Editorial Reviews are returned as a <code>Zend_Service_Amazon_EditorialReview</code> object
             </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.similarproduct">
-        <title>Zend_Service_Amazon_SimilarProduct</title>
-        <para>
-            当我们搜索一个出版物时, Amazon 同时会返回一个相似产品的列表，
-            使顾客更容易找到他们喜欢的商品。这些类似产品的列表由<code>Zend_Service_Amazon_SimilarProduct</code> 对相返回.
-        </para>
-        <para>
-            每个对象包含相关的类似产品,并允许你进行进一步的请求来获得类似产品的全部信息
-        </para>
-        <sect4 id="zend.service.amazon.classes.similarproduct.properties">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_SimilarProduct 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>ASIN</entry>
-                            <entry>string</entry>
-                            <entry>产品 Amazon ID (ASIN)</entry>
-                        </row>
-                        <row>
-                            <entry>Title</entry>
-                            <entry>string</entry>
-                            <entry>产品标题</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+            <sect4 id="zend.service.amazon.classes.editorialreview.properties">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_EditorialReview Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>Source</entry>
+                                <entry>string</entry>
+                                <entry>Source of the Editorial Review</entry>
+                            </row>
+                            <row>
+                                <entry>Content</entry>
+                                <entry>string</entry>
+                                <entry>Review Content</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+        <sect3 id="zend.service.amazon.classes.listmania">
+            <title>Zend_Service_Amazon_Listmania</title>
             <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                Each results List Mania List items are returned as <code>Zend_Service_Amazon_Listmania</code> objects.
             </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.accessories">
-        <title>Zend_Service_Amazon_Accessories</title>
-        <para>
-            返回出版物的附属产品由 <code>Zend_Service_Amazon_Accessories</code> 对象表示
-        </para>
-        <sect4 id="zend.service.amazon.classes.accessories.properties">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_Accessories 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>ASIN</entry>
-                            <entry>string</entry>
-                            <entry>产品 Amazon ID (ASIN)</entry>
-                        </row>
-                        <row>
-                            <entry>Title</entry>
-                            <entry>string</entry>
-                            <entry>产品标题</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-            <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
-            </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.customerreview">
-        <title>Zend_Service_Amazon_CustomerReview</title>
-        <para>
-            顾客的每条评论由 <code>Zend_Service_Amazon_CustomerReview</code> 对相返回.
-        </para>
-        <sect4 id="zend.service.amazon.classes.customerreview.properties">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_CustomerReview 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>Rating</entry>
-                            <entry>string</entry>
-                            <entry>出版物的评分</entry>
-                        </row>
-                        <row>
-                            <entry>HelpfulVotes</entry>
-                            <entry>string</entry>
-                            <entry>关于对评论是否有用的投票</entry>
-                        </row>
-                        <row>
-                            <entry>CustomerId</entry>
-                            <entry>string</entry>
-                            <entry>顾客 ID</entry>
-                        </row>
-                        <row>
-                            <entry>TotalVotes</entry>
-                            <entry>string</entry>
-                            <entry>所有投票</entry>
-                        </row>
-                        <row>
-                            <entry>Date</entry>
-                            <entry>string</entry>
-                            <entry>评论的日期</entry>
-                        </row>
-                        <row>
-                            <entry>Summary</entry>
-                            <entry>string</entry>
-                            <entry>评论摘要</entry>
-                        </row>
-                        <row>
-                            <entry>Content</entry>
-                            <entry>string</entry>
-                            <entry>评论内容</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-            <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
-            </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.editorialreview">
-        <title>Zend_Service_Amazon_EditorialReview</title>
-        <para>
-            出版物的编辑评论由 <code>Zend_Service_Amazon_EditorialReview</code> 对相返回
-        </para>
-        <sect4 id="zend.service.amazon.classes.editorialreview.properties">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_EditorialReview 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>Source</entry>
-                            <entry>string</entry>
-                            <entry>编辑评论的来源</entry>
-                        </row>
-                        <row>
-                            <entry>Content</entry>
-                            <entry>string</entry>
-                            <entry>评论内容</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-            <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
-            </para>
-        </sect4>
-    </sect3>
-    <sect3 id="zend.service.amazon.classes.listmania">
-        <title>Zend_Service_Amazon_Listmania</title>
-        <para>
-            每个相关的List Mania  <code>Zend_Service_Amazon_Listmania</code> 对相返回.
-        </para>
-        <sect4 id="zend.service.amazon.classes.listmania.properties">
-            <title>属性</title>
-            <table>
-                <title>Zend_Service_Amazon_Listmania 属性</title>
-                <tgroup cols="3">
-                    <thead>
-                        <row>
-                            <entry>名称</entry>
-                            <entry>类型</entry>
-                            <entry>描述</entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry>ListId</entry>
-                            <entry>string</entry>
-                            <entry>列表 ID</entry>
-                        </row>
-                        <row>
-                            <entry>ListName</entry>
-                            <entry>string</entry>
-                            <entry>列表名称</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-            <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
-            </para>
-        </sect4>
-    </sect3>
-</sect2>
+            <sect4 id="zend.service.amazon.classes.listmania.properties">
+                <title>Properties</title>
+                <table>
+                    <title>Zend_Service_Amazon_Listmania Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>ListId</entry>
+                                <entry>string</entry>
+                                <entry>List ID</entry>
+                            </row>
+                            <row>
+                                <entry>ListName</entry>
+                                <entry>string</entry>
+                                <entry>List Name</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
+            </sect4>
+        </sect3>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

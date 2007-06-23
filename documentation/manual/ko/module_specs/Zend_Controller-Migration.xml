@@ -61,22 +61,22 @@ $front->setParam('noViewRenderer', true);
         </para>
 
         <para>
-            When you're ready to start using the ViewRenderer functionality,
-            there are several things to look for in your controller code. First,
-            look at your action methods (the methods ending in 'Action'), and
-            determine what each is doing. If none of the following is happening,
-            you'll need to make changes:
+            When you're ready to start using the <code>ViewRenderer</code>
+            functionality, there are several things to look for in your
+            controller code. First, look at your action methods (the methods
+            ending in 'Action'), and determine what each is doing. If none of
+            the following is happening, you'll need to make changes:
         </para>
 
         <itemizedlist>
             <listitem><para>Calls to <code>$this-&gt;render()</code></para></listitem>
             <listitem><para>Calls to <code>$this-&gt;_forward()</code></para></listitem>
             <listitem><para>Calls to <code>$this-&gt;_redirect()</code></para></listitem>
-            <listitem><para>Calls to the Redirector action helper</para></listitem>
+            <listitem><para>Calls to the <code>Redirector</code> action helper</para></listitem>
         </itemizedlist>
 
         <para>
-            The easiest change is to disable auto rendering for that method:
+            The easiest change is to disable auto-rendering for that method: 
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -148,7 +148,7 @@ public function preDispatch()
         <itemizedlist>
             <listitem>
                 <para>
-                    Prior to first instantiating a front controller instance:
+                    Prior to dispatching a front controller instance:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -160,23 +160,24 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
             <listitem>
                 <para>
-                    After retrieving a front controller instance:
+                    Any time during the bootstrap process:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);
 ]]></programlisting>
             </listitem>
         </itemizedlist>
 
         <para>
-            There are many ways to modify the ViewRenderer, including setting a
-            different view script to render, specifying replacements for all
-            replaceable elements of a view script path (including the suffix),
-            choosing a response named segment to utilize, and more. If you
-            aren't using the conventional modular directory structure, you can
-            even associate different path specifications with the ViewRenderer.
+            There are many ways to modify the <code>ViewRenderer</code>,
+            including setting a different view script to render, specifying
+            replacements for all replaceable elements of a view script path
+            (including the suffix), choosing a response named segment to
+            utilize, and more. If you aren't using the conventional modular
+            directory structure, you can even associate different path
+            specifications with the <code>ViewRenderer</code>.
         </para>
 
         <para>
