@@ -123,7 +123,7 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
             // success
         }
         try {
-            $adapter->setLocale('de');
+            $adapter->setLocale('fr');
             $this->fail();
         } catch (Zend_Translate_Exception $e) {
             // success
@@ -133,9 +133,6 @@ class Zend_Translate_TmxTest extends PHPUnit_Framework_TestCase
     public function testList()
     {
         $adapter = new Zend_Translate_Adapter_Tmx(dirname(__FILE__) . '/_files/translation_en.tmx', 'en');
-        $adapter->setOptions(array('defined_language' => true));
-        $this->assertEquals($adapter->getList(), array('en' => 'en'));
-        $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_en.tmx', 'de');
         $this->assertEquals($adapter->getList(), array('en' => 'en', 'de' => 'de', 'it' => 'it'));
 
         $this->assertTrue($adapter->isAvailable('de'));
