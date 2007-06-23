@@ -218,10 +218,18 @@
             Löschmodus.
         </para>
         <para>
+            Bei Definition dieses Backends muß ein Trennzeichen -- '-', '.', ' ', oder '_'
+            -- zwischen den Wörtern 'Zend' und 'Platform' definiert sein wenn die
+            <code>Zend_Cache::factory()</code> Methode verwendet wird:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');
+?>]]></programlisting>
+        <para>
             Es gibt keine Optionen für dieses Backend.
         </para>
     </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
--->
++-->

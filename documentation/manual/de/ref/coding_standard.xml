@@ -200,7 +200,7 @@ Zend/View/Helper/FormRadio.php]]></programlisting>
             </para>
 
             <para>
-                These are examples of acceptable names for functions:
+                Das sind Beispiele akzeptierbarer Namen für Funktionen:
 
                 <programlisting role="php"><![CDATA[
 filterInput()
@@ -227,8 +227,8 @@ widgetFactory()]]></programlisting>
             <title>Variablen</title>
 
             <para>
-                Variable names may only contain alphanumeric characters. Underscores are not permitted.
-                Numbers are permitted in variable names but are discouraged.
+                Variablennamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
+                gestattet. Nummern sind in Variablen gestattet aber nicht gerne gesehen.
             </para>
 
             <para>
@@ -239,8 +239,8 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                Like function names (see section 3.3, above) variable names must always start with a
-                lowercase letter and follow the "camelCaps" capitalization convention.
+                Wie Funktionsnamen (siehe Abschnitt 3.3, darüber) müssen Variablennamen immer mit einem
+                Kleinbuchstaben starten und der "camelCaps" Schreibweise folgen.
             </para>
 
             <para>
@@ -369,13 +369,14 @@ $sql = "SELECT `id`, `name` FROM `people` "
             <title>Arrays</title>
 
             <sect3 id="coding-standard.coding-style.arrays.numerically-indexed">
-                <title>Numerically Indexed Arrays</title>
+                <title>Nummerisch indizierte Arrays</title>
 
-                <para>Negative numbers are not permitted as indices.</para>
+                <para>Negative Nummern sind in Indezes nicht gestattet.</para>
 
                 <para>
-                    An indexed array may be started with any non-negative number, however
-                    this is discouraged and it is recommended that all arrays have a base index of 0.
+                    Ein indiziertes Array kann mit mit irgendeiner nicht-negativen Nummer beginnen, trotzdem
+                    ist das nicht gerne gesehen und es wird vorgeschlagen das alle Arrays einen BasisIndex von 0
+                    besitzen.
                 </para>
 
                 <para>
@@ -414,21 +415,21 @@ $sampleArray = array('firstKey'  => 'firstValue',
         </sect2>
 
         <sect2 id="coding-standard.coding-style.classes">
-            <title>Classes</title>
+            <title>Klassen</title>
 
             <sect3 id="coding-standard.coding-style.classes.declaration">
                 <title>Klassen Deklarationen</title>
 
                 <para>
-                    Classes must be named by following the naming conventions.
+                    Klassen müssen nach der folgenden Namenskonvention benannt werden.
                 </para><para>
                     The brace is always written on the line underneath the class name ("one true brace" form).
                 </para><para>
                     Every class must have a documentation block that conforms to the PHPDocumentor standard.
                 </para><para>
-                    Any code within a class must be indented four spaces.
+                    Jeglicher Code innerhalb der Klasse muß vier Leerzeichen eingerückt sein.
                 </para><para>
-                    Only one class is permitted per PHP file.
+                    Nur eine Klasse ist pro PHP Datei gestattet.
                 </para><para>
                     Placing additional code in a class file is permitted but discouraged. In these files, two blank lines must separate the class any additional PHP code in the file.
                 </para><para>
@@ -505,7 +506,7 @@ class Foo
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> Passing by-reference is permitted in the function declaration only:
+                    <emphasis>NOTIZ:</emphasis> Passing by-reference is permitted in the function declaration only:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -676,7 +677,7 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> It is sometimes useful to write a <code>case</code> statement which falls through
+                    <emphasis>NOTIZ:</emphasis> It is sometimes useful to write a <code>case</code> statement which falls through
                     to the next case by not including a <code>break</code> or <code>return</code> in that case. To distinguish
                     these cases from bugs, any <code>case</code> statement where <code>break</code> or <code>return</code> are
                     omitted must contain the comment "// break intentionally omitted".
@@ -685,21 +686,23 @@ switch ($numPeople) {
         </sect2>
 
         <sect2 id="coding-standards.inline-documentation">
-            <title>Inline Documentation</title>
+            <title>Inline Dokumentation</title>
 
             <sect3 id="coding-standards.inline-documentation.documentation-format">
-                <title>Documentation Format</title>
+                <title>Dokumentations Format</title>
 
                 <para>
-                    All documentation blocks ("docblocks") must be compatible with the phpDocumentor format.
-                    Describing the phpDocumentor format is beyond the scope of this document.
-                    For more information, visit: <ulink url="http://phpdoc.org/">http://phpdoc.org"></ulink>
+                    Alle Dokumentations Blöcke ("DocBlock") müssel mit dem phpDocumentor Format kompatibel sein.
+                    Die Beschreibung des phpDocumentor Formats is jenseits der Reichweite dieses Dokuments.
+                    Für weiterführende Informationen siehe:
+                    <ulink url="http://phpdoc.org/">http://phpdoc.org"></ulink>
                 </para>
 
                 <para>
-                    All source code file written for the Zend Framework or that operates with the framework
-                    must contain a "file-level" docblock at the top of each file and a "class-level" docblock
-                    immediately above each class. Below are examples of such docblocks.
+                    Alle Sourcecode Datei welche für den Zend Framework geschrieben werden, oder welche mit
+                    dem Framework arbeiten müssen einen "file-level" Docblock am Beginn jeder Datei und einen
+                    "class-level" Docblock direkt überhalb jeder Klasse enthalten. Anbei sind Beispiele solcher
+                    Docblocks.
                 </para>
             </sect3>
 
@@ -707,31 +710,31 @@ switch ($numPeople) {
                 <title>Dateien</title>
 
                 <para>
-                    Every file that contains PHP code must have a header block at the top of the file that
-                    contains these phpDocumentor tags at a minimum:
+                    Jede Datei die PHP Code enthält muß einen Header Block am Beginn der Datei besitzen welcher
+                    mindestens diese phpDocumentor Tags enthält:
 
                     <programlisting role="php"><![CDATA[
 /**
- * Short description for file
+ * Kurze Beschreibung der Datei
  *
- * Long description for file (if any)...
+ * Lange Beschreibung der Datei (wenn vorhanden)...
  *
- * LICENSE: Some license information
+ * LICENSE: Einige Lizenz Informationen
  *
  * @copyright  2005 Zend Technologies
  * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
  * @version    CVS: $Id:$
  * @link       http://dev.zend.com/package/PackageName
- * @since      File available since Release 1.2.0
+ * @since      Datei vorhanden seit Release 1.2.0
 */]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.classes">
-                <title>Classes</title>
+                <title>Klassen</title>
 
                 <para>
-                    Every class must have a docblock that contains these phpDocumentor tags at a minimum:
+                    Jede Klasse muß einen Docblock haben welche mindestens diese phpDocumentor Tags enthält:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -744,7 +747,7 @@ switch ($numPeople) {
  * @version    Release: @package_version@
  * @link       http://dev.zend.com/package/PackageName
  * @since      Klasse vorhanden seit Release 1.2.0
- * @deprecated Class deprecated in Release 2.0.0
+ * @deprecated Klasse nicht gerne gesehen ab Release 2.0.0
  */]]></programlisting>
                 </para>
             </sect3>
@@ -753,22 +756,23 @@ switch ($numPeople) {
                 <title>Funktionen</title>
 
                 <para>
-                Every function, including object methods, must have a docblock that contains at a minimum:
+                Jede Funktion, auch Objekt Methoden, müssen einen Docblock haben welcher mindestens folgendes
+                enthält:
 
                     <itemizedlist>
-                        <listitem><para>A description of the function</para></listitem>
-                        <listitem><para>All of the arguments</para></listitem>
-                        <listitem><para>All of the possible return values</para></listitem>
+                        <listitem><para>Eine Beschreibung der Funktion</para></listitem>
+                        <listitem><para>Alle Argumente</para></listitem>
+                        <listitem><para>Alle möglichen Rückgabewerte</para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
-                    It is not necessary to use the "@access" tag because the access level is already known
-                    from the "public", "private", or "protected" construct used to declare the function.
+                    Es ist nicht notwendig das "@access" Tag zu verwenden, weil das Accesslevel bereits vom
+                    "public", "private" oder "protected" Konstrukt bekannt ist wenn die Funktion deklariert wird.
                 </para>
 
                 <para>
-                    If a function/method may throw an exception, use @throws:
+                    Wenn eine Funktion/Methode eine Ausnahme werfen könnte, muß @throws verwendet werden:
 
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [Beschreibung]

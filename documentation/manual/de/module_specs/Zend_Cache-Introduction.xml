@@ -22,6 +22,16 @@
             In diesem ersten Beispiel wird das <code>Core</code> Frontend zusammen mit dem
             <code>File</code> Backend verwendet.
         </para>
+
+        <note>
+            <title>Frontends und Backends bestehend aus mehrfachen Wörtern</title>
+            <para>
+                Bei einige Frontends und Backends werden mehrere Wörter verwendet wie z.B. 'ZendPlatform'.
+                Wenn diese der Fabrik spezifiziert werden, müssen diese aufgeteilt werden indem man ein
+                Trennzeichen verwendet, wie z.B. das Leerzeichen (' '), Bindestrich ('-'), oder den Punkt ('.').
+            </para>
+        </note>
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
@@ -128,4 +138,4 @@ echo 'Das wird nie gecached ('.time().').';
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
--->
++-->

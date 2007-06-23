@@ -50,7 +50,7 @@
                 achten das Ihr API Schlüssel privat bleibt.
             </para>
         </note>
-        <example>
+        <example id="zend.service.amazon.introduction.example.itemsearch">
             <title>Suchen in Amazon mit der traditionellen API</title>
             <para>
                 In diesem Beispiel suchen wir nach PHP Büchern bei Amazon, blättern durch die Resultate und Drucken diese aus.
@@ -58,13 +58,13 @@
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
-foreach ($response as $r) {
-    echo $r->Title .'<br />';
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
-        <example>
+        <example id="zend.service.amazon.introduction.example.query_api">
             <title>Suchen in Amazon mit der Abfrage API</title>
             <para>
                 Hier suchen wir auch nach PHP Büchern bei Amazon. Aber wir verwenden stattdessen die Abfrage API,
@@ -76,9 +76,9 @@ $query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
 $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
@@ -88,13 +88,13 @@ foreach ($results as $result) {
             Vereinigten Staaten ("<code>US</code>"). Um sich zu einem anderen Land zu verbinden, muß einfach der
             entsprechende String des Landercodes als zweiter Parameter an den Konstruktor übergeben werden:
         </para>
-        <example>
+        <example id="zend.service.amazon.countrycodes.example.country_code">
             <title>Auswahl eines Amazon Web Service Landes</title>
             <programlisting><![CDATA[<?php
 // Zu Amazon in Japan verbinden
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
         <note>
             <title>Ländercodes</title>
@@ -110,13 +110,13 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
             Die <code>itemLookup()</code> Methode ermöglicht es ein bestimmtes Teil bei Amazon zu erhalten wenn
             der ASIN bekannt ist.
         </para>
-        <example>
+        <example id="zend.service.amazon.itemlookup.example.asin">
             <title>Betrachten eines speziellen Teils bei Amazon durch ASIN</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $item = $amazon->itemLookup('B0000A432X');
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             Die <code>itemLookup()</code> Methode akzeptiert auch einen optionalen zweiten Parameter für die
@@ -137,16 +137,35 @@ $item = $amazon->itemLookup('B0000A432X');
             Das Suchen nach Teilen, basierend auf den unterschiedlichen möglichen Kriterien ist simpel gehalten durch
             benutzen der <code>itemSearch()</code> Methode wie im folgenden Beispiel:
         </para>
-        <example>
+        <example id="zend.service.amazon.itemsearch.example.basic">
             <title>Suchen nach Teilen bei Amazon</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
-foreach($response as $r) {
-    echo $r->Title .'<br />';
+$results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
+        </example>
+        <example id="zend.service.amazon.itemsearch.example.responsegroup">
+            <title>Verwenden der <code>ResponseGroup</code> Option</title>
+            <para>
+                Die <code>ResponseGroup</code> Option wird verwendet um die spezielle Information zu kontrollieren
+                die in der Antwort zurückgegeben wird.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$results = $amazon->itemSearch(array(
+    'SearchIndex'   => 'Books',
+    'Keywords'      => 'php',
+    'ResponseGroup' => 'Small,ItemAttributes,Images,SalesRank,Reviews,EditorialReview,Similarities,ListmaniaLists';
+    ));
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
+}
+?>]]></programlisting>
         </example>
         <para>
             Die <code>itemSearch()</code> Methode akzeptiert einen einzelnen Parameter als Array für die
@@ -176,21 +195,21 @@ foreach($response as $r) {
                 Optionen wird als Methoden Aufruf angeboten, und jedes Methoden Argument korrespondiert mit dem
                 beschriebenen Options Wert:
             </para>
-            <example>
+            <example id="zend.service.amazon.query.introduction.example.basic">
                 <title>Suchen in Amazon durch Benutzen der alternativen Abfrage API</title>
                 <para>
                     In diesem Beispiel wird die alternative Abfrage API als Fluent Interface benutzt um Optionen und
                     Ihre Werte festzulegen:
                 </para>
                 <programlisting><![CDATA[<?php
-    require_once 'Zend/Service/Amazon/Query.php';
-    $query = new Zend_Service_Amazon_Query('MY_API_KEY');
-    $query->Category('Books')->Keywords('PHP');
-    $results = $query->search();
-    foreach ($results as $result) {
-        echo $result->Title .'<br />';
-    }
-    ?>]]>       </programlisting>
+require_once 'Zend/Service/Amazon/Query.php';
+$query = new Zend_Service_Amazon_Query('MY_API_KEY');
+$query->Category('Books')->Keywords('PHP');
+$results = $query->search();
+foreach ($results as $result) {
+    echo $result->Title . '<br />';
+}
+?>]]></programlisting>
                 <para>
                     Das setzt die Option <code>Category</code> auf "Books" und <code>Keywords</code> auf "PHP".
                 </para>

@@ -46,7 +46,7 @@
             <para>
                 The <code>ViewRenderer</code> is enabled by default. You may
                 disable it via the front controller <code>noViewRenderer</code>
-                param (<code>$front->setParam('noViewRenderer')</code>) or
+                param (<code>$front->setParam('noViewRenderer', true)</code>) or
                 removing the helper from the helper broker stack
                 (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).
             </para>
@@ -75,15 +75,12 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
                 <listitem>
                     <para>
-                        Retrieve the registered <code>ViewRenderer</code> object
-                        from the helper broker after the front controller has
-                        been instantiated:
+                        Initialize and/or retrieve a <code>ViewRenderer</code>
+                        object on demand via the helper broker:
                     </para>
 
                     <programlisting role="php"><![CDATA[<?php
-$front = Zend_Controller_Front::getInstance();
-
-$viewRenderer = Zend_Controller_Action_HelperBroker::getExistingHelper('viewRenderer');
+$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 ]]></programlisting>
@@ -97,11 +94,13 @@ $viewRenderer->setView($view)
 
         <para>
             At its most basic usage, you simply instantiate the
-            <code>ViewRenderer</code> and pass it to the action helper broker:
+            <code>ViewRenderer</code> and pass it to the action helper broker.
+            The easiest way to instantiate it and register in one go is to use
+            the helper broker's <code>getStaticHelper()</code> method:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ]]></programlisting>
 
         <para>
@@ -488,9 +487,9 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <title>Basic Usage</title>
 
             <para>
-                At its most basic, you simply add the <code>ViewRenderer</code>
-                helper to the helper broker in your bootstrap, and then set
-                variables in your action methods.
+                At its most basic, you simply initialize and register the
+                <code>ViewRenderer</code> helper with the helper broker in your
+                bootstrap, and then set variables in your action methods. 
             </para>
 
             <note>
@@ -510,7 +509,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
             <programlisting role="php"><![CDATA[<?php
 // In your bootstrap:
-Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ?>
 
 <?php
@@ -708,7 +707,7 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_View_Controller_HelperBroker::addHelper($viewRenderer);
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 ]]></programlisting>
         </example>
 

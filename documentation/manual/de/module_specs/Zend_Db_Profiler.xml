@@ -102,6 +102,17 @@ $profiler = $db->getProfiler();
             <listitem>
                 <para>
                     <code>getQuery()</code> gibt den SQL Text der Abfrage zurück.
+                    Der SQL Text des vorbereiteten Statements mit Parametern ist der Text, zu der Zeit
+                    als die Abfrage vorbereitet wurde, er enthält also Platzhalter für Parameter, nicht die
+                    Werte die verwendet werden wenn das Statement ausgeführt wird.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryParams()</code> gibt ein Array von Parameter Werten zurück die verwendet werden
+                    wenn eine vorbereitete Abfrage ausgeführt wird. Das beinhaltet beide, gebundene Parameter und
+                    Argumente für die <code>execute()</code> Methode des Statements. Die Schlüssel des Arrays sind
+                    die Positionierten (1-basierend) oder benannten (Zeichenkette) Parameter Indezes.
                 </para>
             </listitem>
             <listitem>
