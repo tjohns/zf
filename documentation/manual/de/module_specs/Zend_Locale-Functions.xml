@@ -64,7 +64,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // Prüfe ob die Gebietsschema gleich sind
-if ($locale->equals($mylocale) {
+if ($locale->equals($mylocale)) {
     print "Die Gebietsschemata sind gleich";
 }
 ?>]]></programlisting>

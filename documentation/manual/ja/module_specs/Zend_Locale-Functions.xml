@@ -63,7 +63,7 @@ $locale = new Zend_Locale();
 $mylocale = new Zend_Locale('en_US');
 
 // ロケールが同一かどうかを調べます
-if ($locale->equals($mylocale) {
+if ($locale->equals($mylocale)) {
     print "これらのロケールは同一です";
 }
 ?>]]></programlisting>
