@@ -30,7 +30,7 @@
             Gibt nur dann <code>true</code> zurück wenn <code>$value</code> zwischen dem minimalen und
             maximalen Grenzwert ist. Der Vergleich ist standardmäßig inklusive (<code>$value</code> kann
             gleich dem Grenzwert sein), kann aber überschrieben werden um einen strikten Vergleich dort
-            durchzuführen wo <code>$value</code strikt größer als das Minimum und strikt kleiner als das
+            durchzuführen wo <code>$value</code> strikt größer als das Minimum und strikt kleiner als das
             Maximum sein muß.
         </para>
     </sect2>

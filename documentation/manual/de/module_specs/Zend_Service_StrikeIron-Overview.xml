@@ -2,27 +2,11 @@
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-<<<<<<< .mine
-      <ulink url="http://www.strikeiron.com">StrikeIron</ulink>
-      offers hundreds of commercial data services ("Data as a Service")
-      such as Online Sales Tax, Currency Rates, Stock Quotes, Geocodes, Global
-      Address Verification, Yellow/White Pages, MapQuest Driving Directions,
-      Dun &amp; Bradstreet Business Credit Checks, and much, much more.
-=======
         Zend_Service_StrikeIron provides a PHP 5 client to StrikeIron
         web services.  See the following sections:
->>>>>>> .r5238
     </para>
 
     <para>
-<<<<<<< .mine
-      Each StrikeIron web service service shares a standard SOAP (and REST)
-      API, making it easy to integrate and manage multiple services.
-      StrikeIron also manages customer billing for all services in a single
-      account, making it perfect for solution providers. Get
-      started with free web services at
-      <ulink url="http://www.strikeiron.com/sdp">http://www.strikeiron.com/sdp</ulink>.
-=======
         <itemizedlist>
             <listitem><para><xref linkend="zend.service.strikeiron" /></para></listitem>
         </itemizedlist>
@@ -32,32 +16,10 @@
         <itemizedlist>
             <listitem><para><xref linkend="zend.service.strikeiron.advanced-uses" /></para></listitem>
         </itemizedlist>
->>>>>>> .r5238
     </para>
 
-<<<<<<< .mine
-    <para>
-      StrikeIron's services may be used through the
-      <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.
-      However, using StrikeIron this way does not give an ideal PHP-like interface.
-      The Zend_Service_StrikeIron component provides a lightweight layer on
-      top of the SOAP extension for working with StrikeIron services in a
-      more convenient, PHP-like manner.
-    </para>
-
-    <note>
-      <para>
-        The PHP 5 SOAP extension must be installed and enabled to use
-        Zend_Service_StrikeIron.
-      </para>
-    </note>
-
-    <para>
-      The Zend_Service_StrikeIron component provides:
-=======
     <sect2 id="zend.service.strikeiron.overview">
         <title>Overview</title>
->>>>>>> .r5238
 
         <para>
           <ulink url="http://www.strikeiron.com">StrikeIron</ulink>
