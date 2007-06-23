@@ -62,12 +62,8 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $lang = new Zend_Translate(Zend_Translate::AN_XLIFF , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
 
-        try {
-            $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
-            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
-        } catch (Zend_Translate_Exception $e) {
-            // success - not implemented
-        }
+        $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/_files/translation_de.ts', 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Qt);
 
         try {
             $lang = new Zend_Translate('sql' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
