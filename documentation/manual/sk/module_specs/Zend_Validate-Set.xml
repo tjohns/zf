@@ -9,14 +9,16 @@
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
-            Returns true if and only if <code>$value</code> contains only alphabetic and digit characters.
+            Returns <code>true</code> if and only if <code>$value</code> contains only alphabetic and digit characters.
+            This validator includes an option to also consider white space characters as valid.
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.alpha">
         <title>Alpha</title>
         <para>
-            Returns <code>true</code> if and only if <code>$value</code> contains only alphabetic characters.
+            Returns <code>true</code> if and only if <code>$value</code> contains only alphabetic characters. This
+            validator includes an option to also consider white space characters as valid.
         </para>
     </sect2>
 

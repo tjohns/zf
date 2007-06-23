@@ -116,6 +116,8 @@ if ($validator->isValid($email)) {
             Other tokens may be supported on a case-by-case basis in each
             validate class.  For example, <code>%max%</code> is a token
             supported by Zend_Validate_LessThan.
+            The <code>getMessageVariables()</code> method returns an array
+            of variable tokens supported by the validator.
         </para>
 
         <para>
