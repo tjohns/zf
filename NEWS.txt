@@ -1,22 +1,22 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 1.0.0RC3 / 22-Jun-2007 / based on revision 5422 =
+=RELEASE 1.0.0RC3 / 22-Jun-2007 / based on revision 5437 =
 This release resolves the following issues:
 - Zend_Controller
   ZF-1392 useDefaultControllerAlways : default module renamed to Default !
-  ZF-1439 Zend_Controller_Request_Http Should check REDIRECT_URL before REQUEST_URI
+  ZF-1439 Should check REDIRECT_URL before REQUEST_URI
   ZF-1447 Error in examples for section 7.10.5.1.1. and 7.10.5.1.3.
-  ZF-1448 Zend/Controller/Dispatcher/Exception.php is not included before throwing Exception
+  ZF-1448 Dispatcher/Exception.php is not included before throwing Exception
   ZF-1460 Redirector::setGotoUrl ignores prependBase
   ZF-1473 Redirector::gotoUrlAndExit's second argument has invalid default
-  ZF-1478 Zend_Controller_Front::addModuleDirectory() should ignore directories like ".svn"
+  ZF-1478 Zend_Controller_Front::addModuleDirectory() should ignore ".svn"
   ZF-1486 FlashMessenger incorrect use of own functions
   ZF-1494 Doc mistake for useGlobalDefault parameter
-  ZF-1502 Zend_Controller_Response_Abstract::setHttpResponseCode() set $this->_isRedirect incorrectly
+  ZF-1502 setHttpResponseCode() set $this->_isRedirect incorrectly
   ZF-1514 ViewRenderer passes incorrect default prefix to Zend_View_Abstract
-  ZF-1520 Zend_Controller_Action_HelperBroker lacks a method to return all registered helpes
-  ZF-1535 Zend_Controller_Action_Helper_FlashMessenger lacks a method to clear all messages
+  ZF-1520 HelperBroker lacks a method to return all registered helpes
+  ZF-1535 FlashMessenger lacks a method to clear all messages
 - Zend_Date
   ZF-1537 Zend_Date_Cities bug for throw exception
 - Zend_Db
@@ -49,36 +49,37 @@ This release resolves the following issues:
   ZF-1609 Typo error
 - Zend_Gdata
   ZF-1445 Zend_Gdata_Spreadsheets_CellFeedTest failing
-  ZF-1525 Header set in Zend_Http_Client indicating x-http-method-override is not removed for subsequent requests
+  ZF-1525 x-http-method-override is not removed for subsequent requests
   ZF-1526 Zend_Gdata_App - Cookies being set incorrectly
   ZF-1527 Redirects being performed incorrectly in Zend_Gdata_App
   ZF-1528 Zend_Gdata_App_HttpException used before it's loaded
-  ZF-1529 Zend_Gdata_Extension_Reminder sets the wrong value of days, hours, minutes and absoluteTime attributes
+  ZF-1529 Zend_Gdata_Extension_Reminder sets the wrong values
   ZF-1530 Zend_Gdata_Extension_Where has bad ordering of constructor params
   ZF-1538 Invalid require for InvalidArgumentException in Zend_Gdata_Calendar
   ZF-1539 Add example of creating a web content entry to Calendar demo
   ZF-1540 Typo in Zend_Gdata_Calendar_EventEntry::getDOM()
   ZF-1560 Zend_Gdata_App_Util::formatTimestamp strips timezone offset
-  ZF-1585 Calendar/LinkTest and Calendar/WebContentTest do not properly verify that all elements are copied correctly
+  ZF-1585 Calendar/LinkTest and Calendar/WebContentTest not verifying properly
   ZF-1589 "Property does not exist" error message contains an extra space
-  ZF-1591 Zend_Gdata_Extension_OriginalEvent does not support 'when' child element
-  ZF-1592 Gdata_Calendar_Extension unit tests need to test against sample data for extension attributes/elements
+  ZF-1591 OriginalEvent does not support 'when' child element
+  ZF-1592 need to test against sample data for extension attributes/elements
   ZF-1593 Add unit tests for Zend_Gdata_Extension classes
-  ZF-1595 Undefined property: DOMAttr::$valueString in library/Zend/Gdata/Extension/When.php:105
-  ZF-1596 Undefined property: DOMAttr::$valueString in library/Zend/Gdata/Extension/Where.php:78
-  ZF-1597 Zend_Gdata_Extension_Who does not properly recognize entryLink elements when importing from XML
-  ZF-1604 Add extra unit tests to make sure that the new formatTimestamp() functionality is solid
+  ZF-1595 Undefined DOMAttr::$valueString in Zend/Gdata/Extension/When.php:105
+  ZF-1596 Undefined DOMAttr::$valueString in Zend/Gdata/Extension/Where.php:78
+  ZF-1597 Zend_Gdata_Extension_Who does not properly recognize entryLink 
+  ZF-1604 test new formatTimestamp() functionality
   ZF-1607 Fix capitalization of "eventFeed" in Zend_Gdata_CalendarEventTest
   ZF-1612 AccessLevel::getValue has wrong return type
 - Zend_Http_Client
-  ZF-1557 Unsetting headers requires passing the header in a case-sensitive fashion
+  ZF-1557 Unsetting headers requires case-sensitive header 
 - Zend_Loader
-  ZF-1511 registerAutoload() registers parent loader, not loader for extended class
+  ZF-1511 registerAutoload() registers parent loader
 - Zend_Locale
   ZF-1479 ::toNumber() returns wrong value
   ZF-1567 Zend/Locale.php - getQuestion() bug
-  ZF-1575 unexpected behaviour of toNumber() when using precision and number_format
+  ZF-1575 fault in toNumber() when using precision and number_format
   ZF-1576 toFloat() rounds the return value
+  ZF-1605 Small typo in Example 18.9 for Zend_Locale functions documentation
 - Zend_Pdf
   ZF-1559 Zend_Pdf leaks memory
   ZF-1611 embedded TTF font can't be reused with another PDF
@@ -96,10 +97,10 @@ This release resolves the following issues:
   ZF-1453 Validator for Alpha and Alnum that permits whitespace
   ZF-1600 Strict Error in Zend_Validate_Abstract class on line 93
 - Zend_View
-  ZF-1481 Zend_View_Exception for non existent scripts in path should be more descriptive..
+  ZF-1481 Zend_View_Exception for non existent scripts should be more clear
 - Zend_XmlRpc_Client
   ZF-1364 Zend_XmlRpc_Client forces faultCode and faultString on response
-- Total of 74 issues resolved; for a detailed list, see the changelog
+- Total of 75 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 1.0.0RC2 / 07-Jun-2007 / based on revision 5189 =
