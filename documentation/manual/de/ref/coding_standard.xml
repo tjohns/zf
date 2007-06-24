@@ -110,8 +110,9 @@
 
             <para>
                 Klassennamen dürfen nur alphanumerische Zeichen enthalten. Nummern sind in Klassennamen
-                gestattet aber nicht gerne gesehen. Unterstrche sind nur gestattet im Platz des Pfadseperators
-                -- der Dateiname "Zend/Db/Table.php" muß übereinstimmen mit dem Klassennamen "Zend_Db_Table".
+                gestattet es wird aber von Ihnen abgeraten. Unterstriche sind nur gestattet im Platz des
+                Pfadseperators -- der Dateiname "Zend/Db/Table.php" muß übereinstimmen mit dem Klassennamen
+                "Zend_Db_Table".
             </para>
 
             <para>
@@ -185,7 +186,7 @@ Zend/View/Helper/FormRadio.php]]></programlisting>
 
             <para>
                 Funktionsnamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
-                gestattet. Nummern sind in Funktionsnamen gestattet aber nicht gerne gesehen.
+                gestattet. Nummern sind in Funktionsnamen gestattet es wird aber von Ihnen abgeraten.
             </para>
 
             <para>
@@ -195,8 +196,8 @@ Zend/View/Helper/FormRadio.php]]></programlisting>
             </para>
 
             <para>
-                Verbosity is encouraged. Function names should be as verbose as is practical to enhance the
-                understandability of code.
+                Wortreichtum wird beführwortet. Funktionsnamen sollten so wortreich wie möglich sein um die
+                Verständlichkeit des Codes zu erhöhen.
             </para>
 
             <para>
@@ -211,15 +212,16 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                For object-oriented programming, accessors for objects should always be prefixed with
-                either "get" or "set". When using design patterns, such as the singleton or factory
-                patterns, the name of the method should contain the pattern name where practical to
-                make the pattern more readily recognizable.
+                Für objekt-orientiertes Programmieren, sollten Zugriffspunkte für Objekte immer mit
+                "get" oder "set" beginnen. Wenn Design-Pattern verwendet werden, wie Singleton oder das
+                Factory Pattern, sollte der Name der Methode den Namen des Pattern enthalten wo es
+                praktikabel ist, um das Pattern schneller begreifbar zu machen.
             </para>
 
             <para>
-                Functions in the global scope ("floating functions") are permitted but discouraged.
-                It is recommended that these functions should be wrapped in a static class.
+                Funktionen im globalen Bereich ("floating functions") sind gestattet aber es wird von Ihnen
+                abgeraten. Es wird vorgeschlagen das diese Funktionen in einer statischen Klasse gewrappt
+                werden.
             </para>
         </sect2>
 
@@ -228,14 +230,14 @@ widgetFactory()]]></programlisting>
 
             <para>
                 Variablennamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
-                gestattet. Nummern sind in Variablen gestattet aber nicht gerne gesehen.
+                gestattet. Nummern sind in Variablen gestattet es wird aber von Ihnen abgeraten.
             </para>
 
             <para>
-                For class member variables that are declared with the "private" or "protected" construct,
-                the first character of the function name must be a single underscore. This is the only
-                acceptable usage of an underscore in a function name. Member variables declared "public"
-                may never start with an underscore.
+                Für Klassenvariablen die mit dem "private" oder "protected" Konstrukt deklariert werden,
+                muß das erste Zeichen des Funktionsnamens ein einzelner Unterstrich sein. Das ist die
+                einzige akzeptierte Verwendung eines Unterstriches in einem Funktionsnamen. Klassenvariablen
+                welche als "public" deklariert werden dürfen nie mit einem Unterstrich beginnen.
             </para>
 
             <para>
@@ -244,10 +246,10 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                Verbosity is encouraged. Variables should always be as verbose as practical. Terse variable
-                names such as "$i" and "$n" are discouraged for anything other than the smallest loop contexts.
-                If a loop contains more than 20 lines of code, the variables for the indices need to have more
-                descriptive names.
+                Wortreichtum wird beführwortet. Variablen sollen immer so wortreich wie möglich sein.
+                Von gedrängte Variablennamen wie "$i" und "$n" wird abgeraten für alles andere als die kleinsten
+                Schleifen. Wenn eine Schleife mehr als 20 Codezeilen enthält, benötigen die Variablen der Indezes
+                einen ausführlicheren Namen.
             </para>
         </sect2>
 
@@ -255,17 +257,18 @@ widgetFactory()]]></programlisting>
             <title>Konstanten</title>
 
             <para>
-                Constants may contain both alphanumeric characters and the underscore. Numbers are permitted
-                in constant names.
+                Konstanten können beides enthalten, sowohl Alphanummerische Zeichen als auch den Unterstrich.
+                Nummern sind in Konstantennamen gestattet.
             </para>
 
             <para>
-                Constants must always have all letters capitalized.
+                Konstanten müssen alle Buchstaben immer großgeschrieben haben.
             </para>
 
             <para>
-                Constants must be defined as class members by using the "const" construct. Defining constants
-                in the global scope with "define" is permitted but discouraged.
+                Konstanten müssen als Klassenkonstanten definiert werden mithilfe des "const" Konstruktes.
+                Die Definition von Konstanten im globalen Bereich mit "define" ist gestattet aber es wird
+                hiervon abgeraten.
             </para>
         </sect2>
     </sect1>
@@ -274,10 +277,10 @@ widgetFactory()]]></programlisting>
         <title>Code Stil</title>
 
         <sect2 id="coding-standard.coding-style.php-code-demarcation">
-            <title>PHP Code Demarcation</title>
+            <title>PHP Code Abgrenzung</title>
 
             <para>
-                PHP code must always be delimited by the full-form, standard PHP tags:
+                PHP Code muß immer mit der kompletten Form des Standard-PHP Tags abgegrenzt sein:
 
                 <programlisting role="php"><![CDATA[
 <?php
@@ -286,7 +289,7 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                Short tags are never allowed.
+                Kurze Tags sind nie erlaubt.
             </para>
         </sect2>
 
@@ -294,68 +297,68 @@ widgetFactory()]]></programlisting>
             <title>Strings</title>
 
             <sect3 id="coding-standard.coding-style.strings.literals">
-                <title>String Literals</title>
+                <title>String Literale</title>
 
                 <para>
-                    When a string is literal (contains no variable substitutions), the apostrophe or
-                    "single quote" must always used to demarcate the string:
+                    Wenn ein String ein Literal ist (er also keine Variablenvertreter enthält), muß immer das
+                    Apostroph oder "einzelne Anführungszeichen" verwendet werden um den String abzugrenzen:
 
                     <programlisting role="php"><![CDATA[
-$a = 'Example String';]]></programlisting>
+$a = 'Beispiel String';]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.literals-containing-apostrophes">
-                <title>String Literals Containing Apostrophes</title>
+                <title>String Literale die Apostrophe enthalten</title>
 
                 <para>
-                    When a literal string itself contains apostrophes, it is permitted to demarcate
-                    the string with quotation marks or "double quotes". This is especially encouraged
-                    for SQL statements:
+                    Wenn ein literaler String selbst Apostrophe enthält, ist es gestattet den String mit
+                    Anführungszeichen oder "doppeltes Anführungszeichen" abzugrenzen. Das ist speziell für
+                    SQL Anweisungen zu befürworten:
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]></programlisting>
 
-                    The above syntax is preferred over escaping apostrophes.
+                    Der obige Syntax ist zu bevorzugen im Gegensatz zum Ausbruch von Apostrophs.
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.variable-substitution">
-                <title>Variable Substitution</title>
+                <title>Variabler Austausch</title>
 
                 <para>
-                    Variable substitution is permitted using either of these two forms:
+                    Variabler Austausch ist gestatten bei Verwendung einer der zwei Formen:
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello $name, welcome back!";
+$greeting = "Halle $name, willkommen zurück!";
 
-$greeting = "Hello {$name}, welcome back!";]]></programlisting>
+$greeting = "Hallo {$name}, willkommen zurück!";]]></programlisting>
                 </para>
 
                 <para>
-                    For consistency, this form is not permitted:
+                    Aus Gründen der Konstistenz ist folgende Form nicht gestattet:
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello ${name}, welcome back!";]]></programlisting>
+$greeting = "Hallo ${name}, willkommen zurück!";]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.string-concatenation">
-                <title>String Concatenation</title>
+                <title>Verbinden von Strings</title>
 
                 <para>
-                    Strings may be concatenated using the "." operator. A space must always
-                    be added before and after the "." operator to improve readability:
+                    Strings können verbunden werden indem man den "." Operator verwendet. Ein Leerzeichen muß
+                    immer vor und nach dem "." Operator hinzugefügt werden um die Lesbarkeit zu erhöhen:
 
                     <programlisting role="php"><![CDATA[
 $company = 'Zend' . 'Technologies';]]></programlisting>
                 </para>
 
                 <para>
-                    When concatenating strings with the "." operator, it is permitted to
-                    break the statement into multiple lines to improve readability. In these
-                    cases, each successive line should be padded with whitespace such that the
-                    "."; operator is aligned under the "=" operator:
+                    Wenn Strings mit dem "." Operator verbunden werden, ist es gestattet die Anweisung in
+                    mehrere Zeilen umzubrechen um die Lesbarkeit zu erhöhen. In diesen Fällen sollte jede
+                    folgende Zeile mit Leerraum aufgefüllt werden so das der "." Operator genau unterhalb
+                    des "=" Operators ist:
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
@@ -375,22 +378,23 @@ $sql = "SELECT `id`, `name` FROM `people` "
 
                 <para>
                     Ein indiziertes Array kann mit mit irgendeiner nicht-negativen Nummer beginnen, trotzdem
-                    ist das nicht gerne gesehen und es wird vorgeschlagen das alle Arrays einen BasisIndex von 0
+                    wird davon abgeraten und es wird vorgeschlagen das alle Arrays einen BasisIndex von 0
                     besitzen.
                 </para>
 
                 <para>
-                    When declaring indexed arrays with the <code>array</code> construct, a trailing space must be
-                    added after each comma delimiter to improve readability:
+                    Wenn indizierte Arrays mit dem <code>array</code> Konstrukt deklariert werden, muß ein
+                    folgendes Leerzeichen nach jeder Kommabegrenzung hinzugefügt werden um die Lesbarkeit
+                    zu erhöhen:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]></programlisting>
                 </para>
 
                 <para>
-                    It is also permitted to declare multiline indexed arrays using the "array" construct.
-                    In this case, each successive line must be padded with spaces such that beginning of
-                    each line aligns as shown below:
+                    Es ist auch gestattet mehrzeilige indizierte Arrays zu definieren bei Verwendung des
+                    "array" Konstrukts. In diesem Fall, muß jede folgende Zeile mit Leerzeichen aufgefüllt
+                    werden so das der Beginn jeder Zeile wie folgt erscheint:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
@@ -400,12 +404,13 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
             </sect3>
 
             <sect3 id="coding-standard.coding-style.arrays.associative">
-                <title>Associative Arrays</title>
+                <title>Assoziative Arrays</title>
 
                 <para>
-                    When declaring associative arrays with the <code>array</code> construct, it is encouraged
-                    to break the statement into multiple lines. In this case, each successive line must be
-                    padded with whitespace such that both the keys and the values are aligned:
+                    Wenn assoziative Arrays mit dem <code>array</code> Konstrukt deklariert werden, ist es
+                    gestattet die Anweisung in mehrere Zeilen zu brechen. In diesem Fall muß jede folgende
+                    Linie mit Leerraum aufgefüllt werden so das beide, der Schlüssel und der Wert untereinander
+                    stehen:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
@@ -423,17 +428,19 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <para>
                     Klassen müssen nach der folgenden Namenskonvention benannt werden.
                 </para><para>
-                    The brace is always written on the line underneath the class name ("one true brace" form).
+                    Die Klammer wird immer in der Zeile unter dem Klassennamen geschrieben ("one true brace" Form).
                 </para><para>
-                    Every class must have a documentation block that conforms to the PHPDocumentor standard.
+                    Jede Klasse muß einen Dokumentationsblock haben der dem PHPDocumentor Standard entspricht.
                 </para><para>
                     Jeglicher Code innerhalb der Klasse muß vier Leerzeichen eingerückt sein.
                 </para><para>
                     Nur eine Klasse ist pro PHP Datei gestattet.
                 </para><para>
-                    Placing additional code in a class file is permitted but discouraged. In these files, two blank lines must separate the class any additional PHP code in the file.
+                    Das Platzieren von zusätzlichem Code in einer Klassendatei ist gestattet aber es wird davon
+                    abgeraten. In diesem Dateien müssen zwei leere Zeilen die Klasse von jedem zusätzlichen PHP
+                    Code in der Datei seperieren.
                 </para><para>
-                    This is an example of an acceptable class declaration:
+                    Das ist ein Beispiel einer akzeptierbaren Klassendeklaration:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -442,51 +449,49 @@ $sampleArray = array('firstKey'  => 'firstValue',
 class SampleClass
 {
     // gesamter Inhalt der Klasse
-    // muss durch vier Leerzeichen eingerückt sein
+    // muss mit vier Leerzeichen eingerückt sein
 }]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.classes.member-variables">
-                <title>Class Member Variables</title>
+                <title>Klassenvariablen</title>
 
                 <para>
-                    Member variables must be named by following the variable naming conventions.
+                    Klassenvariablen müssen nach den folgenden Variablen-Benennungs-Konventionen benannt werden.
                 </para><para>
-                    Any variables declared in a class must be listed at the top of the class, prior
-                    to declaring any functions.
+                    Jede Variable die in der Klasse deklariert wird muß am Beginn der Klasse ausgelistet werden,
+                    bevor irgendeine Funktion deklariert wird.
                 </para><para>
-                    The <code>var</code> construct is not permitted.  Member variables always declare
-                    their visibility by using one of the <code>private</code>, <code>protected</code>,
-                    or <code>public</code> constructs. Accessing member variables directly by making
-                    them public is permitted but discouraged in favor of accessor
-                    variables (set/get).
+                    Das <code>var</code> Konstrukt ist nicht gestattet.  Klassenvariablen definieren Ihre
+                    Sichtbarkeit durch die Verwendung des <code>private</code>, <code>protected</code>,
+                    oder <code>public</code> Konstrukts. Der direkte Zugriff auf Klassenvariablen durch das
+                    öffentlich machen ist gestattet aber es wird davon abgeraten da hierfür Zugriffsvariablen
+                    verwendet werden sollten (set/get).
                 </para>
             </sect3>
         </sect2>
 
         <sect2 id="coding-standard.coding-style.functions-and-methods">
-            <title>Functions and Methods</title>
+            <title>Funktionen und Methoden</title>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.declaration">
-                <title>Function and Method Declaration</title>
+                <title>Deklaration von Funktionen und Methoden</title>
 
                 <para>
-                    Functions must be named by following the naming conventions.
+                    Funktionen müssen nach der folgenden Namenskonvention benannt werden.
                 </para><para>
-                    Functions inside classes must always declare their visibility by using
-                    one of the <code>private</code>, <code>protected</code>,
-                    or <code>public</code> constructs.
+                    Funktionen innerhalb von Klassen müssen immer Ihre Sichtbarkeit durch Verwendung einer der
+                    <code>private</code>, <code>protected</code>, oder <code>public</code> Konstrukte definieren.
                 </para><para>
-                    Like classes, the brace is always written on the line underneath the
-                    function name ("one true brace" form).
+                    Wie bei Klassen, wird die Klassem immer in der Zeile unterhalb des Funktionsnamens geschrieben
+                    werden ("one true brace" Form).
 
-                    There is no space between the
-                    function name and the opening parenthesis for the arguments.
+                    Es gibt kein Leerzeichen zwischen dem Funktionsnamen und der öffnenden Klammer für die Argumente.
                 </para><para>
-                    Functions in the global scope are strongly discouraged.
+                    Von Funktionen im globalen Raum wird komplett abgeraten.
                 </para><para>
-                    This is an example of an acceptable function declaration in a class:
+                    Das ist ein Beispiel einer akzeptierbaren Funktionsdeklaration in einer Klasse:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -747,7 +752,7 @@ switch ($numPeople) {
  * @version    Release: @package_version@
  * @link       http://dev.zend.com/package/PackageName
  * @since      Klasse vorhanden seit Release 1.2.0
- * @deprecated Klasse nicht gerne gesehen ab Release 2.0.0
+ * @deprecated Klasse abgeraten ab Release 2.0.0
  */]]></programlisting>
                 </para>
             </sect3>
