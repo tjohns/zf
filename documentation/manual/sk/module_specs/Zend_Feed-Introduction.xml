@@ -1,49 +1,51 @@
 <sect1 id="zend.feed.introduction">
-    <title>Introduction</title>
+    <title>Úvod</title>
     <para>
-        <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
-        natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
-        <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
-        same natural syntax, and turning the result back into XML. In the future, this modification support
-        could provide support for the Atom Publishing Protocol.
+        <code>Zend_Feed</code> poskytuje funkcionalitu pre spracovanie RSS a Atom 
+        zdrojov. Poskytuje prirodzený spôsob pre prístup k jednotlivým častiam zdroja,
+        ako sú elementy, atribúty a jednotlivé položky. Okrem toho <code>Zend_Feed</code>
+        poskytuje podporu pre modifikáciu zdroja a jeho položiek a spätné uloženie
+        do XML. V budúcnosti pribudne aj podpora Atom Publishing Protocol
     </para>
 
     <para>
-        Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_Entry_Abstract</code> base classes for
-        representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
-        a behind-the-scenes helper for making the natural syntax magic work.
+        Programátorsky, <code>Zend_Feed</code> pozostáva zo základnej triedy 
+        <code>Zend_Feed</code> abstraktných tried <code>Zend_Feed_Abstract</code>
+        a <code>Zend_Feed_Entry_Abstract</code> pre reprezentáciu zdroja a položiek
+        v zdroji. Ďalej sú to špecifické implementácie zdroja a jeho položiek 
+        pre RSS a Atom.
     </para>
 
     <para>
-        In the example below, we demonstrate a simple use case of retrieving an RSS feed and saving relevant
-        portions of the feed data to a simple PHP array, which could then be used for printing the data, storing
-        to a database, etc.
+        V uvedenom príklade je ukázané získanie RSS zdroja a uloženie relevantných
+        častí do jednoduchého poľa, ktoré môže byť použité pre zobrazenie dát,
+        alebo ich uloženie do databázy, atď.
     </para>
 
     <note>
-        <title>Be aware</title>
+        <title>Uvedomte si</title>
         <para>
-            Many RSS feeds have different channel and item properties available. The RSS specification provides for
-            many optional properties, so be aware of this when writing code to work with RSS data.
+            Veľa RSS zdrojov ma rôzne prúdy a rôzne vlastnosti. Špecifikácia RSS
+            poskytuje veľa voliteľných vlastnosti a preto si dávajte pozor pri
+            písaní kódu ktorý pracuje s RSS zdrojmi. 
         </para>
     </note>
 
     <example id="zend.feed.introduction.example.rss">
-        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
+        <title>Použitie Zend_Feed na získanie dát z RSS zdroja</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Feed.php';
 
-// Fetch the latest Slashdot headlines
+// Získanie posledných noviniek zo slashdot.org
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
-    // feed import failed
+    // zlyhal import zdroja
     echo "Exception caught importing feed: {$e->getMessage()}\n";
     exit;
 }
 
-// Initialize the channel data array
+// Získanie info zo zdroja
 $channel = array(
     'title'       => $slashdotRss->title(),
     'link'        => $slashdotRss->link(),
@@ -51,7 +53,7 @@ $channel = array(
     'items'       => array()
     );
 
-// Loop over each channel item and store relevant data
+// uloženie relevantných dát z každej položky zdroja
 foreach ($slashdotRss as $item) {
     $channel['items'][] = array(
         'title'       => $item->title(),

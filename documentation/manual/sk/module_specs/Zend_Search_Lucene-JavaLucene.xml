@@ -1,53 +1,53 @@
 <sect1 id="zend.search.lucene.java-lucene">
-    <title>Interoperating with Java Lucene</title>
+    <title>Spolupráca s Java Lucene</title>
 
     <sect2 id="zend.search.lucene.index-creation.file-formats">
-        <title>File Formats</title>
+        <title>Formáty súborov</title>
         <para>
-          Zend_Search_Lucene index file formats are binary compatible with a Lucene
-          version 1.4 and above.
+            Indexový súbor Zend_Search_Lucene je binárne kompatibilný s verziou
+            Lucene 1.4 a vyššou.
         </para>
 
         <para>
-          A detailed description of this format is available here:
-          <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
-          <footnote><para>Currently supported Lucene index file format version is v2.0</para></footnote>.
+            Detailný <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>popis formátu</ulink>
+            je k dispozícii na stránke projektu Lucene
+            <footnote><para>Aktuálne podporovaná verzia indexového súboru je v2.0.</para></footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.index-directory">
-        <title>Index Directory</title>
+        <title>Adresár indexu</title>
 
         <para>
-        After index creation, the index directory will contain several files:
+        Po vytvorení indexu obsahuje adresár niekoľko súborov:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                <filename>segments</filename> file is a list of index segments.
+                <filename>segments</filename> je súbor, ktorý obsahuje zoznam segmentov indexu.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                <filename>*.cfs</filename> files contain index segments.
-                Note! Optimized index has always only one segment.
+                <filename>*.cfs</filename> súbory ktoré obsahujú segmenty indexu.
+                Optimalizovaný index vždy obsahuje iba jeden segment!
                 </para>
             </listitem>
             <listitem>
                 <para>
-                <filename>deletable</filename> file is a list of files that are no longer used
-                by the index, but which could not be deleted.
+                <filename>deletable</filename> súbor ktorý obsahuje zoznam súborov
+                ktoré sa už nepoužívajú indexom, ale nemohli byť zmazané.
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.search.lucene.java-lucene.source-code">
-        <title>Java Source Code</title>
+        <title>Zdrojový kód v Java</title>
         <para>
-            The Java program listing below provides an example of how to index a file
-            using Java Lucene:
+            Nasledujúci Java kód poskytuje príklad ako indexovať súbor s použitím
+            Java Lucene:
         </para>
 
         <programlisting role="java"><![CDATA[
