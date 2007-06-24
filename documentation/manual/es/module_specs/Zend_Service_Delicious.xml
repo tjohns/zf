@@ -3,7 +3,8 @@
     <sect2 id="zend.service.delicious.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Delicious</code> is simple API for using <ulink url="http://del.icio.us">del.icio.us</ulink>
+            <code>Zend_Service_Delicious</code> is simple API for using
+            <ulink url="http://del.icio.us">del.icio.us</ulink>
             XML and JSON web services. This component gives you read-write access to posts at del.icio.us
             if you provide credentials. It also allows read-only access to public data of all users.
         </para>
@@ -61,6 +62,10 @@ public function getAllPosts($tag = null);
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
         <para>
+            Instances of this class are returned by the <code>getPosts()</code>, <code>getAllPosts()</code>,
+            <code>getRecentPosts()</code>, and <code>getUserPosts()</code> methods of <code>Zend_Service_Delicious</code>.
+        </para>
+        <para>
             For easier data access this class implements the <code>Countable</code>, <code>Iterator</code>, and
             <code>ArrayAccess</code> interfaces.
         </para>
@@ -91,6 +96,43 @@ echo $posts[0]->getTitle();
                 <code>$posts[0] = 'A';</code> will throw exceptions because these properties are read-only.
             </para>
         </note>
+        <para>
+            Post list objects have two built-in filtering capabilities. Post lists may be filtered by tags and by URL.
+        </para>
+        <example id="zend.service.delicious.postlist.example.withTags">
+            <title>Filtering a Post List with Specific Tags</title>
+            <para>
+                Posts may be filtered by specific tags using <code>withTags()</code>. As a convenience,
+                <code>withTag()</code> is also provided for when only a single tag needs to be specified.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+$delicious = new Zend_Service_Delicious('username', 'password');
+$posts = $delicious->getAllPosts();
+
+// Print posts having "php" and "zend" tags
+foreach ($posts->withTags(array('php', 'zend')) as $post) {
+    echo "Title: {$post->getTitle()}\n";
+    echo "Url: {$post->getUrl()}\n";
+}
+?>]]></programlisting>
+        </example>
+        <example id="zend.service.delicious.postlist.example.withTags">
+            <title>Filtering a Post List by URL</title>
+            <para>
+                Posts may be filtered by URL matching a specified regular expression using the <code>withUrl()</code>
+                method:
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+$delicious = new Zend_Service_Delicious('username', 'password');
+$posts = $delicious->getAllPosts();
+
+// Print posts having "help" in the URL
+foreach ($posts->withUrl('/help/') as $post) {
+    echo "Title: {$post->getTitle()}\n";
+    echo "Url: {$post->getUrl()}\n";
+}
+?>]]></programlisting>
+        </example>
     </sect2>
     <sect2 id="zend.service.delicious.editing_posts">
         <title>Editing posts</title>
