@@ -1,31 +1,33 @@
 <sect1 id="zend.pdf.pages">
-    <title>Document pages.</title>
+    <title>Stránky dokumentu</title>
     <para>
-    PDF document page abstraction is represented by <code>Zend_Pdf_Page</code> class.
+        Stránky v PDF dokumente sú reprezentované triedou <code>Zend_Pdf_Page</code>.
     </para>
 
     <para>
-    PDF pages either are loaded from existing PDF, or created.
+        Stránky PDF dukumentu možu byt načítane zo súboru, alebo vytvorené.
     </para>
 
     <para>
-    New page can be obtained by creating new <code>Zend_Pdf_Page</code> object or calling
-    <code>Zend_Pdf::newPage()</code> method, which returns <code>Zend_Pdf_Page</code> object.
-    The difference is that <code>Zend_Pdf::newPage()</code> method creates a page, already attached to
-    the document. In difference from unattached pages it can't be used with several PDF documents,
-    but has a little bit better performance.
+        Nové stránky môžu byť získané vytvorením nového objektu <code>Zend_Pdf_Page</code>
+        alebo zavolaním metódy <code>Zend_Pdf::newPage()</code>, ktorá vráti objekt
+        <code>Zend_Pdf_Page</code>. Rozdiel je ten, že metóda <code>Zend_Pdf::newPage()</code>
+        vytvorí stránku, ktorá je spojená z dokumentom. Rozdiel oproti nespojeným
+        stránkam je to, že nemôže byť použitá vo viacerých PDF dokumentoch, ale 
+        za to je rýchlejšia.
     <footnote>
         <para>
-        It's a limitation of V1.0 version of Zend_Pdf module. It will be eliminated in future versions.
-        But unattached pages will always give better (more optimal) result for sharing pages between documents.
+            Toto je limitácia verzie 1.0 Zend_Pdf a bude odstránená v budúcich
+            verziách. Nepripojené stránky dávajú lepšie (optimálne) výsledky pre
+            zdieľanie stránok medzi dokumentami.
         </para>
-    </footnote>. It's your choice, which approach should be used.
+    </footnote>
     </para>
 
     <para>
-    <code>Zend_Pdf::newPage()</code> method and <code>Zend_Pdf_Page</code> constructor take the same
-    set of parameters. It either the size of page ($x, $y) in a points (1/72 inch), or predefined constant,
-    which is treated as a page type:
+        Metóda <code>Zend_Pdf::newPage()</code> a konštruktor <code>Zend_Pdf_Page</code>
+        majú rovnaké parametre. Buď veľkosť stránky ($x, $y) zadanú v bodoch (1/72 palca),
+        alebo jednu z preddefinovaných konštánt, ktoré sú považované za typ stránky:
         <itemizedlist>
             <listitem>
                 <para>Zend_Pdf_Page::SIZE_A4</para>
@@ -43,24 +45,24 @@
     </para>
 
     <para>
-    Document pages are stored in <code>$pages</code> public member of <code>Zend_Pdf</code> class.
-    It's an array of <code>Zend_Pdf_Page</code> objects. It completely defines set and order of document pages
-    and can be manipulated as a common array:
+        Stránky dokumentu sú uložené v poli <code>$pages</code>, ktoré je verejná
+        vlastnosť objektu <code>Zend_Pdf</code>. Toto pole určuje poradie stránok
+        a je sním možné manipulovať ako klasickým poľom:
     </para>
 
     <example>
         <title>PDF document pages management.</title>
         <programlisting role="php"><![CDATA[<?php
 ...
-// Reverse page order
+// Otočenie poradia stránok
 $pdf->pages = array_reverse($pdf->pages);
 ...
-// Add new page
+// Pridanie stránky
 $pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
-// Add new page
+// Pridanie stránky
 $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
-// Remove specified page.
+// Odstránenie stránky
 unset($pdf->pages[$id]);
 
 ...
