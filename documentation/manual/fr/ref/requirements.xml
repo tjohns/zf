@@ -1,4 +1,4 @@
-<appendix id="requirements">
+﻿<appendix id="requirements">
 
     <title>Configuration système requise</title>
 
@@ -11,23 +11,15 @@
         <title>Version de PHP requise</title>
 
         <para>
-            Zend Framework requière au minimum la version 5.1.4 de PHP.
-            Quelques interfaces SPL comme <code>Countable</code> ne sont pas
-            stables dans les versions précédentes de PHP.
+            Zend Framework requière au minimum la version 5.1.4 de PHP. Quelques interfaces SPL comme <code>Countable</code> ne sont pas stables dans les versions précédentes de PHP.
         </para>
 
         <para>
-            Zend Framework possède une collection étendue de tests automatisés,
-            que vous pouvez lancer avec PHPUnit 3.0 ou plus. Cette version de PHPUnit
-            nécessitent aussi une version 5.14 ou plus de PHP.
+            Zend Framework possède une collection étendue de tests automatisés, que vous pouvez lancer avec PHPUnit 3.0 ou plus. Cette version de PHPUnit nécessitent aussi une version 5.1.4 ou plus de PHP.
         </para>
 
         <para>
-            Bien que le Zend Framework fonctionne correctement avec la version PHP
-            mentionnée ci-dessus, nous vous recommandons fortement d'utiliser
-            la version PHP 5.2.2 ou plus. Il y a des améliorations importantes
-            concernant la sécurité et la performance d'éxécution disponibles
-            dans les versions plus récentes de PHP.
+            Bien que le Zend Framework fonctionne correctement avec la version PHP mentionnée ci-dessus, nous vous recommandons fortement d'utiliser la version PHP 5.2.2 ou plus. Il y a des améliorations importantes concernant la sécurité et la performance d'éxécution disponibles dans les versions plus récentes de PHP.
         </para>
 
     </sect1>
@@ -37,11 +29,7 @@
         <title>Extensions PHP</title>
 
         <para>
-            Ci-dessous, la table recense toutes les extensions typiquement trouvées
-            dans PHP et comment elles sont utilisées dans le Zend Framework. Cela peut aider
-            à vous guider pour savoir quelles extensions sont exigées pour votre application.
-            Cependant toutes les extensions utilisées par le Zend Framework ne sont pas
-            exigées pour chaque application.
+            Ci-dessous, la table recense toutes les extensions typiquement trouvées dans PHP et comment elles sont utilisées dans le Zend Framework. Cela peut aider à vous guider pour savoir quelles extensions sont exigées pour votre application. Cependant toutes les extensions utilisées par le Zend Framework ne sont pas exigées pour chaque application.
         </para>
 
         <table frame='all'>
@@ -54,7 +42,7 @@
                     <row>
                         <entry>Extension</entry>
                         <entry>Type d'utilisation</entry>
-                        <entry>Utilisé par les composants du Zend Framework</entry>
+                        <entry>Utilisée par les composants du Zend Framework</entry>
                     </row>
                 </thead>
                 <tbody>
@@ -463,6 +451,5 @@
         </table>
 
     </sect1>
-
 
 </appendix>
