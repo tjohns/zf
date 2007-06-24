@@ -1,5 +1,4 @@
 <sect1 id="zend.exception.using">
-
     <title>Používanie výnimiek</title>
 
     <para>
@@ -16,7 +15,7 @@ try {
 } catch (Zend_Exception $e) {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
-    // other code to recover from the failure.
+    // pokračovanie kódu pre zotavenie sa z chyby
 }
 
 ?>]]></programlisting>

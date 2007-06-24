@@ -4,6 +4,7 @@
         Používanie <code>Zend_Json</code> vyžaduje použitie týchto dvoch metód:
         <code>Zend_Json::encode()</code> a <code>Zend_Json::decode()</code>.
     </para>
+
     <programlisting role="php"><![CDATA[<?php
 // Získanie hodnoty:
 $phpNative = Zend_Json::decode($encodedValue);
