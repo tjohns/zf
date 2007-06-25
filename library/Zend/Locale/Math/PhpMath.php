@@ -76,7 +76,11 @@ function Zend_Locale_Math_Sub($op1, $op2, $op3 = null)
     if ($op3 !== null) {
         $result = round($result, $op3);
     } else {
-        $result = floor($result);
+        if ($result > 0) {
+            $result = floor($result);
+        } else {
+            $result = ceil($result);
+        }
     }
     if ($op3 > 0) {
         if ((string) $result == "0")  {
