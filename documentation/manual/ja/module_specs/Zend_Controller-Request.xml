@@ -133,6 +133,37 @@
                     パラメータの順になります。このメソッドを使用する際には、この点に注意しましょう。
                 </para>
             </note>
+
+            <note>
+                <title>Apache のおかしな挙動</title>
+                <para>
+                    Apache の 404 ハンドラを使用して
+                    リクエストをフロントコントローラに渡したり、
+                    PT フラグを rewrite ルールで使用したりする場合は、
+                    必要な URI 情報が含まれるのが
+                    <code>$_SERVER['REQUEST_URI']</code>
+                    ではなく <code>$_SERVER['REDIRECT_URL']</code>
+                    であることに注意しましょう。
+                    この設定を使用して無効なルーティングを取得したい場合は、
+                    デフォルトの Http クラスではなく
+                    <code>Zend_Controller_Request_Apache404</code>
+                    クラスを使用してリクエストオブジェクトを作成しなければなりません。
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Request/Apache404.php';
+$request = new Zend_Controller_Request_Apache404();
+$front->setRequest($request);
+?>]]></programlisting>
+
+                <para>
+                    このクラスは
+                    <code>Zend_Controller_Request_Http</code>
+                    クラスを継承したもので、リクエスト URI
+                    を自動で検出できるように変更しています。
+                    これは、単純にもとのクラスと差し替えて使用できます。
+                </para>
+            </note>
         </sect3>
 
         <sect3 id="zend.controller.request.http.baseurl">
