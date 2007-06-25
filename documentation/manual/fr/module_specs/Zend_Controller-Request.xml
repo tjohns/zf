@@ -73,7 +73,23 @@
                 <title>getParam() retrouve plus que les paramètres d'utilisateur</title>
 
                 <para>
-                    Afin d'effectuer une partie de son travail, <code>getParam()</code> recherche réellement dans plusieurs sources. Dans l'ordre de priorité, ceux-ci incluent : l'ensemble de paramètres d'utilisateur régléspar l'intermédiaire de <code>setParam()</code>, les paramètres <code>GET</code>, les paramètres <code>POST</code>, et finalement les paramètres <code>COOKIE</code>. Faites attention à ceci lorsque vous récupérez des données par l'intermédiaire de cette méthode.
+                    Afin d'effectuer une partie de son travail, <code>getParam()</code> recherche réellement dans plusieurs sources. Dans l'ordre de priorité, ceux-ci incluent : l'ensemble de paramètres d'utilisateur réglés par l'intermédiaire de <code>setParam()</code>, les paramètres <code>GET</code>, les paramètres <code>POST</code>, et finalement les paramètres <code>COOKIE</code>. Faites attention à ceci lorsque vous récupérez des données par l'intermédiaire de cette méthode.
+                </para>
+            </note>
+            <note>
+                <title>Caprices d'Apache</title>
+                <para>
+                    Si vous utilisez le gestionnaire 404 d'Apache pour passer les requêtes entrantes au contrôleur frontal, ou si vous utilisez le drapeau PT avec les règles de ré-écriture, <code>$_SERVER['REDIRECT_URL']</code> contient l'URI dont vous avez besoin, pas <code>$_SERVER['REQUEST_URI']</code>. Si vous employez une telle installation et obtenez un routage invalide, vous devriez employer la classe <code>Zend_Controller_Request_Apache404</code> au lieu de la classe HTTP par défaut pour votre objet de requête :
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Request/Apache404.php';
+$request = new Zend_Controller_Request_Apache404();
+$front->setRequest($request);
+?>]]></programlisting>
+
+                <para>
+                    Cette classe étend la classe <code>Zend_Controller_Request_Http</code> et modifie simplement la recherche automatique de l'URI de la requête. Elle peut être employée comme un remplacement "drop-in".
                 </para>
             </note>
         </sect3>
