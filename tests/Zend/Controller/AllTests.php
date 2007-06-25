@@ -21,6 +21,7 @@ require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
 require_once 'Plugin/BrokerTest.php';
 require_once 'Plugin/ErrorHandlerTest.php';
+require_once 'Request/Apache404Test.php';
 require_once 'Request/HttpTest.php';
 require_once 'Response/HttpTest.php';
 require_once 'Router/RouteTest.php';
@@ -50,6 +51,7 @@ class Zend_Controller_AllTests
         $suite->addTestSuite('Zend_Controller_FrontTest');
         $suite->addTestSuite('Zend_Controller_Plugin_BrokerTest');
         $suite->addTestSuite('Zend_Controller_Plugin_ErrorHandlerTest');
+        $suite->addTestSuite('Zend_Controller_Request_Apache404Test');
         $suite->addTestSuite('Zend_Controller_Request_HttpTest');
         $suite->addTestSuite('Zend_Controller_Response_HttpTest');
         $suite->addTestSuite('Zend_Controller_Router_RouteTest');
