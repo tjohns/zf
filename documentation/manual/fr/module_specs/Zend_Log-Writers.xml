@@ -73,7 +73,7 @@ $parametres = array ('host'     => '127.0.0.1',
                  'dbname'   => 'camelot');
 $db = Zend_Db::factory('PDO_MYSQL', $parametres);
 
-$planDeCorrespondance = array(array('niveau' => 'priority', 'msg' => 'message'));
+$planDeCorrespondance = array('niveau' => 'priority', 'msg' => 'message');
 $redacteur = new Zend_Log_Writer_Db($db, 'nom_de_la_table_de_log', $planDeCorrespondance);
 
 $logger = new Zend_Log($redacteur);
