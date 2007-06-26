@@ -89,7 +89,7 @@ $params = array ('host'     => '127.0.0.1',
                  'dbname'   => 'camelot');
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-$columnMapping = array(array('lvl' => 'priority', 'msg' => 'message'));
+$columnMapping = array('lvl' => 'priority', 'msg' => 'message');
 $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 
 $logger = new Zend_Log($writer);

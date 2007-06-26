@@ -28,6 +28,8 @@
         <para>
             抽象クラス Zend_Db_Table_Abstract を継承して、各テーブル用のクラスを作成します。
             詳細は <xref linkend="zend.db.table.defining" /> を参照ください。
+            また、以下のコードで使用しているデータベースの構成については
+            <xref linkend="zend.db.adapter.example-database" /> を参照ください。
         </para>
 
         <para>
@@ -69,11 +71,6 @@ class Bugs extends Zend_Db_Table_Abstract
             'columns'           => array('verified_by'),
             'refTableClass'     => 'Accounts',
             'refColumns'        => array('account_name')
-        ),
-        'Product' => array(
-            'columns'           => array('product_id'),
-            'refTableClass'     => 'Products',
-            'refColumns'        => array('product_id')
         )
     );
 }
@@ -541,7 +538,7 @@ $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'Bugs');]]>
+$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]]>
             </programlisting>
         </example>
 
@@ -554,8 +551,8 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'Bugs');]]>
 
         <para>
             <code>$rule1</code> は、中間テーブルから元テーブルへのリレーションを表す
-            ルールのキーです。この例では、<code>Bugs</code> から
-            <code>Accounts</code> へのリレーションがそれにあたります。
+            ルールのキーです。この例では、<code>BugsProducts</code> から
+            <code>Bugs</code> へのリレーションがそれにあたります。
         </para>
 
         <para>
@@ -593,7 +590,7 @@ $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'Bugs', 'Bug');]]>
+$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');]]>
             </programlisting>
         </example>
 
@@ -654,10 +651,10 @@ $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
 // デフォルトの参照ルールを使用します
-$products          = $bug1234->findProductsViaBugs();
+$products          = $bug1234->findProductsViaBugsProducts();
 
 // 参照ルールを指定します
-$products          = $bug1234->findProductsViaBugsByBug();]]>
+$products          = $bug1234->findProductsViaBugsProductsByBug();]]>
             </programlisting>
         </example>
 
@@ -764,7 +761,7 @@ $product1234->delete();
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-class Bugs extends Zend_Db_Table_Abstract
+class BugsProducts extends Zend_Db_Table_Abstract
 {
     ...
     protected $_referenceMap    = array(
