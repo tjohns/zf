@@ -73,7 +73,7 @@ function Zend_Locale_Math_Sub($op1, $op2, $op3 = null)
     if ((string)($result + $op2) != (string)$op1) {
         throw new Zend_Locale_Math_Exception("subtraction overflow: $op1 - $op2 != $result", $op1, $op2, $result);
     }
-    if ($op3 !== null) {
+    if ($op3 <> 0) {
         $result = round($result, $op3);
     } else {
         if ($result > 0) {
