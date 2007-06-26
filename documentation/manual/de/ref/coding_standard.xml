@@ -511,7 +511,8 @@ class Foo
                 </para>
 
                 <para>
-                    <emphasis>NOTIZ:</emphasis> Passing by-reference is permitted in the function declaration only:
+                    <emphasis>NOTIZ:</emphasis> Das Übergeben durch Referenz ist nur in der Deklaration der Funktion
+                    gestattet:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -528,13 +529,14 @@ class Foo
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited.
+                    Der Aufruf durch Referenz ist nicht gestattet.
                 </para>
 
 
                 <para>
-                    The return value must not be enclosed in parentheses.  This can hinder readability
-                    and can also break code if a method is later changed to return by reference.
+                    Der Rückgabewert darf nicht in Klammern stehen. Das kann die Lesbarkeit behindern und auch
+                    den Code unterbrechen wenn eine Methode später später auf Rückgabe durch Referenz geändert
+                    wird.
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -563,24 +565,24 @@ class Foo
             </sect3>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.usage">
-                <title>Function and Method Usage</title>
+                <title>Verwendung von Funktionen und Methoden</title>
 
                 <para>
-                    Function arguments are separated
-                    by a single trailing space after the comma delimiter. This is an example of an
-                    acceptable function call for a function that takes three arguments:
+                    Funktionsargumente sind durch ein einzelnes trennendes Leerzeichen nach dem Komma Trennzeichen
+                    getrennt. Das ist ein Beispiel für einen akzeptierbaren Funktionsaufruf für eine Funktion die
+                    drei Argumente benötigt:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);]]></programlisting>
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited. See the function declarations section
-                    for the proper way to pass function arguments by-reference.
+                    Übergabe von Referenzen zur Laufzeit ist gestattet. Siehe die Sektion für Funktions Deklarationen
+                    für den richtigen Weg um Funktionsargumente per Referenz zu übergeben.
                 </para><para>
-                    For functions whose arguments permitted arrays, the function call may include the
-                    "array" construct and can be split into multiple lines to improve readability.  In
-                    these cases, the standards for writing arrays still apply:
+                    Für Funktionen deren Argumente Arrays gestatten, kann der Funktionsaufruf das "array"
+                    Konstrukt beinhalten und in mehrere Zeilen gespalten werden um die Lesbarkeit zu erhöhen.
+                    In diesen Fällen ist der Standard für das Schreiben von Arrays trotzdem:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
@@ -593,27 +595,27 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
         </sect2>
 
         <sect2 id="coding-standard.coding-style.control-statements">
-            <title>Control Statements</title>
+            <title>Kontrollanweisungen</title>
 
             <sect3 id="coding-standard.coding-style.control-statements.if-else-elseif">
                 <title>If / Else / Elseif</title>
 
                 <para>
-                    Control statements based on the <code>if</code> and <code>elseif</code>
-                    constructs must have a single space before the opening parenthesis of the conditional,
-                    and a single space after the closing parenthesis.
+                    Kontrollanweisungen die auf den <code>if</code> und <code>elseif</code> Konstrukten
+                    beruhen müssen ein einzelnes Leerzeichen vor der öffnenden Klammer der bedingten Anweisung,
+                    und ein einzelnes Leerzeichen nach der schließenden Klammer.
                 </para>
 
                 <para>
-                    Within the conditional statements between the parentheses, operators must be separated
-                    by spaces for readability. Inner parentheses are encouraged to improve logical grouping
-                    of larger conditionals.
+                    Innerhalb der bedingten Anweisungen zwischen den Klammern, müssen die Operationen, für die
+                    Lesbarkeit, durch Leerzeichen getrennt werden. Innere Klammern sind zu beführworten um
+                    die logische Gruppierung von größeren Bedingungen zu erhöhen.
                 </para>
 
                 <para>
-                    The opening brace is written on the same line as the conditional statement. The closing
-                    brace is always written on its own line. Any content within the braces must be
-                    indented four spaces.
+                    Die öffnende Klammer wird in der selben Zeile geschrieben wie die Bedingungsanweisung.
+                    Die schließende Klammer wird immer in einer eigenen Zeile geschrieben. Jeder Inhalt innerhalb
+                    der Klammer muß vier Leerzeichen eingerückt werden.
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -622,8 +624,8 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    For "if" statements that include "elseif" or "else", the formatting must be
-                    as in these examples:
+                    Für "if" Anweisungen die "elseif" oder "else" beinhalten, muß die Formatierung wie in den
+                    folgenden Beispielen stattfinden:
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -640,14 +642,14 @@ if ($a != 2) {
 } else {
    $a = 7;
 }]]></programlisting>
-                    PHP allows for these statements to be written without braces in some circumstances.
-                    The coding standard makes no differentiation and all "if", "elseif" or "else" statements
-                    must use braces.
+                    PHP erlaubt es solche Anweisungen in einigen Fällen auch ohne Klammern zu schreiben.
+                    Der Code Standard macht keine Unterscheidungen und es müssen alle "if", "elseif" oder "else"
+                    Anweisungen in Klammern geschrieben werden.
                 </para>
 
                 <para>
-                    Use of the "elseif" construct is permitted but highly discouraged in favor of the
-                    "else if" combination.
+                    Die Verwendung des "elseif" Konstruktes ist erlaubt es wird aber sehr stark davon abgeraten
+                    und es ist die "else if" Kombination zu bevorzugen.
                 </para>
             </sect3>
 
@@ -655,14 +657,14 @@ if ($a != 2) {
                 <title>Switch</title>
 
                 <para>
-                    Control statements written with the "switch" construct must have a single space before
-                    the opening parenthesis of the conditional statement, and also a single space after
-                    the closing parenthesis.
+                    Kontrollanweisungen die mit dem "switch" Konstrukt geschrieben werden müssen ein einzelnes
+                    Leerzeichen vor der öffnenden Klammer der Bedingten Anweisung besitzen, und auch ein einzelnes
+                    Leerzeichen nach der schließenden Klammer.
                 </para>
 
                 <para>
-                    All content within the "switch" statement must be indented four spaces. Content under
-                    each "case" statement must be indented an additional four spaces.
+                    Jeglicher Inhalt innerhalb der "switch" Anweisung muß um vier Leerzeichen eingerückt sein.
+                    Der Inhalt unter jeder "case" Anweisung muß um vier zusätzliche Leerzeichen eingerückt werden.
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -678,14 +680,16 @@ switch ($numPeople) {
 }]]></programlisting>
 
                 <para>
-                    The construct <code>default</code> may never be omitted from a <code>switch</code> statement.
+                    Das <code>default</code> Konstrukt darf nie bei der <code>switch</code> Anweisung vergessen
+                    werden.
                 </para>
 
                 <para>
-                    <emphasis>NOTIZ:</emphasis> It is sometimes useful to write a <code>case</code> statement which falls through
-                    to the next case by not including a <code>break</code> or <code>return</code> in that case. To distinguish
-                    these cases from bugs, any <code>case</code> statement where <code>break</code> or <code>return</code> are
-                    omitted must contain the comment "// break intentionally omitted".
+                    <emphasis>NOTIZ:</emphasis> Es ist machmal nützlich eine <code>case</code> Anweisung zu
+                    schreiben, die durch das nächste case fällt indem in solchen Fällen kein  <code>break</code>
+                    oder <code>return</code> angegeben wird. Um diese Fälle von Fehlern zu unterscheiden, muß jede
+                    <code>case</code> Anweisung wo <code>break</code> oder <code>return</code> unterlassen werden
+                    den Kommentar "// break intentionally omitted" enthalten.
                 </para>
             </sect3>
         </sect2>
