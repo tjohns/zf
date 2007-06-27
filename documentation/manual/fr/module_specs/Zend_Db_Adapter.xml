@@ -459,6 +459,16 @@ CREATE TABLE bugs_products (
             <code>accounts</code> table for a given bug.
         </para>
 
+        <para>
+            The diagram below illustrates the physical data model of the
+            example database.
+        </para>
+
+        <para>
+            <inlinegraphic width="387" scale="100" align="center" valign="middle"
+                fileref="../figures/zend.db.adapter.example-database.png" format="PNG" />
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.select">
