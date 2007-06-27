@@ -389,4 +389,22 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
     	$this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of CookieJar as expected');
     	$this->assertEquals(3, count($jar->getAllCookies()), 'CookieJar expected to contain 3 cookies');
     }
+    
+    /**
+     * Make sure that paths with trailing slashes are matched as well as paths with no trailing slashes
+     */
+    public function testMatchPathWithTrailingSlash()
+    {
+    	$jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo1=bar1; domain=.example.com; path=/a/b'),
+    		Zend_Http_Cookie::fromString('foo2=bar2; domain=.example.com; path=/a/b/')
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	$cookies = $jar->getMatchingCookies('http://www.example.com/a/b/file.txt');
+    	
+    	$this->assertType('array', $cookies);
+    	$this->assertEquals(2, count($cookies));    	
+    }
 }

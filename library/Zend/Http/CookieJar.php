@@ -307,6 +307,7 @@ class Zend_Http_CookieJar
      */
     protected function _matchPath($domains, $path) {
         $ret = array();
+        if (substr($path, -1) != '/') $path .= '/';
         
         foreach ($domains as $dom => $paths_array) {
             foreach (array_keys($paths_array) as $cpath) {
