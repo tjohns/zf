@@ -60,11 +60,6 @@ class Zend_Db_Table_TableBugs extends Zend_Db_Table_Abstract
             'columns'           => array('verified_by'),
             'refTableClass'     => 'Zend_Db_Table_TableAccounts',
             'refColumns'        => array('account_name')
-        ),
-        'Product' => array(
-            'columns'           => array('product_id'),
-            'refTableClass'     => 'Zend_Db_Table_TableProducts',
-            'refColumns'        => array('product_id')
         )
     );
 
