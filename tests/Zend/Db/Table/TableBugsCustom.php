@@ -76,11 +76,6 @@ class Zend_Db_Table_TableBugsCustom extends Zend_Db_Table_TableBugs
             'columns'           => 'verified_by',
             'refTableClass'     => 'Zend_Db_Table_TableAccountsCustom',
             'refColumns'        => 'account_name'
-        ),
-        'Product' => array(
-            'columns'           => 'product_id',
-            'refTableClass'     => 'Zend_Db_Table_TableProductsCustom',
-            'refColumns'        => 'product_id'
         )
     );
 
