@@ -63,7 +63,15 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        $pattern = '/[^\p{L}' . ($this->allowWhiteSpace ? '\s' : '') . ']/u';
+        $whiteSpace = $this->allowWhiteSpace ? '\s' : '';
+
+        // Checks if PCRE is compiled with UTF-8 and Unicode support
+        if (!@preg_match('/\pL/u', 'a')) {
+            // POSIX named classes are not supported, use alternative a-zA-Z match
+            $pattern = '/[^a-zA-Z' . $whiteSpace . ']/';
+        } else {
+            $pattern = '/[^\p{L}' . $whiteSpace . ']/u';
+        }
 
         return preg_replace($pattern, '', (string) $value);
     }

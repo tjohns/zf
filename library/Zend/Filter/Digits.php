@@ -45,6 +45,14 @@ class Zend_Filter_Digits implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        return preg_replace('/[\p{^N}]/', '', (string) $value);
+        // Checks if PCRE is compiled with UTF-8 and Unicode support
+        if (!@preg_match('/\pL/u', 'a')) {
+            // POSIX named classes are not supported, use alternative a-zA-Z0-9 match
+            $pattern = '/[^0-9]/';
+        } else {
+            $pattern = '/[\p{^N}]/';
+        }
+
+        return preg_replace($pattern, '', (string) $value);
     }
 }

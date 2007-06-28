@@ -67,16 +67,28 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
-        $valuesExpected = array(
-            'abc123'        => 'abc',
-            'abc 123'       => 'abc',
-            'abcxyz'        => 'abcxyz',
-            'četně'         => 'četně',
-            'لعربية'        => 'لعربية',
-            'grzegżółka'    => 'grzegżółka',
-            'België'        => 'België',
-            ''              => ''
-            );
+        // Checks if PCRE is compiled with UTF-8 and Unicode support
+        if (!@preg_match('/\pL/u', 'a')) {
+            // Sorry folks, no unicode tests for you
+            $valuesExpected = array(
+                'abc123'        => 'abc',
+                'abc 123'       => 'abc',
+                'abcxyz'        => 'abcxyz',
+                ''              => ''
+                );
+        } else {
+            $valuesExpected = array(
+                'abc123'        => 'abc',
+                'abc 123'       => 'abc',
+                'abcxyz'        => 'abcxyz',
+                'četně'         => 'četně',
+                'لعربية'        => 'لعربية',
+                'grzegżółka'    => 'grzegżółka',
+                'België'        => 'België',
+                ''              => ''
+                );
+        }
+
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals(
                 $output,
@@ -95,18 +107,32 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     {
         $this->_filter->allowWhiteSpace = true;
 
-        $valuesExpected = array(
-            'abc123'        => 'abc',
-            'abc 123'       => 'abc ',
-            'abcxyz'        => 'abcxyz',
-            'četně'         => 'četně',
-            'لعربية'        => 'لعربية',
-            'grzegżółka'    => 'grzegżółka',
-            'België'        => 'België',
-            ''              => '',
-            "\n"            => "\n",
-            " \t "          => " \t "
-            );
+        // Checks if PCRE is compiled with UTF-8 and Unicode support
+        if (!@preg_match('/\pL/u', 'a')) {
+            // Sorry folks, no unicode tests for you
+            $valuesExpected = array(
+                'abc123'        => 'abc',
+                'abc 123'       => 'abc ',
+                'abcxyz'        => 'abcxyz',
+                ''              => '',
+                "\n"            => "\n",
+                " \t "          => " \t "
+                );
+        } else {
+            $valuesExpected = array(
+                'abc123'        => 'abc',
+                'abc 123'       => 'abc ',
+                'abcxyz'        => 'abcxyz',
+                'četně'         => 'četně',
+                'لعربية'        => 'لعربية',
+                'grzegżółka'    => 'grzegżółka',
+                'België'        => 'België',
+                ''              => '',
+                "\n"            => "\n",
+                " \t "          => " \t "
+                );
+        }
+
         foreach ($valuesExpected as $input => $output) {
             $this->assertEquals(
                 $output,
