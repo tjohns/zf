@@ -1356,9 +1356,14 @@ try {
         <para>
             The <code>describeTable()</code> method returns an associative
             array of metadata about a table.  Specify the name of the table
-            as a string in the first argument to this method.  The keys
-            of the associative array returned are the column names of the
-            table.  The value corresponding to each column is also an
+            as a string in the first argument to this method.  The second
+            argument is optional, and names the schema in which the table
+            exists.
+        </para>
+
+        <para>
+            The keys of the associative array returned are the column names of
+            the table.  The value corresponding to each column is also an
             associative array, with the following keys and values:
         </para>
 
@@ -1446,6 +1451,11 @@ try {
                 </tbody>
             </tgroup>
         </table>
+
+        <para>
+            If no table exists matching the table name and optional schema name
+            specified, then <code>describeTable()</code> returns an empty array.
+        </para>
 
     </sect2>
 
