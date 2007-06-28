@@ -69,6 +69,7 @@ class Zend_Controller_Plugin_ErrorHandlerTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp() 
     {
+        Zend_Controller_Front::getInstance()->resetInstance();
         $this->request  = new Zend_Controller_Request_Http();
         $this->response = new Zend_Controller_Response_Http();
         $this->plugin   = new Zend_Controller_Plugin_ErrorHandler();
