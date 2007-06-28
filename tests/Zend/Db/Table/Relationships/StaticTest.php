@@ -34,6 +34,10 @@ require_once 'PHPUnit/Util/Filter.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+/**
+ * @see Zend_Db_Table_Row_TestMockRow
+ */
+require_once 'Zend/Db/Table/Row/TestMockRow.php';
 
 /**
  * @category   Zend
@@ -45,9 +49,64 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Relationships_StaticTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testStatic()
+    public function testTableRelationshipsFindDependentMagic()
     {
-        $this->markTestIncomplete('Static table tests are not implemented yet');
+        $row = new Zend_Db_Table_Row_TestMockRow();
+
+        $this->assertNull($row->dependentTable);
+        $this->assertNull($row->ruleKey);
+
+        $row->findTable1();
+        $this->assertEquals('Table1', $row->dependentTable);
+        $this->assertNull($row->ruleKey);
+
+        $row->findTable2ByRule1();
+        $this->assertEquals('Table2', $row->dependentTable);
+        $this->assertEquals('Rule1', $row->ruleKey);
+    }
+
+    public function testTableRelationshipsFindParentMagic()
+    {
+        $row = new Zend_Db_Table_Row_TestMockRow();
+
+        $this->assertNull($row->parentTable);
+        $this->assertNull($row->ruleKey);
+
+        $row->findParentTable1();
+        $this->assertEquals('Table1', $row->parentTable);
+        $this->assertNull($row->ruleKey);
+
+        $row->findParentTable2ByRule1();
+        $this->assertEquals('Table2', $row->parentTable);
+        $this->assertEquals('Rule1', $row->ruleKey);
+    }
+
+    public function testTableRelationshipsFindManyToManyMagic()
+    {
+        $row = new Zend_Db_Table_Row_TestMockRow();
+
+        $this->assertNull($row->matchTable);
+        $this->assertNull($row->intersectionTable);
+        $this->assertNull($row->callerRefRuleKey);
+        $this->assertNull($row->matchRefRuleKey);
+
+        $row->findTable1ViaTable2();
+        $this->assertEquals('Table1', $row->matchTable);
+        $this->assertEquals('Table2', $row->intersectionTable);
+        $this->assertNull($row->callerRefRuleKey);
+        $this->assertNull($row->matchRefRuleKey);
+
+        $row->findTable3ViaTable4ByRule1();
+        $this->assertEquals('Table3', $row->matchTable);
+        $this->assertEquals('Table4', $row->intersectionTable);
+        $this->assertEquals('Rule1', $row->callerRefRuleKey);
+        $this->assertNull($row->matchRefRuleKey);
+
+        $row->findTable5ViaTable6ByRule2AndRule3();
+        $this->assertEquals('Table5', $row->matchTable);
+        $this->assertEquals('Table6', $row->intersectionTable);
+        $this->assertEquals('Rule2', $row->callerRefRuleKey);
+        $this->assertEquals('Rule3', $row->matchRefRuleKey);
     }
 
     public function getDriver()

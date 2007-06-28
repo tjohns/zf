@@ -863,8 +863,9 @@ abstract class Zend_Db_Table_Row_Abstract
          * Recognize methods for Has-Many cases:
          * findParent<Class>()
          * findParent<Class>By<Rule>()
+         * Use the non-greedy pattern repeat modifier e.g. \w+?
          */
-        if (preg_match('/^findParent(\w+)(?:By(\w+))?$/', $method, $matches)) {
+        if (preg_match('/^findParent(\w+?)(?:By(\w+))?$/', $method, $matches)) {
             $class    = $matches[1];
             $ruleKey1 = isset($matches[2]) ? $matches[2] : null;
             return $this->findParentRow($class, $ruleKey1);
@@ -875,8 +876,9 @@ abstract class Zend_Db_Table_Row_Abstract
          * find<Class1>Via<Class2>()
          * find<Class1>Via<Class2>By<Rule>()
          * find<Class1>Via<Class2>By<Rule1>And<Rule2>()
+         * Use the non-greedy pattern repeat modifier e.g. \w+?
          */
-        if (preg_match('/^find(\w+)Via(\w+)(?:By(\w+)(?:And(\w+))?)?$/', $method, $matches)) {
+        if (preg_match('/^find(\w+?)Via(\w+?)(?:By(\w+?)(?:And(\w+))?)?$/', $method, $matches)) {
             $class    = $matches[1];
             $viaClass = $matches[2];
             $ruleKey1 = isset($matches[3]) ? $matches[3] : null;
@@ -888,8 +890,9 @@ abstract class Zend_Db_Table_Row_Abstract
          * Recognize methods for Belongs-To cases:
          * find<Class>()
          * find<Class>By<Rule>()
+         * Use the non-greedy pattern repeat modifier e.g. \w+?
          */
-        if (preg_match('/^find(\w+)(?:By(\w+))?$/', $method, $matches)) {
+        if (preg_match('/^find(\w+?)(?:By(\w+))?$/', $method, $matches)) {
             $class    = $matches[1];
             $ruleKey1 = isset($matches[2]) ? $matches[2] : null;
             return $this->findDependentRowset($class, $ruleKey1);
