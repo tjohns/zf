@@ -112,7 +112,6 @@ abstract class Zend_Db_Table_Row_Abstract
                 require_once 'Zend/Db/Table/Row/Exception.php';
                 throw new Zend_Db_Table_Row_Exception('Data must be an array');
             }
-            // @todo: use setFromArray(), which employs _transformColumn().
             $this->_data = $config['data'];
         }
         if (isset($config['stored']) && $config['stored'] === true) {
@@ -368,7 +367,6 @@ abstract class Zend_Db_Table_Row_Abstract
         /**
          * Compare the data to the clean data to discover
          * which columns have been changed.
-         * @todo: do this in the __set() and setFromArray() methods.
          */
         $diffData = array_diff_assoc($this->_data, $this->_cleanData);
 
