@@ -51,6 +51,13 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     protected $_filter;
 
     /**
+     * Is PCRE is compiled with UTF-8 and Unicode support
+     *
+     * @var mixed
+     **/
+    protected static $_unicodeEnabled;
+
+    /**
      * Creates a new Zend_Filter_Alpha object for each test method
      *
      * @return void
@@ -58,6 +65,9 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_filter = new Zend_Filter_Alpha();
+        if (null === self::$_unicodeEnabled) {
+            self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
+        }
     }
 
     /**
@@ -67,8 +77,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
-        // Checks if PCRE is compiled with UTF-8 and Unicode support
-        if (!@preg_match('/\pL/u', 'a')) {
+        if (!self::$_unicodeEnabled) {
             // Sorry folks, no unicode tests for you
             $valuesExpected = array(
                 'abc123'        => 'abc',
@@ -106,9 +115,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
     public function testAllowWhiteSpace()
     {
         $this->_filter->allowWhiteSpace = true;
-
-        // Checks if PCRE is compiled with UTF-8 and Unicode support
-        if (!@preg_match('/\pL/u', 'a')) {
+        if (!self::$_unicodeEnabled) {
             // Sorry folks, no unicode tests for you
             $valuesExpected = array(
                 'abc123'        => 'abc',

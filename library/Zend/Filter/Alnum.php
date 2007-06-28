@@ -43,6 +43,13 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
     public $allowWhiteSpace;
 
     /**
+     * Is PCRE is compiled with UTF-8 and Unicode support
+     *
+     * @var mixed
+     **/
+    protected static $_unicodeEnabled;
+
+    /**
      * Sets default option values for this instance
      *
      * @param  boolean $allowWhiteSpace
@@ -51,6 +58,9 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
     public function __construct($allowWhiteSpace = false)
     {
         $this->allowWhiteSpace = (boolean) $allowWhiteSpace;
+        if (null === self::$_unicodeEnabled) {
+            self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
+        }
     }
 
     /**
@@ -64,9 +74,7 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
     public function filter($value)
     {
         $whiteSpace = $this->allowWhiteSpace ? '\s' : '';
-
-        // Checks if PCRE is compiled with UTF-8 and Unicode support
-        if (!@preg_match('/\pL/u', 'a')) {
+        if (!self::$_unicodeEnabled) {
             // POSIX named classes are not supported, use alternative a-zA-Z0-9 match
             $pattern = '/[^a-zA-Z0-9' . $whiteSpace . ']/';
         } else {

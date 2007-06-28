@@ -36,6 +36,28 @@ require_once 'Zend/Filter/Interface.php';
 class Zend_Filter_Digits implements Zend_Filter_Interface
 {
     /**
+     * Is PCRE is compiled with UTF-8 and Unicode support
+     *
+     * @var mixed
+     **/
+    protected static $_unicodeEnabled;
+
+    /**
+     * Class constructor
+     *
+     * Checks if PCRE is compiled with UTF-8 and Unicode support
+     *
+     * @param  boolean $allowWhiteSpace
+     * @return void
+     */
+    public function __construct()
+    {
+        if (null === self::$_unicodeEnabled) {
+            self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
+        }
+    }
+
+    /**
      * Defined by Zend_Filter_Interface
      *
      * Returns the string $value, removing all but digit characters
@@ -45,8 +67,7 @@ class Zend_Filter_Digits implements Zend_Filter_Interface
      */
     public function filter($value)
     {
-        // Checks if PCRE is compiled with UTF-8 and Unicode support
-        if (!@preg_match('/\pL/u', 'a')) {
+        if (!self::$_unicodeEnabled) {
             // POSIX named classes are not supported, use alternative a-zA-Z0-9 match
             $pattern = '/[^0-9]/';
         } else {
