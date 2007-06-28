@@ -5,7 +5,7 @@
     <para>
         Zend_Validate bietet ein Set von standardmäßig benötigten Prüfern, aber zwangsläufig, werden
         Entwickler wünschen, eigene Prüfer für die eigenen Bedürfnisse zu schreiben. Die Aufgabe des
-        schreibens von eigenen Prüfern wird in diesem Kapitel beschrieben.
+        Schreibens eigener Prüfer wird in diesem Kapitel beschrieben.
     </para>
 
     <para>
