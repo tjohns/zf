@@ -22,15 +22,15 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
 
     public function testSetHeader()
     {
-        $expected = array(array('name' => 'Content-Type', 'value' => 'text/xml'));
+        $expected = array(array('name' => 'Content-Type', 'value' => 'text/xml', 'replace' => false));
         $this->_response->setHeader('Content-Type', 'text/xml');
         $this->assertSame($expected, $this->_response->getHeaders());
 
-        $expected[] =array('name' => 'Content-Type', 'value' => 'text/html');
+        $expected[] =array('name' => 'Content-Type', 'value' => 'text/html', 'replace' => false);
         $this->_response->setHeader('Content-Type', 'text/html');
         $this->assertSame($expected, $this->_response->getHeaders());
 
-        $expected = array(array('name' => 'Content-Type', 'value' => 'text/plain'));
+        $expected = array(array('name' => 'Content-Type', 'value' => 'text/plain', 'replace' => true));
         $this->_response->setHeader('Content-Type', 'text/plain', true);
         $count = 0;
         foreach ($this->_response->getHeaders() as $header) {

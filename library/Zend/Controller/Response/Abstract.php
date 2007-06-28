@@ -108,8 +108,9 @@ abstract class Zend_Controller_Response_Abstract
         }
 
         $this->_headers[] = array(
-            'name'  => $name,
-            'value' => $value
+            'name'    => $name,
+            'value'   => $value,
+            'replace' => $replace
         );
 
         return $this;
@@ -298,10 +299,10 @@ abstract class Zend_Controller_Response_Abstract
 
         foreach ($this->_headers as $header) {
             if (!$httpCodeSent && $this->_httpResponseCode) {
-                header($header['name'] . ': ' . $header['value'], false, $this->_httpResponseCode);
+                header($header['name'] . ': ' . $header['value'], $header['replace'], $this->_httpResponseCode);
                 $httpCodeSent = true;
             } else {
-                header($header['name'] . ': ' . $header['value'], false);
+                header($header['name'] . ': ' . $header['value'], $header['replace']);
             }
         }
 
