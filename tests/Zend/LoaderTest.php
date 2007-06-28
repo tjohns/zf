@@ -56,6 +56,16 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testLoaderLoadClassWithDotDir()
+    {
+        $dirs = array('.');
+        try {
+            Zend_Loader::loadClass('Zend_Version', $dirs);
+        } catch (Exception $e) {
+            $this->fail('Loading from dot should not fail');
+        }
+    }
+
     /**
      * Tests that an exception is thrown when a file is loaded but the
      * class is not found within the file

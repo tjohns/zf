@@ -75,8 +75,12 @@ class Zend_Loader
                 $dirs = array($dirPath);
             } else {
                 foreach ($dirs as $key => $dir) {
-                    $dir = rtrim($dir, '\\/');
-                    $dirs[$key] = $dir . DIRECTORY_SEPARATOR . $dirPath;
+                    if ($dir == '.') {
+                        $dirs[$key] = $dirPath;
+                    } else {
+                        $dir = rtrim($dir, '\\/');
+                        $dirs[$key] = $dir . DIRECTORY_SEPARATOR . $dirPath;
+                    }
                 }
             }
             $file = basename($path) . '.php';
