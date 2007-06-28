@@ -281,7 +281,7 @@ $router->removeDefaultRoutes();]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$request->setBaseUrl(/~user/application-root/);]]></programlisting>
+$request->setBaseUrl('/~user/application-root/');]]></programlisting>
 
     </sect2>
 

@@ -203,7 +203,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_APC</title>
+        <title>Zend_Cache_Backend_Apc</title>
         <para>
             このバックエンドは、キャッシュレコードを共有メモリに保存する際に
             <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache)
