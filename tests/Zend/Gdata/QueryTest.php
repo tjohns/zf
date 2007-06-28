@@ -60,6 +60,33 @@ class Zend_Gdata_QueryTest extends PHPUnit_Framework_TestCase
                 'updated-min=2007-01-01') !== false); 
     }
 
+    public function testSetAndGetPublishedMax()
+    {
+        $query = new Zend_Gdata_Query();
+        $query->setPublishedMax('2007-01-01');
+        $this->assertEquals('2007-01-01', $query->getPublishedMax());
+        $this->assertTrue(strpos($query->getQueryUrl(), 
+                'published-max=2007-01-01') !== false); 
+    }
+
+    public function testSetAndGetPublishedMin()
+    {
+        $query = new Zend_Gdata_Query();
+        $query->setPublishedMin('2007-01-01');
+        $this->assertEquals('2007-01-01', $query->getPublishedMin());
+        $this->assertTrue(strpos($query->getQueryUrl(), 
+                'published-min=2007-01-01') !== false); 
+    }
+
+    public function testSetAndGetAuthor()
+    {
+        $query = new Zend_Gdata_Query();
+        $query->setAuthor('My Name');
+        $this->assertEquals('My Name', $query->getAuthor());
+        $this->assertTrue(strpos($query->getQueryUrl(),
+            'author=My+Name') !== false);
+    }
+
     public function testSetAndGetMaxResults()
     {
         $query = new Zend_Gdata_Query();

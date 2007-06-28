@@ -184,7 +184,7 @@ class Zend_Gdata_Query
     }
 
     /**
-     * @param int $value
+     * @param string $value
      * @return Zend_Gdata_Query Provides a fluent interface
      */
     public function setUpdatedMax($value)
@@ -198,7 +198,7 @@ class Zend_Gdata_Query
     }
 
     /**
-     * @param int $value
+     * @param string $value
      * @return Zend_Gdata_Query Provides a fluent interface
      */
     public function setUpdatedMin($value)
@@ -209,6 +209,48 @@ class Zend_Gdata_Query
             unset($this->_params['updated-min']);
         }
         return $this; 
+    }
+
+    /**
+     * @param string $value
+     * @return Zend_Gdata_Query Provides a fluent interface
+     */
+    public function setPublishedMax($value)
+    {
+        if ($value != null) {
+            $this->_params['published-max'] = Zend_Gdata_App_Util::formatTimestamp($value);
+        } else {
+            unset($this->_params['published-max']);
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     * @return Zend_Gdata_Query Provides a fluent interface
+     */
+    public function setPublishedMin($value)
+    {
+        if ($value != null) {
+            $this->_params['published-min'] = Zend_Gdata_App_Util::formatTimestamp($value);
+        } else {
+            unset($this->_params['published-min']);
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     * @return Zend_Gdata_Query Provides a fluent interface
+     */
+    public function setAuthor($value)
+    {
+        if ($value != null) {
+            $this->_params['author'] = $value;
+        } else {
+            unset($this->_params['author']);
+        }
+        return $this;
     }
 
     /**
@@ -260,7 +302,7 @@ class Zend_Gdata_Query
     }
 
     /**
-     * @returns int updatedMax
+     * @returns string updatedMax
      */
     public function getUpdatedMax()
     {
@@ -272,12 +314,48 @@ class Zend_Gdata_Query
     }
 
     /**
-     * @returns int updatedMin
+     * @returns string updatedMin
      */
     public function getUpdatedMin()
     {
         if (array_key_exists('updated-min', $this->_params)) {
             return $this->_params['updated-min'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @returns string publishedMax
+     */
+    public function getPublishedMax()
+    {
+        if (array_key_exists('published-max', $this->_params)) {
+            return $this->_params['published-max'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @returns string publishedMin
+     */
+    public function getPublishedMin()
+    {
+        if (array_key_exists('published-min', $this->_params)) {
+            return $this->_params['published-min'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @returns string author
+     */
+    public function getAuthor()
+    {
+        if (array_key_exists('author', $this->_params)) {
+            return $this->_params['author'];
         } else {
             return null;
         }
