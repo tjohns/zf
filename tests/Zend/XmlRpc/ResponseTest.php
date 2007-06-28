@@ -154,4 +154,23 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
         $this->_response->setEncoding('ISO-8859-1');
         $this->assertEquals('ISO-8859-1', $this->_response->getEncoding());
     }
+
+    public function testLoadXmlThrowsExceptionWithMissingNodes()
+    {
+        $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><params><param>foo</param></params></methodResponse>');
+        $this->_loadXml($sxl->asXML());
+        $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><params>foo</params></methodResponse>');
+        $this->_loadXml($sxl->asXML());
+        $sxl = new SimpleXMLElement('<?xml version="1.0"?><methodResponse><bar>foo</bar></methodResponse>');
+        $this->_loadXml($sxl->asXML());
+    }
+
+    protected function _loadXml($xml)
+    {
+        try {
+            $this->_response->loadXml($xml);
+            $this->fail('Invalid XML-RPC response should raise an exception');
+        } catch (Exception $e) {
+        }
+    }
 }

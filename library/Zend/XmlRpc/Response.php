@@ -200,6 +200,9 @@ class Zend_XmlRpc_Response
         }
 
         try {
+            if (!isset($xml->params) || !isset($xml->params->param) || !isset($xml->params->param->value)) {
+                throw new Zend_XmlRpc_Value_Exception('Missing XML-RPC value in XML');
+            }
             $valueXml = $xml->params->param->value->asXML();
             $valueXml = preg_replace('/<\?xml version=.*?\?>/i', '', $valueXml);
             $value = Zend_XmlRpc_Value::getXmlRpcValue(trim($valueXml), Zend_XmlRpc_Value::XML_STRING);
