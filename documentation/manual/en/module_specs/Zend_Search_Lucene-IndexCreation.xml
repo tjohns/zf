@@ -202,7 +202,7 @@ $index->optimize();
             <para>
                 <emphasis>MergeFactor</emphasis> is a good estimation for average number of segments merged by one auto-optimization pass.
                 Too large values produce large number of segments while they are not merged into new one. It may be a cause of
-                "failed to open stream: Too many open files" error message. This limitation is system dependant.
+                "failed to open stream: Too many open files" error message. This limitation is system dependent.
             </para>
             <para>
                 <emphasis>MergeFactor</emphasis> can be retrieved or set by <code>$index->getMergeFactor()</code> or
@@ -221,7 +221,7 @@ $index->optimize();
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.limitations">
-        <title>Limitationas</title>
+        <title>Limitations</title>
 
         <sect3 id="zend.search.lucene.index-creation.limitations.index-size">
             <title>Index size</title>

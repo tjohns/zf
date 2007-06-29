@@ -221,21 +221,21 @@ $index->optimize();
         </para>
 
         <para>
-            Index object is automatically shutted down when it and all returned QueryHit objects go out of scope.
+            Index object is automatically shut down when it, and all returned QueryHit objects, go out of scope.
         </para>
 
         <para>
             If index object is stored in global variable than it's destroyed only at the end of script execution<footnote><para>It also
-            may occur if index or QueryHit objects are refered in some complex data structures. Ex. PHP destroys objects
+            may occur if index or QueryHit objects are referred in some complex data structures. Ex. PHP destroys objects
             with cyclic references only at the end of script execution.</para></footnote>.
         </para>
 
         <para>
-            PHP exception processing is also shutted down at this moment.
+            PHP exception processing is also shut down at this moment.
         </para>
 
         <para>
-            It doesn't prevent normal index shutdowning process, but may prevent to get correct error diagnostic if any error occurs.
+            It doesn't prevent normal index shutdown process, but may prevent to get correct error diagnostic if any error occurs.
         </para>
 
         <para>
