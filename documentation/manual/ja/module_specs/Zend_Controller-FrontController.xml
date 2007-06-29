@@ -315,9 +315,20 @@ Zend_Controller_Front::run('../application/controllers');
 
             <listitem>
                 <para>
-                    <code>(un)registerPlugin()</code> は、
+                    <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code>
+                    は、<link linkend="zend.controller.plugins">プラグインオブジェクト</link>
+                    を登録します。オプションの <code>$stackIndex</code>
+                    を設定すると、プラグインの実行順を制御することができます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>unregisterPlugin($plugin)</code> は、
                     <link linkend="zend.controller.plugins">プラグインオブジェクト</link>
-                    を登録したり登録を解除したりします。
+                    の登録を解除します。<code>$plugin</code>
+                    にはプラグインオブジェクトそのものか、あるいはプラグインのクラス名を表す文字列を指定します。
+                    ここで指定したプラグインの登録を解除します。
                 </para>
             </listitem>
 
