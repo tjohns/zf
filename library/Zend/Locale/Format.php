@@ -389,16 +389,16 @@ class Zend_Locale_Format
                 $options['precision'] = 0;
             }
         }
+
         // get fraction and format lengths
-        $preg = call_user_func(Zend_Locale_Math::$sub, $value, '0');
-        $prec = call_user_func(Zend_Locale_Math::$sub, $value, $preg, $options['precision']);
+        $number = call_user_func(Zend_Locale_Math::$sub, $value, '0');
+        $prec   = call_user_func(Zend_Locale_Math::$sub, $value, $number, $options['precision']);
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
         if (($options['precision'] + 2) > strlen($prec)) {
             $prec = $prec . str_pad("0", ($options['precision'] - iconv_strlen($prec)), "0");
         }
-        $number = call_user_func(Zend_Locale_Math::$sub, $value, $prec, 0);
         if (iconv_strpos($number, '-') !== false) {
             $number = iconv_substr($number, 1);
         }
@@ -419,7 +419,6 @@ class Zend_Locale_Format
         if (($value < 0) and ($rest != '0') and ($rest != '#')) {
             $format .= $rest;
         }
-
         // Add seperation
         if ($group == 0) {
             // no seperation
