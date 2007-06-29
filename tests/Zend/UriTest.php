@@ -11,11 +11,6 @@
 require_once 'Zend/Uri.php';
 
 /**
- * Zend_Uri_Http
- */
-require_once 'Zend/Uri/Http.php';
-
-/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -56,6 +51,7 @@ class Zend_UriTest extends PHPUnit_Framework_TestCase
 
     public function testSchemeMailto()
     {
+        $this->markTestIncomplete('Zend_Uri_Mailto is not implemented yet');
     	$this->_testValidUri('mailto');
     }
 
