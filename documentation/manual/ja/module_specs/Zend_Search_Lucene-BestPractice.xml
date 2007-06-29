@@ -271,7 +271,7 @@ $index->optimize();
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.shutting-down">
-        <title>インデックスの終了処理</title>
+        <title>インデックスの終了時処理</title>
 
         <para>
             <code>Zend_Search_Lucene</code> オブジェクトは、

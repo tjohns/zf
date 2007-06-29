@@ -82,7 +82,7 @@ $hits  = $index->find($query);]]></programlisting>
     <sect2 id="zend.search.lucene.queries.multiterm-query">
         <title>複数の単語のクエリ</title>
         <para>
-            単語の組み合わせによる検索を行うためのものです。
+            複数の単語の組み合わせによる検索を行うためのものです。
         </para>
 
         <para>

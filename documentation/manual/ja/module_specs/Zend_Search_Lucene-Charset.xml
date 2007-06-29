@@ -63,7 +63,7 @@
         <title>UTF-8 互換のテキスト解析器</title>
 
         <para>
-            Zend_Search_Lucene には、機能限定版の UTF-8 解析器も含まれています。
+            Zend_Search_Lucene には、機能を絞り込んだ UTF-8 解析器も含まれています。
             これを有効にするには、以下のようなコードを使用します。
 
             <programlisting role="php"><![CDATA[<?php
