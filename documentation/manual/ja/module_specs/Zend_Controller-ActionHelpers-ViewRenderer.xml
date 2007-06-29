@@ -508,13 +508,28 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <title>命名規約: コントローラ名やアクション名の単語の区切り</title>
                 <para>
                     コントローラやアクションの名前が複数の単語からなるものである場合、
-                    ディスパッチャは特定の区切り文字を単語の切れ目と判断し、
-                    そこで区切って URL を作成します。
-                    <code>ViewRenderer</code> は、単語の区切り文字をすべてダッシュ
-                    ('-') に変換して URL を作成します。したがって、
+                    ディスパッチャには、特定のパスや区切り文字を使用して単語を区切った
+                    URL を指定しなければなりません。
+                    <code>ViewRenderer</code> は、コントローラ名の中にあるパス区切り文字を
+                    実際のパス区切り文字 ('/') に置き換え、単語区切り文字をダッシュ
+                    ('-') に置き換えてパスを作成します。したがって、
                     アクション <code>/foo.bar/baz.bat</code> をコールすると
-                    <code>FooBarController::bazBatAction()</code> へディスパッチし、
-                    その結果 <code>foo-bar/baz-bat.phtml</code> をレンダリングします。
+                    FooBarController.php の
+                    <code>FooBarController::bazBatAction()</code> へディスパッチされ、
+                    <code>foo-bar/baz-bat.phtml</code> をレンダリングすることになります。
+                    また、アクション <code>/bar_baz/baz-bat</code> をコールすると
+                    <code>Bar/BazController.php</code> (パス区切り文字に注意) の
+                    <code>Bar_BazController::bazBatAction()</code>
+                    へディスパッチされ、<code>bar/baz/baz-bat.phtml</code>
+                    をレンダリングすることになります。
+                </para>
+
+                <para>
+                    二番目の例では、モジュールはデフォルトモジュールのままであることに注意しましょう。
+                    しかし、パス区切り文字があるために、
+                    <code>Bar/BazController.php</code> にある
+                    <code>Bar_BazController</code> を受け取ることになります。
+                    ビューレンダラはコントローラのディレクトリ階層を模倣します。
                 </para>
             </note>
 
@@ -524,7 +539,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ?>
 
 <?php
-// Foo モジュールのコントローラクラス
+// 'foo' モジュールの 'bar' コントローラ
 class Foo_BarController extends Zend_Controller_Action
 {
     // デフォルトで bar/index.phtml をレンダリングするので、特に何もする必要はありません
