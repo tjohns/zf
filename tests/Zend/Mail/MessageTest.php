@@ -13,6 +13,11 @@
 require_once 'Zend/Mail/Message.php';
 
 /**
+ * Zend_Mail_Storage_Mbox
+ */
+require_once 'Zend/Mail/Storage/Mbox.php';
+
+/**
  * Zend_Mime_Decode
  */
 require_once 'Zend/Mime/Decode.php';
@@ -343,5 +348,19 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($message->valid());
         $this->assertEquals($message->getChildren(), $message->current());
         $this->assertEquals($message->key(), 1);
+    }
+
+    public function testMessageFlagsAreSet()
+    {
+        $origFlags = array(
+            'foo' => 'bar',
+            'baz' => 'bat'
+        );
+        $message = new Zend_Mail_Message(array('flags' => $origFlags));
+
+        $messageFlags = $message->getFlags();
+        $this->assertTrue($message->hasFlag('bar'), var_export($messageFlags, 1));
+        $this->assertTrue($message->hasFlag('bat'), var_export($messageFlags, 1));
+        $this->assertEquals(array('bar' => 'bar', 'bat' => 'bat'), $messageFlags);
     }
 }
