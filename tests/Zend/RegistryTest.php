@@ -191,7 +191,7 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
             $registry = Zend_Registry::setClassName('classdoesnotexist');
             $this->fail('Expected exception, because we cannot initialize the registry using a non-existent class.');
         } catch (Zend_Exception $e) {
-            $this->assertContains('class is not found', $e->getMessage());
+            $this->assertContains('File "classdoesnotexist.php" was not found', $e->getMessage());
         }
     }
 
