@@ -372,6 +372,99 @@ array(
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.controller.response.exceptions">
+        <title>レスポンスオブジェクト内での例外の検査</title>
+
+        <para>
+            先ほど説明したように、デフォルトでは
+            ディスパッチ中に発生した冷害はレスポンスオブジェクトに登録されます。
+            例外はスタックに登録されるので、発生した例外はすべて保持することができます。
+            アプリケーションの例外、ディスパッチ処理の例外、プラグインの例外などなど……。
+            特定の例外の内容を調べたり例外をログに記録したりしたい場合は、
+            レスポンスオブジェクトの例外用 API を使用します。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setException(Exception $e)</code>
+                    は、例外を登録します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isException()</code>
+                    は、例外が登録されているかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getException(Exception $e)</code>
+                    は、例外スタック全体を返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasExceptionOfType($type)</code>
+                    は、特定のクラスの例外がスタックに登録されているかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasExceptionOfMessage($message)</code>
+                    は、指定したメッセージを含む例外が
+                    スタックに登録されているかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasExceptionOfCode($code)</code>
+                    は、指定したコードを含む例外が
+                    スタックに登録されているかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getExceptionByType($type)</code>
+                    は、指定したクラスの例外をスタックからすべて取り出します。
+                    そのクラスの例外が見つからなかった場合は false を返し、
+                    見つかった場合は例外の配列を返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getExceptionByMessage($message)</code>
+                    は、指定したメッセージを含む例外をスタックからすべて取り出します。
+                    そのクラスの例外が見つからなかった場合は false を返し、
+                    見つかった場合は例外の配列を返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getExceptionByCode($code)</code>
+                    は、指定したコードを含む例外をスタックからすべて取り出します。
+                    そのクラスの例外が見つからなかった場合は false を返し、
+                    見つかった場合は例外の配列を返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>renderExceptions($flag)</code>
+                    は、例外が発生したかどうかを表すフラグを設定します。
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
     <sect2 id="zend.controller.response.subclassing">
         <title>レスポンスオブジェクトのサブクラスの作成</title>
 
