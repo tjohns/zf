@@ -138,7 +138,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     protected function _quote($value)
     {
-        if (is_int($value) || is_float($value)) {
+        if (is_numeric($value)) {
             return $value;
         }
         $value = str_replace("'", "''", $value);

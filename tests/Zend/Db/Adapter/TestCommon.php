@@ -63,6 +63,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $select->from('zfproducts');
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result), 'Expected 3 rows in first query result');
 
         $this->assertEquals(1, $result[0]['product_id']);
 
@@ -105,8 +106,6 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         ));
         $tableName = $this->_util->getTableName('noquote');
 
-        $db->getProfiler()->setEnabled(true);
-
         // insert into the table
         $numRows = $db->insert($tableName, array(
             'id'    => 1,
@@ -115,7 +114,8 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(1, $numRows);
 
         // check if the row was inserted as expected
-        $stmt = $db->query("SELECT id, stuff FROM $tableName ORDER BY id");
+        $sql = "SELECT id, stuff FROM $tableName ORDER BY id";
+        $stmt = $db->query($sql);
         $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
         $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1')), $fetched);
 
@@ -127,7 +127,8 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(1, $numRows);
 
         // check if the row was inserted as expected
-        $stmt = $db->query('SELECT ID, STUFF FROM '.strtoupper($tableName).' ORDER BY ID');
+        $sql = 'SELECT ID, STUFF FROM '.strtoupper($tableName).' ORDER BY ID';
+        $stmt = $db->query($sql);
         $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
         $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1'), 1=>array(0=>2, 1=>'no quote 2')), $fetched);
 
@@ -747,13 +748,13 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
     /**
      * test that quote() accepts a string containing
-     * digits and returns a quoted string.
+     * digits and returns an unquoted string.
      */
     public function testAdapterQuoteDigitString()
     {
         $string = '123';
         $value = $this->_db->quote($string);
-        $this->assertEquals("'123'", $value);
+        $this->assertEquals("123", $value);
     }
 
     /**
@@ -780,14 +781,13 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
     /**
      * test that quote() accepts an array and returns
-     * an imploded string of quoted elements, or non-quoted
-     * elements if they are integers.
+     * an imploded string of unquoted elements
      */
     public function testAdapterQuoteIntegerArray()
     {
         $array = array(1,'2',3);
         $value = $this->_db->quote($array);
-        $this->assertEquals("1, '2', 3", $value);
+        $this->assertEquals("1, 2, 3", $value);
     }
 
     /**

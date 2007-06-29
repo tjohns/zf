@@ -67,6 +67,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         $select->from('zfproducts');
         $stmt = $this->_db->query($select);
         $result1 = $stmt->fetchAll();
+        $this->assertEquals(3, count($result1), 'Expected 3 rows in first query result');
 
         $this->assertEquals(1, $result1[0]['product_id']);
 
@@ -75,13 +76,13 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         try {
             $stmt = $this->_db->query($select);
             $result2 = $stmt->fetchAll();
+            $this->assertEquals(3, count($result2), 'Expected 3 rows in second query result');
+            $this->assertEquals($result1, $result2);
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
             $this->fail('Unexpected exception '.get_class($e).' received: '.$e->getMessage());
         }
-
-        $this->assertEquals($result1, $result2);
     }
 
     /**
