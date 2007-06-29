@@ -7,7 +7,7 @@ cla@zend.com with a request to enable posting privileges.
 
 To run the unit tests for Zend_Session*, use a CLI version of PHP:
 
-$ cd zftrunk/incubator/tests/Zend/Session
+$ cd /path/to/zend_framework/tests/Zend/Session
 $ php AllTests.php
 
 Simulation of multiple, sequential requests required the use of exec() using the
