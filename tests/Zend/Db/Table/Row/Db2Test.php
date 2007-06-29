@@ -26,11 +26,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Row_Db2Test extends Zend_Db_Table_Row_TestCommon
 {
 
-    public function testTableRowSaveInsert()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' having troubles with auto-increment insert');
-    }
-
     public function getDriver()
     {
         return 'Db2';

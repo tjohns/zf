@@ -1038,7 +1038,17 @@ abstract class Zend_Db_Table_Abstract
         $keys = array_flip($this->_cols);
         $data = array_intersect_key($data, $keys);
         $data = array_merge($defaults, $data);
-
+        
+        /**
+         * If the primary key can be generated automatically, and no value was 
+         * specified in the user-supplied data, then omit it from the tuple.
+         */
+        $primary = (array) $this->_primary;
+        $pkIdentity = $primary[(int)$this->_identity];
+        if ($data[$pkIdentity] === null) {
+            unset($data[$pkIdentity]);   
+        }
+        
         $config = array(
             'table'   => $this,
             'data'    => $data,
