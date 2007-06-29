@@ -165,7 +165,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_APC</title>
+        <title>Zend_Cache_Backend_Apc</title>
         <para>
             Ce backend stocke les enregistrements de cache en mémoire partagée grâce à l'extension <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) qui est requise pour utiliser ce backend.
         </para>
