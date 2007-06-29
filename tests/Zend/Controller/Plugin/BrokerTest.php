@@ -177,6 +177,49 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($response->hasExceptionOfMessage('postDispatch triggered exception'));
         $this->assertTrue($response->hasExceptionOfMessage('dispatchLoopShutdown triggered exception'));
     }
+
+    public function testRegisterPluginStackOrderIsSane()
+    {
+        $broker   = new Zend_Controller_Plugin_Broker();
+        $plugin1  = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $plugin2  = new Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin();
+        $plugin3  = new Zend_Controller_Plugin_BrokerTest_TestPlugin2();
+        $broker->registerPlugin($plugin1, 5);
+        $broker->registerPlugin($plugin2, -5);
+        $broker->registerPlugin($plugin3, 2);
+
+        $plugins = $broker->getPlugins();
+        $expected = array(-5 => $plugin2, 2 => $plugin3, 5 => $plugin1);
+        $this->assertSame($expected, $plugins);
+    }
+
+    public function testRegisterPluginThrowsExceptionOnDuplicateStackIndex()
+    {
+        $broker   = new Zend_Controller_Plugin_Broker();
+        $plugin1  = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $plugin2  = new Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin();
+        $broker->registerPlugin($plugin1, 5);
+        try {
+            $broker->registerPlugin($plugin2, 5);
+            $this->fail('Registering plugins with same stack index should raise exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testRegisterPluginStackOrderWithAutmaticNumbersIncrementsCorrectly()
+    {
+        $broker   = new Zend_Controller_Plugin_Broker();
+        $plugin1  = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $plugin2  = new Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin();
+        $plugin3  = new Zend_Controller_Plugin_BrokerTest_TestPlugin2();
+        $broker->registerPlugin($plugin1, 2);
+        $broker->registerPlugin($plugin2, 3);
+        $broker->registerPlugin($plugin3);
+
+        $plugins = $broker->getPlugins();
+        $expected = array(2 => $plugin1, 3 => $plugin2, 4 => $plugin3);
+        $this->assertSame($expected, $plugins);
+    }
 }
 
 class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugin_Abstract
@@ -210,6 +253,10 @@ class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugi
     {
         $this->getResponse()->appendBody('6');
     }
+}
+
+class Zend_Controller_Plugin_BrokerTest_TestPlugin2 extends Zend_Controller_Plugin_BrokerTest_TestPlugin
+{
 }
 
 class Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin extends Zend_Controller_Plugin_Abstract

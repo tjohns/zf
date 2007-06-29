@@ -53,15 +53,33 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     /**
      * Register a plugin.
      *
-     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @param  Zend_Controller_Plugin_Abstract $plugin
+     * @param  int $stackIndex
      * @return Zend_Controller_Plugin_Broker
      */
-    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
+    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)
     {
         if (false !== array_search($plugin, $this->_plugins, true)) {
-            throw new Zend_Controller_Exception('Plugin already registered.');
+            throw new Zend_Controller_Exception('Plugin already registered');
         }
-        $this->_plugins[] = $plugin;
+
+        $stackIndex = (int) $stackIndex;
+        
+        if ($stackIndex) {
+            if (isset($this->_plugins[$stackIndex])) {
+                throw new Zend_Controller_Exception('Plugin with stackIndex "' . $stackIndex . '" already registered');
+            }
+            $this->_plugins[$stackIndex] = $plugin;
+        } else {
+            $stackIndex = count($this->_plugins);
+            while (isset($this->_plugins[$stackIndex])) {
+                ++$stackIndex;
+            }
+            $this->_plugins[$stackIndex] = $plugin;
+        }
+        
+        ksort($this->_plugins);
+
         return $this;
     }
 

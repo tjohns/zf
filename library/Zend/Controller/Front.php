@@ -694,12 +694,13 @@ class Zend_Controller_Front
     /**
      * Register a plugin.
      *
-     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @param  Zend_Controller_Plugin_Abstract $plugin
+     * @param  int $stackIndex Optional; stack index for plugin
      * @return Zend_Controller_Front
      */
-    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
+    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)
     {
-        $this->_plugins->registerPlugin($plugin);
+        $this->_plugins->registerPlugin($plugin, $stackIndex);
         return $this;
     }
 
