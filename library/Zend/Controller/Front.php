@@ -802,7 +802,8 @@ class Zend_Controller_Front
     public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
     {
         if (!$this->getParam('noErrorHandler') && !$this->_plugins->hasPlugin('Zend_Controller_Plugin_ErrorHandler')) {
-            $this->_plugins->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
+            // Register with stack index of 100
+            $this->_plugins->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(), 100);
         }
 
         if (!$this->getParam('noViewRenderer') && !Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
