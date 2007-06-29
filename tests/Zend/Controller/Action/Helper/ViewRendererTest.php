@@ -634,6 +634,29 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $body = $this->response->getBody();
         $this->assertTrue(empty($body));
     }
+
+    public function testRenderNormalizationIsCorrect()
+    {
+        $this->request->setModuleName('default')
+                      ->setControllerName('foo')
+                      ->setActionName('myBar');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $scriptName = $this->helper->getViewScript();
+        $this->assertEquals('foo/mybar.phtml', $scriptName);
+
+        $this->request->setModuleName('default')
+                      ->setControllerName('foo')
+                      ->setActionName('baz__bat');
+        $scriptName = $this->helper->getViewScript();
+        $this->assertEquals('foo/baz-bat.phtml', $scriptName);
+
+        $this->request->setModuleName('default')
+                      ->setControllerName('Foo_Bar')
+                      ->setActionName('bar__baz');
+        $scriptName = $this->helper->getViewScript();
+        $this->assertEquals('foo/bar/bar-baz.phtml', $scriptName);
+    }
 }
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.
