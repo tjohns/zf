@@ -1,6 +1,22 @@
 <?php
+// Call Zend_Controller_Response_HttpTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_Controller_Response_HttpTest::main");
+
+    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 3));
+
+    set_include_path(
+        $basePath . DIRECTORY_SEPARATOR . 'tests'
+        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
+        . PATH_SEPARATOR . get_include_path()
+    );
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
 require_once 'Zend/Controller/Response/Http.php';
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'Zend/Controller/Response/Exception.php';
 
 class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase 
 {
@@ -8,6 +24,20 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
      * @var Zend_Http_Response
      */
     protected $_response;
+
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Controller_Response_HttpTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
 
     public function setUp()
     {
@@ -460,8 +490,61 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->_response->setHttpResponseCode(309);
         $this->assertFalse($this->_response->isRedirect());
     }
+
+    public function testHasExceptionOfType()
+    {
+        $this->assertFalse($this->_response->hasExceptionOfType('Zend_Controller_Response_Exception'));
+        $this->_response->setException(new Zend_Controller_Response_Exception());
+        $this->assertTrue($this->_response->hasExceptionOfType('Zend_Controller_Response_Exception'));
+    }
+
+    public function testHasExceptionOfMessage()
+    {
+        $this->assertFalse($this->_response->hasExceptionOfMessage('FooBar'));
+        $this->_response->setException(new Zend_Controller_Response_Exception('FooBar'));
+        $this->assertTrue($this->_response->hasExceptionOfMessage('FooBar'));
+    }
+
+    public function testHasExceptionOfCode()
+    {
+        $this->assertFalse($this->_response->hasExceptionOfCode(200));
+        $this->_response->setException(new Zend_Controller_Response_Exception('FooBar', 200));
+        $this->assertTrue($this->_response->hasExceptionOfCode(200));
+    }
+
+    public function testGetExceptionByType()
+    {
+        $this->assertFalse($this->_response->getExceptionByType('Zend_Controller_Response_Exception'));
+        $this->_response->setException(new Zend_Controller_Response_Exception());
+        $exceptions = $this->_response->getExceptionByType('Zend_Controller_Response_Exception');
+        $this->assertTrue(0 < count($exceptions));
+        $this->assertTrue($exceptions[0] instanceof Zend_Controller_Response_Exception);
+    }
+
+    public function testGetExceptionByMessage()
+    {
+        $this->assertFalse($this->_response->getExceptionByMessage('FooBar'));
+        $this->_response->setException(new Zend_Controller_Response_Exception('FooBar'));
+        $exceptions = $this->_response->getExceptionByMessage('FooBar');
+        $this->assertTrue(0 < count($exceptions));
+        $this->assertEquals('FooBar', $exceptions[0]->getMessage());
+    }
+
+    public function testGetExceptionByCode()
+    {
+        $this->assertFalse($this->_response->getExceptionByCode(200));
+        $this->_response->setException(new Zend_Controller_Response_Exception('FooBar', 200));
+        $exceptions = $this->_response->getExceptionByCode(200);
+        $this->assertTrue(0 < count($exceptions));
+        $this->assertEquals(200, $exceptions[0]->getCode());
+    }
 }
 
 require_once 'Zend/Controller/Action.php';
 class Zend_Controller_Response_HttpTest_Action extends Zend_Controller_Action 
 {}
+
+// Call Zend_Controller_Response_HttpTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Controller_Response_HttpTest::main") {
+    Zend_Controller_Response_HttpTest::main();
+}

@@ -213,7 +213,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
         foreach ($this->_plugins as $plugin) {
-            $plugin->routeStartup($request);
+            try {
+                $plugin->routeStartup($request);
+            } catch (Exception $e) {
+                if (Zend_Controller_Front::getInstance()->throwExceptions()) {
+                    throw $e;
+                } else {
+                    $this->getResponse()->setException($e);
+                }
+            }
         }
     }
 
@@ -228,7 +236,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {
         foreach ($this->_plugins as $plugin) {
-            $plugin->routeShutdown($request);
+            try {
+                $plugin->routeShutdown($request);
+            } catch (Exception $e) {
+                if (Zend_Controller_Front::getInstance()->throwExceptions()) {
+                    throw $e;
+                } else {
+                    $this->getResponse()->setException($e);
+                }
+            }
         }
     }
 
@@ -247,7 +263,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
     {
         foreach ($this->_plugins as $plugin) {
-            $plugin->dispatchLoopStartup($request);
+            try {
+                $plugin->dispatchLoopStartup($request);
+            } catch (Exception $e) {
+                if (Zend_Controller_Front::getInstance()->throwExceptions()) {
+                    throw $e;
+                } else {
+                    $this->getResponse()->setException($e);
+                }
+            }
         }
     }
 
@@ -261,7 +285,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         foreach ($this->_plugins as $plugin) {
-            $plugin->preDispatch($request);
+            try {
+                $plugin->preDispatch($request);
+            } catch (Exception $e) {
+                if (Zend_Controller_Front::getInstance()->throwExceptions()) {
+                    throw $e;
+                } else {
+                    $this->getResponse()->setException($e);
+                }
+            }
         }
     }
 
@@ -275,7 +307,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         foreach ($this->_plugins as $plugin) {
-            $plugin->postDispatch($request);
+            try {
+                $plugin->postDispatch($request);
+            } catch (Exception $e) {
+                if (Zend_Controller_Front::getInstance()->throwExceptions()) {
+                    throw $e;
+                } else {
+                    $this->getResponse()->setException($e);
+                }
+            }
         }
     }
 
@@ -289,7 +329,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function dispatchLoopShutdown()
     {
        foreach ($this->_plugins as $plugin) {
-           $plugin->dispatchLoopShutdown();
+           try {
+                $plugin->dispatchLoopShutdown();
+            } catch (Exception $e) {
+                if (Zend_Controller_Front::getInstance()->throwExceptions()) {
+                    throw $e;
+                } else {
+                    $this->getResponse()->setException($e);
+                }
+            }
        }
     }
 }

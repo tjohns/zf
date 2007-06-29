@@ -151,6 +151,32 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $broker->registerPlugin($plugin);
         $this->assertTrue($broker->hasPlugin('Zend_Controller_Plugin_BrokerTest_TestPlugin'));
     }
+
+    public function testBrokerCatchesExceptions()
+    {
+        $request  = new Zend_Controller_Request_Http('http://framework.zend.com/empty');
+        $response = new Zend_Controller_Response_Cli();
+        $broker   = new Zend_Controller_Plugin_Broker();
+        $broker->setResponse($response);
+        $broker->registerPlugin(new Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin());
+        try {
+            $broker->routeStartup($request);
+            $broker->routeShutdown($request);
+            $broker->dispatchLoopStartup($request);
+            $broker->preDispatch($request);
+            $broker->postDispatch($request);
+            $broker->dispatchLoopShutdown();
+        } catch (Exception $e) {
+            $this->fail('Broker should catch exceptions');
+        }
+
+        $this->assertTrue($response->hasExceptionOfMessage('routeStartup triggered exception'));
+        $this->assertTrue($response->hasExceptionOfMessage('routeShutdown triggered exception'));
+        $this->assertTrue($response->hasExceptionOfMessage('dispatchLoopStartup triggered exception'));
+        $this->assertTrue($response->hasExceptionOfMessage('preDispatch triggered exception'));
+        $this->assertTrue($response->hasExceptionOfMessage('postDispatch triggered exception'));
+        $this->assertTrue($response->hasExceptionOfMessage('dispatchLoopShutdown triggered exception'));
+    }
 }
 
 class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugin_Abstract
@@ -185,6 +211,40 @@ class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugi
         $this->getResponse()->appendBody('6');
     }
 }
+
+class Zend_Controller_Plugin_BrokerTest_ExceptionTestPlugin extends Zend_Controller_Plugin_Abstract
+{
+    public function routeStartup(Zend_Controller_Request_Abstract $request)
+    {
+        throw new Exception('routeStartup triggered exception');
+    }
+
+    public function routeShutdown(Zend_Controller_Request_Abstract $request)
+    {
+        throw new Exception('routeShutdown triggered exception');
+    }
+
+    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
+    {
+        throw new Exception('dispatchLoopStartup triggered exception');
+    }
+
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    {
+        throw new Exception('preDispatch triggered exception');
+    }
+
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
+    {
+        throw new Exception('postDispatch triggered exception');
+    }
+
+    public function dispatchLoopShutdown()
+    {
+        throw new Exception('dispatchLoopShutdown triggered exception');
+    }
+}
+
 
 // Call Zend_Controller_Plugin_BrokerTest::main() if this source file is executed directly.
 if (PHPUnit_MAIN_METHOD == "Zend_Controller_Plugin_BrokerTest::main") {
