@@ -250,14 +250,38 @@ $index->optimize();
     <sect2 id="zend.search.lucene.index-creation.limitations">
         <title>制限</title>
 
-        <para>
-            制限はプラットフォームに依存します。
-        </para>
+        <sect3 id="zend.search.lucene.index-creation.limitations.index-size">
+            <title>インデックスの大きさ</title>
+            <para>
+                インデックスの大きさは、
+                32 ビットプラットフォームでは最大 2GB までとなります。
+            </para>
 
-        <para>
-            32 ビットプラットフォームでは、インデックスの大きさは最大
-            2GB までとなります。
-        </para>
+            <para>
+                64 ビットプラットフォームを使用すれば、
+                もっと大きなインデックスを扱えます。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
+            <title>サポートするファイルシステム</title>
+            <para>
+                Zend_Search_Lucene は、
+                検索処理やインデックス更新、インデックスの最適化を処理する際に
+                <code>flock()</code> を使用しています。
+            </para>
+
+            <para>
+                PHP の <ulink url="http://www.php.net/manual/ja/function.flock.php">マニュアル</ulink>
+                によると、
+                "<code>flock()</code> は NFS 及び他の多くのネットワークファイルシステムでは動作しません"
+                とのことです。
+            </para>
+
+            <para>
+                ネットワークファイルシステムは、Zend_Search_Lucene では使用しないでください。
+            </para>
+        </sect3>
     </sect2>
 </sect1>
 
