@@ -239,6 +239,7 @@
         <xi:include href="module_specs/Zend_Search_Lucene-Extending.xml" />
         <xi:include href="module_specs/Zend_Search_Lucene-JavaLucene.xml" />
         <xi:include href="module_specs/Zend_Search_Lucene-Advanced.xml" />
+        <xi:include href="module_specs/Zend_Search_Lucene-BestPractice.xml" />
     </chapter>
     <chapter id="zend.server">
         <title>Zend_Server</title>
