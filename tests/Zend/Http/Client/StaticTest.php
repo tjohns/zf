@@ -92,13 +92,16 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testInvalidUriObjectException()
 	{
-		try {
-			$uri = Zend_Uri::factory('mailto:nobody@example.com');
-			$this->client->setUri($uri);
-			$this->fail('Excepted invalid URI object exception was not thrown');
-		} catch (Zend_Http_Client_Exception $e) {
-			// We're good
-		}
+            try {
+                $uri = Zend_Uri::factory('mailto:nobody@example.com');
+                $this->client->setUri($uri);
+                $this->fail('Excepted invalid URI object exception was not thrown');
+            } catch (Zend_Http_Client_Exception $e) {
+                // We're good
+            } catch (Zend_Uri_Exception $e) {
+                // URI is currently unimplemented
+                $this->markTestIncomplete('Zend_Uri_Mailto is not implemented yet');
+            }
 		
 	}
 	
