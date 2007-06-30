@@ -22,8 +22,9 @@
         セッションデータがクライアントと共有されるのは、
         サーバ側のソースコードの脆弱性のために
         クライアントからのリクエストへの応答として使用できるようになった場合のみです。
-        このコンポーネントのドキュメントにおいて「セッションデータ」は、
-        <code>$_SESSION[]</code> に保存されたり <code>Zend_Session</code> で管理されたり、
+        このコンポーネントのドキュメントにおいて「セッションデータ」という用語は、
+        <ulink url="http://www.php.net/manual/ja/reserved.variables.php#reserved.variables.session"><code>$_SESSION</code></ulink>
+        に保存されたり <code>Zend_Session</code> で管理されたり、
         独立して <code>Zend_Session_Namespace</code> のアクセス用オブジェクトで管理されたりする
         サーバ側のデータをさすものとします。
         <emphasis role="bold">セッション名前空間</emphasis>
@@ -35,15 +36,15 @@
     </para>
 
     <para>
-        <code>Zend_Session_Namespace</code> は、<code>$_SESSION[]</code>
-        の一部を切り取って名前空間つきでアクセスするためのオブジェクトのインスタンスを作成します。
+        <code>Zend_Session_Namespace</code> のインスタンスは、<code>$_SESSION</code>
+        の一部を切り取って名前空間つきでアクセスするためのオブジェクトとなります。
         <code>Zend_Session</code> コンポーネントは、PHP の既存の
         ext/session をラップして管理用インターフェイスを提供します。また、
         <code>Zend_Session_Namespace</code> のセッション名前空間を持続させるための API も提供します。
         <code>Zend_Session_Namespace</code> は、標準化されたオブジェクト指向のインターフェイスで
         名前空間を扱います。これは、PHP 標準のセッションの仕組みを使用しています。
-        匿名セッションおよび "ログイン" セッション名前空間の両方をサポートしています。
-        ZF の認証コンポーネントである <code>Zend_Auth</code> は、
+        匿名セッションおよび認証済み ("ログイン") セッション名前空間の両方をサポートしています。
+        Zend Framework の認証コンポーネントである <code>Zend_Auth</code> は、
         <code>Zend_Session_Namespace</code> を使用して "Zend_Auth"
         名前空間に認証済みユーザの情報を保存します。
         <code>Zend_Session_Core</code> が内部で使用しているのは通常の PHP
@@ -56,11 +57,13 @@
     </para>
 
     <para>
-        クラスタを構成するサーバ群のひとつにクライアントから接続している際には、
-        デフォルトの
-        <ulink url="http://www.php.net/manual/ja/function.session-set-save-handler.php">
-        セッション保存ハンドラ</ulink> は、この関連を保持するという問題を解決できません。
-        セッションの状態に関するデータは、(接続している) そのサーバにしか保存されないからです。
+        でフォルトの
+        <ulink url="http://www.php.net/manual/ja/function.session-set-save-handler.php">セッション保存ハンドラ
+        </ulink> は、クラスタ構成のサーバではセッションデータの関連性を保持できないことがあります。
+        セッションデータは、リクエストに応答したサーバ上に保存されるからです。
+        セッションデータがある場所とは別のサーバでリクエストが処理された場合は、
+        そのサーバからセッションデータにアクセスすることができません
+        (ネットワークファイルシステムなどでアクセス可能になっている場合は別です)。
         このような場合に対応できるような保存ハンドラを将来提供する予定です。
         使用できるようになった時点でここで説明します。
         保存ハンドラの案を出したり実際に作成したりした場合は、メーリングリスト
