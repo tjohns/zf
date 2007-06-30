@@ -46,8 +46,8 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     public function getSchema()
     {
-        $server = db2_server_info($this->_db->getConnection());
-        return $server->DB_NAME;
+        $desc = $this->_db->describeTable('zfproducts');
+        return $desc['product_id']['SCHEMA_NAME'];
     }
 
     /**
