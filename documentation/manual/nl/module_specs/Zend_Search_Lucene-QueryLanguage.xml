@@ -6,7 +6,7 @@
     </para>
 
     <para>
-        It mostly the same, but has some diffirences, which are mentioned below.
+        It mostly the same, but has some differences, which are mentioned below.
     </para>
 
     <para>
@@ -48,7 +48,7 @@
             <emphasis>all fields</emphasis> by default.
         </para>
         <para>
-            There are two static methods in Zend_Search_Lucene class, which allow to operate with this settengs:
+            There are two static methods in Zend_Search_Lucene class, which allow to operate with this settings:
         </para>
         <programlisting role="php"><![CDATA[<?php
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
@@ -81,7 +81,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             so the query
             <programlisting role="querystring"><![CDATA[title:Do it right]]></programlisting>
             Will only find "Do" in the title field. It will find "it" and "right" in the default field,
-            if default field is set, or in tha all indexed fields, if default field is set to <code>null</code>.
+            if default field is set, or in the all indexed fields, if default field is set to <code>null</code>.
         </para>
     </sect2>
 
@@ -174,7 +174,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
         <sect3 id="zend.search.lucene.query-language.boolean.or">
             <title>OR</title>
             <para>
-                The OR operator devides query into several optional parts.
+                The OR operator divides query into several optional parts.
             </para>
             <para>
                 To search for documents that contain "PHP framework" or "Zend Framework" use the query:

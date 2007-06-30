@@ -19,7 +19,7 @@
                        proximity queries, range queries and more
                         <footnote>
                            <para>
-                             Term, multi term, phrase queries, boolean expressions and subqueries are supported at this time.
+                             Term, multi-term, phrase queries, boolean expressions and subqueries are supported at this time.
                            </para>
                         </footnote>
                     </para>

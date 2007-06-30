@@ -498,12 +498,28 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <para>
                     If your controller or action name is composed of several
                     words, the dispatcher requires that these are separated on
-                    the URL by specific word delimiter characters. The
-                    <code>ViewRenderer</code> replaces any word delimiter found
-                    with a dash ('-') when creating paths. Thus, a call to the
-                    action <code>/foo.bar/baz.bat</code> would dispatch to
-                    <code>FooBarController::bazBatAction()</code>, which would
-                    render <code>foo-bar/baz-bat.phtml</code>.
+                    the URL by specific path and word delimiter characters. The
+                    <code>ViewRenderer</code> replaces any path delimiter found
+                    in the controller name with an actual path delimiter ('/'),
+                    and any word delimiter found with a dash ('-') when creating
+                    paths. Thus, a call to the action
+                    <code>/foo.bar/baz.bat</code> would dispatch to
+                    <code>FooBarController::bazBatAction()</code> in
+                    FooBarController.php, which would render
+                    <code>foo-bar/baz-bat.phtml</code>; a call to the action
+                    <code>/bar_baz/baz-bat</code> would dispatch to
+                    <code>Bar_BazController::bazBatAction()</code> in
+                    <code>Bar/BazController.php</code> (note the path
+                    separation) and render <code>bar/baz/baz-bat.phtml</code>.
+                </para>
+
+                <para>
+                    Note that the in the second example, the module is still the
+                    default module, but that, because of the existence of a path
+                    separator, the controller receives the name
+                    <code>Bar_BazController</code>, in
+                    <code>Bar/BazController.php</code>. The ViewRenderer mimics
+                    the controller directory hierarchy.
                 </para>
             </note>
 
@@ -513,7 +529,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 ?>
 
 <?php
-// A controller class, foo module:
+// 'foo' module, 'bar' controller:
 class Foo_BarController extends Zend_Controller_Action
 {
     // Render bar/index.phtml by default; no action required

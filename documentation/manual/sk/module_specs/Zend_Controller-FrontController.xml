@@ -333,9 +333,21 @@ Zend_Controller_Front::run('../application/controllers');
 
             <listitem>
                 <para>
-                    <code>(un)registerPlugin()</code> let you register and
+                    <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code>
+                    allows you to register a <link
+                        linkend="zend.controller.plugins">plugin objects</link>.
+                    By setting the optional <code>$stackIndex</code>, you can
+                    control the order in which plugins will execute.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>unregisterPlugin($plugin)</code> let you 
                     unregister <link
                         linkend="zend.controller.plugins">plugin objects</link>.
+                    <code>$plugin</code> may be either a plugin object or a
+                    string denoting the class of plugin to unregister.
                 </para>
             </listitem>
 

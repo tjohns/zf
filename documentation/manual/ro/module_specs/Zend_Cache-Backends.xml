@@ -188,7 +188,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_APC</title>
+        <title>Zend_Cache_Backend_Apc</title>
         <para>
             This backends stores cache records in shared memory through
             the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension

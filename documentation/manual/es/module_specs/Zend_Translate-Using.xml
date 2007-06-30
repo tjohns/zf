@@ -21,7 +21,7 @@ print "Fix language here is line two\n";
     <para>
         The example above shows some output with no support for translation.
         You probably write your code in your native language.
-        Generally you need to translate translate not only the output,
+        Generally you need to translate not only the output,
         but also error messages and log messages.
     </para>
 

@@ -77,8 +77,8 @@ $index->find($query);
             Thus all transformations, which are done on indexed text are also done on query string entries.
         </para>
         <para>
-            It may be transforming to lower case to make search case-insensitive, removing stop-words, stamming and
-            mauch more other things.
+            It may be transforming to lower case to make search case-insensitive, removing stop-words, stemming and
+            much more other things.
         </para>
         <para>
             As opposed to it, API method doesn't transform or filter input terms. Thus it's more suitable for
