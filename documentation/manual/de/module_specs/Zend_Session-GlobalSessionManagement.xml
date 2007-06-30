@@ -1,60 +1,51 @@
-<sect1 id="zend.session.globalsessionmanagement">
+<sect1 id="zend.session.global_session_management">
 
     <title>Globales Session Management</title>
 
     <para>
-        Das Standardverhalten von Sessions kann mit Hilfe der statischen Methoden in Zend_Session geändert werden.
+        Das Standardverhalten von Sessions kann mit Hilfe der statischen Methoden von Zend_Session geändert werden.
         Das komplette Management und die Manipulation des globalen Session Managements findet durch Verwendung
         von Zend_Session statt, was auch die Konfiguration der
-        <ulink url="http://www.php.net/session#session.configuration">üblichen Optionen, welche von ext/session unterstützt werden,</ulink>
+        <ulink url="http://www.php.net/session#session.configuration">üblichen Optionen, welche von ext/session unterstützt werden</ulink>,
         durch <code>Zend_Session::setOptions()</code> enthält. Zum Beispiel kann, das fehlerhafte Versichern das ein
         sicherer save_path oder ein eindeutiger Cookiename von ext/session durch
         <code>Zend_Session::setOptions()</code> verwendet wird, zu einem Sicherheitsproblem werden.
     </para>
 
-    <sect2 id="zend.session.setoptions">
+    <sect2 id="zend.session.global_session_management.configuration_options">
 
-        <title>Zend_Session::setOptions()</title>
+        <title>Konfigurations Optionen</title>
 
         <para>
-            Wenn der erste Session Namensraum angefragt wird, startet Zend_Session selbsttätig, egal ob es bereits
-            explizit gestartet wurde mit Hilfe von
-            <link linkend="zend.session.startingasession"><code>Zend_Session::start()</code></link>.
-            Die darunterliegende PHP Session verwendet die Standards von Zend_Session, unabhängig davon ob Sie
-            zuerst durch <code>Zend_Session::setOptions()</code> modifiziert wurde.
+            Wenn der erste Session Namensraum angefragt wird, startet Zend_Session automatisch die PHP Session,
+            ausser er wurde bereits mit
+            <link linkend="zend.session.startingasession"><code>Zend_Session::start()</code></link> gestartet.
+            Die darunterliegende PHP Session verwendet die Standards von Zend_Session, ausser wenn Sie
+            schon durch <code>Zend_Session::setOptions()</code> modifiziert wurde.
         </para>
 
         <para>
-            Um die Optionen zu übergeben muß nur der Basisname (der nicht <code>session.</code> Teil) als Teil eines
-            Arrays an <code>Zend_Session::setOptions()</code> übergeben werden. Ohne das irgendeine Option gesetzt
+            Um eine Konfigurations Option einer Session zu setzen, muß der Basisname (der Teil des Namens nach
+            "<code>session.</code>") als Schlüssel eines Array inkludiert und an
+            <code>Zend_Session::setOptions()</code> übergeben werden. Der korrespondierende Wert im Array wird
+            verwendet um den Wert der Option dieser Session zu setzen. Wenn keine Option durch den Entwickler gesetzt
             wird, wird Zend_Session zuerst die benötigten Optionen anwenden und anschließend die standard php.ini
             Einstellungen. Feedback der Community über die beste Handhabung für diese Optionen sollte gesendet werden
             an <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.
         </para>
 
-        <para>
-            Um diese Komponente "automatisch" zu konfigurieren bei Verwendung einer ".ini" Datei mit Zend_Config_Ini:
-        </para>
+        <example id="zend.session.global_session_management.setoptions.example">
 
-        <example>
             <title>Verwenden von Zend_Config um Zend_Session zu konfigurieren</title>
-<programlisting role="php"><![CDATA[<?php
-$config = new Zend_Config_Ini('myapp.ini', 'sandbox');
-require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->toArray());
-?>]]></programlisting>
-        </example>
 
-        <para>
-            Die dazugehörende "myapp.ini" Datei:
-        </para>
+            <para>
+                Um diese Komponente mit Hilfe von
+                <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> zu konfigurieren,
+                muß zuerst die Konfigurations-Option dem INI File hinzugefügt werden:
+            </para>
 
-        <example>
-            <title>myapp.ini</title>
-<programlisting role="php">
-<![CDATA[
-;  Standard für unsere Live Server
-[live]
+            <programlisting role="ini"><![CDATA[; Accept defaults for production
+[production]
 ; bug_compat_42
 ; bug_compat_warn
 ; cache_expire
@@ -84,27 +75,32 @@ name = UNIQUE_NAME
 ; strict = on|off
 
 
-; Unser Sandbox Server verwendet die selben Einstellungen wie unser Live-Server,
-; ausser wie anbei überschrieben
-[sandbox : live]
+; Entwicklung beinhaltet Konfiguration der Produktion, überschreibt aber diverse Werte
+[development : production]
 ; Nicht vergessen, dieses Verzeichnis zu erstellen und es rwx machen (lesbar und änderbar) durch PHP.
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; Beim Analysieren von Session ID Cookies, frage nach einer TTL von 10 Tagen
-remember_me_seconds = 864000
-]]></programlisting>
+remember_me_seconds = 864000]]></programlisting>
+
+            <para>
+                Als nächstes die Konfigurationsdatei laden und dessen Array Representation
+                <code>Zend_Session::setOptions()</code> übergeben:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+$config = new Zend_Config_Ini('myapp.ini', 'development');
+
+require_once 'Zend/Session.php';
+Zend_Session::setOptions($config->toArray());]]></programlisting>
+
         </example>
 
-    </sect2>
-
-    <sect2 id="zend.session.options">
-
-        <title>Optionen</title>
-
         <para>
-            Die meisten oben gezeigten Optionen benötigen keine Erklärung über jene der standard PHP
-            Dokumentation hinaus.
-            <itemizedlist mark='opencircle'>
+            Die meisten der oben gezeigten Optionen benötigen keine Erklärung die nicht in der Standard PHP
+            Dokumentation gefunden werden kann, aber jene von speziellem Interesse sind anbei beschrieben.
+            <itemizedlist mark="opencircle">
                 <listitem>
                     <para>
                         boolean <code>strict</code> - verhindert das automatische Starten von <code>Zend_Session</code>
@@ -114,7 +110,7 @@ remember_me_seconds = 864000
                 <listitem>
                     <para>
                         integer <code>remember_me_seconds</code> - Wie lange soll das Session Id Cookie bestehen,
-                        nachdem der Benutzer Agent beendet wurde (z.B. Fenster des Browsers geschlossen)
+                        nachdem der Benutzer Agent beendet wurde (z.B. Browser Anwendung geschlossen)
                     </para>
                 </listitem>
                 <listitem>
@@ -134,24 +130,25 @@ remember_me_seconds = 864000
                             vergiftet</ulink> werden. Wenn der Pfad mit anderen Benutzern oder anderen PHP
                             Anwendungen geteilt wird, können verschiedenste Sicherheitsprobleme auftreten. Das
                             inkludiert Diebstahl von Inhalten der Session, Entführung von Sessions und Kollisionen
-                            der Müllsammlung (z.B. eine andere Anwendung eines Benutzers können PHP veranlassen
+                            der Müllsammlung (z.B., eine andere Anwendung eines Benutzers können PHP veranlassen
                             die eigenen Session Dateien zu löschen).
                         </para>
                         <para>
                             Zum Beispiel kann ein Angreifer die Webseite des Opfers besuchen um ein Session Cookie
-                            zu erhalten. Dann den Cookie Pfad auf die eigene Domain auf dem gleichen Server ändern,
+                            zu erhalten. Dann, den Cookie Pfad auf die eigene Domain auf dem gleichen Server ändern,
                             bevor er die eigene Webseite besucht um <code>var_dump($_SESSION)</code> auszuführen.
                             Bewaffnet mit detailiertem Wissen über die Verwendung von Daten in den Sessions des
                             Opfers, kann der Angreifer den Sessionstatus verändern (Vergiften der Session),
                             den Cookie Pfad auf die Webseite des Opfers zurück ändern, und anschließend eine Anfrage
                             von der Webseite des Opfers, mithilfe der vergifteten Session, durchführen. Selbst wenn
                             zwei Anwendungen auf dem gleichen Server keinen Lese-/Schreibzugriff auf den jeweils
-                            anderen save_path der Anwendung haben. Wenn der save_path erahnbar ist und der
-                            Angreifer die Kontrolle über eine der zwei Webseiten hat, kann der Angreifer den
-                            save_path seiner Webseiten ändern um dem anderen save_path zu verwenden und somit
-                            die Vergiftung der Session durchführen, in den meisten üblichen PHP Konfigurationen.
-                            Deshalb sollte der Wert für save_path nicht öffentlich bekanntgegeben werden, und er
-                            sollte geändert werden um dem Pfad eindeutig für jede Anwendung zu sichern.
+                            anderen <code>save_path</code> der Anwendung haben. Wenn der <code>save_path</code>
+                            erahnbar ist und der Angreifer die Kontrolle über eine der zwei Webseiten hat, kann
+                            der Angreifer den <code>save_path</code> seiner Webseiten ändern um dem anderen
+                            <code>save_path</code> zu verwenden und somit die Vergiftung der Session durchführen,
+                            in den meisten üblichen PHP Konfigurationen. Deshalb sollte der Wert für
+                            <code>save_path</code> nicht öffentlich bekanntgegeben werden, und er sollte geändert
+                            werden um dem Pfad eindeutig für jede Anwendung zu sichern.
                         </para>
                     </note>
                 </listitem>
@@ -165,9 +162,8 @@ remember_me_seconds = 864000
                         <title>Sicherheits Risiko</title>
                         <para>
                             Wenn die <code>php.ini</code> Einstellung für <code>session.name</code> die selbe ist
-                            (z.B. die standardmäßige "PHPSESSID"), und es zwei oder mehr PHP Anwendungen gibt die
-                            über den selben Domain Namen erreichbar sind (z.B.
-                            <code>http://www.somewebhost.com/~youraccount/index.php</code>), dann werden Sie miteinander
+                            (z.B., die standardmäßige "PHPSESSID"), und es zwei oder mehr PHP Anwendungen gibt die
+                            über den selben Domain Namen erreichbar sind, dann werden Sie miteinander
                             für alle Besucher die beide Webseiten besuchen, die selben Session Daten teilen.
                             Zusätzlich, könnte das auch zu einer Verfälschung von Session Daten führen.
                         </para>
@@ -183,9 +179,9 @@ remember_me_seconds = 864000
                                 Wenn diese Einstellung nicht aktiviert wird, kann ein Angreifer einfach die
                                 Session Id des Opfers ändern indem ein Link auf der Webseite des Angreifers
                                 verwendet wird, wie z.B.
-                                <code>http://www.victim-website.com/index.php?PHPSESSID=fixed_session_id</code>.
+                                <code>http://www.example.com/index.php?PHPSESSID=fixed_session_id</code>.
                                 Die Änderung funtioniert, wenn das Opfer nicht schon ein Session Id Cookie für
-                                victom-website.com besitzt. Sobald ein Opfer eine bekannte Session Id benutzt, kann
+                                example.com besitzt. Sobald ein Opfer eine bekannte Session Id benutzt, kann
                                 der Angreifer versuchen die Session zu übernehmen indem er sich verstellt und
                                 vorgibt das Opfer zu sein, und den UserAgent des Opfers emuliert.
                             </para>
@@ -197,135 +193,122 @@ remember_me_seconds = 864000
 
     </sect2>
 
-    <sect2 id="zend.session.errors">
+    <sect2 id="zend.session.global_session_management.headers_sent">
 
-        <title>Fehler</title>
+        <title>Fehler: Header schon gesendet</title>
 
-        <sect3 id="zend.session.errors.headerssent">
+        <para>
+            Wenn die Fehler Nachricht, "Cannot modify header information - headers already sent", oder "You must
+            call .. before any output has been sent to the browser; output started in ..." erscheint, sollte der
+            direkte Grund (Funktion oder Methode) der mit dieser Nachricht gekoppelt ist sorgfältig begutachtet
+            werden. Jede Aktion die das senden von HTTP Headern benötigt, wie z.B. das modifizieren von Browser
+            Cookies, muß vor dem senden von normaler Ausgabe (ungepufferter Ausgabe) durchgeführt werden,
+            ausser wenn PHP's Ausgabebuffer verwendet wird.
+        </para>
 
-            <title>Header schon gesendet</title>
-
-            <para>
-                Wenn die Fehler Nachricht, "Cannot modify header information - headers already sent", oder "You must
-                call .. before any output has been sent to the browser; output started in ...", sollte der
-                direkte Grund (Funktion oder Methode) der mit dieser Nachricht gekoppelt ist sorgfältig begutachtet
-                werden. Jede Aktion die das senden von HTTP Headern benötigt, wie z.B. das modifizieren von Browser
-                Cookies, muß vor dem senden von normaler Ausgabe (ungepufferter Ausgabe) durchgeführt werden,
-                ausser wenn PHP's Ausgabebuffer verwendet wird.
-            </para>
-
-            <itemizedlist mark='opencircle'>
-                <listitem>
-                    <para>
-                        Using
-                        <ulink url="http://php.net/outcontrol">Puffern der Ausgabe</ulink>
-                        ist oft notwendig um dieses Problem zu verhindern, und hilft bei der Steigerung der
-                        Geschwindigkeit. Zum Beispiel aktiviert "<code>output_buffering = 65535</code>" in der
-                        <code>php.ini</code> das puffern der Ausgabe mit einem 64k Puffer. Selbst wenn das Puffern
-                        der Ausgabe eine gute Taktik ist um auf Produktionsservern die Geschwindigkeit zu
-                        Erhöhen, ist das Vertrauen auf das Puffern, um das Problem "headers already sent" zu
-                        beheben, nicht ausreichend. Es muß sicher gestellt werden das die Anwendung die Puffer
-                        Größe nie überschreitet, andernfalls wird das Problem von Zeit zu Zeit wieder auftreten,
-                        wann auch immer eine Ausgabe gesendet wird (vor den HTTP Headern) die die Puffergröße
-                        überschreitet.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        Anternativ kann versucht werden die Logik der Anwendung anders anzuordnen, so das Aktionen
-                        welche Header manipulieren vor dem Senden von jeglicher Ausgabe ausgeführt werden.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        Wenn eine Methode von Zend_Session als Verursacher der Fehlermeldung involviert ist,
-                        sollte die Methode sorgfältig begutachtet werden und es ist sicher zu stellen das Sie auch
-                        wirklich in der Anwendung benötigt wird. Zum Beispiel sendet auch die standardmäßige
-                        Verwendung von <code>destroy()</code> einen HTTP Header um das Session Cookie auf der Seite
-                        des Clients ablaufen zu lassen. In HTTP werden die Anweisungen für das Ändern (z.B.
-                        löschen) von Cookies im HTTP Header gesendet.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        Anternativ kann versucht werden die Logik der Anwendung anders anzuordnen, so das Aktionen
-                        welche Header manipulieren vor dem Senden von jeglicher Ausgabe ausgeführt werden.
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        Jedes schließende "<code>?&gt;</code>" Tag sollte entfernt werden, wenn es am Ende einer
-                        PHP Source Datei steht. Sie werden nicht benötigt und neue Zeilen und andere beinahe
-                        unsichtbare Leerzeichen welche dem schließenden Tag folgen können die Ausgabe an den
-                        Client anstoßen.
-                    </para>
-                </listitem>
-            </itemizedlist>
-
-        </sect3>
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    <ulink url="http://php.net/outcontrol">Puffern der Ausgabe</ulink> ist oft notwendig um
+                    dieses Problem zu verhindern, und hilft bei der Steigerung der Geschwindigkeit. Zum Beispiel
+                    aktiviert "<code>output_buffering = 65535</code>" in der <code>php.ini</code> das Puffern
+                    der Ausgabe mit einem 64k Puffer. Selbst wenn das Puffern der Ausgabe eine gute Taktik ist
+                    um auf Produktionsservern die Geschwindigkeit zu Erhöhen, ist das Vertrauen auf das Puffern,
+                    um das Problem "headers already sent" zu beheben, nicht ausreichend. Die Anwendung darf die
+                    Buffergröße nicht überschreiten, andernfalls wird das Problem von Zeit zu Zeit wieder auftreten,
+                    wann auch immer eine Ausgabe gesendet wird (vor den HTTP Headern) die die Puffergröße
+                    überschreitet.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Anternativ kann versucht werden die Logik der Anwendung anders anzuordnen, so das Aktionen
+                    welche Header manipulieren vor dem Senden von jeglicher Ausgabe ausgeführt werden.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Wenn eine Methode von Zend_Session als Verursacher der Fehlermeldung involviert ist,
+                    sollte die Methode sorgfältig begutachtet werden und es ist sicher zu stellen das Sie auch
+                    wirklich in der Anwendung benötigt wird. Zum Beispiel sendet auch die standardmäßige
+                    Verwendung von <code>destroy()</code> einen HTTP Header um das Session Cookie auf der Seite
+                    des Clients ablaufen zu lassen. Wenn das nicht benötigt wird sollte
+                    <code>destroy(false)</code> verwendet werden, da die Anweisungen für das Ändern
+                    von Cookies im HTTP Header gesendet.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Anternativ kann versucht werden die Logik der Anwendung anders anzuordnen, so das Aktionen
+                    welche Header manipulieren vor dem Senden von jeglicher Ausgabe ausgeführt werden.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Jedes schließende "<code>?&gt;</code>" Tag sollte entfernt werden, wenn es am Ende einer
+                    PHP Source Datei steht. Sie werden nicht benötigt und neue Zeilen und andere beinahe
+                    unsichtbare Leerzeichen welche dem schließenden Tag folgen können eine Ausgabe an den
+                    Client verursachen.
+                </para>
+            </listitem>
+        </itemizedlist>
 
     </sect2>
 
-    <sect2 id="zend.session.regenerateid">
+    <sect2 id="zend.session.global_session_management.session_identifiers">
 
-        <title>regenerateId()</title>
+        <title>Session Identifizierer</title>
 
-        <sect3 id="zend.session.regenerateid.intro">
+        <para>
+            Einführung: Die beste Praxis in Relation für die Benutzung von Session innerhlab des ZF fordert
+            die Verwendung eines Browser Cookies (z.B. ein normales Cookie welchem im Web Browser gespeichert
+            wird), statt der integration von eindeutigen Session Identifizierern in URLs als Mittel für
+            das verfolgen von individuellen Benutzern. Normalerweise verwendet diese Komponente nur Cookie für
+            die Handhabung von Session Identifizierern. Der Wert des Cookies ist der eindeutige Identifizierer
+            in der Session des Browsers. PHP' ext/session verwendet diesen Identifizierer um eine eindeutige
+            eins-zu-eins Verbindung zwischen dem Besucher der Webseite und dem dauerhaften Session Daten
+            Speicher herzustellen. Zend_Session* umhüllt diesen Speichermechanismus (<code>$_SESSION</code>)
+            mit einem objektorientierten Interface. Leider, wenn ein Angreifer Zugriff auf der Wert des Cookies
+            (die Session Id) erhält, kann er die Session des Besuchers übernehmen. Dieses Problem gilt nicht
+            nur für PHP oder den Zend Framework. Die <code>regenerateId()</code> Methode erlaubt einer Anwendung
+            die Session Id (die im Cookie des Besuchers gespeichert ist) in einen neuen, zufälligen,
+            unvorhersagbaren Wert zu ändern. Achtung: Auch wenn nicht das gleiche gemeint ist, um diese Sektion
+            einfacher lesbar zu machen, verwenden wir die Ausdrücke "User Agent" und "Webbrowser" synonym
+            füreinander.
+        </para>
 
-            <title>Einführung: Session Identifizierer</title>
+        <para>
+            Warum?: Wenn ein Angreifer einen gültigen Session Identifizierer erhält, kann ein Angreifer einen
+            gültigen Benutzer (das Opfer) verkörpern, und anschließend Zugriff auf vertrauliche Intormationen
+            oder andererseits die Daten des Opfers verändern welche von der Anwendung verwaltet werden. Das
+            Ändern des Session Id's hilft sich gegen die Übernahme der Session zu Schützen. Wenn die Session Id
+            geändert wird, und ein Angreifer den neuen Wert nicht weiß, kann der Angreifer die neue Session
+            Id nicht für Ihren Zweck, dem Versuch der Übernahme der Session des Opfers, verwenden. Selbst wenn
+            der Angreifer zugriff auf die alte Session Id erhält, verschiebt <code>regenerateId()</code> die
+            Daten der Session vom alten Session Id "Handle" zum neuen, weswegen keine Daten über die alte
+            Session Id abrufbar sind.
+        </para>
 
-            <para>
-                Einführung: Die beste Praxis in Relation für die Benutzung von Session innerhlab des ZF fordert
-                die Verwendung eines Browser Cookies (z.B. ein normales Cookie welchem im Web Browser gespeichert
-                wird), statt der integration von eindeutigen Session Identifizierern in URLs als Mittel für
-                das verfolgen von individuellen Benutzern. Normalerweise verwendet diese Komponente nur Cookie für
-                die Handhabung von Session Identifizierern. Der Wert des Cookies ist der eindeutige Identifizierer
-                in der Session des Browsers. PHP' ext/session verwendet diesen Identifizierer um eine eindeutige
-                eins-zu-eins Verbindung zwischen dem Besucher der Webseite und dem dauerhaften Session Daten
-                Speicher herzustellen. Zend_Session* umhüllt diesen Speichermechanismus (<code>$_SESSION</code>)
-                mit einem objektorientierten Interface. Leider, wenn ein Angreifer Zugriff auf der Wert des Cookies
-                (die Session Id) erhält, kann er die Session des Besuchers übernehmen. Dieses Problem gilt nicht
-                nur für PHP oder den Zend Framework. Die <code>regenerateId()</code> Methode erlaubt einer Anwendung
-                die Session Id (die im Cookie des Besuchers gespeichert ist) in einen neuen, zufälligen,
-                unvorhersagbaren Wert zu ändern. Achtung: Auch wenn nicht das gleiche gemeint ist, um diese Sektion
-                einfacher lesbar zu machen, verwenden wir die Ausdrücke "User Agent" und "Webbrowser" synonym
-                füreinander.
-            </para>
+        <para>
+            Wann sollte regenerateId() verwendet werden: Das Hinzufügen von <code>Zend_Session::regenerateId()</code>
+            in die Bootstrap Datei des Zend Frameworks bietet einen der sichersten und am besten geschützten
+            Wege um die Session Id's in den Cookies der User Agenten zu erneuern. Wenn es keine bedingte Logik
+            gibt, um herauszufinden wann die Session Id erneuert werden soll, dann gibt es keinen Mangel in
+            dieser Logik. Auch wenn der Erneuern bei jeder Anfrage einen möglichen Weg der Attacke verhindert,
+            will nicht jedermann die damit hervorgerufenen kleinen Einbußen in der Geschwindigkeit und der
+            Bandbreite hinnhmen. Deswegen versuchen Anwendungen normalerweise Situationen von größerem
+            Risiko zu erahnen, und nur in diesen Situationen die Session Id's zu erneuern. Immer wenn die
+            Rechte einer Session vom Besucher der Webseite "ausgeweitet" werden (z.B. ein Besucher muß
+            noch einmal seine Identität authentifizieren bevor sein "Profil" bearbeitet werden darf), oder
+            wann auch immer ein sicherheits-"sensitiver" Session Parameter geändert wird, sollte daran gedacht
+            werden <code>regenerateId()</code> zu verwenden um eine neue Session Id zu erstellen. Wenn die
+            <code>rememberMe()</code> Funktion aufgerufen wird, sollte <code>regenerateId()</code> nicht
+            verwendet werden, ausser der erstere ruft den letzteren auf. Wenn sich ein Benutzer erfolgreich
+            auf die Webseite eingeloggt hat, sollte <code>rememberMe()</code> statt <code>regenerateId()</code>
+            verwendet werden.
+        </para>
 
-            <para>
-                Warum?: Wenn ein Angreifer einen gültigen Session Identifizierer erhält, kann ein Angreifer einen
-                gültigen Benutzer (das Opfer) verkörpern, und anschließend Zugriff auf vertrauliche Intormationen
-                oder andererseits die Daten des Opfers verändern welche von der Anwendung verwaltet werden. Das
-                Ändern des Session Id's hilft sich gegen die Übernahme der Session zu Schützen. Wenn die Session Id
-                geändert wird, und ein Angreifer den neuen Wert nicht weiß, kann der Angreifer die neue Session
-                Id nicht für Ihren Zweck, dem Versuch der Übernahme der Session des Opfers, verwenden. Selbst wenn
-                der Angreifer zugriff auf die alte Session Id erhält, verschiebt <code>regenerateId()</code> die
-                Daten der Session vom alten Session Id "Handle" zum neuen, weswegen keine Daten über die alte
-                Session Id abrufbar sind.
-            </para>
-
-            <para>
-                Wann sollte regenerateId() verwendet werden: Das Hinzufügen von <code>Zend_Session::regenerateId()</code>
-                in die Bootstrap Datei des Zend Frameworks bietet einen der sichersten und am besten geschützten
-                Wege um die Session Id's in den Cookies der User Agenten zu erneuern. Wenn es keine bedingte Logik
-                gibt, um herauszufinden wann die Session Id erneuert werden soll, dann gibt es keinen Mangel in
-                dieser Logik. Auch wenn der Erneuern bei jeder Anfrage einen möglichen Weg der Attacke verhindert,
-                will nicht jedermann die damit hervorgerufenen kleinen Einbußen in der Geschwindigkeit und der
-                Bandbreite hinnhmen. Deswegen versuchen Anwendungen normalerweise Situationen von größerem
-                Risiko zu erahnen, und nur in diesen Situationen die Session Id's zu erneuern. Immer wenn die
-                Rechte einer Session vom Besucher der Webseite "ausgeweitet" werden (z.B. ein Besucher muß
-                noch einmal seine Identität authentifizieren bevor sein "Profil" bearbeitet werden darf), oder
-                wann auch immer ein sicherheits-"sensitiver" Session Parameter geändert wird, sollte daran gedacht
-                werden <code>regenerateId()</code> zu verwenden um eine neue Session Id zu erstellen. Wenn die
-                <code>rememberMe()</code> Funktion aufgerufen wird, sollte <code>regenerateId()</code> nicht
-                verwendet werden, ausser der erstere ruft den letzteren auf. Wenn sich ein Benutzer erfolgreich
-                auf die Webseite eingeloggt hat, sollte <code>rememberMe()</code> statt <code>regenerateId()</code>
-                verwendet werden.
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.session.regenerateid.details">
+        <sect3 id="zend.session.global_session_management.session_identifiers.hijacking_and_fixation">
 
             <title>Session-Entführung und Fixierung</title>
 
@@ -333,7 +316,7 @@ remember_me_seconds = 864000
                 Das Vermeiden von
                 <ulink url="http://en.wikipedia.org/wiki/Cross_site_scripting">Seiten übergreifenden Script (XSS) Gefährdungen</ulink>
                 hilft bei der Vorbeugung von Session Entführungen. Laut
-                <ulink url="http://secunia.com/">Secunia's Statistik</ulink> kommen XSS Probleme häufig vor,
+                <ulink url="http://secunia.com/">Secunia's</ulink> Statistik kommen XSS Probleme häufig vor,
                 unabhängig von der Sprache dir für die Erstellung der Web Anwendung benutzt wurde. Vor der Annahme
                 nie XSS Probleme mit einer Anwendung zu haben, sollten diese mit der folgenden besten Praxis
                 berücksichtigt werden um, wenn sie auftreten, den geringsten Schaden zu haben. Mit XSS benötigt
@@ -395,143 +378,144 @@ remember_me_seconds = 864000
                 wissen solange der Angreifer nicht bereits die ersten Zwei Schritte von oben ausgeführt hat.
             </para>
 
-            <example>
-                <title>Anonyme Sessions und Session Fixierung</title>
-<programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Session.php';
+            <example id="zend.session.global_session_management.session_identifiers.hijacking_and_fixation.example">
+
+                <title>Session Fixierung</title>
+
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Session/Namespace.php';
 $defaultNamespace = new Zend_Session_Namespace();
 
-if (!isset($defaultNamespace->initialized))
-{
+if (!isset($defaultNamespace->initialized)) {
     Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-}
-?>]]></programlisting>
+}]]></programlisting>
+
             </example>
 
         </sect3>
 
     </sect2>
 
-    <sect2 id="zend.session.rememberme">
+    <sect2 id="zend.session.global_session_management.rememberme">
 
-        <title>rememberMe(integer $seconds)</title>
+        <title>><code>rememberMe(integer $seconds)</code></title>
 
         <para>
-            Normalerweise enden Sessions wenn der User Agend die "Session" beendet, wie wenn der Benutzer z.b. das
-            Browser Fenster schließt. Trotzdem könnte ein Benutzer, wenn er sich auf der Webseite anmeldet, seine
-            virtuelle Session für 24 Stunden, oder sogar länger, andauern lassen. Foren Software gibt Benutzern
-            normalerweise die Auswahl, wie lange eine Session andauern soll. <code>Zend_Session::rememberMe()</code>
-            kann verwendet werden um ein aktuelles Session Cookie zum User Agent zu schicken mit einer Lebenszeit
-            von <code>remember_me_seconds</code>, welche standardmäßig auf 2 Wochen gestellt ist, ausser sie ist
-            modifiziert worden mit Hilfe von <code>Zend_Session::setOptions()</code>. Um zu helfen, Session
-            Fixierung/Entführung zu vereiteln, sollte diese Funktion verwendet werden wenn sich ein Benutzer
-            erfolgreich authentifiziert und die Anwendung eine "Anmeldung" durchführt.
+            Normalerweise enden Sessions wenn der User Agent terminiert, wie wenn der End-Benutzer seinen WebBrowser
+            schließt. Trotzdem kann die Anwendung die Möglichkeit bieten, eine Benutzer Session über die Lebensdauer
+            des Client Programms hinweg zu verlängern durch die Verwendung von persistenten Cookies.
+            <code>Zend_Session::rememberMe()</code> kann vor dem Start der Session verwendet werden um die Zeitdauer
+            zu kontrollieren bevor ein persistentes Session Cookie abläuft. Wenn keine Anzahl an Sekunden definiert
+            wird, verwendet das Session Cookie standardmäßig eine Lebenszeit von <code>remember_me_seconds</code>,
+            welche durch Verwendung von <code>Zend_Session::setOptions()</code> gesetzt werden kann. Um zu helfen
+            eine Session Fixierung/Entführung zu vereiteln, sollte diese Funktion verwendet werden wenn sich ein
+            Benutzer erfolgreich an der Anwendung authentifiziert hat (z.B., durch ein "login" Formular).
         </para>
 
     </sect2>
 
-    <sect2 id="zend.session.forgetme">
+    <sect2 id="zend.session.global_session_management.forgetme">
 
-        <title>forgetMe()</title>
+        <title><code>forgetMe()</code></title>
 
         <para>
-            Diese Funktion ist das Gegenteil von <code>rememberMe()</code> durch Verändern des Session Cookies
-            zurück zu einer Lebenszeit die endet wenn der User Agent seine Session beendet (z.B. der Benutzer
-            schließt sein Browser Fenster).
+            Diese Funktion ist das Gegenteil von <code>rememberMe()</code> durch Schreiben eines Session Cookies
+            das eine Lebenszeit hat die endet wenn der Benutzer terminiert.
         </para>
 
     </sect2>
 
-    <sect2 id="zend.session.sessionexists">
+    <sect2 id="zend.session.global_session_management.sessionexists">
 
-        <title>sessionExists()</title>
+        <title><code>sessionExists()</code></title>
 
         <para>
             Diese Methode kann verwendet werden um Herauszufinden ob eine Session für den aktuellen User Agent/Anfrage
             bereits existiert. Das kann vor dem Starten einer Session verwendet werden, und ist unabhängig von allen
-            anderen Zend_Session und Zend_Session_Namespace Methoden.
+            anderen <code>Zend_Session</code> und <code>Zend_Session_Namespace</code> Methoden.
         </para>
 
     </sect2>
 
-    <sect2 id="zend.session.destroy">
+    <sect2 id="zend.session.global_session_management.destroy">
 
-        <title>destroy(bool $remove_cookie = true, bool $readonly = true)</title>
+        <title><code>destroy(bool $remove_cookie = true, bool $readonly = true)</code></title>
 
         <para>
             <code>Zend_Session::destroy()</code> entfernt alle deuerhaften Daten welche mit der aktuellen Session
             verbunden sind. Aber es werden keine Variablen in PHP verändert, so das die benannte Session (Instanzen
             von <code>Zend_Session_Namespace</code>) lesbar bleibt. Es ein "Logout" fertigzustellen, muß der
-            optionale Parameter auf true (standard ist true) gestzt werden um auch das Session Id Cookie des
-            User Agents zu löschen. Der optionale <code>$readonly</code> Parameter entfernt, für die
-            Zend_Session_Namespace Instanzen und Zend_Session Methoden, die Möglichkeit auf den Session Daten Speicher
-            zu schreiben (z.B. $_SESSION).
+            optionale Parameter auf <code>true</code> (standard) gesetzt werden um auch das Session Id Cookie des
+            User Agents zu löschen. Der optionale <code>$readonly</code> Parameter entfernt die Möglichkeit neue
+            <code>Zend_Session_Namespace</code> Instanzen zu erstellen und für <code>Zend_Session</code>
+            in den Session Daten Speicher zu schreiben.
         </para>
 
         <para>
             Wenn die Fehlermeldung "Cannot modify header information - headers already sent" erscheint, sollte
-            entweder die Verwendung von true als Wert für das erste Argument (die Entfernung des Session Cookies
-            anfragen) vermieden werden, oder unter <xref linkend="zend.session.errors.headerssent" /> nachgesehen werden.
-            Deswegen muß "Zend_Session::destroy(true)" entweder aufgerufen werden bevor PHP Header gesendet hat,
-            oder die Pufferung der Ausgabe muß aktiviert sein. Auch die komplette Ausgabe die gesendet werden soll,
-            darf die gesetzte Puffergröße nicht überschreiten, um das Senden der Ausgabe vor dem Aufruf von
-            destroy() zu Verhindern.
+            entweder die Verwendung von <code>true</code> als Wert für das erste Argument (die Entfernung des
+            Session Cookies anfragen) vermieden werden, oder unter <xref linkend="zend.session.errors.headerssent" />
+            nachgesehen werden. Deswegen muß "Zend_Session::destroy(true)" entweder aufgerufen werden bevor
+            PHP Header gesendet hat, oder die Pufferung der Ausgabe muß aktiviert sein. Auch die komplette Ausgabe
+            die gesendet werden soll, darf die gesetzte Puffergröße nicht überschreiten, um das Senden der Ausgabe
+            vor dem Aufruf von <code>destroy()</code> zu Verhindern.
         </para>
 
         <note>
-            <title>Throws</title>
+            <title>Wirft</title>
             <para>
                 Standardmäßig ist <code>$readonly</code> aktiviert, und weitere Aktionen welche das Schreiben in den
-                Session Daten Speicher beinhalten, werfen einen Fehler.
+                Session Daten Speicher beinhalten, werfen eine Ausnahme.
             </para>
         </note>
 
     </sect2>
 
-    <sect2 id="zend.session.stop">
+    <sect2 id="zend.session.global_session_management.stop">
 
-        <title>stop()</title>
+        <title><code>stop()</code></title>
 
         <para>
-            Diese Methode macht nicht mehr als ein Flag in Zend_Session zu wechseln um weiteres schreiben in den
-            Session Daten Speicher (z.B. <code>$_SESSION</code>) zu verhindern. Wir erwarten spezielles Feedback
+            Diese Methode macht nicht mehr als ein Flag in Zend_Session zu wechseln um weiteres Schreiben in den
+            Session Daten Speicher zu verhindern. Wir erwarten spezielles Feedback
             für dieses Feature. Potentielle Nicht-/Verwendung könnte temporär bei Verwendung von
             <code>Zend_Session_Namespace</code> Instanzen oder <code>Zend_Session</code> Methoden verhindern das
             auf den Session Daten Speicher geschrieben wird, wärend deren  Ausführung zum Code der View transferiert
             wird. Versuche Aktionen auszuführen welche das Schreiben über diese Instanzen oder Methoden inkludieren
-            werden einen Fehler werfen.
+            werden eine Ausnahme werfen.
         </para>
 
     </sect2>
 
-    <sect2 id="zend.session.writeClose">
+    <sect2 id="zend.session.global_session_management.writeclose">
 
-        <title>writeClose($readonly = true)</title>
+        <title><code>writeClose($readonly = true)</code></title>
 
         <para>
-            Beendet die Session, schließt das schreiben und entfernt $_SESSION vom Backend Speicher Mechanismus. Das
-            vervollständigt die interne Transformation der Daten auf diese Anfrage. Der optionale boolsche $readonly
-            parameter entfernt den Schreibzugriff (z.B. wirft einen Fehler wenn irgendeine Zend_Session_Namespace
-            oder Zend_Session Methode versucht zu schreiben).
+            Beendet die Session, schließt das schreiben und entfernt <code>$_SESSION</code> vom Backend Speicher
+            Mechanismus. Das vervollständigt die interne Transformation der Daten auf diese Anfrage. Der optionale
+            boolsche <code>$readonly</code> Parameter kann den Schreibzugriff entfernen durch das werfen einer
+            Ausnahme bei jedem Versuch in eine Session durch <code>Zend_Session</code> oder
+            <code>Zend_Session_Namespace</code> zu schreiben.
         </para>
 
         <note>
             <title>Wirft</title>
             <para>
                 Standardmäßig ist <code>$readonly</code> aktiviert und weitere Aktionen welche in den Session Daten
-                Speicher schreiben werfen einen Fehler. Trotzdem könnten einige besondere Anwendungen erwarten das
-                $_SESSION beschreibbar bleibt nachdem die Session mittels session_write_close() beendet wurde.
-                Obwohl das nicht die "beste Praxis" ist, ist die <code>$readonly</code> für jene vorhanden die Sie
-                benötigen.
+                Speicher schreiben werfen eine Ausnahme. Trotzdem könnten einige besondere Anwendungen erwarten das
+                <code>$_SESSION</code> beschreibbar bleibt nachdem die Session mittels
+                <code>session_write_close()</code> beendet wurde. Obwohl das nicht die "beste Praxis" ist, ist die
+                <code>$readonly</code> für jene vorhanden die Sie benötigen.
             </para>
         </note>
 
     </sect2>
 
-    <sect2 id="zend.session.expiresessioncookie">
+    <sect2 id="zend.session.global_session_management.expiresessioncookie">
 
-        <title>expireSessionCookie()</title>
+        <title><code>expireSessionCookie()</code></title>
 
         <para>
             Diese Methode sendet ein abgelaufenes Session Id Cookie, was den Client dazu bringt den Session Cookie
@@ -540,21 +524,21 @@ if (!isset($defaultNamespace->initialized))
 
     </sect2>
 
-    <sect2 id="zend.session.savehandler">
+    <sect2 id="zend.session.global_session_management.savehandler">
 
-        <title>setSaveHandler(Zend_Session_SaveHandler_Interface $interface)</title>
+        <title><code>setSaveHandler(Zend_Session_SaveHandler_Interface $interface)</code></title>
 
         <para>
             Die meisten Entwickler werden den Standardmäßigen Speicher Handle ausreichend finden. Diese Methode
-            bietet einen objekt-orientierten Wrapper für <code>
-            <ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink></code>.
+            bietet einen objekt-orientierten Wrapper für
+            <ulink url="http://php.net/session_set_save_handler"><code>session_set_save_handler()</code></ulink>.
         </para>
 
     </sect2>
 
-    <sect2 id="zend.session.namespaceisset">
+    <sect2 id="zend.session.global_session_management.namespaceisset">
 
-        <title>namespaceIsset($namespace)</title>
+        <title><code>namespaceIsset($namespace)</code></title>
 
         <para>
             Diese Methode kann dazu verwendet werden um  herauszufinden ob ein Session Namensraum existiert, oder ob
@@ -564,20 +548,19 @@ if (!isset($defaultNamespace->initialized))
         <note>
             <title>Wirft</title>
             <para>
-                Ein Fehler wird geworfen wenn Zend_Session nicht als lesbar markiert ist (z.B. bevor Zend_Session
-                gestartet wurde).
+                Eine Ausnahme wird geworfen wenn <code>Zend_Session</code> nicht als lesbar markiert ist
+                (z.B. bevor <code>Zend_Session</code> gestartet wurde).
             </para>
         </note>
 
     </sect2>
 
-    <sect2 id="zend.session.namespaceunset">
+    <sect2 id="zend.session.global_session_management.namespaceunset">
 
-        <title>namespaceUnset($namespace)</title>
+        <title><code>namespaceUnset($namespace)</code></title>
 
         <para>
-            Statt eine Zend_Session Instanz für einen Namensraum zu erstellen, und über dessen Inhalt zu iterieren
-            um jeden Eintrag zu entfernen, sollte <code>Zend_Session::namespaceUnset($namespace)</code> verwendet
+            <code>Zend_Session::namespaceUnset($namespace)</code> kann verwendet
             werden um effektiv den kompletten Namensraum und dessen Inhalt zu entfernen. Wie mit allen Arrays in PHP,
             wenn eine Variable die ein Array enthält entfernt wird, und das Array andere Objekte enthält, werden
             diese verfügbar bleiben, wenn diese durch Referenz in anderen Array/Objekten gespeichert sind, die durch
@@ -589,22 +572,20 @@ if (!isset($defaultNamespace->initialized))
         <note>
             <title>Wirft</title>
             <para>
-                Ein Fehler wird geworfen wenn der Namensraum nicht beschreibbar ist (z.B. nach <code>destroy()</code>).
+                Eine Ausnahme wird geworfen wenn der Namensraum nicht beschreibbar ist (z.B. nach <code>destroy()</code>).
             </para>
         </note>
 
     </sect2>
 
-    <sect2 id="zend.session.namespaceget">
+    <sect2 id="zend.session.global_session_management.namespaceget">
 
-        <title>namespaceGet($namespace)</title>
+        <title><code>namespaceGet($namespace)</code></title>
 
         <para>
-            DEPRECATED: <code>getIterator()</code> in Zend_Session_Namespace sollte verwendet werden. Diese Methode
-            gibt ein Array mit dem Inhlat von
-
-            This method returns an array of the <code>$namespace</code> zurück. Wenn es logische Gründe gibt
-            diese Methode öffentlich aufrufbar zu lassen bitte ein Feedback auf die
+            DEPRECATED: <code>getIterator()</code> in <code>Zend_Session_Namespace</code> sollte verwendet werden.
+            Diese Methode gibt ein Array mit dem Inhalt von <code>$namespace</code> zurück. Wenn es logische
+            Gründe gibt diese Methode öffentlich aufrufbar zu lassen bitte ein Feedback auf die
             <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink> Mailingliste geben.
             Aktuell ist jede Anteilnahme an irgendeinem relevanten Thema sehr willkommen :)
         </para>
@@ -612,41 +593,27 @@ if (!isset($defaultNamespace->initialized))
         <note>
             <title>Wirft</title>
             <para>
-                Win Fehler wird geworfen wenn Zend_Session nicht als lesbar markiert ist (z.B bevor Zend_Session
-                gestartet wurde).
+                Eine Ausnahme wird geworfen wenn <code>Zend_Session</code> nicht als lesbar markiert ist
+                (z.B bevor <code>Zend_Session</code> gestartet wurde).
             </para>
         </note>
 
     </sect2>
 
-    <sect2 id="zend.session.getiterator">
+    <sect2 id="zend.session.global_session_management.getiterator">
 
-        <title>getIterator()</title>
+        <title><code>getIterator()</code></title>
 
         <para>
-            <code>getIterator()</code> kann verwendet werden, um ein durchsuchbares Array zu erhalten, das
+            <code>getIterator()</code> kann verwendet werden, um ein Array zu erhalten, das
             die Namen aller Namensräume enthält.
         </para>
-
-        <example>
-            <title>Entfernen aller Namensräume</title>
-<programlisting role="php"><![CDATA[<?php
-foreach(Zend_Session::getIterator() as $space) {
-    try {
-        $core->namespaceUnset($space);
-    } catch (Zend_Session_Exception $e) {
-        return; // Möglich wenn Zend_Session::stop() ausgeführt wurde
-    }
-}
-
-?>]]></programlisting>
-        </example>
 
         <note>
             <title>Wirft</title>
             <para>
-                Ein Fehler wird geworfen wenn Zend_Session nicht als lesbar markiert ist (z.B. bevor Zend_Session
-                gestartet wurde).
+                Eine Ausnahme wird geworfen wenn <code>Zend_Session</code> nicht als lesbar markiert ist
+                (z.B. bevor <code>Zend_Session</code> gestartet wurde).
             </para>
         </note>
 
