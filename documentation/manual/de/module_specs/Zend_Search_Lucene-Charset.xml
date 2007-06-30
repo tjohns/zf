@@ -55,7 +55,7 @@
         <title>UTF-8 compatible text analyzer.</title>
 
         <para>
-            Zend_Search_Lucene also contains limited functionaliy utf-8 analyzer. It can be turned on with the following code:
+            Zend_Search_Lucene also contains limited functionality utf-8 analyzer. It can be turned on with the following code:
 
             <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(

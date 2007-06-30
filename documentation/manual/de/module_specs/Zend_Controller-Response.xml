@@ -376,6 +376,101 @@ array(
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.controller.response.exceptions">
+        <title>Testing for Exceptions in the Response Object</title>
+
+        <para>
+            As mentioned earlier, by default, exceptions caught during dispatch
+            are registered with the response object. Exceptions are registered
+            in a stack, which allows you to keep all exceptions thrown --
+            application exceptions, dispatch exceptions, plugin exceptions, etc.
+            Should you wish to check for particular exceptions or to log
+            exceptions, you'll want to use the response object's exception API:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setException(Exception $e)</code> allows you to
+                    register an exception.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isException()</code> will tell you if an exception has
+                    been registered.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getException(Exception $e)</code> returns the entire
+                    exception stack.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasExceptionOfType($type)</code> allows you to
+                    determine if an exception of a particular class is in the
+                    stack.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasExceptionOfMessage($message)</code> allows you to
+                    determine if an exception with a specific message is in the
+                    stack.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>hasExceptionOfCode($code)</code> allows you to
+                    determine if an exception with a specific code is in the
+                    stack.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getExceptionByType($type)</code> allows you to
+                    retrieve all exceptions of a specific class from the stack.
+                    It will return false if none are found, and an array of
+                    exceptions otherwise.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getExceptionByMessage($message)</code> allows you to
+                    retrieve all exceptions with a specific message from the stack.
+                    It will return false if none are found, and an array of
+                    exceptions otherwise.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getExceptionByCode($code)</code> allows you to
+                    retrieve all exceptions with a specific code from the stack.
+                    It will return false if none are found, and an array of
+                    exceptions otherwise.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>renderExceptions($flag)</code> allows you to set a
+                    flag indicating whether or not exceptions should be emitted
+                    when the response is sent.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
     <sect2 id="zend.controller.response.subclassing">
         <title>Subclassing the Response Object</title>
 

@@ -2,7 +2,7 @@
     <title>Query Construction API</title>
 
     <para>
-        In addition to parsing query automatically it's also possible to constract them through API.
+        In addition to parsing query automatically it's also possible to construct them through API.
     </para>
 
     <para>
@@ -26,7 +26,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]></program
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Search_QueryParserException</code> is thrown in tha case of
+                    <code>Zend_Search_Lucene_Search_QueryParserException</code> is thrown in the case of
                     query syntax exception.
                 </para>
             </listitem>
