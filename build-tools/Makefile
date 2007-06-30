@@ -42,12 +42,12 @@ PHPDOC=php c:/php/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=5437
+ZF_TAG=5525
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=1.0.0-RC3
+ZF_VERSION=1.0.0
 
 # For LANG, use '*' if you want to build all manual
 # translations.  If you want to build one language, use one of the

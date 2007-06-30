@@ -1,6 +1,75 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 1.0.0 / 29-Jun-2007 / based on revision 5525 =
+- Zend_Cache
+  ZF-1583 Zend_Cache_Backend_APC should be Zend_Cache_Backend_Apc
+  ZF-1606 Zend_Cache does not allow using ZendPlatform cache backend
+- Zend_Controller
+  ZF-778  _redirect() needs to use absolute URIs?
+  ZF-1439 Request_Http Should check REDIRECT_URL before REQUEST_URI
+  ZF-1444 allow to set noController globally
+  ZF-1456 Incorrect behavior in ViewRenderer when exception is thrown
+  ZF-1485 Prevent unnecessary ViewRenderer instanciation
+  ZF-1493 default controller class is different from class for specific modules
+  ZF-1495 when useDefaultControllerAlways is true, a bad view can be selected
+  ZF-1503 ViewRenderer calls methods not in Zend_View_Interface
+  ZF-1553 ViewRenderer by postdispatch not disabled by invokeArgs setting
+  ZF-1571 Wrong method call in zend.controller.plugins.html examples
+  ZF-1572 Missing parameter in zend.controller.actionhelpers.html example code
+  ZF-1640 Wrong example in 7.5.5. Base URL and subdirectories
+  ZF-1642 Can't overwrite headers with setHeader
+  ZF-1643 Zend_Controller Unit Tests failing
+  ZF-1649 Plugin broker should attempt to catch plugin exceptions
+  ZF-1650 Add stack order to plugin broker
+  ZF-1654 ViewRenderer and finding view scripts
+- Zend_Db
+  ZF-884  SQLite: result set contains correlation names in keys
+  ZF-1518 Silent failure from describeTable() when schema is wrong
+  ZF-1563 QuoteInto doesn't work with Sqlite
+- Zend_Db_Adapter_Db2
+  ZF-1648 Fixed DB2 Util tests that get the schema used to qualify a name
+- Zend_Db_Table
+  ZF-1634 The findParent<Class>By<Rule>() fails to extract the correct class
+  ZF-1625 Mistakes in Relationships code examples
+  ZF-1645 createRow() should omit identity columns from data
+- Zend_Debug
+  ZF-1602 Data not in UTF-8 is stripped by htmlentities()
+- Zend_Filter / Zend_Validate
+  ZF-1641 PCRE UTF-8 Support Unavailable on Some Platforms
+  ZF-1646 Cache result check for UTF-8 and Unicode support in PCRE
+- Zend_Gdata
+  ZF-1644 Order of parameters in FeedLink and EntryLink is not optimal
+  ZF-1653 author and published-min/published-max missing from Gdata_Query
+- Zend_Loader
+  ZF-1512 loadClass() fails when $dirs contains '.'
+- Zend_Log
+  ZF-1627 Incorrect example in the manual for Zend_Log_Writer_Db
+- Zend_Mail
+  ZF-1622 Safe-Mode Warning in Zend_Mail while sending mails with mail()
+- Zend_Memory
+  ZF-1261 AccessController.php missing require_once for the class it implements
+- Zend_Pdf
+  ZF-1657 Zend_Pdf_Filter interface violates coding standard
+- Zend_Registry
+  ZF-1613 Zend_Registry::setClassName() should load specified class
+- Zend_Search_Lucene
+  ZF-1561 Wrong returned result in comparison to Luke toolbox
+  ZF-1655 Common_TextNum analyzer skips zeroz, 8 and 9
+- Zend_Session
+  ZF-1610 Zend_Session::rememberMe() can not modify the session cookie lifetime
+- Zend_Translate
+  ZF-1635 Wrong translate() and isTranslated() translation check
+  ZF-1647 Typo in Zend_Translate documentation
+- Zend_View
+  ZF-1542 FormLabel View Helper silently ignores third parameter
+  ZF-1568 Zend_View_Helper_FormCheckbox values
+- Zend_XmlRpc_Client
+  ZF-1566 Class 'Zend_Xml_Rpc_Value_Exception' not found
+  ZF-1637 fatal error if server does not return a response
+- Total of 46 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 1.0.0RC3 / 22-Jun-2007 / based on revision 5437 =
 This release resolves the following issues:
 - Zend_Controller
@@ -24,7 +93,6 @@ This release resolves the following issues:
   ZF-1401 Improve code coverage by Zend_Db_Statement tests
   ZF-1413 MSSQL Adapter Small bug on _dsn function
   ZF-1532 MSSQL: support dblib and sybase DSN prefixes
-  ZF-1563 QuoteInto doesn't work with Sqlite
   ZF-1569 Zend_Db_Select_Exception Include missing
 - Zend_Db_Adapter_Db2
   ZF-1500 Add quote character to escaped string in DB2 Adapter
@@ -170,7 +238,7 @@ This release resolves the following issues:
 - Zend_Version
   ZF-1449 Wrong version number in Zend_Version
   ZF-1455 Zend_VersionTest failing
-- Total of 40 issues resolved; for a detailed list, see the changelog
+- Total of 41 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 1.0.0RC1 / 28-May-2007 / based on revision 5029 =
@@ -372,6 +440,7 @@ This release resolves the following issues:
   ZF-1240 Implement a method to close resources in Zend_Log writers
   ZF-1242 Mistake in Zend_Log_Formatter code example
 - Zend_Mail / Zend_Mime
+  ZF-1120 Infinite loop in Zend_Mime::encodeQuotedPrintable 
   ZF-1193 Failure in Zend_Mail_MessageTest::testMultipleHeader()
   ZF-1236 timeout in Zend/Mime.php
   ZF-1252 Imap: delete message
@@ -400,7 +469,7 @@ This release resolves the following issues:
   ZF-1074 Zend_Validate Unit Tests failing
 - Zend_XmlRpc_Server
   ZF-1227 Mistake into phpdoc of Zend_XmlRpcServer
-- Total of 79 issues resolved; for a detailed list, see the changelog
+- Total of 80 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.9.2 / 06-Apr-2007 / based on revision 4421 =
@@ -714,6 +783,8 @@ This release resolves the following issues:
     Component moved from incubator to core.
     Storage adapters for CSV, XLIFF, TMX, Gettext, and Array
     ZF-929  Test errors and failures in Zend_Translate
+- Zend_Uri
+    ZF-797  Incubator version of Zend_Uri_Http to match incubator Zend_Filter
 - Zend_Validate
     ZF-42   Zend_Validate::isEmail() implementation 
     ZF-881  Zend_Validate_Hostname - UTF-8 hostnames valid?
@@ -723,7 +794,7 @@ This release resolves the following issues:
 - Zend_XmlRpc_Client & Server
     ZF-1025 Zend_XmlRpc_Request should not cast incoming XML encoding
     ZF-1027 Zend_XmlRpc_Request_Http should have a getRawRequest() method
-- Total of 118 issues resolved; for a detailed list, see the changelog
+- Total of 119 issues resolved; for a detailed list, see the changelog
   in the issue tracker at http://framework.zend.com/issues
 
 =RELEASE 0.8.0 / 16-Feb-2007 / based on revision 3550 =
