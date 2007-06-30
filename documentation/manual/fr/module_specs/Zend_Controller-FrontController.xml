@@ -217,7 +217,13 @@ Zend_Controller_Front::run('../application/controllers');
 
             <listitem>
                 <para>
-                    <code>(un)registerPlugin()</code> vous permet d'inscrire et de désinscrire des objets <link linkend="zend.controller.plugins">plugin</link>.
+                    <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code> vous permet d'inscrire un <link linkend="zend.controller.plugins">objet plugin</link>. En réglant le paramètre facultatif <code>$stackIndex</code>, vous pouvez contrôler l'ordre dans lequel les plugins seront éxécutés.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>unregisterPlugin($plugin)</code> vous permet de désinscrire un <link linkend="zend.controller.plugins">objet plugin</link>. <code>$plugin</code> peut être soit un objet plugin ou une chaîne représentant la classe du plugin à désinscrire.
                 </para>
             </listitem>
 
