@@ -44,7 +44,7 @@ Zend_Session::start();]]></programlisting>
                 <para>
                     Falsch: PHP's
                     <ulink url="http://www.php.net/manual/en/ref.session.php#ini.session.auto-start"><code>                    session.auto_start</code>
-                    Einstellung</code></ulink> darf nicht eingeschaltet werden. Wenn keine Möglichkeit besteht
+                    Einstellung</ulink> darf nicht eingeschaltet werden. Wenn keine Möglichkeit besteht
                     diese Einstellung in php.ini zu deaktivieren, und mod_php (oder ähnliches) verwendet wird,
                     und die Einstellung schon in <code>php.ini</code> aktiviert ist, kann das folgende in der
                     <code>.htaccess</code> Datei (normalerweise im HTML Dokumenten Basisverzeichnis) hinzugefügt

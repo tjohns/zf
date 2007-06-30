@@ -113,7 +113,7 @@ $_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";]]></programlistin
 
     </sect2>
 
-    <sect2 id=" id="zend.session.basic_usage.iteration">
+    <sect2 id="zend.session.basic_usage.iteration">
 
         <title>Session Namensräume wiederholen</title>
 
