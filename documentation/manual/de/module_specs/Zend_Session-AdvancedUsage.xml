@@ -233,7 +233,6 @@ $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // Nur diese Variable ablaufen lassen
 $testSpace->accept_answer = true;
 //...?>]]></programlisting>
-        </example>
 
             <para>
                 Danach bestimmt der Kontroller der die Antworten für die Test Fragen bearbeitet ob eine
