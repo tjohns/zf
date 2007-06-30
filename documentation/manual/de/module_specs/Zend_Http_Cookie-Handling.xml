@@ -85,7 +85,7 @@
                 </listitem>
             </itemizedlist>
             <example>
-               <title>Instanzieren eines Zend_Http_Cookie-Objekts/title>
+               <title>Instanzieren eines Zend_Http_Cookie-Objekts</title>
                <programlisting role="php"><![CDATA[<?php
 // Zuerst nutzen wir den Konstruktor. Der Cookie wird in zwei Stunden ablaufen
 $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
