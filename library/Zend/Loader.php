@@ -132,7 +132,7 @@ class Zend_Loader
         /**
          * Search for the file in each of the dirs named in $dirs.
          */
-        if (empty($dirs)) {
+        if (is_null($dirs)) {
             $dirs = array();
         } elseif (is_string($dirs))  {
             $dirs = explode(PATH_SEPARATOR, $dirs);
