@@ -278,31 +278,32 @@ else {
         <title>名前空間内あたりのインスタンス数をひとつに絞り込む</title>
 
         <para>
-            Although <link linkend="zend.session.advanced_usage.locking">session locking</link> provides a good degree
-            of protection against unintended use of namespaced session data, <code>Zend_Session_Namespace</code> also
-            features the ability to prevent the creation of multiple instances corresponding to a single namespace.
+            <link linkend="zend.session.advanced_usage.locking">セッションのロック</link>
+            を利用すれば、名前空間つきセッションデータを予期せず使用してしまうことはある程度防げます。
+            しかし、<code>Zend_Session_Namespace</code> には、
+            単一の名前空間内で複数のインスタンスを作成することを防ぐ機能もあります。
         </para>
 
         <para>
-            To enable this behavior, pass <code>true</code> to the second constructor argument when creating the last
-            allowed instance of <code>Zend_Session_Namespace</code>. Any subsequent attempt to instantiate the same
-            namespace would result in a thrown exception.
+            この機能を有効にするには、<code>Zend_Session_Namespace</code>
+            のインスタンスを作成する際に、コンストラクタの第二引数に <code>true</code>
+            を渡します。それ以降は、同一名前空間でインスタンスを作成しようとすると例外がスローされます。
         </para>
 
         <example id="zend.session.advanced_usage.single_instance.example">
 
-            <title>Limiting Session Namespace Access to a Single Instance</title>
+            <title>セッション名前空間へのアクセスを単一のインスタンスに制限する</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 
-// create an instance of a namespace
+// 名前空間のインスタンスを作成します
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
-// create another instance of the same namespace, but disallow any new instances
+// 同じ名前空間で別のインスタンスを作成します。しかし今後はインスタンスを作成できないようにします
 $authSpaceAccessor2 = new Zend_Session_Namespace('Zend_Auth', true);
 
-// making a reference is still possible
+// 参照をすることは可能です
 $authSpaceAccessor3 = $authSpaceAccessor2;
 
 $authSpaceAccessor1->foo = 'bar';
@@ -312,22 +313,24 @@ assert($authSpaceAccessor2->foo, 'bar');
 try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
-    echo "Cannot instantiate this namespace since \$authSpaceAccessor2 was created\n";
+    echo "この名前空間ではインスタンスを作成できません。すでに \$authSpaceAccessor2 があるからです\n";
 }]]></programlisting>
 
         </example>
 
         <para>
-            The second parameter in the constructor above tells <code>Zend_Session_Namespace</code> that any future
-            instances with the "<code>Zend_Auth</code>" namespace are not allowed. Attempting to create such an instance
-            causes an exception to be thrown by the constructor. The developer therefore becomes responsible for storing
-            a reference to an instance object (<code>$authSpaceAccessor1</code>, <code>$authSpaceAccessor2</code>, or
-            <code>$authSpaceAccessor3</code> in the example above) somewhere, if access to the session namespace is
-            needed at a later time during the same request. For example, a developer may store the reference in a static
-            variable, add the reference to a
-            <ulink url="http://www.martinfowler.com/eaaCatalog/registry.html">registry</ulink> (see
-            <xref linkend="zend.registry" />), or otherwise make it available to other methods that may need access to
-            the session namespace.
+            上の例では、コンストラクタの第二引数を用いて
+            "<code>Zend_Auth</code>" 名前空間では今後インスタンスを作成させないよう
+            <code>Zend_Session_Namespace</code> に指示しています。
+            インスタンスを作成しようとすると、コンストラクタから例外がスローされます。
+            したがって、このセッション名前空間へのアクセスが必要となった場合は、
+            今後は現在あるインスタンス (上の例の場合なら <code>$authSpaceAccessor1</code>、
+            <code>$authSpaceAccessor2</code> あるいは <code>$authSpaceAccessor3</code>)
+            のどれかを使うことになるわけです。
+            たとえば、名前空間への参照を静的変数に格納したり、
+            <ulink url="http://www.martinfowler.com/eaaCatalog/registry.html">レジストリ</ulink>
+            (<xref linkend="zend.registry" /> を参照ください) に格納したり、
+            あるいは名前空間へのアクセスを必要とするその他のメソッドで使用したりします。
         </para>
 
     </sect2>
@@ -337,35 +340,35 @@ try {
         <title>配列の使用</title>
 
         <para>
-            Due to the implementation history of PHP magic methods, modifying an array inside a namespace may not work
-            under PHP versions before 5.2.1. If you will only be working with PHP 5.2.1 or later, then you may <link
-            linkend="zend.session.advanced_usage.objects">skip to the next section</link>.
+            PHP のマジックメソッドの実装上の理由で、バージョン 5.2.1 より前の PHP
+            では名前空間内の配列の修正ができません。
+            もし PHP 5.2.1 以降を使っている場合は、<link
+            linkend="zend.session.advanced_usage.objects">このセクションは読み飛ばしてください</link>。
         </para>
 
         <example id="zend.session.advanced_usage.arrays.example.modifying">
 
-            <title>Modifying Array Data with a Session Namespace</title>
+            <title>セッション名前空間内での配列データの修正</title>
 
             <para>
-                The following illustrates how the problem may be reproduced:
+                問題の再現手順は、このようになります。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
-$sessionNamespace->array['testKey'] = 1; // may not work as expected before PHP 5.2.1
+$sessionNamespace->array['testKey'] = 1; // PHP 5.2.1 より前のバージョンでは、期待通りに動作しません
 echo $sessionNamespace->array['testKey'];]]></programlisting>
 
         </example>
 
         <example id="zend.session.advanced_usage.arrays.example.building_prior">
 
-            <title>Building Arrays Prior to Session Storage</title>
+            <title>セッションに保存する前に配列を作成する</title>
 
             <para>
-                If possible, avoid the problem altogether by storing arrays into a session namespace only after all
-                desired array values have been set.
+                可能なら、先に配列のすべての値を設定してからセッションに格納するようにすればこの問題を回避できます。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -376,46 +379,47 @@ $sessionNamespace->array = array('a', 'b', 'c');]]></programlisting>
         </example>
 
         <para>
-            If you are using an affected version of PHP and need to modify the array after assigning it to a session
-            namespace key, you may use either or both of the following workarounds.
+            この問題の影響を受けるバージョンの PHP を使っている場合で、
+            セッション名前空間に代入した後に配列を修正したい場合は、
+            以下の回避策のうちのいずれかを使用します。
         </para>
 
         <example id="zend.session.advanced_usage.arrays.example.workaround.reassign">
 
-            <title>Workaround: Reassign a Modified Array</title>
+            <title>回避策: 修正した配列を再度代入する</title>
 
             <para>
-                In the code that follows, a copy of the stored array is created, modified, and reassigned to the
-                location from which the copy was created, overwriting the original array.
+                以下のコードでは、保存されている配列のコピーを作成してそれを修正し、
+                修正したコピーを再度代入してもとの配列を上書きします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 $sessionNamespace = new Zend_Session_Namespace();
 
-// assign the initial array
+// 配列を代入します
 $sessionNamespace->array = array('tree' => 'apple');
 
-// make a copy of the array
+// そのコピーを作成します
 $tmp = $sessionNamespace->array;
 
-// modfiy the array copy
+// コピーのほうを修正します
 $tmp['fruit'] = 'peach';
 
-// assign a copy of the array back to the session namespace
+// 修正したコピーをセッション名前空間に書き戻します
 $sessionNamespace->array = $tmp;
 
-echo $sessionNamespace->array['fruit']; // prints "peach"]]></programlisting>
+echo $sessionNamespace->array['fruit']; // "peach" と表示されます]]></programlisting>
 
         </example>
 
         <example id="zend.session.advanced_usage.arrays.example.workaround.reference">
 
-            <title>Workaround: store array containing reference</title>
+            <title>回避策: 参照を含む配列を格納する</title>
 
             <para>
-                Alternatively, store an array containing a reference to the desired array, and then access it
-                indirectly.
+                あるいは、実際の配列への参照を含む配列を格納しておき、
+                間接的にアクセスするようにします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -424,7 +428,7 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 $a = array(1, 2, 3);
 $myNamespace->someArray = array( &$a );
 $a['foo'] = 'bar';
-echo $myNamespace->someArray['foo']; // prints "bar"]]></programlisting>
+echo $myNamespace->someArray['foo']; // "bar" と表示されます]]></programlisting>
 
         </example>
 
@@ -432,15 +436,17 @@ echo $myNamespace->someArray['foo']; // prints "bar"]]></programlisting>
 
     <sect2 id="zend.session.advanced_usage.objects">
 
-        <title>Using Sessions with Objects</title>
+        <title>セッションでのオブジェクトの使用</title>
 
         <para>
-            If you plan to persist objects in the PHP session, know that they will be
-            <ulink url="http://www.php.net/manual/en/language.oop.serialization.php">serialized</ulink> for storage.
-            Thus, any object persisted with the PHP session must be unserialized upon retrieval from storage. The
-            implication is that the developer must ensure that the classes for the persisted objects must have been
-            defined before the object is unserialized from session storage. If an unserialized object's class is not
-            defined, then it becomes an instance of <code>stdClass</code>.
+            オブジェクトを PHP セッション内で持続的に使用したい場合は、
+            <ulink url="http://www.php.net/manual/ja/language.oop.serialization.php">シリアライズ</ulink>
+            を使用します。したがって、PHP セッションから永続オブジェクトを取得したら、
+            そのシリアライズを解除しなければなりません。
+            ということは、永続オブジェクトをセッションから読み出す前に、
+            そのオブジェクトのクラスが定義されていなければならないということです。
+            クラスが定義されていない場合は、<code>stdClass</code>
+            のオブジェクトとして復元されます。
         </para>
 
     </sect2>
@@ -473,14 +479,14 @@ echo $myNamespace->someArray['foo']; // prints "bar"]]></programlisting>
             新しいプロセスが、ブラウザからの二番目以降のリクエストをシミュレートします。
             この別プロセスの開始時にはセッションを "初期化" します。
             ちょうど、ふつうの PHP スクリプトがウェブリクエストを実行する場合と同じような動作です。
-            また、呼び出し元のプロセスで <code>$_SESSION[]</code> を変更すると、
+            また、呼び出し元のプロセスで <code>$_SESSION</code> を変更すると、
             子プロセスでそれが反映されます。親側では
             <code>exec()</code> を使用する前にセッションを閉じています。
         </para>
 
         <example id="zend.session.advanced_usage.testing.example">
 
-            <title>PHPUnit Testing Code Dependent on Zend_Session</title>
+            <title>PHPUnit で Zend_Session を使用したコードをテストする例</title>
 
             <programlisting role="php"><![CDATA[<?php
 // testing setExpirationSeconds()
