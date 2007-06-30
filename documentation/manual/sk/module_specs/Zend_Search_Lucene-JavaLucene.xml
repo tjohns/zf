@@ -9,7 +9,7 @@
         </para>
 
         <para>
-            Detailný <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>popis formátu</ulink>
+            Detailný <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">popis formátu</ulink>
             je k dispozícii na stránke projektu Lucene
             <footnote><para>Aktuálne podporovaná verzia indexového súboru je v2.0.</para></footnote>
         </para>
