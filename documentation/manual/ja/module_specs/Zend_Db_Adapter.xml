@@ -3,23 +3,25 @@
     <title>Zend_Db_Adapter</title>
 
     <para>
-        Zend_Db and its related classes provide a simple SQL database interface
-        for Zend Framework.  The Zend_Db_Adapter is the basic class you use to
-        connect your PHP application to an RDBMS.  There is a different Adapter
-        class for each brand of RDBMS.
+        Zend_Db とその関連クラス群は、Zend Framework
+        において SQL データベースとのインターフェイスを担当します。
+        Zend_Db_Adapter は、PHP アプリケーションから RDBMS
+        に接続する際に使用する基本クラスです。
+        RDBMS の種類に応じて、それぞれ個別のアダプタクラスがあります。
     </para>
 
     <para>
-        The Zend_Db Adapters create a bridge from the vendor-specific PHP
-        extensions to a common interface, to help you write PHP applications
-        once and deploy with multiple brands of RDBMS with very little effort.
+        Zend_Db のアダプタは、
+        ベンダ固有の PHP 拡張モジュールを共通インターフェイスにとりまとめる役割を果たします。
+        これにより、いちど書いた PHP アプリケーションが
+        ほんの少しの手間で複数 RDBMS に対応するようになります。
     </para>
 
     <para>
-        The interface of the Adapter class is similar to the interface of the
-        <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
-        Zend_Db provides Adapter classes to PDO drivers for the following RDBMS
-        brands:
+        アダプタクラスのインターフェイスは、
+        <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>
+        拡張モジュールのインターフェイスと似ています。
+        Zend_Db では、次の RDBMS 用の PDO ドライバに対するアダプタクラスを用意しています。
     </para>
 
     <itemizedlist>
@@ -51,60 +53,61 @@
     </itemizedlist>
 
     <para>
-        In addition, Zend_Db provides Adapter classes that utilize PHP database
-        extensions for the following RDBMS brands:
+        さらに、Zend_Db では、
+        以下の RDBMS 用の拡張モジュールを使用するアダプタクラスも用意しています。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                MySQL, using the <ulink url="http://www.php.net/mysqli">mysqli</ulink> PHP extension
+                MySQL (<ulink url="http://www.php.net/mysqli">mysqli</ulink> を使用します)
             </para>
         </listitem>
         <listitem>
             <para>
-                Oracle, using the <ulink url="http://www.php.net/oci8">oci8</ulink> PHP extension
+                Oracle (<ulink url="http://www.php.net/oci8">oci8</ulink> を使用します)
             </para>
         </listitem>
         <listitem>
             <para>
-                IBM DB2, using the <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP extension
+                IBM DB2 (<ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> を使用します)
             </para>
         </listitem>
     </itemizedlist>
 
     <note>
         <para>
-            Each Zend_Db Adapter uses a PHP extension.  You must have the
-            respective PHP extension enabled in your PHP environment to use a
-            Zend_Db Adapter.  For example, if you use any of the PDO Zend_Db
-            Adapters, you need to enable both the PDO extension and the
-            PDO driver for the brand of RDBMS you use.
+            Zend_Db のアダプタは、どれも PHP の拡張モジュールを使用しています。
+            Zend_Db のアダプタを使用するには、
+            対応する PHP 拡張モジュールが使用できる環境でなければなりません。
+            たとえば、PDO 系の Zend_Db アダプタを使用するのなら、
+            PDO 拡張モジュールが必要で、
+            また使用する RDBMS 用の PDO ドライバも必要となります。
         </para>
     </note>
 
     <sect2 id="zend.db.adapter.connecting">
 
-        <title>Connecting to a Database using an Adapter</title>
+        <title>アダプタを使用したデータベース接続</title>
 
         <para>
-            This section describes how to create an instance of a database Adapter.
-            This corresponds to making a connection to your RDBMS server from your
-            PHP application.
+            ここでは、データベースアダプタのインスタンスを作成する方法を説明します。
+            これは、PHP アプリケーションから RDBMS
+            サーバへの接続を確立することに対応します。
         </para>
 
         <sect3 id="zend.db.adapter.connecting.constructor">
 
-            <title>Using a Zend_Db Adapter Constructor</title>
+            <title>Zend_Db アダプタのコンストラクタの使用</title>
 
             <para>
-                You can create an instance of an Adapter using its constructor.
-                An Adapter constructor takes one argument, which is an array
-                of parameters used to declare the connection.
+                コンストラクタを使用して、アダプタのインスタンスを作成することができます。
+                アダプタのコンストラクタが受け取る引数はひとつで、
+                接続を確立するために必要なパラメータを配列で渡します。
             </para>
 
             <example id="zend.db.adapter.connecting.constructor.example">
-                <title>Using an Adapter constructor</title>
+                <title>アダプタのコンストラクタの使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
@@ -122,31 +125,30 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
         <sect3 id="zend.db.adapter.connecting.factory">
 
-            <title>Using the Zend_Db Factory</title>
+            <title>Zend_Db のファクトリの使用</title>
 
             <para>
-                As an alternative to using an Adapter constructor directly, you
-                can create an instance of an Adapter using the static method
-                <code>Zend_Db::factory()</code>.  This method dynamically loads
-                the Adapter class file on demand, using
-                <link linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>.
+                コンストラクタを直接使用する以外の方法として、静的メソッド
+                <code>Zend_Db::factory()</code> を使用することもできます。
+                このメソッドは、必要に応じて
+                <link linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>
+                を使用して動的にアダプタクラスを読み込みます。
             </para>
 
             <para>
-                The first argument is a string that names the base name of the
-                Adapter class.  For example the string 'Pdo_Mysql' corresponds
-                to the class Zend_Db_Adapter_Pdo_Mysql.  The second argument is
-                the same array of parameters you would have given to the
-                Adapter constructor.
+                最初の引数には、アダプタクラスのベース名を文字列で指定します。
+                たとえば、文字列 'Pdo_Mysql' は Zend_Db_Adapter_Pdo_Mysql
+                クラスに対応します。その次の引数は、
+                アダプタのコンストラクタに指定するのと同じ形式の配列となります。
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example">
-                <title>Using the Adapter factory method</title>
+                <title>ファクトリメソッドの使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Db.php';
 
-// Automatically load class Zend_Db_Adapter_Pdo_Mysql and create an instance of it.
+// 自動的に Zend_Db_Adapter_Pdo_Mysql クラスを読み込み、そのインスタンスを作成します
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
@@ -158,12 +160,12 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
             <note>
                 <para>
-                    If you create your own class that extends
-                    Zend_Db_Adapter_Abstract, but you do not name your class
-                    with the "Zend_Db_Adapter" package prefix, you cannot use
-                    the <code>factory()</code> method to load your Adapter.
-                    You must load your Adapter class yourself and create an
-                    instance directly using its contructor.
+                    独自に Zend_Db_Adapter_Abstract
+                    の派生クラスを作成し、そのクラス名のプレフィックスが
+                    "Zend_Db_Adapter" でない場合は、<code>factory()</code>
+                    でそのアダプタを読み込むことはできません。
+                    自分でクラスを読み込み、
+                    コンストラクタを使用してインスタンスを作成する必要があります。
                 </para>
             </note>
 
@@ -171,81 +173,78 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
         <sect3 id="zend.db.adapter.connecting.parameters">
 
-            <title>Adapter Parameters</title>
+            <title>アダプタのパラメータ</title>
 
             <para>
-                The list below explains common parameters recognized by Zend_Db Adapter classes.
+                Zend_Db のアダプタクラスで使用できるパラメータを以下にまとめます。
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
                         <emphasis role="strong">host</emphasis>:
-                        a string containing a hostname or IP address of the
-                        database server.  If the database is running on the
-                        same host as the PHP application, you may use
-                        'localhost' or '127.0.0.1'.
+                        データベースサーバのホスト名あるいは IP アドレス。
+                        データベースが PHP アプリケーションと同じホスト上で動いている場合は、
+                        'localhost' あるいは '127.0.0.1' を指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">username</emphasis>:
-                        account identifier for authenticating a connection to the
-                        RDBMS server.
+                        RDBMS サーバへの接続時に使用する認証用アカウントの ID。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">password</emphasis>:
-                        account password credential for authenticating a
-                        connection to the RDBMS server.
+                        RDBMS サーバへの接続時に使用する認証用パスワード。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">dbname</emphasis>:
-                        database instance name on the RDBMS server.
+                        RDBMS サーバ上のデータベースインスタンス名。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">port</emphasis>:
-                        some RDBMS servers can accept network connections on a
-                        administrator-specified port number.  The port
-                        parameter allow you to specify the port to which your
-                        PHP application connects, to match the port configured
-                        on the RDBMS server.
+                        RDBMS サーバによっては、管理者が指定した
+                        ポート番号によるネットワーク接続を許可しているものもあります。
+                        このパラメータを使用すると、PHP
+                        アプリケーションが接続時に使用するポート番号を指定できます。
+                        これは RDBMS サーバの設定にあわせなければなりません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">options</emphasis>:
-                        this parameter is an associative array of options
-                        that are generic to all Zend_Db_Adapter classes.
+                        このパラメータは、すべての Zend_Db_Adapter
+                        クラスで共通のオプションを連想配列で指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">driver_options</emphasis>:
-                        this parameter is an associative array of additional
-                        options that are specific to a given database
-                        extension.  One typical use of this parameter is to
-                        set attributes of a PDO driver.
+                        このパラメータは、各データベース拡張モジュールに固有の
+                        追加オプションを連想配列で指定します。
+                        典型的な使用例としては、PDO ドライバの属性などがあります。
                     </para>
                 </listitem>
             </itemizedlist>
 
             <example id="zend.db.adapter.connecting.parameters.example1">
-                <title>Passing the case-folding option to the factory</title>
+                <title>ファクトリでの大文字小文字変換オプションの指定</title>
                 <para>
-                    You can specify this option by the constant
-                    <code>Zend_Db::CASE_FOLDING</code>.
-                    This corresponds to the <code>ATTR_CASE</code> attribute in
-                    PDO and IBM DB2 database drivers, adjusting the case of
-                    string keys in query result sets.  The option takes values
-                    <code>Zend_Db::CASE_NATURAL</code> (the default),
-                    <code>Zend_Db::CASE_UPPER</code>, and
-                    <code>Zend_Db::CASE_LOWER</code>.
+                    このオプションは、定数
+                    <code>Zend_Db::CASE_FOLDING</code> で指定します。
+                    これは、PDO や IBM DB2 データベースドライバにおける
+                    <code>ATTR_CASE</code> 属性に対応するもので、
+                    結果セットの文字列キーの大文字小文字変換を指定します。
+                    設定できる値は
+                    <code>Zend_Db::CASE_NATURAL</code> (デフォルト)、
+                    <code>Zend_Db::CASE_UPPER</code> および
+                    <code>Zend_Db::CASE_LOWER</code> のいずれかです。
                 </para>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -266,18 +265,18 @@ $db = Zend_Db::factory('Db2', $params);
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example2">
-                <title>Passing the auto-quoting option to the factory</title>
+                <title>ファクトリでの自動クォートオプションの指定</title>
                 <para>
-                    You can specify this option by the constant
-                    <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.  If the value
-                    is <code>true</code> (the default), identifiers like table
-                    names, column names, and even aliases are delimited in all
-                    SQL syntax generated by the Adapter object.  This makes it
-                    simple to use identifiers that contain SQL keywords, or
-                    special characters.  If the value is <code>false</code>,
-                    identifiers are not delimited automatically.  If you need
-                    to delimit identifiers, you must do so yourself using the
-                    <code>quoteIdentifier()</code> method.
+                    このオプションは、定数
+                    <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code> で指定します。
+                    この値が <code>true</code> (デフォルト) の場合は、
+                    アダプタが生成する SQL 文中のテーブル名やカラム名、
+                    エイリアスといった識別子をすべてクォートします。これにより、
+                    SQL のキーワードや特殊文字を含む識別子を使用できるようになります。
+                    この値が <code>false</code> の場合は、
+                    識別子の自動クォートは行いません。
+                    クォートすべき文字を使用している場合は、自分で
+                    <code>quoteIdentifier()</code> メソッドをコールする必要があります。
                 </para>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -298,7 +297,7 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example3">
-                <title>Passing PDO driver options to the factory</title>
+                <title>ファクトリでの PDO ドライバのオプションの指定</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $pdoParams = array(
@@ -322,50 +321,48 @@ echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.getconnection">
-            <title>Managing Lazy Connections</title>
+            <title>遅延接続の管理</title>
 
             <para>
-                Creating an instance of an Adapter class does not immediately
-                connect to the RDBMS server.  The Adapter saves the connection
-                parameters, and makes the actual connection on demand, the
-                first time you need to execute a query.  This ensures that
-                creating an Adapter object is quick and inexpensive.  You can
-                create an instance of an Adapter even if you are not certain
-                that you need to run any database queries during the current
-                request your application is serving.
+                アダプタクラスのインスタンスを作成した時点では、
+                まだ RDBMS サーバへの接続は行われません。
+                接続用のパラメータを内部で保持しておき、
+                実際にクエリを実行することになった時点で初めて接続を確立します。
+                これにより、アダプタオブジェクトをすばやく作成できるようになっています。
+                つまり、そのリクエストの中で
+                実際にデータベースクエリを発行するかどうかが確定していなくても、
+                とりあえずアダプタのインスタンスを作成しておくということもできます。
             </para>
 
             <para>
-                If you need to force the Adapter to connect to the RDBMS, use
-                the <code>getConnection()</code> method.  This method returns
-                an object for the connection as represented by the respective
-                PHP database extension.  For example, if you use any of the
-                Adapter classes for PDO drivers, then
-                <code>getConnection()</code> returns the PDO object, after
-                initiating it as a live connection to the specific database.
+                強制的に RDBMS との接続を確立する必要がある場合は、
+                <code>getConnection()</code> メソッドを使用します。
+                このメソッドは、対応する PHP 拡張モジュール用の接続オブジェクトを返します。
+                たとえば、PDO ドライバ系のアダプタクラスを使った場合は、
+                <code>getConnection()</code> は
+                データベースとの接続を確立してから PDO オブジェクトを返します。
             </para>
 
             <para>
-                It can be useful to force the connection if you want to catch
-                any exceptions it throws as a result of invalid account
-                credentials, or other failure to connect to the RDBMS server.
-                These exceptions are not thrown until the connection is made,
-                so it can help simplify your application code if you handle the
-                exceptions in one place, instead of at the time of
-                the first query against the database.
+                データベースへの接続時に発生する例外、
+                すなわち ID やパスワードの間違いなどを捕捉したい場合に、
+                これは役立つでしょう。
+                実際に接続を行うまで例外はスローされないので、
+                どこか一か所に例外処理をまとめておいたほうが
+                アプリケーションがシンプルになって便利でしょう。
             </para>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
-                <title>Handling connection exceptions</title>
+                <title>接続時の例外処理</title>
                 <programlisting role="php"><![CDATA[<?php
 
 try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
     $db->getConnection();
 } catch (Zend_Db_Adapter_Exception $e) {
-    // perhaps a failed login credential, or perhaps the RDBMS is not running
+    // ID かパスワードが間違っている、あるいは RDBMS が起動していないなど……
 } catch (Zend_Exception $e) {
-    // perhaps factory() failed to load the specified Adapter class
+    // factory() が指定したアダプタクラスを読み込めなかったなど……
 }
 
 ]]></programlisting>
@@ -377,53 +374,50 @@ try {
 
     <sect2 id="zend.db.adapter.example-database">
 
-        <title>The example database</title>
+        <title>サンプルデータベース</title>
 
         <para>
-            In the documentation for Zend_Db classes, we use a set of simple
-            tables to illustrate usage of the classes and methods.  These
-            example tables could store information for tracking bugs in a
-            software development project.  The database contains four tables:
+            Zend_Db クラスのドキュメントでは、
+            クラスやメソッドの使用法を説明するために単純なデータベースを使用します。
+            これは、とあるソフトウェア開発プロジェクトにおけるバグ管理を想定したものです。
+            次の 4 つのテーブルで構成されています。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis role="strong">accounts</emphasis> stores
-                    information about each user of the bug-tracking database.
+                    <emphasis role="strong">accounts</emphasis> テーブルには、
+                    バグ管理データベースを使用するユーザについての情報を格納します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">products</emphasis> stores
-                    information about each product for which a bug can be
-                    logged.
+                    <emphasis role="strong">products</emphasis> テーブルには、
+                    バグを記録する対象となる製品についての情報を格納します。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">bugs</emphasis> stores information
-                    about bugs, including that current state of the bug, the
-                    person who reported the bug, the person who is assigned to
-                    fix the bug, and the person who is assigned to verify the
-                    fix.
+                    <emphasis role="strong">bugs</emphasis> テーブルには、
+                    バグについての情報を格納します。
+                    バグの状態や報告者、修正担当者、検証担当者などの情報が含まれます。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">bugs_products</emphasis> stores a
-                    relationship between bugs and products.  This implements a
-                    many-to-many relationship, because a given bug may be
-                    relevant to multiple products, and of course a given
-                    product can have multiple bugs.
+                    <emphasis role="strong">bugs_products</emphasis> テーブルには、
+                    バグと製品の関連付け情報を格納します。
+                    これは、いわゆる多対多のリレーションシップを実装するものです。
+                    ひとつのバグが複数の製品に関連するものであることもあれば、
+                    当然ひとつの製品には複数のバグが存在するからです。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The following SQL data definition language pseudocode describes the
-            tables in this example database.  These example tables are used
-            extensively by the automated unit tests for Zend_Db.
+            このサンプルデータベースを作成するための SQL
+            の擬似コードは、次のようになります。
+            これらのテーブルは、Zend_Db 自体のユニットテストでも使用します。
         </para>
 
         <programlisting role="sql"><![CDATA[
@@ -453,15 +447,14 @@ CREATE TABLE bugs_products (
         </programlisting>
 
         <para>
-            Also notice that the <code>bugs</code> table contains multiple
-            foreign key references to the <code>accounts</code> table.
-            Each of these foreign keys may reference a different row in the
-            <code>accounts</code> table for a given bug.
+            また、<code>bugs</code> テーブルには <code>accounts</code>
+            テーブルを指す外部キー参照が複数含まれることにも注意しましょう。
+            それぞれの外部キーは、そのバグに対して
+            <code>accounts</code> テーブルの別々の行を参照することもあります。
         </para>
 
         <para>
-            The diagram below illustrates the physical data model of the
-            example database.
+            サンプルデータベースの物理データモデルは、次の図のようになります。
         </para>
 
         <para>
@@ -473,38 +466,38 @@ CREATE TABLE bugs_products (
 
     <sect2 id="zend.db.adapter.select">
 
-        <title>Reading Query Results</title>
+        <title>クエリ結果の読み込み</title>
 
         <para>
-            This section describes methods of the Adapter class with which you
-            can run SELECT queries and retrieve the query results.
+            ここでは、SELECT クエリを実行してその結果を取得するための
+            アダプタのメソッドについて説明します。
         </para>
 
         <sect3 id="zend.db.adapter.select.fetchall">
 
-            <title>Fetching a Complete Result Set</title>
+            <title>結果セット全体の取得</title>
 
             <para>
-                You can run a SQL SELECT query and retrieve its results in one
-                step using the <code>fetchAll()</code> method.
+                SQL の SELECT クエリの実行とその結果の取得を一度に行うには
+                <code>fetchAll()</code> メソッドを使用します。
             </para>
 
             <para>
-                The first argument to this method is a string containing a
-                SELECT statement.  Alternatively, the first argument can be an
-                object of class <link linkend="zend.db.select">Zend_Db_Select</link>.
-                The Adapter automatically converts this object to a string
-                representation of the SELECT statement.
+                このメソッドの最初の引数には、SELECT 文を文字列で指定します。
+                あるいは、文字列ではなく
+                <link linkend="zend.db.select">Zend_Db_Select</link>
+                クラスのオブジェクトを指定することもできます。
+                オブジェクトを渡した場合は、アダプタの内部でそれを自動的に
+                SELECT 文の文字列に変換します。
             </para>
 
             <para>
-                The second argument to <code>fetchAll()</code> is an array of
-                values to substitute for parameter placeholders in the SQL
-                statement.
+                <code>fetchAll()</code> でその次に指定する引数は、
+                SQL 文中のパラメータプレースホルダを置換する値の配列となります。
             </para>
 
             <example id="zend.db.adapter.select.fetchall.example">
-                <title>Using fetchAll()</title>
+                <title>fetchAll() の使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $sql = 'SELECT * FROM bugs WHERE bug_id = ?';
@@ -517,95 +510,91 @@ $result = $db->fetchAll($sql, 2);
 
         <sect3 id="zend.db.adapter.select.fetch-mode">
 
-            <title>Changing the Fetch Mode</title>
+            <title>フェッチモードの変更</title>
 
             <para>
-                By default, <code>fetchAll()</code> returns an array of
-                rows, each of which is an associative array.  The keys of the
-                associative array are the columns or column aliases named in
-                the select query.
+                デフォルトでは、<code>fetchAll()</code>
+                は行の配列を返します。各行のデータは連想配列となります。
+                連署配列のキーは、列名かあるいは SELECT
+                クエリで指定した列の別名となります。
             </para>
 
             <para>
-                You can specify a different style of fetching results using the
-                <code>setFetchMode()</code> method.  The modes supported are
-                identified by constants:
+                返り値の形式を別のものにするには
+                <code>setFetchMode()</code> メソッドを使用します。
+                対応しているモードは、以下の定数で表されるものです。
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_ASSOC</emphasis>:
-                        return data in an array of associative arrays.
-                        The array keys are column names, as strings.
-                        This is the default fetch mode for Zend_Db_Adapter classes.
+                        データを、連想配列の配列として返します。
+                        配列のキーは、カラム名を文字列で表したものとなります。
+                        これは、Zend_Db_Adapter クラスのデフォルトのフェッチモードです。
                     </para>
                     <para>
-                        Note that if your select-list contains more than one
-                        column with the same name, for example if they are from
-                        two different tables in a JOIN, there can be only one
-                        entry in the associative array for a given name.
-                        If you use the FETCH_ASSOC mode, you should specify
-                        column aliases in your SELECT query to ensure that the
-                        names result in unique array keys.
+                        select で取得する一覧の中に同名のカラムが含まれている場合
+                        (たとえば複数テーブルを JOIN した場合など)
+                        は、その名前のエントリはひとつしか含まれません。
+                        FETCH_ASSOC モードを使用する場合は、
+                        SELECT クエリでカラムの別名を指定するなどして、
+                        結果の配列におけるキーが一意になるようにしなければなりません。
                     </para>
                     <para>
-                        By default, these strings are returned as they are
-                        returned by the database driver.  This is typically the
-                        spelling of the column in the RDBMS server.  You can
-                        specify the case for these strings, using the
-                        <code>Zend_Db::CASE_FOLDING</code> option.
-                        Specify this when instantiating the Adapter.
-                        See <xref linkend="zend.db.adapter.connecting.parameters.example1" />.
+                        デフォルトでは、これらの文字列はデータベースドライバから返されるものをそのまま使用します。
+                        通常は、これは RDBMS サーバでのカラム名となるでしょう。
+                        大文字小文字を指定するには、<code>Zend_Db::CASE_FOLDING</code>
+                        オプションを使用します。これは、
+                        アダプタのインスタンスを作成する際に使用します。
+                        <xref linkend="zend.db.adapter.connecting.parameters.example1" />
+                        を参照ください。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_NUM</emphasis>:
-                        return data in an array of arrays.  The arrays are
-                        indexed by integers, corresponding to the position of
-                        the respective field in the select-list of the query.
+                        データを、配列の配列で返します。
+                        配列は数値添字形式となり、クエリで指定した順番での位置がキーとなります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_BOTH</emphasis>:
-                        return data in an array of arrays.  The array keys are
-                        both strings as used in the FETCH_ASSOC mode, and
-                        integers as used in the FETCH_NUM mode.  Note that the
-                        number of elements in the array is double that which
-                        would be in the array if you used iether FETCH_ASSOC
-                        or FETCH_NUM.
+                        データを、配列の配列で返します。
+                        配列のキーは、FETCH_ASSOC モードで用いる文字列と
+                        FETCH_NUM モードで用いる数値の両方を含んだものとなります。
+                        配列の要素数が、FETCH_ASSOC や FETCH_NUM
+                        の場合の倍になることに注意しましょう。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_COLUMN</emphasis>:
-                        return data in an array of values.  The value in each array
-                        is the value returned by one column of the result set.
-                        By default, this is the first column, indexed by 0.
+                        データを、値の配列で返します。
+                        配列の各要素の値は、結果セットのあるひとつのカラムの値となります。
+                        デフォルトでは、これは最初の (0 番目の) カラムとなります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>
-                        return data in an array of objects.  The default class
-                        is the PHP built-in class stdClass.  Columns of the
-                        result set are available as public properties of the
-                        object.
+                        データを、オブジェクトの配列で返します。
+                        デフォルトのクラスは、PHP の組み込みクラス stdClass
+                        となります。結果セットのカラムは、このクラスのプロパティとしてアクセスできます。
                     </para>
                 </listitem>
             </itemizedlist>
 
             <example id="zend.db.adapter.select.fetch-mode.example">
-                <title>Using setFetchMode()</title>
+                <title>setFetchMode() の使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAll('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
-// $result is an array of objects
+// $result はオブジェクトの配列となります
 echo $result[0]->bug_description;
 ]]></programlisting>
             </example>
@@ -614,23 +603,23 @@ echo $result[0]->bug_description;
 
         <sect3 id="zend.db.adapter.select.fetchassoc">
 
-            <title>Fetching a Result Set as an Associative Array</title>
+            <title>連想配列形式での結果セットの取得</title>
 
             <para>
-                The <code>fetchAssoc()</code> method returns data in an array
-                of associative arrays, regardless of what value you have set
-                for the fetch mode.
+                <code>fetchAssoc()</code> メソッドは、
+                フェッチモードの設定にかかわらず、
+                結果のデータを連想配列の配列で返します。
             </para>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
-                <title>Using fetchAssoc()</title>
+                <title>fetchAssoc() の使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAssoc('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
-// $result is an array of associative arrays, in spite of the fetch mode
+// $result は、フェッチモードの指定とは関係なく連想配列の配列となります
 echo $result[0]['bug_description'];
 ]]></programlisting>
             </example>
@@ -639,25 +628,28 @@ echo $result[0]['bug_description'];
 
         <sect3 id="zend.db.adapter.select.fetchcol">
 
-            <title>Fetching a Single Column from a Result Set</title>
+            <title>結果セットの単一のカラムの取得</title>
 
             <para>
-                The <code>fetchCol()</code> method returns data in an array
-                of values, regardless of the value you have set for the fetch mode.
-                This only returns the first column returned by the query.
-                Any other columns returned by the query are discarded.
-                If you need to return a column other than the first, see <xref linkend="zend.db.statement.fetching.fetchcolumn" />.
+                <code>fetchCol()</code> メソッドは、
+                フェッチモードの設定にかかわらず、
+                結果のデータを値の配列で返します。
+                これは、クエリの最初のカラムのみを返します。
+                それ以外のカラムの内容は破棄されます。
+                別のカラムが必要な場合は
+                <xref linkend="zend.db.statement.fetching.fetchcolumn" />
+                を参照ください。
             </para>
 
             <example id="zend.db.adapter.select.fetchcol.example">
-                <title>Using fetchCol()</title>
+                <title>fetchCol() の使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
 
-// contains bug_description; bug_id is not returned
+// bug_description を含み、bug_id は含みません
 echo $result[0];
 ]]></programlisting>
             </example>
@@ -666,26 +658,24 @@ echo $result[0];
 
         <sect3 id="zend.db.adapter.select.fetchpairs">
 
-            <title>Fetching Key-Value Pairs from a Result Set</title>
+            <title>結果セットからの キー/値 のペアの取得</title>
 
             <para>
-                The <code>fetchPairs()</code> method returns data in an array
-                of key-value pairs, as an associative array with a single entry
-                per row.  The key of this associative array is taken from the
-                first column returned by the SELECT query.  The value is taken
-                from the second column returned by the SELECT query.  Any other
-                columns returned by the query are discarded.
+                <code>fetchPairs()</code> メソッドは、データを キー/値
+                のペア (連想配列) の配列で返します。
+                この連想配列のキーは、SELECT クエリが返す最初のカラムの値となります。
+                また、連想配列の値は、SELECT クエリが返す二番目のカラムの値となります。
+                クエリから返されるその他のカラムは破棄されます。
             </para>
 
             <para>
-                You should design the SELECT query so that the first column
-                returned has unique values.  If there are duplicates values in
-                the first column, entries in the associative array will be
+                SELECT クエリをうまく設計し、最初のカラムの値が一意になるようにしなければなりません。
+                もし最初のカラムに重複する値があれば、連想配列のエントリが上書きされてしまいます。
                 overwritten.
             </para>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
-                <title>Using fetchPairs()</title>
+                <title>fetchPairs() の例</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -699,23 +689,23 @@ echo $result[2];
 
         <sect3 id="zend.db.adapter.select.fetchrow">
 
-            <title>Fetching a Single Row from a Result Set</title>
+            <title>結果セットからの単一の行の取得</title>
 
             <para>
-                The <code>fetchRow()</code> method returns data using the
-                current fetch mode, but it returns only the first row
-                fetched from the result set.
+                <code>fetchRow()</code> メソッドは、
+                結果のデータを現在のフェッチモードで返します。
+                ただ、返すのは結果セットから取得した最初の行のみです。
             </para>
 
             <example id="zend.db.adapter.select.fetchrow.example">
-                <title>Using fetchRow()</title>
+                <title>fetchRow() の使用</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchRow('SELECT * FROM bugs WHERE bug_id = 2');
 
-// note that $result is a single object, not an array of objects
+// $result はオブジェクトの配列ではなく、単なるオブジェクトとなります
 echo $result->bug_description;
 ]]></programlisting>
             </example>
@@ -723,19 +713,18 @@ echo $result->bug_description;
 
         <sect3 id="zend.db.adapter.select.fetchone">
 
-            <title>Fetching a Single Scalar from a Result Set</title>
+            <title>結果セットからの単一のスカラー値の取得</title>
 
             <para>
-                The <code>fetchOne()</code> method is like a combination
-                of <code>fetchRow()</code> with <code>fetchCol()</code>,
-                in that it returns data only for the first row fetched from
-                the result set, and it returns only the value of the first
-                column in that row.  Therefore it returns only a single
-                scalar value, not an array or an object.
+                <code>fetchOne()</code> メソッドは
+                <code>fetchRow()</code> と <code>fetchCol()</code>
+                を組み合わせたようなものです。
+                結果セットからの最初の行から、最初のカラムの値のみを返します。
+                したがって、このメソッドの返り値は配列やオブジェクトではなく単一のスカラー値となります。
             </para>
 
             <example id="zend.db.adapter.select.fetchone.example">
-                <title>Using fetchOne()</title>
+                <title>fetchOne() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
