@@ -1,7 +1,7 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 1.0.0 / 29-Jun-2007 / based on revision 5525 =
+=RELEASE 1.0.0 / 30-Jun-2007 / based on revision 5537 =
 - Zend_Cache
   ZF-1583 Zend_Cache_Backend_APC should be Zend_Cache_Backend_Apc
   ZF-1606 Zend_Cache does not allow using ZendPlatform cache backend
