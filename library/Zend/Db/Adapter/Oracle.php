@@ -483,7 +483,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
     /**
-     * @return
+     * @return int
      */
     public function _getExecuteMode()
     {

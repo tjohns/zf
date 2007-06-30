@@ -289,7 +289,7 @@ abstract class Zend_Measure_Abstract
      * Alias function for setType returning the converted unit
      *
      * @param $type  type
-     * @return
+     * @return string
      */
     public function convertTo($type)
     {
