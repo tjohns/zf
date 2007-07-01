@@ -1,23 +1,21 @@
 <sect1 id="zend.log.formatters">
-  <title>Formatters</title>
+  <title>Formatter</title>
   <para>
-    A Formatter is an object that is responsible for taking an <code>event</code> array
-    describing a log event and outputting a string with a formatted log line.
+    Ein Formatter ist ein Objekt das dafür zuständig ist ein <code>event</code> Array anzunehmen welches ein Log
+    Event beschreibt und einen String auszugeben mit einer formatierten Logzeile.
   </para>
 
   <para>
-    Some Writers are not line-oriented and cannot use a Formatter.  An example is the
-    Database Writer, which inserts the event items directly into database columns.  For
-    Writers that cannot support a Formatter, an exception is thrown if you attempt to
-    set a Formatter.
+    Einige Writer sind nicht zeilen-orientiert und können keinen Formatter benutzen. Ein Beispiel ist der
+    Datenbank Writer, welcher die Events direkt in die Datenbankzeilen einfügt. Für Writer die Formatter nicht
+    unterstützen können, wird eine Ausnahme geworfen wenn versucht wird einen Formatter zu setzen.
   </para>
 
   <sect2 id="zend.log.formatters.simple">
-    <title>Simple Formatting</title>
+    <title>Eingache Formatierung</title>
     <para>
-      <code>Zend_Log_Formatter_Simple</code> is the default formatter.  It is configured
-      automatically when you specify no formatter.  The default configuration is equivalent
-      to the following:
+      <code>Zend_Log_Formatter_Simple</code> ist der Standard Formatter. Er ist automatisch konfiguriert wenn
+      kein Formatter definiert wird. Die Standard Konfiguration ist identisch mit dem folgenden:
 
       <programlisting role="php"><![CDATA[<?php
 
@@ -28,38 +26,37 @@ $formatter = new Zend_Log_Formatter_Simple($format);
     </para>
 
     <para>
-      A formatter is set on an individual Writer object using the Writer's
-      <code>setFormatter()</code> method:
+      Ein Formatter wird einem individuellen Writer Objekt gesetzt durch verwenden der <code>setFormatter()</code>
+      Methode des Writer's:
 
       <programlisting role="php"><![CDATA[<?php
 
 $writer = new Zend_Log_Writer_Stream('php://output');
-$formatter = new Zend_Log_Formatter_Simple('hello %message%' . PHP_EOL);
+$formatter = new Zend_Log_Formatter_Simple('Hallo %message%' . PHP_EOL);
 $writer->setFormatter($formatter);
 
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('there');
+$logger->info('dort');
 
-// outputs "hello there"
+// Gibt "Hallo dort" aus
 
 ?>]]></programlisting>
     </para>
 
     <para>
-      The constructor of <code>Zend_Log_Formatter_Simple</code> accepts a single
-      parameter: the format string.  This string contains keys surrounded by
-      percent signs (e.g. <code>%message%</code>).  The format string may
-      contain any key from the event data array.
+      Der Konstruktor von <code>Zend_Log_Formatter_Simple</code> akzeptiert einen einzelnen Parameter: Den
+      Format String. Dieser String enthält Schlüssel die durch Prozentzeichen begrenzt sind
+      (z.B. <code>%message%</code>). Der Format String kann jeden Schlüssel des Event Data Arrays enthalten.
     </para>
   </sect2>
 
   <sect2 id="zend.log.formatters.xml">
-    <title>Formatting to XML</title>
+    <title>In XML formatieren</title>
     <para>
-      <code>Zend_Log_Formatter_Xml</code> formats log data into XML strings.
-      By default, it automatically logs all items in the event data array:
+      <code>Zend_Log_Formatter_Xml</code> formatiert Log Daten in einen XML String. Standardmäßig loggt er
+      automatisch alle Elemente des Event Data Arrays:
 
       <programlisting role="php"><![CDATA[<?php
 
@@ -70,18 +67,18 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('informational message');
+$logger->info('Informative Nachricht');
 
 ?>]]></programlisting>
     </para>
 
     <para>
-      The code above outputs the following XML (space added for clarity):
+      Der obige Code gibt das folgende XML aus (Leerzeichen werden für Klarstellung hinzugefügt):
 
       <programlisting role="xml"><![CDATA[
 <logEntry>
   <timestamp>2007-04-06T07:24:37-07:00</timestamp>
-  <message>informational message</message>
+  <message>Informative Nachricht</message>
   <priority>6</priority>
   <priorityName>INFO</priorityName>
 </logEntry>
@@ -89,11 +86,10 @@ $logger->info('informational message');
     </para>
 
     <para>
-      It's possible to customize the root element as well as specify a mapping
-      of XML elements to the items in the event data array.  The constructor
-      of <code>Zend_Log_Formatter_Xml</code> accepts a string with the name of
-      the root element as the first parameter and an associative array with
-      the element mapping as the second parameter:
+      Es ist möglich das Root Element anzupassen sowie ein Mapping von XML Elementen zu den Elementen im
+      Event Data Array zu definieren. Der Konstruktor von <code>Zend_Log_Formatter_Xml</code> akzeptiert
+      einen String mit dem Namen des Root Elements als ersten Parameter und ein assoziatives Array mit den
+      gemappten Elementen als zweiten Parameter:
 
       <programlisting role="php"><![CDATA[<?php
 
@@ -104,18 +100,17 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('informational message');
+$logger->info('Informative Nachricht');
 
 ?>]]></programlisting>
 
-      The code above changes the root element from its default of
-      <code>logEntry</code> to <code>log</code>.  It also maps the element
-      <code>msg</code> to the event data item <code>message</code>.  This
-      results in the following output:
+      Der obige Code ändert das Root Element von seinem Standard <code>logEntry</code> zu <code>log</code>.
+      Er mappt auch das Element <code>msg</code> zum Event Daten Element <code>message</code>. Das ergibt die
+      folgende Ausgabe:
 
       <programlisting role="xml"><![CDATA[
 <log>
-  <msg>informational message</msg>
+  <msg>Informative Nachricht</msg>
   <level>INFO</level>
 </log>
 ]]></programlisting>
