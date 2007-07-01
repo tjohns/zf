@@ -93,7 +93,7 @@ $logger->info('Informational message');
 
 ?>]]></programlisting>
 
-      The example above writes a single row of low data to the database table named
+      The example above writes a single row of log data to the database table named
       <code>log_table_name</code> table.  The database column named <code>lvl</code>
       receives the priority number and the column named <code>msg</code> receives the
       log messsage.
