@@ -79,40 +79,40 @@ class MyValid_Float extends Zend_Validate_Abstract
 
 ?>]]></programlisting>
 
-            The class defines a template for its single validation failure message, which includes the built-in magic
-            parameter, <code>%value%</code>. The call to <code>_setValue()</code> prepares the object to insert the
-            tested value into the failure message automatically, should the value fail validation. The call to
-            <code>_error()</code> tracks a reason for validation failure. Since this class only defines one failure
-            message, it is not necessary to provide <code>_error()</code> with the name of the failure message
-            template.
+            Die Klasse definiert ein Template für Ihre einzige Nachricht bei Prüfungsfehlern, welche den eingebauten
+            magischen Parameter <code>%value%</code> inkludiert. Der Aufruf von <code>_setValue()</code> präpariert
+            das Objekt den getesteten Wert automatisch in die Fehlernachricht einzufügen, wenn die Prüfung des Wertes
+            fehlschlägt. Der Aufruf von <code>_error()</code> spürt den Grund für die fehlgeschlagene Prüfung auf.
+            Da diee Klasse nur eine Fehlernachricht definiert, ist es nicht notwendig <code>_error()</code> den
+            Namen des Templates der Fehlernachricht zu geben.
         </para>
 
     </example>
 
     <example id="zend.validate.writing_validators.example.conditions.dependent">
 
-        <title>Writing a Validation Class having Dependent Conditions</title>
+        <title>Schreiben einer Prüfklasse die abhängige Konditionen besitzt</title>
 
         <para>
-            The following example demonstrates a more complex set of validation rules, where it is required that the
-            input value be numeric and within the range of minimum and maximum boundary values. An input value would
-            fail validation for exactly one of the following reasons:
+            Das folgende Beispiel demonstriert ein komplexeres Set von Prüfregeln, wobei es notwendig ist das der
+            Eingabewert nummerisch und innerhalb eines Bereiches von Mindest- und Maximalgrenzwerten ist. Bei einem
+            Eingabewert würde die Prüfung wegen exakt einer der folgenden Gründe fehlschlagen:
 
             <itemizedlist>
                 <listitem>
-                    <para>The input value is not numeric.</para>
+                    <para>Der Eingabewert ist nicht nummerisch.</para>
                 </listitem>
                 <listitem>
-                    <para>The input value is less than the minimum allowed value.</para>
+                    <para>Der Eingabewert ist kleiner als der minimal erlaubte Wert.</para>
                 </listitem>
                 <listitem>
-                    <para>The input value is more than the maximum allowed value.</para>
+                    <para>Der Eingabewert ist größer als der maximal erlaubte Wert.</para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <para>
-            These validation failure reasons are then translated to definitions in the class:
+            Diese Gründe für fehlgeschlagene Prüfungen werden in Definitionen der Klasse übersetzt:
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -133,9 +133,9 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
     );
 
     protected $_messageTemplates = array(
-        self::MSG_NUMERIC => "'%value%' is not numeric",
-        self::MSG_MINIMUM => "'%value%' must be at least '%min%'",
-        self::MSG_MAXIMUM => "'%value%' must be no more than '%max%'"
+        self::MSG_NUMERIC => "'%value%' ist nicht nummerisch",
+        self::MSG_MINIMUM => "'%value%' muß mindestens '%min%' sein",
+        self::MSG_MAXIMUM => "'%value%' darf nicht mehr als '%max%' sein"
     );
 
     public function isValid($value)
@@ -163,50 +163,52 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 
 ?>]]></programlisting>
 
-            The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
-            the minimum and maximum boundaries, respectively, for a value to successfully validate. The class also
-            defines two message variables that correspond to the public properties and allow <code>min</code> and
-            <code>max</code> to be used in message templates as magic parameters, just as with <code>value</code>.
+            Die öffentlichen Eigenschaften <code>$minimum</code> und <code>$maximum</code> wurden eingeführt um
+            die Mindest- und Maximalgrenzen anzubieten, beziehungsweise, für einen Wert um die Prüfung erfolgreich
+            zu bestehen. Die Klasse definiert auch zwei Nachrichtenvariablen die zu den öffentlichen Eigenschaften
+            korrespondieren und es erlauben <code>min</code> und <code>max</code> in den Nachrichten Templates als
+            magische Parameter zu verwenden, genauso wie <code>value</code>.
         </para>
 
         <para>
-            Note that if any one of the validation checks in <code>isValid()</code> fails, an appropriate failure
-            message is prepared, and the method immediately returns <code>false</code>. These validation rules are
-            therefore sequentially dependent. That is, if one test should fail, there is no need to test any
-            subsequent validation rules. This need not be the case, however. The following example illustrates how to
-            write a class having independent validation rules, where the validation object may return multiple
-            reasons why a particular validation attempt failed.
+            Zu beachten ist, das wenn eine der Prüfungen in <code>isValid()</code> fehlschlägt, eine entsprechende
+            Fehlernachricht vorbereitet wird, und die Methode sofort <code>false</code> zurückgibt. Diese
+            Prüfregeln sind deswegen sequentiell abhängig. Das bedeuted, wenn einer der Tests fehlschlägt, gibt es
+            keinen Grund eine weitere nachfolgende Prüfregel zu testen. Das muß aber trotzdem nicht der Fall sein.
+            Das folgende Beispiel zeigt wie man eine Klasse schreiben kann die unabhängige Prüfregeln besitzt,
+            wo die Prüfobjekte mehrfache Gründe zurückgeben könnten, warum ein spezieller Prüfversuch fehlgeschlagen
+            ist.
         </para>
 
     </example>
 
     <example id="zend.validate.writing_validators.example.conditions.independent">
 
-        <title>Validation with Independent Conditions, Multiple Reasons for Failure</title>
+        <title>Prüfen mit unabhängigen Konditionen, mehrfache Gründe für Fehler</title>
 
         <para>
-            Consider writing a validation class for password strength enforcement - when a user is required to choose
-            a password that meets certain criteria for helping secure user accounts. Let us assume that the password
-            security criteria enforce that the password:
+            Angenommen es wird eine Prüfklasse geschrieben für das Erzwingen von Passwortstärke - wenn ein Benutzer
+            ein Passwort auswählen muß das diversen Kriterien entspricht um zu Helfen das die Benutzerzugänge
+            sicher sind. Angenommen die Passwort Sicherheitskriterien erzwingen das folgende Passwort:
 
             <itemizedlist>
                 <listitem>
-                    <para>is at least 8 characters in length,</para>
+                    <para>mindestens 8 Zeichen Länge,</para>
                 </listitem>
                 <listitem>
-                    <para>contains at least one uppercase letter,</para>
+                    <para>enthält mindestens ein großgeschriebenes Zeichen,</para>
                 </listitem>
                 <listitem>
-                    <para>contains at least one lowercase letter,</para>
+                    <para>enthält mindestens ein kleingeschriebenes Zeichen,</para>
                 </listitem>
                 <listitem>
-                    <para>and contains at least one digit character.</para>
+                    <para>und enthält mindestens eine Ziffer.</para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <para>
-            The following class implements these validation criteria:
+            Die folgende Klasse impementiert diese Prüfkriterien:
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -220,10 +222,10 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
     const DIGIT  = 'digit';
 
     protected $_messageTemplates = array(
-        self::LENGTH => "'%value%' must be at least 8 characters in length",
-        self::UPPER  => "'%value%' must contain at least one uppercase letter",
-        self::LOWER  => "'%value%' must contain at least one lowercase letter",
-        self::DIGIT  => "'%value%' must contain at least one digit character"
+        self::LENGTH => "'%value%' muß mindestens 8 Zeichen lang sein",
+        self::UPPER  => "'%value%' muß mindestens ein großgeschriebenes Zeichen enthalten",
+        self::LOWER  => "'%value%' muß mindestens ein kleingeschriebenes Zeichen enthalten",
+        self::DIGIT  => "'%value%' muß mindestens eine Ziffer enthalten"
     );
 
     public function isValid($value)
@@ -258,11 +260,11 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
 ?>]]></programlisting>
 
-            Note that the four criteria tests in <code>isValid()</code> do not immediately return <code>false</code>.
-            This allows the validation class to provide <emphasis role="bold">all</emphasis> of the reasons that the
-            input password failed to meet the validation requirements. If, for example, a user were to input the
-            string "<code>#$%</code>" as a password, <code>isValid()</code> would cause all four validation failure
-            messages to be returned by a subsequent call to <code>getMessages()</code>.
+            Zu beachten ist das diese vier Testkriterien in <code>isValid()</code> nicht sofort <code>false</code>
+            zurückgeben. Das erlaubt der Prüfklasse <emphasis role="bold">alle</emphasis> Gründe anzubieten bei denen
+            das Eingabepasswort den Prüfvoraussetzungen nicht entsprochen hat. Wenn, zum Beispiel, ein Benutzer
+            den String "<code>#$%</code>" als Passwort angegeben hat, würde <code>isValid()</code> alle vier
+            Prüfungfehlermeldungen zurückgeben bei einen nachfolgenden Aufruf von <code>getMessages()</code>.
         </para>
 
     </example>
