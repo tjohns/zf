@@ -3,108 +3,97 @@
     <title>Zend_Db_Adapter</title>
 
     <para>
-        Zend_Db and its related classes provide a simple SQL database interface
-        for Zend Framework.  The Zend_Db_Adapter is the basic class you use to
-        connect your PHP application to an RDBMS.  There is a different Adapter
-        class for each brand of RDBMS.
+        Zend_DB und die zugehörigen Klassen bieten eine einfache SQL Schnittstelle für das Zend Framework.
+        Der Zend_Db_Adapter ist die Basisklasse zur Anbindung einer PHP Anwendung an ein RDBMS. Es gibt für
+        jede RDBMS Marke einen eigenen Adapter.
     </para>
 
     <para>
-        The Zend_Db Adapters create a bridge from the vendor-specific PHP
-        extensions to a common interface, to help you write PHP applications
-        once and deploy with multiple brands of RDBMS with very little effort.
+        Die Zend_Db Adapter bilden eine Schnittstelle zu den Hersteller spezifischen PHP Erweiterungen und
+        unterstützen dadurch die Entwicklung einer PHP Anwendung für verschiedene RDBMS mit geringem Aufwand.
     </para>
 
     <para>
-        The interface of the Adapter class is similar to the interface of the
-        <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
-        Zend_Db provides Adapter classes to PDO drivers for the following RDBMS
-        brands:
+        Die Schnittstellen der Adapterklasse ähneln denen der
+        <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> Erweiterung. Zend_Db bietet Adapterklassen
+        für PDO Treiber der folgenden RDBMS Marken:
     </para>
 
     <itemizedlist>
         <listitem>
-            <para>
-                MySQL
-            </para>
+            <para>MySQL</para>
         </listitem>
+
         <listitem>
-            <para>
-                Microsoft SQL Server
-            </para>
+            <para>Microsoft SQL Server</para>
         </listitem>
+
         <listitem>
-            <para>
-                Oracle
-            </para>
+            <para>Oracle</para>
         </listitem>
+
         <listitem>
-            <para>
-                PostgreSQL
-            </para>
+            <para>PostgreSQL</para>
         </listitem>
+
         <listitem>
-            <para>
-                SQLite
-            </para>
+            <para>SQLite</para>
         </listitem>
     </itemizedlist>
 
     <para>
-        In addition, Zend_Db provides Adapter classes that utilize PHP database
-        extensions for the following RDBMS brands:
+        Zusätzlich bietet Zend_Db Adapterklassen für die folgenden Marken, welche eigene PHP Datenbank
+        Erweiterungen nutzen:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                MySQL, using the <ulink url="http://www.php.net/mysqli">mysqli</ulink> PHP extension
+                MySQL, mit der <ulink url="http://www.php.net/mysqli">mysqli</ulink> PHP Erweiterung
             </para>
         </listitem>
+
         <listitem>
             <para>
-                Oracle, using the <ulink url="http://www.php.net/oci8">oci8</ulink> PHP extension
+                Oracle, mit der <ulink url="http://www.php.net/oci8">oci8</ulink> PHP Erweiterung
             </para>
         </listitem>
+
         <listitem>
             <para>
-                IBM DB2, using the <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP extension
+                IBM DB2, mit der <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP Erweiterung
             </para>
         </listitem>
     </itemizedlist>
 
     <note>
         <para>
-            Each Zend_Db Adapter uses a PHP extension.  You must have the
-            respective PHP extension enabled in your PHP environment to use a
-            Zend_Db Adapter.  For example, if you use any of the PDO Zend_Db
-            Adapters, you need to enable both the PDO extension and the
-            PDO driver for the brand of RDBMS you use.
+            Jeder Zend_Db Adapter nutzt eine PHP Erweiterung. Die entsprechend PHP Erweiterung muss in der
+            PHP Umgebung aktiviert sein um den Zend_Db Adapter zu nutzen. Zum Beispiel muss bei der Nutzung
+            eines PDO Zend_Db_Adapters sowohl die PDO Erweiterung, als auch der PDO Treiber für die jeweilige
+            Marke geladen sein.
         </para>
     </note>
 
     <sect2 id="zend.db.adapter.connecting">
-
-        <title>Connecting to a Database using an Adapter</title>
+        <title>Anbindung einer Datenbank mit einem Adapter</title>
 
         <para>
-            This section describes how to create an instance of a database Adapter.
-            This corresponds to making a connection to your RDBMS server from your
-            PHP application.
+            Dieser Abschnitt beschreibt wie eine Instanz eines Datenbankadapters erzeugt wird. Dies entspricht
+            der Erzeugung einer Verbindung an ein RDBMS Server in einer PHP Anwendung.
         </para>
 
         <sect3 id="zend.db.adapter.connecting.constructor">
-
-            <title>Using a Zend_Db Adapter Constructor</title>
+            <title>Nutzung des Zend_Db Adapter Konstruktors</title>
 
             <para>
-                You can create an instance of an Adapter using its constructor.
-                An Adapter constructor takes one argument, which is an array
-                of parameters used to declare the connection.
+                Man kann eine Instanz eines Adapters erzeugen, indem man den Konstruktor verwendet. Ein Adapter
+                Konstruktur benötigt ein Argument, wobei es sich um ein Array mit Parametern für die Verbindung
+                handelt.
             </para>
 
             <example id="zend.db.adapter.connecting.constructor.example">
-                <title>Using an Adapter constructor</title>
+                <title>Nutzung eines Adapter Konstruktors</title>
                 <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
@@ -117,36 +106,31 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 ));
 ]]></programlisting>
             </example>
-
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.factory">
-
-            <title>Using the Zend_Db Factory</title>
+            <title>Nutzung der Zend_Db Factory</title>
 
             <para>
-                As an alternative to using an Adapter constructor directly, you
-                can create an instance of an Adapter using the static method
-                <code>Zend_Db::factory()</code>.  This method dynamically loads
-                the Adapter class file on demand, using
+                Als Alternative zur direkten Nutzung des Konstruktors kann man auch eine Instanz des Adapters
+                erzeugen indem man die statische Methode <code>Zend_Db::factory()</code> nutzt. Diese Methode
+                lädt die Adapterklasse dynamisch bei Aufruf unter Nutzung von
                 <link linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>.
             </para>
 
             <para>
-                The first argument is a string that names the base name of the
-                Adapter class.  For example the string 'Pdo_Mysql' corresponds
-                to the class Zend_Db_Adapter_Pdo_Mysql.  The second argument is
-                the same array of parameters you would have given to the
-                Adapter constructor.
+                Das erste Argument ist ein String der den Namen der Adapterklasse enthält. Zum Beispiel
+                entspricht der String 'Pdo_Mysql' der Klasse Zend_Db_Adapter_Pdo_Mysql. Das zweite Argument ist
+                das gleiche Array von Parametern wie bei der Verwendung des Adapter Konstruktors.
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example">
-                <title>Using the Adapter factory method</title>
+                <title>Nutzung der Adapter factory() Methode</title>
                 <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Db.php';
 
-// Automatically load class Zend_Db_Adapter_Pdo_Mysql and create an instance of it.
+// Lädt automatisch die Klasse Zend_Db_Adapter_Pdo_Mysql und erzeugt eine Instanz von Ihr.
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
@@ -158,94 +142,83 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
             <note>
                 <para>
-                    If you create your own class that extends
-                    Zend_Db_Adapter_Abstract, but you do not name your class
-                    with the "Zend_Db_Adapter" package prefix, you cannot use
-                    the <code>factory()</code> method to load your Adapter.
-                    You must load your Adapter class yourself and create an
-                    instance directly using its contructor.
+                    Wenn eine eigene Klasse geschrieben wird, die Zend_Db_Adapter_Abstract erweitert aber nicht
+                    mit dem Präfix "Zend_Db_Adapter" beginnt, kann die <code>factory()</code> Methode nicht
+                    verwendet werden um den Adapter zu Laden. In diesem Fall muss der Adapter von Hand geladen
+                    und eine Instanz des Konstruktors erzeugt werden.
                 </para>
             </note>
-
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.parameters">
-
-            <title>Adapter Parameters</title>
+            <title>Adapter Parameter</title>
 
             <para>
-                The list below explains common parameters recognized by Zend_Db Adapter classes.
+                Die unten stehende Liste erklärt die gemeinsamen Parameter die von Zend_Db Adapterklassen erkannt
+                werden.
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
                         <emphasis role="strong">host</emphasis>:
-                        a string containing a hostname or IP address of the
-                        database server.  If the database is running on the
-                        same host as the PHP application, you may use
-                        'localhost' or '127.0.0.1'.
+                        Ein String der den Hostname oder die Ip-Adresse des Datenbankservers beinhaltet. Wenn
+                        die Datenbank auf dem gleichen Host wie die PHP Anwendung läuft wird 'localhost' oder
+                        '127.0.0.1' verwendet.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">username</emphasis>:
-                        account identifier for authenticating a connection to the
-                        RDBMS server.
+                        Konto Kennung zur Authentisierung einer Verbindung zum RDBMS Server.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">password</emphasis>:
-                        account password credential for authenticating a
-                        connection to the RDBMS server.
+                        Konto Passwort zur Authentisierung einer Verbindung zum RDBMS Server.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">dbname</emphasis>:
-                        database instance name on the RDBMS server.
+                        Datenbank Name auf dem RDBMS Server.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">port</emphasis>:
-                        some RDBMS servers can accept network connections on a
-                        administrator-specified port number.  The port
-                        parameter allow you to specify the port to which your
-                        PHP application connects, to match the port configured
-                        on the RDBMS server.
+                        Einige RDBMS Server können Netzwerkverbindungen an vom Administrator spezifizierten
+                        Ports akzeptieren. Der Port-Parameter gibt die Möglichkeit die Portnummer anzugeben,
+                        an welche die PHP Anwendung verbindet um der Port-Konfiguration des RDBMS Servers zu
+                        entsprechen.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">options</emphasis>:
-                        this parameter is an associative array of options
-                        that are generic to all Zend_Db_Adapter classes.
+                        Dieser Parameter ist ein assoziatives Array von Optionen die in allen Zend_Db_Adapter
+                        Klassen enthalten sind.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">driver_options</emphasis>:
-                        this parameter is an associative array of additional
-                        options that are specific to a given database
-                        extension.  One typical use of this parameter is to
-                        set attributes of a PDO driver.
+                        Dieser Parameter ist ein assoziatives Array von zusätzlichen Optionen die spezifisch
+                        für die angegebene Datenbankerweiterung sind. Eine typische Anwendung dieses Parameters ist,
+                        Attribute für einen PDO Treiber zu setzen.
                     </para>
                 </listitem>
             </itemizedlist>
 
             <example id="zend.db.adapter.connecting.parameters.example1">
-                <title>Passing the case-folding option to the factory</title>
+                <title>Übergeben der case-folding Option an die factory</title>
                 <para>
-                    You can specify this option by the constant
-                    <code>Zend_Db::CASE_FOLDING</code>.
-                    This corresponds to the <code>ATTR_CASE</code> attribute in
-                    PDO and IBM DB2 database drivers, adjusting the case of
-                    string keys in query result sets.  The option takes values
-                    <code>Zend_Db::CASE_NATURAL</code> (the default),
-                    <code>Zend_Db::CASE_UPPER</code>, and
-                    <code>Zend_Db::CASE_LOWER</code>.
+                    Diese Option kann über die Konstante <code>Zend_Db::CASE_FOLDING</code> angegeben werden.
+                    Sie entspricht dem <code>ATTR_CASE</code> Attribut in PDO and IBM DB2 Datenbanktreibern und
+                    stelllt die Schreibweise von String Schlüsseln in Abfrageergebnissen ein. Die Option kann
+                    den Wert <code>Zend_Db::CASE_NATURAL</code> (der Standard), <code>Zend_Db::CASE_UPPER</code>
+                    oder <code>Zend_Db::CASE_LOWER</code> annehmen.
                 </para>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -266,18 +239,15 @@ $db = Zend_Db::factory('Db2', $params);
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example2">
-                <title>Passing the auto-quoting option to the factory</title>
+                <title>Übergeben der auto-quoting Option an die factory</title>
                 <para>
-                    You can specify this option by the constant
-                    <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.  If the value
-                    is <code>true</code> (the default), identifiers like table
-                    names, column names, and even aliases are delimited in all
-                    SQL syntax generated by the Adapter object.  This makes it
-                    simple to use identifiers that contain SQL keywords, or
-                    special characters.  If the value is <code>false</code>,
-                    identifiers are not delimited automatically.  If you need
-                    to delimit identifiers, you must do so yourself using the
-                    <code>quoteIdentifier()</code> method.
+                    Diese Option kann über die Konstante <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code> angegeben
+                    werden. Wenn der Wert <code>true</code> (der Standard) ist, werden Bezeichner wie
+                    Tabellennamen, Spaltennamen und auch Aliase in jeder SQL Syntax die vom Adapter Objekt
+                    generiert wurde begrenzt. Dies macht es einfach Bezeichner zu verwenden, die SQL
+                    Schlüsselwörter oder spezielle Zeichen enthalten. Wenn der Wert <code>false</code>
+                    ist, werden Bezeichner nicht automatisch begrenzt. Wenn Bezeichner begrenzt werden müssen,
+                    so kann dies über die <code>quoteIdentifier()</code> Methode von Hand getan werden.
                 </para>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -298,7 +268,7 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example3">
-                <title>Passing PDO driver options to the factory</title>
+                <title>Übergeben von PDO Treiber Optionen an die factory</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $pdoParams = array(
@@ -318,54 +288,48 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
 echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
 ]]></programlisting>
             </example>
-
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.getconnection">
-            <title>Managing Lazy Connections</title>
-
+            <title>Verwalten von Lazy Connections</title>
             <para>
-                Creating an instance of an Adapter class does not immediately
-                connect to the RDBMS server.  The Adapter saves the connection
-                parameters, and makes the actual connection on demand, the
-                first time you need to execute a query.  This ensures that
-                creating an Adapter object is quick and inexpensive.  You can
-                create an instance of an Adapter even if you are not certain
-                that you need to run any database queries during the current
-                request your application is serving.
+                Die Erzeugung einer Instanz der Adapterklasse stellt nicht gleichzeitig eine Verbindung zum
+                RDBMS her. Der Adapter speichert die Verbindungsparameter und stellt die tatsächliche Verbindung
+                bei Bedarf her, wenn die erste Anfrage ausgeführt wird. Dies stellt sicher, dass die Erzeugung
+                eines Adapterobjekts schnell und sparsam ist. Dadurch kann auch dann eine Instanz eines Adapters
+                erzeugt werden, wenn nicht zwingend eine Datenbankanfrage für die aktuell gelieferte Darstellung
+                der Anwendung benötigt wird.
             </para>
 
             <para>
-                If you need to force the Adapter to connect to the RDBMS, use
-                the <code>getConnection()</code> method.  This method returns
-                an object for the connection as represented by the respective
-                PHP database extension.  For example, if you use any of the
-                Adapter classes for PDO drivers, then
-                <code>getConnection()</code> returns the PDO object, after
-                initiating it as a live connection to the specific database.
+                Wenn der Adapter zwingend eine Verbindung zum RDBMS herstellen soll, kann die
+                <code>getConnection()</code> Methode verwendet werden. Diese liefert ein Objekt der Verbindung,
+                welches eine Verbindung entsprechend der verwendeten PHP Erweiterung repräsentiert. Wenn zum
+                Beispiel irgendeine der PDO Adapterklassen verwendet wird, dann liefert
+                <code>getConnection()</code> das PDO Object, nachdem es als eine live Verbindung zu
+                der entsprechenden Datenbank initialisiert wurde.
             </para>
 
             <para>
-                It can be useful to force the connection if you want to catch
-                any exceptions it throws as a result of invalid account
-                credentials, or other failure to connect to the RDBMS server.
-                These exceptions are not thrown until the connection is made,
-                so it can help simplify your application code if you handle the
-                exceptions in one place, instead of at the time of
-                the first query against the database.
+                Es kann nützlich sein eine Verbindung zu erzwingen um jegliche Exceptions abzufangen, die als
+                Resultat falscher Konto Berechtigungen oder einem anderen Fehler bei der Verbindung zum RDBMS
+                auftreten. Diese Exceptions treten nicht auf, bis die tatsächliche Verbindung hergestellt ist,
+                daher kann es den Anwendungs-Code vereinfachen, wenn diese Exceptions an einer Stelle
+                bearbeitet werden, und nicht erst bei der ersten Anfrage.
             </para>
 
-            <example id="zend.db.adapter.connecting.getconnection.example">
-                <title>Handling connection exceptions</title>
+            <example
+                id="zend.db.adapter.connecting.getconnection.example">
+                <title>Umgang mit Verbindungs Exceptions</title>
                 <programlisting role="php"><![CDATA[<?php
 
 try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
     $db->getConnection();
 } catch (Zend_Db_Adapter_Exception $e) {
-    // perhaps a failed login credential, or perhaps the RDBMS is not running
+    // Möglicherweise ein fehlgeschlagener login, oder die RDBMS läuft möglicherweise nicht
 } catch (Zend_Exception $e) {
-    // perhaps factory() failed to load the specified Adapter class
+    // Möglicherweise konnte factory() die definierte Adapter Klasse nicht laden
 }
 
 ]]></programlisting>
@@ -377,53 +341,47 @@ try {
 
     <sect2 id="zend.db.adapter.example-database">
 
-        <title>The example database</title>
+        <title>Die Beispiel Datenbank</title>
 
         <para>
-            In the documentation for Zend_Db classes, we use a set of simple
-            tables to illustrate usage of the classes and methods.  These
-            example tables could store information for tracking bugs in a
-            software development project.  The database contains four tables:
+            In der Dokumentation für die Zend_Db Klassen verwenden wir einige einfache Tabellen um die Verwendung
+            der Klassen und Methoden zu erläutern. Diese Beispieltabellen können Informationen für das Bugtracking
+            in einem Softwareprojekt speichern. Die Datenbank enthält vier Tabellen:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <emphasis role="strong">accounts</emphasis> stores
-                    information about each user of the bug-tracking database.
+                    <emphasis role="strong">accounts</emphasis> speichert Informationen über jeden Benutzer des
+                    Bugtracking Systems.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">products</emphasis> stores
-                    information about each product for which a bug can be
-                    logged.
+                    <emphasis role="strong">products</emphasis> speichert Informationen über jedes Produkt für das
+                    ein Bug erfasst werden kann.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">bugs</emphasis> stores information
-                    about bugs, including that current state of the bug, the
-                    person who reported the bug, the person who is assigned to
-                    fix the bug, and the person who is assigned to verify the
-                    fix.
+                    <emphasis role="strong">bugs</emphasis> speichert informationen über Bugs, dazu gehört der
+                    derzeitige Status des Bugs, die Person die den Bug berichtet hat, die Person die den Bug
+                    beheben soll und die Person die die Fehlerbehebung verifizieren soll.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">bugs_products</emphasis> stores a
-                    relationship between bugs and products.  This implements a
-                    many-to-many relationship, because a given bug may be
-                    relevant to multiple products, and of course a given
-                    product can have multiple bugs.
+                    <emphasis role="strong">bugs_products</emphasis> speichert Beziehungen zwischen Bugs und
+                    Produkten. Dies enthält eine Viele-zu-Viele Beziehung, da ein Bug für mehrere Produkte relevant
+                    sein kann. Und natürlich kann ein Produkt auch mehrere Bugs enthalten.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The following SQL data definition language pseudocode describes the
-            tables in this example database.  These example tables are used
-            extensively by the automated unit tests for Zend_Db.
+            Der folgende SQL Daten Definitions Sprache Pseudocode beschreibt die Tabellen in dieser
+            Beispieldatenbank. Diese Beispieltabellen werden intensiv bei den automatisierten Unit-Tests für
+            Zend_Db verwendet.
         </para>
 
         <programlisting role="sql"><![CDATA[
@@ -453,15 +411,13 @@ CREATE TABLE bugs_products (
         </programlisting>
 
         <para>
-            Also notice that the <code>bugs</code> table contains multiple
-            foreign key references to the <code>accounts</code> table.
-            Each of these foreign keys may reference a different row in the
-            <code>accounts</code> table for a given bug.
+            Weiterhin zu beachten ist, dass die <code>bugs</code> Tabelle mehrere Foreign-Key References zu der
+            <code>accounts</code> Tabelle enthält. Jeder dieser Foreign-Keys kann auf eine andere Zeile für einen
+            angegebenen Bug in der <code>accounts</code> Tabelle verweisen.
         </para>
 
         <para>
-            The diagram below illustrates the physical data model of the
-            example database.
+            Das unten stehende Diagramm illustriert das physische Datenmodell der Beispieldatenbank.
         </para>
 
         <para>
@@ -473,38 +429,36 @@ CREATE TABLE bugs_products (
 
     <sect2 id="zend.db.adapter.select">
 
-        <title>Reading Query Results</title>
+        <title>Lesen von Abfrageergebnissen</title>
 
         <para>
-            This section describes methods of the Adapter class with which you
-            can run SELECT queries and retrieve the query results.
+            Dieser Abschnitt beschreibt Methoden der Adapterklasse mit denen SELECT Abfragen ausgeführt werden
+            können um Abfrageergebnisse abzurufen.
         </para>
 
         <sect3 id="zend.db.adapter.select.fetchall">
 
-            <title>Fetching a Complete Result Set</title>
+            <title>Holen des kompletten Ergebnisssatzes</title>
 
             <para>
-                You can run a SQL SELECT query and retrieve its results in one
-                step using the <code>fetchAll()</code> method.
+                Man kann eine SQL SELECT Anfrage ausführen und alle Ergebnisse auf einmal mit der
+                <code>fetchAll()</code> Methode abrufen.
             </para>
 
             <para>
-                The first argument to this method is a string containing a
-                SELECT statement.  Alternatively, the first argument can be an
-                object of class <link linkend="zend.db.select">Zend_Db_Select</link>.
-                The Adapter automatically converts this object to a string
-                representation of the SELECT statement.
+                Das erste Argument dieser Methode ist ein String der die SELECT Anweisung enthält. Als Alternative
+                kann das erste Argument auch ein Objekt der <link linkend="zend.db.select">Zend_Db_Select</link>
+                Klasse sein. Der Adapter konvertiert dieses automatisch in einen String der die SELECT Anweisung
+                repräsentiert.
             </para>
 
             <para>
-                The second argument to <code>fetchAll()</code> is an array of
-                values to substitute for parameter placeholders in the SQL
-                statement.
+                Das zweite Argument von <code>fetchAll()</code> ist ein Array von Werten die Parameterplatzhalter
+                in der SQL Anweisung ersetzen.
             </para>
 
             <example id="zend.db.adapter.select.fetchall.example">
-                <title>Using fetchAll()</title>
+                <title>Nutzung von fetchAll()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $sql = 'SELECT * FROM bugs WHERE bug_id = ?';
@@ -517,95 +471,84 @@ $result = $db->fetchAll($sql, 2);
 
         <sect3 id="zend.db.adapter.select.fetch-mode">
 
-            <title>Changing the Fetch Mode</title>
+            <title>Ändern des Fetch Modus</title>
 
             <para>
-                By default, <code>fetchAll()</code> returns an array of
-                rows, each of which is an associative array.  The keys of the
-                associative array are the columns or column aliases named in
-                the select query.
+                Standardmäßig gibt <code>fetchAll()</code> ein Array von Zeilen, jede als assoziatives Array,
+                zurück. Die Schlüssel von diesem assoziativem Array entsprechen den Spalten oder Spaltenaliasen
+                wie sie in der SELECT Anfrage benannt sind.
             </para>
 
             <para>
-                You can specify a different style of fetching results using the
-                <code>setFetchMode()</code> method.  The modes supported are
-                identified by constants:
+                Man kann einen anderen Stil für das Holen der Ergebnisse mit der <code>setFetchMode()</code>
+                Methode angeben. Die unterstützten Modi werden mit folgenden Konstanten identifiziert:
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_ASSOC</emphasis>:
-                        return data in an array of associative arrays.
-                        The array keys are column names, as strings.
-                        This is the default fetch mode for Zend_Db_Adapter classes.
+                        Gibt Daten in einem assoziativem Array zurück. Die Array Schlüssel sind Strings der
+                        Spaltennamen. Dies ist der Standardmodus für Zend_Db_Adapter Klassen.
                     </para>
                     <para>
-                        Note that if your select-list contains more than one
-                        column with the same name, for example if they are from
-                        two different tables in a JOIN, there can be only one
-                        entry in the associative array for a given name.
-                        If you use the FETCH_ASSOC mode, you should specify
-                        column aliases in your SELECT query to ensure that the
-                        names result in unique array keys.
+                        Zu beachten ist, dass wenn die Select-Liste mehr als eine Spalte mit dem selben Namen
+                        enthält, zum Beispiel wenn diese aus verschiedenen Tabellen durch einem JOIN bestehen,
+                        kann nur einer der Einträge in dem assoziativem Array enthalten sein. Wenn der FETCH_ASSOC
+                        Modus verwandt wird, sollten Spaltenaliase in der SELECT Anfrage angegeben werden um
+                        sicherzustellen das die Namen eindeutige Arrayschlüssel ergeben.
                     </para>
                     <para>
-                        By default, these strings are returned as they are
-                        returned by the database driver.  This is typically the
-                        spelling of the column in the RDBMS server.  You can
-                        specify the case for these strings, using the
-                        <code>Zend_Db::CASE_FOLDING</code> option.
-                        Specify this when instantiating the Adapter.
-                        See <xref linkend="zend.db.adapter.connecting.parameters.example1" />.
+                        Standardmäßig werden die Strings so zurück gegeben wie sie von dem Datenbanktreiber
+                        geliefert werden. Dies entspricht der typischen Schreibweise der Spaltennamen auf dem RDBMS
+                        Server. Die Schreibweise dieser Strings kann mit der <code>Zend_Db::CASE_FOLDING</code>
+                        Option angegeben werden. Dies muss bei der Instanziierung des Adapters angegeben werden.
+                        Beschreibung unter <xref linkend="zend.db.adapter.connecting.parameters.example1" />.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_NUM</emphasis>:
-                        return data in an array of arrays.  The arrays are
-                        indexed by integers, corresponding to the position of
-                        the respective field in the select-list of the query.
+                        Gibt Daten in einem Array von Arrays zurück. Die Arrays werden über Integer indiziert,
+                        entsprechend der Position der betreffenden Felder in der Select-Liste der Anfrage.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_BOTH</emphasis>:
-                        return data in an array of arrays.  The array keys are
-                        both strings as used in the FETCH_ASSOC mode, and
-                        integers as used in the FETCH_NUM mode.  Note that the
-                        number of elements in the array is double that which
-                        would be in the array if you used iether FETCH_ASSOC
-                        or FETCH_NUM.
+                        Gibt ein Array von Arrays zurück. Die Arrayschlüssel sind sowohl Strings wie beim
+                        FETCH_ASSOC Modus, als auch Integer wie beim FETCH_NUM modus. Zu beachten ist, dass die
+                        Anzahl der Elemente in dem Array doppelt so groß ist, als wenn FETCH_ASSOC oder FETCH_NUM
+                        verwendet worden wäre.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_COLUMN</emphasis>:
-                        return data in an array of values.  The value in each array
-                        is the value returned by one column of the result set.
-                        By default, this is the first column, indexed by 0.
+                        Gibt Daten in einem Array von Werten zurück. Die Werte in jedem Array sind die Werte wie sie
+                        in einer Spalte des Ergebnisses zurück gegeben wurden. Standardmäßig ist die erste Spalte
+                        mit 0 indiziert.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>
-                        return data in an array of objects.  The default class
-                        is the PHP built-in class stdClass.  Columns of the
-                        result set are available as public properties of the
-                        object.
+                        <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>:
+                        Gibt Daten in einem Array von Objekten zurück. Die Standardklasse ist die in PHP eingebaute
+                        Klasse stdClass. Spalten des Ergebnisses sind als öffentliche Eigenschaften des Objekts
+                        verfügbar.
                     </para>
                 </listitem>
             </itemizedlist>
 
             <example id="zend.db.adapter.select.fetch-mode.example">
-                <title>Using setFetchMode()</title>
+                <title>Nutzung von setFetchMode()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAll('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
-// $result is an array of objects
+// $result ist ein Array von Objekten
 echo $result[0]->bug_description;
 ]]></programlisting>
             </example>
@@ -614,23 +557,22 @@ echo $result[0]->bug_description;
 
         <sect3 id="zend.db.adapter.select.fetchassoc">
 
-            <title>Fetching a Result Set as an Associative Array</title>
+            <title>Holen eines Ergbnisssatzes als assoziatives Array</title>
 
             <para>
-                The <code>fetchAssoc()</code> method returns data in an array
-                of associative arrays, regardless of what value you have set
-                for the fetch mode.
+                Die <code>fetchAssoc()</code> Methode gibt Daten in einem Array von assoziativen Array zurück,
+                egal welcher Wert für den fetch-Modus gesetzt wurde.
             </para>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
-                <title>Using fetchAssoc()</title>
+                <title>Nutzung von fetchAssoc()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAssoc('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
-// $result is an array of associative arrays, in spite of the fetch mode
+// $result ist ein Array von assoziativen Arrays im Geist von fetch mode
 echo $result[0]['bug_description'];
 ]]></programlisting>
             </example>
@@ -639,25 +581,24 @@ echo $result[0]['bug_description'];
 
         <sect3 id="zend.db.adapter.select.fetchcol">
 
-            <title>Fetching a Single Column from a Result Set</title>
+            <title>Holen einer einzelnen Spalte eines Ergebnisssatzes</title>
 
             <para>
-                The <code>fetchCol()</code> method returns data in an array
-                of values, regardless of the value you have set for the fetch mode.
-                This only returns the first column returned by the query.
-                Any other columns returned by the query are discarded.
-                If you need to return a column other than the first, see <xref linkend="zend.db.statement.fetching.fetchcolumn" />.
+                Die <code>fetchCol()</code> Methode gibt Daten in einem Array von Werten zurück, egal welcher Wert
+                für den fetch-Modus gesetzt wurde. Sie gibt nur die erste Spalte der Anfrage zurück. Alle weiteren
+                Spalten der Anfrage werden verworfen. Wenn eine andere Spalte als die Erste benötigt wird sollte
+                <xref linkend="zend.db.statement.fetching.fetchcolumn" /> beachtet werden.
             </para>
 
             <example id="zend.db.adapter.select.fetchcol.example">
-                <title>Using fetchCol()</title>
+                <title>Nutzung von fetchCol()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
 
-// contains bug_description; bug_id is not returned
+// Enthält bug_description; bug_id wird nicht zurückgegeben
 echo $result[0];
 ]]></programlisting>
             </example>
@@ -666,26 +607,23 @@ echo $result[0];
 
         <sect3 id="zend.db.adapter.select.fetchpairs">
 
-            <title>Fetching Key-Value Pairs from a Result Set</title>
+            <title>Holen von Schlüssel-Wert Paaren eines Ergebnisssatzes</title>
 
             <para>
-                The <code>fetchPairs()</code> method returns data in an array
-                of key-value pairs, as an associative array with a single entry
-                per row.  The key of this associative array is taken from the
-                first column returned by the SELECT query.  The value is taken
-                from the second column returned by the SELECT query.  Any other
-                columns returned by the query are discarded.
+                Die <code>fetchPairs()</code> Methode gibt Daten in einem Array von Schlüssel-Wert Paaren zurück,
+                einem assoziativen Array mit einem einzelnen Eintrag pro Zeile. Der Schlüssel dieses assoziativen
+                Arrays wird von der ersten Spalte des SELECT Ergebnisses genommen. Der Wert wird aus der zweiten
+                Spalte des SELECT Ergebnisses genommen. Alle weiteren Spalten des Ergebnisses werden verworfen.
             </para>
 
             <para>
-                You should design the SELECT query so that the first column
-                returned has unique values.  If there are duplicates values in
-                the first column, entries in the associative array will be
-                overwritten.
+                Die SELECT Anfrage sollte so gestaltet sein, dass die erste Spalte nur eindeutige Werte liefert.
+                Wenn doppelte Werte in der ersten Spalte vorkommen, werden entsprechende Einträge in dem
+                assoziativen Array überschrieben.
             </para>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
-                <title>Using fetchPairs()</title>
+                <title>Nutzung von fetchPairs()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -695,47 +633,46 @@ $result = $db->fetchAAssocssoc('SELECT bug_id, bug_status FROM bugs');
 echo $result[2];
 ]]></programlisting>
             </example>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.select.fetchrow">
 
-            <title>Fetching a Single Row from a Result Set</title>
+            <title>Holen einer einzelnen Zeile eines Ergebnisssatzes</title>
 
             <para>
-                The <code>fetchRow()</code> method returns data using the
-                current fetch mode, but it returns only the first row
-                fetched from the result set.
+                Die <code>fetchRow()</code> Methode gibt Daten entsprechend dem fetch-Modus zurück, jedoch nur
+                die erste Zeile des Ergebnisssatzes.
             </para>
 
             <example id="zend.db.adapter.select.fetchrow.example">
-                <title>Using fetchRow()</title>
+                <title>Nutzung von fetchRow()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchRow('SELECT * FROM bugs WHERE bug_id = 2');
 
-// note that $result is a single object, not an array of objects
+// Beachte das $result ein einzelnes Objekt ist, und nicht ein Array von Objekten
 echo $result->bug_description;
 ]]></programlisting>
             </example>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.select.fetchone">
 
-            <title>Fetching a Single Scalar from a Result Set</title>
+            <title>Holen eines einzelnen Scalars aus einem Ergebnisssatz</title>
 
             <para>
-                The <code>fetchOne()</code> method is like a combination
-                of <code>fetchRow()</code> with <code>fetchCol()</code>,
-                in that it returns data only for the first row fetched from
-                the result set, and it returns only the value of the first
-                column in that row.  Therefore it returns only a single
-                scalar value, not an array or an object.
+                Die <code>fetchOne()</code> Methode ist wie eine Kombination von <code>fetchRow()</code> mit
+                <code>fetchCol()</code>, gibt also nur die erste Zeile des Ergebnisssatze zurück, und von dieser
+                auch nur den Wert der ersten Spalte. Daher wird nur ein einziger scalarer Wert zurückgegeben,
+                kein Array und auch kein Objekt.
             </para>
 
             <example id="zend.db.adapter.select.fetchone.example">
-                <title>Using fetchOne()</title>
+                <title>Nutzung von fetchOne()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
@@ -750,32 +687,30 @@ echo $result;
 
     <sect2 id="zend.db.adapter.write">
 
-        <title>Writing Changes to the Database</title>
+        <title>Schreiben von Änderungen in die Datenbank</title>
 
         <para>
-            You can use the Adapter class to write new data or change existing
-            data in your database.  This section describes methods to do these
-            operations.
+            Die Adapterklasse kann verwendet werden um neue Daten in die Datenbank zu schreiben oder bestehende
+            Daten in der Datenbank zu ändern. Dieser Abschnitt beschreibt Methoden für diese Operationen.
         </para>
 
         <sect3 id="zend.db.adapter.write.insert">
 
-            <title>Inserting Data</title>
+            <title>Einfügen von Daten</title>
 
             <para>
-                You can add new rows to a table in your database using the
-                <code>insert()</code> method.  The first argument is a string
-                that names the table, and the second argument is an associative
-                array, mapping column names to data values.
+                Neue Zeilen können in die Datenbank mit der <code>insert()</code> Methode eingefügt werden. Das
+                erste Argument ist ein String der die Tabelle benennt, und das zweite Argument ist ein
+                assoziatives Array das den Spaltennamen Datenwerte zuordnet.
             </para>
 
             <example id="zend.db.adapter.write.insert.example">
-                <title>Inserting to a table</title>
+                <title>Einfügen in eine Tabelle</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
     'created_on'      => '2007-03-22',
-    'bug_description' => 'Something wrong',
+    'bug_description' => 'Etwas falsch',
     'bug_status'      => 'NEW'
 );
 
@@ -784,37 +719,33 @@ $db->insert('bugs', $data);
             </example>
 
             <para>
-                Columns you exclude from the array of data are not specified to
-                the database.  Therefore, they follow the same rules that an
-                SQL INSERT statement follows:  if the column has a DEFAULT
-                clause, the column takes that value in the row created,
-                otherwise the column is left in a NULL state.
+                Spalten die nicht in dem Array definiert sind, werden nicht an die Datenbank übergeben. Daher
+                folgen sie den selben Regeln denen eine SQL INSERT Anweisung folgt: wenn die Spalte einen
+                Standardwert hat, so bekommt die Spalte der neuen Zeile diesen Wert. Andernfalls behält sie den
+                Status <code>NULL</code>.
             </para>
 
             <para>
-                By default, the values in your data array are inserted using
-                parameters.  This reduces risk of some types of security
-                issues.  You don't need to apply escaping or quoting to values
-                in the data array.
+                Standardmäßig werden die Daten in dem Array mit Parametern eingefügt. Dies reduziert das Risiko
+                einiger Typen von Sicherheitsproblemen. Die Werte in dem Array müssen daher nicht escaped oder
+                quotiert übergeben werden.
             </para>
 
             <para>
-                You might need values in the data array to be treated as SQL
-                expressions, in which case they should not be quoted.  By
-                default, all data values passed as strings are treated as
-                string literals.  To specify that the value is an SQL
-                expression and therefore should not be quoted, pass the value
-                in the data array as an object of type Zend_Db_Expr instead of
-                a plain string.
+                Einige Werte in dem Array könnten als SQL Expressions benötigt werden, in diesem Fall dürfen sie
+                nicht in Anführungszeichen stehen. Standardmäßig werden alle übergebenen String-Werte als
+                String-literale behandelt. Um anzugeben das ein Wert eine SQL Expression ist, und daher nicht
+                quotiert werden soll, muss der Wert als ein Objekt des Typs Zend_Db_Expr übergeben werden, und
+                nicht als einfacher String.
             </para>
 
             <example id="zend.db.adapter.write.insert.example2">
-                <title>Inserting expressions to a table</title>
+                <title>Einfügen von Expressions in eine Tabelle</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
-    'bug_description' => 'Something wrong',
+    'bug_description' => 'Etwas falsch',
     'bug_status'      => 'NEW'
 );
 
@@ -826,166 +757,147 @@ $db->insert('bugs', $data);
 
         <sect3 id="zend.db.adapter.write.lastinsertid">
 
-            <title>Retrieving a Generated Value</title>
+            <title>Abfragen von generierten Werten</title>
 
             <para>
-                Some RDBMS brands support auto-incrementing primary keys.
-                A table defined this way generates a primary key value
-                automatically during an INSERT of a new row.  The return value
-                of the <code>insert()</code> method is <emphasis>not</emphasis>
-                the last inserted ID, because the table might not have an
-                auto-incremented column.  Instead, the return value is the
-                number of rows affected (usually 1).
+                Einige RDBMS Marken unterstützen Auto-Incrementierung von Primärschlüsseln. Eine Tabelle die so
+                definiert ist generiert automatisch einen Primärschlüsselwert während des INSERTs einer neuen
+                Zeile. Der Rückgabewert der <code>insert()</code> Methode ist <emphasis>nicht</emphasis> die
+                letzte eingefügte ID, weil die Tabelle keine Auto-Increment Spalte haben könnte. Statt dessen
+                ist der Rückgabewert die Anzahl der betroffenen Zeilen (normalerweise 1).
             </para>
 
             <para>
-                If your table is defined with an auto-incrementing primary key,
-                you can call the <code>lastInsertId()</code> method after the
-                insert.  This method returns the last value generated in the
-                scope of the current database connection.
+                Wenn die Tabelle mit einem Auto-Increment Primärschlüssel definiert ist, kann die
+                <code>lastInsertId()</code> Methode nach dem INSERT aufgerufen werden. Diese Methode gibt den
+                letzten generierten Wertim Rahmen der aktuellen Datenbankverbindung zurück.
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-1">
-                <title>Using lastInsertId() for an auto-increment key</title>
+                <title>Nutzung von lastInsertId() für einen Auto-Increment Schlüssel</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->insert('bugs', $data);
 
-// return the last value generated by an auto-increment column
+// Gib den letzten durch eine auto-inkrement Spalte erzeugten Wert zurück
 $id = $db->lastInsertId();
 ]]></programlisting>
             </example>
 
             <para>
-                Some RDBMS brands support a sequence object, which generates
-                unique values to serve as primary key values.  To support
-                sequences, the <code>lastInsertId()</code> method accepts two
-                optional string arguments.  These arguments name the table and
-                the column, assuming you have followed the convention that a
-                sequence is named using the table and column names for which
-                the sequence generates values, and a suffix "_seq".  This is
-                based on the convention used by PostgreSQL when naming
-                sequences for SERIAL columns.  For example, a table "bugs" with
-                primary key column "bug_id" would use a sequence named
-                "bugs_bug_id_seq".
+                Einige RDBMS Marken unterstützen ein Sequenz-Objekt, welches eindeutige Werte generiert, die als
+                Primärschlüsselwerte dienen. Um Sequenzen zu unterstützen, akzeptiert die
+                <code>lastInsertId()</code> Method zwei optionale String Argumente. Diese Argumente benennen die
+                Tabelle und die Spalte, in der Annahme das die Konvention beachtet wurde, dass eine Sequenz mit
+                der Tabelle und der Spalte benannt wurde, für die sie Werte generiert plus dem Anhang "_seq". Dies
+                basiert auf der Konvention die von PostgreSQL verwendet wird, wenn Sequenzen für SERIAL Spalten
+                benannt werden. Zum Beispiel würde eine Tabelle "bugs" mit der Primärschlüsselspalte "bug_id" eine
+                Sequenz als "bugs_bug_id_seq" benennen.
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-2">
-                <title>Using lastInsertId() for a sequence</title>
+                <title>Nutzung von lastInsertId() für eine Sequenz</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->insert('bugs', $data);
 
-// return the last value generated by sequence 'bugs_bug_id_seq'.
+// Gib den letzten durch die 'bugs_bug_id_seq' Sequenz erstellten Wert zurück.
 $id = $db->lastInsertId('bugs', 'bug_id');
 
-// alternatively, return the last value generated by sequence 'bugs_seq'.
+// Anternativ, gib den letzten durch die 'bugs_seq' Sequenz erstellten Wert zurück.
 $id = $db->lastInsertId('bugs');
 ]]></programlisting>
             </example>
 
             <para>
-                If the name of your sequence object does not follow this naming
-                convention, use the <code>lastSequenceId()</code> method
-                instead.  This method takes a single string argument, naming
-                the sequence literally.
+                Wenn der Name des Squenz-Objekts nicht dieser Konvention folgt muss die
+                <code>lastSequenceId()</code> Methode an Stelle verwendet werden. Diese Methode benötigt ein
+                String Argument, welches die Sequenz wörtlich benennt.
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-3">
-                <title>Using lastSequenceId()</title>
+                <title>Nutzung von lastSequenceId()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->insert('bugs', $data);
 
-// return the last value generated by sequence 'bugs_id_gen'.
+// Gib den letzten durch die 'bugs_id_gen' Sequenz erstellten Wert zurück.
 $id = $db->lastSequenceId('bugs_id_gen');
 ]]></programlisting>
             </example>
 
             <para>
-                For RDBMS brands that don't support sequences, including MySQL,
-                Microsoft SQL Server, and SQLite, the arguments to the
-                lastInsertId() method are ignored, and the value returned is the
-                most recent value generated for any table by INSERT operations
-                during the current connection.   For these RDBMS brands, the
-                lastSequenceId() method always returns <code>null</code>.
+                Bei RDBMS Marken die keine Sequenzen unterstützen, dazu gehören MySQL, Microsoft SQL Server und
+                SQLite, werden die Argumente an die <code>lastInsertId()</code> Methode ignoriert, und der zurück
+                gegebene Wert ist der zuletzt für eirgendeine Tabelle während einer INSERT Operation generierte
+                Wert innerhalb der aktuellen Verbindung. Für diese RDBMS Marken gibt die
+                <code>lastSequenceId()</code> Methode immer <code>null</code> zurück.
             </para>
 
             <note>
-                <title>Why not use "SELECT MAX(id) FROM table"?</title>
+                <title>Weßhalb sollte man nicht "SELECT MAX(id) FROM table" verwenden?</title>
                 <para>
-                    Sometimes this query returns the most recent primary key
-                    value inserted into the table.  However, this technique
-                    is not safe to use in an environment where multiple clients are
-                    inserting records to the database.  It is possible, and
-                    therefore is bound to happen eventually, that another
-                    client inserts another row in the instant between the
-                    insert performed by your client application and your query
-                    for the MAX(id) value.  Thus the value returned does not
-                    identify the row you inserted, it identifies the row
-                    inserted by some other client.  There is no way to know
-                    when this has happened.
+                    Manchmal gibt diese Anfrage den zuletzt eingefügten Primärschlüsselwert zurück. Trotzdem ist
+                    diese Technik in einer Umgebung in der mehrere Clients Daten in die Datenbank einfügen nicht
+                    sicher. Es ist möglich, und daher vorherbestimmt eventuell aufzutreten, das ein anderer Client
+                    in dem Augenblick zwischen dem INSERT deiner Client Anwendung und deiner Anfrage für den
+                    MAX(id) Wert, eine andere Zeile einfügt. Somit identifiziert der zurück gegebene Wert nicht
+                    die von dir eingefügte Zeile, sondern die eines anderen Clients. Man kann nie wissen wann dies
+                    passiert.
                 </para>
                 <para>
-                    Using a strong transaction isolation mode such as
-                    "repeatable read" can mitigate this risk, but some RDBMS
-                    brands don't support the transaction isolation required for
-                    this, or else your application may use a lower transaction
-                    isolation mode by design.
+                    Das Nutzen eines starken Transaktions Isolationsmodus wie "repeatable read" kann das Risiko
+                    mindern, aber einige RDBMS Marken unterstützen nicht die Transaktions Isolation die hierfür
+                    benötigt wird, oder deine Applikation könnte einen schwächeren Transaktions Isolationsmodus
+                    nutzen.
                 </para>
                 <para>
-                    Furthermore, using an expression like "MAX(id)+1" to generate
-                    a new value for a primary key is not safe, because two clients
-                    could do this query simultaneously, and then both use the same
-                    calculated value for their next INSERT operation.
+                    Darüberhinaus ist das Nutzen eins Ausdrucks wie "MAX(id)+1" um einen neuen Wert für den
+                    Primärschlüssel zu generiern nict sicher, weil zwei Clients diese Anfrage gleichzeitig
+                    ausführen könnten und damit beide den gleichen Wert für ihre nächste INSERT Operation bekommen
+                    würden.
                 </para>
                 <para>
-                    All RDBMS brands provide mechanisms to generate unique
-                    values, and to return the last value generated.  These
-                    mechanisms necessarily work outside of the scope of
-                    transaction isolation, so there is no chance of two clients
-                    generating the same value, and there is no chance that the
-                    value generated by another client could be reported to your
-                    client's connection as the last value generated.
+                    Alle RDBMS Marken bieten einen Mechanismus um eindeutige Werte zu generieren, und um den
+                    zuletzt generierten Wert zurück zu geben. Diese Machanismen funktionieren notwendigerweise
+                    außerhalb des Gültigkeitsbereichs einer Transaktions Isolation, es besteht daher nicht die
+                    Möglichkeit das zwei Clients den selben Wert generieren und es besteht nicht die Möglichkeit
+                    das der Wert, der von einem anderen Client generiert wurde, an die Verbindung deines Clients,
+                    als letzter generierter Wert, gesendet wird.
                 </para>
             </note>
 
         </sect3>
 
         <sect3 id="zend.db.adapter.write.update">
-            <title>Updating Data</title>
+            <title>Aktualisieren von Daten</title>
 
             <para>
-                You can update rows in a database table using the
-                <code>update()</code> method of an Adapter.  This method takes
-                three arguments:  the first is the name of the table; the
-                second is an associative array mapping columns to change to new
-                values to assign to these columns.
+                Zeilen in der Datenbank können mit der <code>update()</code> Methode eines Adapters aktualisiert
+                werden. Diese Methode benötigt drei Argumente: Das Erste ist der Name der Tabelle und das Zweite
+                ist ein assoziatives Array das den zu Ändernden Spalten neue Werte zuordnet.
             </para>
 
             <para>
-                The values in the data array are treated as string literals.
-                See <xref linkend="zend.db.adapter.write.insert" />
-                for information on using SQL expressions in the data array.
+                Die Werte des Datenarrays werden als String Literale behandelt. Beachte
+                <xref linkend="zend.db.adapter.write.insert" /> für Informationen zur Nutzung von SQL Expressions
+                in dem Datenarray.
             </para>
 
             <para>
-                The third argument is a string containing an SQL expression
-                that is used as criteria for the rows to change.  The values
-                and identifiers in this argument are not quoted or escaped.
-                You are responsible for ensuring that any dynamic content is
-                interpolated into this string safely.
-                See <xref linkend="zend.db.adapter.quoting" />
-                for methods to help you do this.
+                Das dritte Argument ist ein String der aus einer SQL Expression besteht, die genutzt wird um
+                Kriterien für die Auswahl der zu ändernden Zeilen zu bestimmen. Die Werte und Bezeichner in diesem
+                Argument werden nicht escaped oder quotiert. An dieser Stelle muss darauf geachtet werden das
+                sichergestellt ist, das dynamischer Inhalt sicher in diesen String eingefügt wird. Unter
+                <xref linkend="zend.db.adapter.quoting" /> sind Methoden beschrieben die dabei helfen können.
             </para>
 
             <para>
-                The return value is the number of rows affected by the update
-                operation.
+                Der Rückgabewert ist die Anzahl der Betroffenen Zeilen der UPDATE Operation.
             </para>
 
             <example id="zend.db.adapter.write.update.example">
-                <title>Updating rows</title>
+                <title>Aktualisieren von Zeilen</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
@@ -998,18 +910,17 @@ $n = $db->update('bugs', $data, 'bug_id = 2');
             </example>
 
             <para>
-                If you omit the third argument, then all rows in the database
-                table are updated with the values specified in the data array.
+                Wenn das dritte Argument ausgelassen wird, werden alle Zeilen der Tabelle mit den Werten des
+                Datenarrays aktualisiert.
             </para>
 
             <para>
-                If you provide an array of strings as the third argument, these
-                strings are joined together as terms in an expression separated
-                by <code>AND</code> operators.
+                Wenn ein Array mit Strings als drittes Argument übergeben wird, werden diese Strings als eine
+                Expression von Ausdrücken, getrennt von AND Operatoren, zusammengefügt.
             </para>
 
             <example id="zend.db.adapter.write.update.example">
-                <title>Updating rows using an array of expressions</title>
+                <title>Aktualisieren von Zeilen unter Nutzung eines Arrays von Expressions</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
@@ -1022,7 +933,7 @@ $where[] = "bug_status = 'OPEN'";
 
 $n = $db->update('bugs', $data, $where);
 
-// Resulting SQL is:
+// Der erstellte SQL Syntax ist:
 //  UPDATE "bugs" SET "update_on" = '2007-03-23', "bug_status" = 'FIXED'
 //  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')
 ]]></programlisting>
@@ -1031,30 +942,26 @@ $n = $db->update('bugs', $data, $where);
         </sect3>
 
         <sect3 id="zend.db.adapter.write.delete">
-            <title>Deleting Data</title>
+            <title>Löschen von Daten</title>
             <para>
-                You can delete rows from a database table using the
-                <code>delete()</code> method.  This method takes two arguments:
-                the first is a string naming the table.
+                Daten können aus einer Datenbanktabelle mit der <code>delete()</code> Methode gelöscht werden.
+                Diese Methode benötigt zwei Argumente: Das erste ist ein String der die Tabelle benennt.
             </para>
 
             <para>
-                The second argument is a string containing an SQL expression
-                that is used as criteria for the rows to delete.  The values
-                and identifiers in this argument are not quoted or escaped.
-                You are responsible for ensuring that any dynamic content is
-                interpolated into this string safely.
-                See <xref linkend="zend.db.adapter.quoting" />
-                for methods to help you do this.
+                Das zweite Argument ist ein String der aus einer SQL Expression besteht, welche Kriterien für
+                die zu löschenden Zeilen enthält. Die Werte und Bezeichner in diesem Argument werden nicht escaped
+                quotiert. An dieser Stelle muss darauf geachtet werden das sichergestellt ist, das dynamischer
+                Inhalt sicher in diesen String eingefügt wird. Unter <xref linkend="zend.db.adapter.quoting" />
+                sind Methoden beschrieben die dabei helfen können.
             </para>
 
             <para>
-                The return value is the number of rows affected by the delete
-                operation.
+                Der Rückgabewert ist die Anzahl der Betroffenen Zeilen der DELETE Operation.
             </para>
 
             <example id="zend.db.adapter.write.delete.example">
-                <title>Deleting rows</title>
+                <title>Löschen von Zeilen</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $n = $db->delete('bugs', 'bug_id = 3');
@@ -1062,14 +969,12 @@ $n = $db->delete('bugs', 'bug_id = 3');
             </example>
 
             <para>
-                If you omit the second argument, the result is that all rows in
-                the database table are deleted.
+                Wenn das zweite Argument ausgelassen wird, werden alle Zeilen der Tabelle gelöscht.
             </para>
 
             <para>
-                If you provide an array of strings as the second argument, these
-                strings are joined together as terms in an expression separated
-                by <code>AND</code> operators.
+                Wenn ein Array mit Strings als zweites Argument übergeben wird, werden diese Strings als eine
+                Expression von Ausdrücken, getrennt von AND Operatoren, zusammengefügt.
             </para>
 
         </sect3>
@@ -1078,15 +983,13 @@ $n = $db->delete('bugs', 'bug_id = 3');
 
     <sect2 id="zend.db.adapter.quoting">
 
-        <title>Quoting Values and Identifiers</title>
+        <title>Quotierung von Werten und Bezeichnern</title>
 
         <para>
-            When you form SQL queries, often it is the case that you need to
-            include the values of PHP variables in SQL expressions.  This is
-            risky, because if the value in a PHP string contains certain
-            symbols, such as the quote symbol, it could result in invalid SQL.
-            For example, notice the imbalanced quote characters in the
-            following query:
+            Beim Erzeugen von SQL Anfragen ist es häufig nötig PHP Variablen in die SQL Expression einzufügen.
+            Dies ist riskant, weil der Wert eines PHP Strings bestimmte Zeichen enthalten kann, wie das
+            Anführungszeichen, was zu ungültiger SQL Syntax führen kann. Zum Beispiel, zu beachten ist die
+            ungerade Anzahl der Anführungszeichen in der folgenden Anfrage:
             <programlisting role="php"><![CDATA[
 $name = "O'Reilly";
 $sql = "SELECT * FROM bugs WHERE reported_by = '$name'";
@@ -1097,41 +1000,36 @@ echo $sql;
         </para>
 
         <para>
-            Even worse is the risk that such code mistakes might be exploited
-            deliberately by a person who is trying to manipulate the function
-            of your web application.  If they can specify the value of a PHP
-            variable through the use of an HTTP parameter or other mechanism,
-            they might be able to make your SQL queries do things that you
-            didn't intend them to do, such as return data to which the person
-            should not have privilege to read.  This is a serious and widespread
-            technique for violating application security, known as "SQL Injection"
-            (see <ulink url="http://en.wikipedia.org/wiki/SQL_Injection">http://en.wikipedia.org/wiki/SQL_Injection</ulink>).
+            Noch schlimmer ist das Risiko, dass solche Code-Fehler von einer Person absichtlich ausgenutzt werden
+            um die Funktion der Webanwendung zu manipulieren. Wenn der Wert einer PHP Variablen über die Nutzung
+            von HTTP Parametern oder eines anderen Mechanismus gesetzt werden kann, könnte eine Person die SQL
+            Anfragen nutzen um Dinge zu tun, wozu sie nicht gedacht sind, wie Daten ausgeben, wozu die Person
+            keine Zugangsberechtigung hat. Dies ist eine ernst zu nehmende und weit verbreitete Technik um die
+            Sicherheit einer Anwendung zu verletzen, bekannt unter dem Namen "SQL Injection"
+            (siehe <ulink url="http://en.wikipedia.org/wiki/SQL_Injection">http://en.wikipedia.org/wiki/SQL_Injection</ulink>).
         </para>
 
         <para>
-            The Zend_Db Adapter class provides convenient functions to help you
-            reduce vulnerabilities to SQL Injection attacks in your PHP code.
-            The solution is to escape special characters such as quotes in PHP
-            values before they are interpolated into your SQL strings.
-            This protects against both accidental and deliberate manipulation
-            of SQL strings by PHP variables that contain special characters.
+            Die Zend_Db Adapterklassen bieten bequeme Methoden, die helfen die Verletzbarkeit durch SQL Injection
+            Angriffe im PHP Code zu reduzieren. Die Lösung ist bestimmte Zeichen, wie Anführungszeichen, in PHP
+            Werten zu ersetzen bevor sie in SQL Strings eingefügt werden. Dies schützt sowohl vor versehentlicher
+            als auch vor absichtlicher Manipulation von SQL Strings durch PHP Variablen, die spezielle Zeichen
+            enthalten.
         </para>
 
         <sect3 id="zend.db.adapter.quoting.quote">
 
-            <title>Using <code>quote()</code></title>
+            <title>Nutzung von <code>quote()</code></title>
 
             <para>
-                The <code>quote()</code> method accepts a single argument, a
-                scalar string value.  It returns the value with special
-                characters escaped in a manner appropriate for the RDBMS you
-                are using, and surrounded by string value delimiters.  The
-                standard SQL string value delimiter is the single-quote
-                (<code>'</code>).
+                Die <code>quote()</code> Methode benötigt ein Argument, einen scalaren String Wert. Sie gibt den
+                Wert mit ersetzten speziellen Zeichen, passend zu dem eingesetzten RDBMS, und umgeben von
+                Stringwertbegrenzern zurück. Der Standard SQL Stringwertbegrenzer ist das einfache
+                Anführungszeichen (<code>'</code>).
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example">
-                <title>Using quote()</title>
+                <title>Nutzung von quote()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $name = $db->quote("O'Reilly");
@@ -1146,10 +1044,9 @@ echo $sql;
             </example>
 
             <para>
-                Note that the return value of <code>quote()</code> includes the
-                quote delimiters around the string.  This is different from
-                some functions that escape special characters but do not add
-                the quote delimiters, for example
+                Zu beachten ist, dass der Rückgabewert von <code>quote()</code> die Stringwertbegrenzer enthält.
+                Dies ist ein Unterschied zu anderen Methoden die spezielle Zeichen ersetzen, aber keine
+                Stringwertbegrenzer hinzufügen, wie z.B.
                 <ulink url="http://www.php.net/mysqli_real_escape_string">mysql_real_escape_string()</ulink>.
             </para>
 
@@ -1157,31 +1054,26 @@ echo $sql;
 
         <sect3 id="zend.db.adapter.quoting.quote-into">
 
-            <title>Using <code>quoteInto()</code></title>
+            <title>Nutzung von <code>quoteInto()</code></title>
 
             <para>
-                The most typical usage of quoting is to interpolate a PHP
-                variable into a SQL expression or statement.  You can use the
-                <code>quoteInto()</code> method to do this in one step.  This
-                method takes two arguments: the first argument is a string
-                containing a placeholder symbol (<code>?</code>), and the
-                second argument is a value or PHP variable that should be
-                substituted for that placeholder.
+                Die typischste Anwendung von Quotierung ist das Einfügen von PHP Variablen in eine SQL Expression
+                oder Anweisung. Die <code>quoteInto()</code> Methode kann verwendet werden um dies in einem Schritt
+                zu erledigen. Die Methode benötigt zwei Argumente: Das erste Argument ist ein String der ein
+                Platzhaltersymbol (<code>?</code>) enthält, und das zweite Argument ist ein Wert oder eine PHP
+                Variable die den Platzhalter ersetzen soll.
             </para>
 
             <para>
-                The placeholder symbol is the same symbol used by many RDBMS
-                brands for positional parameters, but the
-                <code>quoteInto()</code> method only emulates query parameters.
-                The method simply interpolates the value into the string,
-                escapes special characters, and applies quotes around it.
-                True query parameters maintain the separation between the SQL
-                string and the parameters as the statement is parsed in the
-                RDBMS server.
+                Das Platzhaltersymbol ist das gleiche Symbol wie es von vielen RDBMS Marken für Lage betreffende
+                Parameter verwendet wird, aber die <code>quoteInto()</code> Methode bildet nur Abfrageparameter
+                nach. Die Methode fügt den Wert des Strings in den SQL String ein, ersetzt dabei spezielle Zeichen
+                und fügt Stringwertbegrenzer ein. Echte Abfrageparameter sorgen für eine Trennung von SQL String
+                und Parametern wenn die Anweisung vom RDBMS Server verarbeitet wird.
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example">
-                <title>Using quoteInto()</title>
+                <title>Nutzung von quoteInto()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
@@ -1195,47 +1087,42 @@ echo $sql;
 
         <sect3 id="zend.db.adapter.quoting.quote-identifier">
 
-            <title>Using <code>quoteIdentifier()</code></title>
+            <title>Nutzung von <code>quoteIdentifier()</code></title>
 
             <para>
-                Values are not the only part of SQL syntax that might need to
-                be variable.  If you use PHP variables to name tables, columns,
-                or other identifiers in your SQL statements, you might need to
-                quote these strings too.  By default, SQL identifiers have
-                syntax rules like PHP and most other programming languages.
-                For example, identifiers should not contain spaces, certain
-                punctuation or special characters, or international characters.
-                Also certain words are reserved for SQL syntax, and should not
-                be used as identifiers.
+                Werte könnten nicht der einzige Teil der SQL Syntax sein, der Variabel sein soll. Wenn PHP
+                Variablen genutzt werden um Tabellen, Spalten oder andere Bezeichner in den SQL Anweisungen
+                zu benennen, könnte es nötig sein das diese Strings ebenfalls quotiert werden müssen. Standardmäßig
+                haben SQL Bezeichner Syntaxregeln wie PHP und die meißten anderen Programmiersprachen. Zum
+                Beispiel dürfen Bezeichner keine Leerzeichen, bestimmte Punktierung, spezielle Zeichen oder
+                Internationale Zeichen enthalten. Außerdem sind bestimmte Wörter für die SQL Syntax reserviert
+                und dürfen nicht als Bezeichner verwendet werden.
             </para>
 
             <para>
-                However, SQL has a feature called <emphasis>delimited identifiers</emphasis>,
-                which allows broader choices for the spelling of identifiers.
-                If you enclose a SQL identifier in the proper types of quotes,
-                you can use identifiers with spellings that would be invalid
-                without the quotes.  Delimited identifiers can contain spaces,
-                punctuation, or international characters.  You can also use SQL
-                reserved words if you enclose them in identifier delimiters.
+                Dennoch hat SQL ein Feature mit Namen
+                <emphasis>delimited identifiers (begrenzte Bezeichner)</emphasis>, welches eine größere Auswahl
+                bei der Schreibweise von Bezeichnern erlaubt. Wenn ein SQL Bezeichner mit dem richtigen Typ von´
+                Quotierung eingeschlossen ist, können Schreibweisen für die Bezeichner verwendet werden, die
+                ohne der Quotierung ungültig wären. Begrenzte Bezeichner können Leerzeichen, Punktierung oder
+                internationale Zeichen enthalten. Desweiteren dürfen auch von der SQL Syntax reservierte Wörter
+                verwendet werden, wenn sie von Bezeichner Begrenzungszeichen eingeschlossen sind.
             </para>
 
             <para>
-                The <code>quoteIdentifier()</code> method works like
-                <code>quote()</code>, but it applies the identifier delimiter
-                characters to the string according to the type of Adapter you
-                use.  For example, standard SQL uses double-quotes
-                (<code>"</code>) for identifier delimiters, and most RDBMS
-                brands use that symbol.  MySQL uses back-quotes
-                (<code>`</code>) by default.  The
-                <code>quoteIdentifier()</code> method also escapes special
-                characters within the string argument.
+                Die <code>quoteIdentifier()</code> Methode funktioniert wie <code>quote()</code>, aber sie wendet
+                die Bezeichner Begrenzungszeichen entsprechend dem verwendeten Adapter an. Zum Beispiel nutzt
+                Standard-SQL doppelte Anführungszeichen (<code>"</code>) zum begrenzen von Bezeichnern und die
+                meisten der RDBMS Marken nutzen ebendfalls dieses Symbol. MySQL hingegen benutzt back-quotes
+                (<code>`</code>) als Standardzeichen. Die <code>quoteIdentifier()</code> Methode ersetzt außerdem
+                spezielle Zeichen im String Argument.
             </para>
 
             <example id="zend.db.adapter.quoting.quote-identifier.example">
-                <title>Using quoteIdentifier()</title>
+                <title>Nutzung von quoteIdentifier()</title>
                 <programlisting role="php"><![CDATA[<?php
 
-// we might have a table name that is an SQL reserved word
+// Wir könnten einen Tabellennamen haben, der ein in SQL reserviertes Wort ist
 $tableName = $db->quoteIdentifier("order");
 
 $sql = "SELECT * FROM $tableName";
@@ -1246,19 +1133,17 @@ echo $sql
             </example>
 
             <para>
-                SQL delimited identifiers are case-sensitive, unlike unquoted
-                identifiers.  Therefore, if you use delimited identifiers, you
-                must use the spelling of the identifier exactly as it is stored
-                in your schema, including the case of the letters.
+                SQL begrenzte Bezeichner beachten die Groß- und Kleinschreibung, im Gegensatz zu nicht quotierten
+                Bezeichnern. Daher muss, bei Verwendung von begrenztern Bezeichnern, die Schreibung der Bezeichner
+                genau der Schreibung der Bezeichner im Tabellenschema entsprechen. Einschließlich der Groß- und
+                Kleinschreibung.
             </para>
 
             <para>
-                In most cases where SQL is generated within Zend_Db classes,
-                the default is that all identifiers are delimited
-                automatically.  You can change this behavior with the option
-                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.  Specify this
-                when instantiating the Adapter.
-                See <xref linkend="zend.db.adapter.connecting.parameters.example2" />.
+                In den meißten Fällen wo SQL innerhalb der Zend_Db Klassen generiert wird, werden standardmäßig
+                alle Bezeichner automatisch begrenzt. Dieses Verhalten kann mit der Option
+                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code> geändert werden. Dies muss beim Instanziieren des
+                Adapters wie in <xref linkend="zend.db.adapter.connecting.parameters.example2" /> angegeben werden.
             </para>
 
         </sect3>
@@ -1267,75 +1152,65 @@ echo $sql
 
     <sect2 id="zend.db.adapter.transactions">
 
-        <title>Controlling Database Transactions</title>
+        <title>Kontrollieren von Datenbank Transaktionen</title>
 
         <para>
-            Databases define transactions as logical units of work that can be
-            committed or rolled back as a single change, even if they operate
-            on multiple tables.  All queries to a database are executed within
-            the context of a transaction, even if the database driver manages
-            them implicitly.  This is called <emphasis>auto-commit</emphasis>
-            mode, in which the database driver creates a transaction for every
-            statement you execute, and commits that transaction after your
-            SQL statement has been executed.  By default, all Zend_Db Adapter
-            classes operate in auto-commit mode.
+            Datenbanken definieren Transaktionen als logische Einheiten von Arbeit, die als einzelne Änderung
+            übergeben oder rückgängig gemacht werden kann, selbst wenn sie auf verschiedenen Tabellen operiert.
+            Alle Anfragen an einen Datenbank werden im Kontext einer Transaktion ausgeführt, selbst wenn der
+            Datenbanktreiber sie implizit Verwaltet. Es wird <emphasis>auto-commit</emphasis> Modus genannt,
+            wenn der Datenbanktreiber eine Transaktion für jede Anweisung erzeugt, und diese direkt nach dem
+            Ausführen übergibt. Standardmäßig operieren alle Zend_Db Adapterklassen im auto-commit Modus.
         </para>
 
         <para>
-            Alternatively, you can specify the beginning and resolution of a
-            transaction, and thus control how many SQL queries are included in
-            a single group that is committed (or rolled back) as a single
-            operation.  Use the <code>beginTransaction()</code> method to
-            initiate a transaction.  Subsequent SQL statements are executed in
-            the context of the same transaction until you resolve it
-            explicitly.
+            Alternativ kann der Begin und das Ergebnis einer Transaktion selbst spezifiziert werden, und damit
+            kann kontrolliert werden wieviele SQL Anfragen in einer Gruppe enthalten sind, die entweder übergeben
+            oder rückgängig gemacht wird, als eine einzelne Operation. Um eine Transaktion zu initiieren wird die
+            <code>beginTransaction()</code> Methode verwendet. Anschließend folgende SQL Anweisungen werden im
+            Kontext der selben Transaktion ausgeführt bis sie explizit aufgelöst wird.
         </para>
 
         <para>
-            To resolve the transaction, use either the <code>commit()</code> or
-            <code>rollBack()</code> methods.  The <code>commit()</code> method
-            marks changes made during your transaction as committed, which
-            means the effects of these changes are shown in queries run in
-            other transactions.
+            Um eine Transaktion aufzulösen wird entweder die <code>commit()</code> oder die <code>rollBack()</code>
+            Methode verwendet. Die <code>commit()</code> Methode markiert die Änderungen die während der
+            Transaktionen durchgeführt wurden als übergeben, was bedeutet das die Effekte dieser Änderungen in
+            anderen Transaktionen angezeigt werden.
         </para>
 
         <para>
-            The <code>rollBack()</code> method does the opposite: it discards
-            the changes made during your transaction.  The changes are
-            effectively undone, and the state of the data returns to how it was
-            before you began your transaction.  However, rolling back your
-            transaction has no effect on changes made by other transactions
-            running concurrently.
+            Die <code>rollBack()</code> Methode tut das Gegenteil: sie verwirft die Änderungen die während der
+            Transaktionen durchgeführt wurden. Die Änderungen werden gewissermaßen ungeschehen gemacht, der
+            Status der Daten ändert sich zurück auf jenen wie sie vor Begin der Transaktion waren. Allerdings
+            hat das rückgängig machen keinen Einfluss auf Änderungen die von anderen, gleichzeitig laufenden
+            Transaktionen verursacht wurden.
         </para>
 
         <para>
-            After you resolve this transaction, <code>Zend_Db_Adapter</code>
-            returns to auto-commit mode until you call
-            <code>beginTransaction()</code> again.
+            Nach dem Auflösen der Transaktion befindet sich der <code>Zend_Db_Adapter</code> wieder im auto-commit
+            Modus, bis <code>beginTransaction()</code> wieder aufgerufen wird.
         </para>
 
         <example id="zend.db.adapter.transactions.example">
-            <title>Managing a transaction to ensure consistency</title>
+            <title>Verwalten einer Transaktion um Konsistenz sicher zu stellen</title>
             <programlisting role="php"><![CDATA[<?php
 
-// Start a transaction explicitly.
+// Eine Transaktion explizit starten
 $db->beginTransaction();
 
 try {
-    // Attempt to execute one or more queries:
+    // Versuchen einen oder mehrere Abfragen auszuführen
     $db->query(...);
     $db->query(...);
     $db->query(...);
 
-    // If all succeed, commit the transaction and all changes
-    // are committed at once.
+    // Wenn alle erfolgreich waren, übertrage die Transaktion und alle Änderungen  werden auf einmal übermittelt
     $db->commit();
 
 } catch (Exception $e) {
-    // If any of the queries failed and threw an exception,
-    // we want to roll back the whole transaction, reversing
-    // changes made in the transaction, even those that succeeded.
-    // Thus all changes are committed together, or none are.
+    // Wenn irgendeine der Abfragen fehlgeschlagen ist, wirf eine Ausnahme, wir wollen die komplette Transaktion
+    // zurücknehmen, alle durch die Transaktion gemachten Änderungen wieder entfernen auch die erfolgreichen.
+    // So werden alle Änderungen auf einmal übermittelt oder keine.
     $db->rollBack();
     echo $e->getMessage();
 }
@@ -1346,166 +1221,157 @@ try {
 
     <sect2 id="zend.db.adapter.list-describe">
 
-        <title>Listing and Describing Tables</title>
+        <title>Auflistung und Beschreibung von Tabellen</title>
 
         <para>
-            The <code>listTables()</code> method returns an array of strings,
-            naming all tables in the current database.
+            Die <code>listTables()</code> Methode gibt ein Array von Strings zurück, mit den Namen aller Tabellen
+            in der aktuellen Datenbank.
         </para>
 
         <para>
-            The <code>describeTable()</code> method returns an associative
-            array of metadata about a table.  Specify the name of the table
-            as a string in the first argument to this method.  The second
-            argument is optional, and names the schema in which the table
-            exists.
+            Die <code>describeTable()</code> Methode gibt ein assoziatives Array von MetaDaten über die Tabelle
+            zurück. Das erste Argument dieser Methode ist ein String der den Namen der Tabelle enthält. Das zweite
+            Argument ist optional und benennt das Schema in dem die Tabelle besteht.
         </para>
 
         <para>
-            The keys of the associative array returned are the column names of
-            the table.  The value corresponding to each column is also an
-            associative array, with the following keys and values:
+            Die Schlüssel des assoziativen Arrays sind die Spaltennamen der Tabelle. Der zugehörige Wert jeder
+            Spalte ist ebenfalls ein assoziatives Array mit den folgenden Schlüsseln und Werten:
         </para>
 
         <table frame="all" cellpadding="5" id="zend.db.adapter.list-describe.metadata">
-            <title>Metadata fields returned by describeTable()</title>
+            <title>Metadata Felder die von describeTable() zurückgegeben werden</title>
             <tgroup cols="3" align="left" colsep="1" rowsep="1">
                 <thead>
                     <row>
-                        <entry>Key</entry>
-                        <entry>Type</entry>
-                        <entry>Description</entry>
+                        <entry>Schlüssel</entry>
+                        <entry>Typ</entry>
+                        <entry>Beschreibung</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>SCHEMA_NAME</entry>
                         <entry>(string)</entry>
-                        <entry>Name of the database schema in which this table exists.</entry>
+                        <entry>Name des Datenbankschemas in welchem diese Tabelle existiert.</entry>
                     </row>
                     <row>
                         <entry>TABLE_NAME</entry>
                         <entry>(string)</entry>
-                        <entry>Name of the table to which this column belongs.</entry>
+                        <entry>Name der Tabelle zu welcher diese Spalte gehört.</entry>
                     </row>
                     <row>
                         <entry>COLUMN_NAME</entry>
                         <entry>(string)</entry>
-                        <entry>Name of the column.</entry>
+                        <entry>Name der Spalte.</entry>
                     </row>
                     <row>
                         <entry>COLUMN_POSITION</entry>
                         <entry>(integer)</entry>
-                        <entry>Ordinal position of the column in the table.</entry>
+                        <entry>Ordinale Position der Spalte in der Tabelle.</entry>
                     </row>
                     <row>
                         <entry>DATA_TYPE</entry>
                         <entry>(string)</entry>
-                        <entry>RDBMS name of the datatype of the column.</entry>
+                        <entry>RDBMS Name des Datentyps der Spalte.</entry>
                     </row>
                     <row>
                         <entry>DEFAULT</entry>
                         <entry>(string)</entry>
-                        <entry>Default value for the column, if any.</entry>
+                        <entry>Standardwert der Spalte, wenn angegeben.</entry>
                     </row>
                     <row>
                         <entry>NULLABLE</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if the column accepts SQL NULLs, false if the column has a NOT NULL constraint.</entry>
+                        <entry><code>true</code> wenn die Spalte SQL NULL akzeptiert, <code>false</code> wenn die Spalte eine NOT NULL Bedingung hat.</entry>
                     </row>
                     <row>
                         <entry>LENGTH</entry>
                         <entry>(integer)</entry>
-                        <entry>Length or size of the column as reported by the RDBMS.</entry>
+                        <entry>Länge oder Größe der Spalte wie vom RDBMS angegeben.</entry>
                     </row>
                     <row>
                         <entry>SCALE</entry>
                         <entry>(integer)</entry>
-                        <entry>Scale of SQL NUMERIC or DECIMAL type.</entry>
+                        <entry>Scalar vom Typ SQL NUMERIC oder DECIMAL.</entry>
                     </row>
                     <row>
                         <entry>PRECISION</entry>
                         <entry>(integer)</entry>
-                        <entry>Precision of SQL NUMERIC or DECIMAL type.</entry>
+                        <entry>Präzision des Typs SQL NUMERIC oder DECIMAL.</entry>
                     </row>
                     <row>
                         <entry>UNSIGNED</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if an integer-based type is reported as UNSIGNED.</entry>
+                        <entry><code>true</code> wenn ein Integer-basierender Typ als UNSIGNED angegeben wird.</entry>
                     </row>
                     <row>
                         <entry>PRIMARY</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if the column is part of the primary key of this table.</entry>
+                        <entry><code>true</code> wenn die Spalte Teil des Primärschlüsssels der Tabelle ist.</entry>
                     </row>
                     <row>
                         <entry>PRIMARY_POSITION</entry>
                         <entry>(integer)</entry>
-                        <entry>Ordinal position (1-based) of the column in the primary key.</entry>
+                        <entry>Ordinale Position (1-basierend) der Spalte des Primärschlüssels.</entry>
                     </row>
                     <row>
                         <entry>IDENTITY</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if the column uses an auto-generated value.</entry>
+                        <entry><code>true</code> wenn die Spalte einen auto-increment Wert nutzt.</entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
 
         <para>
-            If no table exists matching the table name and optional schema name
-            specified, then <code>describeTable()</code> returns an empty array.
+            Wenn keine Tabelle mit dem Tabellennamen und dem optional angegebenen Schemanamen existiert, gibt
+            <code>describeTable()</code> ein leeres Array zurück.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.adapter.closing">
 
-        <title>Closing a Connection</title>
+        <title>Schließen einer Verbindung</title>
 
         <para>
-            Normally it is not necessary to close a database connection.  PHP
-            automatically cleans up all resources and the end of a request.
-            Database extensions are designed to close the connection as the
-            reference to the resource object is cleaned up.
+            Normalerweise ist es nicht nötig eine Datenbankverbindung zu schließen. PHP räumt automatisch alle
+            Ressourcen am Ende einer Anfrage auf und die Datenbankerweiterungen sind so designed das sie
+            Verbindungen beenden wenn Referenzen zu ihren Objekten aufgeräumt werden.
         </para>
 
         <para>
-            However, if you have a long-duration PHP script that initiates many
-            database connections, you might need to close the connection, to avoid
-            exhausting the capacity of your RDBMS server.  You can use the
-            Adapter's <code>closeConnection()</code> method to explicitly close
-            the underlying database connection.
+            Trotzdem könnte es sinnvoll sein, wenn ein lang andauerndes PHP Script verwendet wird, das viele
+            Datenbankverbindungen hat, diese zu schließen um zu vermeiden das die Kapazität des RDBMS Servers
+            überschritten wird. Die <code>closeConnection()</code> Methode der Adapterklasse kann verwendet
+            werden um die zugrundeliegende Datenbankverbindung explizit zu schließen.
         </para>
 
         <example id="zend.db.adapter.other-statements.example">
-            <title>Closing a database connection</title>
+            <title>Schließen einer Datenbankverbindung</title>
             <programlisting role="php"><![CDATA[<?php
 
-$db->closeConnection();
+$db-&gt;closeConnection();
 ]]></programlisting>
         </example>
 
         <note>
-            <title>Does Zend_Db support persistent connections?</title>
+            <title>Unterstützt Zend_Db persistente Verbindungen?</title>
             <para>
-                The usage of persistent connections is not supported
-                or encouraged in Zend_Db.
+                Die Nutzung von persistenten Verbindungen wird weder von Zend_Db unterstützt, noch gewünscht.
             </para>
             <para>
-                Using persistent connections can cause an excess of idle
-                connections on the RDBMS server, which causes more problems
-                than any performance gain you might achieve by reducing the
-                overhead of making connections.
+                Die Benutzung von persistenten Verbindungen kann überschüssige und untätige Verbindungen auf
+                dem RDBMS Server verursachen, welche mehr Probleme bringen als Performancegewin, welcher
+                möglicherweise angestrebt wird, durch das reduzieren des Overheads beim Starten von Verbindungen.
             </para>
             <para>
-                Database connections have state.  That is, some objects in the
-                RDBMS server exist in session scope.  Examples are locks, user
-                variables, temporary tables, and information about the most
-                recently executed query, such as rows affected, and last
-                generated id value.  If you use persistent connections, your
-                application could access invalid or privileged data that were
-                created in a previous PHP request.
+                Datenbankverbindungen haben einen Status. Natürlich existieren einige Objekte auf dem Server im
+                Gültigkeitsbereich einer Session. Beispiele dafür sind locks, user variablen, temporary tables und
+                Informationen über die zuletzt ausgeführte Anfrage, sowie betroffene Zeilen und zuletzt generierte
+                ID Werte. Wenn persistente Verbindungen genutzt werden könnte die Anwendung Zugriff auf ungültige
+                oder privilegierte Daten erlangen, die in einem vorigen PHP Request erzeugt wurden.
             </para>
         </note>
 
@@ -1513,33 +1379,30 @@ $db->closeConnection();
 
     <sect2 id="zend.db.adapter.other-statements">
 
-        <title>Running Other Database Statements</title>
+        <title>Ausführen anderer Datenbank Anweisungen</title>
 
         <para>
-            There might be cases in which you need to access the connection
-            object directly, as provided by the PHP database extension.  Some
-            of these extensions may offer features that are not surfaced by
-            methods of Zend_Db_Adapter_Abstract.
+            Es könnte Fälle geben in denen direkter Zugriff auf das Verbindungsobjekt benötigt wird, wie es von
+            der PHP Erweiterung bereitgestellt wird. Einige der Erweiterungen könnten Features anbieten, welche
+            nicht von Methoden der Zend_Db_Adapter_Abstract Klasse auftauchen..
         </para>
 
         <para>
-            For example, all SQL statements run by Zend_Db are prepared, then
-            executed.  However, some database features are incompatible with
-            prepared statements.  DDL statements like CREATE and ALTER cannot
-            be prepared in MySQL.  Also, SQL statements don't benefit
-            from the <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html">MySQL Query Cache</ulink>,
-            prior to MySQL 5.1.17.
+            Zum Beispiel werden alle SQL Anweisungen von Zend_Db vorbereited und dann ausgeführt. Trotzdem gibt
+            es einige Features welche nicht kompatibel mit vorbereiteten Anweisungen sind. DDL Anweisungen wie
+            CREATE und ALTER können in MySQL nicht vorbereitet werden. Auch können SQL Anweisungen keinen Nutzen
+            aus dem <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html">MySQL Query Cache</ulink>
+            ziehen, bei einer geringeren MySQL Version als 5.1.17.
         </para>
 
         <para>
-            Most PHP database extensions provide a method to execute SQL
-            statements without preparing them.  For example, in PDO, this
-            method is <code>exec()</code>.  You can access the connection
-            object in the PHP extension directly using getConnection().
+            Die meisten PHP Datenbankerweiterungen bieten eine Methode um SQL Anweisung auszuführen ohne diese
+            vorzubereiten. Zum Beispiel bietet PDO die Methode <code>exec()</code>. Das Verbindungsobjekt der
+            PHP Erweiterung kann kann mit der Methode <code>getConnection()</code> direkt verwendet werden.
         </para>
 
         <example id="zend.db.adapter.other-statements.example">
-            <title>Running a non-prepared statement in a PDO adapter</title>
+            <title>Ausführen eines nicht-prepared Statements mit einem PDO Adapter</title>
             <programlisting role="php"><![CDATA[<?php
 
 $result = $db->getConnection()->exec('DROP TABLE bugs');
@@ -1547,28 +1410,26 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         </example>
 
         <para>
-            Similarly, you can access other methods or properties that are
-            specific to PHP database extensions.  Be aware, though, that by
-            doing this you might constrain your application to the interface
-            provided by the extension for a specific brand of RDBMS.
+            So ähnlich können auch andere Methoden oder Eigenschaften der speziellen PHP Datenbankerweiterung
+            genutzt werden. Zu beachten dabei ist jedoch, dass dadurch möglicherweise die Anwendung auf das
+            angegebene Interface, bereitgestellt von einer Erweiterung für ein bestimmtes RDBMS, beschränkt wird.
         </para>
 
         <para>
-            In future versions of Zend_Db, there will be opportunities to
-            add method entry points for functionality that is common to
-            the supported PHP database extensions.  This will not affect
-            backward compatibility.
+            In zukünftigen Versionen von Zend_Db werden Möglichkeiten gegeben sein, um Methoden Startpunkte
+            hinzuzufügen, für Funktionalitäten die den unterstützten PHP Datenbankerweiterungen gemein sind.
+            Dies wird die Rückwärtskompatibilität nicht beeinträchtigen.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.adapter.adapter-notes">
 
-        <title>Notes on Specific Adapters</title>
+        <title>Anmerkungen zu bestimmten Adaptern</title>
 
         <para>
-            This section lists differences between the Adapter classes of which
-            you should be aware.
+            Dieser Abschnitt beschreibt Unterschiede zwischen den verschieden Adapterklassen auf die man achtgeben
+            sollte.
         </para>
 
         <sect3 id="zend.db.adapter.adapter-notes.ibm-db2">
@@ -1576,25 +1437,22 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the factory() method with the
-                        name 'Db2'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Db2' angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extension ibm_db2.
+                        Dieser Adapter nutzt die PHP Erweiterung ibm_db2.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        IBM DB2 supports both sequences and auto-incrementing
-                        keys.  Therefore the arguments to
-                        <code>lastInsertId()</code> are optional.  If you give
-                        no arguments, the Adapter returns the last value
-                        generated for an auto-increment key.  If you give
-                        arguments, the Adapter returns the last value generated
-                        by the sequence named according to the convention
-                        '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq'.
+                        IBM DB2 unterstützt sowohl Sequenzen als auch auto-increment Schlüssel. Daher sind die
+                        Argumente für <code>lastInsertId()</code> optional. Werden keine Argumente angegeben, gibt
+                        der Adapter den letzten Wert der für den auto-increment Key generiert wurde zurück.
+                        Werden Argumente angegeben, gibt der Adapter den letzten Wert der für die Sequenz mit dem
+                        Namen, entsprechend der Konvention,
+                        '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq' generiert wurde zurück.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1605,22 +1463,19 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Mysqli'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Mysqli' angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter utilizes the PHP extension mysqli.
+                        Dieser Adapter nutzt die PHP Erweiterung mysqli.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        MySQL does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        MySQL unterstützt keine Sequenzen, daher ignoriert <code>lastInsertId()</code>
+                        Argumente und gibt immer den letzten Wert der für den auto-increment Schlüssel generiert
+                        wurde zurück. Die <code>lastSequenceId()</code> Methode gibt <code>null</code> zurück.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1631,34 +1486,31 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Oracle'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Oracle' angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extension oci8.
+                        Dieser Adapter nutzt die PHP Erweiterung oci8.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Oracle does not support auto-incrementing keys, so you
-                        should specify the name of a sequence to
-                        <code>lastInsertId()</code> or
-                        <code>lastSequenceId()</code>.
+                        Oracle unterstützt keine auto-increment Schlüssel, daher sollte der Name einer Sequenz
+                        an <code>lastInsertId()</code> oder <code>lastSequenceId()</code> übergeben werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        The Oracle extension does not support positional
-                        parameters.  You must use named parameters.
+                        Die Oracle Erweiterung unterstützt keine positionierten Parameter. Es müssen benannte
+                        Parameter verwendet werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Currently the <code>Zend_Db::CASE_FOLDING</code> option
-                        is not supported by the Oracle adapter. To use this
-                        option with Oracle, you must use the PDO OCI adapter.
+                        Aktuell wird die <code>Zend_Db::CASE_FOLDING</code> Option vom Oracle Adapter nicht
+                        unterstützt. Um diese Option mit Oracle zu nutzen muss der PDO OCI Adapter verwendet
+                        werden.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1669,48 +1521,40 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Mssql'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Pdo_Mssql'
+                        angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_mssql.
+                        Dieser Adapter nutzt die PHP Erweiterungen pdo und pdo_mssql.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Microsoft SQL Server does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        Microsoft SQL Server unterstützt keine Sequenzen, daher ignoriert
+                        <code>lastInsertId()</code> Argumente und gibt immer den letzten Wert der für den
+                        auto-increment Schlüssel generiert wurde zurück. Die <code>lastSequenceId()</code>
+                        Methode gibt <code>null</code> zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Zend_Db_Adapter_Pdo_Mssql sets <code>QUOTED_IDENTIFIER ON</code>
-                        immediately after connecting to a SQL Server database.
-                        This makes the driver use the standard SQL identifier
-                        delimiter symbol (<code>"</code>) instead of the
-                        proprietary square-brackets syntax SQL Server uses for
-                        delimiting identifiers.
+                        Zend_Db_Adapter_Pdo_Mssql setzt <code>QUOTED_IDENTIFIER ON</code> direkt nach dem
+                        Verbinden zu einer SQL Server Datenbank. Dadurch verwendet der Treiber das Standard SQL
+                        Bezeichner Begrenzungssymbol (<code>"</code>) an Stelle der proprietären Eckige-Klammer
+                        Syntax die der SQL Server standradmäßig nutzt.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        You can specify <code>pdoType</code> as a key in the
-                        options array.  The value can be "mssql" (the default),
-                        "dblib", "freetds", or "sybase".  This option affects
-                        the DSN prefix the adapter uses when constructing the
-                        DSN string.  Both "freetds" and "sybase" imply a prefix
-                        of "sybase:", which is used for the
-                        <ulink url="http://www.freetds.org/">FreeTDS</ulink> set
-                        of libraries.
-                        See also
-                        <ulink url="http://www.php.net/manual/en/ref.pdo-dblib.connection.php">
-                        http://www.php.net/manual/en/ref.pdo-dblib.connection.php</ulink>
-                        for more information on the DSN prefixes used in this driver.
+                        Es kann <code>pdoType</code> als ein Schlüssel im Optionsarray gesetzt werden. Der Wert
+                        kann "mssql" (der Standard), "dblib", "freetds", oder "sybase" sein. Diese Option
+                        beeinflusst den DNS Prefix, welchen der Adapter beim Konstruieren des DNS Strings benutzt.
+                        Sowohl "freetds" als auch "sybase" implementieren einen Prefix von "sybase:", welcher für
+                        den <ulink url="http://www.freetds.org/">FreeTDS</ulink> Satz von Libraries verwendet wird.
+                        Siehe auch <ulink url="http://www.php.net/manual/en/ref.pdo-dblib.connection.php">http://www.php.net/manual/en/ref.pdo-dblib.connection.php</ulink>
+                        für weitere Informationen über die DNS Prefixe die von diesem Treiber verwendet werden.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1721,22 +1565,20 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Mysql'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Pdo_Mysql'
+                        angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_mysql.
+                        Dieser Adapter nutzt die PHP Erweiterungen pdo und pdo_mysql.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        MySQL does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        MySQL unterstützt keine Sequenzen, daher ignoriert <code>lastInsertId()</code> Argumente
+                        und gibt immer den letzten Wert der für den auto-increment Schlüssel generiert wurde
+                        zurück. Die <code>lastSequenceId()</code> Methode gibt <code>null</code> zurück.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1747,21 +1589,18 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Oci'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Pdo_Oci' angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_oci.
+                        Dieser Adapter nutzt die PHP Erweiterungen pdo und pdo_oci.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Oracle does not support auto-incrementing keys, so you
-                        should specify the name of a sequence to
-                        <code>lastInsertId()</code> or
-                        <code>lastSequenceId()</code>.
+                        Oracle unterstützt keine auto-increment Schlüssel, daher sollte der Name einer Sequenz
+                        an <code>lastInsertId()</code> oder <code>lastSequenceId()</code> übergeben werden.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1772,25 +1611,23 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Pgsql'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Pdo_Pgsql'
+                        angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_pgsql.
+                        Dieser Adapter nutzt die PHP Erweiterungen pdo und pdo_pgsql.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        PostgreSQL supports both sequences and auto-incrementing
-                        keys.  Therefore the arguments to
-                        <code>lastInsertId()</code> are optional.  If you give
-                        no arguments, the Adapter returns the last value
-                        generated for an auto-increment key.  If you give
-                        arguments, the Adapter returns the last value generated
-                        by the sequence named according to the convention
-                        '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq'.
+                        PostgreSQL unterstützt sowohl Sequenzen als auch auto-increment Schlüssel. Daher sind die
+                        Argumente für <code>lastInsertId()</code> optional. Werden keine Argumente angegeben, gibt
+                        der Adapter den letzten Wert der für den auto-increment Key generiert wurde zurück.
+                        Werden Argumente angegeben, gibt der Adapter den letzten Wert der für die Sequenz mit dem
+                        Namen, entsprechend der Konvention,
+                        '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq' generiert wurde zurück.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1801,49 +1638,43 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Sqlite'.
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen 'Pdo_Sqlite'
+                        angegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_sqlite.
+                        Dieser Adapter nutzt die PHP Erweiterungen pdo und pdo_sqlite.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        SQLite does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        SQLite unterstützt keine Sequenzen, daher ignoriert <code>lastInsertId()</code>
+                        Argumente und gibt immer den letzten Wert der für den auto-increment Schlüssel generiert
+                        wurde zurück. Die <code>lastSequenceId()</code> Methode gibt <code>null</code> zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        To connect to an SQLite2 database, specify
-                        <code>'dsnprefix'=>'sqlite2'</code> in the array of
-                        parameters when creating an instance of the
-                        Pdo_Sqlite Adapter.
+                        Um mit einer SQLite2 Datenbank zu Verbinden muss <code>'dsnprefix'=&gt;'sqlite2'</code>
+                        in dem Array von Parametern beim Erzeugen einer Instanz des Pdo_Sqlite Adapters angegeben
+                        werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        To connect to an in-memory SQLite database,
-                        specify <code>'dbname'=>':memory:'</code> in the
-                        array of parameters when creating an instance of
-                        the Pdo_Sqlite Adapter.
+                        Um mit einer in-memory SQLite Datenbank zu verbinden muss
+                        <code>'dbname'=&gt;':memory:'</code> in dem Array von Parametern beim Erzeugen einer
+                        Instanz des Pdo_Sqlite Adapters angegeben werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Older versions of the SQLite driver for PHP do not seem
-                        to support the PRAGMA commands necessary to ensure that
-                        short column names are used in result sets.  If you
-                        have problems that your result sets are returned with
-                        keys of the form "tablename.columnname" when you do a
-                        join query, then you should upgrade to the current
-                        version of PHP.
+                        Ältere Versionen des SQLite Treibers in PHP scheinen die PRAGMA Kommandos nicht zu
+                        unterstützen, die benötigt werden um sicherzustellen, dass kurze Spaltennamen in
+                        Ergebnissätzen verwendet werden. Wenn in den Ergebnissätzen Schlüssel der Art
+                        "tabellenname.spaltenname" bei Nutzung von JOIN Abfragen auftreten, sollte die aktuellste
+                        PHP Version installiert werden.
                     </para>
                 </listitem>
             </itemizedlist>

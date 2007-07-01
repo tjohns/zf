@@ -18,38 +18,39 @@
     </para>
 
     <para>
-        As you may already have inferred from the above description of <code>Zend_Validate_Interface</code>,
-        validation classes provided with Zend Framework return a boolean value for whether or not a value validates
-        successfully. They also provide information about <emphasis role="bold">why</emphasis> a value failed
-        validation. The availability of the reasons for validation failures may be valuable to an application for
-        various purposes, such as providing statistics for usability analysis.
+        Wie man bereits aus der obigen Beschreibung von <code>Zend_Validate_Interface</code> folgern kann,
+        geben die vom Zend Framework bereitgestellten Prüfklassen einen boolschen Wert zurück, ob die Prüfung
+        des Wertes erfolgreich war oder nicht. Sie geben auch darüber Informationen
+        <emphasis role="bold">warum</emphasis> ein Wert die Prüfung nicht bestanden hat. Die Verfügbarkeit der
+        Gründe für fehlgeschlagene Prüfungen kann für eine Anwendung aus vielen Gründen nützlich sein, wie
+        zum Beispiel das zur Verfügung stellen von Statistiken für Useability Analysen.
     </para>
 
     <para>
-        Basic validation failure message functionality is implemented in <code>Zend_Validate_Abstract</code>. To
-        include this functionality when creating a validation class, simply extend
-        <code>Zend_Validate_Abstract</code>. In the extending class you would implement the
-        <code>isValid()</code> method logic and define the message variables and message templates that correspond to
-        the types of validation failures that can occur. If a value fails your validation tests, then
-        <code>isValid()</code> should return <code>false</code>. If the value passes your validation tests, then
-        <code>isValid()</code> should return <code>true</code>.
+        Grundlegende Funktionalitäten für fehlgeschlagene Prüfmeldungen ist in <code>Zend_Validate_Abstract</code>
+        implementiert. Um diese Funktionalität einzubinden wenn eine Prüfklasse erstellt wird, muß einfach
+        <code>Zend_Validate_Abstract</code> erweitert werden. In der existierenden Klasse wird die Logik der
+        <code>isValid()</code> Methode implementiert und die Variablen für die Nachrichten und
+        Nachrichten-Templates definiert werden die zu den Typen von Prüffehlern passen die auftreten können.
+        Wenn ein Wert die Prüfung nicht besteht, sollte <code>isValid()</code> <code>false</code> zurückgeben.
+        Wenn der Wert die Prüfung besteht, sollte <code>isValid()</code> <code>true</code> zurückgeben.
     </para>
 
     <para>
-        In general, the <code>isValid()</code> method should not throw any exceptions, except where it is impossible
-        to determine whether or not the input value is valid. A few examples of reasonable cases for throwing an
-        exception might be if a file cannot be opened, an LDAP server could not be contacted, or a database
-        connection is unavailable, where such a thing may be required for validation success or failure to be
-        determined.
+        Normalerweise sollte die <code>isValid()</code> Methode keine Ausnahmen werfen, ausser wenn es unmöglich
+        ist festzustellen ob ein Eingabewert gültig ist oder nicht. Einige Beispiele für gute Fälle in denen keine
+        Ausnahme geworfen werden sollte sind, wenn eine Datei nicht geöffnet werden konnte, ein LDAP Server nicht
+        erreicht wurde, oder eine Datenbank Verbindung unerreichbar ist, und wo solche Dinge für Prüfprozesse
+        benötigt werden um zu erkennen ob die Prüfung gültig oder ungültig ist.
     </para>
 
     <example id="zend.validate.writing_validators.example.simple">
 
-        <title>Creating a Simple Validation Class</title>
+        <title>Erstellen einer einfachen Prüfklasse</title>
 
         <para>
-            The following example demonstrates how a very simple custom validator might be written. In this case the
-            validation rules are simply that the input value must be a floating point value.
+            Das folgende Beispiel demonstriert wie ein sehr einfacher eigener Prüfer geschrieben werden könnte.
+            In diesem Fall sind die Prüfregeln sehr einfach und der Eingabewert muß ein Gleitkommawert sein.
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -60,7 +61,7 @@ class MyValid_Float extends Zend_Validate_Abstract
     const FLOAT = 'float';
 
     protected $_messageTemplates = array(
-        self::FLOAT => "'%value%' is not a floating point value"
+        self::FLOAT => "'%value%' ist kein Gleitkommawert"
     );
 
     public function isValid($value)
