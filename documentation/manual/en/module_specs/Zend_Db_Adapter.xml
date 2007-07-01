@@ -588,7 +588,7 @@ $result = $db->fetchAll($sql, 2);
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>
+                        <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>:
                         return data in an array of objects.  The default class
                         is the PHP built-in class stdClass.  Columns of the
                         result set are available as public properties of the
