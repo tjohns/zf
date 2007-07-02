@@ -40,7 +40,7 @@
             <listitem>
                 <para>
                     Google Blogger
-                    is a popular internet provider of
+                    is a popular Internet provider of
                     "push-button publishing" and syndication.
                 </para>
             </listitem>
@@ -96,7 +96,7 @@
                         such as Zend_Gdata_Spreadsheets_ListQuery and
                         Zend_Gdata_Spreadsheets_CellQuery.  Query classes
                         provide methods used to construct a query for data
-                        to be redtrieved from GData services.  Methods include
+                        to be retrieved from GData services.  Methods include
                         getters and setters like <code>setUpdatedMin()</code>,
                         <code>setStartIndex()</code>, and
                         <code>getPublishedMin()</code>.  The query classes also
@@ -116,7 +116,7 @@
                         and Zend_Gdata_Spreadsheets_ListFeed.
                         These classes represent feeds of entries retrieved
                         from services.  They are primarily used to retrieve
-                        data retrurned from services.
+                        data returned from services.
                     </para>
                 </listitem>
                 <listitem>
@@ -148,11 +148,11 @@
                         XML element used by Google Spreadsheets).  These
                         classes are used purely to store the data retrieved
                         back from services and for constructing data to be
-                        sent to services.  These include getters and seetters
+                        sent to services.  These include getters and setters 
                         such as
                         <code>setText()</code> to set the child text
                         node of an element, <code>getText()</code> to retrieve
-                        the text node of an eleemnt, <code>getStartTime()</code>
+                        the text node of an element, <code>getStartTime()</code>
                         to retrieve the start time attribute of a When element,
                         and other similiar methods.
                         The data model classes also include methods such as
@@ -179,7 +179,7 @@
         </para>
 
         <para>
-            Note; A full example of working with Zend_Gdata is available in the
+            Note: A full example of working with Zend_Gdata is available in the
             <code>demos/Zend/Gdata</code> directory.  This example is runnable
             from the command-line, but the methods contained within are easily
             portable to a web application.
@@ -267,7 +267,7 @@ $entry->cell = $cell;
 
         <para>
             Zend_Gdata assumes your PHP application is running on a host that
-            has a direct connection to the internet.
+            has a direct connection to the Internet.
             The Zend_Gdata client operates by contacting Google Data servers.
         </para>
 

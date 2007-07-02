@@ -82,7 +82,7 @@ $logger->info("Message d'information");
 
 ?>]]></programlisting>
 
-        L'exemple ci-dessus écrit une ligne simple de données dans la table appelée <code>nom_de_la_table_de_log</code>. La colonne de base de données appelée <code>niveau</code> reçoit le niveau de priorité et la colonne appelée <code>msg</code> reçoit le messsage de log.
+        L'exemple ci-dessus écrit une ligne unique de données de log dans la table appelée <code>nom_de_la_table_de_log</code>. La colonne de base de données appelée <code>niveau</code> reçoit le niveau de priorité et la colonne appelée <code>msg</code> reçoit le message de log.
 
     </para>
 
