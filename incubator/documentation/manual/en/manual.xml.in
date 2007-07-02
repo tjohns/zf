@@ -31,6 +31,14 @@
         <xi:include href="module_specs/Zend_TimeSync-Queries.xml" />
     </chapter>
 
+    <chapter id="zend.json">
+        <title>Zend_Json</title>
+        <xi:include href="module_specs/Zend_Json-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Json-Basics.xml" />
+        <xi:include href="module_specs/Zend_Json-Objects.xml" />
+        <xi:include href="module_specs/Zend_Json-xml2json.xml" />
+    </chapter>
+
     <appendix id="appendix.copyright">
         <title>Copyright Information</title>
         <xi:include href="ref/copyrights.xml" />
