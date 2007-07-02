@@ -17,7 +17,7 @@
         </para>
 
         <para>
-            L'encodage réel de données d'entrée peut être indiqué via l'API de Zend_Search_Lucene. Les données seront automatiquement converties en encodage UTF-8.
+            L'encodage réel des données d'entrée peut être indiqué via l'API de Zend_Search_Lucene. Les données seront automatiquement converties en encodage UTF-8.
         </para>
     </sect2>
 
@@ -110,7 +110,3 @@ $hits = $index->find(strtolower($query));
         </para>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
