@@ -313,4 +313,49 @@ foreach ($docIds as $id) {
 ]]></programlisting>
         </para>
     </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.memory-usage">
+        <title>Memory usage</title>
+
+        <para>
+            Zend_Search_Lucene is memory expensive module.
+        </para>
+
+        <para>
+            It uses memory to cache some information and speed up search and indexing.
+        </para>
+
+        <para>
+            The behavior differs for different modes.
+        </para>
+
+        <para>
+            Terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
+            <footnote><para>Lucene file format allows you to change this number, but Zend_Search_Lucene doesn't give a possibility
+            to do this through its API. Nevertheless you still have possibility to change this value if index is prepared with another
+            Lucene implementation.</para></footnote> term of full dictionary.
+        </para>
+
+        <para>
+            Thus memory usage is increased if you have high number of unique terms. This may happen if you use untokenized phrases as a field values
+            or index a large volume of non-text information.
+        </para>
+
+        <para>
+            Unoptimized index consists of several segments. It also increases memory usage. Segments are independent, so each segment contains
+            his own terms dictionary and terms dictionary index. If index consists of <emphasis>N</emphasis> segments it may increase memory
+            usage by <emphasis>N</emphasis> times in worst case. Look into
+            <link linkend="zend.search.lucene.index-creation.optimization">Index optimization</link> for details.
+        </para>
+
+        <para>
+            Indexing uses the same memory as searching plus memory for buffering documents. The amount of memory used for this may be managed with
+            <emphasis>MaxBufferedDocs</emphasis> parameter.
+        </para>
+
+        <para>
+            Index optimization (full or partial) uses stream like data processing and doesn't take a lot of memory.
+        </para>
+    </sect2>
+
 </sect1>
