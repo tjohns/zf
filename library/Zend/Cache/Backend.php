@@ -146,6 +146,16 @@ class Zend_Cache_Backend
     }
     
     /**
+     * Return true if the automatic cleaning is available for the backend
+     * 
+     * @return boolean
+     */
+    public function isAutomaticCleaningAvailable()
+    {   
+        return true;
+    }
+    
+    /**
      * Return a system-wide tmp directory 
      *
      * @return string system-wide tmp directory

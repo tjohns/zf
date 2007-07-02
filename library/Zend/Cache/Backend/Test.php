@@ -236,6 +236,16 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
         return $this->_log;
     }
     
+    /**
+     * Return true if the automatic cleaning is available for the backend
+     * 
+     * @return boolean
+     */
+    public function isAutomaticCleaningAvailable()
+    {   
+        return true;
+    }    
+    
          
     // -----------------------
     // --- Private methods ---

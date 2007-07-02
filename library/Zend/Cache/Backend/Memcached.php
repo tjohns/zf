@@ -221,5 +221,15 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             $this->_log("Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend");
         }
     }
+    
+    /**
+     * Return true if the automatic cleaning is available for the backend
+     * 
+     * @return boolean
+     */
+    public function isAutomaticCleaningAvailable()
+    {   
+        return false;
+    }   
         
 }
