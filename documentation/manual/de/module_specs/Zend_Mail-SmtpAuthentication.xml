@@ -1,14 +1,13 @@
 <sect1 id="zend.mail.smtp-authentication">
-  <title>SMTP Authentication</title>
+  <title>SMTP Authentifizierung</title>
 
-  <para><code>Zend_Mail</code> supports the use of SMTP Authentication, which
-  can be enabled be passing the 'auth' parameter to the configuration array in
-  the <code>Zend_Mail_Transport_Smtp</code> constructor. The available
-  built-in Authentication methods are PLAIN, LOGIN and CRAM-MD5 which all
-  expect a 'username' and 'password' value in the configuration array.</para>
+  <para><code>Zend_Mail</code> unterstützt die Verwendung von SMTP Authentifizierung, welche eingeschaltet werden
+  kann durch die Übergabe des 'auth' Parameters im Konfigurationsarray des <code>Zend_Mail_Transport_Smtp</code>
+  Konstruktors. Die vorhandenen eingebauten Authentifizierungsmethoden sind PLAIN, LOGIN und CRAM-MD5 welche alle
+  einen Benutzernamen- ('username') und einen Passwortwert ('password') im Konfigurations Array erwarten.</para>
 
   <example>
-    <title>Enabling authentication within Zend_Mail_Transport_Smtp</title>
+    <title>Authentifizierung innerhalb von Zend_Mail_Transport_Smtp einschalten</title>
 
     <programlisting role="php">&lt;?php
 
@@ -16,25 +15,25 @@ require_once 'Zend/Mail.php';
 require_once 'Zend/Mail/Transport/Smtp.php';
 
 $config = array('auth' =&gt; 'login',
-                'username' =&gt; 'myusername',
-                'password' =&gt; 'password');
+                'username' =&gt; 'MeinBenutzername',
+                'password' =&gt; 'Passwort');
 
 $transport = new Zend_Mail_Transport_Smtp('mail.server.com', $config);
 
 $mail = new Zend_Mail();
-$mail-&gt;setBodyText('This is the text of the mail.');
-$mail-&gt;setFrom('sender@test.com', 'Some Sender');
-$mail-&gt;addTo('recipient@test.com', 'Some Recipient');
-$mail-&gt;setSubject('TestSubject');
+$mail-&gt;setBodyText('Das ist der Text des Mails.');
+$mail-&gt;setFrom('sender@test.com', 'Einige Sender');
+$mail-&gt;addTo('recipient@test.com', 'Einige Empfänger');
+$mail-&gt;setSubject('TestBetreff');
 $mail-&gt;send($transport);</programlisting>
   </example>
 
   <note>
-    <title>Authentication types</title>
+    <title>Authentifizierungs Typen</title>
 
-    <para>The authentication type is case-insensitive but has no punctuation.
-    E.g. to use CRAM-MD5 you would pass 'auth' =&gt; 'crammd5' in the
-    <code>Zend_Mail_Transport_Smtp</code> constructor.</para>
+    <para>Der Authentifizierungs Typ ist Groß-Kleinschreibungs unempfindlich enthält aber keine Satzzeichen.
+    Um z.B. CRAM-MD5 zu verwenden müsste 'auth' =&gt; 'crammd5' dem <code>Zend_Mail_Transport_Smtp</code>
+    Konstruktor übergeben werden.</para>
   </note>
 </sect1>
 <!--

@@ -44,17 +44,17 @@ $mail->send();
         eine "Header Injection" mittels Zeilenvorschubzeichen (<code>\n</code>) zu verhindern.
     </para>
     <para>
-        You also can use most methods of the Zend_Mail object with a convenient fluent interface. A fluent
-        interface means that each method returns a reference to the object on which it was called, so you can
-        immediately call another method.
+        Die meisten Methoden des Zend_Mail Objekts können mit dem bequemen Flüssigen Interface verwendet werden.
+        Ein flüssiges Interface bedeutet das jede Methode eine Referenz zu dem Objekt zurückgibt auf das es
+        aufgerufen wurde, so das sofort ein erneuter Aufruf einer anderen Methode stattfinden kann.
     </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-$mail->setBodyText('This is the text of the mail.')
-    ->setFrom('somebody@example.com', 'Some Sender')
-    ->addTo('somebody_else@example.com', 'Some Recipient')
-    ->setSubject('TestSubject')
+$mail->setBodyText('Das ist der Text der Nachricht.')
+    ->setFrom('somebody@example.com', 'Einige Sender')
+    ->addTo('somebody_else@example.com', 'Einige Empfänger')
+    ->setSubject('TestBetreff')
     ->send();
 ?>]]>   </programlisting>
 </sect1>
