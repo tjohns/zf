@@ -96,7 +96,7 @@ $index->optimize();
 
         <para>
             There are three options to control behavior of auto-optimization
-            (see <link id="zend.search.lucene.index-creation.optimization">Index optimization</link> section):
+            (see <link linkend="zend.search.lucene.index-creation.optimization">Index optimization</link> section):
             <itemizedlist>
                 <listitem>
                     <para><emphasis>MaxBufferedDocs</emphasis> is a number of documents buffered in memory before new segment is generated
@@ -344,8 +344,7 @@ foreach ($docIds as $id) {
         <para>
             Unoptimized index consists of several segments. It also increases memory usage. Segments are independent, so each segment contains
             his own terms dictionary and terms dictionary index. If index consists of <emphasis>N</emphasis> segments it may increase memory
-            usage by <emphasis>N</emphasis> times in worst case. Look into
-            <link linkend="zend.search.lucene.index-creation.optimization">Index optimization</link> for details.
+            usage by <emphasis>N</emphasis> times in worst case. Perform index optimization to merge all segments into one.
         </para>
 
         <para>
@@ -358,4 +357,80 @@ foreach ($docIds as $id) {
         </para>
     </sect2>
 
+    <sect2 id="zend.search.lucene.best-practice.encoding">
+        <title>Encoding</title>
+
+        <para>
+            Zend_Search_Lucene works with UTF-8 strings internally. So all strings returned by Zend_Search_Lucene are UTF-8 encoded.
+        </para>
+
+        <para>
+            You shouldn't care about encoding if you works with pure ASCII data, but should be careful in other cases.
+        </para>
+
+        <para>
+            Wrong encoding may cause error notices at the encoding convertion time or cause loss of data.
+        </para>
+
+        <para>
+            Zend_Search_Lucene gives wide range of the possibilities to specify actual encoding of indexed documents and parsed queries.
+        </para>
+
+        <para>
+            Encoding may be explicitly specified as an optional parameter of field creation methods:
+            <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+]]></programlisting>
+            That's the best way to avoid ambiguity in encoding specification.
+        </para>
+
+        <para>
+            If optional encoding parameter is omitted, then current locale is used. Current locale may also contain character set specification
+            in addition to the language information:
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'fr_FR');
+...
+
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+
+setlocale(LC_ALL, 'ru_RU.UTF-8');
+...
+]]></programlisting>
+        </para>
+
+        <para>
+            The same approach is used to specify query string encoding.
+        </para>
+
+        <para>
+            If encoding is not specified in any special way, then current locale is used.
+        </para>
+
+        <para>
+            Encoding may be pointed as an optional parameter, if query is parsed explicitly before search:
+            <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+$hits = $index->find($query);
+...
+]]></programlisting>
+        </para>
+
+        <para>
+            The default encoding may also be specified with <code>setDefaultEncoding()</code> method:
+            <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
+$hits = $index->find($queryStr);
+...
+]]></programlisting>
+            Empty string means 'current locale'.
+        </para>
+
+        <para>
+            Since correct encoding is specified it can be correctly processed by analyzer. The actual behavior depends on analyzer been used.
+            See <link linkend="zend.search.lucene.charset">Character set</link> documentation section for details.
+        </para>
+    </sect2>
 </sect1>
