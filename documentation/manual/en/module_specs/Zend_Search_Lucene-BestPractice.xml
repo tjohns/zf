@@ -369,7 +369,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            Wrong encoding may cause error notices at the encoding convertion time or cause loss of data.
+            Wrong encoding may cause error notices at the encoding conversion time or cause loss of data.
         </para>
 
         <para>
@@ -455,11 +455,11 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            If index corruption happens because of any reason, then index should be completely restored or re-builded.
+            If index corruption happens because of any reason, then index should be completely restored or rebuilt.
         </para>
 
         <para>
-            So that's good idea to backup large indexes and store changelog somewhere to perform manual restore + rollforward operation
+            So that's good idea to backup large indexes and store changelog somewhere to perform manual restore + roll-forward operation
             if it's necessary. It essentially reduces index restoring time.
         </para>
 
