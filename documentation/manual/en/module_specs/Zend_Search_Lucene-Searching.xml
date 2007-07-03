@@ -63,9 +63,7 @@ require_once 'Zend/Search/Lucene.php';
 
 $index = Zend_Search_Lucene::open('/data/my_index');
 
-$index->find($query);
-
-?>]]></programlisting>
+$index->find($query);]]></programlisting>
         <para>
             The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
             uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
@@ -167,7 +165,7 @@ foreach ($hits as $hit) {
     echo $hit->title;
     echo $hit->author;
 }
-?>]]></programlisting>
+]]></programlisting>
 
         <para>
             Stored fields are always returned in UTF-8 encoding.
@@ -201,7 +199,7 @@ foreach ($hits as $hit) {
     // same as getFieldValue()
     echo $document->title;
 }
-?>]]></programlisting>
+]]></programlisting>
         <para>
         The fields available from the Zend_Search_Lucene_Document object are determined at
         the time of indexing.  The document fields are either indexed, or
@@ -212,6 +210,30 @@ foreach ($hits as $hit) {
         <para>
         Note that the document identity ('path' in our example) is also stored
         in the index and must be retrieved from it.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.searching.results-limiting">
+        <title>Limiting result set</title>
+
+        <para>
+            Most expensive part of searching is score calculation. It may take several seconds for large result sets (tens thousands hits).
+        </para>
+
+        <para>
+            Zend_Search_Lucene gives the possibility to limit result set size with <code>getResultSetLimit()</code> and
+            <code>setResultSetLimit()</code> methods:
+        <programlisting role="php"><![CDATA[<?php
+$currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
+
+Zend_Search_Lucene::setResultSetLimit($newLimit);
+]]></programlisting>
+            0 (default value) means 'no limit'.
+        </para>
+
+        <para>
+            It doesn't give 'best N' results, but only 'first N'<footnote><para>Returned hits are still ordered by score or in another way if it's
+            specified.</para></footnote>.
         </para>
     </sect2>
 
