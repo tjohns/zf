@@ -216,7 +216,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                     $line = @fgets($this->socket);
                     $chunk .= $line;
 
-                    $hexchunksize = chop($line);
+                    $hexchunksize = ltrim(chop($line), '0');
                     $hexchunksize = strlen($hexchunksize) ? strtolower($hexchunksize) : 0;
                     
                     $chunksize = hexdec(chop($line));
