@@ -57,7 +57,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      * @var array
      */
     protected $config = array(
-        'ssltransport' => 'sslv2'
+        'ssltransport' => 'ssl'
     );
     
     /**
@@ -217,7 +217,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                     $chunk .= $line;
 
                     $hexchunksize = chop($line);
-                    $hexchunksize = strlen($hexchunksize) ? $hexchunksize : 0;
+                    $hexchunksize = strlen($hexchunksize) ? strtolower($hexchunksize) : 0;
                     
                     $chunksize = hexdec(chop($line));
                     if (dechex($chunksize) != $hexchunksize) {            
