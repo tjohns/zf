@@ -1,73 +1,73 @@
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2003/XInclude">
 
-    <title>±ê×¼Ð£ÑéÀà</title>
+    <title>æ ‡å‡†æ ¡éªŒç±»</title>
 
     <para>
-        Zend Framework ´øÓÐÒ»×é±ê×¼µÄÐ£ÑéÀà¹©ÄãÊ¹ÓÃ¡£
+        Zend Framework å¸¦æœ‰ä¸€ç»„æ ‡å‡†çš„æ ¡éªŒç±»ä¾›ä½ ä½¿ç”¨ã€‚
     </para>
 
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>Ö»°üº¬×ÖÄ¸ºÍÊý×Ö×Ö·û£¬·µ»Ø <code>true</code>¡£Õâ¸öÐ£ÑéÆ÷°üÀ¨Ò»¸ö¿¼ÂÇ¿Õ°××Ö·ûÊÇ·ñÓÐÐ§µÄÑ¡Ïî¡£
+            å½“ä¸”ä»…å½“<code>$value</code>åªåŒ…å«å­—æ¯å’Œæ•°å­—å­—ç¬¦ï¼Œè¿”å›ž <code>true</code>ã€‚è¿™ä¸ªæ ¡éªŒå™¨åŒ…æ‹¬ä¸€ä¸ªè€ƒè™‘ç©ºç™½å­—ç¬¦æ˜¯å¦æœ‰æ•ˆçš„é€‰é¡¹ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.alpha">
         <title>Alpha</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>Ö»°üº¬×ÖÄ¸×Ö·û£¬·µ»Ø <code>true</code>¡£Õâ¸öÐ£ÑéÆ÷°üÀ¨Ò»¸ö¿¼ÂÇ¿Õ°××Ö·ûÊÇ·ñÓÐÐ§µÄÑ¡Ïî¡£
+            å½“ä¸”ä»…å½“<code>$value</code>åªåŒ…å«å­—æ¯å­—ç¬¦ï¼Œè¿”å›ž <code>true</code>ã€‚è¿™ä¸ªæ ¡éªŒå™¨åŒ…æ‹¬ä¸€ä¸ªè€ƒè™‘ç©ºç™½å­—ç¬¦æ˜¯å¦æœ‰æ•ˆçš„é€‰é¡¹ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.between">
         <title>Between</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>ÔÚ×îÐ¡ÖµºÍ×î´óÖµÖ®¼ä£¬·µ»Ø<code>true</code>¡£È±Ê¡µØ£¬±È½Ï°üº¬±ß½çÖµ£¨<code>$value</code>¿ÉÒÔµÈÓÚ±ß½çÖµ£©£¬¾¡¹ÜÎªÁË×ö¾«È·µØ±È½ÏÕâ¸ö¿ÉÒÔ±»¸²¸Ç¡£ËùÎ½¾«È·µØ±È½Ï£¬¾ÍÊÇ<code>$value</code>±ØÐë´óÓÚ×îÐ¡ÖµºÍÐ¡ÓÚ×î´óÖµ¡£
+            å½“ä¸”ä»…å½“<code>$value</code>åœ¨æœ€å°å€¼å’Œæœ€å¤§å€¼ä¹‹é—´ï¼Œè¿”å›ž<code>true</code>ã€‚ç¼ºçœåœ°ï¼Œæ¯”è¾ƒåŒ…å«è¾¹ç•Œå€¼ï¼ˆ<code>$value</code>å¯ä»¥ç­‰äºŽè¾¹ç•Œå€¼ï¼‰ï¼Œå°½ç®¡ä¸ºäº†åšç²¾ç¡®åœ°æ¯”è¾ƒè¿™ä¸ªå¯ä»¥è¢«è¦†ç›–ã€‚æ‰€è°“ç²¾ç¡®åœ°æ¯”è¾ƒï¼Œå°±æ˜¯<code>$value</code>å¿…é¡»å¤§äºŽæœ€å°å€¼å’Œå°äºŽæœ€å¤§å€¼ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.ccnum">
         <title>Ccnum</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>×ñÑ­Luhn(mod-10 checksum)Ëã·¨£¬·µ»Ø<code>true</code> ¡£
+            å½“ä¸”ä»…å½“<code>$value</code>éµå¾ªLuhn(mod-10 checksum)ç®—æ³•ï¼Œè¿”å›ž<code>true</code> ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.date">
-        <title>ÈÕÆÚ</title>
+        <title>æ—¥æœŸ</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>ÊÇÒ»¸ö¸ñÊ½Îª<code>YYYY-MM-DD</code>µÄÓÐÐ§ÈÕÆÚ£¬·µ»Ø<code>true</code> ¡£
+            å½“ä¸”ä»…å½“<code>$value</code>æ˜¯ä¸€ä¸ªæ ¼å¼ä¸º<code>YYYY-MM-DD</code>çš„æœ‰æ•ˆæ—¥æœŸï¼Œè¿”å›ž<code>true</code> ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.digits">
-        <title>Êý×Ö</title>
+        <title>æ•°å­—</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>Ö»°üº¬Êý×Ö×Ö·û£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>åªåŒ…å«æ•°å­—å­—ç¬¦ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <xi:include href="Zend_Validate-EmailAddress.xml" />
 
     <sect2 id="zend.validate.set.float">
-        <title>¸¡µãÊý</title>
+        <title>æµ®ç‚¹æ•°</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>ÊÇÒ»¸ö¸¡µãÊýÖµ£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>æ˜¯ä¸€ä¸ªæµ®ç‚¹æ•°å€¼ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.greater_than">
         <title>GreaterThan</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>´óÓÚ×îÐ¡Öµ£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>å¤§äºŽæœ€å°å€¼ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.hex">
-        <title>Ê®Áù½øÖÆÊý</title>
+        <title>åå…­è¿›åˆ¶æ•°</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>Ö»°üº¬Ê®Áù½øÖÆµÄÊý×Ö×Ö·û£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>åªåŒ…å«åå…­è¿›åˆ¶çš„æ•°å­—å­—ç¬¦ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
@@ -76,49 +76,49 @@
     <sect2 id="zend.validate.set.in_array">
         <title>InArray</title>
         <para>
-            µ±ÇÒ½öµ±Ò»¸ö"needle"<code>$value</code>°üº¬ÔÚÒ»¸ö"haystack"Êý×é£¬·µ»Ø <code>true</code>¡£Èç¹û¾«È·Ñ¡ÏîÊÇ<code>true</code>£¬ÄÇÃ´<code>$value</code>µÄÀàÐÍÒ²±»¼ì²é¡£
+            å½“ä¸”ä»…å½“ä¸€ä¸ª"needle"<code>$value</code>åŒ…å«åœ¨ä¸€ä¸ª"haystack"æ•°ç»„ï¼Œè¿”å›ž <code>true</code>ã€‚å¦‚æžœç²¾ç¡®é€‰é¡¹æ˜¯<code>true</code>ï¼Œé‚£ä¹ˆ<code>$value</code>çš„ç±»åž‹ä¹Ÿè¢«æ£€æŸ¥ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.int">
-        <title>ÕûÊý</title>
+        <title>æ•´æ•°</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>ÊÇÒ»¸öÓÐÐ§µÄÕûÊý£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„æ•´æ•°ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.ip">
         <title>Ip</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>ÊÇÒ»¸öÓÐÐ§µÄIPµØÖ·£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„IPåœ°å€ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.less_than">
         <title>LessThan</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>Ð¡ÓÚ×î´óÖµ£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>å°äºŽæœ€å¤§å€¼ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.not_empty">
         <title>NotEmpty</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>·Ç¿Õ£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>éžç©ºï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.regex">
         <title>Regex</title>
         <para>
-            µ±ÇÒ½öµ±<code>$value</code>Æ¥ÅäÒ»¸öÕýÔò±í´ïÊ½£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“<code>$value</code>åŒ¹é…ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
     <sect2 id="zend.validate.set.string_length">
         <title>StringLength</title>
         <para>
-            µ±ÇÒ½öµ±×Ö´®³¤¶ÈÖµ<code>$value</code>ÖÁÉÙÊÇ×îÐ¡Öµ²¢²»´óÓÚ×î´óÖµ£¨µ±maxÑ¡Ïî²»ÊÇ<code>null</code>£©£¬·µ»Ø <code>true</code>¡£
+            å½“ä¸”ä»…å½“å­—ä¸²é•¿åº¦å€¼<code>$value</code>è‡³å°‘æ˜¯æœ€å°å€¼å¹¶ä¸å¤§äºŽæœ€å¤§å€¼ï¼ˆå½“maxé€‰é¡¹ä¸æ˜¯<code>null</code>ï¼‰ï¼Œè¿”å›ž <code>true</code>ã€‚
         </para>
     </sect2>
 
