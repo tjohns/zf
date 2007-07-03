@@ -67,9 +67,7 @@ require_once 'Zend/Search/Lucene.php';
 
 $index = Zend_Search_Lucene::open('/data/my_index');
 
-$index->find($query);
-
-?>]]></programlisting>
+$index->find($query);]]></programlisting>
 
         <para>
             Die <code>Zend_Search_Lucene::find()</code> Methode ermittelt den Eingabetyp automatisch
@@ -178,7 +176,7 @@ foreach ($hits as $hit) {
     echo $hit->title;
     echo $hit->author;
 }
-?>]]></programlisting>
+]]></programlisting>
 
         <para>
             Gespeicherte Felder werden immer in UTF-8 Kodierung zurückgegeben.
@@ -213,7 +211,7 @@ foreach ($hits as $hit) {
     // same as getFieldValue()
     echo $document->title;
 }
-?>]]></programlisting>
+]]></programlisting>
 
         <para>
             Die Felder, die in einem Zend_Search_Lucene_Document Objekt verfügbar sind, werden beim
@@ -226,9 +224,33 @@ foreach ($hits as $hit) {
             Beachte, dass die Dokumentidentität ('path' in unserem Beispiel) auch im Index
             gespeichert wird und von ihm zurückgewonnen werden muß.
         </para>
-
     </sect2>
 
+    <sect2 id="zend.search.lucene.searching.results-limiting">
+        <title>´Begrenzen des Ergebnisses</title>
+
+        <para>
+            Der kostenintensivste Part des Suchens ist die Berechnung der Treffer. Das kann für große Ergebnisse
+            einige Sekunden dauern (Zehntausend Treffer)
+        </para>
+
+        <para>
+            Zend_Search_Lucene bietet die Möglichkeit die Ergebnisse mit den <code>getResultSetLimit()</code> und
+            <code>setResultSetLimit()</code> Methoden zu begrenzen:
+        <programlisting role="php"><![CDATA[<?php
+$currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
+
+Zend_Search_Lucene::setResultSetLimit($newLimit);
+]]></programlisting>
+            0 (Standardwert) bedeutet 'keine Grenze'.
+        </para>
+
+        <para>
+            Es gibt nicht die 'besten N' Ergebnisse, sonder nur die 'ersten N'
+            <footnote><para>Zurückgegebenen Ergebnisse werden trotzdem nach dem Treffer geordnet oder auf einem
+            anderen Weg wenn dieser definiert wurde.</para></footnote>.
+        </para>
+    </sect2>
 
     <sect2 id="zend.search.lucene.searching.results-scoring">
         <title>Ergebnisgewichtung</title>
