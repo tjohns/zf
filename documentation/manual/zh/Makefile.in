@@ -93,7 +93,7 @@ check1: $(MANUAL_LINT_XML)
 	fi
 
 clean:
-	-rm -f html/*.html
+	-rm -f html/*.html html/HTML.manifest
 	-rm -Rf html/figures
 	-rm -f _temp_*.xml
 
