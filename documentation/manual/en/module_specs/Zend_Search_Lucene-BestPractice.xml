@@ -433,4 +433,35 @@ $hits = $index->find($queryStr);
             See <link linkend="zend.search.lucene.charset">Character set</link> documentation section for details.
         </para>
     </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.maintenance">
+        <title>Index maintenance</title>
+
+        <para>
+            It should be clear, that Zend_Search_Lucene as well as any other Lucene implementation is not a "database".
+        </para>
+
+        <para>
+            It should not be used as some kind of data storage. It doesn't provide partial backup/restoring functionality, journaling, logging, transactions
+            and many other things provided by database management systems.
+        </para>
+
+        <para>
+            Nevertheless, Zend_Search_Lucene tries to keep index in a consistent state at any time.
+        </para>
+
+        <para>
+            Index backup/restoring should be performed off-line by complete copying of index folder.
+        </para>
+
+        <para>
+            If index corruption happens because of any reason, then index should be completely restored or re-builded.
+        </para>
+
+        <para>
+            So that's good idea to backup large indexes and store changelog somewhere to perform manual restore + rollforward operation
+            if it's necessary. It essentially reduces index restoring time.
+        </para>
+
+    </sect2>
 </sect1>
