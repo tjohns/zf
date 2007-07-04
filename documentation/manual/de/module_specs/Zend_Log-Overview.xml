@@ -142,7 +142,7 @@ DEBUG   = 7;  // Debug: Debug Nachrichten
       <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink> beschrieben wird. Die Namen und
       korrespondierenden Prioritätennummern sind auch mit einem anderen PHP Logging Systeme kompatibel,
       <ulink url="http://pear.php.net/package/log">PEAR Log</ulink>, welches möglicherweise mit
-      Interoperabilität zwischen Ihm und <code>Zend_Log</code wirbt.
+      Interoperabilität zwischen Ihm und <code>Zend_Log</code> wirbt.
     </para>
 
     <para>

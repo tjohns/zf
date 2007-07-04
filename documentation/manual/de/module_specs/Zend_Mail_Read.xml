@@ -380,79 +380,83 @@ foreach ($flags as $flag) {
 }
 ]]></programlisting>
 
-        <para>As IMAP allows user or client defined flags you could get flags, that don't have a constant in
-        <code>Zend_Mail_Storage</code>. Instead they are returned as string and can be checked the same way with
-        <code>hasFlag()</code>.</para>
+        <para>Da IMAP Benutzern oder auch Clients selbstdefinierte Flags erlaubt, können auch Flags empfangen werden
+        die keine Konstante in <code>Zend_Mail_Storage</code> haben. Stattdessen werden sie als String zurückgegeben
+        und können auf dem selben Weg mit <code>hasFlag()</code> geprüft werden.</para>
 
         <programlisting role="php"><![CDATA[<?php
-// check message for client defined flags $IsSpam, $SpamTested
+// Nachricht auf vom Client definierte Flags $IsSpam, $SpamTested prüfen
 if (!$message->hasFlag('$SpamTested')) {
-    echo 'message has not been tested for spam';
+    echo 'Die Nachricht wurde nicht auf Spam geprüft';
 } else if ($message->hasFlag('$IsSpam')) {
-    echo 'this message is spam';
+    echo 'Diese Nachricht ist Spam';
 } else {
-    echo 'this message is ham';
+    echo 'Diese Nachricht ist Speck';
 }
 ]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-folders">
-        <title>Using folders</title>
+        <title>Verwenden von Ordnern</title>
 
         <para>
-            All storages, except Pop3, support folders, also called mailboxes. The interface implemented by all storages
-            supporting folders is called <code>Zend_Mail_Storage_Folder_Interface</code>. Also all of these classes have an
-            additional optional parameter called folder, which is the folder selected after login, in the constructor.
+            Alle Speicher, ausser Pop3, unterstützen Ordner, welche Mailboxen genannt werden. Das Interface das von
+            allen Speichern implementiert wurde und Ordner unterstützt heißt
+            <code>Zend_Mail_Storage_Folder_Interface</code>. Alle diese Klassen besitzen auch einen zusätzlichen
+            optionalen Parameter welcher folder heißt, was der ausgewählt Ordner nach dem Login, im Konstruktor ist.
         </para>
         <para>
-            For the local storages you need to use separate classes called <code>Zend_Mail_Storage_Folder_Mbox</code> or
-            <code>Zend_Mail_Storage_Folder_Maildir</code>. Both need one parameter called dirname with the name of the base dir.
-            The format for maildir is as defined in maildir++ (with a dot as default delimiter), Mbox is a directory
-            hierarchy with Mbox files. If you don't have a Mbox file called INBOX in your Mbox base dir you need to set
-            an other folder in the constructor.
+            Für den lokalen Speicher müssen die eigenen Klassen <code>Zend_Mail_Storage_Folder_Mbox</code> oder
+            <code>Zend_Mail_Storage_Folder_Maildir</code> genannt verwendet werden. Beide benötigen einen Parameter
+            der dirname heißt mit dem Namen des Basisverzeichnisses. Das Format für Maildir ist wie in Maildir++
+            definiert (mit einem Punkt als Standardbegrenzer), Mbox ist eine Verzeichnisstruktur mit Mbox Dateien.
+            Wenn im Mbox Basisverzeichnis keine Mbox Datei vorhanden ist die INBOX heißt, muß ein anderer Ordner
+            im Konstruktor gesetzt werden.
         </para>
         <para>
-            <code>Zend_Mail_Storage_Imap</code> already supports folders by default. Examples for opening these storages:
+            <code>Zend_Mail_Storage_Imap</code> unterstützt Ordner schon standardmäßig. Beispiele für das Öffnen
+            solcher Speicher:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// mbox with folders
+// MBox mit Ordnern
 $mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => '/home/test/mail/'));
 
-// mbox with a default folder not called INBOX, also works
-// with Zend_Mail_Storage_Folder_Maildir and Zend_Mail_Storage_Imap
+// MBox mit standard Ordner der nicht INBOX heißt, funktioniert auch
+// mit Zend_Mail_Storage_Folder_Maildir und Zend_Mail_Storage_Imap
 $mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => '/home/test/mail/',
                                                 'folder'  => 'Archive'));
 
-// maildir with folders
+// Maildir mit Ordnern
 $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail/'));
 
-// maildir with colon as delimiter, as suggested in Maildir++
+// Maildir mir Doppelpunkt als Begrenzung, wie in Maildir++ empfohlen
 $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail/'
                                                    'delim'   => ':'));
 
-// imap is the same with and without folders
+// IMAP ist genauso mit und ohne Ordner
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
                                          'user'     => 'test',
                                          'password' => 'test'));
 ]]></programlisting>
 
         <para>
-            With the method getFolders($root = null) you can get the folder hierarchy starting with the root folder or
-            the given folder. It's returned as instance of <code>Zend_Mail_Storage_Folder</code>, which implements
-            <code>RecursiveIterator</code> and all children are also instances of <code>Zend_Mail_Storage_Folder</code>. Each of
-            these instances has a local and a global name returned by the methods <code>getLocalName()</code> and
-            <code>getGlobalName()</code>. The global name is the absolute name from the root folder (including
-            delimiters), the local name is the name in the parent folder.
+            Mit der Methode getFolders($root = null) kann die Verzeichnisstruktur beginnend mit dem
+            Basisverzeichnis oder einem angegebenen Ordner ausgegeben werden. Sie wird als Instanz von
+            <code>Zend_Mail_Storage_Folder</code> zurückgegeben, welche <code>RecursiveIterator</code> implementiert
+            und alle Kinder sind genauso Instanzen von <code>Zend_Mail_Storage_Folder</code>. Jede dieser
+            Instanzenhat einen lokalen und einen globalen Namen der durch die Methoden <code>getLocalName()</code>
+            und <code>getGlobalName()</code> zurückgegeben wird. Der globale Name ist der absolute Name des
+            Basisordners (inklusive Begrenzer), der lokale Name ist der Name im Elternordner.
         </para>
 
         <table>
-            <title>Mail Folder Names</title>
+            <title>Namen für Nachrichtenordner</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Global Name</entry>
-                        <entry>Local Name</entry>
+                        <entry>Globaler Name</entry>
+                        <entry>Lokaler Name</entry>
                     </row>
                 </thead>
                 <tbody>
