@@ -477,10 +477,11 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
         </table>
 
         <para>
-            If you use the iterator the key of the current element is the local name. The global name is also returned
-            by the magic method <code>__toString()</code>. Some folders may not be selectable, which means they can't
-            store messages and selecting them results in an error. This can be checked with the method
-            <code>isSelectable()</code>. So it's very easy to output the whole tree in a view:
+            Wenn der Iterator verwendet wird ist der lokale Name der Schlüssel des aktuellen Elements. Der globale
+            Name wird auch durch die magische Methode <code>__toString()</code> zurückgegeben. Gleiche Ordner können
+            nicht ausgewählt werden, was bedeutet das Sie keine Nachrichten speichern können und die Auswahl von
+            Ergebnisses führt zu einem Fehler. Das kann mit der Methode <code>isSelectable()</code> geprüft werden.
+            Es ist also sehr einfach den ganzen Baum in einer Ansicht auszugeben:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -500,69 +501,71 @@ echo '</select>';
 ]]></programlisting>
 
         <para>
-            The current selected folders is returned by the method <code>getSelectedFolder()</code>. Changing the folder
-            is done with the method <code>selectFolder()</code>, which needs the global name as parameter. If you want
-            to avoid to write delimiters you can also use the properties of a <code>Zend_Mail_Storage_Folder</code> instance:
+            Der aktuell ausgewählte Ordner wird durch die Methode <code>getSelectedFolder()</code> zurückgegeben.
+            Das Ändern von Ordnern wird mit der Methode <code>selectFolder()</code> durchgeführt, welche den globalen
+            Namen als Parameter benötigt. Wenn das Schreiben von Begrenzern vermieden werden soll, können auch die
+            Eigenschaften einer <code>Zend_Mail_Storage_Folder</code> Instanz verwendet werden:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// depending on your mail storage and its settings $rootFolder->Archive->2005
-// is the same as:
+// Abhängig vom Mail Speicher und seinen Einstellungen $rootFolder->Archive->2005
+// ist das gleiche wie:
 //   /Archive/2005
 //  Archive:2005
 //  INBOX.Archive.2005
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
-echo 'Last folder was ' . $mail->getSelectedFolder() . "new folder is $folder\n";
+echo 'Der letzte Ordner war ' . $mail->getSelectedFolder() . "neuer Ordner ist $folder\n";
 $mail->selectFolder($folder);
 ]]></programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-advanced">
-        <title>Advanced Use</title>
+        <title>Forgeschrittene Verwendung</title>
 
         <sect3>
-            <title>Using NOOP</title>
+            <title>NOOP verwenden</title>
 
             <para>
-                If you're using a remote storage and have some long tasks you might need to keep the connection alive
-                via noop:
+                Wenn ein entfernter Speicher verwendet werden soll und einige lange Aufgaben anstehen kann es
+                notwendig sein die Verbindung über noop am Leben zu halten:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 foreach ($mail as $message) {
 
-    // do some calculations ...
+    // einige Berechnungen ...
 
-    $mail->noop(); // keep alive
+    $mail->noop(); // am Leben halten
 
-    // do something else ...
+    // irgendwas anderes tun ...
 
-    $mail->noop(); // keep alive
+    $mail->noop(); // am Leben halten
 }
 ]]></programlisting>
 
         </sect3>
         <sect3>
-            <title>Caching instances</title>
+            <title>Instanzen cachen</title>
 
             <para>
-            <code>Zend_Mail_Storage_Mbox</code>, <code>Zend_Mail_Storage_Folder_Mbox</code>, <code>Zend_Mail_Storage_Maildir</code> and
-            <code>Zend_Mail_Storage_Folder_Maildir</code> implement the magic methods <code>__sleep()</code> and
-            <code>__wakeup()</code>, which means they are serializable. This avoids parsing the files or directory tree
-            more than once. The disadvantage is that your Mbox or Maildir storage should not change. Some easy checks
-            are done, like reparsing the current Mbox file if the modification time changes or reparsing the folder
-            structure if a folder has vanished (which still results in an error, but you can search for an other folder
-            afterwards). It's better if you have something like a signal file for changes and check it before using the
-            cached instance.
+            <code>Zend_Mail_Storage_Mbox</code>, <code>Zend_Mail_Storage_Folder_Mbox</code>,
+            <code>Zend_Mail_Storage_Maildir</code> und <code>Zend_Mail_Storage_Folder_Maildir</code> implementieren
+            die magischen Methoden <code>__sleep()</code> und <code>__wakeup()</code> was bedeutet das Sie
+            serialisierbar sind. Das vermeidet das Parsen von Dateien oder Verzeichnisbäumen mehr als einmal. Der
+            Nachteil ist das der Mbox oder Maildir Speicher sich nicht Ändern sollte. Einige einfache Prüfungen
+            werden durchgeführt, wie das neuparsen der aktuellen Mbox Datei wenn sich der Bearbeitungszeitpunkt
+            ändert oder das neuparsen der Verzeichnisstruktur wenn ein Ordner entfernt wurde (was immer noch zu einem
+            Fehler führt, es kan aber im Nachhinein ein anderer Ordner gesucht werden). Es ist besser etwas wie eine
+            Signaldatei für Änderungen zu haben, und diese zu Prüfen bevor eine gecachete Instanz verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// there's no specific cache handler/class used here,
-// change the code to match your cache handler
+// Es wird kein spezieller Cache Handler/Klasse verwendet
+// Code ändern damit er zum Cache Handler passt
 $signal_file = '/home/test/.mail.last_change';
 $mbox_basedir = '/home/test/mail/';
-$cache_id = 'example mail cache ' . $mbox_basedir . $signal_file;
+$cache_id = 'Beispiel Nachrichten Cache ' . $mbox_basedir . $signal_file;
 
 $cache = new Your_Cache_Class();
 if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($cache_id)) {
@@ -571,26 +574,26 @@ if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($
     $mail = $cache->get($cache_id);
 }
 
-// do stuff ...
+// irgendwas machen ...
 
 $cache->set($cache_id, $mail);
 ]]></programlisting>
 
         </sect3>
         <sect3>
-            <title>Extending Protocol Classes</title>
+            <title>Prokoll Klassen erweitern</title>
 
             <para>
-                Remote storages use two classes: <code>Zend_Mail_Storage_&lt;Name&gt;</code> and
-                <code>Zend_Mail_Protocol_&lt;Name&gt;</code>. The protocol class translates the protocol commands and
-                responses from and to PHP, like methods for the commands or variables with different structures for
-                data. The other/main class implements the common interface.
+                Entfernte Speicher verwenden zwei Klassen: <code>Zend_Mail_Storage_&lt;Name&gt;</code> und
+                <code>Zend_Mail_Protocol_&lt;Name&gt;</code>. Die Protkoll Klasse übersetzt die Protokollbefehle
+                und antwortet von und zu PHP, wie Methoden für die Befehle oder Variablen mit verschiedenen
+                Strukturen für Daten. Die andere/Haupt Klasse implementiert das Stadard Interface.
             </para>
 
             <para>
-                If you need additional protocol features you can extend the protocol class and use it in the
-                constructor of the main class. As an example assume we need to knock different ports before we can
-                connect to POP3.
+                Wenn zusätzliche Protokoll Features benötigt werden kann die Protokoll Klasse erweitert werden und
+                diese im Konstruktor der Basisklasse verwendet werden. Als Beispiel nehmen wir an das verschiedene
+                Ports abgeklopft werden bevor auf POP3 verbunden werden kann.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -611,7 +614,7 @@ class Example_Mail_Protocol_Pop3_Knock extends Zend_Mail_Protocol_Pop3
 
     public function __construct($host, $port = null)
     {
-        // no auto connect in this class
+        // kein automatisches Verbinden in dieser Klasse
         $this->host = $host;
         $this->port = $port;
     }
@@ -640,19 +643,19 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
 {
     public function __construct(array $params)
     {
-        // ... check $params here! ...
+        // ... Parameter hier prüfen! ...
         $protocol = new Example_Mail_Protocol_Pop3_Knock($params['host']);
 
-        // do our "special" thing
+        // Spezial "Ding" hier machen
         foreach ((array)$params['knock_ports'] as $port) {
             $protocol->knock($port);
         }
 
-        // get to correct state
+        // den richtigen Status erhalten
         $protocol->connect($params['host'], $params['port']);
         $protocol->login($params['user'], $params['password']);
 
-        // initialize parent
+        // Eltern initialisieren
         parent::__construct($protocol);
     }
 }
@@ -664,9 +667,11 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
 ]]></programlisting>
 
             <para>
-                As you see we always assume we're connected, logged in and, if supported, a folder is selected in the
-                constructor of the main class. Thus if you assign your own protocol class you always need to make sure
-                that's done or the next method will fail if the server doesn't allow it in the current state.
+                Wie gesehen werden kann wird angenommen das man immer verbunden, eingeloggt und, wenn es
+                unterstützt wird, ein Ordner im Konstruktor der Basisklasse ausgewählt ist. Das bedeutet, wenn eine
+                eigene Protokollklasse verwendet wird muß immer sichergestellt werden das das durchgeführt wird, da
+                sonst die nächste Methode fehlschlagen wird wenn der Server das im aktuellen Status nicht
+                zuläßt.
             </para>
 
         </sect3>

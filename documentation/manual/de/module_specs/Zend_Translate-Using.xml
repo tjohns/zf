@@ -328,7 +328,7 @@ $translate->addTranslation($deutsch, 'de');
         <title>Erstellung von Gettext Quellen</title>
 
         <para>
-            Gettext Quellen werden druch GNU's Gettext Bibliothek erstellt.
+            Gettext Quellen werden durch GNU's Gettext Bibliothek erstellt.
             Es gibt einige kostenlose Tools welche den Code parsen können und hierbei
             die gewünschten Gettext Quellen erstellen.
             Diese Dateien haben die Endung <emphasis role="strong">*.mo</emphasis>
