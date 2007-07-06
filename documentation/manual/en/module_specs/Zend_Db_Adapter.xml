@@ -690,7 +690,7 @@ echo $result[0];
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchAAssocssoc('SELECT bug_id, bug_status FROM bugs');
+$result = $db->fetchAssoc('SELECT bug_id, bug_status FROM bugs');
 
 echo $result[2];
 ]]></programlisting>
