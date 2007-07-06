@@ -98,7 +98,7 @@ $logger->info('通知メッセージ');
 
 ?>]]></programlisting>
 
-      上の例は、一行のログデータを <code>log_table_name</code>
+      上の例は、一行ぶんのログデータを <code>log_table_name</code>
       という名前のテーブルに書き出します。データベースのカラム
       <code>lvl</code> には優先度の番号が格納され、<code>msg</code>
       というカラムにログのメッセージが格納されます。
