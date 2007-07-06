@@ -64,9 +64,7 @@ require_once 'Zend/Search/Lucene.php';
 
 $index = Zend_Search_Lucene::open('/data/my_index');
 
-$index->find($query);
-
-?>]]></programlisting>
+$index->find($query);]]></programlisting>
         <para>
             <code>Zend_Search_Lucene::find()</code> メソッドは、
             入力の型を自動的に判別し、クエリパーサを使用して文字列から
@@ -176,7 +174,7 @@ foreach ($hits as $hit) {
     echo $hit->title;
     echo $hit->author;
 }
-?>]]></programlisting>
+]]></programlisting>
 
         <para>
             保存されたフィールドは、常に UTF-8 エンコーディングで返されます。
@@ -212,7 +210,7 @@ foreach ($hits as $hit) {
     // getFieldValue() と同じです
     echo $document->title;
 }
-?>]]></programlisting>
+]]></programlisting>
         <para>
         Zend_Search_Lucene_Document オブジェクトで使用可能なフィールドは、
         インデックス化の際に決まります。ドキュメントのフィールドは、
@@ -223,6 +221,37 @@ foreach ($hits as $hit) {
         <para>
         ドキュメントを識別するフィールド (例では 'path')
         もインデックス化して取得できるようにしなければならないことに注意しましょう。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.searching.results-limiting">
+        <title>結果の制限</title>
+
+        <para>
+            検索処理の中でいちばん時間がかかるのが、スコアの計算です。
+            検索結果の数が多い (数万件程度) 場合、これには数秒程度かかることもあります。
+        </para>
+
+        <para>
+            Zend_Search_Lucene では、結果セットの件数を制限するためのメソッドとして
+            <code>getResultSetLimit()</code> と
+            <code>setResultSetLimit()</code> を用意しています。
+        <programlisting role="php"><![CDATA[<?php
+$currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
+
+Zend_Search_Lucene::setResultSetLimit($newLimit);
+]]></programlisting>
+            0 (デフォルト値) は、'制限しない' という意味です。
+        </para>
+
+        <para>
+            このメソッドが返す結果は、'スコアの高いほうから N 件' ではなく
+            あくまで '最初の N 件'
+            <footnote><para>
+                しかし、返される結果はスコア順 (あるいはその他指定した順)
+                で並べ替えられています。
+            </para></footnote>
+            です。
         </para>
     </sect2>
 

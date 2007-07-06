@@ -112,7 +112,7 @@ $index->optimize();
 
         <para>
             自動最適化の設定は、次の 3 つのオプションで変更できます
-            (<link id="zend.search.lucene.index-creation.optimization">インデックスの最適化</link>
+            (<link linkend="zend.search.lucene.index-creation.optimization">インデックスの最適化</link>
             を参照ください)。
             <itemizedlist>
                 <listitem>
@@ -389,5 +389,181 @@ foreach ($docIds as $id) {
 }
 ]]></programlisting>
         </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.memory-usage">
+        <title>メモリの使用法</title>
+
+        <para>
+            Zend_Search_Lucene はメモリを消費するモジュールです。
+        </para>
+
+        <para>
+            各種の情報をキャッシュしたり、検索やインデックス作成の速度を上げたりするために、メモリを使用しています。
+        </para>
+
+        <para>
+            メモリに関する挙動は、モードによって異なります。
+        </para>
+
+        <para>
+            単語辞書のインデックスは、検索時にメモリに読み込まれます。
+            これは、実際の辞書に登録されている単語が 128件
+            <footnote><para>
+                Lucene のファイルフォーマットでは、この件数を変更することもできます。しかし
+                Zend_Search_Lucene の API ではそれをサポートしていません。
+                別の Lucene 実装を使用してインデックスをサポートすれば、
+                この値を変更することも可能です。
+            </para></footnote>
+            に達するごとに作成されます。
+        </para>
+
+        <para>
+            したがって、単語の数が増えれば増えるほどメモリの消費量も増加します。
+            トークン化していないフレーズをフィールドの値として使用したり、
+            テキスト以外の情報を大量にインデックスとして使用したりすると、
+            単語の数が増えることになります。
+        </para>
+
+        <para>
+            最適化されていないインデックスは、複数のセグメントで構成されます。
+            これも、メモリ消費量の増加の要因となります。
+            各セグメントは独立しているので、それぞれ独自に単語辞書と辞書インデックスを持っています。
+            ひとつのインデックスの中に <emphasis>N</emphasis> 個のセグメントがあったとすると、
+            メモリの消費量は最悪で <emphasis>N</emphasis> 倍になってしまいます。
+            インデックスの最適化を行ない、セグメントをひとつにまとめましょう。
+        </para>
+
+        <para>
+            インデックスは、検索処理とドキュメントのバッファリングに同じメモリを使用します。
+            このメモリの使用量は、パラメータ <emphasis>MaxBufferedDocs</emphasis>
+            で指定します。
+        </para>
+
+        <para>
+            インデックスの最適化 (完全最適化、部分最適化の両方)
+            はストリーム上で行なわれるので、あまりメモリを消費しません。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.encoding">
+        <title>エンコーディング</title>
+
+        <para>
+            Zend_Search_Lucene は、内部で UTF-8 文字列を使用しています。
+            したがって、Zend_Search_Lucene が返す文字列は、すべて UTF-8
+            でエンコードされています。
+        </para>
+
+        <para>
+            単なる ASCII データのみを扱うのであればエンコーディングを気にする必要はありません。
+            しかしそれ以外の場合は要注意です。
+        </para>
+
+        <para>
+            間違ったエンコーディングを使用すると、
+            エンコーディングの変換時にエラーが発生したりデータを失ってしまったりする可能性があります。
+        </para>
+
+        <para>
+            Zend_Search_Lucene は、ドキュメントやクエリのエンコーディングとしてさまざまなものに対応しています。
+        </para>
+
+        <para>
+            フィールドを作成するメソッドで、エンコーディングをオプションのパラメータによって指定することができます。
+            <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+]]></programlisting>
+            エンコーディングの指定をはっきりさせるという意味で、これが最も良い方法です。
+        </para>
+
+        <para>
+            このエンコーディング指定を省略すると、現在のロケールをもとに判断を行ないます。
+            ロケールの指定時に、言語だけでなく文字セットも指定することができます。
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'fr_FR');
+...
+
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+
+setlocale(LC_ALL, 'ja_JP.UTF-8');
+...
+]]></programlisting>
+        </para>
+
+        <para>
+            クエリ文字列のエンコーディングも、同じ方式で指定します。
+        </para>
+
+        <para>
+            エンコーディングを何らかの方法で指定しなかった場合は、
+            現在のロケールにもとづいて判断を行ないます。
+        </para>
+
+        <para>
+            検索の前にクエリのパースを行なう場合、
+            エンコーディングはオプションのパラメータとして指定することができます。
+            <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+$hits = $index->find($query);
+...
+]]></programlisting>
+        </para>
+
+        <para>
+            デフォルトのエンコーディングを指定するには <code>setDefaultEncoding()</code>
+            メソッドを使用します。
+            <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
+$hits = $index->find($queryStr);
+...
+]]></programlisting>
+            空の文字列は、'現在のロケール' を意味します。
+        </para>
+
+        <para>
+            正しいエンコーディングを指定すれば、解析器はそれを正しく処理することができます。
+            実際の挙動は、使用する解析器によって異なります。詳細は
+            <link linkend="zend.search.lucene.charset">文字セット</link>
+            についての説明を参照ください。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.maintenance">
+        <title>インデックスの保守</title>
+
+        <para>
+            まずはっきりさせておくべきなのは、Zend_Search_Lucene やその他の
+            Lucene 実装は決して "データベース" ではないということです。
+        </para>
+
+        <para>
+            つまり、データを保存するものとして使用してはいけません。
+            通常のデータベース管理システムのように、バックアップ/リストア
+            やジャーナル処理、ログの記録、トランザクションといった機能は持っていません。
+        </para>
+
+        <para>
+            しかし、Zend_Search_Lucene はインデックスの一貫性を保持するための機能は持っています。
+        </para>
+
+        <para>
+            インデックスのバックアップ/リストアは、オフラインでインデックスフォルダをコピーすることで行ないます。
+        </para>
+
+        <para>
+            何らかの理由でインデックスが壊れてしまった場合は、
+            インデックスをリストアするか再構築しなければなりません。
+        </para>
+
+        <para>
+            そこで、大きなインデックスは、どこかに手動でバックアップしておき、
+            何かあったときに手動で復元できるようにしておきましょう。
+            そうすれば、障害からの復旧にかかる時間が短縮できます。
+        </para>
+
     </sect2>
 </sect1>
