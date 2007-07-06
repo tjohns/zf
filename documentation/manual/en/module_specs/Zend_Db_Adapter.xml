@@ -684,13 +684,13 @@ echo $result[0];
                 overwritten.
             </para>
 
-            <example id="zend.db.adapter.select.fetchassoc.example">
+            <example id="zend.db.adapter.select.fetchpairs.example">
                 <title>Using fetchPairs()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchAssoc('SELECT bug_id, bug_status FROM bugs');
+$result = $db->fetchPairs('SELECT bug_id, bug_status FROM bugs');
 
 echo $result[2];
 ]]></programlisting>
