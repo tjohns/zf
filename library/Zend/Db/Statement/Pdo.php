@@ -27,7 +27,7 @@ require_once 'Zend/Db/Statement.php';
 
 /**
  * Proxy class to wrap a PDOStatement object.
- * Matches the interface of PDOStatement.  All methods simply proxy to the 
+ * Matches the interface of PDOStatement.  All methods simply proxy to the
  * matching method in PDOStatement.  PDOExceptions thrown by PDOStatement
  * are re-thrown as Zend_Db_Statement_Exception.
  *
