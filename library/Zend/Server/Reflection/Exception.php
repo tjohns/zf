@@ -16,7 +16,7 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 /**
  * Zend_Exception
@@ -33,6 +33,6 @@ require_once 'Zend/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version $Id$
  */
-class Zend_Server_Reflection_Exception extends Zend_Exception 
+class Zend_Server_Reflection_Exception extends Zend_Exception
 {
 }
