@@ -62,8 +62,8 @@ class Zend_Service_Yahoo_Image
      */
     public function __construct(DOMNode $dom, $namespace)
     {
-    	$xpath = new DOMXPath($dom->ownerDocument);
-    	$xpath->registerNamespace('yh', $namespace);
+        $xpath = new DOMXPath($dom->ownerDocument);
+        $xpath->registerNamespace('yh', $namespace);
         $this->Url = Zend_Uri::factory($xpath->query('./yh:Url/text()', $dom)->item(0)->data);
         $this->Height = (int) $xpath->query('./yh:Height/text()', $dom)->item(0)->data;
         $this->Width = (int) $xpath->query('./yh:Width/text()', $dom)->item(0)->data;
