@@ -626,7 +626,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         if (count($hits) == 0) {
             // skip sorting, which may cause a error on empty index
-        	return array();
+            return array();
         }
 
         if ($topScore > 1) {
