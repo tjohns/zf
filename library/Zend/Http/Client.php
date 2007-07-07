@@ -327,7 +327,7 @@ class Zend_Http_Client
                 list($name, $value) = explode(':', $name, 2);
 
             $name = strtolower($name);
-            
+
             // Make sure the name is valid
             if (! preg_match('/^[a-z0-9-]+$/', $name)) {
                 throw new Zend_Http_Client_Exception("{$name} is not a valid HTTP header name");
@@ -851,10 +851,10 @@ class Zend_Http_Client
         }
 
         // Set the content-type header
-        if ($this->method == self::POST && 
+        if ($this->method == self::POST &&
            (! isset($this->headers['content-type']) && isset($this->enctype))) {
-            
-	    $headers[] = "Content-type: {$this->enctype}";
+
+        $headers[] = "Content-type: {$this->enctype}";
         }
 
         // Set the user agent header
