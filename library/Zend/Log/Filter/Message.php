@@ -30,7 +30,7 @@ require_once 'Zend/Log/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
- */ 
+ */
 class Zend_Log_Filter_Message implements Zend_Log_Filter_Interface
 {
     /**
