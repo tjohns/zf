@@ -128,9 +128,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         $defaults = $this->_defaults;
 
         if (count($defaults)) {
-        	$unique = array_combine(array_keys($defaults), array_fill(0, count($defaults), true));
+            $unique = array_combine(array_keys($defaults), array_fill(0, count($defaults), true));
         } else {
-        	$unique = array();
+            $unique = array();
         }
 
         $path = trim($path, $this->_urlDelimiter);
@@ -154,7 +154,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 $part = $this->_parts[$pos];
                 $name = isset($part['name']) ? $part['name'] : null;
                 $pathPart = urldecode($pathPart);
-                
+
                 if ($name === null) {
                     if ($part['regex'] != $pathPart) {
                         return false;
@@ -162,7 +162,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 } elseif ($part['regex'] === null) {
                     if (strlen($pathPart) == 0) {
                         return false;
-                    } 
+                    }
                 } else {
                     $regex = $this->_regexDelimiter . '^' . $part['regex'] . '$' . $this->_regexDelimiter . 'iu';
                     if (!preg_match($regex, $pathPart)) {
@@ -212,7 +212,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         $url = array();
         $flag = false;
-        
+
         foreach ($this->_parts as $key => $part) {
 
             $resetPart = false;
@@ -251,9 +251,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             }
 
         }
-        
+
         $return = '';
-        
+
         foreach (array_reverse($url, true) as $key => $value) {
             if ($flag || !isset($this->_parts[$key]['name']) || $value !== $this->getDefault($this->_parts[$key]['name'])) {
                 $return = '/' . $value . $return;
