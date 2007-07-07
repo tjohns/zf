@@ -568,7 +568,7 @@ class Zend_Locale_Data
                 break;
 
             case 'scientificnumberformat':
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/scientificFormats/scientificFormatLength/scientificFormat/pattern',
                                '', 'default');
                 break;
@@ -579,25 +579,25 @@ class Zend_Locale_Data
                 break;
 
             case 'currencyformat':
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencyFormatLength/currencyFormat/pattern',
                                '', 'default');
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/currencyMatch',
                                '', 'beforMatch');
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/surroundingMatch',
                                '', 'beforSurround');
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/insertBetween',
                                '', 'beforBetween');
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencySpacing/afterCurrency/currencyMatch',
                                '', 'afterMatch');
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencySpacing/afterCurrency/surroundingMatch',
                                '', 'afterSurround');
-                self::_getFile($locale, 
+                self::_getFile($locale,
                                '/ldml/numbers/currencyFormats/currencySpacing/afterCurrency/insertBetween',
                                '', 'afterBetween');
                 break;
