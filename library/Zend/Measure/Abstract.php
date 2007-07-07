@@ -154,7 +154,7 @@ abstract class Zend_Measure_Abstract
 
     /**
      * Returns the original type
-     * 
+     *
      * @return type
      */
     public function getType()
@@ -276,7 +276,7 @@ abstract class Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
-     * 
+     *
      * @return array
      */
     public function getConversionList()
@@ -324,7 +324,7 @@ abstract class Zend_Measure_Abstract
     {
         $object->setType($this->getType());
         $value  = $this->getValue() - $object->getValue();
-        
+
         $this->setValue($value, $this->getType(), $this->_Locale);
         return $this;
     }
