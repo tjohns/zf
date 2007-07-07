@@ -578,7 +578,7 @@ $result = $db->fetchAll($sql, 2);
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>
+                        <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>:
                         データを、オブジェクトの配列で返します。
                         デフォルトのクラスは、PHP の組み込みクラス stdClass
                         となります。結果セットのカラムは、このクラスのプロパティとしてアクセスできます。
@@ -671,16 +671,15 @@ echo $result[0];
             <para>
                 SELECT クエリをうまく設計し、最初のカラムの値が一意になるようにしなければなりません。
                 もし最初のカラムに重複する値があれば、連想配列のエントリが上書きされてしまいます。
-                overwritten.
             </para>
 
-            <example id="zend.db.adapter.select.fetchassoc.example">
+            <example id="zend.db.adapter.select.fetchpairs.example">
                 <title>fetchPairs() の例</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchAAssocssoc('SELECT bug_id, bug_status FROM bugs');
+$result = $db->fetchPairs('SELECT bug_id, bug_status FROM bugs');
 
 echo $result[2];
 ]]></programlisting>
@@ -729,7 +728,7 @@ echo $result->bug_description;
 
 $result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
 
-// this is a single string value
+// これは単なる文字列となります
 echo $result;
 ]]></programlisting>
             </example>
@@ -739,27 +738,28 @@ echo $result;
 
     <sect2 id="zend.db.adapter.write">
 
-        <title>Writing Changes to the Database</title>
+        <title>データベースへの変更の書き出し</title>
 
         <para>
-            You can use the Adapter class to write new data or change existing
-            data in your database.  This section describes methods to do these
-            operations.
+            アダプタクラスを使用して、
+            新しいデータをデータベースに書き込んだり
+            既存のデータに変更を加えたりすることができます。
+            ここでは、そのためのメソッドについて説明します。
         </para>
 
         <sect3 id="zend.db.adapter.write.insert">
 
-            <title>Inserting Data</title>
+            <title>データの挿入</title>
 
             <para>
-                You can add new rows to a table in your database using the
-                <code>insert()</code> method.  The first argument is a string
-                that names the table, and the second argument is an associative
-                array, mapping column names to data values.
+                データベースのテーブルに新しい行を追加するには、
+                <code>insert()</code> メソッドを使用します。
+                最初の引数はテーブル名を表す文字列で、
+                その次の引数はカラム名とデータの値を関連付けた連想配列となります。
             </para>
 
             <example id="zend.db.adapter.write.insert.example">
-                <title>Inserting to a table</title>
+                <title>テーブルへのデータの挿入</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
@@ -773,32 +773,29 @@ $db->insert('bugs', $data);
             </example>
 
             <para>
-                Columns you exclude from the array of data are not specified to
-                the database.  Therefore, they follow the same rules that an
-                SQL INSERT statement follows:  if the column has a DEFAULT
-                clause, the column takes that value in the row created,
-                otherwise the column is left in a NULL state.
+                データの配列で指定しなかったカラムについてはデータベースに対して何も指示しません。
+                つまり、SQL の INSERT 文で列を指定しなかった場合と同じ挙動となります。
+                DEFAULT 句が設定されていればその値が追加され、
+                設定されていなければ NULL のままとなります。
             </para>
 
             <para>
-                By default, the values in your data array are inserted using
-                parameters.  This reduces risk of some types of security
-                issues.  You don't need to apply escaping or quoting to values
-                in the data array.
+                デフォルトでは、データ配列の値を挿入する際にはパラメータを使用します。
+                これにより、ある種のセキュリティ問題が発生する可能性を軽減します。
+                データ配列で指定するデータについては、
+                エスケープやクォート処理を考慮する必要はありません。
             </para>
 
             <para>
-                You might need values in the data array to be treated as SQL
-                expressions, in which case they should not be quoted.  By
-                default, all data values passed as strings are treated as
-                string literals.  To specify that the value is an SQL
-                expression and therefore should not be quoted, pass the value
-                in the data array as an object of type Zend_Db_Expr instead of
-                a plain string.
+                データ配列の中の値を SQL の式として扱い、
+                クォートしたくない場合もあるかもしれません。
+                デフォルトでは、文字列として渡した値はすべて文字列リテラルとして扱われます。
+                その値が SQL の式であること、つまりクォートしてはいけないということを指定するには、
+                文字列ではなく Zend_Db_Expr 型のオブジェクトをデータ配列に渡します。
             </para>
 
             <example id="zend.db.adapter.write.insert.example2">
-                <title>Inserting expressions to a table</title>
+                <title>テーブルへの式の挿入</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
@@ -815,166 +812,161 @@ $db->insert('bugs', $data);
 
         <sect3 id="zend.db.adapter.write.lastinsertid">
 
-            <title>Retrieving a Generated Value</title>
+            <title>生成された値の取得</title>
 
             <para>
-                Some RDBMS brands support auto-incrementing primary keys.
-                A table defined this way generates a primary key value
-                automatically during an INSERT of a new row.  The return value
-                of the <code>insert()</code> method is <emphasis>not</emphasis>
-                the last inserted ID, because the table might not have an
-                auto-incremented column.  Instead, the return value is the
-                number of rows affected (usually 1).
+                RDBMS によっては、主キーの自動インクリメントをサポートしているものもあります。
+                この方法で定義したテーブルに新しい行を INSERT すると、
+                主キーの値が自動的に生成されます。
+                <code>insert()</code> メソッドの返り値は、最後に追加された ID
+                では<emphasis>ありません</emphasis>。
+                そのテーブルには自動インクリメントのカラムがないかもしれないからです。
+                返り値は、変更された行数 (通常は 1 です) となります。
             </para>
 
             <para>
-                If your table is defined with an auto-incrementing primary key,
-                you can call the <code>lastInsertId()</code> method after the
-                insert.  This method returns the last value generated in the
-                scope of the current database connection.
+                そのテーブルで自動インクリメントの主キーを定義している場合は、
+                データを追加した後で <code>lastInsertId()</code>
+                メソッドを使用することができます。このメソッドは、
+                現在のデータベース接続において最後に自動生成された値を返します。
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-1">
-                <title>Using lastInsertId() for an auto-increment key</title>
+                <title>自動インクリメントのキーにおける lastInsertId() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->insert('bugs', $data);
 
-// return the last value generated by an auto-increment column
+// 自動インクリメントのカラムで最後に生成された値を返します
 $id = $db->lastInsertId();
 ]]></programlisting>
             </example>
 
             <para>
-                Some RDBMS brands support a sequence object, which generates
-                unique values to serve as primary key values.  To support
-                sequences, the <code>lastInsertId()</code> method accepts two
-                optional string arguments.  These arguments name the table and
-                the column, assuming you have followed the convention that a
-                sequence is named using the table and column names for which
-                the sequence generates values, and a suffix "_seq".  This is
-                based on the convention used by PostgreSQL when naming
-                sequences for SERIAL columns.  For example, a table "bugs" with
-                primary key column "bug_id" would use a sequence named
-                "bugs_bug_id_seq".
+                RDBMS によっては、シーケンスをサポートしているものもあります。
+                シーケンスを使用して、主キー用の一意な値を生成することができます。
+                シーケンスをサポートするために、<code>lastInsertId()</code>
+                ではオプションの文字列引数を 2 つ受け取れるようにしています。
+                これらの引数には、それぞれテーブル名とカラム名を指定します。
+                シーケンスの名前は、このテーブル名とカラム名をつなげたものの後に
+                "_seq" を付加したものとなります。これは、PostgreSQL
+                が SERIAL 型のカラムに対して自動生成するシーケンス名の規約にもとづいています。
+                たとえば、"bugs" テーブルの主キーカラムが
+                "bug_id" である場合は、"bugs_bug_id_seq"
+                という名前のシーケンスを使用することになります。
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-2">
-                <title>Using lastInsertId() for a sequence</title>
+                <title>シーケンスにおける lastInsertId() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->insert('bugs', $data);
 
-// return the last value generated by sequence 'bugs_bug_id_seq'.
+// シーケンス 'bugs_bug_id_seq' が最後に生成した値を返します
 $id = $db->lastInsertId('bugs', 'bug_id');
 
-// alternatively, return the last value generated by sequence 'bugs_seq'.
+// これは、シーケンス 'bugs_seq' が最後に生成した値を返します
 $id = $db->lastInsertId('bugs');
 ]]></programlisting>
             </example>
 
             <para>
-                If the name of your sequence object does not follow this naming
-                convention, use the <code>lastSequenceId()</code> method
-                instead.  This method takes a single string argument, naming
-                the sequence literally.
+                もしこの命名規約とは異なる名前のシーケンスを使用している場合は、代わりに
+                <code>lastSequenceId()</code> メソッドを使用します。
+                このメソッドの引数には、シーケンスの名前を直接指定します。
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-3">
-                <title>Using lastSequenceId()</title>
+                <title>lastSequenceId() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $db->insert('bugs', $data);
 
-// return the last value generated by sequence 'bugs_id_gen'.
+// シーケンス 'bugs_id_gen' が最後に生成した値を返します
 $id = $db->lastSequenceId('bugs_id_gen');
 ]]></programlisting>
             </example>
 
             <para>
-                For RDBMS brands that don't support sequences, including MySQL,
-                Microsoft SQL Server, and SQLite, the arguments to the
-                lastInsertId() method are ignored, and the value returned is the
-                most recent value generated for any table by INSERT operations
-                during the current connection.   For these RDBMS brands, the
-                lastSequenceId() method always returns <code>null</code>.
+                シーケンスをサポートしていない RDBMS、たとえば MySQL や
+                Microsoft SQL Server、SQLite などの場合、
+                lastInsertId() メソッドの引数は無視されます。
+                このメソッドの返り値は、現在の接続で最後に実行された
+                INSERT 操作が生成した値となります。また、これらの RDBMS では
+                lastSequenceId() メソッドの返り値は常に <code>null</code>
+                となります。
             </para>
 
             <note>
-                <title>Why not use "SELECT MAX(id) FROM table"?</title>
+                <title>"SELECT MAX(id) FROM table" じゃあダメなんですか?</title>
                 <para>
-                    Sometimes this query returns the most recent primary key
-                    value inserted into the table.  However, this technique
-                    is not safe to use in an environment where multiple clients are
-                    inserting records to the database.  It is possible, and
-                    therefore is bound to happen eventually, that another
-                    client inserts another row in the instant between the
-                    insert performed by your client application and your query
-                    for the MAX(id) value.  Thus the value returned does not
-                    identify the row you inserted, it identifies the row
-                    inserted by some other client.  There is no way to know
-                    when this has happened.
+                    たしかにこのクエリは、最後にテーブルに追加された主キーの値を返すこともあります。
+                    しかしこれは、複数のクライアントがデータベースにレコードを追加するという環境では
+                    安全ではありません。
+                    つまり、データを追加してから MAX(id) の値を取得するまでの間に
+                    他のクライアントが別のデータを追加する可能性があるということです。
+                    この場合、クエリが返す結果はあなたが実際に追加した行の ID とは異なり、
+                    誰か他の人が追加した行の ID となってしまいます。
+                    しかも、もしそのような状況になっていたとしても
+                    あなたにはそれを知ることはできません。
                 </para>
                 <para>
-                    Using a strong transaction isolation mode such as
-                    "repeatable read" can mitigate this risk, but some RDBMS
-                    brands don't support the transaction isolation required for
-                    this, or else your application may use a lower transaction
-                    isolation mode by design.
+                    たとえば "repeatable read" のようなトランザクション分離モードを使用すれば、
+                    この危険性を減らせます。しかし、
+                    このレベルのトランザクション分離をサポートしていない RDBMS
+                    もあります。また、そのアプリケーション自体がもっと緩いレベルの
+                    トランザクション分離モードを想定して作成されているかもしれません。
                 </para>
                 <para>
-                    Furthermore, using an expression like "MAX(id)+1" to generate
-                    a new value for a primary key is not safe, because two clients
-                    could do this query simultaneously, and then both use the same
-                    calculated value for their next INSERT operation.
+                    さらに、新しい主キーの値を生成する際に "MAX(id)+1"
+                    のような式を使うのも同様に危険です。ふたつのクライアントから同時にこのクエリを実行すると、
+                    どちらも同じ値を取得することになり、同じ値で INSERT
+                    を行なうことになってしまいます。
                 </para>
                 <para>
-                    All RDBMS brands provide mechanisms to generate unique
-                    values, and to return the last value generated.  These
-                    mechanisms necessarily work outside of the scope of
-                    transaction isolation, so there is no chance of two clients
-                    generating the same value, and there is no chance that the
-                    value generated by another client could be reported to your
-                    client's connection as the last value generated.
+                    どんな RDBMS でも、一意な値を生成する機能や
+                    最後に生成した値を返す機能は持っています。
+                    この機能はトランザクション分離レベルとは無関係に機能するはずなので、
+                    ふたつのクライアントで同じ値が重複してしまうことはありません。
+                    また、他のクライアントで作成した値が
+                    あなたの接続で「最後に生成した値」として返されることもありません。
                 </para>
             </note>
 
         </sect3>
 
         <sect3 id="zend.db.adapter.write.update">
-            <title>Updating Data</title>
+            <title>データの更新</title>
 
             <para>
-                You can update rows in a database table using the
-                <code>update()</code> method of an Adapter.  This method takes
-                three arguments:  the first is the name of the table; the
-                second is an associative array mapping columns to change to new
-                values to assign to these columns.
+                データベースのテーブルの行を更新するには、アダプタの
+                <code>update()</code> メソッドを使用します。このメソッドへの引数は
+                3 つです。まず最初はテーブルの名前、
+                その次はカラム名と新しい値を関連づけた連想配列となります。
             </para>
 
             <para>
-                The values in the data array are treated as string literals.
-                See <xref linkend="zend.db.adapter.write.insert" />
-                for information on using SQL expressions in the data array.
+                配列で指定した値は、文字列リテラルとして扱われます。
+                データ配列で SQL の式を扱う方法については
+                <xref linkend="zend.db.adapter.write.insert" />
+                を参照ください。
             </para>
 
             <para>
-                The third argument is a string containing an SQL expression
-                that is used as criteria for the rows to change.  The values
-                and identifiers in this argument are not quoted or escaped.
-                You are responsible for ensuring that any dynamic content is
-                interpolated into this string safely.
-                See <xref linkend="zend.db.adapter.quoting" />
-                for methods to help you do this.
+                三番目の引数は、SQL の式を文字列で指定します。
+                これが、変更する行を絞り込むための条件となります。
+                ここで指定した値や識別子に対しては、クォートやエスケープは行ないません。
+                何らかの動的な値を使用する場合は、その内容が安全であることを確認するようにしましょう。
+                <xref linkend="zend.db.adapter.quoting" />
+                で説明しているメソッドを使用するといいでしょう。
             </para>
 
             <para>
-                The return value is the number of rows affected by the update
-                operation.
+                このメソッドの返り値は、更新操作によって変更された行の数となります。
             </para>
 
             <example id="zend.db.adapter.write.update.example">
-                <title>Updating rows</title>
+                <title>行の更新</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
@@ -987,18 +979,16 @@ $n = $db->update('bugs', $data, 'bug_id = 2');
             </example>
 
             <para>
-                If you omit the third argument, then all rows in the database
-                table are updated with the values specified in the data array.
+                三番目の引数を省略した場合は、テーブルのすべての行が指定した値で更新されます。
             </para>
 
             <para>
-                If you provide an array of strings as the third argument, these
-                strings are joined together as terms in an expression separated
-                by <code>AND</code> operators.
+                三番目の引数に文字列の配列を指定すると、各要素の内容を
+                <code>AND</code> 演算子で連結して使用します。
             </para>
 
             <example id="zend.db.adapter.write.update.example">
-                <title>Updating rows using an array of expressions</title>
+                <title>式の配列を指定することによる行の更新</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
@@ -1011,7 +1001,7 @@ $where[] = "bug_status = 'OPEN'";
 
 $n = $db->update('bugs', $data, $where);
 
-// Resulting SQL is:
+// 実行される SQL は、このようになります
 //  UPDATE "bugs" SET "update_on" = '2007-03-23', "bug_status" = 'FIXED'
 //  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')
 ]]></programlisting>
@@ -1020,30 +1010,28 @@ $n = $db->update('bugs', $data, $where);
         </sect3>
 
         <sect3 id="zend.db.adapter.write.delete">
-            <title>Deleting Data</title>
+            <title>行の削除</title>
             <para>
-                You can delete rows from a database table using the
-                <code>delete()</code> method.  This method takes two arguments:
-                the first is a string naming the table.
+                データベースのテーブルから行を削除するには
+                <code>delete()</code> メソッドを使用します。このメソッドに渡す引数は 2 つで、
+                最初の引数はテーブル名を表す文字列です。
             </para>
 
             <para>
-                The second argument is a string containing an SQL expression
-                that is used as criteria for the rows to delete.  The values
-                and identifiers in this argument are not quoted or escaped.
-                You are responsible for ensuring that any dynamic content is
-                interpolated into this string safely.
-                See <xref linkend="zend.db.adapter.quoting" />
-                for methods to help you do this.
+                二番目の引数は、SQL の式を文字列で指定します。
+                これが、削除する行を絞り込むための条件となります。
+                ここで指定した値や識別子に対しては、クォートやエスケープは行ないません。
+                何らかの動的な値を使用する場合は、その内容が安全であることを確認するようにしましょう。
+                <xref linkend="zend.db.adapter.quoting" />
+                で説明しているメソッドを使用するといいでしょう。
             </para>
 
             <para>
-                The return value is the number of rows affected by the delete
-                operation.
-            </para>
+                このメソッドの返り値は、削除操作によって変更された行の数となります。
+　            </para>
 
             <example id="zend.db.adapter.write.delete.example">
-                <title>Deleting rows</title>
+                <title>行の削除</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $n = $db->delete('bugs', 'bug_id = 3');
@@ -1051,14 +1039,12 @@ $n = $db->delete('bugs', 'bug_id = 3');
             </example>
 
             <para>
-                If you omit the second argument, the result is that all rows in
-                the database table are deleted.
+                二番目の引数を省略した場合は、テーブルのすべての行を削除します。
             </para>
 
             <para>
-                If you provide an array of strings as the second argument, these
-                strings are joined together as terms in an expression separated
-                by <code>AND</code> operators.
+                二番目の引数に文字列の配列を指定すると、各要素の内容を
+                <code>AND</code> 演算子で連結して使用します。
             </para>
 
         </sect3>
