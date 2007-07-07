@@ -645,6 +645,59 @@ print $date;
                         </entry>
                     </row>
                     <row>
+                        <entry>toArray()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">toArray()</emphasis>
+                            </para>
+                            <para>
+                                Gibt eine Array Representation des ausgewählten Datums anhand der Konventionen des
+                                Gebietsschemas zurück. Das zurückgegebene Array is identisch zu PHP's
+                                <ulink url="http://php.net/getdate">getdate()</ulink> Funktion und beinhaltet:
+                            </para>
+                            <para>
+                                <itemizedlist>
+                                    <listitem>
+                                        Tag als Zahl mit '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Monat als Zahl mit '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Jahr als '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Stunde als '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Minute als '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Sekunde als '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Abgekürzte Zeitzone als '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Unix Zeitpunkt als '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Wochentag als Zahl mit '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Tag des Jahres als '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Woche als '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Abstand der Zeitzone zu GMT als '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                    </listitem>
+                                </itemizedlist>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
                         <entry>toValue()</entry>
                         <entry>
                             <para>

@@ -5298,6 +5298,16 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 30:00:00', 'dd.MMMM.YYYY HH:mm:ss', 'de_AT'));
     }
+
+    public function testToArray()
+    {
+        $date = new Zend_Date('2006-01-02 23:58:59', Zend_Date::ISO_8601, 'en_US');
+        $return = $date->toArray();
+        $orig = array('day' => 02, 'month' => 01, 'year' => 2006, 'hour' => 23, 'minute' => 58,
+                      'second' => 59, 'timezone' => 'MVT', 'timestamp' => 1136228339, 'weekday' => 1,
+                      'dayofyear' => 1, 'week' => '01', 'gmtsecs' => 18000);
+        $this->assertEquals($return, $orig);
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date
