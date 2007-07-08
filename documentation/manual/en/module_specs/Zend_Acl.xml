@@ -112,7 +112,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+            </programlisting>
             <para>
                 Since there is no rule specifically defined for the "<code>someUser</code>" Role and
                 "<code>someResource</code>", Zend_Acl must search for rules that may be defined for Roles that
@@ -156,7 +157,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></pro
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();]]></programlisting>
+$acl = new Zend_Acl();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -246,7 +248,8 @@ $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator does not inherit access controls
-$acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+        </programlisting>
 
     </sect2>
 
@@ -295,7 +298,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator inherits nothing, but is allowed all privileges
-$acl->allow('administrator');]]></programlisting>
+$acl->allow('administrator');]]>
+        </programlisting>
 
         <para>
             The <code>null</code> values in the above <code>allow()</code> calls are used to indicate
@@ -336,7 +340,8 @@ echo $acl->isAllowed('administrator') ?
      "allowed" : "denied"; // allowed because administrator is allowed all privileges
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // allowed because administrator is allowed all privileges]]></programlisting>
+     "allowed" : "denied"; // allowed because administrator is allowed all privileges]]>
+        </programlisting>
 
     </sect2>
 </sect1>

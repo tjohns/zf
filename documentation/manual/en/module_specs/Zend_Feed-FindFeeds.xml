@@ -5,12 +5,9 @@
         the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
         page with one simple method call:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');]]>
+    </programlisting>
     <para>
         Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
         objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on

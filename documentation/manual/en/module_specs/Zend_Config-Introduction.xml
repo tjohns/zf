@@ -42,7 +42,8 @@ $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
                                       $config->database->username,
                                       $config->database->password,
-                                      $config->database->name);]]></programlisting>
+                                      $config->database->name);]]>
+        </programlisting>
     </example>
     <para>
         As illustrated in the example above, <code>Zend_Config</code> provides nested object property syntax to access
@@ -53,8 +54,8 @@ $myApplicationObject->databaseConnect($config->database->type,
         the supplied default value if the data element doesn't exist. For example:
     </para>
     <programlisting role="php"><![CDATA[<?php
-    $host = $config->database->get('host', 'localhost');
-    ]]></programlisting>
+    $host = $config->database->get('host', 'localhost');]]>
+    </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

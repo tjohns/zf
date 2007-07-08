@@ -22,7 +22,6 @@
         instead of the <code>class</code> option:
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
@@ -34,9 +33,8 @@ $phone = $strikeIron->getService(array('wsdl' => 'http://ws.strikeiron.com/Rever
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;
 
-// Zend Technologies USA Inc
-
-?>]]></programlisting>
+// Zend Technologies USA Inc]]>
+        </programlisting>
       </para>
 
       <para>
@@ -89,7 +87,6 @@ echo $result->listingName;
         <ulink url="http://www.php.net/manual/en/function.soap-soapclient-getlastresponse.php"><code>__getLastRequest()</code></ulink>:
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
@@ -105,9 +102,8 @@ $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 // Get SOAPClient instance and view XML
 $soapClient = $taxBasic->getSoapClient();
 echo $soapClient->__getLastRequest();
-echo $soapClient->__getLastResponse();
-
-?>]]></programlisting>
+echo $soapClient->__getLastResponse();]]>
+        </programlisting>
       </para>
 
     </sect2>

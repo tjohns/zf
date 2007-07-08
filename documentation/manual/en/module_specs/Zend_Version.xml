@@ -21,11 +21,9 @@
     <example id="zend.version.reading.example">
         <title>Example of compareVersion() method</title>
         <programlisting role="php"><![CDATA[<?php
-
 // returns -1, 0 or 1
-$cmp = Zend_Version::compareVersion('1.0.0');
-
-?>]]></programlisting>
+$cmp = Zend_Version::compareVersion('1.0.0');]]>
+        </programlisting>
     </example>
 
 </sect1>

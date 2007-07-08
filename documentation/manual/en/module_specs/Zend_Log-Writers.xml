@@ -18,13 +18,11 @@
       (<code>php://stderr</code>).
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
     </para>
 
     <para>
@@ -33,13 +31,11 @@ $logger->info('Informational message');
       URLs</ulink>:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
 
       By default, the stream opens in the append mode (<code>"a"</code>).
       To open it with a different mode, the Zend_Log_Writer_Stream constructor
@@ -50,7 +46,6 @@ $logger->info('Informational message');
       The constructor of <code>Zend_Log_Writer_Stream</code> also accepts an existing stream resource:
 
       <programlisting role="php"><![CDATA[<?php
-
 $stream = @fopen('/path/to/logfile', 'a', false);
 if (! $stream) {
     throw new Exception('Failed to open stream');
@@ -59,9 +54,8 @@ if (! $stream) {
 $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
 
       You cannot specify the mode for existing stream resources. Doing so
       causes a <code>Zend_Log_Exception</code> to be thrown.
@@ -77,7 +71,6 @@ $logger->info('Informational message');
       columns to event data items:
 
       <programlisting role="php"><![CDATA[<?php
-
 $params = array ('host'     => '127.0.0.1',
                  'username' => 'malory',
                  'password' => '******',
@@ -89,9 +82,8 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
 
       The example above writes a single row of log data to the database table named
       <code>log_table_name</code> table.  The database column named <code>lvl</code>
@@ -108,14 +100,12 @@ $logger->info('Informational message');
       It is useful for disabling logging or stubbing out logging during tests:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
 // goes nowhere
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
     </para>
   </sect2>
 
@@ -126,7 +116,6 @@ $logger->info('Informational message');
       the raw data it receives in an array exposed as a public property.
 
       <programlisting role="php"><![CDATA[<?php
-
 $mock = new Zend_Log_Writer_Mock;
 $logger = new Zend_Log($mock);
 
@@ -140,9 +129,8 @@ var_dump($mock->events[0]);
 //    [message] => Informational message
 //    [priority] => 6
 //    [priorityName] => INFO
-// )
-
-?>]]></programlisting>
+// )]]>
+      </programlisting>
     </para>
 
     <para>
@@ -159,7 +147,6 @@ var_dump($mock->events[0]);
       method:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
 $writer2 = new Zend_Log_Writer_Stream('/path/to/second/logfile');
 
@@ -168,9 +155,8 @@ $logger->addWriter($writer1);
 $logger->addWriter($writer2);
 
 // goes to both writers
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
     </para>
   </sect2>
 </sect1>

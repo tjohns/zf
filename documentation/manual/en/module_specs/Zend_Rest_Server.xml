@@ -21,8 +21,7 @@ require_once 'My/Service/Class.php';
 
 $server = new Zend_Rest_Server();
 $server->setClass('My_Service_Class');
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
 
@@ -46,8 +45,7 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
     </sect2>
@@ -115,8 +113,7 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
     </sect2>
@@ -158,8 +155,7 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
 

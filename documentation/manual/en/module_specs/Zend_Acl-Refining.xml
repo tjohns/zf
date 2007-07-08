@@ -34,7 +34,8 @@
 
         <programlisting role="php"><![CDATA[<?php
 // The new marketing group inherits permissions from staff
-$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
+        </programlisting>
 
         <para>
         Next, note that the above access controls refer to specific Resources (e.g., "newsletter", "latest news", "announcement news"). Now we add these Resources:
@@ -46,7 +47,8 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('newsletter'));           // newsletter
 $acl->add(new Zend_Acl_Resource('news'));                 // news
 $acl->add(new Zend_Acl_Resource('latest'), 'news');       // latest news
-$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]></programlisting>
+$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]>
+        </programlisting>
 
         <para>
         Then it is simply a matter of defining these more specific rules on the target areas of the ACL:
@@ -60,7 +62,8 @@ $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archiv
 $acl->deny('staff', 'latest', 'revise');
 
 // Everyone (including administrators) are denied permission to archive news announcements
-$acl->deny(null, 'announcement', 'archive');]]></programlisting>
+$acl->deny(null, 'announcement', 'archive');]]>
+        </programlisting>
 
         <para>
         We can now query the ACL with respect to the latest changes:
@@ -89,7 +92,8 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
      "allowed" : "denied"; // denied
 
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied]]></programlisting>
+     "allowed" : "denied"; // denied]]>
+        </programlisting>
 
     </sect2>
 
@@ -117,7 +121,8 @@ echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
      "allowed" : "denied"; // denied
 
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
-     "allowed" : "denied"; // denied]]></programlisting>
+     "allowed" : "denied"; // denied]]>
+        </programlisting>
 
         <para>
         Privileges may be modified incrementally as indicated above, but a <code>null</code> value for the
@@ -135,7 +140,8 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
      "allowed" : "denied"; // allowed
 
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
-     "allowed" : "denied"; // allowed]]></programlisting>
+     "allowed" : "denied"; // allowed]]>
+        </programlisting>
 
     </sect2>
 

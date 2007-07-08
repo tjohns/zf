@@ -46,7 +46,7 @@
 
     <p>There are no books to display.</p>
 
-<?php endif; ?>]]>
+<?php endif;]]>
     </programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
@@ -72,8 +72,7 @@
 echo $this->variable;
 
 // good view-script practice:
-echo $this->escape($this->variable);
-?>]]>
+echo $this->escape($this->variable);]]>
         </programlisting>
 
         <para>
@@ -99,8 +98,7 @@ $obj = new SomeClass();
 $view->setEscape(array($obj, 'methodName'));
 
 // and then render your view
-echo $view->render(...);
-?>]]>
+echo $view->render(...);]]>
         </programlisting>
 
         <para>
@@ -152,8 +150,8 @@ if ($this->books) {
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
-}
-?>]]></programlisting>
+}]]>´
+            </programlisting>
 
             <para>
                 These would be the related template files:
@@ -176,8 +174,8 @@ if ($this->books) {
     </tr>
 
 <!-- nobooks.tpl -->
-<p>There are no books to display.</p>
-]]></programlisting>
+<p>There are no books to display.</p>]]>
+            </programlisting>
 
         </sect3>
 
@@ -238,8 +236,8 @@ public function clearVars();
 /**
  * Render the template named $name
  */
-public function render($name);
-]]></programlisting>
+public function render($name);]]>
+            </programlisting>
 
             <para>
                 Using this interface, it becomes relatively easy to wrap a
@@ -430,8 +428,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     {
         return $this->_smarty->fetch($name);
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 In this example, you would instantiate the
@@ -445,8 +443,8 @@ $view = new Zend_View_Smarty();
 $view->setScriptPath('/path/to/templates');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');
-]]></programlisting>
+$rendered = $view->render('bookinfo.tpl');]]>
+            </programlisting>
 
         </sect3>
     </sect2>

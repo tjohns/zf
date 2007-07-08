@@ -14,8 +14,8 @@ print "=======\n";
 print "Here is line one\n";
 print "Today is the " . date("d.m.Y") . "\n";
 print "\n";
-print "Fix language here is line two\n";
-?>]]></programlisting>
+print "Fix language here is line two\n";]]>
+        </programlisting>
     </example>
 
     <para>
@@ -46,8 +46,8 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
 print "\n";
 
 $translate->setLocale('fr');
-print $translate->_("Fix language here is line two") . "\n";
-?>]]></programlisting>
+print $translate->_("Fix language here is line two") . "\n";]]>
+        </programlisting>
     </example>
 
     <para>
@@ -58,11 +58,11 @@ print $translate->_("Fix language here is line two") . "\n";
     <para>
         Create a new Translation object and define the base adapter:
 
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once("Zend/Translate.php");
 
-$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
-?>]]></programlisting>
+$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');]]>
+        </programlisting>
 
         In this example we decided the
         <emphasis role="strong">Gettext Adapter</emphasis>.
@@ -77,11 +77,11 @@ $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
         The simplest approach is to have only simple strings or sentences
         like this:
 
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 print $translate->_("Example")."\n";
 print "=======\n";
-print $translate->_("Here is line one")."\n";
-?>]]></programlisting>
+print $translate->_("Here is line one")."\n";]]>
+        </programlisting>
 
         Some strings do not needed to be translated.
         The seperating line is always a seperating line,
@@ -92,9 +92,9 @@ print $translate->_("Here is line one")."\n";
         Having data values integrated into a translation string is also
         supported through the use of embedded parameters.
 
-<programlisting role="php"><![CDATA[<?php
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));]]>
+        </programlisting>
 
         Instead of <code>print()</code>, use the <code>printf()</code>
         function and replace all parameters with <code>%1\$s</code> parts.
@@ -109,11 +109,11 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
         Each string is identified in the translation storage by a message id.
         You can use message id's instead of strings in your code, like this:
 
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 print $translate->_(1)."\n";
 print "=======\n";
-print $translate->_(2)."\n";
-?>]]></programlisting>
+print $translate->_(2)."\n";]]>
+        </programlisting>
 
         But doing this has several disadvantages:
     </para>
@@ -168,8 +168,8 @@ print $translate->_(2)."\n";
 /languages
   lang.en
   lang.de
-/library
-]]></programlisting>
+/library]]>
+                </programlisting>
 
                 <para>
                     Positive: All source files for every languages can be
@@ -190,8 +190,8 @@ print $translate->_(2)."\n";
   /de
     lang.de
     other.de
-/library
-]]></programlisting>
+/library]]>
+                </programlisting>
 
                 <para>
                     Positive: Every language is based in one directory.
@@ -211,8 +211,8 @@ print $translate->_(2)."\n";
     lang.en
     lang.de
     other.en
-    other.de
-]]></programlisting>
+    other.de]]>
+                </programlisting>
 
                 <para>
                     Positive: All source files for every languages can be
@@ -238,8 +238,8 @@ print $translate->_(2)."\n";
   /en
     /LC_MESSAGES
       lang.mo
-      other.mo
-]]></programlisting>
+      other.mo]]>
+                </programlisting>
 
                 <para>
                     Positive: Old gettext sources can be used without changing
@@ -272,8 +272,8 @@ print $translate->_(2)."\n";
   index.php
   index.de
 /library
-  /Zend
-]]></programlisting>
+  /Zend]]>
+                </programlisting>
                 <para>
                     Positive: Every file is related to its own translation
                     source.
@@ -320,8 +320,8 @@ $german = array('message1' => 'Nachricht1',
                 'message3' => 'Nachricht3');
 
 $translate = new Zend_Translate('array', $english, 'en');
-$translate->addTranslation($deutsch, 'de');
-]]></programlisting>
+$translate->addTranslation($deutsch, 'de');]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.translate.using.source.gettext">
@@ -342,8 +342,8 @@ $translate->addTranslation($deutsch, 'de');
         <programlisting role="php"><![CDATA[
 // We expect that we have created the mo files and translated them
 $translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
-$translate->addTranslation('path/to/german.mo', 'de');
-]]></programlisting>
+$translate->addTranslation('path/to/german.mo', 'de');]]>
+        </programlisting>
 
         <para>
             As you can see the adapters are used exactly the same way,
@@ -403,13 +403,13 @@ $translate->addTranslation('path/to/german.mo', 'de');
   <tu tuid='message2'>
    <tuv xml:lang="en"><seg>message2</seg></tuv>
    <tuv xml:lang="de"><seg>Nachricht2</seg></tuv>
-  </tu>
-]]></programlisting>
+  </tu>]]>
+            </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
-// TMX can have several languages within one TMX file.
-]]></programlisting>
+// TMX can have several languages within one TMX file.]]>
+            </programlisting>
         </example>
 
         <para>
@@ -442,13 +442,13 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
             <programlisting><![CDATA[
 ﻿#Example csv file
 message1;Nachricht1
-message2;Nachricht2
-]]></programlisting>
+message2;Nachricht2]]>
+            </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
-$translate->addTranslation('path/to/other.csv', 'fr');
-]]></programlisting>
+$translate->addTranslation('path/to/other.csv', 'fr');]]>
+            </programlisting>
         </example>
 
         <para>
@@ -474,13 +474,13 @@ message,,1,Nachricht1
 # translation 'Nachricht,2'
 message2,Nachricht,,2
 # original 'message3,'
-message3,,,Nachricht3
-]]></programlisting>
+message3,,,Nachricht3]]>
+            </programlisting>
 
             <programlisting role="php"><![CDATA[
 $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('separator' => ','));
-$translate->addTranslation('path/to/other.csv', 'fr');
-]]></programlisting>
+$translate->addTranslation('path/to/other.csv', 'fr');]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -511,8 +511,8 @@ $options = array('clear' => true);
 $translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
 $translate->addTranslation('path/to/other.csv', 'fr');
 ... // do something
-$translate->addTranslation('path/to/new.csv', 'fr', $options); // clear language fr, use new translation
-]]></programlisting>
+$translate->addTranslation('path/to/new.csv', 'fr', $options); // clear language fr, use new translation]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -553,8 +553,8 @@ if (!($translate->isTranslated('message1', true, 'de'))) {
 }
 if ($translate->isTranslated('message1', false, 'de')) {
     print "'message1' can be translated in 'de_AT' falls back to 'de'";
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>

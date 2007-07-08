@@ -36,8 +36,8 @@
             <title>Using the Short Syntax</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt('abp:');
-?>]]></programlisting>
+$opts = new Zend_Console_Getopt('abp:');]]>
+            </programlisting>
         </example>
         <para>
             The example above shows using <code>Zend_Console_Getopt</code>
@@ -106,8 +106,7 @@ $opts = new Zend_Console_Getopt(
     'banana|b=i' => 'This option chooses banana, with required integer parameter',
     'pear|p-s'   => 'This option chooses pear, with optional string parameter'
   )
-);
-?>]]>
+);]]>
             </programlisting>
         </example>
         <para>

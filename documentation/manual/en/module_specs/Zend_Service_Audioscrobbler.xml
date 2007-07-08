@@ -176,7 +176,8 @@ require_once 'Zend/Service/Audioscrobbler.php';
 $as = new Zend_Service_Audioscrobbler();
 $as->setUser('BigDaddy71'); // Set the user whose profile information we want to retrieve
 $profileInfo = $as->userGetProfileInformation(); // Retrieve BigDaddy71's profile information
-print "Information for $profileInfo->realname can be found at $profileInfo->url"; // Display some of it]]></programlisting>
+print "Information for $profileInfo->realname can be found at $profileInfo->url"; // Display some of it]]>
+            </programlisting>
 
         </example>
 
@@ -204,7 +205,8 @@ echo 'Artist Chart For Week Of ' . date('Y-m-d h:i:s', $as->from_date) . '<br />
 foreach ($previousWeeklyArtists as $artist) {
     // Display the artists' names with links to their profiles
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -262,7 +264,8 @@ $as->setArtist('LCD Soundsystem'); // Set the artist for whom you would like to 
 $relatedArtists = $as->artistGetRelatedArtists(); // Retrieve the related artists
 foreach ($relatedArtists as $artist) {
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />'; // Display the related artists
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 

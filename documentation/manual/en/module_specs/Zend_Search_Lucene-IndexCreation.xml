@@ -27,8 +27,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Add document to the index.
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
 
         <para>
             Newly added documents could be immediately retrieved from an index.
@@ -54,8 +54,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Add document to the index.
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.document-updating">
@@ -75,8 +75,8 @@ $removePath = ...;
 $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
@@ -98,8 +98,8 @@ foreach ($hits as $hit) {
 
         <programlisting role="php"><![CDATA[<?php
 $indexSize = $index->count();
-$documents = $index->numDocs();
-?>]]></programlisting>
+$documents = $index->numDocs();]]>
+        </programlisting>
 
         <para>
             <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
@@ -110,8 +110,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
         echo "Document #$id is deleted.\n";
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Index optimization removes deleted documents and squeezes documents' IDs. So internal document id may be changed.
@@ -147,8 +147,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
 $index = Zend_Search_Lucene::open('/data/my-index');
 
 // Optimize index.
-$index->optimize();
-?>]]></programlisting>
+$index->optimize();]]>
+        </programlisting>
 
         <para>
             Automatic index optimization is performed to keep index in a consistent state.

@@ -8,8 +8,7 @@
     </para>
     <example>
         <title>Sending HTML E-Mail</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('My Nice Test Text');
@@ -17,8 +16,8 @@ $mail->setBodyHtml('My Nice <b>Test</b> Text');
 $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send();
-?>]]>   </programlisting>
+$mail->send();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

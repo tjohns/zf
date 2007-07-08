@@ -30,7 +30,6 @@
         about a United States ZIP code or Canadian postal code:
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
@@ -67,9 +66,8 @@ if ($zips->count == 0) {
 
 // Detailed status information
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
-$status = $response->serviceStatus;
-
-?>]]></programlisting>
+$status = $response->serviceStatus;]]>
+        </programlisting>
       </para>
     </sect2>
 
@@ -100,7 +98,6 @@ $status = $response->serviceStatus;
         an address in the United States:
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
@@ -132,9 +129,8 @@ if ($result->addressErrorNumber != 0) {
 
     // valid address?
     $valid = ($result->valid == 'VALID');
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
       </para>
     </sect2>
 
@@ -165,7 +161,6 @@ if ($result->addressErrorNumber != 0) {
         that will retrieve sales and use tax data for the United States and Canada, respectively.
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
 $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
@@ -182,9 +177,8 @@ echo $rateInfo->GST;              // or just the GST (Goods & Services Tax)
 // Query tax rate for Cupertino, CA USA
 $rateInfo = $taxBasic->getTaxRateUS(array('zip_code' => 95014));
 print_r($rateInfo);               // show all properties
-echo $rateInfo->state_sales_tax;  // or just the state sales tax
-
-?>]]></programlisting>
+echo $rateInfo->state_sales_tax;  // or just the state sales tax]]>
+        </programlisting>
       </para>
     </sect2>
 </sect1>

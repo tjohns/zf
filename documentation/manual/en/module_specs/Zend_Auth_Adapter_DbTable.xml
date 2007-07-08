@@ -84,7 +84,8 @@ $sqlInsert = 'INSERT INTO users (username, password, real_name) '
            . 'VALUES ("my_username", "my_password", "My Real Name")';
 
 // Insert the data
-$dbAdapter->query($sqlInsert);]]></programlisting>
+$dbAdapter->query($sqlInsert);]]>
+                </programlisting>
 
             </para>
 
@@ -103,7 +104,8 @@ $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'p
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $authAdapter->setTableName('users')
             ->setIdentityColumn('username')
-            ->setCredentialColumn('password');]]></programlisting>
+            ->setCredentialColumn('password');]]>
+                </programlisting>
 
             </para>
 
@@ -118,7 +120,8 @@ $authAdapter->setIdentity('my_username')
             ->setCredential('my_password');
 
 // Perform the authentication query, saving the result
-$result = $authAdapter->authenticate();]]></programlisting>
+$result = $authAdapter->authenticate();]]>
+                </programlisting>
 
             </para>
 
@@ -142,7 +145,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]></programlisting>
+*/]]>
+                </programlisting>
 
                 Since the table row contains the credential value, it is important to secure the values against
                 unintended access.
@@ -177,7 +181,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 

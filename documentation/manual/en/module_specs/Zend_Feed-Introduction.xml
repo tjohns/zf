@@ -58,9 +58,8 @@ foreach ($slashdotRss as $item) {
         'link'        => $item->link(),
         'description' => $item->description()
         );
-}
-
-?>]]>   </programlisting>
+}]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

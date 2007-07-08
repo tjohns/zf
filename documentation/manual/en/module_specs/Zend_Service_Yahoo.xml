@@ -27,8 +27,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->webSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.imagesearch">
@@ -49,8 +49,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->imageSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
@@ -69,8 +69,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->localSearch('Apple Computers', array('zip' => '95014'));
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.newssearch">
@@ -89,8 +89,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->newsSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.classes">

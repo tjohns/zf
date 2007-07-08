@@ -48,7 +48,7 @@
 
         <example>
             <title>Checking dates</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 // Checking dates
@@ -73,8 +73,8 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
     print "String $date is a date";
 } else {
     print "String $date is NO date";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -104,12 +104,12 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
         <example>
             <title>Getting all avaiable cities</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
 
 // Output the complete list of avaiable cities
-print_r (Zend_Date_Cities::getCityList());
-?>]]></programlisting>
+print_r (Zend_Date_Cities::getCityList());]]>
+            </programlisting>
         </example>
 
         <para>
@@ -166,7 +166,7 @@ print_r (Zend_Date_Cities::getCityList());
 
         <example>
             <title>Getting the location for a city</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
 
 // Get the location for a defined city
@@ -177,8 +177,8 @@ print_r (Zend_Date_Cities::City('Vienna'));
 print_r (Zend_Date_Cities::City('Vienna', 'nautic'));
 
 // self definition of a location
-$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
-?>]]></programlisting>
+$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -191,7 +191,7 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
 
         <example>
             <title>Calculating sun informations</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Date/Cities.php';
 
@@ -209,8 +209,8 @@ print $sunset->get(Zend_Date::ISO_8601);
 $info = $date->getSunInfo($city);
 foreach ($info as $sun) {
     print "\n" . $sun->get(Zend_Date::ISO_8601);
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -247,7 +247,7 @@ foreach ($info as $sun) {
 
         <example>
             <title>Working with timezones</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 // Set a default timezone... this has to be done within the bootstrap file or php.ini
@@ -270,8 +270,8 @@ $date->setTimezone('America/Chicago');
 print $date->getTimezone();
 
 // see the changed date object
-print $date->getIso();
-?>]]></programlisting>
+print $date->getIso();]]>
+            </programlisting>
         </example>
 
         <para>
@@ -290,7 +290,7 @@ print $date->getIso();
 
         <example>
             <title>Multiple timezones</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 // Set a default timezone... this has to be done within the bootstrap file or php.ini
@@ -318,8 +318,8 @@ $lastdate = clone $date;
 $lastdate->setTimezone();
 
 // view our date object
-print $lastdate->getIso();
-?>]]></programlisting>
+print $lastdate->getIso();]]>
+            </programlisting>
         </example>
 
     </sect2>

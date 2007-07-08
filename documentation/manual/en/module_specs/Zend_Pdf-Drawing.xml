@@ -179,8 +179,7 @@ public function drawText($text, $x, $y, $charEncoding = '');]]>
             <programlisting role="php"><![CDATA[<?php
 ...
 $pdfPage->drawText('Hello world!', 72, 720);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -199,8 +198,7 @@ $unicodeString = fread($fp, 1024);
 
 // Draw the string on the page
 $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
     </sect2>
@@ -239,8 +237,7 @@ $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Apply font
 $pdfPage->setFont($font, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -310,8 +307,7 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
 
 // Apply font
 $pdfPage->setFont($goodDogCoolFont, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -330,8 +326,7 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
 
 // Apply font
 $pdfPage->setFont($goodDogCoolFont, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -354,8 +349,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
                                     Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -373,8 +367,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -387,8 +380,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
 $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
                                     (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
                                      Zend_Pdf_Font::EMBED_DONT_COMPRESS));
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
     </sect2>
@@ -422,8 +414,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
 $image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
 

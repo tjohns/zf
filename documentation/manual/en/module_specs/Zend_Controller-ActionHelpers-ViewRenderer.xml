@@ -69,8 +69,8 @@
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+                    </programlisting>
                 </listitem>
 
                 <listitem>
@@ -82,8 +82,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                     <programlisting role="php"><![CDATA[<?php
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
-             ->setViewSuffix('php');
-]]></programlisting>
+             ->setViewSuffix('php');]]>
+                    </programlisting>
                 </listitem>
             </itemizedlist>
         </note>
@@ -100,8 +100,8 @@ $viewRenderer->setView($view)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        </programlisting>
 
         <para>
             The first time an action controller is instantiated, it will trigger
@@ -140,11 +140,12 @@ class Foo_BarController extends Zend_Controller_Action
         $this->view->foo = 'bar';
     }
 }
-?>
+
+...
 
 // in one of your view scripts:
-<?php $this->foo(); // call Foo_View_Helper_Foo::foo() ?>
-]]></programlisting>
+<?php $this->foo(); // call Foo_View_Helper_Foo::foo()]]>
+        </programlisting>
 
         <para>
             The <code>ViewRenderer</code> also defines a number of accessors to
@@ -256,7 +257,8 @@ $this->_helper->viewRenderer('foo');
 // render form.phtml to the 'html' response segment, without using a
 // controller view script subdirectory:
 $this->_helper->viewRenderer('form', 'html', true);
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <note><para>
                         <code>setRender()</code> and <code>direct()</code> don't
@@ -277,7 +279,8 @@ $this->_helper->viewRenderer('form', 'html', true);
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             There are several additional methods for customizing path
@@ -489,7 +492,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <para>
                 At its most basic, you simply initialize and register the
                 <code>ViewRenderer</code> helper with the helper broker in your
-                bootstrap, and then set variables in your action methods. 
+                bootstrap, and then set variables in your action methods.
             </para>
 
             <note>
@@ -526,7 +529,8 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <programlisting role="php"><![CDATA[<?php
 // In your bootstrap:
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-?>
+
+...
 
 <?php
 // 'foo' module, 'bar' controller:
@@ -556,9 +560,8 @@ class Foo_BarController extends Zend_Controller_Action
     {
         $this->_redirect('/index');
     }
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <example>
@@ -599,9 +602,8 @@ class Bar_BatController extends Zend_Controller_Action
         // Never auto render this controller's actions
         $this->_helper->viewRenderer->setNoRender();
     }
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <example>
@@ -646,9 +648,8 @@ class Foo_BarController extends Zend_Controller_Action
         // otherwise continue processing...
     }
 
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <example>
@@ -678,8 +679,8 @@ class Foo_BarController extends Zend_Controller_Action
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 
@@ -723,8 +724,8 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+            </programlisting>
         </example>
 
         <example>
@@ -754,8 +755,8 @@ class SearchController extends Zend_Controller_Action
     {
         // do nothing; ViewRenderer autorenders the view script
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 </sect3>

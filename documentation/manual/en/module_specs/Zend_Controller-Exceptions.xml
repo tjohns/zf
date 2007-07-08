@@ -74,8 +74,8 @@ try {
     $front->dispatch();
 } catch (Exception $e) {
     // handle exceptions yourself
-}
-]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     This method is probably the easiest way to add custom
@@ -121,8 +121,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}
-]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     The primary advantage this method offers over
@@ -170,8 +170,8 @@ if ($response->isException()) {
 $front->setParam('useDefaultControllerAlways', true);
 
 // or
-$dispatcher->setParam('useDefaultControllerAlways', true);
-]]></programlisting>
+$dispatcher->setParam('useDefaultControllerAlways', true);]]>
+                        </programlisting>
 
                         <para>
                             When this flag is set, the dispatcher will use the
@@ -228,8 +228,8 @@ class My_Controller_Action extends Zend_Controller_Action
 
         throw new Exception('Invalid method');
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
                         <para>
                             The example above intercepts any undefined action
                             method called and redirects it to the default action
@@ -266,8 +266,8 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
         return $action;
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
 
                         <para>
                             The above code checks to see that the requested
@@ -338,8 +338,8 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
             exit;
         }
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
 
                         <para>
                             In this example, we check to see if the action

@@ -31,8 +31,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);
-]]></programlisting>
+$front->setParam('noErrorHandler', true);]]>
+        </programlisting>
 
         <para>
             The <code>ViewRenderer</code> action helper automates view injection
@@ -52,8 +52,8 @@ $front->setParam('noErrorHandler', true);
 
         <programlisting role="php"><![CDATA[<?php
 // Assuming $front is an instance of Zend_Controller_Front
-$front->setParam('noViewRenderer', true);
-]]></programlisting>
+$front->setParam('noViewRenderer', true);]]>
+        </programlisting>
 
         <para>
             However, this is not a good long term strategy, as it means most
@@ -76,12 +76,12 @@ $front->setParam('noViewRenderer', true);
         </itemizedlist>
 
         <para>
-            The easiest change is to disable auto-rendering for that method: 
+            The easiest change is to disable auto-rendering for that method:
         </para>
 
         <programlisting role="php"><![CDATA[
-$this->_helper->viewRenderer->setNoRender();
-]]></programlisting>
+$this->_helper->viewRenderer->setNoRender();]]>
+        </programlisting>
 
         <para>
             If you find that none of your action methods are rendering,
@@ -96,8 +96,8 @@ public function preDispatch()
     // disable view script autorendering
     $this->_helper->viewRenderer->setNoRender()
     // .. do other things...
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             If you are calling <code>render()</code>, and you're using <link
@@ -154,8 +154,8 @@ public function preDispatch()
                 <programlisting role="php"><![CDATA[<?php
 // Assuming $view has already been defined
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -165,8 +165,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
                 <programlisting role="php"><![CDATA[<?php
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-$viewRenderer->setView($view);
-]]></programlisting>
+$viewRenderer->setView($view);]]>
+                </programlisting>
             </listitem>
         </itemizedlist>
 
@@ -240,8 +240,8 @@ $viewRenderer->setView($view);
 
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');
-]]></programlisting>
+Zend_Controller_Front::run('/path/to/controllers');]]>
+        </programlisting>
 
         <para>
             However, the directory structure underwent an overhaul, several
@@ -299,8 +299,8 @@ Zend_Controller_Front::run('/path/to/controllers');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);
-]]></programlisting>
+final protected function _forward($action, $controller = null, $module = null, array $params = null);]]>
+                </programlisting>
 
                 <para>
                     <code>$action</code> is always required; if no controller is
@@ -326,8 +326,8 @@ final protected function _forward($action, $controller = null, $module = null, a
 
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');
-]]></programlisting>
+Zend_Controller_Front::run('/path/to/controllers');]]>
+        </programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- create a router -- */
@@ -341,8 +341,8 @@ $ctrl->setRouter($router);
 
 /* -- set controller directory and dispatch -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
-$ctrl->dispatch();
-]]></programlisting>
+$ctrl->dispatch();]]>
+        </programlisting>
 
         <para>
             We encourage use of the Response object to aggregate content and
@@ -382,8 +382,8 @@ $ctrl->dispatch();
                             controller:
                         </para>
                         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);
-]]></programlisting>
+$front->throwExceptions(true);]]>
+                        </programlisting>
                     </listitem>
 
                     <listitem>
@@ -400,8 +400,8 @@ $front->dispatch();
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
-echo $response;
-]]></programlisting>
+echo $response;]]>
+                        </programlisting>
                     </listitem>
                 </itemizedlist>
             </listitem>
@@ -494,9 +494,8 @@ $action = $this->getRequest()->getActionName();
 // the request object now.
 $params = $this->_getParams();
 $foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
-                                           // 'default' as default value if not found
-
-]]></programlisting>
+                                           // 'default' as default value if not found]]>
+                        </programlisting>
                     </listitem>
 
                     <listitem>
@@ -517,8 +516,8 @@ public function __call($method, $args)
     }
 
     throw new Zend_Controller_Exception('Invalid method called');
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
                     </listitem>
                 </itemizedlist>
             </listitem>

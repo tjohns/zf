@@ -28,8 +28,8 @@ application/
             IndexController.php
             ListController.php
         models/
-        views/
-]]></programlisting>
+        views/]]>
+        </programlisting>
 
         <para>
             In this paradigm, the module name serves as a prefix to the
@@ -84,8 +84,8 @@ application/
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
-));
-?>]]></programlisting>
+));]]>
+        </programlisting>
 
         <para>
             <code>addControllerDirectory()</code> will take an optional second
@@ -95,8 +95,8 @@ $front->setControllerDirectory(array(
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
-?>]]></programlisting>
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        </programlisting>
 
         <para>
             Saving the best for last, the easiest way to specify module
@@ -117,8 +117,8 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');
-?>]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');]]>
+        </programlisting>
 
         <para>
             The above example will define the <code>default</code>,
@@ -144,8 +144,8 @@ $front->addModuleDirectory('/path/to/application/modules');
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');
-?>]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');]]>
+        </programlisting>
 
         <note><para>
             You can indicate that no controller subdirectory be used for your
@@ -195,8 +195,8 @@ $front->addModuleDirectory('/path/to/application/modules');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);
-?>]]></programlisting>
+$front->setParam('useDefaultControllerAlways', true);]]>
+        </programlisting>
     </sect2>
 </sect1>
 <!--

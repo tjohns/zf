@@ -44,8 +44,8 @@ foreach ($hits as $hit) {
 
     // Another way to get 'title' document field
     $title = $hit->getDocument()->title;
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </para>
     </sect2>
 
@@ -76,8 +76,8 @@ foreach ($hits as $hit) {
             <programlisting role="php"><![CDATA[<?php
 $index = Zend_Search_Lucene::open($indexPath);
 
-$index->optimize();
-]]></programlisting>
+$index->optimize();]]>
+            </programlisting>
         </para>
 
         <para>
@@ -249,8 +249,8 @@ $index = Zend_Search_Lucene::open($indexPath);
 
 ...
 
-unset($index);
-?>]]></programlisting>
+unset($index);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -258,8 +258,8 @@ unset($index);
             <programlisting role="php"><![CDATA[<?php
 $index = Zend_Search_Lucene::open($indexPath);
 
-$index->commit();
-?>]]></programlisting>
+$index->commit();]]>
+            </programlisting>
             This possibility is also described in "<link linkend="zend.search.lucene.advanced.static">Advanced. Using index as static property</link>"
             documentation section.
         </para>
@@ -309,8 +309,8 @@ foreach ($docIds as $id) {
     $title    = $doc->title;
     $contents = $doc->contents;
     ...
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </para>
     </sect2>
 
@@ -381,8 +381,8 @@ foreach ($docIds as $id) {
             <programlisting role="php"><![CDATA[<?php
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
-]]></programlisting>
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
+            </programlisting>
             That's the best way to avoid ambiguity in encoding specification.
         </para>
 
@@ -397,8 +397,8 @@ setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
 
 setlocale(LC_ALL, 'ru_RU.UTF-8');
-...
-]]></programlisting>
+...]]>
+            </programlisting>
         </para>
 
         <para>
@@ -414,8 +414,8 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
             <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
-...
-]]></programlisting>
+...]]>
+            </programlisting>
         </para>
 
         <para>
@@ -423,8 +423,8 @@ $hits = $index->find($query);
             <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
-...
-]]></programlisting>
+...]]>
+            </programlisting>
             Empty string means 'current locale'.
         </para>
 

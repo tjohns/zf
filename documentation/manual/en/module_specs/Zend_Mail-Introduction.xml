@@ -18,8 +18,8 @@ $mail->setBodyText('This is the text of the mail.');
 $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send();
-?>]]>   </programlisting>
+$mail->send();]]>
+        </programlisting>
     </example>
     <note>
         <title>Minimum definitions</title>
@@ -49,8 +49,8 @@ $mail->setBodyText('This is the text of the mail.')
     ->setFrom('somebody@example.com', 'Some Sender')
     ->addTo('somebody_else@example.com', 'Some Recipient')
     ->setSubject('TestSubject')
-    ->send();
-?>]]>   </programlisting>
+    ->send();]]>
+        </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

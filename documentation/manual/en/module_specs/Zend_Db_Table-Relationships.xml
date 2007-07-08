@@ -38,7 +38,6 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 class Accounts extends Zend_Db_Table_Abstract
 {
     protected $_name            = 'accounts';
@@ -257,7 +256,6 @@ $row->findDependentRowset($table, [$rule]);]]>
                 reported by that account.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
@@ -292,7 +290,6 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
                 relationship in this example is <code>'Engineer'</code>.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
@@ -351,7 +348,6 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]>
                 table and rule as strings.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $accountsTable    = new Accounts();
 $accountsRowset   = $accountsTable->find(1234);
 $user1234         = $accountsRowset->current();
@@ -403,7 +399,6 @@ $row->findParentRow($table, [$rule]);]]>
                 table for the user who reported the bug.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
@@ -438,7 +433,6 @@ $reporter          = $bug1->findParentRow('Accounts');]]>
                 relationship in this example is <code>'Engineer'</code>.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
@@ -492,7 +486,6 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
                 table and rule as strings.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $bugsTable         = new Bugs();
 $bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
 $bug1              = $bugsRowset->current();
@@ -557,7 +550,6 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]]);]]>
                 related to that bug.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
@@ -611,7 +603,6 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]
                 related to that bug.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
@@ -672,7 +663,6 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', '
                 to a given bug.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
@@ -732,14 +722,13 @@ $products          = $bug1234->findProductsViaBugsProductsByBug();]]>
                 rows in the <code>Bugs</code> table.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $productsTable  = new Products();
 $productsRowset = $productsTable->find(1234);
 $product1234    = $productsRowset->current();
 
 $product1234->delete();
 // Automatically cascades to Bugs table
-// and deletes dependent rows.  ]]>
+// and deletes dependent rows.]]>
             </programlisting>
         </example>
 
@@ -790,7 +779,6 @@ $product1234->delete();
                 <code>'onUpdate'</code> entry.
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 class BugsProducts extends Zend_Db_Table_Abstract
 {
     ...

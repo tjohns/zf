@@ -22,8 +22,8 @@ require_once 'Zend/Rest/Client.php';
 
 $client = new Zend_Rest_Client('http://framework.zend.com/rest');
 
-echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
-?>]]></programlisting>
+echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"]]>
+            </programlisting>
         </example>
 
         <note>
@@ -39,8 +39,8 @@ echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
 
             <programlisting role="php"><![CDATA[<?php
 $client->sayHello('Davey', 'Day');
-echo $client->get();
-?>]]></programlisting>
+echo $client->get();]]>
+            </programlisting>
         </note>
     </sect2>
 
@@ -67,8 +67,8 @@ $result = $client->sayHello('Davey', 'Day')->get();
 
 if ($result->isSuccess()) {
     echo $result; // "Hello Davey, Good Day"
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -101,9 +101,7 @@ $technorati = new Zend_Rest_Client('http://api.technorati.com/bloginfo');
 $technorati->key($key);
 $technorati->url('http://pixelated-dreams.com');
 $result = $technorati->get();
-echo $result->firstname() .' '. $result->lastname();
-
-?>]]>
+echo $result->firstname() .' '. $result->lastname();]]>
             </programlisting>
         </example>
 
@@ -135,7 +133,8 @@ echo $result->firstname() .' '. $result->lastname();
             <inboundlinks>218</inboundlinks>
         </result>
     </document>
-</tapi>]]></programlisting>
+</tapi>]]>
+            </programlisting>
         </example>
 
         <para>
@@ -182,8 +181,8 @@ $client->get();
 
 // or
 
-$client->arg('value1')->arg2('value2')->get();
-?>]]></programlisting>
+$client->arg('value1')->arg2('value2')->get();]]>
+            </programlisting>
         </example>
 
         <para>

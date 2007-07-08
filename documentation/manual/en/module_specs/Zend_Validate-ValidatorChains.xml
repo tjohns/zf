@@ -9,7 +9,6 @@
         12 alphanumeric characters:
 
         <programlisting role="php"><![CDATA[<?php
-
 // Provides validator chaining capability
 require_once 'Zend/Validate.php';
 
@@ -30,9 +29,8 @@ if ($validatorChain->isValid($username)) {
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         Validators are run in the order they were added to <code>Zend_Validate</code>. In the above example,
         the username is first checked to ensure that its length is between 6 and 12 characters, and then it is
@@ -52,11 +50,9 @@ if ($validatorChain->isValid($username)) {
         validation fails:
 
         <programlisting role="php"><![CDATA[<?php
-
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
-        ->addValidator(new Zend_Validate_Alnum());
-
-?>]]></programlisting>
+        ->addValidator(new Zend_Validate_Alnum());]]>
+        </programlisting>
 
     </para>
 

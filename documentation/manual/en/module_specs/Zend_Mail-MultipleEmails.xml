@@ -8,8 +8,7 @@
     </para>
     <example>
         <title>Sending Multiple Mails per SMTP Connection</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // build message...
@@ -20,8 +19,8 @@ $tr->connect();
 for ($i = 0; $i < 5; $i++) {
 $mail->send();
 }
-$tr->disconnect();
-?>]]>   </programlisting>
+$tr->disconnect();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

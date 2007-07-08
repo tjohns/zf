@@ -216,8 +216,8 @@
             <code>Zend_Cache::factory()</code> method:
         </para>
         <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');
-?>]]></programlisting>
+$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        </programlisting>
         <para>
             There is no options for this backend.
         </para>
