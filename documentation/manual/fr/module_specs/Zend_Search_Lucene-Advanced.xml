@@ -13,7 +13,7 @@
         </para>
 
         <para>
-            Si la limite <code>MaxBufferedDocs</code> n'est pas atteinte alors il y a quelques documents "unsaved" (non-sauvegardé) qui sont sauvegardés en tant que nouveau segment dans le destructeur d'objet. Le procédé d'auto-optimisation de l'index est appelé si besoin selon des paramètres de <code>MaxBufferedDocs</code>, <code>MaxMergeDocs</code> et <code>MergeFactor</code> parameters.
+            Si la limite <code>MaxBufferedDocs</code> n'est pas atteinte alors il y a quelques documents "unsaved" (non-sauvegardé) qui sont sauvegardés en tant que nouveau segment dans le destructeur d'objet. Le processus d'auto-optimisation de l'index est appelé si besoin selon des paramètres de <code>MaxBufferedDocs</code>, <code>MaxMergeDocs</code> et <code>MergeFactor</code>.
         </para>
 
         <para>
@@ -41,18 +41,18 @@ Searcher::initIndex();
         </para>
 
         <para>
-             Vous obtiendrez le message d'erreur "Fatal error: Exception thrown without a stack frame in Unknown on line 0" au lieu de la description d'exception pour de tels cas.
+            Vous obtiendrez le message d'erreur "Fatal error: Exception thrown without a stack frame in Unknown on line 0" au lieu de la description d'exception pour de tels cas.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> donne la possibilité d'apréhender ce problème avec la méthode <code>commit()</code>. Elle sauve tous les changements non-sauvegardés et libère la mémoire utilisée pour stocker de nouveaux segments. Vous êtes libre d'employer la méthode <code>commit()</code> n'importe quand ou plusieurs fois pendant l'exécution de script. Vous pouvez encore employer l'objet <code>Zend_Search_Lucene</code> pour rechercher, ajouter ou supprimer un document après l'opération <code>commit()</code>. Mais <code>commit()</code> donne la garantie, que s'il n'y a aucun document s'ajoutant ou supprimant après que l'appel <code>commit()</code>, alors le destructeur de <code>Zend_Search_Lucene</code> n'a rien à faire et ne lève aucune exception :
+            <code>Zend_Search_Lucene</code> donne la possibilité d'appréhender ce problème avec la méthode <code>commit()</code>. Elle sauve tous les changements non-sauvegardés et libère la mémoire utilisée pour stocker de nouveaux segments. Vous êtes libre d'employer la méthode <code>commit()</code> n'importe quand ou plusieurs fois pendant l'exécution de script. Vous pouvez encore employer l'objet <code>Zend_Search_Lucene</code> pour rechercher, ajouter ou supprimer un document après l'opération <code>commit()</code>. Mais <code>commit()</code> donne la garantie, que s'il n'y a aucun document s'ajoutant ou supprimant après que l'appel <code>commit()</code>, alors le destructeur de <code>Zend_Search_Lucene</code> n'a rien à faire et ne lève aucune exception :
 
             <programlisting role="php"><![CDATA[<?php
 class Searcher {
     private static $_index;
 
     public static function initIndex() {
-        self::$_index = Zend_Search_Lucene::open('path/to/index');
+        self::$_index = Zend_Search_Lucene::open('chemin/vers/index');
     }
 
     ...

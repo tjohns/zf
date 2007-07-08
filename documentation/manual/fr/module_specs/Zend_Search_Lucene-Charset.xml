@@ -1,11 +1,11 @@
 ﻿<sect1 id="zend.search.lucene.charset">
-    <title>Jeux de caractères.</title>
+    <title>Jeux de caractères</title>
 
     <sect2 id="zend.search.lucene.charset.description">
         <title>Support d'UTF-8 et de jeux de caractères mono-octet.</title>
 
         <para>
-            Zend_Search_Lucene fonctionne avec UTF-8. Les fichier d'index stockent des données unicode en JAVA "modified UTF-8 encoding". Le coeur de Zend_Search_Lucene le supporte complètement, à une exception près :
+            Zend_Search_Lucene fonctionne avec UTF-8. Les fichiers d'index stockent des données unicodes en JAVA "modified UTF-8 encoding". Le coeur de Zend_Search_Lucene le supporte complètement, à une exception près :
             <footnote>
                <para>
                    Zend_Search_Lucene supporte uniquement les caractères BMP (Basic Multilingual Plane, de 0x0000 à 0xFFFF) et ne supporte pas les &quot;caractères supplémentaires&quot; (ceux dont le code est supérieur à 0xFFFF).
@@ -28,7 +28,7 @@
         </para>
 
         <para>
-            <code>ctype_alpha()</code> n'est pas compatible UTF-8, donc l'nalyseur converti le texte en encodage 'ASCII//TRANSLIT' avant l'indexation. Le même processus est réalisé durant l'analyse de la requête, ceci est donc transparent.
+            <code>ctype_alpha()</code> n'est pas compatible UTF-8, donc l'analyseur converti le texte en encodage 'ASCII//TRANSLIT' avant l'indexation. Le même processus est réalisé durant l'analyse de la requête, ceci est donc transparent.
             <footnote>
                <para>
                    La conversion en 'ASCII//TRANSLIT' peut dépendre de la localisation et de l'OS.
@@ -38,7 +38,7 @@
     </sect2>
 
     <sect2 id="zend.search.lucene.charset.utf_analyzer">
-        <title>Analysseur textuel compatible UTF-8</title>
+        <title>Analyseur textuel compatible UTF-8</title>
 
         <para>
             Zend_Search_Lucene contient également un analyseur utf-8 aux fonctionnalités limitées. Il peut être activé avec le code suivant :

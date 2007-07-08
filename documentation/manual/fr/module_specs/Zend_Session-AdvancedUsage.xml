@@ -33,7 +33,7 @@ Zend_Session::start();
         <orderedlist>
             <listitem>
                 <para>
-                    Mauvaise : ne pas activer <ulink url="http://www.php.net/manual/en/ref.session.php#ini.session.auto-start"><code>session.auto_start</code> de PHP. Si vous n'avez pas la possibilité de désactiver ce réglage dans le php.ini, ou que vous utilisez mod_php (ou équivalent), et que le réglage est déjà activé dans le <code>php.ini</code>, alors ajoutez le code suivant à votre fichier <code>.htaccess</code> (habituellement votre dossier de démarrage HTML) :
+                    Mauvaise : ne pas activer <ulink url="http://www.php.net/manual/en/ref.session.php#ini.session.auto-start"><code>session.auto_start</code></ulink> de PHP. Si vous n'avez pas la possibilité de désactiver ce réglage dans le php.ini, ou que vous utilisez mod_php (ou équivalent), et que le réglage est déjà activé dans le <code>php.ini</code>, alors ajoutez le code suivant à votre fichier <code>.htaccess</code> (habituellement votre dossier de démarrage HTML) :
                     <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]></programlisting>
                 </para>
             </listitem>
@@ -218,6 +218,8 @@ try {
     echo "Cannot instantiate this namespace since \$authSpaceAccessor2 was created\n";
 }?>]]></programlisting>
 
+        </example>
+        
         <para>
             Le second paramètre dans le constructeur ci-dessus informe <code>Zend_Session_Namespace</code> que toute future instance avec l'espace de nommage "Zend_Auth" sera refusée. Tenter de créer une instance entraînera la levée d'une exception par le constructeur. Le développeur devient responsable de stocker quelquepart une référence à l'instance de l'objet (<code>$authSpaceAccessor1</code>, <code>$authSpaceAccessor2</code>, ou <code>$authSpaceAccessor3</code> dans l'exemple ci-dessus), si l'accès à l'espace de nommage de session est nécessaire plus tard dans la même requête. Par exmple, le développeur peut stocker la référence dans une variable statique
 , ajouter la référence au <ulink url="http://www.martinfowler.com/eaaCatalog/registry.html">registrey</ulink> (voir <xref linkend="zend.registry" />), ou sinon la rendre disponible pour les autres méthodes qui peuvent avoir accès à cet espace de nommage.
