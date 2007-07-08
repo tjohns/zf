@@ -563,6 +563,59 @@ print $date;
                         </entry>
                     </row>
                     <row>
+                        <entry>toArray()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">toArray()</emphasis>
+                            </para>
+                            <para>
+                                Returns an array representation of the selected date according to
+                                the conventions of the object's locale. The returned array is equivalent to
+                                PHP's <ulink url="http://php.net/getdate">getdate()</ulink> function and includes:
+                            </para>
+                            <para>
+                                <itemizedlist>
+                                    <listitem>
+                                        Number of day as '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Number of month as '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Year as '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Hour as '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Minute as '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Second as '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Abbreviated timezone as '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Unix timestamp as '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Number of weekday as '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Day of year as '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Week as '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Delay of timezone to GMT as '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                    </listitem>
+                                </itemizedlist>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
                         <entry>toValue()</entry>
                         <entry>
                             <para>
