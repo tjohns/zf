@@ -4432,7 +4432,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::ISO_8601), '2020-01-01T00:00:00-06:00');
         $date->addMonth(12);
         $this->assertSame($date->get(Zend_Date::ISO_8601), '2021-01-01T00:00:00-06:00');
-        
+
     }
 
     /**
@@ -4511,8 +4511,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->getWeek()->toString(),'08.01.1970 05:00:00');
 
         //Saturday [ar_EG]
-	    // The right value for AM/PM has to be set in arabic letters
-	    $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 5:00:00 ص');
+        // The right value for AM/PM has to be set in arabic letters
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 5:00:00 ص');
         $date->setTimeZone('UTC');
         $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 12:00:00 ص');
         $date->setTimeZone('Indian/Maldives');
@@ -5307,6 +5307,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
                       'second' => 59, 'timezone' => 'MVT', 'timestamp' => 1136228339, 'weekday' => 1,
                       'dayofyear' => 1, 'week' => '01', 'gmtsecs' => 18000);
         $this->assertEquals($return, $orig);
+    }
+
+    public function testFromArray()
+    {
+        $date = new Zend_Date(array('day' => 04, 'month' => 12, 'year' => 2006, 'hour' => 10,
+                                    'minute' => 56, 'second' => 30), 'en_US');
+        $this->assertSame($date->getIso(), '2006-12-04T10:56:30+05:00');
     }
 }
 
