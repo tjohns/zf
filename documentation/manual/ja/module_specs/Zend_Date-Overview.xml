@@ -671,6 +671,60 @@ print $date;
                         </entry>
                     </row>
                     <row>
+                        <entry>toArray()</entry>
+                        <entry>
+                            <para>
+                                <emphasis role="strong">toArray()</emphasis>
+                            </para>
+                            <para>
+                                選択した日付を、そのオブジェクトのロケールにもとづいて配列形式で返します。
+                                返される配列は
+                                PHP の <ulink url="http://php.net/getdate">getdate()</ulink>
+                                関数が返すものと同じ形式で、次のような要素を含みます。
+                            </para>
+                            <para>
+                                <itemizedlist>
+                                    <listitem>
+                                        日を表す '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        月を表す '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        年を表す '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                    </listitem>
+                                    <listitem>
+                                        時間を表す '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        分を表す '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        秒を表す '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        タイムゾーンの略称を表す '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                    </listitem>
+                                    <listitem>
+                                        Unix タイムスタンプを表す '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                    </listitem>
+                                    <listitem>
+                                        曜日番号を表す '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                    </listitem>
+                                    <listitem>
+                                        年初からの日数を表す '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                    </listitem>
+                                    <listitem>
+                                        週を表す '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                    </listitem>
+                                    <listitem>
+                                        GMT からの時差を表す '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                    </listitem>
+                                </itemizedlist>
+                            </para>
+                        </entry>
+                    </row>
+                    <row>
                         <entry>toValue()</entry>
                         <entry>
                             <para>
