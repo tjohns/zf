@@ -323,6 +323,16 @@ echo $myNamespace->someArray['foo']; // affiche "bar"
 
     </sect2>
 
+    <sect2 id="zend.session.advanced_usage.objects">
+
+        <title>Utiliser les sessions avec des objets</title>
+
+        <para>
+            Si vous prévoyez de rendre persistant des objets dans les sessions PHP, pensez qu'ils peuvent être <ulink url="http://www.php.net/manual/en/language.oop.serialization.php">sérialisé</ulink> pour le stockage. Ainsi, tout objet persistant dans les sessions PHP doit être désérialisé après sa récupération à partir du stockage. L'implication est que le développeur doit s'assurer que les classes des objets persistants doivent avoir été définies avant que l'objet ne soit désérialisé du stockage. Si aucune classe n'est définie pour l'objet désérialisé, alors il devient une instance de <code>stdClass</code>.
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.session.advanced_usage.testing">
 
         <title>Utiliser les sessions avec les tests unitaires</title>

@@ -88,6 +88,7 @@
         <xi:include href="module_specs/Zend_Date-Basic.xml" />
         <xi:include href="module_specs/Zend_Date-Theory.xml" />
         <xi:include href="module_specs/Zend_Date-Overview.xml" />
+        <xi:include href="module_specs/Zend_Date-Creation.xml" />
         <xi:include href="module_specs/Zend_Date-Constants.xml" />
         <xi:include href="module_specs/Zend_Date-Additional.xml" />
     </chapter>
