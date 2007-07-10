@@ -21,13 +21,6 @@
 
 
 /**
- * Include needed Locale classes
- */
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
-
-
-/**
  * @category   Zend
  * @package    Zend_Locale
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
@@ -37,358 +30,42 @@ class Zend_Locale {
 
     // Class wide Locale Constants
     private static $_LocaleData = array(
-        'root'  => '',
-        'aa_DJ' => '',
-        'aa_ER' => '',
-        'aa_ET' => '',
-        'aa'    => '',
-        'af_ZA' => 'iso-8859-1,windows-1252',
-        'af'    => 'iso-8859-1,windows-1252',
-        'am_ET' => '',
-        'am'    => '',
-        'ar_AE' => 'iso-8859-6,windows-1256',
-        'ar_BH' => 'iso-8859-6,windows-1256',
-        'ar_DZ' => 'iso-8859-6,windows-1256',
-        'ar_EG' => 'iso-8859-6,windows-1256',
-        'ar_IQ' => 'iso-8859-6,windows-1256',
-        'ar_JO' => 'iso-8859-6,windows-1256',
-        'ar_KW' => 'iso-8859-6,windows-1256',
-        'ar_LB' => 'iso-8859-6,windows-1256',
-        'ar_LY' => 'iso-8859-6,windows-1256',
-        'ar_MA' => 'iso-8859-6,windows-1256',
-        'ar_OM' => 'iso-8859-6,windows-1256',
-        'ar_QA' => 'iso-8859-6,windows-1256',
-        'ar_SA' => 'iso-8859-6,windows-1256',
-        'ar_SD' => 'iso-8859-6,windows-1256',
-        'ar_SY' => 'iso-8859-6,windows-1256',
-        'ar_TN' => 'iso-8859-6,windows-1256',
-        'ar_YE' => 'iso-8859-6,windows-1256',
-        'ar'    => 'iso-8859-6,windows-1256',
-        'as_IN' => '',
-        'as'    => '',
-        'az_AZ' => '',
-        'az'    => '',
-        'be_BY' => 'iso-8859-5',
-        'be'    => 'iso-8859-5',
-        'bg_BG' => 'iso-8859-5',
-        'bg'    => 'iso-8859-5',
-        'bn_IN' => '',
-        'bn'    => '',
-        'bs_BA' => '',
-        'bs'    => '',
-        'byn_ER'=> '',
-        'byn'   => '',
-        'ca_ES' => 'iso-8859-1,windows-1252',
-        'ca'    => 'iso-8859-1,windows-1252',
-        'cs_CZ' => 'iso-8859-2',
-        'cs'    => 'iso-8859-2',
-        'cy_GB' => '',
-        'cy'    => '',
-        'da_DK' => 'iso-8859-1,windows-1252',
-        'da'    => 'iso-8859-1,windows-1252',
-        'de_AT' => 'iso-8859-1,windows-1252',
-        'de_BE' => 'iso-8859-1,windows-1252',
-        'de_CH' => 'iso-8859-1,windows-1252',
-        'de_DE' => 'iso-8859-1,windows-1252',
-        'de_LI' => 'iso-8859-1,windows-1252',
-        'de_LU' => 'iso-8859-1,windows-1252',
-        'de'    => 'iso-8859-1,windows-1252',
-        'dv_MV' => '',
-        'dv'    => '',
-        'dz_BT' => '',
-        'dz'    => '',
-        'el_CY' => 'iso-8859-7',
-        'el_GR' => 'iso-8859-7',
-        'el'    => 'iso-8859-7',
-        'en_AS' => 'iso-8859-1,windows-1252',
-        'en_AU' => 'iso-8859-1,windows-1252',
-        'en_BE' => 'iso-8859-1,windows-1252',
-        'en_BW' => 'iso-8859-1,windows-1252',
-        'en_BZ' => 'iso-8859-1,windows-1252',
-        'en_CA' => 'iso-8859-1,windows-1252',
-        'en_GB' => 'iso-8859-1,windows-1252',
-        'en_GU' => 'iso-8859-1,windows-1252',
-        'en_HK' => 'iso-8859-1,windows-1252',
-        'en_IE' => 'iso-8859-1,windows-1252',
-        'en_IN' => 'iso-8859-1,windows-1252',
-        'en_JM' => 'iso-8859-1,windows-1252',
-        'en_MH' => 'iso-8859-1,windows-1252',
-        'en_MP' => 'iso-8859-1,windows-1252',
-        'en_MT' => 'iso-8859-1,windows-1252',
-        'en_NZ' => 'iso-8859-1,windows-1252',
-        'en_PH' => 'iso-8859-1,windows-1252',
-        'en_PK' => 'iso-8859-1,windows-1252',
-        'en_SG' => 'iso-8859-1,windows-1252',
-        'en_TT' => 'iso-8859-1,windows-1252',
-        'en_UM' => 'iso-8859-1,windows-1252',
-        'en_US' => 'iso-8859-1,windows-1252',
-        'en_VI' => 'iso-8859-1,windows-1252',
-        'en_ZA' => 'iso-8859-1,windows-1252',
-        'en_ZW' => 'iso-8859-1,windows-1252',
-        'en'    => 'iso-8859-1,windows-1252',
-        'eo'    => 'iso-8859-3',
-        'es_AR' => 'iso-8859-1,windows-1252',
-        'es_BO' => 'iso-8859-1,windows-1252',
-        'es_CL' => 'iso-8859-1,windows-1252',
-        'es_CO' => 'iso-8859-1,windows-1252',
-        'es_CR' => 'iso-8859-1,windows-1252',
-        'es_DO' => 'iso-8859-1,windows-1252',
-        'es_EC' => 'iso-8859-1,windows-1252',
-        'es_ES' => 'iso-8859-1,windows-1252',
-        'es_GT' => 'iso-8859-1,windows-1252',
-        'es_HN' => 'iso-8859-1,windows-1252',
-        'es_MX' => 'iso-8859-1,windows-1252',
-        'es_NI' => 'iso-8859-1,windows-1252',
-        'es_PA' => 'iso-8859-1,windows-1252',
-        'es_PE' => 'iso-8859-1,windows-1252',
-        'es_PR' => 'iso-8859-1,windows-1252',
-        'es_PY' => 'iso-8859-1,windows-1252',
-        'es_SV' => 'iso-8859-1,windows-1252',
-        'es_US' => 'iso-8859-1,windows-1252',
-        'es_UY' => 'iso-8859-1,windows-1252',
-        'es_VE' => 'iso-8859-1,windows-1252',
-        'es'    => 'iso-8859-1,windows-1252',
-        'et_EE' => 'iso-8859-15',
-        'et'    => 'iso-8859-15',
-        'eu_ES' => 'iso-8859-1,windows-1252',
-        'eu'    => 'iso-8859-1,windows-1252',
-        'fa_AF' => '',
-        'fa_IR' => '',
-        'fa'    => '',
-        'fi_FI' => 'iso-8859-1,windows-1252',
-        'fi'    => 'iso-8859-1,windows-1252',
-        'fo_FO' => 'iso-8859-1,windows-1252',
-        'fo'    => 'iso-8859-1,windows-1252',
-        'fr_BE' => 'iso-8859-1,windows-1252',
-        'fr_CA' => 'iso-8859-1,windows-1252',
-        'fr_CH' => 'iso-8859-1,windows-1252',
-        'fr_FR' => 'iso-8859-1,windows-1252',
-        'fr_LU' => 'iso-8859-1,windows-1252',
-        'fr_MC' => 'iso-8859-1,windows-1252',
-        'fr'    => 'iso-8859-1,windows-1252',
-        'ga_IE' => 'iso-8859-1,windows-1252',
-        'ga'    => 'iso-8859-1,windows-1252',
-        'gez_ER'=> '',
-        'gez_ET'=> '',
-        'gez'   => '',
-        'gl_ES' => 'iso-8859-1,windows-1252',
-        'gl'    => 'iso-8859-1,windows-1252',
-        'gu_IN' => '',
-        'gu'    => '',
-        'gv_GB' => '',
-        'gv'    => '',
-        'haw_US'=> '',
-        'haw'   => '',
-        'he_IL' => '',
-        'he'    => '',
-        'hi_IN' => '',
-        'hi'    => '',
-        'hr_HR' => 'iso-8859-2,windows-1250',
-        'hr'    => 'iso-8859-2,windows-1250',
-        'hu_HU' => 'iso-8859-2',
-        'hu'    => 'iso-8859-2',
-        'hy_AM' => '',
-        'hy'    => '',
-        'id_ID' => '',
-        'id'    => '',
-        'is_IS' => 'iso-8859-1,windows-1252',
-        'is'    => 'iso-8859-1,windows-1252',
-        'it_CH' => 'iso-8859-1,windows-1252',
-        'it_IT' => 'iso-8859-1,windows-1252',
-        'it'    => 'iso-8859-1,windows-1252',
-        'iu'    => '',
-        'ja_JP' => 'shift_jis,iso-2022-jp,euc-jp',
-        'ja'    => 'shift_jis,iso-2022-jp,euc-jp',
-        'ka_GE' => '',
-        'ka'    => '',
-        'kk_KZ' => '',
-        'kk'    => '',
-        'kl_GL' => '',
-        'kl'    => '',
-        'km_KH' => '',
-        'km'    => '',
-        'kn_IN' => '',
-        'kn'    => '',
-        'ko_KR' => 'euc-kr',
-        'ko'    => 'euc-kr',
-        'kok_IN'=> '',
-        'kok'   => '',
-        'kw_GB' => '',
-        'kw'    => '',
-        'ky_KG' => '',
-        'ky'    => '',
-        'lo_LA' => '',
-        'lo'    => '',
-        'lt_LT' => 'iso-8859-13,windows-1257',
-        'lt'    => 'iso-8859-13,windows-1257',
-        'lv_LV' => 'iso-8859-13,windows-1257',
-        'lv'    => 'iso-8859-13,windows-1257',
-        'mk_MK' => 'iso-8859-5,windows-1251',
-        'mk'    => 'iso-8859-5,windows-1251',
-        'ml_IN' => '',
-        'ml'    => '',
-        'mn_MN' => '',
-        'mn'    => '',
-        'mr_IN' => '',
-        'mr'    => '',
-        'ms_BN' => '',
-        'ms_MY' => '',
-        'ms'    => '',
-        'mt_MT' => 'iso-8859-3',
-        'mt'    => 'iso-8859-3',
-        'nb_NO' => '',
-        'nb'    => '',
-        'nl_BE' => 'iso-8859-1,windows-1252',
-        'nl_NL' => 'iso-8859-1,windows-1252',
-        'nl'    => 'iso-8859-1,windows-1252',
-        'no_NO' => 'iso-8859-1,windows-1252',
-        'no'    => 'iso-8859-1,windows-1252',
-        'om_ET' => '',
-        'om_KE' => '',
-        'om'    => '',
-        'or_IN' => '',
-        'or'    => '',
-        'pa_IN' => '',
-        'pa'    => '',
-        'pl_PL' => 'iso-8859-2',
-        'pl'    => 'iso-8859-2',
-        'ps_AF' => '',
-        'ps'    => '',
-        'pt_BR' => 'iso-8859-1,windows-1252',
-        'pt_PT' => 'iso-8859-1,windows-1252',
-        'pt'    => 'iso-8859-1,windows-1252',
-        'ro_RO' => 'iso-8859-2',
-        'ro'    => 'iso-8859-2',
-        'ru_RU' => 'koi8-r,iso-8859-5',
-        'ru_UA' => 'koi8-r,iso-8859-5',
-        'ru'    => 'koi8-r,iso-8859-5',
-        'sa_IN' => '',
-        'sa'    => '',
-        'sh_BA' => '',
-        'sh_CS' => '',
-        'sh_YU' => '',
-        'sh'    => '',
-        'sid_ET'=> '',
-        'sid'   => '',
-        'sk_SK' => 'iso-8859-2',
-        'sk'    => 'iso-8859-2',
-        'sl_SI' => 'iso-8859-2,windows-1250',
-        'sl'    => 'iso-8859-2,windows-1250',
-        'so_DJ' => '',
-        'so_ET' => '',
-        'so_KE' => '',
-        'so_SO' => '',
-        'so'    => '',
-        'sq_AL' => 'iso-8859-1,windows-1252',
-        'sq'    => 'iso-8859-1,windows-1252',
-        'sr_BA' => 'windows-1251,iso-8859-5,iso-8859-2,windows-1250',
-        'sr_CS' => 'windows-1251,iso-8859-5,iso-8859-2,windows-1250',
-        'sr_YU' => 'windows-1251,iso-8859-5,iso-8859-2,windows-1250',
-        'sr'    => 'windows-1251,iso-8859-5,iso-8859-2,windows-1250',
-        'sv_FI' => 'iso-8859-1,windows-1252',
-        'sv_SE' => 'iso-8859-1,windows-1252',
-        'sv'    => 'iso-8859-1,windows-1252',
-        'sw_KE' => '',
-        'sw_TZ' => '',
-        'sw'    => '',
-        'syr_SY'=> '',
-        'syr'   => '',
-        'ta_IN' => '',
-        'ta'    => '',
-        'te_IN' => '',
-        'te'    => '',
-        'th_TH' => '',
-        'th'    => '',
-        'ti_ER' => '',
-        'ti_ET' => '',
-        'ti'    => '',
-        'tig_ER'=> '',
-        'tig'   => '',
-        'tr_TR' => 'iso-8859-9,windows-1254',
-        'tr'    => 'iso-8859-9,windows-1254',
-        'tt_RU' => '',
-        'tt'    => '',
-        'uk_UA' => 'iso-8859-5',
-        'uk'    => 'iso-8859-5',
-        'ur_PK' => '',
-        'ur'    => '',
-        'uz_AF' => '',
-        'uz_UZ' => '',
-        'uz'    => '',
-        'vi_VN' => '',
-        'vi'    => '',
-        'wal_ET'=> '',
-        'wal'   => '',
-        'zh_CN' => '',
-        'zh_HK' => '',
-        'zh_MO' => '',
-        'zh_SG' => '',
-        'zh_TW' => '',
-        'zh'    => ''
-    );
-
-
-    /**
-     *
-     */
-    private static $_LocaleTranslation = array(
-        'Australia'       => 'AU',
-        'Austria'         => 'AT',
-        'Belgium'         => 'BE',
-        'Brazil'          => 'BR',
-        'Canada'          => 'CA',
-        'China'           => 'CN',
-        'Czech Republic'  => 'CZ',
-        'Denmark'         => 'DK',
-        'Finland'         => 'FI',
-        'France'          => 'FR',
-        'Germany'         => 'DE',
-        'Greece'          => 'GR',
-        'Hong Kong SAR'   => 'HK',
-        'Hungary'         => 'HU',
-        'Iceland'         => 'IS',
-        'Ireland'         => 'IE',
-        'Italy'           => 'IT',
-        'Japan'           => 'JP',
-        'Korea'           => 'KP',
-        'Mexiko'          => 'MX',
-        'The Netherlands' => 'NL',
-        'New Zealand'     => 'NZ',
-        'Norway'          => 'NO',
-        'Poland'          => 'PL',
-        'Portugal'        => 'PT',
-        'Russia'          => 'RU',
-        'Singapore'       => 'SG',
-        'Slovakia'        => 'SK',
-        'Spain'           => 'ES',
-        'Sweden'          => 'SE',
-        'Taiwan'          => 'TW',
-        'Turkey'          => 'TR',
-        'United Kingdom'  => 'GB',
-        'United States'   => 'US',
-
-        'Chinese'         => 'zh',
-        'Czech'           => 'cs',
-        'Danish'          => 'da',
-        'Dutch'           => 'nl',
-        'English'         => 'en',
-        'Finnish'         => 'fi',
-        'French'          => 'fr',
-        'German'          => 'de',
-        'Greek'           => 'el',
-        'Hungarian'       => 'hu',
-        'Icelandic'       => 'is',
-        'Italian'         => 'it',
-        'Japanese'        => 'ja',
-        'Korean'          => 'ko',
-        'Norwegian'       => 'no',
-        'Polish'          => 'pl',
-        'Portuguese'      => 'pt',
-        'Russian'         => 'ru',
-        'Slovak'          => 'sk',
-        'Spanish'         => 'es',
-        'Swedish'         => 'sv',
-        'Turkish'         => 'tr'
+        'root'  , 'aa_DJ' , 'aa_ER' , 'aa_ET' , 'aa'    , 'af_NA' , 'af_ZA' , 'af'    , 'ak_GH' , 'ak'    ,
+        'am_ET' , 'am'    , 'ar_AE' , 'ar_BH' , 'ar_DZ' , 'ar_EG' , 'ar_IQ' , 'ar_JO' , 'ar_KW' , 'ar_LB' ,
+        'ar_LY' , 'ar_MA' , 'ar_OM' , 'ar_QA' , 'ar_SA' , 'ar_SD' , 'ar_SY' , 'ar_TN' , 'ar_YE' , 'ar'    ,
+        'as_IN' , 'as'    , 'az_AZ' , 'az'    , 'be_BY' , 'be'    , 'bg_BG' , 'bg'    , 'bn_BD' , 'bn_IN' ,
+        'bn'    , 'bs_BA' , 'bs'    , 'byn_ER', 'byn'   , 'ca_ES' , 'ca'    , 'cch_NG', 'cch'   , 'cs_CZ' ,
+        'cs'    , 'cy_GB' , 'cy'    , 'da_DK' , 'da'    , 'de_AT' , 'de_BE' , 'de_CH' , 'de_DE' , 'de_LI' ,
+        'de_LU' , 'de'    , 'dv_MV' , 'dv'    , 'dz_BT' , 'dz'    , 'ee_GH' , 'ee_TG' , 'ee'    , 'el_CY' ,
+        'el_GR' , 'el'    , 'en_AS' , 'en_AU' , 'en_BE' , 'en_BW' , 'en_BZ' , 'en_CA' , 'en_GB' , 'en_GU' ,
+        'en_HK' , 'en_IE' , 'en_IN' , 'en_JM' , 'en_MH' , 'en_MP' , 'en_MT' , 'en_NZ' , 'en_PH' , 'en_PK' ,
+        'en_SG' , 'en_TT' , 'en_UM' , 'en_US' , 'en_VI' , 'en_ZA' , 'en_ZW' , 'en'    , 'eo'    , 'es_AR' ,
+        'es_BO' , 'es_CL' , 'es_CO' , 'es_CR' , 'es_DO' , 'es_EC' , 'es_ES' , 'es_GT' , 'es_HN' , 'es_MX' ,
+        'es_NI' , 'es_PA' , 'es_PE' , 'es_PR' , 'es_PY' , 'es_SV' , 'es_US' , 'es_UY' , 'es_VE' , 'es'    ,
+        'et_EE' , 'et'    , 'eu_ES' , 'eu'    , 'fa_AF' , 'fa_IR' , 'fa'    , 'fi_FI' , 'fi'    , 'fo_FO' ,
+        'fo'    , 'fr_BE' , 'fr_CA' , 'fr_CH' , 'fr_FR' , 'fr_LU' , 'fr_MC' , 'fr'    , 'fur_IT', 'fur'   ,
+        'ga_IE' , 'ga'    , 'gaa_GH', 'gaa'   , 'gez_ER', 'gez_ET', 'gez'   , 'gl_ES' , 'gl'    , 'gu_IN' ,
+        'gu'    , 'gv_GB' , 'gv'    , 'ha_GH' , 'ha_NE' , 'ha_NG' , 'ha'    , 'haw_US', 'haw'   , 'he_IL' ,
+        'he'    , 'hi_IN' , 'hi'    , 'hr_HR' , 'hr'    , 'hu_HU' , 'hu'    , 'hy_AM' , 'hy'    , 'ia'    ,
+        'id_ID' , 'id'    , 'ig_NG' , 'ig'    , 'is_IS' , 'is'    , 'it_CH' , 'it_IT' , 'it'    , 'iu'    ,
+        'ja_JP' , 'ja'    , 'ka_GE' , 'ka'    , 'kaj_NG', 'kaj'   , 'kam_KE', 'kam'   , 'kcg_NG', 'kcg'   ,
+        'kfo_NG', 'kfo'   , 'kk_KZ' , 'kk'    , 'kl_GL' , 'kl'    , 'km_KH' , 'km'    , 'kn_IN' , 'kn'    ,
+        'ko_KR' , 'ko'    , 'kok_IN', 'kok'   , 'ku_IQ' , 'ku_IR' , 'ku_SY' , 'ku_TR' , 'ku'    , 'kw_GB' ,
+        'kw'    , 'ky_KG' , 'ky'    , 'ln_CD' , 'ln_CG' , 'ln'    , 'lo_LA' , 'lo'    , 'lt_LT' , 'lt'    ,
+        'lv_LV' , 'lv'    , 'mk_MK' , 'mk'    , 'ml_IN' , 'ml'    , 'mn_MN' , 'mn'    , 'mr_IN' , 'mr'    ,
+        'ms_BN' , 'ms_MY' , 'ms'    , 'mt_MT' , 'mt'    , 'nb_NO' , 'nb'    , 'ne_NP' , 'ne'    , 'nl_BE' ,
+        'nl_NL' , 'nl'    , 'nn_NO' , 'nn'    , 'nr_ZA' , 'nr'    , 'nso_ZA', 'nso'   , 'ny_MW' , 'ny'    ,
+        'om_ET' , 'om_KE' , 'om'    , 'or_IN' , 'or'    , 'pa_IN' , 'pa_PK' , 'pa'    , 'pl_PL' , 'pl'    ,
+        'ps_AF' , 'ps'    , 'pt_BR' , 'pt_PT' , 'pt'    , 'ro_RO' , 'ro'    , 'ru_RU' , 'ru_UA' , 'ru'    ,
+        'rw_RW' , 'rw'    , 'sa_IN' , 'sa'    , 'se_NO' , 'se'    , 'sh_BA' , 'sh_CS' , 'sh_YU' , 'sh'    ,
+        'sid_ET', 'sid'   , 'sk_SK' , 'sk'    , 'sl_SI' , 'sl'    , 'so_DJ' , 'so_ET' , 'so_KE' , 'so_SO' ,
+        'so'    , 'sq_AL' , 'sq'    , 'sr_BA' , 'sr_CS' , 'sr_ME' , 'sr_RS' , 'sr_YU' , 'sr'    , 'ss_ZA' ,
+        'ss'    , 'st_ZA' , 'st'    , 'sv_FI' , 'sv_SE' , 'sv'    , 'sw_KE' , 'sw_TZ' , 'sw'    , 'syr_SY',
+        'syr'   , 'ta_IN' , 'ta'    , 'te_IN' , 'te'    , 'tg_TJ' , 'tg'    , 'th_TH' , 'th'    , 'ti_ER' ,
+        'ti_ET' , 'ti'    , 'tig_ER', 'tig'   , 'tn_ZA' , 'tn'    , 'tr_TR' , 'tr'    , 'ts_ZA' , 'ts'    ,
+        'tt_RU' , 'tt'    , 'uk_UA' , 'uk'    , 'ur_IN' , 'ur_PK' , 'ur'    , 'uz_AF' , 'uz_UZ' , 'uz'    ,
+        've_ZA' , 've'    , 'vi_VN' , 'vi'    , 'wal_ET', 'wal'   , 'xh_ZA' , 'xh'    , 'yo_NG' , 'yo'    ,
+        'zh_CN' , 'zh_HK' , 'zh_MO' , 'zh_SG' , 'zh_TW' , 'zh'    , 'zu_ZA' , 'zu'
     );
 
 
@@ -531,6 +208,8 @@ class Zend_Locale {
      */
     public function getEnvironment()
     {
+        require_once 'Zend/Locale/Data/Translation.php';
+
         $language = setlocale(LC_ALL, 0);
         $languages = explode(';', $language);
         $languagearray = array();
@@ -543,7 +222,7 @@ class Zend_Locale {
 
                $language = substr($language, 1, strpos($language, '.') - 1);
                $splitted = explode('_', $language);
-               if (!empty(Zend_Locale::$_LocaleData[$language])) {
+               if (in_array($language, self::$_LocaleData)) {
                    $languagearray[$language] = 1;
                    if (strlen($language) > 4) {
                        $languagearray[substr($language, 0, 2)] = 1;
@@ -551,12 +230,12 @@ class Zend_Locale {
                    continue;
                }
 
-               if (!empty(Zend_Locale::$_LocaleTranslation[$splitted[0]])) {
-                   if (!empty(Zend_Locale::$_LocaleTranslation[$splitted[1]])) {
-                       $languagearray[Zend_Locale::$_LocaleTranslation[$splitted[0]] . '_'
-                     . Zend_Locale::$_LocaleTranslation[$splitted[1]]] = 1;
+               if (!empty(Zend_Locale_Data_Translation::$_LocaleTranslation[$splitted[0]])) {
+                   if (!empty(Zend_Locale_Data_Translation::$_LocaleTranslation[$splitted[1]])) {
+                       $languagearray[Zend_Locale_Data_Translation::$_LocaleTranslation[$splitted[0]] . '_'
+                     . Zend_Locale_Data_Translation::$_LocaleTranslation[$splitted[1]]] = 1;
                    }
-                   $languagearray[Zend_Locale::$_LocaleTranslation[$splitted[0]]] = 1;
+                   $languagearray[Zend_Locale_Data_Translation::$_LocaleTranslation[$splitted[0]]] = 1;
                }
             }
         }
@@ -635,19 +314,17 @@ class Zend_Locale {
         if (($locale == self::BROWSER) or ($locale == self::ENVIRONMENT) or ($locale === null)) {
             $locale = $this->getDefault($locale, true);
         }
-
         if (is_array($locale)) {
             $locale = key($locale);
         }
-
-        if (!isset(Zend_Locale::$_LocaleData[$locale])) {
+        if (!in_array($locale, self::$_LocaleData)) {
             $region = substr($locale, 0, 3);
             if (isset($region[2])) {
                 if (($region[2] == '_') or ($region[2] == '-')) {
                     $region = substr($region, 0, 2);
                 }
             }
-            if (isset(Zend_Locale::$_LocaleData[$region])) {
+            if (in_array($region, self::$_LocaleData)) {
                 $this->_Locale = $region;
             } else {
                 $this->_Locale = 'root';
@@ -753,6 +430,9 @@ class Zend_Locale {
      */
     public function getTranslationList($type = null, $locale = null)
     {
+        // load class within method for speed
+        require_once 'Zend/Locale/Data.php';
+
         if ($locale === null) {
             $locale = $this->_Locale;
         }
@@ -927,6 +607,9 @@ class Zend_Locale {
      */
     public function getTranslation($what, $type = null, $locale = null)
     {
+        // load class within method for speed
+        require_once 'Zend/Locale/Data.php';
+
         if ($locale === null) {
             $locale = $this->_Locale;
         }
@@ -1121,6 +804,9 @@ class Zend_Locale {
      */
     public function getQuestion($locale = null)
     {
+        // load class within method for speed
+        require_once 'Zend/Locale/Data.php';
+
         if ($locale === null) {
             $locale = $this->_Locale;
         }
@@ -1159,11 +845,11 @@ class Zend_Locale {
             return false;
         }
 
-        if (array_key_exists($locale, self::$_LocaleData)) {
+        if (in_array($locale, self::$_LocaleData)) {
             return $locale;
         } else {
             $locale = explode('_', $locale);
-            if (array_key_exists($locale[0], self::$_LocaleData)) {
+            if (in_array($locale[0], self::$_LocaleData)) {
                 return $locale[0];
             }
         }

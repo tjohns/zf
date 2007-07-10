@@ -22,9 +22,6 @@
 /** Zend_Translate_Exception */
 require_once 'Zend/Translate/Exception.php';
 
-/** Zend_Locale */
-require_once 'Zend/Locale.php';
-
 
 /**
  * @category   Zend

@@ -26,6 +26,7 @@
 require_once 'Zend/Date/DateObject.php';
 require_once 'Zend/Date/Exception.php';
 require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
 require_once 'Zend/Locale/Math.php';
 
 
@@ -372,7 +373,7 @@ class Zend_Date extends Zend_Date_DateObject {
      */
     public function toString($format = null, $type = null, $locale = null)
     {
-        if (Zend_Locale::isLocale($format)) {
+        if ((strlen($format) != 2) and (Zend_Locale::isLocale($format))) {
             $locale = $format;
             $format = null;
         }
