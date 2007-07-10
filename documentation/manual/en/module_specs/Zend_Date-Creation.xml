@@ -43,7 +43,7 @@ $date = new Zend_Date();]]>
 
             <para>
                 Sometimes it is easier to use a static method for date creation. Therefor you can use the
-                <emphasis role="strong><code>now()</code></emphasis> method. It returns a new instance of
+                <emphasis role="strong"><code>now()</code></emphasis> method. It returns a new instance of
                 <code>Zend_Date</code> the same way as if you would use <code>new Zend_Date()</code>. But it will
                 always return the actual date and can not be changed by giving optional parameters.
             </para>
