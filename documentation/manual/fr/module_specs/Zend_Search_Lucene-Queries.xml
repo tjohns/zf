@@ -21,14 +21,12 @@
         <para>ou</para>
 
         <para>
-        Construction de la requêtre avec l'API :
-        <programlisting role="php"><![CDATA[<?php
-
-    $term  = new Zend_Search_Lucene_Index_Term('mot1');
-    $query = new Zend_Search_Lucene_Search_Query_Term($term);
-    $hits  = $index->find($query);
-
-?>]]></programlisting>
+        	Construction de la requêtre avec l'API :
+        	<programlisting role="php"><![CDATA[<?php
+$term  = new Zend_Search_Lucene_Index_Term('mot1');
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
+$hits  = $index->find($query);]]>
+    		</programlisting>
         </para>
     </sect2>
 
@@ -74,47 +72,43 @@
 
         <para>
             Recherche par chaine de caractères :
-        <programlisting role="php"><![CDATA[<?php
+        	<programlisting role="php"><![CDATA[<?php
+$hits = $index->find('+mot1 auteur:mot2 -mot3');]]>
+    		</programlisting>
 
-$hits = $index->find('+mot1 auteur:mot2 -mot3');
-
-?>]]></programlisting>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    '+' est utilisé pour définir un terme comme requis.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    '-' est utilisé pour définir un terme comme interdit.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche.
-                    Si ce n'est pas indiqué, alors le champs 'contents' est utilisé.
-                </para>
-            </listitem>
-        </itemizedlist>
+	        <itemizedlist>
+	            <listitem>
+	                <para>
+	                    '+' est utilisé pour définir un terme comme requis.
+	                </para>
+	            </listitem>
+	            <listitem>
+	                <para>
+	                    '-' est utilisé pour définir un terme comme interdit.
+	                </para>
+	            </listitem>
+	            <listitem>
+	                <para>
+	                    Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche.
+	                    Si ce n'est pas indiqué, alors le champs 'contents' est utilisé.
+	                </para>
+	            </listitem>
+	        </itemizedlist>
         </para>
 
         <para>ou</para>
 
         <para>
-        Construction de recherche par l'API :
-        <programlisting role="php"><![CDATA[<?php
+	        Construction de recherche par l'API :
+	        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
-    $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
+$query->addTerm(new Zend_Search_Lucene_Index_Term('mot1'), true);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('mot2'), null);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('mot3'), false);
 
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('mot1'), true);
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('mot2'), null);
-    $query->addTerm(new Zend_Search_Lucene_Index_Term('mot3'), false);
-
-    $hits  = $index->find($query);
-
-?>]]></programlisting>
+$hits  = $index->find($query);]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -183,10 +177,8 @@ $query3 = new Zend_Search_Lucene_Search_Query_Phrase(
 ...
 
 $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
-                array('mot1', 'mot2'), array(0,1), 'annotation');
-
-?>]]></programlisting>
-
+                array('mot1', 'mot2'), array(0,1), 'annotation');]]>
+    	</programlisting>
 
         <para>
             Les requêtes de phrases peuvent être construitent en une étape avec un constructeur de classe, ou alors
@@ -195,7 +187,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Le constructeur de classe Zend_Search_Lucene_Search_Query_Phrase prend trois paramètres optionnels :
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
+        	<programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -216,23 +209,18 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            Ainsi:
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
-            va rechercher la phrase 'zend framework'.
+            Ainsi : <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting> va rechercher la phrase 'zend framework'.
 
-        <programlisting role="php"><![CDATA[<$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
-            va rechercher la phrase 'zend ????? download' et récupérer 'zend platform download', 'zend studio download',
-            'zend core download', 'zend framework download' etc.
+        	<programlisting role="php"><![CDATA[<$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting> va rechercher la phrase 'zend ????? download' et récupérer 'zend platform download', 'zend studio download', 'zend core download', 'zend framework download' etc.
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
-            va rechercher la phrase 'zend framework' dans le champ 'title'.
+        	<programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting> va rechercher la phrase 'zend framework' dans le champ 'title'.
         </para>
 
 
         <para>
             La méthode <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> prend deux arguments.
             L'objet requis <code>Zend_Search_Lucene_Index_Term</code> et une position optionnelle :
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
+        	<programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
         </para>
 
         <para>
@@ -245,21 +233,24 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            Ainsi:
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+            Ainsi :
+        	<programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'));
-$query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlisting>
-            va rechercher  la phrase 'zend framework'.
+$query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]>
+    		</programlisting>
+            va rechercher la phrase 'zend framework'.
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        	<programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
-$query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
+$query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]>
+    		</programlisting>
             va rechercher la phrase 'zend ????? download' et récupérer 'zend platform download', 'zend studio download',
             'zend core download', 'zend framework download' etc.
 
-        <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
+        	<programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend', 'title'));
-$query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></programlisting>
+$query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]>
+    		</programlisting>
             va rechercher la phrase 'zend framework' dans le champ 'title'.
         </para>
 
@@ -281,7 +272,6 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             Slop factor can be assigned after query creation:
         </para>
         <programlisting role="php"><![CDATA[<?php
-
 // requête sans espace
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('mot1', 'mot2'));
 
@@ -292,13 +282,8 @@ $hits1 = $index->find($query);
 // Recherche for 'mot1 mot2', 'mot1 ... mot2',
 // 'mot1 ... ... mot2', 'mot2 mot1'
 $query->setSlop(2);
-$hits2 = $index->find($query);
-
-?>]]></programlisting>
+$hits2 = $index->find($query);]]>
+    </programlisting>
 
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

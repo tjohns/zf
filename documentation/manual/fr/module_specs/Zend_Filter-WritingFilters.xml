@@ -28,7 +28,8 @@ class MonFiltre implements Zend_Filter_Interface
 
         return $valeurFiltree;
     }
-}]]></programlisting>
+}]]>
+    	</programlisting>
 
     </para>
 
@@ -37,11 +38,9 @@ class MonFiltre implements Zend_Filter_Interface
 
         <programlisting role="php"><![CDATA[<?php
 $filtreChaine = new Zend_Filter();
-$filtreChaine->addFilter(new MonFiltre());]]></programlisting>
+$filtreChaine->addFilter(new MonFiltre());]]>
+    	</programlisting>
 
     </para>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

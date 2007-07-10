@@ -21,14 +21,14 @@
         </para>
         <example>
             <title>Rechercher sur le Web avec Yahoo!</title>
-            <programlisting><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->webSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+    		</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.imagesearch">
@@ -40,14 +40,14 @@ foreach ($results as $result) {
         </para>
         <example>
             <title>Trouver des images avec Yahoo!</title>
-            <programlisting><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->imageSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+		    </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
@@ -58,14 +58,14 @@ foreach ($results as $result) {
         </para>
         <example>
             <title>Trouver des entreprises locales et des services avec Yahoo!</title>
-            <programlisting><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->localSearch('Ordinateurs Apple', array('zip' => '95014'));
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+		    </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.newssearch">
@@ -77,14 +77,14 @@ foreach ($results as $result) {
         </para>
         <example>
             <title>Rechercher dans Yahoo! News</title>
-            <programlisting><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->newsSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+		    </programlisting>
         </example>
     </sect2>
 <sect2 id="zend.service.yahoo.classes">

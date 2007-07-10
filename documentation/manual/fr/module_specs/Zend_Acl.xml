@@ -75,7 +75,8 @@ $acl->add(new Zend_Acl_Resource('uneResource'));
 $acl->deny('invite', 'uneResource');
 $acl->allow('membre', 'uneResource');
 
-echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';?>]]></programlisting>
+echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';]]>
+    		</programlisting>
             <para>
                 Puisqu'il n'y a pas de règle spécifiquement définie pour le Rôle "<code>unUtilisateur</code>" et "<code>uneResource</code>", <code>Zend_Acl</code> doit rechercher des règles qui pourraient être définies pour des Rôles dont "<code>unUtilisateur</code>" hérite. Premièrement, le Rôle "<code>admin</code>" est contrôlé, et il n'y a pas de règle d'accès définie pour lui. Ensuite, le Rôle "<code>membre</code>" est visité, et <code>Zend_Acl</code> trouve qu'il y a une règle qui spécifie que "<code>membre</code>" a un accès autorisé à "<code>uneResource</code>".
             </para>
@@ -103,7 +104,8 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';?
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();?>]]></programlisting>
+$acl = new Zend_Acl();]]>
+   		</programlisting>
 
         <note>
             <para>
@@ -180,7 +182,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), $roleinvite);
 $acl->addRole(new Zend_Acl_Role('editeur'), 'staff');
 
 // Administrateur n'hérite pas d'accès
-$acl->addRole(new Zend_Acl_Role('administrateur'));?>]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrateur'));]]>
+    	</programlisting>
 
     </sect2>
 
@@ -223,7 +226,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'relire'));
 $acl->allow('editeur', null, array('publier', 'archiver', 'supprimer'));
 
 // Administrateur hérite de rien, mais reçoit tous les privilèges
-$acl->allow('administrateur');?>]]></programlisting>
+$acl->allow('administrateur');]]>
+    	</programlisting>
 
         <para>
             Les valeurs <code>null</code> dans les appels <code>allow()</code> ci-dessus sont utilisées pour indiquer que les règles s'appliquent à toutes les Ressources.
@@ -261,7 +265,8 @@ echo $acl->isAllowed('administrateur') ?
      "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
 
 echo $acl->isAllowed('administrateur', null, 'modifier') ?
-     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout?>]]></programlisting>
+     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout]]>
+    	</programlisting>
 
     </sect2>
 </sect1>

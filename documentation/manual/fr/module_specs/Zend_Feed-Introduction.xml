@@ -43,8 +43,7 @@
 
     <example id="zend.feed.introduction.example.rss">
         <title>Manipuler des données RSS avec Zend_Feed</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Feed.php';
 
 // on va chercher les dernières news de Slashdot
@@ -74,11 +73,7 @@ foreach ($rssSlashdot as $elem) {
         'lien'        => $elem->link(),
         'description' => $elem->description()
         );
-}
-
-?>]]>   </programlisting>
+}]]>
+    	</programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

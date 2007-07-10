@@ -51,15 +51,13 @@
 
         <para>
             Les deux méthodes utilisent la même API pour chercher dans l'index :
-        <programlisting role="php"><![CDATA[<?php
-
+        	<programlisting role="php"><![CDATA[<?php
 require_once('Zend/Search/Lucene.php');
 
 $index = new Zend_Search_Lucene('/donnees/mon-index');
 
-$index->find($query);
-
-?>]]></programlisting>
+$index->find($query);]]>
+    		</programlisting>
 
             La méthode <code>Zend_Search_Lucene::find()</code> détermine automatiquement le type en entrée et
             utilise le Query Parser pour construire l'objet Zend_Search_Lucene_Search_Query à partir
@@ -90,8 +88,7 @@ $index->find($query);
             comme une propriété de ce hit. Dans cet exempl, un hit est retourné et le document correspondant à deux champs :
             titre et auteur.
 
-        <programlisting role="php"><![CDATA[<?php
-
+        	<programlisting role="php"><![CDATA[<?php
 require_once('Zend/Search/Lucene.php');
 
 $index = new Zend_Search_Lucene('/donnees/mon-index');
@@ -104,45 +101,42 @@ foreach ($hits as $hit) {
 
     echo $hit->titre;
     echo $hit->auteur;
-}
-
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
         <para>
-          Optionnellement, l'objet Zend_Search_Lucene_Document orginial peut-être retourné à partir de
-          Zend_Search_Lucene_Search_QueryHit.
+			Optionnellement, l'objet Zend_Search_Lucene_Document orginial peut-être retourné à partir de
+			Zend_Search_Lucene_Search_QueryHit.
 
-          Vous pouvez retrouver les parties stockées du document en utilisant la méthode <code>getDocument()</code>
-          de l'objet index, et ensuite les récupérer par la méthode <code>getFieldValue()</code> :
-        <programlisting role="php"><![CDATA[<?php
+			Vous pouvez retrouver les parties stockées du document en utilisant la méthode <code>getDocument()</code>
+			de l'objet index, et ensuite les récupérer par la méthode <code>getFieldValue()</code> :
+        	<programlisting role="php"><![CDATA[<?php
+require_once('Zend/Search/Lucene.php');
 
-    require_once('Zend/Search/Lucene.php');
+$index = new Zend_Search_Lucene('/donnees/mon-index');
 
-    $index = new Zend_Search_Lucene('/donnees/mon-index');
+$hits = $index->find($query);
+foreach ($hits as $hit) {
 
-    $hits = $index->find($query);
-    foreach ($hits as $hit) {
+// retourn l'objet Zend_Search_Lucene_Document pour ce hit
+echo $document = $hit->getDocument();
 
-    // retourn l'objet Zend_Search_Lucene_Document pour ce hit
-    echo $document = $hit->getDocument();
+// retourne un objet Zend_Search_Lucene_Field
+// à partir de Zend_Search_Lucene_Document
+echo $document->getField('title');
 
-    // retourne un objet Zend_Search_Lucene_Field
-    // à partir de Zend_Search_Lucene_Document
-    echo $document->getField('title');
+// retourne la valeur de l'objet Zend_Search_Lucene_Field
+echo $document->getFieldValue('title');
 
-    // retourne la valeur de l'objet Zend_Search_Lucene_Field
-    echo $document->getFieldValue('title');
+// identique à getFieldValue()
+echo $document->title;
+}]]>
+    		</programlisting>
 
-    // identique à getFieldValue()
-    echo $document->title;
-}
-
-?>]]></programlisting>
-
-        Les champs disponibles de l'objet Zend_Search_Lucene_Document sont déterminés au moment de l'indexation.
-        Les champs de document sont soit indexés, soit indexés et stockés dans le document par l'application qui
-        indexe (i.e LuceneIndexCreation.jar).
+	        Les champs disponibles de l'objet Zend_Search_Lucene_Document sont déterminés au moment de l'indexation.
+	        Les champs de document sont soit indexés, soit indexés et stockés dans le document par l'application qui
+	        indexe (i.e LuceneIndexCreation.jar).
         </para>
 
         <para>
@@ -171,15 +165,14 @@ foreach ($hits as $hit) {
 
         <para>
             Le score peut-être retrouvé par la propriété <code>score</code> du hit :
-        <programlisting role="php"><![CDATA[<?php
+        	<programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
     echo $hit->id;
     echo $hit->score;
-}
-
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -191,7 +184,3 @@ foreach ($hits as $hit) {
     </sect2>
 
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

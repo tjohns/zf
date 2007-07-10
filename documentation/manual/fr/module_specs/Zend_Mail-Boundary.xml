@@ -9,15 +9,11 @@
     </para>
     <example>
         <title>Changer la limite MIME</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
-// construction du message...
-?>]]>   </programlisting>
+// construction du message...]]>
+    	</programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

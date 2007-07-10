@@ -94,8 +94,8 @@ if (!($data = $cache->get($id))) {
 
 }
 
-// [...] fait quelque chose avec $data (affichage, passage ailleurs, etc, etc)
-?>]]></programlisting>
+// [...] fait quelque chose avec $data (affichage, passage ailleurs, etc, etc)]]>
+			    </programlisting>
             </para>
             <para>
                 Si vous voulez cacher des blocs multiples ou des instances de données, l'idée reste la même :
@@ -133,8 +133,8 @@ if (!($data = $cache->get($id2))) {
     $cache->save($data);
 
 }
-echo($data);
-?>]]></programlisting>
+echo($data);]]>
+			    </programlisting>
             </para>
         </sect3>
     </sect2>
@@ -169,8 +169,8 @@ if (!$cache->start('mypage')) {
     $cache->end(); // affiche ce qu'il y a dans le buffer
 }
 
-echo 'This is never cached ('.time().').';
-?>]]></programlisting>
+echo 'This is never cached ('.time().').';]]>
+			    </programlisting>
             </para>
             <para>
                 Utiliser cette forme est assez simple pour définir une mise de cache de sortie dans vos projets déjà en production, avec peu de refactorisation de code.
@@ -233,8 +233,8 @@ $cache->call('veryExpensiveFunc', $params);
 // $params est dans un tableau
 // par exemple, pour appeler (avec mise en cache) veryExpensiveFunc(1, 'foo', 'bar')
 // vous devriez utiliser
-$cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
-?>]]></programlisting>
+$cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+			    </programlisting>
             </para>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> est assez intelligente pour mettre en cache la valeur de retour de la fonction, ainsi que sa sortie interne.
@@ -318,8 +318,8 @@ $frontendOptions = array(
 // [...]
 
 // l'appel caché
-$res = $cache->foobar('1', '2');
-?>]]>           </programlisting>
+$res = $cache->foobar('1', '2');]]>
+			    </programlisting>
                 Pour mettre en cache des appels classiques aux méthodes :
                 <programlisting role="php"><![CDATA[<?php
 class test {
@@ -341,8 +341,8 @@ $frontendOptions = array(
 // [...]
 
 // L'appel mis en cache
-$res = $cache->foobar2('1', '2');
-?>]]></programlisting>
+$res = $cache->foobar2('1', '2');]]>
+			    </programlisting>
             </para>
         </sect3>
     </sect2>
@@ -514,8 +514,8 @@ $res = $cache->foobar2('1', '2');
 $cache->start();
 // si le cache est trouvé, le résultat est envoyé au navigateur et le script s'arrête là
 
-// reste de la page ...
-?>]]></programlisting>
+// reste de la page ...]]>
+			    </programlisting>
             </para>
             <para>
                 Un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un fichier d'amorçage (pour utiliser avec Zend_Controller par exemple)
@@ -550,8 +550,8 @@ $cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 $cache->start();
 // si nous trouvons un cache, le résultat est envoyé au navigateur, et le script s'arrête là
 
-// [...] la fin du fichier de démarrage (ces lignes ne seront pas exécutées si on trouve un cache)
-?>]]></programlisting>
+// [...] la fin du fichier de démarrage (ces lignes ne seront pas exécutées si on trouve un cache)]]>
+			    </programlisting>
             </para>
         </sect3>
     </sect2>

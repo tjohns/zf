@@ -56,9 +56,8 @@
 echo $this->variable;
 
 // bonne pratique d'affichage
-echo $this->escape($this->variable);
-?>]]>
-        </programlisting>
+echo $this->escape($this->variable);]]>
+	    </programlisting>
 
         <para>
             Par défaut, la méthode <code>escape()</code> utilise la fonction PHP htmlspecialchar() pour l'échappement. Cependant, en fonction de votre environnement, vous souhaitez peut-être un échappement différent. Utilisez la méthode <code>setEscape()</code> au niveau du contrôleur pour dire à <code>Zend_View</code> quelle méthode de rappel elle doit utiliser.
@@ -79,9 +78,8 @@ $obj = new SomeClass();
 $view->setEscape(array($obj, 'methodName'));
 
 // et ensuite effectue le rendu de la vue
-echo $view->render(...);
-?>]]>
-        </programlisting>
+echo $view->render(...);]]>
+	    </programlisting>
 
         <para>
             La fonction ou méthode de rappel doit prendre la valeur à échapper dans le premier paramètre, et tout les autres paramètres devraient être optionnels.
@@ -128,9 +126,8 @@ if ($this->books) {
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
-}
-?>]]>
-        </programlisting>
+}]]>
+	    </programlisting>
 
         <para>
             Et ceci pourrait être les fichiers de gabarits correspondants :
@@ -153,9 +150,8 @@ if ($this->books) {
     </tr>
 
 <!-- nobooks.tpl -->
-<p>Aucun livre à afficher</p>
-]]>
-        </programlisting>
+<p>Aucun livre à afficher</p>]]>
+		    </programlisting>
 
         </sect3>
 
@@ -199,8 +195,8 @@ public function clearVars();
 /**
  * Effectue le rendu du gabarit nommé $name
  */
-public function render($name);
-]]></programlisting>
+public function render($name);]]>
+		    </programlisting>
 
             <para>
                 En utilisant cette interface, il devient relativement facile d'encapsuler un moteur de gabarit tiers comme une classe compatible Zend_View. Comme par exemple, le code suivant est une encapsulation potentielle de Smarty :
@@ -352,8 +348,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     {
         return $this->_smarty->fetch($name);
     }
-}
-]]></programlisting>
+}]]>
+		    </programlisting>
 
             <para>
                 Dans cet exemple, vous instanciez la classe <code>Zend_View_Smarty</code> au lieu de <code>Zend_View</code>, et vous l'utilisez de la même façon :
@@ -364,14 +360,11 @@ $view = new Zend_View_Smarty();
 $view->setScriptPath('/chemin/vers/gabarits');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');
-]]></programlisting>
+$rendered = $view->render('bookinfo.tpl');]]>
+		    </programlisting>
 
         </sect3>
 
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

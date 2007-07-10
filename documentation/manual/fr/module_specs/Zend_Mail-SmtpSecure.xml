@@ -20,10 +20,7 @@ $mail->setBodyText('Ceci est le texte de l\'email.');
 $mail->setFrom('emetteur@test.com', 'Un émetteur');
 $mail->addTo('destinataire@test.com', 'Un destinataire');
 $mail->setSubject('Sujet de test');
-$mail->send($transport);
-?>]]></programlisting>
+$mail->send($transport);]]>
+    </programlisting>
   </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

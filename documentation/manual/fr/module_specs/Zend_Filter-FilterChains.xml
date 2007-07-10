@@ -23,7 +23,8 @@ $filtreChaine->addFilter(new Zend_Filter_Alpha())
              ->addFilter(new Zend_Filter_StringToLower());
 
 // Filtrage de l'identifiant
-$identifiant = $filtreChaine->filter($_POST['identifiant']);]]></programlisting>
+$identifiant = $filtreChaine->filter($_POST['identifiant']);]]>
+    	</programlisting>
 
         Les filtres sont exécutés dans leur ordre d'ajout à <code>Zend_Filter</code>. Dans l'exemple ci-dessus,
         l'identifiant se voit d'abord retirer tout caractère non-alphabétique, les caractère majuscules éventuels
@@ -36,6 +37,3 @@ $identifiant = $filtreChaine->filter($_POST['identifiant']);]]></programlisting>
     </para>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

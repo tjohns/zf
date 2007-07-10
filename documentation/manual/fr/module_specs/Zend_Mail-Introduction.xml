@@ -7,17 +7,15 @@
         <title>Email simple avec Zend_Mail</title>
         <para>
             Un email simple est composé d'un destinataire, d'un sujet, d'un message et d'un expéditeur. Pour envoyer ce genre de messages en utilisant la fonction PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink>, vous pouvez faire comme ceci :
-            <programlisting role="php">
-            <![CDATA[<?php
-            require_once 'Zend/Mail.php';
-            $mail = new Zend_Mail();
-            $mail->setBodyText('Ceci est le message.');
-            $mail->setFrom('somebody@example.com', 'un expéditeur');
-            $mail->addTo('somebody_else@example.com', 'un destinataire');
-            $mail->setSubject('sujet de test');
-            $mail->send();
-            ?>]]>
-        </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('Ceci est le message.');
+$mail->setFrom('somebody@example.com', 'un expéditeur');
+$mail->addTo('somebody_else@example.com', 'un destinataire');
+$mail->setSubject('sujet de test');
+$mail->send();]]>
+    		</programlisting>
        </para>
     </example>
     <note>
@@ -35,13 +33,13 @@
     <para>
         Vous pouvez aussi utiliser la plupart des méthodes de l'objet Zend_Mail via une interface fluide. Une interface est dite fluide quand chaque méthode retourne la référence à l'objet appelé, donc vous pouvez appeler aussitôt une autre méthode.
     </para>
-        <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Ceci est le message.')
     ->setFrom('somebody@example.com', 'un expéditeur')
     ->addTo('somebody_else@example.com', 'un destinataire')
     ->setSubject('sujet de test')
-    ->send();
-?>]]>   </programlisting>
+    ->send();]]>
+    </programlisting>
 </sect1>

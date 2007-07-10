@@ -17,9 +17,8 @@
 $view = new Zend_View();
 $view->a = "Ha";
 $view->b = "Bé";
-$view->c = "Cé";
-?>]]>
-        </programlisting>
+$view->c = "Cé";]]>
+	    </programlisting>
 
         <para>
             Cependant, ceci peut être pénible quand vous avez déjà collecté (dans un tableau ou dans un objet) les valeurs à assigner.
@@ -47,9 +46,8 @@ $obj = new StdClass;
 $obj->a = "Ha";
 $obj->b = "Bé";
 $obj->c = "Cé";
-$view->assign((array) $obj);
-?>]]>
-        </programlisting>
+$view->assign((array) $obj);]]>
+	    </programlisting>
 
         <para>
             Alternativement, vous pouvez utiliser la méthode <code>assign()</code> pour assigner les variables une par une, en passant le nom de la variable, et sa valeur.
@@ -59,9 +57,8 @@ $view->assign((array) $obj);
 $view = new Zend_View();
 $view->assign('a', "Ha");
 $view->assign('b', "Bé");
-$view->assign('c', "Cé");
-?>]]>
-        </programlisting>
+$view->assign('c', "Cé");]]>
+	    </programlisting>
 
     </sect2>
 
@@ -78,9 +75,8 @@ $view = new Zend_View();
 $view->a = "Ha";
 $view->b = "Bé";
 $view->c = "Cé";
-echo $view->render('uneVue.php');
-?>]]>
-        </programlisting>
+echo $view->render('uneVue.php');]]>
+	    </programlisting>
 
     </sect2>
 
@@ -98,9 +94,8 @@ echo $view->render('uneVue.php');
 
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setScriptPath('/chemin/des/vues');
-?>]]>
-        </programlisting>
+$view->setScriptPath('/chemin/des/vues');]]>
+	    </programlisting>
 
         <para>
             Maintenant, vous appelez $view->render('uneVue.php'), il va rechercher dans &quot;/chemin/des/vues/uneVue.php&quot;.
@@ -118,9 +113,8 @@ $view->addScriptPath('/chemin/des/vues-personnalisees');
 // maintenant, lorsque vous appelerez $view->render('booklist.php'),
 // Zend_View va rechercher en premier dans "/chemin/des/vues-personnalisees/booklist.php", puis
 // dans "/chemin/des/vues/booklist.php", et ensuite dans le répertoire courant
-// pour trouver le fichier &quot;booklist.php&quot;.
-?>]]>
-        </programlisting>
+// pour trouver le fichier &quot;booklist.php&quot;.]]>
+	    </programlisting>
 
     </sect2>
 

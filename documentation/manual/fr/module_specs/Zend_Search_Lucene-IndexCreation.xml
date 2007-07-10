@@ -14,26 +14,24 @@
             comment indexer un fichier en utilisant l'API d'indexation de Zend_Search_Lucene :
         </para>
 
-        <programlisting role="php"><![CDATA[
-        <?php
-        // Définir le second paramètre à true pour créer un nouvel index
-        $index = new Zend_Search_Lucene('/donnees/mon-index', true);
+        <programlisting role="php"><![CDATA[<?php
+// Définir le second paramètre à true pour créer un nouvel index
+$index = new Zend_Search_Lucene('/donnees/mon-index', true);
 
-        $doc = new Zend_Search_Lucene_Document();
+$doc = new Zend_Search_Lucene_Document();
 
-        // Stocke l'URL du document pour l'identifier dans un résultat de recherche.
-        $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+// Stocke l'URL du document pour l'identifier dans un résultat de recherche.
+$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-        // Contenu du document d'index
-        $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+// Contenu du document d'index
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-        // Ajout du document à l'index
-        $index->addDocument($doc);
+// Ajout du document à l'index
+$index->addDocument($doc);
 
-        // Ecriture des changements dans l'index
-        $index->commit();
-        ?>
-        ]]></programlisting>
+// Ecriture des changements dans l'index
+$index->commit();]]>
+    	</programlisting>
 
         <para>
             Les nouveaux documents ajoutés peuvent être récupérés depuis l'index après une opération de commit.
@@ -78,26 +76,24 @@
             La seule différence est que l'index doit être ouvert sans second paramètre :
         </para>
 
-        <programlisting role="php"><![CDATA[
-        <?php
-        // Ouverture d'un index existant
-        $index = new Zend_Search_Lucene('/donnees/mon-index');
+        <programlisting role="php"><![CDATA[<?php
+// Ouverture d'un index existant
+$index = new Zend_Search_Lucene('/donnees/mon-index');
 
-        $doc = new Zend_Search_Lucene_Document();
+$doc = new Zend_Search_Lucene_Document();
 
-        // Stocke l'URL du document pour l'identifier dans un résultat de recherche.
-        $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+// Stocke l'URL du document pour l'identifier dans un résultat de recherche.
+$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-        // Contenu du document d'index
-        $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+// Contenu du document d'index
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-        // Ajout du document à l'index
-        $index->addDocument($doc);
+// Ajout du document à l'index
+$index->addDocument($doc);
 
-        // Ecriture des changements dans l'index
-        $index->commit();
-        ?>
-        ]]></programlisting>
+// Ecriture des changements dans l'index
+$index->commit();]]>
+    	</programlisting>
 
         <para>
             Chaque appel à <code>commit()</code> (explicite ou implicite) génère un nouveau segment d'index.
@@ -124,19 +120,13 @@
             La méthode <code>Zend_Search_Lucene::delete()</code> opère avec un id de document index interne.
             Il peut être récupéré par une requête sur la propriété 'id' :
         </para>
-        <programlisting role="php">
-        <![CDATA[<?php
-            $removePath = ...;
-            $hits = $index->find('path:' . $removePath);
-            foreach ($hits as $hit) {
-                $index->delete($hit->id);
-            }
-            $index->commit();
-        ?>]]>
-        </programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$removePath = ...;
+$hits = $index->find('path:' . $removePath);
+foreach ($hits as $hit) {
+	$index->delete($hit->id);
+}
+$index->commit();]]>
+    	</programlisting>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -31,9 +31,8 @@
             <programlisting role="php"><![CDATA[<?php
 
 $bugs   = new Bugs();
-$rowset = $bugs->fetchAll("bug_status = 'NEW'");
-
-?>]]></programlisting>
+$rowset = $bugs->fetchAll("bug_status = 'NEW'");]]>
+    </programlisting>
 
         </example>
 
@@ -69,9 +68,8 @@ if ($rowCount > 0) {
     echo "found $rowCount rows";
 } else {
     echo 'no rows matched the query';
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
         </example>
 
@@ -88,9 +86,8 @@ if ($rowCount > 0) {
 
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
-$row    = $rowset->current();
-
-?>]]></programlisting>
+$row    = $rowset->current();]]>
+    </programlisting>
 
         </example>
 
@@ -130,9 +127,8 @@ foreach ($rowset as $row) {
 
     // write the change to the database
     $row->save();
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
         </example>
 
@@ -172,9 +168,8 @@ foreach ($rowsetArray as $rowArray) {
     }
     ++$rowCount;
     echo "\n";
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
         </example>
 
         <para>
@@ -210,9 +205,8 @@ $rowset = $bugs->fetchAll();
 // Convert object to serialized form
 $serializedRowset = serialize($rowset);
 
-// Now you can write $serializedRowset to a file, etc.
-
-?>]]></programlisting>
+// Now you can write $serializedRowset to a file, etc.]]>
+    </programlisting>
 
         </example>
 
@@ -238,9 +232,8 @@ $rowsetDisconnected = unserialize($serializedRowset);
 
 // Now you can use object methods and properties, but read-only
 $row = $rowsetDisconnected->current();
-echo $row->bug_description;
-
-?>]]></programlisting>
+echo $row->bug_description;]]>
+    </programlisting>
 
         </example>
 
@@ -281,9 +274,8 @@ $row = $rowset->current();
 
 // Now you can make changes to the row and save them
 $row->bug_status = 'FIXED';
-$row->save();
-
-?>]]></programlisting>
+$row->save();]]>
+    </programlisting>
 
         </example>
 
@@ -325,9 +317,8 @@ class Products extends Zend_Db_Table_Abstract
 
 // Or specify a custom Rowset to be used in one
 // instance of a Table class.
-$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
-
-?>]]></programlisting>
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));]]>
+    </programlisting>
         </example>
 
         <para>
@@ -365,9 +356,8 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_rowsetClass = 'MyBugsRowset';
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
         </example>
 
     </sect2>

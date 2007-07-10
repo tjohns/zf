@@ -12,7 +12,6 @@
         Pour filtrer avant tous les rédacteurs, vous pouvez ajouter autant de filtres que vous souhaitez à l'objet enregistreur en utilisant la méthode <code>addFilter()</code> :
 
         <programlisting role="php"><![CDATA[<?php
-
 $logger = new Zend_Log();
 
 $redacteur = new Zend_Log_Writer_Stream('php://output');
@@ -25,9 +24,8 @@ $logger->addFilter($filtre);
 $logger->info("Message d'information");
 
 // écrit dans le log
-$logger->emerg("Message d'urgence");
-
-?>]]></programlisting>
+$logger->emerg("Message d'urgence");]]>
+    	</programlisting>
 
         Quand vous ajoutez un ou plusieurs filtres à l'objet enregistreur, le message doit passer par tous les filtres avant que tous les rédacteurs le reçoive.
       </para>
@@ -40,7 +38,6 @@ $logger->emerg("Message d'urgence");
         Pour filtrer seulement sur un instance spécifique de rédacteur, employer la méthode <code>addFilter</code> de ce rédacteur :
 
         <programlisting role="php"><![CDATA[<?php
-
 $logger = new Zend_Log();
 
 $redacteur1 = new Zend_Log_Writer_Stream('/chemin/vers/premier/fichierdelog');
@@ -57,9 +54,8 @@ $redacteur2->addFilter($filter);
 $logger->info("Message d'information");
 
 // écrit dans les 2 logs
-$logger->emerg("Message d'urgence");
-
-?>]]></programlisting>
+$logger->emerg("Message d'urgence");]]>
+    </programlisting>
     </para>
   </sect2>
 </sect1>

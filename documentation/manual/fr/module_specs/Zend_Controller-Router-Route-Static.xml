@@ -13,7 +13,8 @@ $route = new Zend_Controller_Router_Route_Static(
     'login',
     array('controller' => 'auth', 'action' => 'login')
 );
-$router->addRoute('login', $route);]]></programlisting>
+$router->addRoute('login', $route);]]>
+    </programlisting>
 
     <para>
         Above route will match a URL of <code>http://domain.com/login</code>,

@@ -13,14 +13,12 @@
     <para>
         Pour écrire des données de log dans le buffer d'affichage de PHP, il faut utiliser l'URL <code>php://output</code>. Alternativement, vous pouvez préférer envoyer des données de log directement à un flux comme <code>STDERR</code> (<code>php://stderr</code>).
 
-      <programlisting role="php"><![CDATA[<?php
-
+      	<programlisting role="php"><![CDATA[<?php
 $redacteur = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($redacteur);
 
-$logger->info("Message d'information");
-
-?>]]></programlisting>
+$logger->info("Message d'information");]]>
+    	</programlisting>
     </para>
 
     <para>
@@ -28,22 +26,19 @@ $logger->info("Message d'information");
       URLs</ulink>:
 
       <programlisting role="php"><![CDATA[<?php
-
 $redacteur = new Zend_Log_Writer_Stream('/chemin/vers/fichierdelog');
 $logger = new Zend_Log($redacteur);
 
-$logger->info("Message d'information");
-
-?>]]></programlisting>
+$logger->info("Message d'information");]]>
+    	</programlisting>
 
         Par défaut, le flux s'ouvre en mode d'ajout (<code>"a"</code>). Pour l'ouvrir avec un mode différent, le constructeur de <code>Zend_Log_Writer_Stream</code> accepte un deuxième paramètre facultatif pour le mode.
     </para>
 
     <para>
-      Le constructeur de <code>Zend_Log_Writer_Stream</code> accepte également une ressource existante de flux :
+      	Le constructeur de <code>Zend_Log_Writer_Stream</code> accepte également une ressource existante de flux :
 
-      <programlisting role="php"><![CDATA[<?php
-
+      	<programlisting role="php"><![CDATA[<?php
 $flux = @fopen('/chemin/vers/fichierdelog', 'a', false);
 if (! $flux) {
     throw new Exception('Impossible d\'ouvrir le flux');
@@ -52,9 +47,8 @@ if (! $flux) {
 $redacteur = new Zend_Log_Writer_Stream($flux);
 $logger = new Zend_Log($redacteur);
 
-$logger->info("Message d'information");
-
-?>]]></programlisting>
+$logger->info("Message d'information");]]>
+    	</programlisting>
 
         Vous ne pouvez pas indiquer le mode pour des ressources existantes de flux. Le faire entraînera une <code>Zend_Log_Exception</code>.
     </para>
@@ -65,8 +59,7 @@ $logger->info("Message d'information");
     <para>
         <code>Zend_Log_Writer_Db</code> écrit les informations de log dans une table de base de données en utilisant <code>Zend_Db</code>. Le constructeur de <code>Zend_Log_Writer_Db</code> reçoit une instance de <code>Zend_Db_Adapter</code>, un nom de table, et un plan de correspondance entre les colonnes de la base de données et les données élémentaires d'événement :
 
-      <programlisting role="php"><![CDATA[<?php
-
+      	<programlisting role="php"><![CDATA[<?php
 $parametres = array ('host'     => '127.0.0.1',
                  'username' => 'malory',
                  'password' => '******',
@@ -78,9 +71,8 @@ $redacteur = new Zend_Log_Writer_Db($db, 'nom_de_la_table_de_log', $planDeCorres
 
 $logger = new Zend_Log($redacteur);
 
-$logger->info("Message d'information");
-
-?>]]></programlisting>
+$logger->info("Message d'information");]]>
+    	</programlisting>
 
         L'exemple ci-dessus écrit une ligne unique de données de log dans la table appelée <code>nom_de_la_table_de_log</code>. La colonne de base de données appelée <code>niveau</code> reçoit le niveau de priorité et la colonne appelée <code>msg</code> reçoit le message de log.
 
@@ -95,25 +87,22 @@ $logger->info("Message d'information");
       The <code>Zend_Log_Writer_Null</code> is a stub that does not write log data to anything.
       It is useful for disabling logging or stubbing out logging during tests:
 
-      <programlisting role="php"><![CDATA[<?php
-
+      	<programlisting role="php"><![CDATA[<?php
 $redacteur = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($redacteur);
 
 // va nulle part
-$logger->info("Message d'information");
-
-?>]]></programlisting>
+$logger->info("Message d'information");]]>
+    	</programlisting>
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.mock">
     <title>Terter avec un simulacre</title>
     <para>
-      Le <code>Zend_Log_Writer_Mock</code> est un rédacteur très simple qui enregistre les données brutes qu'il reçoit dans un tableau exposé comme propriété publique.
+      	Le <code>Zend_Log_Writer_Mock</code> est un rédacteur très simple qui enregistre les données brutes qu'il reçoit dans un tableau exposé comme propriété publique.
 
-      <programlisting role="php"><![CDATA[<?php
-
+      	<programlisting role="php"><![CDATA[<?php
 $simulacre = new Zend_Log_Writer_Mock;
 $logger = new Zend_Log($simulacre);
 
@@ -127,9 +116,8 @@ var_dump($mock->events[0]);
 //    [message] => Message d'information
 //    [priority] => 6
 //    [priorityName] => INFO
-// )
-
-?>]]></programlisting>
+// )]]>
+    	</programlisting>
     </para>
 
     <para>
@@ -143,8 +131,7 @@ var_dump($mock->events[0]);
     <para>
         Il n'y a aucun objet composite de rédacteurs. Cependant, une instance d'enregistreur peut écrire vers tout nombre de rédacteurs. Pour faire ceci, employer la méthode <code>addWriter()</code> :
 
-      <programlisting role="php"><![CDATA[<?php
-
+      	<programlisting role="php"><![CDATA[<?php
 $redacteur1 = new Zend_Log_Writer_Stream('/chemin/vers/premier/fichierdelog');
 $redacteur2 = new Zend_Log_Writer_Stream('/chemin/vers/second/fichierdelog');
 
@@ -153,9 +140,8 @@ $logger->addWriter($redacteur1);
 $logger->addWriter($redacteur2);
 
 // va dans les 2 rédacteurs
-$logger->info("Message d'information");
-
-?>]]></programlisting>
+$logger->info("Message d'information");]]>
+    	</programlisting>
     </para>
   </sect2>
 </sect1>

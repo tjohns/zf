@@ -110,8 +110,8 @@ Zend_Db
 
 Zend_View
 
-Zend_View_Helper
-]]></programlisting>
+Zend_View_Helper]]>
+                </programlisting>
 
                 <emphasis>IMPORTANT :</emphasis> le code qui opère avec le Framework mais qui n'en fait par partie, c'est-à-dire le code écrit par un utilisateur et pas Zend ou une des entreprises partenaires, ne doivent jamais commencer par &quot;Zend_&quot;.
             </para>
@@ -124,7 +124,8 @@ Zend_View_Helper
                 Les interfaces doivent suivrent les même conventions que les autres classes (cf. ci-dessus), cependant elles doivent finir par le mot &quot;Interface&quot; comme le montre ces exemples :
                 <programlisting role="php"><![CDATA[
 Zend_Log_Adapter_Interface
-Zend_Controller_Dispatcher_Interface]]></programlisting>
+Zend_Controller_Dispatcher_Interface]]>
+                </programlisting>
             </para>
         </sect2>
 
@@ -142,7 +143,8 @@ Zend/Db.php
 
 Zend/Controller/Front.php
 
-Zend/View/Helper/FormRadio.php]]></programlisting>
+Zend/View/Helper/FormRadio.php]]>
+                </programlisting>
 
                 Les noms de fichiers doivent correspondre aux noms des classes décris ci-dessus.
             </para>
@@ -170,7 +172,8 @@ filterInput()
 
 getElementById()
 
-widgetFactory()]]></programlisting>
+widgetFactory()]]>
+                </programlisting>
             </para>
 
             <para>
@@ -230,7 +233,8 @@ widgetFactory()]]></programlisting>
                 <programlisting role="php"><![CDATA[
 <?php
 
-?>]]></programlisting>
+?>]]>
+                </programlisting>
             </para>
 
             <para>
@@ -247,7 +251,8 @@ widgetFactory()]]></programlisting>
                 <para>
                     Lorsqu'une chaîne est litérrale (c'est-à-dire qu'elle ne contient pas de substitution de variables), l'apostrophe ou guillemet simple doit être utilisé pour démarquer la chaîne :
                     <programlisting role="php"><![CDATA[
-$a = 'Example String';]]></programlisting>
+$a = 'Example String';]]>
+                    </programlisting>
                 </para>
             </sect3>
 
@@ -258,7 +263,8 @@ $a = 'Example String';]]></programlisting>
                     Lorsque qu'une chaîne litérrale contient des apostrophes, il est permis de les démarquer en utilisant les guillemets doubles Ceci est particulièrement conseillé pour les requêtes SQL :
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]></programlisting>
+$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
+                    </programlisting>
 
                     La syntaxe ci-dessus est préférée à l'échappement des aspostrophes.
                 </para>
@@ -272,13 +278,15 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                     <programlisting role="php"><![CDATA[
 $greeting = "Bonjour $name, bienvenue!";
 
-$greeting = "Bonjour {$name}, bienvenue!";]]></programlisting>
+$greeting = "Bonjour {$name}, bienvenue!";]]>
+                    </programlisting>
                 </para>
 
                 <para>
                     Pour des raison d'uniformité, cette forme n'est pas permise :
                     <programlisting role="php"><![CDATA[
-$greeting = "Bonjour ${name}, bienvenue!";]]></programlisting>
+$greeting = "Bonjour ${name}, bienvenue!";]]>
+                    </programlisting>
                 </para>
             </sect3>
 
@@ -288,7 +296,8 @@ $greeting = "Bonjour ${name}, bienvenue!";]]></programlisting>
                 <para>
                     Les chaînes peuvent êtres concaténées en utilisant l'opérateur &quot;.&quot;. Un espace doit toujours être ajouté avant, et après cet opérateur, cela permet d'améliorer la lisibilité:
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . 'Technologies';]]></programlisting>
+$company = 'Zend' . 'Technologies';]]>
+                    </programlisting>
                 </para>
 
                 <para>
@@ -296,7 +305,8 @@ $company = 'Zend' . 'Technologies';]]></programlisting>
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
-     . "ORDER BY `name` ASC ";]]></programlisting>
+     . "ORDER BY `name` ASC ";]]>
+                    </programlisting>
                 </para>
             </sect3>
         </sect2>
@@ -316,7 +326,8 @@ $sql = "SELECT `id`, `name` FROM `people` "
                 <para>
                     Lors de la déclaration de tableaux indexés avec la construction <code>array</code>, un espace doit être ajouté après chaque virgule délimitante, pour améliorer la lisibilité :
                     <programlisting role="php"><![CDATA[
-$sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]></programlisting>
+$sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
+                    </programlisting>
                 </para>
 
                 <para>
@@ -324,7 +335,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]></programlisting>
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500);]]></programlisting>
+                     56.44, $d, 500);]]>
+                    </programlisting>
                 </para>
             </sect3>
 
@@ -335,7 +347,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                     Lorsque de la déclaration de tableaux associatifs avec la construction <code>array</code>, il est conseillé de séparer la définition sur plusieurs lignes. Dans ce cas, chaque ligne successive doit être remplie par des espaces pour que les clés et les valeurs soient alignées :
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
-                     'secondKey' => 'secondValue');]]></programlisting>
+                     'secondKey' => 'secondValue');]]>
+                    </programlisting>
                  </para>
             </sect3>
         </sect2>
@@ -363,7 +376,8 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 </para>
                 <para>
                     Le placement de code additionnel dans un fichier de classe est permis, mais déconseillé. Dans ces fichier, deux lignes vides doivent séparer la classe du code PHP additionel.
-                </para><para>
+                </para>
+                <para>
                     Voici un exemple d'une déclaration de classe autorisée :
                     <programlisting role="php"><![CDATA[
 /**
@@ -373,7 +387,8 @@ class SampleClass
 {
     // contenu de la classe
     // qui doit être indenté avec 4 espaces
-}]]></programlisting>
+}]]>
+                    </programlisting>
                 </para>
             </sect3>
 
@@ -420,14 +435,16 @@ function sampleMethod($a)
 {
     // contenu de la fonction
     // qui doit être indenté avec 4 espaces
-}]]></programlisting>
+}]]>
+                    </programlisting>
                 </para>
 
                 <para>
                     <emphasis>NOTE :</emphasis> Le passage par référence est permis uniquement dans la déclaration de la fonction :
                     <programlisting role="php"><![CDATA[
 function sampleMethod(&$a)
-{}]]></programlisting>
+{}]]>
+                    </programlisting>
                 </para>
 
                 <para>
@@ -445,7 +462,8 @@ function foo()
 
     // CORRECT
     return $this->bar;
-}]]></programlisting>
+}]]>
+                    </programlisting>
                 </para>
 
             </sect3>
@@ -456,7 +474,8 @@ function foo()
                 <para>
                     Les arguments d'une fonction sont séparés par un espace après la virgule de délimitation. Voici un exemple d'un appel de fonction qui prend trois arguments :
                     <programlisting role="php"><![CDATA[
-threeArguments(1, 2, 3);]]></programlisting>
+threeArguments(1, 2, 3);]]>
+                    </programlisting>
                 </para>
 
                 <para>
@@ -469,7 +488,8 @@ threeArguments(array(1, 2, 3), 2, 3);
 
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500), 2, 3);]]></programlisting>
+                     56.44, $d, 500), 2, 3);]]>
+                    </programlisting>
                 </para>
             </sect3>
         </sect2>
@@ -493,7 +513,8 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
     $a = 2;
-}]]></programlisting>
+}]]>
+                    </programlisting>
                 </para>
 
                 <para>
@@ -512,7 +533,8 @@ if ($a != 2) {
    $a = 4;
 } else {
    $a = 7;
-}]]></programlisting>
+}]]>
+                    </programlisting>
                     PHP permet que ces instructions soient écrites sans accolades dans certaines circonstances. La convention de codage ne fait pas de différentiation et toutes les instructions &quot;if&quot;, &quot;elseif&quot; et &quot;else&quot; doivent utiliser des accolades.
                 </para>
 
@@ -542,7 +564,8 @@ switch ($numPeople) {
 
     default:
         break;
-}]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     La construction <code>default</code> ne doit jamais être oubliée dans une instruction <code>switch</code>.
@@ -587,7 +610,8 @@ switch ($numPeople) {
  * @version    CVS: $Id:$
  * @link       http://dev.zend.com/package/PackageName
  * @since      File available since Release 1.2.0
-*/]]></programlisting>
+*/]]>
+                    </programlisting>
                 </para>
             </sect3>
 
@@ -608,7 +632,8 @@ switch ($numPeople) {
  * @link       http://dev.zend.com/package/PackageName
  * @since      Class available since Release 1.2.0
  * @deprecated Class deprecated in Release 2.0.0
- */]]></programlisting>
+ */]]>
+                    </programlisting>
                 </para>
             </sect3>
 
@@ -632,7 +657,8 @@ switch ($numPeople) {
                     Si une fonction/méthode peut lancer une exception, utilisez &quot;@throws&quot; :
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [description]
-]]></programlisting>
+]]>
+                    </programlisting>
                 </para>
             </sect3>
         </sect2>

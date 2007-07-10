@@ -33,8 +33,8 @@ $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
                                       $config->database->username,
                                       $config->database->password,
-                                      $config->database->name);
-?>]]></programlisting>
+                                      $config->database->name);]]>
+    	</programlisting>
     </example>
     <para>
         Comme illustré dans l'exemple ci-dessus, <code>Zend_Config</code> fournit une syntaxe de propriétés d'objets imbriquées pour accéder aux données de configuration passées à son constructeur.
@@ -43,6 +43,6 @@ $myApplicationObject->databaseConnect($config->database->type,
         Avec l'accès de type orienté-objet aux données, <code>Zend_Config</code> a aussi la méthode <code>get()</code> qui retournera la valeur par défaut si l'élément n'existe pas. Par exemple :
     </para>
     <programlisting role="php"><![CDATA[<?php
-$host = $config->database->get('host', 'localhost');
-?>]]></programlisting>
+$host = $config->database->get('host', 'localhost');]]>
+    </programlisting>
 </sect1>

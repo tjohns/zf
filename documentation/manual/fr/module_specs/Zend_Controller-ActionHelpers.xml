@@ -49,8 +49,8 @@
 
                 <programlisting role="php"><![CDATA[<?php
 $flashMessenger = $this->_helper->getHelper('FlashMessenger');
-$flashMessenger->addMessage('We did something in the last request');
-]]></programlisting>
+$flashMessenger->addMessage('We did something in the last request');]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -62,8 +62,8 @@ $flashMessenger->addMessage('We did something in the last request');
 
                 <programlisting role="php"><![CDATA[<?php
 $flashMessenger = $this->_helper->FlashMessenger;
-$flashMessenger->addMessage('We did something in the last request');
-]]></programlisting>
+$flashMessenger->addMessage('We did something in the last request');]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -76,8 +76,8 @@ $flashMessenger->addMessage('We did something in the last request');
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
-$this->_helper->FlashMessenger('We did something in the last request');
-]]></programlisting>
+$this->_helper->FlashMessenger('We did something in the last request');]]>
+                </programlisting>
             </listitem>
         </itemizedlist>
 
@@ -107,8 +107,8 @@ $this->_helper->FlashMessenger('We did something in the last request');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper($helper);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
+        </programlisting>
 
         <para>
             Of course, instantiating and passing helpers to the broker is a bit
@@ -128,8 +128,8 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);
 
                 <programlisting role="php"><![CDATA[<?php
 // Add helpers prefixed with My_Action_Helpers in My/Action/Helpers/
-Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -142,8 +142,8 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
 
                 <programlisting role="php"><![CDATA[<?php
 // Add helpers prefixed with Helper in Plugins/Helpers/
-Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
+                </programlisting>
             </listitem>
         </itemizedlist>
 
@@ -162,8 +162,8 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');
 // Check if 'redirector' helper is registered with the broker:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'Redirector helper registered
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Finally, to delete a registered helper from the broker, use
@@ -175,8 +175,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 // Conditionally remove the 'redirector' helper from the broker:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
-}
-]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.stockhelpers">
@@ -277,8 +277,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <programlisting role="php"><![CDATA[<?php
 // Redirect to /blog/view/item/id/42
-$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
-?>]]></programlisting>
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
+        </programlisting>
 
         <para>
             Internally, the helper broker's <code>__call()</code> method looks

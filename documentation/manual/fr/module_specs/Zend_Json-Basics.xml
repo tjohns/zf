@@ -8,10 +8,7 @@
 $phpNatif = Zend_Json::decode($valeurCodee);
 
 // Codage pour renvoi au client :
-$json = Zend_Json::encode($phpNatif);
-?>]]></programlisting>
+$json = Zend_Json::encode($phpNatif);]]>
+    	</programlisting>
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

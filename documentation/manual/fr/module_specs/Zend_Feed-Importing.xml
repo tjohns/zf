@@ -7,7 +7,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-$flux = Zend_Feed::import('http://flux.example.com/nomDuFlux');?>]]></programlisting>
+$flux = Zend_Feed::import('http://flux.example.com/nomDuFlux');]]>
+    </programlisting>
 
     <para>
         Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le contenu d'un flux à partir d'un fichier ou d'une chaîne PHP :
@@ -18,8 +19,8 @@ $flux = Zend_Feed::import('http://flux.example.com/nomDuFlux');?>]]></programlis
 $fluxAPartirDeFichierTexte = Zend_Feed::importFile('flux.xml');
 
 // on importe un flux à partir d'une variable PHP de type chaîne
-$fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);
-?>]]></programlisting>
+$fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);]]>
+    </programlisting>
 
     <para>
         Dans chacun des exemples ci-dessus, une instance d'une classe étendant <code>Zend_Feed_Abstract</code> est renvoyée en cas de succès, selon le type du flux. Si un flux RSS a été obtenu au moyen de l'une des méthodes d'importation décrites ci-dessus, alors un objet <code>Zend_Feed_Rss</code> sera renvoyé. Par contre, si un flux Atom a été importé, alors un objet <code>Zend_Feed_Atom</code> est renvoyé. Les méthodes d'importation déclencheront aussi une exception <code>Zend_Feed_Exception</code> en cas d'échec, par exemple si le flux est illisible ou malformé.
@@ -45,7 +46,8 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // on importe un flux rss à partir d'un tableau
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');?>]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+    		</programlisting>
 
             <para>
                 Le format du tableau doit être conforme à cette structure :
@@ -147,7 +149,8 @@ array(
                                    //données de le second item et ainsi de suite
                                    )
                              )
-       );?>]]></programlisting>
+       );]]>
+    		</programlisting>
 
             <para>
                 Références :
@@ -206,7 +209,8 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importe un flux rss à partir d'un constructeur personnalisé
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');?>]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+		    </programlisting>
 
         </sect3>
 
@@ -225,13 +229,11 @@ assert($feed instanceof Zend_Feed_Abstract);
 print $feed->saveXML();
 
 // envoie les entêtes et décharge le flux
-$feed->send();?>]]></programlisting>
+$feed->send();]]>
+		    </programlisting>
 
         </sect3>
 
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

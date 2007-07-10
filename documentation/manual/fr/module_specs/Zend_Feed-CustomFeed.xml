@@ -2,7 +2,7 @@
     <title>Classes personnalisées pour les flux et entrées</title>
 
     <para>
-                Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si
+    	Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si
 vous souhaitez créer votre propre format ou implémenter des gâteries
 comme par exemple la gestion automatique des éléments situés dans un
 espace de noms personnalisé.
@@ -18,8 +18,7 @@ espace de noms personnalisé.
 
     <example id="zend.feed.custom-feed.example.extending">
         <title>Étendre la classe représentant les entrées Atom pour ajouter la gestion d'un espace de noms personnalisé</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 /**
  * La classe personnalisée connaît automatiquement l'URI du flux (qui est
@@ -61,22 +60,15 @@ class MonEntree extends Zend_Feed_Entry_Atom
         }
     }
 
-}
-
-?>]]>   </programlisting>
+}]]>
+    	</programlisting>
         <para>
             Puis pour utiliser cette classe, instanciez-la directement et définissez la propriété <code>monPrenom</code> :
-            <programlisting role="php"><![CDATA[
-<?php
-
+            <programlisting role="php"><![CDATA[<?php
 $entree = new MonEntree();
-$entree->monPrenom = 'Martin';
-
-?>]]>       </programlisting>
+$entree->monPrenom = 'Martin';]]>
+    		</programlisting>
         </para>
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

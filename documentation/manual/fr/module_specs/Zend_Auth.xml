@@ -18,10 +18,10 @@
     </para>
 
     <note>
-        <para>  
+        <para>
             La classe <code>Zend_Auth</code> inclut un singleton -uniquement une instance de la classe est disponible- à travers la méthode
             statique <code>getInstance()</code>. Celle ci utilise un nouvel opérateur et le clone des mots clés ne fonctionnera pas avec la classe <code>Zend_Auth</code>, utilisez <code>getInstance()</code> à la place.
-            
+
         </para>
     </note>
 
@@ -38,7 +38,7 @@
 
         <para>
             Chaque classe d'authentification, adaptateur de Zend_Auth implémente <code>Zend_Auth_Adapter_Interface</code>.
-            Cette interface définit une méthode, <code>authenticate</code>, celle-ci est implémentée par une classe adaptateur 
+            Cette interface définit une méthode, <code>authenticate</code>, celle-ci est implémentée par une classe adaptateur
             à fin de l'authentification. Chaque classe adaptateur doit être préparée avant tout appel de <code>authenticate()</code>.
             Cela implique que chaque adaptateur fournisse la possibilité de définir des éléments d'authentification
             (par exemple identifiant et mot de passe) et de définir des valeurs pour les options spécifiques de
@@ -75,8 +75,8 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}
-?>]]></programlisting>
+}]]>
+    		</programlisting>
 
             Comme indiqué dans le bloc de documentation, <code>authenticate()</code> doit retourner une
             instance de <code>Zend_Auth_Result</code> (ou d'une classe derivée de <code>Zend_Auth_Result</code>).
@@ -130,7 +130,8 @@ Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+    		</programlisting>
 
         </para>
 
@@ -158,8 +159,8 @@ switch ($result->getCode()) {
     default:
         /** autres cas **/
         break;
-}
-?>]]></programlisting>
+}]]>
+    		</programlisting>
 
         </para>
 
@@ -202,7 +203,7 @@ switch ($result->getCode()) {
                 <para>
                    Si la persistance automatique de l'identité n'est pas souhaitable dans un cas particulier, alors
             le développeur peut renoncer à utiliser la classe <code>Zend_Auth</code> et préférer utiliser
-            directement une classe adaptateur. 
+            directement une classe adaptateur.
                 </para>
             </note>
 
@@ -229,8 +230,8 @@ $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
  */
 
 // authentification, sauvegarde du résultat et stockage du résultat en cas de succès
-$result = $auth->authenticate($authAdapter);
-?>]]></programlisting>
+$result = $auth->authenticate($authAdapter);]]>
+    				</programlisting>
 
                 </para>
 
@@ -320,8 +321,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
          */
     }
 
-}
-?>]]></programlisting>
+}]]>
+    				</programlisting>
 
                 </para>
 
@@ -338,8 +339,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  */
 
 // Authentification, sauvegarde et persistance du résultat en cas de succès.
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);
-?>]]></programlisting>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+    				</programlisting>
 
                 </para>
 
@@ -385,7 +386,7 @@ $authAdaptateur = new MonAdaptateurAuth($identifiant, $motdepasse);
 $resultat = $auth->authenticate($authAdaptateur);
 
 if (!$resultat->isValid()) {
-    // échec de l'authentification ; afficher pourquoi 
+    // échec de l'authentification ; afficher pourquoi
     foreach ($resultat->getMessages() as $message) {
         echo "$message\n";
     }
@@ -393,8 +394,8 @@ if (!$resultat->isValid()) {
     // Authentification réussie ; l'identité ($identifiant) est stockée dans la session
     // $resultat->getIdentity() === $auth->getIdentity()
     // $resultat->getIdentity() === $identifiant
-}
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -405,23 +406,23 @@ $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // l'identité existe ; on la récupère
     $identite = $auth->getIdentity();
-}
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
         <para>
             Pour retirer une identité du stockage persistant, utilisez simplement la méthode <code>clearIdentity()</code>.
             A utiliser typiquement pour implémenter une opération de déconnexion d'une application :
             <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();
-?>]]></programlisting>
+Zend_Auth::getInstance()->clearIdentity();]]>
+    </programlisting>
         </para>
 
         <para>
             Quand l'utilisation automatique du stockage persistant n'est pas appropriée, le développeur
             peut simplement contourner l'utilisation de la classe <code>Zend_Auth</code> en utilisant
             directement une classe adaptateur. L'usage direct d'une classe adaptateur implique de
-            configurer et préparer l'objet de l'adaptateur et d'appeler ensuite sa méthode <code>authenticate()</code>. 
+            configurer et préparer l'objet de l'adaptateur et d'appeler ensuite sa méthode <code>authenticate()</code>.
             Les détails spécifiques à un adaptateur sont décrits dans la documentation de chacun d'entre-eux.
             L'exemple suivant utilise directement <code>MonAdaptateurAuth</code> :
 
@@ -433,15 +434,15 @@ $authAdaptateur = new MonAdaptateurAuth($identifiant, $motdepasse);
 $resultat = $authAdaptateur->authenticate();
 
 if (!$resultat->isValid()) {
-    // échec de l'authentification ; afficher pourquoi 
+    // échec de l'authentification ; afficher pourquoi
     foreach ($resultat->getMessages() as $message) {
         echo "$message\n";
     }
 } else {
     // Authentification réussie
     // $resultat->getIdentity() === $identifiant
-}
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
     </sect2>

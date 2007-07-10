@@ -23,8 +23,8 @@
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+    	</programlisting>
 
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> a été créée pour être un parent de tous les analyseurs définis par l'utilisateur. L'utilisateur ne devrait définir que les méthodes <code>reset()</code> et <code>nextToken()</code>, qui prennent une chaîne de caractères issu du membre <code>$_input</code> et les tokens un par un (<code>null</code> indique la fin du flux).
@@ -107,9 +107,8 @@ class Mon_Analyseur extends Zend_Search_Lucene_Analysis_Analyzer_Common
 }
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new Mon_Analyseur());
-
-?>]]></programlisting>
+    new Mon_Analyseur());]]>
+			    </programlisting>
             </example>
         </para>
         </sect2>
@@ -162,16 +161,16 @@ $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWo
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+    		</programlisting>
             <programlisting role="php"><![CDATA[<?php
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($shortWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -183,8 +182,8 @@ $stopWordsFilter->loadFromFile($my_stopwords_file);
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);?>
-]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+    		</programlisting>
             Les fichiers devraient des fichiers textes communs avec un mot dans chaque chaîne. Le caractère "#" déclare un chaîne en commentaire.
         </para>
 
@@ -244,7 +243,6 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);?>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 class MaSimilarite extends Zend_Search_Lucene_Search_Similarity {
     public function lengthNorm($fieldName, $numTerms) {
         return 1.0/sqrt($numTerms);
@@ -276,9 +274,8 @@ class MaSimilarite extends Zend_Search_Lucene_Search_Similarity {
 }
 
 $mySimilarity = new MaSimilarite();
-Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
-
-?>]]></programlisting>
+Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);]]>
+    	</programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.extending.storage">
@@ -306,8 +303,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
         <para>
             Les méthodes de <code>Zend_Search_Lucene_Storage_Directory</code> :
 
-        <programlisting><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 abstract class Zend_Search_Lucene_Storage_Directory {
 /**
  * Closes the store.
@@ -389,9 +385,8 @@ abstract function touchFile($filename);
  */
 abstract function getFileObject($filename);
 
-}
-
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -406,8 +401,7 @@ abstract function getFileObject($filename);
         <para>
             Seules deux méthodes de la classe <code>Zend_Search_Lucene_Storage_File</code> doivent être surchargée dans votre implémentation:
 
-        <programlisting><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
      * Sets the file position indicator and advances the file pointer.
@@ -438,9 +432,8 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
     protected function _fread($length=1) {
         ...
     }
-}
-
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </para>
 
     </sect2>

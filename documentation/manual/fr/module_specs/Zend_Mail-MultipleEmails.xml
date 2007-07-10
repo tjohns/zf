@@ -16,7 +16,7 @@ $tr->connect();
 for ($i = 0; $i < 5; $i++) {
     $mail->send();
 }
-$tr->disconnect();
-?>]]></programlisting>
+$tr->disconnect();]]>
+    	</programlisting>
     </example>
 </sect1>

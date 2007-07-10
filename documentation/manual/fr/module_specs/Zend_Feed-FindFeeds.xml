@@ -5,12 +5,9 @@
 qui font référence à des flux dont le contenu est lié à la page.
 <code>Zend_Feed</code> vous permet d'obtenir tous les flux référencés
 par une page web en appelant simplement une méthode :
-        <programlisting role="php"><![CDATA[
-<?php
-
-$tableauFlux = Zend_Feed::findFeeds('http://www.exemple.com/news.html');
-
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$tableauFlux = Zend_Feed::findFeeds('http://www.exemple.com/news.html');]]>
+    	</programlisting>
 La méthode <code>findFeeds()</code> renvoie ici un tableau d'objets
 <code>Zend_Feed_Abstract</code> associés aux flux référencés par les
 balises <code>&lt;link&gt;</code> de la page web <code>news.html</code>.
@@ -22,6 +19,3 @@ Selon le type de chaque flux, chaque entrée respective du tableau
 code HTTP 404 renvoyé en réponse ou si le flux est malformé.
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

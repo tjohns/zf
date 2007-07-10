@@ -59,11 +59,8 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 // Retire la page spécifiée
 unset($pdf->pages[$id]);
 
-...
-?>]]></programlisting>
+...]]>
+    	</programlisting>
     </example>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

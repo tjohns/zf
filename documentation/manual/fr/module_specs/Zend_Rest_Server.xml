@@ -21,9 +21,8 @@ require_once 'Mon/Service/Classe.php';
 
 $server = new Zend_Rest_Server();
 $server->setClass('Mon_Service_Classe');
-$server->handle();
-?>]]>
-            </programlisting>
+$server->handle();]]>
+    		</programlisting>
         </example>
 
         <example>
@@ -46,9 +45,8 @@ function ditBonjour($qui, $quand)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
-$server->handle();
-?>]]>
-            </programlisting>
+$server->handle();]]>
+		    </programlisting>
         </example>
     </sect2>
 
@@ -92,7 +90,7 @@ $server->handle();
 
         <example>
             <title>Renvoyer un statut personnalisé</title>
-            <programlisting><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
 /**
@@ -109,9 +107,8 @@ function ditBonjour($qui, $quand)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
-$server->handle();
-?>]]>
-            </programlisting>
+$server->handle();]]>
+    		</programlisting>
         </example>
     </sect2>
 
@@ -126,7 +123,7 @@ $server->handle();
         <example>
             <title>Renvoyer une réponse XML personnalisée</title>
 
-            <programlisting><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
 
 /**
@@ -151,9 +148,8 @@ function ditBonjour($qui, $quand)
 $server = new Zend_Rest_Server();
 $server->addFunction('ditBonjour');
 
-$server->handle();
-?>]]>
-            </programlisting>
+$server->handle();]]>
+		    </programlisting>
         </example>
 
         <para>
@@ -161,7 +157,3 @@ $server->handle();
         </para>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

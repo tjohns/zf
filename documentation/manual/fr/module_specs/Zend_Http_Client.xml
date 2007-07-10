@@ -19,22 +19,20 @@
             and set later using the setUri() and setConfig() methods.
             <example>
                 <title>Instantiating a Zend_Http_Client object</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
 
-    $client = new Zend_Http_Client('http://example.org', array(
-        'maxredirects' => 0,
-        'timeout'      => 30));
+$client = new Zend_Http_Client('http://example.org', array(
+    'maxredirects' => 0,
+    'timeout'      => 30));
 
-    // This is actually exactly the same:
-    $client = new Zend_Http_Client();
-    $client->setUri('http://example.org');
-    $client->setConfig(array(
-        'maxredirects' => 0,
-        'timeout'      => 30));
-
-?>]]></programlisting>
+// This is actually exactly the same:
+$client = new Zend_Http_Client();
+$client->setUri('http://example.org');
+$client->setConfig(array(
+    'maxredirects' => 0,
+    'timeout'      => 30));]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -111,13 +109,12 @@
             request() method, and rarely needs more than three lines of code:
             <example>
                 <title>Preforming a Simple GET Request</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
 
-    $client = new Zend_Http_Client('http://example.org');
-    $response = $client->request();
-?>]]></programlisting>
+$client = new Zend_Http_Client('http://example.org');
+$response = $client->request();]]>
+                </programlisting>
             </example>
             The request() method takes one optional parameter - the request method.
             This can be either GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS or
@@ -136,15 +133,14 @@
             method is GET (see the above example).
             <example>
                 <title>Using Request Methods Other Than GET</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Preforming a POST request
-    $response = $client->request('POST');
+                <programlisting role="php"><![CDATA[<?php
+// Preforming a POST request
+$response = $client->request('POST');
 
-    // Yet another way of preforming a POST request
-    $client->setMethod(Zend_Http_Client::POST);
-    $response = $client->request();
-?>]]></programlisting>
+// Yet another way of preforming a POST request
+$client->setMethod(Zend_Http_Client::POST);
+$response = $client->request();]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -162,21 +158,20 @@
             be more comfortable when several GET parameters need to be set.
             <example>
                 <title>Setting GET Parameters</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Setting a get parameter using the setParameterGet method
-    $client->setParameterGet('knight', 'lancelot');
+                <programlisting role="php"><![CDATA[<?php
+// Setting a get parameter using the setParameterGet method
+$client->setParameterGet('knight', 'lancelot');
 
-    // This is equivalent to setting such URL:
-    $client->setUri('http://example.com/index.php?knight=lancelot');
+// This is equivalent to setting such URL:
+$client->setUri('http://example.com/index.php?knight=lancelot');
 
-    // Adding several parameters with one call
-    $client->setParameterGet(array(
-        'first_name'  => 'Bender',
-        'middle_name' => 'Bending'
-        'made_in'     => 'Mexico',
-    ));
-?>]]></programlisting>
+// Adding several parameters with one call
+$client->setParameterGet(array(
+    'first_name'  => 'Bender',
+    'middle_name' => 'Bending'
+    'made_in'     => 'Mexico',
+));]]>
+                </programlisting>
             </example>
         </para>
         <para>
@@ -187,18 +182,17 @@
             similar to the setParameterGet() method in structure.
             <example>
                 <title>Setting POST Parameters</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Setting a POST parameter
-    $client->setParameterPost('language', 'fr');
+                <programlisting role="php"><![CDATA[<?php
+// Setting a POST parameter
+$client->setParameterPost('language', 'fr');
 
-    // Setting several POST parameters, one of them with several values
-    $client->setParameterPost(array(
-        'language'  => 'es',
-        'country'   => 'ar',
-        'selection' => array(45, 32, 80)
-    ));
-?>]]></programlisting>
+// Setting several POST parameters, one of them with several values
+$client->setParameterPost(array(
+    'language'  => 'es',
+    'country'   => 'ar',
+    'selection' => array(45, 32, 80)
+));]]>
+                </programlisting>
             </example>
             Note that when sending POST requests, you can set both GET and
             POST parameters. On the other hand, while setting POST parameters

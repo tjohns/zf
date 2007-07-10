@@ -16,7 +16,8 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $config);?>]]></programlisting>
+$config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $config);]]>
+		    </programlisting>
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
@@ -38,7 +39,8 @@ database.name     = dbname
 [test : production]
 database.host     = dev.example.com
 database.username = devuser
-database.password = devsecret]]></programlisting>
+database.password = devsecret]]>
+	    </programlisting>
         <para>
             Ensuite, supposons que le développeur ait besoin des données de configuration de test issues du fichier INI. Il est facile de charger ces données en indiquant le fichier INI et la section de test :
         </para>
@@ -48,7 +50,8 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('/chemin/vers/config.ini', 'test');
 
 echo $config->database->host; // affiche "dev.example.com"
-echo $config->database->name; // affiche "dbname"?>]]></programlisting>
+echo $config->database->name; // affiche "dbname"]]>
+	    </programlisting>
     </example>
     <note>
     <table>

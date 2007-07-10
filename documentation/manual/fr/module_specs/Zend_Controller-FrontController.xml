@@ -32,8 +32,8 @@
 
             <programlisting role="php"><![CDATA[<?php
 // Désactivez le plugin ErrorHandler :
-$front->setParam('noErrorHandler', true);
-?>]]></programlisting>
+$front->setParam('noErrorHandler', true);]]>
+    		</programlisting>
 
             <para>
                 Pour désactiver <code>ViewRenderer</code>, éxécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
@@ -41,8 +41,8 @@ $front->setParam('noErrorHandler', true);
 
             <programlisting role="php"><![CDATA[<?php
 // Désactivez l'aide ViewRenderer :
-$front->setParam('noViewRenderer', true);
-?>]]></programlisting>
+$front->setParam('noViewRenderer', true);]]>
+		    </programlisting>
 
         </note>
     </sect2>
@@ -62,8 +62,8 @@ $front->setParam('noViewRenderer', true);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$front = Zend_Controller_Front::getInstance();
-?>]]></programlisting>
+$front = Zend_Controller_Front::getInstance();]]>
+		    </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.front.methods.primary.setcontrollerdirectory">
@@ -89,8 +89,8 @@ $front->setControllerDirectory(array(
 ));
 
 // Ajouter le répertoire de module 'foo' :
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');
-?>]]></programlisting>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
+		    </programlisting>
 
             <note>
                 <para>
@@ -146,8 +146,8 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
 
             <programlisting role="php"><![CDATA[<?php
 // Instancie le contrôleur frontal, règle les dossiers de contrôleurs, et dispatche en une seule étape :
-Zend_Controller_Front::run('../application/controllers');
-?>]]></programlisting>
+Zend_Controller_Front::run('../application/controllers');]]>
+		    </programlisting>
         </sect3>
     </sect2>
 
@@ -329,8 +329,8 @@ class Mon_Controleur_Frontal extends Zend_Controller_Front
 
         return self::$_instance;
     }
-}
-]]></programlisting>
+}]]>
+	    </programlisting>
 
         <para>
             Surcharger la méthode <code>getInstance()</code> assure que des appels suivants à <code>Zend_Controller_Front::getInstance()</code> renverront une instance de votre nouvelle sous-classe au lieu d'une instance de <code>Zend_Controller_Front</code> - c'est particulièrement utile pour certains des routeurs alternatifs et certaines aides de vue.

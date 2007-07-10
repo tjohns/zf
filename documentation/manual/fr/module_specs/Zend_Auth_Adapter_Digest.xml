@@ -32,7 +32,8 @@
             Les éléments ci-dessus sont séparés par des virgules, comme dans l'exemple suivant (dans lequel le mot de passe est "<code>unMotdepasse</code>") :
         </para>
 
-        <programlisting><![CDATA[unUtilisateur:Un domaine:fde17b91c3a510ecbaf7dbd37f59d4f8]]></programlisting>
+        <programlisting><![CDATA[unUtilisateur:Un domaine:fde17b91c3a510ecbaf7dbd37f59d4f8]]>
+    </programlisting>
 
     </sect2>
 
@@ -94,7 +95,8 @@ Array
     [realm] => Un domaine
     [username] => unUtilisateur
 )
-*/?>]]></programlisting>
+*/]]>
+    	</programlisting>
 
     </sect2>
 

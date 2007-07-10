@@ -114,7 +114,7 @@
 
         <example>
             <title>User-specified input date format</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
@@ -122,8 +122,8 @@ $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
 $date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // strictly restricts interpretation to specified format
-echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
-?>]]></programlisting>
+echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"]]>
+            </programlisting>
         </example>
 
         <para>
@@ -162,15 +162,15 @@ echo $date3, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"
 
         <example>
             <title>Operating on Parts of Dates</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date(); // $date's timestamp === time()
 
 // changes $date by adding 12 hours
 $date->add('12', Zend_Date::HOUR);
-print $date;
-?>]]></programlisting>
+print $date;]]>
+            </programlisting>
         </example>
 
         <para>

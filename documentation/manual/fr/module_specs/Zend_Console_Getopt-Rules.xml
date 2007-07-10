@@ -19,8 +19,8 @@
             <title>Utiliser la syntaxe courte</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt('abp:');
-?>]]></programlisting>
+$opts = new Zend_Console_Getopt('abp:');]]>
+		    </programlisting>
         </example>
         <para>
             L'exemple ci-dessus montre l'utilisation de <code>Zend_Console_Getopt</code> pour déclarer que des options peuvent être données en tant que "<code>-a</code>", "<code>-b</code>" ou "<code>-p</code>". Le dernier drapeau exige un paramètre.
@@ -71,9 +71,8 @@ $opts = new Zend_Console_Getopt(
     'banane|b=i' => 'Cette option choisit banane, avec un parametre obligatoire de type entier',
     'pear|p-s'   => 'Cette option choisit pear, avec un parametre optionel de type chaine de caracteres'
   )
-);
-?>]]>
-            </programlisting>
+);]]>
+		    </programlisting>
         </example>
         <para>
             Dans l'exemple ci-dessus, il y a trois options. "<code>--abricot</code>" et "<code>-a</code>" sont des alias l'un pour l'autre et l'option ne prend pas de paramètres. "<code>--banane</code>" et "<code>-b</code>" sont des alias l'un pour l'autre et l'option prend un paramètre obligatoire de type entier. Enfin, "<code>--pear</code>" et "<code>-p</code>" sont des alias l'un pour l'autre et l'option prend un paramètre optionel de type chaîne de caractère.

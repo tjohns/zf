@@ -29,8 +29,8 @@ if ($validateurChaine->isValid($identifiant)) {
     foreach ($validateurChaine->getMessages() as $message) {
         echo "$message\n";
     }
-}
-?>]]></programlisting>
+}]]>
+	    </programlisting>
 
         Les validateurs sont exécutés dans leur ordre d'ajout à <code>Zend_Validate</code>. Dans l'exemple
         ci-dessus, l'identifiant est d'abord testé pour vérifier que sa longueur est bien comprise entre 6
@@ -51,8 +51,8 @@ if ($validateurChaine->isValid($identifiant)) {
 
         <programlisting role="php"><![CDATA[<?php
 $validateurChaine->addValidator(new Zend_Validate_StringLength(6, 12), true)
-                 ->addValidator(new Zend_Validate_Alnum());
-?>]]></programlisting>
+                 ->addValidator(new Zend_Validate_Alnum());]]>
+	    </programlisting>
 
     </para>
 
@@ -61,6 +61,3 @@ $validateurChaine->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

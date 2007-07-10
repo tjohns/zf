@@ -11,8 +11,7 @@ le renvoyer au serveur.
 
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>Modifier l'entrée existante d'un flux</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
 $entree = $flux->current();
@@ -20,9 +19,8 @@ $entree = $flux->current();
 $entree->title = 'Ceci est un nouveau titre';
 $entree->author->email = 'mon_email@exemple.com';
 
-echo $entree->saveXML();
-
-?>]]>   </programlisting>
+echo $entree->saveXML();]]>
+    	</programlisting>
         <para>
            Ce code affichera une représentation XML complète (y compris le
             prologue <code>&lt;?xml ...&gt;</code>) de la nouvelle entrée, avec les
@@ -50,8 +48,7 @@ de noms.
 
     <example id="zend.feed.modifying-feed.example.creating">
         <title>Créer une entrée Atom dont les éléments appartiennent à un espace de noms personnalisé</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $entree = new Zend_Feed_Entry_Atom();
 // en Atom, id est toujours affecté par le serveur
@@ -66,11 +63,7 @@ $entree->{'monen:monelement_un'} = 'ma première valeur personnalisée';
 $entree->{'monen:conteneur_elt'}->partie1 = 'première partie imbriquée personnalisée';
 $entree->{'monen:conteneur_elt'}->partie2 = 'deuxième partie imbriquée personnalisée';
 
-echo $entree->saveXML();
-
-?>]]>   </programlisting>
+echo $entree->saveXML();]]>
+    	</programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

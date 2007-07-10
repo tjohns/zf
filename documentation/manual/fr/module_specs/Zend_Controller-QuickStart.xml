@@ -39,7 +39,8 @@ application/
 html/
     .htaccess
     index.php
-]]></programlisting>
+]]>
+    </programlisting>
 
         </sect3>
 
@@ -61,7 +62,8 @@ html/
             <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
-]]></programlisting>
+]]>
+    </programlisting>
 
             <para>
                 Les règles ci-dessus vont redirigées toute requête non-ressource (images, feuilles de style CSS) vers le contrôleur frontal. S'il y a d'autres extensions que vous souhaitez exclure du contrôleur frontal (PDFs, fichiers textes, etc.), ajoutez leurs extensions au commutateur, ou créez vos propres règles de réécriture.
@@ -84,7 +86,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/chemin/vers/application/controllers');
-?>]]></programlisting>
+]]>
+    </programlisting>
 
             <para>
                 Ceci va instancier et dispatcher le contrôleur frontal, qui conduira les demandes vers les contrôleurs d'action.
@@ -121,7 +124,8 @@ class IndexController extends Zend_Controller_Action
         $this->render();
     }
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
 
             <para>
                 Par défaut, l'aide d'action <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link> est activé. Ceci signifie qu'en définissant simplement une méthode d'action et un script de vue correspondant, vous obtiendrez automatiquement le rendu du contenu. Par défaut, <code>Zend_View</code> est utilisé en tant que couche Vue dans le MVC. Le <code>ViewRenderer</code> utilise le nom du contrôleur (par exemple, <code>index</code>) et le nom de l'action courante (par exemple, <code>index</code>) pour déterminer le modèle à afficher. Par défaut, le fichier modèle se termine par l'extension <code>.phtml</code>, cela signifie que dans l'exemple ci-dessus, le modèle <code>index/index.phtml</code> sera rendu. De plus, le <code>ViewRenderer</code> suppose automatiquement que le dossier <code>views</code> situé au même niveau que le dossier des contrôleurs est le dossier de base des vues, et que les scripts de vues sont dans le sous-dossier <code>views/scripts/</code>. Ainsi le modèle rendu sera trouvé dans <code>application/views/scripts/index/index.phtml</code>.
@@ -148,7 +152,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Hello, World!</h1>
 </body>
 </html>
-]]></programlisting>
+]]>
+    </programlisting>
         </sect3>
         <sect3 id="zend.controller.quickstart.go.errorhandler">
             <title>Créer votre contrôleur d'erreur</title>
@@ -167,7 +172,8 @@ class ErrorController extends Zend_Controller_Action
     {
     }
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
 
             <para>
                 En considérant l'architecture des dossiers vu ci-dessus, le fichier sera dans <code>application/controllers/ErrorController.php</code>. Vous devez aussi créer une script de vue dans <code>application/views/scripts/error/error.phtml</code> ; exemple de contenu possible :
@@ -187,7 +193,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <p>Une erreur est apparue ; veuillez rééssayer plus tard.</p>
 </body>
 </html>
-]]></programlisting>
+]]>
+    </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">

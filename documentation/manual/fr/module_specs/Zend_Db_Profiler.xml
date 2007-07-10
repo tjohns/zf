@@ -31,8 +31,8 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 $db->getProfiler()->setEnabled(false);
 
 // active le profileur :
-$db->getProfiler()->setEnabled(true);
-?>]]></programlisting>
+$db->getProfiler()->setEnabled(true);]]>
+    	</programlisting>
     </sect2>
 
     <sect2 id="zend.db.profiler.using">
@@ -44,8 +44,8 @@ $db->getProfiler()->setEnabled(true);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$profileur = $db->getProfiler();
-?>]]></programlisting>
+$profileur = $db->getProfiler();]]>
+	    </programlisting>
 
         <para>
             Ceci retourne une instance de <code>Zend_Db_Profiler</code>. Avec cette instance, le développeur peut examiner les requêtes en utilisant un éventail de méthodes :
@@ -108,8 +108,8 @@ $profileur = $db->getProfiler();
         <programlisting role="php"><![CDATA[<?php
 $query = $profileur->getLastQueryProfile();
 
-echo $query->getQuery();
-?>]]></programlisting>
+echo $query->getQuery();]]>
+	    </programlisting>
 
         <para>
             Si une page se génère lentement, utilisez le profileur pour déterminer le nombre total de requêtes, et ensuite passer d'une requête à l'autre pour voir laquelle a été la plus longue:
@@ -132,8 +132,8 @@ echo 'Exécution de ' . $nombreRequetes . ' requêtes en ' . $tempsTotal . ' sec
 echo 'Temps moyen : ' . $tempsTotal / $nombreRequetes . ' secondes' . "\n";
 echo 'Requêtes par seconde: ' . $nombreRequetes / $tempsTotal . ' seconds' . "\n";
 echo 'Requête la plus lente (secondes) : ' . $tempsLePlusLong . "\n";
-echo "Requête la plus lente (SQL) : \n" . $requeteLaPlusLongue . "\n";
-?>]]></programlisting>
+echo "Requête la plus lente (SQL) : \n" . $requeteLaPlusLongue . "\n";]]>
+    </programlisting>
 
     </sect2>
 
@@ -157,8 +157,8 @@ echo "Requête la plus lente (SQL) : \n" . $requeteLaPlusLongue . "\n";
 $profileur->setFilterElapsedSecs(5);
 
 // Profil de toutes les requêtes, peu importe leur durée :
-$profileur->setFilterElapsedSecs(null);
-?>]]></programlisting>
+$profileur->setFilterElapsedSecs(null);]]>
+		    </programlisting>
         </sect3>
 
         <sect3 id="zend.db.profiler.advanced.filtertype">
@@ -221,8 +221,8 @@ $profileur->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSE
 $profileur->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // Efface tous les filtres
-$profileur->setFilterQueryType(null);
-?>]]></programlisting>
+$profileur->setFilterQueryType(null);]]>
+		    </programlisting>
 
         </sect3>
         <sect3 id="zend.db.profiler.advanced.getbytype">
@@ -242,9 +242,8 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profi
 
 // Récupère uniquement les profils des requêtes DELETE (on peut donc comprendre pourquoi les données
 // disparaissent)
-$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
-?>]]>
-            </programlisting>
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
+		    </programlisting>
 
         </sect3>
 

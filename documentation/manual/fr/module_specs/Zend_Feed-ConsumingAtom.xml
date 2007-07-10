@@ -21,17 +21,15 @@
             <code>title</code>) et le résumé (propriété <code>summary</code>) de
             chaque entrée :
         </para>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 
 $flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/');
 echo 'Le flux contient ' . $flux->count() . ' entrée(s).' . "\n\n";
 foreach ($flux as $entree) {
     echo 'Titre : ' . $entree->title() . "\n";
     echo 'Résumé : ' . $entree->summary() . "\n\n";
-}
-
-?>]]>   </programlisting>
+}]]>
+    	</programlisting>
     </example>
 
     <para>
@@ -102,6 +100,3 @@ l'entrée</para>
         <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
     </para>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

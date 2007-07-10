@@ -7,8 +7,7 @@
     </para>
     <example>
         <title>Envoyer des emails HTML</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Mon texte de test');
@@ -16,10 +15,7 @@ $mail->setBodyHtml('Mon texte de test');
 $mail->setFrom('somebody@exemple.com', 'Un expéditeur');
 $mail->addTo('somebody_else@exemple.com', 'Un destinataire');
 $mail->setSubject('Sujet de test');
-$mail->send();
-?>]]>   </programlisting>
+$mail->send();]]>
+    	</programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

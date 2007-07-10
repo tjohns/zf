@@ -9,8 +9,8 @@
         <para>
             Créer des objets mémoires mobiles en utilisant la méthode <code>create([$data])</code> du manager de mémoire :
             <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->create($data);
-?>]]></programlisting>
+$memObject = $memoryManager->create($data);]]>
+    		</programlisting>
         </para>
 
         <para>
@@ -26,8 +26,8 @@ $memObject = $memoryManager->create($data);
         <para>
             Créer des objets mémoires vérrouillés en utilisant la méthode <code>createLocked([$data])</code> du manager de mémoire :
             <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->createLocked($data);
-?>]]></programlisting>
+$memObject = $memoryManager->createLocked($data);]]>
+		    </programlisting>
         </para>
 
         <para>
@@ -69,8 +69,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);
-?>]]></programlisting>
+$memObject->value = substr($memObject->value, $start, $length);]]>
+		    </programlisting>
         </para>
 
         <para>
@@ -91,8 +91,8 @@ $memObject->value = substr($memObject->value, $start, $length);
             <title>La méthode getRef()</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function &getRef();
-?>]]></programlisting>
+public function &getRef();]]>
+		    </programlisting>
 
             <para>
                 La méthode <code>getRef()</code> retourne la référence vers une valeur d'objet.
@@ -116,8 +116,8 @@ $value = &$memObject->getRef();
 for ($count = 0; $count < strlen($value); $count++) {
     $char = $value[$count];
     ...
-}
-?>]]></programlisting>
+}]]>
+			    </programlisting>
             </para>
 
         </sect3>
@@ -127,8 +127,8 @@ for ($count = 0; $count < strlen($value); $count++) {
             <title>La méthode touch()</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function touch();
-?>]]></programlisting>
+public function touch();]]>
+		    </programlisting>
             <para>
                 La méthode <code>touch()</code> devrait être employée en commun avec <code>getRef()</code>. Elle signale que la valeur d'objet a été changé :
                 <programlisting role="php"><![CDATA[<?php
@@ -145,8 +145,8 @@ for ($count = 0; $count < strlen($value); $count++) {
     ...
 }
 
-$memObject->touch();
-?>]]></programlisting>
+$memObject->touch();]]>
+			    </programlisting>
 
             </para>
 
@@ -157,8 +157,8 @@ $memObject->touch();
             <title>La méthode lock()</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function lock();
-?>]]></programlisting>
+public function lock();]]>
+		    </programlisting>
 
             <para>
                 La méthode <code>lock()</code> vérouille l'objet en mémoire. Elle devrait être utilisé pour empêcher la mise en cache des objets que vous choisissez. Normalement, ce n'est pas nécessaire, parce que le manager de mémoire utilise un algorithme intelligent pour choisir des candidats à la mise en cache. Mais si vous savez exactement, qu'à cette endroit du code certains objets ne devraient pas être mis en cache, vous pouvez les verrouiller.
@@ -183,8 +183,8 @@ for ($count = 0; $count < strlen($value2); $count++) {
 
 $memObject1->touch();
 $memObject1->unlock();
-$memObject2->unlock();
-?>]]></programlisting>
+$memObject2->unlock();]]>
+			    </programlisting>
             </para>
 
         </sect3>
@@ -194,8 +194,8 @@ $memObject2->unlock();
             <title>La méthode unlock()</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function unlock();
-?>]]></programlisting>
+public function unlock();]]>
+		    </programlisting>
 
             <para>
                 La méthode <code>unlock()</code> déverrouille l'objet quand il n'est plus nécessaire de maintenir vérrouillé. Voir l'exemple ci-dessus.
@@ -208,8 +208,8 @@ public function unlock();
             <title>La méthode isLocked()</title>
 
             <programlisting role="php"><![CDATA[<?php
-public function isLocked();
-?>]]></programlisting>
+public function isLocked();]]>
+		    </programlisting>
 
             <para>
                 La méthode <code>isLocked()</code> peut être utilisée pour vérifier si l'objet est verrouillé. Il retourne <code>true</code> si l'objet est verrouillé, ou <code>false</code> s'il n'est pas verrouillé. C'est toujours <code>true</code> pour les objets "verrouillés" et peut être <code>true</code> ou <code>false</code> pour des objets "mobiles".

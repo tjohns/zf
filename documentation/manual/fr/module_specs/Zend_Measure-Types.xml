@@ -221,7 +221,7 @@
             Les chiffres romains plus grands que 4000 sont supportés. <ulink url="http://fr.wikipedia.org/wiki/Chiffre_romain#Extensions_classiques">Ces nombres sont écrits avec une barre au dessus</ulink>. Comme cette barre ne peut pas être représentée sur l'ordinateur, il faut utiliser un tiret bas en début de chaîne.
         </para>
 
-<programlisting role="php"><![CDATA[<?php
+		<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
 $valeur_grande = '_X';
@@ -229,8 +229,8 @@ $locale = new Zend_Locale('en');
 $unite = new Zend_Measure_Number($valeur_grande,Zend_Measure_Number::ROMAN, $locale);
 
 // convertir en système décimal
-echo $unite->convertTo(Zend_Measure_Number::DECIMAL); // affiche 10000
-?>]]></programlisting>
+echo $unite->convertTo(Zend_Measure_Number::DECIMAL); // affiche 10000]]>
+	    </programlisting>
 
     </sect2>
 

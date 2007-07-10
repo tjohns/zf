@@ -58,11 +58,8 @@ try {
     }
 } catch (Zend_Http_Client_Exception $e) {
     echo '<p>Une erreur a eu lieu (' .$e->getMessage(). ')</p>';
-}
-?>]]></programlisting>
+}]]>
+    		</programlisting>
         </example>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

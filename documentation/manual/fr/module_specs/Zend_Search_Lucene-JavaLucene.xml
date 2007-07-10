@@ -92,10 +92,10 @@ indexWriter.addDocument(doc);]]>
         <para>
             LuceneIndexCreation.jar lit les fichier texte et construit un index à partir d'eux. Utilisation:
         <programlisting role="java"><![CDATA[
-    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
-    -c   - force l'index à sensible à être sensible àla case
-    -s   - stocke le contenu dans l'index
-    ]]></programlisting>
+java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
+-c   - force l'index à sensible à être sensible àla case
+-s   - stocke le contenu dans l'index    ]]>
+    	</programlisting>
             Cette commande analyse le répertoire <code>&lt;document_dir&gt;</code>, ainsi que tous ces sous répertoires, et génère un index Lucene.
             L'index est un jeu de fichiers qui seront stokés dans un répertoire séparé <code>&lt;index_dir&gt;</code>.
         </para>
@@ -128,7 +128,3 @@ indexWriter.addDocument(doc);]]>
     </sect2>
 
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->

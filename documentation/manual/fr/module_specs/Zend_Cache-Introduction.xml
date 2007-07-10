@@ -35,12 +35,11 @@ $backendOptions = array(
 );
 
 // créer un objet Zend_Cache_Core
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
-
-?>]]></programlisting>
-       <para>
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+		</programlisting>
+       	<para>
             Maintenant que nous avons un frontend, nous pouvons mettre en cache tout type de données (nous avons activé la sérialisation). Par exemple nous pouvons mettre en cache le résultat d'une requête SQL couteuse. Après qu'il soit mis en cache, il n'y a plus besoin de se connecter à la base de données. Les enregistrements récupérés depuis le cache sont désérialisés.
-       </para>
+       	</para>
             <programlisting role="php"><![CDATA[<?php
 // $cache initialisé dans l'exemple précédent
 
@@ -61,8 +60,8 @@ if(!$result = $cache->get('myresult')) {
 
 }
 
-print_r($result);
-?>]]></programlisting>
+print_r($result);]]>
+	    </programlisting>
     </example>
     <example>
         <title>Cache de sortie avec le frontend de sortie <code>Zend_Cache</code></title>
@@ -91,12 +90,12 @@ if(!$cache->start('mypage')) {
     $cache->end(); // la sortie est sauvegardée est envoyé au navigateur
 }
 
-echo 'Ceci n\' jamais mis en cache ('.time().').';
-?>]]>       </programlisting>
-       </para>
-       <para>
+echo 'Ceci n\' jamais mis en cache ('.time().').';]]>
+		    </programlisting>
+		</para>
+		<para>
            Notez que nous affichons le résultat de <code>time()</code> deux fois ; c'est dans un but de démonstration. Essayez de lancer la page et de la rafraîchir plusieurs fois ; vous allez constater que le premier nombre ne change pas alors que le second change à chaque actualisation. C'est parce que le premier nombre a été mis en cache et sauvegardé. Après 30 secondes ('lifeTime' a été mis à 30 secondes), le premier nombre devrait de nouveau correspondre au second nombre parce que le cache a expiré -- seulement pour être mis en cache de nouveau. Vous devriez essayer ce code dans votre navigateur ou dans une console.
-       </para>
+        </para>
     </example>
     <note><para>
         Lorsque vous utilisez Zend_Cache, faîtes attention à l'identifiant du cache (passé à <code>save()</code> et <code>start()</code>). Il doit être unique pour chaque ressource que vous mettez en cache, sinon il est possible que des caches en efface d'autres, ou encore pire, s'affiche en lieu et place d'autres.

@@ -25,15 +25,15 @@
         peuvent être définies en accédant directement aux attributs :
         </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    	<programlisting role="php"><![CDATA[<?php
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;
-?>]]></programlisting>
+public $charset;]]>
+    	</programlisting>
     </sect2>
 
   <sect2 id="zend.mime.part.methods">
@@ -82,6 +82,3 @@ public $charset;
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

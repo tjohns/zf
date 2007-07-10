@@ -34,15 +34,15 @@
             <code>Zend_Measure</code> supporte la récupération sous formes de chaines de caractères automatiquement.
             <example>
                 <title>Récupération automatique</title>
-<programlisting role="php"><![CDATA[<?php
+				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89 Meter";
 $unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
 
-echo $unite; // affiche "1234567.89 m"
-?>]]></programlisting>
+echo $unite; // affiche "1234567.89 m"]]>
+			    </programlisting>
             </example>
         </para>
 
@@ -63,15 +63,15 @@ echo $unite; // affiche "1234567.89 m"
             La valeur d'une mesure peut être récupérée en utilisant <code>getValue()</code>.
             <example>
                 <title>Récupération d'une valeur</title>
-<programlisting role="php"><![CDATA[<?php
+				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89 Meter";
 $unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
 
-echo $unite->getValue(); // affiche "1234567.89"
-?>]]></programlisting>
+echo $unite->getValue(); // affiche "1234567.89"]]>
+			    </programlisting>
             </example>
         </para>
 
@@ -85,15 +85,15 @@ echo $unite->getValue(); // affiche "1234567.89"
             La fonction <code>getType()</code> retourne l'unité de mesure courante.
             <example>
                 <title>Récupérer l'unité de mesure</title>
-<programlisting role="php"><![CDATA[<?php
+				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
 
 $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89";
 $unit = new Zend_Measure_Weight($machaine,Zend_Measure_Weight::POUND, $locale);
 
-echo $unit->getType(); // affiche "POUND"
-?>]]></programlisting>
+echo $unit->getType(); // affiche "POUND"]]>
+    			</programlisting>
             </example>
         </para>
 
@@ -110,6 +110,3 @@ echo $unit->getType(); // affiche "POUND"
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -26,7 +26,8 @@ $route = new Zend_Controller_Router_Route(
     )
 );
 
-$router->addRoute('user', $route);]]></programlisting>
+$router->addRoute('user', $route);]]>
+    </programlisting>
 
     <para>
         The first parameter in the <code>Zend_Controller_Router_Route</code>
@@ -62,7 +63,8 @@ $values = array(
     'username'   => 'martel',
     'controller' => 'profile',
     'action'     => 'userinfo'
-);]]></programlisting>
+);]]>
+    </programlisting>
 
     <para>
         Later on, <code>Zend_Controller_Dispatcher_Standard</code> should invoke
@@ -80,8 +82,8 @@ public function userinfoAction()
     $username = $request->getParam('username');
 
     $username = $this->_getParam('username');
-}
-]]></programlisting>
+}]]>
+    </programlisting>
 
     <para>
         Route definition can contain one more special character - a wildcard
@@ -95,7 +97,8 @@ $route = new Zend_Controller_Router_Route(
     ':module/:controller/:action/*',
     array('module' => 'default')
 );
-$router->addRoute('default', $route);]]></programlisting>
+$router->addRoute('default', $route);]]>
+    </programlisting>
 
     <sect4 id="zend.controller.router.routes.standard.variable-defaults">
         <title>Variable defaults</title>
@@ -112,7 +115,8 @@ $route = new Zend_Controller_Router_Route(
     'archive/:year',
     array('year' => 2006)
 );
-$router->addRoute('archive', $route);]]></programlisting>
+$router->addRoute('archive', $route);]]>
+        </programlisting>
 
         <para>
             The above route will match URLs like
@@ -140,7 +144,8 @@ $route = new Zend_Controller_Router_Route(
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]></programlisting>
+$router->addRoute('archive', $route);]]>
+        </programlisting>
 
         <para>
             This route will then result in dispatching to the method
@@ -170,7 +175,8 @@ $route = new Zend_Controller_Router_Route(
     ),
     array('year' => '\d+')
 );
-$router->addRoute('archive', $route);]]></programlisting>
+$router->addRoute('archive', $route);]]>
+        </programlisting>
 
         <para>
             With a route defined like above, the router will match it only when

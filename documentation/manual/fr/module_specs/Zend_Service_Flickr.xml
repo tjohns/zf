@@ -23,8 +23,8 @@ $results = $flickr->tagSearch("php");
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}
-?>]]>       </programlisting>
+}]]>
+    		</programlisting>
         </example>
         <note>
             <title>Optional parameter</title>
@@ -72,8 +72,8 @@ $results = $flickr->userSearch($userEmail);
 
 foreach ($results as $result) {
     echo $result->title . '<br />';
-}
-?>]]>       </programlisting>
+}]]>
+		    </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
@@ -96,8 +96,8 @@ $flickr = new Zend_Service_Flickr('MA_CLE_API');
 $image = $flickr->getImageDetails($imageId);
 
 echo "ID de l'image : $imageId, taille : $image->width x $image->height pixels.<br />\n";
-echo "<a href=\"$image->clickUri\">Clicker pour l'image</a>\n";
-?>]]>       </programlisting>
+echo "<a href=\"$image->clickUri\">Clicker pour l'image</a>\n";]]>
+		    </programlisting>
         </example>
     </sect2>
 <sect2 id="zend.service.flickr.classes">

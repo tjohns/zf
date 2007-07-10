@@ -101,7 +101,8 @@ $feed = $gdataBlog->getBloggerFeed('blogname');
 // Autre methode
 $gdataBlog->setBlogName('blogname');
 $feed = $gdataBlog->getBloggerFeed();
-?>]]></programlisting>
+]]>
+    </programlisting>
 
         <para>
 Voir la documentation de Zend_Feed pour plus d'informations sur l'utilisation de cet objet.
@@ -164,7 +165,8 @@ XML;
 $xml = new SimpleXMLElement($xmlString);
 
 $response = $gdataBlog->post($xml->asXML());
-?>]]></programlisting>
+]]>
+    </programlisting>
 
         <para>
 Vou pouvez récupérer le flux des noms des blogs de votre client HTTP authentifié en utilisant le methode <code>getBloggerListFeed()</code>
@@ -173,7 +175,8 @@ Vou pouvez récupérer le flux des noms des blogs de votre client HTTP authentif
     <programlisting role="php"><![CDATA[<?php
 $gdataBlog = new Zend_Gdata_Blogger($authenticatedHttpClient);
 $myBlogs = $gdataBlog->getBloggerListFeed();
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     </sect2>
 

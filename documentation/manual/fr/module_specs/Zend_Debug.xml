@@ -9,8 +9,8 @@
     <example id="zend.debug.dumping.example">
         <title>Exemple avec la méthode dump()</title>
         <programlisting role="php"><![CDATA[<?php
-Zend_Debug::dump($var, $label=null, $echo=true)
-?>]]></programlisting>
+Zend_Debug::dump($var, $label=null, $echo=true);]]>
+    	</programlisting>
     </example>
 
     <para>
@@ -40,6 +40,3 @@ Zend_Debug::dump($var, $label=null, $echo=true)
     </tip>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -13,8 +13,8 @@ try {
 } catch(Zend_Gdata_App_Exception $ex) {
     // Report the exception to the user
     die($ex->getMessage());
-}
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
     <para>
         The following exception subclasses are used by Zend_Gdata:
@@ -73,7 +73,7 @@ try {
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data servers cannot be contacted.
     die($httpEx->getMessage);
-}
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
 </sect1>

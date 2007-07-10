@@ -54,8 +54,8 @@
             <title>Exemple d'utilisation de la méthode select()</title>
             <programlisting role="php"><![CDATA[<?php
 $db = Zend_Db::factory( ...options... );
-$select = $db->select();
-?>]]></programlisting>
+$select = $db->select();]]>
+		    </programlisting>
         </example>
 
         <para>
@@ -66,8 +66,8 @@ $select = $db->select();
             <title>Exemple de création d'un nouvel objet Select</title>
             <programlisting role="php"><![CDATA[<?php
 $db = Zend_Db::factory( ...options... );
-$select = new Zend_Db_Select($db);
-?>]]></programlisting>
+$select = new Zend_Db_Select($db);]]>
+		    </programlisting>
         </example>
 
     </sect2>
@@ -83,7 +83,6 @@ $select = new Zend_Db_Select($db);
         <example id="zend.db.select.building.example">
             <title>Exemple d'utilisation des méthodes d'ajout de clauses</title>
             <programlisting role="php"><![CDATA[<?php
-
 // Créer un objet Zend_Db_Select
 $select = $db->select();
 
@@ -94,9 +93,8 @@ $select->from( ...spécifiez une table et des colonnes... )
 $select->where( ...spécifiez des critères de recherche... )
 
 // Ajouter une clause ORDER BY
-$select->order( ...spécifiez des critères de tri... );
-
-?>]]></programlisting>
+$select->order( ...spécifiez des critères de tri... );]]>
+		    </programlisting>
         </example>
 
         <para>
@@ -109,8 +107,8 @@ $select->order( ...spécifiez des critères de tri... );
 $select = $db->select()
     ->from( ...spécifiez une table et des colonnes... )
     ->where( ...spécifiez des critères de recherche... )
-    ->order( ...spécifiez des critères de tri... );
-?>]]></programlisting>
+    ->order( ...spécifiez des critères de tri... );]]>
+		    </programlisting>
         </example>
 
         <para>
@@ -133,8 +131,8 @@ $select = $db->select()
 //   FROM "produits"
 
 $select = $db->select()
-    ->from( 'produits' );
-?>]]></programlisting>
+    ->from( 'produits' );]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -149,8 +147,8 @@ $select = $db->select()
 //   FROM "produits" AS p
 
 $select = $db->select()
-    ->from( array('p' => 'produits') );
-?>]]></programlisting>
+    ->from( array('p' => 'produits') );]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -170,8 +168,8 @@ $select = $db->select()
 // or
 
 $select = $db->select()
-    ->from('produits', '*', 'monschema');
-?>]]></programlisting>
+    ->from('produits', '*', 'monschema');]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -221,8 +219,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'produits'),
-        array('prodno' => 'produit_id', 'produit_nom'));
-?>]]></programlisting>
+        array('prodno' => 'produit_id', 'produit_nom'));]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -272,8 +270,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'produits'),
-        array('produit_id', 'prix_avec_taxe' => new Zend_Db_Expr('p.prix * 1.08')));
-?>]]></programlisting>
+        array('produit_id', 'prix_avec_taxe' => new Zend_Db_Expr('p.prix * 1.08')));]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -297,8 +295,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'produits'),
-        array('origine' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));
-?>]]></programlisting>
+        array('origine' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -323,8 +321,8 @@ $select = $db->select()
     ->from(array('p' => 'produits'),
         array('produit_id', 'produit_nom'))
     ->join(array('l' => 'ligne_items'),
-        'p.produit_id = l.produit_id');
-?>]]></programlisting>
+        'p.produit_id = l.produit_id');]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -348,7 +346,6 @@ $select = $db->select()
             <example id="zend.db.select.building.join.example-no-columns">
                 <title>Exemple avec aucune colonne spécifiée</title>
                 <programlisting role="php"><![CDATA[<?php
-
 // Construire cette requête :
 //   SELECT p."produit_id", p."produit_nom"
 //   FROM "produits" AS p JOIN "ligne_items" AS l
@@ -359,9 +356,8 @@ $select = $db->select()
         array('produit_id', 'produit_name'))
     ->join(array('l' => 'ligne_items'),
         'p.produit_id = l.produit_id',
-        array() ); // liste de colonnes vide
-
-?>]]></programlisting>
+        array() ); // liste de colonnes vide]]>
+			    </programlisting>
                 <para>
                     Notez le tableau vide (<code>array()</code>) dans l'exemple ci-dessus à la place de la liste de colonnes de la table jointe.
                 </para>
@@ -462,8 +458,8 @@ $select = $db->select()
     ->from(
         'produits',
         array('produit_id', 'produit_nom', 'prix'))
-    ->where('prix > 100.00');
-?>]]></programlisting>
+    ->where('prix > 100.00');]]>
+			    </programlisting>
             </example>
 
             <note>
@@ -494,8 +490,8 @@ $select = $db->select()
     ->from(
         'produits',
         array('produit_id', 'produit_nom', 'prix'))
-    ->where('prix > ?', $prixminimum);
-?>]]></programlisting>
+    ->where('prix > ?', $prixminimum);]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -518,8 +514,8 @@ $select = $db->select()
     ->from('produits',
         array('produit_id', 'produit_nom', 'prix'))
     ->where('prix > ?', $prixminimum)
-    ->where('prix < ?', $prixmaximum);
-?>]]></programlisting>
+    ->where('prix < ?', $prixmaximum);]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -542,8 +538,8 @@ $select = $db->select()
     ->from('produits',
         array('produit_id', 'produit_nom', 'prix'))
     ->where('prix < ?', $prixminimum)
-    ->orWhere('prix > ?', $prixmaximum);
-?>]]></programlisting>
+    ->orWhere('prix > ?', $prixmaximum);]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -567,8 +563,8 @@ $select = $db->select()
     ->from('produits',
         array('produit_id', 'produit_nom', 'prix'))
     ->where("prix < $prixminimum OR prix > $prixmaximum")
-    ->where('produit_nom = ?', $prod);
-?>]]></programlisting>
+    ->where('produit_nom = ?', $prod);]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -604,8 +600,8 @@ $select = $db->select()
     ->join(array('l' => 'ligne_items'),
         'p.produit_id = l.produit_id',
         array('ligne_items_par_produit' => 'COUNT(*)'))
-    ->group('p.produit_id');
-?>]]></programlisting>
+    ->group('p.produit_id');]]>
+			    </programlisting>
             </example>
 
             <para>
@@ -643,8 +639,8 @@ $select = $db->select()
         'p.produit_id = l.produit_id',
         array('ligne_items_par_produit' => 'COUNT(*)'))
     ->group('p.produit_id')
-    ->having('ligne_items_par_produit > 10');
-?>]]></programlisting>
+    ->having('ligne_items_par_produit > 10');]]>
+			    </programlisting>
             </example>
 
             <note>
@@ -688,8 +684,8 @@ $select = $db->select()
         'p.produit_id = l.produit_id',
         array('ligne_items_par_produit' => 'COUNT(*)'))
     ->group('p.produit_id')
-    ->order(array('ligne_items_par_produit DESC', 'produit_id'));
-?>]]></programlisting>
+    ->order(array('ligne_items_par_produit DESC', 'produit_id'));]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -716,8 +712,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'produits'), array('produit_id', 'produit_nom'))
-    ->limit(10, 20);
-?>]]></programlisting>
+    ->limit(10, 20);]]>
+			    </programlisting>
             </example>
 
             <note>
@@ -745,8 +741,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->distinct()
-    ->from(array('p' => 'produits'), 'produit_nom');
-?>]]></programlisting>
+    ->from(array('p' => 'produits'), 'produit_nom');]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -768,8 +764,8 @@ $select = $db->select()
 
 $select = $db->select()
     ->forUpdate()
-    ->from(array('p' => 'produits'));
-?>]]></programlisting>
+    ->from(array('p' => 'produits'));]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -803,8 +799,8 @@ $select = $db->select()
   ->from('produits');
 
 $stmt = $db->query($select);
-$result = $stmt->fetchAll();
-?>]]></programlisting>
+$result = $stmt->fetchAll();]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -824,8 +820,8 @@ $select = $db->select()
     ->from('produits');
 
 $stmt = $select->query();
-$result = $stmt->fetchAll();
-?>]]></programlisting>
+$result = $stmt->fetchAll();]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -848,8 +844,8 @@ $sql = $select->__toString();
 echo "$sql\n";
 
 // L'affichage est la chaîne :
-//   SELECT * FROM "produits"
-?>]]></programlisting>
+//   SELECT * FROM "produits"]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -953,8 +949,8 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 
 // La valeur retournée peut être une structure tableau, pas une chaîne.
 // Chaque partie a une structure différente
-print_r( $orderData );
-?>]]></programlisting>
+print_r( $orderData );]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -999,8 +995,8 @@ $select->reset( Zend_Db_Select::ORDER );
 $select->order('produit_id');
 
 // Vider toutes les parties de la requête
-$select->reset();
-?>]]></programlisting>
+$select->reset();]]>
+			    </programlisting>
             </example>
 
         </sect3>
@@ -1008,6 +1004,3 @@ $select->reset();
     </sect2>
 
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
