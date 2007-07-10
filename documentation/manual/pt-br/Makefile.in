@@ -39,7 +39,7 @@ XMLLINT=@XMLLINT@
 ECSRC=@ECSRC@
 HERE=@HERE@
 
-DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
+DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
 DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
 HTML_XSL=html.xsl
 MANUAL_XML=manual.xml
