@@ -3,7 +3,7 @@
     <title>Introduction</title>
 
     <para>
-        Le composant Zend_Validate fournit un ensemble de validateurs fréquemment utiles. Il fournit également un mécanisme simple de chaînage permettant d'appliquer de multiples validateurs à une donnée dans un ordre défini par l'utilisateur.
+        Le composant Zend_Validate fournit un ensemble de validateurs usuels. Il fournit également un mécanisme simple de chaînage permettant d'appliquer de multiples validateurs à une donnée dans un ordre défini par l'utilisateur.
     </para>
 
     <sect2 id="zend.validate.introduction.definition">
@@ -25,7 +25,7 @@
         <title>Utilisation basique des validateurs</title>
 
         <para>
-            Avoir défini la validation de cette manière fournit la fondation de <code>Zend_Validate_Interface</code>, qui définit deux méthodes, <code>isValid()</code> et <code>getMessages()</code>. La méthode <code>isValid()</code> réalise la validation sur la valeur founie, en retournant <code>true</code> si et seulement si la valeur passe les critères de validation.
+            Avoir défini la validation de cette manière fournit la fondation de <code>Zend_Validate_Interface</code>, qui définit deux méthodes, <code>isValid()</code> et <code>getMessages()</code>. La méthode <code>isValid()</code> réalise la validation sur la valeur fournie, en retournant <code>true</code> si et seulement si la valeur passe les critères de validation.
         </para>
 
         <para>
@@ -38,7 +38,7 @@
 
         <note>
             <para>
-                Les méthodes <code>getMessages()</code> et <code>getErrors()</code> retournent des informations sur l'échec de validation seulement pour l'appel le plus récent de <code>isValid()</code>. Chaque appel de <code>isValid()</code> efface les messages et les erreurs déclenchés par l'appel précédent, car il est probable que chaque appel de <code>isValid()</code> est réalisé pour des données d'entrée différentes.
+                Les méthodes <code>getMessages()</code> et <code>getErrors()</code> retournent des informations sur l'échec de validation seulement pour l'appel le plus récent de <code>isValid()</code>. Chaque appel de <code>isValid()</code> efface les messages et les erreurs déclenchées par l'appel précédent, car il est probable que chaque appel de <code>isValid()</code> est réalisé pour des données d'entrée différentes.
             </para>
         </note>
 
@@ -73,11 +73,11 @@ if ($validator->isValid($email)) {
         <title>Messages personnalisés</title>
 
         <para>
-            Les classes de validation fournissent une méthode <code>setMessage()</code> avec laquelle vous pouvez spécifier le format du message retourné par <code>getMessages()</code> dans le cas d'un échec de validation. Le premier argument de cette méthode est une chaîne contenant le message d'erreur. Vous pouvez inclure des marques dans cette chaîne qui seront substituées avec les données appropriées du validateur. La marque <code>%value%</code> est supportée par tous les validateurs ; elle est substituée par la valeur fournie à <code>isValid()</code>. D'autres marques peuvent être supportées aux cas par cas par chaque classe de validation. Par exemple, <code>%max%</code> est une marque supportée par Zend_Validate_LessThan. La méthode <code>getMessageVariables()</code> retourne un tableau des marques de variables supportés par le validateur.
+            Les classes de validation fournissent une méthode <code>setMessage()</code> avec laquelle vous pouvez spécifier le format du message retourné par <code>getMessages()</code> dans le cas d'un échec de validation. Le premier argument de cette méthode est une chaîne contenant le message d'erreur. Vous pouvez inclure des balises dans cette chaîne qui seront substituées avec les données appropriées du validateur. La balise <code>%value%</code> est supportée par tous les validateurs ; elle est substituée par la valeur fournie à <code>isValid()</code>. D'autres balises peuvent être supportées aux cas par cas par chaque classe de validation. Par exemple, <code>%max%</code> est une balise supportée par <code>Zend_Validate_LessThan</code>. La méthode <code>getMessageVariables()</code> retourne un tableau des balises de variables supportées par le validateur.
         </para>
 
         <para>
-            Le second paramètre optionel est une chaîne qui correspond aux identificateurs d'erreurs retournés par la méthode <code>getErrors()</code>. Si vous omettez ce second argument, <code>setMessage()</code> considère que le message que vous spécifiez s'applique au premier message déclaré dans la classe de validation. La plupart des classes de validation n'ayant qu'un seul message d'erreur, il n'est pas nécessaire de spécifier distinctement dans ce cas quel message vous affectez.
+            Le second paramètre optionel est une chaîne qui correspond aux identificateurs d'erreurs retournés par la méthode <code>getErrors()</code>. Si vous omettez ce second argument, <code>setMessage()</code> considère que le message, que vous spécifiez, s'applique au premier message déclaré dans la classe de validation. La plupart des classes de validation n'ayant qu'un seul message d'erreur, il n'est pas nécessaire de spécifier distinctement dans ce cas quel message vous affectez.
         </para>
 
         <para>
@@ -100,7 +100,7 @@ if (!$validator->isValid('word')) {
         </para>
 
         <para>
-            Vous pouvez régler des messages multiples en utilsant la méthode <code>setMessages()</code>. Son argument est ce cas est un tableau de paires clé/message.
+            Vous pouvez régler des messages multiples en utilisant la méthode <code>setMessages()</code>. Son argument dans ce cas est un tableau de paires clé/message.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/StringLength.php';
@@ -116,7 +116,7 @@ $validator->setMessages( array(
         </para>
 
         <para>
-            Si votre application exige une flexibilité encore plus grande avec laquelle il rapporte des erreurs, vous pouvez accéder aux propriétés par le même nom que les marques de message supportées par une classe de validation donnée. La propriété <code>value</code> est toujour accessible dans un validateur ; il s'agit de la valeur fourni comme argument à <code>isValid()</code>. D'autres propriétés peuvent supportées au cas par cas par les chaque classe de validation.
+            Si votre application exige une flexibilité encore plus grande avec laquelle il rapporte des erreurs, vous pouvez accéder aux propriétés par le même nom que les balises de message supportées par une classe de validation donnée. La propriété <code>value</code> est toujour accessible dans un validateur ; il s'agit de la valeur fourni comme argument à <code>isValid()</code>. D'autres propriétés peuvent supportées au cas par cas par chaque classe de validation.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate/StringLength.php';
@@ -142,7 +142,7 @@ if (!validator->isValid('word')) {
         <title>Utilisation de la méthode statique <code>is()</code></title>
 
         <para>
-            S'il est incommode de charger une classe de validation donnée et créer une instance de validateur, vous pouvez utiliser la méthode statique <code>Zend_Validate::is()</code> comme appel alternatif. Le premier argument de cette méthode est la donnée d'entrée, que vous passeriez à la méthode <code>isValid()</code>. Le deuxième argument est une chaîne, qui correspond au nom de base de la classe de validation, relativement dans l'espace de nommage Zend_Validate. La méthode <code>is()</code> charge automatiquement la classe, crée une instance et applique la méthode <code>isValid()</code> à la donnée d'entrée.
+            S'il est peu pratique de charger une classe de validation donnée et créer une instance de validateur, vous pouvez utiliser la méthode statique <code>Zend_Validate::is()</code> comme appel alternatif. Le premier argument de cette méthode est la donnée d'entrée, que vous passeriez à la méthode <code>isValid()</code>. Le deuxième argument est une chaîne, qui correspond au nom de base de la classe de validation, relativement dans l'espace de nommage Zend_Validate. La méthode <code>is()</code> charge automatiquement la classe, crée une instance et applique la méthode <code>isValid()</code> à la donnée d'entrée.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate.php';
@@ -157,7 +157,7 @@ if (Zend_Validate::is($email, 'EmailAddress')) {
         </para>
 
         <para>
-            Vous pouvez aussi fournir un tableau destiné au constructeur de la classe, s'ils sont nécessaires pour votre classe de validation.
+            Vous pouvez aussi fournir un tableau de paramètres destinés au constructeur de la classe, s'ils sont nécessaires pour votre classe de validation.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Validate.php';
@@ -172,11 +172,11 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            La méthode <code>is()</code> retourne une valeur booléenne, la meme que la méthode <code>isValid()</code>. Lors de l'utilisation de la méthode statique <code>is()</code>, les erreurs et messages ne sont pas disponibles.
+            La méthode <code>is()</code> retourne une valeur booléenne, la même que la méthode <code>isValid()</code>. Lors de l'utilisation de la méthode statique <code>is()</code>, les erreurs et messages ne sont pas disponibles.
         </para>
 
         <para>
-            L'utilisation statique peut être commode pour invoquer un validateur ad hoc, mais si vous avez besoin d'exécuter un validateur pour des données multiples, il est plus efficace de suivre le premier exemple ci-dessus, créant une instance de l'objet de validation et appelant sa méthode <code>isValid()</code>.
+            L'utilisation statique peut être pratique pour invoquer un validateur ad hoc, mais si vous avez besoin d'exécuter un validateur pour des données multiples, il est plus efficace de suivre le premier exemple ci-dessus, créant une instance de l'objet de validation et appelant sa méthode <code>isValid()</code>.
         </para>
 
         <para>

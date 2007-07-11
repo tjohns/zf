@@ -3,7 +3,7 @@
     <title>Introduction</title>
 
     <para>
-        Le composant Zend_Filter fournit un ensemble de filtres de données usuels. Il fournit également un mécanisme simple de chaînage par lequel plusieurs filtres peuvent être appliqués à une donnée dans un ordre défini.
+        Le composant Zend_Filter fournit un ensemble de filtres de données usuel. Il fournit également un mécanisme simple de chaînage par lequel plusieurs filtres peuvent être appliqués à une donnée dans un ordre défini.
     </para>
 
     <sect2 id="zend.filter.introduction.definition">
@@ -11,11 +11,11 @@
         <title>Qu'est-ce qu'un filtre ?</title>
 
         <para>
-            Généralement parlant, une filtre est utilisé pour supprimer les parties non désirées de ce qui lui est soumis tout en laissant passer la partie désiré. Dans ce cas de figure, un filtre est une opération qui restitue une partie de la donnée soumise. Ce type de filtrage est utile pour les applications web : suppression des données soumises non conformes, élimination des espaces inutiles, etc.
+            Généralement parlant, un filtre est utilisé pour supprimer les parties non désirées de ce qui lui est soumis tout en laissant passer la partie désirée. Dans ce cas de figure, un filtre est une opération qui restitue une partie de la donnée soumise. Ce type de filtrage est utile pour les applications web : suppression des données soumises non conformes, élimination des espaces inutiles, etc.
         </para>
 
         <para>
-            Cette définition simple d'un filtre peut être étendue pour inclure des transformations généralisées aux données soumises. Une transformation communément requise dans les applications web consiste à échapper les entités HTML. Ainsi, si un champ de formulaire est automatiquement transmis et contient des données non vérifiées (provenant par exemple d'un navigateur web), ces données doivent être expurgées de leurs entités HTML ou bien contenir uniquement des entités HTML échappées, de manière à se garantir contre les comportements non désirés et les vulnérabilités de sécurité. Afin d'assurer cette opération, les entités HTML qui sont présentes dans les données saisies doivent être soit supprimées soit échappées. Naturellement, l'approche adéquate dépend du contexte. Un filtre de suppression des entités HTML opère dans le contexte défini plus haut : une opération produisant un sous-ensemble à partir d'une donnée soumise. Cependant, un filtre échappant les entités HTML transforme la valeur entrée (par exemple, "<code>&amp;</code>" sera transformé en "<code>&amp;amp;</code>". Permettre de telles choses est important pour les développeurs web et "filtrer" dans le contexte d'utilisation de Zend_Filter consiste à réaliser des transformations sur les donnée soumises.
+            Cette définition simple d'un filtre peut être étendue pour inclure des transformations généralisées aux données soumises. Une transformation communément requise dans les applications web consiste à échapper les entités HTML. Ainsi, si un champ de formulaire est automatiquement transmis et contient des données non vérifiées (provenant par exemple d'un navigateur web), ces données doivent être expurgées de leurs entités HTML ou bien contenir uniquement des entités HTML échappées, de manière à se garantir contre des comportements non désirés et les vulnérabilités de sécurité. Afin d'assurer cette opération, les entités HTML qui sont présentes dans les données saisies doivent être soit supprimées soit échappées. Naturellement, l'approche adéquate dépend du contexte. Un filtre de suppression des entités HTML opère dans le contexte défini plus haut : une opération produisant un sous-ensemble à partir d'une donnée soumise. Cependant, un filtre échappant les entités HTML transforme la valeur entrée (par exemple, "<code>&amp;</code>" sera transformé en "<code>&amp;amp;</code>". Permettre de telles choses est important pour les développeurs web et "filtrer" dans le contexte d'utilisation de Zend_Filter consiste à réaliser des transformations sur les données soumises.
         </para>
 
     </sect2>
@@ -49,7 +49,7 @@ echo $htmlEntities->filter('"'); // &quot;]]>
         <title>Utilisation de la méthode statique <code>get()</code></title>
 
         <para>
-            S'il est incommode de charger une classe de filtre donnée et créer une instance du filtre, vous pouvez utiliser la méthode statique <code>Zend_Filter::get()</code> comme appel alternatif. Le premier argument de cette méthode est une valeur de saisie de données, que vous passeriez à la méthode <code>filter()</code>. Le deuxième argument est une chaîne, qui correspond au nom de base de la classe de filtre, relativement dans l'espace de nommage Zend_Filter. La méthode <code>get()</code> charge automatiquement la classe, crée une instance et applique  la méthode <code>filter()</code> à la donnée saisie.
+            S'il est peu pratique de charger une classe de filtre donnée et créer une instance du filtre, vous pouvez utiliser la méthode statique <code>Zend_Filter::get()</code> comme appel alternatif. Le premier argument de cette méthode est une valeur de saisie de données, que vous passeriez à la méthode <code>filter()</code>. Le deuxième argument est une chaîne, qui correspond au nom de base de la classe de filtre, relativement dans l'espace de nommage Zend_Filter. La méthode <code>get()</code> charge automatiquement la classe, crée une instance et applique  la méthode <code>filter()</code> à la donnée saisie.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
@@ -60,7 +60,7 @@ echo Zend_Filter::get('&', 'HtmlEntities');]]>
         </para>
 
         <para>
-            Vous pouvez aussi fournir un tableau destiné au constructeur de la classe, s'ils sont nécessaires pour votre classe de filtre.
+            Vous pouvez aussi fournir un tableau de paramètres destinés au constructeur de la classe, s'ils sont nécessaires pour votre classe de filtre.
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
@@ -71,7 +71,7 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
         </para>
 
         <para>
-            L'utilisation statique peut être commode pour invoquer un filtre ad hoc, mais si vous avez besoin d'exécuter un filtre pour des saisies multiples, il est plus efficace de suivre le premier exemple ci-dessus, créant une instance de l'objet de filtre et appelant sa méthode <code>filter()</code>.
+            L'utilisation statique peut être pratique pour invoquer un filtre ad hoc, mais si vous avez besoin d'exécuter un filtre pour des saisies multiples, il est plus efficace de suivre le premier exemple ci-dessus, créant une instance de l'objet de filtre et appelant sa méthode <code>filter()</code>.
         </para>
 
         <para>
