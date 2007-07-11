@@ -686,13 +686,13 @@
 
         <example>
             <title>Beispiel Verwendung eines selbst-definierten ISO Formats</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
-print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
-?>]]></programlisting>
+print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
+            </programlisting>
         </example>
 
         <table>
@@ -1106,7 +1106,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
 
         <example>
             <title>Beispielbenutzung von Selbst-definierten Formaten mit PHP Formatbezeichnern</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -1116,8 +1116,8 @@ $date = new Zend_Date(1234567890, false, $locale);
 // Ausgabe zum Beispiel 'Februar 16, 2007, 3:36 vorm.'
 print $date->toString('F j, Y, g:i a');
 
-print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
-?>]]></programlisting>
+print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");]]>
+            </programlisting>
         </example>
 
         <para>

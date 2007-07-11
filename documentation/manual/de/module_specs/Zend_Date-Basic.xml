@@ -69,14 +69,14 @@ print $date;]]>
 
             <example>
                 <title>get() - Ausgabe eines Datums</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // Ausgabe des gewünschten Datums
-print $date->get();
-?>]]></programlisting>
+print $date->get();]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -93,15 +93,15 @@ print $date->get();
 
             <example>
                 <title>set() - Setzen eines Datums</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // Setzen einer neuen Zeit
 $date->set('13:00:00',Zend_Date::TIMES);
-print $date->get(Zend_Date::W3C);
-?>]]></programlisting>
+print $date->get(Zend_Date::W3C);]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -119,7 +119,7 @@ print $date->get(Zend_Date::W3C);
 
             <example>
                 <title>add() - Addieren von Daten</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -130,8 +130,8 @@ $date->add('12:00:00', Zend_Date::TIMES);
 echo "Datum über get() = ", $date->get(Zend_Date::W3C), "\n";
 
 // benutze die magische __toString() Methode um Zend_Date's toString() aufzurufen
-echo "Datum über toString() = ", $date, "\n";
-?>]]></programlisting>
+echo "Datum über toString() = ", $date, "\n";]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -150,7 +150,7 @@ echo "Datum über toString() = ", $date, "\n";
 
             <example>
                 <title>compare() - Vergleichen von Daten</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -160,8 +160,8 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
     print "Diese Stunde ist weniger als 10 Minuten alt";
 } else {
     print "Diese Stunde ist mehr als 10 Minuten alt";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
             <para>
@@ -171,7 +171,7 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
 
             <example>
                 <title>equals() - Identifizieren eines Datums oder Datumsabschnittes</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -181,8 +181,8 @@ if ($date->equals(10, Zend_Date::HOUR)) {
     print "Es ist 10Uhr. Zeit für die Arbeit.";
 } else {
     print "Es ist noch nicht 10Uhr. Du kannst weiterschlafen.";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
         </sect3>

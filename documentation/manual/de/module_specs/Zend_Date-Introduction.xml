@@ -49,9 +49,9 @@
             <example>
                 <title>Definieren einer Standard-Zeitzone</title>
                 <programlisting role="php"><![CDATA[<?php
-                    date_default_timezone_set('America/Los_Angeles'); // Zeitzone für die USA, Kalifornien
-                    date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland
-                 ?>]]></programlisting>
+date_default_timezone_set('America/Los_Angeles'); // Zeitzone für die USA, Kalifornien
+date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland]]>
+                </programlisting>
             </example>
             <emphasis role="strong">Wenn eine <code>Zend_Date</code> Instanz erzeugt wird, wird die
             Zeitzone des aktuellen Benutzers automatisch als aktuelle Standardzeitzone übernommen</emphasis>.

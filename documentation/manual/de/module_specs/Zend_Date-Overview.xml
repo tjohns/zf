@@ -124,7 +124,7 @@
 
         <example>
             <title>Benutzerdefinierte Eingabeformate für Daten</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 
@@ -132,8 +132,8 @@ $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 
 $date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // Stikte Interpretation des angegebenen Formats
-echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
-?>]]></programlisting>
+echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"]]>
+            </programlisting>
         </example>
 
         <para>
@@ -176,15 +176,15 @@ echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"
 
         <example>
             <title>Arbeiten an Teilen von Daten</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date(); // $date's Zeitpunkt === time()
 
 // Ändert $date durch addieren von 12 Stunden
 $date->add('12', Zend_Date::HOUR);
-print $date;
-?>]]></programlisting>
+print $date;]]>
+            </programlisting>
         </example>
 
         <para>
