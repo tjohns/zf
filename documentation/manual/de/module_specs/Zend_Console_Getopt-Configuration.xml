@@ -23,8 +23,8 @@ $opts->addRules(
   array(
     'verbose|v' => 'Druckt zusätzliche Ausgaben'
   )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             Das obige Beispiel zeigt das hinzufügen der "<code>--verbose</code>"
@@ -55,8 +55,8 @@ $opts->setHelp(
         'b' => 'Diese Option wählt Banane, und benötigt einen Integer Parameter',
         'p' => 'Diese Option wählt Pfirsich, mit einem optionalen Zeichenketten Parameter'
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             Wenn Optionen mit Aliasen definiert wurden, kann jeder dieser Aliase
@@ -94,8 +94,8 @@ $opts->setAliases(
         'a' => 'apfel',
         'p' => 'pfirsich'
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             Im obigen Beispiel sind, nach Definition der Aliase, "<code>-a</code>",
@@ -133,8 +133,8 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // Ein neues Array als Ersatz für die bestehenden Argumente
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-?>]]></programlisting>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
+            </programlisting>
         </example>
     </sect2>
 
@@ -211,8 +211,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Verwenden von setOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);
-?>]]></programlisting>
+$opts->setOption('ignoreCase', true);]]>
+            </programlisting>
         </example>
         <para>
             Das Argument für die <code>setOptions()</code> Methode ist ein
@@ -232,8 +232,8 @@ $opts->setOptions(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
     </sect2>
 

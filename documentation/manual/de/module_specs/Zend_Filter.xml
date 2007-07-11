@@ -120,7 +120,7 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
         <para>
             Also, the Zend_Filter_Input class allows you to instantiate and run
             multiple filter and validator classes on demand to process
-            sets of input data.  See <xref linked="zend.filter.input" />.
+            sets of input data.  See <xref linkend="zend.filter.input" />.
         </para>
 
     </sect2>

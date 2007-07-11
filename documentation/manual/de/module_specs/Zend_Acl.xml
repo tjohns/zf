@@ -125,7 +125,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]>
+            </programlisting>
             <para>
                 Da keine Regel speziell für die Rolle "<code>someUser</code>" und
                 "<code>someResource</code>" definiert wurde, muss Zend_Acl nach Regeln suchen, die
@@ -174,7 +175,8 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';]]></progra
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();]]></programlisting>
+$acl = new Zend_Acl();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -267,7 +269,8 @@ $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator erbt keine Zugriffsrechte
-$acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+        </programlisting>
 
     </sect2>
 
@@ -318,7 +321,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator erbt gar nichts, aber erhält alle Rechte
-$acl->allow('administrator');]]></programlisting>
+$acl->allow('administrator');]]>
+        </programlisting>
 
         <para>
             Die <code>null</code> Werte im obigen <code>allow()</code> Aufrufen werden verwendet,
@@ -359,7 +363,8 @@ echo $acl->isAllowed('administrator') ?
      "allowed" : "denied"; // erlaubt, weil Administrator alle Rechte haben
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // erlaubt, weil Administrator alle Rechte haben]]></programlisting>
+     "allowed" : "denied"; // erlaubt, weil Administrator alle Rechte haben]]>
+        </programlisting>
 
     </sect2>
 </sect1>

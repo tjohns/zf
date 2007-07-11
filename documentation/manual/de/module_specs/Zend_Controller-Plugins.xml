@@ -90,8 +90,8 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Keine der Methoden von <code>Zend_Controller_Plugin_Abstract</code> ist abstrakt, so
@@ -159,8 +159,8 @@ $front = Zend_Controller_Front::getInstance();
 $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
-$front->dispatch();
-]]></programlisting>
+$front->dispatch();]]>
+        </programlisting>
 
         <para>
             Assuming that no actions called emit any output, and only one action
@@ -174,8 +174,8 @@ $front->dispatch();
 <p>dispatchLoopStartup() called</p>
 <p>preDispatch() called</p>
 <p>postDispatch() called</p>
-<p>dispatchLoopShutdown() called</p>
-]]></programlisting>
+<p>dispatchLoopShutdown() called</p>]]>
+        </programlisting>
 
         <note>
             Plugins may be registered at any time during the front controller

@@ -56,8 +56,8 @@
 
             <programlisting role="php"><![CDATA[<?php
 // Error-Handler-Plugin abschalten:
-$front->setParam('noErrorHandler', true);
-]]></programlisting>
+$front->setParam('noErrorHandler', true);]]>
+            </programlisting>
 
             <para>
                 Um den <code>ViewRenderer</code> abzuschalten muss wiederum der folgende Code vor dem
@@ -66,8 +66,8 @@ $front->setParam('noErrorHandler', true);
 
             <programlisting role="php"><![CDATA[<?php
 // Den ViewRenderer Action-Helper deaktivieren:
-$front->setParam('noViewRenderer', true);
-]]></programlisting>
+$front->setParam('noViewRenderer', true);]]>
+            </programlisting>
         </note>
     </sect2>
 
@@ -90,8 +90,8 @@ $front->setParam('noViewRenderer', true);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$front = Zend_Controller_Front::getInstance();
-?>]]></programlisting>
+$front = Zend_Controller_Front::getInstance();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.front.methods.primary.setcontrollerdirectory">
@@ -121,8 +121,8 @@ $front->setControllerDirectory(array(
 ));
 
 // Den Ordner für das Modul 'foo' hinzufügen:
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');
-?>]]></programlisting>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
+            </programlisting>
 
             <note>
                 <para>
@@ -208,8 +208,8 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <programlisting role="php"><![CDATA[<?php
 // Front-Controller instanzieren, Controller-Verzeichnis setzen
 // und dispatchen in einem einfachen Schritt:
-Zend_Controller_Front::run('../application/controllers');
-?>]]></programlisting>
+Zend_Controller_Front::run('../application/controllers');]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -465,8 +465,8 @@ class My_Controller_Front extends Zend_Controller_Front
 
         return self::$_instance;
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Das Überschreiben der <code>getInstance()</code>-Methode sorgt dafür, dass folgende Aufrufe von

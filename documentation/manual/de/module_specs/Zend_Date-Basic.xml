@@ -35,14 +35,14 @@
 
         <example>
             <title>Erstellen des aktuellen Datums</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // Ausgabe des aktuellen Zeitpunktes
-print $date;
-?>]]></programlisting>
+print $date;]]>
+            </programlisting>
         </example>
 
     </sect2>

@@ -31,7 +31,8 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+            </programlisting>
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
@@ -61,7 +62,8 @@ database.name     = dbname
 [staging : production]
 database.host     = dev.example.com
 database.username = devuser
-database.password = devsecret]]></programlisting>
+database.password = devsecret]]>
+        </programlisting>
         <para>
             Nehmen wir weiterhin an, dass der Anwendungs-Entwickler die Staging-Konfiguration aus
             diesem INI-File benötigt. Es ist ein Leichtes, diese Daten zu laden, es muss nur das
@@ -73,7 +75,8 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->host; // gibt "dev.example.com" aus
-echo $config->database->name; // gibt "dbname" aus]]></programlisting>
+echo $config->database->name; // gibt "dbname" aus]]>
+        </programlisting>
     </example>
     <note>
     <table>

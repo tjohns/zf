@@ -15,8 +15,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);
-]]></programlisting>
+$front->throwExceptions(true);]]>
+        </programlisting>
 
         <para>
             Um die Ausgabe der Response, inklusiver der gesetzten Header, zu senden, verwendet man
@@ -24,8 +24,8 @@ $front->throwExceptions(true);
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();
-]]></programlisting>
+$response->sendResponse();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -43,8 +43,8 @@ $response = $front->dispatch();
 
 // do some more processing, such as logging...
 // and then send the output:
-$response->sendResponse();
-?>]]></programlisting>
+$response->sendResponse();]]>
+            </programlisting>
         </note>
 
         <para>
@@ -58,8 +58,8 @@ $response->sendResponse();
 // Setze einen Header
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);
-]]></programlisting>
+    ->appendBody($content);]]>
+        </programlisting>
 
         <para>
             Dadurch werden alle Header in einem Rutsch versendet, genau vor der Anzeige des Inhalts.
@@ -101,11 +101,11 @@ if ($response->isException()) {
 $front->returnResponse(true);
 $response = $front->dispatch();
 
-// mache irgend was...
+// mach irgend was...
 
-// zum Schluß, gebe die Antwort aus
-$response->sendResponse();
-]]></programlisting>
+// zum Schluß, gib die Antwort aus
+$response->sendResponse();]]>
+        </programlisting>
 
         <para>
             Standardmäßig werden Ausnahmennachrichten nicht ausgegeben. Dieses Verhalten kann durch
@@ -126,8 +126,8 @@ $response->sendResponse();
 
 // oder:
 $front->throwExceptions(true);
-$front->dispatch();
-]]></programlisting>
+$front->dispatch();]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -282,8 +282,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             In the above example, a call to <code>/my/foo</code> will cause the
@@ -296,8 +296,8 @@ array(
     'header'  => ..., // header content
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content
-);
-?>]]></programlisting>
+);]]>
+        </programlisting>
 
         <para>
             When this is rendered, it will render in the order in which elements

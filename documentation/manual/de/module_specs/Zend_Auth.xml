@@ -76,7 +76,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+            </programlisting>
 
             As indicated in its docblock, <code>authenticate()</code> must return an instance of
             <code>Zend_Auth_Result</code> (or of a class derived from <code>Zend_Auth_Result</code>). If for some
@@ -140,7 +141,8 @@ Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+            </programlisting>
 
         </para>
 
@@ -168,7 +170,8 @@ switch ($result->getCode()) {
     default:
         /** do stuff for other failure **/
         break;
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -238,7 +241,8 @@ $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
  */
 
 // Authenticate, saving the result, and persisting the identity upon success
-$result = $auth->authenticate($authAdapter);]]></programlisting>
+$result = $auth->authenticate($authAdapter);]]>
+                    </programlisting>
 
                 </para>
 
@@ -326,7 +330,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
          */
     }
 
-}]]></programlisting>
+}]]>
+                    </programlisting>
 
                 </para>
 
@@ -343,7 +348,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  */
 
 // Authenticate, saving the result, and persisting the identity upon success
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]></programlisting>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+                    </programlisting>
 
                 </para>
 
@@ -397,7 +403,8 @@ if (!$result->isValid()) {
     // Authentication succeeded; the identity ($username) is stored in the session
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
         <para>
@@ -408,14 +415,16 @@ $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // Identity exists; get it
     $identity = $auth->getIdentity();
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
         <para>
             To remove an identity from persistent storage, simply use the <code>clearIdentity()</code> method.
             This typically would be used for implementing an application "logout" operation:
             <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+Zend_Auth::getInstance()->clearIdentity();]]>
+            </programlisting>
         </para>
 
         <para>
@@ -441,7 +450,8 @@ if (!$result->isValid()) {
 } else {
     // Authentication succeeded
     // $result->getIdentity() === $username
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>

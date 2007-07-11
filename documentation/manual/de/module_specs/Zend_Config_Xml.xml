@@ -52,7 +52,8 @@
             <password>devsecret</password>
         </database>
     </staging>
-</configdata>]]></programlisting>
+</configdata>]]>
+        </programlisting>
         <para>
             Nehmen wir weiterhin an, dass der Anwendungs-Entwickler die Staging-Konfiguration aus
             diesem XML-File benötigt. Es ist ein Leichtes, diese Daten zu laden, es muss nur das
@@ -64,7 +65,8 @@ require_once 'Zend/Config/Xml.php';
 $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->host; // gibt "dev.example.com" aus
-echo $config->database->name; // gibt "dbname" aus]]></programlisting>
+echo $config->database->name; // gibt "dbname" aus]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

@@ -223,8 +223,8 @@
             <code>Zend_Cache::factory()</code> Methode verwendet wird:
         </para>
         <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');
-?>]]></programlisting>
+$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        </programlisting>
         <para>
             Es gibt keine Optionen für dieses Backend.
         </para>

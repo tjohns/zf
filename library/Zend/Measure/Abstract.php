@@ -21,6 +21,7 @@
 
 
 require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Math.php';
 require_once 'Zend/Locale/Format.php';
 
 

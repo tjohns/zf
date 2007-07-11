@@ -240,7 +240,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         <para>
             Die Zend_Filter_Input Klasse erlaubt es auch mehrfache Filter und Prüfklassen zu instanzieren
             und bei Bedarf aufzurufen um Sets von Eingabedaten zu bearbeiten. Siehe
-            <xref linked="zend.filter.input" />.
+            <xref linkend="zend.filter.input" />.
         </para>
 
     </sect2>

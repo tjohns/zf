@@ -51,8 +51,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php
-]]></programlisting>
+    index.php]]>
+            </programlisting>
 
         </sect3>
 
@@ -74,8 +74,8 @@ html/
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
-]]></programlisting>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+            </programlisting>
 
             <para>
                 Die obige Rewrite-Regel routet alle Anfragen, die nicht nach Ressourcen
@@ -104,8 +104,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/app/controllers');
-]]></programlisting>
+Zend_Controller_Front::run('/path/to/app/controllers');]]>
+            </programlisting>
 
             <para>
                 Das instanziert den Front-Controller und führt seine <code>dispatch()</code>-Methode aus,
@@ -160,8 +160,8 @@ class IndexController extends Zend_Controller_Action
     public function indexAction()
     {
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 Normalerweise ist ein Action-Helper namens <link
@@ -203,8 +203,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hallo Welt!</h1>
 </body>
-</html>
-]]></programlisting>
+</html>]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
@@ -227,8 +227,8 @@ class ErrorController extends Zend_Controller_Action
     public function errorAction()
     {
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 In der bereits angesprochenen Ordnerstruktur gehört dieser Code in die Datei
@@ -251,8 +251,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Ein Fehler ist aufgetreten</h1>
     <p>Ein Fehler ist aufgetreten; bitte versuchen Sie es später noch einmal.</p>
 </body>
-</html>
-]]></programlisting>
+</html>]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">

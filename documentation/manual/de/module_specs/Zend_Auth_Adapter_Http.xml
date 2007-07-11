@@ -189,12 +189,14 @@
                 There are two equally easy ways to create a File resolver:
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
-$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]></programlisting>
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
+                </programlisting>
                 or
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
-$resolver->setFile($path);]]></programlisting>
+$resolver->setFile($path);]]>
+                </programlisting>
                 If the given path is empty or not readable, an exception is thrown.
             </para>
 
@@ -214,7 +216,8 @@ $config = array(
     'realm'          => 'My Web Site',
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
-);]]></programlisting>
+);]]>
+            </programlisting>
             This array will cause the adapter to accept either Basic or Digest authentication, and will require
             authenticated access to all the areas of the site under <code>/members_only</code> and
             <code>/my_account</code>. The realm value is usually displayed by the browser in the password dialog box.
@@ -225,7 +228,8 @@ $config = array(
             Next, create the Zend_Auth_Adapter_Http object:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http.php';
-$adapter = new Zend_Auth_Adapter_Http($config);]]></programlisting>
+$adapter = new Zend_Auth_Adapter_Http($config);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -241,7 +245,8 @@ $digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
-$adapter->setDigestResolver($digestResolver);]]></programlisting>
+$adapter->setDigestResolver($digestResolver);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -257,7 +262,8 @@ $adapter->setResponse($response);
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // Bad userame/password, or canceled password prompt
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>

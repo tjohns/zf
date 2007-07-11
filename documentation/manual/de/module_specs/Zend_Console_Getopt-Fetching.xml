@@ -41,8 +41,8 @@ try {
 } catch (Zend_Console_Getopt_Exception $e) {
     echo $e->getUsageMessage();
     exit;
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <para>
             Die Fälle in denen die Analyse eine Ausnahme werden sind unter anderem:
@@ -83,8 +83,8 @@ try {
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
-$p_parameter = $opts->getOption('p');
-?>]]></programlisting>
+$p_parameter = $opts->getOption('p');]]>
+            </programlisting>
         </example>
         <para>
             Alternativ kann die magische <code>__get()</code> Funktion verwendet
@@ -99,8 +99,8 @@ $opts = new Zend_Console_Getopt('abp:');
 if (isset($opts->b)) {
     echo "Die Option b ist da.\n";
 }
-$p_parameter = $opts->p; // Null wenn nicht gesetzt
-?>]]></programlisting>
+$p_parameter = $opts->p; // Null wenn nicht gesetzt]]>
+            </programlisting>
         </example>
         <para>
             Wenn die Optionen mit Aliasen definiert wurden, kann jeder der Aliase für
@@ -165,8 +165,8 @@ $p_parameter = $opts->p; // Null wenn nicht gesetzt
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
-$args = $opts->getRemainingArgs(); // Rückgabe array('filename')
-?>]]></programlisting>
+$args = $opts->getRemainingArgs(); // Rückgabe array('filename')]]>
+            </programlisting>
         </example>
         <para>
             <code>Zend_Console_Getopt</code> unterstützt die GNU Konvention das ein Argument welches auf einem

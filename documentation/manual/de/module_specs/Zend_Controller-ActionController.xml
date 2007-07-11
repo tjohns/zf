@@ -37,8 +37,8 @@ class FooController extends Zend_Controller_Action
     {
         // do something
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             The above <code>FooController</code> class (controller
@@ -82,8 +82,8 @@ class FooController extends Zend_Controller_Action
         // version in order to propagate for this controller:
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 <code>initView()</code>, <code>getViewScript()</code>,
@@ -107,8 +107,8 @@ class FooController extends Zend_Controller_Action
         // disable autorendering for this action only:
         $this->_helper->viewRenderer->setNoRender();
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 The primary reasons to disable the <code>ViewRenderer</code> are
@@ -154,8 +154,8 @@ class FooController extends Zend_Controller_Action
             'dbname'   => 'website'
         ));
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.action.prepostdispatch">
@@ -197,8 +197,8 @@ class FooController extends Zend_Controller_Action
 
                 <programlisting role="php"><![CDATA[
 $this->getResponse()->setHeader('Content-Type', 'text/xml');
-$this->getResponse()->appendBody($content);
-]]></programlisting>
+$this->getResponse()->appendBody($content);]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -246,8 +246,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}
-?>]]></programlisting>
+}]]>
+                    </programlisting>
                 </note>
             </listitem>
         </itemizedlist>
@@ -293,8 +293,8 @@ applicationOrModule/
             index/
                 index.phtml
         helpers/
-        filters/
-]]></programlisting>
+        filters/]]>
+            </programlisting>
 
             <para>
                 In other words, view scripts are assumed to be in the
@@ -315,8 +315,8 @@ applicationOrModule/
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);
-?>]]></programlisting>
+string render(string $action = null, string $name = null, bool $noController = false);]]>
+            </programlisting>
 
             <para>
                 <code>render()</code> renders a view script. If no arguments are
@@ -378,8 +378,8 @@ class MyController extends Zend_Controller_Action
         // Renders my/baz-bat.phtml
         $this->render();
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -517,8 +517,8 @@ class MyController extends Zend_Controller_Action
         // all other methods throw an exception
         throw new Exception('Invalid method "' . $method . '" called');
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 Another possibility is that you may want to forward on to a
@@ -543,8 +543,8 @@ class MyController extends Zend_Controller_Action
         // all other methods throw an exception
         throw new Exception('Invalid method "' . $method . '" called');
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </sect3>
 
         <para>
@@ -572,8 +572,8 @@ abstract class My_Base_Controller extends Zend_Controller_Action
 
         return $this->view;
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Hopefully, from the information in this chapter, you can see the
