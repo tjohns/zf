@@ -19,15 +19,13 @@
             Eintrages aus:
         </para>
         <programlisting role="php"><![CDATA[<?php
-
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/');
 echo 'Der Feed enthält ' . $feed->count() . ' Einträge.' . "\n\n";
 foreach ($feed as $entry) {
     echo 'Überschrift: ' . $entry->title() . "\n";
     echo 'Zusammenfassung: ' . $entry->summary() . "\n\n";
-}
-
-?>]]>   </programlisting>
+}]]>
+        </programlisting>
     </example>
 
     <para>

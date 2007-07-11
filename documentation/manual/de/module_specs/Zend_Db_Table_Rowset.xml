@@ -29,11 +29,9 @@
             <title>Example of fetching a rowset</title>
 
             <programlisting role="php"><![CDATA[<?php
-
 $bugs   = new Bugs();
-$rowset = $bugs->fetchAll("bug_status = 'NEW'");
-
-?>]]></programlisting>
+$rowset = $bugs->fetchAll("bug_status = 'NEW'");]]>
+            </programlisting>
 
         </example>
 
@@ -60,7 +58,6 @@ $rowset = $bugs->fetchAll("bug_status = 'NEW'");
             <title>Counting the Rows in a Rowset</title>
 
             <programlisting role="php"><![CDATA[<?php
-
 $rowset   = $bugs->fetchAll("bug_status = 'FIXED'");
 
 $rowCount = count($rowset);
@@ -69,9 +66,8 @@ if ($rowCount > 0) {
     echo "found $rowCount rows";
 } else {
     echo 'no rows matched the query';
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -85,12 +81,10 @@ if ($rowCount > 0) {
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
-$row    = $rowset->current();
-
-?>]]></programlisting>
+$row    = $rowset->current();]]>
+            </programlisting>
 
         </example>
 
@@ -111,7 +105,6 @@ $row    = $rowset->current();
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $bugs = new Bugs();
 
 // fetch all records from the table
@@ -130,9 +123,8 @@ foreach ($rowset as $row) {
 
     // write the change to the database
     $row->save();
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -158,7 +150,6 @@ foreach ($rowset as $row) {
             <title>Using toArray()</title>
 
             <programlisting role="php"><![CDATA[<?php
-
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll();
 
@@ -172,9 +163,8 @@ foreach ($rowsetArray as $rowArray) {
     }
     ++$rowCount;
     echo "\n";
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -203,16 +193,14 @@ foreach ($rowsetArray as $rowArray) {
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll();
 
 // Convert object to serialized form
 $serializedRowset = serialize($rowset);
 
-// Now you can write $serializedRowset to a file, etc.
-
-?>]]></programlisting>
+// Now you can write $serializedRowset to a file, etc.]]>
+            </programlisting>
 
         </example>
 
@@ -233,14 +221,12 @@ $serializedRowset = serialize($rowset);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $rowsetDisconnected = unserialize($serializedRowset);
 
 // Now you can use object methods and properties, but read-only
 $row = $rowsetDisconnected->current();
-echo $row->bug_description;
-
-?>]]></programlisting>
+echo $row->bug_description;]]>
+            </programlisting>
 
         </example>
 
@@ -268,7 +254,6 @@ echo $row->bug_description;
             <title>Reactivating a Rowset as Live Data</title>
 
             <programlisting role="php"><![CDATA[<?php
-
 $rowset = unserialize($serializedRowset);
 
 $bugs = new Bugs();
@@ -281,9 +266,8 @@ $row = $rowset->current();
 
 // Now you can make changes to the row and save them
 $row->bug_status = 'FIXED';
-$row->save();
-
-?>]]></programlisting>
+$row->save();]]>
+            </programlisting>
 
         </example>
 
@@ -309,7 +293,6 @@ $row->save();
         <example id="zend.db.table.rowset.extending.example">
             <title>Specifying a custom Rowset class</title>
             <programlisting role="php"><![CDATA[<?php
-
 class MyRowset extends Zend_Db_Table_Rowset_Abstract
 {
     // ...customizations
@@ -325,9 +308,8 @@ class Products extends Zend_Db_Table_Abstract
 
 // Or specify a custom Rowset to be used in one
 // instance of a Table class.
-$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
-
-?>]]></programlisting>
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -341,7 +323,6 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
         <example id="zend.db.table.rowset.extending.example-aggregate">
             <title>Example of Rowset class with a new method</title>
             <programlisting role="php"><![CDATA[<?php
-
 class MyBugsRowset extends Zend_Db_Table_Rowset_Abstract
 {
     /**
@@ -365,9 +346,8 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_rowsetClass = 'MyBugsRowset';
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>

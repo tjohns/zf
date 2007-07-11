@@ -17,7 +17,6 @@
     <example id="zend.feed.custom-feed.example.extending">
         <title>Die Klasse für Atom Einträge mit einem eigenen Namensraum erweitern</title>
         <programlisting role="php"><![CDATA[<?php
-
 /**
  * Die eigene Klasse für Einträge kennt automatisch die Feed URI (optional)
  * und kann automatisch weitere Namensräume hinzufügen
@@ -58,19 +57,16 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 
-}
-
-?>]]>   </programlisting>
+}]]>
+        </programlisting>
         <para>
             Um diese Klasse zu verwenden, musst du sie nur direkt instanziieren und die
             <code>myUpdated</code> Eigenschaft setzen.
         </para>
         <programlisting role="php"><![CDATA[<?php
-
 $entry = new MyEntry();
-$entry->myUpdated = '2005-04-19T15:30';
-
-?>]]>       </programlisting>
+$entry->myUpdated = '2005-04-19T15:30';]]>
+        </programlisting>
     </example>
 
 </sect1>

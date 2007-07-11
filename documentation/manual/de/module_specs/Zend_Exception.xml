@@ -11,16 +11,14 @@
     <example id="zend.exception.using.example">
         <title>Beispiel für das Fangen einer Ausnahme</title>
         <programlisting role="php"><![CDATA[<?php
-
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "Gefangene Ausnahme: " . get_class($e) . "\n";
     echo "Nachricht: " . $e->getMessage() . "\n";
     // anderer Code um den Fehler zu korrigieren.
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </example>
 
     <para>
