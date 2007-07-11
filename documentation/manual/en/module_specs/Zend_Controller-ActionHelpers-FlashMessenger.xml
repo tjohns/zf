@@ -11,9 +11,9 @@
             next request retrieval.  It is generally a good idea that if you
             plan on using <code>Zend_Session</code> or
             <code>Zend_Session_Namespace</code>, that you initialize with
-            <code>Zend_Session::start()</code> in your bootstrap file.  (See
-            <link linkend="zend.session.startingasession">Zend Session</link>
-            for more details on its usage.)
+            <code>Zend_Session::start()</code> in your bootstrap file.  (See the
+            <link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link>
+            documentation for more details on its usage.)
         </para>
 
     </sect4>
