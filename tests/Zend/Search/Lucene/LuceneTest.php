@@ -312,4 +312,58 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(count($index->terms()), 607);
     }
+
+    public function testTermsStreamInterface()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $terms = array();
+
+        $index->resetTermsStream();
+        while ($index->currentTerm() !== null) {
+            $terms[] = $index->currentTerm();
+        	$index->nextTerm();
+        }
+
+        $this->assertEquals(count($terms), 607);
+    }
+
+    public function testTermsStreamInterfaceSkipTo()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $terms = array();
+
+        $index->resetTermsStream();
+        $index->skipTo(new Zend_Search_Lucene_Index_Term('one', 'contents'));
+
+        while ($index->currentTerm() !== null) {
+            $terms[] = $index->currentTerm();
+        	$index->nextTerm();
+        }
+
+        $this->assertEquals(count($terms), 244);
+    }
+
+    public function testTermsStreamInterfaceSkipToTermsRetrieving()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $terms = array();
+
+        $index->resetTermsStream();
+        $index->skipTo(new Zend_Search_Lucene_Index_Term('one', 'contents'));
+
+        $terms[] = $index->currentTerm();
+        $terms[] = $index->nextTerm();
+        $terms[] = $index->nextTerm();
+
+        $index->closeTermsStream();
+
+        $this->assertTrue($terms ==
+                          array(new Zend_Search_Lucene_Index_Term('one', 'contents'),
+                                new Zend_Search_Lucene_Index_Term('only', 'contents'),
+                                new Zend_Search_Lucene_Index_Term('open', 'contents'),
+                               ));
+    }
 }

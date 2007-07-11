@@ -1096,15 +1096,132 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 $result[] = $segmentInfo->currentTerm();
             }
 
-            $segmentInfo->nextTerm();
-            // check, if segment dictionary is finished
-            if ($segmentInfo->currentTerm() !== null) {
+            if ($segmentInfo->nextTerm() !== null) {
                 // Put segment back into the priority queue
                 $segmentInfoQueue->put($segmentInfo);
             }
         }
 
         return $result;
+    }
+
+
+    /**
+     * Terms stream queue
+     *
+     * @var Zend_Search_Lucene_Index_SegmentInfoPriorityQueue
+     */
+    private $_termsStreamQueue = null;
+
+    /**
+     * Last Term in a terms stream
+     *
+     * @var Zend_Search_Lucene_Index_Term
+     */
+    private $_lastTerm = null;
+
+    /**
+     * Reset terms stream.
+     */
+    public function resetTermsStream()
+    {
+        $this->_termsStreamQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
+
+        foreach ($this->_segmentInfos as $segmentInfo) {
+            $segmentInfo->reset();
+
+            // Skip "empty" segments
+            if ($segmentInfo->currentTerm() !== null) {
+                $this->_termsStreamQueue->put($segmentInfo);
+            }
+        }
+
+        $this->nextTerm();
+    }
+
+    /**
+     * Skip terms stream up to specified term preffix.
+     *
+     * Prefix contains fully specified field info and portion of searched term
+     *
+     * @param Zend_Search_Lucene_Index_Term $prefix
+     */
+    public function skipTo(Zend_Search_Lucene_Index_Term $prefix)
+    {
+        $segments = array();
+
+        while (($segmentInfo = $this->_termsStreamQueue->pop()) !== null) {
+            $segments[] = $segmentInfo;
+        }
+
+        foreach ($segments as $segmentInfo) {
+            $segmentInfo->skipTo($prefix);
+
+            if ($segmentInfo->currentTerm() !== null) {
+                $this->_termsStreamQueue->put($segmentInfo);
+            }
+        }
+
+        $this->nextTerm();
+    }
+
+    /**
+     * Scans terms dictionary and returns next term
+     *
+     * @return Zend_Search_Lucene_Index_Term|null
+     */
+    public function nextTerm()
+    {
+        while (($segmentInfo = $this->_termsStreamQueue->pop()) !== null) {
+            if ($this->_termsStreamQueue->top() === null ||
+                $this->_termsStreamQueue->top()->currentTerm()->key() !=
+                            $segmentInfo->currentTerm()->key()) {
+                // We got new term
+                $this->_lastTerm = $segmentInfo->currentTerm();
+
+                if ($segmentInfo->nextTerm() !== null) {
+                    // Put segment back into the priority queue
+                    $this->_termsStreamQueue->put($segmentInfo);
+                }
+
+                return $this->_lastTerm;
+            }
+
+            if ($segmentInfo->nextTerm() !== null) {
+                // Put segment back into the priority queue
+                $this->_termsStreamQueue->put($segmentInfo);
+            }
+        }
+
+        // End of stream
+        $this->_lastTerm = null;
+
+        return null;
+    }
+
+    /**
+     * Returns term in current position
+     *
+     * @return Zend_Search_Lucene_Index_Term|null
+     */
+    public function currentTerm()
+    {
+        return $this->_lastTerm;
+    }
+
+    /**
+     * Close terms stream
+     *
+     * Should be used for resources clean up if stream is not read up to the end
+     */
+    public function closeTermsStream()
+    {
+        while (($segmentInfo = $this->_termsStreamQueue->pop()) !== null) {
+            $segmentInfo->closeTermsStream();
+        }
+
+        $this->_termsStreamQueue = null;
+        $this->_lastTerm         = null;
     }
 
 

@@ -861,11 +861,18 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
 
     /**
-     * Number of terms in term stream
+     * Actual number of terms in term stream
      *
      * @var integer
      */
     private $_termCount = 0;
+
+    /**
+     * Overall number of terms in term stream
+     *
+     * @var integer
+     */
+    private $_termNum = 0;
 
     /**
      * Segment index interval
@@ -962,7 +969,8 @@ class Zend_Search_Lucene_Index_SegmentInfo
             throw new Zend_Search_Lucene_Exception('Wrong TermInfoFile file format');
         }
 
-        $this->_termCount     = $this->_tisFile->readLong();
+        $this->_termCount     =
+              $this->_termNum = $this->_tisFile->readLong(); // Read terms count
         $this->_indexInterval = $this->_tisFile->readInt();  // Read Index interval
         $this->_skipInterval  = $this->_tisFile->readInt();  // Read skip interval
 
@@ -1014,7 +1022,6 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Skip terms stream up to specified term preffix.
-     * Must be used just after stream reset.
      *
      * Prefix contains fully specified field info and portion of searched term
      *
@@ -1095,7 +1102,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
                                                                      $prevTermInfo[1] /* freqPointer */,
                                                                      $prevTermInfo[2] /* proxPointer */,
                                                                      $prevTermInfo[3] /* skipOffset */);
-        $this->_termCount -= ($prevPosition*$this->_indexInterval - 1);
+        $this->_termCount  =  $this->_termNum - $prevPosition*$this->_indexInterval;
 
         if ($highIndex == 0) {
             // skip start entry
@@ -1234,7 +1241,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
     /**
      * Close terms stream
      *
-     * Should be used for resources clean up if steam is not read up to the end
+     * Should be used for resources clean up if stream is not read up to the end
      */
     public function closeTermsStream()
     {
@@ -1253,7 +1260,6 @@ class Zend_Search_Lucene_Index_SegmentInfo
     /**
      * Returns term in current position
      *
-     * @param Zend_Search_Lucene_Index_Term $term
      * @return Zend_Search_Lucene_Index_Term|null
      */
     public function currentTerm()
