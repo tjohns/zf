@@ -86,12 +86,11 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement
             // enabled. add the hidden "unchecked" option first, then
             // the the checkbox itself) next. this way, if not-checked,
             // the "unchecked" option is returned to the server instead.
-            $checkboxValue = (null === $value) ? $options[0] : $value;
             $xhtml = $this->_hidden($name, $options[1])
                    . '<input type="checkbox"'
                    . ' name="' . $this->view->escape($name) . '"'
                    . ' id="' . $this->view->escape($id) . '"'
-                   . ' value="' . $this->view->escape($checkboxValue) . '"';
+                   . ' value="' . $this->view->escape($options[0]) . '"';
 
             // is it checked already?
             if ($value == $options[0]) {
