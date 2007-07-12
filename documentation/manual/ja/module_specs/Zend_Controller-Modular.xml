@@ -28,8 +28,8 @@ application/
             IndexController.php
             ListController.php
         models/
-        views/
-]]></programlisting>
+        views/]]>
+        </programlisting>
 
         <para>
             この考え方では、モジュール名が、
@@ -86,8 +86,8 @@ application/
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
-));
-?>]]></programlisting>
+));]]>
+        </programlisting>
 
         <para>
             <code>addControllerDirectory()</code> では、オプションの二番目の引数を受け付けます。
@@ -97,8 +97,8 @@ $front->setControllerDirectory(array(
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
-?>]]></programlisting>
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        </programlisting>
 
         <para>
             結局のところ、モジュールのディレクトリを設定する一番お手軽な方法は、
@@ -118,8 +118,8 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');
-?>]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');]]>
+        </programlisting>
 
         <para>
             上の例は <code>default</code>、
@@ -146,8 +146,8 @@ $front->addModuleDirectory('/path/to/application/modules');
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');
-?>]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');]]>
+        </programlisting>
 
         <note><para>
             モジュール内でコントローラディレクトリを使用しない場合は、
@@ -199,8 +199,8 @@ $front->addModuleDirectory('/path/to/application/modules');
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);
-?>]]></programlisting>
+$front->setParam('useDefaultControllerAlways', true);]]>
+        </programlisting>
     </sect2>
 </sect1>
 <!--

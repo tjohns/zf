@@ -22,8 +22,8 @@ $opts->addRules(
   array(
     'verbose|v' => '詳細な出力を表示する'
   )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             上の例は、"<code>--verbose</code>" というオプションと
@@ -52,8 +52,8 @@ $opts->setHelp(
         'b' => 'このオプションはバナナを選択します。整数パラメータが必須です。',
         'p' => 'このオプションは洋ナシを選択します。オプションで文字列パラメータを指定します。'
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             エイリアスつきでオプションを宣言した場合は、
@@ -88,8 +88,8 @@ $opts->setAliases(
         'a' => 'apfel',
         'p' => 'pear'
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             上の例では
@@ -129,8 +129,8 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // 新しい配列で既存の引数を置き換えます
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-?>]]></programlisting>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
+            </programlisting>
         </example>
     </sect2>
 
@@ -209,8 +209,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>setOption() の使用法</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);
-?>]]></programlisting>
+$opts->setOption('ignoreCase', true);]]>
+            </programlisting>
         </example>
         <para>
             <code>setOptions()</code> メソッドに渡す引数は連想配列です。
@@ -228,8 +228,8 @@ $opts->setOptions(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
     </sect2>
 

@@ -54,8 +54,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php
-]]></programlisting>
+    index.php]]>
+            </programlisting>
 
         </sect3>
 
@@ -78,8 +78,8 @@ html/
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
-]]></programlisting>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+            </programlisting>
 
             <para>
                 このルールは、リソース (画像やスタイルシート)
@@ -110,8 +110,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/app/controllers');
-]]></programlisting>
+Zend_Controller_Front::run('/path/to/app/controllers');]]>
+            </programlisting>
 
             <para>
                 これは、フロントコントローラのインスタンスとディスパッチを行います。
@@ -175,7 +175,8 @@ class IndexController extends Zend_Controller_Action
     {
     }
 }
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 デフォルトでは
@@ -224,8 +225,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hello, World!</h1>
 </body>
-</html>
-]]></programlisting>
+</html>]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
@@ -250,8 +251,8 @@ class ErrorController extends Zend_Controller_Action
     public function errorAction()
     {
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 先ほど説明したディレクトリ構成により、このファイルは
@@ -274,8 +275,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>エラーが発生しました</h1>
     <p>エラーが発生しました。後ほどもう一度お試しください。</p>
 </body>
-</html>
-]]></programlisting>
+</html>]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">

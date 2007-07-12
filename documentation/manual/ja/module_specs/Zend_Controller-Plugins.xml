@@ -86,8 +86,8 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
         </para>
         <para>
             <code>Zend_Controller_Plugin_Abstract</code> には抽象メソッドはありません。
@@ -155,8 +155,8 @@ $front = Zend_Controller_Front::getInstance();
 $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
-$front->dispatch();
-]]></programlisting>
+$front->dispatch();]]>
+        </programlisting>
 
         <para>
             他に何かの出力を行うアクションがなく、ひとつのアクションのみがコールされたとしましょう。
@@ -169,8 +169,8 @@ $front->dispatch();
 <p>dispatchLoopStartup() がコールされました</p>
 <p>preDispatch() がコールされました</p>
 <p>postDispatch() がコールされました</p>
-<p>dispatchLoopShutdown() がコールされました</p>
-]]></programlisting>
+<p>dispatchLoopShutdown() がコールされました</p>]]>
+        </programlisting>
 
         <note>
             プラグインは、フロントコントローラの実行時ならいつでも登録することができます。

@@ -17,8 +17,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);
-]]></programlisting>
+$front->throwExceptions(true);]]>
+        </programlisting>
 
         <para>
             ヘッダを含むレスポンス出力を送信するには、
@@ -26,8 +26,8 @@ $front->throwExceptions(true);
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();
-]]></programlisting>
+$response->sendResponse();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -45,8 +45,8 @@ $response = $front->dispatch();
 
 // 何かの処理、たとえばログの記録などを行ってから
 // 結果を出力します
-$response->sendResponse();
-?>]]></programlisting>
+$response->sendResponse();]]>
+            </programlisting>
         </note>
 
         <para>
@@ -60,8 +60,8 @@ $response->sendResponse();
 // ヘッダを設定します
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);
-]]></programlisting>
+    ->appendBody($content);]]>
+        </programlisting>
 
         <para>
             こうすることで、すべてのヘッダを一度に送信し、
@@ -109,8 +109,8 @@ $response = $front->dispatch();
 // 何かの処理...
 
 // 最後に結果を表示します
-$response->sendResponse();
-]]></programlisting>
+$response->sendResponse();]]>
+        </programlisting>
 
         <para>
             デフォルトでは、例外メッセージは表示されません。
@@ -131,8 +131,8 @@ $response->sendResponse();
 
 // あるいは
 $front->throwExceptions(true);
-$front->dispatch();
-]]></programlisting>
+$front->dispatch();]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -283,8 +283,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             上の例で <code>/my/foo</code> をコールすると、
@@ -296,8 +296,8 @@ array(
     'header'  => ..., // ヘッダの内容
     'default' => ..., // MyController::fooAction() が作成した本文
     'footer'  => ...  // フッタの内容
-);
-?>]]></programlisting>
+);]]>
+        </programlisting>
 
         <para>
             これをレンダリングすると、配列に要素が追加された順に表示されます。

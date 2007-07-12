@@ -76,8 +76,8 @@ try {
     $front->dispatch();
 } catch (Exception $e) {
     // ここで、自分自身で例外を処理します
-}
-]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     これが、自分のアプリケーションで独自の例外処理を行うための
@@ -122,8 +122,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}
-]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     <code>Zend_Controller_Front::throwExceptions()</code>
@@ -170,8 +170,8 @@ if ($response->isException()) {
 $front->setParam('useDefaultControllerAlways', true);
 
 // あるいは
-$dispatcher->setParam('useDefaultControllerAlways', true);
-]]></programlisting>
+$dispatcher->setParam('useDefaultControllerAlways', true);]]>
+                        </programlisting>
 
                         <para>
                             このフラグを設定すると、
@@ -227,8 +227,8 @@ class My_Controller_Action extends Zend_Controller_Action
 
         throw new Exception('Invalid method');
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
                         <para>
                             上の例は、未定義のアクションメソッドがコールされた場合にそれをすべて受け取り、
                             そのコントローラのデフォルトアクションにリダイレクトします。
@@ -265,8 +265,8 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
         return $action;
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
 
                         <para>
                             上のコードは、指定したアクションが
@@ -334,8 +334,8 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
             exit;
         }
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
 
                         <para>
                             この例では、

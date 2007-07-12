@@ -79,8 +79,8 @@
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+                    </programlisting>
                 </listitem>
 
                 <listitem>
@@ -92,8 +92,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                     <programlisting role="php"><![CDATA[<?php
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
-             ->setViewSuffix('php');
-]]></programlisting>
+             ->setViewSuffix('php');]]>
+                    </programlisting>
                 </listitem>
             </itemizedlist>
         </note>
@@ -110,8 +110,8 @@ $viewRenderer->setView($view)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        </programlisting>
 
         <para>
             アクションコントローラのインスタンスが最初に作成されたときに、
@@ -150,11 +150,12 @@ class Foo_BarController extends Zend_Controller_Action
         $this->view->foo = 'bar';
     }
 }
-?>
+
+...
 
 // ビュースクリプトの中では、たとえば次のように書きます
-<?php $this->foo(); // Foo_View_Helper_Foo::foo() をコールします ?>
-]]></programlisting>
+<?php $this->foo(); // Foo_View_Helper_Foo::foo() をコールします]]>
+        </programlisting>
 
         <para>
             <code>ViewRenderer</code> には、
@@ -268,7 +269,8 @@ $this->_helper->viewRenderer('foo');
 // form.phtml の内容をレスポンスセグメント 'html' にレンダリングします。
 // コントローラのビュースクリプト用サブディレクトリは使用しません。
 $this->_helper->viewRenderer('form', 'html', true);
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <note><para>
                         <code>setRender()</code> および <code>direct()</code>
@@ -291,7 +293,8 @@ $this->_helper->viewRenderer('form', 'html', true);
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             さらに追加のメソッドがあり、
@@ -536,7 +539,8 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <programlisting role="php"><![CDATA[<?php
 // 起動ファイル内で
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-?>
+
+...
 
 <?php
 // 'foo' モジュールの 'bar' コントローラ
@@ -566,9 +570,8 @@ class Foo_BarController extends Zend_Controller_Action
     {
         $this->_redirect('/index');
     }
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <example>
@@ -610,9 +613,8 @@ class Bar_BatController extends Zend_Controller_Action
         // このコントローラのアクションでは決して自動レンダリングを行いません
         $this->_helper->viewRenderer->setNoRender();
     }
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <example>
@@ -658,9 +660,8 @@ class Foo_BarController extends Zend_Controller_Action
         // その他の処理を続けます...
     }
 
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <example>
@@ -690,8 +691,8 @@ class Foo_BarController extends Zend_Controller_Action
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 
@@ -735,8 +736,8 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+            </programlisting>
         </example>
 
         <example>
@@ -766,8 +767,8 @@ class SearchController extends Zend_Controller_Action
     {
         // 何もしなくても、ViewRenderer が自動的にビュースクリプトをレンダリングします
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 </sect3>

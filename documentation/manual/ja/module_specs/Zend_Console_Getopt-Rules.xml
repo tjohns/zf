@@ -38,8 +38,8 @@
             <title>短い形式の構文の使用</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Console/Getopt.php';
-$opts = new Zend_Console_Getopt('abp:');
-?>]]></programlisting>
+$opts = new Zend_Console_Getopt('abp:');]]>
+            </programlisting>
         </example>
         <para>
             上の例は、<code>Zend_Console_Getopt</code> を用いて、
@@ -106,8 +106,7 @@ $opts = new Zend_Console_Getopt(
     'banana|b=i' => 'このオプションはバナナを選択します。整数パラメータが必須です。',
     'pear|p-s'   => 'このオプションは洋ナシを選択します。オプションで文字列パラメータを指定します。'
   )
-);
-?>]]>
+);]]>
             </programlisting>
         </example>
         <para>

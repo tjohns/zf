@@ -21,7 +21,8 @@ $route = new Zend_Controller_Router_Route_Regex(
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]></programlisting>
+$router->addRoute('archive', $route);]]>
+    </programlisting>
 
     <para>
         定義された正規表現のパターンが、リクエストオブジェクトに注入されます。
@@ -34,7 +35,8 @@ $values = array(
     1            => '2006',
     'controller' => 'archive',
     'action'     => 'show'
-);]]></programlisting>
+);]]>
+    </programlisting>
 
     <note>
         <para>
@@ -73,8 +75,8 @@ public function showAction()
 {
     $request = $this->getRequest();
     $year    = $request->getParam(1); // $year = '2006';
-}
-]]></programlisting>
+}]]>
+    </programlisting>
 
     <note>
         <para>このキーは、文字列 ('1') ではなく数値の 1 であることに注意しましょう。</para>
@@ -98,7 +100,8 @@ $route = new Zend_Controller_Router_Route_Regex(
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]></programlisting>
+$router->addRoute('archive', $route);]]>
+    </programlisting>
 
     <para>
         まだ問題が残っていることにおそらくお気づきでしょう。
@@ -120,7 +123,8 @@ $route = new Zend_Controller_Router_Route_Regex(
         1 => 'year'
     )
 );
-$router->addRoute('archive', $route);]]></programlisting>
+$router->addRoute('archive', $route);]]>
+    </programlisting>
 
     <para>
         この結果は次のようになり、これがリクエストオブジェクトに格納されます。
@@ -131,7 +135,8 @@ $values = array(
     'year'       => '2006',
     'controller' => 'archive',
     'action'     => 'show'
-);]]></programlisting>
+);]]>
+    </programlisting>
 
     <para>
         関連付けは両方の方法で定義でき、任意の環境 (例. Zend_Config) で動作します。
@@ -152,8 +157,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     'archive/(\d+)',
     array( ... ),
     array('year' => 1)
-);
-]]></programlisting>
+);]]>
+    </programlisting>
 
     <note>
         <para>
@@ -171,8 +176,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     'archive/(\d+)/page/(\d+)',
     array( ... ),
     array('year' => 1)
-);
-]]></programlisting>
+);]]>
+    </programlisting>
 
     <para>
         この結果、リクエスト内には数値キーと名前つきキーが共存することになります。
@@ -186,7 +191,8 @@ $values = array(
     2            => 10,
     'controller' => 'archive',
     'action'     => 'show'
-);]]></programlisting>
+);]]>
+    </programlisting>
 
     <para>
         正規表現を簡単に反転させることはできないので、
@@ -202,8 +208,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     array( ... ),
     array('year' => 1),
     'archive/%s'
-);
-]]></programlisting>
+);]]>
+    </programlisting>
 
     <para>
         これまで説明してきたことは、すべて標準のルートオブジェクトでも可能なことです。
@@ -231,8 +237,8 @@ $route = new Zend_Controller_Router_Route_Regex(
     ),
     'blog/archive/%d-%s.html'
 );
-$router->addRoute('blogArchive', $route);
-]]></programlisting>
+$router->addRoute('blogArchive', $route);]]>
+    </programlisting>
 
     <para>
         regex ルートは標準のルートよりはるかに柔軟性があるということが、

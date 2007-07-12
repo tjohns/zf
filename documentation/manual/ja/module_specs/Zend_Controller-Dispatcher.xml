@@ -61,8 +61,8 @@ public function bazAction()
     // 別のモジュールにある、別のコントローラのアクション
     // Foo_BarController::bazAction() に転送します
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.dispatcher.subclassing">
@@ -210,8 +210,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @return boolean
      */
     public function isValidModule($module);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             しかし、たいていの場合は単純に抽象クラス
