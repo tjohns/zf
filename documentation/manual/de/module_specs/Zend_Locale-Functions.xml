@@ -22,7 +22,7 @@
 
         <example>
             <title>Klonen</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('ar');
@@ -39,8 +39,8 @@ $stringLocale = $locale->toString();
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP ruft automatisch toString() über __toString(); auf
-?>]]></programlisting>
+print "copied: ", $copiedLocale; // PHP ruft automatisch toString() über __toString(); auf]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -57,7 +57,7 @@ print "copied: ", $copiedLocale; // PHP ruft automatisch toString() über __toSt
 
         <example>
             <title>Prüfung auf gleiche Gebietsschemata</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -66,8 +66,8 @@ $mylocale = new Zend_Locale('en_US');
 // Prüfe ob die Gebietsschema gleich sind
 if ($locale->equals($mylocale)) {
     print "Die Gebietsschemata sind gleich";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -89,7 +89,7 @@ if ($locale->equals($mylocale)) {
 
         <example>
             <title>Das Standard Gebietsschema erhalten</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -100,8 +100,8 @@ print_r($found);
 
 // Nur die Gebietsschema des Browsers zurück geben
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
-print_r($found2);
-?>]]></programlisting>
+print_r($found2);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -143,7 +143,7 @@ print_r($found2);
 
         <example>
             <title>setLocale</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -153,8 +153,8 @@ print $locale->toString();
 
 // neues Gebietsschema
 $locale->setLocale('aa_DJ');
-print $locale->toString();
-?>]]></programlisting>
+print $locale->toString();]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -171,7 +171,7 @@ print $locale->toString();
 
         <example>
             <title>getLanguage and getRegion</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -180,8 +180,8 @@ $locale = new Zend_Locale();
 print $locale->getLanguage();
 
 // Wenn das Gebietsschema 'de_AT' ist, wird 'AT' als Region zurückgegeben
-print $locale->getRegion();
-?>]]></programlisting>
+print $locale->getRegion();]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -205,7 +205,7 @@ print $locale->getRegion();
 
         <example>
             <title>getTranslationList</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -218,9 +218,8 @@ print_r ($list);
 
 // Einen der zurückgegebenen Schlüssel als Wert für die getTranslation() Methode einer anderen Sprache verwenden
 print $locale->getTranslation('de', 'language', 'zh');
-// Gibt die Übversetzung für die Sprache 'de' in chinesisch zurück
-
-?>]]></programlisting>
+// Gibt die Übversetzung für die Sprache 'de' in chinesisch zurück]]>
+            </programlisting>
         </example>
 
         <para>
@@ -378,16 +377,16 @@ print $locale->getTranslation('de', 'language', 'zh');
 
         <example>
             <title>Bequemliche Funktionen für getTranslation()</title>
-<programlisting role="php"><![CDATA[<?php
-getCountryTranslation($what, $locale = null)
-getCountryTranslationList($locale = null)
-getLanguageTranslation($what, $locale = null)
-getLanguageTranslationList($locale = null)
-getScriptTranslation($what, $locale = null)
-getScriptTranslationList($locale = null)
-getTerritoryTranslation($what, $locale = null)
-getTerritoryTranslationList($locale = null)
-?>]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+getCountryTranslation($what, $locale = null);
+getCountryTranslationList($locale = null);
+getLanguageTranslation($what, $locale = null);
+getLanguageTranslationList($locale = null);
+getScriptTranslation($what, $locale = null);
+getScriptTranslationList($locale = null);
+getTerritoryTranslation($what, $locale = null);
+getTerritoryTranslationList($locale = null);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -396,13 +395,13 @@ getTerritoryTranslationList($locale = null)
 
         <example>
             <title>getTranslationList</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
 // Gibt die Namen aller Länder in der Französischen Sprache aus
-print_r($locale->getTranslationList('country', 'fr'));
-?>]]></programlisting>
+print_r($locale->getTranslationList('country', 'fr'));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -412,15 +411,15 @@ print_r($locale->getTranslationList('country', 'fr'));
 
         <example>
             <title>Konvertierung des Ländernamens von einer Sprache in eine andere Sprache</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require 'Zend/Locale.php';
 $locale = new Zend_Locale('en_US');
 $code2name = $locale->getLanguageTranslationList();
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
 echo $locale->getLanguageTranslation($frenchCode, 'es');
-// Ausgegeben wird der Spanische Name der Fransösischen Sprache
-?>]]></programlisting>
+// Ausgegeben wird der Spanische Name der Fransösischen Sprache]]>
+            </programlisting>
         </example>
 
         <para>
@@ -430,7 +429,7 @@ echo $locale->getLanguageTranslation($frenchCode, 'es');
 
         <example>
             <title>Alle möglichen Übersetzungen</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 // Erhalte eine Liste aller Übersetzungslisten
 $lists = $locale->getTranslationList();
 
@@ -438,8 +437,8 @@ $lists = $locale->getTranslationList();
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -455,7 +454,7 @@ foreach ($lists as $list) {
 
         <example>
             <title>Alle Sprachen geschrieben in Ihrer Muttersprache</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $sourceLanguage = null; // Setze hier deine Muttersprache ein
@@ -471,8 +470,8 @@ foreach($list as $language => $content) {
     } catch (Exception $e) {
         continue;
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -491,7 +490,7 @@ foreach($list as $language => $content) {
 
         <example>
             <title>getQuestion()</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -508,8 +507,8 @@ Array
     [noabbr]n[/noabbr]
     [yesexpr]^([yY]([eE][sS])?)|([jJ][aA]?)[/yesexpr]
     [noexpr]^([nN]([oO]|([eE][iI][nN]))?)[/noexpr]
-)
-?>]]></programlisting>
+)]]>
+            </programlisting>
         </example>
 
     </sect2>

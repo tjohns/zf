@@ -14,16 +14,16 @@
             einem Versender. Um solch eine Mail mit Hilfe der
             <ulink url="http://php.net/mail"><code>mail()</code></ulink> PHP Funktion zu versenden,
             musst Du folgendes tun:
-       </para>
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Dies ist der Text dieser E-Mail.');
 $mail->setFrom('somebody@example.com', 'Ein Versender');
 $mail->addTo('somebody_else@example.com', 'Ein Empfänger');
 $mail->setSubject('TestBetreff');
-$mail->send();
-?>]]>       </programlisting>
+$mail->send();]]>
+        </programlisting>
     </example>
     <note>
         <title>Minimale Definitionen</title>
@@ -48,15 +48,15 @@ $mail->send();
         Ein flüssiges Interface bedeutet das jede Methode eine Referenz zu dem Objekt zurückgibt auf das es
         aufgerufen wurde, so das sofort ein erneuter Aufruf einer anderen Methode stattfinden kann.
     </para>
-        <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Das ist der Text der Nachricht.')
     ->setFrom('somebody@example.com', 'Einige Sender')
     ->addTo('somebody_else@example.com', 'Einige Empfänger')
     ->setSubject('TestBetreff')
-    ->send();
-?>]]>   </programlisting>
+    ->send();]]>
+    </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

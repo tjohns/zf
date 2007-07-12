@@ -23,10 +23,10 @@
         dekodieren. Wenn du allerdings wünscht, dass ein Objekt zurück gegeben wird, kannst du dies
         angeben:
     </para>
-        <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 // Dekodiere Objekte als Objekte
-$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
-?>]]></programlisting>
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
+    </programlisting>
     <para>
         Jedes dekodierte Objekte wird als <code>StdClass</code> Objekt mit Eigenschaften
         entsprechend der Schlüssel/Wert Paare der JSON Notation zuürckgegeben.

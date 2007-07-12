@@ -18,11 +18,9 @@
       kein Formatter definiert wird. Die Standard Konfiguration ist identisch mit dem folgenden:
 
       <programlisting role="php"><![CDATA[<?php
-
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
-$formatter = new Zend_Log_Formatter_Simple($format);
-
-?>]]></programlisting>
+$formatter = new Zend_Log_Formatter_Simple($format);]]>
+      </programlisting>
     </para>
 
     <para>
@@ -30,7 +28,6 @@ $formatter = new Zend_Log_Formatter_Simple($format);
       Methode des Writer's:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Simple('Hallo %message%' . PHP_EOL);
 $writer->setFormatter($formatter);
@@ -40,9 +37,8 @@ $logger->addWriter($writer);
 
 $logger->info('dort');
 
-// Gibt "Hallo dort" aus
-
-?>]]></programlisting>
+// Gibt "Hallo dort" aus]]>
+      </programlisting>
     </para>
 
     <para>
@@ -59,7 +55,6 @@ $logger->info('dort');
       automatisch alle Elemente des Event Data Arrays:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Xml();
 $writer->setFormatter($formatter);
@@ -67,9 +62,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');]]>
+      </programlisting>
     </para>
 
     <para>
@@ -81,8 +75,8 @@ $logger->info('Informative Nachricht');
   <message>Informative Nachricht</message>
   <priority>6</priority>
   <priorityName>INFO</priorityName>
-</logEntry>
-]]></programlisting>
+</logEntry>]]>
+      </programlisting>
     </para>
 
     <para>
@@ -92,7 +86,6 @@ $logger->info('Informative Nachricht');
       gemappten Elementen als zweiten Parameter:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'level' => 'priorityName'));
 $writer->setFormatter($formatter);
@@ -100,9 +93,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');]]>
+      </programlisting>
 
       Der obige Code ändert das Root Element von seinem Standard <code>logEntry</code> zu <code>log</code>.
       Er mappt auch das Element <code>msg</code> zum Event Daten Element <code>message</code>. Das ergibt die
@@ -112,8 +104,8 @@ $logger->info('Informative Nachricht');
 <log>
   <msg>Informative Nachricht</msg>
   <level>INFO</level>
-</log>
-]]></programlisting>
+</log>]]>
+      </programlisting>
     </para>
 
   </sect2>

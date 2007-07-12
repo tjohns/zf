@@ -9,8 +9,7 @@
     </para>
     <example>
         <title>Versand von HTML E-Mail</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Mein netter Test Text');
@@ -18,8 +17,8 @@ $mail->setBodyHtml('Mein netter <b>Test</b> Text');
 $mail->setFrom('somebody@example.com', 'Ein Versender');
 $mail->addTo('somebody_else@example.com', 'Ein Empfänger');
 $mail->setSubject('TestBetreff');
-$mail->send();
-?>]]>   </programlisting>
+$mail->send();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

@@ -8,14 +8,13 @@
     </para>
     <example>
         <title>Eine E-Mail Kopfzeile hinzufügen</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MeineCooleAnwendung');
 $mail->addHeader('X-greetingsTo', 'Mom', true); // mehrer Werte
-$mail->addHeader('X-greetingsTo', 'Dad', true);
-?>]]>   </programlisting>
+$mail->addHeader('X-greetingsTo', 'Dad', true);]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

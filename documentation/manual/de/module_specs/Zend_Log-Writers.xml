@@ -18,13 +18,11 @@
       (<code>php://stderr</code>).
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
     </para>
 
     <para>
@@ -33,13 +31,11 @@ $logger->info('Informational message');
       URLs</ulink> verwendet werden:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');]]>
+      </programlisting>
 
       Standardmäßig wird der Stream im Anhänge-Modus geöffnet (<code>"a"</code>). Um Ihn in einem anderen Modus
       zu öffnen, akzeptiert der Zend_Log_Writer_Stream Konstruktor einen optionalen zweiten Parameter für den
@@ -50,7 +46,6 @@ $logger->info('Informative Nachricht');
       Der Konstruktor von <code>Zend_Log_Writer_Stream</code> akzeptiert auch eine existierende Stream Ressource:
 
       <programlisting role="php"><![CDATA[<?php
-
 $stream = @fopen('/path/to/logfile', 'a', false);
 if (! $stream) {
     throw new Exception('Stream konnte nicht geöffnet werden');
@@ -59,9 +54,8 @@ if (! $stream) {
 $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');]]>
+      </programlisting>
 
       Der Modus kann für existierende Stream Ressourcen nicht definiert werden. Wenn das gemacht versucht wird, wird
       eine <code>Zend_Log_Exception</code> geworfen.
@@ -76,7 +70,6 @@ $logger->info('Informative Nachricht');
       Instanz, einen Tabellennamen, und ein Abbild der Datenbankspalten zu den Elementen der Eventdaten:
 
       <programlisting role="php"><![CDATA[<?php
-
 $params = array ('host'     => '127.0.0.1',
                  'username' => 'malory',
                  'password' => '******',
@@ -88,9 +81,8 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 
 $logger = new Zend_Log($writer);
 
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');>]]>
+      </programlisting>
 
       Das obige Beispiel schreibt eine einzelne Zeile von Log Daten in einem Datenbanktabelle welche
       <code>log_table_name</code> Tabelle benannt wird. Die Datenbankspalte welche <code>lvl</code> benannt ist
@@ -106,14 +98,12 @@ $logger->info('Informative Nachricht');
       die Protokollierung auszuschalten oder wärend Tests abzustumpfen:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
 // geht nirgendwohin
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');]]>
+      </programlisting>
     </para>
   </sect2>
 
@@ -124,7 +114,6 @@ $logger->info('Informative Nachricht');
       und in einem Array als öffentliche Eigenschaft zur Verfügung stellt.
 
       <programlisting role="php"><![CDATA[<?php
-
 $mock = new Zend_Log_Writer_Mock;
 $logger = new Zend_Log($mock);
 
@@ -138,9 +127,8 @@ var_dump($mock->events[0]);
 //    [message] => Informative Nachricht
 //    [priority] => 6
 //    [priorityName] => INFO
-// )
-
-?>]]></programlisting>
+// )]]>
+      </programlisting>
     </para>
 
     <para>
@@ -157,7 +145,6 @@ var_dump($mock->events[0]);
       schreiben. Um das zu tun, muß die <code>addWriter()</code> Methode verwendet werden:
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
 $writer2 = new Zend_Log_Writer_Stream('/path/to/second/logfile');
 
@@ -166,9 +153,8 @@ $logger->addWriter($writer1);
 $logger->addWriter($writer2);
 
 // Geht zu beiden Writern
-$logger->info('Informative Nachricht');
-
-?>]]></programlisting>
+$logger->info('Informative Nachricht');]]>
+      </programlisting>
     </para>
   </sect2>
 </sect1>

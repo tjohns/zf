@@ -69,20 +69,19 @@
         </para>
         <example>
             <title>Den Stream-Typen für eine HTTPS Verbindung einstellen</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Konfigurationsparameter setzen
-    $config = array(
-        'adapter'      => 'Zend_Http_Client_Adapter_Socket',
-        'ssltransport' => 'tls'
-    );
+            <programlisting role="php"><![CDATA[<?php
+// Konfigurationsparameter setzen
+$config = array(
+    'adapter'      => 'Zend_Http_Client_Adapter_Socket',
+    'ssltransport' => 'tls'
+);
 
-    // Client-Instanz erzeugen
-    $client = Zend_Http_Client('https://www.example.com', $config);
+// Client-Instanz erzeugen
+$client = Zend_Http_Client('https://www.example.com', $config);
 
-    // Jetzt wird der Request über eine verschlüsselte Verbindung verschickt
-    $response = $client->request();
-?>]]></programlisting>
+// Jetzt wird der Request über eine verschlüsselte Verbindung verschickt
+$response = $client->request();]]>
+            </programlisting>
         </example>
         <para>
             Ein ähnliches Ergebnis erzielt man mit folgendem Code:
@@ -172,22 +171,21 @@
         </para>
         <example>
             <title>Zend_Http_Client hinter einem Proxy-Server nutzen</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Konfigurationsparameter setzen
-    $config = array(
-        'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
-        'proxy_host' => 'proxy.int.zend.com',
-        'proxy_port' => 8000,
-        'proxy_user' => 'shahar.e',
-        'proxy_pass' => 'bananashaped'
-    );
+            <programlisting role="php"><![CDATA[<?php
+// Konfigurationsparameter setzen
+$config = array(
+    'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+    'proxy_host' => 'proxy.int.zend.com',
+     'proxy_port' => 8000,
+    'proxy_user' => 'shahar.e',
+    'proxy_pass' => 'bananashaped'
+);
 
-    // Client-Objekt instanziieren
-    $client = Zend_Http_Client('http://www.example.com', $config);
+// Client-Objekt instanziieren
+$client = Zend_Http_Client('http://www.example.com', $config);
 
-    // $client kann jetzt wie gewohnt benutzt werden
-?>]]></programlisting>
+// $client kann jetzt wie gewohnt benutzt werden]]>
+            </programlisting>
         </example>
         <para>
                         Wie vorher erwähnt, nutzt der Proxy-Adapter eine einfache Socket-Verbindung,
@@ -219,31 +217,30 @@
         </para>
         <example>
             <title>Testen gegen einen einfachen HTTP Response Stumpf</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Instanziere einen neuen Adapter und Client
-    $adapter = new Zend_Http_Client_Adapter_Test();
-    $client = Zend_Http_Client('http://www.example.com', array(
-        'adapter' => $adapter
-    ));
+            <programlisting role="php"><![CDATA[<?php
+// Instanziere einen neuen Adapter und Client
+$adapter = new Zend_Http_Client_Adapter_Test();
+$client = Zend_Http_Client('http://www.example.com', array(
+    'adapter' => $adapter
+));
 
-    // Setze die erwartete Antwort
-    $adapter->setResponse(
-        "HTTP/1.1 200 OK"        . "\r\n" .
-        "Content-type: text/xml" . "\r\n" .
-                                   "\r\n" .
-        '<?xml version="1.0" encoding="UTF-8"?>' .
-        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
-        '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
-        '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
-        '  <channel>' .
-        '    <title>Premature Optimization</title>' .
-        // und so weiter...
-        '</rss>');
+// Setze die erwartete Antwort
+$adapter->setResponse(
+    "HTTP/1.1 200 OK"        . "\r\n" .
+    "Content-type: text/xml" . "\r\n" .
+                               "\r\n" .
+    '<?xml version="1.0" encoding="UTF-8"?>' .
+    '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+    '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
+    '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
+    '  <channel>' .
+    '    <title>Premature Optimization</title>' .
+    // und so weiter...
+    '</rss>');
 
-    $response = $client->request('GET');
-    // .. setze die Verarbeitung von $response fort...
-?>]]></programlisting>
+$response = $client->request('GET');
+// .. setze die Verarbeitung von $response fort...]]>
+            </programlisting>
         </example>
         <para>
             Das obere Beispiel zeigt, wie man einen HTTP Client voreinstellen kann, damit er die
@@ -259,38 +256,37 @@
         </para>
         <example>
             <title>Test mit mehreren HTTP-Antworten</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Instanzen vom Adapter und Client erzeugen
-    $adapter = new Zend_Http_Client_Adapter_Test();
-    $client = Zend_Http_Client('http://www.example.com', array(
-        'adapter' => $adapter
-    ));
+            <programlisting role="php"><![CDATA[<?php
+// Instanzen vom Adapter und Client erzeugen
+$adapter = new Zend_Http_Client_Adapter_Test();
+$client = Zend_Http_Client('http://www.example.com', array(
+    'adapter' => $adapter
+));
 
-    // mit setResponse() die erste Antwort setzen
-    $adapter->setResponse(
-        "HTTP/1.1 302 Found"      . "\r\n" .
-        "Location: /"             . "\r\n" .
-        "Content-Type: text/html" . "\r\n" .
+// mit setResponse() die erste Antwort setzen
+$adapter->setResponse(
+    "HTTP/1.1 302 Found"      . "\r\n" .
+    "Location: /"             . "\r\n" .
+    "Content-Type: text/html" . "\r\n" .
+                                "\r\n" .
+    '<html>' .
+    '  <head><title>Moved</title></head>' .
+    '  <body><p>This page has moved.</p></body>' .
+    '</html>');
+
+// mit addResponse() nachfolgende Antworten setzen
+$adapter->addResponse(
+    "HTTP/1.1 200 OK"         . "\r\n" .
+    "Content-Type: text/html" . "\r\n" .
                                     "\r\n" .
-        '<html>' .
-        '  <head><title>Moved</title></head>' .
-        '  <body><p>This page has moved.</p></body>' .
-        '</html>');
+    '<html>' .
+    '  <head><title>Meine Haustierseite...</title></head>' .
+    '  <body><p>...</p></body>' .
+    '</html>');
 
-    // mit addResponse() nachfolgende Antworten setzen
-    $adapter->addResponse(
-        "HTTP/1.1 200 OK"         . "\r\n" .
-        "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" .
-        '<html>' .
-        '  <head><title>Meine Haustierseite...</title></head>' .
-        '  <body><p>...</p></body>' .
-        '</html>');
-
-    // Das $client Objekt kann jetzt zu testzwecken herangezogen werden,
-    // indem es wie ein normales Client-Objekt benutzt wird.
-?>]]></programlisting>
+// Das $client Objekt kann jetzt zu testzwecken herangezogen werden,
+// indem es wie ein normales Client-Objekt benutzt wird.]]>
+            </programlisting>
         </example>
 
         <para>
@@ -321,8 +317,7 @@
         </para>
         <example>
             <title>Gerüst für einen eigenen Verbindungs-Adapter</title>
-            <programlisting role="php">
-<![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**
@@ -387,8 +382,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
 // Jetzt kann der Adapter benutzt werden:
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
-));
-]]></programlisting>
+));]]>
+            </programlisting>
         </example>
     </sect2>
 </sect1>

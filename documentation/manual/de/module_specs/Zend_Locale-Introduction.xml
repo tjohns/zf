@@ -126,10 +126,10 @@
 
         <example>
             <title>Auswählen eines speziellen Gebietsschemas</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend_Locale';
-$locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland
-?>]]></programlisting>
+$locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland]]>
+            </programlisting>
         </example>
 
         <para>
@@ -173,13 +173,13 @@ $locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland
 
         <example>
             <title>Automatische Auswahl des Gebietsschemas</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 $locale  = new Zend_Locale();
 $locale1 = new Zend_Locale(Zend_Locale::BROWSER);     // Standard verhalten, wie eine Zeile weiter oben
 $locale2 = new Zend_Locale(Zend_Locale::ENVIRONMENT); // Bevorzuge die Einstellungen des hostenden Servers
-$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellungen der Framework Anwendung
-?>]]></programlisting>
+$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellungen der Framework Anwendung]]>
+            </programlisting>
         </example>
 
         <para>
@@ -232,10 +232,10 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellu
 
         <example>
             <title>Daten verwenden das aktuelle Gebietsschema des Web Benutzers</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
-$date = new Zend_Date('2006',Zend_Date::YEAR);
-?>]]></programlisting>
+$date = new Zend_Date('2006',Zend_Date::YEAR);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -246,14 +246,14 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
 
         <example>
             <title>Übergehen der Auswahl des standardmäßigen Gebietsschemas</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
 
 $usLocale = new Zend_Locale('en_US');
 $date = new Zend_Date('2006', Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);
-?>]]></programlisting>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -264,14 +264,14 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLoc
 
         <example>
             <title>Optimierung der Geschwindigkeit durch Benutzung eines Standard Gebietsschemas</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
 
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);
-?>]]></programlisting>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -302,10 +302,10 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
 
         <example>
             <title>Daten die das richtige Gebietsschema des Web Benutzers verwenden</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
-?>]]></programlisting>
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');]]>
+            </programlisting>
         </example>
 
         <para>
@@ -318,16 +318,15 @@ Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_
 
         <example>
             <title>Verwendung von STANDARD Definitionen für setOptions()</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 Zend_Locale_Format::setOptions('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY');
 // Überladen des global gesetzten Datumsformats
 $date = Zend_Locale_Format::getDate('2007-04-20, array('date_format' => Zend_Locale_Format::STANDARD);
 
 // Überladen des global gesetzten Standard Gebietsschemas
-Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');
-
-?>]]></programlisting>
+Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');]]>
+            </programlisting>
         </example>
 
     </sect2>

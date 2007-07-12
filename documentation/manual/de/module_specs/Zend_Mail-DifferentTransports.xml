@@ -8,8 +8,7 @@
     </para>
     <example>
         <title>Verwendung von unterschiedlichen Transportwegen</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // erstelle Nachricht...
@@ -18,8 +17,8 @@ $tr1 = new Zend_Mail_Transport_Smtp('server@example.com');
 $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // wieder Standardmethode verwenden
-?>]]>   </programlisting>
+$mail->send();  // wieder Standardmethode verwenden]]>
+        </programlisting>
     </example>
     <note>
         <title>Zusätzliche Versandwege</title>

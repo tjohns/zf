@@ -5,13 +5,13 @@
         verfügbaren,  statischen Methoden <code>Zend_Json::encode()</code> und
         <code>Zend_Json::decode()</code>.
     </para>
-        <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[<?php
 // Empfange einen Wert
 $phpNative = Zend_Json::decode($encodedValue);
 
 // Kodiere ihn für die Rückgabe an den Client:
-$json = Zend_Json::encode($phpNative);
-?>]]></programlisting>
+$json = Zend_Json::encode($phpNative);]]>
+    </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

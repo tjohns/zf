@@ -11,8 +11,8 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);
-?>]]>   </programlisting>
+Zend_Mail::setDefaultTransport($tr);]]>
+        </programlisting>
     </example>
     <para>
         Die <code>setDefaultTransport()</code> Methode und der Konstruktor von
