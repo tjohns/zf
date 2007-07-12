@@ -68,14 +68,14 @@
             Http Client.
         </para>
 
-    <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 // Enter your Google account credentials
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';
 $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
 
-$cal = new Zend_Gdata_Calendar($client);
-?>]]></programlisting>
+$cal = new Zend_Gdata_Calendar($client);]]>
+        </programlisting>
 
     </sect2>
 

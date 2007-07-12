@@ -8,7 +8,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]></programlisting>
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
+    </programlisting>
 
     <para>
         Du kannst <code>Zend_Feed</code> außerdem verwenden, um Inhalte eines Feeds aus einer Datei
@@ -20,7 +21,8 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]></programlisti
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // importing a feed from a PHP string variable
-$feedFromPHP = Zend_Feed::importString($feedString);]]></programlisting>
+$feedFromPHP = Zend_Feed::importString($feedString);]]>
+    </programlisting>
 
     <para>
         In jedem der obigen Beispiele wird bei Erfolg abhängig vom Typ des Feeds ein Objekt einer
@@ -55,7 +57,8 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // importing a rss feed from an array
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+            </programlisting>
 
             <para>
                 The format of the array must conform to this structure:
@@ -157,7 +160,8 @@ array(
                                    //data for the second entry and so on
                                    )
                              )
-       );]]></programlisting>
+       );]]>
+            </programlisting>
 
             <para>
                 References:
@@ -224,7 +228,8 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importing a rss feed from a custom builder array
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+            </programlisting>
 
         </sect3>
 
@@ -244,7 +249,8 @@ assert($feed instanceof Zend_Feed_Abstract);
 print $feed->saveXML();
 
 // send http headers and dump the feed
-$feed->send();]]></programlisting>
+$feed->send();]]>
+            </programlisting>
 
         </sect3>
 
