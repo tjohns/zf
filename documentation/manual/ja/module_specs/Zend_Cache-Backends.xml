@@ -235,8 +235,8 @@
             '-'、'.'、' ' あるいは '_' が使用できます。
         </para>
         <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');
-?>]]></programlisting>
+$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        </programlisting>
         <para>
             このバックエンドではオプションを使用しません。
         </para>

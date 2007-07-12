@@ -35,7 +35,8 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+            </programlisting>
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
@@ -65,7 +66,8 @@ database.name     = dbname
 [staging : production]
 database.host     = dev.example.com
 database.username = devuser
-database.password = devsecret]]></programlisting>
+database.password = devsecret]]>
+        </programlisting>
         <para>
             次に、開発者が開発環境用の設定データを INI ファイルから読み込むことを考えます。
             これは簡単なことで、単に INI ファイルとセクションを指定するだけです。
@@ -76,7 +78,8 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->host; // "dev.example.com" と出力します
-echo $config->database->name; // "dbname" と出力します]]></programlisting>
+echo $config->database->name; // "dbname" と出力します]]>
+        </programlisting>
     </example>
     <note>
     <table>

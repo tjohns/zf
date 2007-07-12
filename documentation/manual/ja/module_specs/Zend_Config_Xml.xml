@@ -52,7 +52,8 @@
             <password>devsecret</password>
         </database>
     </staging>
-</configdata>]]></programlisting>
+</configdata>]]>
+        </programlisting>
         <para>
             次に、開発者が開発環境用の設定データを XML ファイルから読み込むことを考えます。
             これは簡単なことで、単に XML ファイルとセクションを指定するだけです。
@@ -63,7 +64,8 @@ require_once 'Zend/Config/Xml.php';
 $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->host; // "dev.example.com" と出力します
-echo $config->database->name; // "dbname" と出力します]]></programlisting>
+echo $config->database->name; // "dbname" と出力します]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

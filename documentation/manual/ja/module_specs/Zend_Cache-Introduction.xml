@@ -36,7 +36,7 @@
             </para>
         </note>
 
-            <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
@@ -49,9 +49,8 @@ $backendOptions = array(
 );
 
 // Zend_Cache_Core オブジェクトを取得します
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
-
-?>]]></programlisting>
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+       </programlisting>
        <para>
             これでフロントエンドが得られました。あらゆる種類のデータを保存することができます
             (そのために、シリアライズを有効にしました)。例えば、非常に時間がかかるデータベースクエリの結果を
@@ -59,8 +58,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             あとはデータベースに接続する必要さえありません。キャッシュから取得したレコードを
             アンシリアライズしてデータを取得すればよいのです。
        </para>
-            <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 // $cache は先ほどの例で作成したものです
 
 // キャッシュがすでに存在するかどうかを調べます
@@ -81,9 +79,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);
-
-?>]]></programlisting>
+print_r($result);]]>
+        </programlisting>
     </example>
     <example>
         <title><code>Zend_Cache</code> 出力フロントエンドによる出力のキャッシュ</title>
@@ -97,8 +94,7 @@ print_r($result);
             このセクションが読み飛ばされ、その代わりにキャッシュから取得したデータが使用されます
             (キャッシュレコードが有効なものである限ります)。
        </para>
-            <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 $frontendOptions = array(
    'lifetime' => 30,                  // キャッシュの有効期間は 30 秒です
    'automatic_serialization' => false  // これはデフォルト値です
@@ -118,9 +114,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // 出力が保存され、ブラウザに送信されます
 }
 
-echo 'これはキャッシュされません ('.time().').';
-
-?>]]>       </programlisting>
+echo 'これはキャッシュされません ('.time().').';]]>
+       </programlisting>
        <para>
            <code>time()</code> の結果を二度出力していることに注目しましょう。
            動作説明のため、何らかの動的な出力がほしかったのです。これを実行し、

@@ -113,7 +113,6 @@
                 このようにもう少しコンパクトに作成することが可能です。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // すでに $cache が存在するものとします
 
 $id = 'myBigLoop'; //「キャッシュしたい内容」のキャッシュ ID
@@ -130,14 +129,12 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] $data を用いて何かをします (echo したり、何かに渡したりなど)
-
-?>]]>       </programlisting>
+// [...] $data を用いて何かをします (echo したり、何かに渡したりなど)]]>
+            </programlisting>
             <para>
                 複数のブロックやデータのインスタンスをキャッシュしたい場合も、考え方は同じです。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // 一意な ID を使用するようにしましょう
 $id1 = 'foo';
 $id2 = 'bar';
@@ -171,9 +168,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);
-
-?>]]>       </programlisting>
+echo($data);]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -202,7 +198,6 @@ echo($data);
                 このマニュアルの冒頭に示した例とほとんど同じですが、少しだけ変更を加えています。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // キャッシュが見つからなかった場合に、出力バッファリングが起動します
 if (!($cache->start('mypage'))) {
 
@@ -214,9 +209,8 @@ if (!($cache->start('mypage'))) {
 
 }
 
-echo 'これはキャッシュされません ('.time().')';
-
-?>]]>       </programlisting>
+echo 'これはキャッシュされません ('.time().').';]]>
+            </programlisting>
             <para>
                 この形式を使用すると、既存のプロジェクトに簡単に出力キャッシュ処理を追加することができます。
                 コードのリファクタリングもほとんど行わずにすませられるでしょう。
@@ -284,14 +278,12 @@ echo 'これはキャッシュされません ('.time().')';
                 <code>call_user_func_array()</code> と同じです。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 $cache->call('veryExpensiveFunc', $params);
 
 # $params は配列です。
 # 例えば、veryExpensiveFunc(1, 'foo', 'bar') のコールをキャッシュするには
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。
-
-?>]]>       </programlisting>
+# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。]]>
+            </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> は、
                 関数の返り値だけでなく関数内部での出力もキャッシュします。
@@ -372,7 +364,6 @@ $cache->call('veryExpensiveFunc', $params);
                 例えば、スタティックメソッドのコールをキャッシュするには次のようにします。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 class test {
 
     # スタティックメソッド
@@ -390,14 +381,12 @@ $frontendOptions = array(
 // [...]
 
 # これはキャッシュされます
-$res = $cache->foobar('1', '2');
-
-?>]]>       </programlisting>
+$res = $cache->foobar('1', '2');]]>
+            </programlisting>
             <para>
                 通常のメソッドのコールをキャッシュするには次のようにします。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 class test {
 
     private $_string = 'hello !';
@@ -417,9 +406,8 @@ $frontendOptions = array(
 // [...]
 
 # これはキャッシュされます
-$res = $cache->foobar2('1', '2');
-
-?>]]>       </programlisting>
+$res = $cache->foobar2('1', '2');]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -635,15 +623,13 @@ $res = $cache->foobar2('1', '2');
                 Zend_Cache_Frontend_Page の使用法は、きわめて簡単です。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // [...] // require、設定そしてファクトリ
 
 $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、処理はここで停止します
 
-// ページの残りの部分 ...
-
-?>]]>       </programlisting>
+// ページの残りの部分 ...]]>
+            </programlisting>
             <para>
                 もう少し複雑な例を見てみましょう。これは、起動ファイル
                 (例えば Zend_Controller など) 内でキャッシュを集中管理する方法を示したものです。
@@ -680,9 +666,8 @@ $cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 $cache->start();
 // キャッシュにヒットした場合はその結果がブラウザに送信され、スクリプトの処理はここで停止します。
 
-// [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)。
-
-?>]]>       </programlisting>
+// [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)]]>
+            </programlisting>
         </sect3>
     </sect2>
 </sect1>
