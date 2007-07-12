@@ -114,6 +114,13 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
         $prefixLength    = strlen($prefix);
         $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*') , preg_quote($this->_pattern->text, '/')) . '$/';
 
+        if (@preg_match('/\pL/u', 'a') == 1) {
+            // PCRE unicode support is turned on
+            // add Unicode modifier to the match expression
+            $matchExpression .= 'u';
+        }
+
+
         foreach ($fields as $field) {
             $index->resetTermsStream();
 
@@ -167,7 +174,7 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
      */
     public function optimize(Zend_Search_Lucene_Interface $index)
     {
-        // ...
+        throw new Zend_Search_Lucene_Exception('Wildcard query should not be directly used for search. Use $query->rewrite($index)');
     }
 
 
@@ -251,19 +258,19 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
      */
     public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
     {
-        /** @todo implementation */
-
         $words = array();
 
-        if ($this->_signs === null) {
-            foreach ($this->_terms as $term) {
-                $words[] = $term->text;
-            }
-        } else {
-            foreach ($this->_signs as $id => $sign) {
-                if ($sign !== false) {
-                    $words[] = $this->_terms[$id]->text;
-                }
+        $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*') , preg_quote($this->_pattern->text, '/')) . '$/';
+        if (@preg_match('/\pL/u', 'a') == 1) {
+            // PCRE unicode support is turned on
+            // add Unicode modifier to the match expression
+            $matchExpression .= 'u';
+        }
+
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($doc->getFieldUtf8Value('body'), 'UTF-8');
+        foreach ($tokens as $token) {
+            if (preg_match($matchExpression, $token->getTermText()) === 1) {
+                $words[] = $token->getTermText();
             }
         }
 
@@ -277,34 +284,8 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
      */
     public function __toString()
     {
-        /** @todo implementation */
-
         // It's used only for query visualisation, so we don't care about characters escaping
-
-        $query = '';
-
-        foreach ($this->_terms as $id => $term) {
-            if ($id != 0) {
-                $query .= ' ';
-            }
-
-            if ($this->_signs === null || $this->_signs[$id] === true) {
-                $query .= '+';
-            } else if ($this->_signs[$id] === false) {
-                $query .= '-';
-            }
-
-            if ($term->field !== null) {
-                $query .= $term->field . ':';
-            }
-            $query .= $term->text;
-        }
-
-        if ($this->getBoost() != 1) {
-            $query = '(' . $query . ')^' . $this->getBoost();
-        }
-
-        return $query;
+        return (($this->_pattern->field === null)? '' : $this->_pattern->field . ':') . $this->_pattern->text;
     }
 }
 
