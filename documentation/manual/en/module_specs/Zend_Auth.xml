@@ -159,7 +159,7 @@ switch ($result->getCode()) {
         /** do stuff for nonexistent identity **/
         break;
 
-    case Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL:
+    case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
         /** do stuff for invalid credential **/
         break;
 
