@@ -114,7 +114,6 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $filters = array(
     'month'   => 'Digits',
     'account' => 'StringTrim'
@@ -122,8 +121,8 @@ $filters = array(
 
 $validators = array(
     'account' => 'Alpha'
-);
-]]></programlisting>
+);]]>
+        </programlisting>
 
         <para>
             上の配列の各キーは、特定のデータフィールドにフィルタを適用するルールの名前となります。
@@ -139,11 +138,10 @@ $validators = array(
                 <para>
                     単一のスカラー文字列。これはクラス名に対応します。
                     <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month'   => 'Digits',
-);
-]]></programlisting>
+);]]>
+                    </programlisting>
                 </para>
             </listitem>
             <listitem>
@@ -151,13 +149,12 @@ $validators = array(
                     Zend_Filter_Interface あるいは Zend_Validate_Interface
                     を実装したクラスのいずれかのインスタンス。
                     <programlisting role="php"><![CDATA[<?php
-
 $digits = new Zend_Validate_Digits();
 
 $validators = array(
     'month'   => $digits
-);
-]]></programlisting>
+);]]>
+                    </programlisting>
                 </para>
             </listitem>
             <listitem>
@@ -169,15 +166,14 @@ $validators = array(
                     クラス名の後にそのコンストラクタに渡す引数を続ける方法です。
 
                     <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month'   => array(
         'Digits',                // 文字列
         new Zend_Validate_Int(), // オブジェクトのインスタンス
         array('Between', 1, 12)  // 文字列とコンストラクタの引数
     )
-);
-]]></programlisting>
+);]]>
+                    </programlisting>
                 </para>
             </listitem>
         </itemizedlist>
@@ -200,12 +196,11 @@ $validators = array(
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $filters = array(
     '*'     => 'StringTrim',
     'month' => 'Digits'
-);
-]]></programlisting>
+);]]>
+        </programlisting>
 
     </sect2>
 
@@ -221,9 +216,8 @@ $filters = array(
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
-$input = new Zend_Filter_Input($filters, $validators);
-]]></programlisting>
+$input = new Zend_Filter_Input($filters, $validators);]]>
+        </programlisting>
 
         <para>
             入力データは、コンストラクタの第三引数として指定することができます。
@@ -236,11 +230,10 @@ $input = new Zend_Filter_Input($filters, $validators);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $data = $_GET;
 
-$input = new Zend_Filter_Input($filters, $validators, $data);
-]]></programlisting>
+$input = new Zend_Filter_Input($filters, $validators, $data);]]>
+        </programlisting>
 
         <para>
             あるいは、<code>setData()</code> メソッドを使用してデータを渡すこともできます。
@@ -248,10 +241,9 @@ $input = new Zend_Filter_Input($filters, $validators, $data);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $input = new Zend_Filter_Input($filters, $validators);
-$input->setData($newData);
-]]></programlisting>
+$input->setData($newData);]]>
+        </programlisting>
 
         <para>
             <code>setData()</code> メソッドは、既存の
@@ -286,11 +278,10 @@ $input->setData($newData);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 if ($input->isValid()) {
   echo "OK\n";
-} 
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 このメソッドには、オプションで文字列の引数を指定することができます。
@@ -301,11 +292,10 @@ if ($input->isValid()) {
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 if ($input->isValid('month')) {
   echo "'month' フィールドの内容は正しい形式です\n";
-} 
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </sect3>
 
@@ -341,7 +331,6 @@ if ($input->isValid('month')) {
             </itemizedlist>
 
             <programlisting role="php"><![CDATA[<?php
-
 if ($input->hasInvalid() || $input->hasMissing()) {
   $messages = $input->getMessages();
 }
@@ -358,8 +347,8 @@ if ($input->hasMissing()) {
 
 if ($input->hasUnknown()) {
   $unknownFields = $input->getUnknown();
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 <code>getMessages()</code> メソッドの返り値は連想配列となります。
@@ -392,7 +381,6 @@ if ($input->hasUnknown()) {
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $options = array(
     'missingMessage' => "Field '%field%' is required"
 );
@@ -402,8 +390,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 // もうひとつの方法
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setOptions($options);
-]]></programlisting>
+$input->setOptions($options);]]>
+            </programlisting>
 
             <para>
                 <code>getUnknown()</code> メソッドの結果は、
@@ -428,11 +416,10 @@ $input->setOptions($options);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $m = $input->month;                 // エスケープ済み (マジックメソッド)
 $m = $input->getEscaped('month');   // エスケープ済み
-$m = $input->getUnescaped('month'); // エスケープ前
-]]></programlisting>
+$m = $input->getUnescaped('month'); // エスケープ前]]>
+            </programlisting>
 
             <para>
                 デフォルトでは、値を取得する際には
@@ -460,10 +447,9 @@ $m = $input->getUnescaped('month'); // エスケープ前
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $options = array('escapeFilter' => 'StringTrim');
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);
-]]></programlisting>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+            </programlisting>
 
             <para>
                 あるいは、
@@ -472,10 +458,9 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
-]]></programlisting>
+$input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());]]>
+            </programlisting>
 
             <para>
                 どちらの場合についても、エスケープフィルタの指定方法は
@@ -538,14 +523,13 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $filters = array( 
     'month' => array( 
         'Digits',        // 数値インデックスのフィルタ名 [0] 
         'fields' => 'mo' // 文字列インデックスのフィールド名 ['fields'] 
     ) 
-); 
-]]></programlisting>
+);]]>
+            </programlisting>
 
             <para>
                 上の例では、'digits' フィルタを 'mo'
@@ -574,7 +558,6 @@ $filters = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'password' => array(
         'StringEquals',
@@ -582,8 +565,8 @@ $validators = array(
     )
 );
 // 仮想クラス Zend_Validate_StringEquals に、
-// ふたつのフィールド 'password1' および 'password2' の値を含む配列を渡します
-]]></programlisting>
+// ふたつのフィールド 'password1' および 'password2' の値を含む配列を渡します]]>
+            </programlisting>
 
             <para>
                 このルールのバリデーションに失敗した場合は、
@@ -612,14 +595,13 @@ $validators = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month' => array(
         'digits',
         'presence' => 'required'
     )
-);
-]]></programlisting>
+);]]>
+            </programlisting>
 
             <para>
                 このメタコマンドのデフォルト値は 'optional' です。
@@ -651,7 +633,6 @@ $validators = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month' => array(
         'digits',
@@ -663,8 +644,8 @@ $validators = array(
 $data = array();
 
 $input = new Zend_Filter_Input(null, $validators, $data);
-echo $input->month; // 1 を出力します
-]]></programlisting>
+echo $input->month; // 1 を出力します]]>
+            </programlisting>
 
             <para>
                 <code>FIELDS</code> メタコマンドで複数のフィールドをルールに定義している場合、
@@ -708,14 +689,13 @@ echo $input->month; // 1 を出力します
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'address2' => array(
         'Alnum',
         'allowEmpty' => true
     )
-);
-]]></programlisting>
+);]]>
+            </programlisting>
 
             <para>
                 このメタコマンドのデフォルト値は <code>false</code> です。
@@ -733,7 +713,6 @@ $validators = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $options = array(
     'notEmptyMessage' => "'%field%' に何か値を入力してください"
 );
@@ -743,8 +722,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 // 別の方法
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setOptions($options);
-]]></programlisting>
+$input->setOptions($options);]]>
+            </programlisting>
 
         </sect3>
 
@@ -773,7 +752,6 @@ $input->setOptions($options);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month' => array(
         'Digits',
@@ -782,9 +760,8 @@ $validators = array(
         'breakChainOnFailure' => true
     )
 );
-$input = new Zend_Filter_Input(null, $validators);
-
-]]></programlisting>
+$input = new Zend_Filter_Input(null, $validators);]]>
+            </programlisting>
 
             <para>
                 このメタコマンドのデフォルト値は <code>false</code> です。
@@ -803,7 +780,6 @@ $input = new Zend_Filter_Input(null, $validators);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 // breakChainOnFailure 属性を個別に設定したバリデータチェインを作成します
 $chain = new Zend_Validate();
 $chain->addValidator(new Zend_Validate_Digits(), true);
@@ -814,8 +790,8 @@ $chain->addValidator(new Zend_Validate_GreaterThan(0), true);
 $validators = array(
     'month' => $chain
 );
-$input = new Zend_Filter_Input(null, $validators);
-]]></programlisting>
+$input = new Zend_Filter_Input(null, $validators);]]>
+            </programlisting>
 
         </sect3>
 
@@ -841,14 +817,13 @@ $input = new Zend_Filter_Input(null, $validators);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month' => array(
         'digits',
         'messages' => '月として指定できるのは数字のみです'
     )
-);
-]]></programlisting>
+);]]>
+            </programlisting>
 
             <para>
                 エラーメッセージを設定したいバリデータが複数ある場合は、
@@ -864,7 +839,6 @@ $validators = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month' => array(
         'digits',
@@ -875,8 +849,8 @@ $validators = array(
             1 => '月として指定できるのは 1 から 12 までの値です'
         )
     )
-);
-]]></programlisting>
+);]]>
+            </programlisting>
 
             <para>
                 ひとつのバリデータに複数のエラーメッセージが存在する場合は、
@@ -889,7 +863,6 @@ $validators = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 $validators = array(
     'month' => array(
         'digits', new Zend_Validate_Between(1, 12),
@@ -903,8 +876,8 @@ $validators = array(
             )
         )
     )
-);
-]]></programlisting>
+);]]>
+            </programlisting>
 
             <para>
                 各バリデータクラスがエラーメッセージを複数持っているかどうかや
@@ -928,7 +901,6 @@ $validators = array(
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-
 // デフォルトで、全フィールドに空文字列を許可するようにします
 $options = array('allowEmpty' => true);
 
@@ -941,8 +913,8 @@ $validators = array(
     )
 );
 
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);
-]]></programlisting>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+            </programlisting>
 
             <para>
                 メタコマンド 'fields'、'messages' と 'default' については、
@@ -974,25 +946,23 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $options = array('namespace' => 'My_Namespace');
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);
-]]></programlisting>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+        </programlisting>
 
         <para>
             あるいは、addNamespace() メソッドを使うこともできます。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $input->addNamespace('Other_Namespace');
 
 // この結果、次の順序で探すことになります
 // 1. My_Namespace
 // 2. Other_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate
-]]></programlisting>
+// 4. Zend_Validate]]>
+        </programlisting>
 
         <para>
             名前空間 Zend_Filter と Zend_Validate は削除することができません。

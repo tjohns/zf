@@ -63,8 +63,8 @@ require_once 'Zend/Filter/HtmlEntities.php';
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;
-]]></programlisting>
+echo $htmlEntities->filter('"'); // &quot;]]>
+            </programlisting>
 
         </para>
 
@@ -87,8 +87,8 @@ echo $htmlEntities->filter('"'); // &quot;
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 
-echo Zend_Filter::get('&', 'HtmlEntities');
-]]></programlisting>
+echo Zend_Filter::get('&', 'HtmlEntities');]]>
+            </programlisting>
 
         </para>
 
@@ -99,8 +99,8 @@ echo Zend_Filter::get('&', 'HtmlEntities');
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 
-echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
-]]></programlisting>
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
+            </programlisting>
 
         </para>
 
@@ -114,7 +114,7 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
         <para>
             また、Zend_Filter_Input クラスでも、特定の入力データのセットを処理する際に
             複数のフィルタやバリデータを必要に応じて実行させる機能も提供しています。
-            詳細は <xref linked="zend.filter.input" /> を参照ください。
+            詳細は <xref linkend="zend.filter.input" /> を参照ください。
         </para>
 
     </sect2>

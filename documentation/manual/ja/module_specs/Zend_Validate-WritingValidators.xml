@@ -57,7 +57,6 @@
             ここで定義している検証規則は非常に単純で、入力値が浮動小数点値かどうかのみを調べています。
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Abstract.php';
 
 class MyValid_Float extends Zend_Validate_Abstract
@@ -79,9 +78,8 @@ class MyValid_Float extends Zend_Validate_Abstract
 
         return true;
     }
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             このクラス内には、検証が失敗したときのメッセージ用のテンプレートがひとつ定義されており、
             その中では組み込みのマジックパラメータ <code>%value%</code> を使用しています。
@@ -120,7 +118,6 @@ class MyValid_Float extends Zend_Validate_Abstract
             これらの原因に応じて、クラス内でメッセージへの変換が行われます。
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Abstract.php';
 
 class MyValid_NumericBetween extends Zend_Validate_Abstract
@@ -164,9 +161,8 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 
         return true;
     }
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             パブリックプロパティ <code>$minimum</code> および <code>$maximum</code>
             でそれぞれ最小値と最大値を定義し、値がこの間にあった場合に検証が成功したことにしています。
@@ -217,7 +213,6 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
             この検証規則を実装したクラスは、次のようになります。
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Abstract.php';
 
 class MyValid_PasswordStrength extends Zend_Validate_Abstract
@@ -262,9 +257,8 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
         return $isValid;
     }
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             <code>isValid()</code> では四つのチェックを行っていますが、
             チェックに失敗してもその場では <code>false</code> を返していないことに注目しましょう。

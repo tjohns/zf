@@ -23,7 +23,8 @@ $filterChain->addFilter(new Zend_Filter_Alpha())
             ->addFilter(new Zend_Filter_StringToLower());
 
 // ユーザ名をフィルタリングします
-$username = $filterChain->filter($_POST['username']);]]></programlisting>
+$username = $filterChain->filter($_POST['username']);]]>
+        </programlisting>
 
         フィルタは、<code>Zend_Filter</code> に追加した順に適用されます。
         上の例では、まずユーザ名から非英字を除去したあとで、

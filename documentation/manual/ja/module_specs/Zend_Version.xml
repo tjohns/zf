@@ -21,11 +21,9 @@
     <example id="zend.version.reading.example">
         <title>compareVersion() メソッドの例</title>
         <programlisting role="php"><![CDATA[<?php
-
 // -1、0 あるいは 1 を返します
-$cmp = Zend_Version::compareVersion('1.0.0');
-
-?>]]></programlisting>
+$cmp = Zend_Version::compareVersion('1.0.0');]]>
+        </programlisting>
     </example>
 
 </sect1>

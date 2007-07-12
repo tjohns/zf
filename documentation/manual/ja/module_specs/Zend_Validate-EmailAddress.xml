@@ -17,7 +17,6 @@
         基本的な使用法は、以下のようになります。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
@@ -27,9 +26,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         これは、メールアドレス <code>$email</code> を検証し、失敗した場合は
         その原因を表す便利なエラーメッセージを
@@ -73,7 +71,6 @@ if ($validator->isValid($email)) {
         たとえば DNS ホスト名およびローカルホスト名のどちらも許可するには、次のようにします。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
@@ -83,9 +80,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </para>
 
     <para>
@@ -110,10 +106,8 @@ if ($validator->isValid($email)) {
         constructor.
 
         <programlisting role="php"><![CDATA[<?php
-
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
+        </programlisting>
 
         あるいは、<code>true</code> または <code>false</code> を
         <code>$validator->setValidateMx()</code> に渡すことで、
@@ -137,11 +131,9 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
         無効にするには、<code>Zend_Validate_EmailAddress</code> が内部で保持している
         <code>Zend_Validate_Hostname</code> オブジェクトの設定を変更します。
 
-    <programlisting role="php"><![CDATA[<?php
-
-$validator->hostnameValidator->setValidateIdn(false);
-
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$validator->hostnameValidator->setValidateIdn(false);]]>
+        </programlisting>
 
         <code>setValidateIdn()</code> の詳細な使用法は、
         <code>Zend_Validate_Hostname</code> のドキュメントを参照ください。
@@ -161,11 +153,9 @@ $validator->hostnameValidator->setValidateIdn(false);
         無効にするには、<code>Zend_Validate_EmailAddress</code> が内部で保持している
         <code>Zend_Validate_Hostname</code> オブジェクトの設定を変更します。
 
-    <programlisting role="php"><![CDATA[<?php
-
-$validator->hostnameValidator->setValidateTld(false);
-
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$validator->hostnameValidator->setValidateTld(false);]]>
+        </programlisting>
 
         <code>setValidateTld()</code> の詳細な使用法は、
         <code>Zend_Validate_Hostname</code> のドキュメントを参照ください。

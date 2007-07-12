@@ -18,7 +18,6 @@
        基本的な使用法は、以下のようになります。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname();
 if ($validator->isValid($hostname)) {
@@ -28,9 +27,8 @@ if ($validator->isValid($hostname)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         これは、ホスト名 <code>$hostname</code> を検証し、失敗した場合は
         その原因を表す便利なエラーメッセージを
@@ -55,7 +53,6 @@ if ($validator->isValid($hostname)) {
         はローカルネットワーク名を許可し、<code>ALLOW_ALL</code> はこれら三種類をすべて許可します。
         IP アドレスだけをチェックするには、以下の例のようにします。
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
 if ($validator->isValid($hostname)) {
@@ -65,9 +62,8 @@ if ($validator->isValid($hostname)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </para>
 
     <para>
@@ -76,10 +72,8 @@ if ($validator->isValid($hostname)) {
         たとえば、DNS およびローカルホスト名を許可するには、
         Zend_Validate_Hostname のインスタンスを次のように作成します。
         <programlisting role="php"><![CDATA[<?php
-
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);]]>
+        </programlisting>
 
     </para>
 
@@ -106,10 +100,8 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
         のコンストラクタに二番目のパラメータを次のように渡します。
 
         <programlisting role="php"><![CDATA[<?php
-
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);]]>
+        </programlisting>
 
         あるいは、TRUE または FALSE を
         <code>$validator->setValidateIdn()</code> に渡すことで、
@@ -135,10 +127,8 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
         以下の例では、IDN の検証は二番目のパラメータで有効にしています。
 
         <programlisting role="php"><![CDATA[<?php
-
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);]]>
+        </programlisting>
 
         あるいは、TRUE または FALSE を
         <code>$validator->ValidateTld()</code> に渡すことで、
