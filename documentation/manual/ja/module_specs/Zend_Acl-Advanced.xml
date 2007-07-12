@@ -61,7 +61,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
         アサーションクラスを作成したら、条件付きの規則を定義を割り当てる際に
@@ -74,7 +75,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
+$acl->allow(null, null, null, new CleanIPAssertion());]]>
+        </programlisting>
 
         <para>
         上のコードが作成する条件付き規則は、

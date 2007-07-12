@@ -94,7 +94,8 @@ $sqlInsert = 'INSERT INTO users (username, password, real_name) '
            . 'VALUES ("my_username", "my_password", "My Real Name")';
 
 // データを挿入します
-$dbAdapter->query($sqlInsert);]]></programlisting>
+$dbAdapter->query($sqlInsert);]]>
+                </programlisting>
 
             </para>
 
@@ -114,7 +115,8 @@ $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'p
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $authAdapter->setTableName('users')
             ->setIdentityColumn('username')
-            ->setCredentialColumn('password');]]></programlisting>
+            ->setCredentialColumn('password');]]>
+                </programlisting>
 
             </para>
 
@@ -129,7 +131,8 @@ $authAdapter->setIdentity('my_username')
             ->setCredential('my_password');
 
 // 認証クエリを実行し、結果を保存します
-$result = $authAdapter->authenticate();]]></programlisting>
+$result = $authAdapter->authenticate();]]>
+                </programlisting>
 
             </para>
 
@@ -155,7 +158,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]></programlisting>
+*/]]>
+                </programlisting>
 
                 テーブルの行には証明情報が含まれているので、
                 予期せぬアクセスからその内容を守ることが重要となります。
@@ -196,7 +200,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 

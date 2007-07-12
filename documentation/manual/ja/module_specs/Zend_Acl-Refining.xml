@@ -36,7 +36,8 @@
 
         <programlisting role="php"><![CDATA[<?php
 // 新しいグループ marketing は staff の権限を引き継ぎます
-$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
+        </programlisting>
 
         <para>
         次に、これらのアクセス制御は特定のリソース
@@ -50,7 +51,8 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('newsletter'));           // ニュースレター
 $acl->add(new Zend_Acl_Resource('news'));                 // ニュース
 $acl->add(new Zend_Acl_Resource('latest'), 'news');       // 最新ニュース
-$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // お知らせ]]></programlisting>
+$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // お知らせ]]>
+        </programlisting>
 
         <para>
         そして、次のような特別な規則を、ACL の該当範囲に適用します。
@@ -64,7 +66,8 @@ $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archiv
 $acl->deny('staff', 'latest', 'revise');
 
 // 全員 (administrators を含む) はお知らせを保存することができません
-$acl->deny(null, 'announcement', 'archive');]]></programlisting>
+$acl->deny(null, 'announcement', 'archive');]]>
+        </programlisting>
 
         <para>
         これで、最新の変更内容を反映した ACL への問い合わせが行えるようになります。
@@ -93,7 +96,8 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
      "allowed" : "denied"; // denied となります
 
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied となります]]></programlisting>
+     "allowed" : "denied"; // denied となります]]>
+        </programlisting>
 
     </sect2>
 
@@ -123,7 +127,8 @@ echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
      "allowed" : "denied"; // denied となります
 
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
-     "allowed" : "denied"; // denied となります]]></programlisting>
+     "allowed" : "denied"; // denied となります]]>
+        </programlisting>
 
         <para>
         上で説明したように、徐々に権限を変更していくこともできますが、
@@ -142,7 +147,8 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
      "allowed" : "denied"; // allowed となります
 
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
-     "allowed" : "denied"; // allowed となります]]></programlisting>
+     "allowed" : "denied"; // allowed となります]]>
+        </programlisting>
 
     </sect2>
 

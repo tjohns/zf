@@ -205,12 +205,14 @@
                 ファイルリゾルバを作成する方法は次の二通りで、どちらも同じくらい簡単です。まずは
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
-$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]></programlisting>
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
+                </programlisting>
                 もうひとつは
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
-$resolver->setFile($path);]]></programlisting>
+$resolver->setFile($path);]]>
+                </programlisting>
                 指定したパスが空だったり読み込みできなかったりした場合は、
                 例外をスローします。
             </para>
@@ -231,7 +233,8 @@ $config = array(
     'realm'          => 'My Web Site',
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
-);]]></programlisting>
+);]]>
+            </programlisting>
             この配列は、アダプタに対してベーシック認証およびダイジェスト認証の両方を受け付けるように指定します。
             また、<code>/members_only</code> および <code>/my_account</code>
             の配下では認証済みアクセスが必要となるようにします。
@@ -243,7 +246,8 @@ $config = array(
             次に、Zend_Auth_Adapter_Http オブジェクトを作成します。
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http.php';
-$adapter = new Zend_Auth_Adapter_Http($config);]]></programlisting>
+$adapter = new Zend_Auth_Adapter_Http($config);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -260,7 +264,8 @@ $digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
-$adapter->setDigestResolver($digestResolver);]]></programlisting>
+$adapter->setDigestResolver($digestResolver);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -276,7 +281,8 @@ $adapter->setResponse($response);
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // ユーザ名/パスワードが間違っている、あるいはパスワード入力をキャンセルした
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>
