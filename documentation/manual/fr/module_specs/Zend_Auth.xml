@@ -148,7 +148,7 @@ switch ($result->getCode()) {
         /** l'identifiant n'existe pas **/
         break;
 
-    case Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL:
+    case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
         /** mauvaise authentification **/
         break;
 
