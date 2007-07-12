@@ -183,6 +183,49 @@ $hits  = $index->find($query);]]>
         </para>
     </sect2>
 
+    <sect2 id="zend.search.lucene.queries.wildcard">
+        <title>Wildcard Query</title>
+        <para>
+            Wildcard queries are intended for a searching for a set of terms matching specified pattern.
+        </para>
+
+        <para>
+            '?' symbol is used as a single character wildcard.
+        </para>
+
+        <para>
+            '*' symbol is used as a multiple character wildcard.
+        </para>
+
+        <para>
+            Query string:
+            <programlisting role="querystring"><![CDATA[test*
+field1:test*]]>
+            </programlisting>
+        </para>
+
+
+        <para>or</para>
+
+        <para>
+            Query construction by API:
+            <programlisting role="php"><![CDATA[<?php
+$pattern = new Zend_Search_Lucene_Index_Term('test*', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Term field is optional. Zend_Search_Lucene searches through all fields if field is not specified:
+            <programlisting role="php"><![CDATA[<?php
+$pattern = new Zend_Search_Lucene_Index_Term('test*');
+$query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
     <sect2 id="zend.search.lucene.queries.phrase-query">
         <title>Phrase Query</title>
         <para>

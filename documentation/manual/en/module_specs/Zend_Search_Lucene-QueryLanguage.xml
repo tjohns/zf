@@ -89,6 +89,42 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         </para>
     </sect2>
 
+    <sect2 id="zend.search.lucene.query-language.wildcard">
+        <title>Wildcards</title>
+        <para>
+            Lucene supports single and multiple character wildcard searches within single terms (not within phrase queries).
+        </para>
+
+        <para>
+            To perform a single character wildcard search use the "?" symbol.
+        </para>
+
+        <para>
+            To perform a multiple character wildcard search use the "*" symbol.
+        </para>
+
+        <para>
+            The single character wildcard search looks for terms that match that with the single character replaced.
+            For example, to search for "text" or "test" you can use the search:
+            <programlisting role="querystring"><![CDATA[te?t]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Multiple character wildcard searches looks for 0 or more characters. For example, to search for test,
+            tests or tester, you can use the search:
+            <programlisting role="querystring"><![CDATA[test*]]>
+            </programlisting>
+        </para>
+
+        <para>
+            You can use "?", "*" or both at any place of the term:
+            <programlisting role="querystring"><![CDATA[*wr?t*]]>
+            </programlisting>
+            It searches for "write", "wrote", "written", "rewrite", "rewrote" and so on.
+        </para>
+    </sect2>
+
     <sect2 id="zend.search.lucene.query-language.modifiers">
         <title>Term Modifiers</title>
 
