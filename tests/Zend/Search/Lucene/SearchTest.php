@@ -29,10 +29,11 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         $queries = array('title:"The Right Way" AND text:go',
                          'title:"Do it right" AND right',
                          'title:Do it right',
-                         //'te?t',
-                         //'te?t~20^0.8',
-                         //'test*',
-                         //'te*t',
+                         'te?t',
+                         'test*',
+                         'te*t',
+                         '?Ma*',
+                         // 'te?t~20^0.8',
                          //'roam~',
                          //'roam~0.8',
                          '"jakarta apache"~10',
@@ -65,6 +66,10 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         $rewritedQueries = array('+(title:"the right way") +(text:go)',
                                  '+(title:"do it right") +(path:right modified:right contents:right)',
                                  '(title:do) (path:it modified:it contents:it) (path:right modified:right contents:right)',
+                                 '(contents:test contents:text)',
+                                 '(contents:test contents:tested)',
+                                 '(contents:test contents:text)',
+                                 '(contents:amazon contents:email)',
                                  // ....
                                  '((path:"jakarta apache"~10) (modified:"jakarta apache"~10) (contents:"jakarta apache"~10))',
                                  // ....
@@ -187,6 +192,30 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(count($hits), 1);
         $expectedResultset = array(array(1, 0.168270, 'IndexSource/contributing.wishlist.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
+    public function testWildcardQuery()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $hits = $index->find('*cont*');
+
+        $this->assertEquals(count($hits), 9);
+        $expectedResultset = array(array(8, 0.125253, 'IndexSource/contributing.html'),
+                                   array(4, 0.112122, 'IndexSource/copyright.html'),
+                                   array(2, 0.108491, 'IndexSource/contributing.patches.html'),
+                                   array(7, 0.077716, 'IndexSource/contributing.bugs.html'),
+                                   array(0, 0.050760, 'IndexSource/contributing.documentation.html'),
+                                   array(1, 0.049163, 'IndexSource/contributing.wishlist.html'),
+                                   array(3, 0.036159, 'IndexSource/about-pear.html'),
+                                   array(5, 0.021500, 'IndexSource/authors.html'),
+                                   array(9, 0.007422, 'IndexSource/core.html'));
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
