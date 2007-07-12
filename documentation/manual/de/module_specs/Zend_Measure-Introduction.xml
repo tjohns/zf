@@ -19,15 +19,15 @@
             Einheiten des gleichen Typs möglich (Masse, Fläche, Temperatur, Beschleunigung, usw.), nicht zwischen
             verschiedenen Typen.
         </para>
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::METER, $locale);
 
 // Konvertiert Meter zu Yard
-echo $unit->convertTo(Zend_Measure_Length::YARD);
-?>]]></programlisting>
+echo $unit->convertTo(Zend_Measure_Length::YARD);]]>
+        </programlisting>
     </example>
 
     <para>
@@ -46,7 +46,7 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
             <code>Length</code> gefunden werden. Um auf diese Maßeinheit zu verweisen muß die Schreibweise
             <code>Length::METER</code> verwendet werden. Die Darstellungseinheit ist <code>m</code>.
         </para>
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 echo Zend_Measure_Length::STANDARD;  // Ausgabe 'Length::METER'
@@ -54,8 +54,8 @@ echo Zend_Measure_Length::KILOMETER; // Ausgabe 'Length::KILOMETER'
 
 $unit = new Zend_Measure_Length(100,'METER');
 echo $unit;
-// Ausgabe '100 m'
-?>]]></programlisting>
+// Ausgabe '100 m']]>
+        </programlisting>
     </example>
 
 </sect1>

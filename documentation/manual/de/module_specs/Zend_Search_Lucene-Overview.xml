@@ -95,9 +95,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
 // Feld wird in Token aufgeteilt und indiziert, aber nicht im Index
 // gespeichert.
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
-                                                  'My document content'));
-
-?>]]></programlisting>
+                                                  'My document content'));]]>
+            </programlisting>
 
             <para>
                 Each of these methods (excluding <code>Zend_Search_Lucene_Field::Binary()</code> method) has optional
@@ -110,8 +109,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                 <programlisting role="php"><![CDATA[<?php
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
-?>]]></programlisting>
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
+                </programlisting>
             </para>
 
             <para>
@@ -119,8 +118,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'
                 <programlisting role="php"><![CDATA[<?php
 setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
-?>]]></programlisting>
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
+                </programlisting>
             </para>
 
             <para>
@@ -259,8 +258,8 @@ $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
 $index->addDocument($doc);
 ...
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -303,8 +302,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
                                                    time()));
 $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
                                               'Document annotation text'));
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -314,8 +313,8 @@ $index->addDocument($doc);
             <programlisting role="php"><![CDATA[<?php
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
-$headerLinksArray = $doc->getHeaderLinks();
-?>]]></programlisting>
+$headerLinksArray = $doc->getHeaderLinks();]]>
+            </programlisting>
         </para>
     </sect2>
 

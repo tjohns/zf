@@ -30,8 +30,8 @@ class Searcher {
     }
 }
 
-Searcher::initIndex();
-]]></programlisting>
+Searcher::initIndex();]]>
+            </programlisting>
         </para>
 
 
@@ -76,8 +76,8 @@ Searcher::initIndex();
 // Script shutdown routine
 ...
 Searcher::commit();
-...
-]]></programlisting>
+...]]>
+            </programlisting>
         </para>
     </sect2>
 

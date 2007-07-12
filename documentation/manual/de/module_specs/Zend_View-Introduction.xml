@@ -56,8 +56,7 @@ $view = new Zend_View();
 $view->books = $data;
 
 // und verarbeite ein View Skript mit Namen "booklist.php"
-echo $view->render('booklist.php');
-?>]]>
+echo $view->render('booklist.php');]]>
         </programlisting>
 
     </sect2>
@@ -76,7 +75,6 @@ echo $view->render('booklist.php');
         </para>
 
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-
     <!-- Eine Tabelle mit einigen Büchern. -->
     <table>
         <tr>
@@ -97,7 +95,7 @@ echo $view->render('booklist.php');
 
     <p>Es gibt keine Bücher zum Anzeigen.</p>
 
-<?php endif; ?>]]>
+<?php endif;]]>
         </programlisting>
 
         <para>
@@ -126,8 +124,8 @@ echo $view->render('booklist.php');
 base/path/
     helpers/
     filters/
-    scripts/
-]]]></programlisting>
+    scripts/]]>
+                </programlisting>
 
                 <para>
                     Das kann über <code>setBasePath()</code>,

@@ -9,7 +9,6 @@
         6 und 12 Alphanumerischen Zeichen lang sein muß:
 
         <programlisting role="php"><![CDATA[<?php
-
 // Bietet Möglichkeit der Kettenprüfung
 require_once 'Zend/Validate.php';
 
@@ -30,9 +29,8 @@ if ($validatorChain->isValid($username)) {
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         Prüfungen werden in der Reihenfolge durchgeführt in der Sie <code>Zend_Validate</code> hinzugefügt
         wurden. Im obigen Beispiel wird der Benutzername zuerst geprüft um sicherzustellen das die Länge
@@ -53,11 +51,9 @@ if ($validatorChain->isValid($username)) {
         die alphanumerische Prüfung nicht stattfinden wenn die Prüfung der Stringlänge fehlschlägt:
 
         <programlisting role="php"><![CDATA[<?php
-
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
-        ->addValidator(new Zend_Validate_Alnum());
-
-?>]]></programlisting>
+        ->addValidator(new Zend_Validate_Alnum());]]>
+        </programlisting>
 
     </para>
 

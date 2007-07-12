@@ -34,17 +34,14 @@
     <example>
       <title>Erstellen einer neuen URI mit <code>Zend_Uri::factory()</code></title>
 
-      <programlisting role="php"><![CDATA[
-<?php
-
+      <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 // Um eine neue URI von Grund auf zu erstellen, übergebe nur das Schema.
 $uri = Zend_Uri::factory('http');
 
-// $uri instanceof Zend_Uri_Http
-
-?>]]></programlisting>
+// $uri instanceof Zend_Uri_Http]]>
+      </programlisting>
     </example>
 
     <para>
@@ -72,17 +69,14 @@ $uri = Zend_Uri::factory('http');
     <example>
       <title>Verändern einer vorhandenen URI mit <code>Zend_Uri::factory()</code></title>
 
-    <programlisting role="php"><![CDATA[
-<?php
-
+      <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 // Um eine vorhandene URI zu verändern, übergibt man sie.
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-// $uri instanceof Zend_Uri_Http
-
-?>]]></programlisting>
+// $uri instanceof Zend_Uri_Http]]>
+      </programlisting>
     </example>
 
     <para>
@@ -104,17 +98,14 @@ $uri = Zend_Uri::factory('http://www.zend.com');
     <example>
       <title>URI Validierung mit <code>Zend_Uri::check()</code></title>
 
-    <programlisting role="php"><![CDATA[
-<?php
-
+      <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 // Überprüfe, ob eine übergebe URI wohlgeformt ist
 $valid = Zend_Uri::check('http://uri.in.question');
 
-// $valid ist TRUE für eine valide URI, andernfalls FALSE
-
-?>]]></programlisting>
+// $valid ist TRUE für eine valide URI, andernfalls FALSE]]>
+      </programlisting>
     </example>
 
     <para>
@@ -142,17 +133,14 @@ $valid = Zend_Uri::check('http://uri.in.question');
       <example>
         <title>Das Schema eines <code>Zend_Uri_*</code> Objektes erhalten</title>
 
-        <programlisting role="php"><![CDATA[
-<?php
-
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-$scheme = $uri->getScheme();  // "http"
-
-?>]]></programlisting>
-    </example>
+$scheme = $uri->getScheme();  // "http"]]>
+        </programlisting>
+      </example>
 
       <para>
           Die <code>getScheme()</code> Instanzmethode gibt nur das Schema des URI Objektes
@@ -167,16 +155,13 @@ $scheme = $uri->getScheme();  // "http"
       <example>
         <title>Die komplette URI eines <code>Zend_Uri_*</code> Objektes erhalten</title>
 
-        <programlisting role="php"><![CDATA[
-<?php
-
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-echo $uri->getUri();  // "http://www.zend.com"
-
-?>]]></programlisting>
+echo $uri->getUri();  // "http://www.zend.com"]]>
+        </programlisting>
       </example>
 
       <para>
@@ -199,16 +184,13 @@ echo $uri->getUri();  // "http://www.zend.com"
       <example>
         <title>Ein <code>Zend_Uri_*</code> Object validieren</title>
 
-        <programlisting role="php"><![CDATA[
-<?php
-
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-$isValid = $uri->valid();  // TRUE
-
-?>]]></programlisting>
+$isValid = $uri->valid();  // TRUE]]>
+        </programlisting>
       </example>
 
       <para>

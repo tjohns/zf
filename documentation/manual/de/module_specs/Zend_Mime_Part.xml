@@ -30,9 +30,9 @@ public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;
-?>]]></programlisting>
-    </sect2>
+public $charset;]]>
+    </programlisting>
+  </sect2>
 
   <sect2 id="zend.mime.part.methods">
     <title>Methoden für das übertragen der des Teils der Nachricht zu einem String</title>

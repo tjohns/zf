@@ -26,7 +26,8 @@ require_once 'My/Service/Class.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
@@ -104,7 +105,8 @@ echo $server->handle();]]></programlisting>
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             PhpDocumentor validiert keine Typen, die in Parameter- oder
@@ -135,7 +137,8 @@ function myFunc($val1, $val2, $val3)
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Dennoch eine Anmerkung: Das Erlaubung von vielen Signaturen kann
@@ -177,7 +180,8 @@ function myFunc($val1, $val2, $val3)
 $server->setClass('My_Service_Class', 'myservice');
 
 // Funktion 'somefunc' ist als funcs.somefunc ansprechbar.
-$server->addFunction('somefunc', 'funcs');]]></programlisting>
+$server->addFunction('somefunc', 'funcs');]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
@@ -239,7 +243,8 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></programlisting>
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
+        </programlisting>
 
         <para>
             Abgeleitete Exceptions lassen sich als ganze Familie von Exceptions
@@ -296,7 +301,8 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+        </programlisting>
         <para>
             Obiges Beispiel zeigt, wie der Server versucht, eine Definition
             aus der Datei xmlrpc.cache, welches sich im selben Ordner wie das
@@ -338,7 +344,8 @@ function md5Value($value)
 
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
@@ -355,7 +362,8 @@ require_once 'Services/Comb.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
@@ -376,7 +384,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
 $server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
 $server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
@@ -403,7 +412,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
 $server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
 $server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
@@ -434,7 +444,8 @@ $server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufg
 // Ein neues Anfrage-Objekt wird erstellt
 $request = new Services_Request();
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
@@ -469,7 +480,8 @@ $request = new Services_Request();
 // Nutzen eigener Antwort-Klasse
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
@@ -515,7 +527,8 @@ $request = new Services_Request();
 // Nutzen eigener Antwort-Klasse
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);]]>
+            </programlisting>
         </sect3>
     </sect2>
 </sect1>

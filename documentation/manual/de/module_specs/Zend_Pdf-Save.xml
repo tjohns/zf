@@ -32,8 +32,8 @@ $pdf->save($newFileName, true);
 // Geb das PDF Dokument in einer Zeichenkette zurück.
 $pdfString = $pdf->render();
 
-...
-?>]]></programlisting>
+...]]>
+        </programlisting>
     </example>
 
 </sect1>

@@ -9,22 +9,22 @@
   <example>
     <title>Aktivieren einer sicheren Verbindung innerhalb von Zend_Mail_Transport_Smtp</title>
 
-    <programlisting role="php">&lt;?php
-
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 require_once 'Zend/Mail/Transport/Smtp.php';
 
-$config = array('ssl' =&gt; 'tls',
-                'port' =&gt; 25); // Optionale unterstützte Portnummer
+$config = array('ssl' => 'tls',
+                'port' => 25); // Optionale unterstützte Portnummer
 
 $transport = new Zend_Mail_Transport_Smtp('mail.server.com', $config);
 
 $mail = new Zend_Mail();
-$mail-&gt;setBodyText('Das ist der Text der Mail.');
-$mail-&gt;setFrom('sender@test.com', 'Einige Sender');
-$mail-&gt;addTo('recipient@test.com', 'Einige Empfänger');
-$mail-&gt;setSubject('TestBetreff');
-$mail-&gt;send($transport);</programlisting>
+$mail->setBodyText('Das ist der Text der Mail.');
+$mail->setFrom('sender@test.com', 'Einige Sender');
+$mail->addTo('recipient@test.com', 'Einige Empfänger');
+$mail->setSubject('TestBetreff');
+$mail->send($transport);]]>
+    </programlisting>
   </example>
 </sect1>
 <!--

@@ -56,7 +56,7 @@
 
         <example>
             <title>Konvertieren</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
 
 $locale = new Zend_Locale('de');
@@ -66,8 +66,8 @@ $unit = new Zend_Measure_Weight($mystring,'POND', $locale);
 print "Kilo:".$unit->convertTo('KILOGRAM');
 
 // Konstanten sind eine "bessere Praxis" als Zeichenketten
-print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON);
-?>]]></programlisting>
+print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON);]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -87,7 +87,7 @@ print "Tonne:".$unit->convertTo(Zend_Measure_Weight::TON);
         <para>
             <example>
                 <title>Werte addieren</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 // Objekte definieren
@@ -97,8 +97,8 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 // $unit2 zu $unit1 addieren
 $sum = $unit->add($unit2);
 
-echo $sum; // Ausgabe "300 cm"
-?>]]></programlisting>
+echo $sum; // Ausgabe "300 cm"]]>
+                </programlisting>
             </example>
         </para>
 
@@ -118,7 +118,7 @@ echo $sum; // Ausgabe "300 cm"
                 <para>
                     Das Subtrahieren von Maßeinheiten funktioniert genauso wie das Addieren.
                 </para>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 // Objekte definieren
@@ -128,8 +128,8 @@ $unit2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 // $unit2 von $unit subtrahieren
 $sum = $unit->sub($unit2);
 
-echo $sum;
-?>]]></programlisting>
+echo $sum;]]>
+                </programlisting>
             </example>
         </para>
 
@@ -148,7 +148,7 @@ echo $sum;
         <para>
             <example>
                 <title>Unterschiedliche Maßeinheiten</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 // Maßeinheiten definieren
@@ -159,12 +159,12 @@ if ($unit->equals($unit2)) {
     print "Beide Maßeinheiten sind identisch";
 } else {
     print "Das sind unterschiedliche Maßeinheiten";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
             <example>
                 <title>Identische Maßeinheiten</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 // Maßeinheiten definieren
@@ -177,8 +177,8 @@ if ($unit->equals($unit2)) {
     print "Beide Maßeinheiten sind identisch";
 } else {
     print "Das sind unterschiedliche Maßeinheiten";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
         </para>
 
@@ -197,7 +197,7 @@ if ($unit->equals($unit2)) {
         <para>
             <example>
                 <title>Differenz</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
@@ -206,8 +206,8 @@ $unit3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 
 print "Gleich:".$unit2->compare($unit);
 print "Kleiner:".$unit2->compare($unit3);
-print "Größer:".$unit3->compare($unit2);
-?>]]></programlisting>
+print "Größer:".$unit3->compare($unit2);]]>
+                </programlisting>
             </example>
         </para>
 
@@ -225,7 +225,7 @@ print "Größer:".$unit3->compare($unit2);
         <para>
             <example>
                 <title>Verändern eines Wertes</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -238,8 +238,8 @@ $unit->setValue(1.2, Zend_Measure_Length::KILOMETER);
 echo $unit;
 
 $unit->setValue("1.234,56", Zend_Measure_Length::MILLIMETER,$locale);
-echo $unit;
-?>]]></programlisting>
+echo $unit;]]>
+                </programlisting>
             </example>
         </para>
 
@@ -255,15 +255,15 @@ echo $unit;
 
         <example>
             <title>Verändern des Typs</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $unit = new Zend_Measure_Length(1,Zend_Measure_Length::METER);
 echo $unit; // Ausgabe "1 m"
 
 $unit->setType(Zend_Measure_Length::KILOMETER);
-echo $unit; // Ausgabe "1000 km"
-?>]]></programlisting>
+echo $unit; // Ausgabe "1000 km"]]>
+            </programlisting>
         </example>
 
     </sect2>

@@ -31,7 +31,7 @@
 
         <example>
             <title>Erstellung einer Maßeinheit durch Integer oder Floatwerte</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $measurement = 1234.7;
@@ -41,8 +41,8 @@ echo $unit;
 
 $unit = new Zend_Measure_Length($measurement, Zend_Measure_Length::STANDARD);
 echo $unit;
-// Ausgabe '1234.7 m' (Meter)
-?>]]></programlisting>
+// Ausgabe '1234.7 m' (Meter)]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -66,14 +66,14 @@ echo $unit;
 
         <example>
             <title>Erstellung einer Maßeinheit durch Strings</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
 $mystring = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure_Number($mystring, Zend_Measure_Number::BINARY);
 
-echo $unit;
-?>]]></programlisting>
+echo $unit;]]>
+            </programlisting>
         </example>
 
         <para>
@@ -85,7 +85,7 @@ echo $unit;
 
         <example>
             <title>Gewöhliche Texteingaben welche Maßeinheiten beinhalten</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
 
 $mystring = "Mein Haus ist 125m² groß";
@@ -94,8 +94,8 @@ echo $unit; // Ausgabe "125 m²";
 
 $mystring = "Mein Haus ist 125m² groß, es hat 5 Räume mit jeweils 25m².";
 $unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
-echo $unit; // Ausgabe "125 m²";
-?>]]></programlisting>
+echo $unit; // Ausgabe "125 m²";]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -116,7 +116,7 @@ echo $unit; // Ausgabe "125 m²";
 
         <example>
             <title>Lokalisierte Zeichenketten</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
@@ -127,8 +127,8 @@ echo $unit; // Ausgabe "1.234 m"
 
 $mystring = "Das Boot ist 1,234.50 lang.";
 $unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
-echo $unit; // Ausgabe "1234.50 m"
-?>]]></programlisting>
+echo $unit; // Ausgabe "1234.50 m"]]>
+            </programlisting>
         </example>
 
     </sect2>

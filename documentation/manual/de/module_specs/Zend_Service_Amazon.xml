@@ -61,8 +61,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <example id="zend.service.amazon.introduction.example.query_api">
             <title>Suchen in Amazon mit der Abfrage API</title>
@@ -77,8 +77,8 @@ $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
@@ -93,8 +93,8 @@ foreach ($results as $result) {
             <programlisting><![CDATA[<?php
 // Zu Amazon in Japan verbinden
 require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
-?>]]></programlisting>
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');]]>
+            </programlisting>
         </example>
         <note>
             <title>Ländercodes</title>
@@ -115,8 +115,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$item = $amazon->itemLookup('B0000A432X');
-?>]]></programlisting>
+$item = $amazon->itemLookup('B0000A432X');]]>
+            </programlisting>
         </example>
         <para>
             Die <code>itemLookup()</code> Methode akzeptiert auch einen optionalen zweiten Parameter für die
@@ -145,8 +145,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <example id="zend.service.amazon.itemsearch.example.responsegroup">
             <title>Verwenden der <code>ResponseGroup</code> Option</title>
@@ -164,8 +164,8 @@ $results = $amazon->itemSearch(array(
     ));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <para>
             Die <code>itemSearch()</code> Methode akzeptiert einen einzelnen Parameter als Array für die
@@ -208,8 +208,8 @@ $query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
                 <para>
                     Das setzt die Option <code>Category</code> auf "Books" und <code>Keywords</code> auf "PHP".
                 </para>

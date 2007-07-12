@@ -51,8 +51,8 @@ foreach ($prototypes as $prototype) {
 // Erhalte Namensraum für eine Klasse, Funktion oder Methode.
 // Namensräume können zum Zeitpunkt der Instanzierung gesetzt werden (zweites Argument) oder durch
 // Verwendung von setNamespace()
-$reflection->getNamespace();
-]]></programlisting>
+$reflection->getNamespace();]]>
+        </programlisting>
 
         <para>
             <code>reflectFunction()</code> gibt ein  <code>Zend_Server_Reflection_Function</code>

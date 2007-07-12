@@ -53,7 +53,8 @@
         <programlisting role="php"><![CDATA[<?php
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
-Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
+Zend_Search_Lucene::setDefaultSearchField('contents');]]>
+        </programlisting>
 
         <para>
             <code>null</code> value means, that search is performed through all field. It's a default setting.

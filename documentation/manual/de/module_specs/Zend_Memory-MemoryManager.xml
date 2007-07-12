@@ -24,14 +24,12 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $backendOptions = array(
     'cacheDir' => './tmp/' // Verzeichnis in welchem die geswappten Memory Blöcke abgelegt werden
 );
 
-$memoryManager = Zend_Memory::factory('File', $backendOptions);
-
-?>]]></programlisting>
+$memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
+        </programlisting>
 
         <para>
             Zend_Memory verwendet <link linkend="zend.cache.backends">Zend_Cache Backends</link>
@@ -43,10 +41,8 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
             zusätzlich zu den Standard Zend_Cache Backends.
 
             <programlisting role="php"><![CDATA[<?php
-
-$memoryManager = Zend_Memory::factory('None');
-
-?>]]></programlisting>
+$memoryManager = Zend_Memory::factory('None');]]>
+            </programlisting>
         </para>
 
         <para>
@@ -81,10 +77,8 @@ $memoryManager = Zend_Memory::factory('None');
                 können erstellt werden mit Hilfe der
                 <code>Zend_Memory_Manager::create([$data])</code> Methode:
                 <programlisting role="php"><![CDATA[<?php
-
-$memObject = $memoryManager->create($data);
-
-?>]]></programlisting>
+$memObject = $memoryManager->create($data);]]>
+                </programlisting>
 
             </para>
 
@@ -105,10 +99,8 @@ $memObject = $memoryManager->create($data);
                 erstellt werden mit Hilfe der
                 <code>Zend_Memory_Manager::createLocked([$data])</code> Methode:
                 <programlisting role="php"><![CDATA[<?php
-
-$memObject = $memoryManager->createLocked($data);
-
-?>]]></programlisting>
+$memObject = $memoryManager->createLocked($data);]]>
+                </programlisting>
             </para>
 
             <para>
@@ -128,7 +120,6 @@ $memObject = $memoryManager->createLocked($data);
                 entfernt wenn sie ausserhalb des Bereichs sind:
 
                 <programlisting role="php"><![CDATA[<?php
-
 function foo()
 {
     global $memoryManager, $memList;
@@ -150,9 +141,8 @@ function foo()
     ...
     // $memObject1 wird hier zerstört
     // Aber das $memObject2 Objekt ist noch immer referenziert durch $memList und ist nicht zerstört
-}
-
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </para>
 
             <para>
@@ -187,11 +177,9 @@ function foo()
                 der <code>getMemoryLimit()</code> und <code>setMemoryLimit($newLimit)</code>
                 Methoden:
                 <programlisting role="php"><![CDATA[<?php
-
 $oldLimit = $memoryManager->getMemoryLimit();  // Memory Limit in Bytes empfangen
-$memoryManager->getMemoryLimit($newLimit);     // Memory Limit in Bytes senden
-
-?>]]></programlisting>
+$memoryManager->getMemoryLimit($newLimit);     // Memory Limit in Bytes senden]]>
+                </programlisting>
             </para>
 
             <para>
@@ -222,11 +210,9 @@ $memoryManager->getMemoryLimit($newLimit);     // Memory Limit in Bytes senden
                 <code>getMinSize()</code> und <code>setMinSize($newSize)</code>
                 Methoden:
                 <programlisting role="php"><![CDATA[<?php
-
 $oldMinSize = $memoryManager->getMinSize();  // MinSize in Bytes empfangen
-$memoryManager->setMinSize($newSize);        // MinSize Limit in Bytes setzen
-
-?>]]></programlisting>
+$memoryManager->setMinSize($newSize);        // MinSize Limit in Bytes setzen]]>
+                </programlisting>
             </para>
 
             <para>

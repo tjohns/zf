@@ -53,7 +53,6 @@
             In diesem Fall sind die Prüfregeln sehr einfach und der Eingabewert muß ein Gleitkommawert sein.
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Abstract.php';
 
 class MyValid_Float extends Zend_Validate_Abstract
@@ -75,9 +74,8 @@ class MyValid_Float extends Zend_Validate_Abstract
 
         return true;
     }
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             Die Klasse definiert ein Template für Ihre einzige Nachricht bei Prüfungsfehlern, welche den eingebauten
             magischen Parameter <code>%value%</code> inkludiert. Der Aufruf von <code>_setValue()</code> präpariert
@@ -115,7 +113,6 @@ class MyValid_Float extends Zend_Validate_Abstract
             Diese Gründe für fehlgeschlagene Prüfungen werden in Definitionen der Klasse übersetzt:
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Abstract.php';
 
 class MyValid_NumericBetween extends Zend_Validate_Abstract
@@ -159,9 +156,8 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
 
         return true;
     }
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             Die öffentlichen Eigenschaften <code>$minimum</code> und <code>$maximum</code> wurden eingeführt um
             die Mindest- und Maximalgrenzen anzubieten, beziehungsweise, für einen Wert um die Prüfung erfolgreich
@@ -211,7 +207,6 @@ class MyValid_NumericBetween extends Zend_Validate_Abstract
             Die folgende Klasse impementiert diese Prüfkriterien:
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Abstract.php';
 
 class MyValid_PasswordStrength extends Zend_Validate_Abstract
@@ -256,9 +251,8 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
         return $isValid;
     }
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             Zu beachten ist das diese vier Testkriterien in <code>isValid()</code> nicht sofort <code>false</code>
             zurückgeben. Das erlaubt der Prüfklasse <emphasis role="bold">alle</emphasis> Gründe anzubieten bei denen

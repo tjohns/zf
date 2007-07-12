@@ -16,7 +16,6 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 // Index erstellen
 $index = Zend_Search_Lucene::create('/data/my-index');
 
@@ -29,8 +28,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
 
         <para>
             Neu hinzugefügte Dokumente können sofort aus einem Index zurückgeholt werden.
@@ -47,7 +46,6 @@ $index->addDocument($doc);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 // Öffnen einen vorhandenen Index
 $index = Zend_Search_Lucene::open('/data/my-index');
 
@@ -60,8 +58,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
     </sect2>
     <sect2 id="zend.search.lucene.index-creation.document-updating">
         <title>Dokumente aktualisieren</title>
@@ -83,8 +81,8 @@ $removePath = ...;
 $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
@@ -106,8 +104,8 @@ foreach ($hits as $hit) {
 
         <programlisting role="php"><![CDATA[<?php
 $indexSize = $index->count();
-$documents = $index->numDocs();
-?>]]></programlisting>
+$documents = $index->numDocs();]]>
+        </programlisting>
 
         <para>
             <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
@@ -118,8 +116,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
         echo "Document #$id is deleted.\n";
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Index optimization removes deleted documents and squeezes documents' IDs. So internal document id may be changed.
@@ -156,8 +154,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
 $index = new Zend_Search_Lucene('/data/my-index');
 
 // Optimiere Index
-$index->optimize();
-?>]]></programlisting>
+$index->optimize();]]>
+        </programlisting>
 
         <para>
             Die automatische Indexoptimierung wird durchgeführt, um einen Index konsistens zu halten.

@@ -67,8 +67,8 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 // Entferne eine bestimmte Seite
 unset($pdf->pages[$id]);
 
-...
-?>]]></programlisting>
+...]]>
+        </programlisting>
     </example>
 
 </sect1>

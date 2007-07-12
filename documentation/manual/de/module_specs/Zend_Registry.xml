@@ -28,10 +28,8 @@
         <example id="zend.registry.using.storing.example">
             <title>Beispiel der set() Methode</title>
             <programlisting role="php"><![CDATA[<?php
-
-Zend_Registry::set('index', $value);
-
-?>]]></programlisting>
+Zend_Registry::set('index', $value);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -60,10 +58,8 @@ Zend_Registry::set('index', $value);
         <example id="zend.registry.using.retrieving.example">
             <title>Beispiel der get() Methode</title>
             <programlisting role="php"><![CDATA[<?php
-
-$value = Zend_Registry::get('index');
-
-?>]]></programlisting>
+$value = Zend_Registry::get('index');]]>
+            </programlisting>
         </example>
 
         <para>
@@ -77,15 +73,13 @@ $value = Zend_Registry::get('index');
         <example id="zend.registry.using.retrieving.example-iterating">
             <title>Beispiel des Durchsuchens der Registry</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = Zend_Registry::getInstance();
 
 foreach ($registry as $index => $value) {
     echo "Registry Index $index enthält:\n";
     var_dump($value);
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -115,10 +109,8 @@ foreach ($registry as $index => $value) {
         <example id="zend.registry.using.constructing.example">
             <title>Beispiel für das Erstellen einer Registry</title>
             <programlisting role="php"><![CDATA[<?php
-
-$registry = new Zend_Registry(array('index' => $value));
-
-?>]]></programlisting>
+$registry = new Zend_Registry(array('index' => $value));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -130,12 +122,10 @@ $registry = new Zend_Registry(array('index' => $value));
         <example id="zend.registry.using.constructing.example-setinstance">
             <title>Beispiel der Initialisierung der statischen Registry</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = new Zend_Registry(array('index' => $value));
 
-Zend_Registry::setInstance($registry);
-
-?>]]></programlisting>
+Zend_Registry::setInstance($registry);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -157,14 +147,12 @@ Zend_Registry::setInstance($registry);
         <example id="zend.registry.using.array-access.example">
             <title>Beispiel eines Array-zugriffs</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
-var_dump( $registry['index'] );
-
-?>]]></programlisting>
+var_dump( $registry['index'] );]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -188,7 +176,6 @@ var_dump( $registry['index'] );
         <example id="zend.registry.using.array-object.example">
             <title>Beispiel eines Objektzugriffs</title>
             <programlisting role="php"><![CDATA[<?php
-
 // In der Anwendungs Bootstrap Datei:
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
@@ -205,9 +192,8 @@ echo $registry->tree; // Gibt "Apfel" aus
 
 $registry->index = $value;
 
-var_dump($registry->index);
-
-?>]]></programlisting>
+var_dump($registry->index);]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -224,12 +210,10 @@ var_dump($registry->index);
         <example id="zend.registry.using.isset.example-isregistered">
             <title>Beispiel der isRegistered() Methode</title>
             <programlisting role="php"><![CDATA[<?php
-
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -241,7 +225,6 @@ if (Zend_Registry::isRegistered($index)) {
         <example id="zend.registry.using.isset.example-isset">
             <title>Beispiel der isset() Methode</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = Zend_Registry::getInstance();
 
 // Verwendung des Array-Zugriffs Syntax
@@ -252,9 +235,8 @@ if (isset($registry['index'])) {
 // Verwendung des Objekt-Zugriffs Syntax, wenn aktiviert
 if (isset($registry->index)) {
     var_dump( $registry->index );
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -275,12 +257,10 @@ if (isset($registry->index)) {
         <example id="zend.registry.using.subclassing.example">
             <title>Beispiel des Definierens des statischen Registry Klassennamens</title>
             <programlisting role="php"><![CDATA[<?php
-
 Zend_Registry::setClassName('Meine_Registry');
 
-Zend_Registry::set('index', $value);
-
-?>]]></programlisting>
+Zend_Registry::set('index', $value);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -321,7 +301,6 @@ Zend_Registry::set('index', $value);
         <example id="zend.registry.using.unsetting.example">
             <title>Beispiel der _unsetInstance() Methode</title>
             <programlisting role="php"><![CDATA[<?php
-
 Zend_Registry::set('index', $value);
 
 Zend_Registry::_unsetInstance();
@@ -329,9 +308,8 @@ Zend_Registry::_unsetInstance();
 // Ändern der Klasse
 Zend_Registry::setClassName('Meine_Registry');
 
-Zend_Registry::set('index', $value);
-
-?>]]></programlisting>
+Zend_Registry::set('index', $value);]]>
+            </programlisting>
         </example>
 
     </sect2>

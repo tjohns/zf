@@ -34,15 +34,15 @@
             <code>Zend_Measure</code> unterstützt die automatische Ausgabe von Zeichenketten.
             <example>
                 <title>Automatische Ausgabe</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
 $unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
 
-echo $unit;
-?>]]></programlisting>
+echo $unit;]]>
+                </programlisting>
             </example>
         </para>
 
@@ -65,15 +65,15 @@ echo $unit;
             Der Wert einer Maßeinheit kann mit <code>getValue()</code> ausgegeben werden.
             <example>
                 <title>Ausgabe eines Wertes</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
 $unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
 
-echo $unit->getValue();
-?>]]></programlisting>
+echo $unit->getValue();]]>
+                </programlisting>
             </example>
         </para>
 
@@ -87,15 +87,15 @@ echo $unit->getValue();
             Die Funktion <code>getType()</code> gibt die aktuelle Maßeinheit zurück.
             <example>
                 <title>Outputting units</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
 
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89";
 $unit = new Zend_Measure_Weight($mystring,Zend_Measure_Weight::POUND, $locale);
 
-echo $unit->getType();
-?>]]></programlisting>
+echo $unit->getType();]]>
+                </programlisting>
             </example>
         </para>
 

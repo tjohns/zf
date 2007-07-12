@@ -22,7 +22,8 @@ require_once 'Zend/Session/Namespace.php';
 
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
-// $myNamespace corresponds to $_SESSION['myNamespace']]]></programlisting>
+// $myNamespace corresponds to $_SESSION['myNamespace']]]>
+        </programlisting>
 
         Es ist möglich Zend_Session in Verbindung mit anderem Code zu verwenden welche <code>$_SESSION</code> direkt
         verwendet. Um Probleme zu vermeiden wird trotzdem stärkstens empfohlen das solcher Code nur Teile von
@@ -59,7 +60,8 @@ if (isset($defaultNamespace->numberOfPageRequests)) {
     $defaultNamespace->numberOfPageRequests = 1; // Erster Zugriff
 }
 
-echo "Seitenzugriffe in dieser Session: ", $defaultNamespace->numberOfPageRequests;]]></programlisting>
+echo "Seitenzugriffe in dieser Session: ", $defaultNamespace->numberOfPageRequests;]]>
+            </programlisting>
 
         </example>
 
@@ -92,8 +94,8 @@ $authNamespace->user = "meinbenutzername";
 
 // In einer Web Service Komponente
 $webServiceNamespace = new Zend_Session_Namespace('Mein_Web_Service');
-$webServiceNamespace->user = "meinwebbenutzername";
-?>]]></programlisting>
+$webServiceNamespace->user = "meinwebbenutzername";]]>
+            </programlisting>
         </example>
 
         <para>
@@ -107,7 +109,8 @@ $webServiceNamespace->user = "meinwebbenutzername";
 
             <programlisting role="php"><![CDATA[<?php
 $_SESSION['Zend_Auth']['user'] = "meinbenutzername";
-$_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";]]></programlisting>
+$_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";]]>
+            </programlisting>
 
         </example>
 
@@ -134,7 +137,8 @@ $aNamespace = new Zend_Session_Namespace('Einige_Namensräume_Mit_aktuellen_Date
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";
-}]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -168,7 +172,8 @@ if (!isset($namespace->bar)) {
     echo "\$namespace->bar nicht gesetzt\n";
 }
 
-unset($namespace->foo);]]></programlisting>
+unset($namespace->foo);]]>
+            </programlisting>
         </example>
 
     </sect2>
