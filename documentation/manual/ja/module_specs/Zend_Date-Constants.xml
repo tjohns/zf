@@ -26,7 +26,7 @@
             にあわせて地域化された形式です。
         </para>
 
-        <table>
+        <table id="zend.date.constants.using.table">
             <title>Zend_Date::HOUR を使用した操作</title>
             <tgroup cols="4">
                 <thead>
@@ -107,7 +107,7 @@
             <code>Zend_Date</code> がサポートするすべての定数を以下に示します。
         </para>
 
-        <table>
+        <table id="zend.date.constants.list.table-1">
             <title>日に関する定数</title>
             <tgroup cols="4">
                 <thead>
@@ -186,7 +186,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-2">
             <title>週に関する定数</title>
             <tgroup cols="4">
                 <thead>
@@ -209,7 +209,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-3">
             <title>月に関する定数</title>
             <tgroup cols="4">
                 <thead>
@@ -265,7 +265,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-4">
             <title>年に関する定数</title>
             <tgroup cols="4">
                 <thead>
@@ -314,7 +314,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-5">
             <title>時間に関する定数</title>
             <tgroup cols="4">
                 <thead>
@@ -403,7 +403,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-6">
             <title>タイムゾーンに関する定数</title>
             <tgroup cols="4">
                 <thead>
@@ -460,7 +460,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-7">
             <title>日付フォーマットに関する定数 (タイムゾーンを含むフォーマット)</title>
             <tgroup cols="4">
                 <thead>
@@ -564,7 +564,7 @@
             できるだけ修正します。たとえば年、月、日の順序がおかしい場合などです。
         </para>
 
-        <table>
+        <table id="zend.date.constants.list.table-8">
             <title>日付および時刻フォーマットに関する定数 (ロケールによって変化する書式)</title>
             <tgroup cols="4">
                 <thead>
@@ -685,18 +685,18 @@
             (以下の <xref linkend="zend.date.constants.phpformats" /> を参照ください)。
         </para>
 
-        <example>
+        <example id="zend.date.constants.selfdefinedformats.example-1">
             <title>ISO 書式を使用した独自書式の例</title>
 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
-print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
-?>]]></programlisting>
+print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
+            </programlisting>
         </example>
 
-        <table>
+        <table id="zend.date.constants.selfdefinedformats.table">
             <title>
               <emphasis role="strong">ISO 8601 日付出力</emphasis>
               に関する定数
@@ -1106,9 +1106,9 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
             を使用します。次の例は、下の表の定数を用いて独自の書式を定義するものです。
         </para>
 
-        <example>
+        <example id="zend.date.constants.phpformats.example-1">
             <title>PHP の指定子を使用した独自書式の例</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -1118,8 +1118,8 @@ $date = new Zend_Date(1234567890, false, $locale);
 // 出力は 'February 16, 2007, 3:36 am' のようになります
 print $date->toString('F j, Y, g:i a');
 
-print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
-?>]]></programlisting>
+print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");]]>
+            </programlisting>
         </example>
 
         <para>
@@ -1132,7 +1132,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
             PHP "独特の" 書式指定を理解します。
         </para>
 
-        <table>
+        <table id="zend.date.constants.phpformats.table">
             <title><emphasis role="strong">PHP の日付出力</emphasis> 用の定数
             </title>
             <tgroup cols="5">

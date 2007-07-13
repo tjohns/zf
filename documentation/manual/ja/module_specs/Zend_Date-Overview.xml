@@ -128,9 +128,9 @@
             のいずれかである場合は別です。
         </para>
 
-        <example>
+        <example id="zend.date.values.example-1">
             <title>ユーザ定義の入力日付書式</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 $date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 
@@ -138,8 +138,8 @@ $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 
 $date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.YYYY'); // 指定したフォーマットで解釈するように強制します
-echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
-?>]]></programlisting>
+echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
+            </programlisting>
         </example>
 
         <para>
@@ -191,17 +191,17 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
             以外のメソッドは、処理の結果としてオブジェクト内の日付が変更されます。
         </para>
 
-        <example>
+        <example id="zend.date.basic.example-1">
             <title>日付要素の操作</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date(); // $date のタイムスタンプは time() の返す値と等しくなります
 
 // $date に 12 時間足します
 $date->add('12', Zend_Date::HOUR);
-print $date;
-?>]]></programlisting>
+print $date;]]>
+            </programlisting>
         </example>
 
         <para>
@@ -233,7 +233,7 @@ print $date;
 
             <title>日付要素の一覧</title>
 
-            <table>
+            <table id="id.date.basic.parts.table">
                 <title>日付要素</title>
                 <tgroup cols="2">
                     <thead>
@@ -400,7 +400,7 @@ print $date;
                 を <code>$part</code> パラメータで指定します。
             </para>
 
-            <table>
+            <table id="id.date.basic.operations.table">
                 <title>基本操作</title>
                 <tgroup cols="2">
                     <thead>
@@ -514,7 +514,7 @@ print $date;
             の一覧にある各日付要素に特化した便利なメソッドは存在しません。
         </para>
 
-        <table>
+        <table id="zend.date.others.comparison.table">
             <title>日付の比較用メソッド</title>
             <tgroup cols="2">
                 <thead>
@@ -642,7 +642,7 @@ print $date;
             <code>Zend_Date</code> インスタンスに関する情報の取得をサポートするメソッド群について説明します。
         </para>
 
-        <table>
+        <table id="zend.date.others.gettingparts.table">
             <title>日付出力用のメソッド</title>
             <tgroup cols="2">
                 <thead>
@@ -685,40 +685,64 @@ print $date;
                             <para>
                                 <itemizedlist>
                                     <listitem>
-                                        日を表す '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                        <para>
+                                            日を表す '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        月を表す '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                        <para>
+                                            月を表す '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        年を表す '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                        <para>
+                                            年を表す '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        時間を表す '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                        <para>
+                                            時間を表す '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        分を表す '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                        <para>
+                                            分を表す '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        秒を表す '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                        <para>
+                                            秒を表す '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        タイムゾーンの略称を表す '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                        <para>
+                                            タイムゾーンの略称を表す '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Unix タイムスタンプを表す '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                        <para>
+                                            Unix タイムスタンプを表す '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        曜日番号を表す '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                        <para>
+                                            曜日番号を表す '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        年初からの日数を表す '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                        <para>
+                                            年初からの日数を表す '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        週を表す '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                        <para>
+                                            週を表す '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        GMT からの時差を表す '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                        <para>
+                                            GMT からの時差を表す '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                        </para>
                                     </listitem>
                                 </itemizedlist>
                             </para>
@@ -790,7 +814,7 @@ print $date;
             <code>Zend_Date</code> インスタンスに関する情報の取得をサポートするメソッド群について説明します。
         </para>
 
-        <table>
+        <table id="zend.date.others.fractions.table">
             <title>日付の出力用メソッド</title>
             <tgroup cols="2">
                 <thead>
@@ -831,7 +855,7 @@ print $date;
             たとえば日の出や日の入りの時刻などが得られます。
         </para>
 
-        <table>
+        <table id="zend.date.other.sun.table">
             <title>雑多なメソッド</title>
             <tgroup cols="2">
                 <thead>

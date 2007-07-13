@@ -35,16 +35,16 @@
             が正しく設定されていることを確認しておきましょう。
         </para>
 
-        <example>
+        <example id="zend.date.basic.creation.example-1">
             <title>現在の日付の作成</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // 現在のタイムスタンプを出力します
-print $date;
-?>]]></programlisting>
+print $date;]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -70,16 +70,16 @@ print $date;
                 さまざまなオプションが使用可能です。これらのオプションについてはあとで説明します。
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.get.example-1">
                 <title>get() - 日付の出力</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // 指定した日付を出力します
-print $date->get();
-?>]]></programlisting>
+print $date->get();]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -95,17 +95,17 @@ print $date->get();
                 これらのオプションについてはあとで説明します。
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.set.example-1">
                 <title>set() - 日付の設定</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // 新しい時刻を設定します
 $date->set('13:00:00',Zend_Date::TIMES);
-print $date->get(Zend_Date::W3C);
-?>]]></programlisting>
+print $date->get(Zend_Date::W3C);]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -123,9 +123,9 @@ print $date->get(Zend_Date::W3C);
                 これについてはあとで説明します。
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.add.example-1">
                 <title>add() - 日付の加算</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -133,11 +133,11 @@ $date = new Zend_Date();
 // $date に 12 時間加算します
 $date->add('12:00:00', Zend_Date::TIMES);
 
-echo "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
+echo "get() で取得した日付 = ", $date->get(Zend_Date::W3C), "\n";
 
 // マジックメソッド __toString() から、Zend_Date の toString() をコールします
-echo "Date via toString() = ", $date, "\n";
-?>]]></programlisting>
+echo "toString() で取得した日付 = ", $date, "\n";]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -155,9 +155,9 @@ echo "Date via toString() = ", $date, "\n";
                 <code>compare()</code> を使用します。以下に例を示します。
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.compare.example-1">
                 <title>compare() - 日付の比較</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -167,8 +167,8 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
     print "This hour is less than 10 minutes old";
 } else {
     print "This hour is at least 10 minutes old";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
             <para>
@@ -176,9 +176,9 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
                 を使用します。これは boolean 値を返します。
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.compare.example-2">
                 <title>equals() - 日付あるいはその一部の同一性</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -188,8 +188,8 @@ if ($date->equals(10, Zend_Date::HOUR)) {
     print "十時です。仕事を始める時間です。";
 } else {
     print "十時ではありません。もうちょっと寝ていましょう。";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
         </sect3>

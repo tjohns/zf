@@ -49,12 +49,12 @@
             タイムゾーン設定の完全な一覧は、
             <ulink url="http://unicode.org/cldr/data/diff/supplemental/territory_containment_un_m_49.html">CLDR Timezone Identifier List</ulink>
             を参照ください。
-            <example>
+            <example id="zend.date.setdefaulttimezone.example-1">
                 <title>デフォルトタイムゾーンの設定</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 date_default_timezone_set('America/Los_Angeles'); // カリフォルニアのアメリカ人用のタイムゾーン
-date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用のタイムゾーン
-?>]]></programlisting>
+date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用のタイムゾーン]]>
+                </programlisting>
             </example>
             <emphasis role="strong">Zend_Date のインスタンスを作成すると、
             そのタイムゾーンは自動的に現在のデフォルトタイムゾーンになります!</emphasis>
