@@ -7,7 +7,7 @@
         measurements.
     </para>
 
-    <table>
+    <table id="zend.measure.types.table-1">
         <title>List of measurement types</title>
         <tgroup cols="4">
             <thead>

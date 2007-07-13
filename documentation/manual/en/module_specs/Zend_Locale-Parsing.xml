@@ -40,7 +40,7 @@
             and decimal characters. The array may also have a 'precision' to truncate excess digits from the result.
         </para>
 
-        <example>
+        <example id="zend.locale.number.normalize.example-1">
             <title>Number normalization</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -80,7 +80,7 @@ print $number; // will return 13524.678]]>
                 return "1", not "2. See the example nearby:
             </para>
 
-            <example>
+            <example id="zend.locale.number.normalize.precision.example-1">
                 <title>Number normalization with precision</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -110,7 +110,7 @@ print $number; // will return 13524.67]]>
             <code>toNumber()</code>.
         </para>
 
-        <example>
+        <example id="zend.locale.number.localize.example-1">
             <title>Number localization</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -138,7 +138,7 @@ print $number;]]>
             is given, the complete localized number will be returned.
         </para>
 
-        <example>
+        <example id="zend.locale.number.localize.example-2">
             <title>Number localization with precision</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -158,7 +158,7 @@ print $number;]]>
             ',' as precission seperation and in english the '.' sign is used.
         </para>
 
-        <table>
+        <table id="zend.locale.number.localize.table-1">
             <title>Format tokens for self generated number formats
             </title>
             <tgroup cols="4">
@@ -205,7 +205,7 @@ print $number;]]>
             </tgroup>
         </table>
 
-        <example>
+        <example id="zend.locale.number.localize.example-3">
             <title>Using a self defined number format</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -234,7 +234,7 @@ print $number;]]>
             true or false.
         </para>
 
-        <example>
+        <example id="zend.locale.number.test.example-1">
             <title>Number testing</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -259,7 +259,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
             function. A floating point value will be returned.
         </para>
 
-        <example>
+        <example id="zend.locale.float.normalize.example-1">
             <title>Floating point value normalization</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -283,7 +283,7 @@ print $number;]]>
             the given number.
         </para>
 
-        <example>
+        <example id="zend.locale.float.localize.example-1">
             <title>Floating point value localization</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -307,7 +307,7 @@ print $number;]]>
             and returns true or false.
         </para>
 
-        <example>
+        <example id="zend.locale.float.test.example-1">
             <title>Floating point value testing</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -331,7 +331,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
             Integer values can be parsed with the <code>getInteger()</code> function. A integer value will be returned.
         </para>
 
-        <example>
+        <example id="zend.locale.integer.normalize.example-1">
             <title>Integer value normalization</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -355,7 +355,7 @@ print $number;]]>
             return a localized string of the given number.
         </para>
 
-        <example>
+        <example id="zend.locale.integer.localize.example-1">
             <title>Integer value localization</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -379,7 +379,7 @@ print $number;]]>
             returns true or false.
         </para>
 
-        <example>
+        <example id="zend.locale.integer.test.example-1">
             <title>Integer value testing</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -428,7 +428,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             converted to the script <code>$destNumeralSystem</code>.
         </para>
 
-        <example>
+        <example id="zend.locale.numbersystems.example-1">
             <title>Converting numerals from Eastern Arabic scripts to European/Latin scripts</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -445,7 +445,7 @@ print "\nNormalized: " . $latinScript;]]>
             Similarly, any of the supported numeral systems may be converted to any other supported numeral system.
         </para>
 
-        <example>
+        <example id="zend.locale.numbersystems.example-2">
             <title>Converting numerals from Latin script to Eastern Arabic script</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -458,7 +458,7 @@ print "\nLocalized: " . $arabicScript;]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.locale.numbersystems.example-3">
             <title>Getting 4 letter CLDR script code using a native-language name of the script</title>
             <programlisting role="php"><![CDATA[<?php
 function getScriptCode($scriptName, $locale)
@@ -478,7 +478,7 @@ echo getScriptCode('tamoul', 'fr'); // outputs "Taml"]]>
             <title>List of supported numeral systems</title>
 
             <para>
-                <table>
+                <table id="zend.locale.appendix.numberscripts.supported.table">
                     <title>List of supported numeral systems</title>
                     <tgroup cols="2">
                         <thead>

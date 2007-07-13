@@ -11,7 +11,7 @@
             address in the <code>Zend_Rest_Client</code> constructor.
         </para>
 
-        <example>
+        <example id="zend.rest.client.introduction.example-1">
             <title>A basic REST request</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -60,7 +60,7 @@ echo $client->get();]]>
             type.
         </para>
 
-        <example>
+        <example id="zend.rest.client.return.example-1">
             <title>Response Status</title>
             <programlisting role="php"><![CDATA[<?php
 $result = $client->sayHello('Davey', 'Day')->get();
@@ -91,7 +91,7 @@ if ($result->isSuccess()) {
             for the object, or an array of PHP value results.
         </para>
 
-        <example>
+        <example id="zend.rest.client.return.example-2">
             <title>Using Technorati's Rest Service</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -105,7 +105,7 @@ echo $result->firstname() .' '. $result->lastname();]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.rest.client.return.example-3">
             <title>Example Technorati Response</title>
             <programlisting role="xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <!-- generator="Technorati API version 1.0 /bloginfo" -->
@@ -169,7 +169,7 @@ echo $result->firstname() .' '. $result->lastname();]]>
             method when calling a <code>Zend_Rest_Server</code> service.
         </para>
 
-        <example>
+        <example id="zend.rest.client.args.example-1">
             <title>Setting Request Arguments</title>
 
             <programlisting role="php"><![CDATA[<?php

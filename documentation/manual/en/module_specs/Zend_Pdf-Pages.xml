@@ -48,7 +48,7 @@
     and can be manipulated as a common array:
     </para>
 
-    <example>
+    <example id="zend.pdf.pages.example-1">
         <title>PDF document pages management.</title>
         <programlisting role="php"><![CDATA[<?php
 ...

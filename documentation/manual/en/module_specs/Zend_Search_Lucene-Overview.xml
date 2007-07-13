@@ -177,7 +177,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
                     fields as an identifier.
                </para>
 
-                <table>
+                <table id="zend.search.lucene.index-creation.understanding-field-types.table">
                     <title>Zend_Search_Lucene_Field Types</title>
                     <tgroup cols="4">
                         <thead>

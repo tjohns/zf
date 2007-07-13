@@ -5,7 +5,7 @@
         <code>Zend_Mail</code> before the <code>send()</code> method is called. For all remaining
         <code>Zend_Mail::send()</code> calls in the current script, the SMTP transport will then be used:
     </para>
-    <example>
+    <example id="zend.mail.sending.example-1">
         <title>Sending E-Mail via SMTP</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';

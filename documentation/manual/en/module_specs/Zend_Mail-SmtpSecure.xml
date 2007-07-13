@@ -7,7 +7,7 @@
   constructor with a value of either 'ssl' or 'tls'. A port can optionally be
   supplied, otherwise it defaults to 25 for TLS or 465 for SSL.</para>
 
-  <example>
+  <example id="zend.mail.smtp-secure.example-1">
     <title>Enabling a secure connection within
     Zend_Mail_Transport_Smtp</title>
 

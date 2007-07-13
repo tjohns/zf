@@ -264,7 +264,7 @@ foreach ($results as $result) {
                     <code>Zend_Service_Amazon_Item</code> has a number of properties directly related to their standard
                     Amazon API counterparts.
                 </para>
-                <table>
+                <table id="zend.service.amazon.classes.item.properties.table-1">
                     <title>Zend_Service_Amazon_Item Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -403,7 +403,7 @@ foreach ($results as $result) {
             <para><code>Zend_Service_Amazon_Image</code> represents a remote Image for a product.</para>
             <sect4 id="zend.service.amazon.classes.image.properties">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.image.properties.table-1">
                     <title>Zend_Service_Amazon_Image Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -477,7 +477,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.offerset.parameters">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.offerset.parameters.table-1">
                     <title>Zend_Service_Amazon_OfferSet Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -560,7 +560,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.offer.properties">
                 <title>Zend_Service_Amazon_Offer Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.offer.properties.table-1">
                     <title>Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -631,7 +631,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.similarproduct.properties">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.similarproduct.properties.table-1">
                     <title>Zend_Service_Amazon_SimilarProduct Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -667,7 +667,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.accessories.properties">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.accessories.properties.table-1">
                     <title>Zend_Service_Amazon_Accessories Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -703,7 +703,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.customerreview.properties">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.customerreview.properties.table-1">
                     <title>Zend_Service_Amazon_CustomerReview Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -764,7 +764,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.editorialreview.properties">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.editorialreview.properties.table-1">
                     <title>Zend_Service_Amazon_EditorialReview Properties</title>
                     <tgroup cols="3">
                         <thead>
@@ -800,7 +800,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.listmania.properties">
                 <title>Properties</title>
-                <table>
+                <table id="zend.service.amazon.classes.listmania.properties.table-1">
                     <title>Zend_Service_Amazon_Listmania Properties</title>
                     <tgroup cols="3">
                         <thead>

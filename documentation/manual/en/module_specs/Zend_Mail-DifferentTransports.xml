@@ -6,7 +6,7 @@
         <code>setDefaultTransport()</code>. The passed object will override the default transport for the
         actual <code>send()</code> request:
     </para>
-    <example>
+    <example id="zend.mail.different-transports.example-1">
         <title>Using Different Transports</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

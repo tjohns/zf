@@ -6,7 +6,7 @@
         should be transferred with base64 encoding, and is handled as an attachment. These assumptions can be
         overridden by passing more parameters to <code>createAttachment()</code>:
     </para>
-    <example>
+    <example id="zend.mail.attachments.example-1">
         <title>E-Mail Messages with Attachments</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

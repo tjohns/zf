@@ -18,7 +18,7 @@
             are reset, and a GET request is sent to the new location. This
             behavior can be changed by setting the 'strictredirects' configuration
             parameter to boolean TRUE:
-            <example>
+            <example id="zend.http.client.redirections.example-1">
                 <title>Forcing RFC 2616 Strict Redirections on 301 and 302 Responses</title>
                 <programlisting role="php"><![CDATA[<?php
 // Strict Redirections
@@ -42,7 +42,7 @@ $client->setConfig(array('strictredirects' => false));]]>
             to your request, so that no direct header modification is
             required. This is done using the setCookie() method. This method
             can be used in several ways:
-            <example>
+            <example id="zend.http.client.cookies.example-1">
                 <title>Setting Cookies Using setCookie()</title>
                 <programlisting role="php"><![CDATA[<?php
 // Easy and simple: by providing a cookie name and cookie value
@@ -67,7 +67,7 @@ $client->setCookie($cookie);]]>
             is useful, for example when you need to log in to a remote site
             first and receive and authentication or session ID cookie before
             sending further requests.
-            <example>
+            <example id="zend.http.client.cookies.example-2">
                 <title>Enabling Cookie Stickiness</title>
                 <programlisting role="php"><![CDATA[<?php
 // To turn cookie stickiness on, set a Cookie Jar
@@ -99,7 +99,7 @@ $client->request('GET');]]>
             Setting custom headers can be done by using the setHeaders() method.
             This method is quite diverse and can be used in several ways, as
             the following example shows:
-            <example>
+            <example id="zend.http.client.custom_headers.example-1">
                 <title>Setting A Single Custom Request Header</title>
                 <programlisting role="php"><![CDATA[<?php
 // Setting a single header, overwriting any previous value
@@ -112,14 +112,14 @@ $client->setHeaders('Host: www.example.com');
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'
-));]]
+));]]>
                 </programlisting>
             </example>
         </para>
         <para>
             setHeader() can also be easily used to set multiple headers in one
             call, by providing an array of headers as a single parameter:
-            <example>
+            <example id="zend.http.client.custom_headers.example-2">
                 <title>Setting Multiple Custom Request Headers</title>
                 <programlisting role="php"><![CDATA[<?php
 // Setting multiple headers, overwriting any previous value
@@ -157,7 +157,7 @@ $client->setHeaders(array(
             the mime_content_type function will be used to guess the file's
             content type, if it is available. In any case, the default MIME
             type will be application/octet-stream.
-            <example>
+            <example id="zend.http.client.file_uploads.example-1">
                 <title>Using setFileUpload to Upload Files</title>
                 <programlisting role="php"><![CDATA[<?php
 // Uploading arbitrary data as a file
@@ -198,7 +198,7 @@ $client->submit('POST');]]>
             parameter is the content-type of the data. While this parameter is
             optional, you should usually set it before sending the request -
             either using setRawData(), or with another method: setEncType().
-            <example>
+            <example id="zend.http.client.raw_post_data.example-1">
                 <title>Sending Raw POST Data</title>
                 <programlisting role="php"><![CDATA[<?php
 $xml = '<book>' .
@@ -236,7 +236,7 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
             authentication type parameter. As mentioned, currently only basic
             authentication is supported (digest authentication support is
             planned).
-            <example>
+            <example id="zend.http.client.http_authentication.example-1">
                 <title>Setting HTTP Authentication User and Password</title>
                 <programlisting role="php"><![CDATA[<?php
 // Using basic authentication
@@ -298,7 +298,7 @@ $client->setAuth('shahar', 'myPassword!');]]>
             object in the user's session. This way, you will only need to
             authenticate the user once every session.
         </para>
-        <example>
+        <example id="zend.http.client.multiple_requests.example-1">
             <title>Performing consecutive requests with one client</title>
             <programlisting role="php"><![CDATA[<?php
 // First, instantiate the client

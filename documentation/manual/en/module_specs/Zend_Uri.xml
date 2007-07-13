@@ -32,7 +32,7 @@
       is passed to <code>Zend_Uri::factory()</code>.
     </para>
 
-    <example>
+    <example id="zend.uri.creation.example-1">
       <title>Creating a New URI with <code>Zend_Uri::factory()</code></title>
 
       <programlisting role="php"><![CDATA[<?php
@@ -68,7 +68,7 @@ $uri = Zend_Uri::factory('http');
       <code>Zend_Uri::factory()</code>.
     </para>
 
-    <example>
+    <example id="zend.uri.manipulation.example-1">
       <title>Manipulating an Existing URI with <code>Zend_Uri::factory()</code></title>
 
       <programlisting role="php"><![CDATA[<?php
@@ -97,7 +97,7 @@ $uri = Zend_Uri::factory('http://www.zend.com');
       validation of an existing URI is needed.
     </para>
 
-    <example>
+    <example id="zend.uri.validation.example-1">
       <title>URI Validation with <code>Zend_Uri::check()</code></title>
 
       <programlisting role="php"><![CDATA[<?php
@@ -134,7 +134,7 @@ $valid = Zend_Uri::check('http://uri.in.question');
         the scheme of <code>http://www.zend.com</code> is <code>http</code>.
       </para>
 
-      <example>
+      <example id="zend.uri.instance-methods.getscheme.example-1">
         <title>Getting the Scheme from a <code>Zend_Uri_*</code> Object</title>
 
         <programlisting role="php"><![CDATA[<?php
@@ -156,7 +156,7 @@ $scheme = $uri->getScheme();  // "http"]]>
     <sect3 id="zend.uri.instance-methods.geturi">
       <title>Getting the Entire URI</title>
 
-      <example>
+      <example id="zend.uri.instance-methods.geturi.example-1">
         <title>Getting the Entire URI from a <code>Zend_Uri_*</code> Object</title>
 
         <programlisting role="php"><![CDATA[<?php
@@ -186,7 +186,7 @@ echo $uri->getUri();  // "http://www.zend.com"]]>
         invalid after it is manipulated.
       </para>
 
-      <example>
+      <example id="zend.uri.instance-methods.valid.example-1">
         <title>Validating a <code>Zend_Uri_*</code> Object</title>
 
         <programlisting role="php"><![CDATA[<?php

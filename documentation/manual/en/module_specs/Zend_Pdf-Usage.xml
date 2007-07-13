@@ -12,7 +12,7 @@
     for test purposes.
     </para>
 
-    <example>
+    <example id="zend.pdf.usage.example-1">
         <title>Zend_Pdf module usage demo.</title>
         <programlisting role="php"><![CDATA[<?php
 /**

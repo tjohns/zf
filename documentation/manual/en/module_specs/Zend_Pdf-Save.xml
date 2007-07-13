@@ -15,7 +15,7 @@
     $newSegmentOnly is true, then only the new PDF file segment is returned.
     </para>
 
-    <example>
+    <example id="zend.pdf.save.example-1">
         <title>Save PDF document.</title>
         <programlisting role="php"><![CDATA[<?php
 ...

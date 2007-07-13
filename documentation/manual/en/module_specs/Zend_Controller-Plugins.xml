@@ -181,9 +181,12 @@ $front->dispatch();]]>
         </programlisting>
 
         <note>
-            Plugins may be registered at any time during the front controller
-            execution. However, if an event has passed for which the plugin has
-            a registered event method, that method will not be triggered.
+            <para>
+                Plugins may be registered at any time during the front
+                controller execution. However, if an event has passed for which
+                the plugin has a registered event method, that method will not
+                be triggered.
+            </para>
         </note>
     </sect2>
 

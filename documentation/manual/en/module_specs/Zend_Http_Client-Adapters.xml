@@ -45,7 +45,7 @@
         </para>
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.http.client.adapters.socket">
         <title>The Socket Adapter</title>
         <para>
             The default connection adapter is the Zend_Http_Client_Adapter_Socket
@@ -71,7 +71,7 @@
                 </para>
             </footnote>.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.socket.example-1">
             <title>Changing the HTTPS transport layer</title>
             <programlisting role="php"><![CDATA[<?php
 // Set the configuration parameters
@@ -96,7 +96,7 @@ $response = $client->request();]]>
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.proxy">
+    <sect2 id="zend.http.client.adapters.proxy">
         <title>The Proxy Adapter</title>
         <para>
             The Zend_Http_Client_Adapter_Proxy adapter is similar to the default
@@ -109,7 +109,7 @@ $response = $client->request();]]>
         <para>
             Using the Proxy adapter requires several additional configuration
             parameters to be set, in addition to the default 'adapter' option:
-            <table>
+            <table id="zend.http.client.adapters.proxy.table">
                 <title>Zend_Http_Client configuration parameters</title>
                 <tgroup cols="4">
                     <thead>
@@ -173,7 +173,7 @@ $response = $client->request();]]>
             accepted by the Zend_Http_Client::setAuth() method. Currently, only
             basic authentication (Zend_Http_Client::AUTH_BASIC) is supported.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.proxy.example-1">
             <title>Using Zend_Http_Client behind a proxy server</title>
             <programlisting role="php"><![CDATA[<?php
 // Set the configuration parameters
@@ -199,7 +199,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.test">
+    <sect2 id="zend.http.client.adapters.test">
         <title>The Test Adapter</title>
         <para>
             Sometimes, it is very hard to test code that relies on HTTP connections.
@@ -221,7 +221,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
             object. Once set, your Test adapter will always return this response,
             without even performing an actual HTTP request.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-1">
             <title>Testing Against a Single HTTP Response Stub</title>
             <programlisting role="php"><![CDATA[<?php
 // Instantiate a new adapter and client
@@ -263,7 +263,7 @@ $response = $client->request('GET');
             opportunity to set the next response(s) your program might need
             before returning to the caller.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-2">
             <title>Testing Against Multiple HTTP Response Stubs</title>
             <programlisting role="php"><![CDATA[<?php
 // Instantiate a new adapter and client
@@ -323,7 +323,7 @@ $adapter->addResponse(
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.extending">
+    <sect2 id="zend.http.client.adapters.extending">
         <title>Creating your own connection adapters</title>
         <para>
             You can create your own connection adapters and use them. You could, for
@@ -337,7 +337,7 @@ $adapter->addResponse(
             shows the skeleton of a user-implemented adapter class. All the public
             functions defined in this example must be defined in your adapter as well:
         </para>
-        <example>
+        <example id="zend.http.client.adapters.extending.example-1">
             <title>Creating your own connection adapter</title>
             <programlisting role="php"><![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface

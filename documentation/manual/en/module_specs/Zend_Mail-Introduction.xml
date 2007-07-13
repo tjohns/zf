@@ -5,7 +5,7 @@
         multipart e-mail messages. Mail can be sent with <code>Zend_Mail</code> via the php built-in
         <ulink url="http://php.net/mail"><code>mail()</code></ulink> function or via direct SMTP connection.
     </para>
-    <example>
+    <example id="zend.mail.introduction.example-1">
         <title>Simple E-Mail with Zend_Mail</title>
         <para>
             A simple e-mail consists of some recipients, a subject, a body and a sender. To send such a mail using

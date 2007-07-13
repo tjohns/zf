@@ -34,7 +34,7 @@
             month, or year in the input to fit the format used.
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-1">
             <title>Key values for getDate() with option 'fix_date'</title>
             <tgroup cols='4'>
                 <thead>
@@ -83,7 +83,7 @@
             and 'i' using the PHP date format).
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-2">
             <title>Return values</title>
             <tgroup cols='4'>
                 <thead>
@@ -142,7 +142,7 @@
             </tgroup>
         </table>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-1">
             <title>Normalizing a date</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -185,7 +185,7 @@ Array
             <code>setOptions()</code>. This forces getDate to use the default date format for <code>$locale</code>.
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-2">
             <title>Normalizing a date by locale</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -201,7 +201,7 @@ print_r ($date);]]>
             A complete date and time is returned when the input contains both a date and time in the expected format.
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-3">
             <title>Normalizing a date with time</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -219,7 +219,7 @@ print_r ($date);]]>
             <code>$format</code>.
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-4">
             <title>Normalizing a userdefined date</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -234,7 +234,7 @@ print_r ($date);]]>
             The format can include the following signs :
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-3">
             <title>Format definition</title>
             <tgroup cols='2'>
                 <thead>
@@ -280,7 +280,7 @@ print_r ($date);]]>
             Examples for proper formats are
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-4">
             <title>Example formats</title>
             <tgroup cols='3'>
                 <thead>
@@ -326,7 +326,7 @@ print_r ($date);]]>
             automatically detects and corrects some kinds of problems with input, such as misplacing the year:
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-5">
             <title>Automatic correction of input dates</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -353,7 +353,7 @@ print_r ($date);]]>
             validity.
         </para>
 
-        <example>
+        <example id="zend.locale.date.test.example-1">
             <title>Date testing</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -380,7 +380,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
             because it uses the default time format for the selected locale.
         </para>
 
-        <example>
+        <example id="zend.locale.time.normalizing.example-1">
             <title>Normalize an unknown time</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -406,7 +406,7 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
             should contain the parts which you expect to have.
         </para>
 
-        <example>
+        <example id="zend.locale.time.test.example-1">
             <title>Testing a time</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';

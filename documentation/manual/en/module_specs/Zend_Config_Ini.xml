@@ -73,7 +73,7 @@ echo $config->database->name; // prints "dbname"]]>
         </programlisting>
     </example>
     <note>
-    <table>
+    <table id="zend.config.adapters.ini.table">
         <title>Zend_Config_Ini Constructor parameters</title>
         <tgroup cols="2">
             <thead>

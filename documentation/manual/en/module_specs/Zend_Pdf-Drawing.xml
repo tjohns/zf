@@ -174,7 +174,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  */
 public function drawText($text, $x, $y, $charEncoding = '');]]>
         </programlisting>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>Draw a string on the page.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -189,7 +189,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         time and Zend_Pdf will handle the conversion for you. You can supply source strings in any encoding
         method supported by PHP's <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> function:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>Draw a UTF-8-encoded string on the page.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -228,7 +228,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
         objects are obtained via one of two factory methods: <code>Zend_Pdf_Font::fontWithName($fontName)</code>
         for the standard 14 PDF fonts or <code>Zend_Pdf_Font::fontWithPath($filePath)</code> for custom fonts.
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-1">
             <title>Create a standard font.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -298,7 +298,7 @@ $pdfPage->setFont($font, 36);
         cannot be read for some reason, or if it is not a TrueType font, the factory method will throw
         an exception:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-2">
             <title>Create a TrueType font.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -316,7 +316,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         If you are concerned about file size, you can request that the font program not be embedded by
         passing a 'do not embed' option to the factory method:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-3">
             <title>Create a TrueType font, but do not embed it in the PDF document.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -343,7 +343,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         You can still use these fonts, but you must either pass the do not embed flag as described above,
         or you can simply suppress the exception:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-4">
             <title>Do not throw an exception for fonts that cannot be embeded.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -361,7 +361,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
         fonts are compressed using the Flate compression scheme, resulting in a space savings of 50% on average.
         If, for some reason, you do not want to compress the font program, you can disable it with an option:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>Do not compress an embedded font.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -373,7 +373,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
         <para>
         Finally, when necessary, you can combine the embedding options by using the bitwise OR operator:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>Combining font embedding options.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -406,7 +406,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
         Image objects should be created with <code>Zend_Pdf_Image::imageWithPath($filePath)</code> method
         (JPG, PNG and TIFF images are supported now):
         </para>
-        <example>
+        <example id="zend.pdf.drawing.image-drawing.example-1">
             <title>Image drawing.</title>
             <programlisting role="php"><![CDATA[<?php
 ...

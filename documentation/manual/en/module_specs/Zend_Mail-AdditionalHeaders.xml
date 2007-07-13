@@ -5,7 +5,7 @@
         parameters containing the name and the value of the header field. A third optional parameter determines
         if the header should have only one or multiple values:
     </para>
-    <example>
+    <example id="zend.mail.additional-headers.example-1">
         <title>Adding E-Mail Message Headers</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

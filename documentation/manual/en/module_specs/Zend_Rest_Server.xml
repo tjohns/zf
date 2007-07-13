@@ -12,7 +12,7 @@
     <sect2 id="zend.rest.server.usage">
         <title>REST Server Usage</title>
 
-        <example>
+        <example id="zend.rest.server.usage.example-1">
             <title>Basic Zend_Rest_Server Usage - Classes</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -25,7 +25,7 @@ $server->handle();]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.rest.server.usage.example-2">
             <title>Basic Zend_Rest_Server Usage - Functions</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -94,7 +94,7 @@ $server->handle();]]>
             array with a <code>status</code> key.
         </para>
 
-        <example>
+        <example id="zend.rest.server.customstatus.example-1">
             <title>Returning Custom Status</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
@@ -127,7 +127,7 @@ $server->handle();]]>
             <code>SimpleXMLElement</code> object.
         </para>
 
-        <example>
+        <example id="zend.rest.server.customxml.example-1">
             <title>Return Custom XML</title>
 
             <programlisting><![CDATA[<?php

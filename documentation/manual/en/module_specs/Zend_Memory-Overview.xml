@@ -27,7 +27,7 @@
             as storage providers.
         </para>
 
-        <example>
+        <example id="zend.memory.introduction.example-1">
             <title>Using Zend_Memory component</title>
             <para>
                 <code>Zend_Memory::factory()</code> instantiates the memory
@@ -130,7 +130,7 @@ $memObject->value = substr($memObject->value, $start, $length);]]>
                     <link linkend="zend.memory.memory-objects.api.getRef">getRef()</link>
                     method instead of accessing the value property directly.
                 </para>
-            </note>:
+            </note>
 
         </sect3>
 

@@ -7,7 +7,7 @@
         different needs the most convinient ways will be shown in this chapter.
     </para>
 
-    <sect2>
+    <sect2 id="zend.date.creation.actual">
 
         <title>Create the actual date</title>
 
@@ -19,7 +19,7 @@
             actual set timezone.
         </para>
 
-        <example>
+        <example id="zend.date.creation.actual.example-1">
 
             <title>Date creation by instance</title>
 
@@ -37,7 +37,7 @@ $date = new Zend_Date();]]>
 
         </example>
 
-        <example>
+        <example id="zend.date.creation.actual.example-2">
 
             <title>Static date creation</title>
 
@@ -58,7 +58,7 @@ $date = Zend_Date::now();]]>
 
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.date.creation.database">
 
         <title>Create a date from database</title>
 
@@ -80,7 +80,7 @@ $date = Zend_Date::now();]]>
             So we have one quick and one convinient way of creating dates from database values.
         </para>
 
-        <example>
+        <example id="zend.date.creation.database.example-1">
 
             <title>Quick creation of dates from database date values</title>
 
@@ -100,9 +100,9 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
 
         </example>
 
-        <example>
+        <example id="zend.date.creation.database.example-2">
 
-            <title>Convinient creation of dates from database date values</title>
+            <title>Convenient creation of dates from database date values</title>
 
             <para>
                 The standard output of all databases is quite different even if it looks the same on the first
@@ -127,7 +127,7 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
 
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.date.creation.array">
 
         <title>Create dates from an array</title>
 
@@ -139,27 +139,39 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
         <para>
             <itemizedlist mark='opencircle'>
                 <listitem>
-                    <emphasis role="strong">day</emphasis>: day of the date as number
+                    <para>
+                        <emphasis role="strong">day</emphasis>: day of the date as number
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">month</emphasis>: month of the date as number
+                    <para>
+                        <emphasis role="strong">month</emphasis>: month of the date as number
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">year</emphasis>: full year of the date
+                    <para>
+                        <emphasis role="strong">year</emphasis>: full year of the date
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">hour</emphasis>: hour of the date
+                    <para>
+                        <emphasis role="strong">hour</emphasis>: hour of the date
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">minute</emphasis>: minute of the date
+                    <para>
+                        <emphasis role="strong">minute</emphasis>: minute of the date
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">second</emphasis>: second of the date
+                    <para>
+                        <emphasis role="strong">second</emphasis>: second of the date
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
 
-        <example>
+        <example id="zend.date.creation.array.example">
 
             <title>Date creation by array</title>
 

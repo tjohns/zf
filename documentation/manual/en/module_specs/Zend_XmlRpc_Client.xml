@@ -33,7 +33,7 @@
             <code>Zend_XmlRpc</code> components.
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.method-calls.example-1">
             <title>XML-RPC Method Call</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/XmlRpc/Client.php';
@@ -61,7 +61,7 @@ echo $client->call('test.sayHello');
             values to pass to the remote method:
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.method-calls.example-2">
             <title>XML-RPC Method Call with Parameters</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/XmlRpc/Client.php';
@@ -117,7 +117,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 according to this table:
             </para>
 
-            <table>
+            <table id="zend.xmlrpc.value.parameters.php-native.table-1">
                 <title>PHP and XML-RPC Type Conversions</title>
                 <tgroup cols="2">
                     <thead>
@@ -203,7 +203,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <code>Zend_XmlRpc_Value::getXmlRpcValue()</code>.
             </para>
 
-            <table>
+            <table id="zend.xmlrpc.value.parameters.xmlrpc-value.table-1">
                 <title><code>Zend_XmlRpc_Value</code> Objects for XML-RPC Types</title>
                 <tgroup cols="3">
                     <thead>
@@ -293,7 +293,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
             method.
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.requests-and-responses.example-1">
             <title>Proxy the Default Namespace</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/XmlRpc/Client.php';
@@ -314,7 +314,7 @@ $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) returns "hello"]]>
             will be proxied:
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.requests-and-responses.example-2">
             <title>Proxy Any Namespace</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/XmlRpc/Client.php';
@@ -355,7 +355,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"]]>
                 <code>Zend_XmlRpc_Client_HttpException</code> will be thrown.
             </para>
 
-            <example>
+            <example id="zend.xmlrpc.client.error-handling.http.example-1">
                 <title>Handling HTTP Errors</title>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -403,7 +403,7 @@ try {
                 response.
             </para>
 
-            <example>
+            <example id="zend.xmlrpc.client.error-handling.faults.example-1">
                 <title>Handling XML-RPC Faults</title>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -471,7 +471,7 @@ try {
             The <code>doRequest()</code> method is also available for use directly:
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.request-to-response.example-1">
             <title>Processing Request to Response</title>
 
             <programlisting role="php"><![CDATA[<?php

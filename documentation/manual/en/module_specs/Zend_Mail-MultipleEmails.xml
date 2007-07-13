@@ -6,7 +6,7 @@
         transport has already established a connection before <code>send()</code> is called, it will be used
         and will not be closed:
     </para>
-    <example>
+    <example id="zend.mail.multiple-emails.example-1">
         <title>Sending Multiple Mails per SMTP Connection</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

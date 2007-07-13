@@ -15,7 +15,7 @@
     Both of them return Zend_Pdf object as a result or throw an exception if error occurs.
     </para>
 
-    <example>
+    <example id="zend.pdf.create.example-1">
         <title>Create new or load existing PDF document.</title>
         <programlisting role="php"><![CDATA[<?php
 ...
@@ -48,7 +48,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     call.
     </para>
 
-    <example>
+    <example id="zend.pdf.create.example-2">
         <title>Requesting specified revision of the PDF document.</title>
         <programlisting role="php"><![CDATA[<?php
 ...

@@ -6,7 +6,7 @@
         This section documents requirements for Zend Framework.
     </para>
 
-    <sect1 id="requirements.extensions">
+    <sect1 id="requirements.version">
 
         <title>PHP Version Required</title>
 
@@ -43,7 +43,7 @@
             application.
         </para>
 
-        <table frame='all'>
+        <table frame='all' id="requirements.extensions.table-1">
             <title>PHP Extensions Used in Zend Framework</title>
             <tgroup cols='3'>
                 <colspec colwidth='1in'/>

@@ -18,7 +18,7 @@
             representations of locales, such as the result of <code>$locale->toString()</code>.
         </para>
 
-        <example>
+        <example id="zend.locale.copying.example-1">
             <title>clone</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -52,7 +52,7 @@ print "copied: ", $copiedLocale; // PHP automatically calls toString() via __toS
             classes should provide a similar equality check.
         </para>
 
-        <example>
+        <example id="zend.locale.equals.example-1">
             <title>Check for equal locales</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -84,7 +84,7 @@ if ($locale->equals($mylocale)) {
             Locale-aware components normally use only the first locale. A quality rating is included, when avaiable.
         </para>
 
-        <example>
+        <example id="zend.locale.getdefault.example-1">
             <title>Get default locales</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -139,7 +139,7 @@ print_r($found2);]]>
             have references to the existing instance object.
         </para>
 
-        <example>
+        <example id="zend.locale.setlocale.example-1">
             <title>setLocale</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -167,7 +167,7 @@ print $locale->toString();]]>
             from the string locale identifier.
         </para>
 
-        <example>
+        <example id="zend.locale.getlocale.example-1">
             <title>getLanguage and getRegion</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -200,7 +200,7 @@ print $locale->getRegion();]]>
             translation with the <code>getTranslation()</code> method.
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -225,7 +225,7 @@ print $locale->getTranslation('de', 'language', 'zh');
             simplicity. See this list for detailed informations.
         </para>
 
-        <table>
+        <table id="zend.locale.getdata.table-1">
             <title>Details for getTranslationList($type = null, $locale = null)</title>
             <tgroup cols="4">
                 <thead>
@@ -370,7 +370,7 @@ print $locale->getTranslation('de', 'language', 'zh');
             the two functions above:
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-2">
             <title>Convenience functions for getTranslation()</title>
             <programlisting role="php"><![CDATA[<?php
 getCountryTranslation($what, $locale = null);
@@ -388,7 +388,7 @@ getTerritoryTranslationList($locale = null);]]>
             The example below demonstrates how to obtain the names of things in different languages.
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-3">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -404,7 +404,7 @@ print_r($locale->getTranslationList('country', 'de'));]]>
             country code is not known.
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-4">
             <title>Converting country name in one language to another</title>
             <programlisting role="php"><![CDATA[<?php
 require 'Zend/Locale.php';
@@ -421,7 +421,7 @@ echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
             To gain some familiarity with what is available, try the example and examine the output.
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-5">
             <title>All available translations</title>
             <programlisting role="php"><![CDATA[<?php
 // obtain a list of all the translation lists
@@ -444,7 +444,7 @@ foreach ($lists as $list) {
             all languages are also locales. In the example, below exceptions are ignored to prevent early termination.
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-6">
             <title>All Languages written in their native language</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -479,7 +479,7 @@ foreach($list as $language => $content) {
             for "yes", "no", their abbreviations, and regex string for proper parsing as shown in the example below.
         </para>
 
-        <example>
+        <example id="zend.locale.getquestion.example-1">
             <title>getQuestion()</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';

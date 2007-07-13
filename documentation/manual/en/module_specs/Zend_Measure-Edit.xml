@@ -59,7 +59,7 @@
             without exceptions.
         </para>
 
-        <example>
+        <example id="zend.measure.edit.convert.example-1">
             <title>Convert</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
@@ -90,7 +90,7 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);]]>
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.add.example-1">
                 <title>Adding units</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -119,7 +119,7 @@ echo $sum; // outputs "300 cm"]]>
         </note>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.add.example-2">
                 <title>Subtract</title>
                 <para>
                     Subtraction of measurements works just like addition.
@@ -151,7 +151,7 @@ echo $sum;]]>
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.equal.example-1">
                 <title>Different measurements</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -167,7 +167,7 @@ if ($unit->equals($unit2)) {
 }]]>
                 </programlisting>
             </example>
-            <example>
+            <example id="zend.measure.edit.equal.example-2">
                 <title>Identical measurements</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -200,7 +200,7 @@ if ($unit->equals($unit2)) {
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.compare.example-1">
                 <title>Difference</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -228,7 +228,7 @@ print "Greater:".$unit3->compare($unit2);]]>
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.changevalue.example-1">
                 <title>Changing a value</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -258,7 +258,7 @@ echo $unit;]]>
             To change the type of a measurement without altering its value use <code>setType()</code>.
         </para>
 
-        <example>
+        <example id="zend.measure.edit.changetype.example-1">
             <title>Changing the type</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';

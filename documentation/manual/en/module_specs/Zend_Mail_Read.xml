@@ -7,7 +7,7 @@
         features. For a feature overview of the implemented storages see the following table.
     </para>
 
-    <table>
+    <table id="zend.mail.read.table-1">
         <title>Mail Read Feature Overview</title>
         <tgroup cols="5">
             <thead>
@@ -434,7 +434,7 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
             delimiters), the local name is the name in the parent folder.
         </para>
 
-        <table>
+        <table id="zend.mail.read-folders.table-1">
             <title>Mail Folder Names</title>
             <tgroup cols="2">
                 <thead>
@@ -505,7 +505,7 @@ $mail->selectFolder($folder);]]>
     <sect2 id="zend.mail.read-advanced">
         <title>Advanced Use</title>
 
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.noop">
             <title>Using NOOP</title>
 
             <para>
@@ -527,7 +527,7 @@ foreach ($mail as $message) {
             </programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.caching">
             <title>Caching instances</title>
 
             <para>
@@ -561,7 +561,7 @@ $cache->set($cache_id, $mail);]]>
             </programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.extending">
             <title>Extending Protocol Classes</title>
 
             <para>

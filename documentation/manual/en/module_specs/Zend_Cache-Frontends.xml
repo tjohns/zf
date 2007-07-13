@@ -1,9 +1,9 @@
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache frontends</title>
 
-    <sect2 id="zend.cache.core">
+    <sect2 id="zend.cache.frontends.core">
         <title>Zend_Cache_Core</title>
-        <sect3 id="zend.cache.core.introduction">
+        <sect3 id="zend.cache.frontends.core.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Core</code> is a special frontend because it is the core
@@ -15,13 +15,13 @@
                 documented there.
             </para></note>
         </sect3>
-        <sect3 id="zend.cache.core.options">
+        <sect3 id="zend.cache.frontends.core.options">
             <title>Available options</title>
             <para>
                 These options are passed to the factory method as demonstrated in previous examples.
             </para>
-            <table>
-                <title>Available options</title>
+            <table id="zend.cache.frontends.core.options.table">
+                <title>Core frontend options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -164,9 +164,9 @@ echo($data);]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.output">
+    <sect2 id="zend.cache.frontends.output">
         <title>Zend_Cache_Frontend_Output</title>
-        <sect3 id="zend.cache.frontend.output.introduction">
+        <sect3 id="zend.cache.frontends.output.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
@@ -174,7 +174,7 @@ echo($data);]]>
                 <code>end()</code> methods.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.output.options">
+        <sect3 id="zend.cache.frontends.output.options">
             <title>Available options</title>
             <para>
                 This frontend doesn't have any specific options other than those of
@@ -182,7 +182,7 @@ echo($data);]]>
             </para>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.output.examples">
+        <sect3 id="zend.cache.frontends.output.examples">
             <title>Examples</title>
             <para>
                 An example is given in the manual at the very beginning. Here it is with minor changes:
@@ -208,9 +208,9 @@ echo 'This is never cached ('.time().').';]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.function">
+    <sect2 id="zend.cache.frontends.function">
         <title>Zend_Cache_Frontend_Function</title>
-        <sect3 id="zend.cache.frontend.function.introduction">
+        <sect3 id="zend.cache.frontends.function.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> caches the results of function calls. It has
@@ -218,10 +218,10 @@ echo 'This is never cached ('.time().').';]]>
                 for the call in an array.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.function.options">
+        <sect3 id="zend.cache.frontends.function.options">
             <title>Available options</title>
-            <table>
-                <title>Available options</title>
+            <table id="zend.cache.frontends.function.options.table">
+                <title>Function frontend options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -261,7 +261,7 @@ echo 'This is never cached ('.time().').';]]>
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.function.examples">
+        <sect3 id="zend.cache.frontends.function.examples">
             <title>Examples</title>
             <para>
                 Using the <code>call()</code> function is the same as using
@@ -287,19 +287,19 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.class">
+    <sect2 id="zend.cache.frontends.class">
         <title>Zend_Cache_Frontend_Class</title>
-        <sect3 id="zend.cache.frontend.class.introduction">
+        <sect3 id="zend.cache.frontends.class.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Frontend_Class</code> is different from <code>Zend_Cache_Frontend_Function</code>
                 because it allows caching of object and static method calls.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.class.options">
+        <sect3 id="zend.cache.frontends.class.options">
             <title>Available options</title>
-            <table>
-                <title>Available options</title>
+            <table id="zend.cache.frontends.class.options.table">
+                <title>Class frontend options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -348,7 +348,7 @@ $cache->call('veryExpensiveFunc', $params);
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.class.examples">
+        <sect3 id="zend.cache.frontends.class.examples">
             <title>Examples</title>
             <para>
                 For example, to cache static calls :
@@ -421,8 +421,8 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
             <title>Available options</title>
-            <table>
-                <title>Available options</title>
+            <table id="zend.cache.frontends.file.options.table">
+                <title>File frontend options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -479,8 +479,8 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
             <title>Available options (for this frontend in Zend_Cache factory)</title>
-            <table>
-                <title>Available options</title>
+            <table id="zend.cache.frontends.page.options.table">
+                <title>Page frontend options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>

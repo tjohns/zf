@@ -125,7 +125,7 @@
     <sect4 id="zend.controller.actionhelper.redirector.basicusage">
         <title>Basic Usage Examples</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-1">
             <title>Setting Options</title>
 
             <para>
@@ -170,7 +170,7 @@ class SomeController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-2">
             <title>Using Defaults</title>
 
             <para>
@@ -206,7 +206,7 @@ class AlternativeController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
             <title>Using goto()'s _forward() API</title>
 
             <para>
@@ -245,7 +245,7 @@ class ForwardController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
             <title>Using route assembly with gotoRout()</title>
 
             <para>
