@@ -10,38 +10,51 @@
         </para>
 
         <itemizedlist>
-            <listitem><para>
+            <listitem>
+                <para>
                     コントローラ内でいちいちビューオブジェクトのインスタンスを
                     作成しなくても済むようにする。
                     ビューオブジェクトは自動的にコントローラに登録されます。
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     ビュースクリプトやヘルパー、そしてフィルタのパスを
                     現在のモジュールに基づいて自動的に設定し、
                     モジュール名をヘルパーやフィルタのクラス名の先頭に自動的に関連付ける。
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     すべてのコントローラとアクションで使用できる
                     グローバルなビューオブジェクトを作成する。
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     すべてのコントローラで使用する、
                     デフォルトのビューレンダリングオプションを設定できるようにする。
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     何も指定しなくても、
                     自動的にビュースクリプトをレンダリングできる機能を追加する。
-            </para></listitem>
+                </para>
+            </listitem>
 
-            <listitem><para>
+            <listitem>
+                <para>
                     ビューの基底パスやビュースクリプトのパスを
                     独自に指定できるようにする。
-            </para></listitem>
+                </para>
+            </listitem>
         </itemizedlist>
+
         <note>
             <para>
                 <code>_forward()</code> やリダイレクト、あるいは手動でのレンダリングを行う場合は、
@@ -498,7 +511,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
     <sect4 id="zend.controller.actionhelper.viewrenderer.basicusage">
         <title>基本的な使用例</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-1">
             <title>基本的な使用法</title>
 
             <para>
@@ -506,35 +519,6 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 を作成してヘルパーブローカに登録し、
                 アクションメソッドで変数の値を設定するというものです。
             </para>
-
-            <note>
-                <title>命名規約: コントローラ名やアクション名の単語の区切り</title>
-                <para>
-                    コントローラやアクションの名前が複数の単語からなるものである場合、
-                    ディスパッチャには、特定のパスや区切り文字を使用して単語を区切った
-                    URL を指定しなければなりません。
-                    <code>ViewRenderer</code> は、コントローラ名の中にあるパス区切り文字を
-                    実際のパス区切り文字 ('/') に置き換え、単語区切り文字をダッシュ
-                    ('-') に置き換えてパスを作成します。したがって、
-                    アクション <code>/foo.bar/baz.bat</code> をコールすると
-                    FooBarController.php の
-                    <code>FooBarController::bazBatAction()</code> へディスパッチされ、
-                    <code>foo-bar/baz-bat.phtml</code> をレンダリングすることになります。
-                    また、アクション <code>/bar_baz/baz-bat</code> をコールすると
-                    <code>Bar/BazController.php</code> (パス区切り文字に注意) の
-                    <code>Bar_BazController::bazBatAction()</code>
-                    へディスパッチされ、<code>bar/baz/baz-bat.phtml</code>
-                    をレンダリングすることになります。
-                </para>
-
-                <para>
-                    二番目の例では、モジュールはデフォルトモジュールのままであることに注意しましょう。
-                    しかし、パス区切り文字があるために、
-                    <code>Bar/BazController.php</code> にある
-                    <code>Bar_BazController</code> を受け取ることになります。
-                    ビューレンダラはコントローラのディレクトリ階層を模倣します。
-                </para>
-            </note>
 
             <programlisting role="php"><![CDATA[<?php
 // 起動ファイル内で
@@ -574,7 +558,36 @@ class Foo_BarController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <note>
+            <title>命名規約: コントローラ名やアクション名の単語の区切り</title>
+            <para>
+                コントローラやアクションの名前が複数の単語からなるものである場合、
+                ディスパッチャには、特定のパスや区切り文字を使用して単語を区切った
+                URL を指定しなければなりません。
+                <code>ViewRenderer</code> は、コントローラ名の中にあるパス区切り文字を
+                実際のパス区切り文字 ('/') に置き換え、単語区切り文字をダッシュ
+                ('-') に置き換えてパスを作成します。したがって、
+                アクション <code>/foo.bar/baz.bat</code> をコールすると
+                FooBarController.php の
+                <code>FooBarController::bazBatAction()</code> へディスパッチされ、
+                <code>foo-bar/baz-bat.phtml</code> をレンダリングすることになります。
+                また、アクション <code>/bar_baz/baz-bat</code> をコールすると
+                <code>Bar/BazController.php</code> (パス区切り文字に注意) の
+                <code>Bar_BazController::bazBatAction()</code>
+                へディスパッチされ、<code>bar/baz/baz-bat.phtml</code>
+                をレンダリングすることになります。
+            </para>
+
+            <para>
+                二番目の例では、モジュールはデフォルトモジュールのままであることに注意しましょう。
+                しかし、パス区切り文字があるために、
+                <code>Bar/BazController.php</code> にある
+                <code>Bar_BazController</code> を受け取ることになります。
+                ビューレンダラはコントローラのディレクトリ階層を模倣します。
+            </para>
+        </note>
+
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-2">
             <title>自動レンダリングの無効化</title>
 
             <para>
@@ -586,13 +599,6 @@ class Foo_BarController extends Zend_Controller_Action
                 (<code>setNeverRender()</code>) か、あるいは現在のアクションでだけ
                 自動レンダリングを無効にする (<code>setNoRender()</code>) かです。
             </para>
-
-            <note><para>
-                たいていの場合は、自動レンダリングを全体で無効にする
-                (<code>setNeverRender()</code>) のは無意味です。
-                なぜなら、<code>ViewRenderer</code> の唯一の存在意義が、
-                ビューオブジェクトを自動的に設定することだからです。
-            </para></note>
 
             <programlisting role="php"><![CDATA[<?php
 // Bar モジュールの Baz コントローラクラス
@@ -617,7 +623,16 @@ class Bar_BatController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <note>
+            <para>
+                たいていの場合は、自動レンダリングを全体で無効にする
+                (<code>setNeverRender()</code>) のは無意味です。
+                なぜなら、<code>ViewRenderer</code> の唯一の存在意義が、
+                ビューオブジェクトを自動的に設定することだからです。
+            </para>
+        </note>
+
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-3">
             <title>別のビュースクリプトの選択</title>
 
             <para>
@@ -664,7 +679,7 @@ class Foo_BarController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-4">
             <title>登録されているビューの変更</title>
 
             <para>
@@ -699,7 +714,7 @@ class Foo_BarController extends Zend_Controller_Action
     <sect4 id="zend.controller.actionhelper.viewrenderer.advancedusage">
         <title>高度な使用例</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-1">
             <title>パスの指定方法の変更</title>
 
             <para>
@@ -740,7 +755,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-2">
             <title>単一のアクションから複数のビュースクリプトをレンダリングする例</title>
 
             <para>

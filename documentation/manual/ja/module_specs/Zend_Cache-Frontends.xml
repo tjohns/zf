@@ -1,9 +1,9 @@
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
-    <sect2 id="zend.cache.core">
+    <sect2 id="zend.cache.frontends.core">
         <title>Zend_Cache_Core</title>
-        <sect3 id="zend.cache.core.introduction">
+        <sect3 id="zend.cache.frontends.core.introduction">
             <title>導入</title>
             <para>
                 <code>Zend_Cache_Core</code> は特別なフロントエンドであり、
@@ -17,13 +17,13 @@
                 詳しい説明は省略します。
             </para></note>
         </sect3>
-        <sect3 id="zend.cache.core.options">
+        <sect3 id="zend.cache.frontends.core.options">
             <title>使用可能なオプション</title>
             <para>
                 これらのオプションを、先の例で示したようにファクトリメソッドに渡します。
             </para>
-            <table>
-                <title>使用可能なオプション</title>
+            <table id="zend.cache.frontends.core.options.table">
+                <title>Core フロントエンドのオプション</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -173,9 +173,9 @@ echo($data);]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.output">
+    <sect2 id="zend.cache.frontends.output">
         <title>Zend_Cache_Frontend_Output</title>
-        <sect3 id="zend.cache.frontend.output.introduction">
+        <sect3 id="zend.cache.frontends.output.introduction">
             <title>導入</title>
             <para>
                 <code>Zend_Cache_Frontend_Output</code> は、出力を横取りするフロントエンドです。
@@ -184,7 +184,7 @@ echo($data);]]>
                 <code>end()</code> メソッドの間の出力を横取りします。
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.output.options">
+        <sect3 id="zend.cache.frontends.output.options">
             <title>使用可能なオプション</title>
             <para>
                 <code>Zend_Cache_Core</code> のオプション以外に、
@@ -192,7 +192,7 @@ echo($data);]]>
             </para>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.output.examples">
+        <sect3 id="zend.cache.frontends.output.examples">
             <title>例</title>
             <para>
                 このマニュアルの冒頭に示した例とほとんど同じですが、少しだけ変更を加えています。
@@ -218,9 +218,9 @@ echo 'これはキャッシュされません ('.time().').';]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.function">
+    <sect2 id="zend.cache.frontends.function">
         <title>Zend_Cache_Frontend_Function</title>
-        <sect3 id="zend.cache.frontend.function.introduction">
+        <sect3 id="zend.cache.frontends.function.introduction">
             <title>導入</title>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> は、関数コールの結果をキャッシュします。
@@ -228,10 +228,10 @@ echo 'これはキャッシュされません ('.time().').';]]>
                 関数名とパラメータを配列にしてこのメソッドに渡します。
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.function.options">
+        <sect3 id="zend.cache.frontends.function.options">
             <title>使用可能なオプション</title>
-            <table>
-                <title>使用可能なオプション</title>
+            <table id="zend.cache.frontends.function.options.table">
+                <title>Function フロントエンドのオプション</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -271,7 +271,7 @@ echo 'これはキャッシュされません ('.time().').';]]>
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.function.examples">
+        <sect3 id="zend.cache.frontends.function.examples">
             <title>例</title>
             <para>
                 <code>call()</code> 関数の使用法は、PHP の
@@ -297,19 +297,19 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.class">
+    <sect2 id="zend.cache.frontends.class">
         <title>Zend_Cache_Frontend_Class</title>
-        <sect3 id="zend.cache.frontend.class.introduction">
+        <sect3 id="zend.cache.frontends.class.introduction">
             <title>導入</title>
             <para>
                 <code>Zend_Cache_Frontend_Class</code> は、<code>Zend_Cache_Frontend_Function</code>
                 と異なり、オブジェクトおよびスタティックメソッドのコールをキャッシュします。
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.class.options">
+        <sect3 id="zend.cache.frontends.class.options">
             <title>使用可能なオプション</title>
-            <table>
-                <title>使用可能なオプション</title>
+            <table id="zend.cache.frontends.class.options.table">
+                <title>Class フロントエンドのオプション</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -358,7 +358,7 @@ $cache->call('veryExpensiveFunc', $params);
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.class.examples">
+        <sect3 id="zend.cache.frontends.class.examples">
             <title>例</title>
             <para>
                 例えば、スタティックメソッドのコールをキャッシュするには次のようにします。
@@ -432,8 +432,8 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
             <title>使用可能なオプション</title>
-            <table>
-                <title>使用可能なオプション</title>
+            <table id="zend.cache.frontends.file.options.table">
+                <title>File フロントエンドのオプション</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -494,8 +494,8 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
             <title>(Zend_Cache ファクトリで、このフロントエンドを使用する際に) 使用可能なオプション</title>
-            <table>
-                <title>使用可能なオプション</title>
+            <table id="zend.cache.frontends.page.options.table">
+                <title>Page フロントエンドのオプション</title>
                 <tgroup cols="4">
                      <thead>
                           <row>

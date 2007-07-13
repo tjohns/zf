@@ -489,7 +489,7 @@ class MyController extends Zend_Controller_Action
             共通処理をそこにまとめていくようにしましょう。
         </para>
 
-        <sect3 id="zend.controller.action.subclassing.call">
+        <example id="zend.controller.action.subclassing.example-call">
             <title>存在しないアクションの処理</title>
 
             <para>
@@ -551,7 +551,7 @@ class MyController extends Zend_Controller_Action
     }
 }]]>
             </programlisting>
-        </sect3>
+        </example>
 
         <para>
             <code>__call()</code> をオーバーライドするかわりに、

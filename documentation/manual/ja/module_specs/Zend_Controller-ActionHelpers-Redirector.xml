@@ -128,7 +128,7 @@
     <sect4 id="zend.controller.actionhelper.redirector.basicusage">
         <title>基本的な使用例</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-1">
             <title>オプションの設定</title>
 
             <para>
@@ -173,7 +173,7 @@ class SomeController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-2">
             <title>デフォルト設定の使用</title>
 
             <para>
@@ -209,7 +209,7 @@ class AlternativeController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
             <title>goto() での _forward() API の使用</title>
 
             <para>
@@ -249,7 +249,7 @@ class ForwardController extends Zend_Controller_Action
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
             <title>gotoRout() でのルートアセンブリの使用</title>
 
             <para>

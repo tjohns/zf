@@ -10,8 +10,8 @@
         <para>
             使用可能なオプションは次のとおりです。
         </para>
-        <table>
-            <title>使用可能なオプション</title>
+        <table id="zend.cache.backends.file.table">
+            <title>File バックエンドのオプション</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -109,8 +109,8 @@
         <para>
             使用可能なオプションは次のとおりです。
         </para>
-        <table>
-            <title>使用可能なオプション</title>
+        <table id="zend.cache.backends.sqlite.table">
+            <title>Sqlite バックエンドのオプション</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -166,8 +166,8 @@
         <para>
             使用可能なオプションは次のとおりです。
         </para>
-        <table>
-            <title>使用可能なオプション</title>
+        <table id="zend.cache.backends.memcached.table">
+            <title>Memcached バックエンドのオプション</title>
             <tgroup cols="4">
                  <thead>
                       <row>

@@ -82,7 +82,7 @@ echo $config->database->name; // "dbname" と出力します]]>
         </programlisting>
     </example>
     <note>
-    <table>
+    <table id="zend.config.adapters.ini.table">
         <title>Zend_Config_Ini コンストラクタのパラメータ</title>
         <tgroup cols="2">
             <thead>

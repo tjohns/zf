@@ -18,23 +18,13 @@
         (たとえば <code>Output</code>、<code>File</code>、<code>Function</code>、<code>Class</code> など)
         こともできます。
     </para>
-    <example>
+    <example id="zend.cache.introduction.example-1">
         <title><code>Zend_Cache::factory()</code> によるフロントエンドの取得</title>
         <para>
             <code>Zend_Cache::factory()</code> は、適切なオブジェクトを作成してそれらを互いに結び付けます。
             この最初の例では、フロントエンドに <code>Core</code>、バックエンドに <code>File</code>
             を使用します。
         </para>
-
-        <note>
-            <title>複数の単語からなるフロントエンドやバックエンドについて</title>
-            <para>
-                'ZendPlatform' のように複数の単語からなるフロントエンドやバックエンドもあります。
-                これをファクトリで指定する場合は、単語の間に区切り文字を指定します。
-                区切り文字としては スペース (' ')、ハイフン ('-') あるいはピリオド ('.')
-                が使用できます。
-            </para>
-        </note>
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
@@ -50,14 +40,30 @@ $backendOptions = array(
 
 // Zend_Cache_Core オブジェクトを取得します
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
-       </programlisting>
-       <para>
+        </programlisting>
+    </example>
+
+    <note>
+        <title>複数の単語からなるフロントエンドやバックエンドについて</title>
+        <para>
+            'ZendPlatform' のように複数の単語からなるフロントエンドやバックエンドもあります。
+            これをファクトリで指定する場合は、単語の間に区切り文字を指定します。
+            区切り文字としては スペース (' ')、ハイフン ('-') あるいはピリオド ('.')
+            が使用できます。
+        </para>
+    </note>
+
+    <example id="zend.cache.introduction.example-2">
+        <title>データベースへのクエリの結果のキャッシュ</title>
+
+        <para>
             これでフロントエンドが得られました。あらゆる種類のデータを保存することができます
             (そのために、シリアライズを有効にしました)。例えば、非常に時間がかかるデータベースクエリの結果を
             キャッシュすることが可能です。いったんキャッシュしてしまえば、
             あとはデータベースに接続する必要さえありません。キャッシュから取得したレコードを
             アンシリアライズしてデータを取得すればよいのです。
-       </para>
+        </para>
+
         <programlisting role="php"><![CDATA[<?php
 // $cache は先ほどの例で作成したものです
 
@@ -82,7 +88,8 @@ if(!$result = $cache->load('myresult')) {
 print_r($result);]]>
         </programlisting>
     </example>
-    <example>
+
+    <example id="zend.cache.introduction.example-3">
         <title><code>Zend_Cache</code> 出力フロントエンドによる出力のキャッシュ</title>
         <para>
             まず、出力をキャッシュしたい部分を何らかの条件式で「マークアップ」し、

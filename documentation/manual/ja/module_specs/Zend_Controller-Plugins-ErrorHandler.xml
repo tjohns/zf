@@ -234,7 +234,7 @@ $this->getResponse()->clearBody();]]>
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
         <title>プラグインの使用例</title>
 
-        <example>
+        <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
             <title>標準的な使用法</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
@@ -245,7 +245,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
             <title>別のエラーハンドラの設定</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
@@ -260,7 +260,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
             <title>アクセス用メソッドの使用</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
