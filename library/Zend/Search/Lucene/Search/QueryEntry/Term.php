@@ -141,6 +141,10 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
                     }
 
                     $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($subPatternL2, $encoding);
+                    if (count($tokens) > 1) {
+                        throw new Zend_Search_Lucene_Search_QueryParserException('Wildcard search is supported only for non-multiple word terms');
+                    }
+
                     foreach ($tokens as $token) {
                         $pattern .= $token->getTermText();
                     }
