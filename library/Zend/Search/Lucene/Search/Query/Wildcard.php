@@ -57,7 +57,7 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
      *
      * @var array
      */
-    private $_matches;
+    private $_matches = null;
 
     /**
      * Zend_Search_Lucene_Search_Query_Wildcard constructor.
@@ -156,13 +156,13 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
         } else if (count($this->_matches) == 1) {
             return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
         } else {
-            $rewritedQuery = new Zend_Search_Lucene_Search_Query_MultiTerm();
+            $rewrittenQuery = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
             foreach ($this->_matches as $matchedTerm) {
-                $rewritedQuery->addTerm($matchedTerm);
+                $rewrittenQuery->addTerm($matchedTerm);
             }
 
-            return $rewritedQuery;
+            return $rewrittenQuery;
         }
     }
 
@@ -193,9 +193,14 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
      * Return query terms
      *
      * @return array
+     * @throws Zend_Search_Lucene_Exception
      */
     public function getQueryTerms()
     {
+        if ($this->_matches === null) {
+            throw new Zend_Search_Lucene_Exception('Search has to be performed first to get matched terms');
+        }
+
         return $this->_matches;
     }
 
