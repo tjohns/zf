@@ -1,9 +1,9 @@
 ﻿<sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
-    <sect2 id="zend.cache.core">
-        <title>Zend_Cache_Core</title>
-        <sect3 id="zend.cache.core.introduction">
+    <sect2 id="zend.cache.frontends.core">
+    <title>Zend_Cache_Core</title>
+        <sect3 id="zend.cache.frontends.core.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Core</code> est un frontend spécial parce qu'il est le coeur du module. C'est le frontend de cache générique qui est étendu par les autres classes.
@@ -12,13 +12,13 @@
                 Tous les frontends héritent de <code>Zend_Cache_Core</code> ainsi ses méthodes et options (décrites ci-dessous) seront aussi disponibles dans les autres frontends, cependant ils ne sont pas documentés ici.
             </para></note>
         </sect3>
-        <sect3 id="zend.cache.core.options">
+        <sect3 id="zend.cache.frontends.core.options">
             <title>Options disponibles</title>
             <para>
                 Ces options sont passées à la méthode de fabrique comme montrées dans les exemples précédents.
             </para>
-            <table>
-                <title>Otions disponibles</title>
+            <table id="zend.cache.frontends.core.options.table">
+                <title>Options du frantend Core</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -139,22 +139,22 @@ echo($data);]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.output">
+    <sect2 id="zend.cache.frontends.output">
         <title>Zend_Cache_Frontend_Output</title>
-        <sect3 id="zend.cache.frontend.output.introduction">
+        <sect3 id="zend.cache.frontends.output.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Frontend_Output</code> est un frontend capturant la sortie. Il utilise la bufferisation de sortie de PHP pour capturer tout ce qui passe entre les méthodes <code>start()</code> et <code>end()</code> .
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.output.options">
+        <sect3 id="zend.cache.frontends.output.options">
             <title>Options disponibles</title>
             <para>
                 Ce frontend n'a pas d'options spécifiques autres que celles de <code>Zend_Cache_Core</code>.
             </para>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.output.examples">
+        <sect3 id="zend.cache.frontends.output.examples">
             <title>Exemples</title>
             <para>
                 Un exemple est donnée dans le manuel, tout au début. Le voici avec des changements mineurs :
@@ -178,18 +178,18 @@ echo 'This is never cached ('.time().').';]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.function">
+    <sect2 id="zend.cache.frontends.function">
         <title>Zend_Cache_Frontend_Function</title>
-        <sect3 id="zend.cache.frontend.function.introduction">
+        <sect3 id="zend.cache.frontends.function.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> met en cache les résultats des appels de fonction. Elle a une seule méthode principale appelée <code>call()</code> qui prend un nom de fonction et des paramètres pour l'appel dans un tableau.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.function.options">
+        <sect3 id="zend.cache.frontends.function.options">
             <title>Options disponibles</title>
-            <table>
-                <title>Options disponibles</title>
+            <table id="zend.cache.frontends.function.options.table">
+                <title>Options du frontend Function</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -223,7 +223,7 @@ echo 'This is never cached ('.time().').';]]>
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.function.examples">
+        <sect3 id="zend.cache.frontends.function.examples">
             <title>Exemples</title>
             <para>
                 Utiliser la fonction <code>call()</code> est la même chose qu'utiliser <code>call_user_func_array()</code> en PHP:
@@ -245,18 +245,18 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.class">
+    <sect2 id="zend.cache.frontends.class">
         <title>Zend_Cache_Frontend_Class</title>
-        <sect3 id="zend.cache.frontend.class.introduction">
+        <sect3 id="zend.cache.frontends.class.introduction">
             <title>Introduction</title>
             <para>
                 <code>Zend_Cache_Frontend_Class</code> est différent de <code>Zend_Cache_Frontend_Function</code> parce qu'elle permet de mettre en cache les objets et les méthodes statiques.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.class.options">
+        <sect3 id="zend.cache.frontends.class.options">
             <title>Options disponibles</title>
-            <table>
-                <title>Options disponibles</title>
+            <table id="zend.cache.frontends.class.options.table">
+                <title>Options du frontend Class</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -296,7 +296,7 @@ $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.class.examples">
+        <sect3 id="zend.cache.frontends.class.examples">
             <title>Exemples</title>
             <para>
                 Par exemple, pour mettre en cache des appels statiques :
@@ -360,8 +360,8 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
             <title>Options disponibles</title>
-            <table>
-                <title>Options disponibles</title>
+            <table id="zend.cache.frontends.file.options.table">
+                <title>Options du frontend File</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -406,8 +406,8 @@ $res = $cache->foobar2('1', '2');]]>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
             <title>Options disponibles (pour ce frontend dans la fabrique Zend_Cache)</title>
-            <table>
-                <title>Options disponibles</title>
+            <table id="zend.cache.frontends.page.options.table">
+                <title>Options du frontend Page</title>
                 <tgroup cols="4">
                      <thead>
                           <row>

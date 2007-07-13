@@ -9,8 +9,8 @@
         <para>
             Les options disponibles sont :
         </para>
-        <table>
-            <title>Options disponibles</title>
+        <table id="zend.cache.backends.file.table">
+            <title>Options du backend File</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -89,8 +89,8 @@
         <para>
             Les options disponibles sont :
         </para>
-        <table>
-            <title>Options disponibles</title>
+        <table id="zend.cache.backends.sqlite.table">
+            <title>Options du backend Sqlite</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -132,8 +132,8 @@
         <para>
             Les options disponibles sont :
         </para>
-        <table>
-            <title>Options disponibles</title>
+        <table id="zend.cache.backends.memcached.table">
+            <title>Options du backend Memcached</title>
             <tgroup cols="4">
                  <thead>
                       <row>

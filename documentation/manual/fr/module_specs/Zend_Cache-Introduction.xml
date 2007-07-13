@@ -9,18 +9,11 @@
     <para>
         Le coeur du module (<code>Zend_Cache_Core</code>) est générique, souple et configurable. Pour le moment, pour vos besoins spécifiques, il y a des frontends qui étendent <code>Zend_Cache_Core</code> pour votre confort : <code>Output</code>, <code>File</code>, <code>Function</code> et <code>Class</code>.
     </para>
-    <example>
+    <example id="zend.cache.introduction.example-1">
         <title>Créer un frontend avec <code>Zend_Cache::factory()</code></title>
         <para>
             <code>Zend_Cache::factory()</code> instancie les objets corrects et les lie ensemble. Dans le premier exemple, nous allons utiliser le frontend <code>Core</code> avec le backend <code>File</code>.
         </para>
-
-        <note>
-            <title>Frontends et Backends consistitués de plusieurs mots</title>
-            <para>
-                Certains frontends et backends sont nommés en utilisant plusieurs mots, comme "ZendPlatform". En les spécifiant à la fabrique, séparez les en utilisant un séparateur de mot, comme l'espace (" "), le tiret ("-") ou le point (".").
-            </para>
-        </note>
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
@@ -37,6 +30,17 @@ $backendOptions = array(
 // créer un objet Zend_Cache_Core
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
 		</programlisting>
+    </example>
+
+    <note>
+        <title>Frontends et Backends consistitués de plusieurs mots</title>
+        <para>
+            Certains frontends et backends sont nommés en utilisant plusieurs mots, comme "ZendPlatform". En les spécifiant à la fabrique, séparez les en utilisant un séparateur de mot, comme l'espace (" "), le tiret ("-") ou le point (".").
+        </para>
+    </note>
+
+    <example id="zend.cache.introduction.example-2">
+        <title>Mettre en cache un résultat de requête sur une base de données</title>
        	<para>
             Maintenant que nous avons un frontend, nous pouvons mettre en cache tout type de données (nous avons activé la sérialisation). Par exemple nous pouvons mettre en cache le résultat d'une requête SQL couteuse. Après qu'il soit mis en cache, il n'y a plus besoin de se connecter à la base de données. Les enregistrements récupérés depuis le cache sont désérialisés.
        	</para>
@@ -63,7 +67,8 @@ if(!$result = $cache->get('myresult')) {
 print_r($result);]]>
 	    </programlisting>
     </example>
-    <example>
+    
+    <example id="zend.cache.introduction.example-3">
         <title>Cache de sortie avec le frontend de sortie <code>Zend_Cache</code></title>
         <para>
             Nous marquons les sections dans lesquelles nous voulons un cache de sortie en ajoutant de la logique conditionnelle, en encapsulant la section entre les méthodes <code>start()</code> et <code>end()</code> (cela ressemble au premier exemple et est le coeur de la stratégie de mise en cache).

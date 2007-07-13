@@ -125,7 +125,7 @@
             , if you need to select a specific locale within the Zend Framework.
         </para>
 
-        <example>
+        <example id="zend.locale.representation.example-1">
             <title>Choosing a specific locale</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend_Locale';
@@ -168,7 +168,7 @@ $locale = new Zend_Locale('de_DE'); // German language _ Germany]]>
             server's environment configuration, as described below.
         </para>
 
-        <example>
+        <example id="zend.locale.selection.example-1">
             <title>Automatically selecting a locale</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -223,7 +223,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app de
             user's web browser.
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-1">
             <title>Dates default to correct locale of web users</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -237,7 +237,7 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);]]>
             constructor.
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-2">
             <title>Overriding default locale selection</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -254,7 +254,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLoc
             avoid the overhead of each object determining the default locale.
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-3">
             <title>Performance optimization when using a default locale</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -291,7 +291,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             options.
         </para>
 
-        <example>
+        <example id="zend.locale.formatoptions.example-1">
             <title>Dates default to correct locale of web users</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -306,7 +306,7 @@ Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_
             And setting it for locale uses the standard locale for this environment or browser.
         </para>
 
-        <example>
+        <example id="zend.locale.formatoptions.example-2">
             <title>Using STANDARD definitions for setOptions()</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';

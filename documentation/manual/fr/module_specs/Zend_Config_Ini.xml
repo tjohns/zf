@@ -54,7 +54,7 @@ echo $config->database->name; // affiche "dbname"]]>
 	    </programlisting>
     </example>
     <note>
-    <table>
+    <table id="zend.config.adapters.ini.table">
         <title>Paramètres du constructeur de Zend_Config_Ini</title>
         <tgroup cols="2">
             <thead>
