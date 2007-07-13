@@ -28,8 +28,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // ドキュメントをインデックスに追加します。
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
 
         <para>
             新しく追加されたドキュメントは、
@@ -56,8 +56,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // ドキュメントをインデックスに追加します。
-$index->addDocument($doc);
-?>]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.document-updating">
@@ -79,8 +79,8 @@ $removePath = ...;
 $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
@@ -104,8 +104,8 @@ foreach ($hits as $hit) {
 
         <programlisting role="php"><![CDATA[<?php
 $indexSize = $index->count();
-$documents = $index->numDocs();
-?>]]></programlisting>
+$documents = $index->numDocs();]]>
+        </programlisting>
 
         <para>
             <code>Zend_Search_Lucene::isDeleted($id)</code>
@@ -117,8 +117,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
         echo "ドキュメント #$id は削除されました。\n";
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             インデックスの最適化を行うと、削除されたドキュメントを取り除き、
@@ -162,8 +162,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
 $index = Zend_Search_Lucene::open('/data/my-index');
 
 // インデックスを最適化します
-$index->optimize();
-?>]]></programlisting>
+$index->optimize();]]>
+        </programlisting>
 
         <para>
             自動的なインデックス最適化により、インデックスの一貫性を保ちます。

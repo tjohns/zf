@@ -34,7 +34,8 @@
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
-$index->addDocument($doc);]]></programlisting>
+$index->addDocument($doc);]]>
+        </programlisting>
 
         <para>
             ユーザ定義の解析器のための共通の親クラスとして設計されているのが
@@ -55,7 +56,7 @@ $index->addDocument($doc);]]></programlisting>
             独自のテキスト解析器の例を示します。
             これは、数字つきの単語をひとつの言葉として扱います。
 
-            <example>
+            <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>独自のテキスト解析器</title>
                 <programlisting role="php"><![CDATA[<?php
 /** これは独自のテキスト解析器で、数字つきの単語をひとつの言葉として扱います */
@@ -127,9 +128,8 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 }
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new My_Analyzer());
-
-?>]]></programlisting>
+    new My_Analyzer());]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -192,15 +192,16 @@ $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWo
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-?>]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+            </programlisting>
             <programlisting role="php"><![CDATA[<?php
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($shortWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -214,7 +215,8 @@ $stopWordsFilter->loadFromFile($my_stopwords_file);
 $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+            </programlisting>
             ファイル形式は一般的なテキストファイルで、各文字列にひとつの単語が含まれるものとなります。
             '#' を指定すると、その文字列はコメントであるとみなします。
         </para>
@@ -298,7 +300,6 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
     public function lengthNorm($fieldName, $numTerms) {
         return 1.0/sqrt($numTerms);
@@ -329,9 +330,8 @@ class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
 }
 
 $mySimilarity = new MySimilarity();
-Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
-
-?>]]></programlisting>
+Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.search.lucene.extending.storage">
@@ -367,7 +367,6 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
         Zend_Search_Lucene_Storage_Directory のメソッドは以下のとおりです。
         </para>
         <programlisting><![CDATA[<?php
-
 abstract class Zend_Search_Lucene_Storage_Directory {
 /**
  * 保存先を閉じます
@@ -450,9 +449,8 @@ abstract function touchFile($filename);
  */
 abstract function getFileObject($filename);
 
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
         Zend_Search_Lucene_Storage_Directory クラスの
@@ -472,7 +470,6 @@ abstract function getFileObject($filename);
         オーバーロードしなければならないメソッドは 2 つだけです。
         </para>
         <programlisting><![CDATA[<?php
-
 class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
      * ファイル上の位置を指定し、そこにファイルポインタを進めます。
@@ -502,9 +499,8 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
     protected function _fread($length=1) {
         ...
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
     </sect2>
 </sect1>

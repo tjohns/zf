@@ -60,7 +60,8 @@
         <programlisting role="php"><![CDATA[<?php
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
 ...
-Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
+Zend_Search_Lucene::setDefaultSearchField('contents');]]>
+        </programlisting>
 
         <para>
             <code>null</code> 値は、すべてのフィールドを検索の対象とすることを意味します。
@@ -76,11 +77,13 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             タイトルが "The Right Way" で本文に "don't go this way"
             が含まれるドキュメントを探したいなら、
         </para>
-        <programlisting role="querystring"><![CDATA[title:"The Right Way" AND text:go]]></programlisting>
+        <programlisting role="querystring"><![CDATA[title:"The Right Way" AND text:go]]>
+        </programlisting>
         <para>
             あるいは
         </para>
-        <programlisting role="querystring"><![CDATA[title:"Do it right" AND go]]></programlisting>
+        <programlisting role="querystring"><![CDATA[title:"Do it right" AND go]]>
+        </programlisting>
         <para>
             とします。"text" がデフォルトのフィールドなら、フィールドの指定は必須ではなくなります。
         </para>
@@ -88,11 +91,53 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
         <para>
             注意: フィールドが有効なのは、その直後にある単語、
             フレーズあるいはサブクエリだけであることに注意しましょう。つまり、クエリ
-            <programlisting role="querystring"><![CDATA[title:Do it right]]></programlisting>
+            <programlisting role="querystring"><![CDATA[title:Do it right]]>
+            </programlisting>
             は "Do" だけを title フィールドから探し、"it" や "right"
             はデフォルトのフィールドから探します。デフォルトのフィールドが
             <code>null</code> に設定されている場合は、"it" や "right"
             はすべてのフィールドから探します。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.query-language.wildcard">
+        <title>ワイルドカード</title>
+        <para>
+            Lucene は、単一の文字あるいは複数の文字を表すワイルドカードをサポートしています
+            これは、単語検索でのみ使用可能です (フレーズクエリでは使用できません)。
+        </para>
+
+        <para>
+            単一の文字を表すワイルドカードは "?" です。
+        </para>
+
+        <para>
+            複数の文字を表すワイルドカードは "*" です。
+        </para>
+
+        <para>
+            単一文字のワイルドカードは、
+            その部分を別の一文字に置き換えたものにマッチする単語を探します。
+            たとえば、"text" あるいは "test" を探したい場合は
+            <programlisting role="querystring"><![CDATA[te?t]]>
+            </programlisting>
+            とします。
+        </para>
+
+        <para>
+            複数文字のワイルドカードは、0 個以上の任意の数の文字に対応します。
+            たとえば test、tests あるいは tester を探したい場合は
+            <programlisting role="querystring"><![CDATA[test*]]>
+            </programlisting>
+            とします。
+        </para>
+
+        <para>
+            "?" や "*" は単語のどの部分でも使え、
+            また両方を同時に使うこともできます。たとえば
+            <programlisting role="querystring"><![CDATA[*wr?t*]]>
+            </programlisting>
+            は、"write" や "wrote"、"written"、"rewrite"、"rewrote" などに対応します。
         </para>
     </sect2>
 
@@ -112,6 +157,36 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
         </para>
     </sect2>
 
+    <sect2 id="zend.search.lucene.query-language.range">
+        <title>範囲検索</title>
+
+        <para>
+            範囲検索は、フィールドの値の下限と上限を指定して
+            その範囲に含まれるドキュメントを探すものです。
+            最大値と最小値そのものを含めることも含めないこともできます。
+            並べ替えは、辞書順で行われます。
+            <programlisting role="querystring"><![CDATA[mod_date:[20020101 TO 20030101]]]>
+            </programlisting>
+            これは、mod_date フィールドの値が 20020101 から 20030101 (両端を含む)
+            であるドキュメントを探します。
+            範囲検索は、日付フィールド以外でも使えることに注意しましょう。
+            <programlisting role="querystring"><![CDATA[title:{Aida TO Carmen}]]>
+            </programlisting>
+            これは、タイトルが Aida から Carmen までの間にあるドキュメントを探します。
+            ただし、Aida および Carmen は含めません。
+        </para>
+        <para>
+            両端の値を含めるには角括弧 []、含めない場合は波括弧 {}
+            でクエリを指定します。
+        </para>
+        <para>
+            フィールドを指定しなかった場合は、Zend_Search_Lucene
+            はすべてのフィールドに対して範囲検索を行います。
+            <programlisting role="querystring"><![CDATA[{Aida TO Carmen}]]>
+            </programlisting>
+        </para>
+    </sect2>
+
     <sect2 id="zend.search.lucene.query-language.proximity-search">
         <title>近接検索</title>
 
@@ -119,7 +194,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             Lucene は、複数の単語が指定した範囲内にあらわれる状態の検索をサポートしています。
             近接検索を行うには、チルダ記号 "~" をフレーズの最後に指定します。
             たとえば、"Zend" と "Framework" がお互い 10 ワードの範囲内にあらわれるドキュメントを検索するには
-            <programlisting role="querystring"><![CDATA["Zend Framework"~10]]></programlisting>
+            <programlisting role="querystring"><![CDATA["Zend Framework"~10]]>
+            </programlisting>
             とします。
         </para>
     </sect2>
@@ -137,13 +213,16 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
         <para>
             この機能を使用すると、単語の強調度によってドキュメントの関連性を制御できるようになります。
             たとえば
-            <programlisting role="querystring"><![CDATA[PHP framework]]></programlisting>
+            <programlisting role="querystring"><![CDATA[PHP framework]]>
+            </programlisting>
             を検索しようとしており、単語 "PHP" をより重視したいとしましょう。
             そんな場合は ^ 記号と強調度を単語の後に続けます。つまり
-            <programlisting role="querystring"><![CDATA[PHP^4 framework]]></programlisting>
+            <programlisting role="querystring"><![CDATA[PHP^4 framework]]>
+            </programlisting>
             のようにします。これにより、PHP という単語を含むドキュメントがより重視されるようになります。
             フレーズやサブクエリを強調することも可能です。たとえば
-            <programlisting role="querystring"><![CDATA["PHP framework"^4 "Zend Framework"]]></programlisting>
+            <programlisting role="querystring"><![CDATA["PHP framework"^4 "Zend Framework"]]>
+            </programlisting>
             のようになります。デフォルトの強調度は 1 です。強調度には正の数値を指定しますが、
             1 より小さくする (たとえば 0.2 など) ことも可能です。
         </para>
@@ -184,7 +263,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             </para>
             <para>
                 "PHP framework" および "Zend Framework" を含むドキュメントを検索するには
-                <programlisting role="querystring"><![CDATA["PHP framework" AND "Zend Framework"]]></programlisting>
+                <programlisting role="querystring"><![CDATA["PHP framework" AND "Zend Framework"]]>
+                </programlisting>
                 を使用します。
             </para>
         </sect3>
@@ -196,7 +276,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             </para>
             <para>
                 "PHP framework" あるいは "Zend Framework" を含むドキュメントを検索するには
-                <programlisting role="querystring"><![CDATA["PHP framework" OR "Zend Framework"]]></programlisting>
+                <programlisting role="querystring"><![CDATA["PHP framework" OR "Zend Framework"]]>
+                </programlisting>
                 を使用します。
             </para>
         </sect3>
@@ -210,7 +291,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             </para>
             <para>
                 "PHP framework" を含むが "Zend Framework" は含まないドキュメントを検索するには
-                <programlisting role="querystring"><![CDATA["PHP framework" AND NOT "Zend Framework"]]></programlisting>
+                <programlisting role="querystring"><![CDATA["PHP framework" AND NOT "Zend Framework"]]>
+                </programlisting>
                 を使用します。
             </para>
         </sect3>
@@ -230,7 +312,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             </para>
             <para>
                 "Zend" を必ず含み、"Framework" を含んでも含まなくてもかまわないドキュメントを検索するには
-                <programlisting role="querystring"><![CDATA[+Zend Framework]]></programlisting>
+                <programlisting role="querystring"><![CDATA[+Zend Framework]]>
+                </programlisting>
                 を使用します。
             </para>
         </sect3>
@@ -243,7 +326,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             </para>
             <para>
                 "PHP framework" は含むが "Zend Framework" は含まないドキュメントを検索するには
-                <programlisting role="querystring"><![CDATA["PHP framework" -"Zend Framework"]]></programlisting>
+                <programlisting role="querystring"><![CDATA["PHP framework" -"Zend Framework"]]>
+                </programlisting>
                 を使用します。
             </para>
         </sect3>
@@ -264,7 +348,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             </para>
             <para>
                 "PHP framework" は必須で "Zend Framework" は含んでも含まなくてもかまわないドキュメントを検索するには
-                <programlisting role="querystring"><![CDATA[+"PHP framework" "Zend Framework"]]></programlisting>
+                <programlisting role="querystring"><![CDATA[+"PHP framework" "Zend Framework"]]>
+                </programlisting>
                 を使用します。
             </para>
 
@@ -288,7 +373,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
             Java Lucene および Zend_Search_Lucene では、
             括弧を使用して条件をグループ化することによるサブクエリの作成をサポートしています。
             これは、クエリのロジックを制御したい場合や異なるスタイルの論理クエリを共用したい場合などに便利です。
-            <programlisting role="querystring"><![CDATA[+(framework OR library) +php]]></programlisting>
+            <programlisting role="querystring"><![CDATA[+(framework OR library) +php]]>
+            </programlisting>
             Zend_Search_Lucene は、あらゆるレベルのサブクエリをサポートしています。
         </para>
     </sect2>
@@ -301,7 +387,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
         </para>
         <para>
             タイトルに単語 "return" とフレーズ "pink panther" の両方を含むドキュメントを検索するには
-            <programlisting role="querystring"><![CDATA[title:(+return +"pink panther")]]></programlisting>
+            <programlisting role="querystring"><![CDATA[title:(+return +"pink panther")]]>
+            </programlisting>
             を使用します。Zend_Search_Lucene は、あらゆるレベルのサブクエリをサポートしています。
         </para>
     </sect2>
@@ -322,7 +409,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]></programlisting>
         <para>
             これらの文字をエスケープするには、その文字の前に \ をつけます。
             たとえば、(1+1):2 を検索するには
-            <programlisting role="querystring"><![CDATA[\(1\+1\)\:2]]></programlisting>
+            <programlisting role="querystring"><![CDATA[\(1\+1\)\:2]]>
+            </programlisting>
             を使用します。
         </para>
     </sect2>
