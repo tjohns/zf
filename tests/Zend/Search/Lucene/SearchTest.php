@@ -37,8 +37,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                          //'roam~',
                          //'roam~0.8',
                          '"jakarta apache"~10',
-                         //'mod_date:[20020101 TO 20030101]',
-                         //'title:{Aida TO Carmen}',
+                         'contents:[business TO by]',
+                         '{wish TO zzz}',
                          'jakarta apache',
                          'jakarta^4 apache',
                          '"jakarta apache"^4 "Apache Lucene"',
@@ -72,7 +72,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                                  '(contents:amazon contents:email)',
                                  // ....
                                  '((path:"jakarta apache"~10) (modified:"jakarta apache"~10) (contents:"jakarta apache"~10))',
-                                 // ....
+                                 '(contents:business contents:but contents:buy contents:buying contents:by)',
+                                 '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
                                  '(path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)',
                                  '((path:jakarta modified:jakarta contents:jakarta)^4)^4 (path:apache modified:apache contents:apache)',
                                  '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache"))^4 ((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
@@ -216,6 +217,46 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                                    array(3, 0.036159, 'IndexSource/about-pear.html'),
                                    array(5, 0.021500, 'IndexSource/authors.html'),
                                    array(9, 0.007422, 'IndexSource/core.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
+    public function testInclusiveRangeQuery()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $hits = $index->find('[xml TO zzzzz]');
+
+        $this->assertEquals(count($hits), 5);
+        $expectedResultset = array(array(4, 0.156366, 'IndexSource/copyright.html'),
+                                   array(2, 0.080458, 'IndexSource/contributing.patches.html'),
+                                   array(7, 0.060214, 'IndexSource/contributing.bugs.html'),
+                                   array(1, 0.009687, 'IndexSource/contributing.wishlist.html'),
+                                   array(5, 0.005871, 'IndexSource/authors.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
+    public function testNonInclusiveRangeQuery()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $hits = $index->find('{xml TO zzzzz}');
+
+        $this->assertEquals(count($hits), 5);
+        $expectedResultset = array(array(2, 0.1308671, 'IndexSource/contributing.patches.html'),
+                                   array(7, 0.0979391, 'IndexSource/contributing.bugs.html'),
+                                   array(4, 0.0633930, 'IndexSource/copyright.html'),
+                                   array(1, 0.0157556, 'IndexSource/contributing.wishlist.html'),
+                                   array(5, 0.0095493, 'IndexSource/authors.html'));
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
