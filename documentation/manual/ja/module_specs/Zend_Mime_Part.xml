@@ -29,8 +29,8 @@ public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;
-?>]]></programlisting>
+public $charset;]]>
+    </programlisting>
     </sect2>
 
   <sect2 id="zend.mime.part.methods">

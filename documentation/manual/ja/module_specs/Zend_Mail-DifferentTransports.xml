@@ -7,10 +7,9 @@
         実際の  <code>send()</code> の際に、
         渡されたオブジェクトがデフォルトのトランスポートを上書きします。
     </para>
-    <example>
+    <example id="zend.mail.different-transports.example-1">
         <title>異なる転送手段の使用</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // メッセージを作成します...
@@ -19,8 +18,8 @@ $tr1 = new Zend_Mail_Transport_Smtp('server@example.com');
 $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // もう一度デフォルトを使用します
-?>]]>   </programlisting>
+$mail->send();  // もう一度デフォルトを使用します]]>
+        </programlisting>
     </example>
     <note>
         <title>転送手段の追加</title>

@@ -29,7 +29,7 @@
             を使用しています。
         </para>
 
-        <example>
+        <example id="zend.memory.introduction.example-1">
             <title>Zend_Memory コンポーネントの使用法</title>
             <para>
                 <code>Zend_Memory::factory()</code> は、
@@ -37,7 +37,6 @@
                 インスタンスを作成します。
             </para>
                 <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
@@ -60,9 +59,8 @@ echo $loadedFiles[$index1]->value;
 
 $loadedFiles[$index2]->value = $newValue;
 
-$loadedFiles[$index3]->value[$charIndex] = '_';
-
-?>]]></programlisting>
+$loadedFiles[$index3]->value[$charIndex] = '_';]]>
+            </programlisting>
         </example>
     </sect2>
 
@@ -114,7 +112,6 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
                 この属性 <code>value</code> は、オブジェクトのプロパティとして扱うことができます。
 
                 <programlisting role="php"><![CDATA[<?php
-
 $memObject = $memoryManager->create($data);
 
 echo $memObject->value;
@@ -125,9 +122,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);
-
-?>]]></programlisting>
+$memObject->value = substr($memObject->value, $start, $length);]]>
+                </programlisting>
             </para>
 
             <note>
@@ -137,7 +133,7 @@ $memObject->value = substr($memObject->value, $start, $length);
                     <link linkend="zend.memory.memory-objects.api.getRef">getRef()</link>
                     メソッドを使用します。
                 </para>
-            </note>:
+            </note>
 
         </sect3>
 

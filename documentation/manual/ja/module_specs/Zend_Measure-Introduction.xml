@@ -13,7 +13,7 @@
         多くの計測単位をサポートしています。
     </para>
 
-    <example>
+    <example id="zend.measure.introduction.example-1">
         <title>計測値の変換</title>
         <para>
             以下の簡単な例で、計測値の型の自動変換の様子を説明します。
@@ -22,15 +22,15 @@
             変換は、同じ型 (重さ、面積、温度、速度など) の単位間でのみ行うことができます。
             型が違う場合は変換できません。
         </para>
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Length(100, Zend_Measure_Length::METER, $locale);
 
 // メートルをヤードに変換します
-echo $unit->convertTo(Zend_Measure_Length::YARD);
-?>]]></programlisting>
+echo $unit->convertTo(Zend_Measure_Length::YARD);]]>
+        </programlisting>
     </example>
 
     <para>
@@ -45,7 +45,7 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
         を参照ください。
     </para>
 
-    <example>
+    <example id="zend.measure.introduction.example-2">
         <title><code>メートル</code> の計測</title>
         <para>
             <code>メートル</code> は長さの単位です。したがって、対応する定数は
@@ -53,7 +53,7 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
             <code>Length::METER</code> という記法を使用する必要があります。
             表示単位は <code>m</code> です。
         </para>
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 echo Zend_Measure_Length::STANDARD;  // 出力は 'Length::METER' となります
@@ -61,8 +61,8 @@ echo Zend_Measure_Length::KILOMETER; // 出力は 'Length::KILOMETER' となり�
 
 $unit = new Zend_Measure_Length(100,'METER');
 echo $unit;
-// 出力は '100 m' となります
-?>]]></programlisting>
+// 出力は '100 m' となります]]>
+        </programlisting>
     </example>
 
 </sect1>

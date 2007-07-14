@@ -7,13 +7,13 @@
         <code>Zend_Mail::send()</code> がコールされると、
         SMTP による転送が使用されます。
     </para>
-    <example>
+    <example id="zend.mail.sending.example-1">
         <title>SMTP によるメールの送信</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);
-?>]]>   </programlisting>
+Zend_Mail::setDefaultTransport($tr);]]>
+        </programlisting>
     </example>
     <para>
         <code>setDefaultTransport()</code> メソッドや

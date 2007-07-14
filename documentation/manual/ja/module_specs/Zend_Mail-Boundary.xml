@@ -7,15 +7,14 @@
         <code>setMimeBoundary()</code> メソッドを次の例のように使用すれば、
         これが実現できます。
     </para>
-    <example>
+    <example id="zend.mail.boundary.example-1">
         <title>MIME バウンダリの変更</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++);
-// メッセージを作成します...
-?>]]>   </programlisting>
+// メッセージを作成します...]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

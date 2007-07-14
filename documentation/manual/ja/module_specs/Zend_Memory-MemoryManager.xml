@@ -23,14 +23,12 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 $backendOptions = array(
     'cacheDir' => './tmp/' // スワップしたメモリブロックを配置するディレクトリ
 );
 
-$memoryManager = Zend_Memory::factory('File', $backendOptions);
-
-?>]]></programlisting>
+$memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
+        </programlisting>
 
         <para>
             Zend_Memory は <link linkend="zend.cache.backends">Zend_Cache のバックエンド</link>
@@ -42,10 +40,8 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
             '<code>None</code>' をバックエンド名として使用することもできます。
 
             <programlisting role="php"><![CDATA[<?php
-
-$memoryManager = Zend_Memory::factory('None');
-
-?>]]></programlisting>
+$memoryManager = Zend_Memory::factory('None');]]>
+            </programlisting>
         </para>
 
         <para>
@@ -79,10 +75,8 @@ $memoryManager = Zend_Memory::factory('None');
                 を作成するには、<code>Zend_Memory_Manager::create([$data])</code>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[<?php
-
-$memObject = $memoryManager->create($data);
-
-?>]]></programlisting>
+$memObject = $memoryManager->create($data);]]>
+                </programlisting>
 
             </para>
 
@@ -103,10 +97,8 @@ $memObject = $memoryManager->create($data);
                 を作成するには、<code>Zend_Memory_Manager::createLocked([$data])</code>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[<?php
-
-$memObject = $memoryManager->createLocked($data);
-
-?>]]></programlisting>
+$memObject = $memoryManager->createLocked($data);]]>
+                </programlisting>
             </para>
 
             <para>
@@ -126,7 +118,6 @@ $memObject = $memoryManager->createLocked($data);
                 自動的に破棄され、メモリから削除されます。
 
                 <programlisting role="php"><![CDATA[<?php
-
 function foo()
 {
     global $memoryManager, $memList;
@@ -148,9 +139,8 @@ function foo()
     ...
     // $memObject1 はここで破棄されますが、
     // $memObject2 オブジェクトはまだ $memList に参照されており、破棄されていません
-}
-
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </para>
 
             <para>
@@ -186,11 +176,9 @@ function foo()
                 <code>getMemoryLimit()</code> メソッドおよび <code>setMemoryLimit($newLimit)</code>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[<?php
-
 $oldLimit = $memoryManager->getMemoryLimit();  // メモリの制限バイト数を取得します
-$memoryManager->getMemoryLimit($newLimit);     // メモリの制限バイト数を設定します
-
-?>]]></programlisting>
+$memoryManager->getMemoryLimit($newLimit);     // メモリの制限バイト数を設定します]]>
+                </programlisting>
             </para>
 
             <para>
@@ -221,11 +209,9 @@ $memoryManager->getMemoryLimit($newLimit);     // メモリの制限バイト数
                 <code>getMinSize()</code> メソッドおよび <code>setMinSize($newSize)</code>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[<?php
-
 $oldMinSize = $memoryManager->getMinSize();  // MinSize をバイト数で取得します
-$memoryManager->setMinSize($newSize);        // MinSize をバイト数で設定します
-
-?>]]></programlisting>
+$memoryManager->setMinSize($newSize);        // MinSize をバイト数で設定します]]>
+                </programlisting>
             </para>
 
             <para>

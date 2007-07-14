@@ -10,7 +10,7 @@
         各保存形式で実装されている機能の概要については以下の表を参照ください。
     </para>
 
-    <table>
+    <table id="zend.mail.read.table-1">
         <title>メール読み込み機能の概要</title>
         <tgroup cols="5">
             <thead>
@@ -80,8 +80,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'localhost',
 echo $mail->countMessages() . " messages found\n";
 foreach ($mail as $message) {
     echo "Mail from '{$message->from}': {$message->subject}\n";
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-open-local">
@@ -97,14 +97,14 @@ foreach ($mail as $message) {
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));
-]]></programlisting>
+$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));]]>
+        </programlisting>
 
         <para>Maildir もほぼ同様ですが、こちらはディレクトリ名を指定します。</para>
 
         <programlisting role="php"><![CDATA[<?php
-$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));
-]]></programlisting>
+$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));]]>
+        </programlisting>
 
         <para>
          どちらのコンストラクタも、もし読み込めなかった場合は
@@ -138,8 +138,8 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'port'     => 1120
                                          'user'     => 'test',
-                                         'password' => 'test'));
-]]></programlisting>
+                                         'password' => 'test'));]]>
+        </programlisting>
 
         <para>
             どちらの保存形式についても、SSL や TLS をサポートしています。
@@ -160,8 +160,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
                                          'user'     => 'test',
                                          'password' => 'test',
-                                         'ssl'      => 'TLS'));
-]]></programlisting>
+                                         'ssl'      => 'TLS'));]]>
+        </programlisting>
 
         <para>
             どちらのコンストラクタも、エラーの形式によって
@@ -181,8 +181,8 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$message = $mail->getMessage($messageNum);
-]]></programlisting>
+$message = $mail->getMessage($messageNum);]]>
+        </programlisting>
 
         <para>
             配列形式のアクセスもサポートしていますが、<code>getMessage()</code>
@@ -191,16 +191,16 @@ $message = $mail->getMessage($messageNum);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$message = $mail[$messageNum];
-]]></programlisting>
+$message = $mail[$messageNum];]]>
+        </programlisting>
 
         <para>全メッセージについて順に処理するために、Iterator インターフェイスも実装されています。</para>
 
         <programlisting role="php"><![CDATA[<?php
 foreach ($mail as $messageNum => $message) {
-    // do stuff ...
-}
-]]></programlisting>
+    // 何かの処理 ...
+}]]>
+        </programlisting>
 
         <para>
             保存されているメッセージ数を数えるには、
@@ -212,8 +212,8 @@ foreach ($mail as $messageNum => $message) {
 $maxMessage = $mail->countMessages();
 
 // 配列形式のアクセス
-$maxMessage = count($mail);
-]]></programlisting>
+$maxMessage = count($mail);]]>
+        </programlisting>
 
         <para>
             メールを削除するには、<code>removeMessage()</code>
@@ -225,8 +225,8 @@ $maxMessage = count($mail);
 $mail->removeMessage($messageNum);
 
 // 配列形式のアクセス
-unset($mail[$messageNum]);
-]]></programlisting>
+unset($mail[$messageNum]);]]>
+        </programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-message">
@@ -249,8 +249,8 @@ $message = $mail->getMessage(1);
 echo $message->subject . "\n";
 
 // content-type ヘッダを取得します
-$type = $message->contentType;
-]]></programlisting>
+$type = $message->contentType;]]>
+        </programlisting>
 
         <para>同名のヘッダが複数ある場合 (たとえば Received ヘッダなど)、
         それを文字列ではなく配列として扱うこともできます。これは
@@ -275,8 +275,8 @@ foreach ($received as $line) {
 $received = $message->getHeader('received');
 if (is_string($received)) {
     // メッセージ内にそのヘッダはひとつしかありません
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para><code>getHeaders()</code> メソッドは、すべてのヘッダを配列で返します。
         キーはヘッダ名を小文字にしたもので、値は文字列 (そのヘッダがひとつの場合)
@@ -292,8 +292,8 @@ foreach ($message->getHeaders as $name => $value) {
     foreach ($value as $entry) {
         echo "$name: $entry\n";
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>マルチパートメッセージがないのなら、その内容は
         <code>getContent()</code> で簡単に取得できます。ヘッダの場合とは異なり、
@@ -304,8 +304,8 @@ foreach ($message->getHeaders as $name => $value) {
 // メッセージの内容を HTML で出力します
 echo '<pre>';
 echo $message->getContent();
-echo '</pre>';
-]]></programlisting>
+echo '</pre>';]]>
+        </programlisting>
 
         <para>マルチパートメッセージであるかどうかを調べるには <code>isMultipart()</code>
         メソッドを使用します。マルチパートメッセージがある場合は、
@@ -323,8 +323,8 @@ while ($part->isMultipart()) {
 }
 echo 'Type of this part is ' . strtok($part->contentType, ';') . "\n";
 echo "Content:\n";
-echo $part->getContent();
-]]></programlisting>
+echo $part->getContent();]]>
+        </programlisting>
 
         <para>Zend_Mail_Part は RecursiveIterator も実装しています。
         つまり、すべてのパートを順にスキャンすることも簡単にできます。また、
@@ -348,8 +348,8 @@ if (!$foundPart) {
     echo 'プレーンテキストのパートがありません';
 } else {
     echo "プレーンテキストパート: \n" . $foundPart;
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-flags">
@@ -399,8 +399,8 @@ foreach ($flags as $flag) {
         default:
             echo $flag . '(未知のフラグ) ';
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>IMAP ではユーザやクライアントが独自にフラグを設定することができます。
         <code>Zend_Mail_Storage</code> で定数が定義されていない、
@@ -415,8 +415,8 @@ if (!$message->hasFlag('$SpamTested')) {
     echo 'このメッセージはスパムです';
 } else {
     echo 'このメッセージはハムです (スパムではありません)';
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-folders">
@@ -465,8 +465,8 @@ $mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail
 // imap の場合は、フォルダを使用するしないにかかわらず同じ形式です
 $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
                                          'user'     => 'test',
-                                         'password' => 'test'));
-]]></programlisting>
+                                         'password' => 'test'));]]>
+        </programlisting>
 
         <para>
             getFolders($root = null) メソッドを使用すると、
@@ -481,7 +481,7 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
             ローカル名とは親フォルダから見た名前のことです。
         </para>
 
-        <table>
+        <table id="zend.mail.read-folders.table-1">
             <title>Mail フォルダの名前</title>
             <tgroup cols="2">
                 <thead>
@@ -532,8 +532,8 @@ foreach ($folders as $localName => $folder) {
     echo ' value="' . htmlspecialchars($folder) . '">'
         . htmlspecialchars($localName) . '</option>';
 }
-echo '</select>';
-]]></programlisting>
+echo '</select>';]]>
+        </programlisting>
 
         <para>
             現在選択されているフォルダを返すメソッドは <code>getSelectedFolder()</code>
@@ -552,14 +552,14 @@ echo '</select>';
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
 echo 'Last folder was ' . $mail->getSelectedFolder() . "new folder is $folder\n";
-$mail->selectFolder($folder);
-]]></programlisting>
+$mail->selectFolder($folder);]]>
+        </programlisting>
 
     </sect2>
     <sect2 id="zend.mail.read-advanced">
         <title>高度な使用法</title>
 
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.noop">
             <title>NOOP の使用</title>
 
             <para>
@@ -577,11 +577,11 @@ foreach ($mail as $message) {
     // また別の処理 ...
 
     $mail->noop(); // 接続をキープします
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.caching">
             <title>インスタンスのキャッシュ</title>
 
             <para>
@@ -614,11 +614,11 @@ if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($
 
 // 何らかの処理 ...
 
-$cache->set($cache_id, $mail);
-]]></programlisting>
+$cache->set($cache_id, $mail);]]>
+            </programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.extending">
             <title>プロトコルクラスの拡張</title>
 
             <para>
@@ -703,8 +703,8 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
 $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
                                           'user'        => 'test',
                                           'password'    => 'test',
-                                          'knock_ports' => array(1101, 1105, 1111)));
-]]></programlisting>
+                                          'knock_ports' => array(1101, 1105, 1111)));]]>
+            </programlisting>
 
             <para>
                 ご覧の通り、メインクラスのコンストラクタでは

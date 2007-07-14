@@ -31,9 +31,9 @@
             また、ふたつの "浮動小数点数" が等しいかどうかを調べないようにしましょう。
         </para>
 
-        <example>
+        <example id="zend.measure.creation.number.example-1">
             <title>整数および浮動小数点数を使用しての作成</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $measurement = 1234.7;
@@ -43,8 +43,8 @@ echo $unit;
 
 $unit = new Zend_Measure_Length($measurement, Zend_Measure_Length::STANDARD);
 echo $unit;
-// 出力は '1234.7 m' (メートル) となります
-?>]]></programlisting>
+// 出力は '1234.7 m' (メートル) となります]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -69,16 +69,16 @@ echo $unit;
             のような多くの PHP 関数の制限を避けるようになっています。
         </para>
 
-        <example>
+        <example id="zend.measure.creation.string.example-1">
             <title>文字列を使用しての作成</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
 $mystring = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure_Number($mystring, Zend_Measure_Number::BINARY);
 
-echo $unit;
-?>]]></programlisting>
+echo $unit;]]>
+            </programlisting>
         </example>
 
         <para>
@@ -89,9 +89,9 @@ echo $unit;
             文字列内に数値が複数あった場合は、それ以降のものは無視されます。
         </para>
 
-        <example>
+        <example id="zend.measure.creation.string.example-2">
             <title>計測値を含む任意の入力テキスト</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
 
 $mystring = "My house is 125m² in size";
@@ -100,8 +100,8 @@ echo $unit; // 出力は "125 m² in size" となります
 
 $mystring = "My house is 125m² in size, it has 5 rooms of 25m² each.";
 $unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
-echo $unit; // 出力は "125 m² in size" となります
-?>]]></programlisting>
+echo $unit; // 出力は "125 m² in size" となります]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -122,9 +122,9 @@ echo $unit; // 出力は "125 m² in size" となります
             意図した値として適切に解釈されるようにします。
         </para>
 
-        <example>
+        <example id="zend.measure.creation.localized.example-1">
             <title>ローカライズされた文字列</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
@@ -135,8 +135,8 @@ echo $unit; // 出力は "1.234 m" となります
 
 $mystring = "The boat is 1,234.50 long.";
 $unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
-echo $unit; // 出力は "1234.50 m" となります
-?>]]></programlisting>
+echo $unit; // 出力は "1234.50 m" となります]]>
+            </programlisting>
         </example>
 
     </sect2>

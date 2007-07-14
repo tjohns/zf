@@ -6,16 +6,15 @@
         そして設定する値の 2 つのパラメータが必須となります。
         3 番目のパラメータはオプションで、ヘッダが複数の値をとるかどうかを指定します。
     </para>
-    <example>
+    <example id="zend.mail.additional-headers.example-1">
         <title>メールヘッダの追加</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MyCoolApplication');
 $mail->addHeader('X-greetingsTo', 'Mom', true); // 複数の値
-$mail->addHeader('X-greetingsTo', 'Dad', true);
-?>]]>   </programlisting>
+$mail->addHeader('X-greetingsTo', 'Dad', true);]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

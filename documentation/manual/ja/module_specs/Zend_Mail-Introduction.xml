@@ -7,7 +7,7 @@
         <ulink url="http://php.net/mail"><code>mail()</code></ulink>
         関数あるいは SMTP 接続を直接使用してメールを送信することが可能です。
     </para>
-    <example>
+    <example id="zend.mail.introduction.example-1">
         <title>Zend_Mail を使用したシンプルなメール</title>
         <para>
             受信者、表題、本文および送信者を指定しただけの単純なメールです。
@@ -22,8 +22,8 @@ $mail->setBodyText('This is the text of the mail.');
 $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
-$mail->send();
-?>]]>   </programlisting>
+$mail->send();]]>
+        </programlisting>
     </example>
     <note>
         <title>最低限の定義</title>
@@ -58,8 +58,8 @@ $mail->setBodyText('This is the text of the mail.')
     ->setFrom('somebody@example.com', 'Some Sender')
     ->addTo('somebody_else@example.com', 'Some Recipient')
     ->setSubject('TestSubject')
-    ->send();
-?>]]>   </programlisting>
+    ->send();]]>
+        </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

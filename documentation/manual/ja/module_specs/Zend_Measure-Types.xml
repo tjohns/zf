@@ -7,7 +7,7 @@
         それぞれについて、標準的な使用例も示します。
     </para>
 
-    <table>
+    <table id="zend.measure.types.table-1">
         <title>計測値の型の一覧</title>
         <tgroup cols="4">
             <thead>
@@ -297,7 +297,7 @@
             その代わりに下線を使用します。
         </para>
 
-<programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
 $great = '_X';
@@ -305,8 +305,8 @@ $locale = new Zend_Locale('en');
 $unit = new Zend_Measure_Number($great,Zend_Measure_Number::ROMAN, $locale);
 
 十進数に変換します
-echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
-?>]]></programlisting>
+echo $unit->convertTo(Zend_Measure_Number::DECIMAL);]]>
+        </programlisting>
 
     </sect2>
 

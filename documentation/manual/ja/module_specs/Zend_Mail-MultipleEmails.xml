@@ -6,10 +6,9 @@
         を自分自身で処理します。<code>send()</code> がコールされる前に接続が確立していた場合は、
         その接続がそのまま用いられ、接続はオープンしたままになります。
     </para>
-    <example>
+    <example id="zend.mail.multiple-emails.example-1">
         <title>SMTP 雪像による複数のメールの送信</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // メッセージを作成します...
@@ -20,8 +19,8 @@ $tr->connect();
 for ($i = 0; $i < 5; $i++) {
 $mail->send();
 }
-$tr->disconnect();
-?>]]>   </programlisting>
+$tr->disconnect();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--
