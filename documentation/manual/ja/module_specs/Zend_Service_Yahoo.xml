@@ -25,7 +25,7 @@
             ドキュメント</ulink> を参照ください。<code>webSearch()</code> メソッドは
             <code>Zend_Service_Yahoo_WebResultSet</code> オブジェクトを返します。
         </para>
-        <example>
+        <example id="zend.service.yahoo.websearch.example-1">
             <title>Yahoo! を使用したウェブの検索</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
@@ -33,8 +33,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->webSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.imagesearch">
@@ -49,7 +49,7 @@ foreach ($results as $result) {
             <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
             ドキュメント</ulink> を参照ください。
         </para>
-        <example>
+        <example id="zend.service.yahoo.imagesearch.example-1">
             <title>Yahoo! を使用した画像の検索</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
@@ -57,8 +57,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->imageSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
@@ -70,7 +70,7 @@ foreach ($results as $result) {
             <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search
             ドキュメント</ulink> を参照ください。
         </para>
-        <example>
+        <example id="zend.service.yahoo.localsearch.example-1">
             <title>Yahoo! を使用した Local Businesses and Services の検索</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
@@ -78,8 +78,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->localSearch('Apple Computers', array('zip' => '95014'));
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.newssearch">
@@ -90,7 +90,7 @@ foreach ($results as $result) {
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
             ドキュメント</ulink> を参照ください。
         </para>
-        <example>
+        <example id="zend.service.yahoo.newssearch.example-1">
             <title>Yahoo! News の検索</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
@@ -98,8 +98,8 @@ $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
 $results = $yahoo->newsSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
-}
-?>]]>       </programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.classes">
@@ -150,7 +150,7 @@ foreach ($results as $result) {
             </sect4>
             <sect4 id="zend.service.yahoo.classes.resultset.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.resultset.properties.table-1">
                     <title>Zend_Service_Yahoo_ResultSet</title>
                     <tgroup cols="3">
                         <thead>
@@ -226,7 +226,7 @@ foreach ($results as $result) {
                 <code>Zend_Service_Yahoo_LocalResultSet</code> は、Yahoo! Local Search
                 の結果セットを表します。
             </para>
-            <table>
+            <table id="zend.service.yahoo.classes.localresultset.table-1">
                 <title>Zend_Service_Yahoo_LocalResultSet のプロパティ</title>
                 <tgroup cols="3">
                     <thead>
@@ -280,7 +280,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.yahoo.classes.result.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.result.properties.table-1">
                     <title>Zend_Service_Yahoo_Result のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -322,7 +322,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.yahoo.classes.webresult.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.webresult.properties.table-1">
                     <title>Zend_Service_Yahoo_WebResult のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -374,7 +374,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.yahoo.classes.imageresult.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.imageresult.properties.table-1">
                     <title>Zend_Service_Yahoo_ImageResult のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -436,7 +436,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.yahoo.classes.localresult.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.localresult.properties.table-1">
                     <title>Zend_Service_Yahoo_LocalResult のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -508,7 +508,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.yahoo.classes.newsresult.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.newsresult.properties.table-1">
                     <title>Zend_Service_Yahoo_NewsResult のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -570,7 +570,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.yahoo.classes.image.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.yahoo.classes.image.properties.table-1">
                     <title>Zend_Service_Yahoo_Image のプロパティ</title>
                     <tgroup cols="3">
                         <thead>

@@ -88,7 +88,8 @@ name = UNIQUE_NAME
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; セッション ID クッキーを持続させる場合は、その有効期限を 10 日にします
-remember_me_seconds = 864000]]></programlisting>
+remember_me_seconds = 864000]]>
+            </programlisting>
 
             <para>
                 次に、この設定ファイルを読み込んで、その内容を配列として
@@ -100,7 +101,8 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->toArray());]]></programlisting>
+Zend_Session::setOptions($config->toArray());]]>
+            </programlisting>
 
         </example>
 
@@ -449,7 +451,8 @@ $defaultNamespace = new Zend_Session_Namespace();
 if (!isset($defaultNamespace->initialized)) {
     Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-}]]></programlisting>
+}]]>
+                </programlisting>
 
             </example>
 

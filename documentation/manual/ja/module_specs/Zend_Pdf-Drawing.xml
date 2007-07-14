@@ -178,13 +178,12 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  */
 public function drawText($text, $x, $y, $charEncoding = '');]]>
         </programlisting>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>ページ上への文字列の描画</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $pdfPage->drawText('Hello world!', 72, 720);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -197,7 +196,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
         関数がサポートしているエンコーディングなら、すべて入力として使用することが可能です。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>UTF-8 でエンコードされた文字列をページに描画する</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -206,8 +205,7 @@ $unicodeString = fread($fp, 1024);
 
 // 文字列をページ上に描画します
 $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
     </sect2>
@@ -242,7 +240,7 @@ public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
         標準の 14 種類の PDF フォントの場合は <code>Zend_Pdf_Font::fontWithName($fontName)</code>、
         独自のフォントの場合は <code>Zend_Pdf_Font::fontWithPath($filePath)</code> です。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-1">
             <title>標準フォントの作成</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -251,8 +249,7 @@ $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // フォントを適用します。
 $pdfPage->setFont($font, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -314,7 +311,7 @@ $pdfPage->setFont($font, 36);
         何らかの理由でフォントが読み込めなかった場合、あるいはそれが TrueType
         フォントでなかった場合は、ファクトリーメソッドが例外をスローします。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-2">
             <title>TrueType フォントの作成</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -323,8 +320,7 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
 
 // フォントを適用します
 $pdfPage->setFont($goodDogCoolFont, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -333,7 +329,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         ページをきちんと閲覧できるようになります。ファイルの大きさが気になる場合は、
         ファクトリーメソッドのオプションで「フォントを埋め込まない」ことを指定することができます。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-3">
             <title>TrueType を作成するが、PDF ドキュメントには埋め込まない</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -343,8 +339,7 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
 
 // フォントを適用します
 $pdfPage->setFont($goodDogCoolFont, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -361,14 +356,13 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         このようなフォントを使用することも可能ですが、そのためには、
         上で説明した「埋め込まない」フラグを使用するか、あるいは例外を抑制しなければなりません。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-4">
             <title>埋め込みが禁止されているフォントで、例外をスローさせないようにする</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
                                     Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -381,28 +375,26 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
         デフォルトでは埋め込みフォントは Flate 圧縮され、平均して 50% ほどサイズを節約できます。
         何らかの理由でフォントを圧縮したくない場合は、以下のオプションで圧縮を無効にすることができます。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>埋め込みフォントを圧縮しない</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
         最後に、必要に応じていくつかの埋め込みオプションをビット OR 演算子で連結することもできます。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>フォントの埋め込みオプションを組み合わせる</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
                                     (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
                                      Zend_Pdf_Font::EMBED_DONT_COMPRESS));
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
     </sect2>
@@ -430,7 +422,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
         メソッドで作成しなければなりません (現在は JPG、PNG および TIFF
         画像をサポートしています)。
         </para>
-        <example>
+        <example id="zend.pdf.drawing.image-drawing.example-1">
             <title>画像の描画</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -438,8 +430,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
 $image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
 

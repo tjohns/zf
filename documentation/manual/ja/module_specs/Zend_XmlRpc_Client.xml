@@ -33,19 +33,17 @@
             のテストや調査のために、このサーバを使用することができます。
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.method-calls.example-1">
             <title>XML-RPC メソッドのコール</title>
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 echo $client->call('test.sayHello');
 
-// hello
-
-?>]]></programlisting>
+// hello]]>
+            </programlisting>
         </example>
 
         <para>
@@ -63,10 +61,9 @@ echo $client->call('test.sayHello');
             このパラメータには、リモートメソッドに渡す値を配列で指定します。
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.method-calls.example-2">
             <title>パラメータを指定した XML-RPC メソッドのコール</title>
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
@@ -76,9 +73,8 @@ $arg2 = 'foo';
 
 $result = $client->call('test.sayHello', array($arg1, $arg2));
 
-// $result はネイティブな PHP の型になります
-
-?>]]></programlisting>
+// $result はネイティブな PHP の型になります]]>
+            </programlisting>
         </example>
 
         <para>
@@ -121,7 +117,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 以下の表にしたがって XML-RPC 型に変換されます。
             </para>
 
-            <table>
+            <table id="zend.xmlrpc.value.parameters.php-native.table-1">
                 <title>PHP と XML-RPC の間の型変換</title>
                 <tgroup cols="2">
                     <thead>
@@ -207,7 +203,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 を使用します。
             </para>
 
-            <table>
+            <table id="zend.xmlrpc.value.parameters.xmlrpc-value.table-1">
                 <title><code>Zend_XmlRpc_Value</code> オブジェクトと対応する XML-RPC 型</title>
                 <tgroup cols="3">
                     <thead>
@@ -297,19 +293,16 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
             パラメータも通常の PHP メソッドと同じように渡すことができます。
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.requests-and-responses.example-1">
             <title>デフォルト名前空間のプロキシ</title>
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $server = $client->getProxy();           // デフォルトの名前空間のプロキシを作成します
 
-$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) は "hello" を返します
-
-?>]]>
+$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) は "hello" を返します]]>
             </programlisting>
         </example>
 
@@ -320,19 +313,17 @@ $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) は "hello" を返�
             次の例では、<code>test</code> 名前空間がプロキシの対象となります。
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.requests-and-responses.example-2">
             <title>任意の名前空間のプロキシ</title>
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $test  = $client->getProxy('test');     // "test" 名前空間のプロキシを作成します
 
-$hello = $test->sayHello(1, 2);         // test.Hello(1,2) は "hello" を返します
-
-?>]]></programlisting>
+$hello = $test->sayHello(1, 2);         // test.Hello(1,2) は "hello" を返します]]>
+            </programlisting>
         </example>
 
         <para>
@@ -363,11 +354,10 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) は "hello" を返し
                 <code>Zend_XmlRpc_Client_HttpException</code> がスローされます。
             </para>
 
-            <example>
+            <example id="zend.xmlrpc.client.error-handling.http.example-1">
                 <title>HTTP エラーの処理</title>
 
                 <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://foo/404');
@@ -381,9 +371,8 @@ try {
     // $e->getCode() は 404 を返します
     // $e->getMessage() は "Not Found" を返します
 
-}
-
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
             <para>
@@ -411,11 +400,10 @@ try {
                 レスポンスの値に対応するものとなります。
             </para>
 
-            <example>
+            <example id="zend.xmlrpc.client.error-handling.faults.example-1">
                 <title>XML-RPC Fault の処理</title>
 
                 <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
@@ -429,9 +417,8 @@ try {
     // $e->getCode() は 1 を返します
     // $e->getMessage() は "Unknown method" を返します
 
-}
-
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
             <para>
@@ -483,11 +470,10 @@ try {
             <code>doRequest()</code> メソッドは、それ単体で直接使用することもできます。
         </para>
 
-        <example>
+        <example id="zend.xmlrpc.client.request-to-response.example-1">
             <title>リクエストからレスポンスへの処理</title>
 
             <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/XmlRpc/Client.php';
 
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
@@ -499,9 +485,8 @@ $request->setParams(array('foo', 'bar'));
 $client->doRequest($request);
 
 // $server->getLastRequest() は Zend_XmlRpc_Request のインスタンスを返します
-// $server->getLastResponse() は Zend_XmlRpc_Response のインスタンスを返します
-
-?>]]></programlisting>
+// $server->getLastResponse() は Zend_XmlRpc_Response のインスタンスを返します]]>
+            </programlisting>
         </example>
 
         <para>

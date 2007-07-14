@@ -57,7 +57,7 @@
     一般的な配列と同じように操作することができます。
     </para>
 
-    <example>
+    <example id="zend.pdf.pages.example-1">
         <title>PDF ドキュメントのページの操作</title>
         <programlisting role="php"><![CDATA[<?php
 ...
@@ -72,8 +72,8 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 // 指定したページを削除します。
 unset($pdf->pages[$id]);
 
-...
-?>]]></programlisting>
+...]]>
+        </programlisting>
     </example>
 
 </sect1>

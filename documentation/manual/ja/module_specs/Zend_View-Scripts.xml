@@ -45,7 +45,7 @@
 
     <p>表示する本がありません。</p>
 
-<?php endif; ?>]]>
+<?php endif;]]>
     </programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
@@ -70,8 +70,7 @@
 echo $this->variable;
 
 // ビュースクリプトのよい例
-echo $this->escape($this->variable);
-?>]]>
+echo $this->escape($this->variable);]]>
         </programlisting>
 
         <para>
@@ -97,8 +96,7 @@ $obj = new SomeClass();
 $view->setEscape(array($obj, 'methodName'));
 
 // そして、ビューをレンダリングします
-echo $view->render(...);
-?>]]>
+echo $view->render(...);]]>
         </programlisting>
 
         <para>
@@ -151,8 +149,8 @@ if ($this->books) {
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 関連するテンプレートファイルは、このようになります。
@@ -175,8 +173,8 @@ if ($this->books) {
     </tr>
 
 <!-- nobooks.tpl -->
-<p>表示する本がありません。</p>
-]]></programlisting>
+<p>表示する本がありません。</p>]]>
+            </programlisting>
 
         </sect3>
 
@@ -237,8 +235,8 @@ public function clearVars();
 /**
  * $name というテンプレートをレンダリングします
  */
-public function render($name);
-]]></programlisting>
+public function render($name);]]>
+            </programlisting>
 
             <para>
                 このインターフェイスを使用すると、
@@ -428,8 +426,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     {
         return $this->_smarty->fetch($name);
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 この例では、<code>Zend_View</code> ではなく
@@ -442,8 +440,8 @@ $view = new Zend_View_Smarty();
 $view->setScriptPath('/path/to/templates');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');
-]]></programlisting>
+$rendered = $view->render('bookinfo.tpl');]]>
+            </programlisting>
 
         </sect3>
     </sect2>

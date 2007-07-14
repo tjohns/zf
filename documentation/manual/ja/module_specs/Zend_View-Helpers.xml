@@ -220,8 +220,7 @@
 $view = new Zend_View();
 
 // パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' とします
-$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
-?>]]>
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
         </programlisting>
 
 
@@ -243,8 +242,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 // $this->helperName() をコールすると、Zend_View は
 // まず最初に "/other/path/to/helpers/HelperName.php" で "My_View_Helper_HelperName" という名前のクラスを探し、
 // 次に "/path/to/some/helpers/HelperName" で "Your_View_Helper_HelperName" という名前のクラスを探し、
-// そして最後に "Zend/View/Helpers/HelperName.php" で "Zend_View_Helper_HelperName" という名前のクラスを探します。
-?>]]>
+// そして最後に "Zend/View/Helpers/HelperName.php" で "Zend_View_Helper_HelperName" という名前のクラスを探します。]]>
         </programlisting>
 
     </sect2>
@@ -311,8 +309,7 @@ class My_View_Helper_SpecialPurpose
         $output = "'The Jerk' を {$this->_count} 回見ました。";
         return htmlspecialchars($output);
     }
-}
-?>]]>
+}]]>
         </programlisting>
 
         <para>
@@ -325,8 +322,7 @@ class My_View_Helper_SpecialPurpose
 // ビュースクリプト内では、$this は Zend_View インスタンスを指すことを覚えておきましょう。
 echo $this->specialPurpose();
 echo $this->specialPurpose();
-echo $this->specialPurpose();
-?>]]>
+echo $this->specialPurpose();]]>
         </programlisting>
 
         <para>
@@ -359,8 +355,8 @@ class My_View_Helper_ScriptPath
     {
         return $this->view->getScriptPath($script);
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             ヘルパークラスで <code>setView()</code> メソッドを定義しておくと、

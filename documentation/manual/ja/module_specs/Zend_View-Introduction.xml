@@ -61,8 +61,7 @@ $view = new Zend_View();
 $view->books = $data;
 
 // "booklist.php" というビュースクリプトをレンダリングします
-echo $view->render('booklist.php');
-?>]]>
+echo $view->render('booklist.php');]]>
         </programlisting>
 
     </sect2>
@@ -104,7 +103,7 @@ echo $view->render('booklist.php');
 
     <p>表示する本がありません。</p>
 
-<?php endif; ?>]]>
+<?php endif;]]>
         </programlisting>
 
         <para>
@@ -134,8 +133,8 @@ echo $view->render('booklist.php');
 base/path/
     helpers/
     filters/
-    scripts/
-]]]></programlisting>
+    scripts/]]>
+                </programlisting>
 
                 <para>
                     これを設定するには <code>setBasePath()</code> か

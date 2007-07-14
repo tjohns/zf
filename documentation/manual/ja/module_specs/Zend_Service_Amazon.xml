@@ -67,8 +67,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <example id="zend.service.amazon.introduction.example.query_api">
             <title>クエリ API を使用した Amazon 検索</title>
@@ -84,8 +84,8 @@ $query->category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
@@ -100,8 +100,8 @@ foreach ($results as $result) {
             <programlisting><![CDATA[<?php
 // 日本の Amazon に接続します
 require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
-?>]]></programlisting>
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');]]>
+            </programlisting>
         </example>
         <note>
             <title>国コード</title>
@@ -122,8 +122,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$item = $amazon->itemLookup('B0000A432X');
-?>]]></programlisting>
+$item = $amazon->itemLookup('B0000A432X');]]>
+            </programlisting>
         </example>
         <para>
             <code>itemLookup()</code> メソッドにオプションの第 2 パラメータを渡すことで、
@@ -155,8 +155,8 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
 $results = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <example id="zend.service.amazon.itemsearch.example.responsegroup">
             <title><code>ResponseGroup</code> オプションの使用法</title>
@@ -174,8 +174,8 @@ $results = $amazon->itemSearch(array(
     ));
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <para>
             <code>itemSearch()</code> は配列のパラメータをひとつ受け取り、
@@ -220,8 +220,8 @@ $query->Category('Books')->Keywords('PHP');
 $results = $query->search();
 foreach ($results as $result) {
     echo $result->Title . '<br />';
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
                 <para>
                     これは、オプション <code>Category</code> の値を "Books"、
                     そして <code>Keywords</code> の値を "PHP" に設定します。
@@ -280,7 +280,7 @@ foreach ($results as $result) {
                     <code>Zend_Service_Amazon_Item</code> が持つプロパティは、
                     それぞれが標準の Amazon API に直接対応しています。
                 </para>
-                <table>
+                <table id="zend.service.amazon.classes.item.properties.table-1">
                     <title>Zend_Service_Amazon_Item のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -415,7 +415,7 @@ foreach ($results as $result) {
             <para><code>Zend_Service_Amazon_Image</code> は、商品の画像を表します。</para>
             <sect4 id="zend.service.amazon.classes.image.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.image.properties.table-1">
                     <title>Zend_Service_Amazon_Image のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -490,7 +490,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.offerset.parameters">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.offerset.parameters.table-1">
                     <title>Zend_Service_Amazon_OfferSet のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -570,7 +570,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.offer.properties">
                 <title>Zend_Service_Amazon_Offer のプロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.offer.properties.table-1">
                     <title>プロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -642,7 +642,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.similarproduct.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.similarproduct.properties.table-1">
                     <title>Zend_Service_Amazon_SimilarProduct のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -680,7 +680,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.accessories.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.accessories.properties.table-1">
                     <title>Zend_Service_Amazon_Accessories のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -718,7 +718,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.customerreview.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.customerreview.properties.table-1">
                     <title>Zend_Service_Amazon_CustomerReview のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -781,7 +781,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.editorialreview.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.editorialreview.properties.table-1">
                     <title>Zend_Service_Amazon_EditorialReview のプロパティ</title>
                     <tgroup cols="3">
                         <thead>
@@ -819,7 +819,7 @@ foreach ($results as $result) {
             </para>
             <sect4 id="zend.service.amazon.classes.listmania.properties">
                 <title>プロパティ</title>
-                <table>
+                <table id="zend.service.amazon.classes.listmania.properties.table-1">
                     <title>Zend_Service_Amazon_Listmania のプロパティ</title>
                     <tgroup cols="3">
                         <thead>

@@ -191,7 +191,8 @@ require_once 'Zend/Service/Audioscrobbler.php';
 $as = new Zend_Service_Audioscrobbler();
 $as->setUser('BigDaddy71'); // プロファイル情報を取得したいユーザを設定します
 $profileInfo = $as->userGetProfileInformation(); // BigDaddy71 のプロファイル情報を取得します
-print "$profileInfo->realname の情報は $profileInfo->url にあります"; // その一部を表示します]]></programlisting>
+print "$profileInfo->realname の情報は $profileInfo->url にあります"; // その一部を表示します]]>
+            </programlisting>
 
         </example>
 
@@ -219,7 +220,8 @@ echo '週間アーティストチャート ' . date('Y-m-d h:i:s', $as->from_dat
 foreach ($previousWeeklyArtists as $artist) {
     // アーティスト名と、プロファイルへのリンクを表示します
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -282,7 +284,8 @@ $as->setArtist('LCD Soundsystem'); // 関連アーティストを取得したい
 $relatedArtists = $as->artistGetRelatedArtists(); // 関連アーティストを取得します
 foreach ($relatedArtists as $artist) {
     print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />'; // 関連アーティストを表示します
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 

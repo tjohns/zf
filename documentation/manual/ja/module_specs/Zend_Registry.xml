@@ -28,10 +28,8 @@
         <example id="zend.registry.using.storing.example">
             <title>set() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
-Zend_Registry::set('index', $value);
-
-?>]]></programlisting>
+Zend_Registry::set('index', $value);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -59,10 +57,8 @@ Zend_Registry::set('index', $value);
         <example id="zend.registry.using.retrieving.example">
             <title>get() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
-$value = Zend_Registry::get('index');
-
-?>]]></programlisting>
+$value = Zend_Registry::get('index');]]>
+            </programlisting>
         </example>
 
         <para>
@@ -77,15 +73,13 @@ $value = Zend_Registry::get('index');
         <example id="zend.registry.using.retrieving.example-iterating">
             <title>レジストリの順次処理の例</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = Zend_Registry::getInstance();
 
 foreach ($registry as $index => $value) {
     echo "レジストリのインデックス $index に含まれる内容:\n";
     var_dump($value);
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -114,10 +108,8 @@ foreach ($registry as $index => $value) {
         <example id="zend.registry.using.constructing.example">
             <title>レジストリを作成する例</title>
             <programlisting role="php"><![CDATA[<?php
-
-$registry = new Zend_Registry(array('index' => $value));
-
-?>]]></programlisting>
+$registry = new Zend_Registry(array('index' => $value));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -129,12 +121,10 @@ $registry = new Zend_Registry(array('index' => $value));
         <example id="zend.registry.using.constructing.example-setinstance">
             <title>静的レジストリの初期化の例</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = new Zend_Registry(array('index' => $value));
 
-Zend_Registry::setInstance($registry);
-
-?>]]></programlisting>
+Zend_Registry::setInstance($registry);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -157,14 +147,12 @@ Zend_Registry::setInstance($registry);
         <example id="zend.registry.using.array-access.example">
             <title>配列アクセスの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
-var_dump( $registry['index'] );
-
-?>]]></programlisting>
+var_dump( $registry['index'] );]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -188,7 +176,6 @@ var_dump( $registry['index'] );
         <example id="zend.registry.using.array-object.example">
             <title>オブジェクト形式のアクセスの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 // アプリケーションの起動ファイルでの記述
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
@@ -205,9 +192,8 @@ echo $registry->tree; // "apple" と出力します
 
 $registry->index = $value;
 
-var_dump($registry->index);
-
-?>]]></programlisting>
+var_dump($registry->index);]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -224,12 +210,10 @@ var_dump($registry->index);
         <example id="zend.registry.using.isset.example-isregistered">
             <title>isRegistered() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -240,7 +224,6 @@ if (Zend_Registry::isRegistered($index)) {
         <example id="zend.registry.using.isset.example-isset">
             <title>isset() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 $registry = Zend_Registry::getInstance();
 
 // 配列風の構文でのアクセス
@@ -251,9 +234,8 @@ if (isset($registry['index'])) {
 // 有効にしていれば、オブジェクト形式でのアクセスも可能です
 if (isset($registry->index)) {
     var_dump( $registry->index );
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -275,12 +257,10 @@ if (isset($registry->index)) {
         <example id="zend.registry.using.subclassing.example">
             <title>静的レジストリのクラス名を指定する例</title>
             <programlisting role="php"><![CDATA[<?php
-
 Zend_Registry::setClassName('My_Registry');
 
-Zend_Registry::set('index', $value);
-
-?>]]></programlisting>
+Zend_Registry::set('index', $value);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -321,7 +301,6 @@ Zend_Registry::set('index', $value);
         <example id="zend.registry.using.unsetting.example">
             <title>_unsetInstance() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 Zend_Registry::set('index', $value);
 
 Zend_Registry::_unsetInstance();
@@ -329,9 +308,8 @@ Zend_Registry::_unsetInstance();
 // クラスを変更します
 Zend_Registry::setClassName('My_Registry');
 
-Zend_Registry::set('index', $value);
-
-?>]]></programlisting>
+Zend_Registry::set('index', $value);]]>
+            </programlisting>
         </example>
 
     </sect2>

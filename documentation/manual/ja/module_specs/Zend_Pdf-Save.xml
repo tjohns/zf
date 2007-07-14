@@ -18,7 +18,7 @@
     新しい PDF ファイルセグメントのみが返されます。
     </para>
 
-    <example>
+    <example id="zend.pdf.save.example-1">
         <title>PDF ドキュメントの保存</title>
         <programlisting role="php"><![CDATA[<?php
 ...
@@ -33,8 +33,8 @@ $pdf->save($newFileName);
 // PDF ドキュメントを文字列で返します。
 $pdfString = $pdf->render();
 
-...
-?>]]></programlisting>
+...]]>
+        </programlisting>
     </example>
 
 </sect1>

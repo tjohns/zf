@@ -24,7 +24,8 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session.php';
 
-Zend_Session::start();]]></programlisting>
+Zend_Session::start();]]>
+            </programlisting>
 
         </example>
 
@@ -51,7 +52,8 @@ Zend_Session::start();]]></programlisting>
                     <code>php.ini</code> でこの設定が有効になっている、かつそれを無効にすることができない
                     という場合は、<code>.htaccess</code> ファイル (通常は HTML のドキュメントルートにあります)
                     に以下の内容を追加します。
-                    <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]></programlisting>
+                    <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]>
+                    </programlisting>
                 </para>
             </listitem>
             <listitem>
@@ -168,7 +170,8 @@ $userProfileNamespace->lock();
 // 読み取り専用ロックを解除します
 if ($userProfileNamespace->isLocked()) {
     $userProfileNamespace->unLock();
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -207,7 +210,8 @@ $s->setExpirationHops(5);
 $s->setExpirationSeconds(60);
 // "expireAll" 名前空間は、60 秒が経過するか
 // 5 ホップに達するかのどちらかが発生した時点で
-// "有効期限切れ" となります]]></programlisting>
+// "有効期限切れ" となります]]>
+            </programlisting>
 
         </example>
 
@@ -250,7 +254,8 @@ require_once 'Zend/Session/Namespace.php';
 $testSpace = new Zend_Session_Namespace('testSpace');
 $testSpace->setExpirationSeconds(300, 'accept_answer'); // この変数にだけ有効期限を設定します
 $testSpace->accept_answer = true;
-//...]]></programlisting>
+//...]]>
+            </programlisting>
 
             <para>
                 次に、回答を処理するコントローラを示します。
@@ -268,7 +273,8 @@ if ($testSpace->accept_answer === true) {
 else {
     // 時間切れ
 }
-// ...]]></programlisting>
+// ...]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -314,7 +320,8 @@ try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
     echo "この名前空間ではインスタンスを作成できません。すでに \$authSpaceAccessor2 があるからです\n";
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -359,7 +366,8 @@ require_once 'Zend/Session/Namespace.php';
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
 $sessionNamespace->array['testKey'] = 1; // PHP 5.2.1 より前のバージョンでは、期待通りに動作しません
-echo $sessionNamespace->array['testKey'];]]></programlisting>
+echo $sessionNamespace->array['testKey'];]]>
+            </programlisting>
 
         </example>
 
@@ -374,7 +382,8 @@ echo $sessionNamespace->array['testKey'];]]></programlisting>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Session/Namespace.php';
 $sessionNamespace = new Zend_Session_Namespace('Foo');
-$sessionNamespace->array = array('a', 'b', 'c');]]></programlisting>
+$sessionNamespace->array = array('a', 'b', 'c');]]>
+            </programlisting>
 
         </example>
 
@@ -409,7 +418,8 @@ $tmp['fruit'] = 'peach';
 // 修正したコピーをセッション名前空間に書き戻します
 $sessionNamespace->array = $tmp;
 
-echo $sessionNamespace->array['fruit']; // "peach" と表示されます]]></programlisting>
+echo $sessionNamespace->array['fruit']; // prints "peach"]]>
+            </programlisting>
 
         </example>
 
@@ -428,7 +438,8 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 $a = array(1, 2, 3);
 $myNamespace->someArray = array( &$a );
 $a['foo'] = 'bar';
-echo $myNamespace->someArray['foo']; // "bar" と表示されます]]></programlisting>
+echo $myNamespace->someArray['foo']; // "bar" と表示されます]]>
+            </programlisting>
 
         </example>
 
@@ -528,7 +539,8 @@ exec($script . "expireAll $id expireGuava", $result);
 $result = $this->sortResult($result);
 session_start(); // resume artificially suspended session
 $this->assertTrue($result === ';p === plum',
-    "iteration over named Zend_Session namespace failed (result=$result)");]]></programlisting>
+    "iteration over named Zend_Session namespace failed (result=$result)");]]>
+            </programlisting>
 
         </example>
 

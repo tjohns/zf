@@ -50,8 +50,8 @@ foreach ($prototypes as $prototype) {
 // クラス、関数あるいはメソッドの名前空間を取得します。
 // 名前空間は、インスタンス作成時 (二番目の引数) あるいは
 // setNamespace() で設定します。
-$reflection->getNamespace();
-]]></programlisting>
+$reflection->getNamespace();]]>
+        </programlisting>
 
         <para>
             <code>reflectFunction()</code> は

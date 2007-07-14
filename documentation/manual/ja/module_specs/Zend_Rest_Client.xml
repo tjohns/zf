@@ -11,7 +11,7 @@
             まず、そのサービスのアドレスを <code>Zend_Rest_Client</code> のコンストラクタに指定します。
         </para>
 
-        <example>
+        <example id="zend.rest.client.introduction.example-1">
             <title>基本的な REST リクエスト</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -22,8 +22,8 @@ require_once 'Zend/Rest/Client.php';
 
 $client = new Zend_Rest_Client('http://framework.zend.com/rest');
 
-echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
-?>]]></programlisting>
+echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"]]>
+            </programlisting>
         </example>
 
         <note>
@@ -40,8 +40,8 @@ echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
 
             <programlisting role="php"><![CDATA[<?php
 $client->sayHello('Davey', 'Day');
-echo $client->get();
-?>]]></programlisting>
+echo $client->get();]]>
+            </programlisting>
         </note>
     </sect2>
 
@@ -60,15 +60,15 @@ echo $client->get();
             たとえばレスポンスステータス (成功あるいは失敗) や返り値の型などです。
         </para>
 
-        <example>
+        <example id="zend.rest.client.return.example-1">
             <title>レスポンスステータス</title>
             <programlisting role="php"><![CDATA[<?php
 $result = $client->sayHello('Davey', 'Day')->get();
 
 if ($result->isSuccess()) {
     echo $result; // "Hello Davey, Good Day"
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -92,7 +92,7 @@ if ($result->isSuccess()) {
             PHP の値あるいは値の配列としてそのオブジェクトを取得できます。
         </para>
 
-        <example>
+        <example id="zend.rest.client.return.example-2">
             <title>Technorati の Rest サービスの使用</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -102,13 +102,11 @@ $technorati = new Zend_Rest_Client('http://api.technorati.com/bloginfo');
 $technorati->key($key);
 $technorati->url('http://pixelated-dreams.com');
 $result = $technorati->get();
-echo $result->firstname() .' '. $result->lastname();
-
-?>]]>
+echo $result->firstname() .' '. $result->lastname();]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.rest.client.return.example-3">
             <title>Technorati からのレスポンスの例</title>
             <programlisting role="xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <!-- generator="Technorati API version 1.0 /bloginfo" -->
@@ -136,7 +134,8 @@ echo $result->firstname() .' '. $result->lastname();
             <inboundlinks>218</inboundlinks>
         </result>
     </document>
-</tapi>]]></programlisting>
+</tapi>]]>
+            </programlisting>
         </example>
 
         <para>
@@ -172,7 +171,7 @@ echo $result->firstname() .' '. $result->lastname();
             サービスをコールする際のメソッドとみなされます。
         </para>
 
-        <example>
+        <example id="zend.rest.client.args.example-1">
             <title>リクエストの引数の設定</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -184,8 +183,8 @@ $client->get();
 
 // あるいは
 
-$client->arg('value1')->arg2('value2')->get();
-?>]]></programlisting>
+$client->arg('value1')->arg2('value2')->get();]]>
+            </programlisting>
         </example>
 
         <para>

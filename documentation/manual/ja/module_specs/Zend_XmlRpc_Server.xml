@@ -26,7 +26,8 @@ require_once 'My/Service/Class.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
@@ -104,7 +105,8 @@ echo $server->handle();]]></programlisting>
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             PhpDocumentor はパラメータや返り値の型を検証しません。
@@ -133,7 +135,8 @@ function myFunc($val1, $val2, $val3)
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             しかし、注意すべきことがあります。複数のシグネチャを定義すると、
@@ -175,7 +178,8 @@ function myFunc($val1, $val2, $val3)
 $server->setClass('My_Service_Class', 'myservice');
 
 // 関数 'somefunc' は funcs.somefunc としてアクセスするようにします
-$server->addFunction('somefunc', 'funcs');]]></programlisting>
+$server->addFunction('somefunc', 'funcs');]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
@@ -236,7 +240,8 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></programlisting>
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
+        </programlisting>
 
         <para>
             他のプロジェクトの例外を継承した例外クラスを利用するのなら、
@@ -293,7 +298,8 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+        </programlisting>
         <para>
             この例では、スクリプトと同じディレクトリにある xmlrpc.cache
             からサーバの定義を取得しようとします。取得できなかった場合は、
@@ -333,7 +339,8 @@ function md5Value($value)
 
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
@@ -350,7 +357,8 @@ require_once 'Services/Comb.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
@@ -370,7 +378,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
 $server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
 $server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
@@ -396,7 +405,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
 $server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
 $server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
-echo $server->handle();]]></programlisting>
+echo $server->handle();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
@@ -427,7 +437,8 @@ $server->setClass('Services_Pick', 'pick');   // メソッドをコールする�
 // リクエストオブジェクトを作成します
 $request = new Services_Request();
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
@@ -462,7 +473,8 @@ $request = new Services_Request();
 // 独自のレスポンスを使用します
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
@@ -507,7 +519,8 @@ $request = new Services_Request();
 // 独自のレスポンスを使用します
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);]]>
+            </programlisting>
         </sect3>
     </sect2>
 </sect1>

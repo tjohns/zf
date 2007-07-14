@@ -12,7 +12,7 @@
     <sect2 id="zend.rest.server.usage">
         <title>REST サーバの使用法</title>
 
-        <example>
+        <example id="zend.rest.server.usage.example-1">
             <title>基本的な Zend_Rest_Server の使用法 - クラス</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -21,12 +21,11 @@ require_once 'My/Service/Class.php';
 
 $server = new Zend_Rest_Server();
 $server->setClass('My_Service_Class');
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.rest.server.usage.example-2">
             <title>基本的な Zend_Rest_Server の使用法 - 関数</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -46,8 +45,7 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
     </sect2>
@@ -95,7 +93,7 @@ $server->handle();
             キー <code>status</code> を含む配列を返します。
         </para>
 
-        <example>
+        <example id="zend.rest.server.customstatus.example-1">
             <title>独自のステータスを返す</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
@@ -114,8 +112,7 @@ function sayHello($who, $when)
 
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
     </sect2>
@@ -157,8 +154,7 @@ function sayHello($who, $when)
 $server = new Zend_Rest_Server();
 $server->addFunction('sayHello');
 
-$server->handle();
-?>]]>
+$server->handle();]]>
             </programlisting>
         </example>
 

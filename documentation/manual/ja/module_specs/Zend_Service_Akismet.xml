@@ -55,8 +55,8 @@ if ($akismet->verifyKey($apiKey) {
 echo "このキーは有効です。\n";
 } else {
 echo "このキーは無効です。\n";
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             引数を指定せずにコールすると、<code>verifyKey()</code>
@@ -173,7 +173,7 @@ echo "このキーは無効です。\n";
             API キーが無効な場合は例外をスローします。
         </para>
 
-        <example>
+        <example id="zend.service.akismet.isspam.example-1">
             <title>isSpam() の使用法</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -189,8 +189,8 @@ if ($akismet->isSpam($data)) {
     echo "悪いけど、たぶんあなたはスパマーでしょう。";
 } else {
     echo "私たちのサイトへようこそ!";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -216,7 +216,7 @@ if ($akismet->isSpam($data)) {
             API キーが無効な場合は例外が発生します。
         </para>
 
-        <example>
+        <example id="zend.service.akismet.submitspam.example-1">
             <title>submitSpam() の使用法</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -228,8 +228,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "スパマーじゃないもん。信じて!"
 );
-$akismet->submitSpam($data));
-?>]]></programlisting>
+$akismet->submitSpam($data));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -257,7 +257,7 @@ $akismet->submitSpam($data));
             API キーが無効な場合は例外が発生します。
         </para>
 
-        <example>
+        <example id="zend.service.akismet.submitham.example-1">
             <title>submitHam() の使用法</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -269,8 +269,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "スパマーじゃないもん。信じて!"
 );
-$akismet->submitHam($data));
-?>]]></programlisting>
+$akismet->submitHam($data));]]>
+            </programlisting>
         </example>
 
         <para>
