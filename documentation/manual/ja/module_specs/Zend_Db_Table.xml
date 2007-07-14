@@ -64,9 +64,7 @@ class Bugs extends Zend_Db_Table_Abstract
 class bugs extends Zend_Db_Table_Abstract
 {
     // テーブル名とクラス名が一致します
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -106,9 +104,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name   = 'bug_db.bugs';
     protected $_schema = 'ignored';
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -140,9 +136,7 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs');
 // スキーマを 'name' と 'schema' の両方で指定した場合は、
 // 'name' で指定したものが優先されます
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');
-
-?>]]></programlisting>
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');]]></programlisting>
 
             </example>
 
@@ -173,9 +167,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_primary = 'bug_id';
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -219,9 +211,7 @@ class Bugs extends Zend_Db_Table_Abstract
         $this->_name = 'bugs';
         parent::_setupTableName();
     }
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -301,9 +291,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
-$table = new Bugs(array('db' => $db));
-
-?>]]></programlisting>
+$table = new Bugs(array('db' => $db));]]></programlisting>
             </example>
 
         </sect3>
@@ -332,9 +320,7 @@ Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
 // その後...
 
-$table = new Bugs();
-
-?>]]></programlisting>
+$table = new Bugs();]]></programlisting>
             </example>
 
             <para>
@@ -368,9 +354,7 @@ Zend_Registry::set('my_db', $db);
 
 // その後...
 
-$table = new Bugs(array('db' => 'my_db'));
-
-?>]]></programlisting>
+$table = new Bugs(array('db' => 'my_db'));]]></programlisting>
             </example>
 
             <para>
@@ -410,9 +394,7 @@ $data = array(
     'bug_status'      => 'NEW'
 );
 
-$table->insert($data);
-
-?>]]></programlisting>
+$table->insert($data);]]></programlisting>
         </example>
 
         <para>
@@ -432,9 +414,7 @@ $data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
     'bug_description' => 'Something wrong',
     'bug_status'      => 'NEW'
-);
-
-?>]]></programlisting>
+);]]></programlisting>
         </example>
 
         <para>
@@ -470,9 +450,7 @@ class Bugs extends Zend_Db_Table_Abstract
     // これは Zend_Db_Table_Abstract クラスのデフォルト設定です。
     // 特に定義する必要はありません。
     protected $_sequence = true;
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -519,9 +497,7 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name = 'bugs';
 
     protected $_sequence = 'bug_sequence';
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -559,9 +535,7 @@ class BugStatus extends Zend_Db_Table_Abstract
     protected $_name = 'bug_status';
 
     protected $_sequence = false;
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <note>
@@ -603,9 +577,7 @@ $data = array(
 
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1234);
 
-$table->update($data, $where);
-
-?>]]></programlisting>
+$table->update($data, $where);]]></programlisting>
         </example>
 
         <para>
@@ -648,9 +620,7 @@ $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1235);
 
-$table->delete($where);
-
-?>]]></programlisting>
+$table->delete($where);]]></programlisting>
         </example>
 
         <para>
@@ -702,9 +672,7 @@ $rows = $table->find(1234);
 
 // 複数の行を探し、
 // こちらも Rowset を返します
-$rows = $table->find(array(1234, 5678));
-
-?>]]></programlisting>
+$rows = $table->find(array(1234, 5678));]]></programlisting>
         </example>
 
         <para>
@@ -762,9 +730,7 @@ $rows = $table->find(1234, 'ABC');
 
 // 複数の行を複合主キーで探し、
 // こちらも Rowset を返します
-$rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
-
-?>]]></programlisting>
+$rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]></programlisting>
         </example>
 
     </sect2>
@@ -788,9 +754,7 @@ $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($where);
-
-?>]]></programlisting>
+$rows = $table->fetchAll($where);]]></programlisting>
         </example>
 
         <para>
@@ -836,9 +800,7 @@ $order  = 'bug_id';
 $count  = 10;
 $offset = 20;
 
-$rows = $table->fetchAll($where, $order, $count, $offset);
-
-?>]]></programlisting>
+$rows = $table->fetchAll($where, $order, $count, $offset);]]></programlisting>
         </example>
 
         <para>
@@ -870,9 +832,7 @@ $where  = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
 
 $order  = 'bug_id';
 
-$row = $table->fetchRow($where, $order);
-
-?>]]></programlisting>
+$row = $table->fetchRow($where, $order);]]></programlisting>
         </example>
 
         <para>
@@ -901,9 +861,7 @@ $table = new Bugs();
 
 $info = $table->info();
 
-echo "テーブル名は " . $info['name'] . " です\n";
-
-?>]]></programlisting>
+echo "テーブル名は " . $info['name'] . " です\n";]]></programlisting>
         </example>
 
         <para>
@@ -1017,7 +975,7 @@ echo "テーブル名は " . $info['name'] . " です\n";
             </itemizedlist>
 
             どちらの場合においても、メソッドの引数はひとつで、<code>null</code> (キャッシュを使用しない)
-            あるいは <link linkend="zend.cache.core"><code>Zend_Cache_Core</code></link>
+            あるいは <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>
             のインスタンスを指定します。これらを組み合わせることで、
             デフォルトのメタデータキャッシュを指定した上で
             特定のテーブルオブジェクトについてのみ別のキャッシュを使用させることができます。
@@ -1065,9 +1023,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
 // Bugs の各インスタンスは、これでデフォルトのメタデータキャッシュを用いるようになります
 
-$bugs = new Bugs();
-
-?>]]></programlisting>
+$bugs = new Bugs();]]></programlisting>
 
         </example>
 
@@ -1117,9 +1073,7 @@ $bugs->setMetadataCache($cache);
 
 // あるいは、インスタンスの作成時にこのように設定することもできます
 
-$bugs = new Bugs(array('metadataCache' => $cache));
-
-?>]]></programlisting>
+$bugs = new Bugs(array('metadataCache' => $cache));]]></programlisting>
 
         </example>
 
@@ -1196,9 +1150,7 @@ $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
 
 // My_Rowset 型のオブジェクトを返します。
 // その中には My_Row 型のオブジェクトの配列が含まれます。
-$rows = $table->fetchAll($where);
-
-?>]]></programlisting>
+$rows = $table->fetchAll($where);]]></programlisting>
             </example>
 
             <para>
@@ -1228,9 +1180,7 @@ $table->setRowsetClass('My_Rowset');
 // その中には My_Row 型のオブジェクトの配列が含まれます。
 $rowsCustom = $table->fetchAll($where);
 
-// $rowsStandard オブジェクトはまだ存在しますが、なにも変更されていません
-
-?>]]></programlisting>
+// $rowsStandard オブジェクトはまだ存在しますが、なにも変更されていません]]></programlisting>
             </example>
 
             <para>
@@ -1277,9 +1227,7 @@ class Bugs extends Zend_Db_Table_Abstract
         }
         return parent::update($data, $where);
     }
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -1316,9 +1264,7 @@ class Bugs extends Zend_Db_Table_Abstract
         $where = $this->getAdapter()->quoteInto('bug_status = ?', $status);
         return $this->fetchAll($where, 'bug_id');
     }
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
         </sect3>
@@ -1386,9 +1332,7 @@ abstract class MyAbstractTable extends Zend_Db_Table_Abstract
 
 class BugsProducts extends MyAbstractTable
 {
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
