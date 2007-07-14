@@ -2,8 +2,8 @@
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-        Zend_Service_StrikeIron provides a PHP 5 client to StrikeIron
-        web services.  See the following sections:
+        Zend_Service_StrikeIron は、StrikeIron
+        ウェブサービス用の PHP 5 クライアントです。以下のセクションを参照ください。
     </para>
 
     <para>
@@ -19,70 +19,75 @@
     </para>
 
     <sect2 id="zend.service.strikeiron.overview">
-        <title>Overview</title>
+        <title>概要</title>
 
         <para>
           <ulink url="http://www.strikeiron.com">StrikeIron</ulink>
-          offers hundreds of commercial data services ("Data as a Service")
-          such as Online Sales Tax, Currency Rates, Stock Quotes, Geocodes, Global
+          は、さまざまな商用データサービス ("Data as a Service") を提供しています。たとえば
+          Online Sales Tax, Currency Rates, Stock Quotes, Geocodes, Global
           Address Verification, Yellow/White Pages, MapQuest Driving Directions,
-          Dun &amp; Bradstreet Business Credit Checks, and much, much more.
+          Dun &amp; Bradstreet Business Credit Checks などのサービスがあります。
         </para>
 
         <para>
-          Each StrikeIron web service service shares a standard SOAP (and REST)
-          API, making it easy to integrate and manage multiple services.
-          StrikeIron also manages customer billing for all services in a single
-          account, making it perfect for solution providers. Get
-          started with free web services at
-          <ulink url="http://www.strikeiron.com/sdp">http://www.strikeiron.com/sdp</ulink>.
+          StrikeIron ウェブサービスの各サービスは、標準の SOAP (および REST)
+          API を共有しています。これにより、複数のサービスを統合して管理するのが簡単になります。
+          StrikeIron はまた、すべてのサービスの支払いを単一のアカウントで管理しています。
+          ソリューションプロバイダにとって完璧な環境といえます。
+          <ulink url="http://www.strikeiron.com/sdp">http://www.strikeiron.com/sdp</ulink>
+          で、フリーなウェブサービスを試してみましょう。
         </para>
 
         <para>
-          StrikeIron's services may be used through the
-          <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.
-          However, using StrikeIron this way does not give an ideal PHP-like interface.
-          The Zend_Service_StrikeIron component provides a lightweight layer on
-          top of the SOAP extension for working with StrikeIron services in a
-          more convenient, PHP-like manner.
+          StrikeIron のサービスは、
+          <ulink url="http://jp.php.net/soap">PHP 5 の SOAP 拡張モジュール</ulink>
+          のみでも使用することができるでしょう。
+          しかし、StrikeIron をこの方法で使用すると、
+          真の PHP 風インターフェイスを活用することができません。
+          Zend_Service_StrikeIron コンポーネントは、SOAP
+          拡張モジュールの上にもう一枚薄い皮をかぶせることによって、
+          StrikeIron のサービスをより便利かつ PHP
+          らしく使えるようにしています。
         </para>
 
         <note>
           <para>
-            The PHP 5 SOAP extension must be installed and enabled to use
-            Zend_Service_StrikeIron.
+            Zend_Service_StrikeIron を使うには、
+            PHP 5 の SOAP 拡張モジュールがインストールされて有効になっている必要があります。
           </para>
         </note>
 
         <para>
-          The Zend_Service_StrikeIron component provides:
+          Zend_Service_StrikeIron コンポーネントが提供する機能を以下にまとめます。
 
           <itemizedlist>
             <listitem>
               <para>
-                A single point for configuring your StrikeIron authentication credentials
-                that can be used across many StrikeIron services.
+                StrikeIron の認証情報の一元管理により、
+                さまざまな StrikeIron サービスで使用可能。
               </para>
             </listitem>
 
             <listitem>
               <para>
-                A standard way of retrieving your StrikeIron subscription information
-                such as license status and the number of hits remaining to a service.
+                StrikeIron のさまざまな登録情報
+                (ライセンスの状態や残りの使用回数など)
+                の標準的な方法での取得。
               </para>
             </listitem>
 
             <listitem>
               <para>
-                The ability to use any StrikeIron service from its WSDL without
-                creating a PHP wrapper class, and the option of creating a wrapper for
-                a more convenient interface.
+                PHP のラッパークラスを作成しなくても、WSDL
+                だけで StrikeIcon サービスが使用可能。
+                また、ラッパーを作成することで、
+                より便利なインターフェイスを使用することも可能。
               </para>
             </listitem>
 
             <listitem>
               <para>
-                Wrappers for three popular StrikeIron services.
+                StrikeIron のサービスのうち、人気のある 3 つについてのラッパー。
               </para>
             </listitem>
           </itemizedlist>
@@ -91,42 +96,47 @@
     </sect2>
 
     <sect2 id="zend.service.strikeiron.registering">
-      <title>Registering with StrikeIron</title>
+      <title>StrikeIron への登録</title>
       <para>
-        Before you can get started with Zend_Service_StrikeIron, you must first
-        <ulink url="http://strikeiron.com/Register.aspx">register</ulink> for a
-        StrikeIron developer account.
+        Zend_Service_StrikeIron を使用するには、まず
+        StrikeIron 開発者アカウントを取得するために
+        <ulink url="http://strikeiron.com/Register.aspx">登録</ulink>
+        する必要があります。
       </para>
 
       <para>
-        After registering, you will receive a StrikeIron username and password.
-        These will be used when connecting to StrikeIron using Zend_Service_StrikeIron.
+        登録したら、StrikeIron のユーザ名とパスワードを受け取ります。
+        Zend_Service_StrikeIron で StrikeIron に接続する際には、
+        このユーザ名とパスワードを使用します。
       </para>
 
       <para>
-        You will also need to <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">sign up</ulink>
-        for StrikeIron's Super Data Pack Web Service.
+        また、StrikeIron の Super Data Pack Web Service にも
+        <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">登録</ulink>
+        する必要があります。
       </para>
 
       <para>
-        Both registration steps are free and can be done relatively quickly through
-        the StrikeIron website.
+        どちらの登録処理も無料です。
+        StrikeIron のウェブサイト上で比較的速やかに行えます。
       </para>
     </sect2>
 
     <sect2 id="zend.service.strikeiron.getting-started">
-      <title>Getting Started</title>
+      <title>では、はじめましょう</title>
       <para>
-        Once you have <ulink url="http://strikeiron.com/Register.aspx">registered</ulink>
-        for a StrikeIron account and signed up for the
-        <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">Super Data Pack</ulink>,
-        you're ready to start using Zend_Service_StrikeIron.
+        StrikeIron のアカウントを
+        <ulink url="http://strikeiron.com/Register.aspx">取得</ulink>
+        して
+        <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">Super Data Pack</ulink>
+        にも参加したら、Zend_Service_StrikeIron
+        を使うための準備は完了です。
       </para>
 
       <para>
-        StrikeIron consists of hundreds of different web services.
-        Zend_Service_StrikeIron can be used with many of these services but provides supported
-        wrappers for three of them:
+        StrikeIron には何百ものさまざまなウェブサービスが存在します。
+        Zend_Service_StrikeIron はこれらのサービスの多くで利用可能ですが、
+        特に以下の 3 つについてはラッパークラスを用意しています。
       </para>
 
       <itemizedlist>
@@ -142,110 +152,112 @@
       </itemizedlist>
 
       <para>
-        The class <code>Zend_Service_StrikeIron</code> provides a simple way
-        of specifying your StrikeIron account information and other options in
-        its constructor. It also has a factory method that will return clients
-        for StrikeIron services:
+        <code>Zend_Service_StrikeIron</code> クラスには、
+        そのコンストラクタで StrikeIron アカウント情報やその他のオプションを設定することができます。
+        また、StrikeIron の各種サービス用のクライアントを帰すファクトリメソッドも用意しています。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password'));
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+                                                'password' => 'あなたのパスワード'));
 
-$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
-
-?>]]></programlisting>
+$taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));]]>
+        </programlisting>
       </para>
 
       <para>
-        The <code>getService()</code> method will return a client for any
-        StrikeIron service by the name of its PHP wrapper class. In this case,
-        the name <code>SalesUseTaxBasic</code> refers to the wrapper class
-        <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code>. Wrappers are
-        included for three services and described in
-        <link linkend="zend.service.strikeiron.bundled-services">Bundled Services</link>.
+        <code>getService()</code> メソッドは、StrikeIron
+        のサービス用のクライアントを帰します。引数には
+        PHP のラッパークラスの名前を指定します。
+        この場合の <code>SalesUseTaxBasic</code> は、ラッパークラス
+        <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code>
+        を指しています。標準で組み込まれている 3 つのラッパーについては
+        <link linkend="zend.service.strikeiron.bundled-services">バンドルされているサービス</link>
+        で説明します。
       </para>
 
       <para>
-        The <code>getService()</code> method can also return a client for
-        a StrikeIron service that does not yet have a PHP wrapper.  This is
-        explained in
-        <link linkend="zend.service.strikeiron.advanced-uses.services-by-wsdl">Using Services by WSDL</link>.
+        <code>getService()</code> は、対応する PHP
+        ラッパーを持たない StrikeIron サービス用のクライアントも返すことができます。
+        この機能については
+        <link linkend="zend.service.strikeiron.advanced-uses.services-by-wsdl">WSDL によるサービスの使用</link>
+        で説明します。
       </para>
     </sect2>
 
     <sect2 id="zend.service.strikeiron.making-first-query">
-      <title>Making Your First Query</title>
+      <title>はじめてのクエリ</title>
 
       <para>
-        Once you have used the <code>getService()</code> method to get a client
-        for a particular StrikeIron service, you can utilize that client
-        by calling methods on it just like any other PHP object.
+        <code>getService()</code> で StrikeIron サービス用のクライアントを取得したら、
+        あとは普通の PHP オブジェクトと同様にそのメソッドをコールすることができます。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password'));
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+                                                'password' => 'あなたのパスワード'));
 
-// Get a client for the Sales & Use Tax Basic service
+// Sales & Use Tax Basic サービス用のクライアントを取得します
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
-// Query tax rate for Ontario, Canada
+// カナダのオンタリオ州の税率を取得します
 $rateInfo = $taxBasic->getTaxRateCanada(array('province' => 'ontario'));
 echo $rateInfo->province;
 echo $rateInfo->abbreviation;
-echo $rateInfo->GST;
+echo $rateInfo->GST;]]>
+        </programlisting>
 
-?>]]></programlisting>
-
-        In the example above, the <code>getService()</code> method is used
-        to return a client to the
-        <link linkend="zend.service.strikeiron.bundled-services.sales-use-tax-basic">Sales &amp; Use Tax Basic</link> service.
-        The client object is stored in <code>$taxBasic</code>.
+        上の例では、<code>getService()</code> メソッドを使用して
+        <link linkend="zend.service.strikeiron.bundled-services.sales-use-tax-basic">Sales &amp; Use Tax Basic</link>
+        サービス用のクライアントを取得しています。
+        取得したオブジェクトは <code>$taxBasic</code> に保存します。
       </para>
 
       <para>
-        The <code>getTaxRateCanada()</code> method is then called on the
-        service. An associative array is used to supply keyword parameters to
-        the method. This is the way that all StrikeIron methods are called.
+        次に、そのサービスの <code>getTaxRateCanada()</code> 
+        メソッドをコールします。メソッドに対してキーワードパラメータを渡すには
+        連想配列を使用します。これは、すべての StrikeIron
+        のメソッドで共通の方法です。
       </para>
 
       <para>
-        The result from <code>getTaxRateCanada()</code> is stored in
-        <code>$rateInfo</code> and has properties like <code>province</code>
-        and <code>GST</code>.
+        <code>getTaxRateCanada()</code> の返り値を
+        <code>$rateInfo</code> に取得し、そのプロパティ <code>province</code>
+        や <code>GST</code> を参照しています。
       </para>
 
       <para>
-        Many of the StrikeIron services are as simple to use as the example above.  See
-        <link linkend="zend.service.strikeiron.bundled-services">Bundled Services</link>
-        for detailed information on three StrikeIron services.
+        StrikeIron のサービスの多くは、この例と同じくらい簡単に使用できます。
+        3 つの StrikeIron サービスについての詳細は
+        <link linkend="zend.service.strikeiron.bundled-services">バンドルされているサービス</link>
+        を参照ください。
       </para>
     </sect2>
 
     <sect2 id="zend.service.strikeiron.examining-results">
-      <title>Examining Results</title>
+      <title>結果の吟味</title>
       <para>
-        When learning or debugging the StrikeIron services, it's often useful to dump the
-        result returned from a method call.  The result will always be an object that is an
-        instance of <code>Zend_Service_StrikeIron_Decorator</code>.  This is a
-        small <ulink linkend="http://en.wikipedia.org/wiki/Decorator_pattern">decorator</ulink>
-        object that wraps the results from the method call.
+        StrikeIron サービスについて学習したりデバッグしたりする際には、
+        メソッドから返された内容を出力できると便利です。
+        メソッドの返り値は常に
+        <code>Zend_Service_StrikeIron_Decorator</code> のインスタンスとなります。
+        これはちょっとした
+        <ulink url="http://ja.wikipedia.org/wiki/Decorator_%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3">デコレータ</ulink>
+        オブジェクトであり、メソッドのコール結果をラップしています。
       </para>
 
       <para>
-        The simplest way to examine a result from the service is to use the built-in
-        PHP functions like <ulink linkend="http://www.php.net/print_r">print_r()</ulink>:
+        サービスが返した結果を調べる最も単純な方法は、
+        <ulink url="http://www.php.net/print_r">print_r()</ulink>
+        のような PHP の組み込み関数を使うことです。
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/StrikeIron.php';
 
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password'));
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+                                                'password' => 'あなたのパスワード'));
 
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
@@ -266,56 +278,61 @@ Zend_Service_StrikeIron_Decorator Object
             [total] => 0.14
             [HST] => Y
         )
-)
-]]></programlisting>
+)]]>
+        </programlisting>
       </para>
 
       <para>
-        In the output above, we see that the decorator (<code>$rateInfo</code>) wraps an object
-        named <code>GetTaxRateCanadaResult</code>, the result of the call to <code>getTaxRateCanada()</code>.
+        上の例でわかるように、デコレータ (<code>$rateInfo</code>) が
+        <code>GetTaxRateCanadaResult</code> というオブジェクトをラップしています。
+        これが <code>getTaxRateCanada()</code> の返り値です。
       </para>
 
       <para>
-        This means that <code>$rateInfo</code> has public properties like <code>abbreviation</code>,
-        <code>province</code>, and <code>GST</code>.  These are accessed like <code>$rateInfo->province</code>.
+        この結果から、<code>$rateInfo</code> には <code>abbreviation</code>
+        や <code>province</code>、<code>GST</code>
+        といった公開プロパティがあることがわかります。これらは
+        <code>$rateInfo->province</code> のようにしてアクセスできます。
       </para>
 
       <tip>
         <para>
-          StrikeIron result properties sometimes start with an uppercase
-          letter such as <code>Foo</code> or <code>Bar</code> where most PHP object
-          properties normally start with a lowercase letter as in <code>foo</code> or
-          <code>bar</code>. The decorator will automatically do this inflection so you
-          may read a property <code>Foo</code> as <code>foo</code>.
+          StrikeIron の結果のプロパティは、場合によっては大文字で始まっていることもあります
+          (<code>Foo</code> や <code>Bar</code> など)。一方、たいていの PHP
+          オブジェクトのプロパティは、普通は小文字で始まる形式 (<code>foo</code>
+          や <code>bar</code> など) です。このあたりはデコレータがうまく処理するので、
+          プロパティが <code>Foo</code> であっても
+          <code>foo</code> として取得できるようになります。
         </para>
       </tip>
 
       <para>
-        If you ever need to get the original object or its name out of the decorator, use the
-        respective methods <code>getDecoratedObject()</code> and <code>getDecoratedObjectName()</code>.
+        もしデコレータではなく中身のオブジェクトそのものやその名前がほしい場合は、
+        それぞれ <code>getDecoratedObject()</code> および
+        <code>getDecoratedObjectName()</code> を使用します。
       </para>
     </sect2>
 
     <sect2 id="zend.service.strikeiron.handling-errors">
-      <title>Handling Errors</title>
+      <title>エラー処理</title>
       <para>
-        The previous examples are naive, i.e. no error handling was shown.
-        It's possible that StrikeIron will return a fault during a method
-        call. Events like bad account credentials or an expired subscription
-        can cause StrikeIron to raise a fault.
+        先ほどの例はあまりにも無邪気すぎるところがありました。
+        エラー処理を一切していなかったのです。
+        メソッドをコールした際に、StrikeIron がエラーを返す可能性だってあります。
+        認証情報が間違っていたり、アカウントが有効期限切れになっていた場合などに
+        StrikeIron はエラーを発します。
       </para>
 
       <para>
-        An exception will be thrown when such a fault occurs. You should
-        anticipate and catch these exceptions when making method calls to the
-        service:
+        このような場合は例外がスローされます。
+        例外が発生することを想定して、
+        サービスのメソッドをコールする際には例外処理を書く必要があります。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password'));
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+                                                'password' => 'あなたのパスワード'));
 
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
@@ -325,30 +342,30 @@ try {
 
 } catch (Zend_Service_StrikeIron_Exception $e) {
 
-  // error handling for events like connection
-  // problems or subscription errors
+  // 接続時のエラーなどの場合の
+  // エラー処理をここで行います
 
-}
-
-?>]]></programlisting>
-        The exceptions thrown will always be <code>Zend_Service_StrikeIron_Exception</code>.
+}]]>
+        </programlisting>
+        スローされる例外は、常に <code>Zend_Service_StrikeIron_Exception</code>
+        となります。
       </para>
 
       <para>
-        It's important to understand the difference between exceptions and
-        normal failed method calls. Exceptions occur for
-        <emphasis>exceptional</emphasis> conditions, such as
-        the network going down or your subscription expiring.
-        Failed method calls that are a common occurrence,
-        such as <code>getTaxRateCanada()</code> not finding the
-        <code>province</code> you supplied, will not result an in exception.
+        メソッドコール時の通常の失敗と例外の違いはしっかり把握しておきましょう。
+        例外が発生するのは、<emphasis>例外的な</emphasis>
+        状態です。たとえばネットワークの障害が発生したとか
+        アカウントが有効期限切れになっていたとかいった状況がそれにあたります。
+        通常の失敗とは、もっと頻繁に起こりえるものです。
+        たとえば <code>getTaxRateCanada()</code> で指定した
+        <code>province</code> が見つけられないときなどは例外とはなりません。
       </para>
 
       <note>
         <para>
-          Every time you make a method call to a StrikeIron service, you
-          should check the response object for validity and also be
-          prepared to catch an exception.
+          StrikeIron サービスのメソッドをコールする際には
+          常に返り値をチェックするようにしましょう。
+          もちろん例外処理も必要です。
         </para>
       </note>
 
@@ -356,52 +373,52 @@ try {
     </sect2>
 
     <sect2 id="zend.service.strikeiron.checking-subscription">
-      <title>Checking Your Subscription</title>
+      <title>購入内容の確認</title>
       <para>
-        StrikeIron provides many different services.  Some of these are
-        free, some are available on a trial basis, and some are pay subscription only.
-        When using StrikeIron, it's important to be aware of your subscription
-        status for the services you are using and check it regularly.
+        StrikeIron にはさまざまなサービスがあります。
+        その中には無料で使えるものもあればお試し版のものもあります。
+        また、有料サービスのみのものもあります。
+        StrikeIron を使用するにあたっては、
+        そのサービスの購入状況を常に確認することが必要です。
       </para>
 
       <para>
-        Each StrikeIron client returned by the <code>getService</code> method
-        has the ability to check the subscription status for that service using
-        the <code>getSubscriptionInfo()</code> method of the client:
+        <code>getService</code> メソッドが返す StrikeIron クライアントにはすべて、
+        そのサービスの購入状況を調べる
+        <code>getSubscriptionInfo()</code> メソッドが存在します。
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Service/StrikeIron.php';
 
-// Get a client for the Sales & Use Tax Basic service
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password'));
+// Sales & Use Tax Basic サービス用のクライアントを取得します
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+                                                'password' => 'あなたのパスワード'));
 
 $taxBasic = $strikeIron->getService(array('class => 'SalesUseTaxBasic'));
 
-// Check remaining hits for the Sales & Use Tax Basic service
+// Sales & Use Tax Basic サービスをあと何回使用できるかを調べます
 $subscription = $taxBasic->getSubscriptionInfo();
-echo $subscription->remainingHits;
-
-?>]]></programlisting>
+echo $subscription->remainingHits;]]>
+        </programlisting>
       </para>
 
       <para>
-        The <code>getSubscriptionInfo()</code> method will return an object
-        that typically has a <code>remainingHits</code> property.  It's
-        important to check the status on each service that you are using.  If
-        a method call is made to StrikeIron after the remaining hits have been
-        used up, an exception will occur.
+        <code>getSubscriptionInfo()</code> メソッドが返すオブジェクトの多くには、
+        <code>remainingHits</code> プロパティが含まれます。
+        これを調べて、使用しているサービスの状態を確認します。
+        残りの使用回数を超える数のメソッドコールを行うと、
+        StrikeIron は例外をスローします。
       </para>
 
       <para>
-        Checking your subscription to a service does not use any remaining
-        hits to the service.  Each time any method call to the service is made,
-        the number of hits remaining will be cached and this cached value will
-        be returned by <code>getSubscriptionInfo()</code> without connecting
-        to the service again.  To force <code>getSubscriptionInfo()</code>
-        to override its cache and query the subscription information again, use
-        <code>getSubscriptionInfo(true)</code>.
+        サービスの購入状況を調べる問い合わせを送っても、
+        残りの使用可能回数は減りません。
+        サービスのメソッドをコールする際にはいつも残りの回数を自動的に取得します。
+        この値は、サービスに接続しなくても
+        <code>getSubscriptionInfo()</code> で取得することができます。
+        キャッシュを使用せずにもう一度情報を問い合わせるよう
+        <code>getSubscriptionInfo()</code> に指示するには、
+        <code>getSubscriptionInfo(true)</code> とします。
       </para>
     </sect2>
 </sect1>
