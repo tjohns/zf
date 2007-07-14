@@ -19,9 +19,9 @@
             が返す文字列表現のロケールを受け付けます。
         </para>
 
-        <example>
+        <example id="zend.locale.copying.example-1">
             <title>clone</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('ar');
@@ -38,8 +38,8 @@ $stringLocale = $locale->toString();
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に toString() をコールします
-?>]]></programlisting>
+print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に toString() をコールします]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -54,9 +54,9 @@ print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に
             ロケール対応のクラスはすべて、これと同等の同一性チェック機能を提供しなければなりません。
         </para>
 
-        <example>
+        <example id="zend.locale.equals.example-1">
             <title>ロケールが同一かどうかの調査</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -65,8 +65,8 @@ $mylocale = new Zend_Locale('en_US');
 // ロケールが同一かどうかを調べます
 if ($locale->equals($mylocale)) {
     print "これらのロケールは同一です";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -90,9 +90,9 @@ if ($locale->equals($mylocale)) {
             優先度が指定されている場合は、それも考慮します。
         </para>
 
-        <example>
+        <example id="zend.locale.getdefault.example-1">
             <title>デフォルトロケールの取得</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -103,8 +103,8 @@ print_r($found);
 
 // ブラウザのロケールのみを返します
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
-print_r($found2);
-?>]]></programlisting>
+print_r($found2);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -145,9 +145,9 @@ print_r($found2);
             なので、このメソッドは既存のインスタンスを参照しているすべてのコードに影響をおよぼします。
         </para>
 
-        <example>
+        <example id="zend.locale.setlocale.example-1">
             <title>setLocale</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -157,8 +157,8 @@ print $locale->toString();
 
 // 新しいロケール
 $locale->setLocale('aa_DJ');
-print $locale->toString();
-?>]]></programlisting>
+print $locale->toString();]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -174,9 +174,9 @@ print $locale->toString();
             ロケール識別文字列から取得します。
         </para>
 
-        <example>
+        <example id="zend.locale.getlocale.example-1">
             <title>getLanguage および getRegion</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -185,8 +185,8 @@ $locale = new Zend_Locale();
 print $locale->getLanguage();
 
 // ロケールが 'ja_JP' の場合は、地域として 'JP' が返されます
-print $locale->getRegion();
-?>]]></programlisting>
+print $locale->getRegion();]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -208,9 +208,9 @@ print $locale->getRegion();
             <code>getTranslation()</code> メソッドでこれを使用すると、翻訳を取得することができます。
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -223,9 +223,8 @@ print_r ($list);
 
 // これらのキーのいずれかを getTranslation() メソッドで使用します
 print $locale->getTranslation('de', 'language', 'zh');
-// これは、言語 'de' を中国語で表した文字列を返します
-
-?>]]></programlisting>
+// これは、言語 'de' を中国語で表した文字列を返します]]>
+            </programlisting>
         </example>
 
         <para>
@@ -235,7 +234,7 @@ print $locale->getTranslation('de', 'language', 'zh');
             詳細はこの一覧を参照ください。
         </para>
 
-        <table>
+        <table id="zend.locale.getdata.table-1">
             <title>getTranslationList($type = null, $locale = null) の詳細</title>
             <tgroup cols="4">
                 <thead>
@@ -379,33 +378,33 @@ print $locale->getTranslation('de', 'language', 'zh');
             上のリストの型を使用できます。利便性のため、以下のような関数も用意しています。これは上のふたつの関数と等価です。
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-2">
             <title>getTranslation() 系の便利な関数</title>
-<programlisting role="php"><![CDATA[<?php
-getCountryTranslation($what, $locale = null)
-getCountryTranslationList($locale = null)
-getLanguageTranslation($what, $locale = null)
-getLanguageTranslationList($locale = null)
-getScriptTranslation($what, $locale = null)
-getScriptTranslationList($locale = null)
-getTerritoryTranslation($what, $locale = null)
-getTerritoryTranslationList($locale = null)
-?>]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+getCountryTranslation($what, $locale = null);
+getCountryTranslationList($locale = null);
+getLanguageTranslation($what, $locale = null);
+getLanguageTranslationList($locale = null);
+getScriptTranslation($what, $locale = null);
+getScriptTranslationList($locale = null);
+getTerritoryTranslation($what, $locale = null);
+getTerritoryTranslationList($locale = null);]]>
+            </programlisting>
         </example>
 
         <para>
             以下の例は、さまざまな言語でのものの名前を取得する方法を示すものです。
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-3">
             <title>getTranslationList</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('en_US');
 // すべての国名をドイツ語で表示します
-print_r($locale->getTranslationList('country', 'de'));
-?>]]></programlisting>
+print_r($locale->getTranslationList('country', 'de'));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -413,26 +412,26 @@ print_r($locale->getTranslationList('country', 'de'));
             二文字の CLDR 国コードを知らない場合に調べるものです。
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-4">
             <title>国の名前を、ある言語から別の言語に変換する</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require 'Zend/Locale.php';
 $locale = new Zend_Locale('en_US');
 $code2name = $locale->getLanguageTranslationList();
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
 echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
-// 出力は、「フランス語」を表すドイツ語の名前になります
-?>]]></programlisting>
+// 出力は、「フランス語」を表すドイツ語の名前になります]]>
+            </programlisting>
         </example>
 
         <para>
             何ができるのかをもう少し詳しく知るには、次の例の出力を確認してみましょう。
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-5">
             <title>使用できるすべての翻訳</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 // すべての翻訳の一覧を取得します
 $lists = $locale->getTranslationList();
 
@@ -440,8 +439,8 @@ $lists = $locale->getTranslationList();
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -457,9 +456,9 @@ foreach ($lists as $list) {
             スクリプトが途中で終わってしまうことを防いでいます。
         </para>
 
-        <example>
+        <example id="zend.locale.getdata.example-6">
             <title>すべての言語を、その国のネイティブ言語で書き出す</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $sourceLanguage = null; // あなたのネイティブ言語のコードを設定します
@@ -475,8 +474,8 @@ foreach($list as $language => $content) {
     } catch (Exception $e) {
         continue;
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -497,9 +496,9 @@ foreach($list as $language => $content) {
             以下の例を参照ください。
         </para>
 
-        <example>
+        <example id="zend.locale.getquestion.example-1">
             <title>getQuestion()</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale();
@@ -516,8 +515,8 @@ Array
     [noabbr]n[/noabbr]
     [yesexpr]^([yY]([eE][sS])?)|([jJ][aA]?)[/yesexpr]
     [noexpr]^([nN]([oO]|([eE][iI][nN]))?)[/noexpr]
-)
-?>]]></programlisting>
+)]]>
+            </programlisting>
         </example>
 
     </sect2>

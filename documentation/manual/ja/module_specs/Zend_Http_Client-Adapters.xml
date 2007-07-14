@@ -44,7 +44,7 @@
         </para>
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.http.client.adapters.socket">
         <title>ソケットアダプタ</title>
         <para>
             デフォルトの接続アダプタは Zend_Http_Client_Adapter_Socket
@@ -69,22 +69,21 @@
                 </para>
             </footnote>.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.socket.example-1">
             <title>HTTPS トランスポート層の変更</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // 設定パラメータを指定します
-    $config = array(
-        'adapter'      => 'Zend_Http_Client_Adapter_Socket',
-        'ssltransport' => 'tls'
-    );
+            <programlisting role="php"><![CDATA[<?php
+// 設定パラメータを指定します
+$config = array(
+    'adapter'      => 'Zend_Http_Client_Adapter_Socket',
+    'ssltransport' => 'tls'
+);
 
-    // クライアントオブジェクトのインスタンスを作成します
-    $client = Zend_Http_Client('https://www.example.com', $config);
+// クライアントオブジェクトのインスタンスを作成します
+$client = Zend_Http_Client('https://www.example.com', $config);
 
-    // これ以降のリクエストは、TLS セキュア接続上で行われます
-    $response = $client->request();
-?>]]></programlisting>
+// これ以降のリクエストは、TLS セキュア接続上で行われます
+$response = $client->request();]]>
+            </programlisting>
         </example>
         <para>
             上の例の結果は、次の PHP コマンドで TCP
@@ -95,7 +94,7 @@
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.proxy">
+    <sect2 id="zend.http.client.adapters.proxy">
         <title>プロキシアダプタ</title>
         <para>
             Zend_Http_Client_Adapter_Proxy アダプタはデフォルトのソケットアダプタとほぼ同じです。
@@ -109,7 +108,7 @@
             プロキシアダプタを使用するには、
             デフォルトの 'adapter' オプション以外に
             いくつか追加のパラメータを設定する必要があります。
-            <table>
+            <table id="zend.http.client.adapters.proxy.table">
                 <title>Zend_Http_Client の設定パラメータ</title>
                 <tgroup cols="4">
                     <thead>
@@ -174,24 +173,23 @@
             Zend_Http_Client::setAuth() メソッドと同じです。現在はベーシック認証
             (Zend_Http_Client::AUTH_BASIC) のみをサポートしています。
         </para>
-        <example>
+        <example id="zend.http.client.adapters.proxy.example-1">
             <title>プロキシサーバを使用した Zend_Http_Client の使用法</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // 接続パラメータを設定します
-    $config = array(
-        'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
-        'proxy_host' => 'proxy.int.zend.com',
-        'proxy_port' => 8000,
-        'proxy_user' => 'shahar.e',
-        'proxy_pass' => 'bananashaped'
-    );
+            <programlisting role="php"><![CDATA[<?php
+// 接続パラメータを設定します
+$config = array(
+    'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+    'proxy_host' => 'proxy.int.zend.com',
+    'proxy_port' => 8000,
+    'proxy_user' => 'shahar.e',
+    'proxy_pass' => 'bananashaped'
+);
 
-    // クライアントオブジェクトのインスタンスを作成します
-    $client = Zend_Http_Client('http://www.example.com', $config);
+// クライアントオブジェクトのインスタンスを作成します
+$client = Zend_Http_Client('http://www.example.com', $config);
 
-    // 作業を続けます...
-?>]]></programlisting>
+// 作業を続けます...]]>
+            </programlisting>
         </example>
         <para>
             説明したとおり、もし proxy_host を省略したり空文字列を設定したりすると、
@@ -200,7 +198,7 @@
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.test">
+    <sect2 id="zend.http.client.adapters.test">
         <title>テストアダプタ</title>
         <para>
             HTTP 接続に依存するテストコードを書くのは非常に難しいものです。
@@ -220,33 +218,32 @@
             レスポンスを設定すると、Test アダプタは常にこのレスポンスを返すようになります。
             実際の HTTP リクエストは行いません。
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-1">
             <title>HTTP レスポンススタブを使用したテスト</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // 新しいアダプタとクライアントのインスタンスを作成します
-    $adapter = new Zend_Http_Client_Adapter_Test();
-    $client = Zend_Http_Client('http://www.example.com', array(
-        'adapter' => $adapter
-    ));
+            <programlisting role="php"><![CDATA[<?php
+// 新しいアダプタとクライアントのインスタンスを作成します
+$adapter = new Zend_Http_Client_Adapter_Test();
+$client = Zend_Http_Client('http://www.example.com', array(
+    'adapter' => $adapter
+));
 
-    // 想定するレスポンスを設定します
-    $adapter->setResponse(
-        "HTTP/1.1 200 OK"        . "\r\n" .
-        "Content-type: text/xml" . "\r\n" .
-                                   "\r\n" .
-        '<?xml version="1.0" encoding="UTF-8"?>' .
-        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
-        '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
-        '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
-        '  <channel>' .
-        '    <title>Premature Optimization</title>' .
-        // などなど...
-        '</rss>');
+// 想定するレスポンスを設定します
+$adapter->setResponse(
+    "HTTP/1.1 200 OK"        . "\r\n" .
+    "Content-type: text/xml" . "\r\n" .
+                               "\r\n" .
+    '<?xml version="1.0" encoding="UTF-8"?>' .
+    '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+    '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
+    '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
+    '  <channel>' .
+    '    <title>Premature Optimization</title>' .
+    // などなど...
+    '</rss>');
 
-    $response = $client->request('GET');
-    // .. $response の処理を続けます...
-?>]]></programlisting>
+$response = $client->request('GET');
+// .. $response の処理を続けます...]]>
+            </programlisting>
         </example>
         <para>
             上の例のようにすると、HTTP クライアントにお望みのレスポンスを返させることができます。
@@ -261,40 +258,39 @@
             setResponse() を単独で使うことはできません。なぜなら、
             結果が呼び出し元に返ってくるまで次のレスポンスを設定できないからです。
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-2">
             <title>複数の HTTP レスポンススタブを使用したテスト</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // 新しいアダプタおよびクライアントのインスタンスを作成します
-    $adapter = new Zend_Http_Client_Adapter_Test();
-    $client = Zend_Http_Client('http://www.example.com', array(
-        'adapter' => $adapter
-    ));
+            <programlisting role="php"><![CDATA[<?php
+// 新しいアダプタおよびクライアントのインスタンスを作成します
+$adapter = new Zend_Http_Client_Adapter_Test();
+$client = Zend_Http_Client('http://www.example.com', array(
+    'adapter' => $adapter
+));
 
-    // 最初の応答として期待する値を設定します
-    $adapter->setResponse(
-        "HTTP/1.1 302 Found"      . "\r\n" .
-        "Location: /"             . "\r\n" .
-        "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" .
-        '<html>' .
-        '  <head><title>Moved</title></head>' .
-        '  <body><p>This page has moved.</p></body>' .
-        '</html>');
+// 最初の応答として期待する値を設定します
+$adapter->setResponse(
+    "HTTP/1.1 302 Found"      . "\r\n" .
+    "Location: /"             . "\r\n" .
+    "Content-Type: text/html" . "\r\n" .
+                                "\r\n" .
+    '<html>' .
+    '  <head><title>Moved</title></head>' .
+    '  <body><p>This page has moved.</p></body>' .
+    '</html>');
 
-    // それに続くレスポンスを設定します
-    $adapter->addResponse(
-        "HTTP/1.1 200 OK"         . "\r\n" .
-        "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" .
-        '<html>' .
-        '  <head><title>My Pet Store Home Page</title></head>' .
-        '  <body><p>...</p></body>' .
-        '</html>');
+// それに続くレスポンスを設定します
+$adapter->addResponse(
+    "HTTP/1.1 200 OK"         . "\r\n" .
+    "Content-Type: text/html" . "\r\n" .
+                                "\r\n" .
+    '<html>' .
+    '  <head><title>My Pet Store Home Page</title></head>' .
+    '  <body><p>...</p></body>' .
+    '</html>');
 
-    // HTTP クライアントオブジェクト ($client) をテスト対象の
-    // オブジェクトに注入し、オブジェクトの動きを以下でテストします
-?>]]></programlisting>
+// HTTP クライアントオブジェクト ($client) をテスト対象の
+// オブジェクトに注入し、オブジェクトの動きを以下でテストします]]>
+            </programlisting>
         </example>
         <para>
             setResponse() メソッドは、
@@ -320,7 +316,7 @@
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.extending">
+    <sect2 id="zend.http.client.adapters.extending">
         <title>独自の接続アダプタの作成</title>
         <para>
             独自の接続アダプタを作成し、それを使用することもできます。
@@ -335,10 +331,9 @@
             この例で定義されているすべてのパブリック関数を、
             アダプタで定義する必要があります。
         </para>
-        <example>
+        <example id="zend.http.client.adapters.extending.example-1">
             <title>独自の接続アダプタの作成</title>
-            <programlisting role="php">
-<![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**
@@ -403,8 +398,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
 // そして、このアダプタを使用します
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
-));
-]]></programlisting>
+));]]>
+            </programlisting>
         </example>
     </sect2>
 </sect1>

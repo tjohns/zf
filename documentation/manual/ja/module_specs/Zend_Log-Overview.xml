@@ -48,13 +48,11 @@
         それをログのインスタンスに渡します。
 
         <programlisting role="php"><![CDATA[<?php
-
 $logger = new Zend_Log();
 $writer = new Zend_Log_Writer_Stream('php://output');
 
-$logger->addWriter($writer);
-
-?>]]></programlisting>
+$logger->addWriter($writer);]]>
+        </programlisting>
 
         注意すべき点は、ログには最低ひとつのライターが必要であるということです。
         ライターはお好みの数だけ追加することができます。追加するには
@@ -64,12 +62,10 @@ $logger->addWriter($writer);
       <para>
         一方、ログのコンストラクタで直接ライターを指定することも可能です。
 
-      <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 $writer = new Zend_Log_Writer_Stream('php://output');
-$logger = new Zend_Log($writer);
-
-?>]]></programlisting>
+$logger = new Zend_Log($writer);]]>
+        </programlisting>
 
         これで、ログが使用できるようになりました。
       </para>
@@ -83,10 +79,8 @@ $logger = new Zend_Log($writer);
         メソッドを実行し、メッセージと優先度を渡します。
 
       <programlisting role="php"><![CDATA[<?php
-
-$logger->log('Informational message', Zend_Log::INFO);
-
-?>]]></programlisting>
+$logger->log('Informational message', Zend_Log::INFO);]]>
+      </programlisting>
 
       <code>log()</code> メソッドの最初のパラメータはメッセージを表す文字列で、
       二番目のパラメータは優先度を表す整数値です。
@@ -99,14 +93,12 @@ $logger->log('Informational message', Zend_Log::INFO);
       優先度と同じ名前のメソッドをコールできます。
 
       <programlisting role="php"><![CDATA[<?php
-
 $logger->log('Informational message', Zend_Log::INFO);
 $logger->info('Informational message');
 
 $logger->log('Emergency message', Zend_Log::EMERG);
-$logger->emerg('Emergency message');
-
-?>]]></programlisting>
+$logger->emerg('Emergency message');]]>
+      </programlisting>
     </para>
   </sect2>
 
@@ -119,10 +111,8 @@ $logger->emerg('Emergency message');
       <code>shutdown()</code> をコールしてからログオブジェクトを破棄します。
 
       <programlisting role="php"><![CDATA[<?php
-
-$logger = null;
-
-?>]]></programlisting>
+$logger = null;]]>
+      </programlisting>
 
       このように明示的にログを破棄することは必須ではありません。
       PHP の終了時に、この処理が自動的に行われます。
@@ -142,8 +132,8 @@ ERR     = 3;  // エラー (Error): エラーが発生しました
 WARN    = 4;  // 警告 (Warning): 警告が発生しました
 NOTICE  = 5;  // 注意 (Notice): 通常動作ですが、注意すべき状況です
 INFO    = 6;  // 情報 (Informational): 情報メッセージ
-DEBUG   = 7;  // デバッグ (Debug): デバッグメッセージ
-]]></programlisting>
+DEBUG   = 7;  // デバッグ (Debug): デバッグメッセージ]]>
+      </programlisting>
 
       これらの優先度は常に使用可能で、それぞれについて
       同じ名前のメソッドが用意されています。
@@ -176,20 +166,16 @@ DEBUG   = 7;  // デバッグ (Debug): デバッグメッセージ
       <code>addPriority()</code> メソッドを使用します。
 
       <programlisting role="php"><![CDATA[<?php
-
-$logger->addPriority('FOO', 8);
-
-?>]]></programlisting>
+$logger->addPriority('FOO', 8);]]>
+      </programlisting>
 
       上の例では、新しい優先度 <code>FOO</code> を
       <code>8</code> という値で定義しています。これで、次のようにして新しい優先度でログ出力できるようになります。
 
       <programlisting role="php"><![CDATA[<?php
-
 $logger->log('Foo message', 8);
-$logger->foo('Foo Message');
-
-?>]]></programlisting>
+$logger->foo('Foo Message');]]>
+      </programlisting>
 
       新しい優先度は、既存のものを上書きすることはできません。
     </para>
@@ -217,10 +203,8 @@ $logger->foo('Foo Message');
       <code>setEventItem()</code> メソッドをコールしてキーと値を指定します。
 
       <programlisting role="php"><![CDATA[<?php
-
-$logger->setEventItem('pid', getmypid());
-
-?>]]></programlisting>
+$logger->setEventItem('pid', getmypid());]]>
+      </programlisting>
 
       上の例は、<code>pid</code> という名前の新しい項目を作成して現在のプロセスの
       PID を格納します。新しい値が設定されると、他のすべてのイベントデータと同様に

@@ -21,11 +21,9 @@
       デフォルトの設定は、次のようになります。
 
       <programlisting role="php"><![CDATA[<?php
-
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
-$formatter = new Zend_Log_Formatter_Simple($format);
-
-?>]]></programlisting>
+$formatter = new Zend_Log_Formatter_Simple($format);]]>
+      </programlisting>
     </para>
 
     <para>
@@ -33,7 +31,6 @@ $formatter = new Zend_Log_Formatter_Simple($format);
       <code>setFormatter()</code> メソッドを使用します。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Simple('hello %message%' . PHP_EOL);
 $writer->setFormatter($formatter);
@@ -43,9 +40,8 @@ $logger->addWriter($writer);
 
 $logger->info('there');
 
-// "hello there" と出力します
-
-?>]]></programlisting>
+// "hello there" と出力します]]>
+      </programlisting>
     </para>
 
     <para>
@@ -64,7 +60,6 @@ $logger->info('there');
       デフォルトでは、イベントデータ配列のすべての項目を自動的に記録します。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Xml();
 $writer->setFormatter($formatter);
@@ -72,9 +67,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('通知メッセージ');
-
-?>]]></programlisting>
+$logger->info('通知メッセージ');]]>
+      </programlisting>
     </para>
 
     <para>
@@ -86,8 +80,8 @@ $logger->info('通知メッセージ');
   <message>通知メッセージ</message>
   <priority>6</priority>
   <priorityName>INFO</priorityName>
-</logEntry>
-]]></programlisting>
+</logEntry>]]>
+      </programlisting>
     </para>
 
     <para>
@@ -97,7 +91,6 @@ $logger->info('通知メッセージ');
       二番目のパラメータには要素名の対応を表す連想配列を指定します。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'level' => 'priorityName'));
 $writer->setFormatter($formatter);
@@ -105,9 +98,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('通知メッセージ');
-
-?>]]></programlisting>
+$logger->info('通知メッセージ');]]>
+      </programlisting>
 
       上のコードは、ルート要素の名前をデフォルトの
       <code>logEntry</code> から <code>log</code> に変更します。また、要素名
@@ -118,8 +110,8 @@ $logger->info('通知メッセージ');
 <log>
   <msg>通知メッセージ</msg>
   <level>INFO</level>
-</log>
-]]></programlisting>
+</log>]]>
+      </programlisting>
     </para>
 
   </sect2>

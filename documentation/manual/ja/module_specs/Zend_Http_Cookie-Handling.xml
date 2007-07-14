@@ -82,7 +82,7 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.cookies.cookie.instantiating.example-1">
                <title>Zend_Http_Cookie のインスタンスの作成</title>
                <programlisting role="php"><![CDATA[<?php
 // まずはコンストラクタを使用します。このクッキーの有効期限は二時間です。
@@ -94,8 +94,8 @@ $cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/pa
 $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
 
 // クッキーのドメインが設定されていない場合は、手動で設定する必要があります。
-$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');
-?>]]></programlisting>
+$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');]]>
+                </programlisting>
             </example>
             <note>
                 <para>
@@ -111,7 +111,7 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
             を使用します。このメソッドは、HTTP リクエストヘッダ "Cookie" 用の文字列を作成します。
             クッキーの名前と値が表示され、最後はセミコロン (';') となります。
             この値は URL エンコードされ、そのまま Cookie ヘッダとして使用できるようになります。
-            <example>
+            <example id="zend.http.cookies.cookie.instantiating.example-2">
                <title>Zend_Http_Cookie オブジェクトの文字列化</title>
                <programlisting role="php"><![CDATA[<?php
 // 新しいクッキーを作成します。
@@ -124,8 +124,8 @@ echo $cookie->__toString();
 echo (string) $cookie;
 
 // PHP 5.2 以降では、これでもかまいません。
-echo $cookie;
-?>]]></programlisting>
+echo $cookie;]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -190,7 +190,7 @@ echo $cookie;
             </itemizedlist>
         </para>
         <para>
-            <example>
+            <example id="zend.http.cookies.cookie.accessors.example-1">
                 <title>Zend_Http_Cookie のゲッターメソッドの使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 // まずクッキーを作成します
@@ -211,8 +211,8 @@ echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No');
 // これは 'No' を表示します
 
 echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
-// これは 'No' を表示します
-?>]]></programlisting>
+// これは 'No' を表示します]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -250,7 +250,7 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.cookies.cookie.matching.example-1">
                 <title>クッキーがマッチするかどうかの確認</title>
                 <programlisting role="php"><![CDATA[<?php
 // まずクッキーオブジェクトを作成します。これはセキュアなセッションクッキーです。
@@ -287,8 +287,8 @@ $cookie->match('http://subdomain.example.com/');
 // これは false を返します。ドメインが違っているからです。
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
-// これは false を返します。今から三時間後を時刻を指定したからです。
-?>]]></programlisting>
+// これは false を返します。今から三時間後を時刻を指定したからです。]]>
+                </programlisting>
             </example>
         </para>
     </sect2>

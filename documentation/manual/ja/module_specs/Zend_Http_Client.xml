@@ -18,24 +18,23 @@
             また、オプションで設定パラメータの配列を指定することもできます。
             どちらも省略することが可能で、その場合は後から
             setUri() メソッドや setConfig() メソッドで指定します。
-            <example>
+            <example id="zend.http.client.introduction.example-1">
                 <title>Zend_Http_Client のインスタンスの作成</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
+require_once 'Zend/Http/Client.php';
 
-    $client = new Zend_Http_Client('http://example.org', array(
-        'maxredirects' => 0,
-        'timeout'      => 30));
+$client = new Zend_Http_Client('http://example.org', array(
+    'maxredirects' => 0,
+    'timeout'      => 30));
 
-    // これは、上とまったく同じことです
-    $client = new Zend_Http_Client();
-    $client->setUri('http://example.org');
-    $client->setConfig(array(
-        'maxredirects' => 0,
-        'timeout'      => 30));
-
-?>]]></programlisting>
+// これは、上とまったく同じことです
+$client = new Zend_Http_Client();
+$client->setUri('http://example.org');
+$client->setConfig(array(
+    'maxredirects' => 0,
+    'timeout'      => 30));]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -46,7 +45,7 @@
             設定パラメータの連想配列を受け取ります。
             これらのパラメータは、設定してもしなくてもかまいません。
             すべてのパラメータにはデフォルト値があります。
-            <table>
+            <table id="zend.http.client.configuration.table">
                 <title>Zend_Http_Client の設定パラメータ</title>
                 <tgroup cols="3">
                     <thead>
@@ -113,15 +112,14 @@
         <para>
             シンプルな HTTP リクエストを実行するのは非常に簡単で、単に
             request() メソッドを実行するだけです。たったの三行ですんでしまいます。
-            <example>
+            <example id="zend.http.client.basic-requests.example-1">
                 <title>シンプルな GET リクエストの処理</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
 
-    $client = new Zend_Http_Client('http://example.org');
-    $response = $client->request();
-?>]]></programlisting>
+$client = new Zend_Http_Client('http://example.org');
+$response = $client->request();]]>
+                </programlisting>
             </example>
             request() メソッドには、オプションでパラメータを指定することができます。
             このパラメータはリクエストメソッドで、HTTP プロトコルで定義されている
@@ -139,17 +137,16 @@
             メソッドを指定しない場合は、直近の setMethod() コールで指定されたメソッドを使用します。
             setMethod() もコールされていない場合は、デフォルトのリクエストメソッドとして
             GET を使用します (上の例を参照ください)。
-            <example>
+            <example id="zend.http.client.basic-requests.example-2">
                 <title>GET 以外のリクエストメソッドの使用</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // POST リクエストを実行します
-    $response = $client->request('POST');
+                <programlisting role="php"><![CDATA[<?php
+// POST リクエストを実行します
+$response = $client->request('POST');
 
-    // POST リクエストを実行するためのもうひとつの方法です
-    $client->setMethod(Zend_Http_Client::POST);
-    $response = $client->request();
-?>]]></programlisting>
+// POST リクエストを実行するためのもうひとつの方法です
+$client->setMethod(Zend_Http_Client::POST);
+$response = $client->request();]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -164,23 +161,22 @@
             さらに便利に使用するため、setParameterGet()
             メソッドでは name => value 形式の連想配列で GET 変数を指定することもできます。
             これは、複数の GET パラメータを指定する必要がある場合に便利です。
-            <example>
+            <example id="zend.http.client.parameters.example-1">
                 <title>GET パラメータの設定</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // setParameterGet メソッドで GET パラメータを指定します
-    $client->setParameterGet('knight', 'lancelot');
+                <programlisting role="php"><![CDATA[<?php
+// setParameterGet メソッドで GET パラメータを指定します
+$client->setParameterGet('knight', 'lancelot');
 
-    // このような URL を指定するのと同じことです
-    $client->setUri('http://example.com/index.php?knight=lancelot');
+// このような URL を指定するのと同じことです
+$client->setUri('http://example.com/index.php?knight=lancelot');
 
-    // 複数のパラメータを一度に追加します
-    $client->setParameterGet(array(
-        'first_name'  => 'Bender',
-        'middle_name' => 'Bending'
-        'made_in'     => 'Mexico',
-    ));
-?>]]></programlisting>
+// 複数のパラメータを一度に追加します
+$client->setParameterGet(array(
+    'first_name'  => 'Bender',
+    'middle_name' => 'Bending'
+    'made_in'     => 'Mexico',
+));]]>
+                </programlisting>
             </example>
         </para>
         <para>
@@ -190,20 +186,19 @@
             パラメータを追加する場合と非常に似ています。
             使用するのは setParameterPost() メソッドで、このメソッドの使用法は
             setParameterGet() メソッドと同じです。
-            <example>
+            <example id="zend.http.client.parameters.example-2">
                 <title>POST パラメータの設定</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // POST パラメータを設定します
-    $client->setParameterPost('language', 'fr');
+                <programlisting role="php"><![CDATA[<?php
+// POST パラメータを設定します
+$client->setParameterPost('language', 'fr');
 
-    // 複数の POST パラメータを設定します。そのうちのひとつは複数の値を持ちます。
-    $client->setParameterPost(array(
-        'language'  => 'es',
-        'country'   => 'ar',
-        'selection' => array(45, 32, 80)
-    ));
-?>]]></programlisting>
+// 複数の POST パラメータを設定します。そのうちのひとつは複数の値を持ちます。
+$client->setParameterPost(array(
+    'language'  => 'es',
+    'country'   => 'ar',
+    'selection' => array(45, 32, 80)
+));]]>
+                </programlisting>
             </example>
             POST リクエストを送信する際には、GET パラメータと POST
             パラメータの両方を設定できることに注意しましょう。

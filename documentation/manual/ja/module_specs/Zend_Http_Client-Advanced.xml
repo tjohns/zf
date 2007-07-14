@@ -19,16 +19,15 @@
             GET パラメータや POST パラメータをすべてリセットした上で新しい場所に
             GET リクエストを送信します。この振る舞いを変更するには、設定パラメータ
             'strictredirects' を TRUE に設定します。
-            <example>
+            <example id="zend.http.client.redirections.example-1">
                 <title>301 や 302 のレスポンスに対する RFC 2616 準拠のリダイレクト</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // 厳格なリダイレクト
-    $client->setConfig(array('strictredirects' => true)
+                <programlisting role="php"><![CDATA[<?php
+// 厳格なリダイレクト
+$client->setConfig(array('strictredirects' => true));
 
-    // 厳格でないリダイレクト
-    $client->setConfig(array('strictredirects' => false)
-?>]]></programlisting>
+// 厳格でないリダイレクト
+$client->setConfig(array('strictredirects' => false));]]>
+                </programlisting>
             </example>
         </para>
         <para>
@@ -43,21 +42,20 @@
             Zend_Http_Client を使用すると、リクエストに簡単にクッキーを追加することができます。
             ヘッダを変更したりする必要はありません。クッキーを追加するには
             setCookie() メソッドを使用します。このメソッドにはいくつかの用法があります。
-            <example>
+            <example id="zend.http.client.cookies.example-1">
                 <title>setCookie() によるクッキーの設定</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // 簡単でシンプルな方法: クッキーの名前と値を指定します。
-    $client->setCookie('flavor', 'chocolate chips');
+                <programlisting role="php"><![CDATA[<?php
+// 簡単でシンプルな方法: クッキーの名前と値を指定します。
+$client->setCookie('flavor', 'chocolate chips');
 
-    // クッキー文字列 (name=value) を直接指定します。
-    // 値を URL エンコードしておく必要があることに注意しましょう。
-    $client->setCookie('flavor=chocolate%20chips');
+// クッキー文字列 (name=value) を直接指定します。
+// 値を URL エンコードしておく必要があることに注意しましょう。
+$client->setCookie('flavor=chocolate%20chips');
 
-    // Zend_Http_Cookie オブジェクトを指定します。
-    $cookie = Zend_Http_Cookie::factory('flavor=chocolate%20chips');
-    $client->setCookie($cookie);
-?>]]></programlisting>
+// Zend_Http_Cookie オブジェクトを指定します。
+$cookie = Zend_Http_Cookie::factory('flavor=chocolate%20chips');
+$client->setCookie($cookie);]]>
+                </programlisting>
             </example>
             Zend_Http_Cookie オブジェクトについての詳細は
             <xref linkend="zend.http.cookies" /> を参照ください。
@@ -68,27 +66,26 @@
             それ以降のリクエストで自動的に再送信します。
             これは、たとえばリモートサイトにログインして
             認証情報やセッション ID のクッキーを取得してから次のリクエストに進む場合などに便利です。
-            <example>
+            <example id="zend.http.client.cookies.example-2">
                 <title>クッキーの持続化</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // クッキーの持続性を有効にし、ジャーに保存します
-    $client->setCookieJar();
+                <programlisting role="php"><![CDATA[<?php
+// クッキーの持続性を有効にし、ジャーに保存します
+$client->setCookieJar();
 
-    // 最初のリクエスト: ログインし、セッションを開始します
-    $client->setUri('http://example.com/login.php');
-    $client->addParameterPost('user', 'h4x0r');
-    $client->addParameterPost('password', '1337');
-    $client->request('POST');
+// 最初のリクエスト: ログインし、セッションを開始します
+$client->setUri('http://example.com/login.php');
+$client->addParameterPost('user', 'h4x0r');
+$client->addParameterPost('password', '1337');
+$client->request('POST');
 
-    // レスポンスに設定されたクッキー (たとえばセッション ID クッキーなど)
-    // の内容は、自動的にジャーに保存されます。
+// レスポンスに設定されたクッキー (たとえばセッション ID クッキーなど)
+// の内容は、自動的にジャーに保存されます。
 
-    // 次のリクエストを送信します。この際に、
-    // 先ほど保存されたクッキーが自動的に送信されます。
-    $client->setUri('http://example.com/read_member_news.php');
-    $client->request('GET');
-?>]]></programlisting>
+// 次のリクエストを送信します。この際に、
+// 先ほど保存されたクッキーが自動的に送信されます。
+$client->setUri('http://example.com/read_member_news.php');
+$client->request('GET');]]>
+                </programlisting>
             </example>
             Zend_Http_CookieJar クラスについての詳細は
             <xref linkend="zend.http.cookies.cookiejar" /> を参照ください。
@@ -100,43 +97,41 @@
         <para>
             独自のヘッダを指定するには setHeaders() メソッドを使用します。
             このメソッドには、さまざまな用法があります。それを以下の例で説明します。
-            <example>
+            <example id="zend.http.client.custom_headers.example-1">
                 <title>独自のリクエストヘッダの設定</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // ひとつのヘッダを設定します。既存の値を上書きします。
-    $client->setHeaders('Host', 'www.example.com');
+                <programlisting role="php"><![CDATA[<?php
+// ひとつのヘッダを設定します。既存の値を上書きします。
+$client->setHeaders('Host', 'www.example.com');
 
-    // 上とまったく同じことを別の方法で行います。
-    $client->setHeaders('Host: www.example.com');
+// 上とまったく同じことを別の方法で行います。
+$client->setHeaders('Host: www.example.com');
 
-    // 同一のヘッダに対して複数の値を設定します (Cookie ヘッダなどに有用です)。
-    $client->setHeaders('Cookie', array(
-        'PHPSESSID=1234567890abcdef1234567890abcdef',
-        'language=he'
-    ));
-?>]]></programlisting>
+// 同一のヘッダに対して複数の値を設定します (Cookie ヘッダなどに有用です)。
+$client->setHeaders('Cookie', array(
+    'PHPSESSID=1234567890abcdef1234567890abcdef',
+    'language=he'
+));]]>
+                </programlisting>
             </example>
         </para>
         <para>
             setHeader() は、複数のヘッダを一度に設定することも簡単にできます。
             その場合は、ヘッダの配列をパラメータとして指定します。
-            <example>
+            <example id="zend.http.client.custom_headers.example-2">
                 <title>複数の独自リクエストヘッダの設定</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // 複数のヘッダを設定します。既存の値を上書きします。
-    $client->setHeaders(array(
-        'Host' => 'www.example.com',
-        'Accept-encoding', 'gzip,deflate',
-        'X-Powered-By' => 'Zend Framework'));
+                <programlisting role="php"><![CDATA[<?php
+// 複数のヘッダを設定します。既存の値を上書きします。
+$client->setHeaders(array(
+    'Host' => 'www.example.com',
+    'Accept-encoding', 'gzip,deflate',
+    'X-Powered-By' => 'Zend Framework'));
 
-    // 配列には文字列を含めることができます。
-    $client->setHeaders(array(
-        'Host: www.example.com',
-        'Accept-encoding: gzip,deflate',
-        'X-Powered-By: Zend Framework'));
-?>]]></programlisting>
+// 配列には文字列を含めることができます。
+$client->setHeaders(array(
+    'Host: www.example.com',
+    'Accept-encoding: gzip,deflate',
+    'X-Powered-By: Zend Framework'));]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -160,20 +155,19 @@
             関数を使用して content-type を判定します。
             いずれの場合でも、デフォルトの MIME 型は
             application/octet-stream となります。
-            <example>
+            <example id="zend.http.client.file_uploads.example-1">
                 <title>setFileUpload によるファイルのアップロード</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // 任意のデータをファイルとしてアップロードします。
-    $text = 'this is some plain text';
-    $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
+                <programlisting role="php"><![CDATA[<?php
+// 任意のデータをファイルとしてアップロードします。
+$text = 'this is some plain text';
+$client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
 
-    // 既存のファイルをアップロードします。
-    $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
+// 既存のファイルをアップロードします。
+$client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
-    // ファイルを送信します。
-    $client->submit('POST');
-?>]]></programlisting>
+// ファイルを送信します。
+$client->submit('POST');]]>
+                </programlisting>
             </example>
             最初の例では、変数 $text の内容がアップロードされ、サーバ上で
             $_FILES['upload'] として使用できるようになります。二番目の例では、
@@ -202,21 +196,20 @@
             二番目のパラメータはオプションで、データの content-type を指定します。
             このパラメータはオプションですが、リクエストを送信する前にはできるだけ設定しておくようにしましょう。
             setRawData() 以外にも、別のメソッド setEncType() を使用することもできます。
-            <example>
+            <example id="zend.http.client.raw_post_data.example-1">
                 <title>生の POST データの送信</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    $xml = '<book>' .
-           '  <title>海流の中の島々</title>' .
-           '  <author>アーネスト・ヘミングウェイ</author>' .
-           '  <year>1970</year>' .
-           '</book>';
+                <programlisting role="php"><![CDATA[<?php
+$xml = '<book>' .
+       '  <title>海流の中の島々</title>' .
+       '  <author>アーネスト・ヘミングウェイ</author>' .
+       '  <year>1970</year>' .
+       '</book>';
 
-    $client->setRawData($xml, 'text/xml')->request('POST');
+$client->setRawData($xml, 'text/xml')->request('POST');
 
-    // 同じことを、別の方法でもできます。
-    $client->setRawData($xml)->setEncType('text/xml')->request('POST');
-?>]]></programlisting>
+// 同じことを、別の方法でもできます。
+$client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
+                </programlisting>
             </example>
             このデータをサーバ側で使用するには、PHP の変数
             $HTTP_RAW_POST_DATA あるいは php://input ストリームを使用します。
@@ -241,16 +234,15 @@
             ユーザ名とパスワード、そしてオプションで認証タイプとなります。
             先ほど説明したように、現在はベーシック認証しかサポートしていません
             (将来的にはダイジェスト認証もサポートする予定です)。
-            <example>
+            <example id="zend.http.client.http_authentication.example-1">
                 <title>HTTP 認証用のユーザとパスワードの設定</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // ベーシック認証を使用します。
-    $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
+                <programlisting role="php"><![CDATA[<?php
+// ベーシック認証を使用します。
+$client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
 
-    // ベーシック認証はデフォルトなので、このように省略することもできます。
-    $client->setAuth('shahar', 'myPassword!');
-?>]]></programlisting>
+// ベーシック認証はデフォルトなので、このように省略することもできます。
+$client->setAuth('shahar', 'myPassword!');]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -299,42 +291,41 @@
             クッキージャーオブジェクトをセッションに格納することをお勧めします。
             こうすると、一度認証を受けるだけでそれをセッション全体で使いまわせるようになります。
         </para>
-        <example>
+        <example id="zend.http.client.multiple_requests.example-1">
             <title>単一のクライアントによる連続したリクエストの実行</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // まず、クライアントのインスタンスを作成します。
-    $client = new Zend_Http_Client('http://www.example.com/fetchdata.php', array(
-        'keepalive' => true
+            <programlisting role="php"><![CDATA[<?php
+// まず、クライアントのインスタンスを作成します。
+$client = new Zend_Http_Client('http://www.example.com/fetchdata.php', array(
+    'keepalive' => true
+));
+
+// セッションにクッキーが保存されていますか?
+if (isset($_SESSION['cookiejar']) &&
+    $_SESSION['cookiejar'] instanceof Zend_Http_CookieJar)) {
+
+    $client->setCookieJar($_SESSION['cookiejar']);
+} else {
+    // いなければ、認証を行ってクッキーを保存します。
+    $client->setCookieJar();
+    $client->setUri('http://www.example.com/login.php');
+    $client->setParameterPost(array(
+        'user' => 'shahar',
+        'pass' => 'somesecret'
     ));
+    $client->request(Zend_Http_Client::POST);
 
-    // セッションにクッキーが保存されていますか?
-    if (isset($_SESSION['cookiejar']) &&
-        $_SESSION['cookiejar'] instanceof Zend_Http_CookieJar)) {
+    // さあ、パラメータを消去して URI を元のものに戻しましょう
+    // (サーバによって設定されたクッキーは、ジャーに保存されている
+    //  ことに注意しましょう)
+    $client->resetParameters();
+    $client->setUri('http://www.example.com/fetchdata.php');
+}
 
-        $client->setCookieJar($_SESSION['cookiejar']);
-    } else {
-        // いなければ、認証を行ってクッキーを保存します。
-        $client->setCookieJar();
-        $client->setUri('http://www.example.com/login.php');
-        $client->setParameterPost(array(
-            'user' => 'shahar',
-            'pass' => 'somesecret'
-        ));
-        $client->request(Zend_Http_Client::POST);
+$response = $client->request(Zend_Http_Client::GET);
 
-        // さあ、パラメータを消去して URI を元のものに戻しましょう
-        // (サーバによって設定されたクッキーは、ジャーに保存されている
-        //  ことに注意しましょう)
-        $client->resetParameters();
-        $client->setUri('http://www.example.com/fetchdata.php');
-    }
-
-    $response = $client->request(Zend_Http_Client::GET);
-
-    // クッキーをセッションに保存し、次のページで使用します。
-    $_SESSION['cookiejar'] = $client->getCookieJar();
-?>]]></programlisting>
+// クッキーをセッションに保存し、次のページで使用します。
+$_SESSION['cookiejar'] = $client->getCookieJar();]]>
+            </programlisting>
         </example>
     </sect2>
 </sect1>

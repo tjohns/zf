@@ -11,8 +11,8 @@
 $phpNative = Zend_Json::decode($encodedValue);
 
 // クライアントに返すために、それをエンコードします
-$json = Zend_Json::encode($phpNative);
-?>]]></programlisting>
+$json = Zend_Json::encode($phpNative);]]>
+    </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

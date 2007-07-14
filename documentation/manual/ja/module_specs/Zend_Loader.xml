@@ -34,10 +34,8 @@
         <example id="zend.loader.load.file.example">
             <title>loadFile() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
-Zend_Loader::loadFile($filename, $dirs=null, $once=false)
-
-?>]]></programlisting>
+Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
+            </programlisting>
     </example>
 
         <para>
@@ -79,15 +77,13 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
         <example id="zend.loader.load.class.example">
             <title>loadClass() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
         '/home/production/myapp'
     )
-);
-
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -131,12 +127,10 @@ Zend_Loader::loadClass('Container_Tree',
         <example id="zend.loader.load.isreadable.example">
             <title>isReadable() メソッドの例</title>
             <programlisting role="php"><![CDATA[<?php
-
 if (Zend_Loader::isReadable($filename)) {
     // $filename で何かをします
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -168,10 +162,8 @@ if (Zend_Loader::isReadable($filename)) {
         <example id="zend.loader.load.autoload.example">
             <title>自動ローダー用コールバックメソッドの登録例</title>
             <programlisting role="php"><![CDATA[<?php
-
-Zend_Loader::registerAutoload();
-
-?>]]></programlisting>
+Zend_Loader::registerAutoload();]]>
+            </programlisting>
         </example>
 
         <para>
@@ -200,7 +192,6 @@ Zend_Loader::registerAutoload();
                 サブクラスのメソッドではなく親クラス側の同名のメソッドをコールします。
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 class My_Loader extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)
@@ -219,9 +210,8 @@ class My_Loader extends Zend_Loader
     }
 }
 
-Zend_Loader::registerAutoload('My_Loader');
-
-?>]]></programlisting>
+Zend_Loader::registerAutoload('My_Loader');]]>
+            </programlisting>
         </example>
 
     </sect2>

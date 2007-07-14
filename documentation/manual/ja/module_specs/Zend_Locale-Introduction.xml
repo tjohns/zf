@@ -140,12 +140,12 @@
             を参考に、Zend Framework で使用するロケールを選択しましょう。
         </para>
 
-        <example>
+        <example id="zend.locale.representation.example-1">
             <title>特定のロケールの選択</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend_Locale';
-$locale = new Zend_Locale('de_DE'); // ドイツ語 _ ドイツ
-?>]]></programlisting>
+$locale = new Zend_Locale('de_DE'); // ドイツ語 _ ドイツ]]>
+            </programlisting>
         </example>
 
         <para>
@@ -192,15 +192,15 @@ $locale = new Zend_Locale('de_DE'); // ドイツ語 _ ドイツ
             を使用すると、以下に示すようにホストサーバの環境設定から情報を取得するようになります。
         </para>
 
-        <example>
+        <example id="zend.locale.selection.example-1">
             <title>ロケールの自動選択</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 $locale  = new Zend_Locale();
 $locale1 = new Zend_Locale(Zend_Locale::BROWSER);     // デフォルトの挙動で、上と同じです
 $locale2 = new Zend_Locale(Zend_Locale::ENVIRONMENT); // ホストサーバ上の設定を使用します
-$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // フレームワークアプリケーションのデフォルト設定を使用します
-?>]]></programlisting>
+$locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // フレームワークアプリケーションのデフォルト設定を使用します]]>
+            </programlisting>
         </example>
 
         <para>
@@ -254,12 +254,12 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // フレームワーク�
             ユーザのウェブブラウザの設定からロケール情報を取得してそれを使用します。
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-1">
             <title>日付のデフォルトが、ウェブのユーザのロケールになる例</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
-$date = new Zend_Date('2006',Zend_Date::YEAR);
-?>]]></programlisting>
+$date = new Zend_Date('2006',Zend_Date::YEAR);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -268,16 +268,16 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
             コンストラクタの三番目の引数でロケールを明示的に指定します。
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-2">
             <title>デフォルトのロケール選択のオーバーライド</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
 
 $usLocale = new Zend_Locale('en_US');
 $date = new Zend_Date('2006',Zend_Date::YEAR, $usLocale);
-$temp = new Zend_Measure_Temperature('100,10',Zend_Measure::TEMPERATURE, $usLocale);
-?>]]></programlisting>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLocale);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -286,16 +286,16 @@ $temp = new Zend_Measure_Temperature('100,10',Zend_Measure::TEMPERATURE, $usLoca
             オーバーヘッドを回避することができます。
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-3">
             <title>デフォルトのロケールを使用する際のパフォーマンスの最適化</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 require_once 'Zend/Measure/Temperature.php';
 
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006', Zend_Date::YEAR, $locale);
-$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);
-?>]]></programlisting>
+$temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $locale);]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -324,12 +324,12 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             array('date_format' => null, 'locale' => $locale) をメソッドのオプションで指定します。
         </para>
 
-        <example>
+        <example id="zend.locale.formatoptions.example-1">
             <title>日付のデフォルトを、ウェブユーザの正しいロケールに設定する</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');
-?>]]></programlisting>
+Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');]]>
+            </programlisting>
         </example>
 
         <para>
@@ -340,18 +340,17 @@ Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_
             また、locale に設定すると、この環境あるいはブラウザの標準のロケールを使用します。
         </para>
 
-        <example>
+        <example id="zend.locale.formatoptions.example-2">
             <title>setOptions() での STANDARD の使用</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 Zend_Locale_Format::setOptions('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY');
 // グローバル設定の日付書式をオーバーライドします
 $date = Zend_Locale_Format::getDate('2007-04-20, array('date_format' => Zend_Locale_Format::STANDARD);
 
 // 標準ロケールのグローバル設定
-Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');
-
-?>]]></programlisting>
+Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');]]>
+            </programlisting>
         </example>
 
     </sect2>

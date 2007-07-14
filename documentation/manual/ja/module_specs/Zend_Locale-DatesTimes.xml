@@ -40,7 +40,7 @@
             使用する書式にあわせるための情報を表します。
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-1">
             <title>getDate() のオプション 'fix_date' のキーの値</title>
             <tgroup cols='4'>
                 <thead>
@@ -90,7 +90,7 @@
             (ISO のデフォルトでは 'm'、PHP の date 関数では 'i' を使用します)。
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-2">
             <title>返り値</title>
             <tgroup cols='4'>
                 <thead>
@@ -149,9 +149,9 @@
             </tgroup>
         </table>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-1">
             <title>日付の正規化</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $dateString = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => 'dd.MM.yyyy'));
@@ -179,8 +179,8 @@ Array
     [month] => 4
     [year] => 2006
     [fixed] => 4
-)
-?>]]></programlisting>
+)]]>
+            </programlisting>
         </example>
 
         <para>
@@ -197,16 +197,16 @@ Array
             のデフォルトの日付書式を使用するようになります。
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-2">
             <title>ロケールを指定した日付の正規化</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale));
 
-print_r ($date);
-?>]]></programlisting>
+print_r ($date);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -214,16 +214,16 @@ print_r ($date);
             完全な日付と時刻が返されます。
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-3">
             <title>日付と時刻の正規化</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
 $date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale);
 
-print_r ($date);
-?>]]></programlisting>
+print_r ($date);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -233,22 +233,22 @@ print_r ($date);
             (H, m, s, y, M, d) および MMMM、EEEE だけです。
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-4">
             <title>ユーザ定義の日付書式への正規化</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('13200504T551422', array('date_format' => 'ddyyyyMM ssmmHH');
 
-print_r ($date);
-?>]]></programlisting>
+print_r ($date);]]>
+            </programlisting>
         </example>
 
         <para>
             書式には次の記号が使用できます。
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-3">
             <title>書式定義</title>
             <tgroup cols='2'>
                 <thead>
@@ -294,7 +294,7 @@ print_r ($date);
             適切な書式の例は、次のようになります。
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-4">
             <title>書式の例</title>
             <tgroup cols='3'>
                 <thead>
@@ -343,16 +343,16 @@ print_r ($date);
             たとえば年の位置が違っている場合などがこれにあたります。
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-5">
             <title>入力された日付の訂正処理</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $date = Zend_Locale_Format::getDate('41.10.20', array('date_format' => 'ddMMyy', 'fix_date' => true));
 
 // 41 は、日付ではなく年として返されます
-print_r ($date);
-?>]]></programlisting>
+print_r ($date);]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -372,9 +372,9 @@ print_r ($date);
             経験則によってそれを "修正" してから検証します。
         </para>
 
-        <example>
+        <example id="zend.locale.date.test.example-1">
             <title>日付かどうかの確認</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -382,8 +382,8 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
     print "日付です";
 } else {
     print "日付ではありません";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -400,9 +400,9 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
             これは、選択したロケールに対するデフォルトの時刻書式を使用するからです。
         </para>
 
-        <example>
+        <example id="zend.locale.time.normalizing.example-1">
             <title>未知の時刻の正規化</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -410,8 +410,8 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
     print "時刻です";
 } else {
     print "時刻ではありません";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -427,9 +427,9 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
             <code>date_format</code> には期待するパーツを指定しなければなりません。
         </para>
 
-        <example>
+        <example id="zend.locale.time.test.example-1">
             <title>時刻かどうかの確認</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -437,8 +437,8 @@ if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:m
     print "時刻です";
 } else {
     print "時刻ではありません";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
     </sect2>

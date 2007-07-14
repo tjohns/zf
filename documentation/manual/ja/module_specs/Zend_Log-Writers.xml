@@ -20,13 +20,11 @@
       のようなストリームに送ることもできます (<code>php://stderr</code>)。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
     </para>
 
     <para>
@@ -35,13 +33,11 @@ $logger->info('Informational message');
       URL</ulink> のいずれかを使用します。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');
-
-?>]]></programlisting>
+$logger->info('Informational message');]]>
+      </programlisting>
 
       デフォルトでは、ストリームを追記モード (<code>"a"</code>) でオープンします。
       別のモードでオープンするには、Zend_Log_Writer_Stream
@@ -53,7 +49,6 @@ $logger->info('Informational message');
       既存のストリームリソースを指定することもできます。
 
       <programlisting role="php"><![CDATA[<?php
-
 $stream = @fopen('/path/to/logfile', 'a', false);
 if (! $stream) {
     throw new Exception('ストリームのオープンに失敗しました');
@@ -62,9 +57,8 @@ if (! $stream) {
 $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
-$logger->info('通知メッセージ');
-
-?>]]></programlisting>
+$logger->info('通知メッセージ');]]>
+      </programlisting>
 
       既存のストリームリソースに対してモードを指定することはできません。
       指定しようとすると <code>Zend_Log_Exception</code> をスローします。
@@ -82,7 +76,6 @@ $logger->info('通知メッセージ');
       columns to event data items:
 
       <programlisting role="php"><![CDATA[<?php
-
 $params = array ('host'     => '127.0.0.1',
                  'username' => 'malory',
                  'password' => '******',
@@ -94,9 +87,8 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 
 $logger = new Zend_Log($writer);
 
-$logger->info('通知メッセージ');
-
-?>]]></programlisting>
+$logger->info('通知メッセージ');]]>
+      </programlisting>
 
       上の例は、一行ぶんのログデータを <code>log_table_name</code>
       という名前のテーブルに書き出します。データベースのカラム
@@ -113,14 +105,12 @@ $logger->info('通知メッセージ');
       これは、ログ出力を無効にしたりテスト時などに便利です。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
 // どこにも出力されません
-$logger->info('通知メッセージ');
-
-?>]]></programlisting>
+$logger->info('通知メッセージ');]]>
+      </programlisting>
     </para>
   </sect2>
 
@@ -131,7 +121,6 @@ $logger->info('通知メッセージ');
       受け取った生のデータを配列に格納し、それを public プロパティとして公開します。
 
       <programlisting role="php"><![CDATA[<?php
-
 $mock = new Zend_Log_Writer_Mock;
 $logger = new Zend_Log($mock);
 
@@ -145,9 +134,8 @@ var_dump($mock->events[0]);
 //    [message] => 通知メッセージ
 //    [priority] => 6
 //    [priorityName] => INFO
-// )
-
-?>]]></programlisting>
+// )]]>
+      </programlisting>
     </para>
 
     <para>
@@ -165,7 +153,6 @@ var_dump($mock->events[0]);
       <code>addWriter()</code> メソッドを使用します。
 
       <programlisting role="php"><![CDATA[<?php
-
 $writer1 = new Zend_Log_Writer_Stream('/path/to/first/logfile');
 $writer2 = new Zend_Log_Writer_Stream('/path/to/second/logfile');
 
@@ -174,9 +161,8 @@ $logger->addWriter($writer1);
 $logger->addWriter($writer2);
 
 // 両方のライターに書き出されます
-$logger->info('通知メッセージ');
-
-?>]]></programlisting>
+$logger->info('通知メッセージ');]]>
+      </programlisting>
     </para>
   </sect2>
 </sect1>

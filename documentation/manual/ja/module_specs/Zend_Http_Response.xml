@@ -14,7 +14,7 @@
             factory() メソッドを使用します。これは、HTTP
             レスポンスメッセージを含む文字列を受け取って新しい
             Zend_Http_Response オブジェクトを返します。
-            <example>
+            <example id="zend.http.response.introduction.example-1">
                 <title>ファクトリメソッドを使用した Zend_Http_Response オブジェクトの作成</title>
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
@@ -28,8 +28,8 @@ fwrite($sock, $req);
 while ($buff = fread($sock, 1024))
     $str .= $sock;
 
-$response = Zend_Http_Response::factory($str);
-?>]]></programlisting>
+$response = Zend_Http_Response::factory($str);]]>
+                </programlisting>
             </example>
         </para>
         <para>
@@ -97,15 +97,15 @@ $response = Zend_Http_Response::factory($str);
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.response.testers.example-1">
                 <title>isError() メソッドの使用によるレスポンスの検証</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->isError()) {
   echo "データ転送エラー。\n"
   echo "サーバからの応答: " . $response->getStatus() . " " . $response->getMessage() . "\n";
 }
-// .. ここでレスポンスを処理します...
-?>]]></programlisting>
+// .. ここでレスポンスを処理します...]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -165,7 +165,7 @@ if ($response->isError()) {
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.response.acessors.example-1">
                 <title>Zend_Http_Response へのアクセス用メソッドの使用</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->getStatus() == 200) {
@@ -174,8 +174,8 @@ if ($response->getStatus() == 200) {
 } else {
   echo "データの取得時にエラーが発生しました。<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
             <note>
                 <title>常に返り値をチェックする</title>
@@ -186,7 +186,7 @@ if ($response->getStatus() == 200) {
                     返された値が文字列なのか配列なのかを常にチェックするようにしましょう。
                 </para>
             </note>
-            <example>
+            <example id="zend.http.response.acessors.example-2">
                 <title>レスポンスヘッダへのアクセス</title>
                 <programlisting role="php"><![CDATA[<?php
 $ctype = $response->getHeader('Content-type');
@@ -197,8 +197,8 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
   $body = htmlentities($body);
 }
 
-echo $body;
-?>]]></programlisting>
+echo $body;]]>
+                </programlisting>
             </example>
         </para>
     </sect2>

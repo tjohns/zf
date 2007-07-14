@@ -28,8 +28,8 @@
     </para>
     <programlisting role="php"><![CDATA[<?php
 // オブジェクトをオブジェクトにデコードします
-$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
-?>]]></programlisting>
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
+    </programlisting>
     <para>
         このようにしてデコードされたオブジェクトは <code>StdClass</code>
         オブジェクトとなり、JSON の キー/値
