@@ -168,6 +168,9 @@
         <xi:include href="module_specs/Zend_Date-Overview.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Overview.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Date-Creation.xml" />
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Creation.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Date-Constants.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Constants.xml" /></xi:fallback>
         </xi:include>
@@ -594,17 +597,14 @@
         <xi:include href="module_specs/Zend_Validate.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Validate.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Validate-Set.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Validate-Set.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Validate-ValidatorChains.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Validate-ValidatorChains.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Validate-WritingValidators.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Validate-WritingValidators.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Validate-EmailAddress.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Validate-EmailAddress.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="module_specs/Zend_Validate-Hostname.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Validate-Hostname.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.version">
