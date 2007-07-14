@@ -481,7 +481,7 @@ class MyController extends Zend_Controller_Action
             <code>Zend_Controller_Action</code> could solve such redundancy.
         </para>
 
-        <sect3 id="zend.controller.action.subclassing.call">
+        <example id="zend.controller.action.subclassing.example-call">
             <title>How to Handle Non-Existent Actions</title>
 
             <para>
@@ -545,7 +545,7 @@ class MyController extends Zend_Controller_Action
     }
 }]]>
             </programlisting>
-        </sect3>
+        </example>
 
         <para>
             Besides overriding <code>__call()</code>, each of the

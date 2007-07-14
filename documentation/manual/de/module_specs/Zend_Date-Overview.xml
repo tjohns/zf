@@ -122,7 +122,7 @@
             oder <code>Zend_Date::DATES</code> (ein "fehlertolerantes" Format).
         </para>
 
-        <example>
+        <example id="zend.date.values.example-1">
             <title>Benutzerdefinierte Eingabeformate für Daten</title>
             <programlisting role="php"><![CDATA[<?php
 $date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
@@ -174,7 +174,7 @@ echo $date3, "\n"; // Ausgabe "Mar 3, 2007 12:00:00 AM"]]>
             <code>get()</code>.
         </para>
 
-        <example>
+        <example id="zend.date.basic.example-1">
             <title>Arbeiten an Teilen von Daten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -211,7 +211,7 @@ print $date;]]>
 
             <title>Liste der Datumsabschnitte</title>
 
-            <table>
+            <table id="id.date.basic.parts.table">
                 <title>Datumsabschnitte</title>
                 <tgroup cols="2">
                     <thead>
@@ -380,7 +380,7 @@ print $date;]]>
                 <code>$part</code> Parameter verwendet.
             </para>
 
-            <table>
+            <table id="id.date.basic.operations.table">
                 <title>Basis Operationen</title>
                 <tgroup cols="2">
                     <thead>
@@ -492,7 +492,7 @@ print $date;]]>
             Datumsabschnitt wie beschrieben unter <xref linkend="zend.date.overview" />.
         </para>
 
-        <table>
+        <table id="zend.date.others.comparison.table">
             <title>Methoden zum Vergleichen von Daten</title>
             <tgroup cols="2">
                 <thead>
@@ -619,7 +619,7 @@ print $date;]]>
             Several methods support retrieving values related to a <code>Zend_Date</code> instance.
         </para>
 
-        <table>
+        <table id="zend.date.others.gettingparts.table">
             <title>Date Output Methods</title>
             <tgroup cols="2">
                 <thead>
@@ -658,40 +658,77 @@ print $date;]]>
                             <para>
                                 <itemizedlist>
                                     <listitem>
-                                        Tag als Zahl mit '<emphasis role="strong">day</emphasis>' (<code>Zend_Date::DAY_SHORT</code>)
+                                        <para>
+                                            Tag als Zahl mit '<emphasis role="strong">day</emphasis>'
+                                            (<code>Zend_Date::DAY_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Monat als Zahl mit '<emphasis role="strong">month</emphasis>' (<code>Zend_Date::MONTH_SHORT</code>)
+                                        <para>
+                                            Monat als Zahl mit '<emphasis role="strong">month</emphasis>'
+                                            (<code>Zend_Date::MONTH_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Jahr als '<emphasis role="strong">year</emphasis>' (<code>Zend_Date::YEAR</code>)
+                                        <para>
+                                            Jahr als '<emphasis role="strong">year</emphasis>'
+                                            (<code>Zend_Date::YEAR</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Stunde als '<emphasis role="strong">hour</emphasis>' (<code>Zend_Date::HOUR_SHORT</code>)
+                                        <para>
+                                            Stunde als '<emphasis role="strong">hour</emphasis>'
+                                            (<code>Zend_Date::HOUR_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Minute als '<emphasis role="strong">minute</emphasis>' (<code>Zend_Date::MINUTE_SHORT</code>)
+                                        <para>
+                                            Minute als '<emphasis role="strong">minute</emphasis>'
+                                            (<code>Zend_Date::MINUTE_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Sekunde als '<emphasis role="strong">second</emphasis>' (<code>Zend_Date::SECOND_SHORT</code>)
+                                        <para>
+                                            Sekunde als '<emphasis role="strong">second</emphasis>'
+                                            (<code>Zend_Date::SECOND_SHORT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Abgekürzte Zeitzone als '<emphasis role="strong">timezone</emphasis>' (<code>Zend_Date::TIMEZONE</code>)
+                                        <para>
+                                            Abgekürzte Zeitzone als '<emphasis role="strong">timezone</emphasis>'
+                                            (<code>Zend_Date::TIMEZONE</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Unix Zeitpunkt als '<emphasis role="strong">timestamp</emphasis>' (<code>Zend_Date::TIMESTAMP</code>)
+                                        <para>
+                                            Unix Zeitpunkt als '<emphasis role="strong">timestamp</emphasis>'
+                                            (<code>Zend_Date::TIMESTAMP</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Wochentag als Zahl mit '<emphasis role="strong">weekday</emphasis>' (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                        <para>
+                                            Wochentag als Zahl mit '<emphasis role="strong">weekday</emphasis>'
+                                            (<code>Zend_Date::WEEKDAY_DIGIT</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Tag des Jahres als '<emphasis role="strong">dayofyear</emphasis>' (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                        <para>
+                                            Tag des Jahres als '<emphasis role="strong">dayofyear</emphasis>'
+                                            (<code>Zend_Date::DAY_OF_YEAR</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Woche als '<emphasis role="strong">week</emphasis>' (<code>Zend_Date::WEEK</code>)
+                                        <para>
+                                            Woche als '<emphasis role="strong">week</emphasis>'
+                                            (<code>Zend_Date::WEEK</code>)
+                                        </para>
                                     </listitem>
                                     <listitem>
-                                        Abstand der Zeitzone zu GMT als '<emphasis role="strong">gmtsecs</emphasis>' (<code>Zend_Date::GMT_SECS</code>)
+                                        <para>
+                                            Abstand der Zeitzone zu GMT als
+                                            '<emphasis role="strong">gmtsecs</emphasis>'
+                                            (<code>Zend_Date::GMT_SECS</code>)
+                                        </para>
                                     </listitem>
                                 </itemizedlist>
                             </para>
@@ -759,7 +796,7 @@ print $date;]]>
             Viele Methoden unterstützen es, Werte relativ zu einer <code>Zend_Date</code> Instanz zu erhalten.
         </para>
 
-        <table>
+        <table id="zend.date.others.fractions.table">
             <title>Methoden zur Datumsausgabe</title>
             <tgroup cols="2">
                 <thead>
@@ -800,7 +837,7 @@ print $date;]]>
             für Sonnenaufgang und Sonnenuntergang beinhaltet.
         </para>
 
-        <table>
+        <table id="zend.date.other.sun.table">
             <title>Gewöhliche Methoden</title>
             <tgroup cols="2">
                 <thead>

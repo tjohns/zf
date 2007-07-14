@@ -1,13 +1,13 @@
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
-    <sect2 id="zend.cache.core">
+    <sect2 id="zend.cache.frontends.core">
         <title>Zend_Cache_Core</title>
-        <sect3 id="zend.cache.core.introduction">
+        <sect3 id="zend.cache.frontends.core.introduction">
             <title>Einführung</title>
             <para>
                 <code>Zend_Cache_Core</code> ist ein spezielles Frontend, da es der Kern dieses Moduls ist.
-                Es ist ein generelles Cache Frontend und durch andere Klassen erweiterbar.
+                Es ist ein generelles Cache Frontend und wurde von anderen Klassen erweitert.
             </para>
             <note>
                 <para>
@@ -17,13 +17,13 @@
                 </para>
             </note>
         </sect3>
-        <sect3 id="zend.cache.core.options">
+        <sect3 id="zend.cache.frontends.core.options">
             <title>Mögliche Optionen</title>
             <para>
                 Diese Optionen werden der Factory Methode übergeben wie im nachfolgenden Beispiel demonstriert.
             </para>
-            <table>
-                <title>Mögliche Optionen</title>
+            <table id="zend.cache.frontends.core.options.table">
+                <title>Core Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -169,9 +169,9 @@ echo($data);]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.output">
+    <sect2 id="zend.cache.frontends.output">
         <title>Zend_Cache_Frontend_Output</title>
-        <sect3 id="zend.cache.frontend.output.introduction">
+        <sect3 id="zend.cache.frontends.output.introduction">
             <title>Einführung</title>
             <para>
                 <code>Zend_Cache_Frontend_Output</code> ist ein Ausgabe-Empfangendes Frontend. Es verwendet den
@@ -179,7 +179,7 @@ echo($data);]]>
                 zu fangen.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.output.options">
+        <sect3 id="zend.cache.frontends.output.options">
             <title>Mögliche Optionen</title>
             <para>
                 Dieses Frontend hat keine bestimmten Optionen zusätzlich zu denen von
@@ -187,7 +187,7 @@ echo($data);]]>
             </para>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.output.examples">
+        <sect3 id="zend.cache.frontends.output.examples">
             <title>Beispiele</title>
             <para>
                 Ein Beispiel wird ganz am Anfang des Handbuches gegeben. Hier ist es mit kleinen Änderungen:
@@ -213,9 +213,9 @@ echo 'Hier wird nie gecached ('.time().').';]]>
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.function">
+    <sect2 id="zend.cache.frontends.function">
         <title>Zend_Cache_Frontend_Function</title>
-        <sect3 id="zend.cache.frontend.function.introduction">
+        <sect3 id="zend.cache.frontends.function.introduction">
             <title>Einführung</title>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> cached das Ergebnis von Funktionsaufrufen. Es hat
@@ -223,10 +223,10 @@ echo 'Hier wird nie gecached ('.time().').';]]>
                 für den Aufruf in einem Array entgegennimmt.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.function.options">
+        <sect3 id="zend.cache.frontends.function.options">
             <title>Mögliche Optionen</title>
             <table>
-                <title>Mögliche Optionen</title>
+                <title>Cache Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -266,7 +266,7 @@ echo 'Hier wird nie gecached ('.time().').';]]>
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.function.examples">
+        <sect3 id="zend.cache.frontends.function.examples">
             <title>Beispiele</title>
             <para>
                 Die Verwendung der <code>call()</code> Funktion ist die gleiche, wie die von
@@ -292,19 +292,19 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
     </sect2>
 
-    <sect2 id="zend.cache.frontend.class">
+    <sect2 id="zend.cache.frontends.class">
         <title>Zend_Cache_Frontend_Class</title>
-        <sect3 id="zend.cache.frontend.class.introduction">
+        <sect3 id="zend.cache.frontends.class.introduction">
             <title>Einführung</title>
             <para>
                 <code>Zend_Cache_Frontend_Class</code> ist unterschiedlich zu <code>Zend_Cache_Frontend_Function</code>,
                 weil es das Cachen von Objekten und statischen Methodenaufrufen erlaubt.
             </para>
         </sect3>
-        <sect3 id="zend.cache.frontend.class.options">
+        <sect3 id="zend.cache.frontends.class.options">
             <title>Mögliche Optionen</title>
             <table>
-                <title>Mögliche Optionen</title>
+                <title>Class Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -354,7 +354,7 @@ $cache->call('veryExpensiveFunc', $params);
               </table>
         </sect3>
 
-        <sect3 id="zend.cache.frontend.class.examples">
+        <sect3 id="zend.cache.frontends.class.examples">
             <title>Beispiele</title>
             <para>
                 zum Beispiel, um einen statischen Aufruf zu cachen:
@@ -428,7 +428,7 @@ $res = $cache->foobar2('1', '2');]]>
         <sect3 id="zend.cache.frontends.file.options">
             <title>Mögliche Optionen</title>
             <table>
-                <title>Mögliche Optionen</title>
+                <title>File Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -486,7 +486,7 @@ $res = $cache->foobar2('1', '2');]]>
         <sect3 id="zend.cache.frontends.page.options">
             <title>Mögliche Optionen (Für dieses Frontend in der Zend_Cache Factory)</title>
             <table>
-                <title>Mögliche Optionen</title>
+                <title>Page Frontend Optionen</title>
                 <tgroup cols="4">
                      <thead>
                           <row>

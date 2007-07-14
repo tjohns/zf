@@ -24,7 +24,7 @@
             Beispielausgabe zeigt eine Lokalisierung mit Europe/GMT+1 Stunden (z.B. Österreich, Deutschland, Frankreich).
         </para>
 
-        <table>
+        <table id="zend.date.constants.using.table">
             <title>Berechnungen die Zend_Date::HOUR beinhalten</title>
             <tgroup cols="4">
                 <thead>
@@ -105,7 +105,7 @@
             <code>Zend_Date</code> unterstützten Konstanten sind anbei aufgelistet.
         </para>
 
-        <table>
+        <table id="zend.date.constants.list.table-1">
             <title>Konstanten für den Tag</title>
             <tgroup cols="4">
                 <thead>
@@ -184,7 +184,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-2">
             <title>Konstanten für die Woche</title>
             <tgroup cols="4">
                 <thead>
@@ -207,7 +207,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-3">
             <title>Konstanten für das Monat</title>
             <tgroup cols="4">
                 <thead>
@@ -263,7 +263,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-4">
             <title>Konstanten für das Jahr</title>
             <tgroup cols="4">
                 <thead>
@@ -312,7 +312,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-5">
             <title>Konstanten für die Zeit</title>
             <tgroup cols="4">
                 <thead>
@@ -401,7 +401,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-6">
             <title>Konstanten für die Zeitzone</title>
             <tgroup cols="4">
                 <thead>
@@ -458,7 +458,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-7">
             <title>Konstanten für Datumsformate (Formate beinhalten die Zeitzone)</title>
             <tgroup cols="4">
                 <thead>
@@ -562,7 +562,7 @@
             Beispiel Jahre, Monate und Tage wenn möglich.
         </para>
 
-        <table>
+        <table id="zend.date.constants.list.table-8">
             <title>Datums- und Zeitformate (Formate variieren laut Gebietsschema)</title>
             <tgroup cols="4">
                 <thead>
@@ -684,7 +684,7 @@
             zu wählen (siehe <xref linkend="zend.date.constants.phpformats" />).
         </para>
 
-        <example>
+        <example id="zend.date.constants.selfdefinedformats.example-1">
             <title>Beispiel Verwendung eines selbst-definierten ISO Formats</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -695,7 +695,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
             </programlisting>
         </example>
 
-        <table>
+        <table id="zend.date.constants.selfdefinedformats.table">
             <title>Konstanten für <emphasis role="strong">ISO 8601 Datums Ausgaben</emphasis>
             </title>
             <tgroup cols="4">
@@ -1104,7 +1104,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
             Verwendung der Konstanten anhand der unteren Tabelle für die Erstellung von selbst-definierten Formaten.
         </para>
 
-        <example>
+        <example id="zend.date.constants.phpformats.example-1">
             <title>Beispielbenutzung von Selbst-definierten Formaten mit PHP Formatbezeichnern</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -1129,7 +1129,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");]]>
             Standardmäßigen "ISO" Formatcode.
         </para>
 
-        <table>
+        <table id="zend.date.constants.phpformats.table">
             <title>Konstanten für <emphasis role="strong">PHP date Ausgaben</emphasis>
             </title>
             <tgroup cols="5">

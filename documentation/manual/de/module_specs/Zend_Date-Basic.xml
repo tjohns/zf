@@ -33,7 +33,7 @@
             <link linkend="zend.date.setdefaulttimezone">Standardzeitzone</link> gesetzt hat.
         </para>
 
-        <example>
+        <example id="zend.date.basic.creation.example-1">
             <title>Erstellen des aktuellen Datums</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -67,7 +67,7 @@ print $date;]]>
                 in einer späteren Sektion beschrieben werden.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.get.example-1">
                 <title>get() - Ausgabe eines Datums</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -91,7 +91,7 @@ print $date->get();]]>
                 einer späteren Sektion beschrieben werden.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.set.example-1">
                 <title>set() - Setzen eines Datums</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -117,7 +117,7 @@ print $date->get(Zend_Date::W3C);]]>
                 verwenden die gleichen Optionen wie <code>set()</code>, welche später erklärt werden.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.add.example-1">
                 <title>add() - Addieren von Daten</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -148,7 +148,7 @@ echo "Datum über toString() = ", $date, "\n";]]>
                 von <code>compare()</code> wie im nachfolgenden Beispiel beschrieben.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.compare.example-1">
                 <title>compare() - Vergleichen von Daten</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -169,7 +169,7 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
                 welches ein Boolean zurückgibt.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.compare.example-2">
                 <title>equals() - Identifizieren eines Datums oder Datumsabschnittes</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';

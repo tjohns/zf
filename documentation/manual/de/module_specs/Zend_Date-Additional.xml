@@ -8,7 +8,7 @@
         um die Arbeitsweise, und die einfache API für die richtige Benutzung von Ihnen, zu zeigen.
     </para>
 
-    <sect2>
+    <sect2 id="zend.date.additional.checking">
 
         <title>Prüfen von Daten</title>
 
@@ -49,7 +49,7 @@
             das dieses Datum unmöglich ist.
         </para>
 
-        <example>
+        <example id="zend.date.additional.checking.example-1">
             <title>Prüfen von Daten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -82,7 +82,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.date.additional.sunrise-sunset">
 
         <title>Sonnenaufgang und Sonnenuntergang</title>
 
@@ -106,7 +106,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
             vordefinierten Städte der Helferklasse zurück.
         </para>
 
-        <example>
+        <example id="zend.date.additional.sunrise-sunset.example-1">
             <title>Alle verfügbaren Städte ausgeben</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
@@ -128,7 +128,7 @@ print_r (Zend_Date_Cities::getCityList());]]>
             Funktionen immer optional. Wenn er nicht gesetzt wird, wird der '<code>effective</code>' Horizont benutzt.
         </para>
 
-        <table>
+        <table id="zend.date.additional.sunrise-sunset.table">
             <title>Arten von unterstützten Horizonten für Sonnenauf- und -untergang</title>
             <tgroup cols="3">
                 <thead>
@@ -168,7 +168,7 @@ print_r (Zend_Date_Cities::getCityList());]]>
             '<code>latitude</code>' und eine '<code>longitude</code>' anzugeben und optional der '<code>horizon</code>'.
         </para>
 
-        <example>
+        <example id="zend.date.additional.sunrise-sunset.example-2">
             <title>Die Ortsangabe für eine Stadt auslesen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date/Cities.php';
@@ -194,7 +194,7 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
             Nach der Berechnung wird das <code>Zend_Date</code> Objekt mit der berechneten Zeit zurückgegeben.
         </para>
 
-        <example>
+        <example id="zend.date.additional.sunrise-sunset.example-3">
             <title>Berechnung von Sonneninformationen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -220,7 +220,7 @@ foreach ($info as $sun) {
 
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.date.additional.timezones">
 
         <title>Zeitzonen</title>
 
@@ -251,7 +251,7 @@ foreach ($info as $sun) {
             zone aufgerufen wird. Das wird auch automatisch gemacht wenn das Datumsobjekt erstellt wird.
         </para>
 
-        <example>
+        <example id="zend.date.additional.timezones.example-1">
             <title>Arbeiten mit Zeitzonen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -295,7 +295,7 @@ print $date->getIso();]]>
             Es ist möglich verschiedene Daten mit verschiedenen Zeitzonen zu haben.
         </para>
 
-        <example>
+        <example id="zend.date.additional.timezones.example-2">
             <title>Mehrere Zeitzonen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';

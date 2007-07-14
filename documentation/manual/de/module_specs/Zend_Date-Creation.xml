@@ -8,7 +8,7 @@
         gezeigt.
     </para>
 
-    <sect2>
+    <sect2 id="zend.date.creation.actual">
 
         <title>Erstellen des aktuellen Datums</title>
 
@@ -20,7 +20,7 @@
             enthält immer das aktuelle Datum und die Zeit für die aktuell gesetzte Zeitzone.
         </para>
 
-        <example>
+        <example id="zend.date.creation.actual.example-1">
 
             <title>Datum durch Instanz erstellen</title>
 
@@ -39,7 +39,7 @@ $date = new Zend_Date();]]>
 
         </example>
 
-        <example>
+        <example id="zend.date.creation.actual.example-2">
 
             <title>Statische Erstellung eines Datums</title>
 
@@ -61,7 +61,7 @@ $date = Zend_Date::now();]]>
 
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.date.creation.database">
 
         <title>Erstellen von Datumswerden von einer Datenbank</title>
 
@@ -83,7 +83,7 @@ $date = Zend_Date::now();]]>
             Deswegen gibt es einen schnellen und einen bequemen Weg ein Datum von Datenbankwerten zu erstellen.
         </para>
 
-        <example>
+        <example id="zend.date.creation.database.example-1">
 
             <title>Schnelle Erstellung eines Datums von Datumswerten einer Datenbank</title>
 
@@ -105,7 +105,7 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);]]>
 
         </example>
 
-        <example>
+        <example id="zend.date.creation.database.example-2">
 
             <title>Bequeme Erstellung eines Datums von Datumswerten einer Datenbank</title>
 
@@ -131,7 +131,7 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
 
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.date.creation.array">
 
         <title>Erstellung eines Datums von einem Array</title>
 
@@ -143,27 +143,39 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);]]>
         <para>
             <itemizedlist mark='opencircle'>
                 <listitem>
-                    <emphasis role="strong">day</emphasis>: Tag des Datums als Zahl
+                    <para>
+                        <emphasis role="strong">day</emphasis>: Tag des Datums als Zahl
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">month</emphasis>: Monat des Datums als Zahl
+                    <para>
+                        <emphasis role="strong">month</emphasis>: Monat des Datums als Zahl
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">year</emphasis>: Vollständiges Jahr des Datums
+                    <para>
+                        <emphasis role="strong">year</emphasis>: Vollständiges Jahr des Datums
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">hour</emphasis>: Stunde des Datums
+                    <para>
+                        <emphasis role="strong">hour</emphasis>: Stunde des Datums
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">minute</emphasis>: Minute des Datums
+                    <para>
+                        <emphasis role="strong">minute</emphasis>: Minute des Datums
+                    </para>
                 </listitem>
                 <listitem>
-                    <emphasis role="strong">second</emphasis>: Sekunde des Datums
+                    <para>
+                        <emphasis role="strong">second</emphasis>: Sekunde des Datums
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
 
-        <example>
+        <example id="zend.date.creation.array.example">
 
             <title>Erstellen eines Datums durch ein Array</title>
 

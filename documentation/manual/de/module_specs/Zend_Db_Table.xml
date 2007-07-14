@@ -1003,7 +1003,7 @@ echo "The table name is " . $info['name'] . "\n";]]>
             </itemizedlist>
 
             In both cases, the cache specification must be either <code>null</code> (i.e., no cache used) or an
-            instance of <link linkend="zend.cache.core"><code>Zend_Cache_Core</code></link>. The methods may be used
+            instance of <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>. The methods may be used
             in conjunction when it is desirable to have both a default metadata cache and the ability to change the
             cache for individual table objects.
         </para>
