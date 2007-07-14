@@ -36,7 +36,7 @@
             wurde indem Tag, Monat oder Jahr getauscht wurden um in das Format zu passen das angegeben wurde.
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-1">
             <title>Schlüsselwerte für getDate() mit der Option 'fix_date'</title>
             <tgroup cols='4'>
                 <thead>
@@ -87,7 +87,7 @@
             Minuten unterschiedlich ist ('m' wird im ISO Format und 'i' im PHP date Format verwendet).
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-2">
             <title>Rückgabewerte</title>
             <tgroup cols='4'>
                 <thead>
@@ -146,7 +146,7 @@
             </tgroup>
         </table>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-1">
             <title>Normalisieren von Daten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -191,7 +191,7 @@ Array
             zu verwenden.
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-2">
             <title>Normalisieren eines Datums durch ein Gebietsschema</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -208,7 +208,7 @@ print_r ($date);]]>
             Uhrzeit, um erwarteten Format enthält.
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-3">
             <title>Normalisieren eines Datums mit Uhrzeit</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -226,7 +226,7 @@ print_r ($date);]]>
             werden bei <code>$format</code> unterstützt.
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-4">
             <title>Normalisieren eines Benutzerdefinierten Datums</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -241,7 +241,7 @@ print_r ($date);]]>
             Ein Format kann die folgenden Zeichen enthalten:
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-3">
             <title>Format Definition</title>
             <tgroup cols='2'>
                 <thead>
@@ -287,7 +287,7 @@ print_r ($date);]]>
             Beispiele für gültige Formate sind
         </para>
 
-        <table>
+        <table id="zend.locale.date.normalize.table-4">
             <title>Beispielformate</title>
             <tgroup cols='3'>
                 <thead>
@@ -334,7 +334,7 @@ print_r ($date);]]>
             Eingabe, wie zum Beispiel ein falsch plaziertes Jahr:
         </para>
 
-        <example>
+        <example id="zend.locale.date.normalize.example-5">
             <title>Automatische Korrektur von Datumsangaben</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -362,7 +362,7 @@ print_r ($date);]]>
             "richtige" Datum zu eruieren bevor dieses auf Gültigkeit geprüft wird.
         </para>
 
-        <example>
+        <example id="zend.locale.date.test.example-1">
             <title>Testen von Daten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -390,7 +390,7 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
             das ausgewählte Gebietsschema benutzt.
         </para>
 
-        <example>
+        <example id="zend.locale.time.normalizing.example-1">
             <title>Normalisieren einer unbekannten Zeit</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -416,7 +416,7 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
             <code>date_format</code> sollte die Teile enthalten von denen erwartet wird das man Sie erhält.
         </para>
 
-        <example>
+        <example id="zend.locale.time.test.example-1">
             <title>Testen einer Zeit</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';

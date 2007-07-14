@@ -23,26 +23,49 @@
             <para>The Google Calendar API allows access to both public and private calendar feeds. Public feeds do not require authentication, but are read-only and offer reduced functionality. Private feeds offers the most complete functionality but requires an authenticated connection to the calendar servers. There are three authentication schemes that are supported by Google Calendar:</para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>ClientAuth</firstterm>
-                    provides direct username/password authentication to the calendar servers. Since this scheme requires that users provide your application with their password, this authentication is only recommended when other authentication schemes are insufficient.
+                    <para>
+                        <firstterm>ClientAuth</firstterm>
+                        provides direct username/password authentication to the
+                        calendar servers. Since this scheme requires that users
+                        provide your application with their password, this
+                        authentication is only recommended when other
+                        authentication schemes are insufficient.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>AuthSub</firstterm>
-                    allows authentication to the calendar servers via a Google proxy server. This provides the same level of convenience as ClientAuth but without the security risk, making this an ideal choice for web-based applications.
+                    <para>
+                        <firstterm>AuthSub</firstterm>
+                        allows authentication to the calendar servers via a
+                        Google proxy server. This provides the same level of
+                        convenience as ClientAuth but without the security
+                        risk, making this an ideal choice for web-based
+                        applications.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>MagicCookie</firstterm>
-                    allows authentication based on a semi-random URL available from within the Google Calendar interface. This is the simplest authentication scheme to implement, but requires that users manually retrieve their secure URL before they can authenticate, doesn't provide access to calendar lists, and is limited to read-only access.
+                    <para>
+                        <firstterm>MagicCookie</firstterm>
+                        allows authentication based on a semi-random URL
+                        available from within the Google Calendar interface.
+                        This is the simplest authentication scheme to
+                        implement, but requires that users manually retrieve
+                        their secure URL before they can authenticate, doesn't
+                        provide access to calendar lists, and is limited to
+                        read-only access.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
                 The
                 <code>Zend_Gdata</code>
-                library provides support for all three authentication schemes. The rest of this chapter will assume that you are familiar the authentication schemes available and how to create an appropriate authenticated connection. For more information, please see section the
+                library provides support for all three authentication schemes.
+                The rest of this chapter will assume that you are familiar the
+                authentication schemes available and how to create an
+                appropriate authenticated connection. For more information,
+                please see section the
                 <link linkend="zend.gdata.introduction.authentication">Authentication section</link>
                 of this manual or the
-                <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>
-                .
+                <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>.
             </para>
         </sect3>
         <sect3 id="zend.gdata.calendar.connecting.service">
@@ -237,16 +260,36 @@ echo "</ul>";]]>
             </para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>User</firstterm>
-                    is used to specify the user whose calendar is being searched for, and is specified as an email address. If no user is provided, "default" will be used instead to indicate the currently authenticated user (if authenticated).
+                    <para>
+                        <firstterm>User</firstterm>
+                        is used to specify the user whose calendar is being
+                        searched for, and is specified as an email address. If
+                        no user is provided, "default" will be used instead to
+                        indicate the currently authenticated user (if
+                        authenticated).
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Visibility</firstterm>
-                    specifies whether a users public or private calendar should be searched. If using an unauthenticated session and no MagicCookie is available, only the public feed will be available.
+                    <para>
+                        <firstterm>Visibility</firstterm>
+                        specifies whether a users public or private calendar
+                        should be searched. If using an unauthenticated session
+                        and no MagicCookie is available, only the public feed
+                        will be available.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Projection</firstterm>
-                    specifies how much data should be returned by the server and in what format. In most cases you will want to use the "full" projection. Also available is the "basic" projection, which places most meta-data into each event's content field as human readable text, and the "composite" projection which includes complete text for any comments alongside each event. The "composite" view is often much larger than the "full" view.
+                    <para>
+                        <firstterm>Projection</firstterm>
+                        specifies how much data should be returned by the
+                        server and in what format. In most cases you will want
+                        to use the "full" projection. Also available is the
+                        "basic" projection, which places most meta-data into
+                        each event's content field as human readable text, and
+                        the "composite" projection which includes complete text
+                        for any comments alongside each event. The "composite"
+                        view is often much larger than the "full" view.
+                    </para>
                 </listitem>
             </itemizedlist>
         </sect3>
@@ -380,47 +423,77 @@ try {
             <para>At a minimum, the following attributes should be set:</para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>Title</firstterm>
-                    provides the headline that will appear above the event within the Google Calendar UI.
+                    <para>
+                        <firstterm>Title</firstterm>
+                        provides the headline that will appear above the event
+                        within the Google Calendar UI.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>When</firstterm>
-                    indicates the duration of the event and, optionally, any reminders that are associated with it. See the next section for more information on this attribute.
+                    <para>
+                        <firstterm>When</firstterm>
+                        indicates the duration of the event and, optionally,
+                        any reminders that are associated with it. See the next
+                        section for more information on this attribute.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>Other useful attributes that may optionally set include:</para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>Author</firstterm>
-                    provides information about the user who created the event.
+                    <para>
+                        <firstterm>Author</firstterm>
+                        provides information about the user who created the
+                        event.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Content</firstterm>
-                    provides additional information about the event which appears when the event details are requested from within Google Calendar.
+                    <para>
+                        <firstterm>Content</firstterm>
+                        provides additional information about the event which
+                        appears when the event details are requested from
+                        within Google Calendar.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>EventStatus</firstterm>
-                    indicates whether the event is confirmed, tentative, or canceled.
+                    <para>
+                        <firstterm>EventStatus</firstterm>
+                        indicates whether the event is confirmed, tentative, or
+                        canceled.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Hidden</firstterm>
-                    removes the event from the Google Calendar UI.
+                    <para>
+                        <firstterm>Hidden</firstterm>
+                        removes the event from the Google Calendar UI.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Transparency</firstterm>
-                    indicates whether the event should be consume time on the user's free/busy list.
+                    <para>
+                        <firstterm>Transparency</firstterm>
+                        indicates whether the event should be consume time on
+                        the user's free/busy list.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>WebContent</firstterm>
-                    allows links to external content to be provided within an event.
+                    <para>
+                        <firstterm>WebContent</firstterm>
+                        allows links to external content to be provided within
+                        an event.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Where</firstterm>
-                    indicates the location of the event.
+                    <para>
+                        <firstterm>Where</firstterm>
+                        indicates the location of the event.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Visibility</firstterm>
-                    allows the event to be hidden from the public event lists.
+                    <para>
+                        <firstterm>Visibility</firstterm>
+                        allows the event to be hidden from the public event
+                        lists.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
@@ -559,7 +632,7 @@ $when->reminders = array($reminder);]]>
                 , as well as in RFC 2445.
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Create a new entry using the calendar service's magic factory method
+ // Create a new entry using the calendar service's magic factory method
 $event= $service->newEventEntry();
 
 // Populate the event with the desired information
@@ -687,4 +760,3 @@ echo "</ul>";]]>
         </programlisting>
     </sect2>
 </sect1>
-

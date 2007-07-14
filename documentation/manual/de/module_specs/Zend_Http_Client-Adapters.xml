@@ -43,7 +43,7 @@
         </para>
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.http.client.adapters.socket">
         <title>Der Socket Adapter</title>
         <para>
             Der Standard-Adapter von Zend_Http_Client ist der Zend_Http_Client_Adapter_Socket. Dieser
@@ -67,7 +67,7 @@
             Die Konfiguration kann entweder über <code>Zend_Http_Client->setConfig()</code> oder
             über den Konstruktor übergeben werden.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.socket.example-1">
             <title>Den Stream-Typen für eine HTTPS Verbindung einstellen</title>
             <programlisting role="php"><![CDATA[<?php
 // Konfigurationsparameter setzen
@@ -91,7 +91,7 @@ $response = $client->request();]]>
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.proxy">
+    <sect2 id="zend.http.client.adapters.proxy">
         <title>Der Proxy Adapter</title>
         <para>
                         Der Proxy Adapter Zend_Http_Client_Adapter_Proxy verhält sich wie der
@@ -102,7 +102,7 @@ $response = $client->request();]]>
         <para>
                 Der Proxy Adapter benötigt zusätzliche Konfigurationsvariablen, die
                 nachfolgend gelistet sind.
-            <table>
+            <table id="zend.http.client.adapters.proxy.table">
                 <title>Zend_Http_Client Konfigurationsparameter</title>
                 <tgroup cols="4">
                     <thead>
@@ -169,7 +169,7 @@ $response = $client->request();]]>
                         Zur Zeit wird nur die BASIC-Authentifizierung ((Zend_Http_Client::AUTH_BASIC)
                         unterstützt.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.proxy.example-1">
             <title>Zend_Http_Client hinter einem Proxy-Server nutzen</title>
             <programlisting role="php"><![CDATA[<?php
 // Konfigurationsparameter setzen
@@ -195,7 +195,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.test">
+    <sect2 id="zend.http.client.adapters.test">
         <title>Der Test Adapter</title>
         <para>
             Manchmal ist es sehr schwer Code tu testen, der von HTTP Verbindungen abhängig ist.
@@ -215,7 +215,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
             Testadapter immer diese Antwort zurückgeben, ohne tatsächlich eine HTTP Anfrage
             auszuführen.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-1">
             <title>Testen gegen einen einfachen HTTP Response Stumpf</title>
             <programlisting role="php"><![CDATA[<?php
 // Instanziere einen neuen Adapter und Client
@@ -254,7 +254,7 @@ $response = $client->request('GET');
                         Um mehrere HTTP-Antworten zu erstellen, müssen mit setResponse() die erste
                         und mit addResponse() die nachfolgenden Antworten gesetzt werden.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-2">
             <title>Test mit mehreren HTTP-Antworten</title>
             <programlisting role="php"><![CDATA[<?php
 // Instanzen vom Adapter und Client erzeugen
@@ -302,7 +302,7 @@ $adapter->addResponse(
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.extending">
+    <sect2 id="zend.http.client.adapters.extending">
         <title>Einen eigenen Adapter erstellen</title>
         <para>
             Es ist möglich eigene Verbindungs-Adapter zu schreiben, die spezielle
@@ -315,7 +315,7 @@ $adapter->addResponse(
                         finden Sie ein Gerüst für einen neuen Adapter. Die public-Methoden müssen
                         unbedingt implementiert werden.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.extending.example-1">
             <title>Gerüst für einen eigenen Verbindungs-Adapter</title>
             <programlisting role="php"><![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface

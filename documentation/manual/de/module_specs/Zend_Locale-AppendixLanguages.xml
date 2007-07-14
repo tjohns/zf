@@ -4,7 +4,7 @@
 
     <para>
         <code>Zend_Locale</code> liefert Informationen für die folgenden Sprachen.
-        <table>
+        <table id="zend.locale.languages.table">
             <title>Liste aller unterstützten Sprachen</title>
             <tgroup cols="2">
                 <thead>

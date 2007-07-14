@@ -4,7 +4,7 @@
 
     <para>
         <code>Zend_Locale</code> bietet Informationen für die folgenden Regionen.
-        <table>
+        <table id="zend.locale.regions.table">
             <title>Liste aller unterstützten Regionen</title>
             <tgroup cols="2">
                 <thead>

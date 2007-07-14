@@ -17,7 +17,7 @@
             GET und POST Parameter zurückgesetzt und eine GET Anfrage wird an die neue Stelle
             versandt. Dieses Verhalten kann durch Setzen des 'strictredirects'
             Konfigurationsparameters auf das boolesche TRUE geändert werden.
-            <example>
+            <example id="zend.http.client.redirections.example-1">
                 <title>Strikte Umleitung von 301 und 302 Antworten nach RFC 2616 erzwingen</title>
                 <programlisting role="php"><![CDATA[<?php
 // Strikte Umleitungen
@@ -41,7 +41,7 @@ $client->setConfig(array('strictredirects' => false);]]>
             Anfrage bereit, so dass keine direkten Header Änderungen notwendig sind. Dies wird
             durch Verwendung der setCookie() Methode erledigt. Diese Methode kann auf mehrere
             Arten verwendet werden:
-            <example>
+            <example id="zend.http.client.cookies.example-1">
                 <title>Cookies setzen durch Verwendung von setCookie()</title>
                 <programlisting role="php"><![CDATA[<?php
 // Ganz einfach: durch Übergabe von Namen und Wert für den Cookie
@@ -65,7 +65,7 @@ $client->setCookie($cookie);]]>
             bei nachfolgenden Anfragen automatisch wieder mit sendet. Dies ist z.B. nützlich, wenn
             man sich bei einer entfernten Site zuerst einloggen muss und einen Authentifizierungs-
             oder Session-Cookie erhält, bevor man weitere Anfragen versenden kann.
-            <example>
+            <example id="zend.http.client.cookies.example-2">
                 <title>Cookie Stickiness aktivieren</title>
                 <programlisting role="php"><![CDATA[<?php
 // Um die Cookie Stickiness einzuschalten, setze eine Cookie Jar (Keksdose)
@@ -97,7 +97,7 @@ $client->request('GET');]]>
             Das Setzen von individuellen Headern kann durch Verwendung der setHeaders() Methode
             erledigt werden. Diese Methode ist sehr facettenreich und kann auf verschiedene Arten
             verwendet werden, wie das folgende Beispiel zeigt:
-            <example>
+            <example id="zend.http.client.custom_headers.example-1">
                 <title>Setzen eines einzelnen individuellen Anfrageheaders</title>
                 <programlisting role="php"><![CDATA[<?php
 // Setzen eines einzelnen Headers, vorherige werden überschrieben
@@ -117,7 +117,7 @@ $client->setHeaders('Cookie', array(
         <para>
             setHeader() kann genauso einfach für das Setzen mehrerer Header in einem Aufruf durch
             Übergabe eines Array mit Headern als einzigen Parameter verwendet werden:
-            <example>
+            <example id="zend.http.client.custom_headers.example-2">
                 <title>Setzen eines mehreren individuellen Anfrageheaders</title>
                 <programlisting role="php"><![CDATA[<?php
 // Setzen von mehreren Headern, vorherige werden überschrieben
@@ -153,7 +153,7 @@ $client->setHeaders(array(
             Datei von der Platte und verwendet die mime_content_type Funktion, um den Content-type
             der Datei zu erraten, wenn er verfügbar ist. Auf jeden Fall ist der Standard MIME Typ
             'application/octet-stream'.
-            <example>
+            <example id="zend.http.client.file_uploads.example-1">
                 <title>Verwendung von setFileUpload um Dateien hochzuladen</title>
                 <programlisting role="php"><![CDATA[<?php
 // Hochladen beliebiger Daten als Datei
@@ -192,7 +192,7 @@ $client->submit('POST');]]>
             Content-type der Daten. Obwohl dieser Parameter optional ist, sollte man ihn
             normalerweise vor dem Absenden der Anfrage setzen - entweder durch Verwendung von
             setRawData() oder durch eine andere Methode: setEncType().
-            <example>
+            <example id="zend.http.client.raw_post_data.example-1">
                 <title>Unverarbeitete POST Daten versenden</title>
                 <programlisting role="php"><![CDATA[<?php
 $xml = '<book>' .
@@ -230,7 +230,7 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
             Authentifizierungstyp Parameter. Wie gesagt, wird derzeit nur die Basis
             Authentifizierung unterstützt (Unterstützung für eine Digest Authentifizierung ist
             geplant).
-            <example>
+            <example id="zend.http.client.http_authentication.example-1">
                 <title>Setzen von Benutzer und Password für eine HTTP Authentifizierung</title>
                 <programlisting role="php"><![CDATA[<?php
 // Verwende die Basis Authentifizierung
@@ -289,7 +289,7 @@ $client->setAuth('shahar', 'myPassword!');]]>
             speichern. Auf diese Weise muß der Benutzer nur einmal pro Session authentifiziert
             werden.
         </para>
-        <example>
+        <example id="zend.http.client.multiple_requests.example-1">
             <title>Durchführen von aufeinander folgenden Anfrage mit einem Client</title>
             <programlisting role="php"><![CDATA[<?php
 // Zuerst den Client instanzieren
@@ -327,7 +327,6 @@ $_SESSION['cookiejar'] = $client->getCookieJar();]]>
         </example>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

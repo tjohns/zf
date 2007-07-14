@@ -17,7 +17,7 @@
             entweder ein String oder ein Zend_Uri_Http Objekt sein) und ein optionales Array mit
             Konfigurationsparametern. Beides kann ausgelassen und später durch Verwendung der
             setUri() and setConfig() Methoden gesetzt werden.
-            <example>
+            <example id="zend.http.client.introduction.example-1">
                 <title>Ein Zend_Http_Client Objekt instanzieren</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
@@ -42,7 +42,7 @@ $client->setConfig(array(
             Der Konstruktor und die setConfig() Methode akzeptieren ein assoziatives Array mit
             Konfigurationsparametern. Das Setzen dieser Parameter ist optional, da alle einen
             Standardwert haben.
-            <table>
+            <table id="zend.http.client.configuration.table">
                 <title>Zend_Http_Client Konfigurationsparameter</title>
                 <tgroup cols="3">
                     <thead>
@@ -111,7 +111,7 @@ $client->setConfig(array(
         <para>
             Das Durchführen von einfachen HTTP Anfragen kann sehr leicht durch Verwendung der
             request() Methode gemacht werden und benötigt selten mehr als drei Codezeilen:
-            <example>
+            <example id="zend.http.client.basic-requests.example-1">
                 <title>Durchführen einer einfache GET Anfrage</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
@@ -135,7 +135,7 @@ $response = $client->request();]]>
             Wenn keine Methode angegeben worden ist, wird die durch den letzten Aufruf von
             setMethod() gesetzte Methode verwendet. Wenn setMethod() vorher nicht aufgerufen worden
             ist, wird als Standardmethode GET verwendet (siehe obiges Beispiel).
-            <example>
+            <example id="zend.http.client.basic-requests.example-2">
                 <title>Andere Anfragemethoden als GET verwenden</title>
                 <programlisting role="php"><![CDATA[<?php
 // Durchführen einer POST Anfrage
@@ -160,7 +160,7 @@ $response = $client->request();]]>
             setParameterGet() Methode auch ein einzelnes assoziatives Array mit GET Parameter als
             Name => Wert Variablen, was beim setzen von mehreren GET Parametern komfortabler sein
             kann.
-            <example>
+            <example id="zend.http.client.parameters.example-1">
                 <title>Setzen von GET Parametern</title>
                 <programlisting role="php"><![CDATA[<?php
 // Setzen eines GET Parameter mit der setParameterGet Methode
@@ -184,7 +184,7 @@ $client->setParameterGet(array(
             Parameter zu einer Anfrage ist sehr ähnlich wie das Hinzufügen von GET Parametern and
             kann mit der setParameterPost() Methode gemacht werden, die vom Aufbau der
             setParameterGet() Methode ähnlich ist..
-            <example>
+            <example id="zend.http.client.parameters.example-2">
                 <title>Setzen von POST Parametern</title>
                 <programlisting role="php"><![CDATA[<?php
 // Setzen eines POST Parameters
@@ -219,7 +219,6 @@ $client->setParameterPost(array(
     </sect2>
 
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

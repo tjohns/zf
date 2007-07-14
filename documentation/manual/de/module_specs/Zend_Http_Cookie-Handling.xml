@@ -84,7 +84,7 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.cookies.cookie.instantiating.example-1">
                <title>Instanzieren eines Zend_Http_Cookie-Objekts</title>
                <programlisting role="php"><![CDATA[<?php
 // Zuerst nutzen wir den Konstruktor. Der Cookie wird in zwei Stunden ablaufen
@@ -113,7 +113,7 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
             umgewandelt werden. Diese Methode erstellt einen HTTP-Anfrage "Cookie"-Header String, der den
             Namen sowie den Inhalt des Cookies enthält und durch ein Semikolon (';') abgeschlossen ist.
             Der Inhalt wird URL-kodiert, wie es für einen Cookie-Header vorgeschrieben ist:
-            <example>
+            <example id="zend.http.cookies.cookie.instantiating.example-2">
                <title>Transformation eines Zend_Http_Cookie-Objekts zu einem String</title>
                <programlisting role="php"><![CDATA[<?php
 // Erstellt einen neuen Cookie
@@ -194,7 +194,7 @@ echo $cookie;]]>
             </itemizedlist>
         </para>
         <para>
-            <example>
+            <example id="zend.http.cookies.cookie.accessors.example-1">
                 <title>Nutzen der getter-Methoden von Zend_Http_Cookie</title>
                 <programlisting role="php"><![CDATA[<?php
 // Zuerst wird der Cookie erstellt
@@ -252,7 +252,7 @@ echo ($cookie->isSessionCookie() ? 'Ja' : 'Nein');
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.cookies.cookie.matching.example-1">
                 <title>Zutreffen von Cookies</title>
                 <programlisting role="php"><![CDATA[<?php
 // Erstellen eines Cookie Objekts - zuerst ein sicherer Cookie ohne Ablaufzeit

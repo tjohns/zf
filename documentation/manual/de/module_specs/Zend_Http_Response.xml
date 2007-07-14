@@ -13,7 +13,7 @@
             In den meisten Fällen wird ein Zend_Http_Response Objekt über die factory() Methode
             instanziert, die einen String liest, der eine HTTP Rückantwort enthält und ein
             Zend_Http_Response Objekt zurückgibt.
-            <example>
+            <example id="zend.http.response.introduction.example-1">
                 <title>Ein Zend_Http_Response Object über die factory Methode instanzieren</title>
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
@@ -96,7 +96,7 @@ $response = Zend_Http_Response::factory($str);]]>
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.response.testers.example-1">
                 <title>Die isError() Method verwenden, um eine Antwort zu validieren</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->isError()) {
@@ -168,7 +168,7 @@ if ($response->isError()) {
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.response.acessors.example-1">
                 <title>Zend_Http_Response Zugriffsmethoden verwenden</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->getStatus() == 200) {
@@ -189,7 +189,7 @@ if ($response->getStatus() == 200) {
                     prüfen, ob der Rückgabewert ein String oder ein Array ist.
                 </para>
             </note>
-            <example>
+            <example id="zend.http.response.acessors.example-2">
                 <title>Auf Antwort Header zugreifen</title>
                 <programlisting role="php"><![CDATA[<?php
 $ctype = $response->getHeader('Content-type');
