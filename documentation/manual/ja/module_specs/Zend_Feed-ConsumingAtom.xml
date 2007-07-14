@@ -25,9 +25,7 @@ echo 'このフィードには ' . $feed->count() . ' 件のエントリが含�
 foreach ($feed as $entry) {
     echo 'タイトル: ' . $entry->title() . "\n";
     echo '概要: ' . $entry->summary() . "\n\n";
-}
-
-?>]]>   </programlisting>
+}]]></programlisting>
     </example>
 
     <para>

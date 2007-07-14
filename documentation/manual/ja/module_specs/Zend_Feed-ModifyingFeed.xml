@@ -11,16 +11,14 @@
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>既存のフィードエントリの変更</title>
         <programlisting role="php"><![CDATA[<?php
-
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
 $entry->title = '新しいタイトルです';
 $entry->author->email = 'my_email@example.com';
 
-echo $entry->saveXML();
-
-?>]]>   </programlisting>
+echo $entry->saveXML();]]>
+        </programlisting>
         <para>
             これは、必要な XML 名前空間も含めた完全な
             (最初の <code>&lt;?xml ... &gt;</code> も含めた)
@@ -47,7 +45,6 @@ echo $entry->saveXML();
     <example id="zend.feed.modifying-feed.example.creating">
         <title>独自の名前空間の要素としての Atom エントリの作成</title>
         <programlisting role="php"><![CDATA[<?php
-
 $entry = new Zend_Feed_Entry_Atom();
 // Atom では id は常にサーバから割り当てられます
 $entry->title = 'カスタムエントリ';
@@ -61,9 +58,8 @@ $entry->{'myns:myelement_one'} = 'はじめての独自の値';
 $entry->{'myns:container_elt'}->part1 = '入れ子になった独自部分、その1';
 $entry->{'myns:container_elt'}->part2 = '入れ子になった独自部分、その2';
 
-echo $entry->saveXML();
-
-?>]]>   </programlisting>
+echo $entry->saveXML();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

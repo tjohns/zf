@@ -67,14 +67,14 @@
             クライアントオブジェクトを作成します。
         </para>
 
-    <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 // Google アカウントの情報を指定します
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';
 $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
 
-$cal = new Zend_Gdata_Calendar($client);
-?>]]></programlisting>
+$cal = new Zend_Gdata_Calendar($client);]]>
+        </programlisting>
 
     </sect2>
 

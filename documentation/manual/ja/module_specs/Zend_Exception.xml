@@ -17,9 +17,7 @@ try {
     echo "キャッチした例外: " . get_class($e) . "\n";
     echo "メッセージ: " . $e->getMessage() . "\n";
     // その他、失敗から復帰するためのコード
-}
-
-?>]]></programlisting>
+}]]></programlisting>
     </example>
 
     <para>

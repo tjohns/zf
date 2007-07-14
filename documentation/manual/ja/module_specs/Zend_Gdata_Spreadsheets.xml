@@ -37,8 +37,8 @@
 $service = Zend_Gdata_Spreadsheets::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $spreadsheetService = new Zend_Gdata_Spreadsheets($client);
-$feed = $spreadsheetService->getSpreadsheetFeed();
-?>]]></programlisting>
+$feed = $spreadsheetService->getSpreadsheetFeed();]]>
+        </programlisting>
     </sect2>
 
      <sect2 id="zend.gdata.spreadsheets.listworksheets">
@@ -58,8 +58,8 @@ $feed = $spreadsheetService->getSpreadsheetFeed();
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Spreadsheets_DocumentQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
-$feed = $spreadsheetService->getWorksheetFeed($query);
-?>]]></programlisting>
+$feed = $spreadsheetService->getWorksheetFeed($query);]]>
+        </programlisting>
 
         <para>
             この結果である <code>Zend_Gdata_Spreadsheets_WorksheetFeed</code>
@@ -123,8 +123,8 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
 $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
-$listFeed = $spreadsheetService->getListFeed($query);
-?>]]></programlisting>
+$listFeed = $spreadsheetService->getListFeed($query);]]>
+            </programlisting>
 
             <para>
                 その結果得られた <code>Zend_Gdata_Spreadsheets_ListFeed</code>
@@ -144,8 +144,8 @@ $listFeed = $spreadsheetService->getListFeed($query);
 $rowData = $listFeed->entries[1]->getCustom();
 foreach($rowData as $customEntry) {
   echo $customEntry->getColumnName() . " = " . $customEntry->getText();
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.spreadsheets.listfeeds.reverse">
@@ -163,8 +163,8 @@ $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
 $query->setReverse('true');
-$listFeed = $spreadsheetService->getListFeed($query);
-?>]]></programlisting>
+$listFeed = $spreadsheetService->getListFeed($query);]]>
+            </programlisting>
 
             <para>
                 もしワークシート内での位置ではなく特定のカラムの値で
@@ -194,8 +194,8 @@ $query = new Zend_Gdata_Spreadsheets_ListQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
 $query->setSpreadsheetQuery('name=John and age>25');
-$listFeed = $spreadsheetService->getListFeed($query);
-?>]]></programlisting>
+$listFeed = $spreadsheetService->getListFeed($query);]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.spreadsheets.listfeeds.addrow">
@@ -207,8 +207,8 @@ $listFeed = $spreadsheetService->getListFeed($query);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $worksheetId);
-?>]]></programlisting>
+$insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $worksheetId);]]>
+            </programlisting>
 
             <para>
                 <code>$rowData</code> パラメータには、
@@ -234,8 +234,8 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);
-?>]]></programlisting>
+$updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);]]>
+            </programlisting>
 
             <para>
                 <code>$oldListEntry</code> パラメータには、更新するエントリを指定します。
@@ -257,8 +257,8 @@ $updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$spreadsheetService->deleteRow($listEntry);
-?>]]></programlisting>
+$spreadsheetService->deleteRow($listEntry);]]>
+            </programlisting>
 
             <para>
                 あるいは、そのエントリ自身の <code>delete</code>
@@ -266,8 +266,8 @@ $spreadsheetService->deleteRow($listEntry);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$listEntry->delete();
-?>]]></programlisting>
+$listEntry->delete();]]>
+            </programlisting>
         </sect3>
 
     </sect2>
@@ -296,8 +296,8 @@ $listEntry->delete();
 $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setSpreadsheetKey($spreadsheetKey);
 $query->setWorksheetId($worksheetId);
-$cellFeed = $spreadsheetService->getCellFeed($query);
-?>]]></programlisting>
+$cellFeed = $spreadsheetService->getCellFeed($query);]]>
+            </programlisting>
 
             <para>
                 その結果得られた <code>Zend_Gdata_Spreadsheets_CellFeed</code>
@@ -314,8 +314,8 @@ foreach($cellFeed as $cellEntry) {
   $col = $cellEntry->cell->getColumn();
   $val = $cellEntry->cell->getText();
   echo "$row, $col = $val\n";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
         </sect3>
 
@@ -332,8 +332,8 @@ $query = new Zend_Gdata_Spreadsheets_CellQuery();
 $query->setMinCol(1);
 $query->setMaxCol(1);
 $query->setMinRow(2);
-$feed = $spreadsheetService->getCellsFeed($query);
-?>]]></programlisting>
+$feed = $spreadsheetService->getCellsFeed($query);]]>
+            </programlisting>
 
             <para>
                 これは、二行目以降のデータの最初のカラムのみのデータを返します。
@@ -350,8 +350,8 @@ $feed = $spreadsheetService->getCellsFeed($query);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$updatedCell = $spreadsheetService->updateCell($row, $col, $inputValue, $spreadsheetKey, $worksheetId);
-?>]]></programlisting>
+$updatedCell = $spreadsheetService->updateCell($row, $col, $inputValue, $spreadsheetKey, $worksheetId);]]>
+            </programlisting>
 
             <para>
                 新しいデータが、ワークシートの指定した位置に配置されます。

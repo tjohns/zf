@@ -218,8 +218,8 @@ $cell->setRow('1');
 $cell->setColumn('3');
 $entry->cell = $cell;
 
-// ... $entry を使用して、Google Spreadsheet の内容を更新します
-?>]]></programlisting>
+// ... $entry を使用して、Google Spreadsheet の内容を更新します]]>
+        </programlisting>
 
         <para>
             継承ツリー内にある各サービス用クラス内で、
@@ -295,8 +295,8 @@ Zend_Loader::loadClass('Zend_Gdata');
 $client = new Zend_Http_Client();
 $client->setConfig( ...オプション... );
 
-$gdata = new Zend_Gdata($client);
-?>]]></programlisting>
+$gdata = new Zend_Gdata($client);]]>
+        </programlisting>
 
         <para>
             認証済みの Zend_Http_Client オブジェクトを作成する方法については、
@@ -413,8 +413,8 @@ $gdata = new Zend_Gdata($client);
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Query();
 $query->setMaxResults(10);
-echo $gdata->getMaxResults();   // 10 を返します
-?>]]></programlisting>
+echo $query->getMaxResults();   // 10 を返します]]>
+        </programlisting>
 
         <para>
             Zend_Gdata クラスでは、
@@ -425,8 +425,8 @@ echo $gdata->getMaxResults();   // 10 を返します
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Query();
 $query->maxResults = 10;
-echo $gdata->maxResults;        // 10 を返します
-?>]]></programlisting>
+echo $query->maxResults;        // 10 を返します]]>
+        </programlisting>
 
         <para>
             すべてのパラメータを消去するには <code>resetParameters()</code>
@@ -440,8 +440,8 @@ $query->maxResults = 10;
 // ...フィードを取得します...
 
 $gdata->resetParameters();      // すべてのパラメータを消去します
-// ...別のフィードを取得します...
-?>]]></programlisting>
+// ...別のフィードを取得します...]]>
+        </programlisting>
 
     </sect2>
 
@@ -459,8 +459,8 @@ $gdata = new Zend_Gdata();
 $query = new Zend_Gdata_Query(
         'http://www.blogger.com/feeds/blogID/posts/default');
 $query->setMaxResults(10);
-$feed = $gdata->getFeed($query);
-?>]]></programlisting>
+$feed = $gdata->getFeed($query);]]>
+        </programlisting>
 
         <para>
             この後の節で、各 Google Data
@@ -492,8 +492,8 @@ foreach ($feed as $entry) {
     echo 'Title: ' . $entry->title->text;
     // 定義されているアクセス用メソッドを使用します
     echo 'Content: ' . $entry->getContent()->getText();
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.updateentry">
@@ -518,8 +518,8 @@ foreach ($feed as $entry) {
     // エントリの内容を更新します
     $newEntry = $entry->save();
     echo 'New Title: ' . $newEntry->title->text;
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.post">
@@ -541,7 +541,7 @@ foreach ($feed as $entry) {
         </para>
 
         <para>
-            もうひとつの法穂うとして、そのエントリの内容を
+            もうひとつの方法として、そのエントリの内容を
             XML 構造の文字列として作成して
             <code>post()</code> 関数に渡すこともできます。
         </para>
@@ -558,8 +558,8 @@ $entry->content = $content;
 $entryResult = $gdata->insertEntry($entry,
         'http://www.blogger.com/feeds/blogID/posts/default');
 
-echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;
-?>]]></programlisting>
+echo 'この結果のエントリの <id> は、' . $entryResult->id->text;]]>
+        </programlisting>
 
         <para>
             エントリを送信するには、認証済みの Zend_Http_Client
@@ -596,8 +596,8 @@ foreach ($feed as $feedEntry) {
     $feedEntry->delete();
     // 方法 2 - 編集用 URL を $gdata->delete() に渡してエントリを削除します
     // $gdata->delete($feedEntry->getEditLink()->href);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             エントリを削除するには、認証済みの Zend_Http_Client

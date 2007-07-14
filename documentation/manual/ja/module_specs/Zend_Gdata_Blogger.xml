@@ -98,7 +98,7 @@
             あるいは、フィードを要求する際に blog の名前を指定することもできます。
         </para>
 
-    <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 $gdataBlog = new Zend_Gdata_Blogger();
 
 // blog のフィードを取得する方法...
@@ -106,8 +106,8 @@ $feed = $gdataBlog->getBloggerFeed('blogname');
 
 // blog のフィードを取得する別の方法...
 $gdataBlog->setBlogName('blogname');
-$feed = $gdataBlog->getBloggerFeed();
-?>]]></programlisting>
+$feed = $gdataBlog->getBloggerFeed();]]>
+        </programlisting>
 
         <para>
             このオブジェクトの使用法についての詳細は、
@@ -157,7 +157,7 @@ $feed = $gdataBlog->getBloggerFeed();
             Zend_Gdata_ClientLogin クラスを使用して作成します。
         </para>
 
-    <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 $gdataBlog = new Zend_Gdata_Blogger($authenticatedHttpClient);
 $gdataBlog->setBlogName('myblog');
 
@@ -180,18 +180,18 @@ XML;
 
 $xml = new SimpleXMLElement($xmlString);
 
-$response = $gdataBlog->post($xml->asXML());
-?>]]></programlisting>
+$response = $gdataBlog->post($xml->asXML());]]>
+        </programlisting>
 
         <para>
             現在の認証済みアカウントの blog のフィードを取得するには
             <code>getBloggerListFeed()</code> メソッドを使用します。
         </para>
 
-    <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 $gdataBlog = new Zend_Gdata_Blogger($authenticatedHttpClient);
-$myBlogs = $gdataBlog->getBloggerListFeed();
-?>]]></programlisting>
+$myBlogs = $gdataBlog->getBloggerListFeed();]]>
+        </programlisting>
 
     </sect2>
 

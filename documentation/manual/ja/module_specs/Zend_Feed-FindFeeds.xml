@@ -6,12 +6,9 @@
         <code>Zend_Feed</code> を使用すると、
         単純にひとつのメソッドをコールするだけでこのようなフィードを取得できます。
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');]]>
+    </programlisting>
     <para>
         <code>findFeeds()</code> メソッドは <code>Zend_Feed_Abstract</code>
         オブジェクトの配列を返します。その内容は、news.html の中の

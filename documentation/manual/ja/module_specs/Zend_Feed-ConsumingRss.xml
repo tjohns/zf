@@ -4,12 +4,9 @@
         RSS フィードの読み込みは、フィードの URL を指定して
         <code>Zend_Feed_Rss</code> のインスタンスを作成するのと同じくらい簡単です。
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
+    </programlisting>
     <para>
         フィードの取得時にエラーが発生した場合は
         <code>Zend_Feed_Exception</code> がスローされます。
@@ -19,12 +16,9 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
         フィードオブジェクトを取得すると、標準的な RSS の "channel"
         プロパティに対して直接アクセスできるようになります。
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-echo $channel->title();
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+echo $channel->title();]]>
+    </programlisting>
     <para>
         関数の構文に注意しましょう。"getter" 方式の構文 (<code>$obj->property</code>)
         をした場合は、<code>Zend_Feed</code> はプロパティを XML オブジェクトとして扱います。
@@ -37,12 +31,9 @@ echo $channel->title();
         チャネルのプロパティが属性を保持している場合、PHP
         の配列構文を使用してそれらにアクセスすることができます。
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-echo $channel->category['domain'];
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+echo $channel->category['domain'];]]>
+    </programlisting>
     <para>
         XML の属性は子を持つことができないので、
         属性値へアクセスする際にメソッド構文を使用する必要はありません。
@@ -55,14 +46,11 @@ echo $channel->category['domain'];
         インターフェイスを実装しているので、
         例えばチャネル内の全記事のタイトルを表示するには単にこのようにするだけです。
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
+    <programlisting role="php"><![CDATA[<?php
 foreach ($channel as $item) {
     echo $item->title() . "\n";
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
     <para>
         RSS にあまり詳しくない方のために、RSS チャネルおよび個々の RSS
         アイテム (エントリ) で利用できる標準的な要素をまとめます。
@@ -145,14 +133,11 @@ foreach ($channel as $item) {
     <para>
         要素が空要素であるかどうかは、以下のようにして調べられます。
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
+    <programlisting role="php"><![CDATA[<?php
 if ($item->propname()) {
     // ... 続行できます
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
     <para>
         <code>$item->propname</code> 形式を使用した場合は、

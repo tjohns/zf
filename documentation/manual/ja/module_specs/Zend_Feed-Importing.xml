@@ -9,7 +9,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]></programlisting>
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
+    </programlisting>
 
     <para>
         <code>Zend_Feed</code> を使用して、ファイルや PHP
@@ -21,7 +22,8 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]></programlisti
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // PHP の文字列変数からフィードを読み込みます
-$feedFromPHP = Zend_Feed::importString($feedString);]]></programlisting>
+$feedFromPHP = Zend_Feed::importString($feedString);]]>
+    </programlisting>
 
     <para>
         上のすべての例では、成功した場合に返されるのは
@@ -58,7 +60,8 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // rss フィードを配列から読み込みます
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+            </programlisting>
 
             <para>
                 配列の書式は、次のような構造になっていなければなりません。
@@ -160,7 +163,8 @@ array(
                                    // 二番目のエントリ以降のデータ
                                    )
                              )
-       );]]></programlisting>
+       );]]>
+            </programlisting>
 
             <para>
                 参考
@@ -232,7 +236,8 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // 独自のビルダ配列から rss フィードを読み込みます
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+            </programlisting>
 
         </sect3>
 
@@ -252,7 +257,8 @@ assert($feed instanceof Zend_Feed_Abstract);
 print $feed->saveXML();
 
 // http ヘッダを送信し、フィードを出力します
-$feed->send();]]></programlisting>
+$feed->send();]]>
+            </programlisting>
 
         </sect3>
 

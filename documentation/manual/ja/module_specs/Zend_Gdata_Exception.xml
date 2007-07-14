@@ -13,8 +13,8 @@ try {
 } catch(Zend_Gdata_App_Exception $ex) {
     // 例外の内容をユーザに報告します
     die($ex->getMessage());
-}
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
     <para>
         Zend_Gdata では、以下のような例外サブクラスを使用しています。
@@ -70,7 +70,7 @@ try {
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data のサーバに接続できませんでした
     die($httpEx->getMessage);
-}
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
 </sect1>
