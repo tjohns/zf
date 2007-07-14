@@ -12,7 +12,7 @@
             Im folgenden Bespiel benutzen wir die <code>tagSearch()</code> Methode um Photos zu suchen welche
             "php" im Tag haben.
         </para>
-        <example>
+        <example id="zend.service.flickr.introduction.example-1">
             <title>Simple Flickr Photo Suche</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
@@ -60,7 +60,7 @@ foreach ($results as $result) {
                 </para>
             </listitem>
         </itemizedlist>
-        <example>
+        <example id="zend.service.flickr.finding-users.example-1">
             <title>Finden von öffentlichen Photos eines Flickr Benutzers durch seine E-Mail Adresse</title>
             <para>
                 In diesem Beispiel haben wir die E-Mail adresse eines Flickr Benutzers und wir holen uns die
@@ -86,7 +86,7 @@ foreach ($results as $result) {
             basieren auf einer übergebenen ID des Bildes. Einfach durch benutzen der  <code>getImageDetails()</code> Methode,
             wie im folgenden Beispiel:
         </para>
-        <example>
+        <example id="zend.service.flickr.getimagedetails.example-1">
             <title>Empfangen von Details zu Bildern durch Flickr</title>
             <para>
                 Sobald man eine Flickr Bild ID hat, ist es eine einfache Angelegenheit, Informationen über
@@ -126,7 +126,7 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";]]>
             </note>
             <sect4 id="zend.service.flickr.classes.resultset.properties">
                 <title>Eigenschaften</title>
-                <table>
+                <table id="zend.service.flickr.classes.resultset.properties.table-1">
                     <title>Zend_Service_Flickr_ResultSet Eigenschaften</title>
                     <tgroup cols="3">
                         <thead>
@@ -180,7 +180,7 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";]]>
             </para>
             <sect4 id="zend.service.flickr.classes.result.properties">
                 <title>Eigenschaften</title>
-                <table>
+                <table id="zend.service.flickr.classes.result.properties.table-1">
                     <title>Zend_Service_Flickr_Result Eigenschaften</title>
                     <tgroup cols="3">
                         <thead>
@@ -299,7 +299,7 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";]]>
             <para>Repräsentiert ein Bild welches durch eine Flickr Suche zurückgegeben wird.</para>
             <sect4 id="zend.service.flickr.classes.image.properties">
                 <title>Eigenschaften</title>
-                <table>
+                <table id="zend.service.flickr.classes.image.properties.table-1">
                     <title>Zend_Service_Flickr_Image Eigenschaften</title>
                     <tgroup cols="3">
                         <thead>

@@ -174,7 +174,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  */
 public function drawText($text, $x, $y, $charEncoding = '');]]>
         </programlisting>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>Zeichne einen String auf der Seite.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -193,7 +193,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
             <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
             Funktion unterstützt wird.
         </para>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>Zeiche einen UTF-8 kodierten String auf der Seite.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -236,7 +236,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             <code>Zend_Pdf_Font::fontWithName($fontName)</code> für die 14 PDF Standardzeichensätze
             oder <code>Zend_Pdf_Font::fontWithPath($filePath)</code> für eigene Zeichensätze.
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-1">
             <title>Erstelle einen Standardzeichensatz</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -309,7 +309,7 @@ $pdfPage->setFont($font, 36);
             gelesen werden kann oder wenn es kein TrueType Zeichensatz ist, wird the Fabrikmethode
             eine Ausnahme werfen:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-2">
             <title>Erstelle einen TrueType Zeichensatz.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -328,7 +328,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             über die Dateigröße sorgst, kannst du angeben, dass das Zeichensatzprogramm nicht
             eingebettet wird, indem du eine 'nicht einbetten' Option an die Fabrikmethode übergibst:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-3">
             <title>Erstelle einen TrueType Zeichensatz, aber bette ihn nicht in das PDF Dokument ein.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -358,7 +358,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             einbetten' Option übergeben wie oben beschrieben oder du kannst einfach die Ausnahme
             unterdrücken:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-4">
             <title>Werfe keine Ausnahme für Zeichensätze, die nicht eingebettet werden können.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -379,7 +379,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
             kann. Wenn du aus welchem Grund auch immer nicht möchtest, dass das Zeichensatzprogramm
             kompimiert wird, kannst du dies mit einer Option abschalten:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>Komprimiere einen eingebetten Zeichensatz nicht.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -392,7 +392,7 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
             Zuguterletzt, kannst du die Einbettungsoptionen mit Hilfe des OR Operators kombinieren,
             wenn notwendig:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>Kombiniere die Zeichensatz Einbettungsoptionen.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -427,7 +427,7 @@ public function drawImage(Zend_Pdf_Ressource_Image $image, $x1, $y1, $x2, $y2);]
             Grafikobjekte sollten mit der Methode <code>Zend_Pdf_Image::imageWithPath($filePath)</code>
             erzeugt werden. (Es werden zur Zeit JPG, PNG und TIFF Grafiken unterstützt):
         </para>
-        <example>
+        <example id="zend.pdf.drawing.image-drawing.example-1">
             <title>Zeichnen von Grafiken</title>
             <programlisting role="php"><![CDATA[<?php
 ...

@@ -7,7 +7,7 @@
         als Anhang verarbeitet wird. Diese Annahmen können durch die Übergabe von weiteren
         Parametern an <code>createAttachment()</code> überschrieben werden:
     </para>
-    <example>
+    <example id="zend.mail.attachments.example-1">
         <title>E-Mail Nachrichten mit Anhängen</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

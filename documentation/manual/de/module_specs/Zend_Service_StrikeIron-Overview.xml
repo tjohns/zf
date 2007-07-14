@@ -229,13 +229,13 @@ echo $rateInfo->GST;]]>
         When learning or debugging the StrikeIron services, it's often useful to dump the
         result returned from a method call.  The result will always be an object that is an
         instance of <code>Zend_Service_StrikeIron_Decorator</code>.  This is a
-        small <ulink linkend="http://en.wikipedia.org/wiki/Decorator_pattern">decorator</ulink>
+        small <ulink url="http://en.wikipedia.org/wiki/Decorator_pattern">decorator</ulink>
         object that wraps the results from the method call.
       </para>
 
       <para>
         The simplest way to examine a result from the service is to use the built-in
-        PHP functions like <ulink linkend="http://www.php.net/print_r">print_r()</ulink>:
+        PHP functions like <ulink url="http://www.php.net/print_r">print_r()</ulink>:
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/StrikeIron.php';

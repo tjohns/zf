@@ -10,7 +10,7 @@
         Maßeinheiten automatische extrahiert werden. Eine Vielzahl an Maßeinheiten wird unterstützt.
     </para>
 
-    <example>
+    <example id="zend.measure.introduction.example-1">
         <title>Konvertieren von Maßeinheiten</title>
         <para>
             Das folgende einführende Beispiel zeigt die automatische Konvertierung von Einheiten von Maßeinheiten.
@@ -39,7 +39,7 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);]]>
         <link linkend="zend.measure.types"><code>Arten von Maßeinheiten</code></link> gefunden werden.
     </para>
 
-    <example>
+    <example id="zend.measure.introduction.example-2">
         <title>Die Maßeinheit <code>meter</code></title>
         <para>
             Der <code>meter</code> wird für das Abmessen von Längen verwendet und kann in der Klasse

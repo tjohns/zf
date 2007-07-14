@@ -51,7 +51,7 @@ $index->addDocument($doc);]]>
             Hier ist ein Beispiel für einen eigenen Analysator, welcher Wörter mit Ziffern als
             Begriffe verwendet:
 
-            <example>
+            <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>Eigener Textanalysator</title>
                 <programlisting role="php"><![CDATA[<?php
 /** Hier ist ein eigener Textanalysator, der Worte mit Ziffern als einen Begriff behandelt */
@@ -500,7 +500,6 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
 
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

@@ -7,7 +7,7 @@
         der standardmäßigen Benutzung Ihrer Maßeinheiten.
     </para>
 
-    <table>
+    <table id="zend.measure.types.table-1">
         <title>Liste der Arten von Maßeinheiten</title>
         <tgroup cols="4">
             <thead>

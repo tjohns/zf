@@ -31,7 +31,7 @@
         <code>Zend_Uri::factory()</code> übergeben wurde.
     </para>
 
-    <example>
+    <example id="zend.uri.creation.example-1">
       <title>Erstellen einer neuen URI mit <code>Zend_Uri::factory()</code></title>
 
       <programlisting role="php"><![CDATA[<?php
@@ -66,7 +66,7 @@ $uri = Zend_Uri::factory('http');
         <code>Zend_Uri::factory()</code>.
     </para>
 
-    <example>
+    <example id="zend.uri.manipulation.example-1">
       <title>Verändern einer vorhandenen URI mit <code>Zend_Uri::factory()</code></title>
 
       <programlisting role="php"><![CDATA[<?php
@@ -95,7 +95,7 @@ $uri = Zend_Uri::factory('http://www.zend.com');
         einer vorhandenen URI benötigt wird.
     </para>
 
-    <example>
+    <example id="zend.uri.validation.example-1">
       <title>URI Validierung mit <code>Zend_Uri::check()</code></title>
 
       <programlisting role="php"><![CDATA[<?php
@@ -130,7 +130,7 @@ $valid = Zend_Uri::check('http://uri.in.question');
           <code>http</code> das Schema von <code>http://www.zend.com</code>.
       </para>
 
-      <example>
+      <example id="zend.uri.instance-methods.getscheme.example-1">
         <title>Das Schema eines <code>Zend_Uri_*</code> Objektes erhalten</title>
 
         <programlisting role="php"><![CDATA[<?php
@@ -152,7 +152,7 @@ $scheme = $uri->getScheme();  // "http"]]>
     <sect3 id="zend.uri.instance-methods.geturi">
       <title>Die komplette URI erhalten</title>
 
-      <example>
+      <example id="zend.uri.instance-methods.geturi.example-1">
         <title>Die komplette URI eines <code>Zend_Uri_*</code> Objektes erhalten</title>
 
         <programlisting role="php"><![CDATA[<?php
@@ -181,7 +181,7 @@ echo $uri->getUri();  // "http://www.zend.com"]]>
           worden ist.
       </para>
 
-      <example>
+      <example id="zend.uri.instance-methods.valid.example-1">
         <title>Ein <code>Zend_Uri_*</code> Object validieren</title>
 
         <programlisting role="php"><![CDATA[<?php

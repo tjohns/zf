@@ -120,7 +120,7 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
 }]]>
             </programlisting>
         </example>
-        <example id="zend.service.delicious.postlist.example.withTags">
+        <example id="zend.service.delicious.postlist.example.byUrl">
             <title>Eine Beitragsliste nach URLs filtern</title>
             <para>
               Beiträge können mit Hilfe der Methode <code>withUrl()</code> nach einem speziellen URL gefiltert werden.

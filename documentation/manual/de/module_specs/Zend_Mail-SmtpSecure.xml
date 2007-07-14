@@ -6,7 +6,7 @@
   <code>Zend_Mail_Transport_Smtp</code> Konstruktor indem entweder der Wert 'ssl' oder 'tls' übergeben wird.
   Ein Port kann optional angegeben werden, andernfalls ist er standardmäßig 25 für TLS oder 465 für SSL.</para>
 
-  <example>
+  <example id="zend.mail.smtp-secure.example-1">
     <title>Aktivieren einer sicheren Verbindung innerhalb von Zend_Mail_Transport_Smtp</title>
 
     <programlisting role="php"><![CDATA[<?php

@@ -6,7 +6,7 @@
         die zu verwendene MIME Abgrenzung selber angeben. Dies kann durch die
         <code>setMimeBoundary()</code> Methode erreicht werden, wie in dem folgenden Beispiel:
     </para>
-    <example>
+    <example id="zend.mail.boundary.example-1">
         <title>Die MIME Abgrenzung ändern</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

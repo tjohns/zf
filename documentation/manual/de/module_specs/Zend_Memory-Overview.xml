@@ -29,7 +29,7 @@
             als Speicheranbieter.
         </para>
 
-        <example>
+        <example id="zend.memory.introduction.example-1">
             <title>Verwenden der Zend_Memory Komponente</title>
             <para>
                 <code>Zend_Memory::factory()</code> instantiiert das Speichermanager
@@ -134,7 +134,7 @@ $memObject->value = substr($memObject->value, $start, $length);]]>
                     Methode verwendet werden statt direkt auf die Wert Eigenschaften
                     zuzugreifen.
                 </para>
-            </note>:
+            </note>
 
         </sect3>
 

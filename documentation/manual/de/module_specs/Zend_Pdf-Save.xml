@@ -17,7 +17,7 @@
         neue PDF Dateisegment zurückgegeben.
     </para>
 
-    <example>
+    <example id="zend.pdf.save.example-1">
         <title>Speichern eines PDF Dokuments</title>
         <programlisting role="php"><![CDATA[<?php
 ...

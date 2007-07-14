@@ -7,7 +7,7 @@
         Verbindung vor dem Aufruf von <code>send()</code> eingerichtet hat, wird diese verwendet und
         nicht geschlossen.
     </para>
-    <example>
+    <example id="zend.mail.multiple-emails.example-1">
         <title>Versand von mehrteiligen E-Mails über eine SMTP Verbindung</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

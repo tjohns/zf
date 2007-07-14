@@ -6,7 +6,7 @@
         aufgerufen wird. Für alle verbleibenden Aufrufe von <code>Zend_Mail::send()</code> im
         aktuellen Skript wird dann der SMTP Versand verwendet:
     </para>
-    <example>
+    <example id="zend.mail.sending.example-1">
         <title>E-Mail Versand über SMTP</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';

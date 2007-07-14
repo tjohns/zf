@@ -8,7 +8,7 @@
         implementierten Speicher kann in die folgende Tabelle gesehen werden.
     </para>
 
-    <table>
+    <table id="zend.mail.read.table-1">
         <title>Übersicht der Lesefeatures für Mails</title>
         <tgroup cols="5">
             <thead>
@@ -450,7 +450,7 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
             Basisordners (inklusive Begrenzer), der lokale Name ist der Name im Elternordner.
         </para>
 
-        <table>
+        <table id="zend.mail.read-folders.table-1">
             <title>Namen für Nachrichtenordner</title>
             <tgroup cols="2">
                 <thead>
@@ -523,7 +523,7 @@ $mail->selectFolder($folder);]]>
     <sect2 id="zend.mail.read-advanced">
         <title>Forgeschrittene Verwendung</title>
 
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.noop">
             <title>NOOP verwenden</title>
 
             <para>
@@ -545,7 +545,7 @@ foreach ($mail as $message) {
             </programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.caching">
             <title>Instanzen cachen</title>
 
             <para>
@@ -580,7 +580,7 @@ $cache->set($cache_id, $mail);]]>
             </programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.extending">
             <title>Prokoll Klassen erweitern</title>
 
             <para>

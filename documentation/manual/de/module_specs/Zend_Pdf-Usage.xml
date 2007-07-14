@@ -12,7 +12,7 @@
         Testzwecken verwendet werden kann.
     </para>
 
-    <example>
+    <example id="zend.pdf.usage.example-1">
         <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
         <programlisting role="php"><![CDATA[<?php
 /**

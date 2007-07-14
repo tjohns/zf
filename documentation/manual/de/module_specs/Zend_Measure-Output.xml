@@ -32,7 +32,7 @@
 
         <para>
             <code>Zend_Measure</code> unterstützt die automatische Ausgabe von Zeichenketten.
-            <example>
+            <example id="zend.measure.output.auto.example-1">
                 <title>Automatische Ausgabe</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -63,7 +63,7 @@ echo $unit;]]>
 
         <para>
             Der Wert einer Maßeinheit kann mit <code>getValue()</code> ausgegeben werden.
-            <example>
+            <example id="zend.measure.output.value.example-1">
                 <title>Ausgabe eines Wertes</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -85,7 +85,7 @@ echo $unit->getValue();]]>
 
         <para>
             Die Funktion <code>getType()</code> gibt die aktuelle Maßeinheit zurück.
-            <example>
+            <example id="zend.measure.output.unit.example-1">
                 <title>Outputting units</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';

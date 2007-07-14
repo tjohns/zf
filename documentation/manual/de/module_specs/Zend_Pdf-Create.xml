@@ -17,7 +17,7 @@
         werfen eine Ausnahme, wenn ein Fehler auftritt.
     </para>
 
-    <example>
+    <example id="zend.pdf.create.example-1">
         <title>Erstellen und Laden von PDF Dokumenten</title>
         <programlisting role="php"><![CDATA[<?php
 ...
@@ -51,7 +51,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
         Aufruf angefordert werden.
     </para>
 
-    <example>
+    <example id="zend.pdf.create.example-2">
         <title>Rückgabe einer vorgegebenen Revision eines PDF Dokuments</title>
         <programlisting role="php"><![CDATA[<?php
 ...

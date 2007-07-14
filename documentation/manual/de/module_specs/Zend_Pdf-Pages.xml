@@ -52,7 +52,7 @@
         wie ein normales Array verändert werden:
     </para>
 
-    <example>
+    <example id="zend.pdf.pages.example-1">
         <title>Verwaltung von PDF Dokumentseiten</title>
         <programlisting role="php"><![CDATA[<?php
 ...

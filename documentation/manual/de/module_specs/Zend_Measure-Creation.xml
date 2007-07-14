@@ -29,7 +29,7 @@
             werden.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.number.example-1">
             <title>Erstellung einer Maßeinheit durch Integer oder Floatwerte</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -64,7 +64,7 @@ echo $unit;
             <ulink url="http://php.net/bin2dec"><code>bin2dec()</code></ulink> zu umgehen.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.string.example-1">
             <title>Erstellung einer Maßeinheit durch Strings</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
@@ -83,7 +83,7 @@ echo $unit;]]>
             benutzt. Wenn weitere Zahlen in der Zeichenkette enthalten sind, werden diese Ignoriert.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.string.example-2">
             <title>Gewöhliche Texteingaben welche Maßeinheiten beinhalten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
@@ -114,7 +114,7 @@ echo $unit; // Ausgabe "125 m²";]]>
             semantische Eingabe richtig zu interpretieren.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.localized.example-1">
             <title>Lokalisierte Zeichenketten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';

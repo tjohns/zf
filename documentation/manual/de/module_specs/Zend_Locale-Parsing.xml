@@ -46,7 +46,7 @@
             um überschüssige Ziffern vom Ergebnis abzuschneiden.
         </para>
 
-        <example>
+        <example id="zend.locale.number.normalize.example-1">
             <title>Normalisieren von Nummern</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -90,7 +90,7 @@ print $number; // wird 13524.678 zurückgeben]]>
                 Null ist wird "1.6" den Wert "1" und nicht "2" zurückgeben. Siehe das folgende Beispiel:
             </para>
 
-            <example>
+            <example id="zend.locale.number.normalize.precision.example-1">
                 <title>Normalisierung von Nummern mit Genauigkeit</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -120,7 +120,7 @@ print $number; // will 13524.67 zurückgeben]]>
             nicht standardmäßiges Nummernformat für die Verwendung mit <code>toNumber()</code>.
         </para>
 
-        <example>
+        <example id="zend.locale.number.localize.example-1">
             <title>Lokalisieren von Nummern</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -148,7 +148,7 @@ print $number;]]>
             Wenn keine Genauigkeit angegeben wurde, wird die komplette lokalisierte Nummer zurückgegeben.
         </para>
 
-        <example>
+        <example id="zend.locale.number.localize.example-2">
             <title>Nummern mit bestimmter Genauigkeit lokalisieren</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -169,7 +169,7 @@ print $number;]]>
             und im Englischen wird das '.' Zeichen benutzt.
         </para>
 
-        <table>
+        <table id="zend.locale.number.localize.table-1">
             <title>Definitionen für selbst erzeugte Zahlenformate
             </title>
             <tgroup cols="4">
@@ -216,7 +216,7 @@ print $number;]]>
             </tgroup>
         </table>
 
-        <example>
+        <example id="zend.locale.number.localize.example-3">
             <title>Ein selbst definiertes Zahlenformat verwenden</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -245,7 +245,7 @@ print $number;]]>
             enthält und gibt wahr oder falsch zurück.
         </para>
 
-        <example>
+        <example id="zend.locale.number.test.example-1">
             <title>Testen von Zahlen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -270,7 +270,7 @@ if (Zend_Locale_Format::isNumber('13.445,36', array('locale' => 'de_AT')) {
             analysiert werden. Es wird eine Gleitkommazahl zurückgegeben.
         </para>
 
-        <example>
+        <example id="zend.locale.float.normalize.example-1">
             <title>Gleitkommazahlen normalisieren</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -294,7 +294,7 @@ print $number;]]>
             lokalisierte Zeichenkette mit der gegebenen Zahl zurück.
         </para>
 
-        <example>
+        <example id="zend.locale.float.localize.example-1">
             <title>Lokalisieren von Gleitkommazahlen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -318,7 +318,7 @@ print $number;]]>
             Gleitkommazahl enthält und gibt wahr oder falsch zurück.
         </para>
 
-        <example>
+        <example id="zend.locale.float.test.example-1">
             <title>Testen von Gleitkommazahlen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -343,7 +343,7 @@ if (Zend_Locale_Format::isFloat('13.445,36', array('locale' => $locale)) {
             Integer Wert zurückgegeben.
         </para>
 
-        <example>
+        <example id="zend.locale.integer.normalize.example-1">
             <title>Normalisieren von Integer Zahlen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -367,7 +367,7 @@ print $number;]]>
             Diese Funktion gibt eine lokalisierte Zeichenkette anhand der gegebenen Nummer zurück.
         </para>
 
-        <example>
+        <example id="zend.locale.integer.localize.example-1">
             <title>Lokalisieren von Integer Zahlen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -391,7 +391,7 @@ print $number;]]>
             Integer Zahl enthält und gibt wahr oder falsch zurück.
         </para>
 
-        <example>
+        <example id="zend.locale.integer.test.example-1">
             <title>Testen von Integer Zahlen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -443,7 +443,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             <code>$destNumeralSystem</code> konvertiert werden.
         </para>
 
-        <example>
+        <example id="zend.locale.numbersystems.example-1">
             <title>Konvertieren von Ost-Arabischen Ziffern in Europäisch Lateinische Ziffern</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -460,7 +460,7 @@ print "\nNormalisiert: " . $latinScript;]]>
             Genauso kann jedes unterstützte Zahlensystem in jedes andere unterstützte Zahlensystem konvertiert werden.
         </para>
 
-        <example>
+        <example id="zend.locale.numbersystems.example-2">
             <title>Konvertieren von Lateinischen Ziffern in Ost-Arabische Ziffern</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -473,7 +473,7 @@ print "\nLokalisiert: " . $arabicScript;]]>
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.locale.numbersystems.example-3">
             <title>Auslesen des 4 Zeichen CLDR Codes durch Benutzen des Namens in der Muttersprache</title>
             <programlisting role="php"><![CDATA[<?php
 function getScriptCode($scriptName, $locale)
@@ -493,7 +493,7 @@ echo getScriptCode('tamoul', 'fr'); // Ausgabe "Taml"]]>
             <title>Liste der unterstützten Zahlensysteme</title>
 
             <para>
-                <table>
+                <table id="zend.locale.appendix.numberscripts.supported.table">
                     <title>Liste der unterstützten Zahlensysteme</title>
                     <tgroup cols="2">
                         <thead>

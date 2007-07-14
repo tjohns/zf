@@ -7,7 +7,7 @@
         <ulink url="http://php.net/mail"><code>mail()</code></ulink> Funktion oder direkt über
         eine SMTP Verbindung versandt werden.
     </para>
-    <example>
+    <example id="zend.mail.introduction.example-1">
         <title>Einfache E-Mail mit Zend_Mail</title>
         <para>
             Eine einfache E-Mail besteht aus einigen Empfängern, einem Betreff, einem Hauptteil und

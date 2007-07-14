@@ -124,7 +124,7 @@
             wenn ein bestimmtes Gebietsschema im Zend Framework ausgewählt werden muß.
         </para>
 
-        <example>
+        <example id="zend.locale.representation.example-1">
             <title>Auswählen eines speziellen Gebietsschemas</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend_Locale';
@@ -171,7 +171,7 @@ $locale = new Zend_Locale('de_DE'); // deutsche Sprache _ Deutschland]]>
             beschrieben, dafür genommen.
         </para>
 
-        <example>
+        <example id="zend.locale.selection.example-1">
             <title>Automatische Auswahl des Gebietsschemas</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -230,7 +230,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellu
             Benutzers zur Verfügung gestellt werden.
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-1">
             <title>Daten verwenden das aktuelle Gebietsschema des Web Benutzers</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -244,7 +244,7 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);]]>
             Webseite ist, muß als dritter Parameter im Konstruktor das Gebietsschema angegeben werden.
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-2">
             <title>Übergehen der Auswahl des standardmäßigen Gebietsschemas</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -262,7 +262,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $usLoc
             Eruierung des Standardmäßigen Gebietsschemas zu verringern.
         </para>
 
-        <example>
+        <example id="zend.locale.interoperate.example-3">
             <title>Optimierung der Geschwindigkeit durch Benutzung eines Standard Gebietsschemas</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
@@ -300,7 +300,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             zu benutzen, muß array('date_format' => null, 'locale' => $locale) in deren Optionen angegeben werden.
         </para>
 
-        <example>
+        <example id="zend.locale.formatoptions.example-1">
             <title>Daten die das richtige Gebietsschema des Web Benutzers verwenden</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
@@ -316,7 +316,7 @@ Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_
             verwendet das Standard Gebietsschema des Servers oder Browsers.
         </para>
 
-        <example>
+        <example id="zend.locale.formatoptions.example-2">
             <title>Verwendung von STANDARD Definitionen für setOptions()</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';

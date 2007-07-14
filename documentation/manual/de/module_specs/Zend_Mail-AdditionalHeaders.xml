@@ -6,7 +6,7 @@
         enthalten. Ein dritter, optionaler Parameter legt fest, ob die Kopfzeile einen oder mehrere
         Werte enthalten darf:
     </para>
-    <example>
+    <example id="zend.mail.additional-headers.example-1">
         <title>Eine E-Mail Kopfzeile hinzufügen</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
