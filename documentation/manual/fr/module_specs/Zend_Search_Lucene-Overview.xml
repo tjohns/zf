@@ -183,7 +183,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
                     un champ séparé comme identifiant.
                </para>
 
-                <table>
+                <table id="zend.search.lucene.index-creation.understanding-field-types.table">
                     <title>Types de Zend_Search_Lucene_Field</title>
                     <tgroup cols="4">
                         <thead>

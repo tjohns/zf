@@ -121,7 +121,7 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
 }]]>
 		    </programlisting>
         </example>
-        <example id="zend.service.delicious.postlist.example.withTags">
+        <example id="zend.service.delicious.postlist.example.byUrl">
             <title>Filtrage d'une entrée par URL</title>
             <para>
                 Les entrées peuvent être filtrées par URL correpsondant à une expression régulière

@@ -36,7 +36,7 @@ $index->addDocument($doc);]]>
 
         <para>
             Voici un exemple d'Analyseur personnalisé, qui prend pour termes des mots contenant des chiffres :
-            <example>
+            <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>Analyseur de texte personnalisé</title>
                 <programlisting role="php"><![CDATA[<?php
 /** Voici un analyseur de texte personnalisé, qui traite les mots contenant des chiffres comme un seul terme */

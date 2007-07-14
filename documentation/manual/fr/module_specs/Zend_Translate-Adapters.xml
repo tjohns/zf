@@ -116,7 +116,7 @@
             </para>
         </sect3>
 
-        <sect3 id="zend.translate.adapter.tmx">
+        <sect3 id="zend.translate.adapter.qt">
 
             <title>Zend_Translate_Adapter_Qt</title>
 

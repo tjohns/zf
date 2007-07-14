@@ -265,7 +265,7 @@ foreach ($results as $result) {
 	            <para>
 	                <code>Zend_Service_Amazon_Item</code> a un nombre de propriétés directement relié à leur contre-parties de l'API standard Amazon.
 	            </para>
-	            <table>
+                <table id="zend.service.amazon.classes.item.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_Item</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -396,7 +396,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.image.properties">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.image.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_Image</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -469,7 +469,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.offerset.parameters">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.offerset.parameters.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_OfferSet</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -610,7 +610,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.similarproduct.properties">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.similarproduct.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_SimilarProduct</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -646,7 +646,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.accessories.properties">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.accessories.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_Accessories</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -682,7 +682,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.customerreview.properties">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.customerreview.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_CustomerReview</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -743,7 +743,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.editorialreview.properties">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.editorialreview.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_EditorialReview</title>
 	                <tgroup cols="3">
 	                    <thead>
@@ -779,7 +779,7 @@ foreach ($results as $result) {
 	        </para>
 	        <sect4 id="zend.service.amazon.classes.listmania.properties">
 	            <title>Propriétés</title>
-	            <table>
+                <table id="zend.service.amazon.classes.listmania.properties.table-1">
 	                <title>Propriétés de Zend_Service_Amazon_Listmania</title>
 	                <tgroup cols="3">
 	                    <thead>
