@@ -507,11 +507,116 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         <example id="zend.translate.using.options.example">
             <title>Using translation options</title>
             <programlisting role="php"><![CDATA[
+// define ':' as separator for the translation source files
+$options = array('separator' => ':');
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', $options);
+
+...
+
+// clear the defined language and use new translation data
 $options = array('clear' => true);
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
-$translate->addTranslation('path/to/other.csv', 'fr');
-... // do something
-$translate->addTranslation('path/to/new.csv', 'fr', $options); // clear language fr, use new translation]]>
+$translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Here you can find all avaiable options for the different adapters with a description of their useage:
+        </para>
+
+        <table id="zend.translate.using.options.alloptions">
+            <title>Options for Translation Adapters</title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Adapter</entry>
+                        <entry>Option</entry>
+                        <entry>Standard value</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>all</entry>
+                        <entry>clear</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>If set to true, the already read translations will be cleared. This can be used
+                        instead of creating a new instance when reading new translation data</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>separator</entry>
+                        <entry><emphasis role="strong">;</emphasis></entry>
+                        <entry>Defines which sign is used for seperating source and translation</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <para>
+            When you want to have self defined options, you are also able to use them within all adapters.
+            The <code>setOptions()</code> method can be used to define your option. <code>setOptions()</code>
+            needs an array with the options you want to set. If an given option exists it will be signed over.
+            You can define as much options as needed as they will not be checked by the adapter. Just get sure
+            that you do not sign over any existing option which is used by an adapter.
+        </para>
+
+        <para>
+            To return the set option you can use the <code>getOptions()</code> method. When <code>getOptions()</code>
+            is called without an parameter it will return all set options. When the optional parameter is given
+            you will only get the particular option returned.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.languages">
+
+        <title>Handling languages</title>
+
+        <para>
+            When working with different languages there are a few methods which will be usefull.
+        </para>
+
+        <para>
+            The <code>getLocale()</code> method can be used to get the actual set language. It can eigther hold
+            an instance of <code>Zend_Locale</code> or the identifier of a locale.
+        </para>
+
+        <para>
+            The <code>setLocale()</code> method sets a new standard language for translation. This prevents the
+            need of setting the optional language parameter more than once to the <code>translate()</code> method.
+            If the given language does not exist, or no translation data is avaiable for the language, an
+            exception will be thrown.
+        </para>
+
+        <para>
+            The <code>isAvaiable()</code> method checks if a given language is already avaiable. It returns
+            <code>true</code> if data for the given language exist.
+        </para>
+
+        <para>
+            And finally the <code>getList()</code> method can be used to get all actual set languages for an adapter
+            returned as array.
+        </para>
+
+        <example id="zend.translate.using.languages.example">
+            <title>Handling languages with adapters</title>
+            <programlisting role="php"><![CDATA[
+...
+// returns the actual set language
+$actual = $translate->getLocale();
+
+...
+// you can use the optional parameter while translating
+echo $translate->_("my_text", "fr");
+// or set a new standard language
+$translate->setLocale("fr");
+echo $translate->_("my_text");
+
+...
+// check if this language exist
+if ($translate->isAvaiable("fr")) {
+    // language exists
+}]]>
             </programlisting>
         </example>
 
@@ -554,6 +659,41 @@ if (!($translate->isTranslated('message1', true, 'de'))) {
 if ($translate->isTranslated('message1', false, 'de')) {
     print "'message1' can be translated in 'de_AT' falls back to 'de'";
 }]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.sourcedata">
+
+        <title>Access to the source data</title>
+
+        <para>
+            Of course sometimes it is usefull to have access to the translation source data. Therefor two functions
+            exist.
+        </para>
+
+        <para>
+            The <code>getMessageIds()</code> method returns all known message ids as array.
+        </para>
+
+        <para>
+            And the <code>getMessages()</code> method returns the complete translation source as array. The
+            message id is used as key and the translation data as value.
+        </para>
+
+        <example id="zend.translate.using.sourcedata.example">
+            <title>Handling languages with adapters</title>
+            <programlisting role="php"><![CDATA[
+...
+// returns all known message ids
+$messageids = $translate->getMessageIds();
+print_r($messageids);
+
+...
+// returns all the complete translation data
+$source = $translate->getMessages();
+print_r($source);]]>
             </programlisting>
         </example>
 

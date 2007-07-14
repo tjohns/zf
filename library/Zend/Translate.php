@@ -232,4 +232,26 @@ class Zend_Translate {
     {
         return $this->_adapter->isTranslated($messageId, $original, $locale);
     }
+
+
+    /**
+     * Returns all actual known message ids as array
+     *
+     * @return array
+     */
+    public function getMessageIds()
+    {
+        return $this->_adapter->getMessageIds();
+    }
+
+
+    /**
+     * Returns all known messages with  ids
+     *
+     * @return array
+     */
+    public function getMessages()
+    {
+        return $this->_adapter->getMessages();
+    }
 }
