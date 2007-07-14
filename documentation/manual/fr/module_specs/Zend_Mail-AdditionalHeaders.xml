@@ -5,7 +5,7 @@
         paramètres contenant le nom et la valeur du champ d'entête. Un troisième paramètre optionnel détermine si
         l'entête doit avoir une ou plusieurs valeurs :
     </para>
-    <example>
+    <example id="zend.mail.additional-headers.example-1">
         <title>Ajouter des entêtes à l'email</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
