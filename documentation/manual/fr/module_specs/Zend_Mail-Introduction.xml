@@ -3,7 +3,7 @@
     <para>
         <code>Zend_Mail</code> fournit des fonctionnalités génériques pour écrire et envoyer des emails au format texte et MIME. Un email peut-être envoyé avec <code>Zend_Mail</code> via la fonction PHP native <ulink url="http://php.net/mail"><code>mail()</code></ulink> ou via une connexion SMTP directe.
     </para>
-    <example>
+    <example id="zend.mail.introduction.example-1">
         <title>Email simple avec Zend_Mail</title>
         <para>
             Un email simple est composé d'un destinataire, d'un sujet, d'un message et d'un expéditeur. Pour envoyer ce genre de messages en utilisant la fonction PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink>, vous pouvez faire comme ceci :

@@ -7,7 +7,7 @@
         vous pouvez appeler la méthode <code>setMimeBoundary()</code>,
         comme le montre l'exemple suivant :
     </para>
-    <example>
+    <example id="zend.mail.boundary.example-1">
         <title>Changer la limite MIME</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

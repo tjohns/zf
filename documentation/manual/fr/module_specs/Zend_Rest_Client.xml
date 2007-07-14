@@ -6,7 +6,7 @@
             Utiliser le <code>Zend_Rest_Client</code> est très semblable à l'utilisation des objets de <code>SoapClient</code> (<ulink url="http://www.php.net/soap">SOAP web service extension</ulink>). Vous pouvez simplement appeler les procédures de service de REST comme méthodes de <code>Zend_Rest_Client</code>. Vous devez indiquer l'adresse complète du service dans le constructeur de <code>Zend_Rest_Client</code>.
         </para>
 
-        <example>
+        <example id="zend.rest.client.introduction.example-1">
             <title>Une requête REST basique</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -45,7 +45,7 @@ echo $client->get();]]>
             Quand le service est basé sur <code>Zend_Rest_Server</code>, Zend_Rest_Client peut faire plusieurs suppositions au sujet de la réponse, y compris le statut de réponse (succès ou échec) et le type de retour.
         </para>
 
-        <example>
+        <example id="zend.rest.client.return.example-1">
             <title>Etat de la réponse</title>
             <programlisting role="php"><![CDATA[<?php
 $result = $client->sayHello('Davey', 'Day')->get();
@@ -64,7 +64,7 @@ if ($result->isSuccess()) {
             Si cependant, vous souhaitez questionner un service n'employant pas <code>Zend_Rest_Server</code> l'objet de <code>Zend_Rest_Client_Response</code> se comportera comme un <code>SimpleXMLElement</code>. Cependant, pour faciliter les choses, il questionnera automatiquement le XML en utilisant XPath si la propriété n'est pas un descendant direct de l'élément racine du document. En plus, si vous accédez à une propriété comme à une méthode, vous recevrez la valeur de PHP pour l'objet, ou un tableau de résultats.
         </para>
 
-        <example>
+        <example id="zend.rest.client.return.example-2">
             <title>Utiliser le service REST Technorati</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -78,7 +78,7 @@ echo $result->firstname() .' '. $result->lastname();]]>
     		</programlisting>
         </example>
 
-        <example>
+        <example id="zend.rest.client.return.example-3">
             <title>Exemple de réponse Technorati</title>
             <programlisting role="xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
 <!-- generator="Technorati API version 1.0 /bloginfo" -->
@@ -130,7 +130,7 @@ echo $result->firstname() .' '. $result->lastname();]]>
             A moins que vous ne fassiez une demande à un service basé sur <code>Zend_Rest_Server</code>, il y a des chances que vous devez envoyer des arguments multiples avec votre requête. Ceci est fait en appelant une méthode avec le nom de l'argument, en passant la valeur comme premier (et seul) argument. Chacun de ces appels de méthode renvoie l'objet lui-même, tenant compte de l'enchaînement, ou de l'utilisation habituelle. Le premier appel, ou le premier argument si vous passez plus d'un argument, est toujours considéré comme la méthode en appelant un service <code>Zend_Rest_Server</code>.
         </para>
 
-        <example>
+        <example id="zend.rest.client.args.example-1">
             <title>Affecter des arguments de requêtes</title>
 
             <programlisting role="php"><![CDATA[<?php

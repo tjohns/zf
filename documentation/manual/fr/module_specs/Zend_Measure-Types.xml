@@ -3,9 +3,10 @@
     <title>Types de mesures</title>
 
     <para>
-        Tous les types de mesures supportées sont listées ci-dessous, chacun avec une exmple d'utilisation standard pour ce type de mesure.    </para>
+        Tous les types de mesures supportées sont listées ci-dessous, chacun avec une exmple d'utilisation standard pour ce type de mesure.
+    </para>
 
-    <table>
+    <table id="zend.measure.types.table-1">
         <title>Liste des types de mesure</title>
         <tgroup cols="4">
             <thead>

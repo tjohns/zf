@@ -3,7 +3,7 @@
 
     <para><code>Zend_Mail</code> supporte l'utilisation de l'authentification SMTP, qui peut être activé en passant le paramètre 'auth' au tableau de configuration du constructeur de <code>Zend_Mail_Transport_Smtp</code>. Les méthodes d'authentification intégrées disponibles sont PLAIN, LOGIC et CRAM-MD5 qui ont tous besoins des valeurs 'username' et 'password' dans le tableau de configuration.</para>
 
-  <example>
+  <example id="zend.mail.smtp-authentication.example-1">
     <title>Activer l'authentification dans Zend_Mail_Transport_Smtp</title>
 
     <programlisting role="php"><![CDATA[<?php

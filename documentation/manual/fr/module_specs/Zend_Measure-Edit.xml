@@ -47,7 +47,7 @@
             Le dispositif le plus important est probablement la conversion dans différentes unités de la mesure. La conversion d'une unité peut être faite à tout moment en utilisant la méthode <code>convertTo()</code>. Des unités de mesure peuvent seulement être converties en d'autres unités du même type (classe). Par conséquent, il n'est pas possible de convertir (par exemple : une longueur en poids), qui encouragerait des pratiques de programmation pauvres et entraînerait la propagation d'erreurs sans lever d'exception.
         </para>
 
-        <example>
+        <example id="zend.measure.edit.convert.example-1">
             <title>Convert</title>
 			<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Weight.php';
@@ -74,7 +74,7 @@ print "Tonne : ".$unite->convertTo(Zend_Measure_Weight::TON); // affiche "Tonne 
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.add.example-1">
                 <title>Ajouter des mesures</title>
 				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -99,7 +99,7 @@ echo $somme; // affiche "300 cm"]]>
         </note>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.add.example-2">
                 <title>Soustraire des mesures</title>
                 <para>
                     La soustraction des mesures fonctionne comme l'addition.
@@ -130,7 +130,7 @@ echo $somme; // affiche "100 cm"]]>
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.equal.example-1">
                 <title>Mesures différentes</title>
 				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -146,7 +146,7 @@ if ($unite1->equals($unite2)) {
 } // affiche "Les mesures sont différentes"]]>
 			    </programlisting>
             </example>
-            <example>
+            <example id="zend.measure.edit.equal.example-2">
                 <title>Mesures identiques</title>
 				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -177,7 +177,7 @@ if ($unite1->equals($unite2)) {
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.compare.example-1">
                 <title>Différence</title>
 				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -204,7 +204,7 @@ print "Plus grand que : ".$unite3->compare($unite2); // affiche "Plus grand que 
         </para>
 
         <para>
-            <example>
+            <example id="zend.measure.edit.changevalue.example-1">
                 <title>Changer une valeur</title>
 				<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
@@ -234,7 +234,7 @@ echo $unite; // affiche "1234.56 mm"]]>
             Pour changer le type d'une mesure sans altérer sa valeur, il faut utiliser <code>setType()</code>.
         </para>
 
-        <example>
+        <example id="zend.measure.edit.changetype.example-1">
             <title>Changer de type</title>
 			<programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';

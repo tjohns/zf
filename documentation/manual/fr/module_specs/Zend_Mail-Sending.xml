@@ -4,7 +4,7 @@
         Pour envoyer des emails via SMTP, <code>Zend_Mail_Transport_Smtp</code> a besoin d'être créé et enregistré avant que la méthode
         soit appelée. Pour tout appel de <code>Zend_Mail::send()</code> dans le script en cours, le transport SMTP sera utilisé :
     </para>
-    <example>
+    <example id="zend.mail.sending.example-1">
         <title>Envoyer un email via SMTP</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';

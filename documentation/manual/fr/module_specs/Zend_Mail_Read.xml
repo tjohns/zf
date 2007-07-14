@@ -5,7 +5,7 @@
         <code>Zend_Mail</code> peut lire des emails provenant de différents stockages locaux ou distants. Tous bénéficient de la même API pour compter et extraire les messages, certains implémentent des interfaces additionnelles pour des fonctionnalités moins communes. Pour une vue d'ensemble des fonctionnalités des stockages implémentés voir la table suivante.
     </para>
 
-    <table>
+    <table id="zend.mail.read.table-1">
         <title>Vue d'ensemble des fonctionnalités de lecture d'emails</title>
         <tgroup cols="5">
             <thead>
@@ -404,7 +404,7 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
             Avec la méthode getFolders($root = null) vous pouvez obtenir la hiérarchie des dossiers en commençant par le dossier racine ou le dossier fourni. Elle est retournée comme instance de <code>Zend_Mail_Storage_Folder</code>, qui implémente <code>RecursiveIterator</code> et tous ses enfants sont également des instances de <code>Zend_Mail_Storage_Folder</code>. Chacune de ces instances à des noms locaux et globaux retournés par les méthodes <code>getLocalName()</code> et <code>getGlobalName()</code>. Le nom global est le nom absolu du dossier racine (délimiteurs y compris), le nom local est le nom dans le dossier parent.
         </para>
 
-        <table>
+        <table id="zend.mail.read-folders.table-1">
             <title>Noms de dossiers</title>
             <tgroup cols="2">
                 <thead>
@@ -470,7 +470,7 @@ $mail->selectFolder($folder);]]>
     <sect2 id="zend.mail.read-advanced">
         <title>Utilisation avancée</title>
 
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.noop">
             <title>Utiliser NOOP</title>
 
             <para>
@@ -491,7 +491,7 @@ foreach ($mail as $message) {
     		</programlisting>
 
         </sect3>
-        <sect3>
+        <sect3 id="zend.mail.read-advanced.extending">
             <title>Mettre en cache des instances</title>
 
             <para>

@@ -5,7 +5,7 @@
         à la place de <code>setBodyText()</code>. Le type de contenu MIME sera automatiquement définit à <code>text/html</code>.
         Si vous utilisez les formats textes et HTML, un message MIME de type multipart/alternative sera automatiquement généré :
     </para>
-    <example>
+    <example id="zend.mail.html-mails.example-1">
         <title>Envoyer des emails HTML</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';

@@ -19,7 +19,7 @@
             Le manager de mémoire utilise les <link linkend="zend.cache.backends">backends Zend_Cache</link> comme fournisseurs de stockage.
         </para>
 
-        <example>
+        <example id="zend.memory.introduction.example-1">
             <title>Utiliser le composant Zend_Memory</title>
             <para>
                 <code>Zend_Memory::factory()</code> instancie l'objet de management de la mémoire avec les options spécifiques du backend.

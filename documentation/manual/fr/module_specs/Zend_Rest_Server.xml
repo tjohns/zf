@@ -12,7 +12,7 @@
     <sect2 id="zend.rest.server.usage">
         <title>Utilisation d'un serveur REST</title>
 
-        <example>
+        <example id="zend.rest.server.usage.example-1">
             <title>Utilisation basique Zend_Rest_Server - Avec des classes</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -25,7 +25,7 @@ $server->handle();]]>
     		</programlisting>
         </example>
 
-        <example>
+        <example id="zend.rest.server.usage.example-2">
             <title>Utilisation basique Zend_Rest_Server - Avec des fonctions</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -88,7 +88,7 @@ $server->handle();]]>
             En envoyant des valeurs, pour ajouter un statut personnalisé, vous pouvez envoyer un tableau avec une clé <code>status</code>.
         </para>
 
-        <example>
+        <example id="zend.rest.server.customstatus.example-1">
             <title>Renvoyer un statut personnalisé</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Rest/Server.php';
@@ -120,7 +120,7 @@ $server->handle();]]>
             <code>SimpleXMLElement</code>.
         </para>
 
-        <example>
+        <example id="zend.rest.server.customxml.example-1">
             <title>Renvoyer une réponse XML personnalisée</title>
 
             <programlisting role="php"><![CDATA[<?php

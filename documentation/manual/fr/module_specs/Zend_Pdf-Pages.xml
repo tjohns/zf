@@ -44,7 +44,7 @@
      celle-ci et peut-être manipulé comme un tableau classique :
     </para>
 
-    <example>
+    <example id="zend.pdf.pages.example-1">
         <title>Gestion des pages d'un document PDF</title>
         <programlisting role="php"><![CDATA[<?php
 ...

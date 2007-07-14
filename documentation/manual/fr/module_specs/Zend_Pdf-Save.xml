@@ -15,7 +15,7 @@
      Si <code>$newSegmentOnly</code> est à true, alors seulement les nouvelles sections du PDF sont retournées.
     </para>
 
-    <example>
+    <example id="zend.pdf.save.example-1">
         <title>Sauvegarder un document PDF</title>
         <programlisting role="php"><![CDATA[<?php
 ...

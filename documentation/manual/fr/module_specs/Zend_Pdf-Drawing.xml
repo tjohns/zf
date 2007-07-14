@@ -188,7 +188,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
 public function drawText($text, $x, $y, $charEncoding = '');]]>
     		</programlisting>
         </para>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>Dessiner une ligne dans la page</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -204,7 +204,7 @@ $pdfPage->drawText('Bonjour le monde!', 72, 720);
         dans n'importe quel encodage supporté par la fonction
         <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> de PHP:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>Dessiner une chaîne UTF-8 sur une page</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -246,7 +246,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             pour les 14 polices PDF standard ou <code>Zend_Pdf_Font::fontWithPath($filePath)</code> pour les polices
             personnalisées.
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-1">
             <title>Créer une police standard</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -311,7 +311,7 @@ $pdfPage->setFont($font, 36);
         <para>
             Pour utiliser une police TrueType, vous devez fournir le chemin de fichier complet vers cette police. Si la police ne peut pas être lue pour uune quelconque raison, ou si ce n'est pas une police TrueType, la méthode lèvera une exception :
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-2">
             <title>Créer une police TrueType</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -326,7 +326,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         <para>
         Par défaut, les polices personnalisées seront incorporées dans le document PDF résultant. Cela permet aux destinataires de voir la page comme prévu, même s'ils ne font pas installer les polices appropriées sur leur système. En cas de problème avec la taille du fichier généré, vous pouvez demander que la police ne soit pas incorporé en passant l'option 'ne pas inclure' à la méthode de création :
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-3">
             <title>Créer une police TrueType sans l'incorporer dans le document PDF</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -348,7 +348,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         <para>
         Vous pouvez toujours utiliser ces polices, mais vous devez passer le paramètre 'ne pas inclure' comme décrit ci-dessous, ou vous pouvez simplement bloquer l'exception :
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-4">
             <title>Ne pas lever d'exception pour les polices ne pouvant être incorporées</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -363,7 +363,7 @@ $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceNonIncorporable.ttf',
         <para>
         Les fichiers de police peuvent être assez grands, certains peuvent atteindre des dizaines de méga-octets. Par défaut, toutes les polices incorporées sont comprimées en utilisant le schéma de compression Flate, ayant pour résultat un gain d'espace de 50% en moyenne. Si, pour une quelconque raison, vous ne voulez pas comprimer la police, vous pouvez le neutraliser avec une option :
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>Ne pas compresser une police incorporée</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -375,7 +375,7 @@ $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceDeGrandeTaille.ttf',
         <para>
         En conclusion, si nécessaire, vous pouvez combiner les options d'incorporation en employant l'opérateur binaire OR :
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>Combiner les options de polices incorporées</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -409,7 +409,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
         <para>
          Les objets Image peuvent être créés avec la méthode <code>Zend_Pdf_Image::imageWithPath($filePath)</code> (les images JPG, PNG et TIFF sont maintenant supportées) :
         </para>
-        <example>
+        <example id="zend.pdf.drawing.image-drawing.example-1">
             <title>Insertion d'images</title>
             <programlisting role="php"><![CDATA[<?php
 ...
