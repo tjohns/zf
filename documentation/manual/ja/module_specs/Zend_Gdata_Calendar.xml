@@ -1,90 +1,110 @@
 <sect1 id="zend.gdata.calendar">
-    <title>Using Google Calendar</title>
+    <title>Google Calendar の使用法</title>
     <para>
-        You can use the
         <code>Zend_Gdata_Calendar</code>
-        class to view, create, update, and delete events in the online Google Calendar service.
+        クラスを使うと、Google Calendar サービスで
+        イベントの閲覧や作成、更新、削除ができるようになります。
     </para>
     <para>
-        See
+        Google Calendar API についての詳細な情報は
         <ulink url="http://code.google.com/apis/calendar/overview.html">http://code.google.com/apis/calendar/overview.html</ulink>
-        for more information about the Google Calendar API.
+        を参照ください。
     </para>
     <sect2 id="zend.gdata.calendar.connecting">
-        <title>Connecting To The Calendar Service</title>
-        <para>The Google Calendar API, like all GData APIs, is based off of the Atom Publishing Protocol (APP), an XML based format for managing web-based resources. Traffic between a client and the Google Calendar servers occurs over HTTP and allows for both authenticated and unauthenticated connections.</para>
+        <title>Calendar サービスへの接続</title>
         <para>
-            Before any transactions can occur, this connection needs to be made. Creating a connection to the calendar servers involves two steps: creating an HTTP client and binding a
+            Google Calendar API は、その他の GData API と同様に
+            Atom Publishing Protocol (APP) を使用しています。
+            これは、XML ベースのフォーマットでウェブのリソースを管理するための仕組みです。
+            クライアントと Google Calendar サーバとの間のやり取りは
+            HTTP で行われ、認証済みの接続と未認証の接続の両方が利用できます。
+        </para>
+        <para>
+            何らかのトランザクションが発生する際には、かならず接続を確立する必要があります。
+            カレンダーサーバとの接続は、まず HTTP クライアントを作成して
             <code>Zend_Gdata_Calendar</code>
-            service instance to that client.
+            サービスのインスタンスをそこにバインドするという手順で行います。
         </para>
         <sect3 id="zend.gdata.calendar.connecting.authentication">
-            <title>Authentication</title>
-            <para>The Google Calendar API allows access to both public and private calendar feeds. Public feeds do not require authentication, but are read-only and offer reduced functionality. Private feeds offers the most complete functionality but requires an authenticated connection to the calendar servers. There are three authentication schemes that are supported by Google Calendar:</para>
+            <title>認証</title>
+            <para>
+                Google Calendar API を使用すると、公開カレンダーだけでなく
+                プライベートカレンダーのフィードにもアクセスすることができます。
+                公開フィードには認証は不要ですが、
+                認証しない場合は読み込み専用となり、機能が制限されます。
+                プライベートフィードでは完全な機能が使用できますが、
+                カレンダーサーバとの認証が必要になります。
+                Google Calendar がサポートしている認証方式は、次の 3 通りです。
+            </para>
             <itemizedlist>
                 <listitem>
                     <para>
                         <firstterm>ClientAuth</firstterm>
-                        provides direct username/password authentication to the
-                        calendar servers. Since this scheme requires that users
-                        provide your application with their password, this
-                        authentication is only recommended when other
-                        authentication schemes are insufficient.
+                        は、カレンダーサーバとの間で直接
+                        ユーザ名/パスワード
+                        による認証を行います。この方式では
+                        ユーザ自身がアプリケーションにパスワードを教える必要があるので、
+                        これは他の方式が使えない場合にのみ使用するようにしましょう。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>AuthSub</firstterm>
-                        allows authentication to the calendar servers via a
-                        Google proxy server. This provides the same level of
-                        convenience as ClientAuth but without the security
-                        risk, making this an ideal choice for web-based
-                        applications.
+                        は、Gooble のプロキシサーバを経由してカレンダーサーバとの認証を行ないます。
+                        これは ClientAuth と同じくらい便利に使用でき、
+                        セキュリティリスクもありません。
+                        ウェブベースのアプリケーションでは、
+                        これは最適な選択肢となります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>MagicCookie</firstterm>
-                        allows authentication based on a semi-random URL
-                        available from within the Google Calendar interface.
-                        This is the simplest authentication scheme to
-                        implement, but requires that users manually retrieve
-                        their secure URL before they can authenticate, doesn't
-                        provide access to calendar lists, and is limited to
-                        read-only access.
+                        は、Google Calendar インターフェイス内の
+                        半ランダムな URL にもとづいた認証を行なう方法です。
+                        この方法は、実装するのが一番簡単です。しかし、
+                        ユーザ自身が安全な URL を事前に取得しないと認証できません
+                        またカレンダーリストにはアクセスできず、
+                        アクセスは読み込み専用に制限されます。
                     </para>
                 </listitem>
             </itemizedlist>
             <para>
-                The
-                <code>Zend_Gdata</code>
-                library provides support for all three authentication schemes.
-                The rest of this chapter will assume that you are familiar the
-                authentication schemes available and how to create an
-                appropriate authenticated connection. For more information,
-                please see section the
-                <link linkend="zend.gdata.introduction.authentication">Authentication section</link>
-                of this manual or the
-                <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>.
+                <code>Zend_Gdata</code> ライブラリは、
+                これらのすべての方式に対応しています。
+                これ以降の説明は、認証方式については理解しており
+                適切な認証方式で接続できるようになっていることを前提として進めていきます。
+                詳細な情報は、このマニュアルの
+                <link linkend="zend.gdata.introduction.authentication">認証に関するセクション</link>
+                か、あるいは
+                <ulink url="http://code.google.com/apis/gdata/auth.html">Google Data API Developer's Guide
+                の Authentication Overview</ulink>
+                を参照ください。
             </para>
         </sect3>
         <sect3 id="zend.gdata.calendar.connecting.service">
-            <title>Creating A Service Instance</title>
+            <title>サービスのインスタンスの作成</title>
             <para>
-                In order to interact with Google Calendar, this library provides the
-                <code>Zend_Gdata_Calendar</code>
-                service class. This class provides a common interface to the Google Data and Atom Publishing Protocol models and assists in marshaling requests to and from the calendar servers.
+                Google Calendar を使用するためのクラスとして、このライブラリでは
+                <code>Zend_Gdata_Calendar</code> を用意しています。
+                このクラスは Google Data や Atom Publishing Protocol
+                モデルへの共通インターフェイスを提供し、
+                カレンダーサーバとのリクエストのやりとりを支援します。
             </para>
             <para>
-                Once deciding on an authentication scheme, the next step is to create an instance of
-                <code>Zend_Gdata_Calendar</code>
-                . The class constructor takes an instance of
+                使用する認証方式を決めたら、次に
+                <code>Zend_Gdata_Calendar</code> のインスタンスを作成します。
+                このクラスのコンストラクタには、引数として
+                <code>Zend_Http_Client</code> のインスタンスを渡します。
+                これは、AuthSub 認証および ClientAuth 認証へのインターフェイスを提供します。
+                これらの認証を使用する場合には、認証済みの HTTP クライアントが必要です。
+                引数を省略した場合は、未認証の
                 <code>Zend_Http_Client</code>
-                as a single argument. This provides an interface for AuthSub and ClientAuth authentication, as both of these require creation of a special authenticated HTTP client. If no arguments are provided, an unauthenticated instance of
-                <code>Zend_Http_Client</code>
-                will be automatically created.
+                のインスタンスを自動的に作成して使用します。
             </para>
-            <para>The example below shows how to create a Calendar service class using ClientAuth authentication:</para>
+            <para>
+                以下の例は、ClientAuth 認証を使用して Calendar サービスを作成するものです。
+            </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
@@ -92,18 +112,21 @@ Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
 Zend_Loader::loadClass('Zend_Http_Client');
 
-// Parameters for ClientAuth authentication
+// ClientAuth 認証用のパラメータ
 $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 $user = "sample.user@gmail.com";
 $pass = "pa$$w0rd";
 
-// Create an authenticated HTTP client
+// 認証済みの HTTP クライアントを作成します
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
-// Create an instance of the Calendar service
+// Calendar サービスのインスタンスを作成します
 $service = new Zend_Gdata_Calendar($client);]]>
             </programlisting>
-            <para>A Calendar service using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
+            <para>
+                AuthSub を使用する Calendar サービスを作成するのもほぼ同様ですが、
+                少々長めになります。
+            </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
@@ -111,14 +134,14 @@ Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
 Zend_Loader::loadClass('Zend_Http_Client');
 
-/** Retrieve the current URL so that the AuthSub server knows where to
- * redirect the user after authentication is complete.
+/** 現在の URL を取得し、AuthSub サーバに
+ * 認証後のリダイレクト先を伝えられるようにします
  */
 function getCurrentUrl()
 {
     global $_SERVER;
 
-    // Filter php_self to avoid a security vulnerability.
+    // php_self をフィルタリングし、セキュリティを確保します
     $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
 
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
@@ -137,23 +160,23 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** Obtain an AuthSub authenticated HTTP client, redirecting the user to the
- *  AuthSub server to login if necessary.
+/** AuthSub 認証済みの HTTP クライアントを作成し、ログインが必要なら
+ *  ユーザを AuthSub サーバにリダイレクトします
  */
 function getAuthSubHttpClient()
 {
     global $_SESSION, $_GET;
 
-    // If there is no AuthSub session or one-time token waiting for us,
-    // redirect the user to the AuthSub server to get one.
+    // AuthSub セッションあるいはワンタイムトークンがなければ、
+    // AuthSub サーバにリダイレクトします
     if (!isset($_SESSION['sessionToken']) && !isset($_GET['token'])) {
-        // Parameters to give to AuthSub server
+        // AuthSub サーバへのパラメータ
         $next = getCurrentUrl();
         $scope = "http://www.google.com/calendar/feeds/";
         $secure = false;
         $session = true;
 
-        // Redirect the user to the AuthSub server to sign in
+        // ユーザを AuthSub サーバにリダイレクトします
 
         $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
          header("HTTP/1.0 307 Temporary redirect");
@@ -163,52 +186,63 @@ function getAuthSubHttpClient()
          exit();
     }
 
-    // Convert an AuthSub one-time token into a session token if needed
+    // AuthSub のワンタイムトークンを、必要に応じてセッショントークンに変換します
     if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
         $_SESSION['sessionToken'] =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
     }
 
-    // At this point we are authenticated via AuthSub and can obtain an
-    // authenticated HTTP client instance
+    // この時点で AuthSub による認証がすんでいるので、
+    // 認証済みの HTTP クライアントのインスタンスを作成することができます
 
-    // Create an authenticated HTTP client
+    // 認証済みの HTTP クライアントを作成します
     $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
     return $client;
 }
 
-// -> Script execution begins here <-
+// -> スクリプトの実行はここから始まります <-
 
-// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat the user has a valid session, so we can record the
-// AuthSub session token once it is available.
+// http://code.google.com/apis/gdata/reference.html#Queries
+// でユーザが有効なセッションを保持していることを確認し、
+// AuthSub セッショントークンを記録します
 session_start();
 
-// Create an instance of the Calendar service, redirecting the user
-// to the AuthSub server if necessary.
+// Calendar サービスのインスタンスを作成し、
+// 必要に応じてユーザを AuthSub サーバにリダイレクトします
 $service = new Zend_Gdata_Calendar(getAuthSubHttpClient());]]>
             </programlisting>
-            <para>Finally, an unauthenticated server can be created for use with either public feeds or MagicCookie authentication:</para>
+            <para>未認証のサーバを作成して、公開フィードへのアクセスや MagicCookie 認証で使用することができます。</para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
 
 
-// Create an instance of the Calendar service using an unauthenticated HTTP client
+// Calendar サービスのインスタンスを、未認証の HTTP クライアントで作成します
 
 $service = new Zend_Gdata_Calendar();]]>
             </programlisting>
-            <para>Note that MagicCookie authentication is not supplied with the HTTP connection, but is instead specified along with the desired visibility when submitting queries. See the section on retrieving events below for an example.</para>
+            <para>
+                MagicCookie 認証は HTTP 接続で提供するものではなく、
+                クエリを送信する際の可視性を指定するものです。
+                以下にあるイベント取得の例を見てみましょう。
+            </para>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar_retrieval">
-        <title>Retrieving A Calendar List</title>
+        <title>カレンダーリストの取得</title>
         <para>
-            The calendar service supports retrieving a list of calendars for the authenticated user. This is the same list of calendars which are displayed in the Google Calendar UI, except those marked as "
-            <code>hidden</code>
-            " are also available.
+            カレンダーサービスには、認証済みのユーザのカレンダーの一覧を取得する機能があります。
+            これは Google Calendar の画面に表示される一覧と同じですが、
+            "<code>hidden</code>" とマークされているものも取得できるという点が異なります。
         </para>
-        <para>The calendar list is always private and must be accessed over an authenticated connection. It is not possible to retrieve another user's calendar list and it cannot be accessed using MagicCookie authentication. Attempting to access a calendar list without holding appropriate credentials will fail and result in a 401 (Authentication Required) status code.</para>
+        <para>
+            カレンダーリストは常に非公開なので、認証済み接続でアクセスする必要があります。
+            別のユーザのカレンダーリストを取得したり、MagicCookie
+            認証でアクセスしたりすることはできません。
+            適切な認証情報を持たずにカレンダーリストにアクセスしようとすると、
+            その処理は失敗し、ステータスコード 401 (Authentication Required) を返します。
+        </para>
         <programlisting role="php"><![CDATA[<?php
 $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -217,20 +251,19 @@ $service = new Zend_Gdata_Calendar($client);
 try {
     $listFeed= $service->getCalendarListFeed();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "エラー: " . $e->getResponse();
 }]]>
         </programlisting>
         <para>
-            Calling
-            <code>getCalendarListFeed()</code>
-            creates a new instance of
+            <code>getCalendarListFeed()</code> をコールすると
             <code>Zend_Gdata_Calendar_ListFeed</code>
-            containing each available calendar as an instance of
+            の新しいインスタンスを作成します。この中には、使用できるカレンダーの一覧が
             <code>Zend_Gdata_Calendar_ListEntry</code>
-            . After retrieving the feed, you can use the iterator and accessors contained within the feed to inspect the enclosed calendars.
+            のインスタンスとして格納されています。
+            フィードを取得したら、それを使用して中身を取得することができます。
         </para>
         <programlisting role="php"><![CDATA[<?php
-echo "<h1>Calendar List Feed</h1>";
+echo "<h1>カレンダーリストのフィード</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
     echo "<li>" . $calendar->title . " (Event Feed: " . $calendar->id . ")</li>";
@@ -239,86 +272,97 @@ echo "</ul>";]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.event_retrieval">
-        <title>Retrieving Events</title>
+        <title>イベントの取得</title>
         <para>
-            Like the list of calendars, events are also retrieved using the
+            カレンダーリストと同様、イベントも
             <code>Zend_Gdata_Calendar</code>
-            service class. The event list returned is of type
+            クラスで取得することができます。
+            返されるイベントリストの型は
             <code>Zend_Gdata_Calendar_EventFeed</code>
-            and contains each event as an instance of
+            で、各イベントは
             <code>Zend_Gdata_Calendar_EventEntry</code>
-            . As before, the iterator and accessors contained within the event feed instance allow inspection of individual events.
+            のインスタンスとして格納されています。
+            先ほどの例と同様の方法で、個々のイベントの情報を取得することができます。
         </para>
         <sect3 id="zend.gdata.event_retrieval.queries">
-            <title>Queries</title>
+            <title>クエリ</title>
             <para>
-                When retrieving events using the Calendar API, specially constructed query URLs are used to describe what events should be returned. The
-                <code>Zend_Gdata_Calendar_EventQuery</code>
-                class simplifies this task by automatically constructing a query URL based on provided parameters. A full list of these parameters is available at the
-                <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">Queries section of the Google Data APIs Protocol Reference</ulink>
-                . However, there are three parameters that are worth special attention:
+                Calendar API でイベントを取得する際には、
+                クエリ URL を用いてほしいイベントを指定します。
+                <code>Zend_Gdata_Calendar_EventQuery</code> クラスは、
+                指定したパラメータに基づいたクエリ URL
+                を自動的に作成することでこの作業の手間を軽減します。
+                使用できるパラメータの一覧は
+                <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">
+                Google Data APIs Protocol Reference の Queries セクション</ulink>
+                にあります。ここでは、そのうち特に重要な
+                3 つのパラメータについて説明します。
             </para>
             <itemizedlist>
                 <listitem>
                     <para>
                         <firstterm>User</firstterm>
-                        is used to specify the user whose calendar is being
-                        searched for, and is specified as an email address. If
-                        no user is provided, "default" will be used instead to
-                        indicate the currently authenticated user (if
-                        authenticated).
+                        は、誰のカレンダーを検索するのかをメールアドレスで指定します。
+                        省略した場合は "default" を使用します。
+                        これは、現在認証されているユーザ (認証済みの場合)
+                        を表します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Visibility</firstterm>
-                        specifies whether a users public or private calendar
-                        should be searched. If using an unauthenticated session
-                        and no MagicCookie is available, only the public feed
-                        will be available.
+                        は、公開カレンダーと非公開カレンダーの
+                        どちらを検索するのかを指定します。
+                        未認証のセッションを使用していて
+                        MagicCookie もない場合は、
+                        公開フィードのみしか使用できません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Projection</firstterm>
-                        specifies how much data should be returned by the
-                        server and in what format. In most cases you will want
-                        to use the "full" projection. Also available is the
-                        "basic" projection, which places most meta-data into
-                        each event's content field as human readable text, and
-                        the "composite" projection which includes complete text
-                        for any comments alongside each event. The "composite"
-                        view is often much larger than the "full" view.
+                        は、サーバから返されるデータの件数とフォーマットを指定します。
+                        たいていの場合は "full" を指定することになるでしょう。
+                        "basic" を指定すると、ほとんどのメタデータ情報を
+                        各イベントの content フィールドの可読形式で格納します。
+                        "composite" を指定すると、各イベントについてのコメントも情報に付加します。
+                        "composite" は、"full"
+                        よりも巨大になることもあります。
                     </para>
                 </listitem>
             </itemizedlist>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.start_time">
-            <title>Retrieving Events In Order Of Start Time</title>
+            <title>開始時刻順によるイベントの取得</title>
             <para>
-                The example below illustrates the use of the
-                <code>Zend_Gdata_Query</code>
-                class and specifies the private visibility feed, which requires that an authenticated connection is available to the calendar servers. If a MagicCookie is being used for authentication, the visibility should be instead set to "
-                <code>private-magicCookieValue</code>
-                ", where magicCookieValue is the random string obtained when viewing the private XML address in the Google Calendar UI. Events are requested chronologically by start time and only events occurring in the future are returned.
+                以下の例は、
+                <code>Zend_Gdata_Query</code> を使用して非公開フィードを指定しています。
+                つまり、認証済みの接続が必要となります。
+                認証に MagicCookie を使用している場合は、可視性は
+                "<code>private-magicCookieValue</code>"
+                としなければなりません。magicCookieValue
+                のところは、Google Calendar で非公開
+                XML アドレスを閲覧した際に取得したランダムな文字列となります。
+                イベントは開始時刻の順に取得され、
+                過去のイベントは返されません。
             </para>
             <programlisting role="php"><![CDATA[<?php
 $query = $service->newEventQuery();
 $query->setUser('default');
-// Set to $query->setVisibility('private-magicCookieValue') if using MagicCookie auth
+// MagicCookie 認証の場合は $query->setVisibility('private-magicCookieValue') とします
 $query->setVisibility('private');
 $query->setProjection('full');
 $query->setOrderby('starttime');
 $query->setFutureevents('true');
 
-// Retrieve the event list from the calendar server
+// カレンダーサーバからイベントの一覧を取得します
 try {
     $eventFeed = $service->getCalendarEventFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "エラー: " . $e->getResponse();
 }
 
-// Iterate through the list of events, outputting them as an HTML list
+// リストの内容を順に取得し、HTML のリストとして出力します
 echo "<ul>";
 foreach ($eventFeed as $event) {
     echo "<li>" . $event->title . " (Event ID: " . $event->id . ")</li>";
@@ -326,59 +370,65 @@ foreach ($eventFeed as $event) {
 echo "</ul>";]]>
             </programlisting>
             <para>
-                Additional properties such as ID, author, when, event status, visibility, web content, and content, among others are available within
+                ID や author、when、event status、visibility、web content、
+                そして content などのさまざまなプロパティが
                 <code>Zend_Gdata_Calendar_EventEntry</code>
-                . Refer to the
-                <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework API Documentation</ulink>
-                and the
+                で使用できます。プロパティの一覧は
+                <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework
+                API ドキュメント</ulink>
+                や
                 <ulink url="http://code.google.com/apis/gdata/reference.html">Calendar Protocol Reference</ulink>
-                for a complete list.
+                を参照ください。
             </para>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.date_range">
-            <title>Retrieving Events In A Specified Date Range</title>
+            <title>指定した日付の範囲からのイベントの取得</title>
             <para>
-                To print out all events within a certain range, for example from December 1, 2006 through December 15, 2007, add the following two lines to the previous sample. Take care to remove "
-                <code>$query->setFutureevents('true')</code>
-                ", since
+                指定した範囲、たとえば 2006 年 12 月 1 日から
+                2006 年 12 月 15 日までのすべてのイベントを表示するには、
+                先ほどのサンプルに次の 2 行を追加します。
+                "<code>$query->setFutureevents('true')</code>"
+                を削除することを忘れないでください。
                 <code>futureevents</code>
-                will override
+                を指定すると
                 <code>startMin</code>
-                and
+                や
                 <code>startMax</code>
-                .
+                を上書きしてしまうからです。
             </para>
             <programlisting role="php"><![CDATA[<?php
 $query->setStartMin('2006-12-01');
 $query->setStartMax('2006-12-16');]]>
             </programlisting>
             <para>
-                Note that
                 <code>startMin</code>
-                is inclusive whereas
+                は範囲に含まれますが、
                 <code>startMax</code>
-                is exclusive. As a result, only events through 2006-12-15 23:59:59 will be returned.
+                は含まれないことに注意しましょう。上の例の場合、
+                2006-12-15 23:59:59 までのイベントが対象となります。
             </para>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.fulltext">
-            <title>Retrieving Events By Fulltext Query</title>
+            <title>全文検索によるイベントの取得</title>
             <para>
-                To print out all events which contain a specific word, for example "dogfood", use the
+                指定した単語、たとえば "dogfood"
+                を含むすべてのイベントを表示するには、
                 <code>setQuery()</code>
-                method when creating the query.
+                メソッドでクエリを作成します。
             </para>
             <programlisting role="php"><![CDATA[<?php
 $query->setQuery("dogfood");]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.individual">
-            <title>Retrieving Individual Events</title>
+            <title>特定のイベントの取得</title>
             <para>
-                Individual events can be retrieved by specifying their event ID as part of the query. Instead of calling
+                特定のイベントを取得する場合は、そのイベントの ID
+                をクエリで指定します。そして
                 <code>getCalendarEventFeed()</code>
-                ,
+                ではなく
                 <code>getCalendarEventEntry()</code>
-                should be called instead.
+                をコールします。
             </para>
             <programlisting role="php"><![CDATA[<?php
 $query = $service->newEventQuery();
@@ -390,13 +440,15 @@ $query->setEvent($eventId);
 try {
     $event = $service->getCalendarEventEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "エラー: " . $e->getResponse();
 }]]>
             </programlisting>
             <para>
-                In a similar fashion, if the event URL is known, it can be passed directly into
-                <code>getCalendarEntry()</code>
-                to retrieve a specific event. In this case, no query object is required since the event URL contains all the necessary information to retrieve the event.
+                同様に、もしそのイベントの URL がわかっているのなら、
+                それを直接 <code>getCalendarEntry()</code>
+                に渡して特定のイベントを取得することもできます。
+                この場合はクエリオブジェクトは不要です。
+                必要な情報は、イベントの URL にすべて含まれているからです。
             </para>
             <programlisting role="php"><![CDATA[<?php
 $eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
@@ -404,121 +456,124 @@ $eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq
 try {
     $event = $service->getCalendarEventEntry($eventURL);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "エラー: " . $e->getResponse();
 }]]>
             </programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar.creating_events">
-        <title>Creating Events</title>
+        <title>イベントの作成</title>
         <sect3 id="zend.gdata.calendar.creating_events.single">
-            <title>Creating Single-Occurrence Events</title>
+            <title>一度だけのイベントの作成</title>
             <para>
-                Events are added to a calendar by creating an instance of
-                <code>Zend_Gdata_EventEntry</code>
-                and populating it with the appropriate data. The calendar service instance (
-                <code>Zend_Gdata_Calendar</code>
-                ) is then used to used to transparently covert the event into XML and POST it to the calendar server. Creating events requires either an AuthSub or ClientAuth authenticated connection to the calendar server.
+                イベントをカレンダーに追加するには、
+                <code>Zend_Gdata_EventEntry</code> のインスタンスを作成して
+                そこに適切なデータを代入します。カレンダーサービスのインスタンス
+                (<code>Zend_Gdata_Calendar</code>) はそのデータを XML
+                に変換し、カレンダーサーバに POST します。
+                イベントを作成するには、AuthSub 認証あるいは
+                ClientAuth 認証でカレンダーサーバと接続する必要があります。
             </para>
-            <para>At a minimum, the following attributes should be set:</para>
+            <para>最低限設定しなければならない属性は、次のとおりです。</para>
             <itemizedlist>
                 <listitem>
                     <para>
                         <firstterm>Title</firstterm>
-                        provides the headline that will appear above the event
-                        within the Google Calendar UI.
+                        は、Google Calendar でイベントの見出しとして表示される内容です。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>When</firstterm>
-                        indicates the duration of the event and, optionally,
-                        any reminders that are associated with it. See the next
-                        section for more information on this attribute.
+                        は、そのイベントの期間を表します。
+                        オプションで、リマインダーを関連付けることができます。
+                        この属性については、次のセクションで詳しく説明します。
                     </para>
                 </listitem>
             </itemizedlist>
-            <para>Other useful attributes that may optionally set include:</para>
+            <para>その他、オプションで設定できる属性は次のようになります。</para>
             <itemizedlist>
                 <listitem>
                     <para>
                         <firstterm>Author</firstterm>
-                        provides information about the user who created the
-                        event.
+                        は、そのイベントを作成したユーザについての情報です。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Content</firstterm>
-                        provides additional information about the event which
-                        appears when the event details are requested from
-                        within Google Calendar.
+                        は、イベントの詳細情報です。
+                        Google Calendar でそのイベントの詳細情報を開いたときに表示されます。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>EventStatus</firstterm>
-                        indicates whether the event is confirmed, tentative, or
-                        canceled.
+                        はそのイベントが確認済み (confirmed)
+                        なのか仮の予定 (tentative) なのか、
+                        あるいは取り消された (canceled) を表します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Hidden</firstterm>
-                        removes the event from the Google Calendar UI.
+                        は、そのイベントを Google Calendar 上で非表示にします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Transparency</firstterm>
-                        indicates whether the event should be consume time on
-                        the user's free/busy list.
+                        は、そのイベントをユーザの予定表に反映させるかどうかを指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>WebContent</firstterm>
-                        allows links to external content to be provided within
-                        an event.
+                        は、そのイベント内で外部のコンテンツへのリンクを指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Where</firstterm>
-                        indicates the location of the event.
+                        は、そのイベントの場所を指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <firstterm>Visibility</firstterm>
-                        allows the event to be hidden from the public event
-                        lists.
+                        は、そのイベントを公開リスト上では非表示にします。
                     </para>
                 </listitem>
             </itemizedlist>
             <para>
-                For a complete list of event attributes, refer to the
-                <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework API Documentation</ulink>
-                and the
-                <ulink url="http://code.google.com/apis/gdata/reference.html">Calendar Protocol Reference</ulink>
-                . Attributes that can contain multiple values, such as where, are implemented as arrays and need to be created accordingly. Be aware that all of these attributes require objects as parameters. Trying instead to populate them using strings or primitives will result in errors during conversion to XML.
+                イベントの属性の一覧は、
+                <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework API
+                ドキュメント</ulink>
+                および
+                <ulink url="http://code.google.com/apis/gdata/reference.html">Calendar
+                Protocol Reference</ulink>
+                を参照ください。
+                where のように複数の値を持つことのある属性は配列で実装しています。
+                それにあわせて適切な形式にする必要があります。これらの属性には、
+                パラメータとしてオブジェクトを渡さなければならないことに注意しましょう。
+                文字列などを渡そうとすると、XML への変換時にエラーとなります。
             </para>
             <para>
-                Once the event has been populated, it can be uploaded to the calendar server by passing it as an argument to the calendar service's
-                <code>insertEvent()</code>
-                function.
+                イベントの情報を設定したら、それをカレンダーサーバにアップロードします。
+                アップロードするには、カレンダーサーバの
+                <code>insertEvent()</code> 関数の引数としてそのイベントを渡します。
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Create a new entry using the calendar service's magic factory method
+// カレンダーサービスのマジックメソッドで、新規エントリを作成します
 $event= $service->newEventEntry();
 
-// Populate the event with the desired information
-// Note that each attribute is crated as an instance of a matching class
+// イベントの情報を設定します
+// 各属性は、対応するクラスのインスタンスとして作成されることに注意しましょう
 $event->title = $service->newTitle("My Event");
 $event->where = array($service->newWhere("Mountain View, California"));
 $event->content = $service->newContent(" This is my awesome event. RSVP required.");
 
-// Set the date using RFC 3339 format.
+// RFC 3339 形式で日付を指定します
 $startDate = "2008-01-20";
 $startTime = "14:00";
 $endDate = "2008-01-20";
@@ -530,118 +585,113 @@ $when->startTime = "{$startDate}T{$startTime}:00.000{$tzOffset}:00";
 $when->endTime = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
 $event->when = array($when);
 
-// Upload the event to the calendar server
-// A copy of the event as it is recorded on the server is returned
+// イベントをカレンダーサーバにアップロードします
+// サーバに記録したイベントのコピーが返されます
 $newEvent = $service->insertEvent($event);]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.schedulers_reminders">
-            <title>Event Schedules and Reminders</title>
+            <title>イベントのスケジュールおよびリマインダー</title>
             <para>
-                An event's starting time and duration are determined by the value of its when property, which contains the properties
-                <code>startTime</code>
-                ,
-                <code>endTime</code>
-                , and
-                <code>valueString</code>
-                .
-                <code>StartTime</code>
-                and
-                <code>EndTime</code>
-                control the duration of the event, while
-                <code>valueString</code>
-                provides a way to store a friendly, human readable version of the duration such as "This Afternoon". Note that even when using
-                <code>valueString</code>
-                ,
-                <code>startTime</code>
-                and
-                <code>endTime</code>
-                still must be be set to valid values.
+                イベントの開始時刻と期間は、when プロパティによって決まります。
+                この中には
+                <code>startTime</code>、<code>endTime</code>
+                および <code>valueString</code>
+                というプロパティが含まれます。
+                <code>StartTime</code> および <code>EndTime</code>
+                がイベントの期間を表します。そして <code>valueString</code>
+                は、よりわかりやすい形式 (たとえば "This Afternoon")
+                で指定することができます。<code>valueString</code>
+                を使用した場合でも、<code>startTime</code>
+                および <code>endTime</code>
+                には正しい値を設定する必要があることに注意しましょう。
             </para>
             <para>
-                All-day events can be scheduled by specifying only the date omitting the time when setting
+                全日のイベントを作成するには、
                 <code>startTime</code>
-                and
+                および
                 <code>endTime</code>
-                . Likewise, zero-duration events can be specified by omitting the
-                <code>endTime</code>
-                . In all cases, date/time values should be provided in
+                で日付のみを指定し、時刻は省略します。
+                同様に、期間がゼロのイベントを作成する場合は
+                <code>endTime</code> を省略します。
+                すべての場合について、日付や時刻は
                 <ulink url="http://www.ietf.org/rfc/rfc3339.txt">RFC3339</ulink>
-                format.
+                形式で指定しなければなりません。
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Schedule the event to occur on December 05, 2007 at 2 PM PST (UTC-8) with a duration of one hour.
+// 2007 年 12 月 5 日の午後 2 時 (UTC-8) から 1 時間のイベントを設定します
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
 
-// Specify a optional human readable value for the above date
+// オプションで、可読形式の値を設定します
 $when->valueString = "This Afternoon";
 
-// Apply the when property to an event
+// when プロパティをイベントに追加します
 $event->when = $when;]]>
             </programlisting>
             <para>
-                The
-                <code>when</code>
-                attribute also controls when reminders are sent to a user. Reminders are stored in an array and each event may have up to find reminders associated with it.
+                <code>when</code> 属性では、ユーザへのリマインダーをいつ送信するかを指定することもできます。
+                リマインダーは配列形式で保存し、各イベントには 5 つまでのリマインダーを関連づけることができます。
             </para>
             <para>
-                For a
-                <code>reminder</code>
-                to be valid, it needs to have two attributes set:
-                <code>method</code>
-                and a time.
-                <code>Method</code>
-                can accept one of the following strings: "alert", "email", or "sms". The time should be entered as an integer and can be set with either the property
-                <code>minutes</code>
-                ,
-                <code>hours</code>
-                ,
-                <code>days</code>
-                , or
-                <code>absoluteTime</code>
-                . However, a valid request may only have one of these attributes set. If a mixed time is desired, convert to the most precise unit available. For example, 1 hour and 30 minutes should be entered as 90 minutes.
+                <code>reminder</code> を指定するには、少なくともふたつの属性
+                <code>method</code> と time を指定する必要があります。
+                <code>method</code> には "alert"、"email"
+                あるいは "sms" を文字列で指定します。time
+                は整数値で指定します。
+                <code>minutes</code>、<code>hours</code>、<code>days</code>
+                を指定するか、あるいは
+                <code>absoluteTime</code> を指定します。
+                しかし、指定するのはこれらの中のどれかひとつのみとしなければなりません。
+                複数の単位が必要な場合は、一番小さい単位に換算して指定します。
+                たとえば、1 時間 30 分の場合は 90 分と指定しなければなりません。
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Create a new reminder object. It should be set send an email message to the user 10 minutes beforehand.
+// 新しいリマインダーオブジェクトを作成します。予定の 10 分前に、メールでメッセージを送るようにします
 $reminder = $service->newReminder();
 $reminder->method = "email";
 $reminder->minutes = "10";
 
-// Apply the reminder to an existing event's when property
+// 既存のイベントの when プロパティにリマインダーを適用します
 $when = $event->when[0];
 $when->reminders = array($reminder);]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.recurring">
-            <title>Creating Recurring Events</title>
+            <title>繰り返し発生するイベントの作成</title>
             <para>
-                Recurring events are created the same way as single-occurrence events, except a recurrence attribute should be provided instead of a where attribute. The recurrence attribute should hold a string describing the event's recurrence pattern using properties defined in the iCalendar standard (
+                繰り返し発生するイベントの作成方法は、一回しか発生しないイベントの場合と同じです。
+                ただ、when 属性の代わりに recurrence 属性を指定する必要があります。
+                recurrence 属性は、そのイベントの繰り返しパターンを文字列で指定します。
+                この文字列は、iCalendar の標準規格 (
                 <ulink url="http://www.ietf.org/rfc/rfc2445.txt">RFC 2445</ulink>
-                ).
+                ) で定義されているものを使用します。
             </para>
             <para>
-                Exceptions to the recurrence pattern will usually be specified by a distinct
-                <code>recurrenceException</code>
-                attribute. However, the iCalendar standard provides a secondary format for defining recurrences, and the possibility that either may be used must be accounted for.
+                繰り返しパターンの例外は、別途
+                <code>recurrenceException</code> 属性で指定します。
+                しかし、iCalendar の標準規格では第二の繰り返しパターンを定義することができます。
+                どちらかを使用するといいでしょう。
             </para>
             <para>
-                Due to the complexity of parsing recurrence patterns, further information on this them is outside the scope of this document. However, more information can be found in the
-                <ulink url="http://code.google.com/apis/gdata/elements.html#gdRecurrence">Common Elements section of the Google Data APIs Developer Guide</ulink>
-                , as well as in RFC 2445.
+                繰り返しパターンの解析は複雑なので、詳細はこのドキュメントでは扱いません。
+                詳細な情報を知りたい場合は、
+                <ulink url="http://code.google.com/apis/gdata/elements.html#gdRecurrence">Google
+                Data APIs Developer Guide の Common Elements セクション</ulink>
+                あるいは RFC 2445 を参照ください。
             </para>
             <programlisting role="php"><![CDATA[<?php
- // Create a new entry using the calendar service's magic factory method
+ // カレンダーサービスのマジックメソッドで、新規エントリを作成します
 $event= $service->newEventEntry();
 
-// Populate the event with the desired information
-// Note that each attribute is crated as an instance of a matching class
+// イベントの情報を設定します
+// 各属性は、対応するクラスのインスタンスとして作成されることに注意しましょう
 $event->title = $service->newTitle("My Recurring Event");
 $event->where = array($service->newWhere("Palo Alto, California"));
 $event->content = $service->newContent(" This is my other awesome event, occurring all-day every Tuesday from 2007-05-01 until 207-09-04. No RSVP required.");
 
-// Set the duration and frequency by specifying a recurrence pattern.
+// 繰り返しパターンの期間と頻度を指定します
 
 $recurrence = "DTSTART;VALUE=DATE:20070501\r\n" .
         "DTEND;VALUE=DATE:20070502\r\n" .
@@ -649,109 +699,121 @@ $recurrence = "DTSTART;VALUE=DATE:20070501\r\n" .
 
 $event->recurrence = $service->newRecurrence($recurrence);
 
-// Upload the event to the calendar server
-// A copy of the event as it is recorded on the server is returned
+// イベントをカレンダーサーバにアップロードします
+// サーバに記録したイベントのコピーが返されます
 $newEvent = $service->insertEvent($event);]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.quickadd">
-            <title>Using QuickAdd</title>
+            <title>QuickAdd の使用法</title>
             <para>
-                QuickAdd is a feature which allows events to be created using free-form text entry. For example, the string "Dinner at Joe's Diner on Thursday" would create an event with the title "Dinner", location "Joe's Diner", and date "Thursday". To take advantage of QuickAdd, create a new
-                <code>QuickAdd</code>
-                property set to "true" and store the freeform text as a
-                <code>content</code>
-                property.
+                QuickAdd とは、自由形式のテキストでイベントを作成する機能のことです。
+                たとえば、"Dinner at Joe's Diner on Thursday" という文字列を指定すると、
+                タイトルが "Dinner"、場所が "Joe's Diner"、日付が "Thursday"
+                のイベントが作成されます。QuickAdd 機能を使用するには、
+                <code>QuickAdd</code> プロパティを "true" に設定し、
+                テキストを <code>content</code> プロパティに指定します。
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Create a new entry using the calendar service's magic factory method
+// カレンダーサービスのマジックメソッドで、新規エントリを作成します
 $event= $service->newEventEntry();
 
-// Populate the event with the desired information
+// イベントの情報を設定します
 $event->content= $service->newContent("Dinner at Joe's Diner on Thursday");
 $event->quickAdd = $service->newQuickAdd("true");
 
-// Upload the event to the calendar server
-// A copy of the event as it is recorded on the server is returned
+// イベントをカレンダーサーバにアップロードします
+// サーバに記録したイベントのコピーが返されます
 $newEvent = $service->insertEvent($event);]]>
             </programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar.modifying_events">
-        <title>Modifying Events</title>
+        <title>イベントの変更</title>
         <para>
-            Once an instance of an event has been obtained, the event's attributes can be locally modified in the same way as when creating an event. Once all modifications are complete, calling the event's
-            <code>save()</code>
-            method will upload the changes to the calendar server and return a copy of the event as it was created on the server.
+            イベントのインスタンスを取得したら、
+            新しいイベントを作成する場合と同じようにしてその属性を変更できます。
+            変更が完了したら、そのイベントの <code>save()</code>
+            メソッドをコールすると、変更内容をカレンダーサーバにアップロードします。
+            そして、更新後のイベントのコピーを返します。
         </para>
         <para>
-            In the event another user has modified the event since the local copy was retrieved,
-            <code>save()</code>
-            will fail and the server will return a 409 (Conflict) status code. To resolve this a fresh copy of the event must be retrieved from the server before attempting to resubmit any modifications.
+            イベントを取得した後で別のユーザがそのイベントを変更していた場合、
+            <code>save()</code> は失敗し、ステータスコード 409 (Conflict)
+            を返します。これを解決するには、
+            変更を加える直前に最新のコピーを取得する必要があります。
         </para>
         <programlisting role="php"><![CDATA[<?php
-// Get the first event in the user's event list
+// ユーザのイベントリストから最初のイベントを取得します
 $event = $eventFeed[0];
 
-// Change the title to a new value
+// タイトルを変更します
 $event->title = $service->newTitle("Woof!");
 
-// Upload the changes to the server
+// 変更をサーバにアップロードします
 try {
     $event->save();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "エラー: " . $e->getResponse();
 }]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.deleting_events">
-        <title>Deleting Events</title>
+        <title>イベントの削除</title>
         <para>
-            Calendar events can be deleted either by calling the calendar service's
-            <code>delete()</code>
-            method and providing the edit URL of an event or by calling an existing event's own
-            <code>delete()</code>
-            method.
+            カレンダーのイベントを削除する方法には二通りあります。
+            ひとつはカレンダーサービスの <code>delete()</code>
+            メソッドにそのイベントの編集用 URL を指定する方法、
+            もうひとつはそのイベント自身の <code>delete()</code>
+            メソッドをコールすることです。
         </para>
         <para>
-            In either case, the deleted event will still show up on a user's private event feed if an
-            <code>updateMin</code>
-            query parameter is provided. Deleted events can be distinguished from regular events because they will have their
-            <code>eventStatus</code>
-            property set to "http://schemas.google.com/g/2005#event.canceled".
+            どちらの場合も、クエリのパラメータ <code>updateMin</code>
+            を指定した場合は削除後もそのイベントが
+            プライベートイベントフィードとして残ります。
+            削除されたイベントと通常のイベントを区別するには
+            <code>eventStatus</code> プロパティを確認します。
+            削除されたイベントは、このプロパティが
+            "http://schemas.google.com/g/2005#event.canceled"
+            に設定されています。
         </para>
         <programlisting role="php"><![CDATA[<?php
-// Option 1: Events can be deleted directly
+// 方法 1: イベントを直接削除します
 $event->delete();]]>
         </programlisting>
         <programlisting role="php"><![CDATA[<?php
-// Option 2: Events can be deleted supplying the edit URL of the event to the calendar service, if known
+// 方法 2: カレンダーサービスに、削除したいイベントの編集 URL を渡します
 $service->delete($event->getEditLink()->href);]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.comments">
-        <title>Accessing Event Comments</title>
-        <para>When using the full event view, comments are not directly stored within an entry. Instead, each event contains a URL to it's associated comment feed which must be manually requested.</para>
+        <title>イベントのコメントへのアクセス</title>
         <para>
-            Working with comments is fundamentally similar to working with events, with the only significant difference being that a different feed and event class should be used and that the additional meta-data for events such as where and when does not exist for comments. Specifically, the comment's author is stored in the
-            <code>author</code>
-            property, and the comment text is stored in the
-            <code>content</code>
-            property.
+            full イベントビューでは、コメントはイベントのエントリに保存されません。
+            その代わりとして、各イベントにはコメントの URL が含まれており、
+            それを使用して手動でコメントを取得することになります。
+        </para>
+        <para>
+            コメントの操作方法は、イベントの場合とよく似ています。
+            ただ、使用するフィードクラスやエントリクラスは異なります。
+            またイベントのメタデータにある where や when
+            といったプロパティはコメントにはありません。コメントの発言者は
+            <code>author</code> プロパティに、そしてコメントの本文は
+            <code>content</code> プロパティに格納されます。
         </para>
         <programlisting role="php"><![CDATA[<?php
-// Extract the comment URL from the first event in a user's feed list
+// コメントの URL を、フィードリストの最初のイベントから取得します
 $event = $eventFeed[0];
 $commentUrl = $event->comments->feedLink->url;
 
-// Retrieve the comment list for the event
+// そのイベントのコメント一覧を取得します
 try {
 $commentFeed = $service->getFeed($commentUrl);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "エラー: " . $e->getResponse();
 }
 
-// Output each comment as an HTML list
+// 各コメントを HTML のリストで出力します
 echo "<ul>";
 foreach ($commentFeed as $comment) {
     echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
