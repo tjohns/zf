@@ -10,10 +10,8 @@
             Create movable memory objects using the <code>create([$data])</code>
             method of the memory manager:
             <programlisting role="php"><![CDATA[<?php
-
-$memObject = $memoryManager->create($data);
-
-?>]]></programlisting>
+$memObject = $memoryManager->create($data);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -31,10 +29,8 @@ $memObject = $memoryManager->create($data);
             Create locked memory objects using the <code>createLocked([$data])</code>
             method of the memory manager:
             <programlisting role="php"><![CDATA[<?php
-
-$memObject = $memoryManager->createLocked($data);
-
-?>]]></programlisting>
+$memObject = $memoryManager->createLocked($data);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -74,7 +70,6 @@ $memObject = $memoryManager->createLocked($data);
             Use the memory container (movable or locked) '<code>value</code>'
             property to operate with memory object data:
             <programlisting role="php"><![CDATA[<?php
-
 $memObject = $memoryManager->create($data);
 
 echo $memObject->value;
@@ -85,9 +80,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);
-
-?>]]></programlisting>
+$memObject->value = substr($memObject->value, $start, $length);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -112,10 +106,8 @@ $memObject->value = substr($memObject->value, $start, $length);
             <title>getRef() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-
-public function &getRef();
-
-?>]]></programlisting>
+public function &getRef();]]>
+            </programlisting>
 
             <para>
                 The <code>getRef()</code> method returns reference to the object value.
@@ -141,7 +133,6 @@ public function &getRef();
                 So, it's a good idea to use the <code>getRef()</code> method
                 for value data processing:
                 <programlisting role="php"><![CDATA[<?php
-
 $memObject = $memoryManager->create($data);
 
 $value = &$memObject->getRef();
@@ -149,8 +140,8 @@ $value = &$memObject->getRef();
 for ($count = 0; $count < strlen($value); $count++) {
     $char = $value[$count];
     ...
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </para>
 
         </sect3>
@@ -160,15 +151,12 @@ for ($count = 0; $count < strlen($value); $count++) {
             <title>touch() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-
-public function touch();
-
-?>]]></programlisting>
+public function touch();]]>
+            </programlisting>
             <para>
                 The <code>touch()</code> method should be used in common with
                 <code>getRef()</code>. It signals that object value has been changed:
                 <programlisting role="php"><![CDATA[<?php
-
 $memObject = $memoryManager->create($data);
 ...
 
@@ -182,9 +170,8 @@ for ($count = 0; $count < strlen($value); $count++) {
     ...
 }
 
-$memObject->touch();
-
-?>]]></programlisting>
+$memObject->touch();]]>
+                </programlisting>
 
             </para>
 
@@ -195,10 +182,8 @@ $memObject->touch();
             <title>lock() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-
-public function lock();
-
-?>]]></programlisting>
+public function lock();]]>
+            </programlisting>
 
             <para>
                 The <code>lock()</code> methods locks object in memory.
@@ -214,7 +199,6 @@ public function lock();
                 returned by the <code>getRef()</code> method is valid until you
                 unlock the object:
                 <programlisting role="php"><![CDATA[<?php
-
 $memObject1 = $memoryManager->create($data1);
 $memObject2 = $memoryManager->create($data2);
 ...
@@ -231,9 +215,8 @@ for ($count = 0; $count < strlen($value2); $count++) {
 
 $memObject1->touch();
 $memObject1->unlock();
-$memObject2->unlock();
-
-?>]]></programlisting>
+$memObject2->unlock();]]>
+                </programlisting>
             </para>
 
         </sect3>
@@ -243,10 +226,8 @@ $memObject2->unlock();
             <title>unlock() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-
-public function unlock();
-
-?>]]></programlisting>
+public function unlock();]]>
+            </programlisting>
 
             <para>
                 <code>unlock()</code> method unlocks object when it's no longer
@@ -260,10 +241,8 @@ public function unlock();
             <title>isLocked() method</title>
 
             <programlisting role="php"><![CDATA[<?php
-
-public function isLocked();
-
-?>]]></programlisting>
+public function isLocked();]]>
+            </programlisting>
 
             <para>
                 The <code>isLocked()</code> method can be used to check if

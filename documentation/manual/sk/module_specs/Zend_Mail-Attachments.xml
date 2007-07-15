@@ -6,24 +6,22 @@
         should be transferred with base64 encoding, and is handled as an attachment. These assumptions can be
         overridden by passing more parameters to <code>createAttachment()</code>:
     </para>
-    <example>
+    <example id="zend.mail.attachments.example-1">
         <title>E-Mail Messages with Attachments</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 // build message...
 $mail->createAttachment($someBinaryString);
-$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
-?>]]>   </programlisting>
+$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);]]>
+        </programlisting>
     </example>
     <para>
         If you want more control over the MIME part generated for this attachment you can use the return value
         of <code>createAttachment()</code> to modify its attributes. The <code>createAttachment()</code> method
         returns a <code>Zend_Mime_Part</code> object:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 
@@ -33,13 +31,12 @@ $at->disposition = Zend_Mime::DISPOSITION_INLINE;
 $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
-$mail->send();
-?>]]></programlisting>
+$mail->send();]]>
+    </programlisting>
     <para>
         An alternative is to create an instance of Zend_Mime_Part and add it with <code>addAttachment()</code>:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 
@@ -51,8 +48,8 @@ $at->filename    = 'test.gif';
 
 $mail->addAttachment($at);
 
-$mail->send();
-?>]]></programlisting>
+$mail->send();]]>
+    </programlisting>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -22,8 +22,8 @@ $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
   )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             The example above shows adding the "<code>--verbose</code>" option
@@ -54,8 +54,8 @@ $opts->setHelp(
         'b' => 'This option chooses banana, with required integer parameter',
         'p' => 'This option chooses pear, with optional string parameter'
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             If you declared options with aliases, you can use any of the
@@ -91,8 +91,8 @@ $opts->setAliases(
         'a' => 'apfel',
         'p' => 'pear'
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
         <para>
             In the example above, after declaring these aliases,
@@ -132,8 +132,8 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts->addArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
 
 // Substitute a new array for the existing arguments
-$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
-?>]]></programlisting>
+$opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));]]>
+            </programlisting>
         </example>
     </sect2>
 
@@ -211,8 +211,8 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Using setOption()</title>
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
-$opts->setOption('ignoreCase', true);
-?>]]></programlisting>
+$opts->setOption('ignoreCase', true);]]>
+            </programlisting>
         </example>
         <para>
             The argument to the <code>setOptions()</code> method is
@@ -231,8 +231,8 @@ $opts->setOptions(
         'ignoreCase' => true,
         'dashDash'   => false
     )
-);
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
     </sect2>
 

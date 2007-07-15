@@ -45,7 +45,7 @@
         </para>
     </sect2>
 
-    <sect2>
+    <sect2 id="zend.http.client.adapters.socket">
         <title>The Socket Adapter</title>
         <para>
             The default connection adapter is the Zend_Http_Client_Adapter_Socket
@@ -71,22 +71,21 @@
                 </para>
             </footnote>.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.socket.example-1">
             <title>Changing the HTTPS transport layer</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Set the configuration parameters
-    $config = array(
-        'adapter'      => 'Zend_Http_Client_Adapter_Socket',
-        'ssltransport' => 'tls'
-    );
+            <programlisting role="php"><![CDATA[<?php
+// Set the configuration parameters
+$config = array(
+    'adapter'      => 'Zend_Http_Client_Adapter_Socket',
+    'ssltransport' => 'tls'
+);
 
-    // Instantiate a client object
-    $client = Zend_Http_Client('https://www.example.com', $config);
+// Instantiate a client object
+$client = Zend_Http_Client('https://www.example.com', $config);
 
-    // The following request will be sent over a TLS secure connection.
-    $response = $client->request();
-?>]]></programlisting>
+// The following request will be sent over a TLS secure connection.
+$response = $client->request();]]>
+            </programlisting>
         </example>
         <para>
             The result of the example above will be similar to opening a TCP
@@ -97,7 +96,7 @@
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.proxy">
+    <sect2 id="zend.http.client.adapters.proxy">
         <title>The Proxy Adapter</title>
         <para>
             The Zend_Http_Client_Adapter_Proxy adapter is similar to the default
@@ -110,7 +109,7 @@
         <para>
             Using the Proxy adapter requires several additional configuration
             parameters to be set, in addition to the default 'adapter' option:
-            <table>
+            <table id="zend.http.client.adapters.proxy.table">
                 <title>Zend_Http_Client configuration parameters</title>
                 <tgroup cols="4">
                     <thead>
@@ -174,24 +173,23 @@
             accepted by the Zend_Http_Client::setAuth() method. Currently, only
             basic authentication (Zend_Http_Client::AUTH_BASIC) is supported.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.proxy.example-1">
             <title>Using Zend_Http_Client behind a proxy server</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Set the configuration parameters
-    $config = array(
-        'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
-        'proxy_host' => 'proxy.int.zend.com',
-        'proxy_port' => 8000,
-        'proxy_user' => 'shahar.e',
-        'proxy_pass' => 'bananashaped'
-    );
+            <programlisting role="php"><![CDATA[<?php
+// Set the configuration parameters
+$config = array(
+    'adapter'    => 'Zend_Http_Client_Adapter_Proxy',
+    'proxy_host' => 'proxy.int.zend.com',
+    'proxy_port' => 8000,
+    'proxy_user' => 'shahar.e',
+    'proxy_pass' => 'bananashaped'
+);
 
-    // Instantiate a client object
-    $client = Zend_Http_Client('http://www.example.com', $config);
+// Instantiate a client object
+$client = Zend_Http_Client('http://www.example.com', $config);
 
-    // Continue working...
-?>]]></programlisting>
+// Continue working...]]>
+            </programlisting>
         </example>
         <para>
             As mentioned, if proxy_host is not set or is set to a blank string,
@@ -201,7 +199,7 @@
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.test">
+    <sect2 id="zend.http.client.adapters.test">
         <title>The Test Adapter</title>
         <para>
             Sometimes, it is very hard to test code that relies on HTTP connections.
@@ -223,33 +221,32 @@
             object. Once set, your Test adapter will always return this response,
             without even performing an actual HTTP request.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-1">
             <title>Testing Against a Single HTTP Response Stub</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Instantiate a new adapter and client
-    $adapter = new Zend_Http_Client_Adapter_Test();
-    $client = Zend_Http_Client('http://www.example.com', array(
-        'adapter' => $adapter
-    ));
+            <programlisting role="php"><![CDATA[<?php
+// Instantiate a new adapter and client
+$adapter = new Zend_Http_Client_Adapter_Test();
+$client = Zend_Http_Client('http://www.example.com', array(
+    'adapter' => $adapter
+));
 
-    // Set the expected response
-    $adapter->setResponse(
-        "HTTP/1.1 200 OK"        . "\r\n" .
-        "Content-type: text/xml" . "\r\n" .
-                                   "\r\n" .
-        '<?xml version="1.0" encoding="UTF-8"?>' .
-        '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
-        '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
-        '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
-        '  <channel>' .
-        '    <title>Premature Optimization</title>' .
-        // and so on...
-        '</rss>');
+// Set the expected response
+$adapter->setResponse(
+    "HTTP/1.1 200 OK"        . "\r\n" .
+    "Content-type: text/xml" . "\r\n" .
+                               "\r\n" .
+    '<?xml version="1.0" encoding="UTF-8"?>' .
+    '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+    '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
+    '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
+    '  <channel>' .
+    '    <title>Premature Optimization</title>' .
+    // and so on...
+    '</rss>');
 
-    $response = $client->request('GET');
-    // .. continue parsing $response..
-?>]]></programlisting>
+$response = $client->request('GET');
+// .. continue parsing $response..]]>
+            </programlisting>
         </example>
         <para>
             The above example shows how you can preset your HTTP client to
@@ -266,40 +263,39 @@
             opportunity to set the next response(s) your program might need
             before returning to the caller.
         </para>
-        <example>
+        <example id="zend.http.client.adapters.test.example-2">
             <title>Testing Against Multiple HTTP Response Stubs</title>
-            <programlisting role="php">
-<![CDATA[<?php
-    // Instantiate a new adapter and client
-    $adapter = new Zend_Http_Client_Adapter_Test();
-    $client = Zend_Http_Client('http://www.example.com', array(
-        'adapter' => $adapter
-    ));
+            <programlisting role="php"><![CDATA[<?php
+// Instantiate a new adapter and client
+$adapter = new Zend_Http_Client_Adapter_Test();
+$client = Zend_Http_Client('http://www.example.com', array(
+    'adapter' => $adapter
+));
 
-    // Set the first expected response
-    $adapter->setResponse(
-        "HTTP/1.1 302 Found"      . "\r\n" .
-        "Location: /"             . "\r\n" .
-        "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" .
-        '<html>' .
-        '  <head><title>Moved</title></head>' .
-        '  <body><p>This page has moved.</p></body>' .
-        '</html>');
+// Set the first expected response
+$adapter->setResponse(
+    "HTTP/1.1 302 Found"      . "\r\n" .
+    "Location: /"             . "\r\n" .
+    "Content-Type: text/html" . "\r\n" .
+                                "\r\n" .
+    '<html>' .
+    '  <head><title>Moved</title></head>' .
+    '  <body><p>This page has moved.</p></body>' .
+    '</html>');
 
-    // Set the next successive response
-    $adapter->addResponse(
-        "HTTP/1.1 200 OK"         . "\r\n" .
-        "Content-Type: text/html" . "\r\n" .
-                                    "\r\n" .
-        '<html>' .
-        '  <head><title>My Pet Store Home Page</title></head>' .
-        '  <body><p>...</p></body>' .
-        '</html>');
+// Set the next successive response
+$adapter->addResponse(
+    "HTTP/1.1 200 OK"         . "\r\n" .
+    "Content-Type: text/html" . "\r\n" .
+                                "\r\n" .
+    '<html>' .
+    '  <head><title>My Pet Store Home Page</title></head>' .
+    '  <body><p>...</p></body>' .
+    '</html>');
 
-    // inject the http client object ($client) into your object
-    // being tested and then test your object's behavior below
-?>]]></programlisting>
+// inject the http client object ($client) into your object
+// being tested and then test your object's behavior below]]>
+            </programlisting>
         </example>
         <para>
             The setResponse() method clears any responses in the
@@ -327,7 +323,7 @@
         </para>
     </sect2>
 
-    <sect2 id="zend.http.client.adapter.extending">
+    <sect2 id="zend.http.client.adapters.extending">
         <title>Creating your own connection adapters</title>
         <para>
             You can create your own connection adapters and use them. You could, for
@@ -341,10 +337,9 @@
             shows the skeleton of a user-implemented adapter class. All the public
             functions defined in this example must be defined in your adapter as well:
         </para>
-        <example>
+        <example id="zend.http.client.adapters.extending.example-1">
             <title>Creating your own connection adapter</title>
-            <programlisting role="php">
-<![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
 {
     /**
@@ -409,8 +404,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
 // Then, you could use this adapter:
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
-));
-]]></programlisting>
+));]]>
+            </programlisting>
         </example>
     </sect2>
 </sect1>

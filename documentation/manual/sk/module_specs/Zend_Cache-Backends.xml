@@ -9,8 +9,8 @@
         <para>
             Available options are :
         </para>
-        <table>
-            <title>Available options</title>
+        <table id="zend.cache.backends.file.table">
+            <title>File backend options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -101,8 +101,8 @@
         <para>
             Available options are :
         </para>
-        <table>
-            <title>Available options</title>
+        <table id="zend.cache.backends.sqlite.table">
+            <title>Sqlite backend options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -152,8 +152,8 @@
         <para>
             Available options are :
         </para>
-        <table>
-            <title>Available options</title>
+        <table id="zend.cache.backends.memcached.table">
+            <title>Memcached backend options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -216,8 +216,8 @@
             <code>Zend_Cache::factory()</code> method:
         </para>
         <programlisting role="php"><![CDATA[<?php
-$cache = Zend_Cache::factory('Core', 'Zend Platform');
-?>]]></programlisting>
+$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        </programlisting>
         <para>
             There is no options for this backend.
         </para>

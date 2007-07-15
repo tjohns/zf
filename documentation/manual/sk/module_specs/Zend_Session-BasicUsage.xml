@@ -21,7 +21,8 @@ require_once 'Zend/Session/Namespace.php';
 
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
-// $myNamespace corresponds to $_SESSION['myNamespace']]]></programlisting>
+// $myNamespace corresponds to $_SESSION['myNamespace']]]>
+        </programlisting>
 
         It is possible to use Zend_Session in conjunction with other code that uses <code>$_SESSION</code> directly. To
         avoid problems, however, it is highly recommended that such code only uses parts of <code>$_SESSION</code> that
@@ -55,7 +56,8 @@ if (isset($defaultNamespace->numberOfPageRequests)) {
     $defaultNamespace->numberOfPageRequests = 1; // first time
 }
 
-echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;]]></programlisting>
+echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;]]>
+            </programlisting>
 
         </example>
 
@@ -86,7 +88,8 @@ $authNamespace->user = "myusername";
 
 // in a web services component
 $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
-$webServiceNamespace->user = "mywebusername";]]></programlisting>
+$webServiceNamespace->user = "mywebusername";]]>
+            </programlisting>
 
         </example>
 
@@ -101,7 +104,8 @@ $webServiceNamespace->user = "mywebusername";]]></programlisting>
 
             <programlisting role="php"><![CDATA[<?php
 $_SESSION['Zend_Auth']['user'] = "myusername";
-$_SESSION['Some_Web_Service']['user'] = "mywebusername";]]></programlisting>
+$_SESSION['Some_Web_Service']['user'] = "mywebusername";]]>
+            </programlisting>
 
         </example>
 
@@ -128,7 +132,8 @@ $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </example>
 
@@ -163,7 +168,8 @@ if (!isset($namespace->bar)) {
     echo "\$namespace->bar not set\n";
 }
 
-unset($namespace->foo);]]></programlisting>
+unset($namespace->foo);]]>
+            </programlisting>
 
         </example>
 

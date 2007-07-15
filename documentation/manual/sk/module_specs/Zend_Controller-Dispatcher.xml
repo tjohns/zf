@@ -63,8 +63,8 @@ public function bazAction()
     // forward to an action in another controller in another module,
     // Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.dispatcher.subclassing">
@@ -211,8 +211,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @return boolean
      */
     public function isValidModule($module);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             In most cases, however, you should simply extend the abstract class

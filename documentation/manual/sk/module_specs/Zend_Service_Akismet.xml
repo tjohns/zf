@@ -53,8 +53,8 @@ if ($akismet->verifyKey($apiKey) {
 echo "Key is valid.\n";
 } else {
 echo "Key is not valid\n";
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             If called with no arguments, <code>verifyKey()</code> uses
@@ -173,7 +173,7 @@ echo "Key is not valid\n";
             false, and throw an exception if the API key is invalid.
         </para>
 
-        <example>
+        <example id="zend.service.akismet.isspam.example-1">
             <title>isSpam() Usage</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -189,8 +189,8 @@ if ($akismet->isSpam($data)) {
     echo "Sorry, but we think you're a spammer.";
 } else {
     echo "Welcome to our site!";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -215,7 +215,7 @@ if ($akismet->isSpam($data)) {
             value. An exception will be raised if the API key used is invalid.
         </para>
 
-        <example>
+        <example id="zend.service.akismet.submitspam.example-1">
             <title>submitSpam() Usage</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -227,8 +227,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitSpam($data));
-?>]]></programlisting>
+$akismet->submitSpam($data));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -256,7 +256,7 @@ $akismet->submitSpam($data));
             is invalid.
         </para>
 
-        <example>
+        <example id="zend.service.akismet.submitham.example-1">
             <title>submitHam() Usage</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -268,8 +268,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitHam($data));
-?>]]></programlisting>
+$akismet->submitHam($data));]]>
+            </programlisting>
         </example>
 
         <para>

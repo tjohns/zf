@@ -23,26 +23,49 @@
             <para>The Google Calendar API allows access to both public and private calendar feeds. Public feeds do not require authentication, but are read-only and offer reduced functionality. Private feeds offers the most complete functionality but requires an authenticated connection to the calendar servers. There are three authentication schemes that are supported by Google Calendar:</para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>ClientAuth</firstterm>
-                    provides direct username/password authentication to the calendar servers. Since this scheme requires that users provide your application with their password, this authentication is only recommended when other authentication schemes are insufficient.
+                    <para>
+                        <firstterm>ClientAuth</firstterm>
+                        provides direct username/password authentication to the
+                        calendar servers. Since this scheme requires that users
+                        provide your application with their password, this
+                        authentication is only recommended when other
+                        authentication schemes are insufficient.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>AuthSub</firstterm>
-                    allows authentication to the calendar servers via a Google proxy server. This provides the same level of convenience as ClientAuth but without the security risk, making this an ideal choice for web-based applications.
+                    <para>
+                        <firstterm>AuthSub</firstterm>
+                        allows authentication to the calendar servers via a
+                        Google proxy server. This provides the same level of
+                        convenience as ClientAuth but without the security
+                        risk, making this an ideal choice for web-based
+                        applications.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>MagicCookie</firstterm>
-                    allows authentication based on a semi-random URL available from within the Google Calendar interface. This is the simplest authentication scheme to implement, but requires that users manually retrieve their secure URL before they can authenticate, doesn't provide access to calendar lists, and is limited to read-only access.
+                    <para>
+                        <firstterm>MagicCookie</firstterm>
+                        allows authentication based on a semi-random URL
+                        available from within the Google Calendar interface.
+                        This is the simplest authentication scheme to
+                        implement, but requires that users manually retrieve
+                        their secure URL before they can authenticate, doesn't
+                        provide access to calendar lists, and is limited to
+                        read-only access.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
                 The
                 <code>Zend_Gdata</code>
-                library provides support for all three authentication schemes. The rest of this chapter will assume that you are familiar the authentication schemes available and how to create an appropriate authenticated connection. For more information, please see section the
+                library provides support for all three authentication schemes.
+                The rest of this chapter will assume that you are familiar the
+                authentication schemes available and how to create an
+                appropriate authenticated connection. For more information,
+                please see section the
                 <link linkend="zend.gdata.introduction.authentication">Authentication section</link>
                 of this manual or the
-                <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>
-                .
+                <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>.
             </para>
         </sect3>
         <sect3 id="zend.gdata.calendar.connecting.service">
@@ -55,9 +78,9 @@
             <para>
                 Once deciding on an authentication scheme, the next step is to create an instance of
                 <code>Zend_Gdata_Calendar</code>
-                . This class takes in an instance of
+                . The class constructor takes an instance of
                 <code>Zend_Http_Client</code>
-                as a single argument. This provides an interface for AuthSub and ClientAuth authentication, as both of these creation of a special authenticated HTTP client. If no arguments are provided, an unauthenticated instance of
+                as a single argument. This provides an interface for AuthSub and ClientAuth authentication, as both of these require creation of a special authenticated HTTP client. If no arguments are provided, an unauthenticated instance of
                 <code>Zend_Http_Client</code>
                 will be automatically created.
             </para>
@@ -78,9 +101,9 @@ $pass = "pa$$w0rd";
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Create an instance of the Calendar service
-$service = new Zend_Gdata_Calendar($client);
-?>]]></programlisting>
-            <para>A Calender service using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
+$service = new Zend_Gdata_Calendar($client);]]>
+            </programlisting>
+            <para>A Calendar service using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
@@ -162,8 +185,8 @@ session_start();
 
 // Create an instance of the Calendar service, redirecting the user
 // to the AuthSub server if necessary.
-$service = new Zend_Gdata_Calendar(getAuthSubHttpClient());
-?>]]></programlisting>
+$service = new Zend_Gdata_Calendar(getAuthSubHttpClient());]]>
+            </programlisting>
             <para>Finally, an unauthenticated server can be created for use with either public feeds or MagicCookie authentication:</para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
@@ -173,8 +196,8 @@ Zend_Loader::loadClass('Zend_Gdata_Calendar');
 
 // Create an instance of the Calendar service using an unauthenticated HTTP client
 
-$service = new Zend_Gdata_Calendar();
-?>]]></programlisting>
+$service = new Zend_Gdata_Calendar();]]>
+            </programlisting>
             <para>Note that MagicCookie authentication is not supplied with the HTTP connection, but is instead specified along with the desired visibility when submitting queries. See the section on retrieving events below for an example.</para>
         </sect3>
     </sect2>
@@ -195,8 +218,8 @@ try {
     $listFeed= $service->getCalendarListFeed();
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getResponse();
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
         <para>
             Calling
             <code>getCalendarListFeed()</code>
@@ -212,8 +235,8 @@ echo "<ul>";
 foreach ($listFeed as $calendar) {
     echo "<li>" . $calendar->title . " (Event Feed: " . $calendar->id . ")</li>";
 }
-echo "</ul>";
-?>]]></programlisting>
+echo "</ul>";]]>
+        </programlisting>
     </sect2>
     <sect2 id="zend.gdata.event_retrieval">
         <title>Retrieving Events</title>
@@ -226,27 +249,47 @@ echo "</ul>";
             <code>Zend_Gdata_Calendar_EventEntry</code>
             . As before, the iterator and accessors contained within the event feed instance allow inspection of individual events.
         </para>
-        <sect3 id="zend.gdata.event_retrieveal.queries">
+        <sect3 id="zend.gdata.event_retrieval.queries">
             <title>Queries</title>
             <para>
-                When retrieveing events using the Calendar API, specially constructed query URLs are used to describe what events should be returned. The
+                When retrieving events using the Calendar API, specially constructed query URLs are used to describe what events should be returned. The
                 <code>Zend_Gdata_Calendar_EventQuery</code>
-                class simplifies this task by automatically constructing a query URL based on provided parameters. A full list of these paremeters is available at the
-                <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">Queries section of the Google Data APIs Protocl Reference</ulink>
+                class simplifies this task by automatically constructing a query URL based on provided parameters. A full list of these parameters is available at the
+                <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">Queries section of the Google Data APIs Protocol Reference</ulink>
                 . However, there are three parameters that are worth special attention:
             </para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>User</firstterm>
-                    is used to specify the user whose calender is being searched for, and is specified as an email address. If no user is provided, "default" will be used instead to indicate the currently authenticated user (if authenticated).
+                    <para>
+                        <firstterm>User</firstterm>
+                        is used to specify the user whose calendar is being
+                        searched for, and is specified as an email address. If
+                        no user is provided, "default" will be used instead to
+                        indicate the currently authenticated user (if
+                        authenticated).
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Visibility</firstterm>
-                    specifies whether a users public or private calendar should be searched. If using an unauthenticated session and no MagicCookie is available, only the public feed will be available.
+                    <para>
+                        <firstterm>Visibility</firstterm>
+                        specifies whether a users public or private calendar
+                        should be searched. If using an unauthenticated session
+                        and no MagicCookie is available, only the public feed
+                        will be available.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Projection</firstterm>
-                    specifies how much data should be returned by the server and in what format. In most cases you will want to use the "full" projection. Also available is the "basic" projection, which places most meta-data into each event's content field as human readable text, and the "composite" projetion which includes complete text for any comments alongside each event. The "composite" view is often much larger than the "full" view.
+                    <para>
+                        <firstterm>Projection</firstterm>
+                        specifies how much data should be returned by the
+                        server and in what format. In most cases you will want
+                        to use the "full" projection. Also available is the
+                        "basic" projection, which places most meta-data into
+                        each event's content field as human readable text, and
+                        the "composite" projection which includes complete text
+                        for any comments alongside each event. The "composite"
+                        view is often much larger than the "full" view.
+                    </para>
                 </listitem>
             </itemizedlist>
         </sect3>
@@ -268,7 +311,7 @@ $query->setProjection('full');
 $query->setOrderby('starttime');
 $query->setFutureevents('true');
 
-// Retrieve the event list from the calender server
+// Retrieve the event list from the calendar server
 try {
     $eventFeed = $service->getCalendarEventFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
@@ -280,8 +323,8 @@ echo "<ul>";
 foreach ($eventFeed as $event) {
     echo "<li>" . $event->title . " (Event ID: " . $event->id . ")</li>";
 }
-echo "</ul>";
-?>]]></programlisting>
+echo "</ul>";]]>
+            </programlisting>
             <para>
                 Additional properties such as ID, author, when, event status, visibility, web content, and content, among others are available within
                 <code>Zend_Gdata_Calendar_EventEntry</code>
@@ -307,8 +350,8 @@ echo "</ul>";
             </para>
             <programlisting role="php"><![CDATA[<?php
 $query->setStartMin('2006-12-01');
-$query->setStartMax('2006-12-16');
-?>]]></programlisting>
+$query->setStartMax('2006-12-16');]]>
+            </programlisting>
             <para>
                 Note that
                 <code>startMin</code>
@@ -325,8 +368,8 @@ $query->setStartMax('2006-12-16');
                 method when creating the query.
             </para>
             <programlisting role="php"><![CDATA[<?php
-$query->setQuery("dogfood");
-?>]]></programlisting>
+$query->setQuery("dogfood");]]>
+            </programlisting>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.individual">
             <title>Retrieving Individual Events</title>
@@ -348,8 +391,8 @@ try {
     $event = $service->getCalendarEventEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getResponse();
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
             <para>
                 In a similar fashion, if the event URL is known, it can be passed directly into
                 <code>getCalendarEntry()</code>
@@ -362,8 +405,8 @@ try {
     $event = $service->getCalendarEventEntry($eventURL);
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getResponse();
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar.creating_events">
@@ -373,54 +416,84 @@ try {
             <para>
                 Events are added to a calendar by creating an instance of
                 <code>Zend_Gdata_EventEntry</code>
-                and populating it with the appropriate data. The calender service instance (
+                and populating it with the appropriate data. The calendar service instance (
                 <code>Zend_Gdata_Calendar</code>
                 ) is then used to used to transparently covert the event into XML and POST it to the calendar server. Creating events requires either an AuthSub or ClientAuth authenticated connection to the calendar server.
             </para>
             <para>At a minimum, the following attributes should be set:</para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>Title</firstterm>
-                    provides the headline that will appear above the event within the Google Calendar UI.
+                    <para>
+                        <firstterm>Title</firstterm>
+                        provides the headline that will appear above the event
+                        within the Google Calendar UI.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>When</firstterm>
-                    indicates the duration of the event and, optionally, any reminders that are associated with it. See the next section for more information on this attribute.
+                    <para>
+                        <firstterm>When</firstterm>
+                        indicates the duration of the event and, optionally,
+                        any reminders that are associated with it. See the next
+                        section for more information on this attribute.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>Other useful attributes that may optionally set include:</para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>Author</firstterm>
-                    provides information about the user who created the event.
+                    <para>
+                        <firstterm>Author</firstterm>
+                        provides information about the user who created the
+                        event.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Content</firstterm>
-                    provides additional information about the event which appears when the event details are requested from within Google Calendar.
+                    <para>
+                        <firstterm>Content</firstterm>
+                        provides additional information about the event which
+                        appears when the event details are requested from
+                        within Google Calendar.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>EventStatus</firstterm>
-                    indicates whether the event is confirmed, tentative, or canceled.
+                    <para>
+                        <firstterm>EventStatus</firstterm>
+                        indicates whether the event is confirmed, tentative, or
+                        canceled.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Hidden</firstterm>
-                    removes the event from the Google Calendar UI.
+                    <para>
+                        <firstterm>Hidden</firstterm>
+                        removes the event from the Google Calendar UI.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Transparency</firstterm>
-                    indicates whether the event should be consume time on the user's free/busy list.
+                    <para>
+                        <firstterm>Transparency</firstterm>
+                        indicates whether the event should be consume time on
+                        the user's free/busy list.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>WebContent</firstterm>
-                    allows links to external content to be provided within an event.
+                    <para>
+                        <firstterm>WebContent</firstterm>
+                        allows links to external content to be provided within
+                        an event.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Where</firstterm>
-                    indicates the location of the event.
+                    <para>
+                        <firstterm>Where</firstterm>
+                        indicates the location of the event.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>Visibility</firstterm>
-                    allows the event to be hidden from the public event lists.
+                    <para>
+                        <firstterm>Visibility</firstterm>
+                        allows the event to be hidden from the public event
+                        lists.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
@@ -436,31 +509,31 @@ try {
                 function.
             </para>
             <programlisting role="php"><![CDATA[<?php
-    // Create a new entry using the calendar service's magic factory method
-    $event= $service->newEventEntry();
+// Create a new entry using the calendar service's magic factory method
+$event= $service->newEventEntry();
 
-    // Populate the event with the desired information
-    // Note that each attribute is crated as an instance of a matching class
-    $event->title = $service->newTitle("My Event");
-    $event->where = array($service->newWhere("Mountain View, California"));
-    $event->content = $service->newContent(" This is my awesome event. RSVP required.");
+// Populate the event with the desired information
+// Note that each attribute is crated as an instance of a matching class
+$event->title = $service->newTitle("My Event");
+$event->where = array($service->newWhere("Mountain View, California"));
+$event->content = $service->newContent(" This is my awesome event. RSVP required.");
 
-    // Set the date using RFC 3339 format.
-    $startDate = "2008-01-20";
-    $startTime = "14:00";
-    $endDate = "2008-01-20";
-    $endTime = "16:00";
-    $tzOffset = "-08";
+// Set the date using RFC 3339 format.
+$startDate = "2008-01-20";
+$startTime = "14:00";
+$endDate = "2008-01-20";
+$endTime = "16:00";
+$tzOffset = "-08";
 
-    $when = $service->newWhen();
-    $when->startTime = "{$startDate}T{$startTime}:00.000{$tzOffset}:00";
-    $when->endTime = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
-    $event->when = array($when);
+$when = $service->newWhen();
+$when->startTime = "{$startDate}T{$startTime}:00.000{$tzOffset}:00";
+$when->endTime = "{$endDate}T{$endTime}:00.000{$tzOffset}:00";
+$event->when = array($when);
 
-    // Upload the event to the calendar server
-    // A copy of the event as it is recorded on the server is returned
-    $newEvent = $service->insertEvent($event);
-?>]]></programlisting>
+// Upload the event to the calendar server
+// A copy of the event as it is recorded on the server is returned
+$newEvent = $service->insertEvent($event);]]>
+            </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.schedulers_reminders">
             <title>Event Schedules and Reminders</title>
@@ -506,8 +579,8 @@ $when->endTime="2007-12-05T15:00:00:00-08:00";
 $when->valueString = "This Afternoon";
 
 // Apply the when property to an event
-$event->when = $when;
-?>]]></programlisting>
+$event->when = $when;]]>
+            </programlisting>
             <para>
                 The
                 <code>when</code>
@@ -538,13 +611,13 @@ $reminder->minutes = "10";
 
 // Apply the reminder to an existing event's when property
 $when = $event->when[0];
-$when->reminders = array($reminder);
-?>]]></programlisting>
+$when->reminders = array($reminder);]]>
+            </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.recurring">
             <title>Creating Recurring Events</title>
             <para>
-                Recurring events are created the same way as single-occurrence events, except a recurrence attribute should be provided instead of a where attribute. The recurrence attribute should hold a string describing the even'ts recurrence pattern using properties defined in the iCalendar standard (
+                Recurring events are created the same way as single-occurrence events, except a recurrence attribute should be provided instead of a where attribute. The recurrence attribute should hold a string describing the event's recurrence pattern using properties defined in the iCalendar standard (
                 <ulink url="http://www.ietf.org/rfc/rfc2445.txt">RFC 2445</ulink>
                 ).
             </para>
@@ -578,13 +651,13 @@ $event->recurrence = $service->newRecurrence($recurrence);
 
 // Upload the event to the calendar server
 // A copy of the event as it is recorded on the server is returned
-$newEvent = $service->insertEvent($event);
-?>]]></programlisting>
+$newEvent = $service->insertEvent($event);]]>
+            </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.quickadd">
             <title>Using QuickAdd</title>
             <para>
-                QuickAdd is a feature which allows events to be created using reeform text entry. For example, the string "Dinner at Joe's Diner on Thursday" would create an event with the title "Dinner", location "Joe's Diner", and date "Thursday". To take advantage of QuickAdd, create a new
+                QuickAdd is a feature which allows events to be created using free-form text entry. For example, the string "Dinner at Joe's Diner on Thursday" would create an event with the title "Dinner", location "Joe's Diner", and date "Thursday". To take advantage of QuickAdd, create a new
                 <code>QuickAdd</code>
                 property set to "true" and store the freeform text as a
                 <code>content</code>
@@ -600,8 +673,8 @@ $event->quickAdd = $service->newQuickAdd("true");
 
 // Upload the event to the calendar server
 // A copy of the event as it is recorded on the server is returned
-$newEvent = $service->insertEvent($event);
-?>]]></programlisting>
+$newEvent = $service->insertEvent($event);]]>
+            </programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar.modifying_events">
@@ -628,8 +701,8 @@ try {
     $event->save();
 } catch (Zend_Gdata_App_Exception $e) {
     echo "Error: " . $e->getResponse();
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.deleting_events">
         <title>Deleting Events</title>
@@ -649,12 +722,12 @@ try {
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Option 1: Events can be deleted directly
-$event->delete();
-?>]]></programlisting>
+$event->delete();]]>
+        </programlisting>
         <programlisting role="php"><![CDATA[<?php
 // Option 2: Events can be deleted supplying the edit URL of the event to the calendar service, if known
-$service->delete($event->getEditLink()->href);
-?>]]></programlisting>
+$service->delete($event->getEditLink()->href);]]>
+        </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.comments">
         <title>Accessing Event Comments</title>
@@ -683,8 +756,7 @@ echo "<ul>";
 foreach ($commentFeed as $comment) {
     echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
 }
-echo "</ul>";
-?>]]></programlisting>
+echo "</ul>";]]>
+        </programlisting>
     </sect2>
 </sect1>
-

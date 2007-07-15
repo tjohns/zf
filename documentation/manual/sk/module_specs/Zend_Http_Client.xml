@@ -17,24 +17,22 @@
             (can be either a string or a Zend_Uri_Http object), and an optional
             array of configuration parameters. Both can be left out,
             and set later using the setUri() and setConfig() methods.
-            <example>
+            <example id="zend.http.client.introduction.example-1">
                 <title>Instantiating a Zend_Http_Client object</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
 
-    $client = new Zend_Http_Client('http://example.org', array(
-        'maxredirects' => 0,
-        'timeout'      => 30));
+$client = new Zend_Http_Client('http://example.org', array(
+    'maxredirects' => 0,
+    'timeout'      => 30));
 
-    // This is actually exactly the same:
-    $client = new Zend_Http_Client();
-    $client->setUri('http://example.org');
-    $client->setConfig(array(
-        'maxredirects' => 0,
-        'timeout'      => 30));
-
-?>]]></programlisting>
+// This is actually exactly the same:
+$client = new Zend_Http_Client();
+$client->setUri('http://example.org');
+$client->setConfig(array(
+    'maxredirects' => 0,
+    'timeout'      => 30));]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -44,7 +42,7 @@
             The constructor and setConfig() method accept an associative array
             of configuration parameters. Setting these parameters is optional,
             as they all have default values.
-            <table>
+            <table id="zend.http.client.configuration.table">
                 <title>Zend_Http_Client configuration parameters</title>
                 <tgroup cols="3">
                     <thead>
@@ -109,15 +107,14 @@
         <para>
             Performing simple HTTP requests is very easily done using the
             request() method, and rarely needs more than three lines of code:
-            <example>
+            <example id="zend.http.client.basic-requests.example-1">
                 <title>Preforming a Simple GET Request</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
 
-    $client = new Zend_Http_Client('http://example.org');
-    $response = $client->request();
-?>]]></programlisting>
+$client = new Zend_Http_Client('http://example.org');
+$response = $client->request();]]>
+                </programlisting>
             </example>
             The request() method takes one optional parameter - the request method.
             This can be either GET, POST, PUT, HEAD, DELETE, TRACE, OPTIONS or
@@ -134,17 +131,16 @@
             If no method is specified, the method set by the last setMethod()
             call is used. If setMethod() was never called, the default request
             method is GET (see the above example).
-            <example>
+            <example id="zend.http.client.basic-requests.example-2">
                 <title>Using Request Methods Other Than GET</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Preforming a POST request
-    $response = $client->request('POST');
+                <programlisting role="php"><![CDATA[<?php
+// Preforming a POST request
+$response = $client->request('POST');
 
-    // Yet another way of preforming a POST request
-    $client->setMethod(Zend_Http_Client::POST);
-    $response = $client->request();
-?>]]></programlisting>
+// Yet another way of preforming a POST request
+$client->setMethod(Zend_Http_Client::POST);
+$response = $client->request();]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -160,23 +156,22 @@
             For convenience, the setParameterGet() method can also accept a
             single associative array of name => value GET variables - which may
             be more comfortable when several GET parameters need to be set.
-            <example>
+            <example id="zend.http.client.parameters.example-1">
                 <title>Setting GET Parameters</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Setting a get parameter using the setParameterGet method
-    $client->setParameterGet('knight', 'lancelot');
+                <programlisting role="php"><![CDATA[<?php
+// Setting a get parameter using the setParameterGet method
+$client->setParameterGet('knight', 'lancelot');
 
-    // This is equivalent to setting such URL:
-    $client->setUri('http://example.com/index.php?knight=lancelot');
+// This is equivalent to setting such URL:
+$client->setUri('http://example.com/index.php?knight=lancelot');
 
-    // Adding several parameters with one call
-    $client->setParameterGet(array(
-        'first_name'  => 'Bender',
-        'middle_name' => 'Bending'
-        'made_in'     => 'Mexico',
-    ));
-?>]]></programlisting>
+// Adding several parameters with one call
+$client->setParameterGet(array(
+    'first_name'  => 'Bender',
+    'middle_name' => 'Bending'
+    'made_in'     => 'Mexico',
+));]]>
+                </programlisting>
             </example>
         </para>
         <para>
@@ -185,20 +180,19 @@
             parameters to a request is very similar to adding GET parameters,
             and can be done with the setParameterPost() method, which is
             similar to the setParameterGet() method in structure.
-            <example>
+            <example id="zend.http.client.parameters.example-2">
                 <title>Setting POST Parameters</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Setting a POST parameter
-    $client->setParameterPost('language', 'fr');
+                <programlisting role="php"><![CDATA[<?php
+// Setting a POST parameter
+$client->setParameterPost('language', 'fr');
 
-    // Setting several POST parameters, one of them with several values
-    $client->setParameterPost(array(
-        'language'  => 'es',
-        'country'   => 'ar',
-        'selection' => array(45, 32, 80)
-    ));
-?>]]></programlisting>
+// Setting several POST parameters, one of them with several values
+$client->setParameterPost(array(
+    'language'  => 'es',
+    'country'   => 'ar',
+    'selection' => array(45, 32, 80)
+));]]>
+                </programlisting>
             </example>
             Note that when sending POST requests, you can set both GET and
             POST parameters. On the other hand, while setting POST parameters

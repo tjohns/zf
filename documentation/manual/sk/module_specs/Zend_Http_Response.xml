@@ -13,7 +13,7 @@
             In most cases, a Zend_Http_Response object will be instantiated
             using the factory() method, which reads a string containing an HTTP
             response message, and returns a new Zend_Http_Response object:
-            <example>
+            <example id="zend.http.response.introduction.example-1">
                 <title>Instantiating a Zend_Http_Response object using the factory method</title>
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
@@ -27,8 +27,8 @@ fwrite($sock, $req);
 while ($buff = fread($sock, 1024))
     $str .= $sock;
 
-$response = Zend_Http_Response::factory($str);
-?>]]></programlisting>
+$response = Zend_Http_Response::factory($str);]]>
+                </programlisting>
             </example>
         </para>
         <para>
@@ -95,15 +95,15 @@ $response = Zend_Http_Response::factory($str);
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.response.testers.example-1">
                 <title>Using the isError() method to validate a response</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->isError()) {
   echo "Error transmitting data.\n"
   echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
 }
-// .. process the response here...
-?>]]></programlisting>
+// .. process the response here...]]>
+                </programlisting>
             </example>
         </para>
     </sect2>
@@ -162,7 +162,7 @@ if ($response->isError()) {
                     </para>
                 </listitem>
             </itemizedlist>
-            <example>
+            <example id="zend.http.response.acessors.example-1">
                 <title>Using Zend_Http_Response Accessor Methods</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->getStatus() == 200) {
@@ -171,8 +171,8 @@ if ($response->getStatus() == 200) {
 } else {
   echo "An error occurred while fetching data:<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
             <note>
                 <title>Always check return value</title>
@@ -183,7 +183,7 @@ if ($response->getStatus() == 200) {
                     always check whether the returned value is a string or array.
                 </para>
             </note>
-            <example>
+            <example id="zend.http.response.acessors.example-2">
                 <title>Accessing Response Headers</title>
                 <programlisting role="php"><![CDATA[<?php
 $ctype = $response->getHeader('Content-type');
@@ -194,8 +194,8 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
   $body = htmlentities($body);
 }
 
-echo $body;
-?>]]></programlisting>
+echo $body;]]>
+                </programlisting>
             </example>
         </para>
     </sect2>

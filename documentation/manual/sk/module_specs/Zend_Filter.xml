@@ -66,8 +66,8 @@ require_once 'Zend/Filter/HtmlEntities.php';
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;
-]]></programlisting>
+echo $htmlEntities->filter('"'); // &quot;]]>
+            </programlisting>
 
         </para>
 
@@ -92,8 +92,8 @@ echo $htmlEntities->filter('"'); // &quot;
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 
-echo Zend_Filter::get('&', 'HtmlEntities');
-]]></programlisting>
+echo Zend_Filter::get('&', 'HtmlEntities');]]>
+            </programlisting>
 
         </para>
 
@@ -104,8 +104,8 @@ echo Zend_Filter::get('&', 'HtmlEntities');
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 
-echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
-]]></programlisting>
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
+            </programlisting>
 
         </para>
 
@@ -120,7 +120,7 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
         <para>
             Also, the Zend_Filter_Input class allows you to instantiate and run
             multiple filter and validator classes on demand to process
-            sets of input data.  See <xref linked="zend.filter.input" />.
+            sets of input data.  See <xref linkend="zend.filter.input" />.
         </para>
 
     </sect2>

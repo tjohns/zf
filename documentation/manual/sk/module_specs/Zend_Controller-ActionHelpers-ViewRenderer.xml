@@ -10,28 +10,52 @@
         </para>
 
         <itemizedlist>
-            <listitem><para>Eliminate the need to instantiate view objects
-                    within controllers; view objects will be automatically
-                    registered with the controller.</para></listitem>
+            <listitem>
+                <para>
+                    Eliminate the need to instantiate view objects within
+                    controllers; view objects will be automatically registered
+                    with the controller.
+                </para>
+            </listitem>
 
-            <listitem><para>Automatically set view script, helper, and filter
-                    paths based on the current module, and automatically
-                    associate the current module name as a class prefix for
-                    helper and filter classes.</para></listitem>
+            <listitem>
+                <para>
+                    Automatically set view script, helper, and filter paths
+                    based on the current module, and automatically associate
+                    the current module name as a class prefix for helper and
+                    filter classes.
+                </para>
+            </listitem>
 
-            <listitem><para>Create a globally available view object for all
-                    dispatched controllers and actions.</para></listitem>
+            <listitem>
+                <para>
+                    Create a globally available view object for all dispatched
+                    controllers and actions.
+                </para>
+            </listitem>
 
-            <listitem><para>Allow the developer to set default view rendering
-                    options for all controllers.</para></listitem>
+            <listitem>
+                <para>
+                    Allow the developer to set default view rendering options
+                    for all controllers.
+                </para>
+            </listitem>
 
-            <listitem><para>Add the ability to automatically render a view
-                    script with no intervention.</para></listitem>
+            <listitem>
+                <para>
+                    Add the ability to automatically render a view script with
+                    no intervention.
+                </para>
+            </listitem>
 
-            <listitem><para>Allow the developer to create her own specifications
-                    for the view base path and for view script
-                    paths.</para></listitem>
+            <listitem>
+                <para>
+                    Allow the developer to create her own specifications for
+                    the view base path and for view script paths.
+                </para>
+            </listitem>
         </itemizedlist>
+
         <note>
             <para>
                 If you perform a <code>_forward()</code>, redirect, or
@@ -69,8 +93,8 @@
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+                    </programlisting>
                 </listitem>
 
                 <listitem>
@@ -82,8 +106,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                     <programlisting role="php"><![CDATA[<?php
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
-             ->setViewSuffix('php');
-]]></programlisting>
+             ->setViewSuffix('php');]]>
+                    </programlisting>
                 </listitem>
             </itemizedlist>
         </note>
@@ -100,8 +124,8 @@ $viewRenderer->setView($view)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        </programlisting>
 
         <para>
             The first time an action controller is instantiated, it will trigger
@@ -140,11 +164,12 @@ class Foo_BarController extends Zend_Controller_Action
         $this->view->foo = 'bar';
     }
 }
-?>
+
+...
 
 // in one of your view scripts:
-<?php $this->foo(); // call Foo_View_Helper_Foo::foo() ?>
-]]></programlisting>
+<?php $this->foo(); // call Foo_View_Helper_Foo::foo()]]>
+        </programlisting>
 
         <para>
             The <code>ViewRenderer</code> also defines a number of accessors to
@@ -256,7 +281,8 @@ $this->_helper->viewRenderer('foo');
 // render form.phtml to the 'html' response segment, without using a
 // controller view script subdirectory:
 $this->_helper->viewRenderer('form', 'html', true);
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <note><para>
                         <code>setRender()</code> and <code>direct()</code> don't
@@ -277,7 +303,8 @@ $this->_helper->viewRenderer('form', 'html', true);
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             There are several additional methods for customizing path
@@ -483,50 +510,20 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
     <sect4 id="zend.controller.actionhelper.viewrenderer.basicusage">
         <title>Basic Usage Examples</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-1">
             <title>Basic Usage</title>
 
             <para>
                 At its most basic, you simply initialize and register the
                 <code>ViewRenderer</code> helper with the helper broker in your
-                bootstrap, and then set variables in your action methods. 
+                bootstrap, and then set variables in your action methods.
             </para>
-
-            <note>
-                <title>Naming Conventions: Word delimiters in controller and
-                    action names</title>
-                <para>
-                    If your controller or action name is composed of several
-                    words, the dispatcher requires that these are separated on
-                    the URL by specific path and word delimiter characters. The
-                    <code>ViewRenderer</code> replaces any path delimiter found
-                    in the controller name with an actual path delimiter ('/'),
-                    and any word delimiter found with a dash ('-') when creating
-                    paths. Thus, a call to the action
-                    <code>/foo.bar/baz.bat</code> would dispatch to
-                    <code>FooBarController::bazBatAction()</code> in
-                    FooBarController.php, which would render
-                    <code>foo-bar/baz-bat.phtml</code>; a call to the action
-                    <code>/bar_baz/baz-bat</code> would dispatch to
-                    <code>Bar_BazController::bazBatAction()</code> in
-                    <code>Bar/BazController.php</code> (note the path
-                    separation) and render <code>bar/baz/baz-bat.phtml</code>.
-                </para>
-
-                <para>
-                    Note that the in the second example, the module is still the
-                    default module, but that, because of the existence of a path
-                    separator, the controller receives the name
-                    <code>Bar_BazController</code>, in
-                    <code>Bar/BazController.php</code>. The ViewRenderer mimics
-                    the controller directory hierarchy.
-                </para>
-            </note>
 
             <programlisting role="php"><![CDATA[<?php
 // In your bootstrap:
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-?>
+
+...
 
 <?php
 // 'foo' module, 'bar' controller:
@@ -556,12 +553,41 @@ class Foo_BarController extends Zend_Controller_Action
     {
         $this->_redirect('/index');
     }
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
-        <example>
+        <note>
+            <title>Naming Conventions: Word delimiters in controller and action names</title>
+            <para>
+                If your controller or action name is composed of several
+                words, the dispatcher requires that these are separated on
+                the URL by specific path and word delimiter characters. The
+                <code>ViewRenderer</code> replaces any path delimiter found
+                in the controller name with an actual path delimiter ('/'),
+                and any word delimiter found with a dash ('-') when creating
+                paths. Thus, a call to the action
+                <code>/foo.bar/baz.bat</code> would dispatch to
+                <code>FooBarController::bazBatAction()</code> in
+                FooBarController.php, which would render
+                <code>foo-bar/baz-bat.phtml</code>; a call to the action
+                <code>/bar_baz/baz-bat</code> would dispatch to
+                <code>Bar_BazController::bazBatAction()</code> in
+                <code>Bar/BazController.php</code> (note the path
+                separation) and render <code>bar/baz/baz-bat.phtml</code>.
+            </para>
+
+            <para>
+                Note that the in the second example, the module is still the
+                default module, but that, because of the existence of a path
+                separator, the controller receives the name
+                <code>Bar_BazController</code>, in
+                <code>Bar/BazController.php</code>. The ViewRenderer mimics
+                the controller directory hierarchy.
+            </para>
+        </note>
+
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-2">
             <title>Disabling autorender</title>
 
             <para>
@@ -572,13 +598,6 @@ class Foo_BarController extends Zend_Controller_Action
                 autorendering (<code>setNeverRender()</code>), or simply turn it
                 off for the current action (<code>setNoRender()</code>).
             </para>
-
-            <note><para>
-                In most cases, it makes no sense to turn off autorendering
-                globally (ala <code>setNeverRender()</code>), as the only thing
-                you then gain from <code>ViewRenderer</code> is the autosetup of
-                the view object.
-            </para></note>
 
             <programlisting role="php"><![CDATA[<?php
 // Baz controller class, bar module:
@@ -599,12 +618,20 @@ class Bar_BatController extends Zend_Controller_Action
         // Never auto render this controller's actions
         $this->_helper->viewRenderer->setNoRender();
     }
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
-        <example>
+        <note>
+            <para>
+                In most cases, it makes no sense to turn off autorendering
+                globally (ala <code>setNeverRender()</code>), as the only thing
+                you then gain from <code>ViewRenderer</code> is the autosetup of
+                the view object.
+            </para>
+        </note>
+
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-3">
             <title>Choosing a different view script</title>
 
             <para>
@@ -646,12 +673,11 @@ class Foo_BarController extends Zend_Controller_Action
         // otherwise continue processing...
     }
 
-}
-?>
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-4">
             <title>Modifying the registered view</title>
 
             <para>
@@ -678,15 +704,15 @@ class Foo_BarController extends Zend_Controller_Action
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 
     <sect4 id="zend.controller.actionhelper.viewrenderer.advancedusage">
         <title>Advanced Usage Examples</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-1">
             <title>Changing the path specifications</title>
 
             <para>
@@ -723,11 +749,11 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-]]></programlisting>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-2">
             <title>Rendering multiple view scripts from a single action</title>
 
             <para>
@@ -754,8 +780,8 @@ class SearchController extends Zend_Controller_Action
     {
         // do nothing; ViewRenderer autorenders the view script
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 </sect3>

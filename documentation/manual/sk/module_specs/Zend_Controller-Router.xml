@@ -26,7 +26,8 @@
 
         <programlisting role="php"><![CDATA[
 RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+        </programlisting>
 
         <para>
             or:
@@ -36,7 +37,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
 RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
+RewriteRule ^(.*)$ index.php/$1 ]]>
+        </programlisting>
 
         <para>
             The rewrite router can also be used with the IIS webserver if <ulink
@@ -45,7 +47,8 @@ RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[
-RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]></programlisting>
+RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]>
+        </programlisting>
 
         <note>
             <title>IIS Isapi_Rewrite</title>
@@ -63,7 +66,8 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
         </para>
 
         <programlisting role="php"><![CDATA[
-url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php")]]></programlisting>
+url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php")]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.usage">
@@ -82,8 +86,8 @@ $router = $ctrl->getRouter(); // returns a rewrite router by default
 $router->addRoute(
     'user',
     new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
-);
-]]></programlisting>
+);]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.basic">
@@ -97,7 +101,8 @@ $router->addRoute(
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
+$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]>
+        </programlisting>
 
         <para>
             Rewrite Router comes with four basic types of routes (one of which
@@ -132,7 +137,8 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </para>
 
             <programlisting role="php"><![CDATA[
-<a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]></programlisting>
+<a href="<?= $this->url('user', array('username' => 'martel')) ?>">Martel</a>]]>
+            </programlisting>
 
             <para>
                 Which would result in the href: <code>user/martel</code>.
@@ -240,7 +246,8 @@ http://example/blog/archive/list/sort/alpha/date/desc
     action     == list
     sort       == alpha
     date       == desc
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The default route is simply a
@@ -251,7 +258,8 @@ http://example/blog/archive/list/sort/alpha/date/desc
 
         <programlisting role="php"><![CDATA[<?php
 $compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
-$this->addRoute('default', $compat);]]></programlisting>
+$this->addRoute('default', $compat);]]>
+        </programlisting>
 
         <para>
             If you do not want this particular default route in your routing
@@ -262,7 +270,8 @@ $this->addRoute('default', $compat);]]></programlisting>
 
         <programlisting role="php"><![CDATA[<?php
 // Remove any default routes
-$router->removeDefaultRoutes();]]></programlisting>
+$router->removeDefaultRoutes();]]>
+        </programlisting>
 
     </sect2>
 
@@ -287,7 +296,8 @@ $router->removeDefaultRoutes();]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$request->setBaseUrl('/~user/application-root/');]]></programlisting>
+$request->setBaseUrl('/~user/application-root/');]]>
+        </programlisting>
 
     </sect2>
 
@@ -331,8 +341,8 @@ routes.archive.route = "archive/(\d+)"
 routes.archive.defaults.controller = "archive"
 routes.archive.defaults.action = "show"
 routes.archive.map.1 = "year"
-; OR: routes.archive.map.year = 1
-]]></programlisting>
+; OR: routes.archive.map.year = 1]]>
+        </programlisting>
 
         <para>
             The above INI file can then be read into a <code>Zend_Config</code>
@@ -342,8 +352,8 @@ routes.archive.map.1 = "year"
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'production');
 $router = new Zend_Controller_Router_Rewrite();
-$router->addConfig($config, 'routes');
-]]></programlisting>
+$router->addConfig($config, 'routes');]]>
+        </programlisting>
 
         <para>
             In the above example, we tell the router to use the 'routes' section
@@ -389,8 +399,8 @@ interface Zend_Controller_Router_Interface
    * @return Zend_Controller_Request_Abstract
    */
   public function route(Zend_Controller_Request_Abstract $request);
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Routing only occurs once: when the request is first received into

@@ -39,8 +39,8 @@ try {
 } catch (Zend_Console_Getopt_Exception $e) {
     echo $e->getUsageMessage();
     exit;
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
         <para>
             Cases where parsing throws an exception include:
@@ -80,8 +80,8 @@ try {
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $b = $opts->getOption('b');
-$p_parameter = $opts->getOption('p');
-?>]]></programlisting>
+$p_parameter = $opts->getOption('p');]]>
+            </programlisting>
         </example>
         <para>
             Alternatively, you can use the magic <code>__get()</code> function
@@ -96,8 +96,8 @@ $opts = new Zend_Console_Getopt('abp:');
 if (isset($opts->b)) {
     echo "I got the b option.\n";
 }
-$p_parameter = $opts->p; // null if not set
-?>]]></programlisting>
+$p_parameter = $opts->p; // null if not set]]>
+            </programlisting>
         </example>
         <para>
             If your options are declared with aliases, you may use any of the
@@ -162,8 +162,8 @@ $p_parameter = $opts->p; // null if not set
             <programlisting role="php"><![CDATA[<?php
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setArguments(array('-p', 'p_parameter', 'filename'));
-$args = $opts->getRemainingArgs(); // returns array('filename')
-?>]]></programlisting>
+$args = $opts->getRemainingArgs(); // returns array('filename')]]>
+            </programlisting>
         </example>
         <para>
             <code>Zend_Console_Getopt</code> supports the GNU convention that

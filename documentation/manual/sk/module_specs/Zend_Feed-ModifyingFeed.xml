@@ -10,16 +10,14 @@
     <example id="zend.feed.modifying-feed.example.modifying">
         <title>Modifying an Existing Feed Entry</title>
         <programlisting role="php"><![CDATA[<?php
-
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
 $entry->title = 'This is a new title';
 $entry->author->email = 'my_email@example.com';
 
-echo $entry->saveXML();
-
-?>]]>   </programlisting>
+echo $entry->saveXML();]]>
+        </programlisting>
         <para>
             This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
             new entry, including any necessary XML namespaces.
@@ -42,7 +40,6 @@ echo $entry->saveXML();
     <example id="zend.feed.modifying-feed.example.creating">
         <title>Creating an Atom Entry with Elements of Custom Namespaces</title>
         <programlisting role="php"><![CDATA[<?php
-
 $entry = new Zend_Feed_Entry_Atom();
 // id is always assigned by the server in Atom
 $entry->title = 'my custom entry';
@@ -56,9 +53,8 @@ $entry->{'myns:myelement_one'} = 'my first custom value';
 $entry->{'myns:container_elt'}->part1 = 'first nested custom part';
 $entry->{'myns:container_elt'}->part2 = 'second nested custom part';
 
-echo $entry->saveXML();
-
-?>]]>   </programlisting>
+echo $entry->saveXML();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

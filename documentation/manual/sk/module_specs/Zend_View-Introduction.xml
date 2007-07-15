@@ -59,8 +59,7 @@ $view = new Zend_View();
 $view->books = $data;
 
 // and render a view script called "booklist.php"
-echo $view->render('booklist.php');
-?>]]>
+echo $view->render('booklist.php');]]>
         </programlisting>
 
     </sect2>
@@ -102,7 +101,7 @@ echo $view->render('booklist.php');
 
     <p>There are no books to display.</p>
 
-<?php endif; ?>]]>
+<?php endif;]]>
         </programlisting>
 
         <para>
@@ -132,8 +131,8 @@ echo $view->render('booklist.php');
 base/path/
     helpers/
     filters/
-    scripts/
-]]]></programlisting>
+    scripts/]]>
+                </programlisting>
 
                 <para>
                     This may be set via <code>setBasePath()</code>,

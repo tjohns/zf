@@ -57,7 +57,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
         Once an assertion class is available, the developer must supply an instance of the assertion class
@@ -69,7 +70,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
+$acl->allow(null, null, null, new CleanIPAssertion());]]>
+        </programlisting>
 
         <para>
         The above code creates a conditional allow rule that allows access to all privileges on everything

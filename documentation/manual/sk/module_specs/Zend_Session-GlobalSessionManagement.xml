@@ -79,7 +79,8 @@ name = UNIQUE_NAME
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; When persisting session id cookies, request a TTL of 10 days
-remember_me_seconds = 864000]]></programlisting>
+remember_me_seconds = 864000]]>
+            </programlisting>
 
             <para>
                 Next, load the configuration file and pass its array representation to
@@ -91,7 +92,8 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
 require_once 'Zend/Session.php';
-Zend_Session::setOptions($config->toArray());]]></programlisting>
+Zend_Session::setOptions($config->toArray());]]>
+            </programlisting>
 
         </example>
 
@@ -357,7 +359,8 @@ $defaultNamespace = new Zend_Session_Namespace();
 if (!isset($defaultNamespace->initialized)) {
     Zend_Session::regenerateId();
     $defaultNamespace->initialized = true;
-}]]></programlisting>
+}]]>
+                </programlisting>
 
             </example>
 

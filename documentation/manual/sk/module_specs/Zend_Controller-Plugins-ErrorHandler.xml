@@ -112,8 +112,8 @@ class ErrorController extends Zend_Controller_Action
     {
         $errors = $this->_getParam('error_handler');
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Once you have the error object, you can get the type via
@@ -169,8 +169,8 @@ class ErrorController extends Zend_Controller_Action
                 break;
         }
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Finally, you can retrieve the exception that triggered the error
@@ -204,8 +204,8 @@ public function errorAction()
                 $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
                 break;
         }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
@@ -225,25 +225,25 @@ public function errorAction()
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$this->getResponse()->clearBody();
-?>]]></programlisting>
+$this->getResponse()->clearBody();]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
         <title>Plugin Usage Examples</title>
 
-        <example>
+        <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
             <title>Standard usage</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
 
 $front = Zend_Controller_Front::getInstance();
-$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
-?>]]></programlisting>
+$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
             <title>Setting a different error handler</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
@@ -254,11 +254,11 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array
     'module'     => 'mystuff',
     'controller' => 'static',
     'action'     => 'error'
-)));
-?>]]></programlisting>
+)));]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
             <title>Using accessors</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
@@ -270,8 +270,8 @@ $plugin->setErrorHandlerModule('mystuff')
        ->setErrorHandlerAction('error');
 
 $front = Zend_Controller_Front::getInstance();
-$front->registerPlugin($plugin);
-?>]]></programlisting>
+$front->registerPlugin($plugin);]]>
+            </programlisting>
         </example>
     </sect4>
 
@@ -315,8 +315,8 @@ EOH;
 
         $this->view->content = $content;
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </sect4>
 </sect3>
 <!--

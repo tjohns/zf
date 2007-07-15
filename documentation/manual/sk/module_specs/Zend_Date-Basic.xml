@@ -31,16 +31,16 @@
             .
         </para>
 
-        <example>
+        <example id="zend.date.basic.creation.example-1">
             <title>Creating the current date</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // Output of the current timestamp
-print $date;
-?>]]></programlisting>
+print $date;]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -63,16 +63,16 @@ print $date;
                 <code>get()</code> method. There are many available options, which will be explained in later sections.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.get.example-1">
                 <title>get() - output a date</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // Output of the desired date
-print $date->get();
-?>]]></programlisting>
+print $date->get();]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -86,17 +86,17 @@ print $date->get();
                 a timestamp (not an object). Again, there are many options which will be explored in later sections.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.set.example-1">
                 <title>set() - set a date</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
 
 // Setting of a new time
 $date->set('13:00:00',Zend_Date::TIMES);
-print $date->get(Zend_Date::W3C);
-?>]]></programlisting>
+print $date->get(Zend_Date::W3C);]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -112,9 +112,9 @@ print $date->get(Zend_Date::W3C);
                 be explained later.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.add.example-1">
                 <title>add() - adding dates</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -125,8 +125,8 @@ $date->add('12:00:00', Zend_Date::TIMES);
 echo "Date via get() = ", $date->get(Zend_Date::W3C), "\n";
 
 // use magic __toString() method to call Zend_Date's toString()
-echo "Date via toString() = ", $date, "\n";
-?>]]></programlisting>
+echo "Date via toString() = ", $date, "\n";]]>
+                </programlisting>
             </example>
 
         </sect3>
@@ -142,9 +142,9 @@ echo "Date via toString() = ", $date, "\n";
                 <code>compare()</code>, as in the example below.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.compare.example-1">
                 <title>compare() - compare dates</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -154,17 +154,17 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
     print "This hour is less than 10 minutes old";
 } else {
     print "This hour is at least 10 minutes old";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
             <para>
                 For simple equality comparisons, use <code>equals()</code>, which returns a boolean.
             </para>
 
-            <example>
+            <example id="zend.date.simple.functions.compare.example-2">
                 <title>equals() - identify a date or date part</title>
-<programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $date = new Zend_Date();
@@ -174,8 +174,8 @@ if ($date->equals(10, Zend_Date::HOUR)) {
     print "It's 10 o'clock. Time to get to work.";
 } else {
     print "It is not 10 o'clock. You can keep sleeping.";
-}
-?>]]></programlisting>
+}]]>
+                </programlisting>
             </example>
 
         </sect3>

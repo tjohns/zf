@@ -16,8 +16,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);
-]]></programlisting>
+$front->throwExceptions(true);]]>
+        </programlisting>
 
         <para>
             To send the response output, including headers, use
@@ -25,8 +25,8 @@ $front->throwExceptions(true);
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();
-]]></programlisting>
+$response->sendResponse();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -44,8 +44,8 @@ $response = $front->dispatch();
 
 // do some more processing, such as logging...
 // and then send the output:
-$response->sendResponse();
-?>]]></programlisting>
+$response->sendResponse();]]>
+            </programlisting>
         </note>
 
         <para>
@@ -59,8 +59,8 @@ $response->sendResponse();
 // Set a header
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);
-]]></programlisting>
+    ->appendBody($content);]]>
+        </programlisting>
 
         <para>
             By doing this, all headers get sent at once, just prior to
@@ -107,8 +107,8 @@ $response = $front->dispatch();
 // do some processing...
 
 // finally, echo the response
-$response->sendResponse();
-]]></programlisting>
+$response->sendResponse();]]>
+        </programlisting>
 
         <para>
             By default, exception messages are not displayed. This behaviour may be
@@ -128,8 +128,8 @@ $response->sendResponse();
 
 // or:
 $front->throwExceptions(true);
-$front->dispatch();
-]]></programlisting>
+$front->dispatch();]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
@@ -284,8 +284,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             In the above example, a call to <code>/my/foo</code> will cause the
@@ -298,8 +298,8 @@ array(
     'header'  => ..., // header content
     'default' => ..., // body content from MyController::fooAction()
     'footer'  => ...  // footer content
-);
-?>]]></programlisting>
+);]]>
+        </programlisting>
 
         <para>
             When this is rendered, it will render in the order in which elements

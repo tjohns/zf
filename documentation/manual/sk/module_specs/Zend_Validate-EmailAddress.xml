@@ -16,7 +16,6 @@
         A basic example of usage is below:
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
@@ -26,9 +25,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         This will match the email address <code>$email</code> and on failure populate
         <code>$validator->getMessages()</code> with useful error messages.
@@ -66,7 +64,6 @@ if ($validator->isValid($email)) {
         though an example of how to accept both DNS and Local hostnames appears below:
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/EmailAddress.php';
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
@@ -76,9 +73,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
     </para>
 
     <para>
@@ -99,10 +95,8 @@ if ($validator->isValid($email)) {
         constructor.
 
         <programlisting role="php"><![CDATA[<?php
-
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
+        </programlisting>
 
         Alternatively you can either pass <code>true</code> or <code>false</code> to
         <code>$validator->setValidateMx()</code> to enable or disable MX validation.
@@ -124,11 +118,9 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
         you can disable this by changing the setting via the internal <code>Zend_Validate_Hostname</code> object
         that exists within <code>Zend_Validate_EmailAddress</code>.
 
-    <programlisting role="php"><![CDATA[<?php
-
-$validator->hostnameValidator->setValidateIdn(false);
-
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$validator->hostnameValidator->setValidateIdn(false);]]>
+        </programlisting>
 
         More information on the usage of <code>setValidateIdn()</code> appears in the
         <code>Zend_Validate_Hostname</code> documentation.
@@ -147,11 +139,9 @@ $validator->hostnameValidator->setValidateIdn(false);
         default, though you can disable this by changing the setting via the internal
         <code>Zend_Validate_Hostname</code> object that exists within <code>Zend_Validate_EmailAddress</code>.
 
-    <programlisting role="php"><![CDATA[<?php
-
-$validator->hostnameValidator->setValidateTld(false);
-
-?>]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+$validator->hostnameValidator->setValidateTld(false);]]>
+        </programlisting>
 
         More information on the usage of <code>setValidateTld()</code> appears in the
         <code>Zend_Validate_Hostname</code> documentation.

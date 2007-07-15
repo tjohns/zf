@@ -93,8 +93,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -145,8 +145,8 @@ if (!$validator->isValid('word')) {
     echo $m[0];
 
     // echoes "The string 'word' is too short; it must be at least 8 characters"
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
         <para>
@@ -161,8 +161,8 @@ $validator = new Zend_Validate_StringLength(8, 12);
 $validator->setMessages( array(
     Zend_Validate_StringLength::TOO_SHORT => 'The string \'%value%\' is too short',
     Zend_Validate_StringLength::TOO_LONG  => 'The string \'%value%\' is too long'
-));
-]]></programlisting>
+));]]>
+            </programlisting>
 
         </para>
 
@@ -188,8 +188,8 @@ if (!validator->isValid('word')) {
         . ' and '
         . $validator->max
         . "\n";
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>
@@ -217,8 +217,8 @@ if (Zend_Validate::is($email, 'EmailAddress')) {
     //
     // Yes, email appears to be valid
     //
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -233,8 +233,8 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     //
     // Yes, $value is between 1 and 12
     //
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -255,7 +255,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         <para>
             Also, the Zend_Filter_Input class allows you to instantiate and run
             multiple filter and validator classes on demand to process
-            sets of input data.  See <xref linked="zend.filter.input" />.
+            sets of input data.  See <xref linkend="zend.filter.input" />.
         </para>
 
     </sect2>

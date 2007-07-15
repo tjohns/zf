@@ -27,9 +27,9 @@
             sometimes giving surprising results. Also, do not compare two "float" type numbers for equality.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.number.example-1">
             <title>Creation using integer and floating values</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $measurement = 1234.7;
@@ -39,8 +39,8 @@ echo $unit;
 
 $unit = new Zend_Measure_Length($measurement, Zend_Measure_Length::STANDARD);
 echo $unit;
-// outputs '1234.7 m' (meters)
-?>]]></programlisting>
+// outputs '1234.7 m' (meters)]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -63,16 +63,16 @@ echo $unit;
             .
         </para>
 
-        <example>
+        <example id="zend.measure.creation.string.example-1">
             <title>Creation using strings</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Number.php';
 
 $mystring = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure_Number($mystring, Zend_Measure_Number::BINARY);
 
-echo $unit;
-?>]]></programlisting>
+echo $unit;]]>
+            </programlisting>
         </example>
 
         <para>
@@ -82,9 +82,9 @@ echo $unit;
             the rest of these numerals will be ignored.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.string.example-2">
             <title>Arbitrary text input containing measurements</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Area.php';
 
 $mystring = "My house is 125m² in size";
@@ -93,8 +93,8 @@ echo $unit; // outputs "125 m²in size";
 
 $mystring = "My house is 125m² in size, it has 5 rooms of 25m² each.";
 $unit = new Zend_Measure_Area($mystring, Zend_Measure_Area::STANDARD);
-echo $unit; // outputs "125 m² in size";
-?>]]></programlisting>
+echo $unit; // outputs "125 m² in size";]]>
+            </programlisting>
         </example>
 
     </sect2>
@@ -112,9 +112,9 @@ echo $unit; // outputs "125 m² in size";
             disambiguate the input data and properly interpret the intended semantic value.
         </para>
 
-        <example>
+        <example id="zend.measure.creation.localized.example-1">
             <title>Localized string</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure/Length.php';
 
 $locale = new Zend_Locale('de');
@@ -125,8 +125,8 @@ echo $unit; // outputs "1.234 m"
 
 $mystring = "The boat is 1,234.50 long.";
 $unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
-echo $unit; // outputs "1234.50 m"
-?>]]></programlisting>
+echo $unit; // outputs "1234.50 m"]]>
+            </programlisting>
         </example>
 
     </sect2>

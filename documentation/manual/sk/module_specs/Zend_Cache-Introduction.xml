@@ -14,7 +14,7 @@
         Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
         for convinience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
     </para>
-    <example>
+    <example id="zend.cache.introduction.example-1">
         <title>Getting a frontend with <code>Zend_Cache::factory()</code></title>
         <para>
             <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
@@ -22,17 +22,7 @@
             backend.
         </para>
 
-        <note>
-            <title>Frontends and Backends consisting of multiple words</title>
-            <para>
-                Some frontends and backends are named using multiple words, such
-                as 'ZendPlatform'. When specifying them to the factory, separate
-                them using a word separator, such as a space (' '), hyphen
-                ('-'), or period ('.').
-            </para>
-        </note>
-
-            <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
@@ -45,16 +35,30 @@ $backendOptions = array(
 );
 
 // getting a Zend_Cache_Core object
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+        </programlisting>
+    </example>
 
-?>]]></programlisting>
-       <para>
+    <note>
+        <title>Frontends and Backends consisting of multiple words</title>
+        <para>
+            Some frontends and backends are named using multiple words, such
+            as 'ZendPlatform'. When specifying them to the factory, separate
+            them using a word separator, such as a space (' '), hyphen
+            ('-'), or period ('.').
+        </para>
+    </note>
+
+    <example id="zend.cache.introduction.example-2">
+        <title>Caching a database query result</title>
+
+        <para>
             Now that we have a frontend, we can cache any type of data (we turned on serialization). For
             example, we can cache a result from a very expensive database query. After it is cached, there
             is no need to even connect to the database; records are fetched from cache and unserialized.
         </para>
-            <programlisting role="php"><![CDATA[<?php
 
+        <programlisting role="php"><![CDATA[<?php
 // $cache initialized in previous example
 
 // see if a cache already exists:
@@ -75,11 +79,11 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);
-
-?>]]></programlisting>
+print_r($result);]]>
+        </programlisting>
     </example>
-    <example>
+
+    <example id="zend.cache.introduction.example-3">
         <title>Caching output with <code>Zend_Cache</code> output frontend</title>
         <para>
             We 'mark up' sections in which we want to cache output by adding some conditional logic,
@@ -90,8 +94,7 @@ print_r($result);
             method. On the next run, the whole section will be skipped in favor of fetching data from cache
             (as long as the cache record is valid).
         </para>
-            <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 $frontendOptions = array(
    'lifetime' => 30,                  // cache lifetime of half a minute
    'automatic_serialization' => false  // this is default anyway
@@ -111,9 +114,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // the output is saved and sent to the browser
 }
 
-echo 'This is never cached ('.time().').';
-
-?>]]>       </programlisting>
+echo 'This is never cached ('.time().').';]]>
+       </programlisting>
        <para>
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
            for demonstration purposes. Try running this and then refreshing several times; you will notice

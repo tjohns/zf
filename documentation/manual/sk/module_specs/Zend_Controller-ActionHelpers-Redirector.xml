@@ -125,7 +125,7 @@
     <sect4 id="zend.controller.actionhelper.redirector.basicusage">
         <title>Basic Usage Examples</title>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-1">
             <title>Setting Options</title>
 
             <para>
@@ -166,11 +166,11 @@ class SomeController extends Zend_Controller_Action
         $this->_redirector->redirectAndExit();
         return; // never reached
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-2">
             <title>Using Defaults</title>
 
             <para>
@@ -202,11 +202,11 @@ class AlternativeController extends Zend_Controller_Action
         $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         return; // never reached since default is to goto and exit
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
             <title>Using goto()'s _forward() API</title>
 
             <para>
@@ -241,11 +241,11 @@ class ForwardController extends Zend_Controller_Action
         // using the params param1 => test and param2 => test2
         $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
-        <example>
+        <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
             <title>Using route assembly with gotoRout()</title>
 
             <para>
@@ -261,8 +261,8 @@ $route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
     array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
 );
-$router->addRoute('blogArchive', $route);
-?>]]></programlisting>
+$router->addRoute('blogArchive', $route);]]>
+            </programlisting>
 
             <para>
                 Given an array with year set to 2006, month to 4, day to 24, and
@@ -296,8 +296,8 @@ class BlogAdminController extends Zend_Controller_Action
             'blogArchive'
         );
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
     </sect4>
 </sect3>

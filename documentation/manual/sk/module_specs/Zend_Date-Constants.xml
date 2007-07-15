@@ -22,7 +22,7 @@
             Europe/GMT+1 hour (e.g. Germany, Austria, France).
         </para>
 
-        <table>
+        <table id="zend.date.constants.using.table">
             <title>Operations involving Zend_Date::HOUR</title>
             <tgroup cols="4">
                 <thead>
@@ -103,7 +103,7 @@
             <code>Zend_Date</code> are listed below.
         </para>
 
-        <table>
+        <table id="zend.date.constants.list.table-1">
             <title>Day Constants</title>
             <tgroup cols="4">
                 <thead>
@@ -182,7 +182,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-2">
             <title>Week Constants</title>
             <tgroup cols="4">
                 <thead>
@@ -205,7 +205,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-3">
             <title>Month Constants</title>
             <tgroup cols="4">
                 <thead>
@@ -261,7 +261,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-4">
             <title>Year Constants</title>
             <tgroup cols="4">
                 <thead>
@@ -310,7 +310,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-5">
             <title>Time Constants</title>
             <tgroup cols="4">
                 <thead>
@@ -399,7 +399,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-6">
             <title>Timezone Constants</title>
             <tgroup cols="4">
                 <thead>
@@ -456,7 +456,7 @@
             </tgroup>
         </table>
 
-        <table>
+        <table id="zend.date.constants.list.table-7">
             <title>Date Format Constants (formats include timezone)</title>
             <tgroup cols="4">
                 <thead>
@@ -558,7 +558,7 @@
             simple errors in dates (if any), such as swapping of years, months, and days, when possible.
         </para>
 
-        <table>
+        <table id="zend.date.constants.list.table-8">
             <title>Date and Time Formats (format varies by locale)</title>
             <tgroup cols="4">
                 <thead>
@@ -679,18 +679,18 @@
             below).
         </para>
 
-        <example>
+        <example id="zend.date.constants.selfdefinedformats.example-1">
             <title>Example usage for self-defined ISO formats</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
-print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
-?>]]></programlisting>
+print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
+            </programlisting>
         </example>
 
-        <table>
+        <table id="zend.date.constants.selfdefinedformats.table">
             <title>Constants for <emphasis role="strong">ISO 8601 date output</emphasis>
             </title>
             <tgroup cols="4">
@@ -1098,9 +1098,9 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
             below to create self-defined formats.
         </para>
 
-        <example>
+        <example id="zend.date.constants.phpformats.example-1">
             <title>Example usage for self-defined formats with PHP specifier</title>
-<programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
@@ -1110,8 +1110,8 @@ $date = new Zend_Date(1234567890, false, $locale);
 // outputs something like 'February 16, 2007, 3:36 am'
 print $date->toString('F j, Y, g:i a');
 
-print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
-?>]]></programlisting>
+print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");]]>
+            </programlisting>
         </example>
 
         <para>
@@ -1122,7 +1122,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
             "peculiar" PHP format specifiers, even when in the default "ISO" format mode.
         </para>
 
-        <table>
+        <table id="zend.date.constants.phpformats.table">
             <title>Constants for <emphasis role="strong">PHP date output</emphasis>
             </title>
             <tgroup cols="5">
