@@ -503,11 +503,120 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         <example id="zend.translate.using.options.example">
             <title>Benutzen von Übersetzungsoptionen</title>
             <programlisting role="php"><![CDATA[
+// Definiere ':' als Trenner für die Quelldatei der Übersetzung
+$options = array('separator' => ':');
+$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', $options);
+
+...
+
+// Lösche die definierte Sprache und verwende die neuen Übersetzungsdaten
 $options = array('clear' => true);
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
-$translate->addTranslation('path/to/other.csv', 'fr');
-... // mach was
-$translate->addTranslation('path/to/new.csv', 'fr', $options); // löschen der Sprache fr, neue Übersetzungen benutzen]]>
+$translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Hier können alle vorhandenen Optionen für die verschiedenen Adapter gefunden werden mit einer
+            Beschreibung Ihrer Verwendung:
+        </para>
+
+        <table id="zend.translate.using.options.alloptions">
+            <title>Optionen für Übersetzungs-Adapter</title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Adapter</entry>
+                        <entry>Option</entry>
+                        <entry>Standard Wert</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>all</entry>
+                        <entry>clear</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>Wenn true gesetzt wird, werden bereits gelesene Übersetzungen entfernt. Das kann
+                        statt dem Erstellen einer neuen Instanz verwendet werden wenn neue Übersetzungsdaten
+                        gelesen werden</entry>
+                    </row>
+                    <row>
+                        <entry>Csv</entry>
+                        <entry>separator</entry>
+                        <entry><emphasis role="strong">;</emphasis></entry>
+                        <entry>Definiert welches Zeichen verwendet wird um Quelle und Übersetzung zu trennen</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <para>
+            Wenn man selbstdefinierte Optionen haben will, können diese auch in allen Adaptern verwendet werden.
+            Die <code>setOptions()</code> Methode kann verwendet werden um die eigene Option zu definieren.
+            <code>setOptions()</code> benötigt ein Array mit den Optionen die gesetzt werden sollen. Wenn eine
+            angegebene Option bereits existiert wird diese überschrieben. Es können beliebig viele Optionen
+            definiert werden da diese nicht vom Adapter geprüft werden. Es muß nur sichergestellt werden das keine
+            bereits existierende Option überschrieben wird welche ein Adapter verwendet.
+        </para>
+
+        <para>
+            Um die gesetzte Option zurückzugeben kann die Methode <code>getOptions()</code> verwendet werden. Wenn
+            <code>getOptions()</code> ohne einen Parameter aufgerufen wird, gibt Sie alle Optionen zurück. Wenn
+            der optionale Parameter angegeben wird, wird nur diese spezielle Option zurückgegeben.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.languages">
+
+        <title>Mit Sprachen arbeiten</title>
+
+        <para>
+            Wenn mit verschiedenen Sprachen gearbeitet wird gibt es ein paar Methoden die nützlich sind.
+        </para>
+
+        <para>
+            Die <code>getLocale()</code> Methode kann verwendet werden um die aktuell gesetzte Sprache zu
+            erhalten. Sie kann entweder eine Instanz von <code>Zend_Locale</code> oder den Bezeichner des
+            Gebietsschemas enthalten.
+        </para>
+
+        <para>
+            Die <code>setLocale()</code> Methode setzt eine neue Standardsprache für Übersetzungen. Das verhindert
+            das der optionale Sprachparameter der <code>translate()</code> Methode mehr als einmal gesetzt werden
+            muß. Wenn die angegebene Sprache nicht existiert, oder keine Übersetzten Daten für diese Sprache
+            vorhanden sind, wird eine Ausnahme geworfen.
+        </para>
+
+        <para>
+            Die <code>isAvaiable()</code> Methode prüft ob eine angegebene Sprache bereits vorhanden ist. Es wird
+            <code>true</code> zurückgegeben wenn Daten für die angegebene Sprache existieren.
+        </para>
+
+        <para>
+            Und letztendlich kann die <code>getList()</code> Methode verwendet werden um alle aktuell gesetzten
+            Sprachen für einen Adapter als Array zurückgegeben zu bekommen.
+        </para>
+
+        <example id="zend.translate.using.languages.example">
+            <title>Handhabung von Sprachen mit Adaptern</title>
+            <programlisting role="php"><![CDATA[
+...
+// gibt die aktuell gesetzte Sprache zurück
+$actual = $translate->getLocale();
+
+...
+// der optionale Parameter kann wärend der Übersetzung verwendet werden
+echo $translate->_("mein_Text", "fr");
+// oder es wird eine neue Standardsprache gesetzt
+$translate->setLocale("fr");
+echo $translate->_("mein_Text");
+
+...
+// Prüft ob die Sprache existiert
+if ($translate->isAvaiable("fr")) {
+    // Sprache existiert
+}]]>
             </programlisting>
         </example>
 
@@ -553,6 +662,42 @@ if ($translate->isTranslated('message1', false, 'de')) {
         </example>
 
     </sect2>
+
+    <sect2 id="zend.translate.using.sourcedata">
+
+        <title>Zugang zu Quell Daten</title>
+
+        <para>
+            Natürlich ist es manchmal nützlich Zugang zu den übersetzten Quelldaten zu erhalten. Hierfür existieren
+            zwei Methoden.
+        </para>
+
+        <para>
+            Die <code>getMessageIds()</code> Methode gibt alle bekannten Ids für Übersetzungen als Array zurück.
+        </para>
+
+        <para>
+            Und die <code>getMessages()</code> Methode gibt die komplette Übersetzungs-Quelle als Array zurück. Die
+            Ids der Übersetzungen werden als Schlüssel und die Übersetzten Daten als Wert verwendet.
+        </para>
+
+        <example id="zend.translate.using.sourcedata.example">
+            <title>Handhabung von Quell Daten</title>
+            <programlisting role="php"><![CDATA[
+...
+// gibt alle bekannten Übersetzungs Ids zurück
+$messageids = $translate->getMessageIds();
+print_r($messageids);
+
+...
+// gibt die kompletten Übersetzungs Daten zurück
+$source = $translate->getMessages();
+print_r($source);]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
