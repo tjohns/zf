@@ -96,7 +96,7 @@ $mail->setBodyText('This is the text of the mail.')
             メソッドに渡すこともできます。
         </para>
 
-        <example id="zend.mail.introduction.example-1">
+        <example id="zend.mail.introduction.sendmail.example-1">
 
             <title>Zend_Mail_Transport_Sendmail トランスポートへの追加パラメータの渡し方</title>
 
