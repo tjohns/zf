@@ -89,7 +89,7 @@ $mail->setBodyText('Das ist der Text der Nachricht.')
             übergeben werden.
         </para>
 
-        <example id="zend.mail.introduction.example-1">
+        <example id=" id="zend.mail.introduction.sendmail.example-1">
 
             <title>Zusätzliche Parameter einem Zend_Mail_Transport_Sendmail Transport übergeben</title>
 
