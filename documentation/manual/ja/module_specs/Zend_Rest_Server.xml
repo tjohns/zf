@@ -126,7 +126,7 @@ $server->handle();]]>
             <code>SimpleXMLElement</code> オブジェクトを返します。
         </para>
 
-        <example>
+        <example id="zend.rest.server.customxml.example-1">
             <title>独自の XML を返す</title>
 
             <programlisting><![CDATA[<?php
