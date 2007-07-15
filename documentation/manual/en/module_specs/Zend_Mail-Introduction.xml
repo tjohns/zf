@@ -83,7 +83,7 @@ $mail->setBodyText('This is the text of the mail.')
             method of <code>Zend_Mail</code>.
         </para>
 
-        <example id="zend.mail.introduction.example-1">
+        <example id="zend.mail.introduction.sendmail.example-1">
 
             <title>Passing additional parameters to the Zend_Mail_Transport_Sendmail transport</title>
 
