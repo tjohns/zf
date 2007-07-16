@@ -75,8 +75,8 @@ $client->setCookieJar();
 
 // Première requête : s'identifier et démarrer une session
 $client->setUri('http://exemple.com/login.php');
-$client->addParameterPost('user', 'h4x0r');
-$client->addParameterPost('password', '1337');
+$client->setParameterPost('user', 'h4x0r');
+$client->setParameterPost('password', '1337');
 $client->request('POST');
 
 // Le magasin de cookies stocke automatiquement les
@@ -127,7 +127,7 @@ $client->setHeaders('Cookie', array(
 // Définition de plusieurs entêtes, écrasant toute valeur précédemment définie
 $client->setHeaders(array(
     'Host' => 'www.exemple.com',
-    'Accept-encoding', 'gzip,deflate',
+    'Accept-encoding' => 'gzip,deflate',
     'X-Powered-By' => 'Zend Framework'));
 
 // Le tableau peut contenir uniquement des valeurs
