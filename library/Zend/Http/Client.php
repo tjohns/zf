@@ -850,6 +850,16 @@ class Zend_Http_Client
             if (! $this->config['keepalive']) $headers[] = "Connection: close";
         }
 
+        // Set the Accept-encoding header if not set - depending on whether
+        // zlib is available or not.
+        if (! isset($this->headers['accept-encoding'])) {
+        	if (function_exists('gzinflate')) {
+        		$headers[] = 'Accept-Encoding: gzip, deflate';
+        	} else {
+        		$headers[] = 'Accept-Encoding: identity';
+        	}
+        }
+        
         // Set the content-type header
         if ($this->method == self::POST &&
            (! isset($this->headers['content-type']) && isset($this->enctype))) {
