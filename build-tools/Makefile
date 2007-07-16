@@ -42,22 +42,22 @@ PHPDOC=php c:/php/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=5541
+ZF_TAG=HEAD
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=1.0.0
+ZF_VERSION=1.0.1
 
 # For LANG, use '*' if you want to build all manual
 # translations.  If you want to build one language, use one of the
 # names of language directories, e.g. 'en', 'de', etc.  You also can
 # use any file-globbing pattern.
-LANG=*
+LANG={en,de,fr,jp,ru}
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_HOST=framework.zend.com
-DTD_URL=http://$(DTD_HOST)/docbook/xml/4.4/docbookx.dtd
+DTD_URL=http://$(DTD_HOST)/docbook/xml/4.5/docbookx.dtd
 XSL_HOST=framework.zend.com
 XSL_URL=http://$(XSL_HOST)/docbook-xsl/html/chunk.xsl
 
