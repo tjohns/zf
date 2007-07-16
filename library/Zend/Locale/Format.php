@@ -912,13 +912,20 @@ class Zend_Locale_Format
      *
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return string  format
+     * @throws Zend_Locale_Exception  throws an exception when locale data is broken
      */
     public static function getDateFormat($locale = null)
     {
         $format = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
+        if (!array_key_exists('default', $format)) {
+            throw new Zend_Locale_Exception("failed to receive data from locale $locale");
+        }
         $format = $format['default'];
 
         $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $format));
+        if (!array_key_exists('pattern', $format)) {
+            throw new Zend_Locale_Exception("failed to receive data from locale $locale");
+        }
         return $format['pattern'];
     }
 
