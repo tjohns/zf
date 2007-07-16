@@ -50,6 +50,7 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                          '+jakarta apache',
                          '"jakarta apache" AND NOT "Apache Lucene"',
                          '"jakarta apache" && !"Apache Lucene"',
+                         '\\ ',
                          'NOT "jakarta apache"',
                          '!"jakarta apache"',
                          '"jakarta apache" -"Apache Lucene"',
@@ -57,8 +58,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                          '(jakarta || apache) && website',
                          'title:(+return +"pink panther")',
                          'title:(+re\\turn\\ value +"pink panther\\"" +body:cool)',
-                         '+type:1 +id:5',
-                         'type:1 AND id:5',
+                         '+contents:apache +type:1 +id:5',
+                         'contents:apache AND type:1 AND id:5',
                          'f1:word1 f1:word2 and f1:word3',
                          'f1:word1 not f1:word2 and f1:word3'
                          );
@@ -85,15 +86,16 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                                  '+(path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)',
                                  '+((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
                                  '+((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '<EmptyQuery>',
-                                 '<EmptyQuery>',
+                                 '(<InsignificantQuery>)',
+                                 '<InsignificantQuery>',
+                                 '<InsignificantQuery>',
                                  '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
                                  '+((path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)) +(path:website modified:website contents:website)',
                                  '+((path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)) +(path:website modified:website contents:website)',
                                  '(+(title:return) +(title:"pink panther"))',
                                  '(+(+title:return +title:value) +(title:"pink panther") +(body:cool))',
-                                 '+(<EmptyQuery>) +(<EmptyQuery>)',
-                                 '+(<EmptyQuery>) +(<EmptyQuery>)',
+                                 '+(contents:apache) +(<InsignificantQuery>) +(<InsignificantQuery>)',
+                                 '+(contents:apache) +(<InsignificantQuery>) +(<InsignificantQuery>)',
                                  '(f1:word) (+(f1:word) +(f1:word))',
                                  '(f1:word) (-(f1:word) +(f1:word))');
 
@@ -190,6 +192,25 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
 
         $hits = $index->find('"PEAR developers" AND Home');
+
+        $this->assertEquals(count($hits), 1);
+        $expectedResultset = array(array(1, 0.168270, 'IndexSource/contributing.wishlist.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
+    public function testFilteredTokensQueryParserProcessing()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $this->assertEquals(count(Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize('123456787654321')), 0);
+
+
+        $hits = $index->find('"PEAR developers" AND Home AND 123456787654321');
 
         $this->assertEquals(count($hits), 1);
         $expectedResultset = array(array(1, 0.168270, 'IndexSource/contributing.wishlist.html'));
