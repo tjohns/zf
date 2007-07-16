@@ -75,8 +75,8 @@ $client->setCookieJar();
 
 // First request: log in and start a session
 $client->setUri('http://example.com/login.php');
-$client->addParameterPost('user', 'h4x0r');
-$client->addParameterPost('password', '1337');
+$client->setParameterPost('user', 'h4x0r');
+$client->setParameterPost('password', '1337');
 $client->request('POST');
 
 // The Cookie Jar automatically stores the cookies set
@@ -125,7 +125,7 @@ $client->setHeaders('Cookie', array(
 // Setting multiple headers, overwriting any previous value
 $client->setHeaders(array(
     'Host' => 'www.example.com',
-    'Accept-encoding', 'gzip,deflate',
+    'Accept-encoding' => 'gzip,deflate',
     'X-Powered-By' => 'Zend Framework'));
 
 // The array can also contain full array strings:
