@@ -36,10 +36,8 @@
         <example id="zend.loader.load.file.example">
             <title>Przykład użycia metody loadFile()</title>
             <programlisting role="php"><![CDATA[<?php
-
-Zend_Loader::loadFile($filename, $dirs=null, $once=false)
-
-?>]]></programlisting>
+Zend_Loader::loadFile($filename, $dirs=null, $once=false)]]>
+            </programlisting>
     </example>
 
         <para>
@@ -83,15 +81,13 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false)
         <example id="zend.loader.load.class.example">
             <title>Przykład użycia metody loadClass()</title>
             <programlisting role="php"><![CDATA[<?php
-
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
         '/home/production/myapp'
     )
-);
-
-?>]]></programlisting>
+);]]>
+            </programlisting>
         </example>
 
         <para>
@@ -138,12 +134,10 @@ Zend_Loader::loadClass('Container_Tree',
         <example id="zend.loader.load.isreadable.example">
             <title>Przykład użycia metody isReadable()</title>
             <programlisting role="php"><![CDATA[<?php
-
 if (Zend_Loader::isReadable($filename)) {
     // zrób coś z $filename
-}
-
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -173,11 +167,18 @@ if (Zend_Loader::isReadable($filename)) {
 
         <example id="zend.loader.load.autoload.example-extended">
             <title>Przykład zarejestrowania metody autoloadera</title>
+            <para>
+                Because of the semantics of static function references in PHP,
+                you must implement code for both <code>loadClass()</code>
+                and <code>autoload()</code>, and the <code>autoload()</code>
+                must call <code>self::loadClass()</code>.  If your
+                <code>autoload()</code> method delegates to its parent to
+                call <code>self::loadClass()</code>, then it calls the
+                method of that name in the parent class, not the subclass.
+            </para>
             <programlisting role="php"><![CDATA[<?php
-
-Zend_Loader::registerAutoload();
-
-?>]]></programlisting>
+Zend_Loader::registerAutoload();]]>
+            </programlisting>
         </example>
 
         <para>
@@ -198,15 +199,26 @@ Zend_Loader::registerAutoload();
             <title>Przykład rejestrowania metody autoloadera z rozszerzonej
                 klasy</title>
             <programlisting role="php"><![CDATA[<?php
-
 class My_Loader extends Zend_Loader
 {
-    // własna funkcjonalność
+    public static function loadClass($class, $dirs = null)
+    {
+        parent::loadClass($class, $dirs);
+    }
+
+    public static function autoload($class)
+    {
+        try {
+            self::loadClass($class);
+            return $class;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 
-Zend_Loader::registerAutoload('My_Loader');
-
-?>]]></programlisting>
+Zend_Loader::registerAutoload('My_Loader');]]>
+            </programlisting>
         </example>
 
     </sect2>

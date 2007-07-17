@@ -54,8 +54,8 @@ if ($akismet->verifyKey($apiKey) {
 echo "Key is valid.\n";
 } else {
 echo "Key is not valid\n";
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Jeśli metoda <code>verifyKey()</code> jest wywołana bez żadnych
@@ -172,7 +172,7 @@ echo "Key is not valid\n";
             a w przypadku gdy klucz API jest nieprawidłowy, wyrzuci wyjątek.
         </para>
 
-        <example>
+        <example id="zend.service.akismet.isspam.example-1">
             <title>Użycie metody isSpam()</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -188,8 +188,8 @@ if ($akismet->isSpam($data)) {
     echo "Sorry, but we think you're a spammer.";
 } else {
     echo "Welcome to our site!";
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
         </example>
 
         <para>
@@ -215,7 +215,7 @@ if ($akismet->isSpam($data)) {
             wyrzucony wyjątek.
         </para>
 
-        <example>
+        <example id="zend.service.akismet.submitspam.example-1">
             <title>Użycie metody submitSpam()</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -227,8 +227,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitSpam($data));
-?>]]></programlisting>
+$akismet->submitSpam($data));]]>
+            </programlisting>
         </example>
 
         <para>
@@ -256,7 +256,7 @@ $akismet->submitSpam($data));
             nieprawidłowy, zostanie wyrzucony wyjątek.
         </para>
 
-        <example>
+        <example id="zend.service.akismet.submitham.example-1">
             <title>Użycie metody submitHam()</title>
 
             <programlisting role="php"><![CDATA[<?php
@@ -268,8 +268,8 @@ $data = array(
     'comment_author_email' => 'nospam@myhaus.net',
     'comment_content'      => "I'm not a spammer, honest!"
 );
-$akismet->submitHam($data));
-?>]]></programlisting>
+$akismet->submitHam($data));]]>
+            </programlisting>
         </example>
 
         <para>

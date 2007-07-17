@@ -89,7 +89,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+            </programlisting>
 
             Jak pokazano w bloku dokumentacyjnym , metoda <code>authenticate()</code>
             musi zwracać instancję <code>Zend_Auth_Result</code> (lub instancję klasy
@@ -168,7 +169,8 @@ Zend_Auth_Result::FAILURE
 Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND
 Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS
 Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID
-Zend_Auth_Result::FAILURE_UNCATEGORIZED]]></programlisting>
+Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
+            </programlisting>
 
         </para>
 
@@ -186,7 +188,7 @@ switch ($result->getCode()) {
         /** obsługujemy nieistniejącą tożsamość **/
         break;
 
-    case Zend_Auth_Result::FAILURE_INVALID_CREDENTIAL:
+    case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
         /** obsługujemy nieprawidłowe hasło **/
         break;
 
@@ -197,7 +199,8 @@ switch ($result->getCode()) {
     default:
         /** obsługujemy inne błędy **/
         break;
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -280,7 +283,8 @@ $auth->setStorage(new Zend_Auth_Storage_Session('someNamespace'));
  */
 
 // Uwierzytelniamy, zapisując wynik i przechowując tożsamość po udanym uwierzytelnieniu
-$result = $auth->authenticate($authAdapter);]]></programlisting>
+$result = $auth->authenticate($authAdapter);]]>
+                    </programlisting>
 
                 </para>
 
@@ -371,7 +375,8 @@ class MyStorage implements Zend_Auth_Storage_Interface
          */
     }
 
-}]]></programlisting>
+}]]>
+                    </programlisting>
 
                 </para>
 
@@ -389,7 +394,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  */
 
 // Uwierzytelniamy, zapisując wynik i przechowując tożsamość po udanym uwierzytelnieniu
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]></programlisting>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+                    </programlisting>
 
                 </para>
 
@@ -445,7 +451,8 @@ if (!$result->isValid()) {
     // Uwierzytelnianie udane; tożsamość ($username) jest zapisana w sesji
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
         <para>
@@ -457,7 +464,8 @@ $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
     // Tożsamość istnieje; pobieramy ją
     $identity = $auth->getIdentity();
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
         <para>
@@ -465,7 +473,8 @@ if ($auth->hasIdentity()) {
             <code>clearIdentity()</code>. Typowo może być to użyte do
             implementacji w aplikacji operacji wylogowania:
             <programlisting role="php"><![CDATA[<?php
-Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+Zend_Auth::getInstance()->clearIdentity();]]>
+            </programlisting>
         </para>
 
         <para>
@@ -493,7 +502,8 @@ if (!$result->isValid()) {
 } else {
     // Uwierzytelnianie udane
     // $result->getIdentity() === $username
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>

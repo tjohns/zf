@@ -15,10 +15,10 @@
 
         <para>
             Walidator bada dane wejściowe w oparciu o pewne wymagania i tworzy
-            wynik w postaci wartości logicznej - wartość ta mówi czy dane wejściowe
-            spełniają te wymagania. Jeśli dane wejściowe nie spełniają wymagań,
-            walidator może dodatkowo przekazać informacje o tym, które z wymagań nie
-            zostały spełnione.
+            wynik w postaci wartości logicznej - wartość ta mówi czy dane 
+            wejściowe spełniają te wymagania. Jeśli dane wejściowe nie spełniają 
+            wymagań, walidator może dodatkowo przekazać informacje o tym, które 
+            z wymagań nie zostały spełnione.
         </para>
 
         <para>
@@ -95,8 +95,8 @@ if ($validator->isValid($email)) {
     foreach ($validator->getMessages() as $message) {
         echo "$message\n";
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -118,7 +118,9 @@ if ($validator->isValid($email)) {
             wartością, która została przekazana do metody <code>isValid()</code>.
             Inne identyfikatory mogą być obsługiwane indywidualnie w każdej
             klasie walidatora. Na przykład identyfikator <code>%max%</code> jest
-            obsługiwany przez klasę.
+            obsługiwany przez klasę Zend_Validate_LessThan.
+            Metoda <code>getMessageVariables()</code> zwraca tablicę
+            identyfikatorów obsługiwanych przez walidator.
         </para>
 
         <para>
@@ -147,8 +149,8 @@ if (!$validator->isValid('word')) {
     echo $m[0];
 
     // echoes "Łańcuch znaków 'word' jest za krotki; musi składać się z przynajmniej 8 znaków"
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
         <para>
@@ -164,8 +166,8 @@ $validator = new Zend_Validate_StringLength(8, 12);
 $validator->setMessages( array(
     Zend_Validate_StringLength::TOO_SHORT => 'Łańcuch znaków \'%value%\' jest za krótki',
     Zend_Validate_StringLength::TOO_LONG  => 'Łańcuch znaków \'%value%\' jest za długi'
-));
-]]></programlisting>
+));]]>
+            </programlisting>
 
         </para>
 
@@ -191,8 +193,8 @@ if (!validator->isValid('word')) {
         . ' i '
         . $validator->max
         . "\n";
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>
@@ -219,8 +221,8 @@ if (Zend_Validate::is($email, 'EmailAddress')) {
     //
     // Tak, adres email jest poprawny
     //
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -235,8 +237,8 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     //
     // Tak, wartość $value jest pomiędzy 1 i 12
     //
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 
@@ -258,7 +260,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
             Dodatkowo klasa Zend_Filter_Input pozwala na utworzenie instancji
             i wywołanie większej ilości klas filtrów i walidatorów w celu
             przetworzenia zestawu danych wejściowych. Zobacz
-            <xref linked="zend.filter.input" />.
+            <xref linkend="zend.filter.input" />.
         </para>
 
     </sect2>

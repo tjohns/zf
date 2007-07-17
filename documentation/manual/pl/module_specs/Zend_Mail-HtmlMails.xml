@@ -6,10 +6,9 @@
         <code>text/html</code>. Jeśli używasz zarówno treści HTML jak i tekstowej to
         automatycznie zostanie wygenerowana wiadomość o typie MIME <code>multipart/alternative</code>:
     </para>
-    <example>
+    <example id="zend.mail.html-mails.example-1">
         <title>Wysyłanie e-maila w postaci HTML</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Testowy tekst');
@@ -17,8 +16,8 @@ $mail->setBodyHtml('<b>Testowy</b> tekst');
 $mail->setFrom('somebody@example.com', 'Nadawca');
 $mail->addTo('somebody_else@example.com', 'Odbiorca');
 $mail->setSubject('Testowy temat');
-$mail->send();
-?>]]>   </programlisting>
+$mail->send();]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

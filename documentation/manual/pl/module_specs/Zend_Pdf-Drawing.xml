@@ -177,13 +177,12 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  */
 public function drawText($text, $x, $y, $charEncoding = '');]]>
         </programlisting>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>Wypisywanie tekstu na stronie.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $pdfPage->drawText('Hello world!', 72, 720);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -195,7 +194,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         przeprowadzi dla ciebie konwersję. Możesz użyć źródłowego łańcucha znaków
         w dowolnym kodowaniu obsługiwanym przez funkcję PHP <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.text-drawing.example-2">
             <title>Wypisywanie tekstu zakodowanego w UTF-8 na stronie.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -204,8 +203,7 @@ $unicodeString = fread($fp, 1024);
 
 // Wypisz tekst na stronie
 $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
     </sect2>
@@ -239,7 +237,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
         dla 14 standardowych czcionek PDF lub <code>Zend_Pdf_Font::fontWithPath($filePath)</code>
         dla własnych czcionek.
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-1">
             <title>Tworzenie standardowej czcionki.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -248,8 +246,7 @@ $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Ustaw czcionkę
 $pdfPage->setFont($font, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -311,7 +308,7 @@ $pdfPage->setFont($font, 36);
         Jeśli z jakiegoś powodu nie może on być odczytany, lub nie jest to czcionka
         TrueType, metoda fabryki wyrzuci wyjątek:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-2">
             <title>Tworzenie czcionki TrueType.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -320,8 +317,7 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
 
 // Ustaw czcionkę
 $pdfPage->setFont($goodDogCoolFont, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -331,7 +327,7 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         jest dla ciebie rozmiar pliku, możesz zażądać, aby plik czcionki nie
         był osadzony przekazując opcję 'nie osadzaj' do metody fabryki:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-3">
             <title>Tworzenie czcionki TrueType, ale bez osadzania jej w dokumencie PDF.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -341,8 +337,7 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
 
 // Ustaw czcionkę
 $pdfPage->setFont($goodDogCoolFont, 36);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -361,14 +356,13 @@ $pdfPage->setFont($goodDogCoolFont, 36);
         Możesz wciąż użyć tych czcionek, ale musisz przekazać odpowiedni parametr
         w celu nieosadzenia czcionki, lub w prosty sposób zignorować wyjątek:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-4">
             <title>Nie wyrzucanie wyjątku dla czcionek które nie mogą być osadzone.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
                                     Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
@@ -382,29 +376,27 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
         co powoduje zaoszczędzenie średnio 50% miejsca. Jeśli z jakiegoś powodu
         nie chcesz kompresować plików czcionek, możesz to zablokować opcją:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-5">
             <title>Nie kompresowanie osadzonych czcionek.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
         <para>
         Ostatecznie, jeśli potrzebujesz, możesz łączyć opcje osadzania czcionek
         używając bitowego operatora LUB:
         </para>
-        <example>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
             <title>Łączenie opcji osadzania czcionki.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
                                     (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
                                      Zend_Pdf_Font::EMBED_DONT_COMPRESS));
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
     </sect2>
@@ -432,7 +424,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
         <code>Zend_Pdf_Image::imageWithPath($filePath)</code> (obecnie
         obsługiwane są obrazy JPG, PNG oraz TIFF):
         </para>
-        <example>
+        <example id="zend.pdf.drawing.image-drawing.example-1">
             <title>Wstawianie obrazów.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
@@ -440,8 +432,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
 $image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
-...
-?>]]>
+...]]>
             </programlisting>
         </example>
 

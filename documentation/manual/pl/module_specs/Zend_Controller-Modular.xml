@@ -28,8 +28,8 @@ application/
             IndexController.php
             ListController.php
         models/
-        views/
-]]></programlisting>
+        views/]]>
+        </programlisting>
 
         <para>
             W tym modelu, nazwa modułu uwidacznia się jako przedrostek nazw
@@ -40,6 +40,19 @@ application/
             własnej przestrzeni nazw. Ta struktura katalogów będzie używana w
             przykładach w tym rozdziale.
         </para>
+
+        <note>
+            <title>Brak przestrzeni nazw w domyślnym module</title>
+            <para>
+                Zauważ, że w domyślnym module nazwa kontrolera nie ma 
+                przedrostka defniującego przestrzeń nazw. Dlatego w powyższym 
+                przykładzie kontrolery w domyślnym module nie potrzebują 
+                przedrostka 'Default_' -- są one po prostu uruchamiane jako 
+                'IndexController' oraz 'FooController'. Przedrostek definiujący 
+                przestrzeń nazw jest jednak używany we wszystkich innych 
+                modułach.
+            </para>
+        </note>
 
         <para>
             Więc jak implementujesz taką strukturę katalogów używając
@@ -73,8 +86,8 @@ application/
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
-));
-?>]]></programlisting>
+));]]>
+        </programlisting>
 
         <para>
             Metoda <code>addControllerDirectory()</code> przyjmuje opcjonalny
@@ -84,8 +97,8 @@ $front->setControllerDirectory(array(
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
-?>]]></programlisting>
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        </programlisting>
 
         <para>
             Zostawiając najlepsze na koniec, najprostszym sposobem określenia
@@ -107,8 +120,8 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');
-?>]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');]]>
+        </programlisting>
 
         <para>
             Powyższy przykład definiuje moduły <code>default</code>,
@@ -134,8 +147,8 @@ $front->addModuleDirectory('/path/to/application/modules');
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');
-?>]]></programlisting>
+$front->addModuleDirectory('/path/to/application/modules');]]>
+        </programlisting>
 
         <note><para>
             Możesz określić aby podkatalog kontrolerów nie był używany w
@@ -184,12 +197,12 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <para>
             Jeśli chcesz zawsze używać domyślnej przestrzeni nazw, ustaw
-            parametr <code>useGlobalDefault</code> w kontrolerze frontowym:
+            parametr <code>useDefaultControllerAlways</code> w kontrolerze frontowym:
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->setParam('useGlobalDefault', true);
-]]></programlisting>
+$front->setParam('useDefaultControllerAlways', true);]]>
+        </programlisting>
     </sect2>
 </sect1>
 

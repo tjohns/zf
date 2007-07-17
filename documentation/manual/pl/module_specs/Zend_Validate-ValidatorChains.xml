@@ -11,7 +11,6 @@
         znaków:
 
         <programlisting role="php"><![CDATA[<?php
-
 // Zapewnia możliwość łańcuchowego wywoływania walidatorów
 require_once 'Zend/Validate.php';
 
@@ -32,9 +31,8 @@ if ($validatorChain->isValid($username)) {
     foreach ($validatorChain->getMessages() as $message) {
         echo "$message\n";
     }
-}
-
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         Walidatory są uruchamiane w takiej kolejności, w jakiej zostały dodane
         do <code>Zend_Validate</code>. W powyższym przykładzie, wpierw jest
@@ -61,11 +59,9 @@ if ($validatorChain->isValid($username)) {
         byłaby nieodpowiednia:
 
         <programlisting role="php"><![CDATA[<?php
-
 $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
-        ->addValidator(new Zend_Validate_Alnum());
-
-?>]]></programlisting>
+        ->addValidator(new Zend_Validate_Alnum());]]>
+        </programlisting>
 
     </para>
 

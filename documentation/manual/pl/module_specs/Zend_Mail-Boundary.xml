@@ -6,15 +6,14 @@
         możesz chciec określić jakie wartości ma mieć pole rozgraniczające. Możesz to
         zrobić używając metody <code>setMimeBoundary()</code> jak w poniższym przykładzie:
     </para>
-    <example>
+    <example id="zend.mail.boundary.example-1">
         <title>Zmiana pola rozgraniczającego MIME</title>
-        <programlisting role="php"><![CDATA[
-<?php
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++);
-// tworzymy wiadomość
-?>]]>   </programlisting>
+// tworzymy wiadomość]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

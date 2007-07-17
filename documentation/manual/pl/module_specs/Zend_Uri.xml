@@ -34,20 +34,17 @@
       <code>Zend_Uri::factory()</code> przekazana jest tylko nazwa schematu.
     </para>
 
-    <example>
+    <example id="zend.uri.creation.example-1">
       <title>Tworzenie nowego URI za pomocą <code>Zend_Uri::factory()</code></title>
 
-      <programlisting role="php"><![CDATA[
-<?php
-
+      <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 // Aby utworzyć URI z szablonu, przekaż tylko schemat.
 $uri = Zend_Uri::factory('http');
 
-// $uri jest instancją Zend_Uri_Http
-
-?>]]></programlisting>
+// $uri jest instancją Zend_Uri_Http]]>
+        </programlisting>
     </example>
 
     <para>
@@ -73,20 +70,17 @@ $uri = Zend_Uri::factory('http');
       <code>Zend_Uri::factory()</code>.
     </para>
 
-    <example>
+    <example id="zend.uri.manipulation.example-1">
       <title>Manipulowanie istniejącym URI za pomocą <code>Zend_Uri::factory()</code></title>
 
-    <programlisting role="php"><![CDATA[
-<?php
-
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 // Aby manipulować istniejącym URI, przekaż go do metody fabryki.
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-// $uri jest instancją Zend_Uri_Http
-
-?>]]></programlisting>
+// $uri jest instancją Zend_Uri_Http]]>
+        </programlisting>
     </example>
 
     <para>
@@ -106,20 +100,17 @@ $uri = Zend_Uri::factory('http://www.zend.com');
       jest tylko sprawdzenie poprawności istniejącego URI.
     </para>
 
-    <example>
+    <example id="zend.uri.validation.example-1">
       <title>Sprawdzanie poprawności URI za pomocą <code>Zend_Uri::check()</code></title>
 
-    <programlisting role="php"><![CDATA[
-<?php
-
+    <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 // Sprawdź czy podany URI ma poprawny format
 $valid = Zend_Uri::check('http://uri.in.question');
 
-// $valid ma wartość TRUE dla poprawnego URI, lub FALSE w przeciwnym wypadku.
-
-?>]]></programlisting>
+// $valid ma wartość TRUE dla poprawnego URI, lub FALSE w przeciwnym wypadku.]]>
+    </programlisting>
     </example>
 
     <para>
@@ -146,19 +137,16 @@ $valid = Zend_Uri::check('http://uri.in.question');
         nazwą schematu adresu <code>http://www.zend.com</code> jest <code>http</code>.
       </para>
 
-      <example>
+      <example id="zend.uri.instance-methods.getscheme.example-1">
         <title>Pobieranie schematu z obiektu <code>Zend_Uri_*</code></title>
 
-        <programlisting role="php"><![CDATA[
-<?php
-
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-$scheme = $uri->getScheme();  // "http"
-
-?>]]></programlisting>
+$scheme = $uri->getScheme();  // "http"]]>
+        </programlisting>
     </example>
 
       <para>
@@ -171,19 +159,16 @@ $scheme = $uri->getScheme();  // "http"
     <sect3 id="zend.uri.instance-methods.geturi">
       <title>Pobieranie całego URI</title>
 
-      <example>
+      <example id="zend.uri.instance-methods.geturi.example-1">
         <title>Pobieranie całego URI z obiektu <code>Zend_Uri_*</code></title>
 
-        <programlisting role="php"><![CDATA[
-<?php
-
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-echo $uri->getUri();  // "http://www.zend.com"
-
-?>]]></programlisting>
+echo $uri->getUri();  // "http://www.zend.com"]]>
+          </programlisting>
       </example>
 
       <para>
@@ -204,19 +189,16 @@ echo $uri->getUri();  // "http://www.zend.com"
         się niepoprawny, po tym jak będziemy nim manipulować.
       </para>
 
-      <example>
+      <example id="zend.uri.instance-methods.valid.example-1">
         <title>Sprawdzanie poprawności obiektu <code>Zend_Uri_*</code></title>
 
-        <programlisting role="php"><![CDATA[
-<?php
-
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Uri.php';
 
 $uri = Zend_Uri::factory('http://www.zend.com');
 
-$isValid = $uri->valid();  // TRUE
-
-?>]]></programlisting>
+$isValid = $uri->valid();  // TRUE]]>
+          </programlisting>
       </example>
 
       <para>

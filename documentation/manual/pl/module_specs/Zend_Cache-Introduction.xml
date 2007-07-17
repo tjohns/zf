@@ -17,14 +17,15 @@
         frontendy rozszerzające <code>Zend_Cache_Core</code> na przykład:
         <code>Output</code>, <code>File</code>, <code>Function</code> oraz <code>Class</code>.
     </para>
-    <example>
+    <example id="zend.cache.introduction.example-1">
         <title>Pobieranie frontendu za pomocą <code>Zend_Cache::factory()</code></title>
         <para>
             <code>Zend_Cache::factory()</code> tworzy instancję odpowiedniego
             obiektu łączy je razem. W tym pierwszym przykładzie użyjemy
             frontendu <code>Core</code> wraz z backendem <code>File</code>.
         </para>
-            <programlisting role="php"><![CDATA[<?php
+
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
@@ -37,18 +38,30 @@ $backendOptions = array(
 );
 
 // pobieranie obiektu Zend_Cache_Core
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+       </programlisting>
+   </example>
 
-?>]]></programlisting>
+   <note>
+       <title>Frontends and Backends consisting of multiple words</title>
        <para>
+            Some frontends and backends are named using multiple words, such
+            as 'ZendPlatform'. When specifying them to the factory, separate
+            them using a word separator, such as a space (' '), hyphen
+            ('-'), or period ('.').
+        </para>
+    </note>
+    
+    <example id="zend.cache.introduction.example-2">
+        <title>Caching a database query result</title>
+        <para>
             Teraz gdy mamy frontend, możemy buforować dowolny typ danych
             (włączyliśmy serializację). Na przykład, możemy buforować rezultat
             bardzo obciążającego zapytania do bazy danych. Kiedy jest buforowane,
             nie ma nawet potrzeby aby łączyć się z bazą; rekordy są pobierane z
             bufora, a następnie odserializowane.
         </para>
-            <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 // obiekt $cache zainicjalizowany jak w poprzednim przykładzie
 
 // sprawdzamy czy bufor istnieje:
@@ -69,11 +82,10 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);
-
-?>]]></programlisting>
+print_r($result);]]>
+        </programlisting>
     </example>
-    <example>
+    <example id="zend.cache.introduction.example-3">
         <title>Buforowanie danych wyjściowych przy użyciu frontendu <code>Zend_Cache</code></title>
         <para>
             Sekcje w których chcemy buforować dane wyjściowe oznaczamy dodając
@@ -86,8 +98,7 @@ print_r($result);
             następnego wywołania, cała sekcja będzie ominięta, a użyte zostaną
             dane z bufora. (tak długo jak rekord bufora jest prawidłowy).
         </para>
-            <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 $frontendOptions = array(
    'lifetime' => 30,                  // okres ważności bufora pół minuty
    'automatic_serialization' => false  // to i tak jest domyślna wartość
@@ -107,9 +118,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // dane wyjściowe są zapisywane i wysyłane do przeglądarki
 }
 
-echo 'To nie jest nigdy buforowane ('.time().').';
-
-?>]]>       </programlisting>
+echo 'To nie jest nigdy buforowane ('.time().').';]]>
+       </programlisting>
        <para>
            Zauważ, że wyświetlamy rezultat funkcji <code>time()</code> dwa razy;
            jest to coś dynamicznego, aby zademenstrować przeznaczenie. Spróbuj

@@ -34,8 +34,7 @@
             Dobrym sposobem utworzenia użytecznej instancji frontendu
             <code>Zend_Cache</code> jest ten pokazany w poniższym przykładzie:
         </para>
-            <programlisting role="php"><![CDATA[<?php
-
+        <programlisting role="php"><![CDATA[<?php
 # Ładujemy fabrykę Zend_Cache
 require 'Zend/Cache.php';
 
@@ -53,9 +52,8 @@ $backendOptions = array([...]);
 
 # We make the good instance
 # (oczywiście dwa ostatnie argumenty są opcjonalne)
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
-
-?>]]></programlisting>
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]>
+        </programlisting>
         <para>
             W poniższych przykładach założymy że zmienna <code>$cache</code> zawiera
             poprawną instancję frontendu i to, że rozumiesz jak przekazać
@@ -77,10 +75,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             usuwania wszystkich rekordów bufora oznaczonych daną etykietą (lub etykietami):
         </para>
         <programlisting role="php"><![CDATA[<?php
-
-$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
-
-?>]]></programlisting>
+$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
+        </programlisting>
         <note><para>
             zauważ, że metoda <code>save()</code> akceptuje opcjonalny czwarty
             argument : <code>$specificLifetime</code> (jeśli jego wartość jest
@@ -95,32 +91,26 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             metody <code>remove()</code>:
         </para>
         <programlisting role="php"><![CDATA[<?php
-
-$cache->remove('idToRemove');
-
-?>]]></programlisting>
+$cache->remove('idToRemove');]]>
+        </programlisting>
         <para>
             Aby usunąć/unieważnić wiele rekordów bufora za jednym razem, możesz
             użyć metody <code>clean()</code>. Na przykład aby usunąć wszystkie
             rekordy bufora:
         </para>
         <programlisting role="php"><![CDATA[<?php
-
 // czyszczenie wszystkich rekordów
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // czyszczenie jedynie nieaktualnych rekordów
-$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
-
-?>]]>   </programlisting>
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]>
+        </programlisting>
         <para>
             Jeśli chcesz usunąć rekordy bufora oznaczone etykietami 'tagA' oraz 'tagC':
         </para>
         <programlisting role="php"><![CDATA[<?php
-
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
-
-?>]]>   </programlisting>
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
+        </programlisting>
         <para>
             Dostępne tryby czyszczenia bufora to: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
             <code>CLEANING_MODE_MATCHING_TAG</code> oraz <code>CLEANING_MODE_NOT_MATCHING_TAG</code>.

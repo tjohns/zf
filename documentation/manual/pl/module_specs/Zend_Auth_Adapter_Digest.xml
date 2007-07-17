@@ -109,7 +109,8 @@ Array
     [realm] => Some Realm
     [username] => someUser
 )
-*/]]></programlisting>
+*/]]>
+        </programlisting>
 
     </sect2>
 

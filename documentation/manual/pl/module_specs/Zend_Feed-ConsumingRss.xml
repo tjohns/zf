@@ -4,12 +4,9 @@
         Odczytywanie kanału RSS jest tak proste jak utworzenie obiektu <code>Zend_Feed_Rss</code> z adresem
         URL kanału przekazanym do konstruktora:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
+    </programlisting>
     <para>
         Jeśli wystąpi jakiś błąd podczas obróbki danych pochodzących z kanału,
         zostanie wyrzucony wyjątek <code>Zend_Feed_Exception</code>.
@@ -19,12 +16,9 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
         Kiedy już masz obiekt kanału informacyjnego, możesz łatwo uzyskać dostęp
         do standardowych właściwości kanału RSS bezpośrednio na obiekcie:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-echo $channel->title();
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+echo $channel->title();]]>
+    </programlisting>
     <para>
         Zwróć uwagę na składnie funkcji. <code>Zend_Feed</code> używa konwencji
         traktującej właściwości jak obiekt XML gdy próbujemy uzyskać do nich dostęp
@@ -38,12 +32,9 @@ echo $channel->title();
         Jeśli właściwości kanału mają atrybuty, są one dostępne przy użyciu składni
         tablic PHP:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-echo $channel->category['domain'];
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+echo $channel->category['domain'];]]>
+    </programlisting>
     <para>
         Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
         values.
@@ -55,14 +46,11 @@ echo $channel->category['domain'];
         w PHP interfejs <code>Iterator</code>, więc wyświetlenie wszystkich tytułów
         artykułów z kanału jest bardzo proste:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
+    <programlisting role="php"><![CDATA[<?php
 foreach ($channel as $item) {
     echo $item->title() . "\n";
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
     <para>
         Jeśli nie jesteś obeznany z RSS, poniżej znajdziesz opis podstawowych
         składników, które możesz znaleść w kanale RSS i w jego indywidualnych
@@ -144,14 +132,11 @@ foreach ($channel as $item) {
     <para>
         W twoim kodzie zawsze możesz sprawdzić czy element nie jest pusty za pomocą:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
+    <programlisting role="php"><![CDATA[<?php
 if ($item->propname()) {
     // ... kontynuuj.
-}
-
-?>]]></programlisting>
+}]]>
+    </programlisting>
 
     <para>
         Jeśli zamiast tego użyjesz <code>$item->propname</code>, zawsze dostaniesz

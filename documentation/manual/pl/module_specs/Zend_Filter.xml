@@ -68,8 +68,8 @@ require_once 'Zend/Filter/HtmlEntities.php';
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;
-]]></programlisting>
+echo $htmlEntities->filter('"'); // &quot;]]>
+            </programlisting>
 
         </para>
 
@@ -93,8 +93,8 @@ echo $htmlEntities->filter('"'); // &quot;
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 
-echo Zend_Filter::get('&', 'HtmlEntities');
-]]></programlisting>
+echo Zend_Filter::get('&', 'HtmlEntities');]]>
+            </programlisting>
 
         </para>
 
@@ -105,8 +105,8 @@ echo Zend_Filter::get('&', 'HtmlEntities');
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Filter.php';
 
-echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
-]]></programlisting>
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
+            </programlisting>
 
         </para>
 
@@ -122,7 +122,7 @@ echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
             Dodatkowo klasa Zend_Filter_Input pozwala na utworzenie instancji
             i wywołanie większej ilości klas filtrów i walidatorów w celu
             przetworzenia zestawu danych wejściowych. Zobacz
-            <xref linked="zend.filter.input" />.
+            <xref linkend="zend.filter.input" />.
         </para>
 
     </sect2>

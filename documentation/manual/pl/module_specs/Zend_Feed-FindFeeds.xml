@@ -6,12 +6,9 @@
         <code>Zend_Feed</code> pozwala odebrać wszystkie kanały informacyjne
         do których odwołuje się dana strona za pomocą wywołania prostej metody:
     </para>
-    <programlisting role="php"><![CDATA[
-<?php
-
-$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
-
-?>]]></programlisting>
+    <programlisting role="php"><![CDATA[<?php
+$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');]]>
+</programlisting>
     <para>
         Tutaj metoda <code>findFeeds()</code> zwraca tablicę obiektów <code>Zend_Feed_Abstract</code>
         do których na stronie news.html są odniesienia w postaci <code>&lt;link&gt;</code>. Zależenie

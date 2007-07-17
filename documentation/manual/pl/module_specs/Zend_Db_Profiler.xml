@@ -36,8 +36,8 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 $db->getProfiler()->setEnabled(false);
 
 // włącz profiler:
-$db->getProfiler()->setEnabled(true);
-?>]]></programlisting>
+$db->getProfiler()->setEnabled(true);]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.db.profiler.using">
@@ -50,8 +50,8 @@ $db->getProfiler()->setEnabled(true);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$profiler = $db->getProfiler();
-?>]]></programlisting>
+$profiler = $db->getProfiler();]]>
+        </programlisting>
 
         <para>
             Zwraca to instancję <code>Zend_Db_Profiler</code>. Używając tej
@@ -104,6 +104,20 @@ $profiler = $db->getProfiler();
             <listitem>
                 <para>
                     <code>getQuery()</code> zwraca tekst SQL zapytania.
+                    The SQL text of a prepared statement with parameters is the
+                    text at the time the query was prepared, so it contains
+                    parameter placeholders, not the values used when the
+                    statement is executed.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryParams()</code> returns an array of
+                    parameter values used when executing a prepared query.
+                    This includes both bound parameters and arguments to the
+                    statement's <code>execute()</code> method.  The keys of
+                    the array are the positional (1-based) or named (string)
+                    parameter indices.
                 </para>
             </listitem>
             <listitem>
@@ -123,8 +137,8 @@ $profiler = $db->getProfiler();
         <programlisting role="php"><![CDATA[<?php
 $query = $profiler->getLastQueryProfile();
 
-echo $query->getQuery();
-?>]]></programlisting>
+echo $query->getQuery();]]>
+        </programlisting>
 
         <para>
             Możliwe, że strona generuje się powoli; użyj profilera aby ustalić
@@ -149,8 +163,8 @@ echo 'Wykonano ' . $queryCount . ' zapytań w czasie ' . $totalTime . ' sekund' 
 echo 'Średni czas trwania zapytania: ' . $totalTime / $queryCount . ' sekund' . "\n";
 echo 'Zapytań na sekundę:: ' . $queryCount / $totalTime . "\n";
 echo 'Czas trwania najdłuższego zapytania: ' . $longestTime . "\n";
-echo "Najdłuższe zapytanie: \n" . $longestQuery . "\n";
-?>]]></programlisting>
+echo "Najdłuższe zapytanie: \n" . $longestQuery . "\n";]]>
+        </programlisting>
 
     </sect2>
 
@@ -179,8 +193,8 @@ echo "Najdłuższe zapytanie: \n" . $longestQuery . "\n";
 $profiler->setFilterElapsedSecs(5);
 
 // Profiluj wszystkie zapytania, niezależnie od czasu ich trwania:
-$profiler->setFilterElapsedSecs(null);
-?>]]></programlisting>
+$profiler->setFilterElapsedSecs(null);]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.db.profiler.advanced.filtertype">
@@ -256,8 +270,8 @@ $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSER
 $profiler->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // Usuń wszystkie filtry
-$profiler->setFilterQueryType(null);
-?>]]></programlisting>
+$profiler->setFilterQueryType(null);]]>
+            </programlisting>
 
         </sect3>
 
@@ -284,8 +298,8 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
 
 // Pobierz jedynie profile zapytań DELETE
-$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
-?>]]></programlisting>
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
+            </programlisting>
 
         </sect3>
 

@@ -32,7 +32,8 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 $config['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]></programlisting>
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+            </programlisting>
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
@@ -64,7 +65,8 @@ database.name     = dbname
 [staging : production]
 database.host     = dev.example.com
 database.username = devuser
-database.password = devsecret]]></programlisting>
+database.password = devsecret]]>
+        </programlisting>
         <para>
             Następnie załóżmy, że programista aplikacji potrzebuje danych
             konfiguracyjnych aplikacji rozbudowywanej z pliku INI. Prostą 
@@ -77,10 +79,11 @@ require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->host; // wyświetla "dev.example.com"
-echo $config->database->name; // wyświetla "dbname"]]></programlisting>
+echo $config->database->name; // wyświetla "dbname"]]>
+        </programlisting>
     </example>
     <note>
-    <table>
+    <table id="zend.config.adapters.ini.table">
         <title>Parametry konstruktora Zend_Config_Ini</title>
         <tgroup cols="2">
             <thead>

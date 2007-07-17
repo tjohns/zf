@@ -96,8 +96,8 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Żadna z metod klasy <code>Zend_Controller_Plugin_Abstract</code> nie
@@ -164,8 +164,8 @@ $front = Zend_Controller_Front::getInstance();
 $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
-$front->dispatch();
-]]></programlisting>
+$front->dispatch();]]>
+        </programlisting>
 
         <para>
            Zakładając, że żadne wywołana akcja nie wyświetliła żadnych danych, i
@@ -179,14 +179,16 @@ $front->dispatch();
 <p>Wywołano metodę dispatchLoopStartup()</p>
 <p>Wywołano metodę preDispatch()</p>
 <p>Wywołano metodę postDispatch()</p>
-<p>Wywołano metodę dispatchLoopShutdown()</p>
-]]></programlisting>
+<p>Wywołano metodę dispatchLoopShutdown()</p>]]>
+        </programlisting>
 
         <note>
-            Wtyczki mogą być zarejestrowane w dowolnym momencie podczas
-            uruchomienia kontrolera frontowego. Jednak jeśli zdarzenie dla
-            którego we wtyczce była zarejestrowana metoda już minęło, to metoda
-            ta będzie ominięta.
+            <para>
+                Wtyczki mogą być zarejestrowane w dowolnym momencie podczas
+                uruchomienia kontrolera frontowego. Jednak jeśli zdarzenie dla
+                którego we wtyczce była zarejestrowana metoda już minęło, to 
+                metoda ta będzie ominięta.
+            </para>
         </note>
     </sect2>
 

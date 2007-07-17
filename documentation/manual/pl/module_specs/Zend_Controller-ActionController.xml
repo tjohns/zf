@@ -38,8 +38,8 @@ class FooController extends Zend_Controller_Action
     {
         // zrób coś
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Powyższa klasa <code>FooController</code> (kontroler <code>foo</code>)
@@ -71,8 +71,8 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Lokalnie, tylko dla tego kontrolera:
-        $this->_invokeArgs['noViewRenderer'] = true;
+        // Lokalnie, tylko dla tego kontrolera; affects all actions, as loaded in init:
+        $this->_helper->viewRenderer->setNoRender(true);
 
         // Globalnie:
         $this->_helper->removeHelper('viewRenderer');
@@ -81,14 +81,15 @@ class FooController extends Zend_Controller_Action
         // version in order to propagate for this controller:
         Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 <code>initView()</code>, <code>getViewScript()</code>,
                 <code>render()</code>, and <code>renderScript()</code> each
                 proxy to the <code>ViewRenderer</code> unless the helper is not
-                in the helper broker or the noViewRenderer flag has been set.
+                in the helper broker or the <code>noViewRenderer</code> flag has 
+                been set.
             </para>
 
             <para>
@@ -102,11 +103,11 @@ class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
-        // wyłączamy automatyczne renderowanie dla tej akcji:
+        // wyłączamy automatyczne renderowanie tylko dla tej akcji:
         $this->_helper->viewRenderer->setNoRender();
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 The primary reasons to disable the <code>ViewRenderer</code> are
@@ -152,8 +153,8 @@ class FooController extends Zend_Controller_Action
             'dbname'   => 'website'
         ));
     }
-}
-]]></programlisting>
+}]]>
+        </programlisting>
 
     </sect2>
 
@@ -198,8 +199,8 @@ class FooController extends Zend_Controller_Action
 
                 <programlisting role="php"><![CDATA[
 $this->getResponse()->setHeader('Content-Type', 'text/xml');
-$this->getResponse()->appendBody($content);
-]]></programlisting>
+$this->getResponse()->appendBody($content);]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -249,8 +250,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}
-?>]]></programlisting>
+}]]>
+                    </programlisting>
                 </note>
             </listitem>
         </itemizedlist>
@@ -299,8 +300,8 @@ applicationOrModule/
             index/
                 index.phtml
         helpers/
-        filters/
-]]></programlisting>
+        filters/]]>
+            </programlisting>
 
             <para>
                 Innymi słowy, założone jest, że skrypty widoków znajdują się w
@@ -321,8 +322,8 @@ applicationOrModule/
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-string render(string $action = null, string $name = null, bool $noController = false);
-?>]]></programlisting>
+string render(string $action = null, string $name = null, bool $noController = false);]]>
+            </programlisting>
 
             <para>
                 <code>render()</code> renderuje skrypt widoku. Jeśli nie
@@ -386,8 +387,8 @@ class MyController extends Zend_Controller_Action
         // Renderuje my/baz-bat.phtml
         $this->render();
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -494,7 +495,7 @@ class MyController extends Zend_Controller_Action
             <code>Zend_Controller_Action</code> could solve such redundancy.
         </para>
 
-        <sect3 id="zend.controller.action.subclassing.call">
+        <example id="zend.controller.action.subclassing.example-call">
             <title>Jak obsługiwać nieistniejące akcje</title>
 
             <para>
@@ -530,8 +531,8 @@ class MyController extends Zend_Controller_Action
         // wszystkie inne metody wyrzucają wyjątek
         throw new Exception('Invalid method "' . $method . '" called');
     }
-}
-?>]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
                 Inną możliwością jest przeniesienie do domyślnego kontrolera:
@@ -555,9 +556,9 @@ class MyController extends Zend_Controller_Action
         // wszystkie inne metody wyrzucają wyjątek
         throw new Exception('Invalid method "' . $method . '" called');
     }
-}
-?>]]></programlisting>
-        </sect3>
+}]]>
+            </programlisting>
+        </example>
 
         <para>
             Besides overriding <code>__call()</code>, each of the
@@ -584,8 +585,8 @@ abstract class My_Base_Controller extends Zend_Controller_Action
 
         return $this->view;
     }
-}
-?>]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             Hopefully, from the information in this chapter, you can see the

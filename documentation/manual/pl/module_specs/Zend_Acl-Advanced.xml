@@ -65,7 +65,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
         Kiedy klasa zapewnień jest już dostępna, programista musi przekazać
@@ -78,7 +79,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
+$acl->allow(null, null, null, new CleanIPAssertion());]]>
+        </programlisting>
 
         <para>
         Powyższy kod tworzy warunkową regułę dostępu, ktora pozwala na dostęp

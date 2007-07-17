@@ -106,7 +106,8 @@ $sqlInsert = 'INSERT INTO users (username, password, real_name) '
            . 'VALUES ("my_username", "my_password", "My Real Name")';
 
 // Wstawiamy dane
-$dbAdapter->query($sqlInsert);]]></programlisting>
+$dbAdapter->query($sqlInsert);]]>
+                </programlisting>
 
             </para>
 
@@ -127,7 +128,8 @@ $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'p
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $authAdapter->setTableName('users')
             ->setIdentityColumn('username')
-            ->setCredentialColumn('password');]]></programlisting>
+            ->setCredentialColumn('password');]]>
+                </programlisting>
 
             </para>
 
@@ -144,7 +146,8 @@ $authAdapter->setIdentity('my_username')
             ->setCredential('my_password');
 
 // Przeprowadzamy zapytanie uwierzytelniające, zapisując rezultat
-$result = $authAdapter->authenticate();]]></programlisting>
+$result = $authAdapter->authenticate();]]>
+                </programlisting>
 
             </para>
 
@@ -171,7 +174,8 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/]]></programlisting>
+*/]]>
+                </programlisting>
 
                 Z tego względu, że wiersz tabeli zawiera dane potrzebne do
                 uwierzytelniania, ważne jest, aby dane były zabezpieczone przed
@@ -214,7 +218,8 @@ if ($result->isValid()) {
 
     /* ... */
 
-}]]></programlisting>
+}]]>
+            </programlisting>
 
         </para>
 

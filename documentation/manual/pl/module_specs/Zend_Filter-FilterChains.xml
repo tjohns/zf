@@ -24,7 +24,8 @@ $filterChain->addFilter(new Zend_Filter_Alpha())
             ->addFilter(new Zend_Filter_StringToLower());
 
 // Filtrujemy nazwę użytkownika
-$username = $filterChain->filter($_POST['username']);]]></programlisting>
+$username = $filterChain->filter($_POST['username']);]]>
+        </programlisting>
 
         Filtry są uruchamiane w takiej kolejności, w jakiej zostają dodane do
         <code>Zend_Filter</code>. W powyższym przykładzie z nazwy użytkownika

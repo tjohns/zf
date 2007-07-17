@@ -8,29 +8,29 @@
       aktualną zawartość części wiadomości oraz informacje o jej kodowaniu, typie
       oraz o oryginalej nazwie pliku. Dostarcza ona metody do generowania łańcuchów
       znaków z przechowywanych danych. Obiekty <code>Zend_Mime_Part</code> mogą
-      być dodane do <link
-      linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> aby
-      zebrać kompletną wieloczęściową wiadomość.</para>
+      być dodane do 
+      <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> 
+      aby zebrać kompletną wieloczęściową wiadomość.</para>
     </sect2>
 
-  <sect2 id="zend.mime.part.instantiation">
-    <title>Tworzenie instancji</title>
+    <sect2 id="zend.mime.part.instantiation">
+        <title>Tworzenie instancji</title>
 
-    <para>Obiekt <code>Zend_Mime_Part</code> jest tworzony z łańcuchem znaków
-    zawierającym część wiadomości podanym jako parametr konstruktora.
-    Domyślny typ to OCTET-STREAM, a kodowanie to 8Bit. Po utworzeniu obiektu
-    <code>Zend_Mime_Part</code>, jego podstawowe atrybuty mogą być zmienione
-    bezpośrednio:</para>
+        <para>Obiekt <code>Zend_Mime_Part</code> jest tworzony z łańcuchem znaków
+        zawierającym część wiadomości podanym jako parametr konstruktora.
+        Domyślny typ to OCTET-STREAM, a kodowanie to 8Bit. Po utworzeniu obiektu
+        <code>Zend_Mime_Part</code>, jego podstawowe atrybuty mogą być zmienione
+        bezpośrednio:</para>
 
-    <programlisting role="php"><![CDATA[<?php
+         <programlisting role="php"><![CDATA[<?php
 public $type = ZMime::TYPE_OCTETSTREAM;
 public $encoding = ZMime::ENCODING_8BIT;
 public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;
-?>]]></programlisting>
+public $charset;]]>
+        </programlisting>
     </sect2>
 
   <sect2 id="zend.mime.part.methods">

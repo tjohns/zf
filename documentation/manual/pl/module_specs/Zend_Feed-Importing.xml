@@ -9,7 +9,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]></programlisting>
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
+    </programlisting>
 
     <para>
         Możesz także użyć <code>Zend_Feed</code> do pobrania zawartości kanału
@@ -21,7 +22,8 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]></programlisti
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // importowanie kanału z łańcucha znaków PHP
-$feedFromPHP = Zend_Feed::importString($feedString);]]></programlisting>
+$feedFromPHP = Zend_Feed::importString($feedString);]]>
+    </programlisting>
 
     <para>
         We wszystkich powyższych przykładach w razie powodzenia operacji zwracany
@@ -60,7 +62,8 @@ $atomFeedFromArray = Zend_Feed::importArray($array);
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // importowanie kanału rss z tablicy
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+            </programlisting>
 
             <para>
                 Format tablicy musi zgadzać się z taką strukturą:
@@ -162,7 +165,8 @@ array(
                                    // dane dla drugiego wpisu itd.
                                    )
                              )
-       );]]></programlisting>
+       );]]>
+            </programlisting>
 
             <para>
                 Odnośniki:
@@ -237,7 +241,8 @@ $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importowanie kanału rss z własnego źródła
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]></programlisting>
+$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+            </programlisting>
 
         </sect3>
 
@@ -257,7 +262,8 @@ assert($feed instanceof Zend_Feed_Abstract);
 print $feed->saveXML();
 
 // wysyła nagłówki oraz zrzuca zawartość kanału
-$feed->send();]]></programlisting>
+$feed->send();]]>
+            </programlisting>
 
         </sect3>
 

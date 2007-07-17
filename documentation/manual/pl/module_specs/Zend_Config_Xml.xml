@@ -56,7 +56,8 @@
             <password>devsecret</password>
         </database>
     </staging>
-</configdata>]]></programlisting>
+</configdata>]]>
+        </programlisting>
         <para>
             Następnie załóżmy, że programista aplikacji potrzebuje danych
             konfiguracyjnych aplikacji rozbudowywanej z pliku XML. Prostą 
@@ -69,7 +70,8 @@ require_once 'Zend/Config/Xml.php';
 $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
 echo $config->database->host; // wyświetla "dev.example.com"
-echo $config->database->name; // wyświetla "dbname"]]></programlisting>
+echo $config->database->name; // wyświetla "dbname"]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

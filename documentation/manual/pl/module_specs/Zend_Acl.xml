@@ -134,7 +134,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+            </programlisting>
             <para>
                 Z tego względu, że nie ma zdefiniowanych reguł konkretnie dla
                 roli "<code>someUser</code>" oraz dla zasobu "<code>someResource</code>",
@@ -187,7 +188,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></pro
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();]]></programlisting>
+$acl = new Zend_Acl();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -284,7 +286,8 @@ $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator nie dziedziczy kontroli dostępu
-$acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+        </programlisting>
 
     </sect2>
 
@@ -337,7 +340,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator nie dziedziczy niczego, ale ma dostęp do wszystkich zasobów
-$acl->allow('administrator');]]></programlisting>
+$acl->allow('administrator');]]>
+        </programlisting>
 
         <para>
             Wartości <code>null</code> w powyższych wywołaniach metod
@@ -379,7 +383,8 @@ echo $acl->isAllowed('administrator') ?
      "allowed" : "denied"; // dozwolone ponieważ administrator ma wszystkie uprawnienia
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // dozwolone ponieważ administrator ma wszystkie uprawnienia]]></programlisting>
+     "allowed" : "denied"; // dozwolone ponieważ administrator ma wszystkie uprawnienia]]>
+        </programlisting>
 
     </sect2>
 </sect1>

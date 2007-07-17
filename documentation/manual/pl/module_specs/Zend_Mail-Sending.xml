@@ -6,13 +6,13 @@
         zanim zostanie wywołana metoda <code>send()</code>. Dla kolejnych wywołań
         <code>Zend_Mail::send()</code> w tym skrypcie będzie także użyty transport SMTP:
     </para>
-    <example>
+    <example id="zend.mail.sending.example-1">
         <title>Wysyłanie e-maila przez SMTP</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);
-?>]]>   </programlisting>
+Zend_Mail::setDefaultTransport($tr);]]>
+        </programlisting>
     </example>
     <para>
         Metoda <code>setDefaultTransport()</code> oraz konstruktor <code>Zend_Mail_Transport_Smtp</code>

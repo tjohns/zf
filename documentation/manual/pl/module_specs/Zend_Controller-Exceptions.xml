@@ -76,8 +76,8 @@ try {
     $front->dispatch();
 } catch (Exception $e) {
     // sam obsłuż wyjątki
-}
-]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     Ta metoda jest najprawdopodobniej najłatwiejszym sposobem
@@ -125,8 +125,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}
-]]></programlisting>
+}]]>
+                </programlisting>
 
                 <para>
                     Główną zaletą, dzięki której ta metoda umożliwia więcej niż
@@ -172,8 +172,8 @@ if ($response->isException()) {
 $front->setParam('useDefaultControllerAlways', true);
 
 // lub
-$dispatcher->setParam('useDefaultControllerAlways', true);
-]]></programlisting>
+$dispatcher->setParam('useDefaultControllerAlways', true);]]>
+                        </programlisting>
 
                         <para>
                             Gdy ta flaga jest ustawiona, obiekt uruchamiający,
@@ -230,8 +230,8 @@ class My_Controller_Action extends Zend_Controller_Action
 
         throw new Exception('Invalid method');
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
                         <para>
                             Powyższa metoda przechwytuje wszystkie wywołane
                             niezdefiniowane akcje i przekierowuje żądanie do
@@ -268,8 +268,8 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
         return $action;
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
 
                         <para>
                             Powyższy kod sprawdza czy zażądana akcja istnieje w
@@ -339,8 +339,8 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
             exit;
         }
     }
-}
-]]></programlisting>
+}]]>
+                        </programlisting>
 
                         <para>
                             W tym przykładzie sprawdzamy czy zażądana akcja

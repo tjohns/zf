@@ -51,7 +51,7 @@
     stron dokumentu, a także możemy nią manipulować jak zwykłą tablicą:
     </para>
 
-    <example>
+    <example id="zend.pdf.pages.example-1">
         <title>Zarządzanie stronami dokumentu PDF.</title>
         <programlisting role="php"><![CDATA[<?php
 ...
@@ -66,8 +66,8 @@ $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 // Usuń określoną stronę.
 unset($pdf->pages[$id]);
 
-...
-?>]]></programlisting>
+...]]>
+        </programlisting>
     </example>
 
 </sect1>

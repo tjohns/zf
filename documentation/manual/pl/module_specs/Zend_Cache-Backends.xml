@@ -7,10 +7,10 @@
             Ten backend przechowuje rekordy bufora w plikach (w wybranym katalogu).
         </para>
         <para>
-            Dostępne opcje to :
+            Dostępne opcje to:
         </para>
-        <table>
-            <title>Dostępne opcje</title>
+        <table id="zend.cache.backends.file.table">
+            <title>Opcje backendu File</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -101,10 +101,10 @@
             Ten backend przechowuje rekordy bufora w bazie SQLite.
         </para>
         <para>
-            Dostępne opcje to :
+            Dostępne opcje to:
         </para>
-        <table>
-            <title>Dostępne opcje</title>
+        <table id="zend.cache.backends.sqlite.table">
+            <title>Opcje backendu Sqlite</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -116,7 +116,7 @@
                  </thead>
                  <tbody>
                       <row>
-                          <entry><code>cache_db_complete_path (mandatory)</code></entry>
+                          <entry><code>cache_db_complete_path (wymagana)</code></entry>
                           <entry><code>string</code></entry>
                           <entry><code>null</code></entry>
                           <entry>
@@ -152,10 +152,10 @@
             tak samo jak argument "doNotTestCacheValidity=true".
         </para>
         <para>
-            Dostępne opcje to :
+            Dostępne opcje to:
         </para>
-        <table>
-            <title>Dostępne opcje</title>
+        <table id="zend.cache.backends.memcached.table">
+            <title>Opcje backendu Memcached</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -190,7 +190,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_APC</title>
+        <title>Zend_Cache_Backend_Apc</title>
         <para>
             Ten backend przechowuje rekordy bufora we współdzielonej pamięci za
             pomocą rozszerzenia <ulink url="http://pecl.php.net/package/APC">APC</ulink>
@@ -213,6 +213,15 @@
         <para>
             Ten backend obsługuje etykiety, ale nie obsługuje trybu <code>CLEANING_MODE_NOT_MATCHING_TAG</code> czyszczenia bufora.
         </para>
+        <para>
+            Gdy określasz nazwę tego backendu podczas użycia metody
+            <code>Zend_Cache::factory()</code>, wstaw pomiędzy słowami 'Zend' 
+            oraz 'Platform' jeden z dozwolonych separatorów wyrazów -- '-', 
+            '.', ' ', lub '_':
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$cache = Zend_Cache::factory('Core', 'Zend Platform');]]>
+        </programlisting>
         <para>
             Ten backend nie ma żadnych opcji.
         </para>

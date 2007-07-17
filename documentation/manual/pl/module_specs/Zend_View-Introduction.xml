@@ -58,8 +58,7 @@ $view = new Zend_View();
 $view->books = $data;
 
 // wygenerujemy wyjściowy widok o nazwie "booklist.php"
-echo $view->render('booklist.php');
-?>]]>
+echo $view->render('booklist.php');]]>
         </programlisting>
 
     </sect2>
@@ -100,7 +99,7 @@ echo $view->render('booklist.php');
 
     <p>Nie ma żadnych książek do wyświetlenia.</p>
 
-<?php endif; ?>]]>
+<?php endif;]]>
         </programlisting>
 
         <para>
@@ -131,8 +130,8 @@ echo $view->render('booklist.php');
 base/path/
     helpers/
     filters/
-    scripts/
-]]]></programlisting>
+    scripts/]]]>
+                </programlisting>
 
                 <para>
                     Ta opcja może być ustawiona za pomocą metody

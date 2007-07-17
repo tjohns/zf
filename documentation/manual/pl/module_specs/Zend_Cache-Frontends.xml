@@ -22,7 +22,7 @@
                 Te opcje są przekazywane do metody fabryki jako pokazano w
                 poprzednich przykładach.
             </para>
-            <table>
+            <table id="zend.cache.frontends.core.options.table">
                 <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
@@ -108,7 +108,6 @@
                 jest przechowywanie wartości logicznych), możesz użyć bardziej kompaktowej konstrukcji:
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // zakładamy, że mamy już obiekt $cache
 
 $id = 'myBigLoop'; // id bufora czyli "tego co chcemy buforować"
@@ -125,9 +124,8 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] przetwarzaj dane $data (wyświetl je, przekaż itp.)
-
-?>]]>       </programlisting>
+// [...] przetwarzaj dane $data (wyświetl je, przekaż itp.)]]>
+            </programlisting>
             <para>
                 Jeśli chcesz buforować wiele bloków lub instancji danych, idea
                 jest ta sama:
@@ -167,9 +165,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);
-
-?>]]>       </programlisting>
+echo($data);]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -198,7 +195,6 @@ echo($data);
                 Przykład jest podany w dokumentacji na samym początku. To są główne różnice:
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // jeśli bufor nie istnieje, przechwytywane są dane wyjściowe
 if (!($cache->start('mypage'))) {
 
@@ -210,9 +206,8 @@ if (!($cache->start('mypage'))) {
 
 }
 
-echo 'To nie jest nigdy buforowane ('.time().').';
-
-?>]]>       </programlisting>
+echo 'To nie jest nigdy buforowane ('.time().').';]]>
+            </programlisting>
             <para>
                 Używając tej formy bardzo łatwe jest ustawienie buforowania
                 danych wyjściowych w twoim aktualnie działającym projekcie przy
@@ -288,9 +283,8 @@ $cache->call('veryExpensiveFunc', $params);
 
 # $params jest tablicą
 # przykładowo aby wywołać (z buforowaniem) funkcję veryExpensiveFunc(1, 'foo', 'bar'), użyj
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
-
-?>]]>       </programlisting>
+# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+            </programlisting>
             <para>
                 Frontend <code>Zend_Cache_Frontend_Function</code> jest na tyle sprytny,
                 że buforuje zarówno wartość zwracaną przez funkcję, jak i wszystkie
@@ -318,7 +312,7 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
         <sect3 id="zend.cache.frontend.class.options">
             <title>Dostępne opcje</title>
-            <table>
+            <table  id="zend.cache.frontends.class.options.table">
                 <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
@@ -393,14 +387,12 @@ $frontendOptions = array(
 // [...]
 
 # buforowane wywołanie
-$res = $cache->foobar('1', '2');
-
-?>]]>       </programlisting>
+$res = $cache->foobar('1', '2');]]>
+            </programlisting>
             <para>
                 Aby buforować klasyczne wywołania metod:
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 class test {
 
     private $_string = 'hello !';
@@ -420,9 +412,8 @@ $frontendOptions = array(
 // [...]
 
 # buforowane wywołanie
-$res = $cache->foobar2('1', '2');
-
-?>]]>       </programlisting>
+$res = $cache->foobar2('1', '2');]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -448,7 +439,7 @@ $res = $cache->foobar2('1', '2');
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
             <title>Dostępne opcje</title>
-            <table>
+            <table id="zend.cache.frontends.file.options.table">
                 <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
@@ -461,7 +452,7 @@ $res = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>masterFile (mandatory)</code></entry>
+                              <entry><code>master_file (mandatory)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
@@ -477,7 +468,7 @@ $res = $cache->foobar2('1', '2');
             <para>
                 Użycie tego frontendu jest takie same jak <code>Zend_Cache_Core</code>.
                 Nie ma potrzeby zamieszczania specyficznego przykładu - jedyną rzeczą
-                do zrobienia jest zdefiniowanie pliku <code>masterFile</code> gdy
+                do zrobienia jest zdefiniowanie pliku <code>master_file</code> gdy
                 używamy metody fabryki.
             </para>
         </sect3>
@@ -508,7 +499,7 @@ $res = $cache->foobar2('1', '2');
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
             <title>Dostępne opcje (for this frontend in Zend_Cache factory)</title>
-            <table>
+            <table id="zend.cache.frontends.page.options.table">
                 <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
@@ -645,15 +636,13 @@ $res = $cache->foobar2('1', '2');
                 Użycie Zend_Cache_Frontend_Page jest naprawdę łatwe:
             </para>
             <programlisting role="php"><![CDATA[<?php
-
 // [...] // wymagane, konfiguracja i fabryka
 
 $cache->start();
 // jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 
-// reszta strony
-
-?>]]>       </programlisting>
+// reszta strony]]>
+            </programlisting>
             <para>
                 bardziej kompleksowy przykład, który pokazuje sposób centralnego
                 zarządzania buforowaniem w pliku ładującym (przykładowo do użycia z klasą Zend_Controller)
@@ -690,9 +679,8 @@ $cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 $cache->start();
 // jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 
-// [...] koniec pliku uruchamiającego (te linie nie będą wykonane jeśli bufor jest trafiony)
-
-?>]]>       </programlisting>
+// [...] koniec pliku uruchamiającego (te linie nie będą wykonane jeśli bufor jest trafiony)]]>
+            </programlisting>
         </sect3>
     </sect2>
 </sect1>
