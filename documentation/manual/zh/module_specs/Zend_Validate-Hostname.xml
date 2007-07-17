@@ -14,7 +14,6 @@
         一个基本用法的例子如下：
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname();
 if ($validator->isValid($hostname)) {
@@ -26,7 +25,8 @@ if ($validator->isValid($hostname)) {
     }
 }
 
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         这个例子匹配主机名<code>$hostname</code>并在匹配失败的时候用<code>$validator->getMessages()</code>来获得有用的错误信息。
 
@@ -45,7 +45,6 @@ if ($validator->isValid($hostname)) {
         <code>ALLOW_IP</code> 允许IP地址， <code>ALLOW_LOCAL</code> 允许本地网络名，和<code>ALLOW_ALL</code> 允许所有三种类型。 你可以用下面的例子仅仅检查IP地址：
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Validate/Hostname.php';
 $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_IP);
 if ($validator->isValid($hostname)) {
@@ -57,17 +56,16 @@ if ($validator->isValid($hostname)) {
     }
 }
 
-??]]></programlisting>
+]]>
+        </programlisting>
     </para>
 
     <para>
         你可以用这些类型的组合，也可以用<code>ALLOW_ALL</code>来接受所有主机名类型。例如，你可以通过如下例子实例化Zend_Validate_Hostname对象来接受DNS和本地主机名:
         <programlisting role="php"><![CDATA[<?php
 
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
-}
-
-?>]]></programlisting>
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);}]]>
+        </programlisting>
 
     </para>
 
@@ -85,9 +83,8 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
         你可以象下面通过传递第二个参数给Zend_Validate_Hostname构造器来禁止IDN校验。
         <programlisting role="php"><![CDATA[<?php
 
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);]]>
+        </programlisting>
 
         另外你可以通过传递 TRUE 或 FALSE 给 <code>$validator->setValidateIdn()</code> 来激活或者禁止 IDN 校验。如果你试图匹配一个当前不被支持的IDN主机名，并且如果有国际字符在其中，校验很可能会失败。当指定附加字符的ccTLD文件在Zend/Validate/Hostname下不存在时，一个正常的主机名校验将被执行。（这就是在解释上句话中为什么校验会失败，Jason 注）请注意只有当你允许DNS主机名被校验，IDNs才能被校验。
     </para>
@@ -100,9 +97,8 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
         缺省地主机名通过已知的TLDs列表来检查。如果不需要这个功能，它可以被禁止，就像禁止IDN支持一样。你可以通过传递第三个参数给Zend_Validate_Hostname构造器来禁止TLD校验。在下面的例子中，我们通过第二个参数来支持IDN校验。
         <programlisting role="php"><![CDATA[<?php
 
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);
-
-?>]]></programlisting>
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);]]>
+        </programlisting>
 
         另外，你可以通过传递 TRUE 或 FALSE 给
         <code>$validator->setValidateTld()</code> 来激活或禁止 TLD 校验。
