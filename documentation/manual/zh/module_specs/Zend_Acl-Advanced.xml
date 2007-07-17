@@ -45,7 +45,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
 
@@ -57,7 +58,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
+$acl->allow(null, null, null, new CleanIPAssertion());]]>
+        </programlisting>
 
         <para>
 

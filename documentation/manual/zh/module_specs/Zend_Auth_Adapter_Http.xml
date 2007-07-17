@@ -158,12 +158,14 @@
                 有两个同等简单的方法创建文件 Resolver:
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
-$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]></programlisting>
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
+                </programlisting>
                 或者
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
-$resolver->setFile($path);]]></programlisting>
+$resolver->setFile($path);]]>
+                </programlisting>
                 如果给定的路径是空的或不可读，将抛出一个异常。
             </para>
 
@@ -183,7 +185,8 @@ $config = array(
     'realm'          => 'My Web Site',
     'digest_domains' => '/members_only /my_account',
     'nonce_timeout'  => 3600,
-);]]></programlisting>
+);]]>
+            </programlisting>
             这个数组将使适配器接收基本或者数字认证，并将请求对所有在<code>/members_only</code> 和<code>/my_account</code>之下的区域认证访问。领域值通常在浏览器中密码对话框中显示。<code>nonce_timeout</code>，当然，会有上述的行为。
         </para>
 
@@ -191,7 +194,8 @@ $config = array(
             下一步, 创建 Zend_Auth_Adapter_Http 对象：
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http.php';
-$adapter = new Zend_Auth_Adapter_Http($config);]]></programlisting>
+$adapter = new Zend_Auth_Adapter_Http($config);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -206,7 +210,8 @@ $digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $digestResolver->setFile('files/digestPasswd.txt');
 
 $adapter->setBasicResolver($basicResolver);
-$adapter->setDigestResolver($digestResolver);]]></programlisting>
+$adapter->setDigestResolver($digestResolver);]]>
+            </programlisting>
         </para>
 
         <para>
@@ -221,7 +226,8 @@ $adapter->setResponse($response);
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
     // Bad userame/password, or canceled password prompt
-}]]></programlisting>
+}]]>
+            </programlisting>
         </para>
 
     </sect2>

@@ -75,7 +75,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></programlisting>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+            </programlisting>
             <para>
                 因为没有明确地为 "<code>someUser</code>"和"<code>someResource</code>" 定义规则，所以Zend_Acl 必须搜索可能为"<code>someUser</code>"所继承的角色定义的规则。首先，"<code>admin</code>"角色被访问，没有给它定义访问规则。接着，"<code>member</code>"角色被访问，Zend_Acl发现有个规则允许"<code>member</code>" 访问"<code>someResource</code>"。
             </para>
@@ -104,7 +105,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]></pro
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();]]></programlisting>
+$acl = new Zend_Acl();]]>
+        </programlisting>
 
         <note>
             <para>
@@ -182,7 +184,8 @@ $roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator 不继承访问控制
-$acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+        </programlisting>
 
     </sect2>
 
@@ -225,7 +228,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator 不需要继承任何权限，它拥有所有的权限
-$acl->allow('administrator');]]></programlisting>
+$acl->allow('administrator');]]>
+        </programlisting>
 
         <para>
 
@@ -264,7 +268,8 @@ echo $acl->isAllowed('administrator') ?
      "allowed" : "denied"; // 允许，因为 administrator 有所有权限
 
 echo $acl->isAllowed('administrator', null, 'update') ?
-     "allowed" : "denied"; // 允许，因为 administrator 有所有权限]]></programlisting>
+     "allowed" : "denied"; // 允许，因为 administrator 有所有权限]]>
+        </programlisting>
 
     </sect2>
 </sect1>

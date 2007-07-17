@@ -29,7 +29,8 @@
         <programlisting role="php"><![CDATA[<?php
 
 // 新 marketing 组从 staff 组继承许可
-$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]></programlisting>
+$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
+        </programlisting>
 
         <para>
 
@@ -42,7 +43,8 @@ require_once 'Zend/Acl/Resource.php';
 $acl->add(new Zend_Acl_Resource('newsletter'));           // newsletter
 $acl->add(new Zend_Acl_Resource('news'));                 // news
 $acl->add(new Zend_Acl_Resource('latest'), 'news');       // latest news
-$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]></programlisting>
+$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]>
+<        </programlisting>
 
         <para>
 
@@ -57,7 +59,8 @@ $acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archiv
 $acl->deny('staff', 'latest', 'revise');
 
 // Everyone (包括 administrators) 禁止归档 news announcements
-$acl->deny(null, 'announcement', 'archive');]]></programlisting>
+$acl->deny(null, 'announcement', 'archive');]]>
+        </programlisting>
 
         <para>
         我们现在能够查询到 ACL 的最新变化：
@@ -86,7 +89,8 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
      "allowed" : "denied"; // denied
 
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied]]></programlisting>
+     "allowed" : "denied"; // denied]]>
+        </programlisting>
 
     </sect2>
 
@@ -113,7 +117,8 @@ echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
      "allowed" : "denied"; // denied
 
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
-     "allowed" : "denied"; // denied]]></programlisting>
+     "allowed" : "denied"; // denied]]>
+        </programlisting>
 
         <para>
           如上所示，对于权限的修改可能是增量的，但使用 <code>null</code> 值（未指定权限项的参数值）超越了对权限的增量修改。（所谓的增量修改是指可以对 Resources 一个一个地添加权限或禁止，而如果未指定权限参数值，即使用 <code>null</code> 值，可以使得这些步骤简化，一次性地对某个Resource的所有权限进行允许或禁止。Jason注，Haohappy补）
@@ -130,7 +135,8 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
      "allowed" : "denied"; // allowed
 
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
-     "allowed" : "denied"; // allowed]]></programlisting>
+     "allowed" : "denied"; // allowed]]>
+        </programlisting>
 
     </sect2>
 
