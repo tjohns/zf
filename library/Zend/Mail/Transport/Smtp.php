@@ -28,6 +28,12 @@ require_once 'Zend/Loader.php';
 
 
 /**
+ * Zend_Mime
+ */
+require_once 'Zend/Mime.php';
+
+
+/**
  * Zend_Mail_Protocol_Smtp
  */
 require_once 'Zend/Mail/Protocol/Smtp.php';
@@ -196,7 +202,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
         }
 
         // Issue DATA command to client
-        $this->_connection->data($this->header . $this->EOL . $this->body);
+        $this->_connection->data($this->header . Zend_Mime::LINEEND . $this->body);
     }
 
 }
