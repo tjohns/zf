@@ -188,6 +188,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         );
         try {
             $row3 = $table->createRow($data);
+            $this->assertNull($row3->bug_id);
             $row3->save();
             $this->assertEquals(5, $row3->bug_id);
             $this->assertEquals($data['bug_description'], $row3->bug_description);
