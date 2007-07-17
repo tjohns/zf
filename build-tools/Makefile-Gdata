@@ -42,18 +42,19 @@ PHPDOC=php c:/php/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=5541
+ZF_TAG=HEAD
+ZF_BRANCH=branch/release-1.0
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=1.0.0
+ZF_VERSION=1.0.1dev
 
 # For LANG, use '*' if you want to build all manual
 # translations.  If you want to build one language, use one of the
 # names of language directories, e.g. 'en', 'de', etc.  You also can
 # use any file-globbing pattern.
-LANG=*
+LANG=xx
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_URL=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
@@ -65,7 +66,7 @@ SVN=svn
 SVN_USER=
 SVN_PASS=
 
-ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
+ZF_SVN_URL=http://framework.zend.com/svn/framework/$(ZF_BRANCH)
 ZF_PRODUCTNAME=ZendFramework
 ZF_EXPORT_DIR=./ZendFramework-export-$(ZF_TAG)
 GDATA_PRODUCT_NAME=Zend Gdata
@@ -145,7 +146,7 @@ stage-files:
 checkout: export
 export:
 	@echo "== EXPORTING SVN FILES =="
-	[ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] || $(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
+	@[ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] || $(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
 
 stage-docs: docbook phpdoc
 
@@ -154,6 +155,7 @@ docbook: docbook-core
 docbook-core:
 	-mkdir -p $(GDATA_STAGE_DIR)/documentation/manual/core
 	@for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG) ; do \
+	    [ -d $$language ] || continue ; \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
 	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
@@ -163,6 +165,7 @@ docbook-core:
 docbook-incubator:
 	-mkdir -p $(GDATA_STAGE_DIR)/documentation/manual/incubator
 	@for language in $(GDATA_EXPORT_DIR)/incubator/documentation/manual/$(LANG) ; do \
+	    [ -d $$language ] || continue ; \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
 	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
