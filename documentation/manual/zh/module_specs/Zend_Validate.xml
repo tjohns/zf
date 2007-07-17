@@ -62,7 +62,8 @@ if ($validator->isValid($email)) {
         echo "$message\n";
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
         </para>
 
@@ -97,7 +98,8 @@ if (!$validator->isValid('word')) {
 
     // echoes "The string 'word' is too short; it must be at least 8 characters"
 }
-]]></programlisting>
+]]>
+            </programlisting>
         </para>
 
         <para>
@@ -112,7 +114,8 @@ $validator->setMessages( array(
     Zend_Validate_StringLength::TOO_SHORT => 'The string \'%value%\' is too short',
     Zend_Validate_StringLength::TOO_LONG  => 'The string \'%value%\' is too long'
 ));
-]]></programlisting>
+]]>
+            </programlisting>
 
         </para>
 
@@ -133,7 +136,8 @@ if (!validator->isValid('word')) {
         . $validator->max
         . "\n";
 }
-]]></programlisting>
+]]]>
+<            </programlisting>
         </para>
 
     </sect2>
@@ -153,8 +157,8 @@ if (Zend_Validate::is($email, 'EmailAddress')) {
     // 是, email 有效
     //
 }
-]]></programlisting>
-
+]]>
+            </programlisting>
         </para>
 
         <para>
@@ -168,8 +172,8 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     // Yes, $value is between 1 and 12
     //
 }
-]]></programlisting>
-
+]]>
+            </programlisting>
         </para>
 
         <para>
@@ -181,7 +185,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            并且，Zend_Filter_Input 类允许你按需求实例化和运行多个过滤器和校验器类来处理输入数据集合，参见<xref linked="zend.filter.input" />。
+            并且，Zend_Filter_Input 类允许你按需求实例化和运行多个过滤器和校验器类来处理输入数据集合，参见<xref linkend="zend.filter.input" />。
 
         </para>
 
