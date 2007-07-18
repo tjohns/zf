@@ -22,7 +22,7 @@
 
 /**
  * Zend_Session_SaveHandler_Interface
- * 
+ *
  * @category Zend
  * @package Zend_Session
  * @subpackage SaveHandlers
