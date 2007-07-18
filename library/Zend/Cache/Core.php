@@ -317,7 +317,11 @@ class Zend_Cache_Core
         if ($this->_options['automatic_cleaning_factor'] > 0) {
             $rand = rand(1, $this->_options['automatic_cleaning_factor']);
             if ($rand==1) {
-                $this->clean('old');
+                if ($this->_backend->isAutomaticCleaningAvailable()) {
+                    $this->clean(Zend_Cache::CLEANING_MODE_OLD);
+                } else {
+                    $this->_log('Zend_Cache_Core::save() / automatic cleaning is not available with this backend');   
+                }
             }
         }
         $result = $this->_backend->save($data, $id, $tags, $specificLifetime);
@@ -339,7 +343,7 @@ class Zend_Cache_Core
         }
         return true;
     }
-
+    
     /**
      * Remove a cache 
      * 

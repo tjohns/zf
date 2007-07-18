@@ -500,7 +500,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */
     private function _expireTime($lifetime) 
     {
-        if (is_null($this->_directives['lifetime'])) {
+        if (is_null($lifetime)) {
             return 9999999999;
         }
         return time() + $lifetime;

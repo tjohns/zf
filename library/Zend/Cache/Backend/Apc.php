@@ -157,5 +157,15 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
             $this->_log("Zend_Cache_Backend_Apc::clean() : tags are unsupported by the Apc backend");
         }
     }
+    
+    /**
+     * Return true if the automatic cleaning is available for the backend
+     * 
+     * @return boolean
+     */
+    public function isAutomaticCleaningAvailable()
+    {   
+        return false;
+    }
         
 }
