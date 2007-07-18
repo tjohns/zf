@@ -1,60 +1,221 @@
 <sect1 id="zend.validate.writing_validators">
 
-    <title>å†™æ ¡éªŒå™¨</title>
+    <title>±àÐ´Ð£ÑéÆ÷</title>
 
     <para>
-        å°½ç®¡æä¾›äº†ä¸€ç»„é€šç”¨çš„æ ¡éªŒå™¨ï¼Œä½†ä¸å¯é¿å…åœ°ï¼Œå¼€å‘è€…è¿˜å°†ä¸ºä»–ä»¬ç‰¹å®šçš„éœ€æ±‚æ¥å†™å®šåˆ¶çš„æ ¡éªŒå™¨ã€‚é€šè¿‡å®žçŽ°<code>Zend_Validate_Interface</code>å†™æ ¡éªŒå™¨å°†å˜å¾—å®¹æ˜“ã€‚
+        ¾¡¹ÜÌá¹©ÁËÒ»×éÍ¨ÓÃµÄÐ£ÑéÆ÷£¬µ«²»¿É±ÜÃâµØ£¬¿ª·¢Õß»¹½«ÎªËûÃÇÌØ¶¨µÄÐèÇóÀ´±àÐ´¶¨ÖÆµÄÐ£ÑéÆ÷¡£±àÐ´¶¨ÖÆµÄÐ£ÑéÆ÷µÄÈÎÎñ½«ÔÚ±¾½ÚÃèÊö¡£
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> å®šä¹‰äº†ä¸¤ä¸ªæ–¹æ³•ï¼Œ <code>isValid()</code> å’Œ <code>getMessages()</code>, å®ƒå¯ä»¥åœ¨ç”¨æˆ·çš„ç±»é‡Œè¢«å®žçŽ°ã€‚ç”¨ <code>Zend_Validate::addValidator()</code> å¯ä»¥æŠŠä¸€ä¸ªå®žçŽ°è¿™ä¸ªæŽ¥å£çš„å¯¹è±¡æ·»åŠ åˆ°æ ¡éªŒå™¨é“¾ã€‚
+        <code>Zend_Validate_Interface</code> ¶¨ÒåÁËÈý¸ö·½·¨£¬<code>isValid()</code>£¬<code>getMessages()</code> ºÍ <code>getErrors()</code>, ÎªÁË´´½¨Ð£Ñé¶ÔÏó£¬ËüÃÇ¿ÉÒÔÔÚÓÃ»§µÄÀàÀï±»ÊµÏÖ¡£ÊµÏÖ<code>Zend_Validate_Interface</code>½Ó¿ÚµÄ¶ÔÏó¿ÉÒÔÓÃ<code>Zend_Validate::addValidator()</code> Ìí¼Óµ½Ð£ÑéÁ´Àï¡£ÕâÑùµÄ¶ÔÏóÒ²¿ÉÒÔºÍ<link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>Ò»ÆðÊ¹ÓÃ¡£
     </para>
 
     <para>
-        ä¸‹é¢çš„ä¾‹å­ç¤ºèŒƒå¦‚ä½•å†™å®šåˆ¶çš„æ ¡éªŒå™¨ï¼š
-        <programlisting role="php"><![CDATA[<?php
+        Ò²ÐíÄãÒÑ¾­´ÓÉÏÃæ¹ØÓÚ µÄÃèÊöÖÐÍÆ¶Ï³ö£¬²»ÂÛÒ»¸öÖµÊÇ·ñ±»Ð£Ñé³É¹¦£¬Ð£ÑéÀàÎªZend Framework·µ»ØÒ»¸ö²¼¶ûÖµ¡£ËüÃÇÒ²Ìá¹©¹ØÓÚ<emphasis role="bold">why</emphasis>Ò»¸öÖµÐ£ÑéÊ§°ÜµÄÐÅÏ¢¡£Ð£ÑéÊ§°ÜÔ­ÒòµÄÓÐÐ§ÐÔ¶ÔÓÚ²»Í¬ÓÃÍ¾µÄÓ¦ÓÃ³ÌÐò¿ÉÄÜºÜÓÐ¼ÛÖµ£¬ÏóÎª¿ÉÓÃÐÔ·ÖÎöÌá¹©µÄÍ³¼ÆÁ¿¡£
+    </para>
 
-require_once 'Zend/Validate/Interface.php';
+    <para>
+       »ù±¾Ð£ÑéÊ§°ÜÏûÏ¢µÄ¹¦ÄÜÔÚ<code>Zend_Validate_Abstract</code>ÖÐÊµÏÖ¡£µ±´´½¨Ò»¸öÐ£ÑéÀà£¬¼òµ¥µØÀ©Õ¹<code>Zend_Validate_Abstract</code>À´°üÀ¨Õâ¸ö¹¦ÄÜ¡£ÔÚÀ©Õ¹ÀàÀïÄã½«ÊµÏÖ<code>isValid()</code> ·½·¨Âß¼­ºÍ¶¨ÒåÏûÏ¢±äÁ¿ºÍÏûÏ¢Ä£°å£¬ËüºÍ¿ÉÄÜ·¢ÉúµÄÐ£ÑéÊ§°ÜÀàÐÍÏà¶ÔÓ¦¡£Èç¹ûÐ£Ñé²âÊÔÒ»¸öÖµÊ§°Ü£¬<code>isValid()</code> Ó¦¸Ã·µ»Ø <code>false</code>¡£Èç¹ûÕâ¸öÖµÍ¨¹ýÐ£Ñé²âÊÔ£¬<code>isValid()</code> Ó¦¸Ã·µ»Ø <code>true</code>¡£
+    </para>
 
-class MyValidator implements Zend_Validate_Interface
+    <para>
+       Ò»°ãµØ£¬<code>isValid()</code>·½·¨²»Ó¦¸ÃÅ×³öÈÎºÎÒì³££¬³ýÁË²»¿ÉÄÜ¾ö¶¨ÊäÈëÖµÊÇ·ñÓÐÐ§¡£Ò»Ð©Å×³öÒì³£µÄºÏÇéºÏÀíµÄÀý×Ó¿ÉÄÜÊÇÈç¹ûÎÄ¼þ²»ÄÜ±»´ò¿ª£¬LDAP·þÎñÆ÷²»ÄÜ±»ÁªÏµ£¬»òÕßÊý¾Ý¿âÁ¬½ÓÎÞÐ§£¬²¢ÇÒÓÐÐ©ÊÂÇé±ØÐëÓÉÐ£Ñé³É¹¦»òÊ§°ÜÀ´¾ö¶¨¡£
+    </para>
+
+    <example id="zend.validate.writing_validators.example.simple">
+
+        <title>´´½¨¼òµ¥Ð£ÑéÀà</title>
+
+        <para>
+            ÏÂÃæµÄÀý×ÓÑÝÊ¾ÈçºÎ±àÐ´Ò»¸ö·Ç³£¼òµ¥µÄ¶¨ÖÆµÄÐ£ÑéÆ÷¡£ÔÚÕâ¸öÀý×ÓÖÐ£¬Ð£Ñé¹æÔò¼òµ¥£¬ÊäÈëÖµ±ØÐëÊÇ¸¡µãÊýÖµ¡£
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/Abstract.php';
+
+class MyValid_Float extends Zend_Validate_Abstract
 {
-    protected $_messages = array();
+    const FLOAT = 'float';
+
+    protected $_messageTemplates = array(
+        self::FLOAT => "'%value%' is not a floating point value"
+    );
 
     public function isValid($value)
     {
-        $this->_messages = array();
+        $this->_setValue($value);
 
-        // arrive on $requirement based on validation criteria
-
-        if (!$requirement) {
-            $this->_messages[] = "Reason validation failed";
+        if (!is_float($value)) {
+            $this->_error();
             return false;
         }
 
         return true;
     }
+}]]>
+            </programlisting>
 
-    public function getMessages()
+            Õâ¸öÀàÎªËüµÄµ¥¸öÐ£ÑéÊ§°ÜÏûÏ¢¶¨ÒåÁËÒ»¸öÄ£°å£¬Ëü°üÀ¨ÄÚÖÃµÄÄ§Êõ²ÎÊý£¬<code>%value%</code>¡£Èç¹ûÐ£ÑéÊ§°Ü£¬¶Ô<code>_setValue()</code>µÄµ÷ÓÃ×¼±¸ÁË×Ô¶¯²åÈë±»²âÊÔµÄÖµµ½Ê§°ÜÏûÏ¢µÄ¶ÔÏó¡£¶Ô<code>_error()</code>µÄµ÷ÓÃ¸ú×ÙÐ£ÑéÊ§°ÜµÄÔ­Òò¡£ÒòÎªÕâ¸öÀàÖ»¶¨ÒåÁËÒ»¸öÊ§°ÜÏûÏ¢£¬Ã»ÓÐ±ØÒªÎª<code>_error()</code>Ìá¹©´øÓÐÊ§°ÜÏûÏ¢Ãû×ÖµÄÄ£°å¡£
+        </para>
+
+    </example>
+
+    <example id="zend.validate.writing_validators.example.conditions.dependent">
+
+        <title>±àÐ´ÓÐ¶ÀÁ¢Ìõ¼þµÄÐ£ÑéÀà</title>
+
+        <para>
+            ÏÂÃæµÄÀý×ÓÑÝÊ¾Ò»×éÉÔÎ¢¸´ÔÓµÄÐ£Ñé¹æÔò£¬ÒªÇóÊäÈëÖµÊÇÊý×Ö²¢ÓÐ×îÐ¡ÖµºÍ×î´óÖµµÄ·¶Î§¡£ÓÉÓÚÏÂÃæÈ·ÇÐµÄÔ­ÒòÖ®Ò»£¬ÊäÈëÖµÐ£ÑéÊ§°Ü£º
+            
+            <itemizedlist>
+                <listitem>
+                    <para>ÊäÈëÖµ²»ÊÇÊý×Ö¡£</para>
+                </listitem>
+                <listitem>
+                    <para>ÊäÈëÖµÐ¡ÓÚÔÊÐíµÄ×îÐ¡Öµ¡£</para>
+                </listitem>
+                <listitem>
+                    <para>ÊäÈëÖµ´óÓÚÔÊÐíµÄ×î´óÖµ¡£</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            ÕâÐ©Ð£ÑéÊ§°ÜµÄÔ­Òò±»·­ÒëÎªÔÚÀàÖÐµÄ¶¨Òå£º
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/Abstract.php';
+
+class MyValid_NumericBetween extends Zend_Validate_Abstract
+{
+    const MSG_NUMERIC = 'msgNumeric';
+    const MSG_MINIMUM = 'msgMinimum';
+    const MSG_MAXIMUM = 'msgMaximum';
+
+    public $minimum = 0;
+    public $maximum = 100;
+
+    protected $_messageVariables = array(
+        'min' => 'minimum',
+        'max' => 'maximum'
+    );
+
+    protected $_messageTemplates = array(
+        self::MSG_NUMERIC => "'%value%' is not numeric",
+        self::MSG_MINIMUM => "'%value%' must be at least '%min%'",
+        self::MSG_MAXIMUM => "'%value%' must be no more than '%max%'"
+    );
+
+    public function isValid($value)
     {
-        return $this->_messages;
+        $this->_setValue($value);
+
+        if (!is_numeric($value)) {
+            $this->_error(self::MSG_NUMERIC);
+            return false;
+        }
+
+        if ($value < $this->minimum) {
+            $this->_error(self::MSG_MINIMUM);
+            return false;
+        }
+
+        if ($value > $this->maximum) {
+            $this->_error(self::MSG_MAXIMUM);
+            return false;
+        }
+
+        return true;
     }
-}
+}]]>
+            </programlisting>
 
-?>]]></programlisting>
+            Public ÊôÐÔ<code>$minimum</code> ºÍ <code>$maximum</code> ·Ö±ðÎª³É¹¦Ð£ÑéÒ»¸öÖµ±»½¨Á¢ÓÃÀ´Ìá¹©×îÐ¡ºÍ×î´óÖµ±ß½ç¡£Õâ¸öÀàÒ²¶¨ÒåÁËÁ½¸öÏûÏ¢±äÁ¿ºÍpublicÊôÐÔÏà¶ÔÓ¦²¢ÔÊÐí<code>min</code> ºÍ <code>max</code> Óë <code>value</code> Ò»Æð±»ÓÃÔÚ×÷ÎªÄ§Êõ²ÎÊýµÄÏûÏ¢Ä£°å£¬
+        </para>
 
-    </para>
+        <para>
+            ×¢ÒâÈç¹ûÈÎºÎÔÚ<code>isValid()</code>ÖÐµÄÐ£Ñé¼ì²éÊ§°Ü£¬Ò»¸öÇ¡µ±µÄÊ§°ÜÏûÏ¢±»×¼±¸£¬²¢ÇÒ·½·¨Á¢¼´·µ»Ø<code>false</code>¡£ÕâÐ©Ð£Ñé¹æÔòÒò´Ë¼ÌÐø¶ÀÁ¢¡£»»¾ä»°Ëµ£¬Èç¹ûÒ»¸ö²âÊÔÊ§°Ü£¬²»ÐèÒª²âÊÔÈÎºÎºóÀ´µÄÐ£Ñé¹æÔò¡£È»¶øÕâ±¾À´²»ÊÇ¸ö°¸Àý¡£ÏÂÃæµÄÀý×ÓÊ¾ÀýÈçºÎ±àÐ´´øÓÐ¶ÀÁ¢Ð£Ñé¹æÔòµÄÀà£¬µ±ÌØ¶¨µÄÐ£ÑéÆóÍ¼Ê§°Ü£¬Ð£Ñé¶ÔÏó·µ»Ø¶à¸öÊ§°ÜÔ­Òò¡£
+            
+        </para>
 
-    <para>
-        æŠŠä¸Šé¢æ ¡éªŒå™¨çš„å®žä¾‹æ·»åŠ åˆ°æ ¡éªŒå™¨é“¾ï¼š
+    </example>
 
-        <programlisting role="php"><![CDATA[<?php
+    <example id="zend.validate.writing_validators.example.conditions.independent">
 
-$validatorChain = new Zend_Validate();
-$validatorChain->addValidator(new MyValidator());
+        <title>´øÓÐ¶ÀÁ¢Ìõ¼þ¡¢¶àÖØÊ§°ÜÔ­ÒòµÄÐ£Ñé</title>
 
-?>]]></programlisting>
+        <para>
+           ¿¼ÂÇ±àÐ´Ò»¸öÎªÃÜÂë¼ÓÇ¿Ç¿¶ÈµÄÐ£ÑéÀà£­µ±ÓÃ»§±»ÒªÇóÎª°ïÖúÊ¹ÓÃ»§ÕË»§°²È«¶øÑ¡Ôñ·ûºÏÒ»¶¨Ìõ¼þµÄÃÜÂë¡£ÈÃÎÒÃÇ¼ÙÉè¿ÚÁî°²È«Ìõ¼þ¼ÓÇ¿ÄÇ¸öÃÜÂë£º
+           
+            <itemizedlist>
+                <listitem>
+                    <para>ÖÁÉÙ8¸ö×Ö·û³¤£¬</para>
+                </listitem>
+                <listitem>
+                    <para>°üÀ¨ÖÁÉÙÒ»¸ö´óÐ´×ÖÄ¸£¬</para>
+                </listitem>
+                <listitem>
+                    <para>°üÀ¨ÖÁÉÙÒ»¸öÐ¡Ð´×ÖÄ¸£¬</para>
+                </listitem>
+                <listitem>
+                    <para>²¢ÖÁÉÙ°üÀ¨Ò»¸öÊý×Ö×Ö·û¡£</para>
+                </listitem>
+            </itemizedlist>
+        </para>
 
-    </para>
+        <para>
+            ÏÂÃæµÄÀàÊµÏÖÕâÐ©Ð£ÑéÌõ¼þ£º
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Validate/Abstract.php';
+
+class MyValid_PasswordStrength extends Zend_Validate_Abstract
+{
+    const LENGTH = 'length';
+    const UPPER  = 'upper';
+    const LOWER  = 'lower';
+    const DIGIT  = 'digit';
+
+    protected $_messageTemplates = array(
+        self::LENGTH => "'%value%' must be at least 8 characters in length",
+        self::UPPER  => "'%value%' must contain at least one uppercase letter",
+        self::LOWER  => "'%value%' must contain at least one lowercase letter",
+        self::DIGIT  => "'%value%' must contain at least one digit character"
+    );
+
+    public function isValid($value)
+    {
+        $this->_setValue($value);
+
+        $isValid = true;
+
+        if (strlen($value) < 8) {
+            $this->_error(self::LENGTH);
+            $isValid = false;
+        }
+
+        if (!preg_match('/[A-Z]/', $value) {
+            $this->_error(self::UPPER);
+            $isValid = false;
+        }
+
+        if (!preg_match('/[a-z]/', $value) {
+            $this->_error(self::LOWER);
+            $isValid = false;
+        }
+
+        if (!preg_match('/\d/', $value) {
+            $this->_error(self::DIGIT);
+            $isValid = false;
+        }
+
+        return $isValid;
+    }
+}]]>
+            </programlisting>
+
+            ×¢ÒâÔÚ<code>isValid()</code>ÖÐµÄËÄ¸öÌõ¼þ²âÊÔ²»Á¢¼´·µ»Ø<code>false</code>¡£ÕâÔÊÐíÐ£ÑéÀàÌá¹©<emphasis role="bold">ËùÓÐµÄ</emphasis>ÊäÈëµÄÃÜÂë²»·ûºÏÒªÇóµÄÔ­Òò¡£Èç¹ûÀýÈçÒ»¸öÓÃ»§´òËãÊäÈë"<code>#$%</code>"×Ö·û´®×÷ÎªÃÜÂë£¬<code>isValid()</code>½«µ¼ÖÂËùÓÐËÄ¸öÐ£ÑéÊ§°ÜÏûÏ¢±»ºóÀ´µÄ<code>getMessages()</code>µ÷ÓÃ·µ»Ø¡£
+        </para>
+
+    </example>
 
 </sect1>
 <!--
