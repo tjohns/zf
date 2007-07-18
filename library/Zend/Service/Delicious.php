@@ -28,9 +28,9 @@
 require_once 'Zend/Rest/Client.php';
 
 /**
- * @see Zend_Json
+ * @see Zend_Json_Decoder
  */
-require_once 'Zend/Json.php';
+require_once 'Zend/Json/Decoder.php';
 
 /**
  * @see Zend_Service_Delicious_SimplePost
@@ -488,7 +488,7 @@ class Zend_Service_Delicious
 
                 return $dom;
             case 'json':
-                return Zend_Json::decode($responseBody);
+                return Zend_Json_Decoder::decode($responseBody);
         }
     }
 

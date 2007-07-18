@@ -379,6 +379,9 @@ class Zend_Json_Decoder
                             case 't' :
                                 $result .= chr(9);
                                 break;
+                            case '\'' :
+                                $result .= '\'';
+                                break;
                             default:
                                 throw new Zend_Json_Exception("Illegal escape "
                                     .  "sequence '" . $chr . "'");
