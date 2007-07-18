@@ -30,6 +30,6 @@ require_once 'Zend/Exception.php';
  * @subpackage Reflection
  * @version $Id$
  */
-class Zend_Server_Exception extends Zend_Exception 
+class Zend_Server_Exception extends Zend_Exception
 {
 }
