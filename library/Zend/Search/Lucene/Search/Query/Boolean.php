@@ -165,7 +165,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $signs[]      = ($this->_signs === null)? true : $this->_signs[$id];
         }
 
-        // Check for empty subqueries
+        // Check for empty and insignificant subqueries
         foreach ($subqueries as $id => $subquery) {
             if ($subquery instanceof Zend_Search_Lucene_Search_Query_Empty) {
                 if ($signs[$id] === true) {
@@ -177,7 +177,17 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                     unset($subqueries[$id]);
                     unset($signs[$id]);
                 }
+            } else if ($subquery instanceof Zend_Search_Lucene_Search_Query_Insignificant) {
+                // Insignificant subquery has to be removed anyway
+                unset($subqueries[$id]);
+                unset($signs[$id]);
             }
+        }
+
+
+        // Check, if reduced subqueries list is empty
+        if (count($subqueries) == 0) {
+            return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
 
 
@@ -207,12 +217,6 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $optimizedQuery->setBoost($optimizedQuery->getBoost()*$this->getBoost());
 
             return $optimizedQuery;
-        }
-
-
-        // Check, if reduced subqueries list is empty
-        if (count($subqueries) == 0) {
-            return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
 
