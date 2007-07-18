@@ -30,7 +30,7 @@ require_once 'Zend/Log/Formatter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
- */ 
+ */
 class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
 {
     /**
@@ -49,11 +49,11 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
         if ($format === null) {
             $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
         }
-        
+
         if (! is_string($format)) {
             throw new Zend_Log_Exception('Format must be a string');
         }
-        
+
         $this->_format = $format;
     }
 

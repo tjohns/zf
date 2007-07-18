@@ -28,6 +28,6 @@ require_once 'Zend/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
- */ 
+ */
 class Zend_Log_Exception extends Zend_Exception
 {}

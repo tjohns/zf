@@ -28,7 +28,7 @@ require_once 'Zend/Log/Filter/Priority.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
- */ 
+ */
 class Zend_Log
 {
     const EMERG   = 0;  // Emergency: system is unusable
@@ -172,7 +172,7 @@ class Zend_Log
      * Add a filter that will be applied before all log writers.
      * Before a message will be received by any of the writers, it
      * must be accepted by all filters added with this method.
-     * 
+     *
      * @param  Zend_Log_Filter_Interface  $filter
      * @return void
      */
