@@ -29,7 +29,7 @@
 class Zend_Locale {
 
     // Class wide Locale Constants
-    private static $_LocaleData = array(
+    private static $_localeData = array(
         'root'  => true, 'aa_DJ' => true, 'aa_ER' => true, 'aa_ET' => true, 'aa'    => true, 'af_NA' => true, 'af_ZA' => true, 'af'    => true, 'ak_GH' => true, 'ak'    => true,
         'am_ET' => true, 'am'    => true, 'ar_AE' => true, 'ar_BH' => true, 'ar_DZ' => true, 'ar_EG' => true, 'ar_IQ' => true, 'ar_JO' => true, 'ar_KW' => true, 'ar_LB' => true,
         'ar_LY' => true, 'ar_MA' => true, 'ar_OM' => true, 'ar_QA' => true, 'ar_SA' => true, 'ar_SD' => true, 'ar_SY' => true, 'ar_TN' => true, 'ar_YE' => true, 'ar'    => true,
@@ -222,7 +222,7 @@ class Zend_Locale {
 
                $language = substr($language, 1, strpos($language, '.') - 1);
                $splitted = explode('_', $language);
-               if (array_key_exists((string) $language, self::$_LocaleData)) {
+               if (array_key_exists((string) $language, self::$_localeData)) {
                    $languagearray[$language] = 1;
                    if (strlen($language) > 4) {
                        $languagearray[substr($language, 0, 2)] = 1;
@@ -317,14 +317,14 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        if (!array_key_exists((string) $locale, self::$_LocaleData)) {
+        if (!array_key_exists((string) $locale, self::$_localeData)) {
             $region = substr($locale, 0, 3);
             if (isset($region[2])) {
                 if (($region[2] == '_') or ($region[2] == '-')) {
                     $region = substr($region, 0, 2);
                 }
             }
-            if (array_key_exists((string) $region, self::$_LocaleData)) {
+            if (array_key_exists((string) $region, self::$_localeData)) {
                 $this->_Locale = $region;
             } else {
                 $this->_Locale = 'root';
@@ -845,11 +845,11 @@ class Zend_Locale {
             return false;
         }
 
-        if (array_key_exists($locale, self::$_LocaleData)) {
+        if (array_key_exists($locale, self::$_localeData)) {
             return $locale;
         } else {
             $locale = explode('_', $locale);
-            if (array_key_exists($locale[0], self::$_LocaleData)) {
+            if (array_key_exists($locale[0], self::$_localeData)) {
                 return $locale[0];
             }
         }
