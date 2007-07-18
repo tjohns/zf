@@ -360,7 +360,7 @@ class Zend_Search_Lucene_Search_QueryParserContext
             }
 
             if (!$nonNegativeEntryFound) {
-            	unset($conjuctions[$conjuctionId]);
+                unset($conjuctions[$conjuctionId]);
             }
         }
 
