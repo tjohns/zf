@@ -92,7 +92,7 @@ class Zend_Service_Yahoo_WebResult extends Zend_Service_Yahoo_Result
         parent::__construct($result);
 
         $this->_xpath = new DOMXPath($result->ownerDocument);
-    	$this->_xpath->registerNamespace('yh', $this->_namespace);
+        $this->_xpath->registerNamespace('yh', $this->_namespace);
 
         $this->CacheUrl = $this->_xpath->query('//yh:Cache/yh:Url/text()')->item(0)->data;
         $this->CacheSize = (int) $this->_xpath->query('//yh:Cache/yh:Size/text()')->item(0)->data;
