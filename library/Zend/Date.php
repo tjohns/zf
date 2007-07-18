@@ -265,8 +265,8 @@ class Zend_Date extends Zend_Date_DateObject {
      * Returns the calculated timestamp
      * HINT: timestamps are always GMT
      *
-     * @param  string                    $calc    Type of calculation to make
-     * @param  string|integer|Zend_Date  $stamp   Timestamp to calculate, when null the actual timestamp is calculated
+     * @param  string                          $calc    Type of calculation to make
+     * @param  string|integer|array|Zend_Date  $stamp   Timestamp to calculate, when null the actual timestamp is calculated
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */

@@ -94,9 +94,9 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
 
         // get Endian
         $input = $this->_readMOData(1);
-        if (substr(dechex($input[1]), -8) == "950412de") {
+        if (strtolower(substr(dechex($input[1]), -8)) == "950412de") {
             $this->_bigEndian = false;
-        } else if (substr(dechex($input[1]), -8) == "de120495") {
+        } else if (strtolower(substr(dechex($input[1]), -8)) == "de120495") {
             $this->_bigEndian = true;
         } else {
             throw new Zend_Translate_Exception('\'' . $filename . '\' is not a gettext file');

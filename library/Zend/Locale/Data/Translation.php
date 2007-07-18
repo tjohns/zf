@@ -31,7 +31,7 @@ class Zend_Locale_Data_Translation {
     /**
      * Locale Translation for Full Named Locales
      */
-    public static $_LocaleTranslation = array(
+    public static $localeTranslation = array(
         'Australia'       => 'AU',
         'Austria'         => 'AT',
         'Belgium'         => 'BE',
