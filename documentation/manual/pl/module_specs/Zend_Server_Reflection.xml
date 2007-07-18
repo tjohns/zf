@@ -52,8 +52,8 @@ foreach ($prototypes as $prototype) {
 // Pobierz przestrzeń nazw dla klasy, funkcji lub metody
 // Przestrzenie nazw mogą być ustawione podczas tworzenia instancji
 // lub przez użycie metody setNamespace()
-$reflection->getNamespace();
-]]></programlisting>
+$reflection->getNamespace();]]>
+        </programlisting>
 
         <para>
             <code>reflectFunction()</code> zwraca obiekt
