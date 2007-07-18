@@ -421,7 +421,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
 
     /**
      * Helper function to map retrieved row
-     * to bound column variables 
+     * to bound column variables
      *
      * @param array $row
      * @return bool True

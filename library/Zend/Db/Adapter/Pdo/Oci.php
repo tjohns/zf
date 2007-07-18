@@ -293,7 +293,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         /**
          * Oracle does not implement the LIMIT clause as some RDBMS do.
          * We have to simulate it with subqueries and ROWNUM.
-         * Unfortunately because we use the column wildcard "*", 
+         * Unfortunately because we use the column wildcard "*",
          * this puts an extra column into the query result set.
          */
         $limit_sql = "SELECT z2.*
