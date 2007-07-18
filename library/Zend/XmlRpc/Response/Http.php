@@ -16,7 +16,7 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 /**
  * Zend_XmlRpc_Response
@@ -25,7 +25,7 @@ require_once 'Zend/XmlRpc/Response.php';
 
 /**
  * HTTP response
- * 
+ *
  * @uses Zend_XmlRpc_Response
  * @category Zend
  * @package  Zend_XmlRpc
@@ -37,7 +37,7 @@ class Zend_XmlRpc_Response_Http extends Zend_XmlRpc_Response
 {
     /**
      * Override __toString() to send HTTP Content-Type header
-     * 
+     *
      * @return string
      */
     public function __toString()
