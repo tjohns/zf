@@ -187,7 +187,7 @@ class Zend_Date extends Zend_Date_DateObject {
             }
         }
 
-        if (($date instanceof Zend_TimeSync_Ntp) or 
+        if (($date instanceof Zend_TimeSync_Ntp) or
             ($date instanceof Zend_TimeSync_Sntp)) {
             $date = $date->getInfo();
             $date = $this->_getTime($date['offset']);
@@ -209,7 +209,7 @@ class Zend_Date extends Zend_Date_DateObject {
      *
      * @param  array  $options  Options to set
      * @throws Zend_Date_Exception
-     * @return Options array if no option was given 
+     * @return Options array if no option was given
      */
     public static function setOptions(array $options = array())
     {
@@ -346,9 +346,9 @@ class Zend_Date extends Zend_Date_DateObject {
      * G - era, y - year, Y - ISO year, M - month, w - week of year, D - day of year, d - day of month
      * E - day of week, e - number of weekday (1-7), h - hour 1-12, H - hour 0-23, m - minute, s - second
      * A - milliseconds of day, z - timezone, Z - timezone offset, S - fractional second, a - period of day
-     * 
+     *
      * Additionally format tokens but non ISO conform are:
-     * SS - day suffix, eee - php number of weekday(0-6), ddd - number of days per month 
+     * SS - day suffix, eee - php number of weekday(0-6), ddd - number of days per month
      * l - Leap year, B - swatch internet time, I - daylight saving time, X - timezone offset in seconds
      * r - RFC2822 format, U - unix timestamp
      *
@@ -1627,7 +1627,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     ++$cnt;
                 }
                 $date = array_search($date, $monthlist);
-                
+
                 // Monthname found
                 if ($cnt < 12) {
                     $fixday = 0;
@@ -4352,7 +4352,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * But the check will only be done for the expected dateparts which are given by format.
      * If no format is given the standard dateformat for the actual locale is used.
      * f.e. 30.February.2007 will return false if format is 'dd.MMMM.YYYY'
-     * 
+     *
      * @param  string              $date    Date to parse for correctness
      * @param  string              $format  OPTIONAL Format for parsing the date string
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing date parts
@@ -4377,7 +4377,7 @@ class Zend_Date extends Zend_Date_DateObject {
         }
 
         try {
-            $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'date_format' => $format, 'format_type' => 'iso', 'fix_date' => false));   
+            $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale, 'date_format' => $format, 'format_type' => 'iso', 'fix_date' => false));
         } catch (Zend_Locale_Exception $e) {
             // date can not be parsed
             return false;
