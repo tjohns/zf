@@ -23,9 +23,9 @@
 require_once 'Zend/Controller/Plugin/Abstract.php';
 
 /**
- * Handle exceptions that bubble up based on missing controllers, actions, or 
+ * Handle exceptions that bubble up based on missing controllers, actions, or
  * application errors, and forward to an error handler.
- * 
+ *
  * @uses       Zend_Controller_Plugin_Abstract
  * @category   Zend
  * @package    Zend_Controller
@@ -53,7 +53,7 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
 
     /**
      * Module to use for errors; defaults to default module in dispatcher
-     * @var string 
+     * @var string
      */
     protected $_errorModule;
 
@@ -131,7 +131,7 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
 
     /**
      * Retrieve the current error handler module
-     * 
+     *
      * @return string
      */
     public function getErrorHandlerModule()
@@ -156,7 +156,7 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
 
     /**
      * Retrieve the current error handler controller
-     * 
+     *
      * @return string
      */
     public function getErrorHandlerController()
@@ -178,7 +178,7 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
 
     /**
      * Retrieve the current error handler action
-     * 
+     *
      * @return string
      */
     public function getErrorHandlerAction()
@@ -187,10 +187,10 @@ class Zend_Controller_Plugin_ErrorHandler extends Zend_Controller_Plugin_Abstrac
     }
 
     /**
-     * postDispatch() plugin hook -- check for exceptions and dispatch error 
+     * postDispatch() plugin hook -- check for exceptions and dispatch error
      * handler if necessary
      *
-     * If the 'noErrorHandler' front controller flag has been set, 
+     * If the 'noErrorHandler' front controller flag has been set,
      * returns early.
      *
      * @param  Zend_Controller_Request_Abstract $request

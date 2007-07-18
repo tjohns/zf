@@ -33,6 +33,6 @@ require_once 'Zend/Controller/Router/Exception.php';
 interface Zend_Controller_Router_Route_Interface {
     public function match($path);
     public function assemble($data = array());
-    public static function getInstance(Zend_Config $config); 
+    public static function getInstance(Zend_Config $config);
 }
 
