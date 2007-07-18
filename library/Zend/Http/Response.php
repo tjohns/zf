@@ -538,7 +538,7 @@ class Zend_Http_Response
     public static function decodeChunkedBody($body)
     {
         $decBody = '';
-
+        
         while (trim($body)) {
             if (! preg_match("/^([\da-fA-F]+)[^\r\n]*\r\n/sm", $body, $m)) {
                 throw new Zend_Http_Exception("Error parsing body - doesn't seem to be a chunked message");
@@ -564,6 +564,12 @@ class Zend_Http_Response
      */
     public static function decodeGzip($body)
     {
+        if (! function_exists('gzinflate')) {
+            require_once 'Zend/Http/Exception.php';
+            throw new Zend_Http_Exception('Unable to decode gzipped response ' . 
+                'body: perhaps the zlib extension is not loaded?'); 
+        }
+
         return gzinflate(substr($body, 10));
     }
 
@@ -577,7 +583,13 @@ class Zend_Http_Response
      */
     public static function decodeDeflate($body)
     {
-        return gzuncompress($body);
+        if (! function_exists('gzuncompress')) {
+            require_once 'Zend/Http/Exception.php';
+            throw new Zend_Http_Exception('Unable to decode deflated response ' . 
+                'body: perhaps the zlib extension is not loaded?'); 
+        }
+
+    	return gzuncompress($body);
     }
 
     /**
