@@ -2936,7 +2936,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * For example: MM.dd.YYYY -> 10 -> -10 months
      * Be aware: Subtracting 2 months is not equal to Adding -2 months !!!
      *
-     * @param  string|integer|array|Zend_Date  $time    Date to sub
+     * @param  string|integer|array|Zend_Date  $date    Date to sub
      * @param  string                          $format  OPTIONAL Date format for parsing input
      * @param  string|Zend_Locale              $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -2955,7 +2955,7 @@ class Zend_Date extends Zend_Date_DateObject {
      * If no format is given, the standardformat of this locale is used.
      * For example: 10.01.2000 => 10.02.1999 -> false
      *
-     * @param  string|integer|array|Zend_Date  $time    Date to compare
+     * @param  string|integer|array|Zend_Date  $date    Date to compare
      * @param  string                          $format  OPTIONAL Date format for parsing input
      * @param  string|Zend_Locale              $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
