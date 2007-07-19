@@ -85,3 +85,7 @@ pre {
     text-align: left;
     direction:ltr;
 }
+
+code.code {
+    font-family: "Lucida Console", monospace;
+}

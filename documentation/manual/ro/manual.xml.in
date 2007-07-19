@@ -5,7 +5,7 @@
     <!ENTITY % xinclude SYSTEM "xinclude.mod">
     %xinclude;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="ro">
     <bookinfo>
         <title>Programmer's Reference Guide</title>
         <subtitle>Zend Framework</subtitle>

@@ -15,15 +15,16 @@
 # @license    http://framework.zend.com/license/new-bsd     New BSD License
 #
 
-LANG=*/.
+LANG=*
 DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
 DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
 
 all: html
 
 html: 
-	@for lang in $(LANG) ; \
+	@for lang in ./$(LANG) ; \
 	do \
+	    [ -d $$lang ] || continue ; \
 	    ( cd $$lang && autoconf && ./configure && \
 		make "DOCBOOK_DTD=$(DOCBOOK_DTD)" "DOCBOOK_XSL=$(DOCBOOK_XSL)" 2>&1 | tee err.txt ) ; \
 	    echo "LANG $$lang done." ; \
@@ -32,6 +33,7 @@ html:
 clean:
 	@for lang in $(LANG) ; \
 	do \
+	    [ -d $$lang ] || continue ; \
 	    ( cd $$lang && rm -rf html/*.html html/HTML.manifest html/figures _temp_*.xml) ; \
 	    echo "LANG=$$lang done." ; \
 	done
@@ -39,6 +41,7 @@ clean:
 cleanall:
 	@for lang in $(LANG) ; \
 	do \
+	    [ -d $$lang ] || continue ; \
 	    ( cd $$lang && rm -rf html/*.html html/HTML.manifest html/figures _temp_*.xml \
 		config.* configure autom4te.cache Makefile html.xsl manual.xml err.txt ) ; \
 	    echo "LANG $$lang done." ; \

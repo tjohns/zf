@@ -73,3 +73,7 @@ div.revinfo {
 	font-size: 0.7em;
 	text-decoration: italic;
 }
+
+code.code {
+    font-family: "Lucida Console", monospace;
+}

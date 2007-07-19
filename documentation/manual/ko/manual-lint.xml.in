@@ -5,7 +5,7 @@
     <!ENTITY % xinclude SYSTEM "xinclude.mod">
     %xinclude;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="ko">
     <chapter>
         <title>XMLLint</title>
         <xi:include href="@XMLFILE@">
