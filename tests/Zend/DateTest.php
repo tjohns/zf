@@ -4432,7 +4432,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::ISO_8601), '2020-01-01T00:00:00-06:00');
         $date->addMonth(12);
         $this->assertSame($date->get(Zend_Date::ISO_8601), '2021-01-01T00:00:00-06:00');
-        
+
     }
 
     /**
@@ -4511,8 +4511,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->getWeek()->toString(),'08.01.1970 05:00:00');
 
         //Saturday [ar_EG]
-	    // The right value for AM/PM has to be set in arabic letters
-	    $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 5:00:00 ص');
+        // The right value for AM/PM has to be set in arabic letters
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 5:00:00 ص');
         $date->setTimeZone('UTC');
         $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 12:00:00 ص');
         $date->setTimeZone('Indian/Maldives');
@@ -5297,6 +5297,23 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Date::isDate('32.Mai.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 30:00:00', 'dd.MMMM.YYYY HH:mm:ss', 'de_AT'));
+    }
+
+    public function testToArray()
+    {
+        $date = new Zend_Date('2006-01-02 23:58:59', Zend_Date::ISO_8601, 'en_US');
+        $return = $date->toArray();
+        $orig = array('day' => 02, 'month' => 01, 'year' => 2006, 'hour' => 23, 'minute' => 58,
+                      'second' => 59, 'timezone' => 'MVT', 'timestamp' => 1136228339, 'weekday' => 1,
+                      'dayofyear' => 1, 'week' => '01', 'gmtsecs' => 18000);
+        $this->assertEquals($return, $orig);
+    }
+
+    public function testFromArray()
+    {
+        $date = new Zend_Date(array('day' => 04, 'month' => 12, 'year' => 2006, 'hour' => 10,
+                                    'minute' => 56, 'second' => 30), 'en_US');
+        $this->assertSame($date->getIso(), '2006-12-04T10:56:30+05:00');
     }
 }
 
