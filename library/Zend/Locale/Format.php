@@ -26,7 +26,6 @@
  */
 require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale/Exception.php';
-require_once 'Zend/Locale/Math.php';
 
 
 /**
@@ -308,6 +307,9 @@ class Zend_Locale_Format
      */
     public static function toNumber($value, array $options = array())
     {
+        // load class within method for speed
+        require_once 'Zend/Locale/Math.php';
+
         $value = Zend_Locale_Math::normalize($value);
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if ($options['locale'] instanceof Zend_Locale) {
