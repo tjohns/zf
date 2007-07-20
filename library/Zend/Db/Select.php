@@ -417,7 +417,7 @@ class Zend_Db_Select
      */
     public function join($name, $cond, $cols = '*', $schema = null)
     {
-        return $this->joinInner($name, $cond, $cols);
+        return $this->joinInner($name, $cond, $cols, $schema);
     }
 
     /**
