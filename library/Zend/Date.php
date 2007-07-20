@@ -2390,7 +2390,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::COOKIE :
-                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                $result = preg_match("/^\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s.{3,20}$/", $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, COOKIE format expected", $date);
                 }
@@ -2418,11 +2418,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::RFC_822 :
                 // new RFC 822 format
-                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s[+-]{1}\d{4}$/', $date, $match);
-                if (!$result) {
-                    // old RFC 822 format
-                    $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\w{1,3}/', $date, $match);
-                }
+                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s([+-]{1}\d{4}|\w{1,20})$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 822 date format expected", $date);
                 }
@@ -2448,7 +2444,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::RFC_850 :
-                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                $result = preg_match('/^\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s.{3,21}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 850 date format expected", $date);
                 }
@@ -2527,7 +2523,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::RSS :
-                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s[+-]{1}\d{4}$/', $date, $match);
+                $result = preg_match('/^\w{3},\s\d{2}\s\w{3}\s\d{2,4}\s\d{2}:\d{2}:\d{2}\s.{3,21}$/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception("invalid date ($date) operand, RSS date format expected", $date);
                 }
@@ -2535,9 +2531,17 @@ class Zend_Date extends Zend_Date_DateObject {
                 $days    = substr($match[0], 5, 2);
                 $months  = $this->getDigitFromName(substr($match[0], 8, 3));
                 $years   = substr($match[0], 12, 4);
-                $hours   = substr($match[0], 17, 2);
-                $minutes = substr($match[0], 20, 2);
-                $seconds = substr($match[0], 23, 2);
+                if ($years[2] == " ") {
+                    $years   = substr($match[0], 12, 2);
+                    $years  += 2000;
+                    $hours   = substr($match[0], 15, 2);
+                    $minutes = substr($match[0], 18, 2);
+                    $seconds = substr($match[0], 21, 2);
+                } else {
+                    $hours   = substr($match[0], 17, 2);
+                    $minutes = substr($match[0], 20, 2);
+                    $seconds = substr($match[0], 23, 2);
+                }
 
                 if ($calc == 'set') {
                     --$months;
