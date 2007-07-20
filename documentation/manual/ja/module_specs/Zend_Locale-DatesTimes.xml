@@ -33,7 +33,7 @@
         </para>
 
         <para>
-            <code>setOption('fix_date' => true)</code> が設定されると、
+            <code>setOption(array('fix_date' => true))</code> が設定されると、
             <code>getDate()</code> メソッドは
             'fixed' というキーを追加します。ここには数値が格納され、
             入力の日付文字列の年月日の順序を入れ替えたりして
@@ -83,7 +83,7 @@
         <para>
             これらの (以下の) 指定子は、Zend_Date の <code>toString()</code> がサポートしている完全な "ISO"
             セットの一部です。PHP の <code>date()</code> 関数と同じ形式の指定子を使用したい場合は、
-            まず最初に <code>setOptions('format_type' => 'php')</code> をコールしてください。
+            まず最初に <code>setOptions(array('format_type' => 'php'))</code> をコールしてください。
             特定のひとつの書式文字列だけを PHP の <code>date()</code> 互換形式から
             "ISO" 形式に変換したい場合は <code>convertPhpToIsoFormat()</code>
             を使用します。現時点では、分の形式のみが異なっています

@@ -328,7 +328,7 @@ $temp = new Zend_Measure_Temperature('100,10', Zend_Measure::TEMPERATURE, $local
             <title>日付のデフォルトを、ウェブユーザの正しいロケールに設定する</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php');]]>
+Zend_Locale_Format::setOptions(array('locale' => 'en_US', 'fix_date' => true, 'format_type' => 'php'));]]>
             </programlisting>
         </example>
 
@@ -344,12 +344,12 @@ Zend_Locale_Format::setOptions('locale' => 'en_US', 'fix_date' => true, 'format_
             <title>setOptions() での STANDARD の使用</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
-Zend_Locale_Format::setOptions('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY');
+Zend_Locale_Format::setOptions(array('locale' => 'en_US', 'date_format' => 'dd.MMMM.YYYY'));
 // グローバル設定の日付書式をオーバーライドします
 $date = Zend_Locale_Format::getDate('2007-04-20, array('date_format' => Zend_Locale_Format::STANDARD);
 
 // 標準ロケールのグローバル設定
-Zend_Locale_Format::setOptions('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY');]]>
+Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD, 'date_format' => 'dd.MMMM.YYYY'));]]>
             </programlisting>
         </example>
 
