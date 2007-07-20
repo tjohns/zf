@@ -29,7 +29,7 @@
         </para>
 
         <para>
-            If <code>setOption('fix_date' => true)</code> is set the <code>getDate()</code> method adds a key 'fixed'
+            If <code>setOption(array('fix_date' => true))</code> is set the <code>getDate()</code> method adds a key 'fixed'
             with a whole number value indicating if the input date string required "fixing" by rearranging the day,
             month, or year in the input to fit the format used.
         </para>
@@ -77,7 +77,7 @@
         <para>
             These specifiers (below) are a small subset of the full "ISO" set supported by Zend_Date's
             <code>toString()</code>. If you need to use PHP <code>date()</code> compatible format specifiers, then first
-            call <code>setOptions('format_type' => 'php')</code>. And if you want to convert only one special format
+            call <code>setOptions(array('format_type' => 'php'))</code>. And if you want to convert only one special format
             string from PHP <code>date()</code> compatible format to "ISO" format use <code>convertPhpToIsoFormat()</code>.
             Currently, the only practical difference relates to the specifier for minutes ('m' using the ISO default,
             and 'i' using the PHP date format).

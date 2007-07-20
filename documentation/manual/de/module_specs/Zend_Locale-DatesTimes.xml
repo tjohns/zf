@@ -31,7 +31,7 @@
         </para>
 
         <para>
-            Wenn <code>setOption('fix_date' => true)</code> gesetzt wird, enthält die Methode <code>getDate()</code>
+            Wenn <code>setOption(array('fix_date' => true))</code> gesetzt wird, enthält die Methode <code>getDate()</code>
             einen Schlüssel 'fixed' der eine Zahl enthält welche anzeigt ob die eingegebene Zeichenkette korrigiert
             wurde indem Tag, Monat oder Jahr getauscht wurden um in das Format zu passen das angegeben wurde.
         </para>
@@ -80,7 +80,7 @@
         <para>
             Die unten angegebenen Zeichen sind nur ein kleiner Teil des kompletten "ISO" Sets welches von
             Zend_Date's <code>toString()</code> unterstützt werden. Wenn PHP <code>date()</code> kompatible
-            Format Zeichen benutzt werden müssen, dann muß zuerst <code>setOptions('format_type' => 'php')</code>
+            Format Zeichen benutzt werden müssen, dann muß zuerst <code>setOptions(array('format_type' => 'php'))</code>
             aufgerufen werden. Und wenn eine spezielle Format Zeichenkette vom PHP <code>date()</code> kompatiblen
             Format in ein "ISO" Format konvertiert werden muß kann <code>convertPhpToIsoFormat()</code>
             benutzt werden. Aktuell besteht die einzige praktische Differenz darin dass das Zeichen für
