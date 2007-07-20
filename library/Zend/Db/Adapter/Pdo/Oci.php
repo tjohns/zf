@@ -68,6 +68,11 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         }
         $tns .= $dsn['dbname'];
 
+        if (isset($dsn['charset']))
+        {
+            $tns .= ';charset=' . $dsn['charset'];
+        }       
+
         return $this->_pdoType . ':' . $tns;
     }
 
