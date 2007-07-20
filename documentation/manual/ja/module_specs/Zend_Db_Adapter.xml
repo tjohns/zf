@@ -1031,15 +1031,15 @@ $n = $db->delete('bugs', 'bug_id = 3');]]>
 
     <sect2 id="zend.db.adapter.quoting">
 
-        <title>Quoting Values and Identifiers</title>
+        <title>値や識別子のクォート</title>
 
         <para>
-            When you form SQL queries, often it is the case that you need to
-            include the values of PHP variables in SQL expressions.  This is
-            risky, because if the value in a PHP string contains certain
-            symbols, such as the quote symbol, it could result in invalid SQL.
-            For example, notice the imbalanced quote characters in the
-            following query:
+            SQL を作成する際には、PHP の変数の値を
+            SQL の式で使用しなければならないこともあるでしょう。
+            これは危険な処理です。なぜなら、PHP の文字列の中には
+            たとえばクォート記号のような特殊文字が含まれていることがあり、
+            できあがる SQL がおかしなものになってしまう可能性があるからです。
+            たとえば、以下のコードで作成した SQL は、クォート文字の対応がおかしいものになります。
             <programlisting role="php"><![CDATA[
 $name = "O'Reilly";
 $sql = "SELECT * FROM bugs WHERE reported_by = '$name'";
@@ -1050,41 +1050,43 @@ echo $sql;
         </para>
 
         <para>
-            Even worse is the risk that such code mistakes might be exploited
-            deliberately by a person who is trying to manipulate the function
-            of your web application.  If they can specify the value of a PHP
-            variable through the use of an HTTP parameter or other mechanism,
-            they might be able to make your SQL queries do things that you
-            didn't intend them to do, such as return data to which the person
-            should not have privilege to read.  This is a serious and widespread
-            technique for violating application security, known as "SQL Injection"
-            (see <ulink url="http://en.wikipedia.org/wiki/SQL_Injection">http://en.wikipedia.org/wiki/SQL_Injection</ulink>).
+            さらに悪いことに、このようなコードを悪用されると
+            あなたのアプリケーションが攻撃の被害を受けることになるかもしれません。
+            PHP の変数の値を HTTP パラメータなどで指定することができれば、
+            SQL クエリを操作して予期せぬことをされてしまう可能性があります
+            (たとえば、その人の権限では見えないはずのデータを見られてしまうなど)。
+            これは、アプリケーションのセキュリティ問題としては非常に有名な手法で、
+            "SQL インジェクション" と呼ばれています
+            (<ulink url="http://ja.wikipedia.org/wiki/SQL%E3%82%A4%E3%83%B3%E3%82%B8%E3%82%A7%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3">
+            http://ja.wikipedia.org/wiki/SQL%E3%82%A4%E3%83%B3%E3%82%B8%E3%82%A7%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3</ulink>
+            を参照ください)。
         </para>
 
         <para>
-            The Zend_Db Adapter class provides convenient functions to help you
-            reduce vulnerabilities to SQL Injection attacks in your PHP code.
-            The solution is to escape special characters such as quotes in PHP
-            values before they are interpolated into your SQL strings.
-            This protects against both accidental and deliberate manipulation
-            of SQL strings by PHP variables that contain special characters.
+            Zend_Db Adapter クラスの提供する便利な関数を使用すると、
+            あなたの PHP コードが SQL インジェクション攻撃を受ける危険性を軽減することができます。
+            この攻撃を回避する方法は、PHP のクォート文字のような特殊文字を
+            正しくエスケープしてから SQL に使用することです。
+            これにより、不意に (あるいは故意に)
+            SQL に特殊文字が埋め込まれてしまうことを防ぎます。
         </para>
 
         <sect3 id="zend.db.adapter.quoting.quote">
 
-            <title>Using <code>quote()</code></title>
+            <title><code>quote()</code> の使用法</title>
 
             <para>
-                The <code>quote()</code> method accepts a single argument, a
-                scalar string value.  It returns the value with special
-                characters escaped in a manner appropriate for the RDBMS you
-                are using, and surrounded by string value delimiters.  The
-                standard SQL string value delimiter is the single-quote
-                (<code>'</code>).
+                <code>quote()</code> メソッドは、引数として文字列を受け取ります。
+                そしてその文字列の中の特殊文字をエスケープした上で、
+                両端を区切り文字で囲んだものを返します。
+                エスケープ処理は、使用している RDBMS
+                にあわせて適切に行われます。
+                文字列の両端に使用する区切り文字は、標準の SQL
+                ではシングルクォート (<code>'</code>) となります。
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example">
-                <title>Using quote()</title>
+                <title>quote() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 $name = $db->quote("O'Reilly");
 echo $name;
@@ -1098,42 +1100,41 @@ echo $sql;
             </example>
 
             <para>
-                Note that the return value of <code>quote()</code> includes the
-                quote delimiters around the string.  This is different from
-                some functions that escape special characters but do not add
-                the quote delimiters, for example
-                <ulink url="http://www.php.net/mysqli_real_escape_string">mysql_real_escape_string()</ulink>.
+                <code>quote()</code> の返り値には、文字列の両端に区切り文字が追加されていることに注意しましょう。
+                これは、たとえば
+                <ulink url="http://www.php.net/mysqli_real_escape_string">mysql_real_escape_string()</ulink>
+                のようなエスケープ用関数の挙動とは異なります。
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.adapter.quoting.quote-into">
 
-            <title>Using <code>quoteInto()</code></title>
+            <title><code>quoteInto()</code> の使用法</title>
 
             <para>
-                The most typical usage of quoting is to interpolate a PHP
-                variable into a SQL expression or statement.  You can use the
-                <code>quoteInto()</code> method to do this in one step.  This
-                method takes two arguments: the first argument is a string
-                containing a placeholder symbol (<code>?</code>), and the
-                second argument is a value or PHP variable that should be
-                substituted for that placeholder.
+                クォートを使用する場面としていちばんよくあるのが、
+                PHP の変数の値を SQL の式や文中で使用するということです。
+                <code>quoteInto()</code> メソッドを使用すると、この処理を一度でできるようになります。
+                このメソッドが受け取る引数はふたつです。
+                まず最初の引数としてプレースホルダ記号 (<code>?</code>)
+                を含む文字列を指定し、次の引数で PHP の変数などの値を指定します。
+                ここで指定した値で、プレースホルダの部分を置き換えます。
             </para>
 
             <para>
-                The placeholder symbol is the same symbol used by many RDBMS
-                brands for positional parameters, but the
-                <code>quoteInto()</code> method only emulates query parameters.
-                The method simply interpolates the value into the string,
-                escapes special characters, and applies quotes around it.
-                True query parameters maintain the separation between the SQL
-                string and the parameters as the statement is parsed in the
-                RDBMS server.
+                プレースホルダ用の記号は、多くの RDBMS
+                でパラメータとして使用している記号と同じです。しかし、
+                <code>quoteInto()</code> メソッドはあくまでパラメータをエミュレートしているだけです。
+                このメソッドは単純に文字列の中に値を放り込み、
+                特殊文字をエスケープして両端をクォートするという処理だけを行います。
+                RDBMS におけるパラメータのように、
+                SQL 文字列と値を分離して SQL だけを事前に RDBMS
+                サーバでパースするといったことは行いません。
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example">
-                <title>Using quoteInto()</title>
+                <title>quoteInto() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
@@ -1146,46 +1147,46 @@ echo $sql;
 
         <sect3 id="zend.db.adapter.quoting.quote-identifier">
 
-            <title>Using <code>quoteIdentifier()</code></title>
+            <title><code>quoteIdentifier()</code> の使用法</title>
 
             <para>
-                Values are not the only part of SQL syntax that might need to
-                be variable.  If you use PHP variables to name tables, columns,
-                or other identifiers in your SQL statements, you might need to
-                quote these strings too.  By default, SQL identifiers have
-                syntax rules like PHP and most other programming languages.
-                For example, identifiers should not contain spaces, certain
-                punctuation or special characters, or international characters.
-                Also certain words are reserved for SQL syntax, and should not
-                be used as identifiers.
+                変数を使用する可能性があるのは、SQL 文中の値だけとは限りません。
+                SQL 文中でのテーブル名やカラム名などの識別子として
+                PHP の変数を使用する場合も、同様にクォートする必要があります。
+                デフォルトでは、SQL の識別子に使用できる文字は
+                PHP などのプログラミング言語の規則と似ています。
+                たとえば、識別子には空白文字や記号を使用することはできませんし、
+                またアルファベット以外の文字も使えません。
+                SQL の文法上特別な意味を持つ単語として予約されているものも、
+                そのままでは識別子として使用できません。
             </para>
 
             <para>
-                However, SQL has a feature called <emphasis>delimited identifiers</emphasis>,
-                which allows broader choices for the spelling of identifiers.
-                If you enclose a SQL identifier in the proper types of quotes,
-                you can use identifiers with spellings that would be invalid
-                without the quotes.  Delimited identifiers can contain spaces,
-                punctuation, or international characters.  You can also use SQL
-                reserved words if you enclose them in identifier delimiters.
+                しかし、適切な区切り文字でクォートすれば、
+                識別子として使用できる文字の幅が広がります。
+                本来識別子として使用できない文字を含んでいても、
+                適切な形式でクォートすることで SQL の識別子として使用できるようになります。
+                たとえば、空白や記号などを使うこともできますし、
+                SQL で予約語として指定されている単語であっても使用可能です。
             </para>
 
             <para>
-                The <code>quoteIdentifier()</code> method works like
-                <code>quote()</code>, but it applies the identifier delimiter
-                characters to the string according to the type of Adapter you
-                use.  For example, standard SQL uses double-quotes
-                (<code>"</code>) for identifier delimiters, and most RDBMS
-                brands use that symbol.  MySQL uses back-quotes
-                (<code>`</code>) by default.  The
-                <code>quoteIdentifier()</code> method also escapes special
-                characters within the string argument.
+                <code>quoteIdentifier()</code> メソッドの働きは
+                <code>quote()</code> と似ていますが、
+                このメソッドは使用しているアダプタの型に応じた識別子区切り文字を付加します。
+                たとえば、標準 SQL ではダブルクォート
+                (<code>"</code>) を区切り文字として使用します。
+                多くの RDBMS がこれにしたがっています。
+                MySQL の場合は、デフォルトではバッククォート
+                (<code>`</code>) を使用します。
+                <code>quoteIdentifier()</code> メソッドはまた、
+                文字列引数内の特殊文字のエスケープも行います。
             </para>
 
             <example id="zend.db.adapter.quoting.quote-identifier.example">
-                <title>Using quoteIdentifier()</title>
+                <title>quoteIdentifier() の使用法</title>
                 <programlisting role="php"><![CDATA[<?php
-// we might have a table name that is an SQL reserved word
+// テーブル名に、SQL の予約語を使用します
 $tableName = $db->quoteIdentifier("order");
 
 $sql = "SELECT * FROM $tableName";
@@ -1196,19 +1197,21 @@ echo $sql
             </example>
 
             <para>
-                SQL delimited identifiers are case-sensitive, unlike unquoted
-                identifiers.  Therefore, if you use delimited identifiers, you
-                must use the spelling of the identifier exactly as it is stored
-                in your schema, including the case of the letters.
+                クォートしていない場合とは異なり、
+                クォートした識別子は大文字小文字を区別するようになります。
+                したがって、クォートした識別子を使用する場合は
+                大文字小文字の指定も含めて識別子をきちんと記述する必要があります。
             </para>
 
             <para>
-                In most cases where SQL is generated within Zend_Db classes,
-                the default is that all identifiers are delimited
-                automatically.  You can change this behavior with the option
-                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.  Specify this
-                when instantiating the Adapter.
-                See <xref linkend="zend.db.adapter.connecting.parameters.example2" />.
+                たいていの場合は Zend_Db クラスで自動的に SQL
+                を生成することになるでしょう。デフォルトでは、
+                すべての識別子が自動的にクォートされます。
+                この挙動を変更するには、オプション
+                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>
+                を変更します。これは、アダプタのインスタンスを作成する際に指定します。
+                <xref linkend="zend.db.adapter.connecting.parameters.example2" />
+                を参照ください。
             </para>
 
         </sect3>
@@ -1217,74 +1220,75 @@ echo $sql
 
     <sect2 id="zend.db.adapter.transactions">
 
-        <title>Controlling Database Transactions</title>
+        <title>データベースのトランザクションの制御</title>
 
         <para>
-            Databases define transactions as logical units of work that can be
-            committed or rolled back as a single change, even if they operate
-            on multiple tables.  All queries to a database are executed within
-            the context of a transaction, even if the database driver manages
-            them implicitly.  This is called <emphasis>auto-commit</emphasis>
-            mode, in which the database driver creates a transaction for every
-            statement you execute, and commits that transaction after your
-            SQL statement has been executed.  By default, all Zend_Db Adapter
-            classes operate in auto-commit mode.
+            データベースには「トランザクション」と呼ばれる論理的な作業単位があります。
+            複数のテーブルにまたがる操作などを一括して更新 (コミット) したり、
+            一括して取消 (ロールバック) したりできるようになります。
+            データベースドライバがトランザクションを暗黙的にサポートしている場合は、
+            すべてのクエリがトランザクション内で実行されます。
+            これを<emphasis>自動コミット</emphasis>モードといいます。
+            このモードでは、あらゆるクエリを実行する前に
+            ドライバが自動的にトランザクションを開始し、
+            実行が完了したら自動的にトランザクションをコミットします。
+            デフォルトでは、すべての Zend_Db
+            アダプタクラスは自動コミットモードで動作ｓｈます。
         </para>
 
         <para>
-            Alternatively, you can specify the beginning and resolution of a
-            transaction, and thus control how many SQL queries are included in
-            a single group that is committed (or rolled back) as a single
-            operation.  Use the <code>beginTransaction()</code> method to
-            initiate a transaction.  Subsequent SQL statements are executed in
-            the context of the same transaction until you resolve it
-            explicitly.
+            一方、トランザクションの始点と終点を自分で指定することにより、
+            複数の SQL クエリをひとつのトランザクション内ですることもできます。
+            トランザクションを開始する際には <code>beginTransaction()</code>
+            メソッドを使用します。それ以降に実行した SQL
+            文は、明示的に指定するまではすべて同じトランザクション内で動作します。
         </para>
 
         <para>
-            To resolve the transaction, use either the <code>commit()</code> or
-            <code>rollBack()</code> methods.  The <code>commit()</code> method
-            marks changes made during your transaction as committed, which
-            means the effects of these changes are shown in queries run in
-            other transactions.
+            トランザクションを終了するには、<code>commit()</code>
+            あるいは <code>rollBack()</code> のいずれかを使用します。
+            <code>commit()</code> メソッドは、
+            そのトランザクションでの変更内容をコミットします。
+            つまり、そのトランザクションで行った変更が、
+            他のトランザクションからも見えるようにするということです。
         </para>
 
         <para>
-            The <code>rollBack()</code> method does the opposite: it discards
-            the changes made during your transaction.  The changes are
-            effectively undone, and the state of the data returns to how it was
-            before you began your transaction.  However, rolling back your
-            transaction has no effect on changes made by other transactions
-            running concurrently.
+            <code>rollBack()</code> メソッドはその反対の動作をします。
+            このメソッドは、そのトランザクションでの変更内容をすべて破棄します。
+            変更は一切なかったことになり、トランザクションを開始する前の状態にデータを戻します。
+            しかし、あるトランザクションをロールバックしたとしても、
+            その間に他のトランザクションで行った変更には何の影響も与えません。
         </para>
 
         <para>
-            After you resolve this transaction, <code>Zend_Db_Adapter</code>
-            returns to auto-commit mode until you call
-            <code>beginTransaction()</code> again.
+            トランザクションを終了すると、<code>Zend_Db_Adapter</code>
+            は再び自動コミットモードに戻ります。
+            手動でのトランザクション管理を使用したい場合は、
+            <code>beginTransaction()</code> をもう一度コールします。
         </para>
 
         <example id="zend.db.adapter.transactions.example">
-            <title>Managing a transaction to ensure consistency</title>
+            <title>一貫性を保持するためのトランザクション管理</title>
             <programlisting role="php"><![CDATA[<?php
-// Start a transaction explicitly.
+// トランザクションを明示的に開始します
 $db->beginTransaction();
 
 try {
-    // Attempt to execute one or more queries:
+    // いくつかクエリを実行します
     $db->query(...);
     $db->query(...);
     $db->query(...);
 
-    // If all succeed, commit the transaction and all changes
-    // are committed at once.
+    // すべて成功したら、トランザクションをコミットして
+    // すべての変更を一度に適用します
     $db->commit();
 
 } catch (Exception $e) {
-    // If any of the queries failed and threw an exception,
-    // we want to roll back the whole transaction, reversing
-    // changes made in the transaction, even those that succeeded.
-    // Thus all changes are committed together, or none are.
+    // いずれかのクエリが失敗して例外が発生したら、
+    // もし他に成功しているクエリがあったとしても
+    // それも含めてすべての処理をロールバックします。
+    // すべて適用されるか、ひとつも適用されないかのいずれかです。
     $db->rollBack();
     echo $e->getMessage();
 }]]>
@@ -1295,165 +1299,166 @@ try {
 
     <sect2 id="zend.db.adapter.list-describe">
 
-        <title>Listing and Describing Tables</title>
+        <title>テーブルの情報の取得</title>
 
         <para>
-            The <code>listTables()</code> method returns an array of strings,
-            naming all tables in the current database.
+            <code>listTables()</code> メソッドは文字列の配列を返します。
+            この配列には、データベース内のすべてのテーブルの名前が格納されています。
         </para>
 
         <para>
-            The <code>describeTable()</code> method returns an associative
-            array of metadata about a table.  Specify the name of the table
-            as a string in the first argument to this method.  The second
-            argument is optional, and names the schema in which the table
+            <code>describeTable()</code> メソッドは、
+            テーブルのメタデータを格納した連想配列を返します。
+            このメソッドの最初の引数に、テーブル名を文字列で指定します。
+            二番目の引数はオプションで、そのテーブルが存在するスキーマの名前を指定します。
             exists.
         </para>
 
         <para>
-            The keys of the associative array returned are the column names of
-            the table.  The value corresponding to each column is also an
-            associative array, with the following keys and values:
+            連想配列のキーは、テーブルのカラムの名前となりあｍす。
+            各キーに関連付けられた値も連想配列で、以下のキーが存在します。
         </para>
 
         <table frame="all" cellpadding="5" id="zend.db.adapter.list-describe.metadata">
-            <title>Metadata fields returned by describeTable()</title>
+            <title>describeTable() が返す連想配列のフィールド</title>
             <tgroup cols="3" align="left" colsep="1" rowsep="1">
                 <thead>
                     <row>
-                        <entry>Key</entry>
-                        <entry>Type</entry>
-                        <entry>Description</entry>
+                        <entry>キー</entry>
+                        <entry>型</entry>
+                        <entry>説明</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>SCHEMA_NAME</entry>
                         <entry>(string)</entry>
-                        <entry>Name of the database schema in which this table exists.</entry>
+                        <entry>このテーブルが属するデータベーススキーマの名前。</entry>
                     </row>
                     <row>
                         <entry>TABLE_NAME</entry>
                         <entry>(string)</entry>
-                        <entry>Name of the table to which this column belongs.</entry>
+                        <entry>このカラムが属するテーブルの名前。</entry>
                     </row>
                     <row>
                         <entry>COLUMN_NAME</entry>
                         <entry>(string)</entry>
-                        <entry>Name of the column.</entry>
+                        <entry>カラム名。</entry>
                     </row>
                     <row>
                         <entry>COLUMN_POSITION</entry>
                         <entry>(integer)</entry>
-                        <entry>Ordinal position of the column in the table.</entry>
+                        <entry>テーブル内でのそのカラムの位置。</entry>
                     </row>
                     <row>
                         <entry>DATA_TYPE</entry>
                         <entry>(string)</entry>
-                        <entry>RDBMS name of the datatype of the column.</entry>
+                        <entry>RDBMS で定義されている、そのカラムのデータ型。</entry>
                     </row>
                     <row>
                         <entry>DEFAULT</entry>
                         <entry>(string)</entry>
-                        <entry>Default value for the column, if any.</entry>
+                        <entry>もし存在すれば、そのカラムのデフォルト値。</entry>
                     </row>
                     <row>
                         <entry>NULLABLE</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if the column accepts SQL NULLs, false if the column has a NOT NULL constraint.</entry>
+                        <entry>そのカラムが SQL の NULL を許可している場合は true、NOT NULL 制約が指定されている場合は false。</entry>
                     </row>
                     <row>
                         <entry>LENGTH</entry>
                         <entry>(integer)</entry>
-                        <entry>Length or size of the column as reported by the RDBMS.</entry>
+                        <entry>RDBMS で定義されている、そのカラムの長さ (サイズ)。</entry>
                     </row>
                     <row>
                         <entry>SCALE</entry>
                         <entry>(integer)</entry>
-                        <entry>Scale of SQL NUMERIC or DECIMAL type.</entry>
+                        <entry>SQL の NUMERIC 型あるいは DECIMAL 型での桁数。</entry>
                     </row>
                     <row>
                         <entry>PRECISION</entry>
                         <entry>(integer)</entry>
-                        <entry>Precision of SQL NUMERIC or DECIMAL type.</entry>
+                        <entry>SQL の NUMERIC 型あるいは DECIMAL 型での精度。</entry>
                     </row>
                     <row>
                         <entry>UNSIGNED</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if an integer-based type is reported as UNSIGNED.</entry>
+                        <entry>整数系の型で、符号なし (UNSIGNED) である場合に true。</entry>
                     </row>
                     <row>
                         <entry>PRIMARY</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if the column is part of the primary key of this table.</entry>
+                        <entry>そのカラムが主キーの一部である場合に true。</entry>
                     </row>
                     <row>
                         <entry>PRIMARY_POSITION</entry>
                         <entry>(integer)</entry>
-                        <entry>Ordinal position (1-based) of the column in the primary key.</entry>
+                        <entry>主キーカラムの中での順序 (最初は 1)。</entry>
                     </row>
                     <row>
                         <entry>IDENTITY</entry>
                         <entry>(boolean)</entry>
-                        <entry>True if the column uses an auto-generated value.</entry>
+                        <entry>そのカラムが自動生成の値を使用している場合に true。</entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
 
         <para>
-            If no table exists matching the table name and optional schema name
-            specified, then <code>describeTable()</code> returns an empty array.
+            指定したテーブル名とスキーマ名に対応するテーブルが存在しない場合は、
+            <code>describeTable()</code> は空の配列を返します。
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.adapter.closing">
 
-        <title>Closing a Connection</title>
+        <title>接続の終了</title>
 
         <para>
-            Normally it is not necessary to close a database connection.  PHP
-            automatically cleans up all resources and the end of a request.
-            Database extensions are designed to close the connection as the
-            reference to the resource object is cleaned up.
+            通常は、データベースとの接続を閉じる必要はありません。
+            リクエストの処理が終了した時点で、PHP
+            が自動的にリソースの後始末を行うからです。
+            データベース関連の拡張モジュールは、
+            リソースオブジェクトへの参照がなくなった時点で接続を閉じるように設計されています。
         </para>
 
         <para>
-            However, if you have a long-duration PHP script that initiates many
-            database connections, you might need to close the connection, to avoid
-            exhausting the capacity of your RDBMS server.  You can use the
-            Adapter's <code>closeConnection()</code> method to explicitly close
-            the underlying database connection.
+            しかし、実行時間が長くかかり、
+            多くのデータベース接続を扱うような PHP
+            スクリプトの場合は、自分で接続を閉じる必要があるかもしれません。
+            これにより、RDBMS サーバが限界に達してしまうことを防ぎます。
+            データベース接続を明示的に閉じるには、アダプタの
+            <code>closeConnection()</code> メソッドを使用します。
         </para>
 
         <example id="zend.db.adapter.closing.example">
-            <title>Closing a database connection</title>
+            <title>データベースとの接続の解除</title>
             <programlisting role="php"><![CDATA[<?php
 $db->closeConnection();]]>
             </programlisting>
         </example>
 
         <note>
-            <title>Does Zend_Db support persistent connections?</title>
+            <title>Zend_Db は持続的な接続をサポートしていますか？</title>
             <para>
-                The usage of persistent connections is not supported
-                or encouraged in Zend_Db.
+                Zend_Db では、持続的な接続の使用はサポートしていません。
             </para>
             <para>
-                Using persistent connections can cause an excess of idle
-                connections on the RDBMS server, which causes more problems
-                than any performance gain you might achieve by reducing the
-                overhead of making connections.
+                持続的な接続を使用すると、RDBMS サーバに余計な接続がたまってしまいます。
+                接続作成時のオーバーヘッドが減ることによるパフォーマンスの向上よりも、
+                それによって引き起こされる問題のほうが多くなりえます。
             </para>
             <para>
-                Database connections have state.  That is, some objects in the
-                RDBMS server exist in session scope.  Examples are locks, user
-                variables, temporary tables, and information about the most
-                recently executed query, such as rows affected, and last
-                generated id value.  If you use persistent connections, your
-                application could access invalid or privileged data that were
-                created in a previous PHP request.
+                データベース接続は、その状態を管理しています。
+                つまり、RDBMS サーバのオブジェクトの中には
+                セッションスコープで存在するものがあるということです。
+                セッションスコープで管理される情報の例としては、
+                ロックやユーザ変数、一時テーブル、直近に実行したクエリの情報
+                (変更された行数、自動生成された ID) などが挙げられます。
+                持続的な接続を使用すると、
+                別の PHP リクエストが作成したデータに
+                誤ってアクセスしてしまう危険が生じてしまいます。
             </para>
         </note>
 
@@ -1461,61 +1466,68 @@ $db->closeConnection();]]>
 
     <sect2 id="zend.db.adapter.other-statements">
 
-        <title>Running Other Database Statements</title>
+        <title>その他のステートメントの実行</title>
 
         <para>
-            There might be cases in which you need to access the connection
-            object directly, as provided by the PHP database extension.  Some
-            of these extensions may offer features that are not surfaced by
-            methods of Zend_Db_Adapter_Abstract.
+            PHP のデータベース関連拡張モジュールが提供する接続オブジェクトを、
+            直接操作したくなることがあるかもしれません。
+            Zend_Db_Adapter_Abstract が対応していないような
+            そのデータベース固有の機能を使用したい場合などです。
         </para>
 
         <para>
-            For example, all SQL statements run by Zend_Db are prepared, then
-            executed.  However, some database features are incompatible with
-            prepared statements.  DDL statements like CREATE and ALTER cannot
-            be prepared in MySQL.  Also, SQL statements don't benefit
-            from the <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html">MySQL Query Cache</ulink>,
-            prior to MySQL 5.1.17.
+            Zend_Db で SQL 文を実行する場合は、
+            常にプリペア/実行の二段階に分けて処理されます。
+            しかし、データベースの機能の中には
+            プリペアドステートメントに対応していないようなものもあります。
+            たとえば、CREATE や ALTER のような DDL は、
+            MySQL ではプリペアドステートメントとすることができません。
+            また、MySQL 5.1.17 より前のバージョンでは
+            <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html">MySQL
+            クエリキャッシュ</ulink>
+            の機能を活用することができません。
         </para>
 
         <para>
-            Most PHP database extensions provide a method to execute SQL
-            statements without preparing them.  For example, in PDO, this
-            method is <code>exec()</code>.  You can access the connection
-            object in the PHP extension directly using getConnection().
+            たいていの拡張モジュールには、
+            プリペアドステートメントではなく直接 SQL
+            を実行するためのメソッドが用意されています。
+            たとえば PDO なら <code>exec()</code> がそれにあたります。
+            接続オブジェクトに直接アクセスするには、getConnection()
+            を使用します。
         </para>
 
         <example id="zend.db.adapter.other-statements.example">
-            <title>Running a non-prepared statement in a PDO adapter</title>
+            <title>PDO アダプタによる、プリペアド形式ではないクエリの実行</title>
             <programlisting role="php"><![CDATA[<?php
 $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             </programlisting>
         </example>
 
         <para>
-            Similarly, you can access other methods or properties that are
-            specific to PHP database extensions.  Be aware, though, that by
-            doing this you might constrain your application to the interface
-            provided by the extension for a specific brand of RDBMS.
+            同様にして、
+            拡張モジュールが提供するその他のメソッドやプロパティにも
+            アクセスすることができます。ただ、注意が必要です。
+            このようなことをすると、あなたの作成したアプリケーションが特定の
+            RDBMS 用の拡張モジュールに依存してしまうようになります。
         </para>
 
         <para>
-            In future versions of Zend_Db, there will be opportunities to
-            add method entry points for functionality that is common to
-            the supported PHP database extensions.  This will not affect
-            backward compatibility.
+            将来のバージョンの Zend_Db では、
+            データベースの拡張モジュールがサポートする機能への
+            メソッドエントリポイントを追加できるようにする予定です。
+            これは、過去のバージョンとの互換性を損なうことはありません。
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.adapter.adapter-notes">
 
-        <title>Notes on Specific Adapters</title>
+        <title>各アダプタ固有の注意点</title>
 
         <para>
-            This section lists differences between the Adapter classes of which
-            you should be aware.
+            ここでは、使用するアダプタごとに
+            注意すべき点をまとめます。
         </para>
 
         <sect3 id="zend.db.adapter.adapter-notes.ibm-db2">
@@ -1523,25 +1535,25 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the factory() method with the
-                        name 'Db2'.
+                        このアダプタを factory() で指定する場合は、名前を
+                        'Db2' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extension ibm_db2.
+                        このアダプタは、PHP の ibm_db2 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        IBM DB2 supports both sequences and auto-incrementing
-                        keys.  Therefore the arguments to
-                        <code>lastInsertId()</code> are optional.  If you give
-                        no arguments, the Adapter returns the last value
-                        generated for an auto-increment key.  If you give
-                        arguments, the Adapter returns the last value generated
-                        by the sequence named according to the convention
-                        '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq'.
+                        IBM DB2 は、シーケンスも自動インクリメントのキーも
+                        両方サポートしています。
+                        したがって、<code>lastInsertId()</code>
+                        への引数は指定してもしなくてもかまいません。引数を省略した場合は、
+                        自動インクリメントのキーが最後に生成した値を返します。
+                        引数を指定した場合は、
+                        '<emphasis>テーブル名</emphasis>_<emphasis>カラム名</emphasis>_seq'
+                        という名前のシーケンスが最後に生成した値を返します。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1552,22 +1564,22 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Mysqli'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Mysqli' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter utilizes the PHP extension mysqli.
+                        このアダプタは、PHP の mysqli 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        MySQL does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        MySQL はシーケンスをサポートしていません。したがって、
+                        <code>lastInsertId()</code> に引数を指定してもそれは無視されます。
+                        返り値は、常に自動インクリメントのキーの最後の値となります。
+                        <code>lastSequenceId()</code> メソッドの返り値は
+                        <code>null</code> となります。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1578,34 +1590,35 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Oracle'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Oracle' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extension oci8.
+                        このアダプタは、PHP の oci8 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Oracle does not support auto-incrementing keys, so you
-                        should specify the name of a sequence to
-                        <code>lastInsertId()</code> or
-                        <code>lastSequenceId()</code>.
+                        Oracle は自動インクリメントのキーをサポートしていません。
+                        したがって、<code>lastInsertId()</code> や
+                        <code>lastSequenceId()</code>
+                        にはシーケンス名を指定する必要があります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        The Oracle extension does not support positional
-                        parameters.  You must use named parameters.
+                        Oracle 拡張モジュールは位置指定によるパラメータをサポートしていません。
+                        名前つきパラメータを使用する必要があります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Currently the <code>Zend_Db::CASE_FOLDING</code> option
-                        is not supported by the Oracle adapter. To use this
-                        option with Oracle, you must use the PDO OCI adapter.
+                        現在、Oracle アダプタでは <code>Zend_Db::CASE_FOLDING</code>
+                        オプションをサポートしていません。Oracle
+                        でこの機能を使用したい場合は、PDO OCI
+                        アダプタを使用する必要があります。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1616,48 +1629,49 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Mssql'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Pdo_Mssql' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_mssql.
+                        このアダプタは、PHP の pdo および pdo_mssql 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Microsoft SQL Server does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        Microsoft SQL Server はシーケンスをサポートしていません。
+                        したがって、
+                        <code>lastInsertId()</code> に引数を指定してもそれは無視されます。
+                        返り値は、常に自動インクリメントのキーの最後の値となります。
+                        <code>lastSequenceId()</code> メソッドの返り値は
+                        <code>null</code> となります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Zend_Db_Adapter_Pdo_Mssql sets <code>QUOTED_IDENTIFIER ON</code>
-                        immediately after connecting to a SQL Server database.
-                        This makes the driver use the standard SQL identifier
-                        delimiter symbol (<code>"</code>) instead of the
-                        proprietary square-brackets syntax SQL Server uses for
-                        delimiting identifiers.
+                        Zend_Db_Adapter_Pdo_Mssql は、SQL Server
+                        に接続した直後に <code>QUOTED_IDENTIFIER ON</code>
+                        を設定します。これにより、SQL の識別子をクォートする際に
+                        標準の区切り文字 (<code>"</code>) を使用するようになります。
+                        SQL Server の独自仕様である角括弧によるクォートは使用しません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        You can specify <code>pdoType</code> as a key in the
-                        options array.  The value can be "mssql" (the default),
-                        "dblib", "freetds", or "sybase".  This option affects
-                        the DSN prefix the adapter uses when constructing the
-                        DSN string.  Both "freetds" and "sybase" imply a prefix
-                        of "sybase:", which is used for the
-                        <ulink url="http://www.freetds.org/">FreeTDS</ulink> set
-                        of libraries.
-                        See also
-                        <ulink url="http://www.php.net/manual/en/ref.pdo-dblib.connection.php">
-                        http://www.php.net/manual/en/ref.pdo-dblib.connection.php</ulink>
-                        for more information on the DSN prefixes used in this driver.
+                        オプションの配列で、キーとして <code>pdoType</code>
+                        を指定することができます。この値は "mssql" (デフォルト)、
+                        "dblib"、"freetds" あるいは "sybase" のいずれかとなります。
+                        このオプションは、DSN 文字列を作成する際に使用する
+                        DSN プレフィックスに影響を与えます。"freetds" および
+                        "sybase" を指定した場合のプレフィックスは
+                        "sybase:" となります。これは
+                        <ulink url="http://www.freetds.org/">FreeTDS</ulink>
+                        系のライブラリで用いられるものです。
+                        このドライバで使用できる DSN プレフィックスの詳細は
+                        <ulink url="http://www.php.net/manual/ja/ref.pdo-dblib.connection.php">
+                        http://www.php.net/manual/ja/ref.pdo-dblib.connection.php</ulink>
+                        を参照ください。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1668,22 +1682,22 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Mysql'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Pdo_Mysql' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_mysql.
+                        このアダプタは、PHP の pdo および pdo_mysql 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        MySQL does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        MySQL はシーケンスをサポートしていません。したがって、
+                        <code>lastInsertId()</code> に引数を指定してもそれは無視されます。
+                        返り値は、常に自動インクリメントのキーの最後の値となります。
+                        <code>lastSequenceId()</code> メソッドの返り値は
+                        <code>null</code> となります。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1694,21 +1708,21 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Oci'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Pdo_Oci' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_oci.
+                        このアダプタは、PHP の pdo および pdo_oci 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Oracle does not support auto-incrementing keys, so you
-                        should specify the name of a sequence to
-                        <code>lastInsertId()</code> or
-                        <code>lastSequenceId()</code>.
+                        Oracle は自動インクリメントのキーをサポートしていません。
+                        したがって、<code>lastInsertId()</code> や
+                        <code>lastSequenceId()</code>
+                        にはシーケンス名を指定する必要があります。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1719,25 +1733,25 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Pgsql'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Pdo_Pgsql' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_pgsql.
+                        このアダプタは、PHP の pdo および pdo_pgsql 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        PostgreSQL supports both sequences and auto-incrementing
-                        keys.  Therefore the arguments to
-                        <code>lastInsertId()</code> are optional.  If you give
-                        no arguments, the Adapter returns the last value
-                        generated for an auto-increment key.  If you give
-                        arguments, the Adapter returns the last value generated
-                        by the sequence named according to the convention
-                        '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq'.
+                        PostgreSQL は、シーケンスも自動インクリメントのキーも
+                        両方サポートしています。
+                        したがって、<code>lastInsertId()</code>
+                        への引数は指定してもしなくてもかまいません。引数を省略した場合は、
+                        自動インクリメントのキーが最後に生成した値を返します。
+                        引数を指定した場合は、
+                        '<emphasis>テーブル名</emphasis>_<emphasis>カラム名</emphasis>_seq'
+                        という名前のシーケンスが最後に生成した値を返します。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -1748,49 +1762,48 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
             <itemizedlist>
                 <listitem>
                     <para>
-                        Specify this Adapter to the <code>factory()</code>
-                        method with the name 'Pdo_Sqlite'.
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Pdo_Sqlite' とします。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        This Adapter uses the PHP extensions pdo and pdo_sqlite.
+                        このアダプタは、PHP の pdo および pdo_sqlite 拡張モジュールを使用します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        SQLite does not support sequences, so
-                        <code>lastInsertId()</code> ignores its arguments and
-                        always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
-                        method returns <code>null</code>.
+                        SQLite はシーケンスをサポートしていません。したがって、
+                        <code>lastInsertId()</code> に引数を指定してもそれは無視されます。
+                        返り値は、常に自動インクリメントのキーの最後の値となります。
+                        <code>lastSequenceId()</code> メソッドの返り値は
+                        <code>null</code> となります。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        To connect to an SQLite2 database, specify
-                        <code>'dsnprefix'=>'sqlite2'</code> in the array of
-                        parameters when creating an instance of the
-                        Pdo_Sqlite Adapter.
+                        SQLite2 データベースに接続するには、
+                        Pdo_Sqlite アダプタのインスタンスを作成する際に
+                        パラメータの配列で
+                        <code>'dsnprefix'=>'sqlite2'</code> を指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        To connect to an in-memory SQLite database,
-                        specify <code>'dbname'=>':memory:'</code> in the
-                        array of parameters when creating an instance of
-                        the Pdo_Sqlite Adapter.
+                        メモリ上の SQLite データベースに接続するには、
+                        Pdo_Sqlite アダプタのインスタンスを作成する際に
+                        パラメータの配列で
+                        <code>'dbname'=>':memory:'</code> を指定します。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Older versions of the SQLite driver for PHP do not seem
-                        to support the PRAGMA commands necessary to ensure that
-                        short column names are used in result sets.  If you
-                        have problems that your result sets are returned with
-                        keys of the form "tablename.columnname" when you do a
-                        join query, then you should upgrade to the current
-                        version of PHP.
+                        PHP 用の SQLite ドライバの古いバージョンでは、
+                        結果セットで短いカラム名を使用するための
+                        PRAGMA コマンドがサポートされていないようです。
+                        join クエリを実行した際の結果セットのカラム名が
+                        "テーブル名.カラム名" 形式になる場合は、
+                        PHP のバージョンをアップグレードする必要があります。
                     </para>
                 </listitem>
             </itemizedlist>
