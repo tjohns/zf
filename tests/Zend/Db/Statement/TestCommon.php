@@ -751,6 +751,20 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    public function testStatementGetColumnMeta()
+    {
+        $select = $this->_db->select()
+            ->from('zfbugs');
+        $stmt = $this->_db->prepare($select->__toString());
+        $stmt->execute();
+        $metaKeys = array('native_type', 'flags', 'table', 'name', 'len', 'precision', 'pdo_type');
+        for ($i = 0; $meta = $stmt->getColumnMeta($i); ++$i) {
+            $this->assertType('array', $meta);
+            $this->assertEquals(7, count($meta));
+            $this->assertEquals($metaKeys, array_keys($meta));
+        }
+    }
+
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()
@@ -774,8 +788,18 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->prepare($select->__toString());
 
         $value = 'value';
-        $stmt->setAttribute(1234, $value);
-        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #1");
+        try {
+            $stmt->setAttribute(1234, $value);
+        } catch (Zend_Exception $e) {
+            $this->assertContains('This driver doesn\'t support setting attributes', $e->getMessage());
+        }
+
+        try {
+            $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #1");
+        } catch (Zend_Exception $e) {
+            $this->assertContains('This driver doesn\'t support setting attributes', $e->getMessage());
+            return;
+        }
 
         $valueArray = array('value1', 'value2');
         $stmt->setAttribute(1235, $valueArray);

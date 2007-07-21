@@ -92,6 +92,11 @@ class Zend_Db_Statement_MysqliTest extends Zend_Db_Statement_TestCommon
         }
     }
 
+    public function testStatementGetColumnMeta()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' has not implemented getColumnMeta() yet [ZF-1424]');
+    }
+
     public function getDriver()
     {
         return 'Mysqli';

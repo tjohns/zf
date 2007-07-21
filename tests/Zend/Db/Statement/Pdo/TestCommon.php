@@ -61,9 +61,4 @@ abstract class Zend_Db_Statement_Pdo_TestCommon extends Zend_Db_Statement_TestCo
         $stmt->closeCursor();
     }
 
-    public function testStatementGetSetAttribute()
-    {
-        $this->markTestSkipped($this->getDriver() . ' does not support setting attributes');
-    }
-
 }

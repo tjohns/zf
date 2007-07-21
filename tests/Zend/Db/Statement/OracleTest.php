@@ -69,6 +69,11 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $this->markTestIncomplete($this->getDriver() . ' driver does not support fetchAll(FETCH_BOTH)');
     }
 
+    public function testStatementGetColumnMeta()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' has not implemented getColumnMeta() yet [ZF-1424]');
+    }
+
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()
