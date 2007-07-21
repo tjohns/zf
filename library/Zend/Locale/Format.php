@@ -359,6 +359,7 @@ class Zend_Locale_Format
                 $value = round($value, 0);
                 $options['precision'] = 0;
             }
+            $value = Zend_Locale_Math::normalize($value);
         }
         // set negative sign
         if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
