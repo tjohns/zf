@@ -121,7 +121,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         $sql = $this->_stripQuoted($sql);
 
         // split into text and params
-        $this->_sqlSplit = preg_split('/(\?|\:[a-z_]+)/',
+        $this->_sqlSplit = preg_split('/(\?|\:\w+)/',
             $sql, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 
         // map params
