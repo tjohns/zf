@@ -193,4 +193,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($lang->isTranslated('msg1',true,'en'), false);
         $this->assertEquals($lang->isTranslated('msg1',false,'ru'), false);
     }
+
+    public function testWithOption()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/_files/translation_en2.csv', 'en', array('separator' => ','));
+
+        $this->assertEquals($lang->translate('Message 1'), 'Message 1 (en)');
+        $this->assertEquals($lang->translate('Message 4,'), 'Message 4 (en)');
+        $this->assertEquals($lang->translate('Message 5'), 'Message 5, (en)');
+    }
 }

@@ -52,14 +52,15 @@ class Zend_Translate {
      * Generates the standard translation object
      *
      * @param  string              $adapter  Adapter to use
-     * @param  array               $options  Options for this adapter to set
+     * @param  array               $data     Translation source data for the adapter
      *                                       Depends on the Adapter
      * @param  string|Zend_Locale  $locale   OPTIONAL locale to use
+     * @param  array               $options  OPTIONAL options for the adapter
      * @throws Zend_Translate_Exception
      */
-    public function __construct($adapter, $options, $locale = null)
+    public function __construct($adapter, $data, $locale = null, array $options = array())
     {
-        $this->setAdapter($adapter, $options, $locale);
+        $this->setAdapter($adapter, $data, $locale, $options);
     }
 
 
