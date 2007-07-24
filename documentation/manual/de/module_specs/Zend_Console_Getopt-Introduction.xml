@@ -87,7 +87,7 @@
     </para>
     <para>
         <code>Zend_Console_Getopt</code> bietet ein Interface um zu definieren welche
-        Flags für die Anwendung gültig sind, einen Fehler und Benutzungshinweise ausgibt
+        Flags für die Anwendung gültig sind, das einen Fehler und Benutzungshinweise ausgibt
         wenn ein ungültiges Flag verwendet wird, und dem Code der Anwendung bekanntgibt
         welche Flags der Benutzer definiert hat.
     </para>
@@ -106,6 +106,6 @@
         </para>
     </note>
     <para>
-        Die folgende Sektion beschreibt die Verwendung von<code>Zend_Console_Getopt</code>.
+        Die folgende Sektion beschreibt die Verwendung von <code>Zend_Console_Getopt</code>.
     </para>
 </sect1>
