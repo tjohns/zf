@@ -83,9 +83,9 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>httpversion</entry>
-                            <entry>HTTP プロトコルのバージョン</entry>
-                            <entry>float (1.1 あるいは 1.0)</entry>
-                            <entry>1.1</entry>
+                            <entry>HTTP プロトコルのバージョン (通常は '1.1' あるいは '1.0')</entry>
+                            <entry>string</entry>
+                            <entry>'1.1'</entry>
                         </row>
                         <row>
                             <entry>adapter</entry>

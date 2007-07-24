@@ -276,7 +276,7 @@ $router->removeDefaultRoutes();]]>
 
         <para>
             Rewrite ルータはサブディレクトリ
-            (例. <code>http://domain.com/~user/application-root/</code>>)
+            (例. <code>http://domain.com/~user/application-root/</code>)
             内でも使用可能です。この場合、アプリケーションのベース URL
             (<code>/~user/application-root</code>) の自動検出が
             <code>Zend_Controller_Request_Http</code> によって行われ、適切に使用されます。
