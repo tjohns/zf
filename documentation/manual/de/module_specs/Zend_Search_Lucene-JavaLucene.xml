@@ -3,9 +3,9 @@
 
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>Dateiformate</title>
+
         <para>
-            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit Lucene Version 1.4 und
-            höher.
+            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit Lucene Version 1.4 und höher.
         </para>
 
         <para>
@@ -81,7 +81,6 @@ indexWriter.addDocument(doc);]]>
     </sect2>
 
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

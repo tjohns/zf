@@ -5,7 +5,7 @@
         <title>Einführung</title>
         <para>
             <code>Zend_Mime</code> ist eine Hilfsklasse für die Verarbeitung von mehrteiligen MIME
-            Nachrichten. Es wird von <link linkend="zend.mail"><code>Zend_Mail</code></link> and
+            Nachrichten. Es wird von <link linkend="zend.mail"><code>Zend_Mail</code></link> und
             <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> verwendet
             und kann von anderen Anwendungen verwendet werden, die MIME Unterstützung benötigen.
         </para>
@@ -25,13 +25,12 @@
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::encodeBase64()</code>: Kodiert einen String in die base64
-                        Kodierung.
+                        <code>Zend_Mime::encodeBase64()</code>: Codiert einen String in die base64 Codierung.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Mime::encodeQuotedPrintable()</code>: Kodiert einen String mit dem
+                        <code>Zend_Mime::encodeQuotedPrintable()</code>: Codiert einen String mit dem
                         "quoted-printable" Mechanismus.
                     </para>
                 </listitem>
