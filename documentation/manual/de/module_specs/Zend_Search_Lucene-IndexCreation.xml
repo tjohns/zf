@@ -86,20 +86,20 @@ foreach ($hits as $hit) {
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
-        <title>Retrieving Index size</title>
+        <title>Die Größe des Indezes erhalten</title>
 
         <para>
-            There are two methods to retrieve index size in Zend_Search_Lucene.
+            Es gibt zwei Methoden um die Indexgröße in Zend_Search_Lucene zu erhalten.
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::maxDoc()</code> returns one greater than the largest possible document number.
-             It's actually overall number of the documents in the index including deleted documents.
-             So it has a synonym: <code>Zend_Search_Lucene::count()</code>.
+             <code>Zend_Search_Lucene::maxDoc()</code> gibt einen Mehr als die größte Anzahl an Dokumenten zurück.
+             Das ist aktuell die Gesamtanzahl der Dokumente im Index inklusive gelöschter Dokumente. Deswegen hat
+             es das Synonym: <code>Zend_Search_Lucene::count()</code>.
         </para>
 
         <para>
-             <code>Zend_Search_Lucene::numDocs()</code> returns the total number of non-deleted documents.
+             <code>Zend_Search_Lucene::numDocs()</code> gibt die Gesamtanzahl an nicht gelöschten Dokumenten zurück.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -108,19 +108,21 @@ $documents = $index->numDocs();]]>
         </programlisting>
 
         <para>
-            <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
+            Die Methode <code>Zend_Search_Lucene::isDeleted($id)</code> kann verwendet werden um zu Prüfen ob ein
+            Dokument gelöscht ist.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 for ($count = 0; $count < $index->maxDoc(); $count++) {
     if ($index->isDeleted($count)) {
-        echo "Document #$id is deleted.\n";
+        echo "Dokument #$id ist gelöscht.\n";
     }
 }]]>
         </programlisting>
 
         <para>
-            Index optimization removes deleted documents and squeezes documents' IDs. So internal document id may be changed.
+            Index Optimierung entfernt gelöschte Dokumente und verkleinert die Dokument IDs. Die interne Id von
+            Dokumenten könnte also geändert werden.
         </para>
     </sect2>
 
@@ -205,13 +207,15 @@ $index->optimize();]]>
                 werden sollen. Bei kleineren Werten wird beim Indizieren weniger RAM verbraucht und Suchabfragen auf
                 nicht optimierte Indizes sind schneller, aber die Indizierungsgeschwindigkeit ist langsamer. Bei größeren
                 Werten, wird mehr beim Indizieren RAM verbraucht und während Suchabfragen auf nicht optimierte Indizes langsamer
-                sind, ist das Indizieren schneller. Deshalb sind größere Werte (&gt; 10)  am besten für Stapelverarbeitung
-                und kleinere Werte (&lt; 10)  sind besser für Indizes, die interaktiv gepflegt werden.
+                sind, ist das Indizieren schneller. Deshalb sind größere Werte (> 10)  am besten für Stapelverarbeitung
+                und kleinere Werte (< 10)  sind besser für Indizes, die interaktiv gepflegt werden.
             </para>
             <para>
-                <emphasis>MergeFactor</emphasis> is a good estimation for average number of segments merged by one auto-optimization pass.
-                Too large values produce large number of segments while they are not merged into new one. It may be a cause of
-                "failed to open stream: Too many open files" error message. This limitation is system dependant.
+                <emphasis>MergeFactor</emphasis> ist eine gute Annahme für die durchschnittliche Anzahl an Segmenten
+                die durch einen Auto-Optimierungs Durchgang zusammengeführt werden. Zu große Werte produzieren
+                eine große Anzahl an Segmenten wärend diese nicht in einen neuen zusammengeführt werden. Das kann
+                eine "failed to open stream: Too many open files" Fehlernachricht sein. Diese Begrenzung ist
+                Sytemabhängig.
             </para>
             <para>
                 <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
@@ -244,21 +248,21 @@ $index->optimize();]]>
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>Unterstützte Dateisysteme</title>
             <para>
-                Zend_Search_Lucene uses <code>flock()</code> to provide concurrent searching, index updating and optimization.
+                Zend_Search_Lucene verwendet <code>flock()</code> um gleichzeitiges Suchen, Updaten und
+                Optimierung des Index zu unterstützen.
             </para>
 
             <para>
-                According to the PHP <ulink url="http://www.php.net/manual/en/function.flock.php">documentation</ulink>,
-                "<code>flock()</code> will not work on NFS and many other networked file systems".
+                Entsprechend der PHP <ulink url="http://www.php.net/manual/en/function.flock.php">Dokumentation</ulink>,
+                "funktioniert <code>flock()</code> nicht auf NFS und vielen anderen Netzwerk Dateisystemen".
             </para>
 
             <para>
-                Do not use networked file systems with Zend_Search_Lucene.
+                Verwende keine Netzwerk Dateisysteme mit Zend_Search_Lucene.
             </para>
         </sect3>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
