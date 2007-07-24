@@ -9,7 +9,7 @@
         </para>
 
         <para>
-            Le dispatchage se produit dans une boucle dans le contrôleur frontal. Avant que le dispatchage ne se produise, le contrôleur frontal détermine la route de la requête pour récupérer lesvaleurs spécifiées par l'utilsateur pour le module, le contrôleur , l'action , et les paramètres optionnels. Il entre alors dans la boucle d'expédition, et dispatche la requête.
+            Le dispatchage se produit dans une boucle dans le contrôleur frontal. Avant que le dispatchage ne se produise, le contrôleur frontal détermine la route de la requête pour récupérer les valeurs spécifiées par l'utilsateur pour le module, le contrôleur , l'action , et les paramètres optionnels. Il entre alors dans la boucle d'expédition, et dispatche la requête.
         </para>
 
         <para>
@@ -17,7 +17,7 @@
         </para>
 
         <para>
-            La méthode du ontrôleur d'action qui contrôle ce dispatchage est <code>_forward()</code> ; appelez cette méthode à partir de pre/postDispatch() ou d'une méthode d'action, en fournissant une action, un contrôleur, un module, et optionnellemnt des paramètres additionnels que vous souhaitez passer à la nouvelle action :
+            La méthode du contrôleur d'action qui contrôle ce dispatchage est <code>_forward()</code> ; appelez cette méthode à partir de pre/postDispatch() ou d'une méthode d'action, en fournissant une action, un contrôleur, un module, et optionnellemnt des paramètres additionnels que vous souhaitez passer à la nouvelle action :
         </para>
 
         <programlisting role="php"><![CDATA[<?php

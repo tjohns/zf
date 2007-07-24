@@ -13,7 +13,7 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> enregistre un <link linkend="zend.controller.plugins">plugin broker</link> avec lui, permettant à des événements divers qu'il déclenche d'être observé par plugins. Dans la plupart des cas, cela donne au développeur l'occasion de contstruire le processus de dispatchage au site sans avoir besoin d'étendre le contrôleur frontal pour ajouter une fonctionnalité.
+            <code>Zend_Controller_Front</code> enregistre un <link linkend="zend.controller.plugins">plugin broker</link> avec lui, permettant à des événements divers qu'il déclenche d'être observé par plugins. Dans la plupart des cas, cela donne au développeur l'occasion de construire le processus de dispatchage au site sans avoir besoin d'étendre le contrôleur frontal pour ajouter une fonctionnalité.
         </para>
 
         <para>

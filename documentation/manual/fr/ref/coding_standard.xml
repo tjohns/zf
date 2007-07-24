@@ -100,7 +100,7 @@
             </para>
 
             <para>
-                Les classes du Zend Framework dont Zend ou les compagnies partenaires participantes sont les auteurss et qui sont distribuées avec le Framework doivent toujours commencer par &quot;Zend_&quot; et doivent être stockée dans le répertoire &quot;Zend&quot; en respectant la hiérarchie.
+                Les classes du Zend Framework dont Zend ou les compagnies partenaires participantes sont les auteurs et qui sont distribuées avec le Framework doivent toujours commencer par &quot;Zend_&quot; et doivent être stockée dans le répertoire &quot;Zend&quot; en respectant la hiérarchie.
             </para>
 
             <para>
