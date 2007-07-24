@@ -1094,6 +1094,16 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $prevTerm = $this->_termDictionary[$prevPosition];
         $prevTermInfo = $this->_termDictionaryInfos[$prevPosition];
 
+        if ($this->_tisFile === null) {
+            // The end of terms stream is reached and terms dictionary file is closed
+            // Perform mini-reset operation
+            $this->_tisFile = $this->openCompoundFile('.tis', false);
+
+            if ($this->_termsScanMode == self::SM_FULL_INFO  ||  $this->_termsScanMode == self::SM_MERGE_INFO) {
+                $this->_frqFile = $this->openCompoundFile('.frq', false);
+                $this->_prxFile = $this->openCompoundFile('.prx', false);
+            }
+        }
         $this->_tisFile->seek($this->_tisFileOffset + $prevTermInfo[4], SEEK_SET);
 
         $this->_lastTerm     = new Zend_Search_Lucene_Index_Term($prevTerm[1] /* text */,

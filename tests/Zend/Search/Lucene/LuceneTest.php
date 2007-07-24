@@ -366,4 +366,70 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
                                 new Zend_Search_Lucene_Index_Term('open', 'contents'),
                                ));
     }
+
+    public function testTermsStreamInterfaceSkipToTermsRetrievingZeroTermsCase()
+    {
+        $index = Zend_Search_Lucene::create(dirname(__FILE__) . '/_files/_index');
+
+        // Zero terms
+        $doc = new Zend_Search_Lucene_Document();
+        $doc->addField(Zend_Search_Lucene_Field::Text('contents', ''));
+        $index->addDocument($doc);
+
+        unset($index);
+
+
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_index');
+
+        $index->resetTermsStream();
+        $index->skipTo(new Zend_Search_Lucene_Index_Term('term', 'contents'));
+
+        $this->assertTrue($index->currentTerm() === null);
+
+        $index->closeTermsStream();
+    }
+
+    public function testTermsStreamInterfaceSkipToTermsRetrievingOneTermsCase()
+    {
+        $index = Zend_Search_Lucene::create(dirname(__FILE__) . '/_files/_index');
+
+        // Zero terms
+        $doc = new Zend_Search_Lucene_Document();
+        $doc->addField(Zend_Search_Lucene_Field::Text('contents', 'someterm'));
+        $index->addDocument($doc);
+
+        unset($index);
+
+
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_index');
+
+        $index->resetTermsStream();
+        $index->skipTo(new Zend_Search_Lucene_Index_Term('term', 'contents'));
+
+        $this->assertTrue($index->currentTerm() === null);
+
+        $index->closeTermsStream();
+    }
+
+    public function testTermsStreamInterfaceSkipToTermsRetrievingTwoTermsCase()
+    {
+        $index = Zend_Search_Lucene::create(dirname(__FILE__) . '/_files/_index');
+
+        // Zero terms
+        $doc = new Zend_Search_Lucene_Document();
+        $doc->addField(Zend_Search_Lucene_Field::Text('contents', 'someterm word'));
+        $index->addDocument($doc);
+
+        unset($index);
+
+
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_index');
+
+        $index->resetTermsStream();
+        $index->skipTo(new Zend_Search_Lucene_Index_Term('term', 'contents'));
+
+        $this->assertTrue($index->currentTerm() == new Zend_Search_Lucene_Index_Term('word', 'contents'));
+
+        $index->closeTermsStream();
+    }
 }
