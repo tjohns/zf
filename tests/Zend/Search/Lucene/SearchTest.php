@@ -197,6 +197,18 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testBooleanQueryWithNonExistingPhraseSubquery()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $query = Zend_Search_Lucene_Search_QueryParser::parse('"non-existing phrase" AND Home');
+
+        $this->assertEquals($query->__toString(), '+("non existing phrase") +(home)');
+        $this->assertEquals($query->rewrite($index)->__toString(),
+                            '+((path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(path:home modified:home contents:home)');
+        $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '<EmptyQuery>');
+    }
+
     public function testFilteredTokensQueryParserProcessing()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
