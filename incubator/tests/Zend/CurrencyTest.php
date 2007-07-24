@@ -99,25 +99,32 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $currency = new Zend_Currency($locale);
         $this->assertTrue($currency instanceof Zend_Currency);
 
-        // failure tests
-        try{
-            $currency = new Zend_Currency('USD');
-            $this->fail();
-        } catch(Zend_Currency_Exception $e) {
-            // success
-        }
+        $currency = new Zend_Currency('USD');
+        $this->assertTrue($currency instanceof Zend_Currency);
 
-        try{
-            $currency = new Zend_Currency('Arab');
-            $this->fail();
-        } catch(Zend_Currency_Exception $e) {
-            // success
-        }
+        $currency = new Zend_Currency('Arab');
+        $this->assertTrue($currency instanceof Zend_Currency);
 
         try{
             $currency = new Zend_Currency('aG_ea');
             $this->fail();
-        }catch(Zend_Currency_Exception $e){}
+        } catch(Zend_Currency_Exception $e) {
+            // success
+        }
+
+        try{
+            $currency = new Zend_Currency('XYZ');
+            $this->fail();
+        } catch(Zend_Currency_Exception $e) {
+            // success
+        }
+
+        try{
+            $currency = new Zend_Currency('wxyz');
+            $this->fail();
+        } catch(Zend_Currency_Exception $e) {
+            // success
+        }
     }
 
 

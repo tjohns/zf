@@ -8,7 +8,7 @@
         the currency which is used.
     <para>
 
-    <example>
+    <example id="zend.currency.useage.example1">
 
         <title>Creating an instance of Zend_Currency from the actual locale</title>
 
@@ -38,377 +38,68 @@ $currency = new Zend_Currency();
                 <emphasis role="strong">currency</emphasis>:
             </para>
             <para>
-                A locale can include several currencies. Therefor the first parameter 'currency' can define
-                which currency should be used by giving the short name of that currency. If that currency in not
-                known in any locale an exception will be thrown.
+                A locale can include several currencies. Therefor the first parameter
+                <emphasis role="strong">'currency'</emphasis> can define which currency should be used by giving
+                the short name of that currency. If that currency in not known in any locale an exception will
+                be thrown. Currency short names are always 3 lettered and written uppercase.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">script</emphasis>:
+            </para>
+            <para>
+                The second parameter <emphasis role="strong">'script'</emphasis> defines in which script the output
+                should be given. The standard script is 'Latin' which includes the global known digits from
+                <emphasis role="strong">'0'</emphasis> to <emphasis role="strong">'9'</emphasis>. Other scripts
+                like <emphasis role="strong">'Arab'</emphasis> can include other digits. For more information
+                about scripts see
+                <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">locale</emphasis>:
+            </para>
+            <para>
+                The third parameter <emphasis role="strong">'locale'</emphasis> defines which locale should be
+                used for formatting the currency. The given locale will also be used to get the standard script
+                and currency of this currency if these parameters are not given.
             </para>
         </listitem>
     </itemizedlist>
 
+    <example id="zend.currency.useage.example2">
 
+        <title>Other examples for creating an instance of Zend_Currency</title>
 
+        <programlisting role="php"><![CDATA[<?php
+// expect standard locale 'de_AT'
+require_once 'Zend/Currency.php';
 
+// creates an instance from 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+$currency = new Zend_Currency('en_US');
 
+// creates an instance from the actual locale ('de_AT') using 'EUR' as currency but displaying it in 'Arab' script
+$currency = new Zend_Currency('Arab');
 
+// creates an instance using 'EUR' as currency, 'en_US' for number formating and 'Arab' for the script
+$currency = new Zend_Currency('en_US', 'EUR', 'Arab');
+        </programlisting>
 
-
-    <para>
-        you can use <code>Zend_Currency</code> by creating instance of it.
-        the first parameter is an optional string which is a currency
-        short name. a currency short name is a three uppercased letters
-        reffers to a known currency. for example it can be USD, EUR,
-        EGP ..etc.
-        the second parameter is an optional script name, which will be
-        used to output a localized number digits. <code>Zend_Currency</code>
-        uses <code>Zend_Locale_Format</code> to manage the localization of numbers, so
-        you can check it's <link linkend="zend.locale.appendix.numberscripts.supported">
-        list of supported numeral systems</link> to know the supported scrpt names.
-        the third parameter is the most important one. it's the locale name of the
-        country that you want to use it's currency information. if you want to make
-        <code>Zend_Currency</code> use the the information of the currency "united states
-        dollar", you will pass the locale name "en_US". see this code :
-
-        <example>
-            <title>creating instance of Zend_Currency</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend_Currency.php';
-
-            //United States Dollar
-            $dollar = Zend_Currency('USD', null, 'en_US');
-
-            //EURO
-            $euro = Zend_Currency('EUR', null, 'de_DE');
-
-            //Egyption Pound with Arabic digits
-            $egp = Zend_Currency('EGP', 'Arab', 'ar_EG');
-            ?>]]></programlisting>
-        </example>
-
-    </para>
+    </example>
 
     <para>
-        passing the short currency name isn't important but it's recommended to pass it
-        when you are creating instance of <code>Zend_Currency</code>. some countries
-        are using more that one currency. if you didn't pass the currency short name, the
-        first currency found for this country will be used. the following example will
-        show you how we can depend on this behaviour when we instantiate
-        <code>Zend_Currency</code>.
-
-        <example>
-            <title>short hand of instantiating Zend_Currency</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //U.S.A only uses one currency
-            $dollar = Zend_Currency('en_US');
-            ?>]]></programlisting>
-        </example>
-
-        <code>Zend_Currency</code> will use the first found currency for this country, but
-        remember that this isn't recomended. maybe this country is using many currencies
-        , but you don't know.
-    </para>
-
-    <para>
-        after instantiating a <code>Zend_Currency</code> object, you can use the method
-        <code>toCurrency()</code> to format numbers.
-        the first parameter is tthe number that you want to format.
-        the second parameter is an optional script name.
-        the third parameter is a locale name or object of <code>Zend_Locale</code> which
-        will be used to format the number.
-        if you pass a script name or a locale name to the method
-        <code>toCurrency()</code>, this values will be used once to format the passed
-        number in the first parameter.
-
-        <example>
-            <title>using Zend_Curency::toCurrency()</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //USD
-            $dollar = Zend_Currency('USD','en_US');
-
-            //format and print number using the stored formatting settings
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            //format using the 'Arab' script and 'de_AT'
-            print $dollar->toCurrency(253292.1832, Arab, 'de_AT');
-            //prints $ ٢٥٣.٢٩٢,١٨٣٢
-
-            //format using the 'de_AT' numbers formating rules
-            print $dollar->toCurrency(253292.1832, null, 'de_AT');
-            //prints $ 253.292,1832
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-    <para>
-        you can use the method <code>toString()</code> to get a string represents the
-        used currency in you <code>Zend_Currency</code> object.
-    </para>
-
-</sect1>
-
-<sect1 id="zend.currency.formatting">
-    <title>Setting the formatting defaults</title>
-
-    <para>
-        the output of <code>toCurrency()</code> can be controlled using two methods.
-        you can use the second and third parameters of <code>toCurrency()</code>.
-        this passed settings will be used only once to format the passed number in
-        the first parameter.
-        when you instantiate a <code>Zend_Currency</code> object, the locale name of
-        the country that uses the currency, will be the default locale name used for
-        formatting the numbers. if you want to change the default settings, you can
-        use the <code>setFormat()</code> method.
-    </para>
-
-    <para>
-        the first parameter of <code>setFormat()</code> can accept
-        <code>Zend_Currency</code> constants only. you can enable/disable the use of
-        currency symbols through passing <code>Zend_Currency::USE_SYMBOL</code> or
-        <code>Zend_Currency::NO_SYMBOL</code> to the first parameter of
-        <code>setFormat()</code>.
-
-        <example>
-            <title>enabling/disabling currency symbols</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //USD
-            $dollar = Zend_Currency('USD','en_US');
-
-            //use defaults
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            //don't use currency symbols
-            $dollar->setFormat(Zend_Currency::NO_SYMBOL);
-
-            print $dollar->toCurrency(253292.1832);
-            //prints  US Dollar 253,292.1832
-
-            ?>]]></programlisting>
-        </example>
-
+        So you can supress any of these parameters if you want to use the default ones. This has no negative effect
+        on the handling of currencies. It can be usefull f.e. if you dont know that default currency of a region.
     </para>
 
     <note>
         <para>
-            when there is no symbol available for this currency or if the use of
-            currency symbols is disabled, the full currency name will be used if
-            available.
+            For many countries there are several currencies known. One actual used currency and several ancient
+            currencies. If the <emphasis role="script">'currency'</emphasis> parameter is supressed the actual
+            currency will be used. The region 'de' for example knows the currencies 'EUR' and 'DEM'... 'EUR' is the
+            actual one and will be used if the parameter is supressed.
         </para>
     </note>
-
-    <para>
-        you can use <code>Zend_Currency::USE_NAME</code> or
-        <code>Zend_Currency::NO_SYMBOL</code> to disable/enable the use of currency
-        names.
-
-        <example>
-            <title>disabling/enabling currency names</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //USD
-            $dollar = Zend_Currency('USD','en_US');
-
-            //use defaults
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            //don't use currency symbols
-            $dollar->setFormat(Zend_Currency::NO_SYMBOL);
-
-            //don't use currency names
-            $dollar->setFormat(Zend_Currency::NO_NAME);
-
-            print $dollar->toCurrency(253292.1832);
-            //prints  USD 253,292.1832
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-    <note>
-        <para>
-            when there is no currency name available for this currency or if the use of
-            currency names is disabled, the short currency name will be used.
-        </para>
-    </note>
-
-    <para>
-        using <code>setFormat()</code>, you can change where the sign (currency name
-        or symbol) should be placed. you can place the currency sign to the left or to
-        or the right of the outputed number by passing <code>Zend_Currency::RIGHT</code>
-        <code>Zend_Currency::LEFT</code> to the first parameter of
-        <code>setFormat()</code>. also, you can use the default settings for placing
-        the currency signs by passing <code>Zend_Currency::STANDARD</code> instead.
-
-        <example>
-            <title>placing currency signs</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //USD
-            $dollar = Zend_Currency('USD','en_US');
-
-            //use defaults
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            //place the sign to the right
-            $dollar->setFormat(Zend_Currency::RIGHT);
-
-            print $dollar->toCurrency(253292.1832);
-            //prints  253,292.1832 $
-
-            //use default placing settings for this currency
-            $dollar->setFormat(Zend_Currency::STANDARD);
-
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-    <para>
-        you can set the default script name to format all the outputs of
-        <code>Zend_Currency</code> through passing the script name to the 2nd
-        parameter of the method <code>setFormat()</code>.
-
-        <example>
-            <title>setting default script name in Zend_Currency</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //USD
-            $dollar = Zend_Currency('USD','en_US');
-
-            //use defaults
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            //use the 'Arab' digits
-            $dollar->setFormat(null, 'Arab');
-
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ ٢٥٣,٢٩٢.١٨٣٢
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-
-    <para>
-        you can set the default locale name which will be used to format the outputed
-        numbers. through passing the locale name to the third parameter of the method
-        <code>setFormat()</code>.
-
-        <example>
-            <title>setting default locale_name for formatting numbers</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            //USD
-            $dollar = Zend_Currency('USD','en_US');
-
-            //use defaults
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253,292.1832
-
-            //use the 'de_AT' formatting rules
-            $dollar->setFormat(null, null, 'de_AT');
-
-            print $dollar->toCurrency(253292.1832);
-            //prints  $ 253.292,1837
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-</sect1>
-
-<sect1 id="zend.currency.getting-information">
-    <title>getting information</title>
-
-    <para>
-        <code>Zend_Currency</code> provides us with some static methods which can
-        help us in getting information about currency.
-    </para>
-
-    <para>
-        the static method <code>Zend_Currency::getSign()</code> will return
-        the sign of a currency. the first parameter is an optional currency
-        short name. the second is the locale name of the country that this
-        currency belongs to.
-        if there is no currency sign available for this currency, the currency short
-        name will be returned.
-
-        <example>
-            <title>getting the currency sign</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            print Zend_Currency::getSign('USD', 'en_US');
-            //prints $
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-    <para>
-        also you can get the currency name using <code>Zend_Currency::getName()</code>.
-        if there is no name available for this currency, the short name will be returned.
-
-        <example>
-            <title>getting the currency name</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            print Zend_Currency::getName('USD', 'en_US');
-            //prints US Dollar
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-
-    <para>
-        <code>Zend_Currency::getRegionList()</code> will return array contains
-        the countries that uses a currency. just pass the currency short name
-        to this method.
-
-        <example>
-            <title>getting region list for currency</title>
-
-            <programlisting role="php"><![CDATA[<?php
-            require_once 'Zend/Currency.php';
-
-            print_r( Zend_Currency::getRegionList('USD') );
-            //prints array of countries short names
-
-            ?>]]></programlisting>
-        </example>
-    </para>
-
-    <para>
-        <code>Zend_Currency::getCurrencyList()</code> takes a short country name like
-        US, FR, EG ..etc. this static method will return array of the currencies used
-        in this country.
-    </para>
 </sect1>

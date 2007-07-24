@@ -1,8 +1,8 @@
 <sect1 id="zend.search.lucene.query-api">
-    <title>Query Construction API</title>
+    <title>Abfrage Erzeugungs API</title>
 
     <para>
-        In addition to parsing query automatically it's also possible to construct them through API.
+        Zusätzlich zum automatischen Analysieren vom Abfragen ist es auch möglich diese durch eine API zu erzeugen.
     </para>
 
     <para>

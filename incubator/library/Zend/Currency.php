@@ -25,6 +25,7 @@
  */
 require_once 'Zend/Locale.php';
 require_once 'Zend/Locale/Data.php';
+require_once 'Zend/Locale/Format.php';
 require_once 'Zend/Currency/Exception.php';
 
 
@@ -164,7 +165,7 @@ class Zend_Currency {
                 }
             // unknown data passed in this param
             } else if ($param !== null){
-                throw new Zend_Currency_Exception("Unknown value '$value' passed at param #$num");
+                throw new Zend_Currency_Exception("Unknown locale '$param' passed with param #$num");
             }
         }
 
