@@ -93,19 +93,20 @@ $index->find($query);]]>
         </para>
 
         <sect3 id="zend.search.lucene.searching.query_building.parsing">
-            <title>Query parsing</title>
+            <title>Parsen der Abfrage</title>
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query string
-                into query object.
+                Die <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> Methode kann verwendet werden um
+                einen Abfrage String in ein Abfrage Objekt zu parsen.
             </para>
 
             <para>
-                This object may be used in query construction API methods to combine user entered queries with
-                machine generated queries.
+                Dieses Objekt kann in Abfrage erzeugenden API Methoden verwendet werden um von Benutzern
+                eingegebene Abfragen mit Maschinen erzeugten Abfragen zu kombinieren.
             </para>
 
             <para>
-                Actually, in some cases it's only way to search for values within untokenized fields:
+                Aktuell ist das in einigen Fällen der einzige Weg um nach einem Wert innerhalb eines Feldes ohne
+                Token zu suchen:
 
                 <programlisting role="php"><![CDATA[<?php
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
@@ -122,20 +123,20 @@ $hits = $index->find($query);]]>
             </para>
 
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
-                which can specify query string encoding:
+                Die <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> Methode nimmt auch einen optionalen
+                Encoding Parameter, welche die Codierung des Abfrage Strings definieren kann:
                 <programlisting role="php"><![CDATA[<?php
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');]]>
                 </programlisting>
             </para>
 
             <para>
-                If encoding is omitted, then current locale is used.
+                Wenn Codierung angegeben wurde, wird das aktuelle Gebietsschema verwendet.
             </para>
 
             <para>
-                It's also possible to specify default query string encoding with
-                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> method:
+                Es ist auch möglich eine Standard Codierung für den Abfragestring mit der
+                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> Methode zu definieren:
                 <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
@@ -144,8 +145,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
             </para>
 
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns current default query
-                string encoding (empty string means "current locale").
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> gibt die aktuelle
+                Standard Codierung des Abfrage Strings zurück (leerer String bedeutet "aktuelles Gebietsschema").
             </para>
         </sect3>
     </sect2>
@@ -201,17 +202,16 @@ $index = Zend_Search_Lucene::open('/data/my_index');
 
 $hits = $index->find($query);
 foreach ($hits as $hit) {
-    // return Zend_Search_Lucene_Document object for this hit
+    // Gibt Zend_Search_Lucene_Document Objekte für diesen Treffer zurück
     echo $document = $hit->getDocument();
 
-    // return a Zend_Search_Lucene_Field object
-    // from the Zend_Search_Lucene_Document
+    // Gibt ein Zend_Search_Lucene_Field Objekt von Zend_Search_Lucene_Document zurück
     echo $document->getField('title');
 
-    // return the string value of the Zend_Search_Lucene_Field object
+    // Gibt den String Wert des Zend_Search_Lucene_Field Objektes zurück
     echo $document->getFieldValue('title');
 
-    // same as getFieldValue()
+    // Gleich wie getFieldValue()
     echo $document->title;
 }]]>
         </programlisting>
@@ -344,10 +344,10 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]
     </sect2>
 
     <sect2 id="zend.search.lucene.searching.highlighting">
-        <title>Search Results Highlighting</title>
+        <title>Such Resultate hervorheben</title>
         <para>
-            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows to highlight HTML document terms
-            in context of search query:
+            Die <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> Methode erlaubt es HTML Dokument
+            Terme im Kontext der Suchabfrage hervorzuheben:
             <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
@@ -357,14 +357,13 @@ $highlightedHTML = $query->highlightMatches($sourceHTML);]]>
         </para>
 
         <para>
-            <code>highlightMatches()</code> method utilizes <code>Zend_Search_Lucene_Document_Html</code> class
-            (see <link linkend="zend.search.lucene.index-creation.html-documents">HTML documents section</link> for details)
-            for HTML processing. So it has the same requirements for HTML source.
+            Die <code>highlightMatches()</code> Methode verwendet die <code>Zend_Search_Lucene_Document_Html</code>
+            Klasse (siehe den <link linkend="zend.search.lucene.index-creation.html-documents">HTML Dokumente Abschnitt</link> für Details)
+            für das bearbeiten von HTML. Deshalb hat Sie die gleichen Voraussetzungen wie HTML Quellen.
         </para>
     </sect2>
 
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
