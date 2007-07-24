@@ -14,51 +14,52 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend
+ * @package    Zend_Db
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: SkipTests.php 4841 2007-05-17 19:15:26Z bkarwin $
  */
 
+require_once 'PHPUnit/Framework/TestCase.php';
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_AllTests::main');
-}
+require_once 'PHPUnit/Util/Filter.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once 'Zend/Db/AllTests.php';
-require_once 'Zend/CurrencyTest.php';
-require_once 'Zend/TimeSyncTest.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @category   Zend
- * @package    Zend
+ * @package    Zend_Db
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_AllTests
+abstract class Zend_Db_Skip_CommonTest extends PHPUnit_Framework_TestCase
 {
-    public static function main()
+    public $message = null;
+
+    abstract public function getDriver();
+
+    public function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $driver = $this->getDriver();
+        $message = 'Skipping ' . $this->getDriver();
+        if ($this->message) {
+            $message .= ': ' . $this->message;
+        }
+        $this->markTestSkipped($message);
     }
 
-    public static function suite()
+    public function testDb()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
-
-        $suite->addTest(Zend_Db_AllTests::suite());
-        $suite->addTestSuite('Zend_CurrencyTest');
-        $suite->addTestSuite('Zend_TimeSyncTest');
-
-        return $suite;
+        // this is here only so we have at least one test
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_AllTests::main') {
-    Zend_AllTests::main();
+class Zend_Db_Skip_Pdo_IbmTest extends Zend_Db_Skip_CommonTest
+{
+    function getDriver()
+    {
+        return 'Pdo_Ibm';
+    }
 }

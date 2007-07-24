@@ -85,18 +85,9 @@ class Zend_Db_AllTests
 
         self::_addDbTestSuites($suite, 'Static');
 
-        self::_addDbTestSuites($suite, 'Db2');
-        self::_addDbTestSuites($suite, 'Mysqli');
-        self::_addDbTestSuites($suite, 'Oracle');
-
         /**
          * @todo: self::_addDbTestSuites($suite, 'Odbc');
          */
-        self::_addDbTestSuites($suite, 'Pdo_Mssql');
-        self::_addDbTestSuites($suite, 'Pdo_Mysql');
-        self::_addDbTestSuites($suite, 'Pdo_Oci');
-        self::_addDbTestSuites($suite, 'Pdo_Pgsql');
-        self::_addDbTestSuites($suite, 'Pdo_Sqlite');
         self::_addDbTestSuites($suite, 'Pdo_Ibm');
 
         if (self::$_skipTestSuite !== null) {
@@ -116,9 +107,6 @@ class Zend_Db_AllTests
         }
 
         $ext = array(
-        'Oracle' => 'oci8',
-        'Db2'    => 'ibm_db2',
-        'Mysqli' => 'mysqli',
         /**
              * @todo: 'Odbc'
              */
