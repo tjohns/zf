@@ -1,60 +1,56 @@
-<sect1 id="zend.currency.introduction">
+<sect1 id="zend.currency.useage">
 
-    <title>Introduction</title>
+    <title>How to work with currencies</title>
 
     <para>
-        <code>Zend_Currency</code> is part of the I18N core of the Zend_Framework. It handles all issues
-        related to currency and money representation and formating. Also additional informational methods
-        are included.
-         one of the i18n classes. you can use this class to
-        localize how your money related numbers is displayed to the users of your website.
-        it will manage how the numbers will be formated and which currency name to use.
-    </para>
+        To use <code>Zend_Currency</code> within the own application just create an instance of it without any
+        parameter. This creates an instance of <code>Zend_Currency</code> with the actual locale which defines
+        the currency which is used.
+    <para>
 
-    <sect2 id="zend.currency.introduction.list">
+    <example>
 
-        <title>Why should <code>Zend_Currency</code> be used ?</title>
+        <title>Creating an instance of Zend_Currency from the actual locale</title>
 
         <para>
-            <code>Zend_Currency</code> offers the following functions for handling currency and money related work.
+            Expect you have 'en_US' set as actual locale. By using no parameter at creation you say
+            <code>Zend_Currency</code> to use the actual currency from the locale 'en_US'. This leads to
+            an instance with US Dollar set as actual currency with the formatting rules from 'en_US'.
         </para>
 
-        <itemizedlist mark='opencircle'>
-            <listitem>
-                <para>
-                    Complete Locale support
-                </para>
-                <para>
-                    <code>Zend_Currency</code> offers all avaiable locales and has therefor the ability to work with
-                    over 100 different locales. This includes for example currency names, abbreviations, money signs
-                    and others.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Reuseable currency definitions
-                </para>
-                <para>
-                    <code>Zend_Currency</code> does not include the value of the currency. This is the reason why
-                    it's functionallity is not included in <code>Zend_Locale_Format</code>. But this gives the
-                    advantage than already defined currency representations can be reused unlimited.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Fluid interface
-                </para>
-                <para>
-                    <code>Zend_Currency</code> includes the fluid interface where possible.
-                </para>
-            </listitem>
-        </itemizedlist>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Currency.php';
+
+$currency = new Zend_Currency();
+        </programlisting>
+
+    </example>
+
+    <para>
+        Of course, depending on your useage, several parameters can be given by creation. Each of this parameters
+        is optional and can be supressed. Even the order of the parameters can be switched. The meaning of each
+        parameter is as described here:
     </para>
 
-</sect1>
+    <itemizedlist mark='opencircle'>
+        <listitem>
+            <para>
+                <emphasis role="strong">currency</emphasis>:
+            </para>
+            <para>
+                A locale can include several currencies. Therefor the first parameter 'currency' can define
+                which currency should be used by giving the short name of that currency. If that currency in not
+                known in any locale an exception will be thrown.
+            </para>
+        </listitem>
+    </itemizedlist>
 
-<sect1 id="zend.currency.over-view">
-    <title>Over View</title>
+
+
+
+
+
+
 
     <para>
         you can use <code>Zend_Currency</code> by creating instance of it.

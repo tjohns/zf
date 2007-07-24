@@ -24,6 +24,7 @@
  * include needed classes
  */
 require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Currency/Exception.php';
 
 
@@ -222,7 +223,7 @@ class Zend_Currency {
 
         //getting the full name of the currency
         $names = Zend_Locale_Data::getContent($this->_symbolLocale, 'currencynames', substr($locale, strpos($locale, '_') + 1) );
-        $this->_fullName = isset($names[$this->_shortName])?$names[$this->_shortName]:$this->_shortName;
+        $this->_fullName = isset($names[$this->_shortName]) ? $names[$this->_shortName] : $this->_shortName;
 
         return $this;
     }
