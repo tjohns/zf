@@ -43,28 +43,26 @@
         <programlisting role="php"><![CDATA[<?php
 public function fooAction()
 {
-    // forward to another action in the current controller and module:
+    // weiterleiten zu einer anderen Aktion im aktuellen Controller und Modul:
     $this->_forward('bar', null, null, array('baz' => 'bogus'));
 }
 
 public function barAction()
 {
-    // forward to an action in another controller, FooController::bazAction(),
-    // in the current module:
+    // weiterleiten zu einer Aktion in einem anderen Controller, FooController::bazAction(), im aktuellen Modul:
     $this->_forward('baz', 'foo', null, array('baz' => 'bogus'));
 }
 
 public function bazAction()
 {
-    // forward to an action in another controller in another module,
-    // Foo_BarController::bazAction():
+    // weiterleiten zu einer Aktion in einem anderen Controller in einem anderen Modul Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
 }]]>
         </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.dispatcher.subclassing">
-        <title>Subclassing the Dispatcher</title>
+        <title>Erben vom Dispatcher</title>
 
         <para>
             <code>Zend_Controller_Front</code> ruft zuerst den Router auf, um die erste Aktion
@@ -73,16 +71,15 @@ public function bazAction()
         </para>
 
         <para>
-            The dispatcher needs a variety of data in order to do its work - it
-            needs to know how to format controller and action names, where to
-            look for controller class files, whether or not a provided module
-            name is valid, and an API for determining if a given request is even
-            dispatchable based on the other information available.
+            Der Dispatcher benötigt eine Vielzahl von Daten um seine Arbeit zu erledigen - er muß wissen wie die
+            Namen von Controller und Aktionen formatiert werden sollen, wo nach Dateien der Controller Klassen
+            gesucht wird, ob ein übergebener Modulname gültig ist oder nicht, und eine API um festzustellen ob eine
+            gegebene Anfrage, basierend auf den anderen vorhandenen Informationen, bearbeitbar ist.
         </para>
 
         <para>
-            <code>Zend_Controller_Dispatcher_Interface</code> defines the
-            following methods as required for any dispatcher implementation:
+            <code>Zend_Controller_Dispatcher_Interface</code> definiert die folgenden Methoden die für jede
+            Dispatcher Implementierung benötigt werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -211,19 +208,17 @@ interface Zend_Controller_Dispatcher_Interface
         </programlisting>
 
         <para>
-            In most cases, however, you should simply extend the abstract class
-            <code>Zend_Controller_Dispatcher_Abstract</code>, in which each of
-            these have already been defined, or
-            <code>Zend_Controller_Dispatcher_Standard</code> to modify
-            functionality of the standard dispatcher.
+            In den meisten Fällen sollte trotzdem einfach die abstrakte Klasse
+            <code>Zend_Controller_Dispatcher_Abstract</code> erweitert werden, und welcher jede davon schon
+            definiert wurde, oder <code>Zend_Controller_Dispatcher_Standard</code> um Funktionalitäten des
+            Standard Dispatchers zu modifizieren.
         </para>
 
         <para>
-            Possible reasons to subclass the dispatcher include a desire to
-            use a different class or method naming schema in your action
-            controllers, or a desire to use a different dispatching paradigm
-            such as dispatching to action files under controller directories
-            (instead of dispatching to class methods).
+            Mögliche Gründe um den Dispatcher zu erweitern beinhaltet den Wunsch eine anderes Klassen oder
+            Methoden Namensschema in den eigenen Aktion Controllern zu verwenden, oder den Wunsch ein anderes
+            Verarbeitungs Paradigma wie das Verarbeiten zu Aktionsdateien unter den Controller Verzeichnissen
+            (statt auf Klassen Methoden zu verarbeiten).
         </para>
     </sect2>
 </sect1>
