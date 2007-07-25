@@ -91,7 +91,7 @@ $currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
 
     <para>
         So you can supress any of these parameters if you want to use the default ones. This has no negative effect
-        on the handling of currencies. It can be usefull f.e. if you dont know that default currency of a region.
+        on the handling of currencies. It can be usefull f.e. if you dont know the default currency of a region.
     </para>
 
     <note>
@@ -173,5 +173,179 @@ echo $currency->toCurrency(1000, 'Arab');
             </programlisting>
 
         </example>
+    </sect2>
+
+    <sect2 id="zend.currency.useage.setformat">
+
+        <title>Changing the format of a currency</title>
+
+        <para>
+            The format which is used by creation of a <code>Zend_Currency</code> instance is of course the
+            standard format. But sometimes it is necessary to change this format for own purposes.
+        </para>
+
+        <para>
+            The format of an currency output includes the following parts:
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Currency symbol or name</emphasis>:
+                </para>
+                <para>
+                    The symbol of the currency is normally displayed within an currency output. It can be supressed
+                    when needed or even overwritten.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Currency position</emphasis>:
+                </para>
+                <para>
+                    The position of the currency sign is normally automatically defined by the locale. It can be
+                    changed if necessary.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Script</emphasis>:
+                </para>
+                <para>
+                    The script which shall be used to display digits. Detailed information about scripts and their
+                    useage can be found in the documentation of <code>Zend_Locale</code> in
+                    <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Number formatting</emphasis>:
+                </para>
+                <para>
+                    The amount of currency (formally known as value of money) is formatted by the useage of
+                    formatting rules within the locale. For example is in english the ',' sign used as seperator for
+                    thousands, and in german the '.' sign.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            So if you are in need to change the format, you can use the
+            <emphasis role="strong">setFormat()</emphasis> method. If no parameter is given the standard
+            settings from the actual or set locale is used. <code>setFormat</code> supports the following
+            settings:
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    <emphasis role="strong">rules</emphasis>:
+                </para>
+                <para>
+                    This parameter selects what currency symbol or name should be displayed and where.
+                    Details are described below.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">script</emphasis>:
+                </para>
+                <para>
+                    This parameter selects what script should be used for displaying digits. 'Latin' is the
+                    default script for most locales. But others like 'Arab' (arabian) are also supported.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">locale</emphasis>:
+                </para>
+                <para>
+                    This parameter selects what locale should be used for formatting the numbers.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            The 'rules' parameter accepts a string as input or any of the below described constants to define
+            where the currency signs should be displayed and what to display in detail. A given string will
+            override any previous set currency shortsign or currency name.
+        </para>
+
+        <table id="zend.currency.useage.setformat.constantsdescription">
+
+            <title>Constants for the selecting the currency description</title>
+
+            <tgroup cols="3" align="left">
+                <thead>
+                    <row>
+                        <entry>constant</entry>
+                        <entry>value</entry>
+                        <entry>description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>NO_SYMBOL</entry>
+                        <entry>0</entry>
+                        <entry>Do not display any currency representation</entry>
+                    </row>
+                    <row>
+                        <entry>USE_SYMBOL</entry>
+                        <entry>1</entry>
+                        <entry>Display the currency symbol as currency description</entry>
+                    </row>
+                    <row>
+                        <entry>USE_NAME</entry>
+                        <entry>2</entry>
+                        <entry>Display the currency name as currency description</entry>
+                    </row>
+                    <row>
+                        <entry>USE_CURRENCY</entry>
+                        <entry>4</entry>
+                        <entry>Display the 3 lettered currency abbreviation as currency description</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+
+        </table>
+
+        <table id="zend.currency.useage.setformat.constantsposition">
+
+            <title>Constants for the selecting the currency position</title>
+
+            <tgroup cols="3" align="left">
+                <thead>
+                    <row>
+                        <entry>constant</entry>
+                        <entry>value</entry>
+                        <entry>description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>STANDARD</entry>
+                        <entry>8</entry>
+                        <entry>Set the position of the description to standard as defined within the locale</entry>
+                    </row>
+                    <row>
+                        <entry>RIGHT</entry>
+                        <entry>16</entry>
+                        <entry>Display the currency description at the right side of the currency value</entry>
+                    </row>
+                    <row>
+                        <entry>LEFT</entry>
+                        <entry>32</entry>
+                        <entry>Display the currency description at the left side of the currency value</entry>
+                    </row>
+                    <row>
+                        <entry>USE_CURRENCY</entry>
+                        <entry>4</entry>
+                        <entry>Display the 3 lettered currency abbreviation as currency description</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+
+        </table>
+
     </sect2>
 </sect1>

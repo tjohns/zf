@@ -124,7 +124,7 @@ class Zend_Currency {
     private $_useName = true;
 
     /**
-     * Constructor
+     * Creates a currency instance. Every supressed parameter is used from the actual or the given locale.
      *
      * @param  string              $currency  OPTIONAL currency short name
      * @param  string              $script    OPTIONAL script name
@@ -185,7 +185,7 @@ class Zend_Currency {
 
 
     /**
-     * gets the short name of the currency from Zend_Locale
+     * Gets the short name of the currency from Zend_Locale
      *
      * @return Zend_Currency
      * @throws Zend_Currency_Exception
@@ -209,7 +209,7 @@ class Zend_Currency {
 
 
     /**
-     * gets the full name of the currency from the LDML files
+     * Gets the full name of the currency from Zend_Locale
      *
      * @return Zend_Currency
      * @throws Zend_Currency_Exception
@@ -231,7 +231,7 @@ class Zend_Currency {
 
 
     /**
-     * gets the symbol of the currency from the LDML files
+     * Gets the symbol of the currency from Zend_Locale
      *
      * @return Zend_Currency
      * @throws Zend_Currency_Exception
@@ -254,7 +254,7 @@ class Zend_Currency {
 
 
     /**
-     * gets the information required for formating the currency from the LDML files
+     * Gets the information required for formating the currency from Zend_Locale
      *
      * @return Zend_Currency
      * @throws Zend_Currency_Exception
