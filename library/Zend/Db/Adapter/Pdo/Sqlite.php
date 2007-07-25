@@ -49,6 +49,20 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
      protected $_pdoType = 'sqlite';
 
     /**
+     * 0 = 32-bit integer
+     * 1 = 64-bit integer
+     * 2 = float
+     * @var array $_numericDataTypes
+     */
+    protected $_numericDataTypes = array(
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'INTEGER'            => Zend_Db::BIGINT_TYPE,
+        'REAL'               => Zend_Db::FLOAT_TYPE
+    );
+
+    /**
      * Constructor.
      *
      * $config is an array of key/value pairs containing configuration

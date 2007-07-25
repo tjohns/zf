@@ -972,6 +972,145 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals("id = 'St John\\'s Wort'", $value);
     }
 
+    protected $_numericDataTypes = array(
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE
+    );
+
+    public function testAdapterQuoteIntoType()
+    {
+        $value = $this->_db->quoteInto('foo = ?', 1234, Zend_Db::INT_TYPE);
+        $this->assertType('string', $value);
+        $this->assertEquals('foo = 1234', $value);
+
+        $value = $this->_db->quoteInto('foo = ?', 1234, Zend_Db::BIGINT_TYPE);
+        $this->assertType('string', $value);
+        $this->assertEquals('foo = 1234', $value);
+
+        $value = $this->_db->quoteInto('foo = ?', 12.34, Zend_Db::FLOAT_TYPE);
+        $this->assertType('string', $value);
+        $this->assertEquals('foo = 1234', $value);
+
+        $value = $this->_db->quoteInto('foo = ?', 1234, 'CHAR');
+        $this->assertType('string', $value);
+        $this->assertEquals("foo = '1234'", $value);
+    }
+
+    public function testAdapterQuoteTypeInt()
+    {
+        foreach ($this->_numericDataTypes as $typeName => $type) {
+            if ($type != 0) {
+                continue;
+            }
+
+            $value = $this->_db->quote(1234, $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234', $value);
+
+            $value = $this->_db->quote('1234', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234', $value);
+
+            $value = $this->_db->quote('1234abcd', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234', $value);
+
+            $value = $this->_db->quote('abcd', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('0', $value);
+
+            $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals("1+2+3", $value);
+        }
+    }
+
+    public function testAdapterQuoteTypeBigInt()
+    {
+        foreach ($this->_numericDataTypes as $typeName => $type) {
+            if ($type != 1) {
+                continue;
+            }
+
+            $value = $this->_db->quote(1234, $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234', $value);
+
+            $value = $this->_db->quote('2200000000', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('2200000000', $value);
+
+            $value = $this->_db->quote('020310253000', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('020310253000', $value);
+
+            $value = $this->_db->quote('0x83215600', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('0x83215600', $value);
+
+            $value = $this->_db->quote('abcd', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('0', $value);
+
+            $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals("1+2+3", $value);
+        }
+    }
+
+    public function testAdapterQuoteTypeFloat()
+    {
+        foreach ($this->_numericDataTypes as $typeName => $type) {
+            if ($type != 2) {
+                continue;
+            }
+
+            $value = $this->_db->quote(12.34, $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('12.34', $value);
+
+            $value = $this->_db->quote('12.34', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('12.34', $value);
+
+            $value = $this->_db->quote('12.34abcd', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('12.34', $value);
+
+            $value = $this->_db->quote('abcd', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('0', $value);
+
+            $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals("1+2+3", $value);
+        }
+    }
+
+    public function testAdapterQuoteTypeNonNumeric()
+    {
+        $value = $this->_db->quote(1234, 'CHAR');
+        $this->assertType('integer', $value);
+        $this->assertEquals(1234, $value);
+
+        $value = $this->_db->quote('1234', 'CHAR');
+        $this->assertType('string', $value);
+        $this->assertEquals("'1234'", $value);
+
+        $value = $this->_db->quote('1234abcd', 'CHAR');
+        $this->assertType('string', $value);
+        $this->assertEquals("'1234abcd'", $value);
+
+        $value = $this->_db->quote('1234abcd56', 'CHAR');
+        $this->assertType('string', $value);
+        $this->assertEquals("'1234abcd56'", $value);
+
+        $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), 'CHAR');
+        $this->assertType('string', $value);
+        $this->assertEquals("1+2+3", $value);
+    }
+
     public function testAdapterSetFetchMode()
     {
         $modes = array(
