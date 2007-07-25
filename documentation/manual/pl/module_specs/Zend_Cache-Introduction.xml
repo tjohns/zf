@@ -43,20 +43,20 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
    </example>
 
    <note>
-       <title>Frontends and Backends consisting of multiple words</title>
+       <title>Frontendy i backendy składające się z wielu słów</title>
        <para>
-            Some frontends and backends are named using multiple words, such
-            as 'ZendPlatform'. When specifying them to the factory, separate
-            them using a word separator, such as a space (' '), hyphen
-            ('-'), or period ('.').
+            Niektóre frontendy i backendy są nazwane przy użyciu wielu słów, na
+            przykład 'ZendPlatform'. Gdy określamy ich nazwę w metodzie fabryki,
+            oddzielamy wyrazy używając separatora wyrazów takiego jak spacja 
+            (' '), myślnik ('-') lub kropka ('.').
         </para>
     </note>
     
     <example id="zend.cache.introduction.example-2">
-        <title>Caching a database query result</title>
+        <title>Buforowanie wyniku zapytania do bazy danych</title>
         <para>
             Teraz gdy mamy frontend, możemy buforować dowolny typ danych
-            (włączyliśmy serializację). Na przykład, możemy buforować rezultat
+            (włączyliśmy serializację). Na przykład, możemy buforować wynik
             bardzo obciążającego zapytania do bazy danych. Kiedy jest buforowane,
             nie ma nawet potrzeby aby łączyć się z bazą; rekordy są pobierane z
             bufora, a następnie odserializowane.
