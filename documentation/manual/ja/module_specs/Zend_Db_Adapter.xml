@@ -1106,6 +1106,52 @@ echo $sql;
                 のようなエスケープ用関数の挙動とは異なります。
             </para>
 
+            <para>
+                値をクォートするかしないかは、SQL のデータ型によって異なります。
+                たとえば、整数値をクォートしてしまうと
+                数値型カラムや計算式で利用できなくなってしまうという
+                RDBMS もあります。つまり、次のような SQL
+                がエラーになってしまう実装があるということです。
+                ここで、<code>intColumn</code> のデータ型は
+                <code>INTEGER</code> であるものとします。
+
+                <programlisting role="php"><![CDATA[
+SELECT * FROM atable WHERE intColumn = '123']]>
+                </programlisting>
+            </para>
+
+            <para>
+                <code>quote()</code> メソッドでオプションの
+                2 番目の引数を使用すると、
+                SQL のデータ型に応じてクォートするかどうかを選択することができます。
+            </para>
+
+            <example id="zend.db.adapter.quoting.quote.example-2">
+                <title>quote() での SQL データ型の指定</title>
+                <programlisting role="php"><![CDATA[<?php
+$value = '1234';
+$sql = 'SELECT * FROM atable WHERE intColumn = '
+     . $db->quoteType($value, 'INTEGER');
+]]>
+                </programlisting>
+            </example>
+
+            <para>
+                各 Zend_Db_Adapter クラスでは、その RDBMS
+                用の SQL 数値データ型の名前がコード化されています。
+                それら以外にも
+                <code>Zend_Db::INT_TYPE</code> や
+                <code>Zend_Db::BIGINT_TYPE</code>、そして
+                <code>Zend_Db::FLOAT_TYPE</code>
+                といった定数が用意されており、
+                これらを使用すると RDBMS に依存しないコードを書くことができます。
+            </para>
+
+            <para>
+                Zend_Db_Table は、テーブルのキーとなるカラムを使用する際には
+                自動的に SQL データ型を <code>quote()</code> に指定します。
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.quoting.quote-into">
@@ -1143,8 +1189,23 @@ echo $sql;
                 </programlisting>
             </example>
 
-        </sect3>
+            <para>
+                <code>quoteInto()</code> のオプションの
+                3 番目のパラメータを使用すると、SQL のデータ型を指定することができます。
+                数値型はクォートをせず、それ以外の型についてはクォートを行います。
+            </para>
 
+            <example id="zend.db.adapter.quoting.quote-into.example-2">
+                <title>quoteInto() での SQL データ型の指定</title>
+                <programlisting role="php"><![CDATA[<?php
+$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
+
+echo $sql;
+// SELECT * FROM bugs WHERE reported_by = 1234]]>
+                </programlisting>
+            </example>
+
+        </sect3>
         <sect3 id="zend.db.adapter.quoting.quote-identifier">
 
             <title><code>quoteIdentifier()</code> の使用法</title>
