@@ -168,13 +168,14 @@ if (Zend_Loader::isReadable($filename)) {
         <example id="zend.loader.load.autoload.example-extended">
             <title>Przykład zarejestrowania metody autoloadera</title>
             <para>
-                Because of the semantics of static function references in PHP,
-                you must implement code for both <code>loadClass()</code>
-                and <code>autoload()</code>, and the <code>autoload()</code>
-                must call <code>self::loadClass()</code>.  If your
-                <code>autoload()</code> method delegates to its parent to
-                call <code>self::loadClass()</code>, then it calls the
-                method of that name in the parent class, not the subclass.
+                Z powodu semantyki referencji do statycznych funkcji w PHP,
+                musisz zaimplementować kod zarówno dla metody <code>loadClass()</code>
+                jak i dla metody <code>autoload()</code>, a metoda <code>autoload()</code>
+                musi wywołać metodę <code>self::loadClass()</code>.  
+                Jeśli twoja metoda <code>autoload()</code> odnosi się do klasy
+                rodzica i wywołuje metodę <code>self::loadClass()</code>, wtedy
+                wywołuje metodę o tej nazwie pochodzącą z klasy rodzica, a nie 
+                z klasy rozszerzonej.
             </para>
             <programlisting role="php"><![CDATA[<?php
 Zend_Loader::registerAutoload();]]>

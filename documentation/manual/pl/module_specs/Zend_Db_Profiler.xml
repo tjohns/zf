@@ -103,26 +103,25 @@ $profiler = $db->getProfiler();]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>getQuery()</code> zwraca tekst SQL zapytania.
-                    The SQL text of a prepared statement with parameters is the
-                    text at the time the query was prepared, so it contains
-                    parameter placeholders, not the values used when the
-                    statement is executed.
+                    Metoda <code>getQuery()</code> zwraca tekst SQL zapytania.
+                    Tekst przygotowanego zapytania SQL z parametrami jest 
+                    tekstem w takiej postaci w jakiej był on przygotowany, więc
+                    zawiera on etykiety, a nie wartości użyte podczas wykonania
+                    zapytania.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getQueryParams()</code> returns an array of
-                    parameter values used when executing a prepared query.
-                    This includes both bound parameters and arguments to the
-                    statement's <code>execute()</code> method.  The keys of
-                    the array are the positional (1-based) or named (string)
-                    parameter indices.
+                    Metoda <code>getQueryParams()</code> zwraca tablicę wartości 
+                    parametrów użytych podczas wykonania przygotowanego 
+                    zapytania. Odnosi się to do parametrów oraz do argumentów 
+                    metody <code>execute()</code>. Klucze tablicy są oparte na 
+                    pozycji (od 1 w górę) lub nazwane (łańcuchy znaków).
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>getElapsedSecs()</code> zwraca czas trwania zapytania
+                    Metoda <code>getElapsedSecs()</code> zwraca czas trwania zapytania
                 </para>
             </listitem>
         </itemizedlist>
