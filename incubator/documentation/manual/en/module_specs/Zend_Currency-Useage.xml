@@ -6,7 +6,7 @@
         To use <code>Zend_Currency</code> within the own application just create an instance of it without any
         parameter. This creates an instance of <code>Zend_Currency</code> with the actual locale which defines
         the currency which is used.
-    <para>
+    </para>
 
     <example id="zend.currency.useage.example1">
 
@@ -21,7 +21,7 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
 
-$currency = new Zend_Currency();
+$currency = new Zend_Currency();]]>
         </programlisting>
 
     </example>
@@ -84,7 +84,7 @@ $currency = new Zend_Currency('en_US');
 $currency = new Zend_Currency('Arab');
 
 // creates an instance using 'EUR' as currency, 'en_US' for number formating and 'Arab' for the script
-$currency = new Zend_Currency('en_US', 'EUR', 'Arab');
+$currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
         </programlisting>
 
     </example>
@@ -102,4 +102,76 @@ $currency = new Zend_Currency('en_US', 'EUR', 'Arab');
             actual one and will be used if the parameter is supressed.
         </para>
     </note>
+
+    <sect2 id="zend.currency.useage.tocurrency">
+
+        <title>Create output from an currency</title>
+
+        <para>
+            To get an existing value converted to a currency formatted output the method
+            <emphasis role="strong">toCurrency()</emphasis> can be used. It takes a value which should be converted.
+            The value itself can be any normalized number.
+        </para>
+
+        <para>
+            If you have a localized number you will have to convert it first to an normalized number with
+            <link linkend="zend.locale.number.normalize">Zend_Locale_Format::getNumber()</link>. Afterwards it can
+            be used with <code>toCurrency()</code> to create an currency output.
+        </para>
+
+        <para>
+            <code>toCurrency()</code> accepts two optional parameters which can be used to temporary set another
+            format.
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    <emphasis role="strong">script</emphasis>:
+                </para>
+                <para>
+                    The first parameter <emphasis role="strong">'script'</emphasis> defines in which script the
+                    output should be given. The standard script is 'Latin' which includes the global known digits
+                    from <emphasis role="strong">'0'</emphasis> to <emphasis role="strong">'9'</emphasis>. Other
+                    scripts like <emphasis role="strong">'Arab'</emphasis> can include other digits. For more
+                    information about scripts see
+                    <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
+                    If this parameter is given, the given script is only used temporary for this method call.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">locale</emphasis>:
+                </para>
+                <para>
+                    The second parameter <emphasis role="strong">'locale'</emphasis> defines which locale should be
+                    used for formatting the currency. The given locale will also be used to get the standard script
+                    and currency of this currency if these parameters are not given. If this parameter is given, the
+                    given locale is only used temporary for this method call.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.currency.useage.tocurrency.example">
+
+            <title>Creating output for an currency</title>
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Currency.php';
+
+// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+$currency = new Zend_Currency('en_US');
+
+// prints 'US$ 1,000.00'
+echo $currency->toCurrency(1000);
+
+// prints 'US$ 1.000,00'
+echo $currency->toCurrency(1000, 'de_AT');
+
+// prints 'US$ ١٬٠٠٠٫٠٠'
+echo $currency->toCurrency(1000, 'Arab');
+            </programlisting>
+
+        </example>
+    </sect2>
 </sect1>
