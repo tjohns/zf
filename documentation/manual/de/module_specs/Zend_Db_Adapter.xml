@@ -1027,6 +1027,46 @@ echo $sql;
                 <ulink url="http://www.php.net/mysqli_real_escape_string">mysql_real_escape_string()</ulink>.
             </para>
 
+            <para>
+                Es kann notwendig sein Werte in Anführungszeichen zu setzen oder nicht je nach dem Kontext des
+                SQL Datentyps in dem diese verwendet werden. Zum Beispiel darf, in einigen RDBMS Typen, ein
+                Integer Wert nicht wie in String in Anführungszeichen gesetzt werden, wenn dieser mit einer
+                Integer-Typ Spalte oder einem Ausdruck verglichen wird. Anders gesagt ist das folgende in einigen
+                SQL Implementationen ein Fehler, wenn angenommen wird das <code>intColumn</code> einen SQL
+                Datentyp von <code>INTEGER</code> besitzt
+
+                <programlisting role="php"><![CDATA[
+SELECT * FROM atable WHERE intColumn = '123']]>
+                </programlisting>
+            </para>
+
+            <para>
+                Es kann das optionale zweite Argument der <code>quote()</code> Methode verwendet werden um
+                die Verwendung von Anführungszeichen selektiv für den spezifizierten SQL Datentyp auszuwählen.
+            </para>
+
+            <example id="zend.db.adapter.quoting.quote.example-2">
+                <title>Verwenden von quote() mit einem SQL Typ</title>
+                <programlisting role="php"><![CDATA[<?php
+$value = '1234';
+$sql = 'SELECT * FROM atable WHERE intColumn = '
+     . $db->quoteType($value, 'INTEGER');
+]]>
+                </programlisting>
+            </example>
+
+            <para>
+                Jede Zend_Db_Adapter Klasse hat den Namen des nummerischen SQL Datentyps für die respektive
+                Marke von RDBMS codiert. Man kann genauso die Konstanten <code>Zend_Db::INT_TYPE</code>,
+                <code>Zend_Db::BIGINT_TYPE</code>, und <code>Zend_Db::FLOAT_TYPE</code> verwenden um Code
+                in einem mehr RDBMS-unabhängigen Weg zu schreiben.
+            </para>
+
+            <para>
+                Zend_Db_Table definiert SQL Typen zu <code>quote()</code> automatisch wenn SQL Abfragen erstellt
+                werden die einer Tabellen Schlüssel Spalte entsprechen.
+            </para>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.quoting.quote-into">
@@ -1059,8 +1099,23 @@ echo $sql;
                 </programlisting>
             </example>
 
-        </sect3>
+            <para>
+                Man kann den optionalen dritten Parameter von <code>quoteInto()</code> verwenden um den SQL
+                Datentyp zu spezifizieren. Nummerische Datentypen werden nicht in Anführungszeichen gesetzt und
+                andere Typen werden in Anführungszeichen gesetzt.
+            </para>
 
+            <example id="zend.db.adapter.quoting.quote-into.example-2">
+                <title>Verwenden von quoteInto() mit einem SQL Typ</title>
+                <programlisting role="php"><![CDATA[<?php
+$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
+
+echo $sql;
+// SELECT * FROM bugs WHERE reported_by = 1234]]>
+                </programlisting>
+            </example>
+
+        </sect3>
         <sect3 id="zend.db.adapter.quoting.quote-identifier">
 
             <title>Nutzung von <code>quoteIdentifier()</code></title>
