@@ -50,7 +50,7 @@
                 </para>
                 <para>
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">Externals değişkeni</ulink>
-		    zaten SVN kullanmakta olan geliştiriciler için uygulamarın çalışan kopyalarını yönetmek için son derece uygun.		    
+		    zaten SVN kullanmakta olan geliştiriciler için uygulamaların çalışan kopyalarını yönetmeye son derece uygun.		    
                 </para>
                 <para>
                     Zend Framework SVN deposunun trunk'ının URL'si :                    
