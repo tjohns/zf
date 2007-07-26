@@ -6,8 +6,8 @@
     </para>
 
     <para>
-        User query can be combined with queries created through API. Use query parser to construct
-        query from a string:
+        Benutzerabfragen können mit durch API erstellte Abfragen kombiniert werden. Der Abfrage Parser kann verwendet
+        werden um eine Abfrage von einem String zu erstellen:
         <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]>
         </programlisting>
@@ -15,37 +15,37 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]>
 
 
     <sect2 id="zend.search.lucene.queries.exceptions">
-        <title>Query Parser Exceptions</title>
+        <title>Abfrageparser Ausnahmen</title>
         <para>
-        Query parser may generate two types of exceptions.
+            Der Abfrageparser kann zwei Typen von Ausnahmen erstellen.
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Exception</code> is thrown if something wrong in a
-                        query parser itself.
+                        <code>Zend_Search_Lucene_Exception</code> wird geworfen wenn irgendwas im Abfrageparser
+                        selbst falsch läuft.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Search_QueryParserException</code> is thrown in the case of
-                        query syntax exception.
+                        <code>Zend_Search_Lucene_Search_QueryParserException</code> wird geworfen im Fall einer
+                        Abfragesyntax Ausnahme.
                     </para>
                 </listitem>
             </itemizedlist>
-            Thus that's good idea to catch Zend_Search_Lucene_Search_QueryParserException and make
-            appropriate message:
+            Deswegen ist es eine gute Idee die Zend_Search_Lucene_Search_QueryParserException zu fangen und
+            entsprechende Nachrichten zu erstellen:
             <programlisting role="php"><![CDATA[<?php
 try {
     $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
 } catch (Zend_Search_Lucene_Search_QueryParserException $e) {
-    echo "Query syntax error: " . $e->getMessage() . "\n";
+    echo "Abfrage Syntax Fehler: " . $e->getMessage() . "\n";
 }]]>
             </programlisting>
         </para>
 
         <para>
-            The same technique may (and should) be used for find() method of Zend_Search_Lucene
-            object.
+            Die selbe Technik kann (und sollte) für die find() Methode des Zend_Search_Lucene Objektes verwendet
+            werden.
         </para>
     </sect2>
 
@@ -73,9 +73,10 @@ $hits  = $index->find($query);]]>
         </programlisting>
 
         <para>
-            Term field is optional. Zend_Search_Lucene searches through all fields if field is not specified:
+            Das Term Feld ist optional. Zend_Search_Lucene durchsucht alle Felder wenn das Feld nicht spezifiziert
+            wurde:
             <programlisting role="php"><![CDATA[<?php
-$term  = new Zend_Search_Lucene_Index_Term('word1');  // Search 'word1' through all indexed fields
+$term  = new Zend_Search_Lucene_Index_Term('wort1');  // Sucht 'word1' durch alle indizierten Felder
 $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);]]>
             </programlisting>
@@ -190,30 +191,31 @@ $hits  = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>Wildcard Query</title>
+        <title>Wildcard Abfragen</title>
         <para>
-            Wildcard queries are intended for a searching for a set of terms matching specified pattern.
+            Wildcard Abfragen sind dazu gedacht um nach einem Set von Ausdrücken zu suchen die einem definierten
+            Pattern entsprechen.
         </para>
 
         <para>
-            '?' symbol is used as a single character wildcard.
+            Das '?' Symbol wird als Wildcard für ein einzelnes Zeichen verwendet.
         </para>
 
         <para>
-            '*' symbol is used as a multiple character wildcard.
+            Das '*' Symbol wird als Woldcard für mehrere Zeichen verwendet.
         </para>
 
         <para>
-            Query string:
+            Abfragestring:
             <programlisting role="querystring"><![CDATA[test*
 field1:test*]]>
             </programlisting>
         </para>
 
-        <para>or</para>
+        <para>oder</para>
 
         <para>
-            Query construction by API:
+            Abfrageerstellung durch die API:
             <programlisting role="php"><![CDATA[<?php
 $pattern = new Zend_Search_Lucene_Index_Term('test*', 'field1');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -222,7 +224,8 @@ $hits  = $index->find($query);]]>
         </para>
 
         <para>
-            Term field is optional. Zend_Search_Lucene searches through all fields if field is not specified:
+            Ausdrucksfelder sind optional. Zend_Search_Lucene durchsucht alle Felder wenn das Feld nicht spezifiziert
+            wurde:
             <programlisting role="php"><![CDATA[<?php
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -252,13 +255,13 @@ $hits  = $index->find($query);]]>
         <programlisting role="php"><![CDATA[<?php
 $query1 = new Zend_Search_Lucene_Search_Query_Phrase();
 
-// Füge 'word1' on der relativen Position 0 hinzu.
+// Füge 'word1' an der relativen Position 0 hinzu.
 $query1->addTerm(new Zend_Search_Lucene_Index_Term('word1'));
 
-// Füge 'word2' on der relativen Position 1 hinzu.
+// Füge 'word2' an der relativen Position 1 hinzu.
 $query1->addTerm(new Zend_Search_Lucene_Index_Term('word2'));
 
-// Füge 'word3' on der relativen Position 3 hinzu.
+// Füge 'word3' an der relativen Position 3 hinzu.
 $query1->addTerm(new Zend_Search_Lucene_Index_Term('word3'), 3);
 
 ...
@@ -426,21 +429,22 @@ $hits2 = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.range">
-        <title>Range Query</title>
+        <title>Bereichsabfragen</title>
         <para>
-            <link linkend="zend.search.lucene.query-language.range">Range queries</link> are intended for searching terms within specified interval.
+            <link linkend="zend.search.lucene.query-language.range">Bereichsabfragen</link> sind dazu gedacht
+            Terme innerhalb eines spezifizierten Intervalls zu suchen.
         </para>
 
         <para>
-            Query string:
+            Abfragestring:
             <programlisting role="querystring"><![CDATA[mod_date:[20020101 TO 20030101]
 title:{Aida TO Carmen}]]></programlisting>
         </para>
 
-        <para>or</para>
+        <para>oder</para>
 
         <para>
-            Query construction by API:
+            Abfrageerstellung durch die API:
             <programlisting role="php"><![CDATA[<?php
 $from = new Zend_Search_Lucene_Index_Term('20020101', 'mod_date');
 $to   = new Zend_Search_Lucene_Index_Term('20030101', 'mod_date');
@@ -450,7 +454,8 @@ $hits  = $index->find($query);]]>
         </para>
 
         <para>
-            Term fields are optional. Zend_Search_Lucene searches through all fields if field is not specified:
+            Begriffsfelder sind optional. Zend_Search_Lucene durchsucht alle Felder wenn das Feld nicht spezifiziert
+            wurde:
             <programlisting role="php"><![CDATA[<?php
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');
@@ -460,18 +465,17 @@ $hits  = $index->find($query);]]>
         </para>
 
         <para>
-            Any (but not both) of boundary terms may be set to null. Zend_Search_Lucene searches form the beginning or
-            up to the end of dictionary for specified field(s) for this case:
+            Jede (aber nicht beide) der Begrenzungsausdrücke können auf null gesetzt werden. Zend_Search_Lucene sucht
+            vom Anfang oder bis zum Ende des Verzeichnisses für die spezifizierten Feld(er) für diesen Fall:
             <programlisting role="php"><![CDATA[<?php
 $from = new Zend_Search_Lucene_Index_Term('20020101', 'mod_date');
-$query = new Zend_Search_Lucene_Search_Query_Range($from, null, true /* inclusive */);  // searches for ['20020101' TO ...]
+$query = new Zend_Search_Lucene_Search_Query_Range($from, null, true /* inclusive */);  // sucht nach ['20020101' TO ...]
 $hits  = $index->find($query);]]>
             </programlisting>
         </para>
      </sect2>
 
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
