@@ -44,7 +44,7 @@ $acl->add(new Zend_Acl_Resource('newsletter'));           // newsletter
 $acl->add(new Zend_Acl_Resource('news'));                 // news
 $acl->add(new Zend_Acl_Resource('latest'), 'news');       // latest news
 $acl->add(new Zend_Acl_Resource('announcement'), 'news'); // announcement news]]>
-<        </programlisting>
+        </programlisting>
 
         <para>
 

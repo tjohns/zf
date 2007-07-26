@@ -136,8 +136,8 @@ if (!validator->isValid('word')) {
         . $validator->max
         . "\n";
 }
-]]]>
-<            </programlisting>
+]]>
+            </programlisting>
         </para>
 
     </sect2>
