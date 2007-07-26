@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.migration">
-    <title>Migrating from Previous Versions</title>
+    <title>Migration von vorhergehenden Versionen</title>
 
     <para>
         Die API der MVC Komponenten hat sich mit der Zeit verändert. Wer das Zend Framework bereits
@@ -8,26 +8,21 @@
     </para>
 
     <sect2 id="zend.controller.migration.fromzeroninethree">
-        <title>Migrating from 0.9.3 to 1.0.0RC1 or newer</title>
+        <title>Migration von 0.9.3 nach 1.0.0RC1 oder neuer</title>
 
         <para>
-            The principal changes introduced in 1.0.0RC1 are the introduction of
-            and default enabling of the
-            <link
-                linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>
-            plugin and the <link
-                linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
-            action helper. Please read the documentation to each thoroughly to
-            see how they work and what effect they may have on your
-            applications.
+            Die prinzipiellen Änderungen die durch 1.0.0RC1 angeboten werden sind die Einführung und standardmäßige
+            Aktivierung des <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler</link>
+            Plugins und den <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+            Aktionhelfer. Bitte lies die Dokumentation jedes einzelnen gründlich um zu sehen wie sie arbeiten und
+            welchen Effekt Sie auf die eigene Anwendung haben können.
         </para>
 
         <para>
-            The <code>ErrorHandler</code> plugin runs during
-            <code>postDispatch()</code> checking for exceptions, and forwarding
-            to a specified error handler controller. You should include such a
-            controller in your application. You may disable it by setting the
-            front controller parameter <code>noErrorHandler</code>:
+            Der <code>ErrorHandler</code> Plugin läuft wärend der <code>postDispatch()</code> Prüfung auf
+            Ausnahmen, und leitet zu einem spezifizierten Fehlerhandler Kontroller weiter. Solch ein Kontroller
+            sollte in der eigenen Anwendung inkludiert werden. Er kann deaktiviert werden durch das setzen des
+            Frontkontroller Parameters <code>noErrorHandler</code>:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -35,48 +30,44 @@ $front->setParam('noErrorHandler', true);]]>
         </programlisting>
 
         <para>
-            The <code>ViewRenderer</code> action helper automates view injection
-            into action controllers as well as autorendering of view scripts
-            based on the current action. The primary issue you may encounter is
-            if you have actions that do not render view scripts and neither
-            forward or redirect, as the <code>ViewRenderer</code> will attempt
-            to render a view script based on the action name.
+            Der <code>ViewRenderer</code> Aktionhelfer automatisiert die Injizierung der View in den Aktionkontroller
+            genauso wie das autorendern von Viewskripten basierend auf die aktuelle Aktion. Das primäre Problem
+            dem man begegnen kann ist, wenn man Aktionen hat die keine View Skripte rendern und weder vorwärts- noch
+            weiterleiten, da der <code>ViewRenderer</code> versucht ein View Skript zu Rendern basierend auf dem
+            Aktionnamen.
         </para>
 
         <para>
-            There are several strategies you can take to update your code. In
-            the short term, you can globally disable the
-            <code>ViewRenderer</code> in your front controller bootstrap prior
-            to dispatching:
+            Es gibt verschiedene Strategien die man anwenden kann um den eigenen Code upzudaten. In kurzer Form,
+            kann man global den <code>ViewRenderer</code> im eigenen Frontkontroller Bootstrap vor dem
+            Abarbeiten ausschalten:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Assuming $front is an instance of Zend_Controller_Front
+// Annahme das $front eine Instanz von Zend_Controller_Front ist
 $front->setParam('noViewRenderer', true);]]>
         </programlisting>
 
         <para>
-            However, this is not a good long term strategy, as it means most
-            likely you'll be writing more code.
+            Trotzdem ist es keine gute Langzeitstrategie, da es auch bedeutet das man mehr Code schreiben muß.
         </para>
 
         <para>
-            When you're ready to start using the <code>ViewRenderer</code>
-            functionality, there are several things to look for in your
-            controller code. First, look at your action methods (the methods
-            ending in 'Action'), and determine what each is doing. If none of
-            the following is happening, you'll need to make changes:
+            Wenn man bereit ist damit zu beginnen die <code>ViewRenderer</code> Funktionalität zu verwenden, gibt
+            es verschiedene Dinge die man im eigenen Kontrollercode beachten muß. Zuerst muß auf die Aktionmethoden
+            (die Methoden die mit 'Action' enden) geachtet werden, und ausgesucht werden was eine jede machen soll.
+            Wenn nichts vom folgenden passiert, muß man Änderungen durchführen:
         </para>
 
         <itemizedlist>
-            <listitem><para>Calls to <code>$this-&gt;render()</code></para></listitem>
-            <listitem><para>Calls to <code>$this-&gt;_forward()</code></para></listitem>
-            <listitem><para>Calls to <code>$this-&gt;_redirect()</code></para></listitem>
-            <listitem><para>Calls to the <code>Redirector</code> action helper</para></listitem>
+            <listitem><para>Aufruf von <code>$this-&gt;render()</code></para></listitem>
+            <listitem><para>Aufruf von <code>$this-&gt;_forward()</code></para></listitem>
+            <listitem><para>Aufruf von <code>$this-&gt;_redirect()</code></para></listitem>
+            <listitem><para>Aufruf des <code>Redirector</code> Aktionhelfers</para></listitem>
         </itemizedlist>
 
         <para>
-            The easiest change is to disable auto-rendering for that method:
+            Die einfachste Änderung ist das ausschalten des Auto-Rendering für diese Methode:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -84,75 +75,69 @@ $this->_helper->viewRenderer->setNoRender();]]>
         </programlisting>
 
         <para>
-            If you find that none of your action methods are rendering,
-            forwarding, or redirecting, you will likely want to put the above
-            line in your <code>preDispatch()</code> or <code>init()</code>
-            methods:
+            Wenn man herausfindet das keine der eigenen Aktionmethoden rendern, weiterleiten oder umleiten, wird man
+            voraussichtlich die oben angeführte Zeile in die eigene <code>preDispatch()</code> oder
+            <code>init()</code> Methode einfügen wollen:
         </para>
 
         <programlisting role="php"><![CDATA[
 public function preDispatch()
 {
-    // disable view script autorendering
+    // Ausschalten des autorendern vom View Skript
     $this->_helper->viewRenderer->setNoRender()
-    // .. do other things...
+    // .. andere Dinge tun...
 }]]>
         </programlisting>
 
         <para>
-            If you are calling <code>render()</code>, and you're using <link
-                linkend="zend.controller.modular">the Conventional Modular
-                directory structure</link>, you'll want to change your code to
-            make use of autorendering:
+            Wenn <code>render()</code> aufgerufen wird, und man
+            <link linkend="zend.controller.modular">die konventionelle Modulare Verzeichnis Struktur</link>
+            verwendet, wird man den Code ändern wollen um Autorendern zu Verwenden:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    If you're rendering multiple view scripts in a single
-                    action, you don't need to change a thing.
+                    Wenn man mehrere View Skripte in einer einzelnen Aktion rendert muß nichts geändert werden.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    If you're simply calling <code>render()</code> with no
-                    arguments, you can remove such lines.
+                    Wenn man einfach <code>render()</code> ohne Argumente aufruft, können diese Zeilen entfernt
+                    werden.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    If you're calling <code>render()</code> with arguments, and
-                    not doing any processing afterwards or rendering multiple
-                    view scripts, you can change these calls to read
-                    <code>$this-&gt;_helper-&gt;viewRenderer()</code>.
+                    Wenn man <code>render()</code> mit Argumenten aufruft, und danach nicht irgendeine Bearbeitung
+                    durchführt oder mehrere View sktipe rendert, können diese Aufrufe zu
+                    <code>$this-&gt;_helper-&gt;viewRenderer()</code> geändert werden.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            If you're not using the conventional modular directory structure,
-            there are a variety of methods for setting the view base path and
-            script path specifications so that you can make use of the
-            <code>ViewRenderer</code>. Please read the <link
-                linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer
-                documentation</link> for information on these methods.
+            Wenn die konventionelle modulare Verzeichnisstruktur nicht verwendet wird, gibt es eine Vielzahl von
+            Methoden für das Setzen des View Basispfades und der Skript Pfadspezifikationen so das man den
+            <code>ViewRenderer</code> verwenden kann. Bitte lies die
+            <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer Dokumentation</link> für
+            Informationen über diese Methoden.
         </para>
 
         <para>
-            If you're using a view object from the registry, or customizing your
-            view object, or using a different view implementation, you'll want
-            to inject the <code>ViewRenderer</code> with this object. This can
-            be done easily at any time.
+            Wenn ein View Objekt von der Registry verwendet, oder das eigene View Objekt verändert, oder
+            eine andere View Implementation verwendet wird wird man den <code>ViewRenderer</code> in diesem
+            Objekt injiziieren wollen. Das kann ganz einfach jederzeit durchgeführt werden.
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    Prior to dispatching a front controller instance:
+                    Vor dem verarbeiten einer Frontkontroller Instanz:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
-// Assuming $view has already been defined
+// Annahme das $view bereits definiert wurde
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 </programlisting>
@@ -160,7 +145,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
 
             <listitem>
                 <para>
-                    Any time during the bootstrap process:
+                    Jederzeit wärend des Bootstrap Prozesses:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -171,62 +156,56 @@ $viewRenderer->setView($view);]]>
         </itemizedlist>
 
         <para>
-            There are many ways to modify the <code>ViewRenderer</code>,
-            including setting a different view script to render, specifying
-            replacements for all replaceable elements of a view script path
-            (including the suffix), choosing a response named segment to
-            utilize, and more. If you aren't using the conventional modular
-            directory structure, you can even associate different path
-            specifications with the <code>ViewRenderer</code>.
+            Es gibt viele Wege den <code>ViewRenderer</code> zu modifizieren inklusive dem Setzen eines anderen
+            View Skripts zum Rendern, dem Spezifizieren von Veränderungen für alle veränderbaren Elemente eines
+            View Skript Pfades (inklusive der Endung), dem Auswählen eines Antwort-benannten Segments zur
+            Anpassung und mehr. Wenn die konventionelle modulare Verzeichnisstruktur nicht verwendet wird, kann
+            noch immer eine andere Pfad Spezifikation mit dem <code>ViewRenderer</code> zugeordnet werden.
         </para>
 
         <para>
-            We encourage you to adapt your code to use the
-            <code>ErrorHandler</code> and <code>ViewRenderer</code> as they are
-            now core functionality.
+            Wir empfehlen die Adaptierung des eigenen Codes um den <code>ErrorHandler</code> und
+            <code>ViewRenderer</code> zu verwenden da diese neue Kernfunktionalitäten sind.
         </para>
     </sect2>
 
     <sect2 id="zend.controller.migration.fromzeroninetwo">
-        <title>Migrating from 0.9.2 to 0.9.3 or newer</title>
+        <title>Migration von 0.9.2 nach 0.9.3 oder neuer</title>
 
         <para>
-            0.9.3 introduces <link
-                linkend="zend.controller.actionhelpers">action helpers</link>.
-            As part of this change, the following methods have been removed as
-            they are now encapsulated in the <link
-                linkend="zend.controller.actionhelpers.redirector">redirector
-                action helper</link>:
+            0.9.3 bietet <link linkend="zend.controller.actionhelpers">Aktionhelfer</link> neu an.
+            Als Teil dieser Änderung wurden die folgenden Methoden entfernt da Sie nun im
+            <link linkend="zend.controller.actionhelpers.redirector">Weiterleitungs Aktionhelfer</link> inkludiert
+            sind:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setRedirectCode()</code>; use
+                    <code>setRedirectCode()</code>; wurde umbenannt in
                     <code>Zend_Controller_Action_Helper_Redirector::setCode()</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>setRedirectPrependBase()</code>; use
+                    <code>setRedirectPrependBase()</code>; wurde umbenannt in
                     <code>Zend_Controller_Action_Helper_Redirector::setPrependBase()</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>setRedirectExit()</code>; use
+                    <code>setRedirectExit()</code>; wurde umbenannt in
                     <code>Zend_Controller_Action_Helper_Redirector::setExit()</code>.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            Read the <link linkend="zend.controller.actionhelpers">action
-                helpers documentation</link> for more information on how to
-            retrieve and manipulate helper objects, and the <link
-                linkend="zend.controller.actionhelpers.redirector">redirector
-                helper documentation</link> for more information on setting
-            redirect options (as well as alternate methods for redirecting).
+            Lese die <link linkend="zend.controller.actionhelpers">Aktionhelfer Dokumentation</link> für nähere
+            Informationen über das empfangen und manipulieren von Helfer Objekten und die
+            <link linkend="zend.controller.actionhelpers.redirector">Weiterleitungshelfer Dokumentation</link> für
+            weitere Information über das setzen von Weiterleitungsoptionen (sowie alternative Methoden des
+            weiterleitens).
         </para>
     </sect2>
 
