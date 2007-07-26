@@ -128,7 +128,10 @@
         <title>StringLength</title>
         <para>
             Returns <code>true</code> if and only if the string length of <code>$value</code> is at least a minimum
-            and no greater than a maximum (when the max option is not <code>null</code>).
+            and no greater than a maximum (when the max option is not <code>null</code>). Since version 1.1.0, the
+            <code>setMin()</code> method throws an exception if the minimum length is set to a value greater than the
+            set maximum length, and the <code>setMax()</code> method throws an exception if the maximum length is set
+            to a value less than than the set minimum length.
         </para>
     </sect2>
 
