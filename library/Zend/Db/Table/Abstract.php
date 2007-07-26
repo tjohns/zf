@@ -835,10 +835,10 @@ abstract class Zend_Db_Table_Abstract
                             if (array_key_exists($refCol, $newPrimaryKey)) {
                                 $newRefs[$col] = $newPrimaryKey[$refCol];
                             }
+                            $type = $this->_metadata[$col]['DATA_TYPE'];
                             $where[] = $this->_db->quoteInto(
                                 $this->_db->quoteIdentifier($col, true) . ' = ?',
-                                $oldPrimaryKey[$refCol]
-                            );
+                                $oldPrimaryKey[$refCol], $type);
                         }
                         $rowsAffected += $this->update($newRefs, $where);
                         break;
@@ -879,10 +879,10 @@ abstract class Zend_Db_Table_Abstract
                         for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
                             $col = $this->_db->foldCase($map[self::COLUMNS][$i]);
                             $refCol = $this->_db->foldCase($map[self::REF_COLUMNS][$i]);
+                            $type = $this->_metadata[$col]['DATA_TYPE'];
                             $where[] = $this->_db->quoteInto(
                                 $this->_db->quoteIdentifier($col, true) . ' = ?',
-                                $primaryKey[$refCol]
-                            );
+                                $primaryKey[$refCol], $type);
                         }
                         $rowsAffected += $this->delete($where);
                         break;
@@ -955,10 +955,10 @@ abstract class Zend_Db_Table_Abstract
             foreach ($whereList as $keyValueSets) {
                 $whereAndTerms = array();
                 foreach ($keyValueSets as $keyPosition => $keyValue) {
+                    $type = $this->_metadata[$keyNames[$keyPosition]]['DATA_TYPE'];
                     $whereAndTerms[] = $this->_db->quoteInto(
                         $this->_db->quoteIdentifier($keyNames[$keyPosition], true) . ' = ?',
-                        $keyValue
-                    );
+                        $keyValue, $type);
                 }
                 $whereOrTerms[] = '(' . implode(' AND ', $whereAndTerms) . ')';
             }

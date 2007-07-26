@@ -74,19 +74,30 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * Execution mode
      *
      * @var int execution flag (DB2_AUTOCOMMIT_ON or DB2_AUTOCOMMIT_OFF)
-     * @access protected
      */
     protected $_execute_mode = DB2_AUTOCOMMIT_ON;
 
     /**
-     * Table name of the last accessed table for an insert operation
-     * This is a DB2-Adapter-specific member variable with the utmost
-     * probability you might not find it in other adapters...
+     * Keys are UPPERCASE SQL datatypes or the constants
+     * Zend_Db::INT_TYPE, Zend_Db::BIGINT_TYPE, or Zend_Db::FLOAT_TYPE.
      *
-     * @var string
-     * @access protected
+     * Values are:
+     * 0 = 32-bit integer
+     * 1 = 64-bit integer
+     * 2 = float or decimal
+     *
+     * @var array Associative array of datatypes to values 0, 1, or 2.
      */
-    protected $_lastInsertTable = null;
+    protected $_numericDataTypes = array(
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'INTEGER'            => Zend_Db::INT_TYPE,
+        'SMALLINT'           => Zend_Db::INT_TYPE,
+        'BIGINT'             => Zend_Db::BIGINT_TYPE,
+        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
+        'NUMERIC'            => Zend_Db::FLOAT_TYPE
+    );
 
     /**
      * Creates a connection resource.

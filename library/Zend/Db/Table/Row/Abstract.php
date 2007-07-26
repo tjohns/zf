@@ -533,13 +533,13 @@ abstract class Zend_Db_Table_Row_Abstract
     /**
      * Retrieves an associative array of primary keys.
      *
-     * @param bool $dirty
+     * @param bool $useDirty
      * @return array
      */
-    protected function _getPrimaryKey($dirty = true)
+    protected function _getPrimaryKey($useDirty = true)
     {
         $primary = array_flip($this->_primary);
-        if ($dirty) {
+        if ($useDirty) {
             return array_intersect_key($this->_data, $primary);
         } else {
             return array_intersect_key($this->_cleanData, $primary);
@@ -549,47 +549,23 @@ abstract class Zend_Db_Table_Row_Abstract
     /**
      * Constructs where statement for retrieving row(s).
      *
+     * @param bool $useDirty
      * @return array
      */
-    protected function _getWhereQuery($dirty = true)
+    protected function _getWhereQuery($useDirty = true)
     {
         $where = array();
         $db = $this->_getTable()->getAdapter();
-        $primaryKey = $this->_getPrimaryKey($dirty);
+        $primaryKey = $this->_getPrimaryKey($useDirty);
         $info = $this->_getTable()->info();
         $metadata = $info[Zend_Db_Table_Abstract::METADATA];
-        $dataTypes = array(
-            'BIGINT'           => 1, // DB2 MySQL PgSQL MSSQL
-            'BIGSERIAL'        => 1, // PgSQL
-            'BIT'              => 1, // MySQL
-            'INT'              => 1, // MySQL MSSQL
-            'INTEGER'          => 1, // DB2 MySQL PgSQL SQLite
-            'MEDIUMINT'        => 1, // MySQL
-            'SERIAL'           => 1, // MySQL PgSQL
-            'SMALLINT'         => 1, // DB2 MySQL PgSQL MSSQL
-            'TINYINT'          => 1, // MySQL MSSQL
-            'DEC'              => 2, // MySQL
-            'DECIMAL'          => 2, // DB2 MySQL PgSQL MSSQL
-            'BINARY_DOUBLE'    => 2, // Oracle
-            'BINARY_FLOAT'     => 2, // Oracle
-            'DOUBLE'           => 2, // MySQL
-            'DOUBLE PRECISION' => 2, // MySQL PgSQL
-            'FIXED'            => 2, // MySQL
-            'FLOAT'            => 2, // MySQL MSSQL
-            'MONEY'            => 2, // MSSQL
-            'NUMBER'           => 2, // Oracle
-            'NUMERIC'          => 2, // DB2 PgSQL MSSQL
-            'REAL'             => 2, // PgSQL SQLite MSSQL
-            'SMALLMONEY'       => 2, // MSSQL
-        );
 
         // retrieve recently updated row using primary keys
-        foreach ($primaryKey as $columnName => $val) {
-            $type = strtoupper($metadata[$columnName]['DATA_TYPE']);
-            if (array_key_exists($type, $dataTypes)) {
-                $val = ($dataTypes[$type] == 2)? floatval($val) : intval($val);
-            }
-            $where[] = $db->quoteInto($db->quoteIdentifier($columnName, true) . ' = ?', $val);
+        foreach ($primaryKey as $columnName => $value) {
+            $type = $metadata[$columnName]['DATA_TYPE'];
+            $where[] = $db->quoteInto(
+                $db->quoteIdentifier($columnName, true) . ' = ?',
+                $value, $type);
         }
 
         return $where;
