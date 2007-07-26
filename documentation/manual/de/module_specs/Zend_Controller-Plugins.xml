@@ -163,65 +163,60 @@ $front->dispatch();]]>
         </programlisting>
 
         <para>
-            Assuming that no actions called emit any output, and only one action
-            is called, the functionality of the above plugin would still create
-            the following output:
+            Angenommen das keine der Aktionen igendeine Ausgabe produzieren, und nur eine Aktion aufgerufen wurde,
+            dann erzeugt die Funktionalität des obigen Plugins trotzdem die folgende Ausgabe:
         </para>
 
         <programlisting role="php"><![CDATA[
-<p>routeStartup() called</p>
-<p>routeShutdown() called</p>
-<p>dispatchLoopStartup() called</p>
-<p>preDispatch() called</p>
-<p>postDispatch() called</p>
-<p>dispatchLoopShutdown() called</p>]]>
+<p>routeStartup() aufgerufen</p>
+<p>routeShutdown() aufgerufen</p>
+<p>dispatchLoopStartup() aufgerufen</p>
+<p>preDispatch() aufgerufen</p>
+<p>postDispatch() aufgerufen</p>
+<p>dispatchLoopShutdown() aufgerufen</p>]]>
         </programlisting>
 
         <note>
             <para>
-                Plugins may be registered at any time during the front controller
-                execution. However, if an event has passed for which the plugin has
-                a registered event method, that method will not be triggered.
+                Plugins können jederzeit wärend der Ausführung des Frontkontrollers registriert werden. Wenn
+                trotzdem ein Event ausgeführt wurde für das das Plugin eine registrierte Eventmethode enthält,
+                wird diese Methode nicht getriggert.
             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.controller.plugins.manipulating">
-        <title>Retrieving and Manipulating Plugins</title>
+        <title>Empfangen und Manipulieren von Plugins</title>
 
         <para>
-            On occasion, you may need to unregister or retrieve a plugin. The
-            following methods of the front controller allow you to do so:
+            Fallweise kann es notwendig sein ein Plugin zu entfernen oder empfangen. Die folgenden Methoden des
+            Frontkontrollers erlauben dies:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                    <code>getPlugin($class)</code> allows you to retrieve a
-                    plugin by class name. If no plugins match, it returns false.
-                    If more than one plugin of that class is registered, it
-                    returns an array.
+                    <code>getPlugin($class)</code> erlaubt es ein Plugin durch den Klassennamen zu empfangen. Wenn
+                    kein Plugin entspricht, wird false zurückgegeben. Wenn mehr als ein Plugin dieser Klasse
+                    registriert ist, wird ein Array zurückgegeben.
             </para></listitem>
 
             <listitem><para>
-                    <code>getPlugins()</code> retrieves the entire plugin stack.
+                    <code>getPlugins()</code> empfängt den kompletten Plugin Stack.
             </para></listitem>
 
             <listitem><para>
-                    <code>unregisterPlugin($plugin)</code> allows you to remove
-                    a plugin from the stack. You may pass a plugin object, or
-                    the class name of the plugin you wish to unregister. If you
-                    pass the class name, any plugins of that class will be
-                    removed.
+                    <code>unregisterPlugin($plugin)</code> erlaubt die Entfernung eines Plugins vom Stack. Es kann
+                    ein Plugin Objekt oder der Klassenname des Plugins, das entfernt werden soll, übergeben werden.
+                    Wenn der Klassenname übergeben wird, wird jedes Plugin dieser Klasse entfernt.
             </para></listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.controller.plugins.standard">
-        <title>Plugins Included in the Standard Distribution</title>
+        <title>Plugins die in der Standard Distribution enthalten sind</title>
 
         <para>
-            Zend Framework includes a plugin for error handling in its standard
-            distribution.
+            Zend Framework enthält ein Plugin für die Fehlerbehandlung in der Standard Distribution.
         </para>
 
         <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />
