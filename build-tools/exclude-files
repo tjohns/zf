@@ -1,9 +1,6 @@
 build-tools/
 documentation/
-incubator/documentation/
-incubator/library/Zend/Currency.php
-incubator/library/Zend/Currency/
-incubator/tests/TestConfiguration.php
+incubator/
 tests/TestConfiguration.php
 scripts
 .svn
