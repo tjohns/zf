@@ -109,7 +109,7 @@ abstract class Zend_Db_Adapter_Abstract
      * 1 = 64-bit integer
      * 2 = float or decimal
      *
-     * @var array $_numericDataTypes
+     * @var array Associative array of datatypes to values 0, 1, or 2.
      */
     protected $_numericDataTypes = array(
         Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,

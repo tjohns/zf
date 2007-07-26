@@ -835,9 +835,6 @@ abstract class Zend_Db_Table_Abstract
                             if (array_key_exists($refCol, $newPrimaryKey)) {
                                 $newRefs[$col] = $newPrimaryKey[$refCol];
                             }
-                            if (!array_key_exists($col, $this->_metadata)) {
-                                print_r($this->_metadata);
-                            }
                             $type = $this->_metadata[$col]['DATA_TYPE'];
                             $where[] = $this->_db->quoteInto(
                                 $this->_db->quoteIdentifier($col, true) . ' = ?',
@@ -882,9 +879,6 @@ abstract class Zend_Db_Table_Abstract
                         for ($i = 0; $i < count($map[self::COLUMNS]); ++$i) {
                             $col = $this->_db->foldCase($map[self::COLUMNS][$i]);
                             $refCol = $this->_db->foldCase($map[self::REF_COLUMNS][$i]);
-                            if (!array_key_exists($col, $this->_metadata)) {
-                                print_r($this->_metadata);
-                            }
                             $type = $this->_metadata[$col]['DATA_TYPE'];
                             $where[] = $this->_db->quoteInto(
                                 $this->_db->quoteIdentifier($col, true) . ' = ?',

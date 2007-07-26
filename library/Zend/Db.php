@@ -44,7 +44,7 @@ class Zend_Db
 {
 
     /**
-     * Use the AUTO_QUOTE_IDENTIFIERS constant in the config of a Zend_Db_Adapter.
+     * Use the CASE_FOLDING constant in the config of a Zend_Db_Adapter.
      */
     const CASE_FOLDING = 'caseFolding';
 
