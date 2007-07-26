@@ -50,7 +50,7 @@ $currency = new Zend_Currency();]]>
             </para>
             <para>
                 The second parameter <emphasis role="strong">'script'</emphasis> defines in which script the output
-                should be given. The standard script is 'Latin' which includes the global known digits from
+                should be given. The standard script is 'Latn' which includes the global known digits from
                 <emphasis role="strong">'0'</emphasis> to <emphasis role="strong">'9'</emphasis>. Other scripts
                 like <emphasis role="strong">'Arab'</emphasis> can include other digits. For more information
                 about scripts see
