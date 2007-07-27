@@ -91,5 +91,17 @@ class Zend_Gdata_App_FeedTest extends PHPUnit_Framework_TestCase
                 $entry->contributor[1]->name->text); 
         $this->assertEquals('xhtml', $entry->content->type);
     }
+    
+    public function testCanAddIndividualEntries() {
+        $this->feed->transferFromXML($this->feedText);
+        $this->assertEquals(1, count($this->feed->entry));
+        $oldTitle = $this->feed->entry[0]->title->text;
+        $newEntry = new Zend_Gdata_App_Entry();
+        $newEntry->setTitle(new Zend_Gdata_App_Extension_Title("Foo"));
+        $this->feed->addEntry($newEntry);
+        $this->assertEquals(2, count($this->feed->entry));
+        $this->assertEquals($oldTitle, $this->feed->entry[0]->title->text);
+        $this->assertEquals("Foo", $this->feed->entry[1]->title->text);
+    }
 
 }

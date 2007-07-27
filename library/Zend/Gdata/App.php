@@ -676,4 +676,33 @@ class Zend_Gdata_App
         }
     }
 
+    /**
+     * Retrieve all entries for a feed, iterating through pages as necessary.
+     * Be aware that calling this function on a large dataset will take a 
+     * significant amount of time to complete. In some cases this may cause 
+     * execution to timeout without proper precautions in place.
+     *
+     * @param $feed The feed to iterate through.
+     * @return mixed A new feed of the same type as the one originally 
+     *          passed in, containing all relevent entries.
+     */
+    public static function retrieveAllEntriesForFeed ($feed) {
+        $feedClass = get_class($feed);
+        $reflectionObj = new ReflectionClass($feedClass);
+        $result = $reflectionObj->newInstance();
+        do {
+            foreach ($feed as $entry) {
+                $result->addEntry($entry);
+            }
+            
+            $next = $feed->getLink('next');
+            if ($next !== null) {
+                $feed = $this->getFeed($next->href, $feedClass);
+            } else {
+                $feed = null;
+            }
+        }
+        while ($feed != null);
+        return $result;
+    }
 }

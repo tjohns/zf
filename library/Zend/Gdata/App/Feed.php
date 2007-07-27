@@ -200,6 +200,16 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
     }
 
     /**
+     * @param Zend_Gdata_App_Entry An individual entry to add.
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function addEntry($value)
+    {
+        $this->_entry[] = $value;
+        return $this;
+    }
+
+    /**
      * Required by the ArrayAccess interface
      *
      * @param int $key The index to set
