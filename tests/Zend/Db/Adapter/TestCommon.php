@@ -111,26 +111,38 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'id'    => 1,
             'stuff' => 'no quote 1'
         ));
-        $this->assertEquals(1, $numRows);
+        $this->assertEquals(1, $numRows,
+            'number of rows in first insert not as expected');
 
         // check if the row was inserted as expected
         $sql = "SELECT id, stuff FROM $tableName ORDER BY id";
         $stmt = $db->query($sql);
         $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
-        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1')), $fetched);
+        $a = array(
+            0 => array(0 => 1, 1 => 'no quote 1')
+        );
+        $this->assertEquals($a, $fetched,
+            'result of first query not as expected');
 
         // insert into the table using other case
         $numRows = $db->insert(strtoupper($tableName), array(
             'ID'    => 2,
             'STUFF' => 'no quote 2'
         ));
-        $this->assertEquals(1, $numRows);
+        $this->assertEquals(1, $numRows,
+            'number of rows in second insert not as expected');
 
         // check if the row was inserted as expected
         $sql = 'SELECT ID, STUFF FROM '.strtoupper($tableName).' ORDER BY ID';
         $stmt = $db->query($sql);
         $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
-        $this->assertEquals(array(0=>array(0=>1, 1=>'no quote 1'), 1=>array(0=>2, 1=>'no quote 2')), $fetched);
+
+        $a = array(
+            0 => array(0 => 1, 1 => 'no quote 1'),
+            1 => array(0 => 2, 1 => 'no quote 2'),
+        );
+        $this->assertEquals($a, $fetched,
+            'result of second query not as expected');
 
         // clean up
         $util->dropTable($tableName);
@@ -660,6 +672,26 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test that we can query twice in a row.
+     * That is, a query doesn't leave the adapter in an unworking state.
+     * See bug ZF-1778.
+     */
+    public function testAdapterQueryAfterUnclosedQuery()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->order('product_id');
+
+        $stmt1 = $this->_db->query($select);
+        $result1 = $stmt1->fetchAll(Zend_Db::FETCH_NUM);
+
+        $stmt1 = $this->_db->query($select);
+        $result2 = $stmt1->fetchAll(Zend_Db::FETCH_NUM);
+
+        $this->assertEquals($result1, $result2);
+    }
+
+    /**
      * Ensures that query() throws an exception when given a bogus query
      *
      * @return void
@@ -754,7 +786,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $string = '123';
         $value = $this->_db->quote($string);
-        $this->assertEquals("123", $value);
+        $this->assertEquals("'123'", $value);
     }
 
     /**
@@ -787,7 +819,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $array = array(1,'2',3);
         $value = $this->_db->quote($array);
-        $this->assertEquals("1, 2, 3", $value);
+        $this->assertEquals("1, '2', 3", $value);
     }
 
     /**
@@ -982,19 +1014,28 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $value = $this->_db->quoteInto('foo = ?', 1234, Zend_Db::INT_TYPE);
         $this->assertType('string', $value);
-        $this->assertEquals('foo = 1234', $value);
+        $this->assertEquals('foo = 1234', $value,
+            'Incorrect quoteInto() result for INT_TYPE');
 
         $value = $this->_db->quoteInto('foo = ?', 1234, Zend_Db::BIGINT_TYPE);
         $this->assertType('string', $value);
-        $this->assertEquals('foo = 1234', $value);
+        $this->assertEquals('foo = 1234', $value,
+            'Incorrect quoteInto() result for BIGINT_TYPE');
 
         $value = $this->_db->quoteInto('foo = ?', 12.34, Zend_Db::FLOAT_TYPE);
         $this->assertType('string', $value);
-        $this->assertEquals('foo = 1234', $value);
+        $this->assertEquals('foo = 12.34', $value,
+            'Incorrect quoteInto() result for FLOAT_TYPE');
 
         $value = $this->_db->quoteInto('foo = ?', 1234, 'CHAR');
         $this->assertType('string', $value);
-        $this->assertEquals("foo = '1234'", $value);
+        $this->assertEquals("foo = 1234", $value,
+            'Incorrect quoteInto() result for CHAR');
+
+        $value = $this->_db->quoteInto('foo = ?', '1234', 'CHAR');
+        $this->assertType('string', $value);
+        $this->assertEquals("foo = '1234'", $value,
+            'Incorrect quoteInto() result for CHAR');
     }
 
     public function testAdapterQuoteTypeInt()
