@@ -103,6 +103,11 @@ class Zend_Db_Adapter_Pdo_SqliteTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support login credentials');
     }
 
+    public function testAdapterInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
+    }
+
     /**
      * Used by:
      * - testAdapterOptionCaseFoldingNatural()

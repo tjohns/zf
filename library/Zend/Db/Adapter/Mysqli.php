@@ -342,12 +342,12 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      *
      * @param string $tableName   OPTIONAL Name of table.
      * @param string $primaryKey  OPTIONAL Name of primary key column.
-     * @return integer
+     * @return string
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $mysqli = $this->_connection;
-        return $mysqli->insert_id;
+        return (string) $mysqli->insert_id;
     }
 
     /**

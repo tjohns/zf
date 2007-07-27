@@ -102,6 +102,11 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         }
     }
 
+    public function testAdapterInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
+    }
+
     /**
      * test that quoteColumnAs() accepts a string
      * and an alias, and returns each as delimited

@@ -752,17 +752,20 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    protected $_getColumnMetaKeys = array(
+        'native_type', 'flags', 'table', 'name', 'len', 'precision', 'pdo_type'
+    );
+
     public function testStatementGetColumnMeta()
     {
         $select = $this->_db->select()
             ->from('zfbugs');
         $stmt = $this->_db->prepare($select->__toString());
         $stmt->execute();
-        $metaKeys = array('native_type', 'flags', 'table', 'name', 'len', 'precision', 'pdo_type');
-        for ($i = 0; $meta = $stmt->getColumnMeta($i); ++$i) {
+        for ($i = 0; $i < $stmt->columnCount(); ++$i) {
+            $meta = $stmt->getColumnMeta($i);
             $this->assertType('array', $meta);
-            $this->assertEquals(7, count($meta));
-            $this->assertEquals($metaKeys, array_keys($meta));
+            $this->assertEquals($this->_getColumnMetaKeys, array_keys($meta));
         }
     }
 

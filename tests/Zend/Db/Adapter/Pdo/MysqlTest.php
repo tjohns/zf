@@ -127,6 +127,11 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertFalse((boolean) $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY));
     }
 
+    public function testAdapterInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
+    }
+
     /**
      * test that quoteColumnAs() accepts a string
      * and an alias, and returns each as delimited
