@@ -11,9 +11,9 @@
 # obtain it through the world-wide-web, please send an email
 # to license@zend.com so we can send you a copy immediately.
 #
-# @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+# @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
 # @license    http://framework.zend.com/license/new-bsd     New BSD License
-#
+# @version    $Id$
 
 #
 # Makefile - build Zend Framework product and documentation
@@ -29,7 +29,7 @@
 #  clean - remove staged files.
 #  clean-docbook - remove temp files under docbook sources.
 #  clean-export - remove exported product tree.
-# 
+#
 
 # -- parameters you are likely to want to change --
 
@@ -46,7 +46,7 @@ ZF_TAG=HEAD
 ZF_BRANCH=trunk
 
 # ZF_VERSION is the release version string to build.  This is added
-# to the VERSION.txt file, and is also used for the name of the 
+# to the VERSION.txt file, and is also used for the name of the
 # staging directory and the names of the zip and tarball files.
 ZF_VERSION=1.1.0dev
 
@@ -95,7 +95,7 @@ zipball:
 	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) $(GDATA_PRODUCT))
 
 tar: tarball
-tarball: 
+tarball:
 	@echo "== CREATING TAR.GZ ARCHIVE =="
 	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) $(GDATA_PRODUCT))
 
@@ -133,13 +133,13 @@ stage-files:
 	    }' \
 	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests-orig.php > \
 	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests.php
-	@echo "...altering README.txt..." 
+	@echo "...altering README.txt..."
 	@mv $(GDATA_EXPORT_DIR)/README.txt \
 	    $(GDATA_EXPORT_DIR)/README-orig.txt
 	@sed -e 's/Zend Framework/Zend Gdata/' -e 's/ZEND FRAMEWORK/ZEND GDATA/' \
 	    $(GDATA_EXPORT_DIR)/README-orig.txt > \
 	    $(GDATA_EXPORT_DIR)/README.txt
-	@echo "...staging files..." 
+	@echo "...staging files..."
 	@(pwd=`pwd` ; cd $(GDATA_EXPORT_DIR) && rsync --quiet --archive \
 	    --delete --exclude-from="$$pwd/exclude-files-gdata" ./ $$pwd/$(GDATA_STAGE_DIR))
 
@@ -172,7 +172,7 @@ docbook-incubator:
 	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/manual/incubator/$$lang ; \
 	done
 
-phpdoc: phpdoc-core 
+phpdoc: phpdoc-core
 
 phpdoc-core:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
