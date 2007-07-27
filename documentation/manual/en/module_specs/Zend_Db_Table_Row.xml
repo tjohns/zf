@@ -54,7 +54,17 @@ $row = $bugs->fetchRow('bug_id = 1');]]></programlisting>
 $bugs = new Bugs();
 $rowset = $bugs->fetchAll("bug_status = 'NEW'");
 $row = $rowset->current();]]></programlisting>
-            </example>
+        </example>
+
+        <note>
+            <para>
+                The values and identifiers in the SQL expression are not
+                quoted for you.  If you have values or identifiers that
+                require quoting, you are responsible for doing this.
+                Use the <code>quote()</code>, <code>quoteInto()</code>, and
+                <code>quoteIdentifier()</code> methods of the database adapter.
+            </para>
+        </note>
 
         <sect3 id="zend.db.table.row.read.get">
             <title>Reading column values from a row</title>
