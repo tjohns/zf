@@ -118,7 +118,7 @@
     <sect2 id="zend.validate.set.string_length">
         <title>StringLength</title>
         <para>
-            Retourne <code>true</code> si et seulement si la longueur de la chaîne <code>$value</code> est supérieure à une valeur minimum et inférieure à une valeur maximum (quand l'option max n'est pas à <code>null</code>).
+            Retourne <code>true</code> si et seulement si la longueur de la chaîne <code>$value</code> est supérieure à une valeur minimum et inférieure à une valeur maximum (quand l'option max n'est pas à <code>null</code>). Depuis la version 1.1.0, la méthode <code>setMin()</code> lève une exception si la valeur fournie pour la longueur minimum est supérieure à celle fournie pour la longueur maximum, et la méthode <code>setMax()</code> lève une exception si la valeur fournie pour la longueur maximum est supérieure à celle fournie pour la longueur minimum.
         </para>
     </sect2>
 
