@@ -57,6 +57,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
             'Expecting object of type Zend_Db_Select, got '.get_class($select));
         $stmt = $this->_db->query($select);
         $row = $stmt->fetch();
+        $stmt->closeCursor();
         $this->assertEquals(2, count($row)); // correct number of fields
         $this->assertEquals(1, $row['product_id']); // correct data
     }
@@ -71,6 +72,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
             'Expecting object of type Zend_Db_Select, got '.get_class($select));
         $stmt = $select->query();
         $row = $stmt->fetch();
+        $stmt->closeCursor();
         $this->assertEquals(2, count($row)); // correct number of fields
         $this->assertEquals(1, $row['product_id']); // correct data
     }

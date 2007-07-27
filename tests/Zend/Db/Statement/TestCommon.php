@@ -430,6 +430,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
+        $stmt->closeCursor();
     }
 
     public function testStatementFetchColumn()

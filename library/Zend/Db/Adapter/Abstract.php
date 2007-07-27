@@ -556,6 +556,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetchColumn(0);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -571,6 +572,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetch($this->_fetchMode);
+        $stmt->closeCursor();
         return $result;
     }
 
