@@ -289,7 +289,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
             if ($primaryKey) {
                 $sequenceName .= $this->foldCase("_$primaryKey");
             }
-            $sequenceName .= $this->foldCase('_SEQ');
+            $sequenceName .= $this->foldCase('_seq');
             return $this->lastSequenceId($sequenceName);
         }
         return $this->_connection->lastInsertId($tableName);
