@@ -84,6 +84,11 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     );
 
     /**
+     * @var Zend_Db_Statement_Mysqli
+     */
+    protected $_stmt = null;
+
+    /**
      * Quote a raw string.
      *
      * @param string $value     Raw string
@@ -311,8 +316,15 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     public function prepare($sql)
     {
         $this->_connect();
+        if ($this->_stmt) {
+            $this->_stmt->close();
+        }
         $stmt = new Zend_Db_Statement_Mysqli($this, $sql);
+        if ($stmt === false) {
+            return false;
+        }
         $stmt->setFetchMode($this->_fetchMode);
+        $this->_stmt = $stmt;
         return $stmt;
     }
 

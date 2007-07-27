@@ -103,17 +103,31 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     }
 
     /**
+     * Closes the cursor and the statement.
+     *
+     * @return bool
+     */
+    public function close()
+    {
+        if ($this->_stmt) {
+            $r = $this->_stmt->close();
+            $this->_stmt = null;
+            return $r;
+        }
+        return false;
+    }
+
+    /**
      * Closes the cursor, allowing the statement to be executed again.
      *
      * @return bool
      */
     public function closeCursor()
     {
-        if (!$this->_stmt) {
-            return false;
+        if ($stmt = $this->_stmt) {
+            return $this->_stmt->reset();
         }
-        $this->_stmt->reset();
-        return true;
+        return false;
     }
 
     /**
@@ -304,7 +318,6 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
                 throw new Zend_Db_Statement_Mysqli_Exception("Invalid fetch mode '$style' specified");
                 break;
         }
-
         return $row;
     }
 
