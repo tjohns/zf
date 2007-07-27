@@ -98,6 +98,28 @@ require_once 'Zend/Gdata/Spreadsheets/DocumentQueryTest.php';
 require_once 'Zend/Gdata/Spreadsheets/CellQueryTest.php';
 require_once 'Zend/Gdata/Spreadsheets/ListQueryTest.php';
 
+require_once 'Zend/Gdata/GappsTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListEntryTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListFeedTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListQueryTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListRecipientEntryTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListRecipientFeedTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListRecipientQueryTest.php';
+require_once 'Zend/Gdata/Gapps/EmailListTest.php';
+require_once 'Zend/Gdata/Gapps/ErrorTest.php';
+require_once 'Zend/Gdata/Gapps/LoginTest.php';
+require_once 'Zend/Gdata/Gapps/NameTest.php';
+require_once 'Zend/Gdata/Gapps/NicknameEntryTest.php';
+require_once 'Zend/Gdata/Gapps/NicknameFeedTest.php';
+require_once 'Zend/Gdata/Gapps/NicknameQueryTest.php';
+require_once 'Zend/Gdata/Gapps/NicknameTest.php';
+require_once 'Zend/Gdata/Gapps/QuotaTest.php';
+require_once 'Zend/Gdata/Gapps/ServiceExceptionTest.php';
+require_once 'Zend/Gdata/Gapps/UserEntryTest.php';
+require_once 'Zend/Gdata/Gapps/UserFeedTest.php';
+require_once 'Zend/Gdata/Gapps/UserQueryTest.php';
+
+
 /**
  * Tests that do require online access to servers
  * and authentication credentials
@@ -108,6 +130,8 @@ require_once 'Zend/Gdata/GdataOnlineTest.php';
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
 
 require_once 'Zend/Gdata/SpreadsheetsOnlineTest.php';
+
+require_once 'Zend/Gdata/GappsOnlineTest.php';
 
 require_once 'Zend/Gdata/SkipTests.php';
 
@@ -189,6 +213,27 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellQueryTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_ListQueryTest');
 
+        $suite->addTestSuite('Zend_Gdata_GappsTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListRecipientEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListRecipientFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListRecipientQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_EmailListTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_ErrorTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_LoginTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_NameTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_NicknameEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_NicknameFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_NicknameQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_NicknameTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_QuotaTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_ServiceExceptionTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_UserEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_UserFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Gapps_UserQueryTest');
+
         if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
         constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true &&
         defined('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED') &&
@@ -208,6 +253,12 @@ class Zend_Gdata_AllTests
             constant('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
             }
+            
+            if (defined('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_GappsOnlineTest');
+            }
+            
         } else {
             $suite->addTestSuite('Zend_Gdata_SkipOnlineTest');
         }

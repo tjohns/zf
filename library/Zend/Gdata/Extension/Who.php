@@ -164,7 +164,7 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
     }
 
     /**
-     * Retrieves a human redable string describing this attribute's value.
+     * Retrieves a human readable string describing this attribute's value.
      *
      * @return string The attribute value.
      */

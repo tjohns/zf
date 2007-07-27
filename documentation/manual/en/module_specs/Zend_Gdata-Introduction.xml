@@ -33,8 +33,16 @@
             <listitem>
                 <para>
                     <link linkend="zend.gdata.spreadsheets">Google Spreadsheets</link>
-                    provides an online collaborative spreadsheets tool which can
-                    be used as a simple data store for your applications.
+                    provides an online collaborative spreadsheets tool which
+                    can be used as a simple data store for your applications.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="zend.gdata.gapps">Google Provisioning</link>
+                    provides the ability to create, retrieve, update, and
+                    delete user accounts, nicknames, and email lists on a
+                    Google Apps hosted domain.
                 </para>
             </listitem>
             <listitem>
@@ -62,9 +70,9 @@
     <note>
         <title>Unsupported services</title>
         <para>
-            Google Data API also supports Google Base, Picasa Web Albums,
-            Google Apps Provisioning, but Zend_Gdata does not provide helper
-            classes for these products in this release.
+            Google Data API also supports Google Base and Picasa Web Albums,
+            but Zend_Gdata does not provide helper classes for these products
+            in this release.
         </para>
 
         <para>
@@ -476,6 +484,52 @@ $feed = $gdata->getFeed($query);]]>
             appropriate for the respective service.
         </para>
 
+    </sect2>
+
+    <sect2 id="zend.gdata.introduction.paging">
+        <title>Working with multi-page feeds</title>
+        
+        <para>
+            When retrieving a feed that contains a large number of entries,
+            the feed may be broken up into many smaller "pages" of feeds. When
+            this occurs, each page will contain a link to the next page in the
+            series. This link can be accessed by calling
+            <code>getLink('next')</code>. The following example shows how to
+            retrieve the next page of a feed:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+function getNextPage($feed) {
+    $nextURL = $feed->getLink('next');
+    if ($nextURL !== null) {
+        return $gdata->getFeed($nextURL);
+    } else {
+        return null;
+    }
+}]]>
+        </programlisting>
+
+        <para>
+            If you would prefer not to work with pages in your application,
+            pass the first page of the feed into
+            <code>Zend_Gdata_App::retrieveAllEntriesForFeed()</code>, which
+            will consolidate all entries from each page into a single feed.
+            This example shows how to use this function:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$gdata = new Zend_Gdata();
+$query = new Zend_Gdata_Query(
+        'http://www.blogger.com/feeds/blogID/posts/default');
+$feed = Zend_Gdata_App::retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
+        </programlisting>
+
+        <para>
+            Keep in mind when calling this function that it may take a long
+            time to complete on large feeds. You may need to increase PHP's
+            execution time limit by calling <code>set_time_limit()</code>.
+        </para>
+        
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
