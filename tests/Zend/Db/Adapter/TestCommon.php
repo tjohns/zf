@@ -496,10 +496,6 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         );
         $rowsAffected = $this->_db->insert('zfbugs', $row);
         $this->assertEquals(1, $rowsAffected);
-        $lastInsertId = $this->_db->lastInsertId();
-        $this->assertType('string', $lastInsertId);
-        $this->assertEquals('5', (string) $lastInsertId,
-            'Expected new id to be 5');
 
         $value = $this->_db->fetchOne("SELECT $bug_id FROM $bugs WHERE $bug_id = 5");
         $this->assertEquals(5, $value);
