@@ -55,7 +55,16 @@ $row = $bugs->fetchRow('bug_id = 1');]]></programlisting>
 $bugs = new Bugs();
 $rowset = $bugs->fetchAll("bug_status = 'NEW'");
 $row = $rowset->current();]]></programlisting>
-            </example>
+        </example>
+
+        <note>
+            <para>
+                SQL 式の中の値や識別子は、自動的にはクォートされません。
+                クォートが必要な値や識別子を使用する場合は、自分でクォートする必要があります。
+                データベースアダプタの <code>quote()</code>、<code>quoteInto()</code>
+                および <code>quoteIdentifier()</code> を使用してください。
+            </para>
+        </note>
 
         <sect3 id="zend.db.table.row.read.get">
             <title>行からのカラムの値の読み込み</title>

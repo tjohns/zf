@@ -746,7 +746,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]></programlisting
             型のオブジェクトを返します。
         </para>
 
-        <example id="zend.db.table.fetch-all.example1">
+        <example id="zend.db.table.fetch-all.example1a">
             <title>式から行を取得する例</title>
             <programlisting role="php"><![CDATA[<?php
 
@@ -763,6 +763,47 @@ $rows = $table->fetchAll($where);]]></programlisting>
             先ほど <code>update()</code> メソッドや <code>delete()</code>
             メソッドで説明したものと似ています。
         </para>
+
+        <para>
+            <code>WHERE</code> 句の引数は、上の例のような文字列以外にも配列となることもあります。
+            配列の各要素について、もしキーが文字列なら
+            「キーはプレースホルダを含む SQL の式、
+            そして値はプレースホルダを置き換える値」
+            として扱われます。
+        </para>
+
+        <example id="zend.db.table.fetch-all.example1b">
+            <title>式の配列から行を取得する例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = array('bug_status = ?' => 'NEW');
+
+$rows = $table->fetchAll($where);]]></programlisting>
+        </example>
+
+        <para>
+            配列に複数の要素が含まれる場合は、それらを
+            <code>AND</code> で連結して使用します。
+        </para>
+
+        <example id="zend.db.table.fetch-all.example1c">
+            <title>複数の式の配列から行を取得する例</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = array(
+            'bug_status = ?'  => 'NEW',
+            'reported_by = ?' => 'dduck'
+        );
+
+$rows = $table->fetchAll($where);
+// 作成される SQL は、次のようになります
+// WHERE bug_status = 'NEW' AND reported_by = 'dduck'
+]]></programlisting>
+        </example>
 
         <note>
             <para>
