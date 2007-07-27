@@ -76,7 +76,7 @@
     </para>
 
     <para>
-        Zend Framework tercihen gevşek olarak bir araya getirilmiş olmasada ,  birçok bileşeni gerekli olduğunda
+        Zend Framework gevşek olarak bir araya getirilmiş olmasada ,  birçok bileşeni gerekli olduğunda
 	bağımsız kullanım için seçilebilir.
 	Takip eden herbir bölüm herbir bileşenin kullanımını belgelemektedir.	
     </para>
