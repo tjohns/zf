@@ -11,9 +11,9 @@
 # obtain it through the world-wide-web, please send an email
 # to license@zend.com so we can send you a copy immediately.
 #
-# @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+# @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
 # @license    http://framework.zend.com/license/new-bsd     New BSD License
-#
+# @version    $Id$
 
 #
 # Makefile - build Zend Framework product and documentation
@@ -29,7 +29,7 @@
 #  clean - remove staged files.
 #  clean-docbook - remove temp files under docbook sources.
 #  clean-export - remove exported product tree.
-# 
+#
 
 # -- parameters you are likely to want to change --
 
@@ -46,7 +46,7 @@ ZF_TAG=HEAD
 ZF_BRANCH=branch/release-1.0
 
 # ZF_VERSION is the release version string to build.  This is added
-# to the VERSION.txt file, and is also used for the name of the 
+# to the VERSION.txt file, and is also used for the name of the
 # staging directory and the names of the zip and tarball files.
 ZF_VERSION=1.0.1dev
 
@@ -110,7 +110,7 @@ zipball:
 	@echo "Done."
 
 tar: tarball
-tarball: 
+tarball:
 	@echo "== CREATING TAR.GZ ARCHIVES =="
 	@( cd $(STAGE_HOME) && $(TAR) -czf $(ZF_TARBALL) --exclude=$(ZF_PRODUCT)/documentation $(ZF_PRODUCT) )
 	@echo "Code archive done..."
