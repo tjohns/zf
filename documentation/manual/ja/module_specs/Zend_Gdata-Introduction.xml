@@ -39,6 +39,14 @@
             </listitem>
             <listitem>
                 <para>
+                    <link linkend="zend.gdata.gapps">Google Provisioning</link>
+                    は、Google Apps がホストするドメイン上の
+                    ユーザアカウントやニックネーム、そしてメーリングリストの
+                    作成、取得、更新、削除を行うものです。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     Google Blogger
                     は、人気のあるインターネットプロバイダです。
                     "ボタンひとつで簡単に" 記事を配信することができます。
@@ -62,8 +70,8 @@
     <note>
         <title>サポートしていないサービス</title>
         <para>
-            Google Data API は、その他に Google Base や Picasa Web Albums、
-            Google Apps Provisioning などもサポートしています。
+            Google Data API は、その他に Google Base や Picasa Web Albums
+            などもサポートしています。
             しかし、今回のリリースでは Zend_Gdata は
             これらのプロダクト用のヘルパークラスを用意していません。
         </para>
@@ -468,6 +476,54 @@ $feed = $gdata->getFeed($query);]]>
             対応するサービスにあわせた適切な URI からフィードを取得できるようになります。
         </para>
 
+    </sect2>
+
+    <sect2 id="zend.gdata.introduction.paging">
+        <title>複数ページのフィードの扱い方</title>
+        
+        <para>
+            多くのエントリが含まれるフィードを取得した場合、
+            そのフィードはいくつかの「ページ」に分かれていることがあるかもしれません。
+            そのような場合には、各ページには次のページへのリンクが含まれることになります。
+            このリンクにアクセスするには
+            <code>getLink('next')</code> を使用します。
+            この例は、フィードの次のページを取得する方法を示すものです。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+function getNextPage($feed) {
+    $nextURL = $feed->getLink('next');
+    if ($nextURL !== null) {
+        return $gdata->getFeed($nextURL);
+    } else {
+        return null;
+    }
+}]]>
+        </programlisting>
+
+        <para>
+            もしこのようにページに分かれているのが気に入らない場合は、
+            フィードの最初のページを
+            <code>Zend_Gdata_App::retrieveAllEntriesForFeed()</code>
+            に渡しましょう。そうすると、
+            すべてのエントリの内容をひとつのフィードにまとめてくれます。
+            この関数の使用法を、次の例で示します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$gdata = new Zend_Gdata();
+$query = new Zend_Gdata_Query(
+        'http://www.blogger.com/feeds/blogID/posts/default');
+$feed = Zend_Gdata_App::retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
+        </programlisting>
+
+        <para>
+            大きなフィードに対してこの関数をコールすると、
+            処理に時間がかかるということに注意しましょう。
+            <code>set_time_limit()</code>
+            で PHP の実行時間制限を拡大する必要があるかもしれません。
+        </para>
+        
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
