@@ -901,6 +901,32 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
     }
 
+    public function testTableLoadsCustomRowClass()
+    {
+        $this->assertFalse(class_exists('Zend_Db_Table_Row_TestMyRow', false),
+            'Expected TestMyRow class not to be loaded (#1)');
+        $this->assertFalse(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
+            'Expected TestMyRowset class not to be loaded (#1)');
+
+        // instantiating the table does not creat a rowset
+        // so the custom classes are not loaded yet
+        $bugsTable = $this->_getTable('Zend_Db_Table_TableBugsCustom');
+
+        $this->assertFalse(class_exists('Zend_Db_Table_Row_TestMyRow', false),
+            'Expected TestMyRow class not to be loaded (#2)');
+        $this->assertFalse(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
+            'Expected TestMyRowset class not to be loaded (#2)');
+
+        // creating a rowset makes the table load the rowset class
+        // and the rowset constructor loads the row class.
+        $bugs = $bugsTable->fetchAll();
+
+        $this->assertTrue(class_exists('Zend_Db_Table_Row_TestMyRow', false),
+            'Expected TestMyRow class to be loaded (#3)');
+        $this->assertTrue(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
+            'Expected TestMyRowset class to be loaded (#3)');
+    }
+
     public function testTableMetadataCacheRegistry()
     {
         $cache = $this->_getCache();
