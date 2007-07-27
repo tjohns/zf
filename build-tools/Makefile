@@ -48,7 +48,7 @@ ZF_BRANCH=branch/release-1.0
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
 # staging directory and the names of the zip and tarball files.
-ZF_VERSION=1.0.1dev
+ZF_VERSION=1.0.1
 
 # For LANG, use '*' if you want to build all manual
 # translations.  If you want to build one language, use one of the
