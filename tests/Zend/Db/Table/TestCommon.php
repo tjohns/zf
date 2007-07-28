@@ -577,7 +577,6 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     /**
      * @todo
      *
-     //
     public function testTableInsertNaturalExceptionKeyViolation()
     {
         $table = $this->_table['bugs'];
@@ -599,12 +598,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('xxx', $e->getMessage());
         }
     }
-    //*/
+     */
 
     /**
      * @todo
      *
-     //
     public function testTableInsertNaturalCompoundExceptionKeyViolation()
     {
         $table = $this->_table['bugs_products'];
@@ -621,7 +619,29 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('xxx', $e->getMessage());
         }
     }
-    //*/
+     */
+
+    /**
+     * @todo
+     *
+    public function testTableInsertMemoryLeakBugZf1739()
+    {
+        $table = $this->_table['products'];
+        $this->_db->beginTransaction();
+        for ($i = 0; $i < 10000000; $i++) 
+        {
+            $table->insert(array('product_name' => "product$i"));
+            if ($i % 1000 == 0) {
+                echo ".";
+            }
+        }
+        $this->_db->commit();
+        $select = $this->_db->select()
+            ->from('zfproducts', 'COUNT(*)');
+        $count = $this->_db->fetchOne($select);
+        $this->assertEquals(1000003, $count);
+    }
+     */
 
     public function testTableUpdate()
     {
@@ -903,6 +923,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableLoadsCustomRowClass()
     {
+        if (class_exists('Zend_Db_Table_Row_TestMyRow')) {
+            $this->markTestSkipped("Cannot test loading the custom Row class because it is already loaded");
+            return;
+        }
+
         $this->assertFalse(class_exists('Zend_Db_Table_Row_TestMyRow', false),
             'Expected TestMyRow class not to be loaded (#1)');
         $this->assertFalse(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
