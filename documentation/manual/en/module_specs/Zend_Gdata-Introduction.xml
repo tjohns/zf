@@ -521,7 +521,7 @@ function getNextPage($feed) {
 $gdata = new Zend_Gdata();
 $query = new Zend_Gdata_Query(
         'http://www.blogger.com/feeds/blogID/posts/default');
-$feed = Zend_Gdata_App::retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
+$feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
         </programlisting>
 
         <para>

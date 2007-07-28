@@ -729,7 +729,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllUsers () {
-        return self::retrieveAllEntriesForFeed($this->retrievePageOfUsers());
+        return $this->retrieveAllEntriesForFeed($this->retrievePageOfUsers());
     }
     
     /** 
@@ -870,7 +870,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
     public function retrieveNicknames($username) {
         $query = $this->newNicknameQuery();
         $query->setUsername($username);
-        $nicknameFeed = self::retrieveAllEntriesForFeed(
+        $nicknameFeed = $this->retrieveAllEntriesForFeed(
             $this->getNicknameFeed($query));
         return $nicknameFeed;
     }
@@ -909,7 +909,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllNicknames () {
-        return self::retrieveAllEntriesForFeed($this->retrievePageOfNicknames());
+        return $this->retrieveAllEntriesForFeed($this->retrievePageOfNicknames());
     }
     
     /**
@@ -996,7 +996,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllEmailLists() {
-        return self::retrieveAllEntriesForFeed($this->retrievePageOfEmailLists());
+        return $this->retrieveAllEntriesForFeed($this->retrievePageOfEmailLists());
     }
     
     /**
@@ -1076,7 +1076,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllRecipients($emailList) {
-        return self::retrieveAllEntriesForFeed(
+        return $this->retrieveAllEntriesForFeed(
                 $this->retrievePageOfRecipients($emailList));
     }
     
