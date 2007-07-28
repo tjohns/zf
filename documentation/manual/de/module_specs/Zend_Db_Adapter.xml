@@ -415,7 +415,7 @@ CREATE TABLE bugs_products (
 
         <para>
             <inlinegraphic width="387" scale="100" align="center" valign="middle"
-                fileref="../figures/zend.db.adapter.example-database.png" format="PNG" />
+                fileref="figures/zend.db.adapter.example-database.png" format="PNG" />
         </para>
 
     </sect2>
