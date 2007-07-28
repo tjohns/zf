@@ -577,7 +577,6 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     /**
      * @todo
      *
-     //
     public function testTableInsertNaturalExceptionKeyViolation()
     {
         $table = $this->_table['bugs'];
@@ -599,12 +598,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('xxx', $e->getMessage());
         }
     }
-    //*/
+     */
 
     /**
      * @todo
      *
-     //
     public function testTableInsertNaturalCompoundExceptionKeyViolation()
     {
         $table = $this->_table['bugs_products'];
@@ -621,7 +619,29 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('xxx', $e->getMessage());
         }
     }
-    //*/
+     */
+
+    /**
+     * @todo
+     *
+    public function testTableInsertMemoryLeakBugZf1739()
+    {
+        $table = $this->_table['products'];
+        $this->_db->beginTransaction();
+        for ($i = 0; $i < 10000000; $i++) 
+        {
+            $table->insert(array('product_name' => "product$i"));
+            if ($i % 1000 == 0) {
+                echo ".";
+            }
+        }
+        $this->_db->commit();
+        $select = $this->_db->select()
+            ->from('zfproducts', 'COUNT(*)');
+        $count = $this->_db->fetchOne($select);
+        $this->assertEquals(1000003, $count);
+    }
+     */
 
     public function testTableUpdate()
     {
@@ -899,6 +919,37 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         Zend_Registry::set('registered_metadata_cache', $cache);
         Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
         $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
+    }
+
+    public function testTableLoadsCustomRowClass()
+    {
+        if (class_exists('Zend_Db_Table_Row_TestMyRow')) {
+            $this->markTestSkipped("Cannot test loading the custom Row class because it is already loaded");
+            return;
+        }
+
+        $this->assertFalse(class_exists('Zend_Db_Table_Row_TestMyRow', false),
+            'Expected TestMyRow class not to be loaded (#1)');
+        $this->assertFalse(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
+            'Expected TestMyRowset class not to be loaded (#1)');
+
+        // instantiating the table does not creat a rowset
+        // so the custom classes are not loaded yet
+        $bugsTable = $this->_getTable('Zend_Db_Table_TableBugsCustom');
+
+        $this->assertFalse(class_exists('Zend_Db_Table_Row_TestMyRow', false),
+            'Expected TestMyRow class not to be loaded (#2)');
+        $this->assertFalse(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
+            'Expected TestMyRowset class not to be loaded (#2)');
+
+        // creating a rowset makes the table load the rowset class
+        // and the rowset constructor loads the row class.
+        $bugs = $bugsTable->fetchAll();
+
+        $this->assertTrue(class_exists('Zend_Db_Table_Row_TestMyRow', false),
+            'Expected TestMyRow class to be loaded (#3)');
+        $this->assertTrue(class_exists('Zend_Db_Table_Rowset_TestMyRowset', false),
+            'Expected TestMyRowset class to be loaded (#3)');
     }
 
     public function testTableMetadataCacheRegistry()

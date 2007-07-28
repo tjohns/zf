@@ -430,6 +430,7 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
         }
+        $stmt->closeCursor();
     }
 
     public function testStatementFetchColumn()
@@ -751,6 +752,23 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    protected $_getColumnMetaKeys = array(
+        'native_type', 'flags', 'table', 'name', 'len', 'precision', 'pdo_type'
+    );
+
+    public function testStatementGetColumnMeta()
+    {
+        $select = $this->_db->select()
+            ->from('zfbugs');
+        $stmt = $this->_db->prepare($select->__toString());
+        $stmt->execute();
+        for ($i = 0; $i < $stmt->columnCount(); ++$i) {
+            $meta = $stmt->getColumnMeta($i);
+            $this->assertType('array', $meta);
+            $this->assertEquals($this->_getColumnMetaKeys, array_keys($meta));
+        }
+    }
+
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()
@@ -774,8 +792,18 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt = $this->_db->prepare($select->__toString());
 
         $value = 'value';
-        $stmt->setAttribute(1234, $value);
-        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #1");
+        try {
+            $stmt->setAttribute(1234, $value);
+        } catch (Zend_Exception $e) {
+            $this->assertContains('This driver doesn\'t support setting attributes', $e->getMessage());
+        }
+
+        try {
+            $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #1");
+        } catch (Zend_Exception $e) {
+            $this->assertContains('This driver doesn\'t support getting attributes', $e->getMessage());
+            return;
+        }
 
         $valueArray = array('value1', 'value2');
         $stmt->setAttribute(1235, $valueArray);

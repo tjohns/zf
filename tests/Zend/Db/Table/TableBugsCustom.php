@@ -28,18 +28,6 @@
 require_once 'Zend/Db/Table/TableBugs.php';
 
 
-/**
- * @see Zend_Db_Table_Row_TestMyRow
- */
-require_once 'Zend/Db/Table/Row/TestMyRow.php';
-
-
-/**
- * @see Zend_Db_Table_Row_TestMyRowset
- */
-require_once 'Zend/Db/Table/Rowset/TestMyRowset.php';
-
-
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 

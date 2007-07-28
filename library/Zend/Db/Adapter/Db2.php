@@ -405,14 +405,14 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
-     * @return integer
+     * @return string
      */
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
         $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName, true).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
-        return $value;
+        return (string) $value;
     }
 
     /**
@@ -421,14 +421,14 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
-     * @return integer
+     * @return string
      */
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
         $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName, true).' AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
-        return $value;
+        return (string) $value;
     }
 
     /**
@@ -446,7 +446,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @param string $tableName OPTIONAL
      * @param string $primaryKey OPTIONAL
-     * @return integer
+     * @return string
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
@@ -463,7 +463,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
         $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
         $value = $this->fetchOne($sql);
-        return $value;
+        return (string) $value;
     }
 
     /**

@@ -556,6 +556,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetchColumn(0);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -571,6 +572,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $stmt = $this->query($sql, $bind);
         $result = $stmt->fetch($this->_fetchMode);
+        $stmt->closeCursor();
         return $result;
     }
 
@@ -787,7 +789,7 @@ abstract class Zend_Db_Adapter_Abstract
      * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
-     * @return integer
+     * @return string
      */
     public function lastSequenceId($sequenceName)
     {
@@ -800,7 +802,7 @@ abstract class Zend_Db_Adapter_Abstract
      * (e.g. Oracle, PostgreSQL, DB2).  Other RDBMS brands return null.
      *
      * @param string $sequenceName
-     * @return integer
+     * @return string
      */
     public function nextSequenceId($sequenceName)
     {
@@ -906,7 +908,7 @@ abstract class Zend_Db_Adapter_Abstract
      *
      * @param string $tableName   OPTIONAL Name of table.
      * @param string $primaryKey  OPTIONAL Name of primary key column.
-     * @return integer
+     * @return string
      */
     abstract public function lastInsertId($tableName = null, $primaryKey = null);
 

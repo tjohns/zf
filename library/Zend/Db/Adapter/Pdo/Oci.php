@@ -88,6 +88,11 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         }
         $tns .= $dsn['dbname'];
 
+        if (isset($dsn['charset']))
+        {
+            $tns .= ';charset=' . $dsn['charset'];
+        }       
+
         return $this->_pdoType . ':' . $tns;
     }
 
@@ -274,7 +279,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
      *
      * @param string $tableName   OPTIONAL Name of table.
      * @param string $primaryKey  OPTIONAL Name of primary key column.
-     * @return integer
+     * @return string
      * @throws Zend_Db_Adapter_Oracle_Exception
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
@@ -284,7 +289,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
             if ($primaryKey) {
                 $sequenceName .= $this->foldCase("_$primaryKey");
             }
-            $sequenceName .= $this->foldCase('_SEQ');
+            $sequenceName .= $this->foldCase('_seq');
             return $this->lastSequenceId($sequenceName);
         }
         return $this->_connection->lastInsertId($tableName);

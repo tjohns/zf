@@ -26,6 +26,15 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
 {
 
+    protected $_numericDataTypes = array(
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'BINARY_DOUBLE'      => Zend_Db::FLOAT_TYPE,
+        'BINARY_FLOAT'       => Zend_Db::FLOAT_TYPE,
+        'NUMBER'             => Zend_Db::FLOAT_TYPE
+    );
+
     public function testAdapterDescribeTablePrimaryAuto()
     {
         $this->markTestSkipped('Oracle does not support auto-increment');
@@ -58,8 +67,27 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertEquals(1, $rowsAffected);
         $lastInsertId = $this->_db->lastInsertId('zfproducts', null); // implies 'products_seq'
         $lastSequenceId = $this->_db->lastSequenceId('zfproducts_seq');
+        $this->assertType('string', $lastInsertId);
+        $this->assertType('string', $lastSequenceId);
         $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
         $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
+    }
+
+    public function testAdapterInsertDbExpr()
+    {
+        $row = array (
+            'product_id'   => new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq').'.NEXTVAL'),
+            'product_name' => new Zend_Db_Expr('UPPER(\'Solaris\')')
+        );
+        $rowsAffected = $this->_db->insert('zfproducts', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $product_id = $this->_db->quoteIdentifier('product_id', true);
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->where("$product_id = 4");
+        $result = $this->_db->fetchAll($select);
+        $this->assertType('array', $result);
+        $this->assertEquals('SOLARIS', $result[0]['product_name']);
     }
 
     /**

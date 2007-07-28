@@ -26,6 +26,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Statement_Pdo_OciTest extends Zend_Db_Statement_Pdo_TestCommon
 {
 
+    public function testStatementGetColumnMeta()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support statement metadata');
+    }
+
     public function getDriver()
     {
         return 'Pdo_Oci';

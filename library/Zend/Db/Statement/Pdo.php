@@ -340,7 +340,7 @@ class Zend_Db_Statement_Pdo extends Zend_Db_Statement
     public function getColumnMeta($column)
     {
         try {
-            return $this->_stmt->getColumnMeta();
+            return $this->_stmt->getColumnMeta($column);
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';
             throw new Zend_Db_Statement_Exception($e->getMessage());

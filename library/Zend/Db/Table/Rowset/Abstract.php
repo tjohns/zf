@@ -21,12 +21,10 @@
  * @version    $Id$
  */
 
-
 /**
- * @see Zend_Db_Table_Row
+ * @see Zend_Loader
  */
-require_once 'Zend/Db/Table/Row.php';
-
+require_once 'Zend/Loader.php';
 
 /**
  * @category   Zend
@@ -102,6 +100,8 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
 
     /**
      * Constructor.
+     *
+     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -112,6 +112,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
         if (isset($config['rowClass'])) {
             $this->_rowClass   = $config['rowClass'];
         }
+        Zend_Loader::loadClass($this->_rowClass);
         if (isset($config['data'])) {
             $this->_data       = $config['data'];
         }
@@ -148,7 +149,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     /**
      * Returns the table object, or null if this is disconnected rowset
      *
-     * @return Zend_Db_Table_Abstract|null
+     * @return Zend_Db_Table_Abstract
      */
     public function getTable()
     {

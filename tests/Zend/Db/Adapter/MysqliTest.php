@@ -46,6 +46,25 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
 {
 
+    protected $_numericDataTypes = array(
+        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+        'INT'                => Zend_Db::INT_TYPE,
+        'INTEGER'            => Zend_Db::INT_TYPE,
+        'MEDIUMINT'          => Zend_Db::INT_TYPE,
+        'SMALLINT'           => Zend_Db::INT_TYPE,
+        'TINYINT'            => Zend_Db::INT_TYPE,
+        'BIGINT'             => Zend_Db::BIGINT_TYPE,
+        'SERIAL'             => Zend_Db::BIGINT_TYPE,
+        'DEC'                => Zend_Db::FLOAT_TYPE,
+        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
+        'DOUBLE'             => Zend_Db::FLOAT_TYPE,
+        'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
+        'FIXED'              => Zend_Db::FLOAT_TYPE,
+        'FLOAT'              => Zend_Db::FLOAT_TYPE
+    );
+
     /**
      * Test AUTO_QUOTE_IDENTIFIERS option
      * Case: Zend_Db::AUTO_QUOTE_IDENTIFIERS = true
@@ -79,10 +98,13 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
             $this->assertEquals(3, count($result2), 'Expected 3 rows in second query result');
             $this->assertEquals($result1, $result2);
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Statement_Exception', $e,
-                'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-            $this->fail('Unexpected exception '.get_class($e).' received: '.$e->getMessage());
+            $this->fail('exception caught where none was expected.');
         }
+    }
+
+    public function testAdapterInsertSequence()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences');
     }
 
     /**
