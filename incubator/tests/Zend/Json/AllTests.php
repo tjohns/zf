@@ -7,6 +7,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Json/ServerTest.php';
+require_once 'Zend/Json/JsonXMLTest.php';
 
 class Zend_Json_AllTests
 {
@@ -21,6 +22,7 @@ class Zend_Json_AllTests
 
         $suite->addTestSuite('Zend_Json_ServerTest');
         //$suite->addTestSuite('Zend_Json_ClientTest');
+        $suite->addTestSuite('Zend_Json_JsonXMLTest');
        
         return $suite;
     }
