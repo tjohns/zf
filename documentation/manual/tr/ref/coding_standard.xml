@@ -195,12 +195,12 @@ Zend/View/Helper/FormRadio.php]]>
             </para>
 
             <para>
-                Verbosity is encouraged. Function names should be as verbose as is practical to enhance the
-                understandability of code.
+               Fonksiyon isimleri uzun yazılmalı.Fonksiyon isimlerinin uzun olması kodun pratik olarak anlaşılabilirliğini
+	       artırdığından , fonksiyon isimleri mümkün olduğunca uzun olmalı.
             </para>
 
             <para>
-                These are examples of acceptable names for functions:
+                Bunlar kabul edilebilir  fonksiyon isimleri:
 
                 <programlisting role="php"><![CDATA[
 filterInput()
@@ -212,56 +212,53 @@ widgetFactory()]]>
             </para>
 
             <para>
-                For object-oriented programming, accessors for objects should always be prefixed with
-                either "get" or "set". When using design patterns, such as the singleton or factory
-                patterns, the name of the method should contain the pattern name where practical to
-                make the pattern more readily recognizable.
+		Nesneye dayalı programlamada  nesne erişirleri(accessor) "get" veya "set" önekleri almalı.
+		Dizayn kalıpları kullanırken  mesela iskelet veya fabrika kalıbları , methodun adı kalıbın
+		adını içermeliki kalıb kolayca tanımlanabilsin.
             </para>
 
             <para>
-                Functions in the global scope ("floating functions") are permitted but discouraged.
-                It is recommended that these functions should be wrapped in a static class.
+		Fonksiyonlar ("floating functions") genel kapsamda kullanılabilir ancak bu kullanım uygun bulunmamaktadır.
+                Bu fonksiyonları static bir sınıf'ın içine koymalısınız.                
             </para>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.variables">
-            <title>Variables</title>
+            <title>Değişkenler</title>
 
             <para>
-                Variable names may only contain alphanumeric characters. Underscores are not permitted.
-                Numbers are permitted in variable names but are discouraged.
+                Değişken isimleri sadece alfanümerik karakterleden oluşabilir.Altçizgi kullanmamalısınız.
+		Değişken isimlerinde numaralar kullanılabilir ancak bu kullanım ugun bulunmamaktadır.
+		
             </para>
 
             <para>
-                For class member variables that are declared with the "private" or "protected" construct,
-                the first character of the variable name must be a single underscore. This is the only
-                acceptable usage of an underscore in a function name. Member variables declared "public"
-                may never start with an underscore.
+                "private" veya "protected" construct'ı ile tanımlanmış sınıf üyesi değişkenlerin
+		değişken isminin ilk harfi altçizgi olmalı.Bu fonksiyon adında altçizgi kullanılabilir tek  kullanım 
+		şeklidir. "public" ile tanımlanmış üye değişkenler asla altçizgi ile başlamamalı.	
             </para>
 
             <para>
-                Like function names (see section 3.3, above) variable names must always start with a
-                lowercase letter and follow the "camelCaps" capitalization convention.
+                Fonksiyon isimlerinde (bölüm 3.3,yukarıda) olduğu gibi değişken isimleride her zaman
+		küçük harfle başlamalı ve "camelCaps" kuralına uymalı.
             </para>
 
             <para>
-                Verbosity is encouraged. Variables should always be as verbose as practical. Terse variable
-                names such as "$i" and "$n" are discouraged for anything other than the smallest loop contexts.
-                If a loop contains more than 20 lines of code, the variables for the indices need to have more
-                descriptive names.
+                Değişkenler pratik olabilecek kadar uzun olmalı. "$i" ve "$n" gibi kısa ve öz değişken isimleri
+		küçük döngüler dışında kullanılmamalı. Eğer bir döngü 20 satırdan fazla ise , indisler için olan değişkenlerin
+		daha açıklayıcı isimleri olmalı.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.constants">
-            <title>Constants</title>
+            <title>Sabitler</title>
 
             <para>
-                Constants may contain both alphanumeric characters and the underscore. Numbers are permitted
-                in constant names.
+                Sabitler hem altçizgi hemde alfanümerik karakterler içerebilir. Sabit isimlerinde sayılar kullanılabilir.
             </para>
 
             <para>
-                Constants must always have all letters capitalized.
+                Sabitlerin tüm harfleri mutlaka büyük olmalı.
             </para>
 
             <para>
