@@ -32,6 +32,8 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/CurrencyTest.php';
 require_once 'Zend/TimeSyncTest.php';
+require_once 'Zend/Json/AllTests.php';
+
 
 /**
  * @category   Zend
@@ -54,6 +56,10 @@ class Zend_AllTests
         $suite->addTest(Zend_Db_AllTests::suite());
         $suite->addTestSuite('Zend_CurrencyTest');
         $suite->addTestSuite('Zend_TimeSyncTest');
+        /*
+         * Perform the tests for Zend_Json component now.
+         */
+        $suite->addTest(Zend_Json_AllTests::suite());
 
         return $suite;
     }
