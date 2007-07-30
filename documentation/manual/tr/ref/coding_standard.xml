@@ -227,8 +227,8 @@ widgetFactory()]]>
             <title>Değişkenler</title>
 
             <para>
-                Değişken isimleri sadece alfanümerik karakterleden oluşabilir.Altçizgi kullanmamalısınız.
-		Değişken isimlerinde numaralar kullanılabilir ancak bu kullanım ugun bulunmamaktadır.
+                Değişken isimleri sadece alfanümerik karakterleden oluşabilir.Altçizgi kullanılamaz.
+		Değişken isimlerinde numaralar kullanılabilir ancak bu kullanım uygun bulunmamaktadır.
 		
             </para>
 
@@ -262,26 +262,26 @@ widgetFactory()]]>
             </para>
 
             <para>
-                To enhance readablity, words in constant names must be separated by underscore characters. For
-                example, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> is permitted but
-                <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> is not.
+                Okunabilirliği artırmak için sabitlerdeki kelimeler altçizgilerle ayrılmalı. Örneğin
+		<code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> kabul olmasına karşın <code>EMBED_SUPPRESSEMBEDEXCEPTION</code>
+		kabul edilmez.
             </para>
 
             <para>
-                Constants must be defined as class members by using the "const" construct. Defining constants
-                in the global scope with "define" is permitted but discouraged.
+                Sabitler "const" construct'ı kullanılarak sınıf üyeleri olarak tanımlanmalı.
+		Sabitler genel kapsamda "define" ile tanımlanabilmesine karşın bu tanımlama uygun görülmemektedir.		
             </para>
         </sect2>
     </sect1>
 
     <sect1 id="coding-standard.coding-style">
-        <title>Coding Style</title>
+        <title>Kodlama Stili</title>
 
         <sect2 id="coding-standard.coding-style.php-code-demarcation">
-            <title>PHP Code Demarcation</title>
+            <title>PHP Kodu Sınırlaması</title>
 
             <para>
-                PHP code must always be delimited by the full-form, standard PHP tags:
+                PHP kodu her zaman için tam,standart PHP tagleri ile ayrılmalı :		
 
                 <programlisting role="php"><![CDATA[<?php
 
@@ -289,8 +289,8 @@ widgetFactory()]]>
             </para>
 
             <para>
-                Short tags are never allowed.  For files containing only PHP code, the
-                closing tag must always be omitted (See <xref linkend="coding-standard.php-file-formatting.general" />).
+                Kısa taglere izin verilmez. Sadece PHP kodu içeren dosyalarda kapama tagi her zaman
+		için gözardı edilmeli (bakınız <xref linkend="coding-standard.php-file-formatting.general" />).		
             </para>
         </sect2>
 
@@ -298,62 +298,64 @@ widgetFactory()]]>
             <title>Strings</title>
 
             <sect3 id="coding-standard.coding-style.strings.literals">
-                <title>String Literals</title>
+                <title>Yalın Stringler</title>
 
                 <para>
-                    When a string is literal (contains no variable substitutions), the apostrophe or
-                    "single quote" must always used to demarcate the string:
+                    Bir string yalın olduğunda (değişken değişimi olmadığında) , kesme işareti veya
+		    "tek tırnak" her zaman stringi ayırmak için kullanılır:
 
                     <programlisting role="php"><![CDATA[
-$a = 'Example String';]]>
+$a = 'Örnek String';]]>
                     </programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.literals-containing-apostrophes">
-                <title>String Literals Containing Apostrophes</title>
+                <title>Kesme işareti içeren Yalın Stringler</title>
 
                 <para>
-                    When a literal string itself contains apostrophes, it is permitted to demarcate
-                    the string with quotation marks or "double quotes". This is especially encouraged
-                    for SQL statements:
+		    Bir yalın string kesme işareti içerdiği zaman string tırnak işareti veya çift tırnak ile ayrılmalı.
+		    Bu özellikle SQL ifadelerine uygun :	    
+                    
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
                     </programlisting>
 
-                    The above syntax is preferred over escaping apostrophes.
+                    Yukarıdaki söz dizimi tek tırnak escapelemeye göre tercih edilir.
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.variable-substitution">
-                <title>Variable Substitution</title>
+                <title>Değişken Yerine koyma</title>
 
                 <para>
-                    Variable substitution is permitted using either of these two forms:
+                    Değişken yerine koyma şu iki şekilde yapılabilir :
+                    
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello $name, welcome back!";
+$greeting = "Merhaba $isim, tekrar hoşgeldin!";
 
-$greeting = "Hello {$name}, welcome back!";]]>
+$greeting = "Merhaba {$isim}, tekrar hoşgeldin!";]]>
                     </programlisting>
                 </para>
 
                 <para>
-                    For consistency, this form is not permitted:
+                    Tutarlılık için bu kullanıma izin verilmez :
+                    
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello ${name}, welcome back!";]]>
+$greeting = "Merhaba ${isim}, tekrar hoşgeldin!";]]>
                     </programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.string-concatenation">
-                <title>String Concatenation</title>
+                <title>String Birleştirme</title>
 
                 <para>
-                    Strings may be concatenated using the "." operator. A space must always
-                    be added before and after the "." operator to improve readability:
+                    Stringler "." operetörü ile birleştirilebilirler. Okunabilirliği artırmak için
+		    "." operatöründen önce ve sonra boşluk bırakılmalı :
 
                     <programlisting role="php"><![CDATA[
 $company = 'Zend' . 'Technologies';]]>
