@@ -208,17 +208,21 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     public function __construct($params)
     {
-        if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
+        if (is_array($params)) {
+            $params = (object)$params;
+        }
+
+        if (!isset($params->dirname) || !is_dir($params->dirname)) {
             throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
-        if (!$this->_isMaildir($params['dirname'])) {
+        if (!$this->_isMaildir($params->dirname)) {
             throw new Zend_Mail_Storage_Exception('invalid maildir given');
         }
 
         $this->_has['top'] = true;
         $this->_has['flags'] = true;
-        $this->_openMaildir($params['dirname']);
+        $this->_openMaildir($params->dirname);
     }
 
     /**

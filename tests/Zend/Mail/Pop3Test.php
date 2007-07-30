@@ -18,6 +18,11 @@ require_once 'Zend/Mail/Storage/Pop3.php';
 require_once 'Zend/Mail/Protocol/Pop3.php';
 
 /**
+ * Zend_Config
+ */
+require_once 'Zend/Config.php';
+
+/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -98,6 +103,16 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
             $this->fail('exception raised while loading connection to pop3 server');
         }
     }
+
+    public function testConnectConfig()
+    {
+        try {
+            $mail = new Zend_Mail_Storage_Pop3(new Zend_Config($this->_params));
+        } catch (Exception $e) {
+            $this->fail('exception raised while loading connection to pop3 server');
+        }
+    }
+
 
     public function testConnectFailure()
     {

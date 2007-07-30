@@ -13,6 +13,11 @@
 require_once 'Zend/Mail/Storage/Mbox.php';
 
 /**
+ * Zend_Config
+ */
+require_once 'Zend/Config.php';
+
+/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -69,6 +74,15 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
             $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
         } catch (Exception $e) {
             $this->fail('exception raised while loading mbox file');
+        }
+    }
+
+    public function testLoadConfig()
+    {
+        try {
+            $mail = new Zend_Mail_Storage_Mbox(new Zend_Config(array('filename' => $this->_mboxFile)));
+        } catch (Exception $e) {
+            $this->fail('exception raised while loading mbox folder');
         }
     }
 

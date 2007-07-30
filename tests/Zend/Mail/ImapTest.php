@@ -17,6 +17,10 @@ require_once 'Zend/Mail/Storage/Imap.php';
  */
 require_once 'Zend/Mail/Protocol/Imap.php';
 
+/**
+ * Zend_Config
+ */
+require_once 'Zend/Config.php';
 
 /**
  * PHPUnit test case
@@ -95,6 +99,15 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
     {
         try {
             $mail = new Zend_Mail_Storage_Imap($this->_params);
+        } catch (Exception $e) {
+            $this->fail('exception raised while loading connection to imap server');
+        }
+    }
+
+    public function testConnectConfig()
+    {
+        try {
+            $mail = new Zend_Mail_Storage_Imap(new Zend_Config($this->_params));
         } catch (Exception $e) {
             $this->fail('exception raised while loading connection to imap server');
         }

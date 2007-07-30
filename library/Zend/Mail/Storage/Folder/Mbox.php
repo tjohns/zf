@@ -76,18 +76,22 @@ class Zend_Mail_Storage_Folder_Mbox extends Zend_Mail_Storage_Mbox implements Ze
      */
     public function __construct($params)
     {
-        if (isset($params['filename'])) {
+        if (is_array($params)) {
+            $params = (object)$params;
+        }
+
+        if (isset($params->filename)) {
             throw new Zend_Mail_Storage_Exception('use Zend_Mail_Storage_Mbox for a single file');
         }
 
-        if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
+        if (!isset($params->dirname) || !is_dir($params->dirname)) {
             throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
-        $this->_rootdir = rtrim($params['dirname'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->_rootdir = rtrim($params->dirname, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         $this->_buildFolderTree($this->_rootdir);
-        $this->selectFolder(!empty($params['folder']) ? $params['folder'] : 'INBOX');
+        $this->selectFolder(!empty($params->folder) ? $params->folder : 'INBOX');
         $this->_has['top']      = true;
         $this->_has['uniqueid'] = false;
     }

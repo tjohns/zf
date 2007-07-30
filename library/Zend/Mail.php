@@ -405,7 +405,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _storeHeader($headerName, $value, $append=false)
     {
-        $value = strtr($value,"\r\n\t",'???');
+// ??        $value = strtr($value,"\r\n\t",'???');
         if (isset($this->_headers[$headerName])) {
             $this->_headers[$headerName][] = $value;
         } else {

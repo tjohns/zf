@@ -13,6 +13,11 @@
 require_once 'Zend/Mail/Storage/Folder/Maildir.php';
 
 /**
+ * Zend_Config
+ */
+require_once 'Zend/Config.php';
+
+/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -114,6 +119,15 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
     {
         try {
             $mail = new Zend_Mail_Storage_Folder_Maildir($this->_params);
+        } catch (Exception $e) {
+            $this->fail('exception raised while loading Maildir folder');
+        }
+    }
+
+    public function testLoadConfig()
+    {
+        try {
+            $mail = new Zend_Mail_Storage_Folder_Maildir(new Zend_Config($this->_params));
         } catch (Exception $e) {
             $this->fail('exception raised while loading Maildir folder');
         }

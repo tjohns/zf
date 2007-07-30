@@ -194,11 +194,15 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     public function __construct($params)
     {
-        if (!isset($params['filename']) /* || Zend_Loader::isReadable($params['filename']) */) {
+        if (is_array($params)) {
+            $params = (object)$params;
+        }
+    
+        if (!isset($params->filename) /* || Zend_Loader::isReadable($params['filename']) */) {
             throw new Zend_Mail_Storage_Exception('no valid filename given in params');
         }
 
-        $this->_openMboxFile($params['filename']);
+        $this->_openMboxFile($params->filename);
         $this->_has['top']      = true;
         $this->_has['uniqueid'] = false;
     }

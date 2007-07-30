@@ -177,6 +177,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
      */
     public function _sendMail()
     {
+		var_dump($this->header, $this->body); die();    
         // If sending multiple messages per session use existing adapter
         if (!($this->_connection instanceof Zend_Mail_Protocol_Smtp)) {
             // Check if authentication is required and determine required class

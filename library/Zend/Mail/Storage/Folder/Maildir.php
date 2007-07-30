@@ -75,16 +75,20 @@ class Zend_Mail_Storage_Folder_Maildir extends Zend_Mail_Storage_Maildir impleme
      */
     public function __construct($params)
     {
-        if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
+        if (is_array($params)) {
+            $params = (object)$params;
+        }
+
+        if (!isset($params->dirname) || !is_dir($params->dirname)) {
             throw new Zend_Mail_Storage_Exception('no valid dirname given in params');
         }
 
-        $this->_rootdir = rtrim($params['dirname'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->_rootdir = rtrim($params->dirname, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        $this->_delim = isset($params['delim']) ? $params['delim'] : '.';
+        $this->_delim = isset($params->delim) ? $params->delim : '.';
 
         $this->_buildFolderTree();
-        $this->selectFolder(!empty($params['folder']) ? $params['folder'] : 'INBOX');
+        $this->selectFolder(!empty($params->folder) ? $params->folder : 'INBOX');
         $this->_has['top'] = true;
         $this->_has['flags'] = true;
     }

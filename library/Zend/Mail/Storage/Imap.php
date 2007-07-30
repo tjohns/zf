@@ -200,6 +200,10 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
      */
     public function __construct($params)
     {
+        if (is_array($params)) {
+            $params = (object)$params;
+        }
+
         $this->_has['flags'] = true;
 
         if ($params instanceof Zend_Mail_Protocol_Imap) {
@@ -212,21 +216,21 @@ class Zend_Mail_Storage_Imap extends Zend_Mail_Storage_Abstract
             return;
         }
 
-        if (!isset($params['user'])) {
+        if (!isset($params->user)) {
             throw new Zend_Mail_Storage_Exception('need at least user in params');
         }
 
-        $params['host']     = isset($params['host'])     ? $params['host']     : 'localhost';
-        $params['password'] = isset($params['password']) ? $params['password'] : '';
-        $params['port']     = isset($params['port'])     ? $params['port']     : null;
-        $params['ssl']      = isset($params['ssl'])      ? $params['ssl']      : false;
+        $host     = isset($params->host)     ? $params->host     : 'localhost';
+        $password = isset($params->password) ? $params->password : '';
+        $port     = isset($params->port)     ? $params->port     : null;
+        $ssl      = isset($params->ssl)      ? $params->ssl      : false;
 
         $this->_protocol = new Zend_Mail_Protocol_Imap();
-        $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
-        if (!$this->_protocol->login($params['user'], $params['password'])) {
+        $this->_protocol->connect($host, $port, $ssl);
+        if (!$this->_protocol->login($params->user, $password)) {
             throw new Zend_Mail_Storage_Exception('cannot login, user or password wrong');
         }
-        $this->selectFolder(isset($params['folder']) ? $params['folder'] : 'INBOX');
+        $this->selectFolder(isset($params->folder) ? $params->folder : 'INBOX');
     }
 
     /**
