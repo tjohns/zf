@@ -1,0 +1,175 @@
+<sect1 id="zend.controller.modular">
+    <title>Модульная структуры директорий<!--Using a Conventional Modular Directory Structure--></title>
+
+    <sect2 id="zend.controller.modular.introduction">
+        <title>Введение</title>
+        <para>
+            Модульная структура директорий позволяет делить различные
+            MVC-приложения в самодостаточные единицы и повторно использовать их
+            с различными фронт-контроллерами. Следующая структура директорий
+            иллюстрирует это:
+<!--
+            The Conventional Modular directory structure allows you to separate
+            different MVC applications into self-contained units, and re-use
+            them with different front controllers. To illustrate such a
+            directory structure:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+docroot/
+    index.php
+application/
+    controllers/
+        IndexController.php
+        FooController.php
+    blog/
+        controllers/
+            IndexController.php
+        models/
+        views/
+    news/
+        controllers/
+            IndexController.php
+            ListController.php
+        models/
+        views/
+]]></programlisting>
+
+        <para>
+            В этой парадигме имена модулей используются как префиксы к
+            контроллерам в этих модулях. Пример выше содержит три контроллера в
+            модулях: 'Blog_IndexController', 'News_IndexController' и
+            'News_ListController'. Также определены два общих контроллера:
+            'IndexController' и 'FooController'. Эта структура директорий будет
+            использоваться для последующих примеров в этом разделе.
+<!--
+            In this paradigm, the module name serves as a prefix to the
+            controllers it contains. The above example contains three
+            module controllers, 'Blog_IndexController', 'News_IndexController', and
+            'News_ListController'. Two global controllers, 'IndexController' and
+            'FooController' are also defined; neither of these will be
+            namespaced. This directory structure will be used for examples in
+            this chapter.
+-->
+        </para>
+
+        <para>
+            Итак, как можно реализовать такую организацию на уровне директорий, используя компоненты MVC в Zend Framework?
+<!--
+            So, how do you implement such a directory layout using the Zend
+            Framework MVC components?
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.modular.directories">
+        <title>Определение директорий контроллеров для модулей<!--Specifying Module Controller Directories--></title>
+
+        <para>
+            Первым шагом в использовании модулей является изменение способа определения список директорий во фронт-контроллере. В основной серии MVC вы передаете методу setControllerDirectory() массив или строку, а методу addControllerDirectory() - путь. При использованиии модулей нужно несколько изменить вызовы этих методов.
+<!--
+            The first step to making use of modules is to modify how you specify
+            the controller directory list in the front controller. In the basic
+            MVC series, you pass either an array or a string to
+            setControllerDirectory(), or a path to addControllerDirectory().
+            When using modules, you need to alter your calls to these methods
+            slightly.
+-->
+        </para>
+
+        <para>
+            Методу setControllerDirectory() нужно будет передавать ассоциативный массив, в котором пары 'имя модуля'-'пути директорий' определены как ключ и значение массива соответственно. Специальный ключ 'default' используется для общих контроллеров. Все ключи (имена модулей) должны указывать на единственный путь. Например:
+<!--
+            With setControllerDirectory(), you will need to pass an associative
+            array and specify key/value pairs of module name/directory paths.
+            The special key 'default' will be used for global controllers (those
+            not needing a module namespace).  All entries should contain a
+            string key pointing to a single path. As an example:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+      'default' => '/path/to/application/controllers',
+      'blog'    => '/path/to/application/blog/controllers'
+));
+]]></programlisting>
+
+        <para>
+            Метод addControllerDirectory() принимает необязательный второй параметр. Если используются модули, то передавайте имя модуля в качестве второго аргумента; если он не определен, то путь будет добавлен в пространство имен, используемое по умолчанию ('default'). Например:
+<!--
+            addControllerDirectory() will take an optional second argument. When
+            using modules, pass the module name as the second argument; if not
+            specified, the path will be added to the default namespace. As an
+            example:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.controller.modular.router">
+        <title>Маршрутизация применительно к модулям<!--Routing to modules--></title>
+
+        <para>
+            Маршрут, используемый по умолчанию в <code>Zend_Controller_Router_Rewrite</code> является объектом <code>Zend_Controller_Router_Route_Module</code>. Этот объект использует следующие схемы маршрутизации:
+<!--
+            The default route in <code>Zend_Controller_Router_Rewrite</code> is
+            an object of type <code>Zend_Controller_Router_Route_Module</code>.
+            This route expects one of the following routing schemas:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem><para><code>:module/:controller/:action/*</code></para></listitem>
+            <listitem><para><code>:controller/:action/*</code></para></listitem>
+
+        </itemizedlist>
+
+        <para>
+            Другими словами, он будет соответсвовать контроллеру и действию без модуля или контроллеру и действию с предшествующим модулем. Правила сопоставления предписывают, что модуль должен только тогда соответствовать пути, если ключ с тем же именем существует в массиве директорий контроллера.
+<!--
+            In other words, it will match a controller and action by themselves
+            or with a preceding module. The rules for matching specify that a
+            module will only be matched if a key of the same name exists in the
+            controller directory array passed to the front controller and
+            dispatcher.
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.modular.defaultcontroller">
+        <title>Контроллер, используемый по умолчанию - для модуля или общий<!--Module or Global Default Controller--></title>
+
+        <para>
+            В маршрутизаторе, используемом по умолчанию, если контроллер не был определен в URL, то используется контроллер по умолчанию (<code>IndexController</code>, если не был установлен другой). В случае использования модулей, если был определен модуль без контроллера, то диспетчер сначала ищет используемый по умолчанию контроллер в директории модуля, затем в общем пространстве имен.
+<!--
+            In the default router, if a controller was not specified in the URL,
+            a default controller is used (<code>IndexController</code>, unless otherwise
+            requested). With modular controllers, if a module has been specified
+            but no controller, the dispatcher first looks for this default
+            controller in the module path, and then falls back on the default
+            controller found in the 'default', global, namespace.
+-->
+        </para>
+
+        <para>
+            Если вы хотите всегда использовать общее пространство имен, то установите параметр <code>useGlobalDefault</code> во фронт-контроллере:
+<!--
+            If you wish to always default to the global namespace, set the
+            <code>useGlobalDefault</code> parameter in the front controller:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->setParam('useGlobalDefault', true);
+]]></programlisting>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,201 @@
+<sect1 id="zend.cache.theory">
+    <title>Теория кэширования<!--The theory of caching--></title>
+    <para>
+        Есть три ключевых понятия в Zend_Cache. Первое — уникальный
+        идентификатор (строка), который служит для идентификации записей кэша.
+        Второе — это директива <code>'lifetime'</code>, которую вы могли видеть
+        в предыдущих примерах; она определяет, в течение какого времени кэшируемый
+        ресурс считается "свежим". Третье понятие — условное исполнение, используемое
+        для того, чтобы части вашего кода могли быть пропущены целиком, этим повышается
+        производительность. Основной метод фронтэнда
+        (например, <code>Zend_Cache_Core::get()</code>) всегда спроектирован так, чтобы
+        должен возвращать <code>false</code> при промахе кэша, если это
+        имеет смысл для данного фронэнда. Это дает конечным
+        пользователям возможность включать части кода, которые нужно
+        кэшировать (и затем пропускать) в операторы <code>if(){ ... }</code>,
+        где условием является сам метод Zend_Cache. Но в конце этих блоков
+        вы должны сохранять то, что было сгенерировано (например, методом
+        <code>Zend_Cache_Core::save()</code>).
+<!--
+        There are three key concepts in Zend_Cache. One is the unique indentifier (a string) that is used
+        to identify cache records. The second one is the <code>'lifetime'</code> directive as seen in the
+        examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
+        is conditional execution so that parts of your code can be skipped entirely, boosting performance.
+        The main frontend function (eg. <code>Zend_Cache_Core::get()</code>) is always designed to return
+        false for a cache miss if that makes sense for the nature of a frontend. That enables end-users to
+        wrap parts of the code they would like to cache (and skip) in <code>if(){ ... }</code> statements where
+        the condition is a Zend_Cache method itself. On the end if these blocks you must save what you've
+        generated, however (eg. <code>Zend_Cache_Core::save()</code>).
+-->
+    </para>
+    <note><para>
+        Для некоторых фронтэндов включение условного исполнения в
+        код не нужно, так как вся логика уже реализована в них
+        (например, <code>Function</code>).
+<!--
+        The conditional execution design of your generating code is not necessary in some frontends
+        (<code>Function</code>, for an example) when the whole logic is implemented inside the frontend.
+-->
+    </para></note>
+    <note><para>
+        "Попадание в кэш" — термин для того состояния, когда запись кэша найдена,
+        является корректной и "свежей" (в других словах, для которой
+        не закончился срок действия). Иначе имеет место "промах кэша".
+        Когда происходит "промах кэша", вы должны сгенерировать свои данные,
+        которые помещаются в кэш. С другой стороны, если есть "попадание",
+        то бэкэнд автоматически извлечет запись из кэша.
+<!--
+        'Cache hit' is a term for a condition when a cache record is found, is valid and is 'fresh' (in other
+        words hasn't expired yet). 'Cache miss' is everything else. When a cache miss happens, you must
+        generate your data (as you would normally do) and have it cached. When you have a cache hit, on the
+        other hand, the backend automatically fetches the record from cache transparently.
+-->
+    </para></note>
+    <sect2 id="zend.cache.factory">
+        <title>Фабричный метод <code>Zend_Cache</code><!--The <code>Zend_Cache</code> factory method--></title>
+        <para>
+            Корректным способом создания рабочего экземпляра
+            фронтэнда <code>Zend_Cache</code> является код показанный в
+            следующем примере:
+<!--
+            A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
+            in the following example :
+-->
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+# Загружаем фабрику Zend_Cache
+require 'Zend/Cache.php';
+
+# Выбираем бэкэнд (например, 'File' или 'Sqlite'...)
+$backendName = '[...]';
+
+# Выбираем фронтэнд (например, 'Core', 'Output', 'Page'...)
+$frontendName = '[...]';
+
+# Устанавливаем массив опций для выбранного фронтэнда
+$frontendOptions = array([...]);
+
+# Устанавливаем массив опций для выбранного бэкэнда
+$backendOptions = array([...]);
+
+# Создаем экземпляр
+# (два последних аргумента являются необязательными)
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+
+?>]]>   </programlisting>
+        <para>
+            В следующих примерах мы предполагаем, что переменная <code>$cache</code>
+            содержит инстанцированный, как показано в примере, фронтэнд,
+            и что вы понимаете, как передавать параметры выбранному вами
+            бэкэнду.
+<!--
+            In the following examples we will assume that the <code>$cache</code> variable holds a
+            valid, instantiated frontend as shown and that you understand how to pass parametres
+            to your chosen backends.
+-->
+        </para>
+        <note><para>
+            Всегда используйте <code>Zend_Cache::factory()</code> для получения
+            экземпляров фронтэнда. Непосредственно созданные экземпляры
+            фронтэндов и бэкэндов будут работать не так, как ожидается.
+<!--
+            Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
+            frontends and backends yourself will not work as expected.
+-->
+        </para></note>
+    </sect2>
+
+    <sect2 id="zend.cache.tags">
+        <title>Добавление тегов к записям<!--Tagging records--></title>
+        <para>
+            Теги являются средством категоризации записей кэша. Когда вы производите
+            сохранение в кэш методом <code>save()</code>, то можете установить массив
+            тегов к данной записи. После этого вы можете удалить все записи
+            кэша, помеченные данным тегом (тегами).
+<!--
+            Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
+            method, you can set an array of tags to apply for this record. Then you will be
+            able to clean all cache records tagged with a given tag (or tags):
+-->
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
+
+?>]]>   </programlisting>
+        <note>
+            <para>
+                Метод <code>save()</code> принимает также необязательный
+                четвертый параметр: <code>$specificLifetime</code>. Если он не
+                равен <code>false</code>, то устанавливается время жизни
+                определенной записи кэша.
+<!--
+            note than the <code>save()</code> method accepts an optional fourth argument : <code>$specificLifetime</code>
+            (if != false, it sets a specific lifetime for this particular cache record)
+-->
+            </para>
+        </note>
+    </sect2>
+    <sect2 id="zend.cache.clean">
+        <title>Очистка кэша<!--Cleaning the cache--></title>
+        <para>
+            Для того, чтобы удалить или сделать недействительной запись с определенным
+            идентификатором, вы можете использовать метод <code>remove()</code>:
+<!--
+            To remove/invalidate in particular cache id, you can use the <code>remove()</code>
+            method :
+-->
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+$cache->remove('idToRemove');
+
+?>]]>   </programlisting>
+        <para>
+            Для того, чтобы за одну операцию удалить или сделать недействительными
+            несколько записей кэша, вы можете использовать
+            метод <code>clean()</code>. Например, чтобы удалить все записи кэша:
+<!--
+            To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
+            method. For example to remove all cache records :
+-->
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+// удаление всех записей
+$cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+// удаление только устаревших записей
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+
+?>]]>   </programlisting>
+        <para>
+            Если вы хотите удалить записи кэша, помеченные тегами 'tagA' и 'tagC':
+<!--
+            If you want to remove cache entries matching the tags 'tagA' and 'tagC':
+-->
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+
+?>]]>   </programlisting>
+        <para>
+            Доступные режимы очищения: <code>CLEANING_MODE_ALL</code> (удалить все),
+            <code>CLEANING_MODE_OLD</code> (удалить устаревшие),
+            <code>CLEANING_MODE_MATCHING_TAG</code> (удалить помеченные тегом)
+            и <code>CLEANING_MODE_NOT_MATCHING_TAG</code> (удалить не помеченные тегом).
+            Последние два, как ясно из названий, передаются вместе с массивом
+            тегов.
+<!--
+            Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
+            <code>CLEANING_MODE_MATCHING_TAG</code> and <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. The
+            latter are, as their names suggest, combined with an array of tags in cleaning operations.
+-->
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

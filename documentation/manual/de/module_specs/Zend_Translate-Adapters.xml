@@ -1,0 +1,195 @@
+<sect1 id="zend.translate.adapter">
+
+    <title>Adapter für Zend_Translate</title>
+
+    <para>
+        Zend_Translate kann unterschiedliche Adapter für die Übersetzung verwenden.
+        Jeder Adapter hat seine eigenen Vor- und Nachteile. Hier ist eine kurze
+        Liste aller unterstützten Adapter für Übersetzungs Quell Dateien.
+    </para>
+
+    <table id="zend.translate.adapter.table">
+        <title>Adapter für Zend_Translate</title>
+        <tgroup cols="3">
+            <thead>
+                <row>
+                    <entry>Adapter</entry>
+                    <entry>Beschreibung</entry>
+                    <entry>Benutzung</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>Array</entry>
+                    <entry>Für PHP Arrays</entry>
+                    <entry>Kleine Seiten; Einfachste Handhabung; nur für Programmierer</entry>
+                </row>
+                <row>
+                    <entry>Csv</entry>
+                    <entry>Für kommagetrennte (*.csv/*.txt) Dateien</entry>
+                    <entry>Einfaches Textdatei Format; sehr schnell; mögliche Probleme bei der Verwendung von Unicode Zeichen</entry>
+                </row>
+                <row>
+                    <entry>Gettext</entry>
+                    <entry>Für binäre Gettext (*.mo) Dateien</entry>
+                    <entry>GNU Standard für Linux; sehr schnell; Threadsicher; benötigt Tools für die Übersetzung</entry>
+                </row>
+                <row>
+                    <entry>TMX</entry>
+                    <entry>Für TMX (*.tmx/*.xml) Dateien</entry>
+                    <entry>Industrie Standard für Applikations übergreifende Übersetzungen; XML Format, menschlich lesbar</entry>
+                </row>
+                <row>
+                    <entry>QT</entry>
+                    <entry>Für qt Linguist (*.ts) Dateien</entry>
+                    <entry>Plattform übergreifender Anwendungs Framework; XML Format, menschlich lesbar</entry>
+                </row>
+                <row>
+                    <entry>XLIFF</entry>
+                    <entry>Für XLIFF (*.xliff/*.xml) Dateien</entry>
+                    <entry>Ein einfacheres Format als TMX aber vergleichbar; XML Format; menschlich lesbar</entry>
+                </row>
+                <row>
+                    <entry>Andere</entry>
+                    <entry>*.sql, *.tbx, *.qt</entry>
+                    <entry>Verschiedene andere Adapter werden in Zukunft noch implementiert</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+
+    <sect2 id="zend.translate.adapter.decision">
+
+        <title>Wie man entscheidet welchen Adapter man benutzen soll</title>
+
+        <para>
+            Zuerst muss man die Entscheidung treffen welchen der Adapter man für
+            Zend_Translate benutzen soll. Oft sind externe Kriterien wie die Vorgaben
+            durch ein Projekt oder durch eien Kunden dafür ausschlaggebend. Aber
+            wenn die Entscheidungsgewalt in den eigenen Händen liegt, werden die folgenden
+            Hinweise die Entscheidung vereinfachen.
+        </para>
+
+        <sect3 id="zend.translate.adapter.array">
+
+            <title>Zend_Translate_Adapter_Array</title>
+
+            <para>
+                Der Array Adapter ist der Adapter welcher am einfachsten für Programmierer
+                zu verwenden ist.
+                Aber wenn viele Strings oder viele Sprachen zu übersetzen sind sollte über
+                einen anderen Adapter nachgedachte werden. Wenn z.B. über 5000 Strings zu
+                übersetzen sind wird der Array Adapter nicht die beste Wahl sein.
+            </para>
+
+            <para>
+                Dieser Adapter sollte nur für kleine Seiten mit einer Handvoll Sprachen
+                verwendet werden. Und wenn man selbst oder das eigene Team die Übersetzungen
+                erstellen kann.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.csv">
+
+            <title>Zend_Translate_Adapter_Csv</title>
+
+            <para>
+                Der CSV Adapter ist der Adapter der am einfachsten für Kunden zu benutzen ist.
+                CSV Dateien sind mit Standard Texteditoren lesbar, aber diese Editoren
+                unterstützen oft nicht UTF8 Zeichen.
+            </para>
+
+            <para>
+                Man sollte diesen Adapter nur benutzen wenn der Kunde die Übersetzungen
+                selbst durchführen will.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.gettext">
+
+            <title>Zend_Translate_Adapter_Gettext</title>
+
+            <para>
+                Der Gettext Adapter ist der Adapter der am meisten verwendet wird.
+                Gettext ist ein Übersetzungsformat welches durch GNU eingeführt wurde
+                und jetzt weltweit Verwendung findet.
+                Es ist nicht menschlich lesbar, allerdings existieren einige kostenlose
+                Freeware Tools (zum Beispiel, <ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink>),
+                welche sehr nützlich sind. Der Zend_Translate Gettext Adapter ist nicht
+                mit Hilfe von PHP's Gettext Erweiterung realisiert worden.
+                Der Gettext Adapter kann also verwendet werden selbst wenn PHP's Gettext
+                Erweiterung nicht verfügbar ist.
+                Ausserdem ist der Adapter im Gegensatz zu PHP's Gettext Erweiterung Threadsicher.
+            </para>
+
+            <para>
+                Die meisten werden diesen Adapter benutzen.
+                Mit den vorhandenen Tools ist eine Professionelle Übersetzung sehr einfach.
+                Aber Gettext Dateien werden in einem machinen-lesbaren Format gespeichert
+                und sind nicht ohne Tools lesbar.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.tmx">
+
+            <title>Zend_Translate_Adapter_Tmx</title>
+
+            <para>
+                Der TMX Adapter ist der Adapter welcher am meisten benutzt wird wenn
+                Kunden mehrere Systeme haben welche alle auf die gleichen Übersetzungen
+                zugreifen, oder wenn die Übersetzungen Systemunabhängig sein muß.
+                TMX ist ein XML Datei Format, welches als der kommende Industriestandard
+                gehandelt wird. XML Dateien sind menschlich lesbar, aber das Lesen der
+                Dateien ist nicht so schnell wie mit Gettext Dateien.
+            </para>
+
+            <para>
+                Die meisten Mittel- und Großfirmen werden diesen Adapter benutzen.
+                Die Dateien sind menschlich lesbar und systemunabhängig.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.qt">
+
+            <title>Zend_Translate_Adapter_Qt</title>
+
+            <para>
+                Der Qt Adapter ist der Adapter ist für alle Kunden welche TS Dateien
+                als Übersetzungs-Quelle haben, die von QtLinguist erstellt wurden.
+                QT ist ein XML basiertes Format.
+                XML Dateien sind menschlich lesbar, aber das Lesen der Dateien ist nicht
+                so schnell wie mit Gettext Dateien.
+            </para>
+
+            <para>
+                Einige "Big Player" haben Ihre Software auf dem QT Framework ausgebaut.
+                Die Dateien sind menschlich lesbar und Betriebsystem unabhängig.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.xliff">
+
+            <title>Zend_Translate_Adapter_Xliff</title>
+
+            <para>
+                Der XLIFF Adapter ist der Adapter der von den meisten Kunden benutzt
+                wird die zwar XML Dateien haben wollen, aber keine Tools für TMX
+                zur Verfügung haben.
+                XLIFF ist ein XML Dateiformat, welches ähnlich zu TMX ist aber etwas
+                einfacher im Aufbau. Es unterstützt aber nicht alle Möglichkeiten von
+                TMX. XML Dateien sind menschlich lesbar, aber das Lesen der
+                Dateien ist nicht so schnell wie mit Gettext Dateien.
+            </para>
+
+            <para>
+                Die meisten Mittelständigen Unternehmen werden diesen Adapter benutzen.
+                Die Dateien sind menschlich lesbar und systemunabhängig.
+            </para>
+        </sect3>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

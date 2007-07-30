@@ -1,0 +1,511 @@
+<sect1 id="zend.controller.action">
+    <title>Контроллеры действий<!--Action Controllers--></title>
+
+    <sect2 id="zend.controller.action.introduction">
+        <title>Введение<!--Introduction--></title>
+        <para>
+            <code>Zend_Controller_Action</code> является абстрактным классом,
+            который можно использовать в реализации контроллеров действий для
+            последующего их использования с фронт-контроллером при разработке
+            сайта, основанного на паттерне Model-View-Controller (MVC).
+<!--
+            <code>Zend_Controller_Action</code> is an abstract class you may use
+            for implementing Action Controllers for use with the Front
+            Controller when building a website based on the
+            Model-View-Controller (MVC) pattern.
+-->
+        </para>
+
+        <para>
+            Для того, чтобы использовать Zend_Controller_Action, нужно создать
+            его подкласс в действующей директории контроллеров (или расширить
+            его для создания своего базового класса контроллеров действий).
+            Подкласс может содержать методы действий, которые соответствуют
+            различным действиям, которыми должен управлять контроллер.
+            Маршрутизатор и диспетчер компоненты Zend_Controller будут
+            рассматривать любые методы в классе контроллера с именем,
+            заканчивающимся на 'Action', как возможные действия контроллеров.
+<!--
+            To use Zend_Controller_Action, you will need to subclass it in your
+            actual action controllers (or subclass it to create your own base
+            class for action controllers). The most basic operation is to
+            subclass it, and create action methods that correspond to the
+            various actions you wish the controller to handle for your site.
+            Zend_Controller's routing and dispatch handling will autodiscover
+            any methods ending in 'Action' in your class as potential
+            controller actions.
+-->
+        </para>
+
+        <para>
+            Для примера предположим, что ваш класс определен следующим образом:
+<!--
+            For example, let's say your class is defined as follows:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // do something
+    }
+
+    public function bazAction()
+    {
+        // do something
+    }
+}
+]]></programlisting>
+
+        <para>
+            Приведенный выше класс FooController (контроллер 'foo') определяет
+            два действия - 'bar' и 'baz'.
+<!--
+            The above FooController class (controller 'foo') defines two
+            actions, 'bar' and 'baz'.
+-->
+        </para>
+
+        <para>
+            Класс может быть дополнен инициализирующим методом, методом,
+            используемым по умолчанию (если не был вызван метод, либо вызван
+            несуществующий метод), перехватчиками pre- и post-dispatch и
+            различными вспомогательными методами.
+<!--
+            There's much more that can be accomplished than this, such as custom
+            initialization actions, default actions to call should no action (or
+            an invalid action) be specified, pre- and post-dispatch hooks, and a
+            variety of helper methods. This chapter serves as an overview of the
+            action controller functionality
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.action.initialization">
+        <title>Инициализация объекта<!--Object initialization--></title>
+
+        <para>
+            Несмотря на то, что вы всегда можете переопределить конструктор
+            контроллера действий, мы не рекомендуем делать этого.
+            Zend_Controller_Action::__construct() выполняет некоторые важные
+            задачи, такие, как регистрация объектов запроса и ответа, аргументов
+            вызова, переданных из фронт-контроллера. Если необходимо
+            переопределить контроллер, то всегда вызывайте конструктор
+            родительского класса parent::__construct($request, $response,
+            $invokeArgs) в конструкторе подкласса.
+<!--
+            While you can always override the action controller's constructor,
+            we do not recommend this. Zend_Controller_Action::__construct()
+            performs some important tasks, such as registring the request and
+            response objects, as well as any custom invocation arguments passed
+            in from the front controller. If you must override the constructor,
+            be sure to call parent::__construct($request, $response,
+            $invokeArgs).
+-->
+        </para>
+
+        <para>
+            Для осуществления своего инстанцирования более подходящим
+            является метод init(), который вызывается в конце __construct().
+            Например, если вы хотите устанавливать соединение с БД при
+            инстанцировании:
+<!--
+            The more appropriate way to customize instantiation is to use the
+            init() method, which is called as the last task of __construct().
+            For example, if you want to connect to a database at instantiation:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        $this->db = Zend_Db::factory('Pdo_Mysql', array(
+            'host'     => 'myhost',
+            'username' => 'user',
+            'password' => 'XXXXXXX',
+            'dbname'   => 'website'
+        ));
+    }
+}
+]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.controller.action.prepostdispatch">
+        <title>Перехватчики Pre- и Post-Dispatch<!--Pre- and Post-Dispatch Hooks--></title>
+
+        <para>
+            Zend_Controller_Action определяет два метода, которые вызываются до
+            и после требуемого действия, preDispatch() и postDispatch(). Они
+            могут быть полезны во многих случаях: проверка аутентификации и прав
+            пользователя до запуска действия (действие может быть пропущено
+            через вызов _forward() в preDispatch()) или размещение
+            сгенерированного содержимого в боковой части сайта (метод
+            postDispatch()).
+<!--
+            Zend_Controller_Action specifies two methods that may be called to
+            bookend a requested action, preDispatch() and postDispatch(). These
+            can be useful in a variety of ways: verifying authentication and
+            ACLs prior to running an action (by calling _forward() in
+            preDispatch(), the action will be skipped), for instance, or placing
+            generated content in a sitewide template (postDispatch()).
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.action.accessors">
+        <title>Методы доступа<!--Accessors--></title>
+
+        <para>
+            Вместе с объектом регистрируются некоторые объекты и переменные, для
+            них есть свои методы доступа.
+<!--
+            A number of objects and variables are registered with the object,
+            and each has accessor methods.
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <emphasis>Объект запроса</emphasis>: getRequest() может
+                использоваться для получения объекта запроса, используемого при
+                вызове действия.
+<!--
+                <emphasis>Request Object</emphasis>: getRequest() may be
+                used to retrieve the request object used to call the action.
+-->
+            </para></listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Объект ответа</emphasis>: getResponse() может
+                    использоваться для получения объекта ответа. Некоторые
+                    типичные вызовы могут выглядеть следующим образом:
+<!--
+                    <emphasis>Response Object</emphasis>: getResponse() may be
+                    used to retrieve the response object aggregating the final
+                    response. Some typical calls might look like:
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[
+$this->getResponse()->setHeader('Content-Type', 'text/xml');
+$this->getResponse()->appendBody($content);
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Аргументы вызова</emphasis>: фронт-контроллер
+                    может добавлять параметры в маршрутизатор, диспетчер и
+                    контроллер действий. Для их получения используйте
+                    getInvokeArg($key), можно также извлечь весь список
+                    аргументов, используя метод getInvokeArgs().
+<!--
+                    <emphasis>Invocation Arguments</emphasis>: the front
+                    controller may push parameters into the router, dispatcher,
+                    and action controller. To retrieve these, use
+                    getInvokeArg($key); alternatively, fetch the entire list
+                    using getInvokeArgs().
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Параметры запроса</emphasis>: Объект запроса
+                    включает в себя параметры запроса, такие, как значения _GET,
+                    _POST, или параметры, определенные в пути URL. Для их
+                    получения используйте <code>_getParam($key)</code> или
+                    <code>_getAllParams()</code>. Вы можете также установить
+                    параметры запроса, используя метод <code>_setParam()</code>,
+                    это полезно при перенаправлении на другие действия через
+                    метод <code>_forward()</code>.
+<!--
+                    <emphasis>Request parameters</emphasis>: The request object
+                    aggregates request parameters, such as any _GET or _POST
+                    parameters, or user parameters specified in the URL's path
+                    information. To retrieve these, use _getParam($key) or
+                    _getAllParams(). You may also set request parameters using
+                    _setParam(); this is useful when forwarding to additional
+                    actions.
+-->
+                </para>
+
+                <para>
+                    Для определения того, существует ли параметр или нет
+                    (полезно для логического ветвления), используйте
+                    _hasParam($key).
+<!--
+                    To test whether or not a parameter exists (useful for
+                    logical branching), use _hasParam($key).
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.controller.action.utilmethods">
+        <title>Вспомогательные методы<!--Utility Methods--></title>
+
+        <para>
+            Кроме методов доступа, Zend_Controller_Action имеет несколько
+            вспомогательных методов для выполнения некотрорых общих задач в
+            методах действий (или в pre-/post-dispatch).
+<!--
+            Besides the accessors, Zend_Controller_Action has several utility
+            methods for performing common tasks from within your action methods
+            (or from pre-/post-dispatch).
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis>_forward($action, $controller = null, $module =
+                        null, array $params = null)</emphasis>: выполняет другое
+                        действие. Если этоот метод вызывается в preDispatch(),
+                        то текущее действие будет пропущено, вместо этого
+                        начинает выполняться другое действие. В остальных
+                        случаях выполнение этого действия начинается только
+                        после выполнения текущего действия.
+<!--
+                    <emphasis>_forward($action, $controller = null, $module =
+                        null, array $params = null)</emphasis>:
+                    perform another action. If called in preDispatch(), the
+                    currently requested action will be skipped in favor of the
+                    new one. Otherwise, after the current action is processed,
+                    the action requested in _forward() will be executed.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>_redirect($url, array $options = array())</emphasis>:
+                    перенаправляет по другому URL. Этот метод принимает URL и
+                    необязательный набор опций. По умолчанию он выполняет
+                    перенаправление HTTP 302.
+<!--
+                    <emphasis>_redirect($url, array $options =
+                        array())</emphasis>: redirect to another location. This
+                    method takes a URL and an optional set of options. By
+                    default, it performs an HTTP 302 redirect.
+-->
+                </para>
+
+                <para>
+                    Опции могут включать в себя одну и более опций из
+                    перечисленных ниже:
+<!--
+                    The options may include one or more of the following:
+-->
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            <emphasis>exit:</emphasis> whether or not to exit
+                            immediately. If requested, it will cleanly close any
+                            open sessions and perform the redirect.
+                        </para>
+
+                        <para>
+                            You may set this option globally within the
+                            controller using the <code>setRedirectExit()</code>
+                            accessor.
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            <emphasis>prependBase:</emphasis> whether or not to
+                            prepend the base URL registered with the request
+                            object to the URL provided.
+                        </para>
+
+                        <para>
+                            You may set this option globally within the
+                            controller using the
+                            <code>setRedirectPrependBase()</code> accessor.
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            <emphasis>code:</emphasis> what HTTP code to utilize
+                            in the redirect. By default, an HTTP 302 is
+                            utilized; any code between 301 and 306 may be used.
+                        </para>
+
+                        <para>
+                            You may set this option globally within the
+                            controller using the
+                            <code>setRedirectCode()</code> accessor.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>render($action = null, $name = null, $noController
+                    = false)</emphasis>: render a view script. If no arguments
+                    are passed, it assumes that the script requested is
+                    <code>[controller]/[action].phtml</code> (where
+                    <code>.phtml</code> is the value of the
+                    <code>$viewSuffix</code> property). Passing a value for
+                    <code>$action</code> will render that template in the
+                    <code>[controller]</code> subdirectory. To override using
+                    the <code>[controller]</code> subdirectory, pass a true
+                    value for <code>$noController</code>. Finally, templates are
+                    rendered into the response object; if you wish to render to
+                    a specific named segment in the response object, pass a
+                    value to <code>$name</code>.
+                </para>
+
+                <para>
+                    Some examples:
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function fooAction()
+    {
+        // Renders my/foo.phtml
+        $this->render();
+
+        // Renders my/bar.phtml
+        $this->render('bar');
+
+        // Renders baz.phtml
+        $this->render('baz', null, true);
+
+        // Renders foo/login.phtml to the 'form' segment of the response object
+        $this->render('login', 'form');
+
+        // Renders site.phtml to the 'page' segment of the response object
+        $this->render('site', 'page', true);
+    }
+}
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>initView()</emphasis>: initialize the view object.
+                    <code>render()</code> calls <code>initView()</code> in order
+                    to retrieve the view object, but it may be initialized at
+                    any time; by default it populates the <code>$view</code>
+                    property.  By default, it uses <code>Zend_View</code>, but
+                    any class implementing <code>Zend_View_Interface</code> may
+                    be used.
+                </para>
+
+                <para>
+                    The default implementation makes the following assumption of
+                    the directory structure:
+                </para>
+
+                <programlisting role="php"><![CDATA[
+applicationOrModule/
+    controllers/
+        IndexController.php
+    views/
+        scripts/
+            index/
+                index.phtml
+        helpers/
+        filters/
+]]></programlisting>
+
+                <para>
+                    In other words, view scripts are assumed to be in the
+                    <code>views/scripts/</code> subdirectory, and the
+                    <code>views</code> subdirectory is assumed to be a sibling
+                    of the controllers subdirectory.
+                </para>
+
+                <para>
+                    Call <code>initView()</code> in either <code>init()</code>
+                    or your action methods if you need to be able to assign
+                    variables, register filters, etc. As examples:
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+class MyController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        // Initialize view object immediately
+        $this->initView();
+    }
+
+    public function fooAction()
+    {
+        // Initialize some variables
+        $this->view->foo = 'bar';
+        $this->view->bar = 'baz';
+
+        // render the view, with the 'foo' and 'bar' assigned variables
+        $this->render();
+    }
+}
+
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        // Initialize view on a per-action basis:
+        $view = $this->initView();
+
+        // Initialize some variables
+        $view->foo = 'bar';
+        $view->bar = 'baz';
+
+        // render the view, with the 'foo' and 'bar' assigned variables
+        $this->render();
+    }
+}
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>getViewScript($action = null, $noController =
+                        false):</emphasis> retrieve a view script path.
+                    Primarily used by <code>render()</code>, you can call this
+                    at any time to grab a view script path, or override the
+                    method to change how your controller determines the path to
+                    a view script.
+                </para>
+
+                <para>
+                    As detailed under <code>render()</code>, above, the default
+                    functionality is to look for a view script named
+                    <code>[controller]/[action].phtml</code>. Providing
+                    <code>$action</code> will override the filename of the view
+                    script, and passing a true value to
+                    <code>$noController</code> will override looking in the
+                    controller subdirectory. You may also override the
+                    <code>$viewSuffix</code> property to change the file
+                    extension used (defaults to .phtml).
+                </para>
+
+                <para>
+                    Override this method to provide alternate functionality when
+                    determining the view script name and path.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

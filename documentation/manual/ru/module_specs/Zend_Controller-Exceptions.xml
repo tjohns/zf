@@ -1,0 +1,485 @@
+<sect1 id="zend.controller.exceptions">
+    <title>Исключения<!--MVC Exceptions--></title>
+
+    <sect2 id="zend.controller.exceptions.introduction">
+        <title>Введение</title>
+
+        <para>
+            Компоненты MVC в Zend Framework используют фронт-контроллер, это
+            означает, что все запросы к сайту будут проходить через единственную
+            точку входа. Как следствие, все исключения "всплывают" к
+            фронт-контроллеру, что позволяет разработчикам обрабатывать их в
+            одном месте.
+<!--
+            The MVC components in Zend Framework utilize a Front Controller,
+            which means that all requests to a given site will go through a
+            single entry point. As a result, all exceptions bubble up to the
+            Front Controller eventually, allowing the developer to handle them
+            in a single location.
+-->
+        </para>
+
+        <para>
+            Сообщения исключений и данные обратной трассировки часто содержат
+            важную системную информацию, такую, как текст запросов SQL,
+            местонахождение файлов и т.п. Поэтому в целях защиты вашего сайта
+            Zend_Controller_Front по умолчанию отлавливает все исключения и
+            регистрирует их в объектах ответа; в свою очередь, объект ответа по
+            умолчанию не отображает сообщения исключений.
+<!--
+            However, exception messages and backtrace information often contain
+            sensitive system information, such as SQL statements, file
+            locations, and more. To help protect your site, by default
+            Zend_Controller_Front catches all exceptions and registers them with
+            the response object; in turn, by default, the response object does
+            not display exception messages.
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.exceptions.handling">
+        <title>Как я могу обрабатывать исключения?<!--How can you handle exceptions?--></title>
+
+        <para>
+            В компоненты MVC уже встроено несколько механизмов, позволяющих
+            обрабатывать исключения.
+<!--
+            Several mechanisms are built in to the MVC components already to
+            allow you to handle exceptions.
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>Zend_Controller_Front::throwExceptions()</para>
+
+                <para>
+                    Посредством передачи булевого значения <code>true</code>
+                    этому методу, вы говорите фронт-контроллеру, что будете
+                    самостоятельно обрабатывать исключения вместо того, чтобы
+                    они скапливались в объекте ответа.
+<!--
+                    By passing a boolean true value to this method, you can tell
+                    the front controller that instead of aggregating exceptions
+                    in the response object, you'd rather handle them yourself.
+                    As an example:
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$front->throwExceptions(true);
+try {
+    $front->dispatch();
+} catch (Exception $e) {
+    // сами обрабатываем исключения
+}
+]]></programlisting>
+
+                <para>
+                    Этот метод может быть наиболее легким способом добавления
+                    своей обработки исключений в приложение.
+<!--
+                    This method is probably the easiest way to add custom
+                    exception handling to your front controller application.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Zend_Controller_Response_Abstract::renderExceptions()</para>
+
+                <para>
+                    Посредством передачи булевого значения <code>true</code>
+                    этому методу, вы говорите объекту ответа, что он должен
+                    вместе с заголовком и содержимым ответа выводить сообщения
+                    исключений и данные обратной трассировки. В этом случае
+                    любые исключения, сгенерированные вашим приложением, будут
+                    отображены пользователю. Это рекомендуется только для
+                    непроизводственной среды.
+<!--
+                    By passing a boolean true value to this method, you tell the
+                    response object that it should render an exception message
+                    and backtrace when rendering itself. In this scenario, any
+                    exception raised by your application will be displayed. This
+                    is only recommended for non-production environments.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>Zend_Controller_Front::returnResponse() и
+                    Zend_Controller_Response_Abstract::isException()</para>
+
+                <para>
+                    После передачи булевого значения <code>true</code> методу
+                    Zend_Controller_Front::returnResponse(), метод
+                    Zend_Controller_Front::dispatch() не будет выводить ответ, а
+                    возвращать его. Имея объект ответа, вы можете проверить,
+                    были ли отловлены исключения, используя его метод
+                    isException(), и извлекая их через метод getException().
+                    Например:
+<!--
+                    By passing a boolean true to
+                    Zend_Controller_Front::returnResponse(),
+                    Zend_Controller_Front::dispatch() will not render the
+                    response, but instead return it. Once you have the response,
+                    you may then test to see if any exceptions were trapped using
+                    its isException() method, and retrieving the exceptions via
+                    the getException() method. As an example:
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$front->returnResponse(true);
+$response = $front->dispatch();
+if ($response->isException()) {
+    $exceptions = $response->getException();
+    // обработка исключений ...
+} else {
+    $response->sendHeaders();
+    $response->outputBody();
+}
+]]></programlisting>
+
+                <para>
+                    Основное преимущество этого метода по сравнению с
+                    Zend_Controller_Front::throwExceptions() состоит в том, что
+                    он позволяет управлять выводом ответа после обработки
+                    исключений.
+<!--
+                    The primary advantage this method offers over
+                    Zend_Controller_Front::throwExceptions() is to allow you to
+                    conditionally render the response after handling the
+                    exception.
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.controller.exceptions.internal">
+        <title>Исключения MVC<!--MVC Exceptions You May Encounter--></title>
+
+        <para>
+            Различные компоненты MVC - объекты запросов, маршрутизаторов,
+            диспетчеров, контроллеров действий, ответов могут генерировать свои
+            исключения. Одни исключения при определенных условиях могут быть
+            переопределены, другие используются для указания на то, что
+            структура приложения, возможно, нуждается в рассмотрении.
+<!--
+            The various MVC components - request, router, dispatcher, action
+            controller, and response objects - each may throw exceptions on
+            occasion. Some exceptions may be conditionally overridden, and
+            others are used to indicate the developer may need to consider
+            their application structure.
+-->
+        </para>
+
+        <para>Например:<!--As some examples:--></para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Zend_Controller_Dispatcher::dispatch() по умолчанию будет
+                    генерировать исключение, если запрошен неправильный
+                    контроллер. Есть два способа решения этой проблемы:
+<!--
+                    Zend_Controller_Dispatcher::dispatch() will, by default,
+                    throw an exception if an invalid controller is requested.
+                    There are two recommended ways to deal with this.
+-->
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Установить параметр 'useDefaultControllerAlways'.
+<!--
+                            Set the 'useDefaultControllerAlways' parameter.
+-->
+                        </para>
+
+                        <para>
+                            Добавьте в своем фронт-контроллере или диспетчере
+                            следующую директиву:
+<!--
+                            In your front controller, or your dispatcher, add
+                            the following directive:
+-->
+                        </para>
+
+                        <programlisting role="php"><![CDATA[<?php
+$front->setParam('useDefaultControllerAlways', true);
+
+// или
+$dispatcher->setParam('useDefaultControllerAlways', true);
+]]></programlisting>
+
+                        <para>
+                            Когда этот флаг установлен, то диспетчер будет
+                            использовать контроллер и действие приятые по
+                            умолчанию вместо генерации исключения. Недостаток
+                            этого метода состоит в том, что на любые опечатки
+                            посетителя вашего сайта будет выводиться ваша
+                            главная страница, что может нанести вред в плане
+                            поисковой оптимизации сайта.
+<!--
+                            When this flag is set, the dispatcher will use the
+                            default controller and action instead of throwing an
+                            exception. The disadvantage to this method is that
+                            any typos a user makes when accessing your site will
+                            still resolve and display your home page, which can
+                            wreak havoc with search engine optimization.
+-->
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            Исключение, генерируемое методом dispatch(),
+                            является экземпляром класса
+                            Zend_Controller_Dispatcher_Exception, содержащим
+                            текст 'Invalid controller specified'. Используйте
+                            один из методов, описанных в <link
+linkend="zend.controller.exceptions.handling">предыдущем разделе</link>
+                            для отлова исключений и перенаправления на страницу
+                            с сообщением об ошибке или главную страницу.
+<!--
+                            The exception thrown by dispatch() is a
+                            Zend_Controller_Dispatcher_Exception containing the
+                            text 'Invalid controller specified'. Use one of the
+                            methods outlined in <xref
+                                linkend="zend.controller.exceptions.handling">the
+                            previous section</xref> to catch the exception, and
+                            then redirect to a generic error page or the home
+                            page.
+-->
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Zend_Controller_Action::__call() будет генерировать
+                    исключение, если в классе контроллера нет метода,
+                    соответствующего запрошенному действию. Весьма вероятно, что
+                    вы захотите, чтобы в этом случае в контроллере вызывалось
+                    действие по умолчанию. Вот способы достичь этого:
+<!--
+                    Zend_Controller_Action::__call() will throw an exception if
+                    it cannot dispatch a non-existent action to a method. Most
+                    likely, you will want to use some default action in the
+                    controller in cases like this. Ways to achieve this include:
+-->
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Создать подкласс Zend_Controller_Action и
+                            переопределить в нем метод Zend_Controller_Action.
+                            Например:
+<!--
+                            Subclass Zend_Controller_Action and override the
+                            __call() method. As an example:
+-->
+                        </para>
+
+                        <programlisting role="php"><![CDATA[<?php
+class My_Controller_Action extends Zend_Controller_Action
+{
+    public function __call($method, $args)
+    {
+        if ('Action' == substr($method, -6)) {
+            $controller = $this->getRequest()->getControllerName();
+            $url = '/' . $controller . '/index';
+            return $this->_redirect($url);
+        }
+
+        throw new Exception('Invalid method');
+    }
+}
+]]></programlisting>
+                        <para>
+                            Пример выше перехватывает любые вызовы
+                            несуществующих методов действий и перенаправляет их
+                            на действие по умолчанию в контроллере.
+<!--
+                            The example above intercepts any undefined action
+                            method called and redirects it to the default action
+                            in the controller.
+-->
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            Создать подкласс Zend_Controller_Dispatcher и
+                            переопределить в нем метод getAction() так, чтобы
+                            он производил проверку того, существует ли
+                            запрошенное действие. Например:
+<!--
+                            Subclass Zend_Controller_Dispatcher and override the
+                            getAction() method to verify the action exists.
+                            As an example:
+-->
+                        </para>
+
+                        <programlisting role="php"><![CDATA[<?php
+class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
+{
+    public function getAction($request)
+    {
+        $action = $request->getActionName();
+        if (empty($action)) {
+            $action = $this->getDefaultAction();
+            $request->setActionName($action);
+            $action = $this->formatActionName($action);
+        } else {
+            $controller = $this->getController();
+            $action     = $this->formatActionName($action);
+            if (!method_exists($controller, $action)) {
+                $action = $this->getDefaultAction();
+                $request->setActionName($action);
+                $action = $this->formatActionName($action);
+            }
+        }
+
+        return $action;
+    }
+}
+]]></programlisting>
+
+                        <para>
+                            Код выше проверяет существование запрошенного
+                            действия в классе контроллере; если это действие не
+                            существует, то оно заменяетя на действие по
+                            умолчанию.
+<!--
+                            The above code checks to see that the requested
+                            action exists in the controller class; if not, it
+                            resets the action to the default action.
+-->
+                        </para>
+
+                        <para>
+                            Этот способ хорош тем, что можно прозрачно заменить
+                            действие до финальной диспетчеризации. Тем не менее,
+                            он также подразумевает, что опечатки в URL могут
+                            обрабатываться как корректные, что не хорошо с точки
+                            зрения поисковой оптимизации.
+<!--
+                            This method is nice as you can transparently alter
+                            the action prior to final dispatch. However, it also
+                            means that typos in the URL may still dispatch
+                            correctly, which is not great for search engine
+                            optimization.
+-->
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            Использовать Zend_Controller_Action::preDispatch()
+                            или Zend_Controller_Plugin_Abstract::preDispatch()
+                            для определения ошибочно запрошенных действий.
+<!--
+                            Use Zend_Controller_Action::preDispatch() or
+                            Zend_Controller_Plugin_Abstract::preDispatch() to
+                            identify invalid actions.
+-->
+                        </para>
+
+                        <para>
+                            Создав подкласс Zend_Controller_Action и
+                            модифицировав preDispatch(), вы можете изменить все
+                            свои контроллеры так, чтобы они перенаправляли
+                            (forward) к другому действию или производили
+                            HTTP-перенаправление прежде действительной
+                            обработки действия. Код для этого выглядит подобно
+                            тому, что был приведен выше, с переопределением
+                            __call().
+<!--
+                            By subclassing Zend_Controller_Action and modifying
+                            preDispatch(), you can modify all of your
+                            controllers to forward to another action or redirect
+                            prior to actually dispatching the action. The code
+                            for this will look similar to the code for
+                            overriding __call(), above.
+-->
+                        </para>
+
+                        <para>
+                            Альтернативно, вы можете производить эту проверку в
+                            общем плагине. Преимущество этого подхода состоит в
+                            независимости действий контроллеров. Если ваше
+                            приложение содержит различные контроллеры действий и
+                            не все из них наследуют от одного и того же класса,
+                            то этот метод может обеспечить единнобразие в
+                            обработке различных классов.
+<!--
+                            Alternatively, you can check this information in a
+                            global plugin. This has the advantage of being
+                            action controller independent; if your application
+                            consists of a variety of action controllers, and not
+                            all of them inherit from the same class, this method
+                            can add consistency in handling your various
+                            classes.
+-->
+                        </para>
+
+                        <para>
+                            Например:
+<!--
+                            As an example:
+-->
+                        </para>
+
+                        <programlisting role="php"><![CDATA[<?php
+class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
+{
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    {
+        $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
+        $controller = $dispatcher->getController($request);
+        if (!$controller) {
+            $controller = $dispatcher->getDefaultControllerName($request);
+        }
+        $action     = $dispatcher->getAction($request);
+
+        if (!method_exists($controller, $action)) {
+            $defaultAction = $dispatcher->getDefaultAction();
+            $controllerName = $request->getControllerName();
+            $response = Zend_Controller_Front::getInstance()->getResponse();
+            $response->setRedirect('/' . $controllerName . '/' . $defaultAction);
+            $response->sendHeaders();
+            exit;
+        }
+    }
+}
+]]></programlisting>
+
+                        <para>
+                            В этом примере мы проверяем, доступно ли в
+                            контроллере запрошенное действие. Если нет, то
+                            производится перенаправление к действию по умолчанию
+                            в этом контроллере и выполнение скрипта завершается
+                            сразу же.
+<!--
+                            In this example, we check to see if the action
+                            requested is available in the controller. If not, we
+                            redirect to the default action in the controller,
+                            and exit script execution immediately.
+-->
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

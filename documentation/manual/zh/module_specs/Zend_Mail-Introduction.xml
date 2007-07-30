@@ -1,0 +1,40 @@
+<sect1 id="zend.mail.introduction">
+    <title>简介</title>
+    <para>
+        <code>Zend_Mail</code>提供了通用化的功能来创作和发送文本以及兼容MIME标准的含有多个段的邮件消息。
+        <code>Zend_Mail</code>通过php内建的<ulink url="http://php.net/mail"><code>mail()</code></ulink>函数或者直接通过SMTP连接来发送邮件。
+    </para>
+    <example>
+        <title>使用Zend_Mail发送简单邮件</title>
+        <para>
+            一个简单邮件由一个或者几个收件人，一个主题，一个邮件主体和一个发件人组成。
+            下面的步骤，使用了PHP的<ulink url="http://php.net/mail"><code>mail()</code></ulink>函数来发送邮件：
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('This is the text of the mail.');
+$mail->setFrom('somebody@example.com', 'Some Sender');
+$mail->addTo('somebody_else@example.com', 'Some Recipient');
+$mail->setSubject('TestSubject');
+$mail->send();
+?>]]>   </programlisting>
+    </example>
+    <note>
+        <title>Minimum definitions</title>
+        <para>
+            使用<code>Zend_Mail</code>来发送邮件，你至少得指定一个收件人, 一个发件人(例如通过<code>setFrom()</code>方法)和一个邮件消息主体(文本 和/或者 HTML)。
+        </para>
+    </note>
+    <para>
+         通过“get”方法可以读取绝大多数储存在“mail”对象中的邮件属性，更进一步的细节请参阅API文档。
+        <code>getRecipients()</code>是一个特例，它返回一个含有所有先前被加入的收件人地址的数组。
+    </para>
+    <para>
+        出于安全原因，<code>Zend_Mail</code>了过滤邮件头中所有字段，
+        以防止基于换行符(<code>\n</code>)邮件头注入(header injection)漏洞攻击。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,465 @@
+<sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2003/XInclude">
+    <title>Помощники действий<!--Action Helpers--></title>
+
+    <sect2 id="zend.controller.actionhelper.introduction">
+        <title>Введение<!--Introduction--></title>
+        <para>
+            Помощники действий (action helpers) позволяют разработчикам
+            добавлять функционал во время выполнения или по требованию в любые
+            контроллеры действий, который расширяет Zend_Controller_Action.
+            Помощники действий помогают снизить необходимость расширения
+            абстрактного контроллера действий для того, чтобы добавить общий
+            функционал в контроллер действий.
+<!--
+            Action Helpers allow developers to inject runtime and/or on-demand
+            functionality into any Action Controllers that extend
+            Zend_Controller_Action.  Action Helpers aim to minimize the
+            necessity to extend the abstract Action Controller in order to
+            inject common Action Controller functionality.
+-->
+        </para>
+
+        <para>
+            Есть несколько вариантов использования помощников действий.
+            Помощники действий используют брокерскую систему (brokerage system),
+            подобную той, которая используется в
+            <link linkend="zend.view.helpers">Zend_View_Helpers</link> и
+            <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>.
+            Помощники действий (как и <code>Zend_View_Helpers</code>) могут быть
+            загружены и вызваны по требованию, либо инстанцироваться во время
+            запроса (начальной загрузки) или создания контроллера действий
+            (init()). Для того, чтобы лучше разобраться с этим, см. раздел
+            использования ниже.
+<!--
+            There are a number of ways to use Action Helpers.  Action Helpers
+            employ the use of a brokerage system, similar to the types of
+            brokerage you see in <link linkend="zend.view.helpers">Zend_View_Helpers</link>, and that
+            of <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>.
+            Action Helpers (like <code>Zend_View_Helpers</code>) may be
+            loaded and called on demand, or they may be instantiated at
+            request time (bootstrap) or action controller creation time
+            (init()).  To understand this more fully, please see the usage
+            section below.
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.actionhelper.initialization">
+        <title>Инициализация помощника<!--Helper Initialization--></title>
+
+        <para>
+            Помощник может быть инициализирован несколькими различными
+            способами, выбор способа зависит от ваших нужд и от
+            функционала, предоставляемого этим помощником.
+<!--
+            A helper can be initialized in several different ways, based on
+            your needs as well as the functionality of that helper.  
+-->
+        </para>
+
+        <para>
+            Брокер помощников хранится как член <code>$_helper</code> класса
+            <code>Zend_Controller_Action</code>; используйте брокер для
+            получения или вызова помощников. Методы, предназначенные для этого,
+            включают в себя:
+<!--
+            The helper broker is stored as the <code>$_helper</code> member of
+            <code>Zend_Controller_Action</code>; use the broker to retrieve or
+            call on helpers. Some methods for doing so include:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Явное использование <code>getHelper()</code>. Просто
+                    передавайте ему имя, и будет возвращен объект помощника:
+<!--
+                    Explicitly using <code>getHelper()</code>. Simply pass it a
+                    name, and a helper object is returned:
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$flashMessenger = $this->_helper->getHelper('FlashMessenger');
+$flashMessenger->addMessage('We did something in the last request');]]>
+                </programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Используйте функционал метода <code>__get()</code> брокера
+                    помощников и извлекайте помощника так же, как если бы он был
+                    свойством этого брокера.
+<!--
+                    Use the helper broker's <code>__get()</code> functionality
+                    and retrieve the helper as if it were a member property of
+                    the broker:
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$flashMessenger = $this->_helper->FlashMessenger;
+$flashMessenger->addMessage('We did something in the last request');]]>
+                </programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    И наконец, большинство помощников действий реализует метод
+                    <code>direct()</code>, который будет вызывать особый,
+                    используемый по умолчанию метод в помощнике. Например, в
+                    случае <code>FlashMessenger</code> будет вызван метод
+                    <code>addMessage()</code>:
+<!--
+                    Finally, most action helpers implement the method
+                    <code>direct()</code> which will call a specific, default
+                    method in the helper. In the example of the
+                    <code>FlashMessenger</code>, it calls
+                    <code>addMessage()</code>:
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+$this->_helper->FlashMessenger('We did something in the last request');]]>
+                </programlisting>
+            </listitem>
+        </itemizedlist>
+
+        <note>
+            <para>
+                Все примеры выше функционально эквивалентны.
+                <!--All of the above examples are functionally equivalent.-->
+            </para>
+        </note>
+
+        <para>
+            Вы можете также явно инстанцировать помощников. Вы можете захотеть
+            сделать это, если используете помощника вне контроллера действий,
+            или если хотите передавать помощника брокеру для использования в
+            любых действиях. Инстанцирование производится так же, как и для
+            любого другого класса PHP.
+<!--
+            You may also instantiate helpers explicitly. You may wish to do this
+            if using the helper outside of an action controller, or if you wish
+            to pass a helper to the helper broker for use by any action.
+            Instantiation is as per any other PHP class.
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.actionhelper.broker">
+        <title>Брокер помощников<!--The Helper Broker--></title>
+
+        <para>
+            <code>Zend_Controller_Action_HelperBroker</code> управляет
+            регистрацией объектов помощников и путей к помощникам, а также
+            извлечением помощников по требованию.
+<!--
+            <code>Zend_Controller_Action_HelperBroker</code> handles the details
+            of registering helper objects and helper paths, as well as
+            retrieving helpers on-demand.
+-->
+        </para>
+
+        <para>
+            Для того, чтобы зарегистрировать помощника через брокер, используйте
+            <code>addHelper</code>:
+<!--
+            To register a helper with the broker, use <code>addHelper</code>:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
+        </programlisting>
+
+        <para>
+            Конечно, инстанцирование и передача помощников брокеру отнимают
+            некоторое время и ресурсы, поэтому существуют два метода для
+            некоторой автоматизации: <code>addPrefix()</code> и
+            <code>addPath()</code>.
+<!--
+            Of course, instantiating and passing helpers to the broker is a bit
+            time and resource intensive, so two methods exists to automate
+            things slightly: <code>addPrefix()</code> and
+            <code>addPath()</code>.
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>addPrefix()</code> принимает префикс класса и
+                    использует его для определения пути, по которому определен
+                    класс помощника. Подразумевается, что префикс следует
+                    соглашениям по именованию классов Zend Framework.
+<!--
+                    <code>addPrefix()</code> takes a class prefix and uses it
+                    to determine a path where helper classes have been defined.
+                    It assumes the prefix follows Zend Framework class naming
+                    conventions.
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// Добавление помощников, начинающихся с My_Action_Helpers в My/Action/Helpers/
+Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
+                </programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>addPath()</code> принимает директорию в качестве
+                    первого аргумента и префикс класса в качестве второго (по
+                    умолчанию это 'Zend_Controller_Action_Helper'). Это
+                    позволяет вам поставить в соответствие определенным
+                    директориям собственные префиксы классов.
+<!--
+                    <code>addPath()</code> takes a directory as its first
+                    argument and a class prefix as the second argument
+                    (defaulting to 'Zend_Controller_Action_Helper'). This allows
+                    you to map your own class prefixes to specific directories.
+-->
+                </para>
+
+                <programlisting role="php"><![CDATA[<?php
+// Добавление помощников, начинающихся с Helper в Plugins/Helpers/
+Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
+                </programlisting>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Поскольку эти методы статические, то они могут вызываться из любого
+            места в цепочке контроллеров для динамического добавления
+            помощников, когда необходимо.
+<!--
+            Since these methods are static, they may be called at any point in
+            the controller chain in order to dynamically add helpers as needed.
+-->
+        </para>
+
+        <para>
+            Для определения того, есть ли помощник в брокере, используйте
+            <code>hasHelper($name)</code>, где <code>$name</code> - короткое имя помощника (без префикса):
+<!--
+            To determine if a helper exists in the helper broker, use
+            <code>hasHelper($name)</code>, where <code>$name</code> is the short
+            name of the helper (minus the prefix):
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Проверка, зарегистрирован ли в брокере помощник 'redirector'
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    echo 'Помощник Redirector зарегистрирован';
+}]]>
+        </programlisting>
+
+        <para>
+            Наконец, для удаления зарегистрированного помощника из брокера,
+            используйте <code>removeHelper($name)</code>, где <code>$name</code>
+            - короткое имя помощника (без префикса):
+<!--
+            Finally, to delete a registered helper from the broker, use
+            <code>removeHelper($name)</code>, where <code>$name</code> is the
+            short name of the helper (minus the prefix):
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Удаление помощника 'redirector' из брокера, помещенное в условную конструкцию
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    Zend_Controller_Action_HelperBroker::removeHelper('redirector')
+}]]>
+        </programlisting>
+    </sect2>
+
+    <sect2 id="zend.controller.actionhelper.stockhelpers">
+        <title>Встроенные помощники действий<!--Built-in Action Helpers--></title>
+
+        <para>
+            Zend Framework по умолчанию включает в себя три помощника действий:
+            <code>FlashMessenger</code> для управления мгновенными сообщениями,
+            <code>Redirector</code>, предоставляющий различные реализации
+            перенаправления на внутренние и внешние страницы из вашего
+            приложения, и <code>ViewRenderer</code> для автоматизации процесса
+            настройки объекта вида в ваших контроллерах и рендеринга видов.
+<!--
+            Zend Framework includes three action helpers by default: a
+            FlashMessenger for handling session flash messages; a
+            Redirector, to provide different implementations for redirecting to
+            internal and external pages from your application; and a
+            ViewRenderer to automate the process of setting up the view object
+            in your controllers and rendering views.
+-->
+        </para>
+
+        <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml"/>
+        <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml"/>
+        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml"/>
+    </sect2>
+    
+    <sect2 id="zend.controller.actionhelper.writingyourown">
+        <title>Написание собственных помощников<!--Writing Your Own Helpers--></title>
+
+        <para>
+            Помощники действий расширяют
+            <code>Zend_Controller_Action_Helper_Abstract</code>, абстрактный
+            класс, который дает базовый интерфейс и функционал, требуемый
+            брокером помощников. Он включает в себя следующие методы:
+<!--
+            Action helpers extend
+            <code>Zend_Controller_Action_Helper_Abstract</code>, an abstract
+            class that provides the basic interface and functionality required
+            by the helper broker. These include the following methods:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>setActionController()</code> используется для
+                    установки текущего контроллера действий.
+<!--
+                    <code>setActionController()</code> is used to set the current
+                    action controller.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>init()</code>, запускаемый брокером при
+                    инстанцировании, может использоваться для запуска
+                    инициализации в помощнике. Это может быть полезным для
+                    переустановки состояния, когда несколько контроллеров
+                    используют один и тот же помощник в цепочке действий.
+<!--
+                    <code>init()</code>, triggered by the helper broker at
+                    instantiation, can be used to trigger initialization in the
+                    helper; this can be useful for resetting state when multiple
+                    controllers use the same helper in chained actions.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>preDispatch()</code> запускается до запуска действия.
+<!--
+                    <code>preDispatch()</code>, is triggered prior to a
+                    dispatched action.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>postDispatch()</code> запускается тогда, когда
+                    запущенное действие завершило свое выполнение - даже если
+                    плагин <code>preDispatch()</code> пропустил это действие.
+                    Полезно в основном для очистки.
+<!--
+                    <code>postDispatch()</code> is triggered when a dispatched
+                    action is done - even if a <code>preDispatch()</code>
+                    plugin has skipped the action. Mainly useful for cleanup.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getRequest()</code> возвращает текущий объект запроса.
+<!--
+                    <code>getRequest()</code> retrieves the current request
+                    object.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getResponse()</code> возвращает текущий объект ответа.
+<!--
+                    <code>getResponse()</code> retrieves the current response
+                    object.
+-->
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>getName()</code> возвращает имя помощника. Он
+                    извлекает ту часть имени класса, которая следует после
+                    последнего символа подчеркивания, иначе возвращается полное
+                    имя класса. Например, если класс называется
+                    <code>Zend_Controller_Action_Helper_Redirector</code>, то он
+                    вернет
+                    <code>Zend_Controller_Action_Helper_Redirector</code>,
+                    <code>Redirector</code>, а если класс называется 
+                    <code>FooMessage</code> то он просто вернет свое полное имя.
+<!--
+                    <code>getName()</code> retrieves the helper name. It
+                    retrieves the portion of the class name following the last
+                    underscore character, or the full class name otherwise. As
+                    an example, if the class is named
+                    <code>Zend_Controller_Action_Helper_Redirector</code>, it
+                    will return <code>Redirector</code>; a class named
+                    <code>FooMessage</code> will simply return itself.
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Вы можете опционально добавить метод <code>direct()</code> в свой
+            класс помощника. Если он определен, то это позволит вам обращаться к
+            помощнику как к методу брокера помощников, этим обеспечивается
+            легкое, единоразовое использование помощника. Например,
+            <link linkend="zend.controller.actionhelpers.redirector">redirector</link>
+            определяет <code>direct()</code> как псевдоним метода
+            <code>goto()</code>, что позволяет использовать помощника следующим
+            образом:
+<!--
+            You may optionally include a <code>direct()</code> method in your
+            helper class. If defined, it allows you to treat the helper as a
+            method of the helper broker, in order to allow easy, one-off usage
+            of the helper. As an example, the <link linkend="zend.controller.actionhelpers.redirector">redirector</link>
+            defines <code>direct()</code> as an alias of <code>goto()</code>,
+            allowing use of the helper like this:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Перенаправление на /blog/view/item/id/42
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
+        </programlisting>
+        
+        <para>
+            Метод брокера помощников <code>__call()</code> ищет помощника с
+            именем <code>redirector</code>, затем смотрит, имеет ли помощник
+            определенный метод <code>direct</code>, и, если есть, вызывает его с
+            переданными аргументами.
+<!--
+            Internally, the helper broker's <code>__call()</code> method looks
+            for a helper named <code>redirector</code>, then checks to see if
+            that helper has a defined <code>direct</code> class, and calls it
+            with the arguments provided.
+-->
+        </para>
+
+        <para>
+            Создав собственный класс помощника, вы можете предоставить доступ к
+            нему, как описано в разделах выше.
+<!--
+            Once you have created your own helper class, you may provide access
+            to it as described in the sections above.
+-->
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,112 @@
+<sect1 id="zend.session.basicusage">
+
+    <title>基本用法</title>
+
+    <para>
+        在Zend Framework中，<code>Zend_Session_Namespace</code>实例，提供了操作会话数据主要的API。命名空间常用于隔离所有的会话数据，但也为所有会话数据只需要一个命名空间的情况提供了一个默认的命名空间。Zend_Session利用了PHP内置的会话模块，以及它特有的<code>$_SESSION</code>超级数组做为会话状态数据的存储机制。虽然<code>$_SESSION</code>在全局命名空间内仍然可以访问，但是开发者不应该直接访问它，因为Zend_Session和Zend_Session_Namespace可以提供一组最可靠、安全的处理会话相关的功能。
+    </para>
+
+    <sect2 id="zend.session.basicexamples">
+
+        <title>教程实例</title>
+
+        <para>
+            在初始化Zend_Session时，如果没有指定命名空间，所有的数据将被储存在<code>'Default'</code>命名空间下。<code>Zend_Session</code>不打算直接处理会话命名空间容器的内容，我们可以使用<code>Zend_Session_Namespace</code>。下面的例子，演示了默认命名空间<code>'Default'</code>的使用，和怎样计算用户访问页面的次数。为了测试一下这个例子，把下面的代码添加到你的ZF应用程序的引导(bootstrap)文件中：
+        </para>
+
+        <example>
+            <title>计算web页面被查看的次数</title>
+<programlisting role="php">
+<![CDATA[<?php
+    require_once 'Zend/Session.php';
+
+    $defaultNamespace = new Zend_Session_Namespace('Default');
+
+    // use the magic method __isset() in Zend_Session_Namespace:
+    if (isset($defaultNamespace->numberOfPageRequests)) {
+        $defaultNamespace->numberOfPageRequests++; // this will increment for each page load.
+    } else {
+        $defaultNamespace->numberOfPageRequests = 1; // first time
+    }
+
+    echo "Page requests this session: ", $defaultNamespace->numberOfPageRequests;
+?>]]></programlisting>
+        </example>
+
+        <para>
+            其中一点使用Zend_Session_Namespace的好处是不同的模块可以使用Zend_Session_Namespace，且提供了一定程度的数据封装。可以传递给Zend_Session的构造函数一个可选的$namespace参数，确保其他一些组件、模块以及开发者特定的代码的会话数据各自隔离，从而受到保护。命名空间机制提供了一个有效的、流行的方法来确保处于命名空间之下的会话数据不遭到意外地改变。命名空间的名字是一个字符序列，不能空也不能以下划线('_')开头。只有Zend Framework的核心组件才能使用以'Zend_'开头的命名空间。
+        </para>
+
+        <example>
+            <title>新方法： 使用命名空间避免冲突</title>
+<programlisting role="php">
+<![CDATA[<?php
+    // in the Zend_Auth component
+    require_once 'Zend/Session.php';
+    $authNamespace = new Zend_Session_Namespace('Zend_Auth');
+    $authNamespace->user = "myusername";
+
+    // in a web services component
+    $webServiceNamespace = new Zend_Session_Namespace('Some_Web_Service');
+    $webServiceNamespace->user = "mywebusername";
+?>]]></programlisting>
+        </example>
+
+        <para>
+            上述例子中的代码与下面的代码有相同的效果，不过，上述例子中的会话对象把会话数据封装进了各自的命名空间。Zend_Session_Core中各种结合单体（singleton pattern）模式的检查有责任封装会话数据。
+        </para>
+
+        <example>
+            <title>老方法: PHP会话访问</title>
+<programlisting role="php">
+<![CDATA[<?php
+    $_SESSION['Zend_Auth']['user'] = "myusername";
+    $_SESSION['Some_Web_Service']['user'] = "mywebusername";
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.iteration">
+
+        <title>迭代会话命名空间</title>
+
+        <para>
+            Zend_Session提供了<ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate接口</ulink>所有的能力，包括对<code>foreach</code>语句的支持：
+        </para>
+
+        <example>
+            <title>会话迭代</title>
+<programlisting role="php">
+<![CDATA[<?php
+    // Zend_Session is iteratable
+    require_once 'Zend/Session.php';
+    $aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
+    foreach ($aNamespace as $index => $value) {
+        echo "aNamespace->$index = '$value';\n";
+    }
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.accessors">
+
+        <title>会话命名空间的访问器</title>
+
+        <para>
+            通常，通过__set(), __unset(), __isset(), and __get()这些魔术方法，来访问会话数据。这些魔术方法不能被直接调用，但可以被Zend_Session的子类调用。不过，你可以像调用普通的操作方法那样来访问会话数据，PHP会自动调用那些魔术方法，例如：
+        </para>
+
+        <example>
+            <title>访问会话数据</title>
+<programlisting role="php">
+<![CDATA[<?php
+            $object->property = $value; echo
+            (isset($object->property) ? 'set' : 'unset');
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+</sect1>

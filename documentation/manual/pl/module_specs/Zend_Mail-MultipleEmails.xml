@@ -1,0 +1,29 @@
+<sect1 id="zend.mail.multiple-emails">
+    <title>Wysyłanie wielu maili podczas jednego połączenia SMTP</title>
+    <para>
+        Domyślnie, połączenie SMTP jest tworzone za każdym razem gdy wysyłamy e-mail.
+        Jeśli chcesz wysłać wiele wiadomości za pomocą jednego połączenia SMTP
+        możesz użyć funkcji <code>connect()</code>. Jeśli transport ma już utworzone
+        połączenie przez wywołaniem metody <code>send()</code>, będzie ono użyte
+        i nie będzie zamknięte:
+    </para>
+    <example id="zend.mail.multiple-emails.example-1">
+        <title>Wysyłanie wielu maili podczas jednego połączenia SMTP</title>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+// tworzymy wiadomość
+require_once 'Zend/Mail/Transport/Smtp.php';
+$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
+Zend_Mail::setDefaultTransport($tr);
+$tr->connect();
+for ($i = 0; $i < 5; $i++) {
+$mail->send();
+}
+$tr->disconnect();]]>
+        </programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,30 @@
+<sect1 id="zend.config.theory_of_operation">
+    <title>Werkingstheorie</title>
+    <para>
+        Configuratiedata wordt toegankelijk gemaakt voor de <code>Zend_Config</code> constructor via een associatieve array. Deze kan multidimensioneel zijn om het organizeren van de data van alemeen naar specifiek te vergemakkelijken. Er bestaan concrete functies van de hulpklassen om de configuratiedata aan te passen vanuit het bestand om een associatieve array voor de constructor van <code>Zend_Config</code> aan te maken. Gebruikerscripts kunnen deze arrays direct doorgeven aan de constructor van <code>Zend_Config</code>, zonder een hulpklasse te gebruiken. Dit kan aangewezen zijn in sommige situaties.
+    </para>
+    <para>
+        <code>Zend_Config</code> implementeert de <code>Countable</code> en <code>Iterator</code> interfaces om eenvoudige toegang tot de configuratiedata te vergemakkeliken. Je kan dus de <ulink url="http://php.net/count"><code>count()</code></ulink> functie en PHP constructies zoals <ulink url="http://php.net/foreach"><code>foreach</code></ulink> gebruiken op <code>Zend_Config</code> objecten.
+    </para>
+
+    <para>
+        Standaard is de configuratiedata die beschikbaar wordt gemaakt via <code>Zend_Config</code> read-only, en het toewijzen van een waarde (bv: <code><![CDATA[$config->database->host = 'example.com']]></code>) resulteert in het opwerpen van een uitzondering (exception). Deze standaardeigenschap kan evenwel worden gewijzigd via de constructor om het wijzigen van waarden toe te staan.
+    </para>
+    <note>
+      <para>
+        Het is belangrijk zulke in-memory wijzigingen niet te verwarren met het opslaan van configuratiedata in een specifieke opslagmedia. Werktuigen voor het aanmaken en wijzigen van configuratiedata voor de verschillende opslagmedia worden hier niet besproken, want ze zijn uit het bereik van <code>Zend_Config</code>. Open source toepassingen van derden zijn beschikbaar voor het aanmaken en wijzigen van configuratiedata voor verschillende opslagmedia.
+      </para>
+    </note>
+    <para>
+        Hulpklassen erven van de <code>Zend_Config</code> klasse vermits deze haar functionaliteiten gebruiken.
+    </para>
+    <para>
+        De familie van <code>Zend_Config</code> klassen staat de organizatie van configuratiedata in secties toe. <code>Zend_Config</code> hulpklasse objecten kunnen een enkele gespecifieerde sectie, verschillende gespecifieerde secties of alle secties (indien er geen sectie werd gespecifieerd) inladen.
+    </para>
+    <para>
+        <code>Zend_Config</code> hulpklassen ondersteunen een enkel ervingsmodel dat een configuratiedata sectie toelaat te erven van een andere sectie. Dit word verstrekt om het verdubbelen van configuratiedata voor verchillende doeleinden te verminderen of the verwijderen. Een ervende sectie kan ook de overgeërfde waarden overschrijven. Net zoals PHP klasse erving kan een sectie van een oudersectie erven, die van een grootouder erft en zo verder, maar veelvoudige overerving (bv: sectie C erft onmiddellijk van oudersecties A en B) wordt niet ondersteund.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

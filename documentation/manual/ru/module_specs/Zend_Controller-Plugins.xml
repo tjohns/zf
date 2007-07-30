@@ -1,0 +1,216 @@
+<sect1 id="zend.controller.plugins">
+    <title>Плагины</title>
+
+    <sect2 id="zend.controller.plugins.introduction">
+        <title>Введение</title>
+
+        <para>
+            Архитектура контроллеров включает в себя систему плагинов, которая
+            позволяет добавлять свой код, который будет вызываться при
+            определенных событиях в процессе жизни контроллера. Фронт-контроллер
+            использует брокер плагинов (plugin broker, можно также перевести
+            как "посредник" - прим. перев.) для регистрации пользовательских
+            плагинов, он обеспечивает вызов методов событий в каждом плагине,
+            зарегистрированном через фронт-контроллер.
+<!--
+            The controller architecture includes a plugin system that allows user code to
+            be called when certain events occur in the controller process lifetime.
+            The front controller uses a plugin broker as a registry for user plugins,
+            and the plugin broker ensures that event methods are called on each plugin
+            registered with the front controller.
+-->
+        </para>
+
+        <para>
+            Методы событий определены в абстрактном классе
+            <code>Zend_Controller_Plugin_Abstract</code>, от которого должны
+            наследовать все пользовательские плагины:
+<!--
+            The event methods are defined in the abstract class
+            <code>Zend_Controller_Plugin_Abstract</code>,
+            from which user plugin classes inherit:
+-->
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>routeStartup()</code> вызывается до того, как
+                        <code>Zend_Controller_Front</code> начнет сопоставление
+                        запроса с маршрутами.
+<!--
+                        <code>routeStartup()</code> is called before <code>Zend_Controller_Front</code>
+                        begins evaluating the request against its routes.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>routeShutdown()</code> вызывается после того, как
+                        <code>Zend_Controller_Router</code> завершит свою
+                        работу во фронт-контроллере.
+<!--
+                        <code>routeShutdown()</code> is called after <code>Zend_Controller_Router</code>
+                        exits, when Zend_Controller_Front exits from the router.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>dispatchLoopStartup()</code> вызывается до того,
+                        как <code>Zend_Controller_Front</code> войдет в цикл
+                        диспетчеризации.
+<!--
+                        <code>dispatchLoopStartup()</code> is called before <code>Zend_Controller_Front</code>
+                        enters its dispatch loop.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>preDispatch()</code> вызывается до того, как
+                        диспетчером будет запущено действие. Этот обратный
+                        вызов позволяет реализовать поведение посредника или
+                        фильтра. Через изменение запроса и сброс его
+                        флага диспетчеризации (методом
+                        <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>)
+                        текущее действие может быть пропущено.
+<!--
+                        <code>preDispatch()</code> is called before an action is dispatched by
+                        <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy
+                        or filter behavior. By altering the request and resetting its dispatched
+                        flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
+                        the current action may be skipped.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>postDispatch()</code> вызывается после того, как
+                        действие было вызвано диспетчером. Этот обратный вызов
+                        позволяет реализовать поведение фильтра или посредника.
+                        Через изменение запроса и сброс его
+                        флага диспетчеризации (методом
+                        <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>)
+                        может быть определено новое действие для
+                        диспетчеризации.
+<!--
+                        <code>postDispatch()</code> is called after an action is dispatched by <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy or filter behavior. By altering the request and resetting its dispatched flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), a new action may be specified for dispatching.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>dispatchLoopShutdown()</code> вызывается до того,
+                        как <code>Zend_Controller_Front</code> выйдет из цикла
+                        диспетчеризации.
+<!--
+                        <code>dispatchLoopShutdown()</code> is called before <code>Zend_Controller_Front</code> exits its dispatch loop.
+-->
+                    </para>
+                </listitem>
+        </itemizedlist>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.plugins.writing">
+        <title>Написание плагинов</title>
+
+        <para>
+            Для того, чтобы написать класс плагина, просто включите абстрактный
+            класс <code>Zend_Controller_Plugin_Abstract</code> и создайте его
+            подкласс:
+
+<!--
+        In order to write a plugin class, simply include and extend the abstract class <code>Zend_Controller_Plugin_Abstract</code>:
+-->
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Plugin/Abstract.php';
+
+class MyPlugin extends Zend_Controller_Plugin_Abstract
+{
+    // ...
+}]]></programlisting>
+        </para>
+        <para>
+            Ни один из методов класса
+            <code>Zend_Controller_Plugin_Abstract</code> не является
+            абстрактным, поэтому классы плагинов не обязательно должны
+            реализовать все из перечисленных выше методов. Разработчики плагинов
+            могут реализовать только те методы, которые соответствуют их нуждам.
+<!--
+        None of the methods of <code>Zend_Controller_Plugin_Abstract</code> are abstract, and this means that plugin classes are not forced to implement any of the available event methods listed above. Plugin writers can implement whatever even methods may suit their particular needs.
+-->
+        </para>
+        <para>
+            <code>Zend_Controller_Plugin_Abstract</code> также делает объекты
+            запроса и ответа доступными плагинам контроллеров через методы
+            <code>getRequest()</code> и <code>getResponse()</code>
+            соответственно.
+<!--
+        <code>Zend_Controller_Plugin_Abstract</code> also makes the request and response objects available to controller plugins via the <code>getRequest()</code> and <code>getResponse()</code> methods, respectively.
+-->
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.plugins.using">
+        <title>Использование плагинов</title>
+        <para>
+            Классы плагинов регистрируются через
+            <code>Zend_Controller_Front::registerPlugin()</code> до начала
+            диспетчеризации. Следующий пример демонстрирует использование
+            плагина:
+<!--
+        Plugin classes are registered with <code>Zend_Controller_Front::registerPlugin()</code> prior to dispatching. The following snippet illustrates how a plugin may be used in the controller chain:
+-->
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Router.php';
+require_once 'Zend/Controller/Plugin/Abstract.php';
+
+class MyPlugin extends Zend_Controller_Plugin_Abstract
+{
+    public function routeStartup()
+    {
+        $this->getResponse()->appendBody('<p>routeStartup() called</p>');
+    }
+
+    public function routeShutdown($request)
+    {
+        $this->getResponse()->appendBody('<p>routeShutdown() called</p>');
+    }
+
+    public function dispatchLoopStartup($request)
+    {
+        $this->getResponse()->appendBody('<p>dispatchLoopStartup() called</p>');
+    }
+
+    public function preDispatch($request)
+    {
+        $this->getResponse()->appendBody('<p>preDispatch() called</p>');
+    }
+
+    public function postDispatch($request)
+    {
+        $this->getResponse()->appendBody('<p>postDispatch() called</p>');
+    }
+
+    public function dispatchLoopShutdown()
+    {
+        $this->getResponse()->appendBody('<p>dispatchLoopShutdown() called</p>');
+    }
+}
+
+$controller = Zend_Controller_Front::getInstance();
+$controller->setControllerDirectory('/path/to/controllers')
+           ->setRouter(new Zend_Controller_Router())
+           ->registerPlugin(new MyPlugin());
+$response = $controller->dispatch();
+
+echo $response;]]></programlisting>
+        </para>
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

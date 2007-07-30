@@ -1,0 +1,45 @@
+﻿<sect1 id="zend.mail.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_Mail</code> fournit des fonctionnalités génériques pour écrire et envoyer des emails au format texte et MIME. Un email peut-être envoyé avec <code>Zend_Mail</code> via la fonction PHP native <ulink url="http://php.net/mail"><code>mail()</code></ulink> ou via une connexion SMTP directe.
+    </para>
+    <example id="zend.mail.introduction.example-1">
+        <title>Email simple avec Zend_Mail</title>
+        <para>
+            Un email simple est composé d'un destinataire, d'un sujet, d'un message et d'un expéditeur. Pour envoyer ce genre de messages en utilisant la fonction PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink>, vous pouvez faire comme ceci :
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('Ceci est le message.');
+$mail->setFrom('somebody@example.com', 'un expéditeur');
+$mail->addTo('somebody_else@example.com', 'un destinataire');
+$mail->setSubject('sujet de test');
+$mail->send();]]>
+    		</programlisting>
+       </para>
+    </example>
+    <note>
+        <title>Définitions minimales</title>
+        <para>
+            Pour envoyer un email avec <code>Zend_Mail</code>, vous devez spécifier au moins un destinataire, un expéditeur (avec <code>setFrom()</code>), et un message (text et/ou HTML).
+        </para>
+    </note>
+    <para>
+        Pour la plupart des attributs de l'email, il y a des méthodes "get" pour lire les informations stockées dans l'objet mail. Pour plus de détail, merci de vous référer à la documentation de l'API. Une méthode spéciale est <code>getRecipients()</code>. Elle retourne un tableau avec toutes les adresses email des destinataires qui ont été ajoutés avant l'appel de cette méthode.
+    </para>
+    <para>
+        Pour des raisons de sécurité, <code>Zend_Mail</code> filtre tous les champs d'entête pour éviter tout problème d'injection d'entêtes avec des caractères de nouvelles lignes (<code>\n</code>).
+    </para>
+    <para>
+        Vous pouvez aussi utiliser la plupart des méthodes de l'objet Zend_Mail via une interface fluide. Une interface est dite fluide quand chaque méthode retourne la référence à l'objet appelé, donc vous pouvez appeler aussitôt une autre méthode.
+    </para>
+    <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('Ceci est le message.')
+    ->setFrom('somebody@example.com', 'un expéditeur')
+    ->addTo('somebody_else@example.com', 'un destinataire')
+    ->setSubject('sujet de test')
+    ->send();]]>
+    </programlisting>
+</sect1>
