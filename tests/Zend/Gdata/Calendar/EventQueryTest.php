@@ -39,6 +39,22 @@ class Zend_Gdata_Calendar_EventQueryTest extends PHPUnit_Framework_TestCase
         $this->query = new Zend_Gdata_Calendar_EventQuery();
     }
 
+    public function testDefaultBaseUrlForQuery()
+    {
+        $queryUrl = $this->query->getQueryUrl();
+        $this->assertEquals('http://www.google.com/calendar/feeds/default/public/full',
+                $queryUrl);
+    }
+
+    public function testAlternateBaseUrlForQuery()
+    {
+        $this->query = new Zend_Gdata_Calendar_EventQuery('http://www.foo.com');
+        $queryUrl = $this->query->getQueryUrl();
+        // the URL passed in the constructor has the user, visibility 
+        // projection appended for the return value of $query->getQueryUrl()
+        $this->assertEquals('http://www.foo.com/default/public/full', $queryUrl); 
+    }
+
     public function testUpdatedMinMaxParam()
     {
         $updatedMin = '2006-09-20';
