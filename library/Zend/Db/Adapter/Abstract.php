@@ -492,7 +492,10 @@ abstract class Zend_Db_Adapter_Abstract
      * Fetches all SQL result rows as an associative array.
      *
      * The first column is the key, the entire row array is the
-     * value.
+     * value.  You should construct the query to be sure that
+     * the first column contains unique values, or else
+     * rows with duplicate values in the first column will
+     * overwrite previous data.
      *
      * @param string|Zend_Db_Select $sql An SQL SELECT statement.
      * @param mixed $bind Data to bind into SELECT placeholders.
@@ -502,7 +505,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         $stmt = $this->query($sql, $bind);
         $data = array();
-        while ($row = $stmt->fetch($this->_fetchMode)) {
+        while ($row = $stmt->fetch(Zend_Db::FETCH_ASSOC)) {
             $tmp = array_values(array_slice($row, 0, 1));
             $data[$tmp[0]] = $row;
         }
