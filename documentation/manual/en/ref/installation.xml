@@ -1,60 +1,58 @@
 <sect1 id="introduction.installation">
 
-    <title>Installation</title>
+    <title>نصب</title>
 
     <para>
-        Zend Framework is built with object-oriented PHP 5 and requires PHP 5.1.4 or later. Please see the
-        <link linkend="requirements">system requirements appendix</link> for more detailed information.
+        Zend Framework با استفاده از PHP5 شی-گرا نوشته شده و نیاز به PHP نگارش 5.1.4 یا جدیدتر دارد. لطفا برای
+		اطلاعات بیشتر به
+        <link linkend="requirements">ضمیمه نیازمندیهای سیستم</link> مراجعه کنید.
     </para>
 
     <para>
-        Once an appropriate PHP environment is available, the next step is to get a copy of the Zend Framework, which
-        may be officially obtained by any of the following methods:
+        هنگامی که یک محیط مناسب PHP فراهم باشد, گام بعدی گرفتن نسخه ای از Zend Framework است, که شما میتوانید هر یک از روشهای
+		زیر را برای این کار انتخاب کنید:
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/stable">Download the latest stable release.</ulink>
-                    This version, available in both <code>.zip</code> and <code>.tar.gz</code> formats, is a good
-                    choice for those who are new to Zend Framework.
+                    <ulink url="http://framework.zend.com/download/stable">دریافت آخرین نسخه پایدار ( قابل اطمینان).</ulink>
+                    این نسخه، موجود به صورتهای <code>.zip</code> و <code>.tar.gz</code>, برای کسانی که می خواهند فعالیت خود را با
+					 Zend Framework شروع کنند انتخاب مناسبتری است.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/snapshot">Download the latest nightly
-                    snapshot.</ulink> For those who would brave the cutting edge, the nightly snapshots represent the
-                    latest progress of Zend Framework development. Snapshots are bundled with documentation either in
-                    English only or in all available languages. If you anticipate working with the latest Zend
-                    Framework developments, consider using a Subversion (SVN) client.
+                    <ulink url="http://framework.zend.com/download/snapshot">دریافت آخرین تصویر شبانه (Snapshot).</ulink> 
+					برای کسانی که می خواهند آخرین نسخه را داشته باشند، این نسخه ها آخرین تحولات برنامه ها را در دسترس قرار می دهد. 
+					 تصاویر برنامه به همراه اسناد به هر یک از حالات فقط انگلیسی و تمامی زبانها قابل دریافت است. 
+					 اگر می خواهید همواره با آخرین نسخه در حال تکمیل کار کنید، پیشنهاد میکنیم از Subversion (SVN) استفاده کنید.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Using a <ulink url="http://subversion.tigris.org">Subversion</ulink> (SVN) client. Zend Framework
-                    is open source software, and the Subversion repository used for its development is publicly
-                    available. Consider using SVN to get the Zend Framework if you already use SVN for your
-                    application development, want to contribute back to the framework, or need to upgrade your
-                    framework version more often than releases occur.
+                    استفاده از یک برنامه (Client) <ulink url="http://subversion.tigris.org">Subversion</ulink>.
+					Zend Framework یک برنامه متن-باز است ، و انبار Subversion آن برای همگان قابل دسترس است. استفاده از Subversion را در
+					نظر بگیرید اگر شما هم اکنون از یک برنامه Subversion برای برنامه های خود استفاده می کنید یا می خواهید در Zend
+					 Framework مشارکت کنید ویا می خواهید در فواصل زمانی کوتاه نسخه خود را به روز کنید.
+                    
                 </para>
                 <para>
-                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.export.html">Exporting</ulink> is
-                    useful if you want to get a particular framework revision without the <code>.svn</code>
-                    directories as created in a working copy.
+                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.export.html">صادر کردن</ulink> مفید است اگر 
+					می خواهید یک REVISION خاص ( بدون شاخه های <code>.svn</code> ) را دریافت کنید.
                 </para>
                 <para>
-                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">Checking out a
-                    working copy</ulink> is good when you might contribute to Zend Framework, and a working copy can
-                    be updated any time with
+                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">در اختیار گرفتن (Checking out) 
+					یک نمونه کاری (Working Copy)</ulink> برای مواردی مناسب است که شما بخواهید با Zend Framework مشارکت کنیید، یک نمونه 
+					کاری را هر زمان که بخواهید می توانیید با استفاده از
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.update.html"><code>svn
-                    update</code></ulink>.
+                    update</code> بروز کنید.</ulink>.
                 </para>
                 <para>
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">An externals
-                    definition</ulink> is highly convenient for developers already using SVN to manage their
-                    application working copies.
+                    definition</ulink> برای برنامه نویسانی که از قبل، از SVN برای برنامه های خود استفاده می کرده ان بسیار مناسب است.
                 </para>
                 <para>
-                    The URL for the trunk of the Zend Framework SVN repository is:
+                    آدرس اینترنتی شاخه Zend Framework's SVN trunk:
                     <ulink url="http://framework.zend.com/svn/framework/trunk">http://framework.zend.com/svn/framework/trunk</ulink>
                 </para>
             </listitem>
@@ -62,25 +60,24 @@
     </para>
 
     <para>
-        Once you have a copy of the Zend Framework available, your application needs to be able to access the
-        framework classes. Though there are
+        حال که شما یک نسخه از Zend Framework را در اختیار گرفتید، برنامه های شما باید به طریقی به کلاسهای آن دسترسی پیدا کنند. با اینکه
         <ulink url="http://www.php.net/manual/en/configuration.changes.php">
-        several ways to achieve this</ulink>, your PHP
+        راه های مختلفی برای این کار وجود دارد</ulink>, لازم است که
         <ulink url="http://www.php.net/manual/en/ini.core.php#ini.include-path"><code>include_path</code></ulink>
-        needs to contain the path to the Zend Framework library.
+        در PHP شامل آدرس کتابخانه (Library) Zend Framework باشد.
     </para>
 
     <para>
-        One of the Zend Framework's most useful features is its implementation of the
-        <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink> and
+        یکی از پرکاربردترین ویژگی های Zend Framework، کاربری الگوهای 
+        <ulink url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front Controller</ulink> و
         <ulink url="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller</ulink> (MVC)
-        patterns.
+        است.
         <link linkend="zend.controller.quickstart">Get started with Zend Framework MVC!</link>
     </para>
 
     <para>
-        Since Zend Framework components are rather loosely coupled, various components may be selected for
-        independent use as needed. Each of the following chapters documents the use of a particular component.
+        از آنجایی که اجزاء (Components) Zend Framework تقریبا جدا از هم هستند، شما می توانید آنها را بصورت مجزا و بسته به نیاز انتخاب و استفاده کنید. 
+		هر یک از بخش های آتی نحوی استفاده از یکی از این اجزاء را شرح می دهد.
     </para>
 
 </sect1>
