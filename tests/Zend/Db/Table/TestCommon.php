@@ -622,26 +622,39 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
      */
 
     /**
-     * @todo
-     *
-    public function testTableInsertMemoryLeakBugZf1739()
+     * See ZF-1739 in our issue tracker.
+     */
+    public function testTableInsertMemoryUsageZf1739()
     {
+        $this->markTestSkipped('Very slow test inserts thousands of rows');
+
         $table = $this->_table['products'];
-        $this->_db->beginTransaction();
-        for ($i = 0; $i < 10000000; $i++) 
+
+        // insert one row to prime the pump
+        $table->insert(array('product_name' => "product0"));
+
+        // measure current memory usage
+        $mem1 = memory_get_usage();
+        echo "memory #1: $mem1\n";
+
+        // insert a lot of rows
+        $n = 100000;
+        for ($i = 1; $i <= $n; $i++) 
         {
             $table->insert(array('product_name' => "product$i"));
             if ($i % 1000 == 0) {
-                echo ".";
+                echo '.';
             }
         }
-        $this->_db->commit();
-        $select = $this->_db->select()
-            ->from('zfproducts', 'COUNT(*)');
-        $count = $this->_db->fetchOne($select);
-        $this->assertEquals(1000003, $count);
+
+        // measure new memory usage
+        $mem2 = memory_get_usage();
+        echo "memory #2: $mem2\n";
+
+        // compare new memory usage to original
+        $mem_delta = $mem2-$mem1;
+        $this->assertThat($mem_delta, $this->lessThan(513));
     }
-     */
 
     public function testTableUpdate()
     {
