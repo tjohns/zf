@@ -74,7 +74,7 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         self::UNDECIPHERABLE_TLD      => "'%value%' appears to be a DNS hostname but cannot extract TLD part",
         self::INVALID_HOSTNAME        => "'%value%' does not match the expected structure for a DNS hostname",
         self::INVALID_LOCAL_NAME      => "'%value%' does not appear to be a valid local network name",
-        self::LOCAL_NAME_NOT_ALLOWED  => "'%value%' appears to be a local network name but but local network names are not allowed"
+        self::LOCAL_NAME_NOT_ALLOWED  => "'%value%' appears to be a local network name but local network names are not allowed"
     );
 
     /**
