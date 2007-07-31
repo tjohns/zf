@@ -1,0 +1,100 @@
+<sect1 id="zend.config.adapters.ini">
+    <title>Zend_Config_Ini</title>
+    <para>
+        <code>Zend_Config_Ini</code>允许开发者通过嵌套的对象属性语法在应用程序中用熟悉的INI格式存储和读取配置数据。INI格式在提供拥有配置数据键的等级结构和配置数据节之间的继承能力方面具有专长。配置数据等级结构通过用点或者句号 (<code>.</code>)分离键值。一个节可以扩展或者通过在节的名称之后带一个冒号(<code>:</code>)和被继承的配置数据的节的名称来从另一个节继承。
+    </para>
+    <note>
+        <title>parse_ini_file</title>
+        <para>
+            <code>Zend_Config_Ini</code> 使用<ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>PHP 函数。请复习这个文档了解它的特定行为，它在<code>Zend_Config_Ini</code>中使用，例如<code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> 和 <code>null</code> 这些特殊的值如何操作。
+        </para>
+    </note>
+    <note>
+        <title>键分离器</title>
+        <para>
+            缺省地，键分离器字符是句号(<code>.</code>)。然而，这个可以通过当构造<code>Zend_Config_Ini</code>对象时修改<code>$config</code> key <code>'nestSeparator'</code> 被修改。例如：
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+$config['nestSeparator'] = ':';
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
+            </programlisting>
+        </para>
+    </note>
+    <example id="zend.config.adapters.ini.example.using">
+        <title>使用 Zend_Config_Ini</title>
+        <para>
+            This example illustrates a basic use of <code>Zend_Config_Ini</code> for loading configuration data from an
+            INI file. In this example there are configuration data for both a production system and for a staging
+            system. Because the staging system configuration data are very similar to those for production, the staging
+            section inherits from the production section. In this case, the decision is arbitrary and could have been
+            written conversely, with the production section inheriting from the staging section, though this may not be
+            the case for more complex situations. Suppose, then, that the following configuration data are contained in
+            <code>/path/to/config.ini</code>:
+        </para>
+        <programlisting role="ini"><![CDATA[; Production site configuration data
+[production]
+webhost           = www.example.com
+database.type     = pdo_mysql
+database.host     = db.example.com
+database.username = dbuser
+database.password = secret
+database.name     = dbname
+
+; Staging site configuration data inherits from production and
+; overrides values as necessary
+[staging : production]
+database.host     = dev.example.com
+database.username = devuser
+database.password = devsecret]]>
+        </programlisting>
+        <para>
+            Next, assume that the application developer needs the staging configuration data from the INI file. It is a
+            simple matter to load these data by specifying the INI file and the staging section:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
+
+echo $config->database->host; // prints "dev.example.com"
+echo $config->database->name; // prints "dbname"]]>
+        </programlisting>
+    </example>
+    <note>
+    <table id="zend.config.adapters.ini.table">
+        <title>Zend_Config_Ini Constructor parameters</title>
+        <tgroup cols="2">
+            <thead>
+                  <row>
+                    <entry>Parameter</entry>
+                    <entry>Notes</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry><code>$filename</code></entry>
+                    <entry>The INI file to load.</entry>
+                </row>
+                <row>
+                    <entry><code>$section</code></entry>
+                    <entry>The [section] within the ini file that is to be loaded. Setting
+                        this parameter to null will load all sections. Alternatively, an
+                        array of section names may be supplied to load multiple sections.</entry>
+                </row>
+                <row>
+                    <entry><code>$config = false</code></entry>
+                    <entry>Configuration array. The following keys are supported:
+                        <itemizedlist>
+                            <listitem><para><emphasis>allowModifications</emphasis>: Set to true to allow subsequent modification of loaded file. Defaults to false</para></listitem>
+                            <listitem><para><emphasis>nestSeparator</emphasis>: Set to the character to be used as the nest separator. Defaults to "."</para></listitem>
+                        </itemizedlist>
+                    </entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+    </note>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
