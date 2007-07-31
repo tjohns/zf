@@ -18,12 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend_Json_Exception.
- * It is needed for throwing exceptions whenever there is an error. 
- */
-require_once 'Zend/Json/Exception.php';
-    
 
 /**
  * Class for encoding to and decoding from JSON.
@@ -36,19 +30,17 @@ require_once 'Zend/Json/Exception.php';
 class Zend_Json
 {
     /**
-     * How objects should be encoded -- arrays or as StdClass. TYPE_ARRAY is 1 
-     * so that it is a boolean true value, allowing it to be used with 
+     * How objects should be encoded -- arrays or as StdClass. TYPE_ARRAY is 1
+     * so that it is a boolean true value, allowing it to be used with
      * ext/json's functions.
      */
     const TYPE_ARRAY  = 1;
     const TYPE_OBJECT = 0;
 
     /**
-     * To check the allowed nesting depth of the XML tree during xml2json conversion.
-     * 
-     * @var int
+     * @var bool
      */
-    public static $maxRecursionDepthAllowed=25;
+    public static $useBuiltinEncoderDecoder = false;
 
     /**
      * Decodes the given $encodedValue string which is
@@ -63,11 +55,11 @@ class Zend_Json
      */
     public static function decode($encodedValue, $objectDecodeType = Zend_Json::TYPE_ARRAY)
     {
-        if (function_exists('json_decode')) {
+        if (function_exists('json_decode') && self::$useBuiltinEncoderDecoder !== true) {
             return json_decode($encodedValue, $objectDecodeType);
         }
 
-        include_once 'Zend/Json/Decoder.php';
+        require_once 'Zend/Json/Decoder.php';
         return Zend_Json_Decoder::decode($encodedValue, $objectDecodeType);
     }
 
@@ -88,12 +80,12 @@ class Zend_Json
      */
     public static function encode($valueToEncode, $cycleCheck = false)
     {
-        if (function_exists('json_encode')) {
+        if (function_exists('json_encode') && self::$useBuiltinEncoderDecoder !== true) {
             return json_encode($valueToEncode);
         }
 
-        include_once 'Zend/Json/Encoder.php';
-    	return Zend_Json_Encoder::encode($valueToEncode, $cycleCheck);
+        require_once 'Zend/Json/Encoder.php';
+        return Zend_Json_Encoder::encode($valueToEncode, $cycleCheck);
     }
 
     /**  
