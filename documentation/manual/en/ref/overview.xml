@@ -1,13 +1,16 @@
 <sect1 id="introduction.overview">
 
-    <title>کلیات</title>
+    <title>Overview</title>
 
     <para>
-        Zend Framework یک قالب برنامه نویسی متن باز و با کیفیت برای ساختن برنامه های تحت وب و استفاده از سرویسهای اینترنتی در قالب PHP است.
+        Zend Framework is a high quality and open source framework for developing Web
+        Applications and Web Services with PHP.
     </para>
 
     <para>
-        Zend Framework با استفاده از قابلیت های PHP راحتی استفاده و کارایی بالا را به ارمقان آورده است. همچنین راهکارهایی برای ایجاد وب-سایت های مدرن، قدرتمند و ایمن ارائه می دهد.
+        Built in the true PHP spirit, the Zend Framework delivers ease-of-use and
+        powerful functionality. It provides solutions for building modern, robust, and
+        secure websites.
     </para>
 
 </sect1>
