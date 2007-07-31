@@ -335,18 +335,17 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      * Returns a single column from the next row of a result set.
      *
      * @param int $col OPTIONAL Position of the column to fetch.
-     * @return string
+     * @return string One value from the next row of result set, or false.
      */
     public function fetchColumn($col = 0)
     {
         $data = array();
         $col = (int) $col;
         $row = $this->fetch(Zend_Db::FETCH_NUM);
-        if (is_array($row)) {
-            return $row[$col];
-        } else {
+        if (!is_array($row)) {
             return false;
         }
+        return $row[$col];
     }
 
     /**
@@ -354,12 +353,15 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      *
      * @param string $class  OPTIONAL Name of the class to create.
      * @param array  $config OPTIONAL Constructor arguments for the class.
-     * @return mixed One object instance of the specified class.
+     * @return mixed One object instance of the specified class, or false.
      */
     public function fetchObject($class = 'stdClass', array $config = array())
     {
         $obj = new $class($config);
         $row = $this->fetch(Zend_Db::FETCH_ASSOC);
+        if (!is_array($row)) {
+            return false;
+        }
         foreach ($row as $key => $val) {
             $obj->$key = $val;
         }

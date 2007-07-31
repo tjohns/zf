@@ -448,6 +448,20 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    public function testStatementFetchColumnEmptyResult()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // query that is known to return zero rows
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id < 1 ORDER BY $product_id ASC");
+
+        $result = $stmt->fetchColumn();
+        $stmt->closeCursor();
+
+        $this->assertFalse($result);
+    }
+
     public function testStatementFetchColumnWithArg()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -475,6 +489,19 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $this->assertType('stdClass', $result,
             'Expecting object of type stdClass, got '.get_class($result));
         $this->assertEquals('Linux', $result->product_name);
+    }
+
+    public function testStatementFetchObjectEmptyResult()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // query that is known to return zero rows
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id < 1 ORDER BY $product_id ASC");
+        $result = $stmt->fetchObject();
+        $stmt->closeCursor();
+
+        $this->assertFalse($result);
     }
 
     public function testStatementFetchStyleNum()
