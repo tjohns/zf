@@ -71,6 +71,7 @@ require_once 'Zend/Validate/AllTests.php';
 require_once 'Zend/VersionTest.php';
 require_once 'Zend/ViewTest.php';
 require_once 'Zend/XmlRpc/AllTests.php';
+require_once 'Zend/Json/AllTests.php';
 
 
 class Zend_AllTests
@@ -126,6 +127,7 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_ViewTest');
         $suite->addTestSuite('Zend_VersionTest');
         $suite->addTest(Zend_XmlRpc_AllTests::suite());
+        $suite->addTestSuite('Zend_Json_JsonXMLTest');
 
         return $suite;
     }
