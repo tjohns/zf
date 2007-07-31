@@ -18,6 +18,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Json_Exception.
+ * It is needed for throwing exceptions whenever there is an error. 
+ */
+require_once 'Zend/Json/Exception.php';
 
 /**
  * Class for encoding to and decoding from JSON.
@@ -36,6 +41,13 @@ class Zend_Json
      */
     const TYPE_ARRAY  = 1;
     const TYPE_OBJECT = 0;
+
+     /**
+      * To check the allowed nesting depth of the XML tree during xml2json conversion.
+      * 
+      * @var int
+      */
+    public static $maxRecursionDepthAllowed=25;
 
     /**
      * @var bool
