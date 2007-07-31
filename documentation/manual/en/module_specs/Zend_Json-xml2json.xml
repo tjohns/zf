@@ -1,4 +1,4 @@
-<sect4 id="zend.json.xml2json">
+<sect1 id="zend.json.xml2json">
     <title>XML to JSON coversion</title>
     <para>
         <code>Zend_Json</code> provides a convenience method for transforming
@@ -108,7 +108,7 @@
         <ulink url="http://tinyurl.com/2tfa8z">Zend_xml2json proposal</ulink>.
     </para>
 
-</sect4>
+</sect1>
 <!--
 vim:se ts=4 sw=4 et:
 -->
