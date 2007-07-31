@@ -23,15 +23,9 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
     <example id="zend.config.adapters.ini.example.using">
         <title>使用 Zend_Config_Ini</title>
         <para>
-            This example illustrates a basic use of <code>Zend_Config_Ini</code> for loading configuration data from an
-            INI file. In this example there are configuration data for both a production system and for a staging
-            system. Because the staging system configuration data are very similar to those for production, the staging
-            section inherits from the production section. In this case, the decision is arbitrary and could have been
-            written conversely, with the production section inheriting from the staging section, though this may not be
-            the case for more complex situations. Suppose, then, that the following configuration data are contained in
-            <code>/path/to/config.ini</code>:
+            这个例子示例了从INI文件加载配置数据的<code>Zend_Config_Ini</code>的基本用法。在这个例子中有生产系统（production system）和开发系统（staging system）的配置数据。因为开发系统配置数据和生产系统的配置数据类似，所以开发系统的节从生产系统的节继承。在这个案例中，结果(decision)是任意的并且它可以反过来做，即生产系统节从开发系统节继承，尽管这不可能用于更复杂的情形。接着，假定下面的配置数据包含在<code>/path/to/config.ini</code>中：
         </para>
-        <programlisting role="ini"><![CDATA[; Production site configuration data
+        <programlisting role="ini"><![CDATA[; 生产站点配置数据
 [production]
 webhost           = www.example.com
 database.type     = pdo_mysql
@@ -40,53 +34,49 @@ database.username = dbuser
 database.password = secret
 database.name     = dbname
 
-; Staging site configuration data inherits from production and
-; overrides values as necessary
+; 开发站点配置数据从生产站点配置数据集成并如果需要可以重写
 [staging : production]
 database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]>
         </programlisting>
         <para>
-            Next, assume that the application developer needs the staging configuration data from the INI file. It is a
-            simple matter to load these data by specifying the INI file and the staging section:
+            接着，假定开发者需要从INI文件取开发配置数据。这非常简单，只要指定INI文件和开发系统节就可以加载这些数据了：
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
-echo $config->database->host; // prints "dev.example.com"
-echo $config->database->name; // prints "dbname"]]>
+echo $config->database->host; // 输出 "dev.example.com"
+echo $config->database->name; // 输出 "dbname"]]>
         </programlisting>
     </example>
     <note>
     <table id="zend.config.adapters.ini.table">
-        <title>Zend_Config_Ini Constructor parameters</title>
+        <title>Zend_Config_Ini 构造器参数</title>
         <tgroup cols="2">
             <thead>
                   <row>
-                    <entry>Parameter</entry>
-                    <entry>Notes</entry>
+                    <entry>参数</entry>
+                    <entry>注释</entry>
                 </row>
             </thead>
             <tbody>
                 <row>
                     <entry><code>$filename</code></entry>
-                    <entry>The INI file to load.</entry>
+                    <entry>要加载的 INI 文件。</entry>
                 </row>
                 <row>
                     <entry><code>$section</code></entry>
-                    <entry>The [section] within the ini file that is to be loaded. Setting
-                        this parameter to null will load all sections. Alternatively, an
-                        array of section names may be supplied to load multiple sections.</entry>
+                    <entry>在INI文件中 [section] （节）将被加载。把这个参数设置为null，所有的节将被加载。另外，一个节名称的数组被提供给加载多个节。</entry>
                 </row>
                 <row>
                     <entry><code>$config = false</code></entry>
-                    <entry>Configuration array. The following keys are supported:
+                    <entry>配置数组。下面的键被支持：
                         <itemizedlist>
-                            <listitem><para><emphasis>allowModifications</emphasis>: Set to true to allow subsequent modification of loaded file. Defaults to false</para></listitem>
-                            <listitem><para><emphasis>nestSeparator</emphasis>: Set to the character to be used as the nest separator. Defaults to "."</para></listitem>
+                            <listitem><para><emphasis>allowModifications</emphasis>：设置为true 允许随后加载文件更改。缺省为false</para></listitem>
+                            <listitem><para><emphasis>nestSeparator</emphasis>: 设置嵌套字符。缺省为"."</para></listitem>
                         </itemizedlist>
                     </entry>
                 </row>
