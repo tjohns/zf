@@ -89,3 +89,4 @@ pre {
 code.code {
     font-family: "Lucida Console", monospace;
 }
+p { text-align: right; }
