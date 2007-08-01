@@ -275,6 +275,9 @@
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Spreadsheets.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_Gapps.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gapps.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Exception.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Exception.xml" /></xi:fallback>
         </xi:include>
@@ -307,6 +310,9 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Json-Objects.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Json-Objects.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Json-xml2json.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Json-xml2json.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.loader">

@@ -240,10 +240,10 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
 
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-// Add /path/to/some/helpers with class prefix 'My_View_Helper'
-$view->addHelperPath('/path/to/some/helpers');
-// Add /other/path/to/helpers with class prefix 'Your_View_Helper'
-$view->addHelperPath('/other/path/to/helpers');
+// Dodaj ścieżkę /path/to/some/helpers z przedrostkiem klasy 'My_View_Helper'
+$view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
+// Dodaj ścieżkę /other/path/to/helpers z przedrostkiem klasy 'Your_View_Helper'
+$view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // teraz kiedy wywołasz $this->helperName(), Zend_View będzie wpierw szukał w
 // "/other/path/to/helpers/HelperName.php" używając nazwy klasy "My_View_Helper_HelperName",

@@ -12,6 +12,17 @@
         bezpośrednio odebrany przez JavaScript jest on dużo bardziej efektywnym
         i lżejszym formatem wymiany danych z JavaScript niż XML.
     </para>
+
+    <para>
+        Dodatkowo klasa Zend_Json zapewnia łatwy sposób konwertowania danych
+        XML na JSON. Ta wbudowana funkcjonalność pozwoli programistom PHP
+        zamieniać dane zakodowane w formacie XML do formatu JSON przed wysłaniem
+        ich do aplikacji klienta Ajax opartej na przeglądarce internetowej.
+        Klasa zapewnia łatwy sposób dynamicznej konwersji danych po stronie
+        serwera, zapobiegając niepotrzebnemu parsowaniu danych XML po stronie
+        aplikacji w przeglądarce internetowej. Daje ona funkcjonalność,
+        która powoduje ułatwienie technik przetwarzania danych w aplikacji.
+    </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

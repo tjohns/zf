@@ -137,6 +137,11 @@
             <code>$value</code> jest większa lub równa od zadanej wartośći
             minimalnej i mniejsza lub równa od zadanej wartości maksymalnej.
             (wtedy gdy zadana wartość maksymalna jest różna od <code>null</code>).
+            Od wersji 1.1.0 metoda <code>setMin()</code> wyrzuca wyjątek jeśli
+            zadana wartość minimalna jest ustawiona na wartość większą od 
+            zadanej wartości maksymalnej, a metoda <code>setMax()</code> wyrzuca
+            wyjątek jeśli zadana wartość maksymalna jest ustawiona na wartość 
+            mniejszą od zadanej wartości minimalnej.
         </para>
     </sect2>
 
