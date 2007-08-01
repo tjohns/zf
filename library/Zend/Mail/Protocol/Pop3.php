@@ -129,7 +129,7 @@ class Zend_Mail_Protocol_Pop3
      */
     public function sendRequest($request)
     {
-        $result = @fputs($this->_socket, $request."\n");
+        $result = @fputs($this->_socket, $request . "\r\n");
         if (!$result) {
             throw new Zend_Mail_Protocol_Exception('send failed - connection closed?');
         }
