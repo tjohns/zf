@@ -156,16 +156,30 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 </programlisting>
             </example>
 
-            <note>
-                <para>
-                    独自に Zend_Db_Adapter_Abstract
-                    の派生クラスを作成し、そのクラス名のプレフィックスが
-                    "Zend_Db_Adapter" でない場合は、<code>factory()</code>
-                    でそのアダプタを読み込むことはできません。
-                    自分でクラスを読み込み、
-                    コンストラクタを使用してインスタンスを作成する必要があります。
-                </para>
-            </note>
+            <para>
+                独自に Zend_Db_Adapter_Abstract
+                の派生クラスを作成し、そのクラス名のプレフィックスが
+                "Zend_Db_Adapter" でない場合に <code>factory()</code>
+                でそのアダプタを読み込むには、
+                作成したクラス名の先頭の部分をパラメータ配列のキー
+                'adapterNamespace' で指定します。
+            </para>
+
+            <example id="zend.db.adapter.connecting.factory.example2">
+                <title>自作のアダプタクラスをアダプタのファクトリメソッドで使用する方法</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Db.php';
+
+// 自動的に MyProject_Db_Adapter_Pdo_Mysql クラスを読み込み、インスタンスを作成します
+$db = Zend_Db::factory('Pdo_Mysql', array(
+    'host'             => '127.0.0.1',
+    'username'         => 'webuser',
+    'password'         => 'xxxxxxxx',
+    'dbname'           => 'test',
+    'adapterNamespace' => 'MyProject_Db_Adapter'
+));]]>
+                </programlisting>
+            </example>
 
         </sect3>
 
@@ -227,6 +241,15 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                         このパラメータは、各データベース拡張モジュールに固有の
                         追加オプションを連想配列で指定します。
                         典型的な使用例としては、PDO ドライバの属性などがあります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">adapterNamespace</emphasis>:
+                        アダプタクラスの名前の先頭が 'Zend_Db_Adapter'
+                        以外である場合に、それを指定します。これは、
+                        Zend 以外が作成したアダプタクラスを
+                        <code>factory()</code> メソッドで使いたい場合に指定します。
                     </para>
                 </listitem>
             </itemizedlist>
