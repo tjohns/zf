@@ -55,8 +55,10 @@ $myApplicationObject->databaseConnect($config->database->type,
         dostępu do danych konfiguracyjnych przekazanych do konstruktora.
     </para>
     <para>
-        Along with the object oriented access to the data values, <code>Zend_Config</code> also has <code>get()</code> which will return
-        the supplied default value if the data element doesn't exist. For example:
+        Oprócz zorientowanego obiektowo dostępu do wartości klasa 
+        <code>Zend_Config</code> posiada także metodę <code>get()</code> 
+        umożliwiającą zwrócenie podanej domyślnej wartości jeśli element nie
+        istnieje. Na przykład:
     </para>
     <programlisting role="php"><![CDATA[<?php
     $host = $config->database->get('host', 'localhost');]]>
