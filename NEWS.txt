@@ -15,7 +15,7 @@ Zend Framework                                                             NEWS
   ZF-1778 Mysqli: Statement object cannot be reused
   ZF-1780 Mysqli: cursors need to be closed
 - Zend_Db_Select
-  ZF-1664 where() method of the Zend_Db_Select object
+  ZF-1664 Quote properly strings that contain digits
   ZF-1747 Schema param in join() is not passed to joinInner()
 - Zend_Db_Statement
   ZF-1716 Named parameters pattern does not match PDO
