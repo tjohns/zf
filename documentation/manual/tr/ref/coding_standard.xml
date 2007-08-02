@@ -295,7 +295,7 @@ widgetFactory()]]>
         </sect2>
 
         <sect2 id="coding-standard.coding-style.strings">
-            <title>Strings</title>
+            <title>Stringler</title>
 
             <sect3 id="coding-standard.coding-style.strings.literals">
                 <title>Yalın Stringler</title>
@@ -363,11 +363,11 @@ $company = 'Zend' . 'Technologies';]]>
                 </para>
 
                 <para>
-                    When concatenating strings with the "." operator, it is permitted to
-                    break the statement into multiple lines to improve readability. In these
-                    cases, each successive line should be padded with whitespace such that the
-                    "."; operator is aligned under the "=" operator:
-
+                    Stringleri "." operetörü ile birleştirirken okunabilirliği artırmak için
+		    ifadeyi birden çok satıra bölebiliriz.Bu gibi durumlarda her başarılı satır
+		    "." operatörünün "=" operatörünün altına döşendiği gibi whitespace ile takviye
+		    edilmeli :
+		    
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
@@ -378,21 +378,22 @@ $sql = "SELECT `id`, `name` FROM `people` "
         </sect2>
 
         <sect2 id="coding-standard.coding-style.arrays">
-            <title>Arrays</title>
+            <title>Diziler</title>
 
             <sect3 id="coding-standard.coding-style.arrays.numerically-indexed">
-                <title>Numerically Indexed Arrays</title>
+                <title>Sayısal İndeksli Diziler</title>
 
-                <para>Negative numbers are not permitted as indices.</para>
+                <para>Negatif sayılar indis olamaz.</para>
 
                 <para>
-                    An indexed array may be started with any non-negative number, however
-                    this is discouraged and it is recommended that all arrays have a base index of 0.
+                    İndeksli bir dizi negatif olmayan bir sayı ile başlayabilir halbuki bu uygun değildir
+		    ve tüm dizilerin başlangıç indeksi 0 olmalı.
                 </para>
 
                 <para>
-                    When declaring indexed arrays with the <code>array</code> construct, a trailing space must be
-                    added after each comma delimiter to improve readability:
+		    İndeksli dizileri <code>array</code> construct'ı ile tanımlarken  , okunabilirliği artırmak için
+		    her virgül ayıracından sonra  boşluk bırakılmalı :
+                    
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
@@ -400,9 +401,9 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                 </para>
 
                 <para>
-                    It is also permitted to declare multiline indexed arrays using the "array" construct.
-                    In this case, each successive line must be padded with spaces such that beginning of
-                    each line aligns as shown below:
+                    "array" construct'ı ile çok satırlı indeksli diziler de tanımlanabilir. 
+		    Bu durumda aşağıda gösterildiği gibi her başarılı satırın başlangıcı aynı hizaya gelecek şekilde  
+		    boşluklarla takviye edilmeli :
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
@@ -413,125 +414,126 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
             </sect3>
 
             <sect3 id="coding-standard.coding-style.arrays.associative">
-                <title>Associative Arrays</title>
+                <title>Birleşmeli Diziler</title>
 
                 <para>
-                    When declaring associative arrays with the <code>array</code> construct, it is encouraged
-                    to break the statement into multiple lines. In this case, each successive line must be
-                    padded with whitespace such that both the keys and the values are aligned:
+                    Birleşmeli dizileri <code>array</code> construct'ı ile tanımlarken ifadeyi satırlara bölmek
+		    tavsiye edilir. Bu durumda her başarılı satır her anahtar ve değer aynı hizaya gelecek 
+		    şekilde whitespace ile takviye edilmeli:
+                    
 
                     <programlisting role="php"><![CDATA[
-$sampleArray = array('firstKey'  => 'firstValue',
-                     'secondKey' => 'secondValue');]]>
+$sampleArray = array('ilkAnahtar'  => 'ilkDeger',
+                     'ikinciAnahtar' => 'ikinciDeger');]]>
                     </programlisting>
                 </para>
             </sect3>
         </sect2>
 
         <sect2 id="coding-standard.coding-style.classes">
-            <title>Classes</title>
+            <title>Sınıflar</title>
 
             <sect3 id="coding-standard.coding-style.classes.declaration">
-                <title>Class Declaration</title>
+                <title>Sınıf Tanımlama</title>
 
                 <para>
-                    Classes must be named by following the naming conventions.
+                    Sınıflar takip eden isimlendirme kurallarına göre isimlendirilmeli.
                 </para><para>
-                    The brace is always written on the line underneath the class name ("one true brace" form).
+                   Büyük parantez her zaman  sınıf isminin hemen antındaki satıra yazılır ("Bir gerçek büyük parantez" formu).
                 </para><para>
-                    Every class must have a documentation block that conforms to the PHPDocumentor standard.
+                    Her sınıfın PHPDocumentor  standardına uyan bilgilendirme kısmı olmalı.
                 </para><para>
-                    Any code within a class must be indented four spaces.
+                    Sınıf içindeki her kod içeriden 4 boşluk ile başlamalı.
                 </para><para>
-                    Only one class is permitted per PHP file.
+                    Bir PHP dosyasında bir sınıf olabilir.
                 </para><para>
-                    Placing additional code in a class file is permitted but discouraged. In these files, two blank lines must separate the class from any additional PHP code in the file.
+                    Sınıf dosyası içine ek kod eklenebilir ancak bu uygun bulunmuyor. Böyle dosyalarda iki boş satır sınıf ile ek PHP kodunu birbirinden ayırmalı.
                 </para><para>
-                    This is an example of an acceptable class declaration:
+                    Kabul edilebilir sınıf tanımlaması örneği :
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Bilgilendirme kısmı buraya
  */
 class SampleClass
 {
-    // entire content of class
-    // must be indented four spaces
+    // sınıfın tüm içeriği
+    // içeriden 4 boşluk ile başlamalı
 }]]>
                     </programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.classes.member-variables">
-                <title>Class Member Variables</title>
+                <title>Sınıf Üyesi Değişkenler</title>
 
                 <para>
-                    Member variables must be named by following the variable naming conventions.
+                    Üye değişkenler takip eden değişken isimlendirme kurallarına göre isimlendirilmeli.
                 </para><para>
-                    Any variables declared in a class must be listed at the top of the class, prior
-                    to declaring any functions.
+                    Sınıf içinde tanımlanmış her değişken sınıfın en üstünde , herhangi bir fonksiyon tanımlamadan
+		    listelenmeli.
                 </para><para>
-                    The <code>var</code> construct is not permitted.  Member variables always declare
-                    their visibility by using one of the <code>private</code>, <code>protected</code>,
-                    or <code>public</code> constructs. Accessing member variables directly by making
-                    them public is permitted but discouraged in favor of accessor
-                    variables (set/get).
+                    <code>var</code> construct'ına izin verilmez. Üye değişkenler görünürlüklerini her zaman 
+		    <code>private</code>,<code>protected</code> veya <code>public</code> constructlarından biriyle
+		    tanımlar.Üye değişkenlere direk erişim için onları public yapabilirsiniz ama erişir değişkenler (set/get)
+		    kabul gördüğünden bu yöntem uygun değildir.
                 </para>
             </sect3>
         </sect2>
 
         <sect2 id="coding-standard.coding-style.functions-and-methods">
-            <title>Functions and Methods</title>
+            <title>Fonksiyonlar ve Metodlar</title>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.declaration">
-                <title>Function and Method Declaration</title>
+                <title>Fonksion ve Metod Tanımlaması</title>
 
                 <para>
-                    Functions must be named by following the naming conventions.
+                    Fonksiyonlar takip eden isimlendirme kurallarına göre isimlendirilmeli.
                 </para><para>
-                    Functions inside classes must always declare their visibility by using
-                    one of the <code>private</code>, <code>protected</code>,
-                    or <code>public</code> constructs.
+		    Sınıflar içindeki fonksiyonlar görünürlüklerini her zaman <code>private</code>,<code>protected</code>
+		    veya <code>public</code> constructlarından  biriyle tanımlanmalı.
                 </para><para>
-                    Like classes, the brace is always written on the line underneath the
-                    function name ("one true brace" form).
-
-                    There is no space between the
-                    function name and the opening parenthesis for the arguments.
+                    Sınıflarda olduğu gibi , her zaman büyük parantez fonksiyon isminin altındaki 
+		    satıra yazılır.("Bir gerçek büyük parantez" formu).
+		    
+		    Fonksiyon ismi ile fonksiyon argümanları için açılan 
+		    parantez arasında boşluk bulunmaz.
+		    
                 </para><para>
-                    Functions in the global scope are strongly discouraged.
+                    Genel kapsamda fonksiyon kullanmak kesinlikle uygun bulunmuyor.
                 </para><para>
-                    This is an example of an acceptable function declaration in a class:
+                    Bir sınıfta kabuledilebilir fonksiyon tanımlaması örneği :
+		    
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Bilgilendirme kısmı buraya
  */
 class Foo
 {
     /**
-     * Documentation Block Here
+     * Bilgilendirme kısmı buraya
      */
     public function bar()
     {
-        // entire content of function
-        // must be indented four spaces
+        // fonksiyonun tüm içeriği
+        // içeriden 4 boşluk ile başlamalı
     }
 }]]>
                     </programlisting>
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> Passing by-reference is permitted in the function declaration only:
+                    <emphasis>NOT:</emphasis> Referans atamasına sadece fonksiyon tanımlamasında izin veriliyor :
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Bilgilendirme kısmı buraya
  */
 class Foo
 {
     /**
-     * Documentation Block Here
+    * Bilgilendirme kısmı buraya
      */
     public function bar(&$baz)
     {}
@@ -540,22 +542,23 @@ class Foo
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited.
+                    Çağrı anında referans ile aktarım yapılamaz.
                 </para>
 
 
                 <para>
-                    The return value must not be enclosed in parentheses.  This can hinder readability
-                    and can also break code if a method is later changed to return by reference.
+                    Return değeri parantez içine anlınmamalı. Bu okunabilirliğe engel olabilir ayrıca
+		    ilerde eğer metod referans ile return yapacak şekilde değişirse kodun çalışmasını 
+		    durdurabilir.
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+* Bilgilendirme kısmı buraya
  */
 class Foo
 {
     /**
-     * WRONG
+     * YANLIŞ
      */
     public function bar()
     {
@@ -563,7 +566,7 @@ class Foo
     }
 
     /**
-     * RIGHT
+     * DOĞRU
      */
     public function bar()
     {
@@ -576,12 +579,13 @@ class Foo
             </sect3>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.usage">
-                <title>Function and Method Usage</title>
+                <title>Fonksiyon ve Metod Kullanımı</title>
 
                 <para>
-                    Function arguments are separated
-                    by a single trailing space after the comma delimiter. This is an example of an
-                    acceptable function call for a function that takes three arguments:
+                    Fonksiyon argümanları virgülden ayıracından sonra bir boşluk bırakılarak yazılır.
+                    
+                    Üç argüman alan bir fonksiyon için kabul edilebilir bir fonksiyon çağrısı örneği:
+                    
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);]]>
@@ -589,12 +593,13 @@ threeArguments(1, 2, 3);]]>
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited. See the function declarations section
-                    for the proper way to pass function arguments by-reference.
+		    Çağrı anında referans ile aktarım yapılamaz. Fonksiyon argümanlarını referans ile aktarmak için
+		    fonksiyon tanımlamaları bölümüne bakın.
                 </para><para>
-                    For functions whose arguments permitted arrays, the function call may include the
-                    "array" construct and can be split into multiple lines to improve readability.  In
-                    these cases, the standards for writing arrays still apply:
+                    
+		    Argüman olarak dizileri alabilen fonksiyonlar için fonksiyon çağrısı "array" 
+		    construct'ını içerebilir ve okunabilirliği artırmak için satırlara ayrılabilir.
+		    Bu gibi durumlarda dizi yazım kuralları geçerliliğini korur:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
@@ -608,28 +613,25 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
         </sect2>
 
         <sect2 id="coding-standard.coding-style.control-statements">
-            <title>Control Statements</title>
+            <title>Kontrol İfadeleri</title>
 
             <sect3 id="coding-standard.coding-style.control-statements.if-else-elseif">
                 <title>If / Else / Elseif</title>
 
                 <para>
-                    Control statements based on the <code>if</code> and <code>elseif</code>
-                    constructs must have a single space before the opening parenthesis of the conditional,
-                    and a single space after the closing parenthesis.
+                   <code>if</code> ve <code>elseif</code> constructlarına dayanan kontrol ifadelerinde
+		   koşulun açılan parantezinden önce ve kapama parantezinden sonra bir boşluk bırakılmalı.
                 </para>
 
                 <para>
-                    Within the conditional statements between the parentheses, operators must be separated
-                    by spaces for readability. Inner parentheses are encouraged to improve logical grouping
-                    of larger conditionals.
+                    Parantezler içindeki koşullu ifadelerdeki operatörler okunabilirliği artırmak için boşluklarla
+		    ayrılmalı. Daha geniş koşulların mantıksal gruplandırılmasını geliştirmesi için 
+		    iç parantez kullanılmalı.
                 </para>
 
                 <para>
-                    The opening brace is written on the same line as the conditional statement. The closing
-                    brace is always written on its own line. Any content within the braces must be
-                    indented four spaces.
-
+                    Açılış parantezi koşullu ifade ile aynı satırda yazılır. Kapanış parantezi ise her zaman
+		    kendi satırına yazılır. Parantezler içindeki herhangi bir içerik dört boşluk bırakılarak yazılmalı.
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
     $a = 2;
@@ -638,8 +640,8 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    For "if" statements that include "elseif" or "else", the formatting must be
-                    as in these examples:
+                    "else" veya "else" içeren "if" ifadeleri için biçimlendirme bu örneklerdeki gib olmalı :
+                    
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -657,14 +659,14 @@ if ($a != 2) {
    $a = 7;
 }]]>
                     </programlisting>
-                    PHP allows for these statements to be written without braces in some circumstances.
-                    The coding standard makes no differentiation and all "if", "elseif" or "else" statements
-                    must use braces.
+                    PHP kimi durumlarda buradaki ifadelerin büyük parantez kullanmadan yazılmasına izin verir.
+                    Kodlama standardında bir fark olmaz ve tüm "if" , "elseif" veya "else" ifadeleri 
+		    büyük parantez kullanmak zorundadır.
                 </para>
 
                 <para>
-                    Use of the "elseif" construct is permitted but highly discouraged in favor of the
-                    "else if" combination.
+                    "elseif" construct'ı kullanılabilir ama "else if" kombinasyonunun kabul görmesinden dolayı
+		    kullanılması uygun görülmemektedir.
                 </para>
             </sect3>
 
@@ -672,14 +674,13 @@ if ($a != 2) {
                 <title>Switch</title>
 
                 <para>
-                    Control statements written with the "switch" construct must have a single space before
-                    the opening parenthesis of the conditional statement, and also a single space after
-                    the closing parenthesis.
+                    "switch" construct'ı ile yazılan kontrol ifadelerinde koşulun açılış parantezinden önce ve
+		    koşulun kapanış parantezinden sonra bir boşluk bırakılmalı.
                 </para>
 
                 <para>
-                    All content within the "switch" statement must be indented four spaces. Content under
-                    each "case" statement must be indented an additional four spaces.
+                    "switch" ifadesi içindeki tüm içerik içerinden dört boşluk ile başlamalı.
+		    "case" ifadesi altındaki her içerik ek olarak içeriden dört boşluk ile başlamalı.
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -696,51 +697,54 @@ switch ($numPeople) {
                 </programlisting>
 
                 <para>
-                    The construct <code>default</code> may never be omitted from a <code>switch</code> statement.
+                    <code>switch</code> ifadelerinde <code>default</code> construct'ı asla ihmal edilmemeli.
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> It is sometimes useful to write a <code>case</code> statement which falls through
-                    to the next case by not including a <code>break</code> or <code>return</code> in that case. To distinguish
-                    these cases from bugs, any <code>case</code> statement where <code>break</code> or <code>return</code> are
-                    omitted must contain the comment "// break intentionally omitted".
+                    
+		   <emphasis>NOT:</emphasis>Bazen <code>break</code> veya <code>return</code>  eklemeyerek  sıradaki case'e düşen <code>case</code>
+		    ifadesi yazmak yararlıdır.
+		    
+		    Bu gibi durumları hatalardan ayırt etmek için <code>break</code> veya  <code>return</code> ihmal edilmiş <code>case</code>
+		    ifadelerine "// break intentionally omitted"("//break kasıtlı olarak koyulmadı") yorumu eklenmeli.
                 </para>
             </sect3>
         </sect2>
 
         <sect2 id="coding-standards.inline-documentation">
-            <title>Inline Documentation</title>
+            <title>Satıriçi Belgelendirme</title>
 
             <sect3 id="coding-standards.inline-documentation.documentation-format">
-                <title>Documentation Format</title>
+                <title>Belgelendirme Biçimi</title>
 
                 <para>
-                    All documentation blocks ("docblocks") must be compatible with the phpDocumentor format.
-                    Describing the phpDocumentor format is beyond the scope of this document.
-                    For more information, visit: <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink>
+                    Tüm bilgilendirme kısımları ("docblocks") phpDocumentor biçimi ile uyumlu olmalı.
+		    phpDocumenter biçimini açıklamak bu belgenin kapsamı dışındadır.
+		    Daha fazla bilgi için lütfen ziyaret edin : <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink>                    
                 </para>
 
                 <para>
-                    All source code file written for the Zend Framework or that operates with the framework
-                    must contain a "file-level" docblock at the top of each file and a "class-level" docblock
-                    immediately above each class. Below are examples of such docblocks.
+                    Zend Framework için veya Zend Framework ile çalışan her kaynak kod dosyası her dosyanın üstünde 
+		    "dosya seviyesinde" ve her sınıfın üstünde "sınıf seviyesinde" bilgilendirme kısmı içermelidir.
+		    
+		    Aşağıdakiler bilgilendirme kısmı örnekleri :
                 </para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Files</title>
+                <title>Dosyalar</title>
 
                 <para>
-                    Every file that contains PHP code must have a header block at the top of the file that
-                    contains these phpDocumentor tags at a minimum:
+                    PHP kodu içeren her dosya üst kısmında en az aşağıdaki kadar phpDocumentor tagleri içerecek şekilde 
+		    bir başlık kısmına sahip olmalı:
 
                     <programlisting role="php"><![CDATA[
 /**
- * Short description for file
+ * Dosyanın kısa açıklaması
  *
- * Long description for file (if any)...
+ * Dosya için uzun açıklama (eğer varsa)
  *
- * LICENSE: Some license information
+ * LİSANS: Lisans bilgisi
  *
  * @copyright  2005 Zend Technologies
  * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
@@ -753,16 +757,17 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.classes">
-                <title>Classes</title>
+                <title>Sınıflar</title>
 
                 <para>
-                    Every class must have a docblock that contains these phpDocumentor tags at a minimum:
+                    Her sınıf en az aşağıdaki kadar phpDocumentor tagleri içerecek şekilde bilgilendirme kısmı içermeli :
+                    
 
                     <programlisting role="php"><![CDATA[
 /**
- * Short description for class
+ * Sınıfın kısa açıklaması
  *
- * Long description for class (if any)...
+ * Sınıfın uzun açıklaması (eğer varsa)
  *
  * @copyright  2005 Zend Technologies
  * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
@@ -776,28 +781,31 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.functions">
-                <title>Functions</title>
+                <title>Fonksiyonlar</title>
 
                 <para>
-                Every function, including object methods, must have a docblock that contains at a minimum:
-
+                Her fonksiyon ,nesne methodları  en az aşağıdaki gibi bilgilendirme kısmı içermeli:
+                
                     <itemizedlist>
-                        <listitem><para>A description of the function</para></listitem>
-                        <listitem><para>All of the arguments</para></listitem>
-                        <listitem><para>All of the possible return values</para></listitem>
+                        <listitem><para>Fonksiyonun açıklaması</para></listitem>
+                        <listitem><para>Tüm argümanlar</para></listitem>
+                        <listitem><para>Tüm olası dönüş değerleri</para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
-                    It is not necessary to use the "@access" tag because the access level is already known
-                    from the "public", "private", or "protected" construct used to declare the function.
+                    Fonksiyonun erişim seviyesi fonksiyon tanımlanırken "public","private" veya "protected" construct'ları ile
+		    tanımlandığı için "@access" taginin kullanılmasına gerek yoktur.
+		    
                 </para>
 
                 <para>
-                    If a function/method may throw an exception, use @throws:
+                    
+		    Eğer fonksiyon/metod kural dışı durum(exception) fırlatabiliyorsa , @throws kullanın:
+                    
 
                     <programlisting role="php"><![CDATA[
-@throws exceptionclass [description]]]>
+@throws exceptionclass [açıklama]]]>
                     </programlisting>
                 </para>
             </sect3>
