@@ -59,6 +59,31 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
     {
         $db = Zend_Db::factory('Static', array('dbname' => 'dummy') );
         $this->assertType('Zend_Db_Adapter_Abstract', $db);
+        $this->assertTrue(class_exists('Zend_Db_Adapter_Static'));
+        $this->assertType('Zend_Db_Adapter_Static', $db);
+    }
+
+    public function testDbFactoryAlternateNamespace()
+    {
+        $ip = get_include_path();
+        $dir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+        $newIp = $dir . PATH_SEPARATOR . $ip;
+        set_include_path($newIp);
+
+        try {
+            $db = Zend_Db::factory('Static', array('dbname' => 'dummy', 'adapterNamespace' => 'TestNamespace'));
+        } catch (Zend_Exception $e) {
+            set_include_path($ip);
+            $this->fail('Caught exception of type '.get_class($e).' where none was expected: '.$e->getMessage());
+        }
+
+        set_include_path($ip);
+
+        $this->assertType('Zend_Db_Adapter_Abstract', $db);
+        $this->assertTrue(class_exists('Zend_Db_Adapter_Static'));
+        $this->assertType('Zend_Db_Adapter_Static', $db);
+        $this->assertTrue(class_exists('TestNamespace_Static'));
+        $this->assertType('TestNamespace_Static', $db);
     }
 
     public function testDbConstructorWithoutFactory()

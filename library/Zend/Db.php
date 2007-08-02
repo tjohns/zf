@@ -178,9 +178,13 @@ class Zend_Db
             throw new Zend_Db_Exception('Adapter name must be specified in a string.');
         }
 
-        $adapterName = strtolower($adapterName); // normalize input
-        $adapterName = 'Zend_Db_Adapter_' .
-            str_replace(' ', '_' , ucwords(str_replace('_', ' ', $adapterName)));
+        $adapterNamespace = 'Zend_Db_Adapter';
+        if (isset($config['adapterNamespace'])) {
+            $adapterNamespace = $config['adapterNamespace'];
+            unset($config['adapterNamespace']);
+        }
+        $adapterName = strtolower($adapterNamespace . '_' . $adapterName);
+        $adapterName = str_replace(' ', '_', ucwords(str_replace('_', ' ', $adapterName)));
 
         Zend_Loader::loadClass($adapterName);
 

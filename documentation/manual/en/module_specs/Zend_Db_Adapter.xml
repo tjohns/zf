@@ -154,16 +154,30 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 </programlisting>
             </example>
 
-            <note>
-                <para>
-                    If you create your own class that extends
-                    Zend_Db_Adapter_Abstract, but you do not name your class
-                    with the "Zend_Db_Adapter" package prefix, you cannot use
-                    the <code>factory()</code> method to load your Adapter.
-                    You must load your Adapter class yourself and create an
-                    instance directly using its contructor.
-                </para>
-            </note>
+            <para>
+                If you create your own class that extends
+                Zend_Db_Adapter_Abstract, but you do not name your class with
+                the "Zend_Db_Adapter" package prefix, you can use the
+                <code>factory()</code> method to load your Adapter if you
+                specify the leading portion of the adapter class with the
+                'adapterNamespace' key in the parameters array.
+            </para>
+
+            <example id="zend.db.adapter.connecting.factory.example2">
+                <title>Using the Adapter factory method for a custom adapter class</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Db.php';
+
+// Automatically load class MyProject_Db_Adapter_Pdo_Mysql and create an instance of it.
+$db = Zend_Db::factory('Pdo_Mysql', array(
+    'host'             => '127.0.0.1',
+    'username'         => 'webuser',
+    'password'         => 'xxxxxxxx',
+    'dbname'           => 'test',
+    'adapterNamespace' => 'MyProject_Db_Adapter'
+));]]>
+                </programlisting>
+            </example>
 
         </sect3>
 
@@ -229,6 +243,15 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                         options that are specific to a given database
                         extension.  One typical use of this parameter is to
                         set attributes of a PDO driver.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">adapterNamespace</emphasis>:
+                        names the initial part of the class name for the
+                        adapter, instead of 'Zend_Db_Adapter'.  Use this if
+                        you need to use the <code>factory()</code> method to
+                        load a non-Zend database adapter class.
                     </para>
                 </listitem>
             </itemizedlist>
