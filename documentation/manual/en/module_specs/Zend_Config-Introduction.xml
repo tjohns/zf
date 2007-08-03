@@ -22,11 +22,13 @@
 $configArray = array(
     'webhost' => 'www.example.com',
     'database' => array(
-        'type'     => 'pdo_mysql',
-        'host'     => 'db.example.com',
-        'username' => 'dbuser',
-        'password' => 'secret',
-        'name'     => 'dbname'
+        'adapter'     => 'pdo_mysql',
+        'params'      => array(
+            'host'     => 'db.example.com',
+            'username' => 'dbuser',
+            'password' => 'secret',
+            'dbname'   => 'mydatabase'
+        )
     )
 );
 

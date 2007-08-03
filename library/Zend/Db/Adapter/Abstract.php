@@ -135,11 +135,29 @@ abstract class Zend_Db_Adapter_Abstract
      * protocol       => (string) The network protocol, defaults to TCPIP
      * caseFolding    => (int)
      *
-     * @param array $config An array of configuration keys.
+     * @param mixed $config An array of configuration keys, or an object of Zend_Config
      * @throws Zend_Db_Adapter_Exception
      */
-    public function __construct(array $config = array())
+    public function __construct($config)
     {
+        /*
+         * Verify that adapter parameters are in an array.
+         */
+        if (!is_array($config)) {
+            /*
+             * Convert Zend_Config argument to a plain array.
+             */
+            if ($config instanceof Zend_Config) {
+                $config = $config->toArray();
+            } else {
+                /**
+                 * @see Zend_Db_Exception
+                 */
+                require_once 'Zend/Db/Exception.php';
+                throw new Zend_Db_Exception('Adapter parameters must be in an array or a Zend_Config object');
+            }
+        }
+
         $this->_checkRequiredOptions($config);
 
         $options = array(
@@ -148,7 +166,9 @@ abstract class Zend_Db_Adapter_Abstract
         );
         $driver_options = array();
 
-        // normalize the config and merge it with the defaults
+        /*
+         * normalize the config and merge it with the defaults
+         */
         if (array_key_exists('options', $config)) {
             // can't use array_merge() because keys might be integers
             foreach ((array) $config['options'] as $key => $value) {
@@ -207,7 +227,7 @@ abstract class Zend_Db_Adapter_Abstract
         // we need at least a dbname
         if (! array_key_exists('dbname', $config)) {
             require_once 'Zend/Db/Adapter/Exception.php';
-            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'dbname' that names the database instance.");
+            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'dbname' that names the database instance");
         }
 
         if (! array_key_exists('password', $config)) {
@@ -215,7 +235,7 @@ abstract class Zend_Db_Adapter_Abstract
              * @see Zend_Db_Adapter_Exception
              */
             require_once 'Zend/Db/Adapter/Exception.php';
-            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'password' for login credentials.");
+            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'password' for login credentials");
         }
 
         if (! array_key_exists('username', $config)) {
@@ -223,7 +243,7 @@ abstract class Zend_Db_Adapter_Abstract
              * @see Zend_Db_Adapter_Exception
              */
             require_once 'Zend/Db/Adapter/Exception.php';
-            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'username' for login credentials.");
+            throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'username' for login credentials");
         }
     }
 
