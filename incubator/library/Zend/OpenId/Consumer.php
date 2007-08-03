@@ -272,30 +272,31 @@ class Zend_OpenId_Consumer
      * @param array $params
      * @return mixed
      */
-    protected function _httpRequest($url, $method = 'GET', $params = '')
+    protected function _httpRequest($url, $method = 'GET', array $params = array())
     {
-        if (is_array($params)) {
-            $params = Zend_OpenId::paramsToQuery($params);
-        }
+        require_once 'Zend/Http/Client.php';
 
-        $opts = array(
-                'http'=>array(
-                    'method'=>$method
+        $client = new Zend_Http_Client(
+                $url,
+                array(
+                    'maxredirects' => 4,
+                    'timeout'      => 15,
+                    'useragent'    => 'Zend_OpenId'
                 )
             );
-        if ($method == 'POST' && $params != '') {
-            $opts['http']['header'] =
-                'Content-Type: application/x-www-form-urlencoded';
-            $opts['http']['content'] = $params;
-        }
-        $context = stream_context_create($opts);
-        $url .= (($method == 'GET' && !empty($params)) ? ('?' . $params) : '');
 
-        $fp = @fopen($url, 'r', false, $context);
-        if ($fp) {
-            $response = fread($fp, 1024*32);
-            fclose($fp);
-            return $response;
+        if ($method == 'POST') {
+            $client->setMethod(Zend_Http_Client::POST);
+            if (count($params) > 0) {
+                $client->setParameterPost($params);
+            }
+        } else if (count($params) > 0) {
+            $client->setParameterGet($params);
+        }
+
+        $response = $client->request();
+        if ($response->getStatus() == 200) {
+            return $response->getBody();
         }else{
             return false;
         }
