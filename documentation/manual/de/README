@@ -1,34 +1,36 @@
-Required software:
+Benötigte Software:
 
 - autoconf
 - make
 - xsltproc
 - xmllint
 
-On Windows, you should use Cygwin software or another port of GNU 
-development tools.
+Auf Windows sollte die Cygwin Software oder eine andere Portierung der
+GNU Entwicklungs Tools verwendet werden.
 
-How to build the DocBook documentation:
+Wie die DocBook Dokumentation erstellt wird:
 
-- run "autoconf" in this dir
-- run "./configure" in this dir
-- run "make"
+- "autoconf" in diesem Verzeichnis aufrufen
+- "./configure" in diesem Verzeichnis aufrufen
+- "make" aufrufen
 
-The HTML files are rendered in the "html" dir.
+Die HTML Dateien werden im "html" Verzeichnis erstellt.
 
-When developing content, you can verify your changes by running:
+Bei der Entwicklung von Inhalt können die Änderungen überprüft werden durch
+Aufruf von:
 
   "make check"
 
-This verifies the XML for the whole manual is valid.
+Das prüft ob das XML für das komplette Handbuch gültig ist.
 
-You can verify your changes in a single file by running:
+Die eigenen Änderungen in einer einzelnen Datei können überprüft werden
+durch Aufruf von:
 
   "make XMLFILE=filename.xml check1"
 
-The filename.xml is relative to the "module_specs" directory.
+Die filename.xml Datei ist relativ zum "module_specs" Verzeichnis.
 
-DocBook resources:
+DocBook Ressourcen:
 
 http://www.ibiblio.org/godoy/sgml/docbook/howto/index.html
 http://opensource.bureau-cornavin.com/crash-course/index.html

@@ -10,7 +10,7 @@
         <title>XMLLint</title>
         <xi:include href="@XMLFILE@">
             <xi:fallback>
-                Cannot find file "@XMLFILE@"
+                Kann Datei "@XMLFILE@" nicht finden
             </xi:fallback>
         </xi:include>
     </chapter>
