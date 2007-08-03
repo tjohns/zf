@@ -92,47 +92,41 @@
             </para>
 
             <note>
-                <title>GET and POST data</title>
+                <title>GET und POST Daten</title>
                 <para>
-                    Be cautious when accessing data from the request object as
-                    it is not filtered in any way. The router and dispatcher
-                    validate and filter data for use with their tasks, but leave
-                    the data untouched in the request object.
+                    Vorsicht wenn auf Daten von einem Anfrage Objekt zugegriffen wird da diese in keiner Weise
+                    gefiltert werden. Der Router und Dispatcher prüfen und filtern Daten für die Verwendung
+                    innerhalb Ihrer Aufgabe, lassen diese Daten aber unangetastet im Anfrage Objekt.
                 </para>
             </note>
 
             <para>
-                You may also set user parameters in the request object using
-                <code>setParam()</code> and retrieve these later using
-                <code>getParam()</code>. The router makes use of this
-                functionality to set parameters matched in the request URI into
-                the request object.
+                Es können auch Benutzerparameter im Anfrage Objekt gesetzt werden durch Verwendung von
+                <code>setParam()</code> und empfangen derselben später durch verwenden von <code>getParam()</code>.
+                Der Router verwendet diese Funktionalität um passende Parameter in der Anfrage URI im Anfrage
+                Objekt zu setzen.
             </para>
 
             <note>
-                <title>getParam() retrieves more than user params</title>
+                <title>getParam() empfängt mehr als Benutzer Parameter</title>
 
                 <para>
-                    In order to do some of its work, <code>getParam()</code> actually
-                    retrieves from several sources. In order of priority, these
-                    include: user parameters set via <code>setParam()</code>,
-                    <code>GET</code> parameters, <code>POST</code> parameters,
-                    and finally <code>COOKIE</code> parameters. Be aware of this
-                    when pulling data via this method.
+                    Um einiges Ihrer Arbeit zu tun, empfängt <code>getParam()</code> von verschiedenen Quellen.
+                    Je nach Priorität inkludieren diese: Benutzer Parameter die über <code>setParam()</code>
+                    gesetzt wurden, <code>GET</code> Parameter, <code>POST</code> Parameter, und letztendlich
+                    <code>COOKIE</code> Parameter. Achtung davor wenn Daten über diese Methode durchlaufen werden.
                 </para>
             </note>
 
             <note>
                 <title>Apache Quirks</title>
                 <para>
-                    If you are using Apache's 404 handler to pass incoming
-                    requests to the front controller, or using a PT flag with
-                    rewrite rules, <code>$_SERVER['REDIRECT_URL']</code>
-                    contains the URI you need, not
-                    <code>$_SERVER['REQUEST_URI']</code>. If you are using such
-                    a setup and getting invalid routing, you should use the
-                    <code>Zend_Controller_Request_Apache404</code> class instead
-                    of the default Http class for your request object:
+                    Wenn Apache's 404 Handler verwendet wird um eingehende Anfragen an den Front Controller zu
+                    übergeben, oder ein PT Flag mit Rewrite Regeln verwendet wird, enthält
+                    <code>$_SERVER['REDIRECT_URL']</code> die URI die benötigt wird, nicht
+                    <code>$_SERVER['REQUEST_URI']</code>. Wenn so ein Setup verwendet wird und man ungültige
+                    Routen erhält, sollte man stattdessen die <code>Zend_Controller_Request_Apache404</code>
+                    Klasse statt der standard Http Klasse für das Anfrage Objekt verwenden:
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -142,10 +136,9 @@ $front->setRequest($request);]]>
                 </programlisting>
 
                 <para>
-                    This class extends the
-                    <code>Zend_Controller_Request_Http</code> class and simply
-                    modifies the autodiscovery of the request URI. It can be
-                    used as a drop-in replacement.
+                    Diese Klasse erweitert die <code>Zend_Controller_Request_Http</code> Klasse und modifiziert
+                    einfach die automatische Entdeckung der Anfrage URI. Sie kann als einfache Ersetzung verwendet
+                    werden.
                 </para>
             </note>
         </sect3>
@@ -191,13 +184,13 @@ $front->setRequest($request);]]>
 
             <programlisting role="php"><![CDATA[<?php
 /**
- * Dispatch Request with custom base URL with Zend_Controller_Front.
+ * Dispatch Anfrage mit einer kunden basierenden URL mit Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
-           ->setBaseUrl('/projects/myapp'); // set the base url!
+           ->setBaseUrl('/projects/myapp'); // Setze die Basis URL!
 $response   = $controller->dispatch();]]>
             </programlisting>
 
@@ -205,12 +198,12 @@ $response   = $controller->dispatch();]]>
     </sect2>
 
     <sect2 id="zend.controller.request.subclassing">
-        <title>Subclassing the Request Object</title>
+        <title>Vererben des Anfrage Objektes</title>
 
         <para>
-            The base request class used for all request objects is the abstract
-            class <code>Zend_Controller_Request_Abstract</code>. At its most
-            basic, it defines the following methods:
+            Die Basis Anfrage Klasse die für alle Anfrage Objekte verwendet wird ist die abstrakte Klasse
+            <code>Zend_Controller_Request_Abstract</code>. Sie ist sehr grundsätzlich und definiert die folgenden
+            Methoden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -298,20 +291,17 @@ abstract class Zend_Controller_Request_Abstract
         </programlisting>
 
         <para>
-            The request object is a container for the request environment. The
-            controller chain really only needs to know how to set and retrieve the
-            controller, action, optional parameters, and dispatched status. By
-            default, the request will search its own parameters using the
-            controller or action keys in order to determine the controller and
-            action.
+            Das Anfrage Objekt ist ein Behälter für die Anfrage Umgebung. Die Controller Kette muß wirklich nur
+            wissen wie der Controller, die Aktion, die optionalen Parameter und der Dispatched Status gesetzt
+            und empfangen werden können. Standardmäßig durchsucht das Anfrage Objekt die eigenen Parameter indem
+            es den Controller oder die Aktions Schlüssel verwendet um den Controller und die Aktion zu ermitteln.
         </para>
 
         <para>
-            Extend this class, or one of its derivatives, when you need the
-            request class to interact with a specific environment in order to
-            retrieve data for use in the above tasks. Examples include <link
-                linkend="zend.controller.request.http">the HTTP
-                environment</link>, a CLI environment, or a PHP-GTK environment.
+            Erweitere diese Klasse, oder eine Ihrer Derivate, wenn die Anfrage Klasse mit einer speziellen
+            Umgebung interagieren soll, um Daten für die obigen Aufgaben zu erhalten. Beispiele beinhalten
+            <link linkend="zend.controller.request.http">die HTTP Umgebung</link>, eine CLI Umgebung, oder eine
+            PHP-GTK Umgebung.
         </para>
     </sect2>
 </sect1>
