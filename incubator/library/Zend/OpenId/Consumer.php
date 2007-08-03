@@ -265,7 +265,7 @@ class Zend_OpenId_Consumer
     /**
      * Performs HTTP request to given $url using given HTTP $method.
      * Send additinal query specified by variable/value array,
-     * On success returns HTTP response withot headers, fasle on failure.
+     * On success returns HTTP response without headers, false on failure.
      *
      * @param string $url OpenID server url
      * @param string $method
