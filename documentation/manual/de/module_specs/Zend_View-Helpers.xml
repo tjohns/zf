@@ -218,7 +218,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 // Füge /path/to/some/helpers mit Klassenpräfix 'My_View_Helper' hinzu
-$view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
+$view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 // Füge /other/path/to/helpers mit Klassenpräfix 'Your_View_Helper' hinzu
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
