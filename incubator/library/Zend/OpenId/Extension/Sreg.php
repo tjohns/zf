@@ -251,24 +251,26 @@ class Zend_OpenId_Extension_Sreg extends Zend_OpenId_Extension
      */
     public function checkTrustData($data)
     {
-        $props = array();
-        $name = get_class();
-        if (isset($data[$name])) {
-            $props = $data[$name];
-        } else {
+        if (is_array($this->_props) && count($this->_props) > 0) {
             $props = array();
-        }
-        $props2 = array();
-        foreach ($this->_props as $prop => $req) {
-            if (empty($props[$prop])) {
-                if ($req) {
-                    return false;
-                }
+            $name = get_class();
+            if (isset($data[$name])) {
+                $props = $data[$name];
             } else {
-                $props2[$prop] = $props[$prop];
+                $props = array();
             }
+            $props2 = array();
+            foreach ($this->_props as $prop => $req) {
+                if (empty($props[$prop])) {
+                    if ($req) {
+                        return false;
+                    }
+                } else {
+                    $props2[$prop] = $props[$prop];
+                }
+            }
+            $this->_props = (count($props2) > 0) ? $props2 : null;
         }
-        $this->_props = (count($props2) > 0) ? $props2 : null;
         return true;
     }
 }
