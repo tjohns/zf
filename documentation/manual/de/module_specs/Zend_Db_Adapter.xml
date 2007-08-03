@@ -138,14 +138,29 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 </programlisting>
             </example>
 
-            <note>
-                <para>
-                    Wenn eine eigene Klasse geschrieben wird, die Zend_Db_Adapter_Abstract erweitert aber nicht
-                    mit dem Präfix "Zend_Db_Adapter" beginnt, kann die <code>factory()</code> Methode nicht
-                    verwendet werden um den Adapter zu Laden. In diesem Fall muss der Adapter von Hand geladen
-                    und eine Instanz des Konstruktors erzeugt werden.
-                </para>
-            </note>
+            <para>
+                Wenn eine eigene Klasse geschrieben wird, die Zend_Db_Adapter_Abstract erweitert aber nicht
+                mit dem Präfix "Zend_Db_Adapter" beginnt, kann die <code>factory()</code> Methode verwendet
+                werden um den Adapter zu Laden wenn der führende Teil der Adapter Klasse mit dem
+                'adapterNamespace' Schlüssel im Parameter Array spezifiziert wird.
+            </para>
+
+            <example id="zend.db.adapter.connecting.factory.example2">
+                <title>Die factory Methode für eine eigene Adapter Klasse verwenden</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Db.php';
+
+// Die MyProject_Db_Adapter_Pdo_Mysql Klasse automatisch laden und eine Instanz von Ihr erstellen.
+$db = Zend_Db::factory('Pdo_Mysql', array(
+    'host'             => '127.0.0.1',
+    'username'         => 'webuser',
+    'password'         => 'xxxxxxxx',
+    'dbname'           => 'test',
+    'adapterNamespace' => 'MyProject_Db_Adapter'
+));]]>
+                </programlisting>
+            </example>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.parameters">
@@ -205,6 +220,14 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                         Dieser Parameter ist ein assoziatives Array von zusätzlichen Optionen die spezifisch
                         für die angegebene Datenbankerweiterung sind. Eine typische Anwendung dieses Parameters ist,
                         Attribute für einen PDO Treiber zu setzen.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">adapterNamespace</emphasis>:
+                        Benennt den führenden Teil des Klassen Namens für den Adapter statt 'Zend_Db_Adapter'.
+                        Dies kann verwendet werden wenn man die <code>factory()</code>Methode verwenden muß
+                        um eine nicht von Zend kommende Datenbank Adapter Klasse zu laden.
                     </para>
                 </listitem>
             </itemizedlist>
