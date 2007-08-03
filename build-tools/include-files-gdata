@@ -21,10 +21,10 @@ library/Zend/Version.php
 documentation/manual/en/html
 documentation/manual/en/ref
 documentation/manual/en/module_specs/Zend_Gdata_AuthSub.xml
-documentation/manual/en/module_specs/Zend_Gdata_Blogger.xml
 documentation/manual/en/module_specs/Zend_Gdata_Calendar.xml
 documentation/manual/en/module_specs/Zend_Gdata_ClientLogin.xml
 documentation/manual/en/module_specs/Zend_Gdata_Exception.xml
+documentation/manual/en/module_specs/Zend_Gdata_Gapps.xml
 documentation/manual/en/module_specs/Zend_Gdata_Spreadsheets.xml
 documentation/manual/en/module_specs/Zend_Gdata-Introduction.xml
 documentation/manual/en/configure.in
