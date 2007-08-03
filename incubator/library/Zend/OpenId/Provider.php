@@ -303,9 +303,11 @@ class Zend_OpenId_Provider
      *
      * @param array $params GET or POST variables
      * @param mixed $extensions extension object or array of extensions objects
+     * @param Zend_Controller_Response_Abstract $response
      * @return mixed
      */
-    public function handle($params, $extensions=null)
+    public function handle($params, $extensions=null,
+                           Zend_Controller_Response_Abstract $response = null)
     {
         $version = 1.1;
         if (isset($params['openid_ns']) &&
@@ -324,16 +326,16 @@ class Zend_OpenId_Provider
                 if (empty($params['openid_return_to'])) {
                     return false;
                 }
-                $ret = $this->_checkId($version, $params, 1, $extensions);
+                $ret = $this->_checkId($version, $params, 1, $extensions, $response);
                 if (is_bool($ret)) return $ret;
-                Zend_OpenId::redirect($params['openid_return_to'], $ret);
+                Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
             } else if ($params['openid_mode'] == 'checkid_setup') {
                 if (empty($params['openid_return_to'])) {
                     return false;
                 }
-                $ret = $this->_checkId($version, $params, 0, $extensions);
+                $ret = $this->_checkId($version, $params, 0, $extensions, $response);
                 if (is_bool($ret)) return $ret;
-                Zend_OpenId::redirect($params['openid_return_to'], $ret);
+                Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
             } else if ($params['openid_mode'] == 'check_authentication') {
                 $response = $this->_checkAuthentication($version, $params);
                 $ret = '';
@@ -466,9 +468,11 @@ class Zend_OpenId_Provider
      * @param array $params GET or POST request variables
      * @param bool $immediate enables or disables interaction with user
      * @param mixed $extensions extension object or array of extensions objects
+     * @param Zend_Controller_Response_Abstract $response
      * @return array
      */
-    protected function _checkId($version, $params, $immediate, $extensions=null)
+    protected function _checkId($version, $params, $immediate, $extensions=null,
+        Zend_Controller_Response_Abstract $response = null)
     {
         $ret = array();
 
@@ -491,7 +495,7 @@ class Zend_OpenId_Provider
                 return $ret;
             } else {
                 /* Redirect to Server Login Screen */
-                Zend_OpenId::redirect($this->_loginUrl, $params);
+                Zend_OpenId::redirect($this->_loginUrl, $params, $response);
             }
         }
 
@@ -525,7 +529,7 @@ class Zend_OpenId_Provider
             return $ret;
         } else if (is_null($trusted)) {
             /* Redirect to Server Trust Screen */
-            Zend_OpenId::redirect($this->_trustUrl, $params);
+            Zend_OpenId::redirect($this->_trustUrl, $params, $response);
         }
 
         return $this->_respond($version, $ret, $params, $extensions);

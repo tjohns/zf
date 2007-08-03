@@ -26,6 +26,11 @@
 require_once "Zend/OpenId/Exception.php";
 
 /**
+ * @see Zend_Controller_Response_Abstract
+ */
+require_once "Zend/Controller/Response/Abstract.php";
+
+/**
   * Default Diffie-Hellman key generator (1024 bit)
   */
 define('ZEND_OPEN_ID_DH_P',
@@ -255,10 +260,17 @@ final class Zend_OpenId
      *
      * @param string $url URL to redirect to
      * @param array $params additional variable/value pairs to send
+     * @param Zend_Controller_Response_Abstract $response
      * @param string $method redirection method ('GET' or 'POST')
      */
-    static public function redirect($url, $params = null, $method = 'GET')
+    static public function redirect($url, $params = null, 
+        Zend_Controller_Response_Abstract $response = null, $method = 'GET')
     {
+        if (null === $response) {
+            require_once "Zend/Controller/Response/Http.php";
+            $response = new Zend_Controller_Response_Http();
+        }
+        
         if (is_array($params) && count($params) > 0) {
             if (strpos($url, '?') === false) {
                 $url .= '?' . self::paramsToQuery($params);
@@ -266,13 +278,14 @@ final class Zend_OpenId
                 $url .= '&' . self::paramsToQuery($params);
             }
         }
-        if (headers_sent()){
-            echo "<script language=\"JavaScript\"" .
+        if (!$response->canSendHeaders()) {
+            $response->setBody("<script language=\"JavaScript\"" .
                  " type=\"text/javascript\">window.location='$url';" .
-                 "</script>";
+                 "</script>");
         } else {
-            header('Location: ' . $url);
+            $response->setRedirect($url);
         }
+        $response->sendResponse();
         exit();
     }
 

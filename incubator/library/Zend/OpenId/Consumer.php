@@ -96,16 +96,19 @@ class Zend_OpenId_Consumer
      * @param string $returnTo URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
+     * @param Zend_Controller_Response_Abstract $response
      * @return bool
      */
-    public function login($id, $returnTo=null, $root=null, $extensions=null)
+    public function login($id, $returnTo=null, $root=null, $extensions=null,
+                          Zend_Controller_Response_Abstract $response = null)
     {
         return $this->_checkId(
             false,
             $id,
             $returnTo,
             $root,
-            $extensions);
+            $extensions,
+            $response);
     }
 
     /**
@@ -119,16 +122,20 @@ class Zend_OpenId_Consumer
      * @param string $returnTo HTTP URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
+     * @param Zend_Controller_Response_Abstract $response
      * @return bool
      */
-    public function check($id, $returnTo=null, $root=null, $extensions)
+    public function check($id, $returnTo=null, $root=null, $extensions,
+                          Zend_Controller_Response_Abstract $response = null)
+
     {
         return $this->_checkId(
             true,
             $id,
             $returnTo,
             $root,
-            $extensions);
+            $extensions,
+            $response);
     }
 
     /**
@@ -564,9 +571,11 @@ class Zend_OpenId_Consumer
      * @param string $returnTo HTTP URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
+     * @param Zend_Controller_Response_Abstract $response
      * @return bool
      */
-    protected function _checkId($immediate, $id, $returnTo=null, $root=null, $extensions=null)
+    protected function _checkId($immediate, $id, $returnTo=null, $root=null,
+        $extensions=null, Zend_Controller_Response_Abstract $response = null)
     {
         if (!Zend_OpenId::normalize($id)) {
             return false;
@@ -626,6 +635,6 @@ class Zend_OpenId_Consumer
             return false;
         }
 
-        Zend_OpenId::redirect($server, $params);
+        Zend_OpenId::redirect($server, $params, $response);
     }
 }
