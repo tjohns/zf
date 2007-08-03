@@ -29,20 +29,19 @@ $response->sendResponse();]]>
 
         <note>
             <para>
-                By default, the front controller calls <code>sendResponse()</code>
-                when it has finished dispatching the request; typically you will
-                never need to call it. However, if you wish to manipulate the
-                response or use it in testing, you can override this
-                behaviour by setting the <code>returnResponse</code> flag with
-                <code>Zend_Controller_Front::returnResponse(true)</code>:
+                Standardmäßig ruft der Front Controller <code>sendResponse()</code> auf wenn er die Anfrage fertig
+                bearbeitet hat; typischerweise wird es nie notwendig sein Ihn aufzurufen. Wenn man trotzdem die
+                Antwort manipulieren will oder Sie beim Testen verwenden will, kann dieses Verhalten durch das
+                Setzen des <code>returnResponse</code> Flags mit
+                <code>Zend_Controller_Front::returnResponse(true)</code> geändert werden:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $front->returnResponse(true);
 $response = $front->dispatch();
 
-// do some more processing, such as logging...
-// and then send the output:
+// ein bischen mehr verarbeiten, wie z.B. loggen...
+// und dann die Ausgabe senden:
 $response->sendResponse();]]>
             </programlisting>
         </note>
@@ -67,16 +66,14 @@ $this->getResponse()
 
         <note>
             <para>
-                If using the action controller <link
-                    linkend="zend.controller.action.viewintegration">view
-                    integration</link>, you do not need to set the rendered view
-                script content in the response object, as
-                <code>Zend_Controller_Action::render()</code> does this by default.
+                Wenn die <link linkend="zend.controller.action.viewintegration">View Integration</link> des Aktion
+                Controllers verwendet wird muß der bearbeitete Inhalt des View Skripts im Antwort Objekt nicht
+                gesetzt werden, da die <code>Zend_Controller_Action::render()</code> das standardmäßig macht.
             </para>
         </note>
 
         <para>
-            Sollte in der Applikation eine Ausnahme auftreten, überprüft man den
+            Sollte in der Anwendung eine Ausnahme auftreten, überprüft man den
             <code>isException()</code> Schalter des Response Objektes und erhält die Ausnahme durch
             Verwendung von <code>getException()</code>. Zusätzlich kann man ein eigenes Response
             Objekt erstellen, dass zu einer Fehlerseite umleitet, die Nachricht der Ausnahme loggt,
@@ -131,68 +128,58 @@ $front->dispatch();]]>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
-        <title>Manipulating Headers</title>
+        <title>Header manipulieren</title>
 
         <para>
-            As stated previously, one aspect of the response object's duties is
-            to collect and emit HTTP response headers.  A variety of methods
-            exist for this:
+            Wie vorher besprochen, ist einer der Aspekte der Antwort Objekt Aufgaben das Sammeln und Abschicken der
+            HTTP Antwort Header. Eine Vielzahl von Methoden existieren hierfür:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>canSendHeaders()</code> is used to determine if
-                    headers have already been sent. It takes an optional flag
-                    indicating whether or not to throw an exception if headers
-                    have already been sent. This can be overridden by setting
-                    the property <code>headersSentThrowsException</code> to
-                    <code>false</code>.
+                    <code>canSendHeaders()</code> wird verwendet um zu ermitteln ob bereits Header gesendet wurden.
+                    Sie nimmt ein zusätzliches Flag das zeigt ob eine Ausnahme geworfen werden soll oder nicht,
+                    wenn bereits Header gesendet wurden. Das kann durch das Setzen der Eigenschaft
+                    <code>headersSentThrowsException</code> zu <code>false</code> überschrieben werden.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setHeader($name, $value, $replace = false)</code> is
-                    used to set an individual header. By default, it does not
-                    replace existing headers of the same name in the object;
-                    however, setting <code>$replace</code> to true will force it
-                    to do so.
+                    <code>setHeader($name, $value, $replace = false)</code> wird verwendet um einen individuellen
+                    Header zu setzen. Standardmäßig, ersetzt das keinen bereits existierenden gleichnamigen Header
+                    im Objekt; Trotzdem wird das Setzen von <code>$replace</code> zu true es forcieren das zu tun.
                 </para>
 
                 <para>
-                    Before setting the header, it checks with
-                    <code>canSendHeaders()</code> to see if this operation is
-                    allowed at this point, and requests that an exception be
-                    thrown.
+                    Bevor der Header setzt wird, prüft er mit <code>canSendHeaders()</code> um zu sehen ob diese
+                    Operation zu diesem Zeitpunkt erlaubt ist, und erzwingt das eine Ausnahme geworfen wird.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setRedirect($url, $code = 302)</code> sets an HTTP
-                    Location header for a redirect. If an HTTP status code has
-                    been provided, it will use that status code.
+                    <code>setRedirect($url, $code = 302)</code> setzt einen HTTP Location Header für eine
+                    Umleitung. Wenn ein HTTP Status Code angegeben wurde, wird dieser Status Code verwendet.
                 </para>
 
                 <para>
-                    Internally, it calls <code>setHeader()</code> with the
-                    <code>$replace</code> flag on to ensure only one such header
-                    is ever sent.
+                    Intern wird <code>setHeader()</code> mit dem <code>$replace</code> Flag aufgerufen um
+                    sicherzustellen das nur ein solcher Header jemals gesendet wird.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>getHeaders()</code> returns an array of all headers.
-                    Each array element is an array with the keys 'name' and
-                    'value'.
+                    <code>getHeaders()</code> gibt ein Array aller Header zurück. Jedes Array Element ist ein Array
+                    mit den Schlüsseln 'name' und 'value'.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>clearHeaders()</code> clears all registered headers.
+                    <code>clearHeaders()</code> löscht alle registrierten Headern.
                 </para>
             </listitem>
 
