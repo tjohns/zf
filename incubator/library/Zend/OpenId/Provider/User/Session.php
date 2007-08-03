@@ -27,6 +27,11 @@
 require_once "Zend/OpenId/Provider/User.php";
 
 /**
+ * @see Zend_Session_Namespace
+ */
+require_once "Zend/Session/Namespace.php";
+
+/**
  * Class to get/store information about logged in user in Web Browser using
  * PHP session
  *
@@ -38,6 +43,27 @@ require_once "Zend/OpenId/Provider/User.php";
  */
 class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
 {
+    /**
+     * Reference to an implementation of Zend_Session_Namespace object
+     *
+     * @var Zend_Session_Namespace $_session
+     */
+    private $_session = null;
+
+    /**
+     * Creates Zend_OpenId_Provider_User_Session object with given session
+     * namespace or creates new session namespace named "openid"
+     *
+     * @param Zend_Session_Namespace $session
+     */
+    public function __construct(Zend_Session_Namespace $session = null)
+    {
+        if ($session === null) {
+            $this->_session = new Zend_Session_Namespace("openid");
+        } else {
+            $this->_session = $session;
+        }
+    }
 
     /**
      * Stores information about logged in user in session data
@@ -47,10 +73,7 @@ class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
      */
     public function setLoggedInUser($id)
     {
-        if (session_id() === "") {
-            session_start();
-        }
-        $_SESSION['openid.logged_in'] = $id;
+        $this->_session->logged_in = $id;
     }
 
     /**
@@ -60,11 +83,8 @@ class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
      */
     public function getLoggedInUser()
     {
-        if (session_id() === "") {
-            session_start();
-        }
-        if (isset($_SESSION['openid.logged_in'])) {
-            return $_SESSION['openid.logged_in'];
+        if (isset($this->_session->logged_in)) {
+            return $this->_session->logged_in;
         }
         return false;
     }
@@ -76,10 +96,7 @@ class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
      */
     public function delLoggedInUser()
     {
-        if (session_id() === "") {
-            session_start();
-        }
-        unset($_SESSION['openid.logged_in']);
+        unset($this->_session->logged_in);
     }
 
 }

@@ -4,6 +4,7 @@ $old = ini_get("include_path");
 ini_set("include_path", "$dir/library:$dir/incubator/library:$old");
 require_once "Zend/OpenId/Provider.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
+require_once "Zend/Session/Namespace.php";
 
 $server = new Zend_OpenId_Provider();
 
@@ -62,8 +63,8 @@ function sreg_form(Zend_OpenId_Extension_Sreg $sreg)
     return $s;
 }
 
-session_set_cookie_params(0, $_SERVER['PHP_SELF']);
-session_start();
+$session = new Zend_Session_Namespace("opeinid.server");
+Zend_Session::start();
 
 $ret = false;
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -76,12 +77,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $view->setScriptPath(dirname(__FILE__) . '/templates');
         $view->strictVars(true);
 
-        if (isset($_SESSION['id'])) {
-            $view->id = $_SESSION['id'];
+        if (isset($session->id)) {
+            $view->id = $session->id;
         }
-        if (isset($_SESSION['error'])) {
-            $view->error = $_SESSION['error'];
-            unset($_SESSION['error']);
+        if (isset($session->error)) {
+            $view->error = $session->error;
+            unset($session->error);
         }
         if (isset($_GET['openid_action'])) {
             if ($_GET['openid_action'] == 'register') {
@@ -161,8 +162,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             isset($_POST['openid_password'])) {
             if (!$server->login($_POST['openid_url'],
                                 $_POST['openid_password'])) {
-                $_SESSION['error'] = 'Wrong identity/password!';
-                $_SESSION['id'] = $_POST['openid_url'];
+                $session->error = 'Wrong identity/password!';
+                $session->id = $_POST['openid_url'];
             }
             unset($_GET['openid_action']);
             Zend_OpenId::redirect($_SERVER['PHP_SELF'], $_GET);
@@ -173,13 +174,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
             $url = Zend_OpenId::selfURL() . '?openid=' . $_POST['openid_name'];
             if ($_POST['openid_password'] != $_POST['openid_password2']) {
-                $_SESSION['name'] = $_POST['openid_name'];
-                $_SESSION['error'] = 'Password mismatch.';
+                $session->name = $_POST['openid_name'];
+                $session->error = 'Password mismatch.';
                 header('Location: ' . $_SERVER['PHP_SELF'] . '?openid.action=register');
             } else if ($server->register($url, $_POST['openid_password'])) {
                 header('Location: ' . $_SERVER['PHP_SELF'] . '?openid.action=registration_complete&openid.name=' . $_POST['openid_name']);
             } else {
-                $_SESSION['error'] = 'Registration failed. Try another name.';
+                $session->error = 'Registration failed. Try another name.';
                 header('Location: ' . $_SERVER['PHP_SELF'] . '?openid.action=register');
             }
             exit;
