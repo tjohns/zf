@@ -17,11 +17,9 @@ input.openid_login {
 <body>
 <?php
 $dir = realpath(dirname(__FILE__)."/../../../..");
-$old = ini_get("include_path");
-ini_set("include_path", "$dir/library:$dir/incubator/library:$old");
+set_include_path("$dir/library" . PATH_SEPARATOR . "$dir/incubator/library" . PATH_SEPARATOR . get_include_path());
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
-
 
 if (isset($_POST['openid_action']) &&
     $_POST['openid_action'] == "login" &&
