@@ -35,10 +35,10 @@
             <title>Objetivos</title>
 
             <para>
-        Bons padrões de código são importantes em qualquer projeto de desenvolvimento,
-        mas particularmente quando múltiplos desenvolvedores estão trabalhando no mesmo
-        projeto. Ter padrões ajuda a assegurar que o código seja de alta qualidade,
-    tenha poucos bugs e seja de fácil manutenção.
+              Bons padrões de código são importantes em qualquer projeto de desenvolvimento,
+              mas particularmente quando múltiplos desenvolvedores estão trabalhando no mesmo
+              projeto. Ter padrões ajuda a assegurar que o código seja de alta qualidade,
+              tenha poucos bugs e seja de fácil manutenção.
             </para>
         </sect2>
     </sect1>
