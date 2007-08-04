@@ -1,0 +1,125 @@
+<sect1 id="zend.search.lucene.charset">
+    <title>Zeichensätze</title>
+
+    <sect2 id="zend.search.lucene.charset.description">
+        <title>Unterstützung für UTF-8 und Einzel-Byte Zeichensätze</title>
+
+        <para>
+            Zend_Search_Lucene arbeitet intern mit dem UTF-8 Zeichensatz. Index Dateien speichern Unicode Daten in
+            Java's "modifiziertem UTF-8 Codierung". Der Kern von Zend_Search_Lucene unterstützt Ihn komplett aber
+            mit einer Ausnahme.
+            <footnote>
+               <para>
+                   Zend_Search_Lucene unterstützt nur Basic Multilingual Plane (BMP) Zeichen (von 0x0000 bis 0xFFFF)
+                   und unterstützt keine "zusätzlichen Zeichen" (Zeichen deren Codepunkte größer als 0xFFFF sind).
+               </para>
+               <para>
+                   Java 2 zeigt diese Werte als Paare von Zeichen (16-bit) Werten an, der erste vom
+                   High-Surrogate Bereich (0xD800-0xDBFF), den zweiten vom Low-Surrogate Bereich (0xDC00-0xDFFF).
+                   Dann werden Sie als normale UTF-8 Zeichen mit sechs Bytes kodiert. Die Standard UTF-8
+                   Repräsentation verwendet vier Bytes für zusätzliche Zeichen.
+               </para>
+            </footnote>
+        </para>
+
+        <para>
+            Die Codierung der aktuellen Eingabedaten dann über die API von Zend_Search_Lucene spezifiziert werden.
+            Daten werden automatisch in die UTF-8 Codierung konvertiert.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.charset.default_analyzer">
+        <title>Standard Textanalysator</title>
+        <para>
+            Trotzdem verwendet der Standardmäßige Textanalysator (welche auch im Anfrageparser arbeitet)
+            ctype_alpha() für das analysieren von Text und Anfragen.
+        </para>
+
+        <para>
+            ctype_alpha() ist nicht UTf-8 kompatibel, weswegen der Analysator Text zuerst in die 'ASCII//TRANSLIT'
+            Codierung konvertiert bevor er indiziert. Der selbe Prozess wird wärend des Parsens der Anfrage
+            durchgeführt, er ist also komplett transparent.
+            <footnote>
+               <para>
+                   Konvertierungen in 'ASCII//TRANSLIT' sind abhängig von dem aktuellen Gebietsschema und OS.
+               </para>
+            </footnote>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.charset.utf_analyzer">
+        <title>UTF-8 kompatibler Textanalysator</title>
+
+        <para>
+            Zend_Search_Lucene enthält auch einen limitiert funktionsfähigen UTF-8 Analysator. Er kann mit dem
+            folgenden Code eingeschaltet werden:
+
+            <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Er bezeichnet Daten für das Indizieren im UTF-8 Modus und hat keine Problem mit irgendwelchen
+            UTF-8 kompatiblen Zeichen.
+        </para>
+
+        <para>
+            Er hat zwei Einschränkungen:
+            <itemizedlist>
+                <listitem>
+                    <para>behandelt alle nicht-ASCII Zeichen als Buchstaben (das stimmt nicht immer);</para>
+                </listitem>
+                <listitem>
+                    <para>er unterscheidet zwischen Groß- und Kleinschreibung;</para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Wegen dieser Einschränkungen ist er nicht als Standard gesetzt, kann aber von Zeit zu Zeit hilfreich sein.
+        </para>
+
+        <para>
+            Unabhängigkeit von Groß- und Kleinschreibung kann emuliert werden mit einer <code>strtolower()</code>
+            Konvertierung:
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
+
+...
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+
+...
+
+$doc = new Zend_Search_Lucene_Document();
+
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($contents)));
+
+// Titel Feld für das Durchsuchen (indiziert, nicht gespeichert)
+$doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
+
+// Titel Feld für das Empfangen (nicht indiziert, gespeichert)
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Die selbe Konvertierung kann mit einem Abfrage String durchgeführt werden:
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
+
+...
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+
+...
+
+$hits = $index->find(strtolower($query));]]>
+            </programlisting>
+        </para>
+    </sect2>
+</sect1>
