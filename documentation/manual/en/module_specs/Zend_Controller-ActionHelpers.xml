@@ -161,7 +161,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
         <programlisting role="php"><![CDATA[<?php
 // Check if 'redirector' helper is registered with the broker:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
-    echo 'Redirector helper registered
+    echo 'Redirector helper registered';
 }]]>
         </programlisting>
 
