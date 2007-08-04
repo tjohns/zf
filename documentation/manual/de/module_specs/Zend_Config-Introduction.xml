@@ -43,11 +43,12 @@ $config = new Zend_Config($configArray);
 echo $config->webhost;
 
 // Konfigurations-Daten benutzen, um eine Datenbank-Verbindung her zu stellen
-$myApplicationObject->databaseConnect($config->database->type,
-                                      $config->database->host,
-                                      $config->database->username,
-                                      $config->database->password,
-                                      $config->database->name);]]>
+$db = Zend_Db::factory($config->database->adapter,
+                       $config->database->params->toArray());
+
+// Alternative Verwendung: einfach das Zend_Config Objekt übergeben.
+// Zend_Db factory weiß wie es zu interpretieren ist.
+$db = Zend_Db::factory($config->database);]]>
         </programlisting>
     </example>
     <para>
