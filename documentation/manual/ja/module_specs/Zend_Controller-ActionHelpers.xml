@@ -164,7 +164,7 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
         <programlisting role="php"><![CDATA[<?php
 // 'redirector' ヘルパーがブローカに登録されているかどうかを調べます
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
-    echo 'Redirector helper registered
+    echo 'Redirector helper registered';
 }]]>
         </programlisting>
 
