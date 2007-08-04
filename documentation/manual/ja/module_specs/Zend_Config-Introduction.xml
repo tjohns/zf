@@ -45,11 +45,12 @@ $config = new Zend_Config($configArray);
 echo $config->webhost;
 
 // 設定データを使用してデータベースに接続します
-$myApplicationObject->databaseConnect($config->database->type,
-                                      $config->database->host,
-                                      $config->database->username,
-                                      $config->database->password,
-                                      $config->database->name);]]>
+$db = Zend_Db::factory($config->database->adapter,
+                       $config->database->params->toArray());
+
+// もうひとつの方法: 単に Zend_Config オブジェクトを渡します
+// Zend_Db のファクトリは、その処理方法を知っています
+$db = Zend_Db::factory($config->database);]]>
         </programlisting>
     </example>
     <para>
