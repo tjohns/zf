@@ -415,7 +415,7 @@ $reporter          = $bug1->findParentRow('Accounts');]]>
             </para>
             <programlisting role="php"><![CDATA[<?php
 $bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
+$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
 $bug1              = $bugsRowset->current();
 
 $engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
@@ -468,7 +468,7 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
             </para>
             <programlisting role="php"><![CDATA[<?php
 $bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
+$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
 $bug1              = $bugsRowset->current();
 
 // デフォルトの参照ルールを使用します
