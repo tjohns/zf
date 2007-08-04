@@ -13,11 +13,13 @@
 $configArray = array(
     'webhost' => 'www.example.com',
     'database' => array(
-        'type'     => 'pdo_mysql',
-        'host'     => 'db.example.com',
-        'username' => 'dbuser',
-        'password' => 'secret',
-        'name'     => 'dbname'
+        'adapter'     => 'pdo_mysql',
+        'params'      => array(
+            'host'     => 'db.example.com',
+            'username' => 'dbuser',
+            'password' => 'secret',
+            'dbname'   => 'mydatabase'
+        )
     )
 );
 
@@ -29,11 +31,12 @@ $config = new Zend_Config($configArray);
 echo $config->webhost;
 
 // 使用配置数据来连接数据库
-$myApplicationObject->databaseConnect($config->database->type,
-                                      $config->database->host,
-                                      $config->database->username,
-                                      $config->database->password,
-                                      $config->database->name);]]>
+$db = Zend_Db::factory($config->database->adapter,
+                       $config->database->params->toArray());
+
+// 另外的用法：简单地传递 Zend_Config 对象。
+// Zend_Db factory 知道如何翻译它。
+$db = Zend_Db::factory($config->database);]]>                                      
         </programlisting>
     </example>
     <para>
