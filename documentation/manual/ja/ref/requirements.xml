@@ -160,8 +160,8 @@
                     </row>
                     <row>
                         <entry>hash</entry>
-                        <entry>?</entry>
-                        <entry></entry>
+                        <entry>依存</entry>
+                        <entry>Zend_Auth_Adapter_Http</entry>
                     </row>
                     <row>
                         <entry>ibm_db2</entry>
