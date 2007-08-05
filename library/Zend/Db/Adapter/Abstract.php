@@ -133,7 +133,7 @@ abstract class Zend_Db_Adapter_Abstract
      * port           => (string) The port of the database
      * persistent     => (boolean) Whether to use a persistent connection or not, defaults to false
      * protocol       => (string) The network protocol, defaults to TCPIP
-     * caseFolding    => (int)
+     * caseFolding    => (int) style of case-alteration used for identifiers
      *
      * @param mixed $config An array of configuration keys, or an object of Zend_Config
      * @throws Zend_Db_Adapter_Exception
@@ -644,13 +644,18 @@ abstract class Zend_Db_Adapter_Abstract
                     return (string) intval($value);
                     break;
                 case Zend_Db::BIGINT_TYPE: // 64-bit integer
-                    if (preg_match('/^([1-9]\d*)/', (string) $value, $matches)) {
-                        return $matches[1];
-                    }
-                    if (preg_match('/^(0x[\dA-F]+)/i', (string) $value, $matches)) {
-                        return $matches[1];
-                    }
-                    if (preg_match('/^(0[0-7]*)/', (string) $value, $matches)) {
+                    // ANSI SQL-style hex literals (e.g. x'[\dA-F]+')
+                    // are not supported here, because these are string
+                    // literals, not numeric literals.
+                    if (preg_match('/^(
+                          [+-]?                  # optional sign
+                          (?:
+                            0[Xx][\da-fA-F]+     # ODBC-style hexadecimal
+                            |\d+                 # decimal or octal, or MySQL ZEROFILL decimal
+                            (?:[eE][+-]?\d+)?    # optional exponent on decimals or octals
+                          )
+                        )/x',
+                        (string) $value, $matches)) {
                         return $matches[1];
                     }
                     break;
