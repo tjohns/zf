@@ -139,11 +139,25 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
     public function testTableOptionName()
     {
+        $tableName = 'zfbugs';
         $table = $this->_getTable('Zend_Db_Table_TableSpecial',
-            array('name' => 'zfbugs'));
+            array('name' => $tableName)
+        );
         $info = $table->info();
         $this->assertContains('name', array_keys($info));
-        $this->assertEquals($info['name'], 'zfbugs');
+        $this->assertEquals($tableName, $info['name']);
+    }
+
+    public function testTableOptionSchema()
+    {
+        $schemaName = $this->_util->getSchema();
+        $tableName = 'zfbugs';
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+            array('name' => $tableName, 'schema' => $schemaName)
+        );
+        $info = $table->info();
+        $this->assertContains('schema', array_keys($info));
+        $this->assertEquals($schemaName, $info['schema']);
     }
 
     public function testTableArgumentAdapter()
@@ -545,6 +559,34 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(5, $lastInsertId);
     }
 
+    public function testTableInsertWithSchema()
+    {
+        $schemaName = $this->_util->getSchema();
+        $tableName = 'zfbugs';
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+            array('name' => $tableName, 'schema' => $schemaName)
+        );
+
+        $row = array (
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
+        );
+
+        $profilerEnabled = $this->_db->getProfiler()->getEnabled();
+        $this->_db->getProfiler()->setEnabled(true);
+        $insertResult = $table->insert($row);
+        $this->_db->getProfiler()->setEnabled($profilerEnabled);
+
+        $qp = $this->_db->getProfiler()->getLastQueryProfile();
+        $tableSpec = $this->_db->quoteIdentifier($schemaName.'.'.$tableName, true);
+        $this->assertContains("INSERT INTO $tableSpec ", $qp->getQuery());
+    }
+
     public function testTableInsertSequence()
     {
         $table = $this->_getTable('Zend_Db_Table_TableProducts',
@@ -683,6 +725,33 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals($data[$bug_status], $row->$bug_status);
     }
 
+    public function testTableUpdateWithSchema()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status      = $this->_db->foldCase('bug_status');
+        $schemaName = $this->_util->getSchema();
+        $tableName = 'zfbugs';
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+            array('name' => $tableName, 'schema' => $schemaName)
+        );
+
+        $data = array(
+            $bug_description => 'Implement Do What I Mean function',
+            $bug_status      => 'INCOMPLETE'
+        );
+
+        $profilerEnabled = $this->_db->getProfiler()->getEnabled();
+        $this->_db->getProfiler()->setEnabled(true);
+        $result = $table->update($data, "$bug_id = 2");
+        $this->_db->getProfiler()->setEnabled($profilerEnabled);
+
+        $this->assertEquals(1, $result);
+        $qp = $this->_db->getProfiler()->getLastQueryProfile();
+        $tableSpec = $this->_db->quoteIdentifier($schemaName.'.'.$tableName, true);
+        $this->assertContains("UPDATE $tableSpec ", $qp->getQuery());
+    }
+
     public function testTableUpdateWhereArray()
     {
         $bug_id = $this->_db->quoteIdentifier('bug_id', true);
@@ -721,6 +790,25 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         $rowset = $table->find(array(1, 2));
         $this->assertEquals(1, count($rowset));
+    }
+
+    public function testTableDeleteWithSchema()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+        $schemaName = $this->_util->getSchema();
+        $tableName = 'zfbugs';
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+            array('name' => $tableName, 'schema' => $schemaName)
+        );
+
+        $profilerEnabled = $this->_db->getProfiler()->getEnabled();
+        $this->_db->getProfiler()->setEnabled(true);
+        $result = $table->delete("$bug_id = 2");
+        $this->_db->getProfiler()->setEnabled($profilerEnabled);
+
+        $qp = $this->_db->getProfiler()->getLastQueryProfile();
+        $tableSpec = $this->_db->quoteIdentifier($schemaName.'.'.$tableName, true);
+        $this->assertContains("DELETE FROM $tableSpec ", $qp->getQuery());
     }
 
     public function testTableDeleteWhereArray()

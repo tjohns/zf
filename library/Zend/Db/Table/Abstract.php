@@ -762,7 +762,8 @@ abstract class Zend_Db_Table_Abstract
         /**
          * INSERT the new row.
          */
-        $this->_db->insert($this->_name, $data);
+        $tableSpec = ($this->_schema ? $this->_schema . '.' : '') . $this->_name;
+        $this->_db->insert($tableSpec, $data);
 
         if (isset($data[$pkIdentity])) {
             /**
@@ -810,7 +811,8 @@ abstract class Zend_Db_Table_Abstract
      */
     public function update(array $data, $where)
     {
-        return $this->_db->update($this->_name, $data, $where);
+        $tableSpec = ($this->_schema ? $this->_schema . '.' : '') . $this->_name;
+        return $this->_db->update($tableSpec, $data, $where);
     }
 
     /**
@@ -859,7 +861,8 @@ abstract class Zend_Db_Table_Abstract
      */
     public function delete($where)
     {
-        return $this->_db->delete($this->_name, $where);
+        $tableSpec = ($this->_schema ? $this->_schema . '.' : '') . $this->_name;
+        return $this->_db->delete($tableSpec, $where);
     }
 
     /**
