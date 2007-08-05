@@ -13,11 +13,13 @@
 $configArray = array(
     'webhost' => 'www.example.com',
     'database' => array(
-        'type'     => 'pdo_mysql',
-        'host'     => 'db.example.com',
-        'username' => 'dbuser',
-        'password' => 'secret',
-        'name'     => 'dbname'
+        'adapter'     => 'pdo_mysql',
+        'params'      => array(
+            'host'     => 'db.example.com',
+            'username' => 'dbuser',
+            'password' => 'secret',
+            'dbname'   => 'mydatabase'
+        )
     )
 );
 
@@ -29,12 +31,13 @@ $config = new Zend_Config($configArray);
 echo $config->webhost;
 
 // Utilise les données de configuration pour se connecter à une base de données
-$myApplicationObject->databaseConnect($config->database->type,
-                                      $config->database->host,
-                                      $config->database->username,
-                                      $config->database->password,
-                                      $config->database->name);]]>
-    	</programlisting>
+$db = Zend_Db::factory($config->database->adapter,
+                       $config->database->params->toArray());
+
+// Autre possibilité : fournir simplement l'objet Zend_Config.
+// Zend_Db factory sait comment l'interpréter.
+$db = Zend_Db::factory($config->database);]]>
+        </programlisting>
     </example>
     <para>
         Comme illustré dans l'exemple ci-dessus, <code>Zend_Config</code> fournit une syntaxe de propriétés d'objets imbriquées pour accéder aux données de configuration passées à son constructeur.
