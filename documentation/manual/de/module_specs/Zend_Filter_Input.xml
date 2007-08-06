@@ -192,10 +192,9 @@ $filters = array(
         <title>Filter und Prüfbearbeiter erstellen</title>
 
         <para>
-            After declaring the filters and validators arrays, use them as
-            arguments in the constructor of Zend_Filter_Input.  This returns an
-            object that knows all your filtering and validating rules, and you
-            can use this object to process one or more sets of input data.
+            Nachdem die Filter und Prüfarrays deklariert wurden, können diese als Argumente im Konstruktor von
+            Zend_Filter_Input verwendet werden. Das gibt ein Objekt zurück welches alle Filter- und Prüfregeln
+            kennt, und das verwendet werden kann um ein oder mehrere Sets von Eingabedaten zu bearbeiten.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -203,12 +202,10 @@ $input = new Zend_Filter_Input($filters, $validators);]]>
         </programlisting>
 
         <para>
-            You can specify input data as the third constructor argument.  The
-            data structure is an associative array.  The keys are field names,
-            and the values are data values.  The standard <code>$_GET</code>
-            and <code>$_POST</code> superglobal variables in PHP are examples
-            of this format.  You can use either of these variables as input
-            data for Zend_Filter_Input.
+            Man kann Eingabedaten als drittes Argument im Konstruktor spezifizieren. Die Datenstruktur ist ein
+            assoziatives Array. Die superglobalen Standardvariablen in PHP, <code>$_GET</code> und
+            <code>$_POST</code>, sind Beispiele für dieses Format. Man kann jede dieser Variablen als Eingabedaten
+            für Zend_Filter_Input verwenden.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -218,9 +215,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data);]]>
         </programlisting>
 
         <para>
-            Alternatively, use the <code>setData()</code> method, passing
-            an associative array of key/value pairs the same format as
-            described above.
+            Alternativ kann die <code>setData()</code> Methode verwendet werden, indem ein assoziatives Array von
+            Schlüssel/Werte Paaren, im selben Format wie oben beschrieben, übergeben wird.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -229,34 +225,31 @@ $input->setData($newData);]]>
         </programlisting>
 
         <para>
-            The <code>setData()</code> method redefines data in an existing
-            Zend_Filter_Input object without changing the filtering and
-            validation rules.  Using this method, you can run the same rules
-            against different sets of input data.
+            Die <code>setData()</code> Methode definiert Daten nocheinmal, in einem existierenden Zend_Filter_Input
+            Objekt ohne die Filter- und Prüfregeln zu verändern. Wenn diese Methode verwendet wird können die selben
+            Regeln, an anderen Sets von Eingabedaten, wieder verwendet werden.
         </para>
 
     </sect2>
 
     <sect2 id="zend.filter.input.results">
 
-        <title>Retrieving Validated Fields and other Reports</title>
+        <title>Geprüfte Felder und andere Reporte empfangen</title>
 
         <para>
-            After you have declared filters and validators and created the
-            input processor, you can retrieve reports of missing, unknown, and
-            invalid fields.  You also can get the values of fields after
-            filters have been applied.
+            Nachdem Filter und Prüfer deklariert wurden und der Eingabeprozessor erstellt wurde, können Reporte von
+            fehlenden, unbekannten und ungültigen Feldern empfangen werden. Man kann auch die Werte der Felder
+            erhalten, nachdem die Filter angewendet wurden.
         </para>
 
         <sect3 id="zend.filter.input.results.isvalid">
 
-            <title>Querying if the input is valid</title>
+            <title>Abfragen ob die Eingabe gültig ist</title>
 
             <para>
-                If all input data pass the validation rules, the
-                <code>isValid()</code> method returns <code>true</code>.
-                If any field is invalid or any required field is missing,
-                <code>isValid()</code> returns <code>false</code>.
+                Wenn alle Eingabedaten die Prüfregeln bestanden haben, gibt die <code>isValid()</code> Methode
+                <code>true</code> zurück. Wenn irgendein Feld ungültig ist oder ein benötigtes Feld fehlt, gibt die
+                <code>isValid()</code> Methode <code>false</code> zurück.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -266,15 +259,14 @@ if ($input->isValid()) {
             </programlisting>
 
             <para>
-                This method accepts an optional string argument, naming
-                an individual field.  If the specified field passed validation
-                and is ready for fetching, <code>isValid('fieldName')</code>
-                returns <code>true</code>.
+                Diese Methode akzeptiert ein optionales String Argument, das ein individuelles Feld benennt.
+                Wenn das spezifizierte Feld die Prüfung passiert und bereit ist um abgeholt zu werden, gibt
+                <code>isValid('fieldName')</code> den Wert <code>true</code> zurück.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 if ($input->isValid('month')) {
-  echo "Field 'month' is OK\n";
+  echo "Feld 'month' ist OK\n";
 }]]>
             </programlisting>
 
@@ -282,31 +274,27 @@ if ($input->isValid('month')) {
 
         <sect3 id="zend.filter.input.results.reports">
 
-            <title>Getting Invalid, Missing, or Unknown Fields</title>
+            <title>Ungültige, fehlende oder unbekannte Felder erhalten</title>
 
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Invalid</emphasis> fields are
-                        those that don't pass one or more of their validation
-                        checks.
+                        <emphasis role="strong">Ungültige</emphasis> Felder sind jene, die einen oder mehrere Ihrer
+                        Prüfungen nicht bestehen.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Missing</emphasis> fields are
-                        those that are not present in the input data, but were
-                        declared with the metacommand
-                        <code>'presence'=>'required'</code> (see the
-                        <link linkend="zend.filter.input.metacommands.presence">later section</link>
-                        on metacommands).
+                        <emphasis role="strong">Fehlende</emphasis> Felder sind jene die nicht in den
+                        Eingabedaten vorhanden sind, aber im Metakommando <code>'presence'=>'required'</code>
+                        (Siehe die <link linkend="zend.filter.input.metacommands.presence">spätere Sektion</link>
+                        über Metakommandos) deklariert wurden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Unknown</emphasis> fields are
-                        those that are not declared in any rule in the array of
-                        validators, but appear in the input data.
+                        <emphasis role="strong">Unbekannte</emphasis> Felder sind jene die in keiner einzigen Regel,
+                        im Array der Prüfer, deklariert wurden, aber in den Eingabedaten vorkommen.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -316,7 +304,7 @@ if ($input->hasInvalid() || $input->hasMissing()) {
   $messages = $input->getMessages();
 }
 
-// getMessages() simply returns the merge of getInvalid() and getMissing()
+// getMessages() gibt einfach die Zusammenfassung von getInvalid() und getMissing() zurück
 
 if ($input->hasInvalid()) {
   $invalidFields = $input->getInvalid();
@@ -332,97 +320,87 @@ if ($input->hasUnknown()) {
             </programlisting>
 
             <para>
-                The results of the <code>getMessages()</code> method is an
-                associative array, mapping a rule name to an array of error
-                messages related to that rule.  Note that the index of this
-                array is the rule name used in the rule declaration, which may
-                be different from the names of fields checked by the rule.
+                Das Ergebnis der <code>getMessages()</code> Methode ist ein assoziatives Array, das die Regelnamen
+                einem Array von Fehlermeldungen, relativ zu diesen Regeln, zuordnet. Es ist anzumerken das der Index
+                dieses Arrays der Name der Regel ist die in der Regeldeklaration verwendet wird, und welche
+                von den Namen der Felder, die von der Regel geprüft werden, unterschiedlich sein kann.
             </para>
 
             <para>
-                The <code>getMessages()</code> method returns the merge of the
-                arrays returned by the <code>getInvalid()</code> and
-                <code>getMissing()</code>.  These methods return subsets of the
-                messages, related to validation failures, or fields that were
-                declared as required but missing from the input.
+                Die <code>getMessages()</code> Methode gibt eine Zusammenfassung der Arrays zurück die von
+                <code>getInvalid()</code> und <code>getMissing()</code> retourniert werden. Diese Methoden geben
+                Subsets der Nachrichten zurück, relativ zu den Prüffehlern, oder Felder die als benötigt deklariert
+                wurden aber in der Eingabe fehlen.
             </para>
 
             <para>
-                The <code>getErrors()</code> method returns an associative array,
-                mapping a rule name to an array of error identifiers.  Error
-                identifiers are fixed strings, to identify the reason for a
-                validation failure, while messages can be customized.
-                See <xref linkend="zend.validate.introduction.using" /> for
-                more information.
+                Die <code>getErrors()</code> Methode gibt ein assoziatives Array zurück, in dem die Regelnamen einem
+                Array von Fehler Identifizierern entsprechen. Fehler Identifizierer sind fixe Strings, um Gründe für
+                eine fehlgeschlagene Prüfung, zu identifizieren, wobei Nachrichten selbst geändert werden können.
+                Siehe <xref linkend="zend.validate.introduction.using" /> für mehr Informationen.
             </para>
 
             <para>
-                You can specify the message returned by
-                <code>getMissing()</code> using the 'missingMessage' option,
-                as an argument to the Zend_Filter_Input constructor or using
-                the <code>setOptions()</code> method.
+                Die Nachricht die von <code>getMissing()</code> zurückgegeben wird kann als Argument beim
+                Zend_Filter_Input Konstruktor, oder durch verwenden der <code>setOptions()</code> Methode,
+                spezifiziert werden.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $options = array(
-    'missingMessage' => "Field '%field%' is required"
+    'missingMessage' => "Feld '%field%' wird benötigt"
 );
 
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 
-// alternative method:
+// alternative Methode:
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
 $input->setOptions($options);]]>
             </programlisting>
 
             <para>
-                The results of the <code>getUnknown()</code> method is an
-                associative array, mapping field names to field values.  Field
-                names are used as the array keys in this case, instead of rule
-                names, because no rule mentions the fields considered to be
-                unknown fields.
+                Das Ergebnis der <code>getUnknown()</code> Methode ist ein assoziatives Array, in dem die Feldnamen
+                den Feldwerten zugeordnet werden. Feldnamen werden in diesem Fall als Arrayschlüssel verwendet, statt
+                als Regelnamen, weil keine Regel die Feld erwähnt die unbekannte Felder sind.
             </para>
 
         </sect3>
 
         <sect3 id="zend.filter.input.results.escaping">
 
-            <title>Getting Valid Fields</title>
+            <title>Gültige Felder bekommen</title>
 
             <para>
-                All fields that are neither invalid, missing, nor unknown are
-                considered valid.  You can get values for valid fields using a
-                magic accessor.  There are also non-magic accessor methods
-                <code>getEscaped()</code> and <code>getUnescaped()</code>.
+                Alle Felder die entweder ungültig, fehlend oder unbekannt sind, werden als gültig angenommen. Man
+                kann Werte für diese Felder erhalten indem ein magischer Accessor verwendet wird. Es gibt auch die
+                nicht-magische Accessor Methoden <code>getEscaped()</code> und <code>getUnescaped()</code>.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$m = $input->month;                 // escaped output from magic accessor
-$m = $input->getEscaped('month');   // escaped output
-$m = $input->getUnescaped('month'); // not escaped]]>
+$m = $input->month;                 // Ausgabe vom magischen Accessor kommentieren
+$m = $input->getEscaped('month');   // Ausgabe kommentieren
+$m = $input->getUnescaped('month'); // nicht kommentieren]]>
             </programlisting>
 
             <para>
-                By default, when retrieving a value, it is filtered with the
-                Zend_Filter_HtmlEntities.  This is the default because it is
-                considered the most common usage to output the value of a field
-                in HTML.  The HtmlEntities filter helps prevent unintentional
-                output of code, which can result in security problems.
+                Standardmäßig, wenn ein Wert empfangen wird, wird er mit Zend_Filter_HtmlEntities gefiltert. Das ist
+                der Standard weil angenommen wird, das die am meisten übliche Verwendung, die Ausgabe von Werten von
+                einem Feld in HTML ist. Der HtmlEntities Filter hilft ungewollten Ausgaben von Code vorzubeugen,
+                welche zu Sicherheitsproblemen führen könnten.
             </para>
 
             <note>
                 <para>
-                    As shown above, you can retrieve the unescaped value using
-                    the <code>getUnescaped()</code> method, but you must write
-                    code to use the value safely, and avoid security issues
-                    such as vulnerability to cross-site scripting attacks.
+                    Wie oben gezeigt, kann man unkommentierte Werte erhalten undem die <code>getUnescaped()</code>
+                    Methode verwendet wird, aber man muß dafür Code schreiben um die Werte sicher zu verwendetn, und
+                    Sicherheitsprobleme, wie Verletzbarkeit für Seitenübergreifende Skript Attacken zu vermeiden.
                 </para>
             </note>
 
             <para>
-                You can specify a different filter for escaping values, by
-                specifying it in the constructor options array:
+                Es kann ein anderer Filter für das auskommentieren von Werten definiert werden, durch seine
+                Spezifikation im Array der Optionen des Konstruktors:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -431,8 +409,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
             </programlisting>
 
             <para>
-                Alternatively, you can use the
-                <code>setDefaultEscapeFilter()</code> method:
+                Alternativ kann die <code>setDefaultEscapeFilter()</code> Methode verwendet werden:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -441,32 +418,27 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());]]>
             </programlisting>
 
             <para>
-                In either usage, you can specify the escape filter as a string
-                base name of the filter class, or as an object instance of a
-                filter class.  The escape filter can be an instance of a filter
-                chain, an object of the class Zend_Filter.
+                Bei jeder Verwendung, kann der Kommentarfilter als String Basisname der Filterklasse, oder als
+                Objektinstanz einer Filterklasse, spezifiziert werden. Der Kommentarfilter kann eine Instanz einer
+                Filterkette, oder ein Objekt der Zend_Filter Klasse sein.
             </para>
 
             <para>
-                Filters to escape output should be run in this way, to make
-                sure they run after validation.  Other filters you declare in
-                the array of filter rules are applied to input data before data
-                are validated.  If escaping filters were run before validation,
-                the process of validation would be more complex, and it would
-                be harder to provide both escaped and unescaped versions of the
-                data.  So it is recommended to declare filters to escape output
-                using <code>setDefaultEscapeFilter()</code>, not in the
-                <code>$filters</code> array.
+                Filter die Ausgaben kommentieren sollen auf diesen Weg ausgeführt werden, um sicherzustellen das
+                Sie nach der Prüfung ausgeführt werden. Andere Filter, die im Array der Filterregeln deklariert
+                werden, werden bei den Eingabedaten angewendet bevor diese Daten geprüft werden. Wenn
+                Kommentarfilter vor der Prüfung ausgeführt werden, würde der Prozess der Prüfung viel komplexer sein
+                um sowohl kommentierte als auch unkommentierte Versionen der Daten anzubieten. Deswegen wird
+                empfohlen, Filter die Ausgaben mit <code>setDefaultEscapeFilter()</code> kommentieren, nicht im
+                <code>$filters</code> Array zu deklarieren.
             </para>
 
             <para>
-                There is only one method <code>getEscaped()</code>, and
-                therefore you can specify only one filter for escaping
-                (although this filter can be a filter chain).  If you need a
-                single instance of Zend_Filter_Input to return escaped output
-                using more than one filtering method, you should extend
-                Zend_Filter_Input and implement new methods in your subclass to
-                get values in different ways.
+                Es gibt nur eine <code>getEscaped()</code> Methode, und deswegen kann nur ein Filter für das
+                kommentieren spezifiziert werden (trotzdem kann dieser Filter eine Filterkette sein). Wenn eine
+                einzelne Instanz von Zend_Filter_Input benötigt wird, um kommentierte Ausgaben zu erhalten, und
+                mehr als eine Filtermethode angewendet werden soll, sollte Zend_Filter_Input erweitert werden und
+                neue Methoden in der Subklasse implementiert werden um Wert auf unterschiedlichen Wegen zu erhalten.
             </para>
 
         </sect3>
