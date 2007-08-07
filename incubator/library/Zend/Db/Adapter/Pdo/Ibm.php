@@ -24,6 +24,12 @@
 /** Zend_Db_Adapter_Pdo_Abstract */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 
+/** Zend_Db_Abstract_Pdo_Ibm_Db2 */
+require_once 'Zend/Db/Adapter/Pdo/Ibm/Db2.php';
+
+/** Zend_Db_Abstract_Pdo_Ibm_Ids */
+require_once 'Zend/Db/Adapter/Pdo/Ibm/Ids.php';
+
 /** Zend_Db_Statement_Pdo_Ibm */
 require_once 'Zend/Db/Statement/Pdo/Ibm.php';
 
@@ -44,14 +50,95 @@ require_once 'Zend/Db/Adapter/Exception.php';
 
 class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
 {
-
     /**
      * PDO type.
      *
      * @var string
      */
     protected $_pdoType = 'ibm';
+    
+    /**
+     * The IBM data server connected to
+     *
+     * @var string
+     */
+    protected $_serverType = null;
+    
+    /**
+     * Keys are UPPERCASE SQL datatypes or the constants
+     * Zend_Db::INT_TYPE, Zend_Db::BIGINT_TYPE, or Zend_Db::FLOAT_TYPE.
+     *
+     * Values are:
+     * 0 = 32-bit integer
+     * 1 = 64-bit integer
+     * 2 = float or decimal
+     *
+     * @var array Associative array of datatypes to values 0, 1, or 2.
+     */
+    protected $_numericDataTypes = array(
+                        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+                        Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
+                        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
+                        'INTEGER'            => Zend_Db::INT_TYPE,
+                        'SMALLINT'           => Zend_Db::INT_TYPE,
+                        'BIGINT'             => Zend_Db::BIGINT_TYPE,
+                        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
+                        'DEC'                => Zend_Db::FLOAT_TYPE,
+                        'REAL'               => Zend_Db::FLOAT_TYPE,
+                        'NUMERIC'            => Zend_Db::FLOAT_TYPE,
+                        'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
+                        'FLOAT'              => Zend_Db::FLOAT_TYPE
+                        ); 
+    
+    /**
+     * Creates a PDO object and connects to the database.
+     * 
+     * This is a temporary workaround until the attribute PDO::ATTR_SERVER_INFO
+     * is implemented in the PDO_IBM driver
+     * 
+     * The IBM data server is set.  
+     * Current options are DB2 or IDS
+     * @todo also differentiate between z/OS and i/5
 
+     *
+     * @return void
+     * @throws Zend_Db_Adapter_Exception
+     */
+    public function _connect()
+    {
+        if ($this->_connection) {
+            return;
+        }
+        parent::_connect();
+             
+        if ($this->_serverType === null) {
+            $server = substr($this->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);
+            
+            switch ($server) {
+               case 'DB2':
+                   $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Db2($this);
+                   
+                   // Add DB2-specific numeric types
+                   $this->_numericDataTypes['DECFLOAT'] = Zend_Db::FLOAT_TYPE;
+                   $this->_numericDataTypes['DOUBLE']   = Zend_Db::FLOAT_TYPE;
+                   $this->_numericDataTypes['NUM']      = Zend_Db::FLOAT_TYPE;
+                   
+                   break;
+               case 'IDS':
+                   $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Ids($this);
+                   
+                   // Add IDS-specific numeric types
+                   $this->_numericDataTypes['SERIAL']       = Zend_Db::INT_TYPE;
+                   $this->_numericDataTypes['SERIAL8']      = Zend_Db::BIGINT_TYPE;
+                   $this->_numericDataTypes['INT8']         = Zend_Db::BIGINT_TYPE;
+                   $this->_numericDataTypes['SMALLFLOAT']   = Zend_Db::FLOAT_TYPE;
+                   $this->_numericDataTypes['MONEY']        = Zend_Db::FLOAT_TYPE;
+                  
+                   break;
+           }
+        }
+    }
+    
     /**
      * Creates a PDO DSN for the adapter from $this->_config settings.
      *
@@ -111,15 +198,13 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
 
     /**
      * Returns a list of the tables in the database.
-     * NOTE: Currently only availabe on DB2 LUW.
      *
      * @return array
      */
     public function listTables()
     {
-        $sql = "SELECT tabname "
-        . "FROM SYSCAT.TABLES ";
-        return $this->fetchCol($sql);
+        $this->_connect();
+        return $this->_serverType->listTables();
     }
 
     /**
@@ -153,89 +238,14 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($tableName, $schemaName = null)
     {
-        $sql = "SELECT DISTINCT c.tabschema, c.tabname, c.colname, c.colno,
-              c.typename, c.default, c.nulls, c.length, c.scale,
-              c.identity, tc.type AS tabconsttype, k.colseq
-            FROM syscat.columns c
-              LEFT JOIN (syscat.keycoluse k JOIN syscat.tabconst tc
-                ON (k.tabschema = tc.tabschema
-                  AND k.tabname = tc.tabname
-                  AND tc.type = 'P'))
-              ON (c.tabschema = k.tabschema
-                AND c.tabname = k.tabname
-                AND c.colname = k.colname)
-            WHERE c.tabname = ".$this->quote($tableName);
-        if ($schemaName) {
-            $sql .= " AND c.tabschema = ".$this->quote($schemaName);
-        }
-        $sql .= " ORDER BY c.colno";
-
-        $desc = array();
-        $stmt = $this->query($sql);
-
-        /**
-         * To avoid case issues, fetch using FETCH_NUM
-         */
-        $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
-
-        /**
-         * The ordering of columns is defined by the query so we can map
-         * to variables to improve readability
-         */
-        $tabschema      = 0;
-        $tabname        = 1;
-        $colname        = 2;
-        $colno          = 3;
-        $typename       = 4;
-        $default        = 5;
-        $nulls          = 6;
-        $length         = 7;
-        $scale          = 8;
-        $identityCol    = 9;
-        $tabconstype    = 10;
-        $colseq         = 11;
-
-        foreach ($result as $key => $row) {
-            list ($primary, $primaryPosition, $identity) = array(false, null, false);
-            if ($row[$tabconstype] == 'P') {
-                $primary = true;
-                $primaryPosition = $row[$colseq];
-            }
-            /**
-             * In IBM DB2, an column can be IDENTITY
-             * even if it is not part of the PRIMARY KEY.
-             */
-            if ($row[$identityCol] == 'Y') {
-                $identity = true;
-            }
-
-
-            // only colname needs to be case adjusted
-            $desc[$this->foldCase($row[$colname])] = array(
-            'SCHEMA_NAME'      => $row[$tabschema],
-            'TABLE_NAME'       => $row[$tabname],
-            'COLUMN_NAME'      => $row[$colname],
-            'COLUMN_POSITION'  => $row[$colno]+1,
-            'DATA_TYPE'        => $row[$typename],
-            'DEFAULT'          => $row[$default],
-            'NULLABLE'         => (bool) ($row[$nulls] == 'Y'),
-            'LENGTH'           => $row[$length],
-            'SCALE'            => $row[$scale],
-            'PRECISION'        => ($row[$typename] == 'DECIMAL' ? $row[$length] : 0),
-            'UNSIGNED'         => null, // @todo
-            'PRIMARY'          => $primary,
-            'PRIMARY_POSITION' => $primaryPosition,
-            'IDENTITY'         => $identity
-            );
-        }
-
-        return $desc;
+        $this->_connect();
+        return $this->_serverType->describeTable($tableName, $schemaName);
     }
 
     /**
      *  Inserts a table row with specified data.
      *	Special handling for PDO_IBM
-     * remove empty slots
+     *  remove empty slots
      *
      * @param mixed $table The table to insert data into.
      * @param array $bind Column-value pairs.
@@ -243,6 +253,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function insert($table, array $bind)
     {
+        $this->_connect();
         $newbind = array();
         if (is_array($bind)) {
             foreach ($bind as $name => $value) {
@@ -251,6 +262,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
                 }
             }
         }
+       
         return parent::insert($table, $newbind);
     }
 
@@ -264,44 +276,13 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function limit($sql, $count, $offset = 0)
     {
-        $count = intval($count);
-        if ($count <= 0) {
-            throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
-        }
-
-        $offset = intval($offset);
-        if ($offset < 0) {
-            throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
-        }
-
-        if ($offset == 0) {
-            $limit_sql = $sql . " FETCH FIRST $count ROWS ONLY";
-            return $limit_sql;
-        }
-
-        /**
-         * DB2 does not implement the LIMIT clause as some RDBMS do.
-         * We have to simulate it with subqueries and ROWNUM.
-         * Unfortunately because we use the column wildcard "*",
-         * this puts an extra column into the query result set.
-         */
-        $limit_sql = "SELECT z2.*
-            FROM (
-                SELECT ROW_NUMBER() OVER() AS \"ZEND_DB_ROWNUM\", z1.*
-                FROM (
-                    " . $sql . "
-                ) z1
-            ) z2
-            WHERE z2.zend_db_rownum BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
-        return $limit_sql;
+       $this->_connect();
+       return $this->_serverType->limit($sql, $count, $offset);
     }
-
 
     /**
      * Gets the last ID generated automatically by an IDENTITY/AUTOINCREMENT
      * column.
-     * The IDENTITY_VAL_LOCAL() function gives the last generated identity value
-     * in the current process, even if it was for a GENERATED column.
      *
      * @param string $tableName OPTIONAL
      * @param string $primaryKey OPTIONAL
@@ -310,8 +291,8 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $this->_connect();
-
-        if ($tableName !== null) {
+        
+         if ($tableName !== null) {
             $sequenceName = $tableName;
             if ($primaryKey) {
                 $sequenceName .= "_$primaryKey";
@@ -319,14 +300,11 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
             $sequenceName .= '_seq';
             return $this->lastSequenceId($sequenceName);
         }
-        # PDO_IBM doesn't support lastInsertId function.
-        # We use IDENTITY_VAL_LOCAL() to get the same information
-
-        $sql = 'SELECT IDENTITY_VAL_LOCAL() AS VAL FROM SYSIBM.SYSDUMMY1';
-        $value = $this->fetchOne($sql);
-        return $value;
+        
+        $id = $this->getConnection()->lastInsertId();
+        
+        return $id;   
     }
-
 
     /**
      * Return the most recent value from the specified sequence in the database.
@@ -337,9 +315,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     public function lastSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT PREVVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
-        $value = $this->fetchOne($sql);
-        return $value;
+        return $this->_serverType->lastSequenceId($sequenceName);
     }
 
     /**
@@ -352,8 +328,6 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     public function nextSequenceId($sequenceName)
     {
         $this->_connect();
-        $sql = 'SELECT NEXTVAL FOR '.$this->quoteIdentifier($sequenceName).' AS VAL FROM SYSIBM.SYSDUMMY1';
-        $value = $this->fetchOne($sql);
-        return $value;
+        return $this->_serverType->nextSequenceId($sequenceName);
     }
 }
