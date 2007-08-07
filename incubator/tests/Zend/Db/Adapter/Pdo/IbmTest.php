@@ -50,4 +50,58 @@ class Zend_Db_Adapter_Pdo_IbmTest extends Zend_Db_Adapter_Db2Test
     {
         return 'Pdo_Ibm';
     }
+    
+    public function testAdapterTransactionCommit()
+    {
+        $server = $this->_util->getServer();
+        
+        if ($server == 'IDS') {
+            $this->markTestIncomplete('IDS needs special consideration for transactions');
+        } else {
+            parent::testAdapterTransactionCommit();   
+        }
+    }
+
+    public function testAdapterTransactionRollback()
+    {
+        $server = $this->_util->getServer();
+        
+        if ($server == 'IDS') {
+            $this->markTestIncomplete('IDS needs special consideration for transactions');
+        } else {
+            parent::testAdapterTransactionCommit();   
+        }
+    }
+    
+    public function testAdapterLimitInvalidArgumentException()
+    {
+        $sql = $this->_db->limit('SELECT * FROM zfproducts', 0);
+            
+        $stmt = $this->_db->query($sql);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(0, count($result), 'Expecting to see 0 rows returned');
+
+        try {
+            $sql = $this->_db->limit('SELECT * FROM zfproducts', 1, -1);
+            $this->fail('Expected to catch Zend_Db_Adapter_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Adapter_Exception', $e,
+                'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
+        }
+    }
+    
+    /**
+     * Used by _testAdapterOptionCaseFoldingNatural()
+     * DB2 returns identifiers in uppercase naturally,
+     * while IDS does not
+     */
+    protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
+    {
+        $server = $this->_util->getServer();
+        
+        if ($server == 'DB2') {
+            return 'CASE_FOLDED_IDENTIFIER';
+        }
+        return 'case_folded_identifier';
+    }
 }

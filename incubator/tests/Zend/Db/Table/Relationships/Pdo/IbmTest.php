@@ -46,4 +46,14 @@ class Zend_Db_Table_Relationships_Pdo_IbmTest extends Zend_Db_Table_Relationship
         return 'Pdo_Ibm';
     }
 
+     public function testTableRelationshipCascadingUpdateUsageBasicString()
+    {
+        $server = $this->_util->getServer();
+        
+        if ($server == 'IDS') {
+            $this->markTestSkipped('IDS serial columns cannot be updated');
+        } else {
+            parent::testTableRelationshipCascadingUpdateUsageBasicString();
+        }
+    }
 }

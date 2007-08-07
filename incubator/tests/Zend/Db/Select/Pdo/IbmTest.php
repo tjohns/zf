@@ -46,6 +46,28 @@ class Zend_Db_Select_Pdo_IbmTest extends Zend_Db_Select_TestCommon
         return 'Pdo_Ibm';
     }
 
+    public function testSelectGroupByExpr()
+    {
+       $server = $this->_util->getServer();
+        
+        if ($server == 'IDS') {
+            $this->markTestIncomplete('IDS does not support this SQL syntax');
+        } else {
+            parent::testSelectGroupByExpr();   
+        }
+    }
+    
+    public function testSelectGroupByAutoExpr()
+    {
+       $server = $this->_util->getServer();
+        
+        if ($server == 'IDS') {
+            $this->markTestIncomplete('IDS does not support this SQL syntax');
+        } else {
+            parent::testSelectGroupByAutoExpr();   
+        }
+    }
+    
     public function testSelectJoinCross()
     {
         $this->markTestSkipped($this->getDriver() . ' adapter support for CROSS JOIN not yet available');

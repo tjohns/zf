@@ -46,6 +46,113 @@ class Zend_Db_TestUtil_Pdo_Ibm extends Zend_Db_TestUtil_Db2
         return $desc['product_id']['SCHEMA_NAME'];
     }
 
+    protected function _getDataProducts()
+    {
+        $data = parent::_getDataProducts();
+        
+        $server = $this->getServer();
+        if ($server == 'IDS') {
+            foreach ($data as &$row) {
+                $row['product_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq', true) . ".NEXTVAL");
+            }   
+        }
+        return $data;
+    }
+    
+    public function getSqlType($type)
+    {
+        $server = $this->getServer();
+        
+        if ($server == 'IDS') {
+         
+            if ($type == 'IDENTITY') {
+                return 'SERIAL(1) PRIMARY KEY';
+            }
+            if ($type == 'DATETIME') {
+                return 'DATE';
+            }
+            return $type;
+        }
+        return parent::getSqlType($type);
+    }
+    
+    protected function _getSqlCreateTable($tableName)
+    {
+        $server = $this->getServer();
+        
+        if ($server == 'IDS') {
+            $tableList = $this->_db->fetchCol('SELECT T.TABNAME FROM SYSTABLES T '
+            . $this->_db->quoteInto(' WHERE T.TABNAME = ?', $tableName)
+            );
+            if (in_array($tableName, $tableList)) {
+                return null;
+            }
+            return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName, true);
+        }
+        
+        return parent::_getSqlCreateTable($tableName);
+    }
+
+    protected function _getSqlDropTable($tableName)
+    {
+        $server = $this->getServer();
+        
+        if ($server == 'IDS') {
+            $tableList = $this->_db->fetchCol('SELECT T.TABNAME FROM SYSTABLES T '
+            . $this->_db->quoteInto(' WHERE T.TABNAME = ?', $tableName)
+            );
+            if (in_array($tableName, $tableList)) {
+                return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
+            }
+            return null;
+        }
+        
+        return parent::_getSqlDropTable($tableName);
+    }
+    
+    protected function _getSqlCreateSequence($sequenceName)
+    {
+        $server = $this->getServer();
+        
+        if ($server == 'IDS') {
+            $seqList = $this->_db->fetchCol('SELECT S.TABNAME FROM SYSTABLES S '
+            . $this->_db->quoteInto(' WHERE S.TABNAME = ?', $sequenceName) 
+            . " AND S.TABTYPE = 'Q'"
+            );
+            
+            if (in_array($sequenceName, $seqList)) {
+                return null;
+            }
+            return 'CREATE SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' START WITH 1 INCREMENT BY 1 MINVALUE 1';
+        }
+            
+        return parent::_getSqlCreateSequence($sequenceName);
+    }
+    
+    protected function _getSqlDropSequence($sequenceName)
+    {
+        $server = $this->getServer();
+       
+        if ($server == 'IDS') {
+            $seqList = $this->_db->fetchCol('SELECT S.TABNAME FROM SYSTABLES S '
+            . $this->_db->quoteInto(' WHERE S.TABNAME = ?', $sequenceName)
+            . " AND S.TABTYPE = 'Q'"
+            );
+            
+            if (in_array($sequenceName, $seqList)) {
+                return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true);
+            }
+            return null;
+        }
+        
+        return parent::_getSqlDropSequence($sequenceName);
+    }
+    
+    public function getServer()
+    {
+        return substr($this->_db->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);
+    }
+    
     protected function _rawQuery($sql)
     {
         $conn = $this->_db->getConnection();

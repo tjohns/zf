@@ -31,6 +31,14 @@ class Zend_Db_Statement_Pdo_IbmTest extends Zend_Db_Statement_Pdo_TestCommon
         return 'Pdo_Ibm';
     }
 
+    /**
+     * used by testStatementGetColumnMeta()
+     *
+     */
+    protected $_getColumnMetaKeys = array(
+        'scale', 'table', 'native_type', 'flags', 'name', 'len', 'precision', 'pdo_type'
+    );
+    
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()
@@ -81,5 +89,37 @@ class Zend_Db_Statement_Pdo_IbmTest extends Zend_Db_Statement_Pdo_TestCommon
     public function testStatementBindParamByName()
     {
         $this->markTestIncomplete($this->getDriver() . ' support for bindParam to be implemented soon.');
+    }
+    
+    public function testStatementGetSetAttribute()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts');
+        $stmt = $this->_db->prepare($select->__toString());
+
+        $value = 'value';
+        try {
+            $stmt->setAttribute(1234, $value);
+        } catch (Zend_Exception $e) {
+            $this->assertContains('This driver doesn\'t support setting attributes', $e->getMessage());
+        }
+
+        try {
+            $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #1");
+        } catch (Zend_Exception $e) {
+            $this->assertContains('Driver does not support this function: 1 Unknown attribute', $e->getMessage());
+            return;
+        }
+
+        $valueArray = array('value1', 'value2');
+        $stmt->setAttribute(1235, $valueArray);
+        $this->assertEquals($valueArray, $stmt->getAttribute(1235), "Expected array #1");
+        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #2");
+
+        $valueObject = new stdClass();
+        $stmt->setAttribute(1236, $valueObject);
+        $this->assertSame($valueObject, $stmt->getAttribute(1236), "Expected object");
+        $this->assertEquals($valueArray, $stmt->getAttribute(1235), "Expected array #2");
+        $this->assertEquals($value, $stmt->getAttribute(1234), "Expected '$value' #2");
     }
 }
