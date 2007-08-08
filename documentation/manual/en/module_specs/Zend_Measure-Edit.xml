@@ -59,6 +59,11 @@
             without exceptions.
         </para>
 
+        <para>
+            The <code>convertTo</code> method accepts an optional parameter. With this parameter you can define
+            an precision for the returned output. The standard precision is '<code>2</code>'.
+        </para>
+
         <example id="zend.measure.edit.convert.example-1">
             <title>Convert</title>
             <programlisting role="php"><![CDATA[<?php
@@ -71,7 +76,10 @@ $unit = new Zend_Measure_Weight($mystring,'POND', $locale);
 print "Kilo:".$unit->convertTo('KILOGRAM');
 
 // constants are considered "better practice" than strings
-print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);]]>
+print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
+
+// define a precision for the output
+print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON, 3);]]>
             </programlisting>
         </example>
 

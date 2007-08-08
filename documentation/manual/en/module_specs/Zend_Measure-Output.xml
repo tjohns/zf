@@ -81,6 +81,10 @@ echo $unit->getValue();]]>
             </example>
         </para>
 
+        <para>
+            The <code>getValue()</code> method accepts an optional parameter '<code>round</code>' which allows to
+            define a precision for the generated output. The standard precision is '<code>2</code>'.
+        </para>
     </sect2>
 
     <sect2 id="zend.measure.output.unit">
