@@ -94,10 +94,10 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         $currency = new Zend_Currency('USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 USD');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         try {
-            $currency = new Zend_Currency('XXX');
+            $currency = new Zend_Currency('XYZ');
             $this->fail("unknown shortname should not have been recognised");
         } catch (Zend_Currency_Exception $e) {
             // success
@@ -105,23 +105,23 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         $currency = new Zend_Currency('USD', 'de_AT');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('USD', $locale);
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('de_AT', 'USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency($locale, 'USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('EUR', 'de_AT');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '€ 1.000');
 
         try {
             $currency = new Zend_Currency('EUR', 'xx_YY');
@@ -132,19 +132,19 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         $currency = new Zend_Currency('USD', 'Arab');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ ١.٠٠٠');
 
-        $currency = new Zend_Currency('USD', 'Latin');
+        $currency = new Zend_Currency('USD', 'Latn');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('Arab', 'USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ ١.٠٠٠');
 
-        $currency = new Zend_Currency('Latin', 'USD');
+        $currency = new Zend_Currency('Latn', 'USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         try {
             $currency = new Zend_Currency('EUR', 'Xyyy');
@@ -155,11 +155,11 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         $currency = new Zend_Currency('USD', 'Arab', 'de_AT');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ ١.٠٠٠');
 
-        $currency = new Zend_Currency('USD', 'Latin', $locale);
+        $currency = new Zend_Currency('USD', 'Latn', $locale);
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         try {
             $currency = new Zend_Currency('XXX', 'Latin', $locale);
@@ -184,43 +184,43 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         $currency = new Zend_Currency('Arab', 'USD', 'de_AT');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ ١.٠٠٠');
 
-        $currency = new Zend_Currency('Latin', 'USD', $locale);
+        $currency = new Zend_Currency('Latn', 'USD', $locale);
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('Arab', 'de_AT', 'EUR');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '€ ١.٠٠٠');
 
-        $currency = new Zend_Currency('Latin', $locale, 'USD');
+        $currency = new Zend_Currency('Latn', $locale, 'USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('EUR', 'de_AT', 'Arab');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '€ ١.٠٠٠');
 
-        $currency = new Zend_Currency('USD', $locale, 'Latin');
+        $currency = new Zend_Currency('USD', $locale, 'Latn');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('de_AT', 'USD', 'Arab');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ ١.٠٠٠');
 
-        $currency = new Zend_Currency($locale, 'USD', 'Latin');
+        $currency = new Zend_Currency($locale, 'USD', 'Latn');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
         $currency = new Zend_Currency('de_AT', 'Arab', 'USD');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '$ ١.٠٠٠');
 
-        $currency = new Zend_Currency($locale, 'Latin', 'EUR');
+        $currency = new Zend_Currency($locale, 'Latn', 'EUR');
         $this->assertTrue($currency instanceof Zend_Currency);
-        $this->assertSame($currency->toCurrency(1000), '1000 EUR');
+        $this->assertSame($currency->toCurrency(1000), '€ 1.000');
     }
 
 
@@ -262,7 +262,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $USD->setFormat(null, 'Arab', 'de_AT');
         $this->assertSame($USD->toCurrency(253292.1832), '$ ٢٥٣.٢٩٢,١٨٣٢');
 
-        $USD->setFormat(null, 'Default', 'de_AT');
+        $USD->setFormat(null, 'Latn', 'de_AT');
         $this->assertSame($USD->toCurrency(253292.1832), '$ 253.292,1832');
 
         // allignment of currency signs
@@ -277,7 +277,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         // enable/disable currency symbols & currency names
         $USD->setFormat(Zend_Currency::NO_SYMBOL, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), 'US Dollar 253.292,1832');
+        $this->assertSame($USD->toCurrency(253292.1832), '253.292,1832');
 
         $USD->setFormat(Zend_Currency::USE_SHORTNAME, null, 'de_AT');
         $this->assertSame($USD->toCurrency(253292.1832), 'USD 253.292,1832');
@@ -305,8 +305,8 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertSame(Zend_Currency::getName('EGP','ar_EG'), 'EGP');
-        $this->assertSame(Zend_Currency::getName('ar_EG'), 'EGP');
+        $this->assertSame(Zend_Currency::getName('EGP','ar_EG'), 'جنيه مصرى');
+        $this->assertSame(Zend_Currency::getName('ar_EG'), 'جنيه مصرى');
     }
 
 
