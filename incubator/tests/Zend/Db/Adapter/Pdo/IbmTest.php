@@ -75,14 +75,16 @@ class Zend_Db_Adapter_Pdo_IbmTest extends Zend_Db_Adapter_Db2Test
     
     public function testAdapterLimitInvalidArgumentException()
     {
-        $sql = $this->_db->limit('SELECT * FROM zfproducts', 0);
-            
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $sql = $this->_db->limit("SELECT * FROM $products", 0);
+
         $stmt = $this->_db->query($sql);
         $result = $stmt->fetchAll();
+
         $this->assertEquals(0, count($result), 'Expecting to see 0 rows returned');
 
         try {
-            $sql = $this->_db->limit('SELECT * FROM zfproducts', 1, -1);
+            $sql = $this->_db->limit("SELECT * FROM $products", 1, -1);
             $this->fail('Expected to catch Zend_Db_Adapter_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Adapter_Exception', $e,
