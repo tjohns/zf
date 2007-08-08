@@ -63,6 +63,13 @@
             エラーだらけになってしまうでしょう。
         </para>
 
+        <para>
+            <code>convertTo</code> メソッドには、オプションのパラメータ
+            '<code>round</code>' を指定することができます。
+            これは、出力結果の精度を設定するものです。標準の精度は
+            '<code>2</code>' です。
+        </para>
+
         <example id="zend.measure.edit.convert.example-1">
             <title>変換</title>
             <programlisting role="php"><![CDATA[<?php
@@ -75,7 +82,10 @@ $unit = new Zend_Measure_Weight($mystring,'POND', $locale);
 print "Kilo:".$unit->convertTo('KILOGRAM');
 
 // 文字列を使うより定数で指定するほうが "よりよい方法" です
-print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);]]>
+print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
+
+// 出力の精度を定義します
+print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON, 3);]]>
             </programlisting>
         </example>
 

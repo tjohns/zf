@@ -81,6 +81,12 @@ echo $unit->getValue();]]>
             </example>
         </para>
 
+        <para>
+            <code>getValue()</code> メソッドには、オプションのパラメータ
+            '<code>round</code>' を指定することができます。
+            これは、出力結果の精度を設定するものです。標準の精度は
+            '<code>2</code>' です。
+        </para>
     </sect2>
 
     <sect2 id="zend.measure.output.unit">
