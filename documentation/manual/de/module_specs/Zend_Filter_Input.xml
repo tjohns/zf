@@ -447,67 +447,59 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());]]>
 
     <sect2 id="zend.filter.input.metacommands">
 
-        <title>Using Metacommands to Control Filter or Validator Rules</title>
+        <title>Metakommandos verwenden um Filter oder Prüfregeln zu kontrollieren</title>
 
         <para>
-            In addition to declaring the mapping from fields to filters
-            or validators, you can specify some "metacommands" in the array
-            declarations, to control some optional behavior of
-            Zend_Filter_Input.  Metacommands appear as string-indexed
-            entries in a given filter or validator array value.
+            Zusätzlich zum deklarieren der Übereinstimmungen von Feldern zu Filtern oder Prüfer, können einige
+            "Metakommandos" in der Array Deklaration spezifiziert werden um einige optionale Verhaltensweisen von
+            Zend_Filter_Input zu kontrollieren. Metakommandos treten als String-indizierte Einträge in einem
+            gegebenen Filter- oder Prüfarray Wert auf.
         </para>
 
         <sect3 id="zend.filter.input.metacommands.fields">
 
-            <title>The <code>FIELDS</code> metacommand</title>
+            <title>Das <code>FIELDS</code> Metakommando</title>
 
             <para>
-                If the rule name for a filter or validator is different than
-                the field to which it should apply, you can specify the
-                field name with the 'fields' metacommand.
+                Wenn der Name der Regel für einen Filter oder Prüfer anders lautet als das Feld in welchem er
+                angewendet werden soll, kann der Feldname mit dem 'fields' Metakommando spezifiziert werden.
             </para>
 
             <para>
-                You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::FIELDS</code> instead of the
-                string.
+                Dieses Metakommando kann durch Verwendung der Klassenkonstanten <code>Zend_Filter_Input::FIELDS</code>
+                statt der Angabe eines Strings spezifiziert werden.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $filters = array(
     'month' => array(
-        'Digits',        // filter name at integer index [0]
-        'fields' => 'mo' // field name at string index ['fields']
+        'Digits',        // Namen als Integer Index [0] filtern
+        'fields' => 'mo' // Namen als String Index ['fields'] filtern
     )
 );]]>
             </programlisting>
 
             <para>
-                In the example above, the filter rule applies the 'digits'
-                filter to the input field named 'mo'.  The string 'month'
-                simply becomes a mnemonic key for this filtering rule; it is
-                not used as the field name if the field is specified with the
-                'fields' metacommand, but it is used as the rule name.
+                Im obigen Beispiel wendet die Filterregel den 'digits' Filter am Eingabefeld, das 'mo' heißt, an.
+                Der String 'month' wird einfach ein mnemonischer Schlüsselfür diese Filterregel; er wird nicht als
+                Filtername verwendet wenn der Filter mit dem 'fields' Metakommando spezifiziert wird, aber er wird
+                als Regelname verwendet.
             </para>
 
             <para>
-                The default value of the 'fields' metacommand is the index of
-                the current rule.  In the example above, if the 'fields'
-                metacommand is not specified, the rule would apply to the input
-                field named 'month'.
+                Der Standardwert des 'fields' Metakommandos ist der Index der aktuellen Regel. Im obigen Beispiel
+                wird die Regel, wenn das 'fields' Metakommando nicht spezifiziert wird, auf das Eingabefeld das
+                'month' heißt, angewendet.
             </para>
 
             <para>
-                Another use of the 'fields' metacommand is to specify fields
-                for filters or validators that require multiple fields as
-                input.  If the 'fields' metacommand is an array, the argument
-                to the corresponding filter or validator is an array of the
-                values of those fields.  For example, it is common for users to
-                specify a password string in two fields, and they must type the
-                same string in both fields.  Suppose you implement a validator
-                class that takes an array argument, and returns
-                <code>true</code> if all the values in the array are equal to
-                each other.
+                Eine weitere Verwendung des 'fields' Metakommandos ist es Felder für Filter oder Prüfer zu
+                spezifizieren die mehrere Felder als Eingabe benötigen. Wenn das 'fields' Metakommando ein Array ist,
+                ist das Argument des korrespondierenden Filters oder Prüfers ein Array mit den Werten dieser Felder.
+                Zum Beispiel ist es für Benutzer üblich einen Passwort String in zwei Feldern zu spezifizieren, und
+                diese müssen den selben String in beide Felder eingeben. Man kann zum Beispiel eine Prüfklasse
+                implmentieren die ein Array Argument annimmt, und <code>true</code> zurückgibt wenn alle Werte im
+                Array identisch zum jeweils anderen sind.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -517,22 +509,21 @@ $validators = array(
         'fields' => array('password1', 'password2')
     )
 );
-// Invokes hypothetical class Zend_Validate_StringEquals, passing an array argument
-// containing the values of the two input data fields named 'password1' and 'password2'.]]>
+//  Inkludiert die hypotetische Klasse Zend_Validate_StringEquals, übergibt dieser ein Array Argument das
+// den Wert der beiden Eingabe Datenfelder enthält die 'password1' und 'password2' heißen.]]>
             </programlisting>
 
             <para>
-                If the validation of this rule fails, the rule key
-                (<code>'password'</code>) is used in the return value of
-                <code>getInvalid()</code>, not any of the fields named in
-                the 'fields' metacommand.
+                Wenn die Prüfung dieser Regel fehlschlägt wird der Schlüssel der Regel (<code>'password'</code>)
+                im Rückgabewert von <code>getInvalid()</code> verwendet und nicht eine der benannten Felder im
+                'fields' Metakommando.
             </para>
 
         </sect3>
 
         <sect3 id="zend.filter.input.metacommands.presence">
 
-            <title>The <code>PRESENCE</code> metacommand</title>
+            <title>Das <code>PRESENCE</code> Metakommando</title>
 
             <para>
                 Each entry in the validator array may have a metacommand called
