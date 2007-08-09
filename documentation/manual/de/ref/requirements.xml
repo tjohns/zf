@@ -40,6 +40,13 @@
             Zend Framework verwendet werden sind für jede Anwendung notwendig.
         </para>
 
+        <para>
+            Eine Verwendung vom Typ "Abhängig" bedeutet das die Komponenten oder Klassen nicht verwendet werden
+            können wenn die entsprechende Erweiterung nicht vorhanden ist. Eine Verwendung vom Typ "Optional"
+            bedeutet das, wenn diese Erweiterung nicht vorhanden ist, die Komponente oder Klasse automatisch einen
+            alternativen Code verwendet.
+        </para>
+
         <table frame='all' id="requirements.extensions.table-1">
             <title>PHP Erweiterungen die im Zend Framework verwendet werden</title>
             <tgroup cols='3'>
