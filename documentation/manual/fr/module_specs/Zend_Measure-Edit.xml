@@ -47,6 +47,10 @@
             Le dispositif le plus important est probablement la conversion dans différentes unités de la mesure. La conversion d'une unité peut être faite à tout moment en utilisant la méthode <code>convertTo()</code>. Des unités de mesure peuvent seulement être converties en d'autres unités du même type (classe). Par conséquent, il n'est pas possible de convertir (par exemple : une longueur en poids), qui encouragerait des pratiques de programmation pauvres et entraînerait la propagation d'erreurs sans lever d'exception.
         </para>
 
+        <para>
+            La méthode <code>convertTo</code> accepte un paramètre facultatif. Avec ce paramètre vous pouvez définir une précision pour l'élément retourné. La précision par défaut est "<code>2</code>".
+        </para>
+
         <example id="zend.measure.edit.convert.example-1">
             <title>Convert</title>
 			<programlisting role="php"><![CDATA[<?php
@@ -59,7 +63,10 @@ $unite = new Zend_Measure_Weight($machaine,'POND', $locale);
 print "Kilo : ".$unite->convertTo('KILOGRAM'); // affiche "Kilo : 617283.945 kg"
 
 // l'utilisation de constantes est considérée comme une meilleure pratique que les chaînes
-print "Tonne : ".$unite->convertTo(Zend_Measure_Weight::TON); // affiche "Tonne : 617.283945 t"]]>
+print "Tonne : ".$unite->convertTo(Zend_Measure_Weight::TON); // affiche "Tonne : 617.283945 t"
+
+// définition de la précision pour l'affichage
+print "Tonne :".$unit->convertTo(Zend_Measure_Weight::TON, 3);]]>
     		</programlisting>
         </example>
 

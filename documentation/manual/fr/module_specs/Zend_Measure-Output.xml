@@ -74,7 +74,9 @@ echo $unite->getValue(); // affiche "1234567.89"]]>
 			    </programlisting>
             </example>
         </para>
-
+        <para>
+            La méthode <code>getValue()</code> accepte un paramètre facultatif "<code>round</code>" qui permet de définir la précision de la sortie générée. La précision par défaut est de <code>2</code>.
+        </para>
     </sect2>
 
     <sect2 id="zend.measure.output.unit">
