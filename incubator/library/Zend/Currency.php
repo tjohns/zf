@@ -258,19 +258,23 @@ class Zend_Currency
             $value = Zend_Locale_Format::convertNumerals($value, 'Latn', $script);
         }
         //get the sign to be placed next to the number
-        switch($this->_usedSign) {
-            case self::USE_SYMBOL:
-                $sign = " " . $this->_symbol . " ";
-                break;
-            case self::USE_SHORTNAME:
-                $sign = " " . $this->_shortName . " ";
-                break;
-            case self::USE_NAME:
-                $sign = " " . $this->_fullName . " ";
-                break;
-            default:
-                $sign = "";
-                break;
+        if (!is_numeric($this->_usedSign)) {
+            $sign = " " . $this->_usedSign . " ";
+        } else {
+            switch($this->_usedSign) {
+                case self::USE_SYMBOL:
+                    $sign = " " . $this->_symbol . " ";
+                    break;
+                case self::USE_SHORTNAME:
+                    $sign = " " . $this->_shortName . " ";
+                    break;
+                case self::USE_NAME:
+                    $sign = " " . $this->_fullName . " ";
+                    break;
+                default:
+                    $sign = "";
+                    break;
+            }
         }
 
         //place the sign next to the number
@@ -300,20 +304,24 @@ class Zend_Currency
      */
     public function setFormat($rules = null, $script = null, $locale = null)
     {
-        if (($rules / self::LEFT) >= 1) {
-            $this->_position = self::LEFT;
-            $rules -= self::LEFT;
-        }
-        if (($rules / self::RIGHT) >= 1) {
-            $this->_position = self::RIGHT;
-            $rules -= self::RIGHT;
-        }
-        if (($rules / self::STANDARD) >= 1) {
-            $this->_updateFormat();
-            $rules -= self::STANDARD;
-        }
-        if (!empty($rules)) {
+        if (!is_numeric($rules) and ($rules !== null)) {
             $this->_usedSign = $rules;
+        } else {
+            if (($rules / self::LEFT) >= 1) {
+                $this->_position = self::LEFT;
+                $rules -= self::LEFT;
+            }
+            if (($rules / self::RIGHT) >= 1) {
+                $this->_position = self::RIGHT;
+                $rules -= self::RIGHT;
+            }
+            if (($rules / self::STANDARD) >= 1) {
+                $this->_updateFormat();
+                $rules -= self::STANDARD;
+            }
+            if (!empty($rules)) {
+                $this->_usedSign = $rules;
+            }
         }
 
         //set the new number script
