@@ -526,16 +526,14 @@ $validators = array(
             <title>Das <code>PRESENCE</code> Metakommando</title>
 
             <para>
-                Each entry in the validator array may have a metacommand called
-                'presence'.  If the value of this metacommand is 'required'
-                then the field must exist in the input data, or else it is
-                reported as a missing field.
+                Jeder Eintrag im Prüfarray kann ein Metakommando haben das 'presence' heißt. Wenn der Wert dieses
+                Metakommandos 'required' ist muß dieses Feld in den Eingabedaten existieren, andernfalls wird es
+                als fehlendes Feld gemeldet.
             </para>
 
             <para>
-                You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::PRESENCE</code> instead of the
-                string.
+                Das Metakommando kann auch spezifiziert werden indem die Klassenkonstante
+                <code>Zend_Filter_Input::PRESENCE</code> statt dem String verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -548,34 +546,31 @@ $validators = array(
             </programlisting>
 
             <para>
-                The default value of this metacommand is 'optional'.
+                Der Standardwert dieses Metakommandos ist 'optional'.
             </para>
 
         </sect3>
 
         <sect3 id="zend.filter.input.metacommands.default">
 
-            <title>The <code>DEFAULT_VALUE</code> metacommand</title>
+            <title>Das <code>DEFAULT_VALUE</code> Metakommando</title>
 
             <para>
-                If a field is not present in the input data, and you specify a
-                value for the 'default' metacommand for that rule, the field
-                takes the value of the metacommand.
+                Wenn ein Feld, für das ein Wert mit dem 'default' Metakommando für diese Regel, in den Eigabedaten
+                vorhanden ist, nimmt das Feld den Wert dieses Metakommandos.
             </para>
 
             <para>
-                You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::DEFAULT_VALUE</code> instead of the
-                string.
+                Dieses Metakommando kann auch spezifiziert werden indem die Klassenkonstante
+                <code>Zend_Filter_Input::DEFAULT_VALUE</code> statt einem String verwendet wird.
             </para>
 
             <para>
-                This default value is assigned to the field before any of the
-                validators are invoked.  The default value is applied to the
-                field only for the current rule; if the same field is
-                referenced in a subsequent rule, the field has no value when
-                evaluating that rule.  Thus different rules can declare
-                different default values for a given field.
+                Der Standardwert wird dem Feld zugeordnet bevor irgendeiner der Prüfungen stattfindet. Der
+                Standardwert wird dem Feld nur für die aktuelle Regel zugeordnet; wenn das selbe Weld in einer
+                folgenden Regel referenziert wird, hat dieses Feld keinen Wert wenn diese Regel evaluiert wird.
+                Deshalb können verschiedene Regeln auch verschiedene Standardwerte für ein gegebenes Feld
+                deklarieren.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -586,55 +581,48 @@ $validators = array(
     )
 );
 
-// no value for 'month' field
+// kein Wert für das 'month' Feld
 $data = array();
 
 $input = new Zend_Filter_Input(null, $validators, $data);
-echo $input->month; // echoes 1]]>
+echo $input->month; // gibt 1 aus]]>
             </programlisting>
 
             <para>
-                If your rule uses the <code>FIELDS</code> metacommand
-                to define an array of multiple fields, you can define
-                an array for the <code>DEFAULT_VALUE</code> metacommand
-                and the defaults of corresponding keys are used for any
-                missing fields.  If <code>FIELDS</code> defines multiple
-                fields but <code>DEFAULT_VALUE</code> is a scalar, then
-                that default value is used as the value for any missing
-                fields in the array.
+                Wenn eine Regel das <code>FIELDS</code> Metakommando verwendet um ein Array mit mehrfachen Feldern
+                zu definieren, kann ein Array für das <code>DEFAULT_VALUE</code> Metakommando definiert werden
+                und der Standard der korrespondierenden Schlüssel wird für alle fehlenden Felder verwendet.
+                Wenn <code>FIELDS</code> mehrfache Felder definiert aber <code>DEFAULT_VALUE</code> nur ein
+                skalarer Wert ist, dann wird dieser Standardwert als Wert für alle fehlenden Feldern im Array
+                verwendet.
             </para>
 
             <para>
-                There is no default value for this metacommand.
+                Es gibt keinen Standardwert für dieses Metakommando.
             </para>
 
         </sect3>
 
         <sect3 id="zend.filter.input.metacommands.allow-empty">
 
-            <title>The <code>ALLOW_EMPTY</code> metacommand</title>
+            <title>Das <code>ALLOW_EMPTY</code> Metakommando</title>
 
             <para>
-                By default, if a field exists in the input data, then
-                validators are applied to it, even if the value of the field is
-                an empty string (<code>''</code>).  This is likely to result in
-                a failure to validate.  For example, if the validator checks
-                for digit characters, and there are none because a zero-length
-                string has no characters, then the validator reports the data
-                as invalid.
+                Standardmäßig, wenn ein Feld in den Eingabedaten existiert, wird Ihm der Prüfer zugeordnet selbst
+                wenn der Wert des Feldes ein leerer String ist (<code>''</code>). Das kann zu einem Fehler in der
+                Prüfung führen. Zum Beispiel, wenn ein Prüfer auf Ziffern prüft und es keine gibt weil ein leerer
+                String keine Zeichen hat, weil der Prüfer dann die Daten als fehlerhaft meldet.
             </para>
 
             <para>
-                If in your case an empty string should be considered valid, you
-                can set the metacommand 'allowEmpty' to <code>true</code>.
-                Then the input data passes validation if it is present in the
-                input data, but has the value of an empty string.
+                Wenn, in eigenen Fällen, ein leerer String als gültig angenommen werden soll, kann das
+                Metakommando 'allowEmpty' auf <code>true</code> gesetzt werden. Dann passieren die Eingabedaten die
+                Prüfung wenn sie in den Eingabedaten vorhanden sind, aber der Wert ein leerer String ist.
             </para>
 
             <para>
-                You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::ALLOW_EMPTY</code> instead of the
-                string.
+                Dieses Metakommando kann spezifiziert werden indem die Klassenkonstante
+                <code>Zend_Filter_Input::ALLOW_EMPTY</code> statt einem String verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -647,28 +635,26 @@ $validators = array(
             </programlisting>
 
             <para>
-                The default value of this metacommand is <code>false</code>.
+                Der Standardwert dieses Metakommandos ist <code>false</code>.
             </para>
 
             <para>
-                In the uncommon case that you declare a validation rule with
-                no validators, but the 'allowEmpty' metacommand is
-                <code>false</code> (that is, the field is considered invalid if
-                it is empty), Zend_Filter_Input returns a default error message
-                that you can retrieve with <code>getMessages()</code>.  You can
-                specify this message using the 'notEmptyMessage' option, as an
-                argument to the Zend_Filter_Input constructor or using the
-                <code>setOptions()</code> method.
+                Im unüblichen Fall das eine Prüfregel mit keinem Prüfer definiert wird, aber das
+                'allowEmpty' Metakommando <code>false</code> ist (das bedeutet, das das Feld als ungültig angenommen
+                wird wenn es leer ist), gibt Zend_Filter_Input eine Standard Fehlermeldung zurück die mit
+                <code>getMessages()</code> empfangen werden kann. Diese Meldung kann spezifiziert werden indem die
+                'notEmptyMessage' als Argument für den Zend_Filter_Input Kontruktor verwendet wird oder indem die
+                <code>setOptions()</code> Methode verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $options = array(
-    'notEmptyMessage' => "A non-empty value is required for field '%field%'"
+    'notEmptyMessage' => "Ein nicht-leerer Wert wird für das Feld '%field%' benötigt"
 );
 
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 
-// alternative method:
+// alternative Methode:
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
 $input->setOptions($options);]]>
@@ -678,27 +664,24 @@ $input->setOptions($options);]]>
 
         <sect3 id="zend.filter.input.metacommands.break-chain">
 
-            <title>The <code>BREAK_CHAIN</code> metacommand</title>
+            <title>Das <code>BREAK_CHAIN</code> Metakommando</title>
 
             <para>
-                By default if a rule has more than one validator, all
-                validators are applied to the input, and the resulting messages
-                contain all error messages caused by the input.
+                Standardmäßig, wenn eine Regel mehr als einen Prüfer hat werden alle Prüfer auf die Eingabe
+                angewendet, und die resultierende Nachricht enthält alle Fehlermeldungen die durch die Eingabe
+                verursacht wurden.
             </para>
 
             <para>
-                Alternatively, if the value of the 'breakChainOnFailure'
-                metacommand is <code>true</code>, the validator chain
-                terminates after the first validator fails.  The input data is
-                not checked against subsequent validators in the chain, so it
-                might cause more violations even if you correct the one
-                reported.
+                Alternativ, wenn der Wert des 'breakChainOnFailure' Metakommandos <code>true</code> ist, terminiert
+                die Prüfkette nachdem der erste Prüfer fehlschlägt. Die Eingabedaten werden nicht gegen nachfolgende
+                Prüfer in der Kette geprüft. Sie können also weitere Fehlschläge verursachen selbst wenn der eine,
+                der gemeldet wurde, korrigiert wird.
             </para>
 
             <para>
-                You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::BREAK_CHAIN</code> instead of the
-                string.
+                Dieses Metakommando kann spezifiziert werden indem die Klassenkonstante
+                <code>Zend_Filter_Input::BREAK_CHAIN</code> statt einem String verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -714,30 +697,27 @@ $input = new Zend_Filter_Input(null, $validators);]]>
             </programlisting>
 
             <para>
-                The default value of this metacommand is <code>false</code>.
+                Der Standardwert dieses Metakommandos ist <code>false</code>.
             </para>
 
             <para>
-                The validator chain class, Zend_Validate, is more flexible with
-                respect to breaking chain execution than Zend_Filter_Input.
-                With the former class, you can set the option to break the
-                chain on failure independently for each validator in the chain.
-                With the latter class, the defined value of the
-                'breakChainOnFailure' metacommand for a rule applies uniformly
-                for all validators in the rule.  If you require the more
-                flexible usage, you should create the validator chain yourself,
-                and use it as an object in the validator rule
-                definition:
+                Die Klasse der Prüfketten, Zend_Validate, ist flexibler was das Durchbrechen von ausgeführten
+                Ketten betrifft als Zend_Filter_Input. Mit der ersten Klasse, kann eine Option gesetzt werden um
+                die Kette, für jeden Prüfer in der Kette, bei Fehlern unabhängig von jedem anderen Prüfer
+                abzubrechen. Mit der anderen Klasse wird der definierte Wert des 'breakChainOnFailure'
+                Metakommandos für eine Regel, einheitlich für alle Regeln in der Regel, angewendet. Wenn
+                eine flexiblere Verwendung benötigt wird, sollte die Prüfkette selbst erstellt werden und diese als
+                Objekt in der Definition der Prüfregel verwendet werden:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Create validator chain with non-uniform breakChainOnFailure attributes
+// Prüfkette mit nicht einheitlichen breakChainOnFailure Attributen erstellen
 $chain = new Zend_Validate();
 $chain->addValidator(new Zend_Validate_Digits(), true);
 $chain->addValidator(new Zend_Validate_Between(1,12), false);
 $chain->addValidator(new Zend_Validate_GreaterThan(0), true);
 
-// Declare validator rule using the chain defined above
+// Prüfregeln deklarieren die die oben definierte Kette verwenden
 $validators = array(
     'month' => $chain
 );
@@ -748,49 +728,45 @@ $input = new Zend_Filter_Input(null, $validators);]]>
 
         <sect3 id="zend.filter.input.metacommands.messages">
 
-            <title>The <code>MESSAGES</code> metacommand</title>
+            <title>Das <code>MESSAGES</code> Metakommando</title>
 
             <para>
-                You can specify error messages for each validator in a rule
-                using the metacommand 'messages'.  The value of this metacommand
-                varies based on whether you have multiple validators in the
-                rule, or if you want to set the message for a specific error
-                condition in a given validator.
+                Man kann Fehlermeldungen für jeden Prüfer in einer Regel spezifizieren indem das 'messages'
+                Metakommando verwendet wird. Der Wert dieses Metakommandos variiert, je nachdem ob man mehrere
+                Prüfer in der Regel hat, oder ob man die Nachricht für eine spezielles Fehlerereignis in einem
+                angegebenen Prüfer setzen will.
             </para>
 
             <para>
-                You can specify this metacommand using the class constant
-                <code>Zend_Filter_Input::MESSAGES</code> instead of the
-                string.
+                Dieses Metakommando kann spezifiziert werden indem die Klassenkonstante
+                <code>Zend_Filter_Input::MESSAGES</code> statt einem String verwendet wird.
             </para>
 
             <para>
-                Below is a simple example of setting the default error message
-                for a single validator.
+                Anbei ist ein einfaches Beispiel wie eine Standard fehlermeldung für einen einzelnen Prüfer
+                gesetzt wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 $validators = array(
     'month' => array(
         'digits',
-        'messages' => 'A month must consist only of digits'
+        'messages' => 'Ein Monat darf nur aus Ziffern bestehen'
     )
 );]]>
             </programlisting>
 
             <para>
-                If you have multiple validators for which you want to set the
-                error message, you should use an array for the value of the
-                'messages' metacommand.
+                Wenn mehrere Prüfer vorhanden sind für die eine Fehlermeldung gesetzt werden soll, sollte ein
+                Array für dem Wert des 'messages' Metakommandos verwendet werden.
             </para>
 
             <para>
-                Each element of this array is applied to the validator at the
-                same index position.  You can specify a message for the
-                validator at position <emphasis>n</emphasis> by using the value
-                <emphasis>n</emphasis> as the array index.  Thus you can allow
-                some validators to use their default message, while setting the
-                message for a subsequent validator in the chain.
+                Jedes Element dieses Array wird dem Prüfer an der gleichen Indexposition zugeordnet. Man kann
+                eine Nachricht für die Prüfung an der Position <emphasis>n</emphasis> spezifizieren indem der
+                Wert von <emphasis>n</emphasis> als Array Index verwendet wird. So kann einigen Prüfern erlaubt
+                werden Ihre eigenen Standardnachrichten zu verwenden, wärend die Nachricht für einen nachfolgenden
+                Prüfer in der Kette gesetzt wird.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -799,22 +775,20 @@ $validators = array(
         'digits',
         new Zend_Validate_Between(1, 12),
         'messages' => array(
-            // use default message for validator [0]
-            // set new message for validator [1]
-            1 => 'A month value must be between 1 and 12'
+            // Standardnachricht für Prüfer [0] verwenden
+            // Neue Nachricht für Prüfer [1] setzen
+            1 => 'Der Wert für Monat muß zwischen 1 und 12 sein'
         )
     )
 );]]>
             </programlisting>
 
             <para>
-                If one of your validators has multiple error messages, they are
-                identified by a message key.  There are different keys in each
-                validator class, serving as identifiers for error messages that
-                the respective validator class might generate.  Each validate
-                class defines constants for its message keys.  You can use
-                these keys in the 'messages' metacommand by passing an
-                associative array instead of a string.
+                Wenn einer der Prüfer mehrere Fehlermeldungen besitzt, werden diese durch Nachrichten Schlüssel
+                identifiziert. Es gibt verschiedene Schlüssel in jeder Prüfklasse, welche als Identifizierer
+                für Fehlernachrichten fungieren, die die entsprechende Prüfklasse erstellen kann. Jede Prüfklasse
+                definiert Konstanten für Ihre Nachrichtenschlüssel. Diese Schlüssel können im 'messages'
+                Metakommando verwendet werden indem Sie als assoziatives Array übergeben werden statt als String.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -822,12 +796,12 @@ $validators = array(
     'month' => array(
         'digits', new Zend_Validate_Between(1, 12),
         'messages' => array(
-            'A month must consist only of digits',
+            'Ein Monat darf nur aus Ziffern bestehen',
             array(
                 Zend_Validate_Between::NOT_BETWEEN =>
-                    'Month value %value% must be between %min% and %max%',
+                    'Der Wert %value% vom Monat sollte zwischen %min% und %max% sein',
                 Zend_Validate_Between::NOT_BETWEEN_STRICT =>
-                    'Month value %value% must be strictly between %min% and %max%'
+                    'Der Wert %value% vom Monat darf nur zwischen %min% und %max% sein'
             )
         )
     )
@@ -835,32 +809,30 @@ $validators = array(
             </programlisting>
 
             <para>
-                You should refer to documentation for each validator class to
-                know if it has multiple error messages, the keys of these
-                messages, and the tokens you can use in the message templates.
+                Es sollte für jede Prüfklasse in die Dokumentation gesehen werden, um zu wissen ob diese mehrere
+                Fehlernachrichten hat, welche Schlüssel die Nachrichten haben und welche Token im
+                Nachrichtentemplate verwendet werden können.
             </para>
 
         </sect3>
 
         <sect3 id="zend.filter.input.metacommands.global">
 
-            <title>Using options to set metacommands for all rules</title>
+            <title>Verwenden von Optionen um Metakommandos für alle Regeln zu setzen</title>
 
             <para>
-                The default value for 'allowEmpty', 'breakChainOnFailure', and
-                'presence' metacommands can be set for all rules using the
-                <code>$options</code> argument to the constructor of
-                Zend_Filter_Input.  This allows you to set the default value
-                for all rules, without requiring you to set the metacommand for
-                every rule.
+                Der Standardwert für die 'allowEmpty', 'breakChainOnFailure', und 'presence' Metakommandos kann für
+                alle Regeln gesetzt werden indem das <code>$options</code> Argument für den Konstruktor von
+                Zend_Filter_Input verwendet wird. Das erlaubt das Setzen des Standardwertes für alle Regeln, ohne
+                das das Metakommando für jede Regel gesetzt werden muß.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// The default is set so all fields allow an empty string.
+// Der Standard wird bei allen Feldern gesetzt und erlaubt einen leeren String.
 $options = array('allowEmpty' => true);
 
-// You can override this in a rule definition,
-// if a field should not accept an empty string.
+// Diese Regeldefinition kann überschrieben werden, wenn ein Feld keinen leeren
+// String akzeptieren soll
 $validators = array(
     'month' => array(
         'Digits',
@@ -872,8 +844,7 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
             </programlisting>
 
             <para>
-                The 'fields', 'messages', and 'default' metacommands cannot be
-                set using this technique.
+                Die 'fields', 'messages', und 'default' Metakommandos können nicht mit dieser Technik gesetzt werden.
             </para>
 
         </sect3>
@@ -882,22 +853,19 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
 
     <sect2 id="zend.filter.input.namespaces">
 
-        <title>Adding Filter Class Namespaces</title>
+        <title>Namensräume für Filterklassen hinzufügen</title>
 
         <para>
-            By default, when you declare a filter or validator as a string,
-            Zend_Filter_Input searches for the corresponding classes under
-            the Zend_Filter or Zend_Validate namespaces.  For example,
-            a filter named by the string 'digits' is found in the class
-            Zend_Filter_Digits.
+            Standardmäßig, wenn ein Filter oder Prüfer als String deklariert wird, sucht Zend_Filter_Input nach der
+            korrespondierenden Klasse unter dem Zend_Filter oder Zend_Validate Namensraum. Ein Filter der zum
+            Beispiel nach dem String 'digits' benannt ist wird in der Klasse Zend_Filter_Digits gefunden.
         </para>
 
         <para>
-            If you write your own filter or validator classes, or use filters
-            or validators provided by a third-party, the classes may exist in
-            different namespaces than Zend_Filter or Zend_Validate.  You can
-            tell Zend_Filter_Input to search more namespaces.  You can specify
-            namespaces in the constructor options:
+            Wenn eigene Filter oder Prüfklassen geschrieben werden, oder Filter oder Prüfer von Drittanbietern
+            verwendet werden, können diese Klassen in einem anderen Namensraum als Zend_Filter oder Zend_Validate
+            existieren. Zend_Filter_Input kann mitgeteilt werden, das in zusätzlichen Namensräumen gesucht werden
+            soll. Namensräume können in den Konstruktor Optionen spezifiziert werden:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -906,13 +874,13 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
         </programlisting>
 
         <para>
-            Alternatively, you can use the addNamespace() method:
+            Alternativ kann die addNamespace() Methode verwendet werden:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $input->addNamespace('Other_Namespace');
 
-// Now the search order is:
+// Die Suchrichtung ist jetzt:
 // 1. My_Namespace
 // 2. Other_Namespace
 // 3. Zend_Filter
@@ -920,9 +888,9 @@ $input->addNamespace('Other_Namespace');
         </programlisting>
 
         <para>
-            You cannot remove Zend_Filter and Zend_Validate as namespaces, you
-            only can add namespaces.  User-defined namespaces are searched
-            first, Zend namespaces are searched last.
+            Zend_Filter und Zend_Validate können als Namensraum nicht entfernt werden, es können nur Namensräume
+            hinzugefügt werden. Benutzerdefinierte Namensräume werden zuerst durchsucht, Zend Namensräume werden
+            zuletzt durchsucht.
         </para>
 
     </sect2>
