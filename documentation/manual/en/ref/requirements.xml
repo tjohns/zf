@@ -43,6 +43,14 @@
             application.
         </para>
 
+        <para>
+            A usage type of "Dependency" means that the components or classes
+            are not usable if the respective extension is not available.  A
+            usage type of "Optional" means that if the extension is not
+            available, the components or classes automatically fall back to
+            use alternative code.
+        </para>
+
         <table frame='all' id="requirements.extensions.table-1">
             <title>PHP Extensions Used in Zend Framework</title>
             <tgroup cols='3'>
@@ -544,7 +552,7 @@
                 <thead>
                     <row>
                         <entry>Zend Framework Components</entry>
-                        <entry>PHP Extension ( Subclass / Useage Type )</entry>
+                        <entry>PHP Extension ( Subclass / Usage Type )</entry>
                     </row>
                 </thead>
                 <tbody>
