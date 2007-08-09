@@ -76,6 +76,7 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                     'en');
 
         $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
+        $this->assertEquals($adapter->_('msg1'), 'Message 1 (en)');
         $this->assertEquals($adapter->translate('msg4'), 'msg4');
 
         $adapter->addTranslation(array('msg4' => 'Message 4 (en)',

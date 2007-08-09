@@ -58,6 +58,7 @@ class Zend_Translate_XliffTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Xliff(dirname(__FILE__) . '/_files/translation_en.xliff', 'en');
 
         $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (en)');
+        $this->assertEquals($adapter->_('Message 1'), 'Message 1 (en)');
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5 (en)');
         $this->assertEquals($adapter->translate('Cooking furniture'), 'Küchen Möbel (en)');
         $this->assertEquals($adapter->translate('Küchen Möbel'), 'Cooking furniture (en)');

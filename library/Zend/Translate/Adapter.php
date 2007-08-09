@@ -273,6 +273,21 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
+     * Translates the given string
+     * returns the translation
+     *
+     * @param  string              $messageId  Translation string
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale/Language to use, identical with locale identifier,
+     *                                         see Zend_Locale for more information
+     * @return string
+     */
+    public function _($messageId, $locale = null)
+    {
+        return $this->translate($messageId, $locale);
+    }
+
+
+    /**
      * Checks if a string is translated within the source or not
      * returns boolean
      *
