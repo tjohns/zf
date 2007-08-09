@@ -44,6 +44,14 @@
             そのアプリケーションでも必要となるというわけではありません。
         </para>
 
+        <para>
+            "依存" とは、あるコンポーネントやクラスを使用するためには
+            その拡張モジュールが必須であることを表します。
+            "任意" とは、もしその拡張モジュールがなければ
+            コンポーネントやクラスが代替コードで動作することを表します。
+            use alternative code.
+        </para>
+
         <table frame='all' id="requirements.extensions.table-1">
             <title>Zend Framework が使用する PHP 拡張モジュール</title>
             <tgroup cols='3'>
