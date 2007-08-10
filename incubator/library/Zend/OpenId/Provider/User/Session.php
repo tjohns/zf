@@ -69,11 +69,12 @@ class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
      * Stores information about logged in user in session data
      *
      * @param string $id user identity URL
-     * @return void
+     * @return bool
      */
     public function setLoggedInUser($id)
     {
         $this->_session->logged_in = $id;
+        return true;
     }
 
     /**
@@ -92,11 +93,12 @@ class Zend_OpenId_Provider_User_Session extends Zend_OpenId_Provider_User
     /**
      * Performs logout. Clears information about logged in user.
      *
-     * @return void
+     * @return bool
      */
     public function delLoggedInUser()
     {
         unset($this->_session->logged_in);
+        return true;
     }
 
 }

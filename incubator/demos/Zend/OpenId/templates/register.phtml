@@ -23,22 +23,22 @@ input.openid_password {
 <script language="JavaScript">
 function init() {
 <?php
-	if (isset($this->error)) {
-		echo '    alert("' . $this->error . '");' . "\n";
-	}
+    if (isset($this->error)) {
+        echo '    alert("' . $this->error . '");' . "\n";
+    }
 ?>
-	if (document.forms['register'].elements['openid_name'].value == '') {
-		document.forms['register'].elements['openid_name'].focus();
-	} else {
-		document.forms['register'].elements['openid_password'].focus();
-	}
+    if (document.forms['register'].elements['openid_name'].value == '') {
+        document.forms['register'].elements['openid_name'].focus();
+    } else {
+        document.forms['register'].elements['openid_password'].focus();
+    }
 }
 </script>
 </head>
 <body onLoad="init()">
 <?php
 if (isset($this->error)) {
-	echo '<noscript><div><b><font color="#ff0000">Error: ' . $this->error . '</font></b></div></noscript>';
+    echo '<noscript><div><b><font color="#ff0000">Error: ' . $this->error . '</font></b></div></noscript>';
 }
 ?>
 <div>

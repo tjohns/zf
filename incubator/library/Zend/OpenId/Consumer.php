@@ -499,7 +499,8 @@ class Zend_OpenId_Consumer
                 $id,
                 $realId,
                 $server,
-                $version)) {
+                $version,
+                $expire)) {
             $id = $realId;
             return true;
         }
@@ -554,7 +555,8 @@ class Zend_OpenId_Consumer
             }
         }
 
-        $this->_storage->addDiscoveryInfo($id, $realId, $server, $version);
+        $expire = time() + 60 * 60;
+        $this->_storage->addDiscoveryInfo($id, $realId, $server, $version, $expire);
         $id = $realId;
         return true;
     }

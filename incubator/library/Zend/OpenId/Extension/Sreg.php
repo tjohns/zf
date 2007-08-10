@@ -83,6 +83,15 @@ class Zend_OpenId_Extension_Sreg extends Zend_OpenId_Extension
     }
 
     /**
+     * Returns SREG protocol version
+     *
+     * @return float
+     */
+    public function getVersion() {
+        return $this->_version;
+    }
+
+    /**
      * Returns array of allowed SREG variable names.
      *
      * @return array
@@ -218,6 +227,12 @@ class Zend_OpenId_Extension_Sreg extends Zend_OpenId_Extension
      */
     public function parseResponse($params)
     {
+        if (isset($params['openid_ns_sreg']) &&
+            $params['openid_ns_sreg'] === Zend_OpenId_Extension_Sreg::NAMESPACE_1_1) {
+            $this->_version= 1.1;
+        } else {
+            $this->_version= 1.0;
+        }
         $props = array();
         foreach (self::getSregProperties() as $prop) {
             if (!empty($params['openid_sreg_' . $prop])) {

@@ -40,7 +40,7 @@ abstract class Zend_OpenId_Consumer_Storage
      * @param string $handle assiciation handle
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param long $expires expiration UNIX time
      * @return void
      */
     abstract public function addAssociation($url, $handle, $macFunc, $secret, $expires);
@@ -54,7 +54,7 @@ abstract class Zend_OpenId_Consumer_Storage
      * @param string $handle assiciation handle
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param long $expires expiration UNIX time
      * @return bool
      */
     abstract public function getAssociation($url, &$handle, &$macFunc, &$secret, &$expires);
@@ -68,7 +68,7 @@ abstract class Zend_OpenId_Consumer_Storage
      * @param string $url OpenID server URL
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param long $expires expiration UNIX time
      * @return bool
      */
     abstract public function getAssociationByHandle($handle, &$url, &$macFunc, &$secret, &$expires);
@@ -88,9 +88,10 @@ abstract class Zend_OpenId_Consumer_Storage
      * @param string $realId discovered real identity URL
      * @param string $server discovered OpenID server URL
      * @param float $version discovered OpenID protocol version
+     * @param long $expires expiration UNIX time
      * @return void
      */
-    abstract public function addDiscoveryInfo($id, $realId, $server, $version);
+    abstract public function addDiscoveryInfo($id, $realId, $server, $version, $expires);
 
     /**
      * Gets information discovered from identity $id
@@ -100,7 +101,16 @@ abstract class Zend_OpenId_Consumer_Storage
      * @param string $realId discovered real identity URL
      * @param string $server discovered OpenID server URL
      * @param float $version discovered OpenID protocol version
+     * @param long $expires expiration UNIX time
      * @return bool
      */
-    abstract public function getDiscoveryInfo($id, &$realId, &$server, &$version);
+    abstract public function getDiscoveryInfo($id, &$realId, &$server, &$version, &$expires);
+
+    /**
+     * Removes cached information discovered from identity $id
+     *
+     * @param string $id identity
+     * @return bool
+     */
+    abstract public function delDiscoveryInfo($id);
 }

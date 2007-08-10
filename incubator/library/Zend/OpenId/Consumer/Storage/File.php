@@ -80,8 +80,8 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      * @param string $handle assiciation handle
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
-     * @return void
+     * @param long $expires expiration UNIX time
+     * @return bool
      */
     public function addAssociation($url, $handle, $macFunc, $secret, $expires)
     {
@@ -89,7 +89,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
         $name2 = $this->_dir . '/assoc_handle_' . md5($handle);
         $f = @fopen($name1, 'w+');
         if ($f === false) {
-            return;
+            return false;
         }
         flock($f, LOCK_EX);
         $data = serialize(array($url, $handle, $macFunc, $secret, $expires));
@@ -107,6 +107,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
         }
         flock($f, LOCK_UN);
         fclose($f);
+        return true;
     }
 
     /**
@@ -118,7 +119,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      * @param string $handle assiciation handle
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param long $expires expiration UNIX time
      * @return bool
      */
     public function getAssociation($url, &$handle, &$macFunc, &$secret, &$expires)
@@ -155,7 +156,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      * @param string $url OpenID server URL
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param long $expires expiration UNIX time
      * @return bool
      */
     public function getAssociationByHandle($handle, &$url, &$macFunc, &$secret, &$expires)
@@ -187,16 +188,15 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      * Deletes association identified by $url
      *
      * @param string $url OpenID server URL
-     * @return void
+     * @return bool
      */
     public function delAssociation($url)
     {
         $name1 = $this->_dir . '/assoc_url_' . md5($url);
         $f = @fopen($name1, 'r');
         if ($f === false) {
-            return;
+            return false;
         }
-        $ret = false;
         flock($f, LOCK_EX);
         $data = stream_get_contents($f);
         if (!empty($data)) {
@@ -209,7 +209,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
         }
         flock($f, LOCK_UN);
         fclose($f);
-        return $ret;
+        return true;
     }
 
     /**
@@ -219,10 +219,22 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      * @param string $realId discovered real identity URL
      * @param string $server discovered OpenID server URL
      * @param float $version discovered OpenID protocol version
-     * @return void
+     * @param long $expires expiration UNIX time
+     * @return bool
      */
-    public function addDiscoveryInfo($id, $realId, $server, $version)
+    public function addDiscoveryInfo($id, $realId, $server, $version, $expires)
     {
+        $name = $this->_dir . '/discovery_' . md5($id);
+        $f = @fopen($name, 'w+');
+        if ($f === false) {
+            return false;
+        }
+        flock($f, LOCK_EX);
+        $data = serialize(array($id, $realId, $server, $version, $expires));
+        fwrite($f, $data);
+        flock($f, LOCK_UN);
+        fclose($f);
+        return true;
     }
 
     /**
@@ -233,10 +245,42 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      * @param string $realId discovered real identity URL
      * @param string $server discovered OpenID server URL
      * @param float $version discovered OpenID protocol version
+     * @param long $expires expiration UNIX time
      * @return bool
      */
-    public function getDiscoveryInfo($id, &$realId, &$server, &$version)
+    public function getDiscoveryInfo($id, &$realId, &$server, &$version, &$expires)
     {
-        return false;
+        $name = $this->_dir . '/discovery_' . md5($id);
+        $f = @fopen($name, 'r');
+        if ($f === false) {
+            return false;
+        }
+        $ret = false;
+        flock($f, LOCK_EX);
+        $data = stream_get_contents($f);
+        if (!empty($data)) {
+            list($storedId, $realId, $server, $version, $expires) = unserialize($data);
+            if ($id === $storedId && $expires > time()) {
+                $ret = true;
+            } else {
+                unlink($name);
+            }
+        }
+        flock($f, LOCK_UN);
+        fclose($f);
+        return $ret;
+    }
+
+    /**
+     * Removes cached information discovered from identity $id
+     *
+     * @param string $id identity
+     * @return bool
+     */
+    public function delDiscoveryInfo($id)
+    {
+        $name = $this->_dir . '/discovery_' . md5($id);
+        @unlink($name);
+        return true;
     }
 }

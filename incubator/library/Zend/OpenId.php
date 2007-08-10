@@ -71,22 +71,34 @@ final class Zend_OpenId
     const NS_2_0 = 'http://specs.openid.net/auth/2.0';
 
     /**
+     * Allows enable/disable stoping execution of PHP script after redirect()
+     */
+    static public $exitOnRedirect = true;
+
+    /**
      * Returns a full URL that was requested on current HTTP request.
      *
      * @return string
      */
     static public function selfUrl()
     {
+        if (isset($_SERVER['SCRIPT_URI'])) {
+            return $_SERVER['SCRIPT_URI'];
+        }
+        $url = '';
         $port = '';
         if (isset($_SERVER['HTTP_HOST'])) {
-            if (strpos($_SERVER['HTTP_HOST'], ':') === false) {
+            if (($pos = strpos($_SERVER['HTTP_HOST'], ':')) === false) {
                 if (isset($_SERVER['SERVER_PORT'])) {
                     $port = ':' . $_SERVER['SERVER_PORT'];
                 }
+                $url = $_SERVER['HTTP_HOST'];
+            } else {
+                $url = substr($_SERVER['HTTP_HOST'], 0, $pos);
+                $port = substr($_SERVER['HTTP_HOST'], $pos);
             }
-            $url = $_SERVER['HTTP_HOST'];
         } else if (isset($_SERVER['SERVER_NAME'])) {
-            $url = $_SERVER['HTTP_HOST'];
+            $url = $_SERVER['SERVER_NAME'];
             if (isset($_SERVER['SERVER_PORT'])) {
                 $port = ':' . $_SERVER['SERVER_PORT'];
             }
@@ -106,10 +118,13 @@ final class Zend_OpenId
         $url .= $port;
         if (isset($_SERVER['SCRIPT_URL'])) {
             $url .= $_SERVER['SCRIPT_URL'];
-        } else if (isset($_SERVER['SCRIPT_NAME'])) {
-            $url .= $_SERVER['SCRIPT_NAME'];
         } else if (isset($_SERVER['PHP_SELF'])) {
             $url .= $_SERVER['PHP_SELF'];
+        } else if (isset($_SERVER['SCRIPT_NAME'])) {
+            $url .= $_SERVER['SCRIPT_NAME'];
+            if (isset($_SERVER['PATH_INFO'])) {
+                $url .= $_SERVER['PATH_INFO'];
+            }
         }
         return $url;
     }
@@ -142,68 +157,137 @@ final class Zend_OpenId
      */
     static public function normalizeUrl(&$id)
     {
+        // RFC 3986, 6.2.2.  Syntax-Based Normalization
+
+        // RFC 3986, 6.2.2.2 Percent-Encoding Normalization
         $i = 0;
         $n = strlen($id);
-        while (($i = strpos($id, '%', $i)) !== false) {
-            if ($i+2 < $n &&
-                (($s[$i+1] >= '0' && $s[$i+1] <= '9') ||
-                 ($s[$i+1] >= 'A' && $s[$i+1] <= 'F') ||
-                 ($s[$i+1] >= 'a' && $s[$i+1] <= 'f')) &&
-                (($s[$i+2] >= '0' && $s[$i+2] <= '9') ||
-                 ($s[$i+2] >= 'A' && $s[$i+2] <= 'F') ||
-                 ($s[$i+2] >= 'a' && $s[$i+2] <= 'f'))) {
-                if ($s[$i+1] >= 'a' && $s[$i+1] <= 'f') {
-                    $s[$i+1] = chr(ord($s[$i+1])-ord('a')+ord('A'));
+        $res = '';
+        while ($i < $n) {
+            if ($id[$i] == '%' && $i + 2 < $n) {
+                ++$i;
+                if ($id[$i] >= '0' && $id[$i] <= '9') {
+                    $c = ord($id[$i]) - ord('0');
+                } else if ($id[$i] >= 'A' && $id[$i] <= 'F') {
+                    $c = ord($id[$i]) - ord('A') + 10;
+                } else if ($id[$i] >= 'a' && $id[$i] <= 'f') {
+                    $c = ord($id[$i]) - ord('a') + 10;
+                } else {
+                    $res .= '%';
+                    continue;
                 }
-                if ($s[$i+2] >= 'a' && $s[$i+2] <= 'f') {
-                    $s[$i+2] = chr(ord($s[$i+1])-ord('a')+ord('A'));
+                ++$i;
+                if ($id[$i] >= '0' && $id[$i] <= '9') {
+                    $c = ($c << 4) | (ord($id[$i]) - ord('0'));
+                } else if ($id[$i] >= 'A' && $id[$i] <= 'F') {
+                    $c = ($c << 4) | (ord($id[$i]) - ord('A') + 10);
+                } else if ($id[$i] >= 'a' && $id[$i] <= 'f') {
+                    $c = ($c << 4) | (ord($id[$i]) - ord('a') + 10);
+                } else {
+                    $res .= '%' . $id[$i-1];
+                    continue;
+                }
+                ++$i;
+                $ch = chr($c);
+                if (($ch >= 'A' && $ch <= 'Z') ||
+                    ($ch >= 'a' && $ch <= 'z') ||
+                    $ch == '-' ||
+                    $ch == '.' ||
+                    $ch == '_' ||
+                    $ch == '~') {
+                    $res .= $ch;
+                } else {
+                    $res .= '%';
+                    if (($c >> 4) < 10) {
+                        $res .= chr(($c >> 4) + ord('0'));
+                    } else {
+                        $res .= chr(($c >> 4) - 10 + ord('A'));
+                    }
+                    $c = $c & 0xf;
+                    if ($c < 10) {
+                        $res .= chr($c + ord('0'));
+                    } else {
+                        $res .= chr($c - 10 + ord('A'));
+                    }
+                }
+            } else {
+                $res .= $id[$i++];
+            }
+        }
+
+        if (!preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?]*)?((?:[?](?:[^#]*))?(?:#.*)?)$|', $res, $reg)) {
+            return false;
+        }
+        $scheme = $reg[1];
+        $auth = $reg[2];
+        $host = $reg[3];
+        $port = $reg[4];
+        $path = $reg[5];
+        $query = $reg[6];
+
+        if (empty($scheme) || empty($host)) {
+            return false;
+        }
+
+        // RFC 3986, 6.2.2.1.  Case Normalization
+        $scheme = strtolower($scheme);
+        $host = strtolower($host);
+
+        // RFC 3986, 6.2.2.3.  Path Segment Normalization
+        if (!empty($path)) {
+            $i = 0;
+            $n = strlen($path);
+            $res = "";
+            while ($i < $n) {
+                if ($path[$i] == '/') {
+                    ++$i;
+                    while ($i < $n && $path[$i] == '/') {
+                        ++$i;
+                    }
+                    if ($i < $n && $path[$i] == '.') {
+                        ++$i;
+                        if ($i < $n && $path[$i] == '.') {
+                            ++$i;
+                            if ($i == $n || $path[$i] == '/') {
+                                if (($pos = strrpos($res, '/')) !== false) {
+                                    $res = substr($res, 0, $pos);
+                                }
+                            } else {
+                                    $res .= '/..';
+                            }
+                        } else if ($i != $n && $path[$i] != '/') {
+                            $res .= '/.';
+                        }
+                    } else {
+                        $res .= '/';
+                    }
+                } else {
+                    $res .= $path[$i++];
                 }
             }
-            $i++;
+            $path = $res;
         }
 
-        // TODO: RFC 3986, 6.2.2.2 Percent-Encoding Normalization
-
-        // 7.2.3
-        $url = parse_url($id);
-        if ($url === false) {
-            return false;
-        }
-        if (isset($url['scheme'])) {
-            $url['scheme'] = strtolower($url['scheme']);
-        } else {
-            $url['scheme'] = 'http';
-        }
-        // 7.2.4
-        if ($url['scheme'] == 'http') {
-            if (isset($url['port']) && $url['port'] == 80) {
-                unset($url['port']);
+        // RFC 3986,6.2.3.  Scheme-Based Normalization
+        if ($scheme == 'http') {
+            if ($port == 80) {
+                $port = '';
             }
-        } else if ($url['scheme'] == 'https') {
-            if (isset($url['port']) && $url['port'] == 443) {
-                unset($url['port']);
+        } else if ($scheme == 'https') {
+            if ($port == 443) {
+                $port = '';
             }
-        } else {
-            return false;
         }
-        if (empty($url['host'])) {
-            return false;
-        } else {
-            $url['host'] = strtolower($url['host']);
-        }
-        if (empty($url['path'])) {
-            $url['path'] = '/';
+        if (empty($path)) {
+            $path = '/';
         }
 
-        // TODO: RFC 3986, 6.2.2.3 Path Segment Normalization
-
-        $id = $url['scheme']
+        $id = $scheme
             . '://'
-            . $url['host']
-            . (empty($url['port']) ? '' : (':' . $url['port']))
-            . $url['path']
-            . (empty($url['query']) ? '' : ('?' . $url['query']))
-            . (empty($url['fragment']) ? '' : ('#' . $url['fragment']));
+            . $host
+            . (empty($port) ? '' : (':' . $port))
+            . $path
+            . $query;
         return true;
     }
 
@@ -234,23 +318,32 @@ final class Zend_OpenId
         if (strlen($id) === 0) {
             return true;
         }
+
         // 7.2.1
         if (strpos($id, 'xri://$ip*') === 0) {
-            $id = substr(id, strlen('xri://$ip*'));
-        } else if (strpos($id, 'xri://dns*') === 0) {
-            $id = substr(id, strlen('xri://dns*'));
+            $id = substr($id, strlen('xri://$ip*'));
+        } else if (strpos($id, 'xri://$dns*') === 0) {
+            $id = substr($id, strlen('xri://$dns*'));
         } else if (strpos($id, 'xri://') === 0) {
-            $id = substr(id, strlen('xri://'));
+            $id = substr($id, strlen('xri://'));
         }
+
         // 7.2.2
-        if ($id[0] != '=' &&
-            $id[0] != '@' &&
-            $id[0] != '+' &&
-            $id[0] != '$' &&
-            $id[0] != '!') {
-            return self::normalizeURL($id);
+        if ($id[0] == '=' ||
+            $id[0] == '@' ||
+            $id[0] == '+' ||
+            $id[0] == '$' ||
+            $id[0] == '!') {
+            return true;
         }
-        return true;
+
+        // 7.2.3
+        if (strpos($id, "://") === false) {
+            $id = 'http://' . $id;
+        }
+
+        // 7.2.4
+        return self::normalizeURL($id);
     }
 
     /**
@@ -263,22 +356,36 @@ final class Zend_OpenId
      * @param Zend_Controller_Response_Abstract $response
      * @param string $method redirection method ('GET' or 'POST')
      */
-    static public function redirect($url, $params = null, 
+    static public function redirect($url, $params = null,
         Zend_Controller_Response_Abstract $response = null, $method = 'GET')
     {
+        $body = "";
         if (null === $response) {
             require_once "Zend/Controller/Response/Http.php";
             $response = new Zend_Controller_Response_Http();
         }
-        
-        if (is_array($params) && count($params) > 0) {
+
+        if ($method == 'POST') {
+            $body = "<form method=\"POST\" action=\"$url\">\n";
+            if (is_array($params) && count($params) > 0) {
+                foreach($params as $key => $value) {
+                    $body .= '<input type="hidden" name="' . $key . '" value="' . $value . "\">\n";
+                }
+            }
+            $body .= "</form>\n";
+            $body .= '<script language="JavaScript"'
+                  . ' type="text/javascript">document.forms[0].submit();'
+                  . '</script>';
+        } else if (is_array($params) && count($params) > 0) {
             if (strpos($url, '?') === false) {
                 $url .= '?' . self::paramsToQuery($params);
             } else {
                 $url .= '&' . self::paramsToQuery($params);
             }
         }
-        if (!$response->canSendHeaders()) {
+        if (!empty($body)) {
+            $response->setBody($body);
+        } else if (!$response->canSendHeaders()) {
             $response->setBody("<script language=\"JavaScript\"" .
                  " type=\"text/javascript\">window.location='$url';" .
                  "</script>");
@@ -286,7 +393,9 @@ final class Zend_OpenId
             $response->setRedirect($url);
         }
         $response->sendResponse();
-        exit();
+        if (self::$exitOnRedirect) {
+            exit();
+        }
     }
 
     /**
@@ -370,7 +479,7 @@ final class Zend_OpenId
      * @return mixed
      * @throws Zend_OpenId_Exception
      */
-    static public function binToBigNum($bin)
+    static protected function binToBigNum($bin)
     {
         if (extension_loaded('gmp')) {
             return gmp_init(bin2hex($bin), 16);
@@ -396,7 +505,7 @@ final class Zend_OpenId
      * @return string
      * @throws Zend_OpenId_Exception
      */
-    static public function bigNumToBin($bn)
+    static protected function bigNumToBin($bn)
     {
         if (extension_loaded('gmp')) {
             return pack("H*", gmp_strval($bn, 16));
@@ -432,21 +541,23 @@ final class Zend_OpenId
      * @param string $g generator in binary representation
      * @return mixed
      */
-    static public function createDhKey($p, $g)
+    static public function createDhKey($p, $g, $priv_key = null)
     {
         if (function_exists('openssl_dh_compute_key')) {
-            return openssl_pkey_new(
-                array(
-                    'dh' => array(
-                        'p' => $p,
-                        'g' => $g,
-                    )
-                )
-            );
+            $dh_details = array(
+                    'p' => $p,
+                    'g' => $g
+                );
+            if (!is_null($priv_key)) {
+                $dh_details['priv_key'] = $priv_key;
+            }
+            return openssl_pkey_new(array('dh'=>$dh_details));
         } else {
             $bn_p        = self::binToBigNum($p);
             $bn_g        = self::binToBigNum($g);
-            $priv_key    = self::randomBytes(strlen($p));
+            if (is_null($priv_key)) {
+                $priv_key    = self::randomBytes(strlen($p));
+            }
             $bn_priv_key = self::binToBigNum($priv_key);
             if (extension_loaded('gmp')) {
                 $bn_pub_key  = gmp_powm($bn_g, $bn_priv_key, $bn_p);

@@ -69,6 +69,13 @@ if (isset($this->error)) {
 </td><td></tr><tr><td>&nbsp;</td><td>
 <input type="submit" name="login" value="login">
 </td></tr></table>
+<?php
+    if (!isset($this->ro)) {
+        echo '<br>';
+        echo '<a href="?openid.action=register">register</a>';
+    }
+
+?>
 </fieldset>
 </form>
 </div>

@@ -36,7 +36,7 @@ abstract class Zend_OpenId_Extension
      *
      * @param mixed $extensions list of extensions or one extension
      * @param string $func function to be called
-     * @param mixed $params argument to pass to given funcion 
+     * @param mixed $params argument to pass to given funcion
      * @return bool
      */
     static public function forAll($extensions, $func, &$params)

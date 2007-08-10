@@ -80,20 +80,21 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
      * @param string $macFunc HMAC function (sha1 or sha256)
      * @param string $secret shared secret
      * @param string $expires expiration UNIX time
-     * @return void
+     * @return bool
      */
     public function addAssociation($handle, $macFunc, $secret, $expires)
     {
         $name = $this->_dir . '/assoc_' . md5($handle);
         $f = @fopen($name, 'w+');
         if ($f === false) {
-            return;
+            return false;
         }
         flock($f, LOCK_EX);
         $data = serialize(array($handle, $macFunc, $secret, $expires));
         fwrite($f, $data);
         flock($f, LOCK_UN);
         fclose($f);
+        return true;
     }
 
     /**
@@ -128,6 +129,19 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
         flock($f, LOCK_UN);
         fclose($f);
         return $ret;
+    }
+
+    /**
+     * Removes information about association identified by $handle
+     *
+     * @param string $handle assiciation handle
+     * @return bool
+     */
+    public function delAssociation($handle)
+    {
+        $name = $this->_dir . '/assoc_' . md5($handle);
+        @unlink($name);
+        return true;
     }
 
     /**
@@ -210,6 +224,19 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
     }
 
     /**
+     * Removes information abou specified user
+     *
+     * @param string $id user identity URL
+     * @return bool
+     */
+    public function delUser($id)
+    {
+        $name = $this->_dir . '/user_' . md5($id);
+        @unlink($name);
+        return true;
+    }
+
+    /**
      * Returns array of all trusted/untrusted sites for given user identified
      * by $id
      *
@@ -242,7 +269,7 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
      *
      * @param string $id user identity URL
      * @param string $site site URL
-     * @param bool $trusted
+     * @param mixed $trusted
      * @return bool
      */
     public function addSite($id, $site, $trusted)

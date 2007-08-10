@@ -1,20 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-<title>Zend OpenID Consumer Example</title>
-<style>
-input.openid_login {
-    background: url(login-bg.gif) no-repeat;
-    background-color: #fff;
-    background-position: 0 50%;
-    color: #000;
-    padding-left: 18px;
-    width: 220px;
-    margin-right: 10px;
-}
-</style>
-</head>
-<body>
 <?php
 $dir = realpath(dirname(__FILE__)."/../../../..");
 set_include_path("$dir/library" . PATH_SEPARATOR . "$dir/incubator/library" . PATH_SEPARATOR . get_include_path());
@@ -36,8 +19,31 @@ if (isset($_POST['openid_action']) &&
             }
         }
     }
-    $sreg = new Zend_OpenId_Extension_Sreg($props);
+    $sreg = new Zend_OpenId_Extension_Sreg($props, null, 1.1);
     $ret = $consumer->login($_POST['openid_url'], null, null, $sreg);
+}
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Zend OpenID Consumer Example</title>
+<style>
+input.openid_login {
+    background: url(login-bg.gif) no-repeat;
+    background-color: #fff;
+    background-position: 0 50%;
+    color: #000;
+    padding-left: 18px;
+    width: 220px;
+    margin-right: 10px;
+}
+</style>
+</head>
+<body>
+<?php
+if (isset($_POST['openid_action']) &&
+    $_POST['openid_action'] == "login" &&
+    !empty($_POST['openid_url'])) {
     if ($ret !== true) {
         echo "OpenID login failed because of internal error.<br>";
     }

@@ -33,6 +33,8 @@ require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/CurrencyTest.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Json/AllTests.php';
+require_once 'Zend/OpenIdTest.php';
+require_once 'Zend/OpenId/AllTests.php';
 
 
 /**
@@ -60,6 +62,8 @@ class Zend_AllTests
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());
+        $suite->addTestSuite('Zend_OpenIdTest');
+        $suite->addTest(Zend_OpenId_AllTests::suite());
 
         return $suite;
     }
