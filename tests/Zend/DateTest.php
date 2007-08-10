@@ -115,6 +115,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date2  = new Zend_Date('2006-01-01');
         $date2->setTime('01:00:00');
         $this->assertSame($date1string, $date2->get(Zend_Date::ISO_8601));
+        $date2  = new Zend_Date('2006-01-01 01:00:00');
+        $this->assertSame($date1string, $date2->get(Zend_Date::ISO_8601));
     }
 
     /**
