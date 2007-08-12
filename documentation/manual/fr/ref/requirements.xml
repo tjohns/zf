@@ -1,4 +1,4 @@
-﻿<appendix id="requirements">
+<appendix id="requirements">
 
     <title>Configuration système requise</title>
 
@@ -30,6 +30,10 @@
 
         <para>
             Ci-dessous, la table recense toutes les extensions typiquement trouvées dans PHP et comment elles sont utilisées dans le Zend Framework. Cela peut aider à vous guider pour savoir quelles extensions sont exigées pour votre application. Cependant toutes les extensions utilisées par le Zend Framework ne sont pas exigées pour chaque application.
+        </para>
+
+        <para>
+            Un type d'utilisation "dépendance" signifie que les composants ou les classes ne sont pas utilisables si l'extension respective n'est pas disponible. Un type d'utilisation "facultatif" signifie que si l'extension n'est pas disponible, les composants ou les classes utilisent automatiquement le code alternatif.
         </para>
 
         <table frame='all' id="requirements.extensions.table-1">
