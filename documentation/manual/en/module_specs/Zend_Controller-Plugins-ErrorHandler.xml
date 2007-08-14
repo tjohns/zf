@@ -2,107 +2,94 @@
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> provides a drop-in
-        plugin for handling exceptions thrown by your application, including
-        those resulting from missing controllers or actions; it is an
-        alternative to the methods listed in the <link
-            linkend="zend.controller.exceptions">MVC Exceptions section</link>.
+        <code>Zend_Controller_Plugin_ErrorHandler</code> biete ein Einwurf Plugin für die Handhabung von Ausnahmen
+        die von der Anwendung geworfen werden, inklusive denen die aus fehlenden Kontrollern oder Aktionen
+        resultieren; das ist eine Alternative zu den Methoden die in der
+        <link linkend="zend.controller.exceptions">Sektion MVC Ausnahmen</link> aufgeführt sind.
     </para>
 
     <para>
-        The primary targets of the plugin are:
+        Die primären Ziele dieses Plugins sind:
     </para>
 
     <itemizedlist>
         <listitem>
-            <para>Intercept exceptions raised due to missing controllers or
-                action methods</para>
+            <para>Abfangen von Ausnahmen die durch fehlende Kontroller oder Aktionsmethoden auftreten</para>
         </listitem>
 
         <listitem>
-            <para>Intercept exceptions raised within action controllers</para>
+            <para>Abfangen von Ausnahmen die innerhalb von Kontrollern aufrufen</para>
         </listitem>
     </itemizedlist>
 
     <para>
-        In other words, the <code>ErrorHandler</code> plugin is designed to
-        handle HTTP 404-type errors (page missing) and 500-type errors (internal
-        error). It is not intended to catch exceptions raised in other plugins
-        or routing.
+        Mit anderen Worten ist das <code>ErrorHandler</code> Plugin kreiert worden um HTTP 404 Typ Fehler zu
+        behandeln (fehlende Seite) und 500 Typ Fehler (interner Fehler). Es ist nicht dazu gedacht Ausnahmen
+        zu fangen die in anderen Plugins oder durch das Routen verursacht werden.
     </para>
 
     <para>
-        By default, <code>Zend_Controller_Plugin_ErrorHandler</code> will
-        forward to <code>ErrorController::errorAction()</code> in the default
-        module. You may set alternate values for these by using the various
-        accessors available to the plugin:
+        Standardmäßig leitet <code>Zend_Controller_Plugin_ErrorHandler</code> auf
+        <code>ErrorController::errorAction()</code> im Standardmodul weiter. Es kann ein alternativer Wert für dieses
+        gesetzt werden durch Verwendung der diversen Zugriffsmethoden die zu dem Pligin existieren:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <code>setErrorHandlerModule()</code> sets the controller module
-                to use.
+                <code>setErrorHandlerModule()</code> setzt das Kontroller Modul das verwendet werden soll.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <code>setErrorHandlerController()</code> sets the controller
-                to use.
+                <code>setErrorHandlerController()</code> setzt den Kontroller der verwendet werden soll.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <code>setErrorHandlerAction()</code> sets the controller action
-                to use.
+                <code>setErrorHandlerAction()</code> setzt die Kontroller Aktion die verwendet werden soll.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <code>setErrorHandler()</code> takes an associative array, which
-                may contain any of the keys 'module', 'controller', or 'action',
-                with which it will set the appropriate values.
+                <code>setErrorHandler()</code> nimmt ein assoziatives Array, welches einen der Schlüssel
+                'module', 'controller', oder 'action' enthalten kann und mit denen es die gewünschten Werte setzt.
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Additionally, you may pass an optional associative array to the
-        constructor, which will then proxy to <code>setErrorHandler()</code>.
+        Zusätzlich kann ein optionales assoziatives Array an den Konstruktor übergeben werden, welches dann an den
+        <code>setErrorHandler()</code> weitergeleitet wird.
     </para>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> registers a
-        <code>postDispatch()</code> hook and checks for exceptions registered in
-        <link linkend="zend.controller.response">the response object</link>. If
-        any are found, it attempts to forward to the registered error handler
-        action.
+        <code>Zend_Controller_Plugin_ErrorHandler</code> benötigt einen <code>postDispatch()</code> Hook und
+        prüft auf Ausnahmen die im <link linkend="zend.controller.response">Antwort Objekt</link> registriert
+        sind. Wenn welche gefunden werden, versucht es zur registrieren Fehler Handler Aktion weiterzuleiten.
     </para>
 
     <para>
-        If an exception occurs dispatching the error handler, the plugin will
-        tell the front controller to throw exceptions, and rethrow the last
-        exception registered with the response object.
+        Wenn eine Ausnahme wärend der Abarbeitung des Error Handlers auftritt, teilt das Plugin dem Front Kontroller
+        mit das eine Ausnahme geworfen werden muß, und die letzte registrierte Ausnahme im Antwort Objekt wird
+        nocheinmal geworfen.
     </para>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.fourohfour">
-        <title>Using the ErrorHandler as a 404 Handler</title>
+        <title>Den Fehler Handler als 404 Handler verwenden</title>
 
         <para>
-            Since the <code>ErrorHandler</code> plugin captures not only
-            application errors, but also errors in the controller chain arising
-            from missing controller classes and/or action methods, it can be
-            used as a 404 handler. To do so, you will need to have your error
-            controller check the exception type.
+            Da das <code>ErrorHandler</code> Plugin nicht nur Anwendungsfehler erfasst, sondern auch Fehler in der
+            Kontroller Kette die durch fehlende Kontroller Klassen und/oder Aktions Methoden auftreten, kann es
+            als 404 Handler verwendet werden. Hierfür muß der eigene Fehler Kontroller den Typ der Ausnahme prüfen.
         </para>
 
         <para>
-            Exceptions captured are logged in an object registered in the
-            request. To retrieve it, use
-            <code>Zend_Controller_Action::_getParam('error_handler')</code>:
+            Aufgefangene Ausnahmen werden in einem in der Anfrage registrierten Objekt geloggt. Um dieses zu
+            empfangen kann <code>Zend_Controller_Action::_getParam('error_handler')</code> verwendet werden:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -116,36 +103,35 @@ class ErrorController extends Zend_Controller_Action
         </programlisting>
 
         <para>
-            Once you have the error object, you can get the type via
-            <code>$errors->type</code>. It will be one of the following:
+            Sobald das Fehler Objekt vorhanden ist, kann man es über den Typ mit <code>$errors->type</code>
+            erhalten. Es wird eines der folgenden sein:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>,
-                    indicating the controller was not found.
+                    zeigt das der Kontroller nicht gefunden wurde.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>,
-                    indicating the requested action was not found.
+                    zeigt das die angefragte Aktion nicht gefunden wurde.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>,
-                    indicating other exceptions.
+                    zeigt andere Ausnahmen.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            You can then test for either of the first two types, and, if so,
-            indicate a 404 page:
+            Man kann auf eine der ersten Typen testen, und wenn dem so ist, eine 404 Seite anzeigen:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -158,14 +144,13 @@ class ErrorController extends Zend_Controller_Action
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                // 404 error -- controller or action not found
+                // 404 Fehler -- Kontroller oder Aktion nicht gefunden
                 $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
 
-                // ... get some output to display...
+                // ... Ausgabe für die Anzeige erzeugen...
                 break;
             default:
-                // application error; display error page, but don't change
-                // status code
+                // Anwendungsfehler; Fehler Seite anzeigen, aber den Status Code nicht ändern
                 break;
         }
     }
@@ -173,9 +158,8 @@ class ErrorController extends Zend_Controller_Action
         </programlisting>
 
         <para>
-            Finally, you can retrieve the exception that triggered the error
-            handler by grabbing the <code>exception</code> property of the
-            <code>error_handler</code> object:
+            Letztendlich kann die Anwendung die den Fehler Handler verursacht hat, empfangen werden indem die
+            <code>exception</code> Eigenschaft des <code>error_handler</code> Objektes genommen wird:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -187,18 +171,17 @@ public function errorAction()
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                // 404 error -- controller or action not found
+                // 404 Fehler -- Kontroller oder Aktion nicht gefunden
                 $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
 
-                // ... get some output to display...
+                // ... Ausgabe für die Anzeige erzeugen...
                 break;
             default:
-                // application error; display error page, but don't change
-                // status code
+                // Anwendungsfehler; Fehler Seite anzeigen, aber den Status Code nicht ändern
 
                 // ...
 
-                // Log the exception:
+                // Ausnahme loggen:
                 $exception = $errors->exception;
                 $log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/applicationException.log'));
                 $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
@@ -209,19 +192,18 @@ public function errorAction()
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
-        <title>Handling Previously Rendered Output</title>
+        <title>Zuvor gerenderte Ausgaben erhalten</title>
 
         <para>
-            If you dispatch multiple actions in a request, or if your action
-            makes multiple calls to <code>render()</code>, its possible that the
-            response object already has content stored within it. This can lead
-            to rendering a mixture of expected content and error content.
+            Wenn mehrfache Aktionen in einer Anfrage behandelt werden, oder wenn die Aktion mehrere Aufrufe zu
+            <code>render()</code> macht, ist es möglich das das Antwort Objekt bereits Inhalt in sich gespeichert
+            hat. Das kann dazu führen das eine Mixtur vin erwartetem Inhalt und Fehler Inhalt gerendert wird.
         </para>
 
         <para>
-            If you wish to render errors inline in such pages, no changes will
-            be necessary. If you do not wish to render such content, you should
-            clear the response body prior to rendering any views:
+            Wenn Fehler innerhalb solcher Seiten gerendert werden, ist keine Änderung notwendig. Wenn solche
+            Inhalte nicht gerendert werden sollen, muß der Antwort Body vor dem rendern jeglicher Views
+            gelöscht werden:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -230,10 +212,10 @@ $this->getResponse()->clearBody();]]>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
-        <title>Plugin Usage Examples</title>
+        <title>Beispiele für die Verwendung des Plugins</title>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
-            <title>Standard usage</title>
+            <title>Standardverwendung</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
@@ -244,7 +226,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
-            <title>Setting a different error handler</title>
+            <title>Einen anderen Fehler Handler setzen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
@@ -259,7 +241,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
-            <title>Using accessors</title>
+            <title>Zugriffsmethoden verwenden</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
@@ -276,11 +258,11 @@ $front->registerPlugin($plugin);]]>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.controllerexamples">
-        <title>Error Controller Example</title>
+        <title>Beispiel für den Fehler Kontroller</title>
 
         <para>
-            In order to use the Error Handler plugin, you need an error
-            controller. Below is a simple example.
+            Um das Fehler Handler Plugin zu verwenden, benötigt man einen Fehler Kontroller. Nachfolgend ist ein
+            einfaches Beispiel.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -293,24 +275,24 @@ class ErrorController extends Zend_Controller_Action
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                // 404 error -- controller or action not found
+                // 404 Fehler -- Kontroller oder Aktion nicht gefunden
                 $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
 
                 $content =<<<EOH
 <h1>Error!</h1>
-<p>The page you requested was not found.</p>
+<p>Die angefragte Seite konnte nicht gefunden werden.</p>
 EOH;
                 break;
             default:
-                // application error
+                // Anendungsfehler
                 $content =<<<EOH
-<h1>Error!</h1>
-<p>An unexpected error occurred with your request. Please try again later.</p>
+<h1>Fehler!</h1>
+<p>Ein unerwarteter Fehler trat in der Anfrage auf. Bitte versuchen Sie es etwas später nocheinmal.</p>
 EOH;
                 break;
         }
 
-        // Clear previous content
+        // Vorherige Inhalte löschen
         $this->getResponse()->clearBody();
 
         $this->view->content = $content;
