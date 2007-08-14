@@ -1,5 +1,4 @@
 <sect1 id="introduction.installation">
-
     <title>Kurulum</title>
 
     <para>
@@ -74,11 +73,9 @@
         kalıplarının uyarlanması.
         <link linkend="zend.controller.quickstart">Zend Framework MVC ile başlayın!</link>
     </para>
-
     <para>
         Zend Framework gevşek olarak bir araya getirilmiş olmasada ,  birçok bileşeni gerekli olduğunda
 	bağımsız kullanım için seçilebilir.
 	Takip eden herbir bölüm herbir bileşenin kullanımını belgelemektedir.	
     </para>
-
 </sect1>
