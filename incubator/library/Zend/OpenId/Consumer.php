@@ -32,6 +32,11 @@ require_once "Zend/OpenId.php";
 require_once "Zend/OpenId/Extension.php";
 
 /**
+ * @see Zend_Http_Client
+ */
+require_once 'Zend/Http/Client.php';
+
+/**
  * OpenID consumer implementation
  *
  * @category   Zend
@@ -63,7 +68,14 @@ class Zend_OpenId_Consumer
      *
      * @var array $_cache
      */
-    private $_cache = array();
+    protected $_cache = array();
+
+    /**
+     * HTTP client to make HTTP requests
+     *
+     * @var Zend_Http_Client $_httpClient
+     */
+    private $_httpClient = null;
 
     /**
      * Constructs a Zend_OpenId_Consumer object with given $storage.
@@ -183,7 +195,6 @@ class Zend_OpenId_Consumer
                 Zend_OpenId::hashHmac($macFunc, $data, $secret)) {
                 return true;
             }
-
             $this->_storage->delAssociation($url);
             return false;
         }
@@ -208,9 +219,14 @@ class Zend_OpenId_Consumer
             }
             $params2['openid.mode'] = 'check_authentication';
             $ret = $this->_httpRequest($server, 'POST', $params2);
-            $i = strpos($ret, "is_valid:true\n");
-            if ($i !== false && ($i == 0 || $ret[$i-1] == "\n")) {
-                return true;
+            if (is_string($ret)) {
+                $i = strpos($ret, "is_valid:true");
+                if ($i !== false &&
+                    ($i == 0 || $ret[$i-1] == "\n") &&
+                    ($i + strlen("is_valid:true") == strlen($ret) ||
+                     $ret[$i+strlen("is_valid:true")] == "\n")) {
+                    return true;
+                }
             }
             return false;
         }
@@ -281,23 +297,26 @@ class Zend_OpenId_Consumer
      */
     protected function _httpRequest($url, $method = 'GET', array $params = array())
     {
-        require_once 'Zend/Http/Client.php';
+        $client = $this->_httpClient;
+        if ($client === null) {
+            $client = new Zend_Http_Client(
+                    $url,
+                    array(
+                        'maxredirects' => 4,
+                        'timeout'      => 15,
+                        'useragent'    => 'Zend_OpenId'
+                    )
+                );
+        } else {
+            $client->setUri($url);
+        }
 
-        $client = new Zend_Http_Client(
-                $url,
-                array(
-                    'maxredirects' => 4,
-                    'timeout'      => 15,
-                    'useragent'    => 'Zend_OpenId'
-                )
-            );
-
+        $client->resetParameters();
         if ($method == 'POST') {
             $client->setMethod(Zend_Http_Client::POST);
-            if (count($params) > 0) {
-                $client->setParameterPost($params);
-            }
-        } else if (count($params) > 0) {
+            $client->setParameterPost($params);
+        } else {
+            $client->setMethod(Zend_Http_Client::GET);
             $client->setParameterGet($params);
         }
 
@@ -316,9 +335,10 @@ class Zend_OpenId_Consumer
      *
      * @param string $url OpenID server url
      * @param float $version OpenID protocol version
+     * @param string $priv_key for testing only
      * @return bool
      */
-    protected function _associate($url, $version)
+    protected function _associate($url, $version, $priv_key=null)
     {
 
         /* Check if we already have association in chace or storage */
@@ -353,32 +373,17 @@ class Zend_OpenId_Consumer
             );
         }
 
+        $dh = Zend_OpenId::createDhKey(pack('H*', Zend_OpenId::DH_P),
+                                       pack('H*', Zend_OpenId::DH_G),
+                                       $priv_key);
+        $dh_details = Zend_OpenId::getDhKeyDetails($dh);
 
-        if (!empty($params['openid.session_type']) &&
-            ($params['openid.session_type'] !== 'no-encryption')) {
-
-            $dh = Zend_OpenId::createDhKey(pack('H*', Zend_OpenId::DH_P),
-                                           pack('H*', Zend_OpenId::DH_G));
-            $dh_details = Zend_OpenId::getDhKeyDetails($dh);
-
-            $params['openid.dh_modulus']         =
-                base64_encode(Zend_OpenId::btwoc($dh_details['p']));
-            $params['openid.dh_gen']             =
-                base64_encode(Zend_OpenId::btwoc($dh_details['g']));
-            $params['openid.dh_consumer_public'] =
-                base64_encode(Zend_OpenId::btwoc($dh_details['pub_key']));
-        } else {
-            if ($version >= 2.0) {
-                if (empty($params['openid.session_type'])) {
-                    $params['openid.session_type'] = 'no-encryption';
-                }
-            } else {
-                if ($params['openid.session_type'] === 'no-encryption') {
-                    $params['openid.session_type'] = '';
-                }
-
-            }
-        }
+        $params['openid.dh_modulus']         =
+            base64_encode(Zend_OpenId::btwoc($dh_details['p']));
+        $params['openid.dh_gen']             =
+            base64_encode(Zend_OpenId::btwoc($dh_details['g']));
+        $params['openid.dh_consumer_public'] =
+            base64_encode(Zend_OpenId::btwoc($dh_details['pub_key']));
 
         $ret = $this->_httpRequest($url, 'POST', $params);
         if ($ret === false) {
@@ -407,11 +412,7 @@ class Zend_OpenId_Consumer
         if (!isset($ret['assoc_handle']) ||
             !isset($ret['expires_in']) ||
             !isset($ret['assoc_type']) ||
-            ($params['openid.assoc_type'] != $ret['assoc_type']) ||
-            (isset($ret['session_type']) &&
-             $ret['session_type'] != $params['openid.session_type']) ||
-            (!isset($ret['session_type']) &&
-             !empty($params['openid.session_type']))) {
+            $params['openid.assoc_type'] != $ret['assoc_type']) {
             return false;
         }
 
@@ -427,11 +428,8 @@ class Zend_OpenId_Consumer
             return false;
         }
 
-        if ((($version < 2.0 &&
-              empty($ret['session_type'])) ||
-             ($version >= 2.0 &&
-              isset($ret['session_type']) &&
-              $ret['session_type'] == 'no-encryption')) &&
+        if ((empty($ret['session_type']) ||
+             ($version >= 2.0 && $ret['session_type'] == 'no-encryption')) &&
              isset($ret['mac_key'])) {
             $secret = base64_decode($ret['mac_key']);
         } else if (isset($ret['session_type']) &&
@@ -638,5 +636,14 @@ class Zend_OpenId_Consumer
         }
 
         Zend_OpenId::redirect($server, $params, $response);
+        return true;
+    }
+
+    public function setHttpClient($client) {
+        $this->_httpClient = $client;
+    }
+
+    public function getHttpClient() {
+        return $this->_httpClient;
     }
 }

@@ -329,6 +329,7 @@ class Zend_OpenId_Provider
                 $ret = $this->_checkId($version, $params, 1, $extensions, $response);
                 if (is_bool($ret)) return $ret;
                 Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+                return true;
             } else if ($params['openid_mode'] == 'checkid_setup') {
                 if (empty($params['openid_return_to'])) {
                     return false;
@@ -336,6 +337,7 @@ class Zend_OpenId_Provider
                 $ret = $this->_checkId($version, $params, 0, $extensions, $response);
                 if (is_bool($ret)) return $ret;
                 Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+                return true;
             } else if ($params['openid_mode'] == 'check_authentication') {
                 $response = $this->_checkAuthentication($version, $params);
                 $ret = '';
@@ -496,6 +498,7 @@ class Zend_OpenId_Provider
             } else {
                 /* Redirect to Server Login Screen */
                 Zend_OpenId::redirect($this->_loginUrl, $params, $response);
+                return true;
             }
         }
 
@@ -530,6 +533,7 @@ class Zend_OpenId_Provider
         } else if (is_null($trusted)) {
             /* Redirect to Server Trust Screen */
             Zend_OpenId::redirect($this->_trustUrl, $params, $response);
+            return true;
         }
 
         return $this->_respond($version, $ret, $params, $extensions);
