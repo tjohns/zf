@@ -449,9 +449,6 @@ class Zend_Uri_Http extends Zend_Uri
         if ($status === false) {
             throw new Zend_Uri_Exception('Internal error: path validation failed');
         }
-        if (!$status) {
-            echo "'$path' does not match pattern '$pattern'\n";
-        }
         return (boolean) $status;
     }
 
