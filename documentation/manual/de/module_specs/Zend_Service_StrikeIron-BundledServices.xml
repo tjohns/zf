@@ -64,7 +64,7 @@ if ($zips->count == 0) {
     }
 }
 
-// Detailirete Statusinformationen
+// Detailierte Statusinformationen
 // http://www.strikeiron.com/exampledata/StrikeIronZipCodeInformation_v3.pdf
 $status = $response->serviceStatus;]]>
         </programlisting>
@@ -167,7 +167,6 @@ $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Einen Client für das Verkaufs & Steuer Grundlagen Service erstellen
-// Get a client for the Sales & Use Tax Basic service
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
 // Die Steuerrate für Ontario, Kanada abfragen
