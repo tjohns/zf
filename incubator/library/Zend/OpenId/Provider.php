@@ -405,11 +405,8 @@ class Zend_OpenId_Provider
 
         $secret = $this->_genSecret($macFunc);
 
-        if (($version < 2.0 &&
-             empty($params['openid_session_type'])) ||
-            ($version >= 2.0 &&
-             isset($params['openid_session_type']) &&
-             $params['openid_session_type'] == 'no-encryption')) {
+        if (empty($params['openid_session_type']) ||
+            $params['openid_session_type'] == 'no-encryption') {
             $ret['mac_key'] = base64_encode($secret);
         } else if (isset($params['openid_session_type']) &&
             $params['openid_session_type'] == 'DH-SHA1' &&
@@ -583,7 +580,7 @@ class Zend_OpenId_Provider
                 $ret['openid.invalidate_handle'] =
                     $params['openid_assoc_handle'];
             }
-            $macFunc = 'sha256';
+            $macFunc = $version >= 2.0 ? 'sha256' : 'sha1';
             $secret = $this->_genSecret($macFunc);
             $handle = uniqid();
             $expiresIn = $this->_sessionTtl;
@@ -649,6 +646,8 @@ class Zend_OpenId_Provider
         $ret['openid.mode'] = 'id_res';
 
         if (empty($params['openid_assoc_handle']) ||
+            empty($params['openid_signed']) ||
+            empty($params['openid_sig']) ||
             !$this->_storage->getAssociation($params['openid_assoc_handle'],
                 $macFunc, $secret, $expires)) {
             $ret['is_valid'] = 'false';
