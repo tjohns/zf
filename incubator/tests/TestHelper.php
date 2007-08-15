@@ -52,7 +52,7 @@ if ($zfUseCoreTests === true) {
 $path[] = $zfIncLibrary;
 $path[] = $zfCoreLibrary;
 $path[] = get_include_path();
-set_include_path(implode(PATH_SEPARATOR, $path);
+set_include_path(implode(PATH_SEPARATOR, $path));
 
 /*
  * Load the user-defined test configuration file, if it exists; otherwise, load 
