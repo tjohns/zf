@@ -2,7 +2,7 @@
     <title>Catching Gdata Exceptions</title>
 
     <para>
-        The <code>Zend_Gdata__App_Exception</code> class is a base class
+        The <code>Zend_Gdata_App_Exception</code> class is a base class
         for exceptions thrown by Zend_Gdata.  You can catch any exception
         thrown by Zend_Gdata by catching Zend_Gdata_App_Exception.
     </para>
