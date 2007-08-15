@@ -137,7 +137,7 @@ class Zend_OpenId_Provider
      */
     public function register($id, $password)
     {
-        if (!Zend_OpenId::normalize($id)) {
+        if (!Zend_OpenId::normalize($id) || empty($id)) {
             return false;
         }
         return $this->_storage->addUser($id, md5($id.$password));
@@ -214,10 +214,12 @@ class Zend_OpenId_Provider
             $root = $params['openid_realm'];
         } else if (isset($params['openid_trust_root'])) {
             $root = $params['openid_trust_root'];
-        } else {
+        } else if (isset($params['openid_return_to'])) {
             $root = $params['openid_return_to'];
+        } else {
+            return false;
         }
-        if (Zend_OpenId::normalizeUrl($root)) {
+        if (Zend_OpenId::normalizeUrl($root) && !empty($root)) {
             return $root;
         }
         return false;
