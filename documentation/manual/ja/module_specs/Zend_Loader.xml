@@ -214,6 +214,14 @@ Zend_Loader::registerAutoload('My_Loader');]]>
             </programlisting>
         </example>
 
+        <para>
+            autoload コールバックを削除することもできます。
+            <code>registerAutoload()</code> にはオプションで 2 番目の引数を指定することができ、
+            デフォルトでは <code>true</code> が設定されるようになっています。
+            この引数を <code>false</code> とすると、
+            指定したコールバックが SPL の autoload スタックから削除されます。
+        </para>
+
     </sect2>
 
 </sect1>
