@@ -251,6 +251,8 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             }
         }
         $this->assertFalse($found, "Failed to register Zend_Loader_MyLoader::autoload() with spl_autoload");
+
+        spl_autoload_unregister($expected);
     }
 
     public function testLoaderRegisterAutoloadExtendedClassWithAutoloadMethod()
@@ -310,6 +312,37 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertEquals('The class "stdClass" does not have an autoload() method', $e->getMessage());
         }
+    }
+
+    public function testLoaderUnregisterAutoload()
+    {
+        if (!function_exists('spl_autoload_register')) {
+            $this->markTestSkipped("spl_autoload() not installed on this PHP installation");
+        }
+
+        Zend_Loader::registerAutoload();
+        $autoloaders = spl_autoload_functions();
+        $expected    = array('Zend_Loader', 'autoload');
+        $found       = false;
+        foreach($autoloaders as $function) {
+            if ($expected == $function) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertTrue($found, "Failed to register Zend_Loader::autoload() with spl_autoload");
+
+        Zend_Loader::registerAutoload('Zend_Loader', false);
+        $autoloaders = spl_autoload_functions();
+        $expected    = array('Zend_Loader', 'autoload');
+        $found       = false;
+        foreach($autoloaders as $function) {
+            if ($expected == $function) {
+                $found = true;
+                break;
+            }
+        }
+        $this->assertFalse($found, "Failed to unregister Zend_Loader::autoload() with spl_autoload");
     }
 
 }
