@@ -273,7 +273,7 @@ $user = $user->save();
                 
             </sect4>
             
-            <sect4 id="zend.gdata.gapps.users.updating.forcePasswordChange">
+            <sect4 id="zend.gdata.gapps.users.updating.forcingPasswordChange">
                 <title>Forcing a user to change their password</title>
 
                 <para>
@@ -297,7 +297,7 @@ $user = $user->save();
 
             </sect4>
             
-            <sect4 id="zend.gdata.gapps.users.updating.forcePasswordChange">
+            <sect4 id="zend.gdata.gapps.users.updating.suspendingAccount">
                 <title>Suspending a user account</title>
 
                 <para>
