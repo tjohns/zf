@@ -488,15 +488,27 @@ class Zend_OpenId_Provider
         }
 
         /* Check if user already logged in into the server */
-        if (!isset($params['openid_identity']) |
+        if (!isset($params['openid_identity']) ||
             $this->_user->getLoggedInUser() !== $params['openid_identity']) {
+            $params2 = array();
+            foreach ($params as $key => $val) {
+                if (strpos($key, 'openid_sreg_') === 0) {
+                    $key = 'openid.sreg.' . substr($key, strlen('openid_sreg_'));
+                } else if (strpos($key, 'openid_') === 0) {
+                    $key = 'openid.' . substr($key, strlen('openid_'));
+                }
+                $params2[$key] = $val;
+            }
             if ($immediate) {
+                $params2['openid.mode'] = 'checkid_setup';
                 $ret['openid.mode'] = ($version >= 2.0) ? 'setup_needed': 'cancel';
-                $ret['openid.user_setup_url'] = $this->_loginUrl;
+                $ret['openid.user_setup_url'] = $this->_loginUrl
+                    . (strpos($this->_loginUrl, '?') === false ? '?' : '&')
+                    . Zend_OpenId::paramsToQuery($params2);
                 return $ret;
             } else {
                 /* Redirect to Server Login Screen */
-                Zend_OpenId::redirect($this->_loginUrl, $params, $response);
+                Zend_OpenId::redirect($this->_loginUrl, $params2, $response);
                 return true;
             }
         }
@@ -531,8 +543,26 @@ class Zend_OpenId_Provider
             return $ret;
         } else if (is_null($trusted)) {
             /* Redirect to Server Trust Screen */
-            Zend_OpenId::redirect($this->_trustUrl, $params, $response);
-            return true;
+            $params2 = array();
+            foreach ($params as $key => $val) {
+                if (strpos($key, 'openid_sreg_') === 0) {
+                    $key = 'openid.sreg.' . substr($key, strlen('openid_sreg_'));
+                } else if (strpos($key, 'openid_') === 0) {
+                    $key = 'openid.' . substr($key, strlen('openid_'));
+                }
+                $params2[$key] = $val;
+            }
+            if ($immediate) {
+                $params2['openid.mode'] = 'checkid_setup';
+                $ret['openid.mode'] = ($version >= 2.0) ? 'setup_needed': 'cancel';
+                $ret['openid.user_setup_url'] = $this->_trustUrl
+                    . (strpos($this->_trustUrl, '?') === false ? '?' : '&')
+                    . Zend_OpenId::paramsToQuery($params2);
+                return $ret;
+            } else {
+                Zend_OpenId::redirect($this->_trustUrl, $params2, $response);
+                return true;
+            }
         }
 
         return $this->_respond($version, $ret, $params, $extensions);
