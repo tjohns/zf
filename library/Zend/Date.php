@@ -1559,7 +1559,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             case Zend_Date::WEEKDAY_8601 :
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_8601, $locale);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + intval($date), 1970, true),
                                                  $this->mktime(0, 0, 0, 1, 1 + $weekday,      1970, true), $hour);
@@ -1575,7 +1575,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
             case Zend_Date::WEEKDAY_DIGIT :
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale);
-                if ((intval($date) > 0) and (intval($date) < 8)) {
+                if (is_numeric($date) and (intval($date) >= 0) and (intval($date) < 7)) {
                     return $this->_assign($calc, $this->mktime(0, 0, 0, 1, 1 + $date,    1970, true),
                                                  $this->mktime(0, 0, 0, 1, 1 + $weekday, 1970, true), $hour);
                 }
@@ -3719,11 +3719,11 @@ class Zend_Date extends Zend_Date_DateObject {
         }
 
         if ($weekday instanceof Zend_Date) {
-            $weekday = $weekday->get(Zend_Date::WEEKDAY_DIGIT, $locale);
+            $weekday = $weekday->get(Zend_Date::WEEKDAY_8601, $locale);
         }
 
         if (is_numeric($weekday)) {
-            $type = Zend_Date::WEEKDAY_DIGIT;
+            $type = Zend_Date::WEEKDAY_8601;
         } else if (is_array($weekday)) {
             if (array_key_exists('weekday', $weekday)) {
                 $weekday = $weekday['weekday'];

@@ -1262,7 +1262,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set(1234567890);
         try {
-            $date->set(0, Zend_Date::WEEKDAY_DIGIT);
+            $date->set(7, Zend_Date::WEEKDAY_DIGIT);
             $this->fail();
         } catch (Zend_Date_Exception $e) {
             // success
@@ -4558,6 +4558,20 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             $weekday = str_pad($day, 2, '0', STR_PAD_LEFT);
             $this->assertSame($dw->toString(), "$weekday.01.1970 00:00:00");
         }
+    }
+
+    /**
+     * test setWeekday
+     */
+    public function testSetWeekday()
+    {
+        $date = new Zend_Date('2006-01-01','YYYY-MM-dd', 'en');
+        $date->setWeekday(1);
+        $this->assertSame($date->getIso(), "2005-12-26T00:00:00+05:00");
+
+        $date->set('2006-01-02', 'YYYY-MM-dd');
+        $date->setWeekday(1);
+        $this->assertSame($date->getIso(), "2006-01-02T00:00:00+05:00");
     }
 
     /**
