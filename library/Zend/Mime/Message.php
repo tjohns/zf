@@ -147,7 +147,7 @@ class Zend_Mime_Message
                 $body .= $boundaryLine
                        . $this->getPartHeaders($p, $EOL)
                        . $EOL
-                       . $this->getPartContent($p);
+                       . $this->getPartContent($p, $EOL);
             }
 
             $body .= $mime->mimeEnd($EOL);
@@ -184,9 +184,9 @@ class Zend_Mime_Message
      * @param int $partnum
      * @return string
      */
-    public function getPartContent($partnum)
+    public function getPartContent($partnum, $EOL = Zend_Mime::LINEEND)
     {
-        return $this->_parts[$partnum]->getContent();
+        return $this->_parts[$partnum]->getContent($EOL);
     }
 
     /**
