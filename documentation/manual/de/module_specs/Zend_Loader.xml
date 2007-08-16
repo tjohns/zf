@@ -220,6 +220,13 @@ Zend_Loader::registerAutoload('My_Loader');]]>
             </programlisting>
         </example>
 
+        <para>
+            Der Callback für den Autoloader kann entfernt werden. Die <code>registerAutoload()</code> Methode hat
+            ein zweites optionales Argument welches standardmäßig <code>true</code> ist. Wenn dieses Argument
+            <code>false</code> ist, wird die Registrierung des Callback des Autoloaders vom SPL Autoload Stack
+            entfernt anstatt registriert.
+        </para>
+
     </sect2>
 
 </sect1>
