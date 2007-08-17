@@ -41,10 +41,15 @@ require_once 'PHPUnit/Framework.php';
 class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 {
 
+    public function setUp()
+    {
+        setLocale(LC_ALL, 'de_AT');
+    }
+
     /**
      * tests the creation of Zend_Currency
      */
-    public function testSimpleCreation()
+    public function testSingleCreation()
     {
         $locale = new Zend_Locale('de_AT');
 
@@ -96,12 +101,25 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($currency instanceof Zend_Currency);
         $this->assertSame($currency->toCurrency(1000), '$ 1.000');
 
+        $currency = new Zend_Currency('AWG');
+        $this->assertTrue($currency instanceof Zend_Currency);
+        $this->assertSame($currency->toCurrency(1000), 'AWG 1.000');
+
         try {
             $currency = new Zend_Currency('XYZ');
             $this->fail("unknown shortname should not have been recognised");
         } catch (Zend_Currency_Exception $e) {
             // success
         }
+    }
+
+
+    /**
+     * tests the creation of Zend_Currency
+     */
+    public function testDualCreation()
+    {
+        $locale = new Zend_Locale('de_AT');
 
         $currency = new Zend_Currency('USD', 'de_AT');
         $this->assertTrue($currency instanceof Zend_Currency);
@@ -152,6 +170,15 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Currency_Exception $e) {
             // success
         }
+    }
+
+
+    /**
+     * tests the creation of Zend_Currency
+     */
+    public function testTripleCreation()
+    {
+        $locale = new Zend_Locale('de_AT');
 
         $currency = new Zend_Currency('USD', 'Arab', 'de_AT');
         $this->assertTrue($currency instanceof Zend_Currency);
@@ -224,6 +251,56 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * tests failed creation of Zend_Currency
+     */
+    public function testFailedCreation()
+    {
+        $locale = new Zend_Locale('de_AT');
+
+        try {
+            $currency = new Zend_Currency('de_AT', 'en_US');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
+
+        try {
+            $currency = new Zend_Currency('USD', 'EUR');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
+
+        try {
+            $currency = new Zend_Currency('Arab', 'Latn');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
+
+        try {
+            $currency = new Zend_Currency('EUR');
+            $currency->toCurrency('value');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
+
+        $currency = new Zend_Currency('EUR');
+        $currency->setFormat('SIGN');
+        $this->assertSame($currency->toCurrency(1000), 'SIGN 1.000');
+
+        try {
+            $currency = new Zend_Currency('EUR');
+            $currency->setFormat(null, null, 'xy_ZY');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
+    }
+
+
     /*
      * testing toCurrency
      */
@@ -244,7 +321,6 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 
         $USD = new Zend_Currency('en_US');
         $this->assertSame($USD->toCurrency(253292.1832), '$ 253,292.1832');
-
     }
 
 
@@ -295,8 +371,19 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSign()
     {
+        $locale = new Zend_Locale('ar_EG');
+
         $this->assertSame(Zend_Currency::getSymbol('EGP','ar_EG'), 'ج.م.‏');
+        $this->assertSame(is_string(Zend_Currency::getSymbol('EGP')), true);
         $this->assertSame(Zend_Currency::getSymbol('ar_EG'), 'ج.م.‏');
+        $this->assertSame(Zend_Currency::getSymbol('ar_EG'), 'ج.م.‏');
+
+        try {
+            Zend_Currency::getSymbol('EGP', 'de_XX');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
     }
 
 
@@ -305,8 +392,40 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
+        $locale = new Zend_Locale('ar_EG');
+
         $this->assertSame(Zend_Currency::getName('EGP','ar_EG'), 'جنيه مصرى');
+        $this->assertSame(Zend_Currency::getName('EGP',$locale), 'جنيه مصرى');
         $this->assertSame(Zend_Currency::getName('ar_EG'), 'جنيه مصرى');
+        $this->assertSame(is_string(Zend_Currency::getName('EGP')), true);
+
+        try {
+            Zend_Currency::getName('EGP', 'xy_XY');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
+    }
+
+
+    /**
+     * test getShortName
+     */
+    public function testGetShortName()
+    {
+        $locale = new Zend_Locale('de_AT');
+
+        $this->assertSame(Zend_Currency::getShortName('EUR','de_AT'), 'Euro');
+        $this->assertSame(Zend_Currency::getShortName('EUR',$locale), 'Euro');
+        $this->assertSame(Zend_Currency::getShortName('de_AT'), 'Euro');
+        $this->assertSame(is_string(Zend_Currency::getShortName('EUR')), true);
+
+        try {
+            Zend_Currency::getShortName('EUR', 'xy_ZT');
+            $this->fail();
+        } catch (Zend_Currency_Exception $e) {
+            // success
+        }
     }
 
 
@@ -336,5 +455,6 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     {
         $USD = new Zend_Currency('USD','en_US');
         $this->assertSame($USD->toString(), 'US Dollar');
+        $this->assertSame($USD->__toString(), 'US Dollar');
     }
 }
