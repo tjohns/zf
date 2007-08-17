@@ -51,7 +51,7 @@
                 </row>
                 <row>
                     <entry>その他</entry>
-                    <entry>*.sql, *.tbx, *.qt</entry>
+                    <entry>*.sql, *.tbx, *.tm</entry>
                     <entry>今後、その他さまざまなアダプタを実装する予定です。</entry>
                 </row>
             </tbody>
@@ -183,6 +183,42 @@
                 ファイルは可読形式で、システムに依存しない形式になります。
             </para>
         </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.translate.adapter.selfwritten">
+
+        <title>自作のアダプタの組み込み</title>
+
+        <para>
+            Zend_Translate に、自作のアダプタクラスを組み込むこともできます。
+            これは、Zend_Translate に組み込まれている標準のアダプタクラスと同様に使うことができます。
+        </para>
+
+        <para>
+            Zend_Translate で使用するアダプタクラスは、
+            Zend_Translate_Adapter のサブクラスでなければなりません。
+            Zend_Translate_Adapter は抽象クラスであり、翻訳に必要なものをすべて定義しています。
+            あなたがすべきことは、翻訳データの読み込み方法を定義することだけです。
+        </para>
+
+        <para>
+            名前の先頭に "Zend" をつけることができるのは Zend_Framework
+            内のパッケージだけです。Zend_Translate で使うためのアダプタを自作する場合は、
+            その名前はたとえば "Company_Translate_Adapter_MyFormat" のようにする必要があります。
+            次のコードは、独自のアダプタクラスを実装する例を示すものです。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+try {
+    $translate = new Zend_Translate('Company_Translate_Adapter_MyFormat', '/path/to/translate.xx', 'en', array('myoption' => 'myvalue'));
+} catch (Exception $e) {
+    // ファイルが見つからない、アダプタクラスが存在しない、……
+    // などの一般的なエラー
+}]]>
+        </programlisting>
 
     </sect2>
 
