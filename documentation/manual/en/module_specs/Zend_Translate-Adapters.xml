@@ -52,7 +52,7 @@
                 </row>
                 <row>
                     <entry>Others</entry>
-                    <entry>*.sql, *.tbx, *.qt</entry>
+                    <entry>*.sql, *.tbx, *.tm</entry>
                     <entry>Different other adapters may be implemented in the future</entry>
                 </row>
             </tbody>
@@ -192,6 +192,43 @@
                 The files are human readable and system-independent.
             </para>
         </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.translate.adapter.selfwritten">
+
+        <title>Integrate self written Adapters</title>
+
+        <para>
+            Zend_Translate allows you to integrate and use self written Adapter
+            classes. They can be used like the standard Adapter classes which
+            are already included within Zend_Translate.
+        </para>
+
+        <para>
+            Any adapter class you want to use with Zend_Translate must be a subclass
+            of Zend_Translate_Adapter. Zend_Translate_Adapter is an abstract class
+            which already defines all what is needed for translation. What has to be
+            done by you, is the definition of the reader for translation datas.
+        </para>
+
+        <para>
+            The useage of the prefix "Zend" should be limited to the Zend_Framework.
+            If you extend Zend_Translate with your own adapter, you should name it
+            like "Company_Translate_Adapter_MyFormat". The following code shows an
+            example of how a self written adapter class could be implemented:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+try {
+    $translate = new Zend_Translate('Company_Translate_Adapter_MyFormat', '/path/to/translate.xx', 'en', array('myoption' => 'myvalue'));
+} catch (Exception $e) {
+    // File not found, no adapter class...
+    // General failure
+}]]>
+        </programlisting>
 
     </sect2>
 
