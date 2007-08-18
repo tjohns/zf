@@ -5,13 +5,13 @@
     <para>
         参见
         <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">最新发布的文档</ulink>。
-        同时，Zend Framework Auth团队也非常期望在我们的邮件列表中反馈和贡献：
+        同时，Zend Framework Auth 团队也非常期望大家在邮件列表中进行反馈和贡献：
         <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
     </para>
 
     <para>
-        在基于PHP开发的Web应用程序中，<emphasis role="bold">会话(session)</emphasis>
-        代表服务器端和特定的用户代理客户端(比如web浏览器)之间的一对一的持久的状态数据。
+        在基于 PHP 开发的 Web 应用程序中，<emphasis role="bold">会话(session)</emphasis>
+        代表服务器端和特定的用户代理客户端(比如 web 浏览器)之间的一对一的持久的状态数据。
         <code>Zend_Session</code> 用来在由相同客户端发起的多个页面请求之间，管理和保护会话数据
         。逻辑上来说，会话数据是 cookie 数据的扩展。
         和 cookie 数据不同，会话数据不储存在客户端，仅当服务器端程序源代码使得会话数据可用，
@@ -21,7 +21,7 @@
         采用对象的方式来控制。
         <emphasis role="bold">会话命名空间(Session Namespaces)</emphasis> 
         提供了使用经典的<ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">命名空间</ulink>
-        方式来访问会话数据，命名空间逻辑上就是一系列被命名（键名为字符串）的联合数组（类似于普通的PHP数组）。
+        方式来访问会话数据，命名空间逻辑上就是一系列被命名（键名为字符串）的联合数组（类似于普通的 PHP 数组）。
     </para>
 
     <para>
