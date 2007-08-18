@@ -20,20 +20,21 @@
  */
 
 /**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+/**
  * Zend_Version
  */
 require_once 'Zend/Version.php';
 
 /**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * Unit testing for the Zend_Version class.
- *
- * @package    Zend
+ * @category   Zend
+ * @package    Zend_Version
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_VersionTest extends PHPUnit_Framework_TestCase
 {

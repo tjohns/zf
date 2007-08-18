@@ -13,20 +13,20 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Db
+ * @package    Zend_Cache
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Cache_AllTests::main');
-}
-
 /**
  * Test helper
  */
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Cache_AllTests::main');
+}
 
 require_once 'Zend/Cache/FactoryTest.php';
 require_once 'Zend/Cache/CoreTest.php';
@@ -42,6 +42,13 @@ require_once 'Zend/Cache/PageFrontendTest.php';
 require_once 'Zend/Cache/ZendPlatformBackendTest.php';
 require_once 'Zend/Cache/SkipTests.php';
 
+/**
+ * @category   Zend
+ * @package    Zend_Cache
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Cache_AllTests
 {
     public static function main()
