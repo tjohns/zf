@@ -8,12 +8,12 @@
 
         <para>
             Die Zend_Db_Table Klasse ist eine Objekt-Orientierte Schnittstelle zu Datenbank Tabellen. Sie bietet
-            Methoden für viele gängige Operationen an Tabellen. Die Basisklasse ist erweiterbar, daher kann eigene Logik
-            eingeführt werden.
+            Methoden für viele gängige Operationen an Tabellen. Die Basisklasse ist erweiterbar, daher kann eigene
+            Logik eingeführt werden.
         </para>
 
         <para>
-            Die Zend_Db_Table Lösung iste eine Implementation des
+            Die Zend_Db_Table Lösung ist eine Implementation des
             <ulink url="http://www.martinfowler.com/eaaCatalog/tableDataGateway.html">Table Data Gateway</ulink>
             Patterns. Die Lösung schließt außerdem eine Klasee ein, welche das
             <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">Row Data Gateway</ulink>
@@ -35,9 +35,9 @@
             <title>Definieren des Tabellennamens und Schemas</title>
 
             <para>
-                Die Tabelle der Datenbank, für welche die Klasse bestimmt ist, wird mit der protected Variablen <code>$_name</code>
-                angegeben. Es ist ein String, welcher den Namen der Tabelle enthalten muss, wie er in der Datenbank
-                erscheint.
+                Die Tabelle der Datenbank, für welche die Klasse bestimmt ist, wird mit der protected Variablen
+                <code>$_name</code> angegeben. Es ist ein String, welcher den Namen der Tabelle enthalten muss,
+                wie er in der Datenbank erscheint.
             </para>
 
             <example id="zend.db.table.defining.table-schema.example1">
@@ -105,9 +105,10 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 Die Schema und Tabellennamen können auch mit Konstruktor Konfigurationsdirektiven angegeben werden,
-                welche jegliche Standardwerte, angegeben in den <code>$_name</code> und <code>$_schema</code> Eigenschaften,
-                überschreiben. Eine Schema Angabe welche mit der <code>name</code> Directive angegeben wurde überschreibt
-                jeglichen Wert welcher von der <code>schema</code> Option bereitgestellt ist.
+                welche jegliche Standardwerte, angegeben in den <code>$_name</code> und <code>$_schema</code>
+                Eigenschaften, überschreiben. Eine Schema Angabe welche mit der <code>name</code> Directive
+                angegeben wurde überschreibt jeglichen Wert welcher von der <code>schema</code> Option
+                bereitgestellt ist.
             </para>
 
             <example id="zend.db.table.defining.table-schema.example.constructor">
@@ -172,8 +173,9 @@ class Bugs extends Zend_Db_Table_Abstract
                 <para>
                     Jede Table Klasse muss wissen mit welche(r/n) Spalte(n) Zeilen eindeutig identifiziert werden
                     können. Wenn keine Primärschlüssel Spalte(n) in der Klassendefinition oder als Argument für den
-                    Konstruktor angegeben wurde und nicht aus den Tabellenmetadaten mit Hilfe der <code>describeTable()</code>
-                    Methode ermittelt werden kann, dann kann die Tabelle nicht mit Zend_Db_Table verwendet werden.
+                    Konstruktor angegeben wurde und nicht aus den Tabellenmetadaten mit Hilfe der
+                    <code>describeTable()</code> Methode ermittelt werden kann, dann kann die Tabelle nicht mit
+                    Zend_Db_Table verwendet werden.
                 </para>
             </note>
 
@@ -184,8 +186,8 @@ class Bugs extends Zend_Db_Table_Abstract
             <title>Überschreiben von Table Setup Methoden</title>
 
             <para>
-                Wenn eine Instanz einer Table Klasse erzeugt wird, ruft der Konstruktor einige protected Methoden,
-                welche Metadaten der Tabelle initialisieren, auf. Jede dieser Methoden kann erweitert werden um 
+                Wenn eine Instanz einer Table Klasse erzeugt wird, ruft der Konstruktor einige protected Methoden
+                auf, die Metadaten der Tabelle initialisieren. Jede dieser Methoden kann erweitert werden um
                 Metadaten explizit anzugeben. Dabei darf nicht vergessen werden am Ende der eigenen Methode die
                 gleichnamige Methode der Parentklasse aufzurufen.
             </para>
@@ -225,18 +227,19 @@ class Bugs extends Zend_Db_Table_Abstract
                 </listitem>
                 <listitem>
                     <para>
-                        <code>_setupMetadata()</code> setzt das Schema wenn der Tabellenname dem Muster "schema.table"
-                        entspricht; ruft <code>describeTable()</code> auf um Metadaten Informationen zu erhalten;
-                        Standardisiert das <code>$_cols</code> Array auf die Spalten wie von <code>describeTable()</code>
-                        geliefert. Durch das überschreiben dieser Methode können die Spalten angegeben werden.
+                        <code>_setupMetadata()</code> setzt das Schema wenn der Tabellenname dem Muster
+                        "schema.table" entspricht; ruft <code>describeTable()</code> auf um Metadaten
+                        Informationen zu erhalten; Standardisiert das <code>$_cols</code> Array auf die
+                        Spalten wie von <code>describeTable()</code> geliefert. Durch das überschreiben dieser
+                        Methode können die Spalten angegeben werden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>_setupPrimaryKey()</code> standardisiert die Primärschlüssel Spalten zu denen geliefert
-                        von <code>describeTable()</code>; prüft ob die Primärschlüssel Spalten im <code>$_cols</code>
-                        Array enthalten sind. Durch das überschreiben dieser Methode können die Primärschlüssel
-                        Spalten angegeben werden.
+                        <code>_setupPrimaryKey()</code> standardisiert die Primärschlüssel Spalten zu denen
+                        geliefert von <code>describeTable()</code>; prüft ob die Primärschlüssel Spalten
+                        im <code>$_cols</code> Array enthalten sind. Durch das überschreiben dieser Methode
+                        können die Primärschlüssel Spalten angegeben werden.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -263,7 +266,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 Der erste Weg einen Datenbankadapter an eine Table Klasse bereitzustellen ist, ein Objekt des Typs
-                Zend_Db_Adapter_Abstract im Options Array, bezeichnet mit dem Schlüssel <code>'db'</code>, zu übergeben.
+                Zend_Db_Adapter_Abstract im Options Array, bezeichnet mit dem Schlüssel <code>'db'</code>, zu
+                übergeben.
             </para>
 
             <example id="zend.db.table.constructing.adapter.example">
@@ -284,9 +288,9 @@ $table = new Bugs(array('db' => $db));]]></programlisting>
             <para>
                 Der zweite Weg einer Table Klasse einen Datenbankadapter bereit zu stellen ist es, ein Objekt des
                 Typs Zend_Db_Adapter_Abstract zu deklarieren und als Standard für alle nachfolgenden Instanzen von
-                Table der Applikation zu setzen.
-                Dies kann mit der static Methode <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code> getan werden.
-                Das Argument ist ein Objekt des Typs Zend_Db_Adapter_Abstract.
+                Table der Applikation zu setzen. Dies kann mit der static Methode
+                <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code> getan werden. Das Argument ist ein
+                Objekt des Typs Zend_Db_Adapter_Abstract.
             </para>
 
             <example id="zend.db.table.constructing.default-adapter.example">
@@ -317,9 +321,9 @@ $table = new Bugs();]]></programlisting>
 
             <para>
                 Der dritte Weg einer Table Klasse einen Datenbankadapter bereit zu stellen ist es einen String in
-                dem Optionsarray zu übergeben, auch mit dem <code>'db'</code> Schlüssel identifiziert. Der String wird
-                als Schlüssel der statischen Zend_Registry Instanz verwendet, wo der Eintrag mit dem Schlüssel ein
-                Objekt des Typs Zend_Db_Adapter_Abstract ist.
+                dem Optionsarray zu übergeben, auch mit dem <code>'db'</code> Schlüssel identifiziert. Der String
+                wird als Schlüssel der statischen Zend_Registry Instanz verwendet, wo der Eintrag mit dem Schlüssel
+                ein Objekt des Typs Zend_Db_Adapter_Abstract ist.
             </para>
 
             <example id="zend.db.table.constructing.registry.example">
@@ -335,7 +339,7 @@ $table = new Bugs(array('db' => 'my_db'));]]></programlisting>
             </example>
 
             <para>
-                Wie das setzen eines Standardadapters, bietet auch dieses sicher zu stellen das die gleiche Adapter
+                Wie das Setzen eines Standardadapters, bietet auch dieses sicher zu stellen das die gleiche Adapter
                 Instanz in der gesamten Applikation verwendet wird. Nutzen der Registry ist flexibler, da mehr als
                 eine Adapterinstanz gepeichert werden kann. Eine angegebene Adapterinstanz ist spezifisch für eine
                 bestimmte RDBMS Marke und Datenbankinstanz. Wenn die Applikation Zugriff auf mehrere Datenbanken
@@ -348,25 +352,23 @@ $table = new Bugs(array('db' => 'my_db'));]]></programlisting>
 
     <sect2 id="zend.db.table.insert">
 
-        <title>Inserting Rows to a Table</title>
+        <title>Zeilen in eine Tabelle einfügen</title>
 
         <para>
-            You can use the Table object to insert rows into the database
-            table on which the Table object is based.  Use the
-            <code>insert()</code> method of your Table object.
-            The argument is an associative array, mapping column names to
-            values.
+            Table Objekte können verwendet werden um Zeilen in die Datenbank Tabelle einzufügen auf der das
+            Table Objekt basiert. Hierzu kann die <code>insert()</code> Methode des Table Objektes verwendet
+            werden. Das Argument ist ein assoziatives Array, das Spalten Namen mit Werten verbindet.
         </para>
 
         <example id="zend.db.table.insert.example">
-            <title>Example of inserting to a Table</title>
+            <title>Beispiel vom Einfügen in eine Tabelle</title>
             <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
 $data = array(
     'created_on'      => '2007-03-22',
-    'bug_description' => 'Something wrong',
+    'bug_description' => 'Irgendwas falsch',
     'bug_status'      => 'NEW'
 );
 
