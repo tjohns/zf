@@ -189,6 +189,43 @@
 
     </sect2>
 
+    <sect2 id="zend.translate.adapter.selfwritten">
+
+        <title>Selbst geschriebene Adapter integrieren</title>
+
+        <para>
+            Zend_Translate erlaubt es, selbst geschriebene Adapter Klassen zu integrieren und zu verwenden. Diese
+            können wie die Standard Adapter Klassen, welche bereits in Zend_Translate inkludiert sind, verwendet
+            werden.
+        </para>
+
+        <para>
+            Jede Adapter Klasse die mit Zend_Translate verwendet werden soll muß eine Subklasse von
+            Zend_Translate_Adapter sein. Zend_Translate_Adapter ist eine abstrakte Klasse welche bereits alles
+            definiert was für eine Übersetzung notwendig ist. Was noch getan werden muß, ist die Definition des
+            Lesers für die Übersetzungsdaten.
+        </para>
+
+        <para>
+            Die Verwendung des Prefixes "Zend" sollte dem Zend_Framework vorbehalten sein. Wenn Zend_Translate
+            mit einem eigenen Adapter erweitert wird, sollte er in etwa "Firma_Translate_Adapter_MeinFormat"
+            heißen. Der folgende Code zeigt ein Beispiel davon, wie eine selbst geschriebene Adapter Klasse
+            implmentiert werden sollte:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+try {
+    $translate = new Zend_Translate('Firma_Translate_Adapter_MeinFormat', '/path/to/translate.xx', 'en', array('meineoption' => 'myvalue'));
+} catch (Exception $e) {
+    // Datei nicht gefunden, keine Adapter Klasse...
+    // Genereller Fehler
+}]]>
+        </programlisting>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
