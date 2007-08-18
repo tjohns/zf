@@ -295,18 +295,18 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $USD = new Zend_Currency('USD','en_US');
         $EGP = new Zend_Currency('EGP','ar_EG');
 
-        $this->assertSame($USD->toCurrency(253292.1832), '$ 253,292.1832');
-        $this->assertSame($USD->toCurrency(253292.1832, 'Arab'), '$ ٢٥٣,٢٩٢.١٨٣٢');
-        $this->assertSame($USD->toCurrency(253292.1832, 'Arab', 'de_AT'), '$ ٢٥٣.٢٩٢,١٨٣٢');
-        $this->assertSame($USD->toCurrency(253292.1832, null, 'de_AT'), '$ 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53,292.18');
+        $this->assertSame($USD->toCurrency(53292.18, 'Arab'), '$ ٥٣,٢٩٢.١٨');
+        $this->assertSame($USD->toCurrency(53292.18, 'Arab', 'de_AT'), '$ ٥٣.٢٩٢,١٨');
+        $this->assertSame($USD->toCurrency(53292.18, null, 'de_AT'), '$ 53.292,18');
 
-        $this->assertSame($EGP->toCurrency(253292.1832), 'ج.م.‏ 253٬292٫1832');
-        $this->assertSame($EGP->toCurrency(253292.1832, 'Arab'), 'ج.م.‏ ٢٥٣٬٢٩٢٫١٨٣٢');
-        $this->assertSame($EGP->toCurrency(253292.1832, 'Arab', 'de_AT'), 'ج.م.‏ ٢٥٣.٢٩٢,١٨٣٢');
-        $this->assertSame($EGP->toCurrency(253292.1832, null, 'de_AT'), 'ج.م.‏ 253.292,1832');
+        $this->assertSame($EGP->toCurrency(53292.18), 'ج.م.‏ 53٬292٫18');
+        $this->assertSame($EGP->toCurrency(53292.18, 'Arab'), 'ج.م.‏ ٥٣٬٢٩٢٫١٨');
+        $this->assertSame($EGP->toCurrency(53292.18, 'Arab', 'de_AT'), 'ج.م.‏ ٥٣.٢٩٢,١٨');
+        $this->assertSame($EGP->toCurrency(53292.18, null, 'de_AT'), 'ج.م.‏ 53.292,18');
 
         $USD = new Zend_Currency('en_US');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ 253,292.1832');
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53,292.18');
     }
 
 
@@ -319,36 +319,36 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $USD = new Zend_Currency('USD','en_US');
 
         $USD->setFormat(null, 'Arab');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ ٢٥٣,٢٩٢.١٨٣٢');
+        $this->assertSame($USD->toCurrency(53292.18), '$ ٥٣,٢٩٢.١٨');
 
         $USD->setFormat(null, 'Arab', 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ ٢٥٣.٢٩٢,١٨٣٢');
+        $this->assertSame($USD->toCurrency(53292.18), '$ ٥٣.٢٩٢,١٨');
 
         $USD->setFormat(null, 'Latn', 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
 
         // allignment of currency signs
         $USD->setFormat(Zend_Currency::RIGHT, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '253.292,1832 $');
+        $this->assertSame($USD->toCurrency(53292.18), '53.292,18 $');
 
         $USD->setFormat(Zend_Currency::LEFT, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
 
         $USD->setFormat(Zend_Currency::STANDARD, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
 
         // enable/disable currency symbols & currency names
         $USD->setFormat(Zend_Currency::NO_SYMBOL, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), '53.292,18');
 
         $USD->setFormat(Zend_Currency::USE_SHORTNAME, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), 'USD 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), 'USD 53.292,18');
 
         $USD->setFormat(Zend_Currency::USE_NAME, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), 'US Dollar 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), 'US Dollar 53.292,18');
 
         $USD->setFormat(Zend_Currency::USE_SYMBOL, null, 'de_AT');
-        $this->assertSame($USD->toCurrency(253292.1832), '$ 253.292,1832');
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
     }
 
 
