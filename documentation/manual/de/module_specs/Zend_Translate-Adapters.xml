@@ -51,7 +51,7 @@
                 </row>
                 <row>
                     <entry>Andere</entry>
-                    <entry>*.sql, *.tbx, *.qt</entry>
+                    <entry>*.sql, *.tbx, *.tm</entry>
                     <entry>Verschiedene andere Adapter werden in Zukunft noch implementiert</entry>
                 </row>
             </tbody>
