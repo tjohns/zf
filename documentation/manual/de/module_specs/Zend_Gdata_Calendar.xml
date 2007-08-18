@@ -34,34 +34,27 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        <firstterm>ClientAuth</firstterm>
-                        provides direct username/password authentication to the
-                        calendar servers. Since this scheme requires that users
-                        provide your application with their password, this
-                        authentication is only recommended when other
-                        authentication schemes are insufficient.
+                        <firstterm>ClientAuth</firstterm> bietet direkte Benutzername/Passwort Authentifizierung
+                        zu den Kalender Servern. Da dieses Schema erfordert das Benutzer die Anwendung mit Ihrem
+                        Passwort versorgen, ist diese Authentifizierung nur zu empfehlen wenn andere
+                        Authentifizierungs Schemas nicht anwendbar sind.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <firstterm>AuthSub</firstterm>
-                        allows authentication to the calendar servers via a
-                        Google proxy server. This provides the same level of
-                        convenience as ClientAuth but without the security
-                        risk, making this an ideal choice for web-based
-                        applications.
+                        <firstterm>AuthSub</firstterm> erlaubt die Authentifizierung zu den Kalender Servern über
+                        einen Google Proxy Server. Das bietet den gleichen Level von Bequemlichkeit wie
+                        ClientAuth aber ohne die Sicherheits Risiken, was es zu einer idealen Wahl für Web
+                        basierende Anwendungen macht.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <firstterm>MagicCookie</firstterm>
-                        allows authentication based on a semi-random URL
-                        available from within the Google Calendar interface.
-                        This is the simplest authentication scheme to
-                        implement, but requires that users manually retrieve
-                        their secure URL before they can authenticate, doesn't
-                        provide access to calendar lists, and is limited to
-                        read-only access.
+                        <firstterm>MagicCookie</firstterm> erlaubt die Authentifizierung basieren auf einer
+                        semi-zufälligen URL von immerhalb des Google Kalender Interfaces. Das ist das einfachste
+                        Authentifizierungs Schema das implmentiert werden kann, erzwingt aber das Benutzer
+                        ihre Sicherheits URL manuell empfangen, bevor sie sich authentifizieren können, und ist
+                        limitiert auf nur-lesenden Zugriff.
                     </para>
                 </listitem>
             </itemizedlist>
