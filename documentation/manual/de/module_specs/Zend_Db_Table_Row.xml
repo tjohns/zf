@@ -382,7 +382,8 @@ echo $rowClone->bug_description;]]></programlisting>
 
             <para>
                 Ein nicht verbundenes Zeilenobjekt kann mithilfe der Methode <code>setTable()</code>
-                reaktiviert werden. Das Argument dieser Methode ist ein valides Zend_Db_Table_Abstract-Objekt,
+                reaktiviert werden. Das Argument dieser Methode ist ein valides
+                <code>Zend_Db_Table_Abstract</code>-Objekt,
                 das vom Benutzer erstellt wird. Für das Erstellen eines Tabellenobjekts wird eine aktive
                 Datenbankverbindung benötigt, also wird, indem die Tabelle wieder mit dem Zeilenobjekt verknüpft
                 wird, auch der Datenbankzugriff wiederhergestellt. Ab diesem Zeitpunkt können Werte im
