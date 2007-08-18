@@ -70,7 +70,7 @@ Zend_Session::start();]]>
                     </listitem>
                 </itemizedlist>
                 <para>
-                    <code>strict</code>选项防止<code>new Zend_Session_Namespace()</code>自动调用<code>Zend_Session::start()。这样，这个选项有利于应用程序的开发者强制执行一个设计原则以避免在某些页面请求中使用会话，因为在调用<code>Zend_Session::start()</code>之前，实例化<code>Zend_Session_Namespace</code>时，会抛出一个异常。开发者需小心地考虑使用<code>Zend_Session::setOptions()</code>所引起的冲突，由于它们对应于基本的ext/session这些具有全局作用选项。
+                    <code>strict</code>选项防止<code>new Zend_Session_Namespace()</code>自动调用<code>Zend_Session::start()</code>。这样，这个选项有利于应用程序的开发者强制执行一个设计原则以避免在某些页面请求中使用会话，因为在调用<code>Zend_Session::start()</code>之前，实例化<code>Zend_Session_Namespace</code>时，会抛出一个异常。开发者需小心地考虑使用<code>Zend_Session::setOptions()</code>所引起的冲突，由于它们对应于基本的ext/session这些具有全局作用选项。
                 </para>
             </listitem>
             <listitem>

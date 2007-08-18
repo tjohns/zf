@@ -2,9 +2,9 @@
     <title>FlashMessenger</title>
 
     <sect4 id="zend.controller.actionhelper.flashmessenger.introduction">
-        <title>¼ò½é</title>
+        <title>ç®€ä»‹</title>
         <para>
-            <code>FlashMessenger</code>ÖúÊÖÔÊĞíÄã´«µİÓÃ»§¿ÉÄÜĞèÒªÔÚÏÂ¸öÇëÇó¿´µ½µÄÏûÏ¢¡£ÎªÊµÏÖËü£¬code>FlashMessenger</code>Ê¹ÓÃ<code>Zend_Session_Namespace</code>À´´æ´¢ÏûÏ¢ÒÔ±¸½«À´»òÏÂ¸öÇëÇóÀ´¶ÁÈ¡¡£Èç¹ûÄã¼Æ»®Ê¹ÓÃ<code>Zend_Session</code>»òÕß<code>Zend_Session_Namespace</code>£¬ÔÚÒıµ¼ÎÄ¼şÀïÓÃ<code>Zend_Session::start()</code>³õÊ¼»¯£¬µÄÈ·ÊÇ¸öºÃÖ÷Òâ¡££¨²Î¼û<link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link>ÎÄµµÓĞ¸ü¶àµÄ¹ØÓÚËüµÄÓÃ·¨µÄÏ¸½Ú¡££©
+            <code>FlashMessenger</code>åŠ©æ‰‹å…è®¸ä½ ä¼ é€’ç”¨æˆ·å¯èƒ½éœ€è¦åœ¨ä¸‹ä¸ªè¯·æ±‚çœ‹åˆ°çš„æ¶ˆæ¯ã€‚ä¸ºå®ç°å®ƒï¼Œ<code>FlashMessenger</code>ä½¿ç”¨<code>Zend_Session_Namespace</code>æ¥å­˜å‚¨æ¶ˆæ¯ä»¥å¤‡å°†æ¥æˆ–ä¸‹ä¸ªè¯·æ±‚æ¥è¯»å–ã€‚å¦‚æœä½ è®¡åˆ’ä½¿ç”¨<code>Zend_Session</code>æˆ–è€…<code>Zend_Session_Namespace</code>ï¼Œåœ¨å¼•å¯¼æ–‡ä»¶é‡Œç”¨<code>Zend_Session::start()</code>åˆå§‹åŒ–ï¼Œçš„ç¡®æ˜¯ä¸ªå¥½ä¸»æ„ã€‚ï¼ˆå‚è§<link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link>æ–‡æ¡£æœ‰æ›´å¤šçš„å…³äºå®ƒçš„ç”¨æ³•çš„ç»†èŠ‚ã€‚ï¼‰
         </para>
 
     </sect4>
@@ -12,7 +12,7 @@
     <sect4 id="zend.controller.actionhelper.flashmessenger.basicusage">
         <title>Basic Usage Example</title>
         <para>
-            ÏÂÃæµÄÀı×ÓÕ¹Ê¾flash messenger×î»ù±¾µÄÓÃ·¨¡£µ±¶¯×÷<code>/some/my</code> ±»µ÷ÓÃ£¬ËüÌí¼Óflash message "Record Saved!"£¬ËæºóµÄ¶Ô¶¯×÷<code>/some/my-next-request</code>µÄÇëÇó½«¶ÁÈ¡Ëü£¨²¢Ò²ÕâÑùÉ¾³ıËü£©¡£
+            ä¸‹é¢çš„ä¾‹å­å±•ç¤ºflash messengeræœ€åŸºæœ¬çš„ç”¨æ³•ã€‚å½“åŠ¨ä½œ<code>/some/my</code> è¢«è°ƒç”¨ï¼Œå®ƒæ·»åŠ flash message "Record Saved!"ï¼Œéšåçš„å¯¹åŠ¨ä½œ<code>/some/my-next-request</code>çš„è¯·æ±‚å°†è¯»å–å®ƒï¼ˆå¹¶ä¹Ÿè¿™æ ·åˆ é™¤å®ƒï¼‰ã€‚
         </para>
 
         <programlisting role="php"><![CDATA[<?php
