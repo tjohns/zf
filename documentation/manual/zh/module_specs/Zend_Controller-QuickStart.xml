@@ -44,7 +44,8 @@ application/
 html/
     .htaccess
     index.php
-]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -66,7 +67,8 @@ html/
             <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>                
                 在上例中，所有请求(除了对那几个扩展名的文件的请求)都被转向到index.php。如果你想在访问某些扩展名的文件时不转向到index.php，你可以建立自己的URL重写规则，或者直接把扩展名添加到(|)之中去。
@@ -92,7 +94,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 Zend_Controller_Front::run('/path/to/app/controllers');
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>                
                 这是一个入口文件，目的仅在于启动Zend_Controller_Front。Zend_Controller_Front用于分配请求到不同的控制器。
@@ -134,7 +137,8 @@ class IndexController extends Zend_Controller_Action
     {
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>                
 
@@ -163,16 +167,16 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>Hello, World!</h1>
 </body>
 </html>
-]]></programlisting>
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
             <title>创建你自己的错误控制器</title>
 
-            <para>              
-                默认情况下，<link
-                    linkend="zend.controller.plugins.standard.errorhandler">“错误处理器”插件</link>
-            </para>是已经被注册的。这个插件要求存在一个用于处理错误的控制器。它假设存在一个<code>ErrorController</code>，并且其中有一个名为<code>errorAction</code>的Action。
+            <para>
+                默认情况下，<link linkend="zend.controller.plugins.standard.errorhandler">“错误处理器”插件</link> 是已经被注册的。这个插件要求存在一个用于处理错误的控制器。它假设存在一个<code>ErrorController</code>，并且其中有一个名为<code>errorAction</code>的Action：
+            </para>
 
             <programlisting role="php"><![CDATA[<?php
 /** Zend_Controller_Action */
@@ -183,11 +187,10 @@ class ErrorController extends Zend_Controller_Action
     public function errorAction()
     {
     }
-}
-]]></programlisting>
-            
+}]]>
+            </programlisting>
+
             <para>
-               
                 使用我们之前讨论的目录布局，这个文件将是<code>application/controllers/ErrorController.php</code>，你也需要为它创建一个模板文件，即<code>application/views/scripts/error/error.phtml</code>。其中的内容如下：
             </para>
 
@@ -201,11 +204,11 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   <title>错误</title>
 </head>
 <body>
-    <h1>出错了！</h1>
-    <p>An error occurred; please try again later. 出现了一个错误，请重试。</p>
+    <h1>出错了</h1>
+    <p>出现了一个错误，请重试。</p>
 </body>
-</html>
-]]></programlisting>
+</html>]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">
