@@ -82,11 +82,11 @@ class Zend_Auth_Adapter_DbTable_AllTests
         if (!defined('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED') ||
             constant('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED') === false) {
 	    $skipTest = new Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests();
-	    $skipTest->message = 'tests are not enabled in TestConfiguration.php';
+	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
             $suite->addTest($skipTest);
         } else if (!extension_loaded('pdo')) {
 	    $skipTest = new Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests();
-	    $skipTest->message = "extension 'PDO' is not loaded";
+	    $skipTest->message = "Extension 'PDO' is not loaded";
             $suite->addTest($skipTest);
         } else if (!in_array('sqlite', PDO::getAvailableDrivers())) {
 	    $skipTest = new Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests();

@@ -19,33 +19,28 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-if (is_readable('TestConfiguration.php')) {
-    require_once('TestConfiguration.php');
-} else {
-    require_once('TestConfiguration.php.dist');
-}
-
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Cache_AllTests::main');
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+/**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
-error_reporting(E_ALL | E_STRICT);
-date_default_timezone_set('Europe/Paris'); // to avoid an E_STRICT notice
-require_once 'FactoryTest.php';
-require_once 'CoreTest.php';
-require_once 'FileBackendTest.php';
-require_once 'SqliteBackendTest.php';
-require_once 'OutputFrontendTest.php';
-require_once 'FunctionFrontendTest.php';
-require_once 'ClassFrontendTest.php';
-require_once 'FileFrontendTest.php';
-require_once 'ApcBackendTest.php';
-require_once 'MemcachedBackendTest.php';
-require_once 'PageFrontendTest.php';
-require_once 'ZendPlatformBackendTest.php';
+require_once 'Zend/Cache/FactoryTest.php';
+require_once 'Zend/Cache/CoreTest.php';
+require_once 'Zend/Cache/FileBackendTest.php';
+require_once 'Zend/Cache/SqliteBackendTest.php';
+require_once 'Zend/Cache/OutputFrontendTest.php';
+require_once 'Zend/Cache/FunctionFrontendTest.php';
+require_once 'Zend/Cache/ClassFrontendTest.php';
+require_once 'Zend/Cache/FileFrontendTest.php';
+require_once 'Zend/Cache/ApcBackendTest.php';
+require_once 'Zend/Cache/MemcachedBackendTest.php';
+require_once 'Zend/Cache/PageFrontendTest.php';
+require_once 'Zend/Cache/ZendPlatformBackendTest.php';
+require_once 'Zend/Cache/SkipTests.php';
 
 class Zend_Cache_AllTests
 {
@@ -57,6 +52,7 @@ class Zend_Cache_AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Cache');
+
         $suite->addTestSuite('Zend_Cache_FactoryTest');
         $suite->addTestSuite('Zend_Cache_CoreTest');
         $suite->addTestSuite('Zend_Cache_FileBackendTest');
@@ -65,13 +61,56 @@ class Zend_Cache_AllTests
         $suite->addTestSuite('Zend_Cache_ClassFrontendTest');
         $suite->addTestSuite('Zend_Cache_FileFrontendTest');
         $suite->addTestSuite('Zend_Cache_PageFrontendTest');
-        if (!defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') || (defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') && TESTS_ZEND_CACHE_SQLITE_ENABLED)) {
+
+        /*
+         * Check if SQLite tests are enabled, and if extension and driver are available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_SQLITE_ENABLED') === false) {
+            $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
+	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!extension_loaded('pdo')) {
+	    $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
+	    $skipTest->message = "Extension 'PDO' is not loaded";
+            $suite->addTest($skipTest);
+        } else if (!in_array('sqlite', PDO::getAvailableDrivers())) {
+	    $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
+	    $skipTest->message = "PDO driver 'sqlite' is not available";
+            $suite->addTest($skipTest);
+        } else {
             $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
         }
-        if (!defined('TESTS_ZEND_CACHE_APC_ENABLED') || (defined('TESTS_ZEND_CACHE_APC_ENABLED') && TESTS_ZEND_CACHE_APC_ENABLED)) {
+
+        /*
+         * Check if APC tests are enabled, and if extension is available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_APC_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_APC_ENABLED') === false) {
+            $skipTest = new Zend_Cache_ApcBackendTest_SkipTests();
+	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!extension_loaded('apc')) {
+            $skipTest = new Zend_Cache_ApcBackendTest_SkipTests();
+	    $skipTest->message = "Extension 'APC' is not loaded";
+            $suite->addTest($skipTest);
+        } else {
             $suite->addTestSuite('Zend_Cache_ApcBackendTest');
         }
-        if (!defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') || (defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') && TESTS_ZEND_CACHE_MEMCACHED_ENABLED)) {
+
+        /*
+         * Check if Memcached tests are enabled, and if extension is available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') === false) {
+            $skipTest = new Zend_Cache_MemcachedBackendTest_SkipTests();
+	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!extension_loaded('memcache')) {
+            $skipTest = new Zend_Cache_MemcachedBackendTest_SkipTests();
+	    $skipTest->message = "Extension 'APC' is not loaded";
+            $suite->addTest($skipTest);
+        } else {
             if (!defined('TESTS_ZEND_CACHE_MEMCACHED_HOST')) { 
                 define('TESTS_ZEND_CACHE_MEMCACHED_HOST', '127.0.0.1');
             }
@@ -83,9 +122,23 @@ class Zend_Cache_AllTests
             }
             $suite->addTestSuite('Zend_Cache_MemcachedBackendTest');
         }
-        if (!defined('TESTS_ZEND_CACHE_PLATFORM_ENABLED') || (defined('TESTS_ZEND_CACHE_PLATFORM_ENABLED') && TESTS_ZEND_CACHE_PLATFORM_ENABLED)) {
+
+        /*
+         * Check if Zend Platform tests are enabled, and if extension is available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_PLATFORM_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_PLATFORM_ENABLED') === false) {
+            $skipTest = new Zend_Cache_ZendPlatformBackendTest_SkipTests();
+	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!function_exists('accelerator_license_info')) {
+            $skipTest = new Zend_Cache_ZendPlatformBackendTest_SkipTests();
+	    $skipTest->message = 'Extension for Zend Platform is not loaded';
+            $suite->addTest($skipTest);
+        } else {
             $suite->addTestSuite('Zend_Cache_ZendPlatformBackendTest');
         }
+
         return $suite;
     }
 }
