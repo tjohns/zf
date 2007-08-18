@@ -168,7 +168,9 @@ class Zend_Currency
                 throw new Zend_Currency_Exception("Unknown currency '$this->_shortName' passed");
             }
         } else {
-            $this->_shortName = $data[substr($this->_locale, strpos($this->_locale, '_') + 1)];
+            if (array_key_exists(substr($this->_locale, strpos($this->_locale, '_') + 1), $data)) {
+                $this->_shortName = $data[substr($this->_locale, strpos($this->_locale, '_') + 1)];
+            }
         }
 
         // get the fullname
@@ -369,7 +371,7 @@ class Zend_Currency
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_')+1 );
         } else {
-            throw new Zend_Currency_Exception('pass a valid locale');
+            throw new Zend_Currency_Exception("Locale '$locale' is no valid locale");
         }
 
         //get the available currencies for this country
@@ -412,7 +414,7 @@ class Zend_Currency
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_') + 1 );
         } else {
-            throw new Zend_Currency_Exception('pass a valid locale');
+            throw new Zend_Currency_Exception("Locale '$locale' is no valid locale");
         }
 
         //get the available currencies for this country
@@ -456,7 +458,7 @@ class Zend_Currency
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_') + 1 );
         } else {
-            throw new Zend_Currency_Exception('pass a valid locale');
+            throw new Zend_Currency_Exception("Locale '$locale' is no valid locale");
         }
 
         //get the available currencies for this country
