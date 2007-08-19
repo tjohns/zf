@@ -38,6 +38,11 @@ class AllTests
             $parameters['reportDirectory'] = TESTS_GENERATE_REPORT_TARGET;
         }
 
+        if (defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE') && TESTS_ZEND_LOCALE_FORMAT_SETLOCALE) {
+            // run all tests in a special locale
+            setlocale(LC_ALL, TESTS_ZEND_LOCALE_FORMAT_SETLOCALE);
+        }
+
         PHPUnit_TextUI_TestRunner::run(self::suite(), $parameters);
     }
 
