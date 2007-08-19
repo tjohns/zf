@@ -155,13 +155,13 @@ class Zend_Db_Profiler_Query
     }
 
     /**
-     * @param string $key
-     * @param mixed $param
+     * @param string $param
+     * @param mixed $variable
      * @return void
      */
     public function bindParam($param, &$variable)
     {
-        $this->_boundParams[$param] =& $variable;
+        $this->_boundParams[$param] = $variable;
     }
 
     /**
