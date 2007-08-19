@@ -120,7 +120,7 @@ class Zend_Currency
         foreach ($params as $num => $param){
             // get the locale
             if ($param instanceof Zend_Locale) {
-                $param->toString();
+                $param = $param->toString();
             }
             if (($locale = Zend_Locale::isLocale($param)) && (strlen($param) > 4)) {
                 if ($locale != $param) {
@@ -342,7 +342,7 @@ class Zend_Currency
         //set the locale for the number formating process
         if (!empty($locale)) {
             if ($locale instanceof Zend_Locale) {
-                $locale->toString();
+                $locale = $locale->toString();
             }
             if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
                 $this->_formatLocale = $locale;
@@ -375,7 +375,7 @@ class Zend_Currency
         //validate the locale and get the country short name
         $country = null;
         if ($locale instanceof Zend_Locale) {
-            $locale->toString();
+            $locale = $locale->toString();
         }
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_')+1 );
@@ -421,7 +421,7 @@ class Zend_Currency
         //validate the locale and get the country short name
         $country = null;
         if ($locale instanceof Zend_Locale) {
-            $locale->toString();
+            $locale = $locale->toString();
         }
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_') + 1 );
@@ -468,7 +468,7 @@ class Zend_Currency
         //validate the locale and get the country short name
         $country = null;
         if ($locale instanceof Zend_Locale) {
-            $locale->toString();
+            $locale = $locale->toString();
         }
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_') + 1 );
