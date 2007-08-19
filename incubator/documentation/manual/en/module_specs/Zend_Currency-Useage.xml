@@ -25,6 +25,14 @@ require_once 'Zend/Currency.php';
 $currency = new Zend_Currency();]]>
         </programlisting>
 
+        <note>
+            <para>
+                Be aware, that if your system has no default locale, or if the locale of your system can not be
+                detected automatically, <code>Zend_Currency</code> will throw an exception. If you have this
+                behaviour you should set the locale you manually.
+            </para>
+        </note>
+
     </example>
 
     <para>

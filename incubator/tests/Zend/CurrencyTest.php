@@ -360,9 +360,14 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('ar_EG');
 
         $this->assertSame(Zend_Currency::getSymbol('EGP','ar_EG'), 'ج.م.‏');
-        $this->assertSame(is_string(Zend_Currency::getSymbol('EGP')), true);
         $this->assertSame(Zend_Currency::getSymbol('ar_EG'), 'ج.م.‏');
         $this->assertSame(Zend_Currency::getSymbol('ar_EG'), 'ج.م.‏');
+        try {
+            $this->assertSame(is_string(Zend_Currency::getSymbol('EGP')), true);
+        } catch (Zend_Currency_Exception $e) {
+            // Systems without locale are expected to be ok from the testbed
+            $this->assertSame($e->getMessage(), "Locale 'root' is no valid locale");
+        }
 
         try {
             Zend_Currency::getSymbol('EGP', 'de_XX');
@@ -383,7 +388,12 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Zend_Currency::getName('EGP','ar_EG'), 'جنيه مصرى');
         $this->assertSame(Zend_Currency::getName('EGP',$locale), 'جنيه مصرى');
         $this->assertSame(Zend_Currency::getName('ar_EG'), 'جنيه مصرى');
-        $this->assertSame(is_string(Zend_Currency::getName('EGP')), true);
+        try {
+            $this->assertSame(is_string(Zend_Currency::getName('EGP')), true);
+        } catch (Zend_Currency_Exception $e) {
+            // Systems without locale are expected to be ok from the testbed
+            $this->assertSame($e->getMessage(), "Locale 'root' is no valid locale");
+        }
 
         try {
             Zend_Currency::getName('EGP', 'xy_XY');
@@ -404,7 +414,12 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $this->assertSame(Zend_Currency::getShortName('EUR','de_AT'), 'Euro');
         $this->assertSame(Zend_Currency::getShortName('EUR',$locale), 'Euro');
         $this->assertSame(Zend_Currency::getShortName('de_AT'), 'Euro');
-        $this->assertSame(is_string(Zend_Currency::getShortName('EUR')), true);
+        try {
+            $this->assertSame(is_string(Zend_Currency::getShortName('EUR')), true);
+        } catch (Zend_Currency_Exception $e) {
+            // Systems without locale are expected to be ok from the testbed
+            $this->assertSame($e->getMessage(), "Locale 'root' is no valid locale");
+        }
 
         try {
             Zend_Currency::getShortName('EUR', 'xy_ZT');
