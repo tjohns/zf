@@ -106,7 +106,9 @@ $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 // Erstellt eine Instanz des Kalender Services
 $service = new Zend_Gdata_Calendar($client);]]>
             </programlisting>
-            <para>A Calendar service using AuthSub can be created in a similar, though slightly more lengthy fashion:</para>
+            <para>
+                Ein Kalender Service der AuthSub verwendet, kann ähnlich erstellt werden, durch eine etwas längere
+                Schreibweise:</para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
@@ -114,14 +116,14 @@ Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
 Zend_Loader::loadClass('Zend_Http_Client');
 
-/** Retrieve the current URL so that the AuthSub server knows where to
- * redirect the user after authentication is complete.
+/** Empfängt die aktuelle URL so das der AuthSub Server weiß wohin er den Benutzer
+ * umleiten soll nachdem die Authentifizierung komplett ist.
  */
 function getCurrentUrl()
 {
     global $_SERVER;
 
-    // Filter php_self to avoid a security vulnerability.
+    // Filtert php_self um Sicherheitsprobleme zu vermeiden.
     $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
 
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
@@ -140,23 +142,23 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** Obtain an AuthSub authenticated HTTP client, redirecting the user to the
- *  AuthSub server to login if necessary.
+/** Einen AuthSub authentifizierten HTTP Client nehmen, der den Benutzer zum
+ * AuthSub Server zum Login umleitet wenn es notwendig ist.
  */
 function getAuthSubHttpClient()
 {
     global $_SESSION, $_GET;
 
-    // If there is no AuthSub session or one-time token waiting for us,
-    // redirect the user to the AuthSub server to get one.
+    // Wenn es keine AuthSub Session oder einmal-benutzbares Token gibt der auf uns wartet,
+    // den Benutzer zum AuthSub Server umleiten um einen zu erhalten.
     if (!isset($_SESSION['sessionToken']) && !isset($_GET['token'])) {
-        // Parameters to give to AuthSub server
+        // Parameter für den AuthSub Server
         $next = getCurrentUrl();
         $scope = "http://www.google.com/calendar/feeds/";
         $secure = false;
         $session = true;
 
-        // Redirect the user to the AuthSub server to sign in
+        // Den Benutzer zum AuthSub server umleiten zur Anmeldung
 
         $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
          header("HTTP/1.0 307 Temporary redirect");
@@ -166,52 +168,65 @@ function getAuthSubHttpClient()
          exit();
     }
 
-    // Convert an AuthSub one-time token into a session token if needed
+    // Konvertiert ein AuthSub einmal-benutzbares Token in ein Session Token wenn das notwendig ist
     if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
         $_SESSION['sessionToken'] =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
     }
 
-    // At this point we are authenticated via AuthSub and can obtain an
-    // authenticated HTTP client instance
+    // An diesem Punkt sind wir authentifiziert über AuthSub und können eine authentifizierte
+    // HTTP Client Instanz holen
 
-    // Create an authenticated HTTP client
+    // Erstellt einen authentifizierte HTTP Client
     $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
     return $client;
 }
 
-// -> Script execution begins here <-
+// -> Skript Bearbeitung beginnt hier <-
 
-// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat the user has a valid session, so we can record the
-// AuthSub session token once it is available.
+// Sicher stellen http://code.google.com/apis/gdata/reference.html#Queriesthat das der Benutzer eine
+// gültige Session hat, sodas der AuthSub Session Token gespeichert werden kann sobald er vorhanden ist.
 session_start();
 
-// Create an instance of the Calendar service, redirecting the user
-// to the AuthSub server if necessary.
+// Erstellt eine Instanz des Kalender Services, und leitet den Benutzer zum AuthSub Server
+// um wenn das notwendig ist.
 $service = new Zend_Gdata_Calendar(getAuthSubHttpClient());]]>
             </programlisting>
-            <para>Finally, an unauthenticated server can be created for use with either public feeds or MagicCookie authentication:</para>
+            <para>
+                Schlußendlich, kann ein nicht authentifizierter Server erstellt werden um Ihn entweder mit
+                öffentlichen Feeds oder MagicCookie Authentifizierung zu verwenden:</para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
 
 
-// Create an instance of the Calendar service using an unauthenticated HTTP client
+// Erstellt eine Instanz des Kalender Services wobei ein nicht authentifizierter HTTP Client verwendet wird
 
 $service = new Zend_Gdata_Calendar();]]>
             </programlisting>
-            <para>Note that MagicCookie authentication is not supplied with the HTTP connection, but is instead specified along with the desired visibility when submitting queries. See the section on retrieving events below for an example.</para>
+            <para>
+                Es ist zu beachten das die MagicCookie Authentifizierung nicht mit der HTTP Verbindung
+                unterstützt wird, sonder stattdessen wärend der gewählten Sichtbarkeit spezifiziert wird,
+                wärend Anfragen abgeschickt werden. Siehe die folgende Sektion über das empfangen von Events
+                für ein Beispiel.
+            </para>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar_retrieval">
-        <title>Retrieving A Calendar List</title>
+        <title>Eine Kalender Liste empfangen</title>
         <para>
-            The calendar service supports retrieving a list of calendars for the authenticated user. This is the same list of calendars which are displayed in the Google Calendar UI, except those marked as "
-            <code>hidden</code>
-            " are also available.
+            Der Kalender Service unterstützt den Empfang einer Liste von Kalendern für den authentifizierten
+            Benutzer. Das ist die gleiche Liste von Kalendern welche im Google Kalender UI angezeigt werden,
+            ausser das jene die als "<code>hidden</code>" markiert sind, auch vorhanden sind.
         </para>
-        <para>The calendar list is always private and must be accessed over an authenticated connection. It is not possible to retrieve another user's calendar list and it cannot be accessed using MagicCookie authentication. Attempting to access a calendar list without holding appropriate credentials will fail and result in a 401 (Authentication Required) status code.</para>
+        <para>
+            Die Kalender Liste ist immer privat und es muß über eine authentifizierte Verbindung darauf
+            zugegriffen werden. Es ist nicht möglich eine Kalender Liste eines anderen Benutzers zu erhalten und
+            es kann nicht darauf zugegriffen werden wenn die MagicCookie Authentifizierung verwendet wird.
+            Der Versuch auf eine Kalender Liste zuzugreifen ohne das die notwendigen Zugriffsrechte vorhanden
+            sind, wird fehlschlagen und in einem 401 (Authentifizierung benötigt) Statuc Code resultieren.
+        </para>
         <programlisting role="php"><![CDATA[<?php
 $service = Zend_Gdata_Calendar::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -220,20 +235,18 @@ $service = new Zend_Gdata_Calendar($client);
 try {
     $listFeed= $service->getCalendarListFeed();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Fehler: " . $e->getResponse();
 }]]>
         </programlisting>
         <para>
-            Calling
-            <code>getCalendarListFeed()</code>
-            creates a new instance of
-            <code>Zend_Gdata_Calendar_ListFeed</code>
-            containing each available calendar as an instance of
-            <code>Zend_Gdata_Calendar_ListEntry</code>
-            . After retrieving the feed, you can use the iterator and accessors contained within the feed to inspect the enclosed calendars.
+            Der Aufruf von <code>getCalendarListFeed()</code> erstellt eine neue Instanz von
+            <code>Zend_Gdata_Calendar_ListFeed</code> die jeden vorhandenen Kalender als Instanz von
+            <code>Zend_Gdata_Calendar_ListEntry</code> enthält. Nachdem der Feed empfangen wurde, können der
+            Iterator und der Accessor die innerhalb des Feeds enthalten sind, verwendet werden um die enthaltenen
+            Kalender zu inspizieren.
         </para>
         <programlisting role="php"><![CDATA[<?php
-echo "<h1>Calendar List Feed</h1>";
+echo "<h1>Kalender Feed Liste</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
     echo "<li>" . $calendar->title . " (Event Feed: " . $calendar->id . ")</li>";
@@ -242,86 +255,83 @@ echo "</ul>";]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.event_retrieval">
-        <title>Retrieving Events</title>
+        <title>Events empfangen</title>
         <para>
-            Like the list of calendars, events are also retrieved using the
-            <code>Zend_Gdata_Calendar</code>
-            service class. The event list returned is of type
-            <code>Zend_Gdata_Calendar_EventFeed</code>
-            and contains each event as an instance of
-            <code>Zend_Gdata_Calendar_EventEntry</code>
-            . As before, the iterator and accessors contained within the event feed instance allow inspection of individual events.
+            Wie die Liste der Kalender können auch die Events empfangen werden durch Verwendung der
+            <code>Zend_Gdata_Calendar</code> Service Klasse. Die zurückgegebene Event Liste ist vom Typ
+            <code>Zend_Gdata_Calendar_EventFeed</code> und enthält jedes Event als Instanz von
+            <code>Zend_Gdata_Calendar_EventEntry</code>. Wie vorher, erlauben die in der Instanz des Event Feeds
+            enthaltenen Accessoren und der Iterator das individuelle Events inspiziert werden können.
         </para>
         <sect3 id="zend.gdata.event_retrieval.queries">
-            <title>Queries</title>
+            <title>Abfragen</title>
             <para>
-                When retrieving events using the Calendar API, specially constructed query URLs are used to describe what events should be returned. The
-                <code>Zend_Gdata_Calendar_EventQuery</code>
-                class simplifies this task by automatically constructing a query URL based on provided parameters. A full list of these parameters is available at the
-                <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">Queries section of the Google Data APIs Protocol Reference</ulink>
-                . However, there are three parameters that are worth special attention:
+                Wenn Events mit der Kalender API empfangen werden, werden speziell erstellte Abfrage URLs verwendet
+                um zu beschreiben welche Events zurückgegeben werden sollten. Die
+                <code>Zend_Gdata_Calendar_EventQuery</code> Klasse vereinfacht diese Aufgabe durch
+                automatische Erstellung einer Abfrage URL basierend auf den gegebenen Parametern. Eine komplette
+                Liste dieser Parameter ist in der
+                <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">Abfrage Sektion des
+                Google Data API Protokoll Referenz</ulink> enthalten. Trotzdem gibt es drei Parameter die es
+                Wert sind speziell genannt zu werden:
             </para>
             <itemizedlist>
                 <listitem>
                     <para>
-                        <firstterm>User</firstterm>
-                        is used to specify the user whose calendar is being
-                        searched for, and is specified as an email address. If
-                        no user is provided, "default" will be used instead to
-                        indicate the currently authenticated user (if
-                        authenticated).
+                        <firstterm>User</firstterm> wird verwendet um den Benutzer zu spezifizieren dessen
+                        Kalender gesucht wird, und wird als EMail Adresse spezifiziert. Wenn kein Benutzer
+                        angegeben wurde, wird stattdessen "default" verwendet um den aktuellen authentifizierten
+                        Benutzer anzuzeigen  (wenn er authentifiziert wurde).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <firstterm>Visibility</firstterm>
-                        specifies whether a users public or private calendar
-                        should be searched. If using an unauthenticated session
-                        and no MagicCookie is available, only the public feed
-                        will be available.
+                        <firstterm>Visibility</firstterm> spezifiziert ob der öffentliche oder private Kalender
+                        eines Benutzers gesucht werden soll. Wenn eine nicht authentifizierte Session verwendet
+                        wird und kein MagicCookie vorhanden ist, ist nur der öffentliche Feed vorhanden.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <firstterm>Projection</firstterm>
-                        specifies how much data should be returned by the
-                        server and in what format. In most cases you will want
-                        to use the "full" projection. Also available is the
-                        "basic" projection, which places most meta-data into
-                        each event's content field as human readable text, and
-                        the "composite" projection which includes complete text
-                        for any comments alongside each event. The "composite"
-                        view is often much larger than the "full" view.
+                        <firstterm>Projection</firstterm> spezifiziert wieviele Daten vom Server zurückgegeben
+                        werden sollen, und in welchem Format. In den meisten Fällen wird man die komplette
+                        ("full") Projektion verwenden wollen. Auch die normale ("basic") Projektion ist vorhanden,
+                        welche die meisten Meta-Daten in jedem Inhaltsfeld der Events als menschlich lesbaren
+                        Text plaziert, und die kombinierte ("composite") Projketion welche den kompletten
+                        text für jedes Kommentar entlang jedes Events inkludiert. Die kombinierte ("composite")
+                        Ansicht ist oft viel größer als die komplette ("full") Ansicht.
                     </para>
                 </listitem>
             </itemizedlist>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.start_time">
-            <title>Retrieving Events In Order Of Start Time</title>
+            <title>Events in der Reihenfolge Ihres Startzeitpunktes empfangen</title>
             <para>
-                The example below illustrates the use of the
-                <code>Zend_Gdata_Query</code>
-                class and specifies the private visibility feed, which requires that an authenticated connection is available to the calendar servers. If a MagicCookie is being used for authentication, the visibility should be instead set to "
-                <code>private-magicCookieValue</code>
-                ", where magicCookieValue is the random string obtained when viewing the private XML address in the Google Calendar UI. Events are requested chronologically by start time and only events occurring in the future are returned.
+                Das folgende Beispiel zeigt die Verwendung der <code>Zend_Gdata_Query</code> Klasse und spezifiziert
+                den privat sichtbaren Feed, welcher eine vorhandene authentifizierte Verbindung zu den Kalender
+                Servern benötigt. Wenn ein MagicCookie für die Authentifizierung verwendet wird, sollte die
+                Sichtbarkeit zuerst auf "<code>private-magicCookieValue</code>" gesetzt werden, sobei
+                magicCookieValue der zufälliger String ist, der erhalten wird, wenn man die private XML Adresse
+                im Google Kalender UI betrachtet. Events werden chronologisch anhand des Startzeitpunktes angefragt
+                und nur Events die in der Zukunft stattfinden werden zurückgegeben.
             </para>
             <programlisting role="php"><![CDATA[<?php
 $query = $service->newEventQuery();
 $query->setUser('default');
-// Set to $query->setVisibility('private-magicCookieValue') if using MagicCookie auth
+// Setze $query->setVisibility('private-magicCookieValue') wenn MagicCookie Authentifizierung verwendet wird
 $query->setVisibility('private');
 $query->setProjection('full');
 $query->setOrderby('starttime');
 $query->setFutureevents('true');
 
-// Retrieve the event list from the calendar server
+// Empfängt die Event Liste vom Kalender Server
 try {
     $eventFeed = $service->getCalendarEventFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Fehler: " . $e->getResponse();
 }
 
-// Iterate through the list of events, outputting them as an HTML list
+// Iteriere durch die Liste der Events und gib Sie als HTML Liste aus
 echo "<ul>";
 foreach ($eventFeed as $event) {
     echo "<li>" . $event->title . " (Event ID: " . $event->id . ")</li>";
@@ -329,13 +339,11 @@ foreach ($eventFeed as $event) {
 echo "</ul>";]]>
             </programlisting>
             <para>
-                Additional properties such as ID, author, when, event status, visibility, web content, and content, among others are available within
-                <code>Zend_Gdata_Calendar_EventEntry</code>
-                . Refer to the
-                <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework API Documentation</ulink>
-                and the
-                <ulink url="http://code.google.com/apis/gdata/reference.html">Calendar Protocol Reference</ulink>
-                for a complete list.
+                Zusätzliche Eigenschaften wie ID, Autor, Wann, Event Status, Sichtbarkeit, Web Inhalt, und Inhalt,
+                sowie andere sind innerhalb von <code>Zend_Gdata_Calendar_EventEntry</code> vorhanden. Siehe die
+                <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework API Dokumentation</ulink> und
+                die <ulink url="http://code.google.com/apis/gdata/reference.html">Lalender Protokol Referenz</ulink>
+                für eine komplette Liste.
             </para>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.date_range">
