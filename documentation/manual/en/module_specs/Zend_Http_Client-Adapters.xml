@@ -55,21 +55,56 @@
             compilation flags.
         </para>
         <para>
-            The Socket adapter allows one extra configuration option (passed to
-            the <code>Zend_Http_Client->setConfig()</code> or to the constructor):
-            <code>'ssltransport'</code>. This parameter, if set, is expected to
-            be a string and defaults to 'sslv2'. Changing this will override the
-            stream transport layer used for HTTPS connections. Possible values are
-            'ssl', 'sslv2', 'sslv3' and 'tls'. Generally speaking, any other stream
-            transport layer supported by your PHP installation can also be used -
-            but the results might be unexpected, so you should only use such
-            values if you know exactly what you are doing.
-            <footnote>
+            The Socket adapter allows several extra configuration options that 
+            can be set using <code>Zend_Http_Client->setConfig()</code> or 
+            passed to the client constructor. All of them are related to HTTPS
+            connections, and are not relevant when connecting to non-secure 
+            HTTP servers: 
+            <table id="zend.http.client.adapter.socket.configuration.table">
+                <title>Zend_Http_Client_Adapter_Socket configuration parameters</title>
+                <tgroup cols="4">
+                    <thead>
+                        <row>
+                            <entry>Parameter</entry>
+                            <entry>Description</entry>
+                            <entry>Expected Values</entry>
+                            <entry>Default Value</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>ssltransport</entry>
+                            <entry>SSL transport layer (eg. 'sslv2', 'tls')</entry>
+                            <entry>string</entry>
+                            <entry>ssl</entry>
+                        </row>
+                        <row>
+                            <entry>sslcert</entry>
+                            <entry>PEM encoded SSL certificate file path</entry>
+                            <entry>string</entry>
+                            <entry>'/path/to/cert.pem'</entry>
+                        </row>
+                        <row>
+                            <entry>sslpassphrase</entry>
+                            <entry>Passphrase for the SSL certificate file</entry>
+                            <entry>string</entry>
+                            <entry>'s0mes3cre7'</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            
+            <note>
+                <title>HTTPS SSL Stream Parameters</title>
                 <para>
-                    See Appendix O in the PHP manual for a list of supported socket transports:
-                    <ulink url="http://www.php.net/manual/en/transports.php" />
+                    All the above parameters are related to the SSL layer used 
+                    in HTTPS connections. While the default settings should work
+                    for most applications, you might need to change them if the
+                    server you are connecting to requires special client setup. 
+                    If so, you should read the sections about SSL transport 
+                    layers and options <ulink url="http://www.php.net/manual/en/transports.phphttp://framework.zend.com/manual/en/zend.search.lucene.searching.html#transports.inet">here</ulink>.
                 </para>
-            </footnote>.
+            </note>
         </para>
         <example id="zend.http.client.adapters.socket.example-1">
             <title>Changing the HTTPS transport layer</title>
