@@ -471,20 +471,20 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, count($rowset));
     }
 
-    public function testTableFindExceptionMissingKey()
+    public function testTableFindExceptionTooFewKeys()
     {
-        $table = $this->_table['bugs'];
+        $table = $this->_table['bugs_products'];
         try {
-            $table->find();
+            $table->find(1);
             $this->fail('Expected to catch Zend_Db_Table_Exception for missing key');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-            $this->assertEquals('No value(s) specified for the primary key', $e->getMessage());
+            $this->assertEquals('Too few columns for the primary key', $e->getMessage());
         }
     }
 
-    public function testTableFindExceptionIncorrectKeyCount()
+    public function testTableFindExceptionTooManyKeys()
     {
         $table = $this->_table['bugs'];
         try {
@@ -493,7 +493,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-            $this->assertEquals('Missing value(s) for the primary key', $e->getMessage());
+            $this->assertEquals('Too many columns for the primary key', $e->getMessage());
         }
     }
 
@@ -513,19 +513,6 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertEquals(2, count($rowset));
-    }
-
-    public function testTableFindCompoundExceptionIncorrectKeyCount()
-    {
-        $table = $this->_table['bugs_products'];
-        try {
-            $rowset = $table->find(1);
-            $this->fail('Expected to catch Zend_Db_Table_Exception for incorrect key count');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Table_Exception', $e,
-                'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
-            $this->assertEquals('Missing value(s) for the primary key', $e->getMessage());
-        }
     }
 
     public function testTableFindCompoundMultipleExceptionIncorrectValueCount()

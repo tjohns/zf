@@ -902,37 +902,36 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Fetches rows by primary key.
-     * The arguments specify the primary key values.
-     * If the table has a multi-column primary key, you must
-     * pass as many arguments as the count of column in the
-     * primary key.
+     * Fetches rows by primary key.  The argument specifies one or more primary 
+     * key value(s).  To find multiple rows by primary key, the argument must 
+     * be an array.
      *
-     * To find multiple rows by primary key, the argument
-     * should be an array.  If the table has a multi-column
-     * primary key, all arguments must be arrays with the
-     * same number of elements.
+     * This method accepts a variable number of arguments.  If the table has a 
+     * multi-column primary key, the number of arguments must be the same as 
+     * the number of columns in the primary key.  To find multiple rows in a 
+     * table with a multi-column primary key, each argument must be an array 
+     * with the same number of elements.
      *
-     * The find() method always returns a Rowset object,
-     * even if only one row was found.
+     * The find() method always returns a Rowset object, even if only one row 
+     * was found.
      *
-     * @param  mixed                         The value(s) of the primary key.
+     * @param  mixed $key The value(s) of the primary keys.
      * @return Zend_Db_Table_Rowset_Abstract Row(s) matching the criteria.
      * @throws Zend_Db_Table_Exception
      */
-    public function find()
+    public function find($key)
     {
         $args = func_get_args();
         $keyNames = array_values((array) $this->_primary);
 
-        if (empty($args)) {
+        if (count($args) < count($keyNames)) {
             require_once 'Zend/Db/Table/Exception.php';
-            throw new Zend_Db_Table_Exception("No value(s) specified for the primary key");
+            throw new Zend_Db_Table_Exception("Too few columns for the primary key");
         }
 
-        if (count($args) != count($keyNames)) {
+        if (count($args) > count($keyNames)) {
             require_once 'Zend/Db/Table/Exception.php';
-            throw new Zend_Db_Table_Exception("Missing value(s) for the primary key");
+            throw new Zend_Db_Table_Exception("Too many columns for the primary key");
         }
 
         $whereList = array();
