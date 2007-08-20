@@ -32,6 +32,22 @@
         といったコンポーネントがあります。
     </para>
 
+    <tip>
+        <title>Zend_Locale と setLocale()</title>
+        <para>
+            <ulink url="http://php.net/setlocale">PHP のドキュメント</ulink>
+            には、<code>setlocale()</code> はプロセス単位で動作するのでスレッドセーフではないと書かれています。
+            つまり、マルチスレッド環境では「スクリプト内で一切ロケールを変更していないのに、
+            勝手にロケールが変わってしまう」といった問題が発生する可能性があるということです。
+            スクリプトで <code>setlocale()</code> を使用すると、予期せぬ挙動を引き起こすことがあります。
+        </para>
+        <para>
+            <code>Zend_Locale</code> にはこのような制限はありません。なぜなら
+            <code>Zend_Locale</code> は PHP の <code>setlocale()</code>
+            を使用しているわけではないからです。
+        </para>
+    </tip>
+
     <sect2 id="zend.locale.whatislocalization">
 
         <title>地域化とは</title>
