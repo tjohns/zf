@@ -6,7 +6,6 @@
         <para>
             <code>FlashMessenger</code>助手允许你传递用户可能需要在下个请求看到的消息。为实现它，<code>FlashMessenger</code>使用<code>Zend_Session_Namespace</code>来存储消息以备将来或下个请求来读取。如果你计划使用<code>Zend_Session</code>或者<code>Zend_Session_Namespace</code>，在引导文件里用<code>Zend_Session::start()</code>初始化，的确是个好主意。（参见<link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link>文档有更多的关于它的用法的细节。）
         </para>
-
     </sect4>
 
     <sect4 id="zend.controller.actionhelper.flashmessenger.basicusage">

@@ -41,6 +41,7 @@ HERE=@HERE@
 
 DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
 DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+DOCBOOK_FO_XSL=http://framework.zend.com/docbook-xsl/fo/docbook.xsl
 HTML_XSL=html.xsl
 MANUAL_XML=manual.xml
 MANUAL_LINT_XML=manual-lint.xml.in
@@ -55,8 +56,7 @@ html: html/index.html
 
 html/index.html: $(MANUAL_XML) $(HTML_XSL)
 	@echo "Rendering the whole manual with $(XSLTPROC)..."
-	$(XMLLINT) --xinclude --output _temp_manual.xml $(MANUAL_XML)
-	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) _temp_manual.xml
+	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) $(MANUAL_XML)
 	@echo "Copying manual figures (recursively)..."
 	-[ -d figures ] && cp -r figures html/figures
 
@@ -68,9 +68,9 @@ $(HTML_XSL): $(HTML_XSL).in
 
 # Build the docs in PDF format
 
-# pdf: $(MANUAL_XML) $(FO_XSL)
-#	$(XSLTPROC) --xinclude --output ZendFramework.fo $(FO_XSL) $(MANUAL_XML)
-#	$(FOP) -fo ZendFramework.fo -pdf ZendFramework.pdf
+pdf-xep: $(MANUAL_XML)
+	$(XSLTPROC) --xinclude --output ZendFramework.fo $(DOCBOOK_FO_XSL) $(MANUAL_XML)
+	"$(XEP)" -fo ZendFramework.fo -pdf ZendFramework.pdf
 
 check: $(MANUAL_XML)
 	@echo "Checking the whole manual with $(XMLLINT)..."

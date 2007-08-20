@@ -126,21 +126,18 @@
             </para>
         </sect3>
 
-        <sect3 id="zend.translate.adapter.tmx">
+        <sect3 id="zend.translate.adapter.qt">
 
             <title>Zend_Translate_Adapter_Qt</title>
 
             <para>
-                The Qt Adapter is for all customers which have TS files as their
-                translation source which are made by QtLinguist.
-                QT is a XML file based format.
-                XML files are human-readable, but the parsing is not as fast
-                as with gettext files.
+                Qt 适配器适用于使用 QtLinguist 生成的 TS 文件作为其翻译源的用户。
+                QT 使用 XML 作为基本文件格式。XML 是用户可读的，但是分析速度比不上 gettext 文件。
             </para>
 
             <para>
-                Several big players have build software upon the QT framework.
-                The files are human readable and system-independent.
+                许多应用是构建在 QT 框架之上的。
+                这个格式的文件是人类可读，并且不依赖操作系统的。
             </para>
         </sect3>
 
@@ -155,9 +152,40 @@
             </para>
 
             <para>
-           多数中型公司使用此适配器,这个类型的文件是人可读的,并且是系统独立的(不依赖与系统的)
+           多数中型公司使用此适配器,这个格式的文件是人可读,并且不依赖操作系统的。
             </para>
         </sect3>
+    </sect2>
+
+    <sect2 id="zend.translate.adapter.selfwritten">
+
+        <title>编写自己的适配器</title>
+
+        <para>
+            Zend_Translate 允许编写并使用自己的适配器类。并且可以像 Zend_Translate 内置的标准类一样使用。
+        </para>
+
+        <para>
+            任何要在 Zend_Translate 使用的适配器都必须继承于 Zend_Translate_Adapter.
+            抽象类 Zend_Translate_Adapter 定义了所有翻译需要的内容。
+            用户需要做的，就是定义如何读取翻译数据（Translation Data）。
+        </para>
+
+        <para>
+            前缀“Zend”仅限由 Zend_Framework 使用。如果使用自己的适配器扩展了 Zend_Framework，应当命名为
+            “Company_Translate_Adapter_MyFormat”。下面的代码演示了如何编写一个自定义适配器：
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+try {
+    $translate = new Zend_Translate('Company_Translate_Adapter_MyFormat', '/path/to/translate.xx', 'en', array('myoption' => 'myvalue'));
+} catch (Exception $e) {
+    // 文件没找到，没有适配器类
+    // 通常的错误
+}]]>
+        </programlisting>
 
     </sect2>
 

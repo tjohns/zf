@@ -2,7 +2,9 @@
 
 	<title>简介</title>
 
-	<para>Zend_Translate是Zend框架为多语言应用程序提供的一个解决方案.</para>
+    <para>
+        Zend_Translate是Zend框架为多语言应用程序提供的一个解决方案.
+    </para>
 
 	<para>
 		在多语言应用程序中,内容必须翻译为多种语言,并且根据用户的语言设置显示相应的内容.

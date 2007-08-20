@@ -70,7 +70,12 @@ Zend_Session::start();]]>
                     </listitem>
                 </itemizedlist>
                 <para>
-                    <code>strict</code>选项防止<code>new Zend_Session_Namespace()</code>自动调用<code>Zend_Session::start()</code>。这样，这个选项有利于应用程序的开发者强制执行一个设计原则以避免在某些页面请求中使用会话，因为在调用<code>Zend_Session::start()</code>之前，实例化<code>Zend_Session_Namespace</code>时，会抛出一个异常。开发者需小心地考虑使用<code>Zend_Session::setOptions()</code>所引起的冲突，由于它们对应于基本的ext/session这些具有全局作用选项。
+                    <code>strict</code> 选项防止 <code>new Zend_Session_Namespace()</code> 自动调用 
+                    <code>Zend_Session::start()</code>。
+                    这样，这个选项有利于应用程序的开发者强制执行一个设计原则以避免在某些页面请求中使用会话，
+                    因为在调用 <code>Zend_Session::start()</code> 之前，实例化 <code>Zend_Session_Namespace</code> 
+                    时，会抛出一个异常。开发者需小心地考虑使用 <code>Zend_Session::setOptions()</code>
+                    所引起的冲突，由于它们对应于基本的ext/session这些具有全局作用选项。
                 </para>
             </listitem>
             <listitem>
@@ -99,12 +104,12 @@ require_once 'Zend/Session/Namespace.php';
 
 $userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
 
-// marking session as read only locked
+// 标记会话设置为只读锁定
 $userProfileNamespace->lock();
 
-// unlocking read-only lock
+// 解锁只读锁定
 if ($userProfileNamespace->isLocked()) {
-    $userProfileNamespace->unLock();
+$userProfileNamespace->unLock();
 }]]>
             </programlisting>
 
@@ -134,13 +139,11 @@ $s->o = 'orange';
 
 $s->setExpirationSeconds(5, 'a'); // expire only the key "a" in 5 seconds
 
-// expire entire namespace in 5 "hops"
+// 5 次访问后，会话过期
 $s->setExpirationHops(5);
 
 $s->setExpirationSeconds(60);
-// The "expireAll" namespace will be marked "expired" on
-// the first request received after 60 seconds have elapsed,
-// or in 5 hops, whichever happens first.]]>
+// 命名空间 "expireAll" 将在第一次访问后 60 秒，或者访问 5 次后过期。]]>
             </programlisting>
 
         </example>

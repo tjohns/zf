@@ -123,7 +123,7 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Request.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Controller-Router.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Router.xml" parse="xml" /></xi:fallback>
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Router.xml" parse="xml"/></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Controller-Dispatcher.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Dispatcher.xml" /></xi:fallback>
@@ -132,13 +132,13 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-ActionController.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Controller-ActionHelpers.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-ActionHelpers.xml" parse="xml" /></xi:fallback>
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-ActionHelpers.xml" parse="xml"/></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Controller-Response.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Response.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Controller-Plugins.xml" parse="xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Plugins.xml" parse="xml" /></xi:fallback>
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Plugins.xml" parse="xml"/></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Controller-Modular.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Controller-Modular.xml" /></xi:fallback>
@@ -307,6 +307,9 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Json-Objects.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Json-Objects.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Json-xml2json.xml">        
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Json-xml2json.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.loader">
