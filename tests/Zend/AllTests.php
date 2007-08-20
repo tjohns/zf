@@ -38,6 +38,7 @@ require_once 'Zend/ConfigTest.php';
 require_once 'Zend/Config/AllTests.php';
 require_once 'Zend/Console/GetoptTest.php';
 require_once 'Zend/Controller/AllTests.php';
+require_once 'Zend/CurrencyTest.php';
 require_once 'Zend/DateTest.php';
 require_once 'Zend/Date/AllTests.php';
 require_once 'Zend/DebugTest.php';
