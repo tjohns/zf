@@ -23,6 +23,23 @@
         Komponenten wie Zend_Locale, Zend_Date, Zend_Measure, Zend_Translate, Zend_Currency und Zend_TimeSync.
     </para>
 
+    <tip>
+        <title>Zend_Locale und setLocale()</title>
+        <para>
+            Die <ulink url="http://php.net/setlocale">Dokumentation von PHP</ulink> sagt das
+            <code>setlocale()</code> nicht Threadsicher ist weil es pro Prozess behandelt wird und nicht
+            pro Thread. Das bedeutet das man in multithreaded Umgebungen das Problem bekommen kann, das sich
+            das Gebietsschema (Locale) ändert wärend das Skript diese Änderung nie selbst durchgeführt hat.
+            Deswegen kann es zu unerwarteten Ergebnissen kommen wenn man <code>setLocale()</code> in seinen
+            Skripts verwendet.
+        </para>
+        <para>
+            Wenn <code>Zend_Locale</code> verwendet wird hat man diese Einschränkungen nicht, da
+            <code>Zend_Locale</code> weder von PHP's <code>setlocale()</code> abhängig ist, noch irgendwie
+            mit Ihr gekoppelt ist.
+        </para>
+    </tip>
+
     <sect2 id="zend.locale.whatislocalization">
 
         <title>Was ist Lokalisierung</title>
