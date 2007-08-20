@@ -25,6 +25,21 @@
         Zend_Translate, Zend_Currency, and Zend_TimeSync.
     </para>
 
+    <tip>
+        <title>Zend_Locale and setLocale()</title>
+        <para>
+            <ulink url="http://php.net/setlocale">PHP's documentation</ulink> states that <code>setlocale()</code>
+            is not threadsave because it is maintained per process and not per thread. This means that, in
+            multithreaded environments, you can have the problem that the locale changes while the script
+            never has changed the locale itself. This can lead to unexpected behaviour when you use
+            <code>setlocale()</code> in your scripts.
+        </para>
+        <para>
+            When you are using <code>Zend_Locale</code> you will not have this limitations, because
+            <code>Zend_Locale</code> is not related to or coupled with PHP's <code>setlocale()</code>.
+        </para>
+    </tip>
+
     <sect2 id="zend.locale.whatislocalization">
 
         <title>What is Localization</title>
