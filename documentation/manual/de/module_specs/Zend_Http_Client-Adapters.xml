@@ -47,25 +47,61 @@
         <title>Der Socket Adapter</title>
         <para>
             Der Standard-Adapter von Zend_Http_Client ist der Zend_Http_Client_Adapter_Socket. Dieser
-            wird benutzt, wenn kein anderer angegeben wird. Der Socket-Adapter benutzt die native
+            wird benutzt, wenn kein anderer angegeben wird. Der Socket Adapter benutzt die native
             PHP Funktion fsockopen(), um die Verbindung aufzubauen, dafür werden keine besonderen
             PHP-Extensions oder Einstellungen benötigt.
         </para>
         <para>
-            Der Socket-Adapter kann über den Parameter <code>'ssltransport'</code> für verschiedene
-            Streams konfiguriert werden, um die aufgebaute Verbindung zu verschlüsseln. Mögliche
-            Stream-Typen sind 'ssl', 'sslv2', 'sslv3' oder 'tls'. Grundsätzlich können auch andere
-            Stream-Typen
-            <footnote>
+            Der Socket Adapter erlaubt verschiedene zusätzliche Konfigurations Optionen die gesetzt werden
+            können durch Verwendung von <code>Zend_Http_Client->setConfig()</code> oder deren Übergabe an
+            den Konstruktor des Clients. Alle von Ihnen sind bezogen auf HTTPS Verbindungen, und sind für
+            Verbindungen zu nicht sicheren HTTP Servern nicht notwendig:
+            <table id="zend.http.client.adapter.socket.configuration.table">
+                <title>Zend_Http_Client_Adapter_Socket Konfigurations Parameter</title>
+                <tgroup cols="4">
+                    <thead>
+                        <row>
+                            <entry>Parameter</entry>
+                            <entry>Beschreibung</entry>
+                            <entry>Erwarteter Wert</entry>
+                            <entry>Standardwert</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>ssltransport</entry>
+                            <entry>SSL Transport Layer (eg. 'sslv2', 'tls')</entry>
+                            <entry>string</entry>
+                            <entry>ssl</entry>
+                        </row>
+                        <row>
+                            <entry>sslcert</entry>
+                            <entry>Pfad zum PEM verschlüsselten SSL Zertifikat</entry>
+                            <entry>string</entry>
+                            <entry>'/pfad/zu/cert.pem'</entry>
+                        </row>
+                        <row>
+                            <entry>sslpassphrase</entry>
+                            <entry>Die PassPhrase für die SSL zertifizierte Datei</entry>
+                            <entry>string</entry>
+                            <entry>'s0mes3cre7'</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+            <note>
+                <title>HTTPS SSL Stream Parameter</title>
                 <para>
-                    Die Liste der unterstützten Socket-Stream-Typen ist im Anhang P der PHP Dokumentation abrufbar:
-                    <ulink url="http://www.php.net/manual/de/transports.php" />
+                    Alle der oben gezeigten Parameter sind relevant für den SSL Layer der in HTTPS
+                    Verbindungen verwendet wird. Wärend die Standardeinstellungen für die meisten
+                    Anwendungen funktionieren sollten, kann es notwendig werden diese zu Ändern wenn
+                    man sich zu Server verbinden muß die ein spezielles Client Setup benötigen. Wenn
+                    dem so ist, sollte
+                    <ulink url="http://www.php.net/manual/en/transports.phphttp://framework.zend.com/manual/en/zend.search.lucene.searching.html#transports.inet">hier</ulink>
+                    im Kapitel über SSL Transport Layer und Optionen nachgelesen werden.
                 </para>
-            </footnote>
-            benutzt werden, die bei der PHP Installation zur Verfügung stehen, jedoch
-            kann die einwandfreie Funktion mit diesen nicht gewährleistet werden.
-            Die Konfiguration kann entweder über <code>Zend_Http_Client->setConfig()</code> oder
-            über den Konstruktor übergeben werden.
+            </note>
         </para>
         <example id="zend.http.client.adapters.socket.example-1">
             <title>Den Stream-Typen für eine HTTPS Verbindung einstellen</title>
