@@ -20,10 +20,9 @@
 	    otomatikleşmiş testler içermektedir.PHPUnit'in bu versiyonu da ayrıca PHP 5.1.4
 	    veya yenisini gerektirmektedir.
         </para>
-
         <para>
             Yukarıda bahsedilen PHP versiyonunda Zend Framework doğru olarak çalışaktır ama 
-	    buna rağmen PHP 5.2.2 veya yenisini kullanmanızı şiddetle tavsiye ediyoruz.
+	    buna rağmen PHP 5.2.3 veya yenisini kullanmanızı şiddetle tavsiye ediyoruz.
 	    PHP'nin yeni versiyonunda  önemli güvenlik ve performans geliştirmeleri  var.	    
         </para>
 
@@ -114,7 +113,19 @@
                     <row>
                         <entry>dom</entry>
                         <entry>Bağımlı</entry>
-                        <entry>Zend_Feed, Zend_Gdata, Zend_Log_Formatter_Xml, Zend_Rest_Server, Zend_Search_Lucene, Zend_Service_Amazon, Zend_Service_Delicious, Zend_Service_Flickr, Zend_Service_Simpy, Zend_Service_Yahoo, Zend_XmlRpc</entry>
+                        <entry>
+				<ulink url="http://framework.zend.com/manual/en/zend.feed.html"><code>Zend_Feed</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.gdata.html"><code>Zend_Gdata</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.log.formatters.html"><code>Zend_Log_Formatter_Xml</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.service.amazon.html"><code>Zend_Service_Amazon</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.service.delicious.html"><code>Zend_Service_Delicious</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.service.flickr.html"><code>Zend_Service_Flickr</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.service.simpy.html"><code>Zend_Service_Simpy</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.service.yahoo.html"><code>Zend_Service_Yahoo</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.html"><code>Zend_XmlRpc</code></ulink>		
+			</entry>
                     </row>
                     <row>
                         <entry>exif</entry>
@@ -349,7 +360,18 @@
                     <row>
                         <entry>Reflection</entry>
                         <entry>Bağımlı</entry>
-                        <entry>Zend_Controller, Zend_Filter, Zend_Filter_Input, Zend_Json, Zend_Log, Zend_Rest_Server, Zend_Server_Reflection, Zend_Validate, Zend_View, Zend_XmlRpc_Server</entry>
+                        <entry>
+				<ulink url="http://framework.zend.com/manual/en/zend.controller.html"><code>Zend_Controller</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.filter.html"><code>Zend_Filter</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.filter.input.html"><code>Zend_Filter_Input</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.json.html"><code>Zend_Json</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.log.html"><code>Zend_Log</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.server.reflection.html"><code>Zend_Server_Reflection</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.validate.html"><code>Zend_Validate</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.view.html"><code>Zend_View</code></ulink>,
+				<ulink url="http://framework.zend.com/manual/en/zend.xmlrpc.server.html"><code>Zend_XmlRpc_Server</code></ulink>	
+			</entry>
                     </row>
                     <row>
                         <entry>session</entry>
