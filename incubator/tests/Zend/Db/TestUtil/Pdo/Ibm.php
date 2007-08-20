@@ -59,6 +59,28 @@ class Zend_Db_TestUtil_Pdo_Ibm extends Zend_Db_TestUtil_Db2
         return $data;
     }
     
+    
+    protected function _getDataDocuments()
+    {
+        $server = $this->getServer();
+        
+        if ($server == 'IDS') {
+            return array (
+            array(
+                'doc_id'    => 1,
+                'doc_clob'  => 'this is the clob that never ends...'.
+                               'this is the clob that never ends...'.
+                               'this is the clob that never ends...',
+                'doc_blob'  => 'this is the blob that never ends...'.
+                               'this is the blob that never ends...'.
+                               'this is the blob that never ends...'
+                )
+            );
+        }
+        
+        return parent::_getDataDocuments();
+    }
+    
     public function getSqlType($type)
     {
         $server = $this->getServer();

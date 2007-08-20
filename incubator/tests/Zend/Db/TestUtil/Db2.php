@@ -72,6 +72,22 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
         return $data;
     }
 
+    
+    protected function _getDataDocuments()
+    {
+        return array (
+            array(
+                'doc_id'    => 1,
+                'doc_clob'  => 'this is the clob that never ends...'.
+                               'this is the clob that never ends...'.
+                               'this is the clob that never ends...',
+                'doc_blob'  => new Zend_Db_Expr("BLOB('this is the blob that never ends...".
+                               "this is the blob that never ends...".
+                               "this is the blob that never ends...')")
+            )
+        );
+    }
+    
     public function getSqlType($type)
     {
         if ($type == 'IDENTITY') {
@@ -121,6 +137,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
         $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
         . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
         );
+         
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' RESTRICT';
         }

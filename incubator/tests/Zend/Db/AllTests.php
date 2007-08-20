@@ -135,6 +135,7 @@ class Zend_Db_AllTests
              try {
 
                  Zend_Loader::loadClass("Zend_Db_Adapter_{$driver}Test");
+                 Zend_Loader::loadClass("Zend_Db_Profiler_{$driver}Test");
                  Zend_Loader::loadClass("Zend_Db_Statement_{$driver}Test");
                  Zend_Loader::loadClass("Zend_Db_Select_{$driver}Test");
                  Zend_Loader::loadClass("Zend_Db_Table_{$driver}Test");
@@ -146,6 +147,7 @@ class Zend_Db_AllTests
                  // so we can add them as test suites
 
                  $suite->addTestSuite("Zend_Db_Adapter_{$driver}Test");
+                 $suite->addTestSuite("Zend_Db_Profiler_{$driver}Test");
                  $suite->addTestSuite("Zend_Db_Statement_{$driver}Test");
                  $suite->addTestSuite("Zend_Db_Select_{$driver}Test");
                  $suite->addTestSuite("Zend_Db_Table_{$driver}Test");
