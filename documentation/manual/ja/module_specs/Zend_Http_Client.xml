@@ -47,7 +47,7 @@ $client->setConfig(array(
             すべてのパラメータにはデフォルト値があります。
             <table id="zend.http.client.configuration.table">
                 <title>Zend_Http_Client の設定パラメータ</title>
-                <tgroup cols="3">
+                <tgroup cols="4">
                     <thead>
                         <row>
                             <entry>パラメータ</entry>
