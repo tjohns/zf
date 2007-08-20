@@ -527,112 +527,94 @@ $newEvent = $service->insertEvent($event);]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.schedulers_reminders">
-            <title>Event Schedules and Reminders</title>
+            <title>Event Planungen und Erinnerungen</title>
             <para>
-                An event's starting time and duration are determined by the value of its when property, which contains the properties
-                <code>startTime</code>
-                ,
-                <code>endTime</code>
-                , and
-                <code>valueString</code>
-                .
-                <code>StartTime</code>
-                and
-                <code>EndTime</code>
-                control the duration of the event, while
-                <code>valueString</code>
-                provides a way to store a friendly, human readable version of the duration such as "This Afternoon". Note that even when using
-                <code>valueString</code>
-                ,
-                <code>startTime</code>
-                and
-                <code>endTime</code>
-                still must be be set to valid values.
+                Die Startzeit und Dauer eines Events werden durch die Werte seiner Eigenschaften,
+                <code>startTime</code>, <code>endTime</code>, und <code>valueString</code> ermittelt.
+                <code>StartTime</code> und <code>EndTime</code> kontrollieren die Dauer des Events, wärend
+                <code>valueString</code> einen Weg bietet um eine lesbare Version der Dauer wie zum
+                Beispiel "Heute Abend" zu speichern. Es ist zu beachten das, selbst wenn <code>valueString</code>
+                verwendet wird, <code>startTime</code> und <code>endTime</code> auf gültige Werte gesetzt
+                werden müssen.
             </para>
             <para>
-                All-day events can be scheduled by specifying only the date omitting the time when setting
-                <code>startTime</code>
-                and
-                <code>endTime</code>
-                . Likewise, zero-duration events can be specified by omitting the
-                <code>endTime</code>
-                . In all cases, date/time values should be provided in
-                <ulink url="http://www.ietf.org/rfc/rfc3339.txt">RFC3339</ulink>
-                format.
+                Jeden Tag wiederkehrende Events können geplant werden indem nur das Datum spezifiziert und
+                die Zeit ausgelassen wird wenn <code>startTime</code> und <code>endTime</code> gesetzt werden.
+                Genauso können Events die keine Dauer haben spezifiziert werden indem <code>endTime</code>
+                unterdrückt wird. In allen Fällen sollten Datums und Zeitwerte im
+                <ulink url="http://www.ietf.org/rfc/rfc3339.txt">RFC3339</ulink> Format angegeben werden.
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Schedule the event to occur on December 05, 2007 at 2 PM PST (UTC-8) with a duration of one hour.
+// Plane ein Event das am 05. Dezember 2007 um 14h PST stattfindet (UTC-8) mit der Dauer einer Stunde.
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
 
-// Specify a optional human readable value for the above date
-$when->valueString = "This Afternoon";
+// Spezifiziere einen optionalen lesbaren Wert für das angegebene Datum
+$when->valueString = "Heute Nachmittag";
 
-// Apply the when property to an event
+// Die "when" Eigenschaft an das Event binden
 $event->when = $when;]]>
             </programlisting>
             <para>
-                The
-                <code>when</code>
-                attribute also controls when reminders are sent to a user. Reminders are stored in an array and each event may have up to find reminders associated with it.
+                Das <code>when</code> Attribut kontrolliert auch wann Erinnerungen an einen Benutzer gesendet
+                werden. Erinnerungen werden in einem Array gespeichert und jedes Event kann abgefragt werden
+                um die Erinnerungen herauszufinden die mit Ihm verbunden sind.
             </para>
             <para>
-                For a
-                <code>reminder</code>
-                to be valid, it needs to have two attributes set:
-                <code>method</code>
-                and a time.
-                <code>Method</code>
-                can accept one of the following strings: "alert", "email", or "sms". The time should be entered as an integer and can be set with either the property
-                <code>minutes</code>
-                ,
-                <code>hours</code>
-                ,
-                <code>days</code>
-                , or
-                <code>absoluteTime</code>
-                . However, a valid request may only have one of these attributes set. If a mixed time is desired, convert to the most precise unit available. For example, 1 hour and 30 minutes should be entered as 90 minutes.
+                Damit ein <code>reminder</code> gültig ist, muß er zwei Attribute gesetzt haben: <code>method</code>
+                und eine Zeit. <code>Method</code> akzeptiert einen der folgenden Strings: "alert", "email" oder
+                "sms". Die Zeit sollte als Integer eingegeben werden und kann mit den Eigenschaften
+                <code>minutes</code>, <code>hours</code>, <code>days</code> oder <code>absoluteTime</code>
+                gesetzt werden. Trotzdem darf eine gültige Anfrage nur eines dieser Attribute gesetzt haben.
+                Wenn eine gemischte Zeit gewünscht wird, muß der Wert in die am besten passende und vorhandene
+                Einheit konvertiert werden. Zum Beispiel, 1 Stunde und 30 Minuten sollten als 90 Minuten angegeben
+                werden.
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Create a new reminder object. It should be set send an email message to the user 10 minutes beforehand.
+// Erstellt ein Erinnerungs Objekt. Es sollte eine Email Nachricht an den Benutzer senden, 10 Minuten vor dem Event.
 $reminder = $service->newReminder();
 $reminder->method = "email";
 $reminder->minutes = "10";
 
-// Apply the reminder to an existing event's when property
+// Die Erinnerung einem existierenden Event als "when" Eigenschaft hinzugüfen
 $when = $event->when[0];
 $when->reminders = array($reminder);]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.recurring">
-            <title>Creating Recurring Events</title>
+            <title>Wiederkehrende Events erstellen</title>
             <para>
-                Recurring events are created the same way as single-occurrence events, except a recurrence attribute should be provided instead of a where attribute. The recurrence attribute should hold a string describing the event's recurrence pattern using properties defined in the iCalendar standard (
-                <ulink url="http://www.ietf.org/rfc/rfc2445.txt">RFC 2445</ulink>
-                ).
+                Wiederkehrende Events werden auf dem gleichen Weg erstellt wie einmal stattfindende Events,
+                ausser das ein Wiederholungs "recurrence" Attribut statt dem "where" Attribut angegeben werden
+                muß. Das Wiederholungs Attribut sollte einen String enthalten der das Wiederholungs Pattern des
+                Events beschreibt und das mit Eigenschaften definiert werden kann die im iCalender Standard
+                (<ulink url="http://www.ietf.org/rfc/rfc2445.txt">RFC 2445</ulink>) beschrieben sind.
             </para>
             <para>
-                Exceptions to the recurrence pattern will usually be specified by a distinct
-                <code>recurrenceException</code>
-                attribute. However, the iCalendar standard provides a secondary format for defining recurrences, and the possibility that either may be used must be accounted for.
+                Ausnahmen im Wiederholungs Pattern werden normalerweise durch ein ausgeprägtes
+                <code>recurrenceException</code> Attribut spezifiziert. Trotzdem bietet der iCalender Standard
+                ein zweites Format für die Definition von Wiederholungen, und die Möglichkeit das jedes von Ihnen
+                verwendet werden kann und für jedes davon muß das gehandhabt werden.
             </para>
             <para>
-                Due to the complexity of parsing recurrence patterns, further information on this them is outside the scope of this document. However, more information can be found in the
-                <ulink url="http://code.google.com/apis/gdata/elements.html#gdRecurrence">Common Elements section of the Google Data APIs Developer Guide</ulink>
-                , as well as in RFC 2445.
+                Durch die Komplexität des analysierens des Wiederholungs Patterns, sind weitere Informationen
+                hierüber ausserhalb des Umfangs dieses Dokuments. Trotzdem können weitere Informationen im
+                <ulink url="http://code.google.com/apis/gdata/elements.html#gdRecurrence">Kapitel über normale
+                Elemente des Google Data API Entwickler Leitfadens</ulink> gefunden werden, sowie in der
+                RFC 2445.
             </para>
             <programlisting role="php"><![CDATA[<?php
- // Create a new entry using the calendar service's magic factory method
+ // Erstelle einen neuen Eintrag und verwendet die magische Factory Methode des Kalender Services
 $event= $service->newEventEntry();
 
-// Populate the event with the desired information
-// Note that each attribute is crated as an instance of a matching class
-$event->title = $service->newTitle("My Recurring Event");
-$event->where = array($service->newWhere("Palo Alto, California"));
-$event->content = $service->newContent(" This is my other awesome event, occurring all-day every Tuesday from 2007-05-01 until 207-09-04. No RSVP required.");
+// Gibt das Event mit den gewünschten Informationen bekannt
+// Es ist zu beachten das jedes Attribut als Instanz der betreffenden Klasse erstellt wird
+$event->title = $service->newTitle("Mein wiederkehrendes Event");
+$event->where = array($service->newWhere("Palo Alto, Kalifornien"));
+$event->content = $service->newContent("Das ist mein anderes super Event, das jeden Dienstag von 01.05.2007 bis 04.09.2007 stattfinden. Kein RSVP benötigt.");
 
-// Set the duration and frequency by specifying a recurrence pattern.
+// Setze die Dauer und Frequenz durch Spezifizierung des Wiederholungs Patterns.
 
 $recurrence = "DTSTART;VALUE=DATE:20070501\r\n" .
         "DTEND;VALUE=DATE:20070502\r\n" .
@@ -640,112 +622,117 @@ $recurrence = "DTSTART;VALUE=DATE:20070501\r\n" .
 
 $event->recurrence = $service->newRecurrence($recurrence);
 
-// Upload the event to the calendar server
-// A copy of the event as it is recorded on the server is returned
+// Das Event zum Kalender Server hochladen
+// Eine Kopie des Events wird zurückgegeben, wenn es auf dem Server gespeichert wird
 $newEvent = $service->insertEvent($event);]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.quickadd">
-            <title>Using QuickAdd</title>
+            <title>QuickAdd verwenden</title>
             <para>
-                QuickAdd is a feature which allows events to be created using free-form text entry. For example, the string "Dinner at Joe's Diner on Thursday" would create an event with the title "Dinner", location "Joe's Diner", and date "Thursday". To take advantage of QuickAdd, create a new
-                <code>QuickAdd</code>
-                property set to "true" and store the freeform text as a
-                <code>content</code>
-                property.
+                QuickAdd ist ein Feature das es erlaubt Events zu erstellen indem ein frei definierter Texteintrag
+                verwendet wird. Zum Beispie lwürde der String "Abendessen bei Joe's Dinner am Dienstag" ein
+                Event erstellen mit dem Titel "Abendessen", dem Ort "Joe's Dinner", und dem Datum "Dienstag".
+                Um die Vorteile von QuickAdd zu verwenden, muß eine neue <code>QuickAdd</code> Eigenschaft erstellt,
+                auf "true" gesetzt und der frei definierbare Text als <code>content</code> Eigenschaft
+                gespeichert werden.
             </para>
             <programlisting role="php"><![CDATA[<?php
-// Create a new entry using the calendar service's magic factory method
+ // Erstelle einen neuen Eintrag und verwendet die magische Factory Methode des Kalender Services
 $event= $service->newEventEntry();
 
-// Populate the event with the desired information
+// Gibt das Event mit den gewünschten Informationen bekannt
 $event->content= $service->newContent("Dinner at Joe's Diner on Thursday");
 $event->quickAdd = $service->newQuickAdd("true");
 
-// Upload the event to the calendar server
-// A copy of the event as it is recorded on the server is returned
+// Das Event zum Kalender Server hochladen
+// Eine Kopie des Events wird zurückgegeben, wenn es auf dem Server gespeichert wird
 $newEvent = $service->insertEvent($event);]]>
             </programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.calendar.modifying_events">
-        <title>Modifying Events</title>
+        <title>Events bearbeiten</title>
         <para>
-            Once an instance of an event has been obtained, the event's attributes can be locally modified in the same way as when creating an event. Once all modifications are complete, calling the event's
-            <code>save()</code>
-            method will upload the changes to the calendar server and return a copy of the event as it was created on the server.
+            Sobald eine Instanz eines Events erstellt wurde, können die Attribute des Events lokal auf dem selben
+            Weg wie bei der Erstellung des Events geänder werden. Sobald alle Änderungen komplett sind, schickt
+            der Aufruf der <code>save()</code> Methode des Events die Änderungen an den Kalender Server und gibt
+            eine Kopie des Events zurück wie es auf dem Server erstellt wurde.
         </para>
         <para>
-            In the event another user has modified the event since the local copy was retrieved,
-            <code>save()</code>
-            will fail and the server will return a 409 (Conflict) status code. To resolve this a fresh copy of the event must be retrieved from the server before attempting to resubmit any modifications.
+            Im Fall das ein anderer Benutzer das Event modifiziert hat seitdem die lokale Kopie empfangen wurde,
+            wird die <code>save()</code> Methode fehlschlagen und einen 409 (Konflikt) Status Code zurück geben.
+            Um das zu beheben muß eine neue Kopie des Events vom Server empfangen werden bevor ein erneuter
+            Versuch stattfindet die Änderungen wieder zu speichern.
         </para>
         <programlisting role="php"><![CDATA[<?php
-// Get the first event in the user's event list
+// Das erste Event auf der Liste der Events eines Benutzers erhalten
 $event = $eventFeed[0];
 
-// Change the title to a new value
-$event->title = $service->newTitle("Woof!");
+// Den Titel zu einem neuen Wert ändern
+$event->title = $service->newTitle("Wuff!");
 
-// Upload the changes to the server
+// Die Änderungen an den Server hochladen
 try {
     $event->save();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Fehler: " . $e->getResponse();
 }]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.deleting_events">
-        <title>Deleting Events</title>
+        <title>Events löschen</title>
         <para>
-            Calendar events can be deleted either by calling the calendar service's
-            <code>delete()</code>
-            method and providing the edit URL of an event or by calling an existing event's own
-            <code>delete()</code>
-            method.
+            Kalender Events können entweder durch den Aufruf der <code>delete()</code> Methode des Kalender
+            Services, und des Angebens der Bearbeitungs URL des Events durchgeführt werden, oder durch
+            Aufruf der eigenen <code>delete()</code> Methode des Events.
         </para>
         <para>
-            In either case, the deleted event will still show up on a user's private event feed if an
-            <code>updateMin</code>
-            query parameter is provided. Deleted events can be distinguished from regular events because they will have their
-            <code>eventStatus</code>
-            property set to "http://schemas.google.com/g/2005#event.canceled".
+            In jedem Fall, wird das gelöschte Event trotzdem noch am Privaten Event Feed des Benutzers
+            aufscheinen wenn ein <code>updateMin</code> Abfrage Parameter angegeben wurde. Gelöschte Events
+            können von normalen Events unterschieden werden weil Sie Ihre eigene <code>eventStatus</code>
+            Eigenschaft auf "http://schemas.google.com/g/2005#event.canceled" gesetzt haben.
         </para>
         <programlisting role="php"><![CDATA[<?php
-// Option 1: Events can be deleted directly
+// Option 1: Events können direkt gelöscht werden
 $event->delete();]]>
         </programlisting>
         <programlisting role="php"><![CDATA[<?php
-// Option 2: Events can be deleted supplying the edit URL of the event to the calendar service, if known
+// Option 2: Events können gelöscht werden indem die Bearbeitungs URL des Events zu diesem Kalender Service
+// angegeben wird, wenn diese bekannt ist
 $service->delete($event->getEditLink()->href);]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.comments">
-        <title>Accessing Event Comments</title>
-        <para>When using the full event view, comments are not directly stored within an entry. Instead, each event contains a URL to it's associated comment feed which must be manually requested.</para>
+        <title>Auf Event Kommentare zugreifen</title>
         <para>
-            Working with comments is fundamentally similar to working with events, with the only significant difference being that a different feed and event class should be used and that the additional meta-data for events such as where and when does not exist for comments. Specifically, the comment's author is stored in the
-            <code>author</code>
-            property, and the comment text is stored in the
-            <code>content</code>
-            property.
+            Den die komplette Event Ansicht verwendet wird, werden Kommentare nicht direkt innerhalb eines Events
+            gespeichert. Stattdessen enthält jedes Event eine URL zum dazugehörigen Kommentar Feed welcher
+            manuell angefragt werden muß.
+        </para>
+        <para>
+            Das Arbeiten mit Kommentaren ist fundamental ähnlich zum Arbeiten mit Events, mit dem einzigen
+            signifikanten Unterschied das eine andere Feed und Event Klasse verwendet werden sollte, und das
+            die zusätzlichen Meta-Daten für Events wie zum Beispiel "where" und "when" für Kommentare nicht
+            existieren. Speziell wird der Author des Kommentars in der <code>author</code> Eigenschaft und der
+            Kommentar Text in der <code>content</code> Eigenschaft gespeichert.
         </para>
         <programlisting role="php"><![CDATA[<?php
-// Extract the comment URL from the first event in a user's feed list
+// Die normale URL vom ersten Event der Feed Liste des Benutzers extrahieren
 $event = $eventFeed[0];
 $commentUrl = $event->comments->feedLink->url;
 
-// Retrieve the comment list for the event
+// Die Kommentarliste für das Event erhalten
 try {
 $commentFeed = $service->getFeed($commentUrl);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Error: " . $e->getResponse();
+    echo "Fehler: " . $e->getResponse();
 }
 
-// Output each comment as an HTML list
+// Jedes Kommentar als HTML Liste ausgeben
 echo "<ul>";
 foreach ($commentFeed as $comment) {
-    echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
+    echo "<li><em>Kommentar von: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
 }
 echo "</ul>";]]>
         </programlisting>
