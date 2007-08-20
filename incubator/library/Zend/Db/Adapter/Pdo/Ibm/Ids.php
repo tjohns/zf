@@ -91,9 +91,10 @@ class Zend_Db_Adapter_Pdo_Ibm_Ids
                FROM syscolumns c
                JOIN systables t ON c.tabid = t.tabid
                LEFT JOIN sysdefaults d ON c.tabid = d.tabid AND c.colno = d.colno
-               WHERE t.tabname = ".$this->_adapter->quote($tableName);
+               WHERE "
+                . $this->_adapter->quoteInto('UPPER(t.tabname) = UPPER(?)', $tableName);
         if ($schemaName) {
-            $sql .= " AND t.owner = ".$this->_adapter->quote($schemaName);
+            $sql .= $this->_adapter->quoteInto(' AND UPPER(t.owner) = UPPER(?)', $schemaName);
         }
         $sql .= " ORDER BY c.colno";
 
@@ -136,14 +137,10 @@ class Zend_Db_Adapter_Pdo_Ibm_Ids
                 $identity = true;
             }
 
-            // only colname needs to be case adjusted
-            /**
-             * @todo do we need to adjust case for IDS?
-             */
             $desc[$this->_adapter->foldCase($row[$colname])] = array (
-                'SCHEMA_NAME'       => $row[$tabschema],
-                'TABLE_NAME'        => $row[$tabname],
-                'COLUMN_NAME'       => $row[$colname],
+                'SCHEMA_NAME'       => $this->_adapter->foldCase($row[$tabschema]),
+                'TABLE_NAME'        => $this->_adapter->foldCase($row[$tabname]),
+                'COLUMN_NAME'       => $this->_adapter->foldCase($row[$colname]),
                 'COLUMN_POSITION'   => $row[$colno],
                 'DATA_TYPE'         => $this->_getDataType($row[$typename]),
                 'DEFAULT'           => $row[$default],

@@ -110,6 +110,8 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
             return;
         }
         parent::_connect();
+        
+        $this->getConnection()->setAttribute(Zend_Db::ATTR_STRINGIFY_FETCHES, true);
              
         if ($this->_serverType === null) {
             $server = substr($this->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);

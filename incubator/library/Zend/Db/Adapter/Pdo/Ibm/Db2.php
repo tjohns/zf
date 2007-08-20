@@ -93,11 +93,12 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
                    AND tc.type = 'P'))
                  ON (c.tabschema = k.tabschema
                  AND c.tabname = k.tabname
-                 AND c.colname = k.colname)
-             WHERE c.tabname = ".$this->_adapter->quote($tableName);
+                 AND c.colname = k.colname)        
+            WHERE "
+            . $this->_adapter->quoteInto('UPPER(c.tabname) = UPPER(?)', $tableName);
         if ($schemaName) {
-            $sql .= " AND c.tabschema = ".$this->_adapter->quote($schemaName);
-        }   
+            $sql .= $this->_adapter->quoteInto(' AND UPPER(c.tabschema) = UPPER(?)', $schemaName);
+        }        
         $sql .= " ORDER BY c.colno";
         
         $desc = array();
@@ -138,13 +139,11 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
             if ($row[$identityCol] == 'Y') {
                 $identity = true;
             }
-
-
-            // only colname needs to be case adjusted
+            
             $desc[$this->_adapter->foldCase($row[$colname])] = array(
-            'SCHEMA_NAME'      => $row[$tabschema],
-            'TABLE_NAME'       => $row[$tabname],
-            'COLUMN_NAME'      => $row[$colname],
+            'SCHEMA_NAME'      => $this->_adapter->foldCase($row[$tabschema]),
+            'TABLE_NAME'       => $this->_adapter->foldCase($row[$tabname]),
+            'COLUMN_NAME'      => $this->_adapter->foldCase($row[$colname]),
             'COLUMN_POSITION'  => $row[$colno]+1,
             'DATA_TYPE'        => $row[$typename],
             'DEFAULT'          => $row[$default],
@@ -175,16 +174,13 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
         $count = intval($count);
         if ($count < 0) {
             throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
-        } else if ($count == 0) {
-            $limit_sql = str_ireplace("SELECT", "SELECT * FROM (SELECT", $sql);
-            $limit_sql .= ") WHERE 0 = 1";
         } else {
             $offset = intval($offset);
             if ($offset < 0) {
                 throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
             }
           
-            if ($offset == 0) {
+            if ($offset == 0 && $count > 0) {
                 $limit_sql = $sql . " FETCH FIRST $count ROWS ONLY";
                 return $limit_sql;
             }
