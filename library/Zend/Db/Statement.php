@@ -249,9 +249,6 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
 
         // Finally we are assured that $position is valid
         $this->_bindParam[$position] =& $variable;
-        if ($this->_queryProfile) {
-            $this->_queryProfile->bindParam($position, $variable);
-        }
         return $this->_bindParam($position, $variable, $type, $length, $options);
     }
 
@@ -283,12 +280,15 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
                 $this->_queryProfile = $prof->getQueryProfile($q);
             }
             if ($params !== null) {
-                foreach ($params as $param => $variable) {
-                    if (is_int($param)) {
-                        $param++;
-                    }
-                    $this->_queryProfile->bindParam($param, $variable);
+                // correct if client passes 0-based
+                // positional parameters
+                if (array_key_exists(0, $params)) {
+                    array_unshift($params, null);
+                    unset($params[0]);
                 }
+                $this->_queryProfile->bindParams($params);
+            } else {
+                $this->_queryProfile->bindParams($this->_bindParam);
             }
             $this->_queryProfile->start();
         }

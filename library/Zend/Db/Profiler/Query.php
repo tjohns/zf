@@ -165,6 +165,17 @@ class Zend_Db_Profiler_Query
     }
 
     /**
+     * @param array $param
+     * @return void
+     */
+    public function bindParams(array $params)
+    {
+        foreach ($params as $param => $value) {
+            $this->bindParam($param, $value);
+        }
+    }
+
+    /**
      * @return array
      */
     public function getQueryParams()
