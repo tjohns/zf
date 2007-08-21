@@ -502,9 +502,10 @@ abstract class Zend_Controller_Request_Abstract
         <para>
             Расширяйте этот класс или один из его производных классов, если вам
             нужен класс запроса, взаимодействующий с определенной средой для
-            получения данных, использующихся в упомянутых выше задачах. Примеры
-            влкючают в себя <link linkend="zend.controller.request.http">среду
-            HTTP</link>, среду CLI или PHP-GTK.
+            получения данных, использующихся в упомянутых выше задачах.
+            Примерами могут быть <link
+            linkend="zend.controller.request.http">среда
+            HTTP</link>, среда CLI или PHP-GTK.
 <!--
             Extend this class, or one of its derivatives, when you need the
             request class to interact with a specific environment in order to
