@@ -82,6 +82,11 @@
         <xi:include href="module_specs/Zend_Controller-Exceptions.xml" />
         <xi:include href="module_specs/Zend_Controller-Migration.xml" />
     </chapter>
+    <chapter id="zend.currency">
+        <title>Zend_Currency</title>
+        <xi:include href="module_specs/Zend_Currency-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Currency-Useage.xml" />
+    </chapter>
     <chapter id="zend.date">
         <title>Zend_Date</title>
         <xi:include href="module_specs/Zend_Date-Introduction.xml" />
