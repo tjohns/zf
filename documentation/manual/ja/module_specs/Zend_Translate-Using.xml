@@ -436,7 +436,7 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
         <example id="zend.translate.using.source.csv.example">
             <title>CSV ファイルの例</title>
             <programlisting><![CDATA[
-﻿#Example csv file
+# csv ファイルの例
 message1;Nachricht1
 message2;Nachricht2]]>
             </programlisting>
@@ -448,7 +448,13 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         </example>
 
         <para>
-            CSV 文字列の標準の区切り文字は '<code>;</code>' 記号です。
+            CSV 文字列の標準の区切り文字は '<code>;</code>' 記号です
+            <footnote>
+                <para>
+                    訳注: カンマ以外で区切ったら、もはや CSV でも何でもないのですが、
+                    そのあたりはあまり気にしない方向で :-)
+                </para>
+            </footnote>。
             しかし、必ずこれでなければならないというわけではありません。
             オプション '<code>separator</code>' を使用すると、
             別の区切り文字を使用することができます。
@@ -465,7 +471,7 @@ $translate->addTranslation('path/to/other.csv', 'fr');]]>
         <example id="zend.translate.using.source.csv.example2">
             <title>CSV ファイルの例 その 2</title>
             <programlisting><![CDATA[
-﻿#Example csv file
+# csv ファイルの例
 # 元メッセージは 'message,1'
 message,,1,Nachricht1
 # 翻訳は 'Nachricht,2'
