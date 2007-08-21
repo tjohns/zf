@@ -54,6 +54,38 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->assertTrue($desc['bug_id']['IDENTITY']);
     }
 
+    public function testAdapterDescribeTableAttributeColumn()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
+
+        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME'], 'Expected column name to be product_name');
+        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION'], 'Expected column position to be 2');
+        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE'], 'Expected data type to be VARCHAR');
+        $this->assertEquals('',                  $desc['product_name']['DEFAULT'], 'Expected default to be empty string');
+        $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
+        $this->assertEquals(0,                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        $this->assertEquals(0,                   $desc['product_name']['PRECISION'], 'Expected precision to be 0');
+        $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
+        $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
+        $this->assertFalse(                      $desc['product_name']['IDENTITY'], 'Expected product_name to return false for IDENTITY');
+    }
+
+    public function testAdapterDescribeTablePrimaryKeyColumn()
+    {
+        $desc = $this->_db->describeTable('zfproducts');
+
+        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME'], 'Expected column name to be product_id');
+        $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION'], 'Expected column position to be 1');
+        $this->assertEquals('',                  $desc['product_id']['DEFAULT'], 'Expected default to be empty string');
+        $this->assertFalse(                      $desc['product_id']['NULLABLE'], 'Expected product_id not to be nullable');
+        $this->assertEquals(0,                   $desc['product_id']['SCALE'], 'Expected scale to be 0');
+        $this->assertEquals(0,                   $desc['product_id']['PRECISION'], 'Expected precision to be 0');
+        $this->assertTrue(                       $desc['product_id']['PRIMARY'], 'Expected product_id to be a primary key');
+        $this->assertEquals(1,                   $desc['product_id']['PRIMARY_POSITION']);
+    }
+
     /**
      * Used by _testAdapterOptionCaseFoldingNatural()
      * DB2 and Oracle return identifiers in uppercase naturally,

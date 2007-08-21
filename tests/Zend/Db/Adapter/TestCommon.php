@@ -274,14 +274,14 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $desc = $this->_db->describeTable('zfproducts');
 
-        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME']);
-        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME']);
-        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION']);
-        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
-        $this->assertEquals('',                  $desc['product_name']['DEFAULT']);
+        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME'], 'Expected column name to be product_name');
+        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION'], 'Expected column position to be 2');
+        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE'], 'Expected data type to be VARCHAR');
+        $this->assertEquals('',                  $desc['product_name']['DEFAULT'], 'Expected default to be empty string');
         $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
-        $this->assertEquals(0,                   $desc['product_name']['SCALE']);
-        $this->assertEquals(0,                   $desc['product_name']['PRECISION']);
+        $this->assertNull(                       $desc['product_name']['SCALE'], 'Expected scale to be null');
+        $this->assertNull(                       $desc['product_name']['PRECISION'], 'Expected precision to be null');
         $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
         $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
         $this->assertFalse(                      $desc['product_name']['IDENTITY'], 'Expected product_name to return false for IDENTITY');
@@ -345,13 +345,13 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $desc = $this->_db->describeTable('zfproducts');
 
-        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME']);
-        $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME']);
-        $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION']);
-        $this->assertEquals('',                  $desc['product_id']['DEFAULT']);
+        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME'], 'Expected column name to be product_id');
+        $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION'], 'Expected column position to be 1');
+        $this->assertEquals('',                  $desc['product_id']['DEFAULT'], 'Expected default to be empty string');
         $this->assertFalse(                      $desc['product_id']['NULLABLE'], 'Expected product_id not to be nullable');
-        $this->assertEquals(0,                   $desc['product_id']['SCALE']);
-        $this->assertEquals(0,                   $desc['product_id']['PRECISION']);
+        $this->assertNull(                       $desc['product_id']['SCALE'], 'Expected scale to be null');
+        $this->assertNull(                       $desc['product_id']['PRECISION'], 'Expected precision to be null');
         $this->assertTrue(                       $desc['product_id']['PRIMARY'], 'Expected product_id to be a primary key');
         $this->assertEquals(1,                   $desc['product_id']['PRIMARY_POSITION']);
     }
