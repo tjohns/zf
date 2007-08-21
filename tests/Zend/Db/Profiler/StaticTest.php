@@ -117,7 +117,7 @@ class Zend_Db_Profiler_StaticTest extends Zend_Db_TestSetup
     }
 
     /**
-     * Ensures that setFilterQueryType() behaves as expected.
+     * Ensures that setFilterQueryType() remembers the setting.
      *
      * @return void
      */

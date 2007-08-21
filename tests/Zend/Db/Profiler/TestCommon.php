@@ -210,4 +210,57 @@ abstract class Zend_Db_Profiler_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(array(1 => 3, 2 => 'FIXED'), $params);
     }
 
+    /**
+     * Ensures that setFilterQueryType() actually filters
+     *
+     * @return void
+     */
+    protected function _testProfilerSetFilterQueryTypeCommon($queryType)
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs', true);
+        $bug_status = $this->_db->quoteIdentifier('bug_status', true);
+
+        $prof = $this->_db->getProfiler();
+        $prof->setEnabled(true);
+
+        $this->assertSame($prof->setFilterQueryType($queryType), $prof);
+        $this->assertEquals($queryType, $prof->getFilterQueryType());
+
+        $this->_db->query("SELECT * FROM $bugs");
+        $this->_db->query("INSERT INTO $bugs ($bug_status) VALUES (?)", array('NEW'));
+        $this->_db->query("DELETE FROM $bugs");
+        $this->_db->query("UPDATE $bugs SET $bug_status = ?", array('FIXED'));
+
+        $qps = $prof->getQueryProfiles();
+        $this->assertType('array', $qps, 'Expecting some query profiles, got none');
+        foreach ($qps as $qp) {
+            $qtype = $qp->getQueryType();
+            $this->assertEquals($queryType, $qtype,
+                "Found query type $qtype, which should have been filtered out");
+        }
+
+        $prof->setEnabled(false);
+    }
+
+    public function testProfilerSetFilterQueryTypeInsert()
+    {
+        $this->_testProfilerSetFilterQueryTypeCommon(Zend_Db_Profiler::INSERT);
+    }
+
+    public function testProfilerSetFilterQueryTypeUpdate()
+    {
+        $this->_testProfilerSetFilterQueryTypeCommon(Zend_Db_Profiler::UPDATE);
+    }
+
+    public function testProfilerSetFilterQueryTypeDelete()
+    {
+        $this->_testProfilerSetFilterQueryTypeCommon(Zend_Db_Profiler::DELETE);
+    }
+
+    public function testProfilerSetFilterQueryTypeSelect()
+    {
+        $this->_testProfilerSetFilterQueryTypeCommon(Zend_Db_Profiler::SELECT);
+    }
+
+
 }

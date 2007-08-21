@@ -68,7 +68,6 @@ class Zend_Db_Profiler_Query
     /**
      * @var array
      */
-    protected $_parameterValues = array();
 
     /**
      * Class constructor.  A query is about to be started, save the query text ($query) and its
@@ -92,7 +91,7 @@ class Zend_Db_Profiler_Query
      */
     public function __clone()
     {
-        $this->_parameterValues = array();
+        $this->_boundParams = array();
         $this->_endedMicrotime = null;
         $this->start();
     }
@@ -117,10 +116,6 @@ class Zend_Db_Profiler_Query
      */
     public function end()
     {
-        $this->_parameterValues = array();
-        foreach ($this->_boundParams as $key => $value) {
-            $this->_parameterValues[$key] = $value;
-        }
         $this->_endedMicrotime = microtime(true);
     }
 
@@ -159,7 +154,7 @@ class Zend_Db_Profiler_Query
      * @param mixed $variable
      * @return void
      */
-    public function bindParam($param, &$variable)
+    public function bindParam($param, $variable)
     {
         $this->_boundParams[$param] = $variable;
     }
@@ -170,6 +165,10 @@ class Zend_Db_Profiler_Query
      */
     public function bindParams(array $params)
     {
+        if (array_key_exists(0, $params)) {
+            array_unshift($params, null);
+            unset($params[0]);
+        }
         foreach ($params as $param => $value) {
             $this->bindParam($param, $value);
         }
@@ -180,7 +179,7 @@ class Zend_Db_Profiler_Query
      */
     public function getQueryParams()
     {
-        return $this->_parameterValues;
+        return $this->_boundParams;
     }
 
     /**
