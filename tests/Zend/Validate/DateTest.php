@@ -84,7 +84,35 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
                                 "'$input' expected to be " . ($result ? '' : 'in') . 'valid');
         }
     }
+    
+    /**
+     * Ensures that characters trailing an otherwise valid date cause the input to be invalid
+     *
+     * @see    http://framework.zend.com/issues/browse/ZF-1804
+     * @return void
+     */
+    public function testCharactersTrailingInvalid()
+    {
+        $dateValid = '2007-08-02';
+        $charactersTrailing = 'something';
+        $this->assertTrue($this->_validator->isValid($dateValid));
+        $this->assertFalse($this->_validator->isValid($dateValid . $charactersTrailing));
+    }
 
+    /**
+     * Ensures that characters leading an otherwise valid date cause the input to be invalid
+     *
+     * @see    http://framework.zend.com/issues/browse/ZF-1804
+     * @return void
+     */
+    public function testCharactersLeadingInvalid()
+    {
+        $dateValid = '2007-08-02';
+        $charactersLeading = 'something';
+        $this->assertTrue($this->_validator->isValid($dateValid));
+        $this->assertFalse($this->_validator->isValid($charactersLeading . $dateValid));
+    }
+    
     /**
      * Ensures that getMessages() returns expected default value
      *
