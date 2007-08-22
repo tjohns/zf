@@ -23,19 +23,24 @@
 
 
 /**
+ * @see Zend_Config
+ */
+require_once 'Zend/Config.php';
+
+/**
  * @see Zend_Db
  */
 require_once 'Zend/Db.php';
 
 /**
- * @see Zend_Db_Profiler
- */
-require_once 'Zend/Db/Profiler.php';
-
-/**
  * @see Zend_Db_Select
  */
 require_once 'Zend/Db/Select.php';
+
+/**
+ * @see Zend_Loader
+ */
+require_once 'Zend/Loader.php';
 
 
 /**
@@ -65,11 +70,19 @@ abstract class Zend_Db_Adapter_Abstract
     protected $_fetchMode = Zend_Db::FETCH_ASSOC;
 
     /**
-     * Query profiler
+     * Query profiler object, of type Zend_Db_Profiler
+     * or a subclass of that.
      *
      * @var Zend_Db_Profiler
      */
     protected $_profiler;
+
+    /**
+     * Default class name for the profiler object.
+     *
+     * @var string
+     */
+    protected $_defaultProfilerClass = 'Zend_Db_Profiler';
 
     /**
      * Database connection
@@ -85,7 +98,7 @@ abstract class Zend_Db_Adapter_Abstract
      * Zend_Db::CASE_LOWER
      * Zend_Db::CASE_UPPER
      *
-     * @access protected
+     * @var integer
      */
     protected $_caseFolding = Zend_Db::CASE_NATURAL;
 
@@ -96,7 +109,7 @@ abstract class Zend_Db_Adapter_Abstract
      * If false, developer must quote identifiers themselves
      * by calling quoteIdentifier().
      *
-     * @access protected
+     * @var bool
      */
     protected $_autoQuoteIdentifiers = true;
 
@@ -206,15 +219,13 @@ abstract class Zend_Db_Adapter_Abstract
         }
 
         // create a profiler object
-        $enabled = false;
-        if (array_key_exists('profiler', $this->_config)) {
-            $enabled = (bool) $this->_config['profiler'];
-            unset($this->_config['profiler']);
+        $profiler = false;
+        if (array_key_exists(Zend_Db::PROFILER, $this->_config)) {
+            $profiler = $this->_config[Zend_Db::PROFILER];
+            unset($this->_config[Zend_Db::PROFILER]);
         }
-
-        $this->_profiler = new Zend_Db_Profiler($enabled);
+        $this->setProfiler($profiler);
     }
-
     /**
      * Check for config options that are mandatory.
      * Throw exceptions if any are missing.
@@ -258,6 +269,79 @@ abstract class Zend_Db_Adapter_Abstract
         $this->_connect();
         return $this->_connection;
     }
+
+    /**
+     * Set the adapter's profiler object.
+     * The argument may be boolean, string, associative array, an instance of 
+     * Zend_Db_Profiler, or an instance of Zend_Config.
+     *
+     * A boolean argument sets the profiler to enabled if true, or disabled if 
+     * false.  The profiler class is the adapter's default profiler class,
+     * e.g. Zend_Db_Profiler.
+     *
+     * A string argument names the class to use for a custom profiler, and the 
+     * profiler instance created defaults to disabled.  The profiler must be 
+     * enabled in a separate call to setEnabled().
+     *
+     * An instance of Zend_Db_Profiler sets the adapter's instance to that 
+     * object.  The profiler must be enabled in a separate call to 
+     * setEnabled().
+     *
+     * An associative array argument may contain any of the keys 'enabled', 
+     * 'class', or 'instance', which correspond to the boolean, string, and 
+     * object types documented above.
+     *
+     * An object of type Zend_Config may contain either of the properties 
+     * 'enabled' or 'class', which are treated as the array keys described 
+     * above.  A Zend_Config object cannot contain an object instance.
+     *
+     * @param mixed $profiler
+     * @return void
+     * @throws Zend_Db_Profiler_Exception if the object instance or class specified 
+     * is not Zend_Db_Profiler or an extension of that class.
+     */
+    public function setProfiler($profiler)
+    {
+        $enabled          = false;
+        $profilerClass    = $this->_defaultProfilerClass;
+        $profilerInstance = null;
+
+        if (is_bool($profiler)) {
+            $enabled = $profiler;
+        }
+        if (is_string($profiler)) {
+            $profilerClass = $profiler;
+        }
+        if ($profiler instanceof Zend_Db_Profiler) {
+            $profilerInstance = $profiler;
+        }
+        if ($profiler instanceof Zend_Config) {
+            $profiler = $profiler->toArray();
+        }
+        if (is_array($profiler)) {
+            if (isset($profiler['enabled'])) {
+                $enabled = (bool) $profiler['enabled'];
+            }
+            if (isset($profiler['class'])) {
+                $profilerClass = $profiler['class'];
+            }
+            if (isset($profiler['instance'])) {
+                $profilerInstance = $profiler['instance'];
+            }
+        }
+
+        if ($profilerInstance === null) {
+            Zend_Loader::loadClass($profilerClass);
+            $profilerInstance = new $profilerClass();
+        }
+        if (!$profilerInstance instanceof Zend_Db_Profiler) {
+            require_once 'Zend/Db/Profiler/Exception.php';
+            throw new Zend_Db_Profiler_Exception("Class '$profilerClass' does not extend Zend_Db_Profiler");
+        }
+        $profilerInstance->setEnabled($enabled);
+        $this->_profiler = $profilerInstance;
+    }
+
 
     /**
      * Returns the profiler for this adapter.

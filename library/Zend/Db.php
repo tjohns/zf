@@ -44,6 +44,11 @@ class Zend_Db
 {
 
     /**
+     * Use the PROFILER constant in the config of a Zend_Db_Adapter.
+     */
+    const PROFILER = 'profiler';
+
+    /**
      * Use the CASE_FOLDING constant in the config of a Zend_Db_Adapter.
      */
     const CASE_FOLDING = 'caseFolding';

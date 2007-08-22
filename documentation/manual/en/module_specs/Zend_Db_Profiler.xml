@@ -23,11 +23,11 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Db.php';
 
-$params = array (
+$params = array(
     'host'     => '127.0.0.1',
-    'username' => 'malory',
-    'password' => '******',
-    'dbname'   => 'camelot',
+    'username' => 'webuser',
+    'password' => 'xxxxxxxx',
+    'dbname'   => 'test'
     'profiler' => true  // turn on profiler; set to false to disable (default)
 );
 
@@ -39,6 +39,84 @@ $db->getProfiler()->setEnabled(false);
 // turn on profiler:
 $db->getProfiler()->setEnabled(true);]]>
         </programlisting>
+
+        <para>
+            The value of the 'profiler' option is flexible. It is interpreted
+            differently depending on its type.  Most often, you should use a
+            simple boolean value, but other values enable you to customize the
+            profiler behavior.
+        </para>
+
+        <para>
+            A boolean argument sets the profiler to enabled if it is a 
+            <code>true</code> value, or disabled if <code>false</code>.  The
+            profiler class is the adapter's default profiler class, e.g.
+            Zend_Db_Profiler.
+            <programlisting role="php"><![CDATA[
+$params['profiler'] = true;
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            A string argument names the class to use for a custom profiler.
+            The class must be Zend_Db_Profiler or a subclass.  The created
+            profiler instance is disabled by default, and must be enabled in a
+            separate call to <code>setEnabled()</code>.
+            <programlisting role="php"><![CDATA[
+$params['profiler'] = 'MyProject_Db_Profiler'
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+$db->getProfiler()->setEnabled(true);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            An object instance of Zend_Db_Profiler makes the adapter use that
+            object.  The object type must be Zend_Db_Profiler or a subclass.
+            The profiler must be enabled separately, by a call to
+            <code>setEnabled()</code>.
+            <programlisting role="php"><![CDATA[
+$profiler = MyProject_Db_Profiler(true);
+$params['profiler'] = $profiler;
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+$db->getProfiler()->setEnabled(true);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            An argument can be an associative array containing any or all of
+            the keys 'enabled', 'class', or 'instance', which correspond to the
+            boolean, string, and object types documented above.
+            <programlisting role="php"><![CDATA[
+$params['profiler'] = array(
+    'enabled' => true,
+    'class' => 'MyProject_Db_Profiler'
+);
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            An argument can be an object of type Zend_Config containing either
+            or both of the properties 'enabled' or 'class', which are treated
+            as the array keys described above.  A Zend_Config object cannot
+            contain an object instance.  For example, a file "config.ini" might
+            contain the following data:
+            <programlisting role="php"><![CDATA[
+[main]
+db.profiler.class = "MyProject_Db_Profiler"
+db.profiler.enabled = true]]>
+            </programlisting>
+
+            This configuration can be applied by the following PHP code:
+
+            <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('config.ini', 'main');
+$params['profiler'] = $config->db->profiler;
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.profiler.using">
