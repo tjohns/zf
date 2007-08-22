@@ -110,6 +110,35 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     private $_segFileSizes;
 
+    /**
+     * Delete file generation number
+     *
+     * -1 means 'there is no delete file'
+     *  0 means pre-2.1 format delete file
+     *  X specifies used delete file
+     *
+     * @var integer
+     */
+    private $_delGen;
+
+    /**
+     * Segment has single norms file
+     *
+     * If true then one .nrm file is used for all fields
+     * Otherwise .fN files are used
+     *
+     * @var boolean
+     */
+    private $_hasSingleNormFile;
+
+    /**
+     * Use compound segment file (*.cfs) to collect all other segment files
+     * (excluding .del files)
+     *
+     * @var boolean
+     */
+    private $_isCompound;
+
 
     /**
      * File system adapter.
@@ -136,7 +165,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      *
      * @var mixed
      */
-    private $_deleted;
+    private $_deleted = null;
 
     /**
      * $this->_deleted update flag
@@ -149,19 +178,25 @@ class Zend_Search_Lucene_Index_SegmentInfo
     /**
      * Zend_Search_Lucene_Index_SegmentInfo constructor
      *
+     * @param Zend_Search_Lucene_Storage_Directory $directory
      * @param string $name
      * @param integer $docCount
-     * @param Zend_Search_Lucene_Storage_Directory $directory
+     * @param integer $delGen
+     * @param boolean $isCompound
      */
-    public function __construct($name, $docCount, $directory)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name, $docCount, $delGen = 0, $hasSingleNormFile = false, $isCompound = true)
     {
-        $this->_name = $name;
-        $this->_docCount = $docCount;
         $this->_directory = $directory;
+        $this->_name              = $name;
+        $this->_docCount          = $docCount;
+        $this->_hasSingleNormFile = $hasSingleNormFile;
+        $this->_delGen            = $delGen;
+        $this->_isCompound        = $isCompound;
+
         $this->_termDictionary = null;
 
         $this->_segFiles = array();
-        if ($this->_directory->fileExists($name . '.cfs')) {
+        if ($this->_isCompound) {
             $cfsFile = $this->_directory->getFileObject($name . '.cfs');
             $segFilesCount = $cfsFile->readVInt();
 
@@ -201,37 +236,83 @@ class Zend_Search_Lucene_Index_SegmentInfo
         array_multisort($fieldNames, SORT_ASC, SORT_REGULAR, $fieldNums);
         $this->_fieldsDicPositions = array_flip($fieldNums);
 
-        try {
-            $delFile = $this->openCompoundFile('.del');
+        if ($this->_delGen == -1) {
+            // There is no delete file for this segment
+            // Do nothing
+        } else if ($this->_delGen == 0) {
+            // It's a segment with pre-2.1 format delete file
+            // Try to find delete file
+            try {
+                // '.del' files always stored in a separate file
+                // Segment compound is not used
+                $delFile = $this->_directory->getFileObject($this->_name . '.del');
 
-            $byteCount = $delFile->readInt();
-            $byteCount = ceil($byteCount/8);
-            $bitCount  = $delFile->readInt();
+                $byteCount = $delFile->readInt();
+                $byteCount = ceil($byteCount/8);
+                $bitCount  = $delFile->readInt();
 
-            if ($bitCount == 0) {
-                $delBytes = '';
-            } else {
-                $delBytes = $delFile->readBytes($byteCount);
-            }
+                if ($bitCount == 0) {
+                    $delBytes = '';
+                } else {
+                    $delBytes = $delFile->readBytes($byteCount);
+                }
 
-            if (extension_loaded('bitset')) {
-                $this->_deleted = $delBytes;
-            } else {
-                $this->_deleted = array();
-                for ($count = 0; $count < $byteCount; $count++) {
-                    $byte = ord($delBytes{$count});
-                    for ($bit = 0; $bit < 8; $bit++) {
-                        if ($byte & (1<<$bit)) {
-                            $this->_deleted[$count*8 + $bit] = 1;
+                if (extension_loaded('bitset')) {
+                    $this->_deleted = $delBytes;
+                } else {
+                    $this->_deleted = array();
+                    for ($count = 0; $count < $byteCount; $count++) {
+                        $byte = ord($delBytes{$count});
+                        for ($bit = 0; $bit < 8; $bit++) {
+                            if ($byte & (1<<$bit)) {
+                                $this->_deleted[$count*8 + $bit] = 1;
+                            }
                         }
                     }
                 }
+            } catch(Zend_Search_Exception $e) {
+                if (strpos($e->getMessage(), 'is not readable') === false ) {
+                    throw $e;
+                }
+                // There is no delete file
+                // Do nothing
             }
-        } catch(Zend_Search_Exception $e) {
-            if (strpos($e->getMessage(), 'compound file doesn\'t contain') !== false ) {
-                $this->_deleted = null;
+        } else {
+            // It's 2.1+ format delete file
+            $delFile = $this->_directory->getFileObject($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
+
+            $format = $delFile->readInt();
+
+            if ($format == (int)0xFFFFFFFF) {
+                /**
+                 * @todo Implement support of DGaps delete file format.
+                 * See Lucene file format for details - http://lucene.apache.org/java/docs/fileformats.html#Deleted%20Documents
+                 */
+                throw new Zend_Search_Lucene_Exception('DGaps delete file format is not supported. Optimize index to use it with Zend_Search_Lucene');
             } else {
-                throw $e;
+                // $format is actually byte count
+                $byteCount = ceil($format/8);
+                $bitCount  = $delFile->readInt();
+
+                if ($bitCount == 0) {
+                    $delBytes = '';
+                } else {
+                    $delBytes = $delFile->readBytes($byteCount);
+                }
+
+                if (extension_loaded('bitset')) {
+                    $this->_deleted = $delBytes;
+                } else {
+                    $this->_deleted = array();
+                    for ($count = 0; $count < $byteCount; $count++) {
+                        $byte = ord($delBytes{$count});
+                        for ($bit = 0; $bit < 8; $bit++) {
+                            if ($byte & (1<<$bit)) {
+                                $this->_deleted[$count*8 + $bit] = 1;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -248,13 +329,12 @@ class Zend_Search_Lucene_Index_SegmentInfo
     {
         $filename = $this->_name . $extension;
 
-        // Try to open common file first
-        if ($this->_directory->fileExists($filename)) {
+        if (!$this->_isCompound) {
             return $this->_directory->getFileObject($filename, $shareHandler);
         }
 
         if( !isset($this->_segFiles[$filename]) ) {
-            throw new Zend_Search_Lucene_Exception('Index compound file doesn\'t contain '
+            throw new Zend_Search_Lucene_Exception('Segment compound file doesn\'t contain '
                                        . $filename . ' file.' );
         }
 
@@ -530,15 +610,19 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
         $tisFile = $this->openCompoundFile('.tis');
         $tiVersion = $tisFile->readInt();
-        if ($tiVersion != (int)0xFFFFFFFE) {
+        if ($tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */  &&
+            $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */) {
             throw new Zend_Search_Lucene_Exception('Wrong TermInfoFile file format');
         }
 
         $termCount     = $tisFile->readLong();
         $indexInterval = $tisFile->readInt();
         $skipInterval  = $tisFile->readInt();
+        if ($tiVersion == (int)0xFFFFFFFD /* 2.1+ format */) {
+            $maxSkipLevels = $tisFile->readInt();
+        }
 
-        $tisFile->seek($prevTermInfo[4] /* indexPointer */ - 20 /* header size*/, SEEK_CUR);
+        $tisFile->seek($prevTermInfo[4] /* indexPointer */ - (($tiVersion == (int)0xFFFFFFFD)? 24 : 20) /* header size*/, SEEK_CUR);
 
         $termValue    = $prevTerm[1] /* text */;
         $termFieldNum = $prevTerm[0] /* field */;
@@ -670,11 +754,29 @@ class Zend_Search_Lucene_Index_SegmentInfo
      * Load normalizatin factors from an index file
      *
      * @param integer $fieldNum
+     * @throws Zend_Search_Lucene_Exception
      */
     private function _loadNorm($fieldNum)
     {
-        $fFile = $this->openCompoundFile('.f' . $fieldNum);
-        $this->_norms[$fieldNum] = $fFile->readBytes($this->_docCount);
+        if ($this->_hasSingleNormFile) {
+            $normfFile = $this->openCompoundFile('.nrm');
+
+            $header              = $normfFile->readBytes(3);
+            $headerFormatVersion = $normfFile->readByte();
+
+            if ($header != 'NRM'  ||  $headerFormatVersion != (int)0xFF) {
+                throw new  Zend_Search_Lucene_Exception('Wrong norms file format.');
+            }
+
+            foreach ($this->_fields as $fieldNum => $fieldInfo) {
+                if ($fieldInfo->isIndexed) {
+                    $this->_norms[$fieldNum] = $normfFile->readBytes($this->_docCount);
+                }
+            }
+        } else {
+            $fFile = $this->openCompoundFile('.f' . $fieldNum);
+            $this->_norms[$fieldNum] = $fFile->readBytes($this->_docCount);
+        }
     }
 
     /**
@@ -781,11 +883,15 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Write changes if it's necessary.
+     *
+     * Returns new delete file generation number if it was written or -1 otherwise
+     *
+     * @return integer
      */
     public function writeChanges()
     {
         if (!$this->_deletedDirty) {
-            return;
+            return -1;
         }
 
         if (extension_loaded('bitset')) {
@@ -807,12 +913,27 @@ class Zend_Search_Lucene_Index_SegmentInfo
         }
 
 
-        $delFile = $this->_directory->createFile($this->_name . '.del');
+        if ($this->_delGen == 0) {
+            // It's pre-2.1 delete file
+            $delFile = $this->_directory->createFile($this->_name . '.del');
+        } else {
+            if ($this->_delGen == -1) {
+                // There was no delete file for this segment up to now
+                $this->_delGen = 1;
+            } else {
+                $this->_delGen++;
+            }
+
+            $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($generation, 10, 36) . '.del');
+        }
+
         $delFile->writeInt($this->_docCount);
         $delFile->writeInt($bitCount);
         $delFile->writeBytes($delBytes);
 
         $this->_deletedDirty = false;
+
+        return $this->_delGen;
     }
 
 
@@ -965,7 +1086,8 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_tisFileOffset = $this->_tisFile->tell();
 
         $tiVersion = $this->_tisFile->readInt();
-        if ($tiVersion != (int)0xFFFFFFFE) {
+        if ($tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */  &&
+            $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */) {
             throw new Zend_Search_Lucene_Exception('Wrong TermInfoFile file format');
         }
 
@@ -973,6 +1095,9 @@ class Zend_Search_Lucene_Index_SegmentInfo
               $this->_termNum = $this->_tisFile->readLong(); // Read terms count
         $this->_indexInterval = $this->_tisFile->readInt();  // Read Index interval
         $this->_skipInterval  = $this->_tisFile->readInt();  // Read skip interval
+        if ($tiVersion == (int)0xFFFFFFFD /* 2.1+ format */) {
+            $maxSkipLevels = $this->_tisFile->readInt();
+        }
 
         if ($this->_frqFile !== null) {
             $this->_frqFile = null;

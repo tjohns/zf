@@ -155,7 +155,42 @@ class Zend_Search_Lucene_Index_Writer
                                              '.sti' => '.sti' );
 
     /**
-     * Opens the index for writing
+     * Create empty index
+     *
+     * @param Zend_Search_Lucene_Storage_Directory $directory
+     * @param integer $generation
+     */
+    public static function createIndex(Zend_Search_Lucene_Storage_Directory $directory, $generation)
+    {
+        foreach ($directory->fileList() as $file) {
+            if ($file == 'deletable' ||
+                $file == 'segments'  ||
+                isset(self::$_indexExtensions[ substr($file, strlen($file)-4)]) ||
+                preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
+                    $directory->deleteFile($file);
+                }
+        }
+        $segmentsFile = $directory->createFile('segments');
+        $segmentsFile->writeInt((int)0xFFFFFFFF);
+
+        // write version (is initialized by current time
+        // $segmentsFile->writeLong((int)microtime(true));
+        $version = microtime(true);
+        $segmentsFile->writeInt((int)($version/((double)0xFFFFFFFF + 1)));
+        $segmentsFile->writeInt((int)($version & 0xFFFFFFFF));
+
+        // write name counter
+        $segmentsFile->writeInt(0);
+        // write segment counter
+        $segmentsFile->writeInt(0);
+
+        $deletableFile = $directory->createFile('deletable');
+        // write counter
+        $deletableFile->writeInt(0);
+    }
+
+    /**
+     * Open the index for writing
      *
      * IndexWriter constructor needs Directory as a parameter. It should be
      * a string with a path to the index folder or a Directory object.
@@ -166,43 +201,15 @@ class Zend_Search_Lucene_Index_Writer
      * @param array $segmentInfos
      * @param boolean $create
      */
-    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, &$segmentInfos, $create = false)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, &$segmentInfos)
     {
         $this->_directory    = $directory;
         $this->_segmentInfos = &$segmentInfos;
 
-        if ($create) {
-            foreach ($this->_directory->fileList() as $file) {
-                if ($file == 'deletable' ||
-                    $file == 'segments'  ||
-                    isset(self::$_indexExtensions[ substr($file, strlen($file)-4)]) ||
-                    preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
-                        $this->_directory->deleteFile($file);
-                    }
-            }
-            $segmentsFile = $this->_directory->createFile('segments');
-            $segmentsFile->writeInt((int)0xFFFFFFFF);
-
-            // write version (is initialized by current time
-            // $segmentsFile->writeLong((int)microtime(true));
-            $version = microtime(true);
-            $segmentsFile->writeInt((int)($version/((double)0xFFFFFFFF + 1)));
-            $segmentsFile->writeInt((int)($version & 0xFFFFFFFF));
-
-            // write name counter
-            $segmentsFile->writeInt(0);
-            // write segment counter
-            $segmentsFile->writeInt(0);
-
-            $deletableFile = $this->_directory->createFile('deletable');
-            // write counter
-            $deletableFile->writeInt(0);
-        } else {
-            $segmentsFile = $this->_directory->getFileObject('segments');
-            $format = $segmentsFile->readInt();
-            if ($format != (int)0xFFFFFFFF) {
-                throw new Zend_Search_Lucene_Exception('Wrong segments file format');
-            }
+        $segmentsFile = $this->_directory->getFileObject('segments');
+        $format = $segmentsFile->readInt();
+        if ($format != (int)0xFFFFFFFF) {
+            throw new Zend_Search_Lucene_Exception('Wrong segments file format');
         }
     }
 
@@ -280,7 +287,7 @@ class Zend_Search_Lucene_Index_Writer
     {
         // Try to get exclusive non-blocking lock to the 'index.optimization.lock'
         // Skip optimization if it's performed by other process right now
-        $optimizationLock = $this->_directory->createFile('index.optimization.lock');
+        $optimizationLock = $this->_directory->createFile('optimization.lock');
         if (!$optimizationLock->lock(LOCK_EX,true)) {
             return;
         }
@@ -418,9 +425,9 @@ class Zend_Search_Lucene_Index_Writer
         // Load segments, created by other process
         foreach ($segments as $segName => $segSize) {
             // Load new segments
-            $this->_segmentInfos[] = new Zend_Search_Lucene_Index_SegmentInfo($segName,
-                                                                              $segSize,
-                                                                              $this->_directory);
+            $this->_segmentInfos[] = new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
+                                                                              $segName,
+                                                                              $segSize);
         }
     }
 

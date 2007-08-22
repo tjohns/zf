@@ -46,7 +46,7 @@ class Zend_Search_Lucene_Index_DictionaryLoaderTest extends PHPUnit_Framework_Te
         list($termDictionary, $termDictionaryInfos) = unserialize($stiFileData);
 
 
-        $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo('_1', 2, $directory);
+        $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2);
         $tiiFile = $segmentInfo->openCompoundFile('.tii');
         $tiiFileData = $tiiFile->readBytes($segmentInfo->compoundFileLength('.tii'));
 

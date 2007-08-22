@@ -44,7 +44,7 @@ class Zend_Search_Lucene_Index_SegmentMergerTest extends PHPUnit_Framework_TestC
         $segmentMerger = new Zend_Search_Lucene_Index_SegmentMerger($outputDirectory, 'mergedSegment');
 
         foreach ($segmentsList as $segmentName) {
-            $segmentMerger->addSource(new Zend_Search_Lucene_Index_SegmentInfo($segmentName, 2, $segmentsDirectory));
+            $segmentMerger->addSource(new Zend_Search_Lucene_Index_SegmentInfo($segmentsDirectory, $segmentName, 2));
         }
 
         $mergedSegment = $segmentMerger->merge();

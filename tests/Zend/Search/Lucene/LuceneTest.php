@@ -203,8 +203,9 @@ class Zend_Search_Lucene_LuceneTest extends PHPUnit_Framework_TestCase
         $index->delete(2);
         $this->assertTrue($index->isDeleted(2));
 
-        unset($index);
+        $index->commit();
 
+        unset($index);
 
         $index1 = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
         $this->assertTrue($index1->isDeleted(2));

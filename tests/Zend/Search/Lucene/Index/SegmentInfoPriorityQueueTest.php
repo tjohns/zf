@@ -42,7 +42,7 @@ class Zend_Search_Lucene_Index_SegmentInfoPriorityQueueTest extends PHPUnit_Fram
         $segmentInfoQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
 
         foreach ($segmentsList as $segmentName) {
-            $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($segmentName, 2, $directory);
+            $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, $segmentName, 2);
             $segmentInfo->reset();
 
             // Skip "empty" segments
