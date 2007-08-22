@@ -21,11 +21,11 @@
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Db.php';
 
-$params = array (
+$params = array(
     'host'     => '127.0.0.1',
-    'username' => 'malory',
-    'password' => '******',
-    'dbname'   => 'camelot',
+    'username' => 'webuser',
+    'password' => 'xxxxxxxx',
+    'dbname'   => 'test'
     'profiler' => true  // プロファイラを使用します。false (デフォルト) にすると無効になります。
 );
 
@@ -37,6 +37,88 @@ $db->getProfiler()->setEnabled(false);
 // プロファイラを有効にします
 $db->getProfiler()->setEnabled(true);]]>
         </programlisting>
+
+        <para>
+            'profiler' オプションの値には柔軟性があり、
+            その型に応じて、さまざまな形式で解釈されます。
+            たいていは単純な boolean 値を指定することになるでしょうが、
+            その他の値を指定することでプロファイラの振る舞いをカスタマイズすることも可能です。
+        </para>
+
+        <para>
+            boolean 引数 <code>true</code> を指定すると、
+            プロファイラを有効にします。あるいは <code>false</code>
+            にすると、プロファイラを無効にします。プロファイラのクラスは、
+            そのアダプタのデフォルトのプロファイラクラス (たとえば
+            Zend_Db_Profiler) となります。
+            <programlisting role="php"><![CDATA[
+$params['profiler'] = true;
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            文字列引数を指定した場合は、それは独自のプロファイラクラスのクラス名として解釈されます。
+            このクラスは、Zend_Db_Profiler あるいはそのサブクラスでなければなりません。
+            作成されたプロファイラのインスタンスはデフォルトでは無効になっているので、
+            別途 <code>setEnabled()</code> をコールして有効化する必要があります。
+            <programlisting role="php"><![CDATA[
+$params['profiler'] = 'MyProject_Db_Profiler'
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+$db->getProfiler()->setEnabled(true);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Zend_Db_Profiler オブジェクトのインスタンスを指定した場合は、
+            アダプタはそのオブジェクトを使用します。このオブジェクトの型は
+            Zend_Db_Profiler あるいはそのサブクラスである必要があります。
+            このプロファイラは、別途
+            <code>setEnabled()</code> をコールするまでは無効になっています。
+            <programlisting role="php"><![CDATA[
+$profiler = MyProject_Db_Profiler(true);
+$params['profiler'] = $profiler;
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+$db->getProfiler()->setEnabled(true);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            引数には連想配列を指定することもできます。この連想配列のキーには
+            'enabled'、'class' そして 'instance' のいずれか (あるいはすべて)
+            を含めることができます。これらはそれぞれ、ここまで説明した
+            boolean、文字列、そしてオブジェクト型の引数に対応します。
+            <programlisting role="php"><![CDATA[
+$params['profiler'] = array(
+    'enabled' => true,
+    'class' => 'MyProject_Db_Profiler'
+);
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            引数には Zend_Config オブジェクトを指定することもできます。
+            このオブジェクトのプロパティには 'enabled' と 'class'
+            のいずれか (あるいは両方) を含めます。これらはそれぞれ、
+            先ほどの連想配列の同名のキーと同じ扱いになります。
+            Zend_Config オブジェクトにはオブジェクトのインスタンスを含めることができません。
+            たとえば、以下のような内容の "config.ini" を考えてみましょう。
+            <programlisting role="php"><![CDATA[
+[main]
+db.profiler.class = "MyProject_Db_Profiler"
+db.profiler.enabled = true]]>
+            </programlisting>
+
+            この設定を適用するには、次のような PHP コードを書きます。
+
+            <programlisting role="php"><![CDATA[
+$config = new Zend_Config_Ini('config.ini', 'main');
+$params['profiler'] = $config->db->profiler;
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+        </para>
+
     </sect2>
 
     <sect2 id="zend.db.profiler.using">
