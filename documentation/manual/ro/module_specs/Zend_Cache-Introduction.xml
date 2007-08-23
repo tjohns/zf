@@ -15,48 +15,56 @@
         pentru convenienţă: <code>Output</code>, <code>File</code>, <code>Function</code> şi <code>Class</code>.
     </para>
     <example>
-        <title>Obţinerea unei interfeţe cu <code>Zend_Cache::factory()</code></title>
+        <title>Obţinerea unei interfeţe (frontend) cu <code>Zend_Cache::factory()</code></title>
         <para>
             <code>Zend_Cache::factory()</code> creează instanţe ale obiectelor şi face legătura între ele.
             În acest prim exemplu, vom folosi interfaţa <code>Core</code> împreună cu adaptorul <code>File</code>
             .
         </para>
+
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-<<<<<<< .mine
-   'lifeTime' => 7200, // timp de viaţă pentru înregistrări de 2 ore
-=======
-   'lifetime' => 7200, // cache lifetime of 2 hours
->>>>>>> .r4254
-   'automaticSerialization' => true
+   'lifetime' => 7200, // timp de viaţă pentru înregistrări de 2 ore
+   'automatic_serialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Directorul unde se pun fişierele cache
+    'cache_dir' => './tmp/' // Directorul unde se pun fişierele cache
 );
 
 // getting a Zend_Cache_Core object
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);?>]]>
+			</programlisting>
+    </example>
 
-?>]]></programlisting>
+    <note>
+        <title>Frontend şi backend construit din mai multe cuvinte</title>
+        <para>
+			Numele unor interfeţe şi backend-uri este construit din mai multe
+			cuvinte, cum ar fi „ZendPlatform”. Când le specificaţi fabricii,
+			separaţi-le cu un separator cum ar fi spaţiu („ ”), liniuţă („-”)
+			sau punct („.”).
+        </para>
+    </note>
+
+    <example id="zend.cache.introduction.example-2">
+        <title>Păstrarea în cache a unui rezultat de interogare</title>
+
        <para>
                Acum că avem o interfaţă, putem stoca orice tip de date (am pornit serializarea). De
                exemplu, putem stoca un rezultat al unei interogări foarte complexe în baza de date. După ce este stocat, nu
                mai este nevoie nici măcar să ne conectăm la baza de date; înregistrările sunt preluate din
-            Now that we have a frontend, we can cache any type of data (we turned on serialization). For
-            example, we can cache a result from a very expensive database query. After it is cached, there
-            is no need to even connect to the database; records are fetched from cache and unserialized.
         </para>
-            <programlisting role="php"><![CDATA[<?php
 
-// $cache initialized in previous example
+        <programlisting role="php"><![CDATA[<?php
+// $cache a fost iniţializat în exemplul anterior
 
-// see if a cache already exists:
+// vezi dacă obiectul este deja în cache
 if(!$result = $cache->load('myresult')) {
 
-    // cache miss; connect to the database
+    // nu e în cache, se face o conexiune la baza de date
 
     $db = Zend_Db::factory( [...] );
 
@@ -66,64 +74,62 @@ if(!$result = $cache->load('myresult')) {
 
 } else {
 
-    // cache hit! shout so that we know
+    // e în cache, hai să ne lăudăm cu asta
     echo "This one is from cache!\n\n";
 
 }
 
-print_r($result);
-
-?>]]></programlisting>
+print_r($result);?>]]>
+		</programlisting>
     </example>
-    <example>
-        <title>Caching output with <code>Zend_Cache</code> output frontend</title>
+
+    <example id="zend.cache.introduction.example-3">
+        <title>Punerea în cache a textelor afişate cu interfaţa de ieşire din <code>Zend_Cache</code></title>
         <para>
-            We 'mark up' sections in which we want to cache output by adding some conditional logic,
-            encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
-            resembles the first example and is the core strategy for caching).
+			Marcăm secţiuni în care dorim să punem în cache textele care vor fi afişate adăugând nişte condiţii,
+			mai exact încapsulăm fiecare secţiune între metodele <code>start()</code> şi <code>end()</code> 
         </para><para>
-            Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
-            method. On the next run, the whole section will be skipped in favor of fetching data from cache
-            (as long as the cache record is valid).
+			În secţiune, afişaţi datele în mod normal - tot ceea ce este afişat va fi pus în cache în loc să fie afişat
+			până când este executată metoda <code>end()</code> (este poate cel mai util exemplu de a folosi această clasă).
+            La următoarea rulare, codul din secţiune nu va mai fi executat, rezultatul aflându-se deja în cache
+            (cu condiţia ca înregistrarea din cache să fie validă).
         </para>
             <programlisting role="php"><![CDATA[<?php
-
 $frontendOptions = array(
-   'lifetime' => 30,                  // cache lifetime of half a minute
-   'automaticSerialization' => false  // this is default anyway
+   'lifetime' => 30,                  // timpul de viaţă este jumătate de minut
+   'automatic_serialization' => false  // valoarea false este implicită oricum
 );
 
 $backendOptions = array('cacheDir' => './tmp/');
 
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 
-// we pass a unique identifier to the start() method
+// pasăm un identificator unic metodei start()
 if(!$cache->start('mypage')) {
-    // output as usual:
+    // afişare normală:
 
-    echo 'Hello world! ';
-    echo 'This is cached ('.time().') ';
+    echo 'Salut lume! ';
+    echo 'Acest mesaj este păstrat temporar ('.time().') ';
 
-    $cache->end(); // the output is saved and sent to the browser
+    $cache->end(); // ieşirea este salvată şi trimisă navigatorului
 }
 
-echo 'This is never cached ('.time().').';
-
-?>]]>       </programlisting>
-       <para>
-           Notice that we output the result of <code>time()</code> twice; this is something dynamic
-           for demonstration purposes. Try running this and then refreshing several times; you will notice
-           that the first number doesn't change while second changes as time passes. That is because the first
-           number was output in the cached section and is saved among other output.
-           After half a minute (we've set lifetime to 30 seconds) the
-           numbers should match again because the cache record expired -- only to be cached again. You
-           should try this in your brower or console.
+echo 'Acest text nu este păstrat în cache niciodată ('.time().').';?>]]>       
+		</programlisting>
+		<para>
+		   Notaţi că afişăm rezultatul funcţiei <code>time()</code> de două ori; o facem în scop 
+		   demonstrativ. Încercaţi să reîmprospătaţi pagina de mai multe ori; veţi vedea că primul 
+		   număr nu se schimbă în timp ce al doilea se schimbă pe măsură ce trece timpul. Acest 
+		   lucru se întâmplă pentru că primul număr a fost salvat în cache şi este citit de acolo la a doua 
+		   accesare. După jumătate de minut (am setat timpul de expirare la 30 de secunde) numerele
+		   ar trebui să se potrivească din nou pentru că înregistrarea din cache a expirat -- doar pentru ca 
+		   rezultatul să fie din nou pus în cache. Ar trebui să încercaţi codul acesta în navigator sau în consolă.
        </para>
     </example>
     <note><para>
-        When using Zend_Cache, pay attention to the important cache identifier (passed to <code>save()</code>
-        and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
-        cache records may wipe each other or, even worse, be displayed in place of the other.
+        Când folosiţi Zend_Cache, fiţi atenţi la identificatorul de cache (pasat metodei <code>save()</code>
+        şi metodei <code>start()</code>). Trebuie să fie unic pentru fiecare resursă pe care o puneţi în cache,
+        altfel înregistrările se vor suprapune, sau se vor şterge reciproc.
     </para></note>
 </sect1>
 <!--
