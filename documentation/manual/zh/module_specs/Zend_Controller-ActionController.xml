@@ -217,7 +217,7 @@ applicationOrModule/
             </programlisting>
 
             <para>
-                换句话说，视图脚本假定在<code>views/scripts/</code>子目录，<code>views</code>子目录假定包含同属函数（助手，过滤器）。当决定视图脚本名字和路径，<code>views/scripts/</code>目录将用来作为基础路径，然后加上在提供视图脚本层次的独立的控制器之后命名的目录。（我都糊涂了，哪位修改修改 Jason）
+                换句话说，视图脚本假定放在<code>views/scripts/</code>子目录，同时假定<code> views</code>子目录还包含兄弟功能（助手和过滤器）。确定视图脚本名称和路径时，先以<code> views/scripts/</code>作为基路径，然后加上以视图脚本对应控制器命名的目录。 
             </para>
         </sect3>
 
