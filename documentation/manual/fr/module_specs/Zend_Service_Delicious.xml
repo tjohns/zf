@@ -12,7 +12,7 @@
         <example id="zend.service.delicious.introduction.getAllPosts">
             <title>Récupérer toutes vos entrées</title>
             <programlisting role="php"><![CDATA[<?php
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('identifiant', 'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 foreach ($posts as $post) {
@@ -26,7 +26,7 @@ foreach ($posts as $post) {
     <sect2 id="zend.service.delicious.retrieving_posts">
         <title>Récupérer vos entrées</title>
         <para>
-            <code>Zend_Service_Delicious</code> fournis 3 méthodes pour récupérer vos
+            <code>Zend_Service_Delicious</code> fournis trois méthodes pour récupérer vos
             entrées : <code>getPosts()</code>,
             <code>getRecentPosts()</code> et <code>getAllPosts()</code>. Elles retournent
             toutes une instance de la classe <code>Zend_Service_Delicious_PostList</code>,
@@ -65,8 +65,7 @@ public function getAllPosts($tag = null);]]>
     <sect2 id="zend.service.delicious.postlist">
         <title>Zend_Service_Delicious_PostList</title>
         <para>
-            Des instances de cette classe sont retournées par les méthodes <code>getPosts()</code>, <code>getAllPosts()</code>,
-            <code>getRecentPosts()</code>, et <code>getUserPosts()</code> de <code>Zend_Service_Delicious</code>.
+            Des instances de cette classe sont retournées par les méthodes <code>getPosts()</code>, <code>getAllPosts()</code>,<code>getRecentPosts()</code>, et <code>getUserPosts()</code> de <code>Zend_Service_Delicious</code>.
         </para>
         <para>
             Pour faciliter l'accès au données cette classe implémente les interfaces <code>Countable</code>,
