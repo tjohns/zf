@@ -504,7 +504,7 @@ Array
 
     </sect2>
 
-    <sect2 id="zend.locale.getquestion">
+    <sect2 id="zend.locale.getlocalelist">
 
         <title>Get a list of all known locales</title>
 
