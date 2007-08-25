@@ -504,6 +504,34 @@ Array
 
     </sect2>
 
+    <sect2 id="zend.locale.getquestion">
+
+        <title>Get a list of all known locales</title>
+
+        <para>
+            Sometimes you will want to get a list of all known locales. This can be used for several tasks
+            like the creation of a selectbox. For this purpose you can use the static
+            <code>getLocaleList()</code> method which will return a list of all known locales.
+        </para>
+
+        <example id="zend.locale.getquestion.example-1">
+            <title>getLocaleList()</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$localelist = Zend_Locale::getLocaleList();
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Note that the locales are returned as key of the array you will receive. The value is always
+                a boolean true.
+            </para>
+        </note>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

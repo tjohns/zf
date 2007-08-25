@@ -528,4 +528,14 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $locale = Zend_Locale::isLocale('', true);
         $this->assertTrue(is_string($locale), "true expected");
     }
+
+
+    /**
+     * test isLocale
+     * expected boolean
+     */
+    public function testGetLocaleList()
+    {
+        $this->assertTrue(is_array(Zend_Locale::getLocaleList()));
+    }
 }
