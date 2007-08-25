@@ -513,6 +513,35 @@ Array
 
     </sect2>
 
+    <sect2 id="zend.locale.getlocalelist">
+
+        <title>Eine Liste aller bekannten Gebietsschemata erhalten</title>
+
+        <para>
+            Manchmal will man eine Liste aller bekannten Gebietsschemata erhalten. Das kann für die
+            verschiedensten Aufgaben nützlich sein, zum Beispiel für die Erstellung einer Auswahlbox. Für
+            diesen Zweck kann die statische <code>getLocaleList()</code> Methode verwender werden, welche
+            eine Liste aller bekannten Gebietsschemata zurückgibt.
+        </para>
+
+        <example id="zend.locale.getquestion.example-1">
+            <title>getLocaleList()</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$localelist = Zend_Locale::getLocaleList();
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das die Gebietsschemata als Schlüssel des Arrays das man erhält
+                zurück gegeben werden. Der Wert ist immer ein Boolsches True.
+            </para>
+        </note>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
