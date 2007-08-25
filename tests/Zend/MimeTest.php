@@ -24,10 +24,17 @@
  */
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
-/**
- * Zend_Mime
- */
+/** Zend_Mail */
+require_once 'Zend/Mail.php';
+
+/** Zend_Mime */
 require_once 'Zend/Mime.php';
+
+/** PHPUnit test case */
+require_once 'PHPUnit/Framework/TestCase.php';
+
+/** Zend_MailTest */
+require_once dirname(__FILE__) . '/MailTest.php';
 
 /**
  * @category   Zend
