@@ -398,5 +398,11 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         }
         $this->fail('No exception thrown while requesting invalid field name');
     }
+    
+    public function testCaseInsensitiveMultipart()
+    {
+        $message = new Zend_Mail_Message(array('raw' => "coNTent-TYpe: muLTIpaRT/x-empty\r\n\r\n"));
+        $this->assertTrue($message->isMultipart());
+    }
 
 }
