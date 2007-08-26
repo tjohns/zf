@@ -182,7 +182,7 @@ class Zend_Mail_Part implements RecursiveIterator
         }
 
         // split content in parts
-        $boundary = Zend_Mime_Decode::splitContentType($this->contentType, 'boundary');
+        $boundary = $this->getHeaderField('content-type', 'boundary');
         if (!$boundary) {
             throw new Zend_Mail_Exception('no boundary found in content type to split message');
         }
@@ -316,6 +316,25 @@ class Zend_Mail_Part implements RecursiveIterator
         }
 
         return $header;
+    }
+    
+    /**
+     * Get a specific field from a header like content type or all fields as array
+     *
+     * If the header occurs more than once, only the value from the first header
+     * is returned.
+     *
+     * Throws a Zend_Mail_Exception if the requested header does not exist. If
+     * the specific header field does not exist, returns null.
+     *
+     * @param  string $name       name of header, like in getHeader()
+     * @param  string $wantedPart the wanted part, default is first, if null an array with all parts is returned
+     * @param  string $firstName  key name for the first part
+     * @return string|array wanted part or all parts as array($firstName => firstPart, partname => value)
+     * @throws Zend_Exception, Zend_Mail_Exception
+     */
+    public function getHeaderField($name, $wantedPart = 0, $firstName = 0) {
+    	return Zend_Mime_Decode::splitHeaderField(current($this->getHeader($name, 'array')), $wantedPart, $firstName);
     }
 
 
