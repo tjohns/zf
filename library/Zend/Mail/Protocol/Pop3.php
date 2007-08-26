@@ -349,7 +349,7 @@ class Zend_Mail_Protocol_Pop3
     {
         if ($this->hasTop === false) {
             if ($fallback) {
-                return $this->retrive($msgno);
+                return $this->retrieve($msgno);
             } else {
                 throw new Zend_Mail_Protocol_Exception('top not supported and no fallback wanted');
             }
@@ -363,7 +363,7 @@ class Zend_Mail_Protocol_Pop3
         } catch (Zend_Mail_Protocol_Exception $e) {
             $this->hasTop = false;
             if ($fallback) {
-                $result = $this->retrive($msgno);
+                $result = $this->retrieve($msgno);
             } else {
                 throw $e;
             }
@@ -376,16 +376,29 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Make a RETR call for retrieving a full message with headers and body
      *
+     * @deprecated since 1.1.0; this method has a typo - please use retrieve()
      * @param  int $msgno  message number
      * @return string message
      * @throws Zend_Mail_Protocol_Exception
      */
     public function retrive($msgno)
     {
+        return $this->retrieve($msgno);
+    }
+
+
+    /**
+     * Make a RETR call for retrieving a full message with headers and body
+     *
+     * @param  int $msgno  message number
+     * @return string message
+     * @throws Zend_Mail_Protocol_Exception
+     */
+    public function retrieve($msgno)
+    {
         $result = $this->request("RETR $msgno", true);
         return $result;
     }
-
 
     /**
      * Make a NOOP call, maybe needed for keeping the server happy

@@ -128,7 +128,7 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
             throw new Zend_Mail_Storage_Exception('not implemented');
         }
 
-        $content = $this->_protocol->retrive($id);
+        $content = $this->_protocol->retrieve($id);
         // TODO: find a way to avoid decoding the headers
         Zend_Mime_Decode::splitMessage($content, $null, $body);
         return $body;
