@@ -417,28 +417,31 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
         $this->assertSame( array(), $response->getRawHeaders() );
         $this->assertSame( array(), $response->getHeaders() );
         $this->assertSame(
+            "<html><body onLoad=\"document.forms[0].submit();\">\n" .
             "<form method=\"POST\" action=\"http://www.test.com/\">\n" .
-            "</form>\n" .
-            "<script language=\"JavaScript\" type=\"text/javascript\">document.forms[0].submit();</script>",
+            "<input type=\"submit\" value=\"Continue OpenID transaction\">\n" .
+            "</form></body></html>\n",
             $response->getBody() );
 
         $response = new Zend_OpenId_ResponseHelper(true);
         Zend_OpenId::redirect("http://www.test.com/test.php?a=b", array('a'=>'b'), $response, 'POST');
         $this->assertSame(
+            "<html><body onLoad=\"document.forms[0].submit();\">\n" .
             "<form method=\"POST\" action=\"http://www.test.com/test.php?a=b\">\n" .
             "<input type=\"hidden\" name=\"a\" value=\"b\">\n" .
-            "</form>\n" .
-            "<script language=\"JavaScript\" type=\"text/javascript\">document.forms[0].submit();</script>",
+            "<input type=\"submit\" value=\"Continue OpenID transaction\">\n" .
+            "</form></body></html>\n",
             $response->getBody() );
 
         $response = new Zend_OpenId_ResponseHelper(true);
         Zend_OpenId::redirect("http://www.test.com/test.php?a=b", array('a'=>'b','c'=>'d'), $response, 'POST');
         $this->assertSame(
+            "<html><body onLoad=\"document.forms[0].submit();\">\n" .
             "<form method=\"POST\" action=\"http://www.test.com/test.php?a=b\">\n" .
             "<input type=\"hidden\" name=\"a\" value=\"b\">\n" .
             "<input type=\"hidden\" name=\"c\" value=\"d\">\n" .
-            "</form>\n" .
-            "<script language=\"JavaScript\" type=\"text/javascript\">document.forms[0].submit();</script>",
+            "<input type=\"submit\" value=\"Continue OpenID transaction\">\n" .
+            "</form></body></html>\n",
             $response->getBody() );
     }
 

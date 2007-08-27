@@ -52,7 +52,7 @@ define('ZEND_OPEN_ID_DH_P',
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-final class Zend_OpenId
+class Zend_OpenId
 {
     /**
      * Default Diffie-Hellman key generator
@@ -366,16 +366,15 @@ final class Zend_OpenId
         }
 
         if ($method == 'POST') {
-            $body = "<form method=\"POST\" action=\"$url\">\n";
+            $body = "<html><body onLoad=\"document.forms[0].submit();\">\n";
+            $body .= "<form method=\"POST\" action=\"$url\">\n";
             if (is_array($params) && count($params) > 0) {
                 foreach($params as $key => $value) {
                     $body .= '<input type="hidden" name="' . $key . '" value="' . $value . "\">\n";
                 }
             }
-            $body .= "</form>\n";
-            $body .= '<script language="JavaScript"'
-                  . ' type="text/javascript">document.forms[0].submit();'
-                  . '</script>';
+            $body .= "<input type=\"submit\" value=\"Continue OpenID transaction\">\n";
+            $body .= "</form></body></html>\n";
         } else if (is_array($params) && count($params) > 0) {
             if (strpos($url, '?') === false) {
                 $url .= '?' . self::paramsToQuery($params);
