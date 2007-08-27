@@ -247,6 +247,29 @@ $index->optimize();]]>
         </sect3>
     </sect2>
 
+    <sect2 id="zend.search.lucene.index-creation.permissions">
+        <title>パーミッション</title>
+
+        <para>
+            インデックスファイルは、デフォルトでは全員が読み書き可能となっています。
+        </para>
+
+        <para>
+            この設定を上書きするには
+            <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code>
+            メソッドを使用します。
+        </para>
+
+
+        <programlisting role="php"><![CDATA[<?php
+// 現在のデフォルトのファイルパーミッションを取得します
+$currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
+
+// 現在のユーザとグループに対してのみ読み書きアクセス権限を付与します
+Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);]]>
+        </programlisting>
+    </sect2>
+
     <sect2 id="zend.search.lucene.index-creation.limitations">
         <title>制限事項</title>
 
