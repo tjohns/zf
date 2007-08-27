@@ -6,7 +6,7 @@ require_once "Zend/OpenId/Extension/Sreg.php";
 
 if (isset($_POST['openid_action']) &&
     $_POST['openid_action'] == "login" &&
-    !empty($_POST['openid_url'])) {
+    !empty($_POST['openid_identifier'])) {
 
     $consumer = new Zend_OpenId_Consumer();
     $props = array();
@@ -20,7 +20,7 @@ if (isset($_POST['openid_action']) &&
         }
     }
     $sreg = new Zend_OpenId_Extension_Sreg($props, null, 1.1);
-    $ret = $consumer->login($_POST['openid_url'], null, null, $sreg);
+    $ret = $consumer->login($_POST['openid_identifier'], null, null, $sreg);
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -43,7 +43,7 @@ input.openid_login {
 <?php
 if (isset($_POST['openid_action']) &&
     $_POST['openid_action'] == "login" &&
-    !empty($_POST['openid_url'])) {
+    !empty($_POST['openid_identifier'])) {
     if ($ret !== true) {
         echo "OpenID login failed because of internal error.<br>";
     }
@@ -67,7 +67,7 @@ if (isset($_POST['openid_action']) &&
 <legend>OpenID Login</legend>
 <input type="hidden" name="openid_action" value="login">
 <div>
-<input type="text" name="openid_url" class="openid_login" value="<?php echo isset($_GET["openid_identity"])?$_GET["openid_identity"]:"";?>">
+<input type="text" name="openid_identifier" class="openid_login" value="<?php echo isset($_GET["openid_identity"])?$_GET["openid_identity"]:"";?>">
 <input type="submit" name="login" value="login">
 <table border="0" cellpadding="2" cellspacing="2">
 <tr><td>&nbsp;</td><td>requird</td><td>optional</td><td>none</td><td>&nbsp</td></tr>
