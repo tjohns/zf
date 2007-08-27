@@ -165,11 +165,24 @@ class Zend_OpenId_Consumer
         if (empty($params['openid_return_to']) ||
             empty($params['openid_signed']) ||
             empty($params['openid_sig']) ||
+            empty($params['openid_mode']) ||
+            $params['openid_mode'] != 'id_res' ||
             $params['openid_return_to'] != Zend_OpenId::selfUrl()) {
             return false;
         }
         if (empty($params['openid_assoc_handle'])) {
             return false;
+        }
+
+        if (!empty($params['openid_invalidate_handle'])) {
+            if ($this->_storage->getAssociationByHandle(
+                $params['openid_invalidate_handle'],
+                $url,
+                $macFunc,
+                $secret,
+                $expires)) {
+                $this->_storage->delAssociation($url);
+            }
         }
 
         if ($this->_storage->getAssociationByHandle(
