@@ -41,7 +41,7 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
     private $_file        = false;
     private $_cleared     = array();
     private $_langset     = null;
-    private $_term        = null;
+    private $_termentry   = null;
     private $_content     = null;
     private $_defined     = false;
 
@@ -109,8 +109,10 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
     private function _startElement($file, $name, $attrib)
     {
         switch(strtolower($name)) {
+            case 'termentry':
+                $this->_termentry = null;
+                break;
             case 'langset':
-                $this->_term = null;
                 if (array_key_exists('xml:lang', $attrib)) {
                     $this->_langset = $attrib['xml:lang'];
                     if (!array_key_exists($this->_langset, $this->_translate)) {
@@ -136,11 +138,11 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
                 $this->_langset = null;
                 break;
             case 'term':
-                if (empty($this->_term)) {
-                    $this->_term = $this->_content;
+                if (empty($this->_termentry)) {
+                    $this->_termentry = $this->_content;
                 }
-                if (!empty($this->_content) or !array_key_exists($this->_term, $this->_translate[$this->_langset])) {
-                    $this->_translate[$this->_langset][$this->_term] = $this->_content;
+                if (!empty($this->_content) or !array_key_exists($this->_termentry, $this->_translate[$this->_langset])) {
+                    $this->_translate[$this->_langset][$this->_termentry] = $this->_content;
                 }
                 break;
             default:
