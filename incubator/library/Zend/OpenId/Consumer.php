@@ -593,7 +593,7 @@ class Zend_OpenId_Consumer
         if (!Zend_OpenId::normalize($id)) {
             return false;
         }
-        $climedId = $id;
+        $claimedId = $id;
 
         if (!$this->_discovery($id, $server, $version)) {
             return false;
@@ -624,7 +624,7 @@ class Zend_OpenId_Consumer
 
         $params['openid.identity'] = $id;
 
-        $params['openid.claimed_id'] = $climedId;
+        $params['openid.claimed_id'] = $claimedId;
 
         if (isset($handle)) {
             $params['openid.assoc_handle'] = $handle;
