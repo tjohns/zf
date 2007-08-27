@@ -231,6 +231,29 @@ $index->optimize();]]>
         </sect3>
     </sect2>
 
+    <sect2 id="zend.search.lucene.index-creation.permissions">
+        <title>Berechtigungen</title>
+
+        <para>
+            Index Dateien sind standardmäßig für jeden lesbar und beschreibbar.
+        </para>
+
+        <para>
+            Es ist möglich das mit der
+            <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code>
+            Methode zu umgehen. 
+        </para>
+
+
+        <programlisting role="php"><![CDATA[<?php
+// Die aktuelle Datei Berechtigung erhalten
+$currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
+
+// Nur für den aktuellen Benutzer und die Gruppe Lese-Schreib Berechtigung setzen
+Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);]]>
+        </programlisting>
+    </sect2>
+
     <sect2 id="zend.search.lucene.index-creation.limitations">
         <title>Einschränkungen</title>
 
