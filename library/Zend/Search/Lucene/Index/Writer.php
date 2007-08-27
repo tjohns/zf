@@ -162,6 +162,7 @@ class Zend_Search_Lucene_Index_Writer
      */
     public static function createIndex(Zend_Search_Lucene_Storage_Directory $directory, $generation)
     {
+        /** !!! @todo  Generate 2.1 segment instead of pre-2.1 */
         foreach ($directory->fileList() as $file) {
             if ($file == 'deletable' ||
                 $file == 'segments'  ||
@@ -205,12 +206,6 @@ class Zend_Search_Lucene_Index_Writer
     {
         $this->_directory    = $directory;
         $this->_segmentInfos = &$segmentInfos;
-
-        $segmentsFile = $this->_directory->getFileObject('segments');
-        $format = $segmentsFile->readInt();
-        if ($format != (int)0xFFFFFFFF) {
-            throw new Zend_Search_Lucene_Exception('Wrong segments file format');
-        }
     }
 
     /**
@@ -321,7 +316,7 @@ class Zend_Search_Lucene_Index_Writer
         // Get an exclusive index lock
         // Wait, until all parallel searchers or indexers won't stop
         // and stop all next searchers, while we are updating segments file
-        $lock = $this->_directory->getFileObject('index.lock');
+        $lock = $this->_directory->getFileObject('write.lock');
         if (!$lock->lock(LOCK_EX)) {
             throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
         }

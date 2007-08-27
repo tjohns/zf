@@ -414,11 +414,14 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                 $this->_generation = 1;
             } else {
                 // Directory contains existing index, start from new generation number
-//!!!!!                $this->_generation++;
+                $this->_generation++;
             }
             Zend_Search_Lucene_Index_Writer::createIndex($this->_directory, $this->_generation);
 
             $writeLock->unlock();
+
+            /** @todo !!! Next string should be removed for 2.1+ index format writing support turned on */
+            $this->_generation = 0;
         }
 
         if ($this->_generation == -1) {
