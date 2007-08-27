@@ -210,8 +210,8 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
 
         $params = array(
             'openid_ns'         => Zend_OpenId::NS_2_0,
-            'openid_trust_root' => "http://root/",
-            'openid_return_to'  => "http://wrong/",
+            'openid_trust_root' => "http://wrong/",
+            'openid_return_to'  => "http://root/",
         );
         $this->assertSame( "http://root/", $provider->getSiteRoot($params) );
 
@@ -776,7 +776,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user, $storage);
         $provider->logout();
 
-        // Wrong arguments (no openid_return_to)
+        // Wrong arguments (no openid.return_to and openid.trust_root)
         $response = new Zend_OpenId_ResponseHelper(true);
         $this->assertFalse( $provider->handle(array(
             'openid_mode'=>'checkid_immediate'),
@@ -925,6 +925,17 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( isset($query['openid.signed']) );
         $this->assertTrue( isset($query['openid.sig']) );
         $this->assertSame( 20, strlen(base64_decode($query['openid.sig'])) );
+
+        // Logged in user (trusted site without openid.return_to)
+        $this->assertTrue( $provider->allowSite('http://www.test.com/') );
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue($provider->handle(array(
+            'openid_mode'=>'checkid_immediate',
+            'openid_identity'=>self::USER,
+            'openid_trust_root'=>'http://www.test.com/test.php'),
+            null, $response));
+        $this->assertSame( array(), $response->getHeaders() );
+        $this->assertSame( '', $response->getBody() );
 
         // Logged in user (trusted site) & OpenID 2.0 & established session
         $storage->delAssociation(self::HANDLE);
@@ -1083,7 +1094,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user, $storage);
         $provider->logout();
 
-        // Wrong arguments (no openid_return_to)
+        // Wrong arguments (no openid.return_to and openid.trust_root)
         $response = new Zend_OpenId_ResponseHelper(true);
         $this->assertFalse( $provider->handle(array(
             'openid_mode'=>'checkid_setup'),
@@ -1205,6 +1216,17 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( isset($query['openid.signed']) );
         $this->assertTrue( isset($query['openid.sig']) );
         $this->assertSame( 20, strlen(base64_decode($query['openid.sig'])) );
+
+        // Logged in user (trusted site without openid.return_to)
+        $this->assertTrue( $provider->allowSite('http://www.test.com/') );
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue($provider->handle(array(
+            'openid_mode'=>'checkid_setup',
+            'openid_identity'=>self::USER,
+            'openid_trust_root'=>'http://www.test.com/test.php'),
+            null, $response));
+        $this->assertSame( array(), $response->getHeaders() );
+        $this->assertSame( '', $response->getBody() );
 
         // Logged in user (trusted site) & OpenID 2.0 & established session
         $storage->delAssociation(self::HANDLE);

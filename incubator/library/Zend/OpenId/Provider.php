@@ -212,7 +212,7 @@ class Zend_OpenId_Provider
         }
         if ($version >= 2.0 && isset($params['openid_realm'])) {
             $root = $params['openid_realm'];
-        } else if (isset($params['openid_trust_root'])) {
+        } else if ($version < 2.0 && isset($params['openid_trust_root'])) {
             $root = $params['openid_trust_root'];
         } else if (isset($params['openid_return_to'])) {
             $root = $params['openid_return_to'];
@@ -325,20 +325,18 @@ class Zend_OpenId_Provider
                 }
                 return $ret;
             } else if ($params['openid_mode'] == 'checkid_immediate') {
-                if (empty($params['openid_return_to'])) {
-                    return false;
-                }
                 $ret = $this->_checkId($version, $params, 1, $extensions, $response);
                 if (is_bool($ret)) return $ret;
-                Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+                if (!empty($params['openid_return_to'])) {
+                    Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+                }
                 return true;
             } else if ($params['openid_mode'] == 'checkid_setup') {
-                if (empty($params['openid_return_to'])) {
-                    return false;
-                }
                 $ret = $this->_checkId($version, $params, 0, $extensions, $response);
                 if (is_bool($ret)) return $ret;
-                Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+                if (!empty($params['openid_return_to'])) {
+                    Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+                }
                 return true;
             } else if ($params['openid_mode'] == 'check_authentication') {
                 $response = $this->_checkAuthentication($version, $params);
@@ -480,6 +478,10 @@ class Zend_OpenId_Provider
         if ($version >= 2.0) {
             $ret['openid.ns'] = Zend_OpenId::NS_2_0;
         }
+        $root = $this->getSiteRoot($params);
+        if ($root === false) {
+            return false;
+        }
 
         if (isset($params['openid_identity']) &&
             !$this->_storage->hasUser($params['openid_identity'])) {
@@ -520,12 +522,12 @@ class Zend_OpenId_Provider
 
         /* Check if user trusts to the consumer */
         $trusted = null;
-        $root = $this->getSiteRoot($params);
         $sites = $this->_storage->getTrustedSites($params['openid_identity']);
         if (isset($sites[$root])) {
             $trusted = $sites[$root];
         } else {
             foreach ($sites as $site => $trusted) {
+                /* TODO: OpenID 2.0, 9.2 check for realm wild-card matching */
                 if (strpos($site, $root) === 0) {
                     break;
                 }
@@ -620,7 +622,9 @@ class Zend_OpenId_Provider
         } else {
             $ret['openid.assoc_handle'] = $params['openid_assoc_handle'];
         }
-        $ret['openid.return_to'] = $params['openid_return_to'];
+        if (isset($params['openid_return_to'])) {
+            $ret['openid.return_to'] = $params['openid_return_to'];
+        }
         if (isset($params['openid_claimed_id'])) {
             $ret['openid.claimed_id'] = $params['openid_claimed_id'];
         }
