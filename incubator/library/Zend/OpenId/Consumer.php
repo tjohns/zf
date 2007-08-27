@@ -458,6 +458,15 @@ class Zend_OpenId_Consumer
             }
             $secret = $sec ^ base64_decode($ret['enc_mac_key']);
         }
+        if ($macFunc == 'sha1') {
+            if (strlen($secret) != 20) {
+                return false;
+            }
+        } else if ($macFunc == 'sha256') {
+            if (strlen($secret) != 32) {
+                return false;
+            }
+        }
         $this->_addAssociation(
             $url,
             $handle,
@@ -502,6 +511,10 @@ class Zend_OpenId_Consumer
             $id = $realId;
             return true;
         }
+
+        /* TODO: XRI and Yadis discovery (OpenID 2.0, 7.3) */
+
+        /* HTML-based discovery */
         $response = $this->_httpRequest($id);
         if (!is_string($response)) {
             return false;
