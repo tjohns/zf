@@ -316,7 +316,7 @@ class Zend_Search_Lucene_Index_Writer
         // Get an exclusive index lock
         // Wait, until all parallel searchers or indexers won't stop
         // and stop all next searchers, while we are updating segments file
-        $lock = $this->_directory->getFileObject('write.lock');
+        $lock = $this->_directory->createFile('write.lock');
         if (!$lock->lock(LOCK_EX)) {
             throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
         }

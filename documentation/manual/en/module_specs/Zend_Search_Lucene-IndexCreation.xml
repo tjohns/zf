@@ -220,6 +220,27 @@ $index->optimize();]]>
         </sect3>
     </sect2>
 
+    <sect2 id="zend.search.lucene.index-creation.permissions">
+        <title>Permissions</title>
+
+        <para>
+            Index files are available for read and writing for everyone by default.
+        </para>
+
+        <para>
+            It's possible to override this with <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> method:
+        </para>
+
+
+        <programlisting role="php"><![CDATA[<?php
+// Get current default file permissions
+$currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
+
+// Give read-writing permissions only for current user and group
+Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);]]>
+        </programlisting>
+    </sect2>
+
     <sect2 id="zend.search.lucene.index-creation.limitations">
         <title>Limitations</title>
 
