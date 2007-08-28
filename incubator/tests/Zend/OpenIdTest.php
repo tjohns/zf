@@ -151,9 +151,32 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( Zend_OpenId::normalizeUrl($url) );
         $this->assertSame( 'example://a/b/c/%7Bfoo%7D', $url );
 
+        $url = 'eXAMPLE://A/./b/../b/%63/%bbfoo%Bd';
+        $this->assertTrue( Zend_OpenId::normalizeUrl($url) );
+        $this->assertSame( 'example://a/b/c/%BBfoo%BD', $url );
+
+        $url = 'example://a/b/c/%1';
+        $this->assertFalse( Zend_OpenId::normalizeUrl($url) );
+
+        $url = 'example://a/b/c/%x1';
+        $this->assertFalse( Zend_OpenId::normalizeUrl($url) );
+
+        $url = 'example://a/b/c/%1x';
+        $this->assertFalse( Zend_OpenId::normalizeUrl($url) );
+
+        $url = 'eXAMPLE://A/b/c/x%20y';
+        $this->assertTrue( Zend_OpenId::normalizeUrl($url) );
+        $this->assertSame( 'example://a/b/c/x%20y', $url );
+
         $url = 'example://host/.a/b/c';
         $this->assertTrue( Zend_OpenId::normalizeUrl($url) );
         $this->assertSame( 'example://host/.a/b/c', $url );
+
+        $url = 'a/b/c';
+        $this->assertFalse( Zend_OpenId::normalizeUrl($url) );
+
+        $url = 'example://:80/a/b/c';
+        $this->assertFalse( Zend_OpenId::normalizeUrl($url) );
 
         $url = 'example://host/a/.b/c';
         $this->assertTrue( Zend_OpenId::normalizeUrl($url) );

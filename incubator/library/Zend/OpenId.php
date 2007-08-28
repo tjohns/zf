@@ -164,7 +164,10 @@ class Zend_OpenId
         $n = strlen($id);
         $res = '';
         while ($i < $n) {
-            if ($id[$i] == '%' && $i + 2 < $n) {
+            if ($id[$i] == '%') {
+                if ($i + 2 >= $n) {
+                    return false;
+                }
                 ++$i;
                 if ($id[$i] >= '0' && $id[$i] <= '9') {
                     $c = ord($id[$i]) - ord('0');
@@ -173,8 +176,7 @@ class Zend_OpenId
                 } else if ($id[$i] >= 'a' && $id[$i] <= 'f') {
                     $c = ord($id[$i]) - ord('a') + 10;
                 } else {
-                    $res .= '%';
-                    continue;
+                    return false;
                 }
                 ++$i;
                 if ($id[$i] >= '0' && $id[$i] <= '9') {
@@ -184,8 +186,7 @@ class Zend_OpenId
                 } else if ($id[$i] >= 'a' && $id[$i] <= 'f') {
                     $c = ($c << 4) | (ord($id[$i]) - ord('a') + 10);
                 } else {
-                    $res .= '%' . $id[$i-1];
-                    continue;
+                    return false;
                 }
                 ++$i;
                 $ch = chr($c);
