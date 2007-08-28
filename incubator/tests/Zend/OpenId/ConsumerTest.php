@@ -804,7 +804,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $consumer->verify($params) );
 
         // SREG
-        $test->setResponse("HTTP/1.1 200 OK\r\n\r\nis_valid:false");
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\nis_valid:true");
         $consumer->clearAssociation();
         $storage->delAssociation(self::SERVER);
         $params = array(
@@ -814,32 +814,53 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
             "openid_claimed_id" => self::ID,
             "openid_identity" => self::REAL_ID,
             "openid_response_nonce" => "2007-08-14T12:52:33Z46c1a59124ffe",
+            "openid_op_endpoint" => self::SERVER,
             "openid_mode" => "id_res",
             "openid_ns_sreg" => "http://openid.net/extensions/sreg/1.1",
             "openid_sreg_nickname" => "test",
             "openid_signed" => "ns,assoc_handle,return_to,claimed_id,identity,response_nonce,mode,ns.sreg,sreg.nickname,signed",
             "openid_sig" => "h/5AFD25NpzSok5tzHEGCVUkQSw="
         );
-        $this->assertFalse( $consumer->verify($params) );
+        $this->assertTrue( $consumer->verify($params) );
         $this->assertSame( "POST / HTTP/1.1\r\n" .
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
                            "User-agent: Zend_OpenId\r\n" .
                            "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 620\r\n\r\n" .
+                           "Content-length: 672\r\n\r\n" .
                            "openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&" .
                            "openid.return_to=http%3A%2F%2Fwww.zf-test.com%2Ftest.php&" .
                            "openid.assoc_handle=d41d8cd98f00b204e9800998ecf8427e&" .
                            "openid.claimed_id=http%3A%2F%2Fid.myopenid.com%2F&" .
                            "openid.identity=http%3A%2F%2Freal_id.myopenid.com%2F&" .
                            "openid.response_nonce=2007-08-14T12%3A52%3A33Z46c1a59124ffe&" .
+                           "openid.op_endpoint=http%3A%2F%2Fwww.myopenid.com%2F&" .
                            "openid.mode=check_authentication&" .
                            "openid.ns.sreg=http%3A%2F%2Fopenid.net%2Fextensions%2Fsreg%2F1.1&" .
                            "openid.sreg.nickname=test&" .
                            "openid.signed=ns%2Cassoc_handle%2Creturn_to%2Cclaimed_id%2Cidentity%2Cresponse_nonce%2Cmode%2Cns.sreg%2Csreg.nickname%2Csigned&" .
                            "openid.sig=h%2F5AFD25NpzSok5tzHEGCVUkQSw%3D",
                            $http->getLastRequest() );
+
+        // invalidate_handle
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\nis_valid:false\ninvalidate_handle:".self::HANDLE."1"."\n");
+        $consumer->clearAssociation();
+        $params = array(
+            "openid_return_to" => "http://www.zf-test.com/test.php",
+            "openid_assoc_handle" => self::HANDLE,
+            "openid_claimed_id" => self::ID,
+            "openid_identity" => self::REAL_ID,
+            "openid_response_nonce" => "2007-08-14T12:52:33Z46c1a59124ffe",
+            "openid_op_endpoint" => self::SERVER,
+            "openid_mode" => "id_res",
+            "openid_signed" => "assoc_handle,return_to,claimed_id,identity,response_nonce,mode,signed",
+            "openid_sig" => "h/5AFD25NpzSok5tzHEGCVUkQSw="
+        );
+        $storage->delAssociation(self::SERVER."1");
+        $storage->addAssociation(self::SERVER."1", self::HANDLE."1", "sha1", pack("H*", "8382aea922560ece833ba55fa53b7a975f597370"), $expiresIn);
+        $this->assertFalse( $consumer->verify($params) );
+        $this->assertFalse( $storage->getAssociation(self::SERVER."1", $handle, $func, $secret, $expires) );
     }
 }
 

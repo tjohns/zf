@@ -162,6 +162,12 @@ class Zend_OpenId_Consumer
      */
     public function verify($params)
     {
+        $version = 1.1;
+        if (isset($params['openid_ns']) &&
+            $params['openid_ns'] == Zend_OpenId::NS_2_0) {
+            $version = 2.0;
+        }
+
         if (empty($params['openid_return_to']) ||
             empty($params['openid_signed']) ||
             empty($params['openid_sig']) ||
@@ -171,6 +177,16 @@ class Zend_OpenId_Consumer
             $params['openid_return_to'] != Zend_OpenId::selfUrl()) {
             return false;
         }
+
+        if ($version >= 2.0 &&
+            (empty($params['openid_response_nonce']) ||
+             empty($params['openid_op_endpoint']))) {
+            return false;
+        }
+
+        /* TODO: OpenID 2.0, 11.2 Verifying Discovered Information */
+
+        /* TODO: OpenID 2.0, 11.3 Checking the Nonce */
 
         if (!empty($params['openid_invalidate_handle'])) {
             if ($this->_storage->getAssociationByHandle(
@@ -227,14 +243,32 @@ class Zend_OpenId_Consumer
             }
             $params2['openid.mode'] = 'check_authentication';
             $ret = $this->_httpRequest($server, 'POST', $params2);
+            $r = array();
             if (is_string($ret)) {
-                $i = strpos($ret, "is_valid:true");
-                if ($i !== false &&
-                    ($i == 0 || $ret[$i-1] == "\n") &&
-                    ($i + strlen("is_valid:true") == strlen($ret) ||
-                     $ret[$i+strlen("is_valid:true")] == "\n")) {
-                    return true;
+                foreach(explode("\n", $ret) as $line) {
+                    $line = trim($line);
+                    if (!empty($line)) {
+                        $x = explode(':', $line, 2);
+                        if (is_array($x) && count($x) == 2) {
+                            list($key, $value) = $x;
+                            $r[trim($key)] = trim($value);
+                        }
+                    }
                 }
+            }
+            $ret = $r;
+            if (!empty($ret['invalidate_handle'])) {
+                if ($this->_storage->getAssociationByHandle(
+                    $ret['invalidate_handle'],
+                    $url,
+                    $macFunc,
+                    $secret,
+                    $expires)) {
+                    $this->_storage->delAssociation($url);
+                }
+            }
+            if (isset($ret['is_valid']) && $ret['is_valid'] == 'true') {
+                return true;
             }
             return false;
         }
