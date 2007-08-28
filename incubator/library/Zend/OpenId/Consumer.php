@@ -166,11 +166,9 @@ class Zend_OpenId_Consumer
             empty($params['openid_signed']) ||
             empty($params['openid_sig']) ||
             empty($params['openid_mode']) ||
+            empty($params['openid_assoc_handle']) ||
             $params['openid_mode'] != 'id_res' ||
             $params['openid_return_to'] != Zend_OpenId::selfUrl()) {
-            return false;
-        }
-        if (empty($params['openid_assoc_handle'])) {
             return false;
         }
 
@@ -196,14 +194,6 @@ class Zend_OpenId_Consumer
             foreach ($signed as $key) {
                 $data .= $key . ':' . $params['openid_' . strtr($key,'.','_')] . "\n";
             }
-//$f = fopen("php://stderr", "w");
-//fprintf($f, "-verify\n");
-//fprintf($f, "data   = %s\n", var_export($data,1));
-//fprintf($f, "handle = %s\n", $params['openid_assoc_handle']);
-//fprintf($f, "secret = %s\n", bin2hex($secret));
-//fprintf($f, "hmac_s = %s\n", bin2hex(base64_decode($params['openid_sig'])));
-//fprintf($f, "hmac_c = %s\n", bin2hex(Zend_OpenId::hashHmac($macFunc, $data, $secret)));
-
             if (base64_decode($params['openid_sig']) ==
                 Zend_OpenId::hashHmac($macFunc, $data, $secret)) {
                 return true;
@@ -214,9 +204,14 @@ class Zend_OpenId_Consumer
         else
         {
             /* Use dumb mode */
-            $id = @$params['openid_identity'];
-            if (empty($id) ||
-                !$this->_discovery($id, $server, $version)) {
+            if (isset($params['openid_claimed_id'])) {
+                $id = $params['openid_claimed_id'];
+            } else if (isset($params['openid_identity'])) {
+                $id = $params['openid_identity'];
+            } else {
+                return false;
+            }
+            if (!$this->_discovery($id, $server, $version)) {
                 return false;
             }
             $params2 = array();
@@ -391,12 +386,12 @@ class Zend_OpenId_Consumer
                                        $priv_key);
         $dh_details = Zend_OpenId::getDhKeyDetails($dh);
 
-        $params['openid.dh_modulus']         =
-            base64_encode(Zend_OpenId::btwoc($dh_details['p']));
-        $params['openid.dh_gen']             =
-            base64_encode(Zend_OpenId::btwoc($dh_details['g']));
-        $params['openid.dh_consumer_public'] =
-            base64_encode(Zend_OpenId::btwoc($dh_details['pub_key']));
+        $params['openid.dh_modulus']         = base64_encode(
+            Zend_OpenId::btwoc($dh_details['p']));
+        $params['openid.dh_gen']             = base64_encode(
+            Zend_OpenId::btwoc($dh_details['g']));
+        $params['openid.dh_consumer_public'] = base64_encode(
+            Zend_OpenId::btwoc($dh_details['pub_key']));
 
         $ret = $this->_httpRequest($url, 'POST', $params);
         if ($ret === false) {
@@ -486,19 +481,6 @@ class Zend_OpenId_Consumer
             $macFunc,
             $secret,
             time() + $expiresIn);
-
-//$f = fopen("php://stderr", "w");
-//fprintf($f, "-associate\n");
-//fprintf($f, "p        = %s\n", bin2hex($dh_details['p']));
-//fprintf($f, "g        = %s\n", bin2hex($dh_details['g']));
-//fprintf($f, "priv_key = %s\n", bin2hex($dh_details['priv_key']));
-//fprintf($f, "pub_key  = %s\n", bin2hex($dh_details['pub_key']));
-//fprintf($f, "spub_key = %s\n", bin2hex(base64_decode($ret['dh_server_public'])));
-//fprintf($f, "dhSec    = %s\n", bin2hex($dhSec));
-//fprintf($f, "sec      = %s\n", bin2hex($sec));
-//fprintf($f, "enc_mac  = %s\n", bin2hex(base64_decode($ret['enc_mac_key'])));
-//fprintf($f, "secret   = %s\n", bin2hex($secret));
-
         return true;
     }
 
@@ -632,8 +614,8 @@ class Zend_OpenId_Consumer
             $params['openid.ns'] = Zend_OpenId::NS_2_0;
         }
 
-        $params['openid.mode'] =
-            $immediate ? 'checkid_immediate' : 'checkid_setup';
+        $params['openid.mode'] = $immediate ? 
+            'checkid_immediate' : 'checkid_setup';
 
         $params['openid.identity'] = $id;
 

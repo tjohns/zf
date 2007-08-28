@@ -51,9 +51,17 @@ if (isset($_POST['openid_action']) &&
     $_GET['openid_mode'] == "id_res") {
     $consumer = new Zend_OpenId_Consumer();
     if (!$consumer->verify($_GET)) {
-        echo "INVALID ".$_GET["openid_identity"]."<br>";
+        if (isset($_GET["openid_claimed_id"])) {
+            echo "INVALID ".$_GET["openid_claimed_id"]."<br>";
+        } else {
+            echo "INVALID ".$_GET["openid_identity"]."<br>";
+        }
     } else {
-        echo "VALID ".$_GET["openid_identity"]."<br>";
+        if (isset($_GET["openid_claimed_id"])) {
+            echo "VALID ".$_GET["openid_claimed_id"]."<br>";
+        } else {
+            echo "VALID ".$_GET["openid_identity"]."<br>";
+        }
     }
 } else if (isset($_GET['openid_mode']) &&
     $_GET['openid_mode'] == "cancel") {
@@ -67,7 +75,15 @@ if (isset($_POST['openid_action']) &&
 <legend>OpenID Login</legend>
 <input type="hidden" name="openid_action" value="login">
 <div>
-<input type="text" name="openid_identifier" class="openid_login" value="<?php echo isset($_GET["openid_identity"])?$_GET["openid_identity"]:"";?>">
+<input type="text" name="openid_identifier" class="openid_login" value="<?php 
+if (isset($_GET["openid_claimed_id"])) {
+    echo $_GET["openid_claimed_id"];
+} else if (isset($_GET["openid_identity"])){
+    echo $_GET["openid_identity"];
+} else {
+    echo "";
+}
+?>">
 <input type="submit" name="login" value="login">
 <table border="0" cellpadding="2" cellspacing="2">
 <tr><td>&nbsp;</td><td>requird</td><td>optional</td><td>none</td><td>&nbsp</td></tr>

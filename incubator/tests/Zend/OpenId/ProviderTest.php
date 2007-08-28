@@ -88,9 +88,12 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $provider = new Zend_OpenId_Provider(null, null, $this->_user, $storage);
 
         // wrong ID
-        $this->assertFalse( $provider->hasUser("", self::PASSWORD) );
+        $this->assertFalse( $provider->hasUser("") );
+        $this->assertFalse( $provider->hasUser("http://:80/test") );
+
         // check for non existent
         $this->assertFalse( $provider->hasUser(self::USER) );
+        
         // check for existent user
         $this->assertTrue( $storage->addUser(self::USER, self::PASSWORD) );
         $this->assertTrue( $provider->hasUser(self::USER) );
@@ -112,6 +115,9 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         // wrong ID
         $this->assertFalse( $provider->login("", self::PASSWORD) );
         $this->assertFalse( $this->_user->getLoggedInUser() );
+        $this->assertFalse( $provider->login("http://:80/test", self::PASSWORD) );
+        $this->assertFalse( $this->_user->getLoggedInUser() );
+
         // login as non existent user
         $this->assertFalse( $provider->login(self::USER, self::PASSWORD) );
         $this->assertFalse( $this->_user->getLoggedInUser() );
@@ -294,6 +300,9 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $provider = new Zend_OpenId_Provider(null, null, $this->_user, $storage);
         $sreg = new Zend_OpenId_Extension_Sreg(array("nickname"=>"test_id"));
 
+        // not logged in
+        $this->assertFalse( $provider->denySite("http://www.test.com/") );
+
         $this->assertTrue( $provider->register(self::USER, self::PASSWORD) );
         $this->assertTrue( $provider->login(self::USER, self::PASSWORD) );
         $this->assertTrue( $provider->allowSite("http://www.test1.com/") );
@@ -355,6 +364,9 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->_user->delLoggedInUser();
         $provider = new Zend_OpenId_Provider(null, null, $this->_user, $storage);
         $sreg = new Zend_OpenId_Extension_Sreg(array("nickname"=>"test_id"));
+
+        // not logged in
+        $this->assertFalse( $provider->delSite("http://www.test.com/") );
 
         $this->assertTrue( $provider->register(self::USER, self::PASSWORD) );
         $this->assertTrue( $provider->login(self::USER, self::PASSWORD) );
@@ -485,6 +497,19 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             }
         }
         $this->assertSame( Zend_OpenId::NS_2_0, $res['ns'] );
+        $this->assertSame( 'unsupported-type', $res['error-code'] );
+
+        // Wrong session_type
+        $ret = $provider->handle(array('openid_mode'=>'associate',
+                                       'openid_assoc_type'=>'HMAC-SHA1',
+                                       'openid_session_type'=>'DH-SHA257'));
+        $res = array();
+        foreach (explode("\n", $ret) as $line) {
+            if (!empty($line)) {
+                list($key, $val) = explode(":", $line, 2);
+                $res[$key] = $val;
+            }
+        }
         $this->assertSame( 'unsupported-type', $res['error-code'] );
 
         // Associaation without encryption
@@ -686,6 +711,24 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'id_res', $res['openid.mode'] );
         $this->assertSame( 'true', $res['is_valid'] );
 
+        // Wrong signature
+        $storage->delAssociation(self::HANDLE);
+        $storage->addAssociation(self::HANDLE, "sha256", pack("H*", '0102030405060708091011121314151617181920212223242526272829303132'), time() + 3660);
+        $ret = $provider->handle(array('openid_ns'=>Zend_OpenId::NS_2_0,
+                                       'openid_mode'=>'check_authentication',
+                                       'openid_assoc_handle'=>self::HANDLE,
+                                       'openid_signed'=>'ns,mode,assoc_handle,signed',
+                                       'openid_sig'=>'xoJcXj30L1N7QRir7I2ovop1SaijXnAI97X/yH+kvck='));
+        $res = array();
+        foreach (explode("\n", $ret) as $line) {
+            if (!empty($line)) {
+                list($key, $val) = explode(":", $line, 2);
+                $res[$key] = $val;
+            }
+        }
+        $this->assertSame( 'id_res', $res['openid.mode'] );
+        $this->assertSame( 'false', $res['is_valid'] );
+
         $storage->delAssociation(self::HANDLE);
     }
 
@@ -855,6 +898,42 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'http://www.test.com/test.php', $query2['openid.return_to'] );
         $this->assertSame( self::USER, $query2['openid.identity'] );
 
+        // Non logged in user with SREG
+        $provider->register(self::USER, self::PASSWORD);
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue($provider->handle(array(
+            'openid_mode'=>'checkid_immediate',
+            'openid_identity'=>self::USER,
+            'openid_return_to'=>'http://www.test.com/test.php',
+            'openid_ns_sreg'=>Zend_OpenId_Extension_Sreg::NAMESPACE_1_1,
+            'openid_sreg_required'=>'nickname'),
+            null, $response));
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $query = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $query[$key] = urldecode($val);
+        }
+        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $url2 = parse_url($query['openid.user_setup_url']);
+        $this->assertSame( 'www.test.com', $url2['host'] );
+        $this->assertSame( '/server.php', $url2['path'] );
+        $query2 = array();
+        foreach (explode('&', $url2['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $query2[$key] = urldecode($val);
+        }
+        $this->assertSame( 'login', $query2['openid.action'] );
+        $this->assertSame( 'checkid_setup', $query2['openid.mode'] );
+        $this->assertSame( 'http://www.test.com/test.php', $query2['openid.return_to'] );
+        $this->assertSame( self::USER, $query2['openid.identity'] );
+        $this->assertSame( Zend_OpenId_Extension_Sreg::NAMESPACE_1_1, $query2['openid.ns.sreg'] );
+        $this->assertSame( "nickname", $query2['openid.sreg.required'] );
+
         // Logged in user (unknown site)
         $this->assertTrue( $provider->login(self::USER, self::PASSWORD) );
         $response = new Zend_OpenId_ResponseHelper(true);
@@ -887,8 +966,77 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'http://www.test.com/test.php', $query2['openid.return_to'] );
         $this->assertSame( self::USER, $query2['openid.identity'] );
 
+        // Logged in user (unknown site 2)
+        $this->assertTrue( $provider->login(self::USER, self::PASSWORD) );
+        $this->assertTrue( $provider->allowSite('http://www.test.com/test1.php') );
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue($provider->handle(array(
+            'openid_mode'=>'checkid_immediate',
+            'openid_identity'=>self::USER,
+            'openid_return_to'=>'http://www.test.com/test.php'),
+            null, $response));
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $query = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $query[$key] = urldecode($val);
+        }
+        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $url2 = parse_url($query['openid.user_setup_url']);
+        $this->assertSame( 'www.test.com', $url2['host'] );
+        $this->assertSame( '/server.php', $url2['path'] );
+        $query2 = array();
+        foreach (explode('&', $url2['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $query2[$key] = urldecode($val);
+        }
+        $this->assertSame( 'trust', $query2['openid.action'] );
+        $this->assertSame( 'checkid_setup', $query2['openid.mode'] );
+        $this->assertSame( 'http://www.test.com/test.php', $query2['openid.return_to'] );
+        $this->assertSame( self::USER, $query2['openid.identity'] );
+
+        // Logged in user (unknown site + SREG)
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue( $provider->delSite('http://www.test.com/test1.php') );
+        $this->assertTrue($provider->handle(array(
+            'openid_mode'=>'checkid_immediate',
+            'openid_identity'=>self::USER,
+            'openid_return_to'=>'http://www.test.com/test.php',
+            'openid_ns_sreg'=>Zend_OpenId_Extension_Sreg::NAMESPACE_1_1,
+            'openid_sreg_required'=>'nickname'),
+            null, $response));
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $query = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $query[$key] = urldecode($val);
+        }
+        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $url2 = parse_url($query['openid.user_setup_url']);
+        $this->assertSame( 'www.test.com', $url2['host'] );
+        $this->assertSame( '/server.php', $url2['path'] );
+        $query2 = array();
+        foreach (explode('&', $url2['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $query2[$key] = urldecode($val);
+        }
+        $this->assertSame( 'trust', $query2['openid.action'] );
+        $this->assertSame( 'checkid_setup', $query2['openid.mode'] );
+        $this->assertSame( 'http://www.test.com/test.php', $query2['openid.return_to'] );
+        $this->assertSame( self::USER, $query2['openid.identity'] );
+        $this->assertSame( Zend_OpenId_Extension_Sreg::NAMESPACE_1_1, $query2['openid.ns.sreg'] );
+        $this->assertSame( "nickname", $query2['openid.sreg.required'] );
+
         // Logged in user (untrusted site)
-        $this->assertTrue( $provider->denySite('http://www.test.com/') );
+        $this->assertTrue( $provider->denySite('http://www.test.com/test.php') );
         $response = new Zend_OpenId_ResponseHelper(true);
         $this->assertTrue($provider->handle(array(
             'openid_mode'=>'checkid_immediate',
@@ -900,6 +1048,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'http://www.test.com/test.php?openid.mode=cancel', $headers[0]['value'] );
 
         // Logged in user (trusted site)
+        $this->assertTrue( $provider->delSite('http://www.test.com/test.php') );
         $this->assertTrue( $provider->allowSite('http://www.test.com/') );
         $response = new Zend_OpenId_ResponseHelper(true);
         $this->assertTrue($provider->handle(array(
@@ -1363,6 +1512,21 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
 
         $provider->logout();
         $storage->delUser(self::USER);
+    }
+
+    /**
+     * testing handle
+     *
+     */
+    public function testHandle()
+    {
+        $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user);
+
+        // no openid_mode
+        $this->assertFalse( $provider->handle(array()) );
+
+        // wrong openid_mode
+        $this->assertFalse( $provider->handle(array('openid_mode'=>'wrong')) );
     }
 }
 

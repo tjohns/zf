@@ -494,7 +494,9 @@ class Zend_OpenId_Provider
             $this->_user->getLoggedInUser() !== $params['openid_identity']) {
             $params2 = array();
             foreach ($params as $key => $val) {
-                if (strpos($key, 'openid_sreg_') === 0) {
+                if (strpos($key, 'openid_ns_') === 0) {
+                    $key = 'openid.ns.' . substr($key, strlen('openid_ns_'));
+                } else if (strpos($key, 'openid_sreg_') === 0) {
                     $key = 'openid.sreg.' . substr($key, strlen('openid_sreg_'));
                 } else if (strpos($key, 'openid_') === 0) {
                     $key = 'openid.' . substr($key, strlen('openid_'));
@@ -526,9 +528,10 @@ class Zend_OpenId_Provider
         if (isset($sites[$root])) {
             $trusted = $sites[$root];
         } else {
-            foreach ($sites as $site => $trusted) {
+            foreach ($sites as $site => $t) {
                 /* TODO: OpenID 2.0, 9.2 check for realm wild-card matching */
-                if (strpos($site, $root) === 0) {
+                if (strpos($root, $site) === 0) {
+                    $trusted = $t;                    
                     break;
                 }
             }
@@ -547,7 +550,9 @@ class Zend_OpenId_Provider
             /* Redirect to Server Trust Screen */
             $params2 = array();
             foreach ($params as $key => $val) {
-                if (strpos($key, 'openid_sreg_') === 0) {
+                if (strpos($key, 'openid_ns_') === 0) {
+                    $key = 'openid.ns.' . substr($key, strlen('openid_ns_'));
+                } else if (strpos($key, 'openid_sreg_') === 0) {
                     $key = 'openid.sreg.' . substr($key, strlen('openid_sreg_'));
                 } else if (strpos($key, 'openid_') === 0) {
                     $key = 'openid.' . substr($key, strlen('openid_'));
@@ -609,8 +614,7 @@ class Zend_OpenId_Provider
                 $macFunc, $secret, $expires)) {
             /* Use dumb mode */
             if (!empty($params['openid_assoc_handle'])) {
-                $ret['openid.invalidate_handle'] =
-                    $params['openid_assoc_handle'];
+                $ret['openid.invalidate_handle'] = $params['openid_assoc_handle'];
             }
             $macFunc = $version >= 2.0 ? 'sha256' : 'sha1';
             $secret = $this->_genSecret($macFunc);

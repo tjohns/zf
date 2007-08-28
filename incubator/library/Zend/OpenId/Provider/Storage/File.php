@@ -65,7 +65,7 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
         }
         $this->_dir = $dir;
         if (!is_dir($this->_dir)) {
-            if (!mkdir($this->_dir, 0700, 1)) {
+            if (!@mkdir($this->_dir, 0700, 1)) {
                 throw new Zend_OpenId_Exception(
                     'Cannot access storage directory',
                     Zend_OpenId_Exception::ERROR_STORAGE);
