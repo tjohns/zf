@@ -517,6 +517,36 @@ class Zend_Pdf
     }
 
     /**
+     * Return the document-level Metadata
+     * or null Metadata stream is not presented
+     *
+     * @return string
+     */
+    public function getMetadata()
+    {
+        if ($this->_trailer->Root->Metadata !== null) {
+            return $this->_trailer->Root->Metadata->value;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Sets the document-level Metadata (mast be valid XMP document)
+     *
+     * @param string $metadata
+     */
+    public function setMetadata($metadata)
+    {
+        $metadataObject = $this->_objFactory->newStreamObject($metadata);
+        $metadataObject->dictionary->Type    = new Zend_Pdf_Element_Name('Metadata');
+        $metadataObject->dictionary->Subtype = new Zend_Pdf_Element_Name('XML');
+
+        $this->_trailer->Root->Metadata = $metadataObject;
+        $this->_trailer->Root->touch();
+    }
+
+    /**
      * Return the document-level JavaScript
      * or null if there is no JavaScript for this document
      *
