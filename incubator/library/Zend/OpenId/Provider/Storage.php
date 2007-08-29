@@ -27,6 +27,7 @@
  * @category   Zend
  * @package    Zend_OpenId
  * @subpackage Zend_OpenId_Provider
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_OpenId_Provider_Storage
@@ -49,9 +50,9 @@ abstract class Zend_OpenId_Provider_Storage
      * otherwise
      *
      * @param string $handle assiciation handle
-     * @param string $macFunc HMAC function (sha1 or sha256)
-     * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param string &$macFunc HMAC function (sha1 or sha256)
+     * @param string &$secret shared secret
+     * @param string &$expires expiration UNIX time
      * @return bool
      */
     abstract public function getAssociation($handle, &$macFunc, &$secret, &$expires);
@@ -98,7 +99,7 @@ abstract class Zend_OpenId_Provider_Storage
      *
      * @param string $id user identity URL
      * @param string $site site URL
-     * @param bool $trusted
+     * @param mixed $trusted trust data from extensions or just a boolean value
      * @return bool
      */
     abstract public function addSite($id, $site, $trusted);

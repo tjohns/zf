@@ -197,10 +197,10 @@ class Zend_OpenId_Provider
     }
 
     /**
-     * Retrieve consumer's root URL from request query
+     * Retrieve consumer's root URL from request query.
      * Returns URL or false in case of failure
      *
-     * @param array $params
+     * @param array $params query arguments
      * @return mixed
      */
     public function getSiteRoot($params)
@@ -229,7 +229,7 @@ class Zend_OpenId_Provider
      * Allows consumer with given root URL to authenticate current logged
      * in user. Returns true on success and false on error.
      *
-     * @param string $root
+     * @param string $root root URL
      * @param mixed $extensions extension object or array of extensions objects
      * @return bool
      */
@@ -253,7 +253,7 @@ class Zend_OpenId_Provider
      * Prohibit consumer with given root URL to authenticate current logged
      * in user. Returns true on success and false on error.
      *
-     * @param string $root
+     * @param string $root root URL
      * @return bool
      */
     public function denySite($root)
@@ -272,7 +272,7 @@ class Zend_OpenId_Provider
      * Provider will ask user's confirmation.
      * Returns true on success and false on error.
      *
-     * @param string $root
+     * @param string $root root URL
      * @return bool
      */
     public function delSite($root)
@@ -305,7 +305,8 @@ class Zend_OpenId_Provider
      *
      * @param array $params GET or POST variables
      * @param mixed $extensions extension object or array of extensions objects
-     * @param Zend_Controller_Response_Abstract $response
+     * @param Zend_Controller_Response_Abstract $response an optional response
+     *  object to perform HTTP or HTML form redirection
      * @return mixed
      */
     public function handle($params, $extensions=null,
@@ -374,7 +375,7 @@ class Zend_OpenId_Provider
      * shared key and send it back using Diffie-Hellman encruption.
      * Returns array of variables to push back to consumer.
      *
-     * @param float $version
+     * @param float $version OpenID version
      * @param array $params GET or POST request variables
      * @return array
      */
@@ -463,12 +464,13 @@ class Zend_OpenId_Provider
     /**
      * Performs authentication (or authentication check).
      *
-     * @param float $version
+     * @param float $version OpenID version
      * @param array $params GET or POST request variables
      * @param bool $immediate enables or disables interaction with user
      * @param mixed $extensions extension object or array of extensions objects
      * @param Zend_Controller_Response_Abstract $response
      * @return array
+     * @todo OpenID 2.0 (9.2) check for realm wild-card matching
      */
     protected function _checkId($version, $params, $immediate, $extensions=null,
         Zend_Controller_Response_Abstract $response = null)
@@ -529,7 +531,7 @@ class Zend_OpenId_Provider
             $trusted = $sites[$root];
         } else {
             foreach ($sites as $site => $t) {
-                /* TODO: OpenID 2.0, 9.2 check for realm wild-card matching */
+                /* TODO: OpenID 2.0 (9.2) check for realm wild-card matching */
                 if (strpos($root, $site) === 0) {
                     $trusted = $t;                    
                     break;
@@ -602,7 +604,7 @@ class Zend_OpenId_Provider
      * and signs it using shared secret.
      *
      * @param float $version OpenID protcol version
-     * @param array $ret
+     * @param array $ret arguments to be send back to consumer
      * @param array $params GET or POST request variables
      * @param mixed $extensions extension object or array of extensions objects
      * @return array
@@ -671,7 +673,7 @@ class Zend_OpenId_Provider
      * Returns array of variables to push back to consumer.
      * It MUST contain 'is_valid' variable with value 'true' or 'false'.
      *
-     * @param float $version
+     * @param float $version OpenID version
      * @param array $params GET or POST request variables
      * @return array
      */

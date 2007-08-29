@@ -37,7 +37,7 @@ abstract class Zend_OpenId_Provider_User
      * Stores information about logged in user
      *
      * @param string $id user identity URL
-     * @return void
+     * @return bool
      */
     abstract public function setLoggedInUser($id);
 
@@ -51,7 +51,7 @@ abstract class Zend_OpenId_Provider_User
     /**
      * Performs logout. Clears information about logged in user.
      *
-     * @return void
+     * @return bool
      */
     abstract public function delLoggedInUser();
 }

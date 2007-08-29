@@ -36,7 +36,7 @@ abstract class Zend_OpenId_Extension
      *
      * @param mixed $extensions list of extensions or one extension
      * @param string $func function to be called
-     * @param mixed $params argument to pass to given funcion
+     * @param mixed &$params argument to pass to given funcion
      * @return bool
      */
     static public function forAll($extensions, $func, &$params)
@@ -66,7 +66,7 @@ abstract class Zend_OpenId_Extension
      * 'checkid_setup' request. This method addes nothing but inherited class
      * may add additional data into request.
      *
-     * @param array $params request's var/val pairs
+     * @param array &$params request's var/val pairs
      * @return bool
      */
     public function prepareRequest(&$params)
@@ -91,7 +91,7 @@ abstract class Zend_OpenId_Extension
      * Method to add additional data to OpenId 'id_res' response. This method
      * addes nothing but inherited class may add additional data into response.
      *
-     * @param array $params response's var/val pairs
+     * @param array &$params response's var/val pairs
      * @return bool
      */
     public function prepareResponse(&$params)
@@ -115,7 +115,7 @@ abstract class Zend_OpenId_Extension
     /**
      * Method to prepare data to store it in trusted servers database.
      *
-     * @param array $data data to be stored in tusted servers database
+     * @param array &$data data to be stored in tusted servers database
      * @return bool
      */
     public function getTrustData(&$data)

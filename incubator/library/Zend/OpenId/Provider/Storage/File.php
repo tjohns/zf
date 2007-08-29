@@ -103,9 +103,9 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
      * otherwise
      *
      * @param string $handle assiciation handle
-     * @param string $macFunc HMAC function (sha1 or sha256)
-     * @param string $secret shared secret
-     * @param string $expires expiration UNIX time
+     * @param string &$macFunc HMAC function (sha1 or sha256)
+     * @param string &$secret shared secret
+     * @param string &$expires expiration UNIX time
      * @return bool
      */
     public function getAssociation($handle, &$macFunc, &$secret, &$expires)
@@ -269,7 +269,7 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
      *
      * @param string $id user identity URL
      * @param string $site site URL
-     * @param mixed $trusted
+     * @param mixed $trusted trust data from extension or just a boolean value
      * @return bool
      */
     public function addSite($id, $site, $trusted)

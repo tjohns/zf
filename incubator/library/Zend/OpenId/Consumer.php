@@ -82,8 +82,10 @@ class Zend_OpenId_Consumer
      * Enables or disables future association with server based on
      * Diffie-Hellman key agreement.
      *
-     * @param Zend_OpenId_Consumer_Storage $storage
-     * @param bool $dumpMode
+     * @param Zend_OpenId_Consumer_Storage $storage implementation of custom
+     *  storage object
+     * @param bool $dumbMode Enables or disables consumer to use association
+     *  with server based on Diffie-Hellman key agreement
      */
     public function __construct(Zend_OpenId_Consumer_Storage $storage = null,
                                 $dumbMode = false)
@@ -108,7 +110,8 @@ class Zend_OpenId_Consumer
      * @param string $returnTo URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
-     * @param Zend_Controller_Response_Abstract $response
+     * @param Zend_Controller_Response_Abstract $response an optional response
+     *  object to perform HTTP or HTML form redirection
      * @return bool
      */
     public function login($id, $returnTo=null, $root=null, $extensions=null,
@@ -134,8 +137,11 @@ class Zend_OpenId_Consumer
      * @param string $returnTo HTTP URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
-     * @param Zend_Controller_Response_Abstract $response
+     * @param Zend_Controller_Response_Abstract $response an optional response
+     *  object to perform HTTP or HTML form redirection
      * @return bool
+     * @todo OpenID 2.0 (11.2) Verifying Discovered Information
+     * @todo OpenID 2.0 (11.3) Checking the Nonce
      */
     public function check($id, $returnTo=null, $root=null, $extensions,
                           Zend_Controller_Response_Abstract $response = null)
@@ -184,9 +190,9 @@ class Zend_OpenId_Consumer
             return false;
         }
 
-        /* TODO: OpenID 2.0, 11.2 Verifying Discovered Information */
+        /* TODO: OpenID 2.0 (11.2) Verifying Discovered Information */
 
-        /* TODO: OpenID 2.0, 11.3 Checking the Nonce */
+        /* TODO: OpenID 2.0 (11.3) Checking the Nonce */
 
         if (!empty($params['openid_invalidate_handle'])) {
             if ($this->_storage->getAssociationByHandle(
@@ -300,10 +306,10 @@ class Zend_OpenId_Consumer
      * external storage
      *
      * @param string $url OpenID server url
-     * @param string $handle association handle
-     * @param string $macFunc HMAC function (sha1 or sha256)
-     * @param string $secret shared secret
-     * @param integer $expires expiration UNIX time
+     * @param string &$handle association handle
+     * @param string &$macFunc HMAC function (sha1 or sha256)
+     * @param string &$secret shared secret
+     * @param integer &$expires expiration UNIX time
      * @return void
      */
     protected function _getAssociation($url, &$handle, &$macFunc, &$secret, &$expires)
@@ -333,8 +339,9 @@ class Zend_OpenId_Consumer
      * On success returns HTTP response without headers, false on failure.
      *
      * @param string $url OpenID server url
-     * @param string $method
-     * @param array $params
+     * @param string $method HTTP request method 'GET' or 'POST'
+     * @param array $params additional qwery parameters to be passed with
+     *  request
      * @return mixed
      */
     protected function _httpRequest($url, $method = 'GET', array $params = array())
@@ -523,10 +530,11 @@ class Zend_OpenId_Consumer
      * and OpenID protocol version. Returns true on succees and false on
      * failure.
      *
-     * @param string $id OpenID identity URL
-     * @param string $server OpenID server URL
-     * @param float $version OpenID protocol version
+     * @param string &$id OpenID identity URL
+     * @param string &$server OpenID server URL
+     * @param float &$version OpenID protocol version
      * @return bool
+     * @todo OpenID 2.0 (7.3) XRI and Yadis discovery 
      */
     protected function _discovery(&$id, &$server, &$version)
     {
@@ -541,7 +549,7 @@ class Zend_OpenId_Consumer
             return true;
         }
 
-        /* TODO: XRI and Yadis discovery (OpenID 2.0, 7.3) */
+        /* TODO: OpenID 2.0 (7.3) XRI and Yadis discovery */
 
         /* HTML-based discovery */
         $response = $this->_httpRequest($id);
@@ -601,7 +609,7 @@ class Zend_OpenId_Consumer
         return true;
     }
 
-    /*
+    /**
      * Performs check of OpenID identity.
      *
      * This is the first step of OpenID authentication process.
@@ -613,7 +621,8 @@ class Zend_OpenId_Consumer
      * @param string $returnTo HTTP URL to redirect response from server to
      * @param string $root HTTP URL to identify consumer on server
      * @param mixed $extensions extension object or array of extensions objects
-     * @param Zend_Controller_Response_Abstract $response
+     * @param Zend_Controller_Response_Abstract $response an optional response
+     *  object to perform HTTP or HTML form redirection
      * @return bool
      */
     protected function _checkId($immediate, $id, $returnTo=null, $root=null,
@@ -681,10 +690,20 @@ class Zend_OpenId_Consumer
         return true;
     }
 
+    /**
+     * Sets HTTP client object to make HTTP requests
+     *
+     * @param Zend_Http_Client $client HTTP client object to be used
+     */
     public function setHttpClient($client) {
         $this->_httpClient = $client;
     }
 
+    /**
+     * Returns HTTP client object that will be used to make HTTP requests
+     *
+     * @return Zend_Http_Client
+     */
     public function getHttpClient() {
         return $this->_httpClient;
     }
