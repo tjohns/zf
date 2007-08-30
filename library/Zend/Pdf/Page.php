@@ -232,9 +232,19 @@ class Zend_Pdf_Page
             return;
 
         } else if ($param1 instanceof Zend_Pdf_Page && $param2 === null && $param3 === null) {
-            /** @todo implementation */
-            throw new Zend_Pdf_Exception('Not implemented yet.');
+            // Clone existing page.
+            // Let already existing content and resources to be shared between pages
+            // We don't give existing content modification functionality, so we don't need "deep copy"
+            $this->_objFactory = $param1->_objFactory;
+            $this->_attached = &$param1->_attached;
 
+            $this->_pageDictionary = $this->_objFactory->newObject(new Zend_Pdf_Element_Dictionary());
+
+            foreach ($param1->_pageDictionary->getKeys() as $key) {
+                $this->_pageDictionary->$key = $param1->_pageDictionary->$key;
+            }
+
+            return;
         } else if (is_string($param1) &&
                    ($param2 === null || $param2 instanceof Zend_Pdf_ElementFactory_Interface) &&
                    $param3 === null) {
