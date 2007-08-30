@@ -285,8 +285,8 @@ foreach ($hits as $hit) {
         <para>
             重みを計算するために使用されるのが
             Zend_Search_Lucene_Search_Similarity クラスです。詳細は
-            <link linkend="zend.search.lucene.extending.scoring">拡張性 - 重み付けのアルゴリズム</link>
-            を参照ください。
+            <link linkend="zend.search.lucene.extending.scoring">拡張性
+            - 重み付けのアルゴリズム</link> を参照ください。
         </para>
 
     </sect2>
@@ -360,8 +360,8 @@ $highlightedHTML = $query->highlightMatches($sourceHTML);]]>
         <para>
             <code>highlightMatches()</code> メソッドは、HTML の処理の際に
             <code>Zend_Search_Lucene_Document_Html</code> クラスを使用しています
-            (詳細は <link linkend="zend.search.lucene.index-creation.html-documents">HTML ドキュメントの節</link>
-            を参照ください)。つまり、HTML ソースと同じ条件が適用されます。
+            (詳細は <link linkend="zend.search.lucene.index-creation.html-documents">HTML
+            ドキュメントの節</link> を参照ください)。つまり、HTML ソースと同じ条件が適用されます。
         </para>
     </sect2>
 </sect1>

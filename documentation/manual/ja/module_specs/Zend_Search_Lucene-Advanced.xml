@@ -5,8 +5,8 @@
         <title>静的プロパティとしてのインデックスの使用</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> オブジェクトは、デストラクタ内で
-            変更のコミットやリソースの後始末を行います。
+            <code>Zend_Search_Lucene</code> オブジェクトは、
+            デストラクタ内で変更のコミットやリソースの後始末を行います。
         </para>
 
         <para>
@@ -17,8 +17,8 @@
 
         <para>
             もし <code>MaxBufferedDocs</code> の制限に達していない場合は "保存されていない"
-            ドキュメントが残ってしまい、これがオブジェクトのデストラクタで
-            新しいセグメントとして保存されます。
+            ドキュメントが残ってしまい、
+            これがオブジェクトのデストラクタで新しいセグメントとして保存されます。
             インデックスの自動最適化は、
             <code>MaxBufferedDocs</code>、<code>MaxMergeDocs</code> および
             <code>MergeFactor</code> の設定内容により、必要に応じて行われます。

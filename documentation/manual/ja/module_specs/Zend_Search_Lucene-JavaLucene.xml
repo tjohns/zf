@@ -12,7 +12,8 @@
           このファイルフォーマットについての詳細な説明は
           <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
           にあります。
-          <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.0 です</para></footnote>。
+          <footnote><para>現在サポートしている Lucene
+          インデックスファイルフォーマットのバージョンは v2.0 です</para></footnote>。
         </para>
     </sect2>
 

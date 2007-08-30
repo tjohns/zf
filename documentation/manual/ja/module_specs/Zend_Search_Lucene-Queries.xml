@@ -27,8 +27,8 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Search_Lucene_Search_QueryParserException</code> がスローされるのは、
-                    クエリの構文エラーが発生した場合です。
+                    <code>Zend_Search_Lucene_Search_QueryParserException</code>
+                    がスローされるのは、クエリの構文エラーが発生した場合です。
                 </para>
             </listitem>
         </itemizedlist>
