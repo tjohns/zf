@@ -177,7 +177,7 @@ function foo()
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[<?php
 $oldLimit = $memoryManager->getMemoryLimit();  // メモリの制限バイト数を取得します
-$memoryManager->getMemoryLimit($newLimit);     // メモリの制限バイト数を設定します]]>
+$memoryManager->setMemoryLimit($newLimit);     // メモリの制限バイト数を設定します]]>
                 </programlisting>
             </para>
 
