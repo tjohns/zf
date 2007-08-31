@@ -32,6 +32,11 @@ require_once "Zend/OpenId.php";
 require_once "Zend/OpenId/Extension.php";
 
 /**
+ * @see Zend_OpenId_Consumer_Storage
+ */
+require_once "Zend/OpenId/Consumer/Storage.php";
+
+/**
  * @see Zend_Http_Client
  */
 require_once 'Zend/Http/Client.php';
@@ -114,7 +119,7 @@ class Zend_OpenId_Consumer
      *  object to perform HTTP or HTML form redirection
      * @return bool
      */
-    public function login($id, $returnTo=null, $root=null, $extensions=null,
+    public function login($id, $returnTo = null, $root = null, $extensions = null,
                           Zend_Controller_Response_Abstract $response = null)
     {
         return $this->_checkId(
@@ -164,14 +169,25 @@ class Zend_OpenId_Consumer
      * failure.
      *
      * @param array $params HTTP query data from OpenID server
+     * @param string &$identity this argument is set to end-user's claimed
+     *  identifier or OpenID provider local identifier.
+     * @param mixed $extensions extension object or array of extensions objects
      * @return bool
      */
-    public function verify($params)
+    public function verify($params, &$identity = "", $extensions = null)
     {
         $version = 1.1;
         if (isset($params['openid_ns']) &&
             $params['openid_ns'] == Zend_OpenId::NS_2_0) {
             $version = 2.0;
+        }
+
+        if (isset($params["openid_claimed_id"])) {
+            $identity = $params["openid_claimed_id"];
+        } else if (isset($params["openid_identity"])){
+            $identity = $params["openid_identity"];
+        } else {
+            $identity = "";
         }
 
         if (empty($params['openid_return_to']) ||
@@ -218,6 +234,9 @@ class Zend_OpenId_Consumer
             }
             if (base64_decode($params['openid_sig']) ==
                 Zend_OpenId::hashHmac($macFunc, $data, $secret)) {
+                if (!Zend_OpenId_Extension::forAll($extensions, 'parseResponse', $params)) {
+                    return false;
+                }
                 return true;
             }
             $this->_storage->delAssociation($url);
@@ -274,6 +293,9 @@ class Zend_OpenId_Consumer
                 }
             }
             if (isset($ret['is_valid']) && $ret['is_valid'] == 'true') {
+                if (!Zend_OpenId_Extension::forAll($extensions, 'parseResponse', $params)) {
+                    return false;
+                }
                 return true;
             }
             return false;
@@ -369,7 +391,11 @@ class Zend_OpenId_Consumer
             $client->setParameterGet($params);
         }
 
-        $response = $client->request();
+        try {
+            $response = $client->request();
+        } catch (Exception $e) {
+            return false;
+        }
         if ($response->getStatus() == 200) {
             return $response->getBody();
         }else{
@@ -670,6 +696,32 @@ class Zend_OpenId_Consumer
 
         if (empty($returnTo)) {
             $returnTo = Zend_OpenId::selfUrl();
+        } else if (!preg_match('|^([^:]+)://|', $returnTo)) {
+            if (preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?]*)?((?:[?](?:[^#]*))?(?:#.*)?)$|', Zend_OpenId::selfUrl(), $reg)) {
+                $scheme = $reg[1];
+                $auth = $reg[2];
+                $host = $reg[3];
+                $port = $reg[4];
+                $path = $reg[5];
+                $query = $reg[6];
+                if ($returnTo[0] == '/') {
+                    $returnTo = $scheme
+                        . '://'
+                        . $auth
+                        . $host
+                        . (empty($port) ? '' : (':' . $port))
+                        . $returnTo;
+                } else {
+                    $returnTo = $scheme
+                        . '://'
+                        . $auth
+                        . $host
+                        . (empty($port) ? '' : (':' . $port))
+                        . dirname($path)
+                        . '/'
+                        . $returnTo;
+                }
+            }
         }
         $params['openid.return_to'] = $returnTo;
 

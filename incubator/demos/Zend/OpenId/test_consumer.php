@@ -4,6 +4,9 @@ set_include_path("$dir/library" . PATH_SEPARATOR . "$dir/incubator/library" . PA
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
 
+$id = "";
+$status = "";
+$data = array();
 if (isset($_POST['openid_action']) &&
     $_POST['openid_action'] == "login" &&
     !empty($_POST['openid_identifier'])) {
@@ -20,7 +23,41 @@ if (isset($_POST['openid_action']) &&
         }
     }
     $sreg = new Zend_OpenId_Extension_Sreg($props, null, 1.1);
-    $ret = $consumer->login($_POST['openid_identifier'], null, null, $sreg);
+    $id = $_POST['openid_identifier'];
+    if (!$consumer->login($id, null, null, $sreg)) {
+        $status = "OpenID login failed";
+
+    }
+} else if (isset($_GET['openid_mode'])) {
+    if ($_GET['openid_mode'] == "id_res") {
+        $sreg = new Zend_OpenId_Extension_Sreg();
+        $consumer = new Zend_OpenId_Consumer();
+        if ($consumer->verify($_GET, $id, $sreg)) {
+            $status = "VALID $id";
+            $data = $sreg->getProperties();
+        } else {
+            $status = "INVALID $id";
+        }
+    } else if ($_GET['openid_mode'] == "cancel") {
+        $status = "CANCELED";
+    }
+}
+$sreg_html = "";
+$sreg = new Zend_OpenId_Extension_Sreg();
+foreach (Zend_OpenId_Extension_Sreg::getSregProperties() as $prop) {
+    $val = isset($data[$prop]) ? $data[$prop] : "";
+    $sreg_html .= <<<EOF
+<tr><td>$prop</td>
+<td>
+  <input type="radio" name="$prop" value="required">
+</td><td>
+  <input type="radio" name="$prop" value="optional">
+</td><td>
+  <input type="radio" name="$prop" value="none" checked="1">
+</td><td>
+  $val
+</td></tr>
+EOF;
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -40,34 +77,7 @@ input.openid_login {
 </style>
 </head>
 <body>
-<?php
-if (isset($_POST['openid_action']) &&
-    $_POST['openid_action'] == "login" &&
-    !empty($_POST['openid_identifier'])) {
-    if ($ret !== true) {
-        echo "OpenID login failed because of internal error.<br>";
-    }
-} else if (isset($_GET['openid_mode']) &&
-    $_GET['openid_mode'] == "id_res") {
-    $consumer = new Zend_OpenId_Consumer();
-    if (!$consumer->verify($_GET)) {
-        if (isset($_GET["openid_claimed_id"])) {
-            echo "INVALID ".$_GET["openid_claimed_id"]."<br>";
-        } else {
-            echo "INVALID ".$_GET["openid_identity"]."<br>";
-        }
-    } else {
-        if (isset($_GET["openid_claimed_id"])) {
-            echo "VALID ".$_GET["openid_claimed_id"]."<br>";
-        } else {
-            echo "VALID ".$_GET["openid_identity"]."<br>";
-        }
-    }
-} else if (isset($_GET['openid_mode']) &&
-    $_GET['openid_mode'] == "cancel") {
-    echo "CANCELED<br>";
-}
-?>
+<?php echo "$status<br>\n";?>
 <div>
 <form action="<?php echo Zend_OpenId::selfUrl(); ?>"
     method="post" onsubmit="this.login.disabled=true;">
@@ -75,38 +85,11 @@ if (isset($_POST['openid_action']) &&
 <legend>OpenID Login</legend>
 <input type="hidden" name="openid_action" value="login">
 <div>
-<input type="text" name="openid_identifier" class="openid_login" value="<?php 
-if (isset($_GET["openid_claimed_id"])) {
-    echo $_GET["openid_claimed_id"];
-} else if (isset($_GET["openid_identity"])){
-    echo $_GET["openid_identity"];
-} else {
-    echo "";
-}
-?>">
+<input type="text" name="openid_identifier" class="openid_login" value="<?php echo $id;?>">
 <input type="submit" name="login" value="login">
 <table border="0" cellpadding="2" cellspacing="2">
 <tr><td>&nbsp;</td><td>requird</td><td>optional</td><td>none</td><td>&nbsp</td></tr>
-<?php
-    $sreg = new Zend_OpenId_Extension_Sreg();
-    $sreg->parseResponse($_GET);
-    $data = $sreg->getProperties();
-    foreach (Zend_OpenId_Extension_Sreg::getSregProperties() as $prop) {
-        $val = isset($data[$prop]) ? $data[$prop] : "";
-        echo <<<EOF
-<tr><td>$prop</td>
-<td>
-  <input type="radio" name="$prop" value="required">
-</td><td>
-  <input type="radio" name="$prop" value="optional">
-</td><td>
-  <input type="radio" name="$prop" value="none" checked="1">
-</td><td>
-  $val
-</td></tr>
-EOF;
-    }
-?>
+<?php echo "$sreg_html<br>\n";?>
 </table>
 <br>
 <a href="<?php echo dirname(Zend_OpenId::selfUrl()); ?>/test_server.php?openid.action=register">register</a>

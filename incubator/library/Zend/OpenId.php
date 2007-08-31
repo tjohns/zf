@@ -285,6 +285,7 @@ class Zend_OpenId
 
         $id = $scheme
             . '://'
+            . $auth
             . $host
             . (empty($port) ? '' : (':' . $port))
             . $path

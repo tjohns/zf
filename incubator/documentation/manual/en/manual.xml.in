@@ -42,6 +42,8 @@
     <chapter id="zend.openid">
         <title>Zend_OpenId</title>
         <xi:include href="module_specs/Zend_OpenId-Introduction.xml" />
+        <xi:include href="module_specs/Zend_OpenId-Consumer.xml" />
+        <xi:include href="module_specs/Zend_OpenId-Provider.xml" />
     </chapter>
 
     <appendix id="appendix.copyright">
