@@ -71,26 +71,6 @@ class Zend_Db_Statement_Pdo_IbmTest extends Zend_Db_Statement_Pdo_TestCommon
         $this->assertEquals(2, $n);
     }
 
-    public function testStatementBindParamByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' support for bindParam to be implemented soon.');
-    }
-
-    public function testStatementBindValueByPosition()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' support for bindValue to be implemented soon.');
-    }
-
-    public function testStatementBindValueByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' support for bindValue to be implemented soon.');
-    }
-
-    public function testStatementBindParamByName()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' support for bindParam to be implemented soon.');
-    }
-    
     public function testStatementGetSetAttribute()
     {
         $select = $this->_db->select()

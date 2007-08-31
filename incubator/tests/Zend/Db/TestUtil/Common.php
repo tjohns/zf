@@ -274,7 +274,7 @@ abstract class Zend_Db_TestUtil_Common
             'PRIMARY KEY'  => 'doc_id'
             );
     }
-    
+
     protected function _getDataAccounts()
     {
         return array(
@@ -438,4 +438,5 @@ abstract class Zend_Db_TestUtil_Common
     }
 
     protected abstract function _rawQuery($sql);
+
 }

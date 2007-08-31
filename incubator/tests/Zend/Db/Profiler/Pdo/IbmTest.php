@@ -39,11 +39,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Profiler_Pdo_IbmTest extends Zend_Db_Profiler_TestCommon
 {
-    public function testProfilerPreparedStatementWithBoundParams()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' is having trouble with binding params');
-    }
-    
     public function getDriver()
     {
         return 'Pdo_Ibm';

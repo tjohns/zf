@@ -77,11 +77,8 @@ class Zend_Db_Statement_Pdo_Ibm extends Zend_Db_Statement_Pdo
      * @return bool
      * @throws Zend_Db_Statement_Exception
      */
-    public function bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
+    public function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
-        if (is_string($parameter) && $parameter[0] != ':') {
-            $parameter = ":$parameter";
-        }
         try {
             if ( is_null($type) && is_null($length) && is_null($options) ) {
                 return $this->_stmt->bindParam($parameter, $variable);

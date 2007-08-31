@@ -72,7 +72,6 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
         return $data;
     }
 
-    
     protected function _getDataDocuments()
     {
         return array (
@@ -87,7 +86,6 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
             )
         );
     }
-    
     public function getSqlType($type)
     {
         if ($type == 'IDENTITY') {
@@ -137,7 +135,6 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
         $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
         . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
         );
-         
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' RESTRICT';
         }
@@ -154,4 +151,5 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
             throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
         }
     }
+
 }

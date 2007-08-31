@@ -93,9 +93,6 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Creates a PDO object and connects to the database.
      * 
-     * This is a temporary workaround until the attribute PDO::ATTR_SERVER_INFO
-     * is implemented in the PDO_IBM driver
-     * 
      * The IBM data server is set.  
      * Current options are DB2 or IDS
      * @todo also differentiate between z/OS and i/5
@@ -112,32 +109,42 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         parent::_connect();
         
         $this->getConnection()->setAttribute(Zend_Db::ATTR_STRINGIFY_FETCHES, true);
+        
+        try {
+            if ($this->_serverType === null) {
+                $server = substr($this->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);
              
-        if ($this->_serverType === null) {
-            $server = substr($this->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);
-            
-            switch ($server) {
-               case 'DB2':
-                   $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Db2($this);
+                switch ($server) {
+                    case 'DB2':
+                        $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Db2($this);
                    
-                   // Add DB2-specific numeric types
-                   $this->_numericDataTypes['DECFLOAT'] = Zend_Db::FLOAT_TYPE;
-                   $this->_numericDataTypes['DOUBLE']   = Zend_Db::FLOAT_TYPE;
-                   $this->_numericDataTypes['NUM']      = Zend_Db::FLOAT_TYPE;
+                        // Add DB2-specific numeric types
+                        $this->_numericDataTypes['DECFLOAT'] = Zend_Db::FLOAT_TYPE;
+                        $this->_numericDataTypes['DOUBLE']   = Zend_Db::FLOAT_TYPE;
+                        $this->_numericDataTypes['NUM']      = Zend_Db::FLOAT_TYPE;
                    
-                   break;
-               case 'IDS':
-                   $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Ids($this);
+                        break;
+                    case 'IDS':
+                        $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Ids($this);
                    
-                   // Add IDS-specific numeric types
-                   $this->_numericDataTypes['SERIAL']       = Zend_Db::INT_TYPE;
-                   $this->_numericDataTypes['SERIAL8']      = Zend_Db::BIGINT_TYPE;
-                   $this->_numericDataTypes['INT8']         = Zend_Db::BIGINT_TYPE;
-                   $this->_numericDataTypes['SMALLFLOAT']   = Zend_Db::FLOAT_TYPE;
-                   $this->_numericDataTypes['MONEY']        = Zend_Db::FLOAT_TYPE;
+                        // Add IDS-specific numeric types
+                        $this->_numericDataTypes['SERIAL']       = Zend_Db::INT_TYPE;
+                        $this->_numericDataTypes['SERIAL8']      = Zend_Db::BIGINT_TYPE;
+                        $this->_numericDataTypes['INT8']         = Zend_Db::BIGINT_TYPE;
+                        $this->_numericDataTypes['SMALLFLOAT']   = Zend_Db::FLOAT_TYPE;
+                        $this->_numericDataTypes['MONEY']        = Zend_Db::FLOAT_TYPE;
                   
-                   break;
-           }
+                        break;
+                    }   
+            }
+        } catch (PDOException $e) {
+            require_once 'Zend/Db/Adapter/Exception.php';
+            $error = strpos($e->getMessage(), 'driver does not support that attribute');
+            if ($error) {
+                throw new Zend_Db_Adapter_Exception("PDO_IBM driver extension is downlevel.  Please use driver release version 1.2.1 or later");
+            } else {
+                throw new Zend_Db_Adapter_Exception($e->getMessage());     
+            }
         }
     }
     
@@ -149,23 +156,14 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     protected function _dsn()
     {
         $this->_checkRequiredOptions($this->_config);
-        // baseline of DSN parts
-        $dsn = $this->_config;
-
+  
         // check if using full connection string
         if (array_key_exists('host', $this->_config)) {
-            // if the host is specified, use extended connection params
             $dsn = ';DATABASE=' . $this->_config['dbname']
             . ';HOSTNAME=' . $this->_config['host']
             . ';PORT='     . $this->_config['port']
             // PDO_IBM supports only DB2 TCPIP protocol
-            . ';PROTOCOL=' . 'TCPIP'
-            . ';UID='      . $this->_config['username']
-            . ';PWD='      . $this->_config['password']
-            . ';';
-            // don't pass the username and password in the DSN
-            // unset($dsn['username']);
-            // unset($dsn['password']);
+            . ';PROTOCOL=' . 'TCPIP;';
         } else {
             // catalogued connection
             $dsn = $this->_config['dbname'];

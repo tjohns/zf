@@ -59,7 +59,6 @@ class Zend_Db_TestUtil_Pdo_Ibm extends Zend_Db_TestUtil_Db2
         return $data;
     }
     
-    
     protected function _getDataDocuments()
     {
         $server = $this->getServer();
