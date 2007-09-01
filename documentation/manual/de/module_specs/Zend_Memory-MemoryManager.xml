@@ -178,7 +178,7 @@ function foo()
                 Methoden:
                 <programlisting role="php"><![CDATA[<?php
 $oldLimit = $memoryManager->getMemoryLimit();  // Memory Limit in Bytes empfangen
-$memoryManager->getMemoryLimit($newLimit);     // Memory Limit in Bytes senden]]>
+$memoryManager->setMemoryLimit($newLimit);     // Das Memory Limit in Bytes setzen]]>
                 </programlisting>
             </para>
 
