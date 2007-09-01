@@ -247,7 +247,10 @@ class Zend_Gdata_AllTests
                 $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
             }
             
-            $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');
+            if (defined('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');
+            }
             
             if (defined('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') == true) {

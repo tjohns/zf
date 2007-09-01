@@ -206,6 +206,12 @@ define('TESTS_ZEND_GDATA_SPREADSHEETS_SPREADSHEETKEY', 'o01111111111111111111.11
 define('TESTS_ZEND_GDATA_SPREADSHEETS_WORKSHEETID', 'default');
 
 /*
+ * This indicates that online tests for the Google Calendar API should
+ * be performed. The default calendar will be used.
+ */
+define('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED', false);
+
+/*
  * This is the fully-qualified domain name for a domiain hosted using 
  * Google Apps. This domain must be registered with Google Apps and 
  * have API access enabled.
