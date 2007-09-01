@@ -222,7 +222,7 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 // Füge /other/path/to/helpers mit Klassenpräfix 'Your_View_Helper' hinzu
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
-// wenn du nun $this->helperName() aufrufst, wird Zend_View zuerst nach
+// wenn nun $this->helperName() aufgerufen wird, wird Zend_View zuerst nach
 // "/other/path/to/helpers/HelperName.php" mit dem Klassennamen "My_View_Helper_HelperName",
 // dann nach "/path/to/some/helpers/HelperName.php" mit dem Klassennamen "Your_View_Helper_HelperName",
 // und zuletzt nach "Zend/View/Helpers/HelperName.php" mit dem Klassennamen "Zend_View_Helper_HelperName"
