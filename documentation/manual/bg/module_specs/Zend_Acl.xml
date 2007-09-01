@@ -25,7 +25,7 @@
             </listitem>
         </itemizedlist>
 
-        Тъй че, <emphasis role="strong">Role заявява достъп до Resource</emphasis>.
+        Тъй че, <emphasis role="strong">Role заявява достъп до Ресурс</emphasis>.
         Например, ако човек заяви достъп до автомобил, тогава човекът а в позицията на Role,
         а колата Resource, тъй като достъпа до колата е контролиран.
     </para>
