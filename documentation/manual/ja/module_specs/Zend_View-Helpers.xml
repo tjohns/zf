@@ -219,7 +219,7 @@
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
-// パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' とします
+// パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' と設定します
 $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
         </programlisting>
 
