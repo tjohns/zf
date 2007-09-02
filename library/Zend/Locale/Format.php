@@ -263,18 +263,17 @@ class Zend_Locale_Format
         $symbols = Zend_Locale_Data::getContent($options['locale'],'numbersymbols');
 
         // Parse input locale aware
-        $regex = '/(' . $symbols['minus'] . '){0,1}(\d+(\\' . $symbols['group'] . '){0,1})*(\\' .
+        $regex = '/([' . $symbols['minus'] . '-]){0,1}(\d+(\\' . $symbols['group'] . '){0,1})*(\\' .
                         $symbols['decimal'] . '){0,1}\d+/';
         preg_match($regex, $input, $found);
         if (!isset($found[0]))
             throw new Zend_Locale_Exception('No value in ' . $input . ' found');
         $found = $found[0];
-
         // Change locale input to be standard number
         if ($symbols['minus'] != "-")
             $found = strtr($found,$symbols['minus'],'-');
         $found = str_replace($symbols['group'],'', $found);
-
+            
         // Do precision
         if (strpos($found, $symbols['decimal']) !== false) {
             if ($symbols['decimal'] != '.') {
@@ -290,7 +289,7 @@ class Zend_Locale_Format
                 $found = substr($found, 0, strlen($found) - strlen($pre) + $options['precision']);
             }
         }
-
+        
         return $found;
     }
 
@@ -360,14 +359,6 @@ class Zend_Locale_Format
                 $options['precision'] = 0;
             }
             $value = Zend_Locale_Math::normalize($value);
-        }
-        // set negative sign
-        if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
-            if (iconv_strpos($format, '-') === false) {
-                $format = $symbols['minus'] . $format;
-            } else {
-                $format = str_replace('-', $symbols['minus'], $format);
-            }
         }
 
         // get number parts
@@ -459,6 +450,14 @@ class Zend_Locale_Format
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
 
         }
+        // set negative sign
+        if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+            if (iconv_strpos($format, '-') === false) {
+                $format = $symbols['minus'] . $format;
+            } else {
+                $format = str_replace('-', $symbols['minus'], $format);
+            }
+        }
 
         return (string) $format;
     }
@@ -477,7 +476,7 @@ class Zend_Locale_Format
         $symbols = Zend_Locale_Data::getContent($options['locale'],'numbersymbols');
 
         // Parse input locale aware
-        $regex = '/^(' . $symbols['minus'] . '){0,1}(\d+(\\' . $symbols['group']
+        $regex = '/^([' . $symbols['minus'] . '-]){0,1}(\d+(\\' . $symbols['group']
             . '){0,1})*(\\' . $symbols['decimal'] . '){0,1}\d+$/';
         preg_match($regex, $input, $found);
 
@@ -623,7 +622,7 @@ class Zend_Locale_Format
     {
         $options = array_merge(self::$_Options, self::checkOptions($options));
         $test = array('h', 'H', 'm', 's', 'y', 'Y', 'M', 'd', 'D', 'E', 'S', 'l', 'B', 'I',
-                       'X', 'r', 'U', 'G', 'w', 'e', 'a', 'A', 'Z', 'z');
+                       'X', 'r', 'U', 'G', 'w', 'e', 'a', 'A', 'Z', 'z', 'v');
 
         $format = $options['date_format'];
         foreach (str_split($format) as $splitted) {
@@ -1048,7 +1047,6 @@ class Zend_Locale_Format
             $options['format_type'] = 'iso';
             $options['date_format'] = self::getTimeFormat($options['locale']);
         }
-
         return self::_parseDate($time, $options);
     }
 }

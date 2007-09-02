@@ -350,12 +350,12 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value->getTranslation('full', 'dateformat', 'en'), 'EEEE, MMMM d, yyyy');
         $this->assertFalse($value->getTranslation('xxxx', 'dateformat'));
 
-        $this->assertEquals($value->getTranslation('full', 'timeformat'), "H:mm' Uhr 'z");
+        $this->assertEquals($value->getTranslation('full', 'timeformat'), "HH:mm:ss v");
         $this->assertEquals($value->getTranslation('full', 'timeformat', 'en'), 'h:mm:ss a v');
         $this->assertFalse($value->getTranslation('xxxx', 'timeformat'));
 
-        $this->assertEquals($value->getTranslation('Europe/Berlin', 'timezone'), 'Berlin');
-        $this->assertEquals($value->getTranslation('Europe/Paris', 'timezone', 'en'), 'Paris');
+        $this->assertEquals($value->getTranslation('Europe/Vienna', 'timezone'), 'Wien');
+        $this->assertEquals($value->getTranslation('America/St_Johns', 'timezone', 'en'), 'St. John’s');
         $this->assertFalse($value->getTranslation('xxxx', 'timezone'));
 
         $this->assertEquals($value->getTranslation('EUR', 'currency'), 'Euro');
@@ -426,11 +426,11 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('EEEE, d. MMMM yyyy', $value->getTranslationList('dateformat')));
         $this->assertTrue(in_array('EEEE, MMMM d, yyyy', $value->getTranslationList('dateformat', 'en')));
 
-        $this->assertTrue(in_array("H:mm' Uhr 'z", $value->getTranslationList('timeformat')));
+        $this->assertTrue(in_array("HH:mm:ss v", $value->getTranslationList('timeformat')));
         $this->assertTrue(in_array("h:mm:ss a z", $value->getTranslationList('timeformat', 'en')));
 
-        $this->assertTrue(in_array('Berlin', $value->getTranslationList('timezone')));
-        $this->assertTrue(in_array('Paris', $value->getTranslationList('timezone', 'en')));
+        $this->assertTrue(in_array('Wien', $value->getTranslationList('timezone')));
+        $this->assertTrue(in_array("St. John’s", $value->getTranslationList('timezone', 'en')));
 
         $this->assertTrue(in_array('Euro', $value->getTranslationList('currency')));
         $this->assertTrue(in_array('Euro', $value->getTranslationList('currency', 'en')));
