@@ -228,5 +228,30 @@ class Zend_Gdata_SpreadsheetsOnlineTest extends PHPUnit_Framework_TestCase
         $ssTest = new Zend_Gdata_Spreadsheets($entry->getHttpClient());
         $ssTest->delete($entry);
     }
+    
+    public function testCustomElementsCollected() {
+        $rowData = array();
+        $rowData['a1'] = 'new';
+        $rowData['b1'] = 'row';
+        $rowData['c1'] = 'data';
+        $rowData['d1'] = 'here';
+        $entry = $this->gdata->insertRow($rowData, $this->sprKey);
+        
+        $this->assertEquals(4, count($entry->custom));
+        $this->assertEquals(4, count($entry->customByName));
+        
+        $this->assertEquals('new', $entry->custom[0]->getText());
+        $this->assertEquals('row', $entry->custom[1]->getText());
+        $this->assertEquals('data', $entry->custom[2]->getText());
+        $this->assertEquals('here', $entry->custom[3]->getText());
+        
+        $this->assertEquals('new', $entry->customByName['a1']->getText());
+        $this->assertEquals('row', $entry->customByName['b1']->getText());
+        $this->assertEquals('data', $entry->customByName['c1']->getText());
+        $this->assertEquals('here', $entry->customByName['d1']->getText());
+        
+        $ssTest = new Zend_Gdata_Spreadsheets($entry->getHttpClient());
+        $ssTest->delete($entry);
+    }
 
 }

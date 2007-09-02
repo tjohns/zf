@@ -142,8 +142,8 @@ $listFeed = $spreadsheetService->getListFeed($query);]]>
 
             <para>
               Each <code>Zend_Gdata_Spreadsheets_ListEntry</code> contains an
-              array, <code>custom</code>, which contains the data for that row.
-              You can extract and display this array:
+              array, <code>custom</code>, which contains the data for that
+              row. You can extract and display this array:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -151,6 +151,17 @@ $rowData = $listFeed->entries[1]->getCustom();
 foreach($rowData as $customEntry) {
   echo $customEntry->getColumnName() . " = " . $customEntry->getText();
 }]]>
+            </programlisting>
+            
+            <para>
+              An alternate version of this array, <code>customByName</code>,
+              allows direct access to an entry's cells by name. This is
+              convenient when trying to access a specific header:
+            </para>
+            
+            <programlisting role="php"><![CDATA[<?php
+$customEntry = $listFeed->entries[1]->getCustomByName('my_heading');
+echo $customEntry->getColumnName() . " = " . $customEntry->getText();]]>
             </programlisting>
         </sect3>
 

@@ -304,9 +304,8 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         {
             $newCustom = new Zend_Gdata_Spreadsheets_Extension_Custom();
             $newCustom->setText($v)->setColumnName($k);
-            $newCustomArr[] = $newCustom;
+            $newEntry->addCustom($newCustom);
         }
-        $newEntry->setCustom($newCustomArr);
 
         $query = new Zend_Gdata_Spreadsheets_ListQuery();
         $query->setSpreadsheetKey($key);
