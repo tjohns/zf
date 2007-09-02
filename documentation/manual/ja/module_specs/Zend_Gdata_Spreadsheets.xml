@@ -146,6 +146,17 @@ foreach($rowData as $customEntry) {
   echo $customEntry->getColumnName() . " = " . $customEntry->getText();
 }]]>
             </programlisting>
+            
+            <para>
+              もうひとつの配列である <code>customByName</code>
+              を使用すると、エントリのセルに対して名前を指定して直接アクセスできるようになります。
+              これは、特定のヘッダにアクセスしたい場合などに便利です。
+            </para>
+            
+            <programlisting role="php"><![CDATA[<?php
+$customEntry = $listFeed->entries[1]->getCustomByName('my_heading');
+echo $customEntry->getColumnName() . " = " . $customEntry->getText();]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.spreadsheets.listfeeds.reverse">
