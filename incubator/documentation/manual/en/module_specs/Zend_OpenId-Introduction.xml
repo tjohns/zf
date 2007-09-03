@@ -1,7 +1,7 @@
 <sect1 id="zend.openid.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_OpenId</code> is a Zend Framework componet that provides
+        <code>Zend_OpenId</code> is a Zend Framework component that provides
         simple API to build OpenID-enabled sites and identity providers.
     </para>
 
@@ -21,7 +21,7 @@
             user centric solution. A user may choose which OpenID provider to
             use, or even create their own personal identity server. No central
             authority must approve or register OpenID-enabled sites or
-            indentity providers.
+            identity providers.
         </para>
 
         <para>
@@ -86,7 +86,7 @@
             <listitem>
                 The OpenID consumer verifies the information received from
                 provider by using shared secret got on step 3 or by sending
-                additional direct request to OpenID proider.
+                additional direct request to OpenID provider.
             </listitem>
         </orderedlist>
     </sect2>
@@ -94,15 +94,15 @@
     <sect2 id="zend.openid.introduction.structure">
         <title>Zend_OpenId Structure</title>
         <para>
-            <code>Zend_OpenId</code> consists from two subpackages. The first
+            <code>Zend_OpenId</code> consists from two sub packages. The first
             one is <code>Zend_OpenId_Consumer</code> to develop OpenID-enabled
             sites and the second <code>Zend_OpenId_Provider</code> to develop
-            OpenID servers. They are completly independend from each other and
-            may be used separatly.
+            OpenID servers. They are completely independent from each other and
+            may be used separately.
         </para>
 
         <para>
-            The only common parts of these subpackages are OpenID Simple
+            The only common parts of these sub packages are OpenID Simple
             Registration Extension implemented by <code>Zend_OpenId_Extension_Sreg</code>
             class and set of utility functions implemented by <code>Zend_OpenId</code> class.
         </para>
@@ -120,7 +120,7 @@
                 OpenID Authentication protocol version 1.1
             </listitem>
             <listitem>
-                OpenID Authentication protocol version 2.0 draf 11
+                OpenID Authentication protocol version 2.0 draft 11
             </listitem>
             <listitem>
                 OpenID Simple Registration Extension version 1.0

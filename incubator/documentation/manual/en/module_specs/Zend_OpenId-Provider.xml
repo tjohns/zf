@@ -1,0 +1,9 @@
+<sect1 id="zend.openid.provider">
+    <title>Zend_OpenId_Provider</title>
+    <para>
+        <code>Zend_OpenId_Provider</code> is used to implement OpenID servers. 
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

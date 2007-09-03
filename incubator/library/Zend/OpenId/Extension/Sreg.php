@@ -239,6 +239,15 @@ class Zend_OpenId_Extension_Sreg extends Zend_OpenId_Extension
                 $props[$prop] = $params['openid_sreg_' . $prop];
             }
         }
+        if (isset($this->_props) && is_array($this->_props)) {
+            foreach (self::getSregProperties() as $prop) {
+                if (isset($this->_props[$prop]) &&
+                    $this->_props[$prop] &&
+                    !isset($props[$prop])) {
+                    return false;
+                }
+            }
+        }
         $this->_props = (count($props) > 0) ? $props : null;
         return true;
     }
