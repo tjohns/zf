@@ -192,10 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         $server->allowSite($server->getSiteRoot($_GET), $sreg);
                     }
                     unset($_GET['openid_action']);
-                    $ret = $server->respondToConsumer($_GET, $sreg);
-                    if (is_array($ret)) {
-                        Zend_OpenId::redirect($_GET['openid_return_to'], $ret);
-                    }
+                    $server->respondToConsumer($_GET, $sreg);
                 } else if (isset($_POST['deny'])) {
                     if (isset($_POST['forever'])) {
                         $server->denySite($server->getSiteRoot($_GET));

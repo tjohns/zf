@@ -130,6 +130,46 @@ class Zend_OpenId
     }
 
     /**
+     * Returns an absolute URL for the given one
+     *
+     * @param string $url absilute or relative URL
+     * @return string
+     */
+    static public function absoluteUrl($url)
+    {
+        if (empty($url)) {
+            return Zend_OpenId::selfUrl();
+        } else if (!preg_match('|^([^:]+)://|', $url)) {
+            if (preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?]*)?((?:[?](?:[^#]*))?(?:#.*)?)$|', Zend_OpenId::selfUrl(), $reg)) {
+                $scheme = $reg[1];
+                $auth = $reg[2];
+                $host = $reg[3];
+                $port = $reg[4];
+                $path = $reg[5];
+                $query = $reg[6];
+                if ($url[0] == '/') {
+                    return $scheme
+                        . '://'
+                        . $auth
+                        . $host
+                        . (empty($port) ? '' : (':' . $port))
+                        . $url;
+                } else {
+                    return $scheme
+                        . '://'
+                        . $auth
+                        . $host
+                        . (empty($port) ? '' : (':' . $port))
+                        . dirname($path)
+                        . '/'
+                        . $url;
+                }
+            }
+        }
+        return $url;
+    }
+
+    /**
      * Converts variable/value pairs into URL encoded query string
      *
      * @param array $params variable/value pairs
@@ -361,6 +401,7 @@ class Zend_OpenId
     static public function redirect($url, $params = null,
         Zend_Controller_Response_Abstract $response = null, $method = 'GET')
     {
+        $url = Zend_OpenId::absoluteUrl($url);
         $body = "";
         if (null === $response) {
             require_once "Zend/Controller/Response/Http.php";

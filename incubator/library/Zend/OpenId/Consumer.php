@@ -694,36 +694,7 @@ class Zend_OpenId_Consumer
             $params['openid.assoc_handle'] = $handle;
         }
 
-        if (empty($returnTo)) {
-            $returnTo = Zend_OpenId::selfUrl();
-        } else if (!preg_match('|^([^:]+)://|', $returnTo)) {
-            if (preg_match('|^([^:]+)://([^:@]*(?:[:][^@]*)?@)?([^/:@?#]*)(?:[:]([^/?#]*))?(/[^?]*)?((?:[?](?:[^#]*))?(?:#.*)?)$|', Zend_OpenId::selfUrl(), $reg)) {
-                $scheme = $reg[1];
-                $auth = $reg[2];
-                $host = $reg[3];
-                $port = $reg[4];
-                $path = $reg[5];
-                $query = $reg[6];
-                if ($returnTo[0] == '/') {
-                    $returnTo = $scheme
-                        . '://'
-                        . $auth
-                        . $host
-                        . (empty($port) ? '' : (':' . $port))
-                        . $returnTo;
-                } else {
-                    $returnTo = $scheme
-                        . '://'
-                        . $auth
-                        . $host
-                        . (empty($port) ? '' : (':' . $port))
-                        . dirname($path)
-                        . '/'
-                        . $returnTo;
-                }
-            }
-        }
-        $params['openid.return_to'] = $returnTo;
+        $params['openid.return_to'] = Zend_OpenId::absoluteUrl($returnTo);
 
         if (empty($root)) {
             $root = dirname(Zend_OpenId::selfUrl());

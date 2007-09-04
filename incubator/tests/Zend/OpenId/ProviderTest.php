@@ -742,11 +742,22 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user, $storage);
 
         // dumb mode
+        $response = new Zend_OpenId_ResponseHelper(true);
         $storage->delAssociation(self::HANDLE);
-        $ret = $provider->respondToConsumer(array(
+        $this->assertTrue( $provider->respondToConsumer(array(
                 'openid_assoc_handle' => self::HANDLE,
                 'openid_return_to' => 'http://www.test.com/test.php'
-            ));
+            ), null, $response) );
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $ret = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $ret[$key] = urldecode($val);
+        }
         $this->assertSame( 'id_res', $ret['openid.mode'] );
         $this->assertSame( 'http://www.test.com/test.php', $ret['openid.return_to'] );
         $this->assertTrue( isset($ret['openid.assoc_handle']) );
@@ -758,12 +769,23 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
 
         // OpenID 2.0 with SHA256
         $_SERVER['SCRIPT_URI'] = "http://www.test.com/endpoint.php";
+        $response = new Zend_OpenId_ResponseHelper(true);
         $storage->addAssociation(self::HANDLE, "sha256", pack("H*", '0102030405060708091011121314151617181920212223242526272829303132'), time() + 3660);
-        $ret = $provider->respondToConsumer(array(
+        $this->assertTrue( $provider->respondToConsumer(array(
                 'openid_ns' => Zend_OpenId::NS_2_0,
                 'openid_assoc_handle' => self::HANDLE,
                 'openid_return_to' => 'http://www.test.com/test.php'
-            ));
+            ), null, $response) );
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $ret = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $ret[$key] = urldecode($val);
+        }
         $this->assertSame( 'id_res', $ret['openid.mode'] );
         $this->assertSame( 'http://www.test.com/test.php', $ret['openid.return_to'] );
         $this->assertSame( self::HANDLE, $ret['openid.assoc_handle'] );
@@ -778,13 +800,24 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
 
         // OpenID 1.0 with SHA1
         $storage->addAssociation(self::HANDLE, "sha1", pack("H*", '0102030405060708091011121314151617181920'), time() + 3660);
+        $response = new Zend_OpenId_ResponseHelper(true);
         $ret = $provider->respondToConsumer(array(
                 'openid_assoc_handle' => self::HANDLE,
                 'openid_return_to' => 'http://www.test.com/test.php',
                 'openid_claimed_id' => 'http://claimed_id/',
                 'openid_identity' => 'http://identity/',
                 'openid_unknown' => 'http://www.test.com/test.php',
-            ));
+            ), null, $response);
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $ret = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $ret[$key] = urldecode($val);
+        }
         $this->assertSame( 'id_res', $ret['openid.mode'] );
         $this->assertSame( 'http://www.test.com/test.php', $ret['openid.return_to'] );
         $this->assertSame( self::HANDLE, $ret['openid.assoc_handle'] );
@@ -802,9 +835,20 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
 
         // extensions
         $sreg = new Zend_OpenId_Extension_Sreg(array("nickname"=>"test_id"));
-        $ret = $provider->respondToConsumer(array(
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue( $provider->respondToConsumer(array(
                 'openid_return_to' => 'http://www.test.com/test.php',
-            ), $sreg);
+            ), $sreg, $response) );
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $ret = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $ret[$key] = urldecode($val);
+        }
         $this->assertSame( 'test_id', $ret['openid.sreg.nickname'] );
     }
 

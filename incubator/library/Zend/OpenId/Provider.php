@@ -105,10 +105,14 @@ class Zend_OpenId_Provider
     {
         if ($loginUrl === null) {
             $loginUrl = Zend_OpenId::selfUrl() . '?openid.action=login';
+        } else {
+            $loginUrl = Zend_OpenId::absoluteUrl($loginUrl);
         }
         $this->_loginUrl = $loginUrl;
         if ($trustUrl === null) {
             $trustUrl = Zend_OpenId::selfUrl() . '?openid.action=trust';
+        } else {
+            $trustUrl = Zend_OpenId::absoluteUrl($trustUrl);
         }
         $this->_trustUrl = $trustUrl;
         if ($user === null) {
@@ -303,15 +307,26 @@ class Zend_OpenId_Provider
     /**
      * Handles HTTP request from consumer
      *
-     * @param array $params GET or POST variables
+     * @param array $params GET or POST variables. If this parameter is omited
+     *  or set to null, then $_GET or $_POST superglobal variable is used
+     *  according to REQUEST_METHOD.
      * @param mixed $extensions extension object or array of extensions objects
      * @param Zend_Controller_Response_Abstract $response an optional response
      *  object to perform HTTP or HTML form redirection
      * @return mixed
      */
-    public function handle($params, $extensions=null,
+    public function handle($params=null, $extensions=null,
                            Zend_Controller_Response_Abstract $response = null)
     {
+        if ($params === null) {
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                $params = $_GET;
+            } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $params = $_POST;
+            } else {
+                return false;
+            }
+        }    
         $version = 1.1;
         if (isset($params['openid_ns']) &&
             $params['openid_ns'] == Zend_OpenId::NS_2_0) {
@@ -578,14 +593,17 @@ class Zend_OpenId_Provider
     }
 
     /**
-     * Perepares information to send back to consumer's authentication request
-     * and signs it using shared secret.
+     * Perepares information to send back to consumer's authentication request,
+     * signs it using shared secret and send back through HTTP redirection
      *
      * @param array $params GET or POST request variables
      * @param mixed $extensions extension object or array of extensions objects
-     * @return array
+     * @param Zend_Controller_Response_Abstract $response an optional response
+     *  object to perform HTTP or HTML form redirection
+     * @return bool
      */
-    public function respondToConsumer($params, $extensions=null)
+    public function respondToConsumer($params, $extensions=null,
+                           Zend_Controller_Response_Abstract $response = null)
     {
         $version = 1.1;
         if (isset($params['openid_ns']) &&
@@ -596,7 +614,11 @@ class Zend_OpenId_Provider
         if ($version >= 2.0) {
             $ret['openid.ns'] = Zend_OpenId::NS_2_0;
         }
-        return $this->_respond($version, $ret, $params, $extensions);
+        $ret = $this->_respond($version, $ret, $params, $extensions);
+        if (!empty($params['openid_return_to'])) {
+            Zend_OpenId::redirect($params['openid_return_to'], $ret, $response);
+        }
+        return true;
     }
 
     /**

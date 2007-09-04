@@ -3,6 +3,224 @@
     <para>
         <code>Zend_OpenId_Provider</code> is used to implement OpenID servers. 
     </para>
+
+    <sect2 id="zend.openid.provider.start">
+        <title>Quick Start</title>
+        <para>
+        </para>
+
+        <example id="zend.openid.provider.example-1">
+            <title>The Identity</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once "Zend/OpenId/Provider.php";
+define("TEST_SERVER", Zend_OpenId::absoluteURL("example-8.php"));
+define("TEST_ID", Zend_OpenId::selfURL());
+define("TEST_PASSWORD", "123");
+$server = new Zend_OpenId_Provider();
+if (!$server->hasUser(TEST_ID)) {
+    $server->register(TEST_ID, TEST_PASSWORD);
+}
+?>
+<html><head>
+<link rel="openid.server" href="<?php echo TEST_SERVER;?>" />
+</head><body>
+<?php echo TEST_ID;?>
+</body></html>]]>
+            </programlisting>
+        </example>
+
+        <example id="zend.openid.provider.example-2">
+            <title>Simple Identity Provider</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once "Zend/OpenId/Provider.php";
+$server = new Zend_OpenId_Provider("example-8-login.php", "example-8-trust.php");
+$ret = $server->handle();
+if (is_string($ret)) {
+    echo $ret;
+} else if ($ret !== true) {
+    header('HTTP/1.0 403 Forbidden');
+    echo 'Forbidden';
+}]]>
+            </programlisting>
+        </example>
+
+        <example id="zend.openid.provider.example-3">
+            <title>Simple Login Screen</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once "Zend/OpenId/Provider.php";
+$server = new Zend_OpenId_Provider();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
+    isset($_POST['openid_action']) &&
+    $_POST['openid_action'] === 'login' &&
+    isset($_POST['openid_identifier']) &&
+    isset($_POST['openid_password'])) {
+    $server->login($_POST['openid_identifier'], $_POST['openid_password']);
+    Zend_OpenId::redirect("example-8.php", $_GET);
+}
+?>
+<html><body>
+<form method="post"><fieldset>
+<legend>OpenID Login</legend>
+<table border=0>
+<tr><td>Name:</td><td><input type="text" name="openid_identifier" value="<?php
+echo $_GET['openid_identity'];
+?>"></td></tr>
+<tr><td>Password:</td><td><input type="text" name="openid_password" value=""></td></tr>
+<tr><td>&nbsp</td><td><input type="submit" name="openid_action" value="login"></td></tr>
+</table></fieldset></form></body></html>]]>
+            </programlisting>
+        </example>
+    
+        <example id="zend.openid.provider.example-4">
+            <title>Simple Trust Screen</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once "Zend/OpenId/Provider.php";
+$server = new Zend_OpenId_Provider();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
+    isset($_POST['openid_action']) &&
+    $_POST['openid_action'] === 'trust') {
+
+    if (isset($_POST['allow'])) {
+        if (isset($_POST['forever'])) {
+            $server->allowSite($server->getSiteRoot($_GET));
+        }
+        $server->respondToConsumer($_GET);
+    } else if (isset($_POST['deny'])) {
+        if (isset($_POST['forever'])) {
+            $server->denySite($server->getSiteRoot($_GET));
+        }
+        Zend_OpenId::redirect($_GET['openid_return_to'], array('openid.mode'=>'cancel'));
+    }
+}
+?>
+<html><body>
+<p>A site identifying as <a href="<?php echo $server->getSiteRoot($_GET);?>">
+<?php echo $server->getSiteRoot($_GET);?></a> has asked us for confirmation that 
+<a href="<?php echo $server->getLoggedInUser();?>">
+<?php echo $server->getLoggedInUser();?></a> is your identity URL.</p>
+<form method="post">
+<input type="checkbox" name="forever">
+<label for="forever">forever</label><br>
+<input type="hidden" name="openid_action" value="trust">
+<input type="submit" name="allow" value="Allow">
+<input type="submit" name="deny" value="Deny">
+</form></body></html>]]>
+            </programlisting>
+        </example>
+    
+    </sect2>
+    
+    <sect2 id="zend.openid.provider.all">
+        <title></title>
+        <para>
+        </para>
+
+        <example id="zend.openid.provider.example-5">
+            <title>All in One</title>
+            <programlisting role="php"><![CDATA[<?php
+define("TEST_ID", "http://tpl.home:8080/~dmitry/openid/zend/example-9-id.php");
+define("TEST_PASSWORD", "123");
+
+require_once "Zend/OpenId/Provider.php";
+$server = new Zend_OpenId_Provider();
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
+    isset($_GET['openid_action']) &&
+    $_GET['openid_action'] === 'login') {
+    $server->login(TEST_ID, TEST_PASSWORD);
+    unset($_GET['openid_action']);
+    Zend_OpenId::redirect(Zend_OpenId::selfUrl(), $_GET);
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
+    isset($_GET['openid_action']) &&
+    $_GET['openid_action'] === 'trust') {
+    unset($_GET['openid_action']);
+    $server->respondToConsumer($_GET);
+} else {
+    $ret = $server->handle();
+    if (is_string($ret)) {
+        echo $ret;
+    } else if ($ret !== true) {
+        header('HTTP/1.0 403 Forbidden');
+        echo 'Forbidden';
+    }
+}]]>
+            </programlisting>
+        </example>
+    
+    </sect2>         
+
+    <sect2 id="zend.openid.provider.sreg">
+        <title>Simple Registration Extension</title>
+        <para>
+        </para>
+
+        <example id="zend.openid.provider.example-6">
+            <title>Identity</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once "Zend/OpenId/Provider.php";
+require_once "Zend/OpenId/Extension/Sreg.php";
+define("TEST_SERVER", Zend_OpenId::absoluteURL("example-10.php"));
+define("TEST_ID", Zend_OpenId::selfURL());
+define("TEST_PASSWORD", "123");
+$server = new Zend_OpenId_Provider();
+if (!$server->hasUser(TEST_ID)) {
+    $server->register(TEST_ID, TEST_PASSWORD);
+    $server->login(TEST_ID, TEST_PASSWORD);
+    $sreg = new Zend_OpenId_Extension_Sreg(array(
+        'nickname' =>'test',
+        'email' => 'test@test.com'
+    ));
+    $root = Zend_OpenId::absoluteURL(".");
+    Zend_OpenId::normalizeUrl($root);
+    $server->allowSite($root, $sreg);
+    $server->logout();
+}
+?>
+<html><head>
+<link rel="openid.server" href="<?php echo TEST_SERVER;?>" />
+</head><body>
+<?php echo TEST_ID;?>
+</body></html>]]>
+            </programlisting>
+        </example>
+    
+        <example id="zend.openid.provider.example-7">
+            <title>Provider with SREG</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once "Zend/OpenId/Provider.php";
+require_once "Zend/OpenId/Extension/Sreg.php";
+$server = new Zend_OpenId_Provider();
+$sreg = new Zend_OpenId_Extension_Sreg();
+
+define("TEST_ID", Zend_OpenId::absoluteURL("example-10-id.php"));
+define("TEST_PASSWORD", "123");
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
+    isset($_GET['openid_action']) &&
+    $_GET['openid_action'] === 'login') {
+    $server->login(TEST_ID, TEST_PASSWORD);
+    unset($_GET['openid_action']);
+    Zend_OpenId::redirect(Zend_OpenId::selfUrl(), $_GET);
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
+    isset($_GET['openid_action']) &&
+    $_GET['openid_action'] === 'trust') {
+   echo "UNTRUSTED DATA" ;
+} else {
+    $ret = $server->handle(null, $sreg);
+    if (is_string($ret)) {
+        echo $ret;
+    } else if ($ret !== true) {
+        header('HTTP/1.0 403 Forbidden');
+        echo 'Forbidden';
+    }
+}]]>
+            </programlisting>
+        </example>
+
+    </sect2>         
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
