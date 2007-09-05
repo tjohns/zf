@@ -324,6 +324,16 @@ class Zend_Pdf_Page
 
 
     /**
+     * Clone operator
+     *
+     * @throws Zend_Pdf_Exception
+     */
+    public function __clone()
+    {
+        throw new Zend_Pdf_Exception('Cloning Zend_Pdf_Page object using \'clone\' keyword is not supported. Use \'new Zend_Pdf_Page($srcPage)\' syntax');
+    }
+
+    /**
      * Attach resource to the page
      *
      * @param string $type
