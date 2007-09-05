@@ -198,4 +198,55 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
         unlink(dirname(__FILE__) . '/_files/output.pdf');
     }
 
+    public function testInfoProcessing()
+    {
+        $pdf = Zend_Pdf::load(dirname(__FILE__) . '/_files/pdfarchiving.pdf');
+
+        $this->assertEquals($pdf->properties['Title'], 'PDF as a Standard for Archiving');
+        $this->assertEquals($pdf->properties['Author'], 'Adobe Systems Incorporated');
+
+        $metadata = $pdf->getMetadata();
+
+        $metadataDOM = new DOMDocument();
+        $metadataDOM->loadXML($metadata);
+
+        $xpath = new DOMXPath($metadataDOM);
+        $pdfPreffixNamespaceURI = $xpath->query('/rdf:RDF/rdf:Description')->item(0)->lookupNamespaceURI('pdf');
+        $xpath->registerNamespace('pdf', $pdfPreffixNamespaceURI);
+
+        $titleNodeset = $xpath->query('/rdf:RDF/rdf:Description/pdf:Title');
+        $titleNode    = $titleNodeset->item(0);
+        $this->assertEquals($titleNode->nodeValue, 'PDF as a Standard for Archiving');
+
+
+        $pdf->properties['Title'] .= ' (modified)';
+        $pdf->properties['New_Property'] = 'New property';
+
+        $titleNode->nodeValue .= ' (modified using RDF data)';
+        $pdf->setMetadata($metadataDOM->saveXML());
+
+        $pdf->save(dirname(__FILE__) . '/_files/output.pdf');
+        unset($pdf);
+
+
+        $pdf1 = Zend_Pdf::load(dirname(__FILE__) . '/_files/output.pdf');
+        $this->assertEquals($pdf1->properties['Title'], 'PDF as a Standard for Archiving (modified)');
+        $this->assertEquals($pdf1->properties['Author'], 'Adobe Systems Incorporated');
+        $this->assertEquals($pdf1->properties['New_Property'], 'New property');
+
+        $metadataDOM1 = new DOMDocument();
+        $metadataDOM1->loadXML($metadata);
+
+        $xpath1 = new DOMXPath($metadataDOM);
+        $pdfPreffixNamespaceURI1 = $xpath1->query('/rdf:RDF/rdf:Description')->item(0)->lookupNamespaceURI('pdf');
+        $xpath1->registerNamespace('pdf', $pdfPreffixNamespaceURI1);
+
+        $titleNodeset1 = $xpath->query('/rdf:RDF/rdf:Description/pdf:Title');
+        $titleNode1    = $titleNodeset->item(0);
+        $this->assertEquals($titleNode1->nodeValue, 'PDF as a Standard for Archiving (modified using RDF data)');
+        unset($pdf1);
+
+        unlink(dirname(__FILE__) . '/_files/output.pdf');
+    }
+
 }
