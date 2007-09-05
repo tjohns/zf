@@ -241,7 +241,23 @@ class Zend_Pdf_Page
             $this->_pageDictionary = $this->_objFactory->newObject(new Zend_Pdf_Element_Dictionary());
 
             foreach ($param1->_pageDictionary->getKeys() as $key) {
-                $this->_pageDictionary->$key = $param1->_pageDictionary->$key;
+                if ($key == 'Contents') {
+                    // Clone Contents property
+
+                    $this->_pageDictionary->Contents = new Zend_Pdf_Element_Array();
+
+                    if ($param1->_pageDictionary->Contents->getType() != Zend_Pdf_Element::TYPE_ARRAY) {
+                        // Prepare array of content streams and add existing stream
+                        $this->_pageDictionary->Contents->items[] = $param1->_pageDictionary->Contents;
+                    } else {
+                        // Clone array of the content streams
+                        foreach ($param1->_pageDictionary->Contents->items as $srcContentStream) {
+                            $this->_pageDictionary->Contents->items[] = $srcContentStream;
+                        }
+                    }
+                } else {
+                    $this->_pageDictionary->$key = $param1->_pageDictionary->$key;
+                }
             }
 
             return;
