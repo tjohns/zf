@@ -838,6 +838,26 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
 
     /**
+     * Returns true if segment has single norms file.
+     *
+     * @return boolean
+     */
+    public function hasSingleNormFile()
+    {
+        return $this->_hasSingleNormFile ? 1 : 0;
+    }
+
+    /**
+     * Returns true if segment is stored using compound segment file.
+     *
+     * @return boolean
+     */
+    public function isCompound()
+    {
+        return $this->_isCompound ? 1 : 0;
+    }
+
+    /**
      * Deletes a document from the index segment.
      * $id is an internal document id
      *

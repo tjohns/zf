@@ -88,7 +88,10 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
 
         return new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
                                                         $this->_name,
-                                                        $this->_docCount);
+                                                        $this->_docCount,
+                                                        -1,
+                                                        true,
+                                                        true);
     }
 }
 

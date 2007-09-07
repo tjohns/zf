@@ -194,10 +194,11 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      * 0 means pre-2.1 index format
      * -1 means there are no segments files.
      *
+     * @param Zend_Search_Lucene_Storage_Directory $directory
      * @return integer
      * @throws Zend_Search_Lucene_Exception
      */
-    private function _getGeneration()
+    public static function getActualGeneration(Zend_Search_Lucene_Storage_Directory $directory)
     {
         /**
          * Zend_Search_Lucene uses segments.gen file to retrieve current generation number
@@ -213,7 +214,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         try {
             for ($count = 0; $count < self::GENERATION_RETRIEVE_COUNT; $count++) {
                 // Try to get generation file
-                $genFile = $this->_directory->getFileObject('segments.gen', false);
+                $genFile = $directory->getFileObject('segments.gen', false);
 
                 $format = $genFile->readInt();
                 if ($format != (int)0xFFFFFFFE) {
@@ -236,7 +237,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             if (strpos($e->getMessage(), 'is not readable') !== false) {
                 try {
                     // Try to open old style segments file
-                    $segmentsFile = $this->_directory->getFileObject('segments', false);
+                    $segmentsFile = $directory->getFileObject('segments', false);
 
                     // It's pre-2.1 index
                     return 0;
@@ -262,7 +263,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      * @param integer $generation
      * @return string
      */
-    public function getSegmentFileName($generation)
+    public static function getSegmentFileName($generation)
     {
         if ($generation == 0) {
             return 'segments';
@@ -315,7 +316,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      */
     private function _readSegmentsFile()
     {
-        $segmentsFile = $this->_directory->getFileObject($this->getSegmentFileName($this->_generation));
+        $segmentsFile = $this->_directory->getFileObject(self::getSegmentFileName($this->_generation));
 
         $format = $segmentsFile->readInt();
 
@@ -352,10 +353,10 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             $hasSingleNormFile = $segmentsFile->readByte();
             $numField          = $segmentsFile->readInt();
 
-            $normGen = array();
+            $normGens = array();
             if ($numField != (int)0xFFFFFFFF) {
                 for ($count1 = 0; $count1 < $numField; $count1++) {
-                    $normGen[] = $segmentsFile->readLong();
+                    $normGens[] = $segmentsFile->readLong();
                 }
 
                 throw new Zend_Search_Lucene_Exception('Separate norm files are not supported. Optimize index to use it with Zend_Search_Lucene.');
@@ -401,7 +402,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         $this->_segmentInfos = array();
 
-        $this->_generation = $this->_getGeneration();
+        $this->_generation = self::getActualGeneration($this->_directory);
 
         if ($create) {
             $writeLock = $this->_directory->createFile('write.lock');
@@ -412,16 +413,21 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             if ($this->_generation == -1) {
                 // Directory doesn't contain existing index, start from 1
                 $this->_generation = 1;
+                $nameCounter = 0;
             } else {
-                // Directory contains existing index, start from new generation number
+                // Directory contains existing index
+                $segmentsFile = $this->_directory->getFileObject(self::getSegmentFileName($this->_generation));
+                $segmentsFile->seek(12); // 12 = 4 (int, file format marker) + 8 (long, index version)
+
+                $nameCounter = $segmentsFile->readInt();
                 $this->_generation++;
             }
-            Zend_Search_Lucene_Index_Writer::createIndex($this->_directory, $this->_generation);
+
+            Zend_Search_Lucene_Index_Writer::createIndex($this->_directory, $this->_generation, $nameCounter);
 
             $writeLock->unlock();
-
-            /** @todo !!! Next string should be removed for 2.1+ index format writing support turned on */
-            $this->_generation = 0;
+            unset($writeLock);
+            $this->_directory->deleteFile('write.lock');
         }
 
         if ($this->_generation == -1) {
@@ -1203,7 +1209,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     {
         if ($this->_hasChanges) {
             foreach ($this->_segmentInfos as $segInfo) {
-                $segInfo->writeChanges();
+                $delGen = $segInfo->writeChanges();
             }
 
             $this->_hasChanges = false;
