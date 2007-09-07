@@ -91,6 +91,7 @@ Searcher::commit();
 ...]]>
             </programlisting>
         </para>
+
     </sect2>
 
 </sect1>
