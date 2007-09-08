@@ -371,6 +371,25 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD, '
 
     </sect2>
 
+
+    <sect2 id="zend.locale.cache">
+
+        <title>Zend_Locale とそのサブクラスの高速化</title>
+
+        <para>
+            <code>Zend_Locale</code> およびそのサブクラスを高速化するには、
+            <code>Zend_Cache</code> を使用します。<code>Zend_Locale</code>
+            を使用している場合は、静的メソッド <code>Zend_Locale::setCache($cache)</code>
+            を使用します。<code>Zend_Locale_Format</code> を高速化するには、
+            オプション <code>cache</code> を
+            <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code>
+            のように指定します。両方のクラスを使用している場合は <code>Zend_Locale</code>
+            にのみキャッシュを設定します。そうしないと、
+            データが二重にキャッシュされてしまうことになります。
+        </para>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

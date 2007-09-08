@@ -84,6 +84,23 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.cache">
+
+            <title>日付の地域化や正規化の、Zend_Cache による高速化</title>
+
+            <para>
+                <code>Zend_Date</code> を高速に動作させるには <code>Zend_Cache</code>
+                アダプタを使用します。これを使用すると、地域化したデータを扱う際の
+                <code>Zend_Date</code> のすべてのメソッドが高速化します。
+                たとえば、定数 <code>Zend_Date::DATE</code> や
+                <code>Zend_Date::TIME</code> を扱うメソッドは、すべてこの影響を受けます。
+                <code>Zend_Cache</code> アダプタを <code>Zend_Date</code> に設定するには、
+                <code>Zend_Date::setOptions(array('cache' => $adapter));</code>
+                とするだけです。
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">

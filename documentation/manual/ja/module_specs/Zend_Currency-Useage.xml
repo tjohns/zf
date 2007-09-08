@@ -526,4 +526,19 @@ print_r($currency->getCurrencyList('de_AT');]]>
         </example>
 
     </sect2>
+
+    <sect2 id="zend.currency.useage.cache">
+
+        <title>Zend_Currency の高速化</title>
+
+        <para>
+            <code>Zend_Currency</code> による作業を高速化するには
+            <code>Zend_Cache</code> を使用します。これを使用するには、
+            静的メソッド <code>Zend_Currency::setCache($cache)</code>
+            に <code>Zend_Cache</code> アダプタを指定します。そうすると、
+            Zend_Currency のメソッドで地域化したデータがキャッシュされるようになります。
+        </para>
+
+    </sect2>
+
 </sect1>
