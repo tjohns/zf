@@ -136,7 +136,7 @@ class Zend_Mail_Part implements RecursiveIterator
     public function isMultipart()
     {
         try {
-            return strpos($this->contentType, 'multipart/') === 0;
+            return stripos($this->contentType, 'multipart/') === 0;
         } catch(Zend_Mail_Exception $e) {
             return false;
         }
