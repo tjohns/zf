@@ -183,6 +183,9 @@ class Zend_Mime_Decode
      */
     public static function splitHeaderField($field, $wantedPart = null, $firstName = 0)
     {
+    	$wantedPart = strtolower($wantedPart);
+    	$firstName = strtolower($firstName);
+
         // special case - a bit optimized
         if ($firstName === $wantedPart) {
             $field = strtok($field, ';');
@@ -196,7 +199,7 @@ class Zend_Mime_Decode
 
         if ($wantedPart) {
             foreach ($matches[1] as $key => $name) {
-                if ($name != $wantedPart) {
+                if (strcasecmp($name, $wantedPart)) {
                     continue;
                 }
                 if ($matches[2][$key][0] != '"') {
@@ -209,6 +212,7 @@ class Zend_Mime_Decode
 
         $split = array();
         foreach ($matches[1] as $key => $name) {
+        	$name = strtolower($name);
             if ($matches[2][$key][0] == '"') {
                 $split[$name] = substr($matches[2][$key], 1, -1);
             } else {

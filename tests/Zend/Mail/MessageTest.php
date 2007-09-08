@@ -405,4 +405,10 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($message->isMultipart());
     }
 
+    public function testCaseInsensitiveField()
+    {
+        $header = 'test; fOO="this is a test"';
+        $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'Foo'), 'this is a test');
+        $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'bar'), null);
+    }
 }
