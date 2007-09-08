@@ -87,75 +87,56 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Query classes - inheriting from Zend_Gdata_Query.
-                        These also include other classes for specific services,
-                        such as Zend_Gdata_Spreadsheets_ListQuery and
-                        Zend_Gdata_Spreadsheets_CellQuery.  Query classes
-                        provide methods used to construct a query for data
-                        to be retrieved from GData services.  Methods include
-                        getters and setters like <code>setUpdatedMin()</code>,
-                        <code>setStartIndex()</code>, and
-                        <code>getPublishedMin()</code>.  The query classes also
-                        have a method to generate a URL representing the
-                        constructed query -- <code>getQueryUrl</code>.
-                        Alternatively, the query string component of the URL
-                        can be retrieved used the <code>getQueryString()</code>
-                        method.
+                        Abfrage Klassen - abgeleitet von Zend_Gdata_Query. Diese beinhalten auch andere Klassen
+                        für spezielle Services, wie Zend_Gdata_Spreadsheet_ListQuery und
+                        Zend_Gdata_Spreadsheets_CellQuery. Abfrage Klassen bieten Methoden die verwendet werden
+                        können um Abfragen für Daten zu erstellen die von GData Services empfangen werden.
+                        Die Methoden inkludieren Getter und Setter wie <code>setUpdatedMin()</code>,
+                        <code>setStartIndex()</code>, und <code>getPublishedMin()</code>. Die Abfrage Klassen
+                        haben auch eine Methode um eine URL zu erhalten die die erstellte Abfrage repräsentieren.
+                        -- <code>getQueryUrl</code>. Alternativ kann man die Abfrage String Komponente der URL
+                        erhalten indem die <code>getQueryString()</code> Methode verwendet wird.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Feed classes - inheriting from Zend_Gdata_App_Feed.
-                        These also include other classes such as
-                        Zend_Gdata_Feed,
-                        Zend_Gdata_Spreadsheets_SpreadsheetFeed,
-                        and Zend_Gdata_Spreadsheets_ListFeed.
-                        These classes represent feeds of entries retrieved
-                        from services.  They are primarily used to retrieve
-                        data returned from services.
+                        Feed Klassen - abgeleitet von Zend_Gdata_App_Feed. Diese beinhalten auch andere
+                        Klassen wie Zend_Gdata_Feed, Zend_Gdata_Spreadsheets_SpreadsheetFeed, und
+                        Zend_Gdata_Spreadsheets_ListFeed. Diese Klassen repräsentieren Feeds von Einträgen
+                        die von Services empfangen wurden. Sie werden primär verwendet um Daten die von
+                        Services zurückgegeben werden zu erhalten.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Entry classes - inheriting from Zend_Gdata_App_Entry.
-                        These also include other classes such as
-                        Zend_Gdata_Entry, and Zend_Gdata_Spreadsheets_ListEntry.
-                        These classes represent entries retrieved from
-                        services or used for constructing data to send to
-                        services.  In addition to being able to set the
-                        properties of an entry (such as the spreadsheet cell
-                        value), you can use an entry object to send update
-                        or delete requests to a service.  For example,
-                        you can call <code>$entry->save()</code> to save
-                        changes made to an entry back to service from which
-                        the entry initiated, or <code>$entry->delete()</code>
-                        to delete an entry from the server.
+                        Eingabe Klassen - abgeleitet von Zend_Gdata_App_Entry. Diese beinhalten auch andere
+                        Klassen wie Zend_Gdata_Entry, und Zend_Gdata_Spreadsheets_ListEntry. Diese Klassen
+                        repräsentieren Einträge die von Services empfangen oder für die Erstellung von Daten,
+                        die an Services geschickt werden, verwendet werden. Zusätzlich zur Möglichkeit die
+                        Eigenschaften eines Eintrages (wie den Zellen Wert der Tabellenkalkulation) zu setzen,
+                        kann das Objekt des Eintrages verwendet werden um Aktualisierungs- oder Löschanfragen
+                        an ein Service zu senden. Zum Beispiel kann <code>$entry->save()</code> aufgerufen werden
+                        um Änderungen die an einem Eintrage durchgeführt wurden zu einem Service zurück
+                        zu speichern von welche der Eintrag initiiert wurde, oder <code>$entry->delete()</code>
+                        um einen Eintrag von einem Server zu löschen.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Other Data model classes - inheriting from
-                        Zend_Gdata_App_Extension.  These include classes such
-                        as Zend_Gdata_App_Extension_Title (representing the
-                        atom:title XML element), Zend_Gdata_Extension_When
-                        (representing the gd:when XML element used by the
-                        GData Event "Kind"), and
-                        Zend_Gdata_Extension_Cell (representing the gs:cell
-                        XML element used by Google Spreadsheets).  These
-                        classes are used purely to store the data retrieved
-                        back from services and for constructing data to be
-                        sent to services.  These include getters and setters 
-                        such as
-                        <code>setText()</code> to set the child text
-                        node of an element, <code>getText()</code> to retrieve
-                        the text node of an element, <code>getStartTime()</code>
-                        to retrieve the start time attribute of a When element,
-                        and other similiar methods.
-                        The data model classes also include methods such as
-                        <code>getDOM()</code> to retrieve a DOM representation
-                        of the element and all children and
-                        <code>transferFromDOM()</code> to construct a data
-                        model representation of a DOM tree.
+                        Andere Daten Modell Klassen - abgeleitet von Zend_Gdata_App_Extension. Diese beinhalten
+                        Klassen wie Zend_Gdata_App_Extension_Title (repräsentiert das atom:title XML Element),
+                        Zend_Gdata_Extension_When (repräsentiert das gd:when XML Element das von dem GData Event
+                        "Kind" verwendet wird), und Zend_Gdata_Extension_Cell (repräsentiert das gs:cell XML
+                        Element das von Google Tabellenkalkulation verwendet wird). Diese Klassen werden pur
+                        verwendet um von den Server zurückgegebene Daten zu speichern und für die Erstellung von
+                        Daten die an Services gesendet werden. Diese beinhalten Getter und Setter wie
+                        <code>setText()</code> um den Kindtext Node eines Elements zu setzen,
+                        <code>getText()</code> um den Text Node eines Elements zu erhalten,
+                        <code>getStartTime()</code> um das Startzeit Attribut eines When Elements oder anderen
+                        ähnlichen Methoden zu empfangen. Die Daten Modell Klassen beinhalten auch Methoden
+                        wie <code>getDOM()</code> um eine DOM Repräsentation des Elements und aller Kinder zu
+                        erhalten, und <code>transferFromDOM()</code> um eine Daten Modell Repräsentation des
+                        DOM Baumes zu erstellen.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -163,7 +144,7 @@
     </sect2>
 
     <sect2 id="zend.gdata.introduction.services">
-        <title>Interacting with Google Services</title>
+        <title>Mit Google Services interagieren</title>
         <para>
             Google data services are based upon the Atom Publishing Protocol
             (APP) and the Atom syndication format.  To interact with APP or
@@ -183,7 +164,7 @@
     </sect2>
 
     <sect2 id="zend.gdata.introdduction.magicfactory">
-        <title>Obtaining instances of Zend_Gdata classes</title>
+        <title>Instanzen von Zend_Gdata Klassen erhalten</title>
         <para>
             The Zend Framework naming standards require that all classes be
             named based upon the directory structure in which they are located.
@@ -233,7 +214,7 @@ $entry->cell = $cell;
 
 
     <sect2 id="zend.gdata.introduction.authentication">
-        <title>Google Data Client Authentication</title>
+        <title>Google Data Client Authentifizierung</title>
         <para>
             Most Google Data services require client applications to
             authenticate against the Google server before accessing
@@ -252,7 +233,7 @@ $entry->cell = $cell;
     </sect2>
 
     <sect2 id="zend.gdata.introduction.dependencies">
-        <title>Dependencies</title>
+        <title>Abhängigkeiten</title>
         <para>
             Zend_Gdata makes use of
             <link linkend="zend.http.client">Zend_Http_Client</link> to send
@@ -270,7 +251,7 @@ $entry->cell = $cell;
     </sect2>
 
     <sect2 id="zend.gdata.introduction.creation">
-        <title>Creating a new Gdata client</title>
+        <title>Erstellen eines neuen Gdata Klienten</title>
 
         <para>
             Create a new object of class Zend_Gdata_App, Zend_Gdata, or one
@@ -308,7 +289,7 @@ $gdata = new Zend_Gdata($client);]]>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.parameters">
-        <title>Common query parameters</title>
+        <title>Übliche Abfrage Parameter</title>
 
         <para>
             You can specify parameters to customize queries with Zend_Gdata.
