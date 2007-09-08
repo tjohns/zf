@@ -74,6 +74,21 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.cache">
+
+            <title>Speed up date localization and normalization with Zend_Cache</title>
+
+            <para>
+                You can speed up <code>Zend_Date</code> by using an <code>Zend_Cache</code> adapter.
+                This speeds up all methods of <code>Zend_Date</code> when you are using localized data.
+                For example all methods which accept <code>Zend_Date::DATE</code> and
+                <code>Zend_Date::TIME</code> constants would benefit from this. To set an <code>Zend_Cache</code>
+                adapter to <code>Zend_Date</code> just use
+                <code>Zend_Date::setOptions(array('cache' => $adapter));</code>.
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">

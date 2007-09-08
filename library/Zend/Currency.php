@@ -553,4 +553,14 @@ class Zend_Currency
     {
         return $this->toString();
     }
+
+    /**
+     * sets a cache for Zend_Currency
+     * 
+     * @param Zend_Cache_Core $cache  Cache to set
+     */
+    public static function setCache(Zend_Cache_Core $cache)
+    {
+        Zend_Locale_Data::setCache($cache);
+    }
 }

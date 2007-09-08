@@ -488,4 +488,18 @@ print_r($currency->getCurrencyList('de_AT');]]>
         </example>
 
     </sect2>
+
+    <sect2 id="zend.currency.useage.cache">
+
+        <title>Speed up Zend_Currency</title>
+
+        <para>
+            The work of <code>Zend_Currency</code> can be speed up by the useage of <code>Zend_Cache</code>.
+            By using the static method <code>Zend_Currency::setCache($cache)</code> which accepts one option, an
+            <code>Zend_Cache</code> adapter. When you set it, the localization data of the methods from
+            Zend_Currency are cached.
+        </para>
+
+    </sect2>
+
 </sect1>

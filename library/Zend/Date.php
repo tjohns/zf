@@ -47,7 +47,8 @@ class Zend_Date extends Zend_Date_DateObject {
     private static $_Options = array(
         'format_type'  => 'iso',      // format for date strings 'iso' or 'php'
         'fix_dst'      => true,       // fix dst on summer/winter time change
-        'extend_month' => false       // false - addMonth like SQL, true like excel
+        'extend_month' => false,      // false - addMonth like SQL, true like excel
+        'cache'        => null        // cache to set
     );
 
     // Class wide Date Constants
@@ -236,6 +237,9 @@ class Zend_Date extends Zend_Date_DateObject {
                         if (!is_bool($value)) {
                             throw new Zend_Date_Exception("'extend_month' has to be boolean", $value);
                         }
+                        break;
+                    case 'cache' :
+                        Zend_Locale_Data::setCache($value);
                         break;
                 }
                 self::$_Options[$name] = $value;

@@ -56,6 +56,15 @@ class Zend_Locale_Data
 
 
     /**
+     * internal cache for ldml values
+     * 
+     * @var Zend_Cache_Core
+     * @access private
+     */
+    private static $_cache = null;
+
+
+    /**
      * Read the content from locale
      *
      * Can be called like:
@@ -246,6 +255,18 @@ class Zend_Locale_Data
 
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
+        }
+
+        if (isset(self::$_cache)) {
+            $val = $value;
+            if (is_array($val)) {
+                $val = implode('_' . $value);
+            }
+            $id = 'Zend_Locale_' . $locale . '_' . $path . '_' . implode('_' . $val);
+            
+            if ($result = self::$_cache->load($id)) {
+                return unserialize($result);
+            }
         }
 
         switch(strtolower($path)) {
@@ -736,6 +757,22 @@ class Zend_Locale_Data
                 throw new Zend_Locale_Exception("Unknown detail ($path) for parsing locale data.");
                 break;
         }
+
+        if (isset(self::$_cache)) {
+            self::$_cache->save( serialize(self::$_list), $id);
+        }
+
         return self::$_list;
+    }
+
+
+    /**
+     * Set a cache for Zend_Locale_Data
+     * 
+     * @param Zend_Cache_Core $cache a cache frontend
+     */
+    public static function setCache(Zend_Cache_Core $cache)
+    {
+        self::$cache = $cache;
     }
 }
