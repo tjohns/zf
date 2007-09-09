@@ -22,7 +22,7 @@
         </para>
 
         <para>
-            Statische Objekt Eigenschaften (siehe anbei) werden <emphasis>nach</emphasis der "letzten Zeile des
+            Statische Objekt Eigenschaften (siehe anbei) werden <emphasis>nach</emphasis> der "letzten Zeile des
             ausgeführten Skripts" vernichtet.
 
             <programlisting role="php"><![CDATA[<?php
