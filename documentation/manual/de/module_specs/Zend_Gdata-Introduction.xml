@@ -226,17 +226,14 @@ $entry->cell = $cell;
     <sect2 id="zend.gdata.introduction.dependencies">
         <title>Abhängigkeiten</title>
         <para>
-            Zend_Gdata makes use of
-            <link linkend="zend.http.client">Zend_Http_Client</link> to send
-            requests to google.com and fetch results.  The response to most
-            Google Data requests is returned as a subclass of the
-            Zend_Gdata_App_Feed or Zend_Gdata_App_Entry classes.
+            Zend_Gdata verwendet <link linkend="zend.http.client">Zend_Http_Client</link> um Anfragen an
+            google.com zu senden und Ergebnisse zu erhalten. Die Antworter der meisten Google Data Anfragen
+            werden als Subklasse von Zend_Gdata_App_Feed oder Zend_Gdata_App_Entry Klassen zurückgegeben.
         </para>
 
         <para>
-            Zend_Gdata assumes your PHP application is running on a host that
-            has a direct connection to the Internet.
-            The Zend_Gdata client operates by contacting Google Data servers.
+            Zend_Gdata nimmt an das die PHP Anwendung auf einem Host läuft der eine direkte Verbindung zum
+            Internet hat. Der Zend_Gdata Client arbeitet indem er zu Google Daten Servern Kontakt aufnimmt.
         </para>
 
     </sect2>
@@ -245,20 +242,16 @@ $entry->cell = $cell;
         <title>Erstellen eines neuen Gdata Klienten</title>
 
         <para>
-            Create a new object of class Zend_Gdata_App, Zend_Gdata, or one
-            of the subclasses available that offer helper methods for
-            service-specific behavior.
+            Man muß ein neues Objekt der Klasse Zend_Gdata_App, Zend_Gdata, oder einer dessen Subklassen
+            erstellen die Helfer Methoden für servicespezifische Verhaltensweisen anbieten.
         </para>
 
         <para>
-            The single optional parameter to the Zend_Gdata_App constructor
-            is an instance of
-            <link linkend="zend.http.client">Zend_Http_Client</link>.
-            If you don't pass this parameter, Zend_Gdata creates a default
-            Zend_Http_Client object, which will not have associated
-            credentials to access private feeds.  Specifying the
-            Zend_Http_Client object also allows you to
-            pass configuration options to that client object.
+            Der einzige optionale Parameter für den Konstruktor von Zend_Gdata_App ist eine Instanz von
+            <link linkend="zend.http.client">Zend_Http_Client</link>.  Wenn dieser Parameter nicht
+            übergeben wird, erstellt Zend_Gdata ein standardmäßiges Zend_Http_Client Objekt, welches keine
+            Zugangsdaten zugeordnet hat um auf private Feeds zugreifen zu können. Die Spezifizierung des
+            Zend_Http_Client Objektes erlaubt es auch Konfigurationsoptionen an das Client Objekt zu übergeben.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -273,8 +266,8 @@ $gdata = new Zend_Gdata($client);]]>
         </programlisting>
 
         <para>
-            Also see the sections on authentication for methods to
-            create an authenticated Zend_Http_Client object.
+            Siehe auch die Sektion über Authentifizierung für Methoden, um ein authentifiziertes
+            Zend_Http_Cleint Objekt zu erstellen.
         </para>
 
     </sect2>
@@ -283,110 +276,90 @@ $gdata = new Zend_Gdata($client);]]>
         <title>Übliche Abfrage Parameter</title>
 
         <para>
-            You can specify parameters to customize queries with Zend_Gdata.
-            Query parameters are specified using subclasses of Zend_Gdata_Query.
-            The Zend_Gdata_Query class includes methods to set all query
-            parameters used throughout GData services.  Individual services,
-            such as Spreadsheets, also provide query classes to defined
-            parameters which are custom to the particular service and feeds.
-            Spreadsheets includes a CellQuery class to query the Cell Feed
-            and a ListQuery class to query the List Feed, as different
-            query parameters are applicable to each of those feed types.
-
-            The GData-wide parameters are described below.
+            Es können Parameter spezifiziert werden um Abfragen mit Zend_Gdata anzupassen. Abfrageparameter
+            werden spezifiziert indem Subklassen von Zend_Gdata_Query verwendet werden. Die Zend_Gdata_Query
+            Klasse beinhaltet Methoden um alle Abfrageparameter zu setzen die von Gdata Services verwendet
+            werden. Individuelle Services, wie Tabellenkalkulationen, bieten auch Abfrageklassen zu definierten
+            Parametern welche an das spezielle Service und die Feeds angepasst sind. Tabellenkalkulationen
+            beinhalten eine CellQuery Klasse um den Zellen Feed abzufragen und eine ListQuery Klasse um den
+            Listen Feed abzufragen, da verschiedene Abfrageparameter für jeder dieser Feedtypen möglich sind.
+            Die GData-weiten Parameter werden anbei beschrieben. 
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    The <code>q</code> parameter specifies a full-text
-                    query.  The value of the parameter is a string.
+                    Der <code>q</code> Parameter spezifiziert eine komplette Textabfrage. Der Wert dieses
+                    Parameters ist ein String.
                 </para>
                 <para>
-                    Set this parameter with the <code>setQuery()</code>
-                    function.
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    The <code>alt</code> parameter specifies the feed type.
-                    The value of the parameter can be
-                    <code>atom</code>,
-                    <code>rss</code>,
-                    <code>json</code>,
-                    or <code>json-in-script</code>.
-                    If you don't specify this parameter, the default feed type
-                    is <code>atom</code>.  NOTE: Only the output of the
-                    atom feed format can be processed using
-                    <code>Zend_Gdata</code>.
-                    The <code>Zend_Http_Client</code> could be used to retrieve
-                    feeds in other formats, using query URLs generated by the
-                    <code>Zend_Gdata_Query</code> class and its subclasses.
-                </para>
-                <para>
-                    Set this parameter with the <code>setAlt()</code>
-                    function.
+                    Dieser Parameter kann mit der <code>setQuery()</code> Methode gesetzt werden.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>maxResults</code> parameter limits the number
-                    of entries in the feed.  The value of the parameter is
-                    an integer.  The number of entries returned in the feed
-                    will not exceed this value.
+                    Der <code>alt</code> Parameter spezifiziert den Feed Typ. Der Wert dieses Parameters kann
+                    <code>atom</code>, <code>rss</code>, <code>json</code>, oder <code>json-in-script</code>
+                    sein. Wenn dieser Parameter nicht spezifiziert wird, ist der Standard Feedtyp
+                    <code>atom</code>. <code>Zend_Http_Client</code> könnte verwendet werden um Feeds in anderen
+                    Formaten zu empfangen, indem die von der <code>Zend_Gdata_Query</code> Klasse oder deren
+                    Subklassen erzeugten Abfrage URLs verwendet werden. 
                 </para>
                 <para>
-                    Set this parameter with the <code>setMaxResults()</code>
-                    function.
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    The <code>startIndex</code> parameter specifies the
-                    ordinal number of the first entry returned in the feed.
-                    Entries before this number are skipped.
-                </para>
-                <para>
-                    Set this parameter with the <code>setStartIndex()</code>
-                    function.
+                    Dieser Parameter kann mit der <code>setAlt()</code> Methode gesetzt werden.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>updatedMin</code> and <code>updatedMax</code>
-                    parameters specify bounds on the entry date.
-                    If you specify a value for <code>updatedMin</code>,
-                    no entries that were updated earlier than the date
-                    you specify are included in the feed.  Likewise
-                    no entries updated after the date specified by
-                    <code>updatedMax</code> are included.
+                    Der <code>maxResults</code> Parameter begrenzt die Anzahl an Einträgen im Feed. Der Wert
+                    dieses Parameters ist ein Integer. Die zurückgegebene Anzahl an Einträgen im Feed wird
+                    diesen Wert nicht überschreiten. 
                 </para>
                 <para>
-                    You can use numeric timestamps, or a variety of
-                    date/time string representations as the value for
-                    these parameters.
+                    Dieser Parameter kann mit der <code>setMaxResults()</code> Methode gesetzt werden.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Der <code>startIndex</code> Parameter spezifiziert die ordinale Nummer des ersten
+                    Eintrags der im Feed zurückgegeben wird. Einträge vor dieser Nummer werden übergangen.
                 </para>
                 <para>
-                    Set this parameter with the <code>setUpdatedMin()</code>
-                    and <code>setUpdatedMax()</code> functions.
+                    Dieser Parameter kann mit der <code>setStartIndex()</code> Methode gesetzt werden.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    Die Parameter <code>updatedMin</code> und <code>updatedMax</code> spezifizieren Grenzen
+                    für das Datum der Einträge. Wenn ein Wert für <code>updatedMin</code> spezifiziert wird,
+                    werden keine Einträge die vor dem spezifizierten Datum aktualisiert wurden, im Feed
+                    inkludiert. Genauso werden keine Einträge inkludiert die nach einem Datum aktualisiert
+                    wurden wenn <code>updatedMax</code> spezifiziert wird.
+                </para>
+                <para>
+                    Es können nummerische Zeitstempel, oder eine Variation von Datum/Zeit String
+                    Repräsentationen als Wert für diese Parameter verwendet werden.
+                </para>
+                <para>
+                    Diese Parameter kkönnen mit den <code>setUpdatedMin()</code> und <code>setUpdatedMax()</code>
+                    Methoden gesetzt werden.
                 </para>
             </listitem>
 
         </itemizedlist>
 
         <para>
-            There is a <code>get</code> function for each
-            <code>set</code> function.
+            Es gibt eine <code>get</code> Funktion für jede <code>set</code> Funktion.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Query();
 $query->setMaxResults(10);
-echo $query->getMaxResults();   // returns 10]]>
+echo $query->getMaxResults();   // gibt 10 zurück]]>
         </programlisting>
 
         <para>
