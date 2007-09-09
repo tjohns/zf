@@ -363,43 +363,39 @@ echo $query->getMaxResults();   // gibt 10 zurück]]>
         </programlisting>
 
         <para>
-            The Zend_Gdata class also implements "magic" getter and
-            setter methods, so you can use the name of the parameter
-            as a virtual member of the class.
+            Die Zend_Gdata Klasse implementiert auch "magische" Getter und Setter Methoden, es kann also der
+            Name des Parameters als virtuelles Mitglied der Klasse verwendet werden.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Query();
 $query->maxResults = 10;
-echo $query->maxResults;        // returns 10]]>
+echo $query->maxResults;        // gibt 10 zurück]]>
         </programlisting>
 
         <para>
-            You can clear all parameters with the <code>resetParameters()</code>
-            function.  This is useful to do if you reuse a Zend_Gdata
-            object for multiple queries.
+            Es können alle Parameter mit der <code>resetParameters()</code> Funktion gelöscht werden. Das
+            ist nützlich wenn ein Zend_Gdata Objekt für mehrfache Abfragen wiederverwendet werden soll.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Gdata_Query();
 $query->maxResults = 10;
-// ...get feed...
+// ...den Feed empfangen...
 
-$query->resetParameters();      // clears all parameters
-// ...get a different feed...]]>
+$query->resetParameters();      // löscht alle Parameter
+// ...einen anderen Feed empfangen...]]>
         </programlisting>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.getfeed">
-        <title>Fetching a feed</title>
+        <title>Einen Feed empfangen</title>
 
         <para>
-            Use the <code>getFeed()</code> function to retrieve
-            a feed from a specified URI.
-            This function returns an instance of class specified
-            as the second argument to getFeed, which defaults to
-            Zend_Gdata_Feed.
+            Die <code>getFeed()</code> Funktion kann verwendet werden um einen Feed von einer spezifizierten
+            URI zu empfangen. Diese Funktion gibt eine Instanz der Klasse, die als zweites Argument an
+            getFeed übergeben wurde, zurück, welche standardmäßig Zend_Gdata_Feed ist.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -411,24 +407,22 @@ $feed = $gdata->getFeed($query);]]>
         </programlisting>
 
         <para>
-            See later sections for special functions in each
-            helper class for Google Data services.  These
-            functions help you to get feeds from the URI that is
-            appropriate for the respective service.
+            Siehe spätere Sektionen für spezielle Funktionen in jeder Helfer Klasse für Google Daten Services.
+            Diese Funktionen helfen Feeds von einer URI zu empfangen die für das angeforderte Service zuständig
+            ist.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.paging">
-        <title>Working with multi-page feeds</title>
+        <title>Mit Mehrfach-Seiten Feeds arbeiten</title>
         
         <para>
-            When retrieving a feed that contains a large number of entries,
-            the feed may be broken up into many smaller "pages" of feeds. When
-            this occurs, each page will contain a link to the next page in the
-            series. This link can be accessed by calling
-            <code>getLink('next')</code>. The following example shows how to
-            retrieve the next page of a feed:
+            Wenn man einen Feed empfängt der eine große Anzahl an Einträgen enthält, kann dieser Feed in viele
+            kleinere "Seiten" von Feeds gebrochen werden. Wenn das passiert, enthält jede Seite einen Link zur
+            nächsten Seite der Serie. Auf diesen Link kann mit Hilfe von <code>getLink('next')</code>
+            zugegriffen werden. Das folgende Beispiel zeigt wie auf die nächste Seite eines Feeds empfangen
+            werden kann:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -443,11 +437,10 @@ function getNextPage($feed) {
         </programlisting>
 
         <para>
-            If you would prefer not to work with pages in your application,
-            pass the first page of the feed into
-            <code>Zend_Gdata_App::retrieveAllEntriesForFeed()</code>, which
-            will consolidate all entries from each page into a single feed.
-            This example shows how to use this function:
+            Wenn man es vorzieht nicht mit Seiten in der eigenen Anwendung zu arbeiten, kann die erste Seite des
+            Feeds an <code>Zend_Gdata_App::retrieveAllEntriesForFeed()</code> übergeben werden, welche alle
+            Einträge von jeder Seite in einen einzelnen Feed zusammenfasst. Dieses Beispiel zeigt wie diese
+            Funktion verwendet werden kann:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -458,21 +451,20 @@ $feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
         </programlisting>
 
         <para>
-            Keep in mind when calling this function that it may take a long
-            time to complete on large feeds. You may need to increase PHP's
-            execution time limit by calling <code>set_time_limit()</code>.
+            Es gilt zu beachten das wenn diese Funktion aufgerufen wird, dies eine sehr lange Zeit benötigen
+            kann im große Feeds zu komplettieren. Es kann notwendig sein PHP's Limit der Ausführungszeit zu
+            vergrößern mithilfe von <code>set_time_limit()</code> zu vergrößern.
         </para>
         
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
-        <title>Working with data in feeds and entries</title>
+        <title>Arbeiten mit Daten in Feeds und Einträgen</title>
 
         <para>
-            After retrieving a feed, you can read the data from the feed
-            or the entries contained in the feed using either the accessors
-            defined in each of the data model classes or the magic
-            accessors.  Here's an example:
+            Nachdem ein Feed empfangen wurde, können die Daten von dem Feed oder den Einträgen die in dem
+            Feed enthalten sind, gelesen werden, indem entweder die in jeder Daten Modell Klasse definierten
+            Zugriffsmethoden oder die magischen Zugriffsmethoden verwendet werden. Hier ist ein Beispiel: 
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -483,20 +475,20 @@ $query = new Zend_Gdata_Query(
 $query->setMaxResults(10);
 $feed = $gdata->getFeed($query);
 foreach ($feed as $entry) {
-    // using the magic accessor
-    echo 'Title: ' . $entry->title->text;
-    // using the defined accessors
-    echo 'Content: ' . $entry->getContent()->getText();
+    // Die magischen Zugriffsmethoden verwenden
+    echo 'Titel: ' . $entry->title->text;
+    // Die definierten Zugriffsmethoden verwenden
+    echo 'Inhalt: ' . $entry->getContent()->getText();
 }]]>
         </programlisting>
     </sect2>
 
     <sect2 id="zend.gdata.introduction.updateentry">
-        <title>Updating entries</title>
+        <title>Einträge aktualisieren</title>
 
         <para>
-            After retrieving an entry, you can update that entry and save
-            changes back to the server.  Here's an example:
+            Nachdem ein Eintrag empfangen wurde, kann dieser Eintrag aktualisiert und die Änderungen an den
+            Server zurück gespeichert werden. Hier ist ein Beispiel:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -507,11 +499,11 @@ $query = new Zend_Gdata_Query(
 $query->setMaxResults(10);
 $feed = $gdata->getFeed($query);
 foreach ($feed as $entry) {
-    // update the title to append 'NEW'
-    echo 'Old Title: ' . $entry->title->text;
-    $entry->title->text = $entry->title->text . ' NEW';
+    // Dem Titel 'NEU' hinzufügen
+    echo 'Alter Titel: ' . $entry->title->text;
+    $entry->title->text = $entry->title->text . ' NEU';
 
-    // update the entry on the server
+    // Den Eintrag auf dem Server aktualisieren
     $newEntry = $entry->save();
     echo 'New Title: ' . $newEntry->title->text;
 }]]>
@@ -519,7 +511,7 @@ foreach ($feed as $entry) {
     </sect2>
 
     <sect2 id="zend.gdata.introduction.post">
-        <title>Posting entries to Google servers</title>
+        <title>Einträge an Google Server schicken</title>
 
         <para>
             The Zend_Gdata object has a function <code>post()</code>
@@ -528,76 +520,70 @@ foreach ($feed as $entry) {
         </para>
 
         <para>
-            You can use the data model classes for each service to
-            construct the appropriate entry to post to Google's
-            services.  The <code>post()</code> function will
-            accept a child of Zend_Gdata_App_Entry as data to
-            post to the service.  The method returns a child
-            of Zend_Gdata_App_Entry which represents the state
-            of the entry as it was returned from the server.
+            Die Daten Modell Klassen jedes Services kann verwendet werden um einen entsprechenden Eintrag zu
+            erstellen und an Google's Services zu schicken. Die <code>post()</code> Funktion akzeptiert ein
+            Kind von Zend_Gdata_App_Entry als Daten die an den Service geschickt werden. Die Methode gibt ein
+            Kind von Zend_Gdata_App_Entry zurück welches den Status des Eintrages repräsentiert der vom
+            Server zurückgegeben wurde.
         </para>
 
         <para>
-            Alternatively, you could construct the XML structure
-            for an entry as a string and pass the string to the
-            <code>post()</code> function.
+            Alternativ, kann die XML Struktur eines Eintrages als String konstruiert und dieser String an die
+            <code>post()</code> Funktion übergeben werden.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $entry = $gdata->newEntry();
-$entry->title = $gdata->newTitle('Playing football at the park');
-$content = $gdata->newContent('We will visit the park and play a few football matches');
+$entry->title = $gdata->newTitle('Füßball im Park spielen');
+$content = $gdata->newContent('Wir besuchen den Part und spielen ein paar Runden Fußball');
 $content->setType('text');
 $entry->content = $content;
 
 $entryResult = $gdata->insertEntry($entry,
         'http://www.blogger.com/feeds/blogID/posts/default');
 
-echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;]]>
+echo 'Die <id> des resultierenden Eintrages ist: ' . $entryResult->id->text;]]>
         </programlisting>
 
         <para>
-            To post entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+            Um Einträge zu senden, muß ein authentifizierter Zend_Http_Client verwendet werden der mit Hilfe der
+            Zend_Gdata_AuthSub oder Zend_Gdata_ClientLogin Klassen erstellt wurde.
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.delete">
-        <title>Deleting entries on Google servers</title>
+        <title>Einträge auf einem Google Server löschen</title>
 
         <para>
-            Option 1: The Zend_Gdata object has a function <code>delete()</code>
-            with which you can delete entries from Google Data
-            services.  Pass the edit URL value from
-            a feed entry to the <code>delete()</code> method.
+            Option 1: Das Zend_Gdata Objekt hat eine <code>delete()</code> Funktion mit der Einträge von Google
+            Daten Services gelöscht werden können. Der bearbeitete URL Wert eines Feed Eintrages kann der
+            <code>delete()</code> Methode übergeben werden.
         </para>
 
         <para>
-            Option 2: Alternatively, you can call <code>$entry->delete()</code>
-            on an entry retrieved from a Google service.
+            Option 2: Alternativ kann <code>$entry->delete()</code> an einem Eintrag der von einem Google
+            Service empfangen wurde, aufgerufen werden.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata($authenticatedHttpClient);
-// a Google Data feed
+// ein Google Daten Feed
 $feedUri = ...;
 $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
-    // Option 1 - delete the entry directly
+    // Option 1 - den Eintrag direkt löschen
     $feedEntry->delete();
-    // Option 2 - delete the entry by passing the edit URL to $gdata->delete()
+    // Option 2 - den eintrag durch Übergabe der bearbeiteten URL an $gdata->delete() löschen
     // $gdata->delete($feedEntry->getEditLink()->href);
 }]]>
         </programlisting>
 
         <para>
-            To delete entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+            Um Einträge zu löschen, muß ein authentifizierter Zend_Http_Client verwendet werden der mit Hilfe der
+            Zend_Gdata_AuthSub oder Zend_Gdata_ClientLogin Klassen erstellt wurde.
         </para>
 
     </sect2>
