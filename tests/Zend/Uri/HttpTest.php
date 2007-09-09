@@ -21,6 +21,10 @@
  * @version    $Id$
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * @see Zend_Uri
