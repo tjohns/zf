@@ -82,6 +82,21 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.cache">
+
+            <title>Lokalisierung und Normalisierung von Daten mit Zend_Cache schneller machen</title>
+
+            <para>
+                Man kann <code>Zend_Date</code> schneller machen indem ein <code>Zend_Cache</code> Adapter
+                verwendet wird. Das verschnellert alle Methoden von <code>Zend_Date</code> wenn lokalisierte
+                Daten verwendet werden. Zum Beispiel werden alle Methoden welche <code>Zend_Date::DATE</code>
+                und <code>Zend_Date::TIME</code> Konstanten akzeptieren hiervon profitieren. Um einen
+                <code>Zend_Cache</code> Adapter für <code>Zend_Date</code> zu setzen muß nur
+                <code>Zend_Date::setOptions(array('cache' => $adapter));</code> aufgerufen werden.
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">

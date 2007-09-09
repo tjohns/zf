@@ -348,6 +348,23 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD, '
 
     </sect2>
 
+    <sect2 id="zend.locale.cache">
+
+        <title>Zend_Locale und dessen Subklassen schneller machen</title>
+
+        <para>
+            <code>Zend_Locale</code> und dessen Subklassen können durch die Verwendung von
+            <code>Zend_Cache</code> schneller gemacht werden. Man sollte die statische Methode
+            <code>Zend_Locale::setCache($cache)</code> verwenden wenn man <code>Zend_Locale</code> benutzt.
+            <code>Zend_Locale_Format</code> kann schneller gemacht werden indem die Option
+            <code>cache</code> innerhalb von
+            <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code> aufgerufen wird. Wenn beide
+            Klassen verwendet werden sollte nur für <code>Zend_Locale</code> ein Cache verwendet werden, da
+            sonst die Daten zweimal gespeichert werden würden.
+        </para>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
