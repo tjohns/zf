@@ -153,7 +153,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <para>
             Schlußendlich, um einen registrierten Helfer vom Broker zu entfernen, kann
-            <code>removeHelper($name)</code> verwendet werden, wobei <code>$name</code der Kurzname des Helfers
+            <code>removeHelper($name)</code> verwendet werden, wobei <code>$name</code> der Kurzname des Helfers
             ist (ohne den Prefix):
         </para>
 
