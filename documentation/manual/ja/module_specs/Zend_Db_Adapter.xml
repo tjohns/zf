@@ -27,27 +27,27 @@
     <itemizedlist>
         <listitem>
             <para>
-                MySQL
+                MySQL (<ulink url="http://www.php.net/pdo-mysql">pdo_mysql</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
         <listitem>
             <para>
-                Microsoft SQL Server
+                Microsoft SQL Server (<ulink url="http://www.php.net/pdo-mssql">pdo_mssql</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
         <listitem>
             <para>
-                Oracle
+                Oracle (<ulink url="http://www.php.net/pdo-oci">pdo_oci</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
         <listitem>
             <para>
-                PostgreSQL
+                PostgreSQL (<ulink url="http://www.php.net/pdo-pgsql">pdo_pgsql</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
         <listitem>
             <para>
-                SQLite
+                SQLite (<ulink url="http://www.php.net/pdo-sqlite">pdo_sqlite</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
     </itemizedlist>
@@ -236,10 +236,10 @@ $db = Zend_Db::factory($config->database);
 
             <para>
                 <code>factory()</code> メソッドの 2 番目の引数には、
-                配列あるいは Zend_Config オブジェクトのいずれかを指定できます。
-                ここには、アダプタのパラメータに対応するエントリを含めます。
-                このパラメータは省略可能ですが、もし指定した場合は
-                最初の引数で指定したパラメータよりも優先されます。
+                アダプタのパラメータに対応するエントリをもつ連想配列となります。
+                この引数はオプションです。最初の引数が Zend_Config
+                である場合は、そこにすべてのパラメータが含まれているものとみなし、
+                2 番目の引数は無視されます。
             </para>
 
         </sect3>
