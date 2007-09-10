@@ -448,6 +448,20 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $stmt->closeCursor();
     }
 
+    public function testStatementFetchColumnEmptyResult()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        // query that is known to return zero rows
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id < 1 ORDER BY $product_id ASC");
+
+        $result = $stmt->fetchColumn();
+        $stmt->closeCursor();
+
+        $this->assertFalse($result);
+    }
+
     public function testStatementFetchColumnWithArg()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -477,18 +491,17 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals('Linux', $result->product_name);
     }
 
-    public function testStatementFetchStyleNum()
+    public function testStatementFetchObjectEmptyResult()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
         $product_id = $this->_db->quoteIdentifier('product_id');
 
-        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
-        $result = $stmt->fetch(Zend_Db::FETCH_NUM);
+        // query that is known to return zero rows
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id < 1 ORDER BY $product_id ASC");
+        $result = $stmt->fetchObject();
         $stmt->closeCursor();
 
-        $this->assertType('array', $result);
-        $this->assertEquals('Linux', $result[1]);
-        $this->assertFalse(isset($result['product_name']));
+        $this->assertFalse($result);
     }
 
     public function testStatementFetchStyleAssoc()
