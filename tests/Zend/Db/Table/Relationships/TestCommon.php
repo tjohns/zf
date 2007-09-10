@@ -857,4 +857,24 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         }
     }
 
+    public function testTableRelationshipOmitRefColumns()
+    {
+        $refMap = array(
+            'Reporter' => array(
+                'columns'       => array('reported_by'),
+                'refTableClass' => 'Zend_Db_Table_TableAccounts'
+            )
+        );
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+            array(
+                'name'          => 'zfbugs',
+                'referenceMap'  => $refMap
+            )
+        );
+
+        $bug1 = $table->find(1)->current();
+        $reporter = $bug1->findParentRow('Zend_Db_Table_TableAccounts');
+        $this->assertEquals(array('account_name' => 'goofy'), $reporter->toArray());
+    }
+
 }
