@@ -247,7 +247,8 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $config1 = new Zend_Config($configData1);
         $db = Zend_Db::factory($config1, $configData2);
         $this->assertType('Zend_Db_Adapter_Static', $db);
-        $this->assertEquals('vanilla', $db->config['dbname']);
+        // second arg should be ignored
+        $this->assertEquals('dummy', $db->config['dbname']);
     }
 
     public function testDbFactoryZendConfigOverrideZendConfig()
@@ -265,7 +266,8 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $config2 = new Zend_Config($configData2);
         $db = Zend_Db::factory($config1, $config2);
         $this->assertType('Zend_Db_Adapter_Static', $db);
-        $this->assertEquals('vanilla', $db->config['dbname']);
+        // second arg should be ignored
+        $this->assertEquals('dummy', $db->config['dbname']);
     }
 
     public function testDbGetConnection()

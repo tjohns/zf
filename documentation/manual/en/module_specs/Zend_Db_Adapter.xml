@@ -25,27 +25,27 @@
     <itemizedlist>
         <listitem>
             <para>
-                MySQL
+                MySQL, using the <ulink url="http://www.php.net/pdo-mysql">pdo_mysql</ulink> PHP extension
             </para>
         </listitem>
         <listitem>
             <para>
-                Microsoft SQL Server
+                Microsoft SQL Server, using the <ulink url="http://www.php.net/pdo-mssql">pdo_mssql</ulink> PHP extension
             </para>
         </listitem>
         <listitem>
             <para>
-                Oracle
+                Oracle, using the <ulink url="http://www.php.net/pdo-oci">pdo_oci</ulink> PHP extension
             </para>
         </listitem>
         <listitem>
             <para>
-                PostgreSQL
+                PostgreSQL, using the <ulink url="http://www.php.net/pdo-pgsql">pdo_pgsql</ulink> PHP extension
             </para>
         </listitem>
         <listitem>
             <para>
-                SQLite
+                SQLite, using the <ulink url="http://www.php.net/pdo-sqlite">pdo_sqlite</ulink> PHP extension
             </para>
         </listitem>
     </itemizedlist>
@@ -233,11 +233,11 @@ $db = Zend_Db::factory($config->database);
             </example>
 
             <para>
-                The second argument of the <code>factory()</code> method may
-                be an array or another object of type Zend_Config.  It should
-                contain entries corresponding to adapter parameters.
-                This argument is optional, but if it is present, it takes
-                priority over any parameters supplied in the first argument.
+                The second argument of the <code>factory()</code> method may be
+                an associative array containing entries corresponding to
+                adapter parameters.  This argument is optional.  If the first
+                argument is of type Zend_Config, it is assumed to contain all
+                parameters, and the second argument is ignored.
             </para>
 
         </sect3>

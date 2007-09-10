@@ -178,10 +178,11 @@ class Zend_Db
      * The adapter class base name is read from the 'adapter' property.
      * The adapter config parameters are read from the 'params' property.
      *
-     * Second argument may be an associative array of key-value pairs.  This is 
-     * cast to an array and used as the argument to the adapter constructor.  
-     * If this argument is specified, it takes priority over the params in the 
-     * Zend_Config object.
+     * Second argument is optional and may be an associative array of key-value 
+     * pairs.  This is used as the argument to the adapter constructor.  
+     *
+     * If the first argument is of type Zend_Config, it is assumed to contain 
+     * all parameters, and the second argument is ignored.
      *
      * @param  mixed $adapter String name of base adapter class, or Zend_Config object.
      * @param  mixed $config  OPTIONAL; an array or Zend_Config object with adapter parameters.
@@ -195,8 +196,8 @@ class Zend_Db
          * adapter name and separate config object.
          */
         if ($adapter instanceof Zend_Config) {
-            if (empty($config) && isset($adapter->params)) {
-                $config = $adapter->params;
+            if (isset($adapter->params)) {
+                $config = $adapter->params->toArray();
             }
             if (isset($adapter->adapter)) {
                 $adapter = (string) $adapter->adapter;
@@ -209,18 +210,11 @@ class Zend_Db
          * Verify that adapter parameters are in an array.
          */
         if (!is_array($config)) {
-            /*
-             * Convert Zend_Config argument to a plain array.
+            /**
+             * @see Zend_Db_Exception
              */
-            if ($config instanceof Zend_Config) {
-                $config = $config->toArray();
-            } else {
-                /**
-                 * @see Zend_Db_Exception
-                 */
-                require_once 'Zend/Db/Exception.php';
-                throw new Zend_Db_Exception('Adapter parameters must be in an array or a Zend_Config object');
-            }
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception('Adapter parameters must be in an array or a Zend_Config object');
         }
 
         /*
