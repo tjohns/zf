@@ -384,6 +384,21 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test that fetchAssoc() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchAssocAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $result = $this->_db->fetchAssoc("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id DESC", 1);
+        $this->assertType('array', $result);
+        $this->assertEquals(array('product_id', 'product_name'), array_keys(current($result)));
+    }
+
+    /**
      * Test the Adapter's fetchCol() method.
      */
     public function testAdapterFetchCol()
@@ -392,6 +407,24 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $product_id = $this->_db->quoteIdentifier('product_id');
 
         $result = $this->_db->fetchCol("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
+        $this->assertType('array', $result);
+        $this->assertEquals(2, count($result)); // count rows
+        $this->assertEquals(2, $result[0]);
+        $this->assertEquals(3, $result[1]);
+    }
+
+    /**
+     * Test that fetchCol() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchColAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $result = $this->_db->fetchCol("SELECT * FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
+        $this->assertType('array', $result);
         $this->assertEquals(2, count($result)); // count rows
         $this->assertEquals(2, $result[0]);
         $this->assertEquals(3, $result[1]);
@@ -412,6 +445,23 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test that fetchCol() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchOneAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $prod = 'Linux';
+        $result = $this->_db->fetchOne("SELECT $product_name FROM $products WHERE $product_id > ? ORDER BY $product_id", 1);
+        $this->assertType('string', $result);
+        $this->assertEquals($prod, $result);
+    }
+
+    /**
      * Test the Adapter's fetchPairs() method.
      */
     public function testAdapterFetchPairs()
@@ -422,6 +472,23 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         $prod = 'Linux';
         $result = $this->_db->fetchPairs("SELECT $product_id, $product_name FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
+        $this->assertEquals(2, count($result)); // count rows
+        $this->assertEquals($prod, $result[2]);
+    }
+
+    /**
+     * Test the Adapter's fetchPairs() method.
+     */
+    public function testAdapterFetchPairsAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $prod = 'Linux';
+        $result = $this->_db->fetchPairs("SELECT $product_id, $product_name FROM $products WHERE $product_id > ? ORDER BY $product_id ASC", 1);
+        $this->assertType('array', $result);
         $this->assertEquals(2, count($result)); // count rows
         $this->assertEquals($prod, $result[2]);
     }
