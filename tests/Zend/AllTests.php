@@ -14,20 +14,21 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    UnitTests
+ * @package    Zend
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_AllTests::main');
 }
-
-require_once 'TestHelper.php';
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/AclTest.php';
 require_once 'Zend/Auth/AllTests.php';
@@ -72,7 +73,13 @@ require_once 'Zend/VersionTest.php';
 require_once 'Zend/ViewTest.php';
 require_once 'Zend/XmlRpc/AllTests.php';
 
-
+/**
+ * @category   Zend
+ * @package    Zend
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_AllTests
 {
     public static function main()

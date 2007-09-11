@@ -13,12 +13,16 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    UnitTests
+ * @package    Zend_Json
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * @see Zend_Json
@@ -36,14 +40,11 @@ require_once 'Zend/Json/Encoder.php';
 require_once 'Zend/Json/Decoder.php';
 
 /**
- * PHPUnit Test Case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-
-/**
+ * @category   Zend
  * @package    Zend_Json
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_JsonTest extends PHPUnit_Framework_TestCase
 {

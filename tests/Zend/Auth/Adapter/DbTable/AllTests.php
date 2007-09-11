@@ -46,6 +46,12 @@ require_once 'Zend/Auth/Adapter/DbTable/BasicSqliteTest.php';
 
 
 /**
+ * @see Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests
+ */
+require_once 'Zend/Auth/Adapter/DbTable/BasicSqliteTest/SkipTests.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage UnitTests
@@ -73,12 +79,22 @@ class Zend_Auth_Adapter_DbTable_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth_Adapter_Http');
 
-        if (defined('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED') &&
-            constant('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED') !== false) {
-            $suite->addTestSuite('Zend_Auth_Adapter_DbTable_BasicSqliteTest');
+        if (!defined('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED') ||
+            constant('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED') === false) {
+	    $skipTest = new Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests();
+	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!extension_loaded('pdo')) {
+	    $skipTest = new Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests();
+	    $skipTest->message = "Extension 'PDO' is not loaded";
+            $suite->addTest($skipTest);
+        } else if (!in_array('sqlite', PDO::getAvailableDrivers())) {
+	    $skipTest = new Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests();
+	    $skipTest->message = "PDO driver 'sqlite' is not available";
+            $suite->addTest($skipTest);
         } else {
-            $suite->addTestSuite('Zend_Auth_Adapter_DbTable_BasicSqliteTest_Skip');
-        }
+            $suite->addTestSuite('Zend_Auth_Adapter_DbTable_BasicSqliteTest');
+	}
 
         return $suite;
     }

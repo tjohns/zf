@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -13,49 +14,41 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Config
+ * @package    Zend_Auth
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: BasicSqliteTest.php 4194 2007-03-22 23:50:34Z darby $
  */
+
 
 /**
- * Test helper
+ * PHPUnit_Framework_TestCase
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Config_AllTests::main');
-}
 
-require_once 'Zend/Config/IniTest.php';
-require_once 'Zend/Config/XmlTest.php';
 
 /**
  * @category   Zend
- * @package    Zend_Config
+ * @package    Zend_Auth
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Config_AllTests
+class Zend_Auth_Adapter_DbTable_BasicSqliteTest_SkipTests extends PHPUnit_Framework_TestCase
 {
-    public static function main()
+
+    public $message = 'Skipped for unspecified reason';
+
+    public function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $this->markTestSkipped($this->message);
     }
 
-    public static function suite()
+    public function testBasicSqlite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Config');
-
-        $suite->addTestSuite('Zend_Config_IniTest');
-        $suite->addTestSuite('Zend_Config_XmlTest');
-
-        return $suite;
+        // this is here only so we have at least one test
     }
-}
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Config_AllTests::main') {
-    Zend_Config_AllTests::main();
 }

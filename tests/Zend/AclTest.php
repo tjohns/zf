@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -16,41 +15,35 @@
  * @category   Zend
  * @package    Zend_Acl
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Acl
  */
 require_once 'Zend/Acl.php';
 
-
 /**
  * Zend_Acl_Resource
  */
 require_once 'Zend/Acl/Resource.php';
-
 
 /**
  * Zend_Acl_Role
  */
 require_once 'Zend/Acl/Role.php';
 
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-
 /**
  * @category   Zend
  * @package    Zend_Acl
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_AclTest extends PHPUnit_Framework_TestCase

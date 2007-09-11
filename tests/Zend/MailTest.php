@@ -1,9 +1,28 @@
 <?php
 /**
- * @package 	Zend_Mail
- * @subpackage  UnitTests
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Mail
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Mail
@@ -26,18 +45,13 @@ require_once 'Zend/Mail/Transport/Sendmail.php';
 require_once 'Zend/Mail/Transport/Smtp.php';
 
 /**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * PHPUnit incomplete test exception
- */
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
-
-
-/**
  * Mock mail transport class for testing purposes
+ *
+ * @category   Zend
+ * @package    Zend_Mail
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
 {
@@ -60,9 +74,14 @@ class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
     }
 }
 
-
 /**
  * Mock mail transport class for testing Sendmail transport
+ *
+ * @category   Zend
+ * @package    Zend_Mail
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
 {
@@ -85,8 +104,11 @@ class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
 
 
 /**
- * @package 	Zend_Mail
- * @subpackage  UnitTests
+ * @category   Zend
+ * @package    Zend_Mail
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_MailTest extends PHPUnit_Framework_TestCase
 {

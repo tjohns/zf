@@ -15,17 +15,23 @@
  * @category   Zend
  * @package    Zend_Registry
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RegistryTest.php 3659 2007-02-27 04:08:46Z gavin $
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 require_once 'Zend/Registry.php';
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
+ * @category   Zend
  * @package    Zend_Registry
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_RegistryTest extends PHPUnit_Framework_TestCase
 {

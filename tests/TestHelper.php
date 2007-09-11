@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,28 +19,61 @@
  * @version    $Id$
  */
 
-// Set error reporting to the level to which Zend Framework code must comply
-error_reporting( E_ALL | E_STRICT );
-
-// Determine the root, library, and tests directories of the framework distribution
-$zfRoot    = dirname(dirname(__FILE__));
-$zfLibrary = $zfRoot . DIRECTORY_SEPARATOR . 'library';
-$zfTests   = $zfRoot . DIRECTORY_SEPARATOR . 'tests';
+require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/Runner/Version.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 /*
-Prepend the Zend Framework library/ and tests/ directories to the include_path. This allows the tests to run out of
-the box and helps prevent loading other copies of the framework code and tests that would supersede this copy.
-*/
-set_include_path($zfLibrary . PATH_SEPARATOR
-               . $zfTests   . PATH_SEPARATOR
-               . get_include_path());
+ * Set error reporting to the level to which Zend Framework code must comply.
+ */
+error_reporting( E_ALL | E_STRICT );
 
-// Load the user-defined test configuration file, if it exists; otherwise, load the default configuration
-if (is_readable($zfTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
+/*
+ * Determine the root, library, and tests directories of the framework 
+ * distribution.
+ */
+$zfRoot        = dirname(dirname(__FILE__));
+$zfCoreLibrary = $zfRoot . DIRECTORY_SEPARATOR . 'library';
+$zfCoreTests   = $zfRoot . DIRECTORY_SEPARATOR . 'tests';
+
+/*
+ * Prepend the Zend Framework library/ and tests/ directories to the
+ * include_path. This allows the tests to run out of the box and helps prevent
+ * loading other copies of the framework code and tests that would supersede
+ * this copy.
+ */
+$path = array();
+$path[] = $zfCoreTests;
+$path[] = $zfCoreLibrary;
+$path[] = get_include_path();
+set_include_path(implode(PATH_SEPARATOR, $path));
+
+/*
+ * Load the user-defined test configuration file, if it exists; otherwise, load 
+ * the default configuration.
+ */
+if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
     require_once 'TestConfiguration.php';
 } else {
     require_once 'TestConfiguration.php.dist';
 }
 
-// Unset global variables no longer needed
-unset($zfRoot, $zfLibrary, $zfTests);
+/*
+ * Add Zend Framework library/ directory to the PHPUnit code coverage 
+ * whitelist. This has the effect that only production code source files appear 
+ * in the code coverage report and that all production code source files, even 
+ * those that are not covered by a test yet, are processed.
+ */
+if (TESTS_GENERATE_REPORT === TRUE &&
+    version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
+    PHPUnit_Util_Filter::addDirectoryToWhitelist($zfCoreLibrary);
+}
+
+/*
+ * Unset global variables that are no longer needed.
+ */
+unset($zfRoot, $zfCoreLibrary, $zfCoreTests);

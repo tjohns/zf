@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -16,12 +15,15 @@
  * @category   Zend
  * @package    Zend_Date
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
  */
 
-error_reporting( E_ALL | E_STRICT ); // now required for each test suite
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 /**
  * These const values control some testing behavior.
  * They may be defined here or in TestConfiguration.php.
@@ -36,7 +38,6 @@ if (!defined('TESTS_ZEND_I18N_EXTENDED_COVERAGE')) {
     define('TESTS_ZEND_I18N_EXTENDED_COVERAGE', true);
 }
 
-
 /**
  * Zend_Date
  */
@@ -46,17 +47,14 @@ require_once 'Zend/Locale.php';
 require_once 'Zend/Date/Cities.php';
 // require_once 'Zend/TimeSync.php';
 
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
 // echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
-
 /**
+ * @category   Zend
  * @package    Zend_Date
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_DateTest extends PHPUnit_Framework_TestCase
 {
