@@ -21,23 +21,33 @@
 
     <itemizedlist>
         <listitem>
-            <para>MySQL</para>
+            <para>
+                MySQL, verwendet die <ulink url="http://www.php.net/pdo-mysql">pdo_mysql</ulink> PHP Erweiterung
+            </para>
         </listitem>
 
         <listitem>
-            <para>Microsoft SQL Server</para>
+            <para>
+                Microsoft SQL Server, verwendet die <ulink url="http://www.php.net/pdo-mssql">pdo_mssql</ulink> PHP Erweiterung
+            </para>
         </listitem>
 
         <listitem>
-            <para>Oracle</para>
+            <para>
+                Oracle, verwendet die <ulink url="http://www.php.net/pdo-oci">pdo_oci</ulink> PHP Erweiterung
+            </para>
         </listitem>
 
         <listitem>
-            <para>PostgreSQL</para>
+            <para>
+                PostgreSQL, verwendet die <ulink url="http://www.php.net/pdo-pgsql">pdo_pgsql</ulink> PHP Erweiterung
+            </para>
         </listitem>
 
         <listitem>
-            <para>SQLite</para>
+            <para>
+                SQLite, verwendet die <ulink url="http://www.php.net/pdo-sqlite">pdo_sqlite</ulink> PHP Erweiterung
+            </para>
         </listitem>
     </itemizedlist>
 
@@ -211,10 +221,10 @@ $db = Zend_Db::factory($config->database);
             </example>
 
             <para>
-                Das zweite Argument der <code>factory()</code> Methode kann ein Array oder ein weiteres Objekt
-                des Typs Zend_Config sein. Es sollte die Einträge ensprechend der Adapter Parameter enthalten.
-                Dieses Argument ist optional, aber wenn es vorhanden ist, hat es Priorität vor jeglichem Parameter
-                der im ersten Argument angegeben wurde.
+                Das zweite Argument der <code>factory()</code> Methode kann ein assoziatives Array sein das
+                Einträge enthält die den Parameters des Adapters entsprechen. Dieses Argument ist optional.
+                Wenn das erste Argument vom Typ Zend_Config ist, wird angenommen das es alle Parameter
+                enthält, und das zweite Argument wird ignoriert.
             </para>
 
         </sect3>
