@@ -1094,7 +1094,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
 
         <para>
             もし PHP の日付書式指定子のほうが ISO 書式指定子よりなじみがあるのなら、
-            <code>Zend_Date::setOptions('format' => 'php')</code> を使用しましょう。これで、
+            <code>Zend_Date::setOptions(array('format' => 'php'))</code> を使用しましょう。これで、
             Zend_Date のメソッドで ISO 書式指定子ではなく PHP の date() での指定子を用いるようになります
             その後の書式パラメータは、すべて
             <ulink url="http://php.net/date">PHP の <code>date()</code> 書式指定子</ulink>
@@ -1112,7 +1112,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");]]>
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
-Zend_Date::setOptions('format_type' => 'php');
+Zend_Date::setOptions(array('format_type' => 'php'));
 $date = new Zend_Date(1234567890, false, $locale);
 
 // 出力は 'February 16, 2007, 3:36 am' のようになります

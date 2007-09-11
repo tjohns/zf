@@ -27,6 +27,11 @@
     <itemizedlist>
         <listitem>
             <para>
+                IBM DB2 および Informix Dynamic Server (IDS) (<ulink url="http://www.php.net/pdo-ibm">pdo_ibm</ulink> PHP 拡張モジュールを使用)
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 MySQL (<ulink url="http://www.php.net/pdo-mysql">pdo_mysql</ulink> PHP 拡張モジュールを使用)
             </para>
         </listitem>
@@ -1764,6 +1769,30 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         オプションをサポートしていません。Oracle
                         でこの機能を使用したい場合は、PDO OCI
                         アダプタを使用する必要があります。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.db.adapter.adapter-notes.pdo-ibm">
+            <title>PDO for IBM DB2 and Informix Dynamic Server (IDS)</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        このアダプタを <code>factory()</code> で指定する場合は、
+                        名前を 'Pdo_Ibm' とします。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        このアダプタは、PHP の pdo および pdo_ibm 拡張モジュールを使用します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        PDO_IBM 拡張モジュールのバージョン 1.2.2 以降が必要です。
+                        これより古いバージョンを使っている場合は、PDO_IBM
+                        拡張モジュールを PECL で更新する必要があります。
                     </para>
                 </listitem>
             </itemizedlist>

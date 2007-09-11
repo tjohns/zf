@@ -62,6 +62,13 @@ date_default_timezone_set('Europe/Berlin');       // ドイツのドイツ人用
             明示的に夏時間を指定する必要はありません。
         </para>
 
+        <para>
+            タイムゾーン <emphasis role="strong">UTC</emphasis> および
+            <emphasis role="strong">GMT</emphasis> には夏時間が存在しないことに注意しましょう。
+            つまり、たとえ手動で DST を使うよう設定したとしても、
+            UTC や GMT に設定された <code>Zend_Date</code>
+            のインスタンスはその影響を受けないということです。
+        </para>
     </sect2>
 
     <sect2 id="zend.date.why">

@@ -56,6 +56,15 @@
                 夏時間にあわせた時間の加減算を "月" の計算時にも適用します。
             </para>
 
+            <para>
+                <emphasis role="strong"><code>Zend_Date</code>
+                インスタンスの実際のタイムゾーンが UTC あるいは GMT の場合、
+                オプション <code>'fix_dst'</code> は用いられません</emphasis>。
+                これらのタイムゾーンには DST は適用されないからです。
+                このインスタンスのタイムゾーンを UTC あるいは GMT 以外のものに変更すると、
+                その前に設定されていた 'fix_dst' オプションの値を
+                "月" の計算時に適用します。
+            </para>
         </sect3>
 
         <sect3 id="zend.date.options.extendmonth">
