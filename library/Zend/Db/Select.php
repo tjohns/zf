@@ -718,7 +718,7 @@ class Zend_Db_Select
                     continue;
                 }
                 $direction = 'ASC';
-                if (preg_match('/(.*)\s+(ASC|DESC)\s*$/i', $val, $matches)) {
+                if (preg_match('/(.*\W)(ASC|DESC)\b/si', $val, $matches)) {
                     $val = trim($matches[1]);
                     $direction = $matches[2];
                 }

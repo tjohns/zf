@@ -91,7 +91,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
     /**
      * @var Zend_Db_Profiler_Query
      */
-    protected $_queryProfile = null;
+    protected $_queryId = null;
 
     /**
      * Constructor for a statement.
@@ -107,9 +107,8 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         }
         $this->_parseParameters($sql);
         $this->_prepare($sql);
-        if (($q = $this->_adapter->getProfiler()->queryStart($sql)) !== null) {
-            $this->_queryProfile = $this->_adapter->getProfiler()->getQueryProfile($q);
-        }
+
+        $this->_queryId = $this->_adapter->getProfiler()->queryStart($sql);
     }
 
     /**
@@ -249,9 +248,6 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
 
         // Finally we are assured that $position is valid
         $this->_bindParam[$position] =& $variable;
-        if ($this->_queryProfile) {
-            $this->_queryProfile->bindParam($position, $variable);
-        }
         return $this->_bindParam($position, $variable, $type, $length, $options);
     }
 
@@ -276,33 +272,34 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
      */
     public function execute(array $params = null)
     {
-        if ($this->_queryProfile) {
-            if ($this->_queryProfile->hasEnded()) {
-                $prof = $this->_adapter->getProfiler();
-                $q = $prof->queryClone($this->_queryProfile);
-                $this->_queryProfile = $prof->getQueryProfile($q);
-            }
-            if ($params !== null) {
-                foreach ($params as $param => $variable) {
-                    if (is_int($param)) {
-                        $param++;
-                    }
-                    $this->_queryProfile->bindParam($param, $variable);
-                }
-            }
-            $this->_queryProfile->start();
+        /*
+         * Simple case - no query profiler to manage.
+         */
+        if ($this->_queryId === null) {
+            return $this->_execute($params);
         }
 
-        $retval = true;
+        /*
+         * Do the same thing, but with query profiler
+         * management before and after the execute.
+         */
+        $prof = $this->_adapter->getProfiler();
+        $qp = $prof->getQueryProfile($this->_queryId);
+        if ($qp->hasEnded()) {
+            $this->_queryId = $prof->queryClone($qp);
+            $qp = $prof->getQueryProfile($this->_queryId);
+        }
         if ($params !== null) {
-            $retval = $this->_execute($params);
+            $qp->bindParams($params);
         } else {
-            $retval = $this->_execute();
+            $qp->bindParams($this->_bindParam);
         }
+        $qp->start($this->_queryId);
 
-        if ($this->_queryProfile) {
-            $this->_queryProfile->end();
-        }
+        $retval = $this->_execute($params);
+
+        $prof->queryEnd($this->_queryId);
+
         return $retval;
     }
 

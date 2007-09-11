@@ -504,6 +504,20 @@ abstract class Zend_Db_Statement_TestCommon extends Zend_Db_TestSetup
         $this->assertFalse($result);
     }
 
+    public function testStatementFetchStyleNum()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $stmt = $this->_db->query("SELECT * FROM $products WHERE $product_id > 1 ORDER BY $product_id ASC");
+        $result = $stmt->fetch(Zend_Db::FETCH_NUM);
+        $stmt->closeCursor();
+
+        $this->assertType('array', $result);
+        $this->assertEquals('Linux', $result[1]);
+        $this->assertFalse(isset($result['product_name']));
+    }
+
     public function testStatementFetchStyleAssoc()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');

@@ -278,8 +278,8 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
              */
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception('The Mysqli extension is required for this adapter but the extension is not loaded');
- 	}
-        
+        }
+
         if (isset($this->_config['port'])) {
             $port = (integer) $this->_config['port'];
         } else {

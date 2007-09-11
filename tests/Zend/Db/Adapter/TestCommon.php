@@ -274,14 +274,14 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $desc = $this->_db->describeTable('zfproducts');
 
-        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME']);
-        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME']);
-        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION']);
-        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE']);
-        $this->assertEquals('',                  $desc['product_name']['DEFAULT']);
+        $this->assertEquals('zfproducts',        $desc['product_name']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('product_name',      $desc['product_name']['COLUMN_NAME'], 'Expected column name to be product_name');
+        $this->assertEquals(2,                   $desc['product_name']['COLUMN_POSITION'], 'Expected column position to be 2');
+        $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE'], 'Expected data type to be VARCHAR');
+        $this->assertEquals('',                  $desc['product_name']['DEFAULT'], 'Expected default to be empty string');
         $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
-        $this->assertEquals(0,                   $desc['product_name']['SCALE']);
-        $this->assertEquals(0,                   $desc['product_name']['PRECISION']);
+        $this->assertNull(                       $desc['product_name']['SCALE'], 'Expected scale to be null');
+        $this->assertNull(                       $desc['product_name']['PRECISION'], 'Expected precision to be null');
         $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
         $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
         $this->assertFalse(                      $desc['product_name']['IDENTITY'], 'Expected product_name to return false for IDENTITY');
@@ -345,13 +345,13 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $desc = $this->_db->describeTable('zfproducts');
 
-        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME']);
-        $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME']);
-        $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION']);
-        $this->assertEquals('',                  $desc['product_id']['DEFAULT']);
+        $this->assertEquals('zfproducts',        $desc['product_id']['TABLE_NAME'], 'Expected table name to be zfproducts');
+        $this->assertEquals('product_id',        $desc['product_id']['COLUMN_NAME'], 'Expected column name to be product_id');
+        $this->assertEquals(1,                   $desc['product_id']['COLUMN_POSITION'], 'Expected column position to be 1');
+        $this->assertEquals('',                  $desc['product_id']['DEFAULT'], 'Expected default to be empty string');
         $this->assertFalse(                      $desc['product_id']['NULLABLE'], 'Expected product_id not to be nullable');
-        $this->assertEquals(0,                   $desc['product_id']['SCALE']);
-        $this->assertEquals(0,                   $desc['product_id']['PRECISION']);
+        $this->assertNull(                       $desc['product_id']['SCALE'], 'Expected scale to be null');
+        $this->assertNull(                       $desc['product_id']['PRECISION'], 'Expected precision to be null');
         $this->assertTrue(                       $desc['product_id']['PRIMARY'], 'Expected product_id to be a primary key');
         $this->assertEquals(1,                   $desc['product_id']['PRIMARY_POSITION']);
     }
@@ -1112,25 +1112,47 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
                 continue;
             }
 
+            // test int value
             $value = $this->_db->quote(1234, $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('1234', $value);
+            $this->assertEquals('1234', $value,
+                "Incorrect quote() INT_TYPE result for int");
 
+            // test int string
             $value = $this->_db->quote('1234', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('1234', $value);
+            $this->assertEquals('1234', $value,
+                "Incorrect quote() INT_TYPE result for int string");
 
+            // test int string with + sign
+            $value = $this->_db->quote('+1234', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234', $value,
+                "Incorrect quote() INT_TYPE result for int string with + sign");
+
+            // test int string with - sign
+            $value = $this->_db->quote('-1234', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('-1234', $value,
+                "Incorrect quote() INT_TYPE result for int string with - sign");
+
+            // test int string with non-digit text
             $value = $this->_db->quote('1234abcd', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('1234', $value);
+            $this->assertEquals('1234', $value,
+                "Incorrect quote() INT_TYPE result for int string with non-digit text");
 
+            // test non-digit test; it should return 0
             $value = $this->_db->quote('abcd', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('0', $value);
+            $this->assertEquals('0', $value,
+                "Incorrect quote() INT_TYPE result for non-digit string");
 
+            // test Zend_Db_Expr is passed through literally
             $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals("1+2+3", $value);
+            $this->assertEquals("1+2+3", $value,
+                "Incorrect quote() INT_TYPE result for Zend_Db_Expr");
         }
     }
 
@@ -1141,29 +1163,82 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
                 continue;
             }
 
+            // test int value
             $value = $this->_db->quote(1234, $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('1234', $value);
+            $this->assertEquals(1234, $value,
+                "Incorrect quote() BIGINT_TYPE result for int");
 
+            // test int string
+            $value = $this->_db->quote('1234', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234', $value,
+                "Incorrect quote() BIGINT_TYPE result for int string");
+
+            // test int string with + sign
+            $value = $this->_db->quote('+1234', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('+1234', $value,
+                "Incorrect quote() BIGINT_TYPE result for int string");
+
+            // test int string with - sign
+            $value = $this->_db->quote('-1234', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('-1234', $value,
+                "Incorrect quote() BIGINT_TYPE result for int string");
+
+            // test int string with positive exponent
+            $value = $this->_db->quote('1234e15', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234e15', $value,
+                "Incorrect quote() BIGINT_TYPE result for int string");
+
+            $value = $this->_db->quote('1234e+15', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234e+15', $value,
+                "Incorrect quote() BIGINT_TYPE result for int string");
+
+            // test int value with negative exponent
+            $value = $this->_db->quote('1234e-15', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('1234e-15', $value,
+                "Incorrect quote() BIGINT_TYPE result for int string");
+
+            // test bigint value
             $value = $this->_db->quote('2200000000', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('2200000000', $value);
+            $this->assertEquals('2200000000', $value,
+                "Incorrect quote() BIGINT_TYPE result for big int string");
 
+            // test octal value with leading zeroes
             $value = $this->_db->quote('020310253000', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('020310253000', $value);
+            $this->assertEquals('020310253000', $value,
+                "Incorrect quote() BIGINT_TYPE result for big octal int string with leading zeroes");
 
+            // test decimal value with leading zeroes
+            $value = $this->_db->quote('09091', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('09091', $value,
+                "Incorrect quote() BIGINT_TYPE result for decimal int string with leading zeroes");
+
+            // test hex value with ODBC-style notation
             $value = $this->_db->quote('0x83215600', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('0x83215600', $value);
+            $this->assertEquals('0x83215600', $value,
+                "Incorrect quote() BIGINT_TYPE result for big hex int string");
 
+            // test non-numeric value; it should be zero
             $value = $this->_db->quote('abcd', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('0', $value);
+            $this->assertEquals('0', $value,
+                "Incorrect quote() BIGINT_TYPE result for non-digt string");
 
+            // test Zend_Db_Expr is passed through literally
             $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals("1+2+3", $value);
+            $this->assertEquals("1+2+3", $value,
+                "Incorrect quote() BIGINT_TYPE result for Zend_Db_Expr");
         }
     }
 
@@ -1176,23 +1251,38 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
             $value = $this->_db->quote(12.34, $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('12.34', $value);
+            $this->assertEquals('12.34', $value,
+                "Incorrect quote() FLOAT_TYPE result");
 
             $value = $this->_db->quote('12.34', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('12.34', $value);
+            $this->assertEquals('12.34', $value,
+                "Incorrect quote() FLOAT_TYPE result");
+
+            $value = $this->_db->quote('+12.34', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('12.34', $value,
+                "Incorrect quote() FLOAT_TYPE result");
+
+            $value = $this->_db->quote('-12.34', $typeName);
+            $this->assertType('string', $value);
+            $this->assertEquals('-12.34', $value,
+                "Incorrect quote() FLOAT_TYPE result");
 
             $value = $this->_db->quote('12.34abcd', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('12.34', $value);
+            $this->assertEquals('12.34', $value,
+                "Incorrect quote() FLOAT_TYPE result");
 
             $value = $this->_db->quote('abcd', $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals('0', $value);
+            $this->assertEquals('0', $value,
+                "Incorrect quote() FLOAT_TYPE result");
 
             $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), $typeName);
             $this->assertType('string', $value);
-            $this->assertEquals("1+2+3", $value);
+            $this->assertEquals("1+2+3", $value,
+                "Incorrect quote() FLOAT_TYPE result");
         }
     }
 
@@ -1200,23 +1290,29 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     {
         $value = $this->_db->quote(1234, 'CHAR');
         $this->assertType('integer', $value);
-        $this->assertEquals(1234, $value);
+        $this->assertEquals(1234, $value,
+            "Incorrect quote() CHAR type result");
 
         $value = $this->_db->quote('1234', 'CHAR');
         $this->assertType('string', $value);
-        $this->assertEquals("'1234'", $value);
+        $this->assertEquals("'1234'", $value,
+            "Incorrect quote() CHAR type result");
 
         $value = $this->_db->quote('1234abcd', 'CHAR');
         $this->assertType('string', $value);
-        $this->assertEquals("'1234abcd'", $value);
+        $this->assertEquals("'1234abcd'", $value,
+            "Incorrect quote() CHAR type result");
 
         $value = $this->_db->quote('1234abcd56', 'CHAR');
         $this->assertType('string', $value);
-        $this->assertEquals("'1234abcd56'", $value);
+        $this->assertEquals("'1234abcd56'", $value,
+            "Incorrect quote() CHAR type result");
 
+        // test Zend_Db_Expr is passed through literally
         $value = $this->_db->quote(new Zend_Db_Expr('1+2+3'), 'CHAR');
         $this->assertType('string', $value);
-        $this->assertEquals("1+2+3", $value);
+        $this->assertEquals("1+2+3", $value,
+            "Incorrect quote() CHAR type result for Zend_Db_Expr");
     }
 
     public function testAdapterSetFetchMode()

@@ -948,6 +948,27 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test ORDER BY clause that contains multiple lines.
+     * See ZF-1822, which says that the regexp matching
+     * ASC|DESC fails when string is multi-line.
+     */
+    protected function _selectOrderByMultiLine()
+    {
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->order("product_id\nDESC");
+        return $select;
+    }
+
+    public function testSelectOrderByMultiLine()
+    {
+        $select = $this->_selectOrderByMultiLine();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, $result[0]['product_id']);
+    }
+
+    /**
      * Test adding a LIMIT clause to a Zend_Db_Select object.
      */
     protected function _selectLimit()
