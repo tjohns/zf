@@ -53,7 +53,7 @@
             applied to each building in a city, one would simply assign the rule to the city, instead of
             assigning the same rule to each building. Some buildings may require exceptions to such a
             rule, however, and this is achieved easily in Zend_Acl by assigning such exception rules to
-            each such building that requires an exception to the rule. a Resource may inherit from only one
+            each such building that requires an exception to the rule. A Resource may inherit from only one
             parent Resource, though this parent Resource can have its own parent Resource, and so on.
         </para>
         <para>
@@ -241,7 +241,7 @@ $acl->addRole($roleGuest);
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
 /* alternatively, the above could be written:
-$roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
+$acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
 // Editor inherits from staff

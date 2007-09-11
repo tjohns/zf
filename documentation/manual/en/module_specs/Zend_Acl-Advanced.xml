@@ -10,7 +10,7 @@
         Zend_Acl was designed in such a way that it does not require any particular backend technology such
         as a database or cache server for storage of the ACL data. Its complete PHP implementation enables
         customized administration tools to be built upon Zend_Acl with relative ease and flexibility. Many
-        situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods
+        situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods for
         setting up, and querying against, the access controls of an application.
         </para>
 
@@ -29,7 +29,7 @@
         <title>Writing Conditional ACL Rules with Assertions</title>
 
         <para>
-        Sometimes a rule for allowing or denying an Role access to a Resource should not be absolute but dependent
+        Sometimes a rule for allowing or denying a Role access to a Resource should not be absolute but dependent
         upon various criteria. For example, suppose that certain access should be allowed, but only between the
         hours of 8:00am and 5:00pm. Another example would be denying access because a request comes from an
         IP address that has been flagged as a source of abuse. Zend_Acl has built-in support for implementing
