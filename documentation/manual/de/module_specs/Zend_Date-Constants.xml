@@ -1091,7 +1091,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
 
         <para>
             Wenn man mit PHP's date Formatdefinition vertrauter ist als mit den ISO Formatdefinitionen, dann kann
-            man durch Verwendung der Methode <code>Zend_Date::setOptions('format' => 'php')</code> das Wechseln
+            man durch Verwendung der Methode <code>Zend_Date::setOptions(array('format' => 'php'))</code> das Wechseln
             von ISO Formatdefinition zu PHP date Formatdefinition welche dann für alle Zend_Date Methoden verwendet
             werden wechseln. Danach müssen alle Format Parameter in
             <ulink url="http://php.net/date">PHP's <code>date()</code> Formatdefintion</ulink> angegeben werden.
@@ -1110,7 +1110,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");]]>
 require_once 'Zend/Date.php';
 
 $locale = new Zend_Locale('de_AT');
-Zend_Date::setOptions('format_type' => 'php');
+Zend_Date::setOptions(array('format_type' => 'php'));
 $date = new Zend_Date(1234567890, false, $locale);
 
 // Ausgabe zum Beispiel 'Februar 16, 2007, 3:36 vorm.'

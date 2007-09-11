@@ -55,6 +55,13 @@
                 Datumsberechnungen durchgeführt werden.
             </para>
 
+            <para>
+                <emphasis role="strong">Wenn die aktuelle Zeitzone innerhalb der Instanz von
+                <code>Zend_Date</code> auf UTC oder GMT gestellt wird, wird die Option <code>'fix_dst'</code>
+                nicht verwendet</emphasis> weil diese zwei Zeitzonen nicht mit DST arbeiten. Wenn die Zeitzone
+                für diese Instanz wieder auf eine Zeitzone gestellt wird die nicht UTC oder GMT ist, wird die
+                vorher definierte 'fix_dst' Option wieder für die Datumsberechnungen verwendet.
+            </para>
         </sect3>
 
         <sect3 id="zend.date.options.extendmonth">

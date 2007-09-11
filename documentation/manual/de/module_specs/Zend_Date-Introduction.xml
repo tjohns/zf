@@ -58,6 +58,13 @@ date_default_timezone_set('Europe/Berlin');       // Zeitzone für Deutschland]]
             Das erspart das explizite setzen der Sommer-/Winterzeitumstellung (DST).
         </para>
 
+        <para>
+            Es gilt zu beachten das die Zeitzonen <emphasis role="strong">UTC</emphasis> und
+            <emphasis role="strong">GMT</emphasis> keine Sommer-/Winterzeitumstellung enthalten. Das bedeutet
+            das selbst wenn per Hand definiert wurde das <code>Zend_Date</code> die DST berücksichtigen soll,
+            das automatisch für alle Instanzen von <code>Zend_Date</code> zurückgeschaltet wird die auf
+            UTC oder GMT eingestellt wurden. 
+        </para>
     </sect2>
 
     <sect2 id="zend.date.why">
