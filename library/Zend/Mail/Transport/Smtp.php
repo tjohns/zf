@@ -53,6 +53,13 @@ require_once 'Zend/Mail/Transport/Abstract.php';
 class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
 {
     /**
+     * EOL character string used by transport
+     * @var string
+     * @access public
+     */
+    public $EOL = "\n";
+
+    /**
      * Remote smtp hostname or i.p.
      *
      * @var string
