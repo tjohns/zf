@@ -256,7 +256,37 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         return -1;
     }
 
-
+    /**
+     * Obtain exclusive write lock on the index
+     *
+     * @param Zend_Search_Lucene_Storage_Directory $defaultLockDirectory
+     * @return Zend_Search_Lucene_Storage_File
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public static function obtainWriteLock(Zend_Search_Lucene_Storage_Directory $defaultLockDirectory)
+    {
+        $lock = $defaultLockDirectory->createFile('write.lock');
+        if (!$lock->lock(LOCK_EX)) {
+            throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
+        }
+    	
+        return $lock;
+    }
+    
+    /**
+     * Free exclusive write lock on the index
+     * 
+     * @param Zend_Search_Lucene_Storage_Directory $defaultLockDirectory
+     * @param Zend_Search_Lucene_Storage_File      $lock
+     */
+    public static function releaseWriteLock(Zend_Search_Lucene_Storage_Directory $defaultLockDirectory,
+                                            Zend_Search_Lucene_Storage_File $lock)
+    {
+        $lock->unlock();
+        unset($lock);
+        $defaultLockDirectory->deleteFile('write.lock');
+    }
+    
     /**
      * Get segments file name
      *
@@ -302,7 +332,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
             $segSize = $segmentsFile->readInt();
             $this->_docCount += $segSize;
 
-            $this->_segmentInfos[] =
+            $this->_segmentInfos[$segName] =
                                 new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
                                                                          $segName,
                                                                          $segSize);
@@ -367,7 +397,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
             $this->_docCount += $segSize;
 
-            $this->_segmentInfos[] =
+            $this->_segmentInfos[$segName] =
                                 new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
                                                                          $segName,
                                                                          $segSize,
@@ -405,10 +435,15 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
         $this->_generation = self::getActualGeneration($this->_directory);
 
         if ($create) {
-            $writeLock = $this->_directory->createFile('write.lock');
-            if (!$writeLock->lock(LOCK_EX, true)) {
-                throw new Zend_Search_Lucene_Exception('Can\'t create index. It\'s under processing now');
-            }
+        	try {
+        		$lock = Zend_Search_Lucene::obtainWriteLock($this->_directory);
+        	} catch (Zend_Search_Lucene_Exception $e) {
+        		if (strpos($e->getMessage(), 'Can\'t obtain exclusive index lock') === false) {
+        			throw $e;
+        		} else {
+        			throw new Zend_Search_Lucene_Exception('Can\'t create index. It\'s under processing now');
+        		}
+        	}
 
             if ($this->_generation == -1) {
                 // Directory doesn't contain existing index, start from 1
@@ -425,9 +460,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
             Zend_Search_Lucene_Index_Writer::createIndex($this->_directory, $this->_generation, $nameCounter);
 
-            $writeLock->unlock();
-            unset($writeLock);
-            $this->_directory->deleteFile('write.lock');
+            Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
         }
 
         if ($this->_generation == -1) {
@@ -1186,6 +1219,8 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     {
         $this->getIndexWriter()->addDocument($document);
         $this->_docCount++;
+        
+        $this->_hasChanges = true;
     }
 
 
@@ -1209,18 +1244,14 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     {
         if ($this->_hasChanges) {
             foreach ($this->_segmentInfos as $segInfo) {
-                $delGen = $segInfo->writeChanges();
+                $segInfo->writeChanges();
             }
-
-            $this->_hasChanges = false;
-        }
-        // Update delete file generation number if necessary
-
-
-        if ($this->_writer !== null) {
-            $this->_writer->commit();
-
+            
+            $this->getIndexWriter()->commit();
+            
             $this->_updateDocCount();
+            
+            $this->_hasChanges = false;
         }
     }
 

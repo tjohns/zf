@@ -413,13 +413,13 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
-     * Returns array of FieldInfo objects.
+     * Returns actual deletions file generation number.
      *
-     * @return array
+     * @return integer
      */
-    public function getFieldInfos()
+    public function getDelGen()
     {
-        return $this->_fields;
+        return $this->_delGen;
     }
 
     /**
@@ -903,15 +903,11 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Write changes if it's necessary.
-     *
-     * Returns new delete file generation number if it was written or -1 otherwise
-     *
-     * @return integer
      */
     public function writeChanges()
     {
         if (!$this->_deletedDirty) {
-            return -1;
+            return;
         }
 
         if (extension_loaded('bitset')) {
@@ -932,28 +928,41 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $bitCount = count($this->_deleted);
         }
 
+        
+        // Get new generation number
+        $lock = Zend_Search_Lucene::obtainWriteLock($this->_directory);
 
-        if ($this->_delGen == 0) {
-            // It's pre-2.1 delete file
-            $delFile = $this->_directory->createFile($this->_name . '.del');
-        } else {
-            if ($this->_delGen == -1) {
-                // There was no delete file for this segment up to now
-                $this->_delGen = 1;
-            } else {
-                $this->_delGen++;
+        $delFileList = array();
+        foreach ($this->_directory->fileList() as $file) {
+        	if ($file == $this->_name . '.del') {
+        		// Matches <segment_name>.del file name
+        		$delFileList[] = 0;
+        	} else if (preg_match('/^' . $this->_name . '_([a-zA-Z0-9]+)\.del$/i', $file, $matches)) {
+        		// Matches <segment_name>_NNN.del file names
+				$delFileList[] = (int)$matches[1];
             }
-
-            $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($generation, 10, 36) . '.del');
         }
+       
+        if (count($delFileList) == 0) {
+        	// There is no deletions file for current segment in the directory
+        	// Set detetions file generation number to 1
+        	$this->_delGen = 1;
+        } else {
+        	// There are some deletions files for current segment in the directory
+        	// Set detetions file generation number to the highest + 1
+        	$this->_delGen = max($delFileList) + 1;
+        }
+        
+        $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
 
+        Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
+        
+        
         $delFile->writeInt($this->_docCount);
         $delFile->writeInt($bitCount);
         $delFile->writeBytes($delBytes);
 
         $this->_deletedDirty = false;
-
-        return $this->_delGen;
     }
 
 
