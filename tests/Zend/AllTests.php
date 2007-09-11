@@ -74,7 +74,6 @@ require_once 'Zend/Validate/AllTests.php';
 require_once 'Zend/VersionTest.php';
 require_once 'Zend/ViewTest.php';
 require_once 'Zend/XmlRpc/AllTests.php';
-// require_once 'Zend/Json/AllTests.php';
 
 /**
  * @category   Zend
@@ -111,6 +110,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Gdata_AllTests::suite());
         $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTestSuite('Zend_JsonTest');
+        $suite->addTestSuite('Zend_Json_JsonXMLTest');
         $suite->addTestSuite('Zend_LoaderTest');
         $suite->addTestSuite('Zend_LocaleTest');
         $suite->addTest(Zend_Locale_AllTests::suite());
@@ -136,7 +136,6 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_ViewTest');
         $suite->addTestSuite('Zend_VersionTest');
         $suite->addTest(Zend_XmlRpc_AllTests::suite());
-        $suite->addTestSuite('Zend_Json_JsonXMLTest');
 
         return $suite;
     }
