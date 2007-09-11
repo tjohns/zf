@@ -540,10 +540,15 @@ abstract class Zend_Db_Table_Row_Abstract
     {
         $primary = array_flip($this->_primary);
         if ($useDirty) {
-            return array_intersect_key($this->_data, $primary);
+            $array = array_intersect_key($this->_data, $primary);
         } else {
-            return array_intersect_key($this->_cleanData, $primary);
+            $array = array_intersect_key($this->_cleanData, $primary);
         }
+        if (count($primary) != count($array)) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception("The specified Table '$this->_tableClass' does not have the same primary key as the Row");
+        }
+        return $array;
     }
 
     /**
