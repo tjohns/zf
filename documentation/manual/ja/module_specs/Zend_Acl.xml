@@ -266,7 +266,7 @@ $acl->addRole($roleGuest);
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
 /* あるいは、上の内容は次のように書くこともできます
-$roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
+$acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
 // Editor は staff の権限を継承します
