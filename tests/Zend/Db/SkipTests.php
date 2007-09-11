@@ -96,6 +96,14 @@ class Zend_Db_Skip_OracleTest extends Zend_Db_Skip_CommonTest
     }
 }
 
+class Zend_Db_Skip_Pdo_IbmTest extends Zend_Db_Skip_CommonTest
+{
+    function getDriver()
+    {
+        return 'Pdo_Ibm';
+    }
+}
+
 class Zend_Db_Skip_Pdo_MssqlTest extends Zend_Db_Skip_CommonTest
 {
     function getDriver()
@@ -135,4 +143,3 @@ class Zend_Db_Skip_Pdo_SqliteTest extends Zend_Db_Skip_CommonTest
         return 'Pdo_Sqlite';
     }
 }
-

@@ -132,6 +132,19 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
         return $data;
     }
 
+    protected function _getDataDocuments()
+    {
+        $data = parent::_getDataDocuments();
+        foreach ($data as &$row) {
+            $quoted = $this->_db->quote($row['doc_clob']);
+            $hex = bin2hex($row['doc_clob']);
+            $row['doc_clob'] = new Zend_Db_Expr("TO_CLOB($quoted)");
+            $row['doc_blob'] = new Zend_Db_Expr("TO_BLOB(HEXTORAW('$hex'))");
+                
+        }
+        return $data;
+    }
+
     protected function _getDataProducts()
     {
         $data = parent::_getDataProducts();

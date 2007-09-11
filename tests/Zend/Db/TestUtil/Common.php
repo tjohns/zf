@@ -210,7 +210,8 @@ abstract class Zend_Db_TestUtil_Common
         'Bugs'          => 'zfbugs',
         'BugsProducts'  => 'zfbugs_products',
         'noquote'       => 'zfnoquote',
-        'noprimarykey'  => 'zfnoprimarykey'
+        'noprimarykey'  => 'zfnoprimarykey',
+        'Documents'     => 'zfdocuments'
     );
 
     public function getTableName($tableId)
@@ -262,6 +263,15 @@ abstract class Zend_Db_TestUtil_Common
             'product_id'   => 'INTEGER NOT NULL',
             'PRIMARY KEY'  => 'bug_id,product_id'
         );
+    }
+    protected function _getColumnsDocuments()
+    {
+        return array(
+            'doc_id'       => 'INTEGER NOT NULL',
+            'doc_clob'     => 'CLOB',
+            'doc_blob'     => 'BLOB',
+            'PRIMARY KEY'  => 'doc_id'
+            );
     }
 
     protected function _getDataAccounts()
@@ -354,6 +364,21 @@ abstract class Zend_Db_TestUtil_Common
         );
     }
 
+    protected function _getDataDocuments()
+    {
+        return array (
+            array(
+                'doc_id'    => 1,
+                'doc_clob'  => 'this is the clob that never ends...'.
+                               'this is the clob that never ends...'.
+                               'this is the clob that never ends...',
+                'doc_blob'  => 'this is the blob that never ends...'.
+                               'this is the blob that never ends...'.
+                               'this is the blob that never ends...'
+            )
+        );
+    }
+
     public function populateTable($tableId)
     {
         $tableName = $this->getTableName($tableId);
@@ -394,6 +419,9 @@ abstract class Zend_Db_TestUtil_Common
 
         $this->createTable('BugsProducts');
         $this->populateTable('BugsProducts');
+
+        $this->createTable('Documents');
+        $this->populateTable('Documents');
     }
 
     public function setAdapter(Zend_Db_Adapter_Abstract $db)
