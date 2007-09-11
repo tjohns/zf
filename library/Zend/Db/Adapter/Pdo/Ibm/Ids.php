@@ -148,7 +148,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Ids
                 'LENGTH'            => $row[$length],
                 'SCALE'             => ($row[$typename] == 5 ? $row[$length]&255 : 0),
                 'PRECISION'         => ($row[$typename] == 5 ? (int)($row[$length]/256) : 0),
-                'UNSIGNED'          => false, 
+                'UNSIGNED'          => false,
                 'PRIMARY'           => $primary,
                 'PRIMARY_POSITION'  => $primaryPosition,
                 'IDENTITY'          => $identity
@@ -181,7 +181,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Ids
             10      => "DATETIME",
             11      => "BYTE",
             12      => "TEXT",
- 	        13      => "VARCHAR",
+            13      => "VARCHAR",
             14      => "INTERVAL",
             15      => "NCHAR",
             16      => "NVARCHAR",
@@ -257,9 +257,9 @@ class Zend_Db_Adapter_Pdo_Ibm_Ids
         if ($count < 0) {
             throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         } else if ($count == 0) {
-		  $limit_sql = str_ireplace("SELECT", "SELECT * FROM (SELECT", $sql);
-		  $limit_sql .= ") WHERE 0 = 1";
-		} else {
+              $limit_sql = str_ireplace("SELECT", "SELECT * FROM (SELECT", $sql);
+              $limit_sql .= ") WHERE 0 = 1";
+        } else {
             $offset = intval($offset);
             if ($offset < 0) {
                 throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
@@ -269,7 +269,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Ids
             } else {
                 $limit_sql = str_ireplace("SELECT", "SELECT SKIP $offset LIMIT $count", $sql);
             }
-		}
+        }
         return $limit_sql;
     }
 

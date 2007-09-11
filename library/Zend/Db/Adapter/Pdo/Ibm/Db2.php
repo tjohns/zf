@@ -48,10 +48,10 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
      * @var Zend_Db_Adapter_Abstract
      */
     protected $_adapter = null;
-    
+
     /**
      * Construct the data server class.
-     * 
+     *
      * It will be used to generate non-generic SQL
      * for a particular data server
      *
@@ -61,7 +61,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
     {
         $this->_adapter = $adapter;
     }
-    
+
     /**
      * Returns a list of the tables in the database.
      *
@@ -73,10 +73,10 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
         . "FROM SYSCAT.TABLES ";
         return $this->_adapter->fetchCol($sql);
     }
-    
+
     /**
      * DB2 catalog lookup for describe table
-     * 
+     *
      * @param string $tableName
      * @param string $schemaName OPTIONAL
      * @return array
@@ -93,14 +93,14 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
                    AND tc.type = 'P'))
                  ON (c.tabschema = k.tabschema
                  AND c.tabname = k.tabname
-                 AND c.colname = k.colname)        
+                 AND c.colname = k.colname)
             WHERE "
             . $this->_adapter->quoteInto('UPPER(c.tabname) = UPPER(?)', $tableName);
         if ($schemaName) {
             $sql .= $this->_adapter->quoteInto(' AND UPPER(c.tabschema) = UPPER(?)', $schemaName);
-        }        
+        }
         $sql .= " ORDER BY c.colno";
-        
+
         $desc = array();
         $stmt = $this->_adapter->query($sql);
 
@@ -139,7 +139,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
             if ($row[$identityCol] == 'Y') {
                 $identity = true;
             }
-            
+
             $desc[$this->_adapter->foldCase($row[$colname])] = array(
             'SCHEMA_NAME'      => $this->_adapter->foldCase($row[$tabschema]),
             'TABLE_NAME'       => $this->_adapter->foldCase($row[$tabname]),
@@ -151,7 +151,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
             'LENGTH'           => $row[$length],
             'SCALE'            => $row[$scale],
             'PRECISION'        => ($row[$typename] == 'DECIMAL' ? $row[$length] : 0),
-            'UNSIGNED'         => false, 
+            'UNSIGNED'         => false,
             'PRIMARY'          => $primary,
             'PRIMARY_POSITION' => $primaryPosition,
             'IDENTITY'         => $identity
@@ -160,7 +160,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
 
         return $desc;
     }
-    
+
     /**
      * Adds a DB2-specific LIMIT clause to the SELECT statement.
      *
@@ -179,7 +179,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
             if ($offset < 0) {
                 throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
             }
-          
+
             if ($offset == 0 && $count > 0) {
                 $limit_sql = $sql . " FETCH FIRST $count ROWS ONLY";
                 return $limit_sql;
@@ -201,7 +201,7 @@ class Zend_Db_Adapter_Pdo_Ibm_Db2
         }
         return $limit_sql;
     }
-    
+
     /**
      * DB2-specific last sequence id
      *

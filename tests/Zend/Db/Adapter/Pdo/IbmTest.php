@@ -50,29 +50,29 @@ class Zend_Db_Adapter_Pdo_IbmTest extends Zend_Db_Adapter_Db2Test
     {
         return 'Pdo_Ibm';
     }
-    
+
     public function testAdapterTransactionCommit()
     {
         $server = $this->_util->getServer();
-        
+
         if ($server == 'IDS') {
             $this->markTestIncomplete('IDS needs special consideration for transactions');
         } else {
-            parent::testAdapterTransactionCommit();   
+            parent::testAdapterTransactionCommit();
         }
     }
 
     public function testAdapterTransactionRollback()
     {
         $server = $this->_util->getServer();
-        
+
         if ($server == 'IDS') {
             $this->markTestIncomplete('IDS needs special consideration for transactions');
         } else {
-            parent::testAdapterTransactionCommit();   
+            parent::testAdapterTransactionCommit();
         }
     }
-    
+
     public function testAdapterLimitInvalidArgumentException()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -91,7 +91,7 @@ class Zend_Db_Adapter_Pdo_IbmTest extends Zend_Db_Adapter_Db2Test
                 'Expecting object of type Zend_Db_Adapter_Exception, got '.get_class($e));
         }
     }
-    
+
     /**
      * Used by _testAdapterOptionCaseFoldingNatural()
      * DB2 returns identifiers in uppercase naturally,
@@ -100,7 +100,7 @@ class Zend_Db_Adapter_Pdo_IbmTest extends Zend_Db_Adapter_Db2Test
     protected function _testAdapterOptionCaseFoldingNaturalIdentifier()
     {
         $server = $this->_util->getServer();
-        
+
         if ($server == 'DB2') {
             return 'CASE_FOLDED_IDENTIFIER';
         }

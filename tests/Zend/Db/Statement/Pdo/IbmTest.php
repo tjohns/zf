@@ -38,7 +38,7 @@ class Zend_Db_Statement_Pdo_IbmTest extends Zend_Db_Statement_Pdo_TestCommon
     protected $_getColumnMetaKeys = array(
         'scale', 'table', 'native_type', 'flags', 'name', 'len', 'precision', 'pdo_type'
     );
-    
+
     public function testStatementNextRowset()
     {
         $select = $this->_db->select()

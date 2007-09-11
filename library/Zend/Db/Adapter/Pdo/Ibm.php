@@ -56,14 +56,14 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
      * @var string
      */
     protected $_pdoType = 'ibm';
-    
+
     /**
      * The IBM data server connected to
      *
      * @var string
      */
     protected $_serverType = null;
-    
+
     /**
      * Keys are UPPERCASE SQL datatypes or the constants
      * Zend_Db::INT_TYPE, Zend_Db::BIGINT_TYPE, or Zend_Db::FLOAT_TYPE.
@@ -88,12 +88,12 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
                         'NUMERIC'            => Zend_Db::FLOAT_TYPE,
                         'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
                         'FLOAT'              => Zend_Db::FLOAT_TYPE
-                        ); 
-    
+                        );
+
     /**
      * Creates a PDO object and connects to the database.
-     * 
-     * The IBM data server is set.  
+     *
+     * The IBM data server is set.
      * Current options are DB2 or IDS
      * @todo also differentiate between z/OS and i/5
 
@@ -107,35 +107,35 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
             return;
         }
         parent::_connect();
-        
+
         $this->getConnection()->setAttribute(Zend_Db::ATTR_STRINGIFY_FETCHES, true);
-        
+
         try {
             if ($this->_serverType === null) {
                 $server = substr($this->getConnection()->getAttribute(PDO::ATTR_SERVER_INFO), 0, 3);
-             
+
                 switch ($server) {
                     case 'DB2':
                         $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Db2($this);
-                   
+
                         // Add DB2-specific numeric types
                         $this->_numericDataTypes['DECFLOAT'] = Zend_Db::FLOAT_TYPE;
                         $this->_numericDataTypes['DOUBLE']   = Zend_Db::FLOAT_TYPE;
                         $this->_numericDataTypes['NUM']      = Zend_Db::FLOAT_TYPE;
-                   
+
                         break;
                     case 'IDS':
                         $this->_serverType = new Zend_Db_Adapter_Pdo_Ibm_Ids($this);
-                   
+
                         // Add IDS-specific numeric types
                         $this->_numericDataTypes['SERIAL']       = Zend_Db::INT_TYPE;
                         $this->_numericDataTypes['SERIAL8']      = Zend_Db::BIGINT_TYPE;
                         $this->_numericDataTypes['INT8']         = Zend_Db::BIGINT_TYPE;
                         $this->_numericDataTypes['SMALLFLOAT']   = Zend_Db::FLOAT_TYPE;
                         $this->_numericDataTypes['MONEY']        = Zend_Db::FLOAT_TYPE;
-                  
+
                         break;
-                    }   
+                    }
             }
         } catch (PDOException $e) {
             require_once 'Zend/Db/Adapter/Exception.php';
@@ -143,11 +143,11 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
             if ($error) {
                 throw new Zend_Db_Adapter_Exception("PDO_IBM driver extension is downlevel.  Please use driver release version 1.2.1 or later");
             } else {
-                throw new Zend_Db_Adapter_Exception($e->getMessage());     
+                throw new Zend_Db_Adapter_Exception($e->getMessage());
             }
         }
     }
-    
+
     /**
      * Creates a PDO DSN for the adapter from $this->_config settings.
      *
@@ -156,7 +156,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     protected function _dsn()
     {
         $this->_checkRequiredOptions($this->_config);
-  
+
         // check if using full connection string
         if (array_key_exists('host', $this->_config)) {
             $dsn = ';DATABASE=' . $this->_config['dbname']
@@ -243,9 +243,9 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     }
 
     /**
-     *  Inserts a table row with specified data.
-     *	Special handling for PDO_IBM
-     *  remove empty slots
+     * Inserts a table row with specified data.
+     * Special handling for PDO_IBM
+     * remove empty slots
      *
      * @param mixed $table The table to insert data into.
      * @param array $bind Column-value pairs.
@@ -262,7 +262,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
                 }
             }
         }
-       
+
         return parent::insert($table, $newbind);
     }
 
@@ -291,7 +291,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
     public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $this->_connect();
-        
+
          if ($tableName !== null) {
             $sequenceName = $tableName;
             if ($primaryKey) {
@@ -300,10 +300,10 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
             $sequenceName .= '_seq';
             return $this->lastSequenceId($sequenceName);
         }
-        
+
         $id = $this->getConnection()->lastInsertId();
-        
-        return $id;   
+
+        return $id;
     }
 
     /**

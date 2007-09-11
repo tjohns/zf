@@ -25,6 +25,11 @@
     <itemizedlist>
         <listitem>
             <para>
+                IBM DB2 and Informix Dynamic Server (IDS), using the <ulink url="http://www.php.net/pdo-ibm">pdo_ibm</ulink> PHP extension
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 MySQL, using the <ulink url="http://www.php.net/pdo-mysql">pdo_mysql</ulink> PHP extension
             </para>
         </listitem>
@@ -1775,6 +1780,30 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         Currently the <code>Zend_Db::CASE_FOLDING</code> option
                         is not supported by the Oracle adapter. To use this
                         option with Oracle, you must use the PDO OCI adapter.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.db.adapter.adapter-notes.pdo-ibm">
+            <title>PDO for IBM DB2 and Informix Dynamic Server (IDS)</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Specify this Adapter to the <code>factory()</code>
+                        method with the name 'Pdo_Ibm'.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        This Adapter uses the PHP extensions pdo and pdo_ibm.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        You must use at least PDO_IBM extension version 1.2.2.
+                        If you have an earlier version of this extension, you
+                        must upgrade the PDO_IBM extension from PECL.
                     </para>
                 </listitem>
             </itemizedlist>
