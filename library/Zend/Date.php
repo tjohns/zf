@@ -173,9 +173,7 @@ class Zend_Date extends Zend_Date_DateObject {
 
         // set the timezone and offset for $this
         $zone = @date_default_timezone_get();
-        if ($zone !== 'UTC') {
-            $this->setTimezone($zone);
-        }
+        $this->setTimezone($zone);
 
         if (is_string($date) && defined("self::".$date)) {
             $part = $date;
@@ -1318,8 +1316,8 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
         }
 
-        // dst-correction if 'fix_dst' = true and dst !== false
-        if ((self::$_Options['fix_dst'] === true) and ($dst !== false)) {
+        // dst-correction if 'fix_dst' = true and dst !== false but only for non UTC and non GMT
+        if ((self::$_Options['fix_dst'] === true) and ($dst !== false) and ($this->_dst === true)) {
             $hour = $this->get(Zend_Date::HOUR);
             if ($hour != $dst) {
                 if (($dst == ($hour + 1)) or ($dst == ($hour - 23))) {

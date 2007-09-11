@@ -50,6 +50,13 @@
                 of the DST adjustment when performing date "math".
             </para>
 
+            <para>
+                <emphasis role="strong">If your actual timezone within the instance of <code>Zend_Date</code>
+                is set to UTC or GMT the option <code>'fix_dst'</code> will not be used</emphasis> because
+                these two timezones do not work with DST. When you change the timezone for this instance
+                again to a timezone which is not UTC or GMT the previous set 'fix_dst' option will be used
+                again for date "math". 
+            </para>
         </sect3>
 
         <sect3 id="zend.date.options.extendmonth">

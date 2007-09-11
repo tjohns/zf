@@ -44,10 +44,12 @@ abstract class Zend_Date_DateObject {
     /**
      * active timezone
      */
-    private $_timezone = 'UTC';
-    private $_offset   = 0;
-    private $_syncronised = 0;
+    private   $_timezone    = 'UTC';
+    private   $_offset      = 0;
+    private   $_syncronised = 0;
 
+    // turn off DST correction if UTC or GMT
+    protected $_dst         = true;
 
     /**
      * Table of Monthdays
@@ -982,6 +984,10 @@ abstract class Zend_Date_DateObject {
             $this->_timezone = $zone;
         }
         date_default_timezone_set($oldzone);
+
+        if (($zone == 'UTC') or ($zone == 'GMT')) {
+            $this->_dst = false;
+        }
 
         return $result;
     }

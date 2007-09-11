@@ -53,6 +53,12 @@ date_default_timezone_set('Europe/Berlin');       // timezone for a German in Ge
             (DST) in effect, eliminating the need to explicitly specify DST.
         </para>
 
+        <para>
+            Keep in mind that the timezones <emphasis role="strong">UTC</emphasis> and
+            <emphasis role="strong">GMT</emphasis> do not include Daylight Saving Time. This means that even
+            if you define per hand that <code>Zend_Date</code> should work with DST, it would automatically
+            be switched back for the instances of <code>Zend_Date</code> which have been set to UTC or GMT.
+        </para>
     </sect2>
 
     <sect2 id="zend.date.why">
