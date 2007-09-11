@@ -196,8 +196,14 @@ class Zend_Date extends Zend_Date_DateObject {
 
         // set datepart
         if (($part !== null && $part !== Zend_Date::TIMESTAMP) or (!is_numeric($date))) {
+            // switch off dst handling for value setting
+            $fix = self::$_Options['fix_dst'];
+            self::$_Options['fix_dst'] = false;
+
             $this->setUnixTimestamp($this->getGmtOffset());
             $this->set($date, $part, $this->_Locale);
+
+            self::$_Options['fix_dst'] = $fix;
         } else {
             $this->setUnixTimestamp($date);
         }

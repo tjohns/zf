@@ -5342,6 +5342,20 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
                                     'minute' => 56, 'second' => 30), 'en_US');
         $this->assertSame($date->getIso(), '2006-12-04T10:56:30+05:00');
     }
+
+    public function testTimezoneArray()
+    {
+        date_default_timezone_set('UTC'); 
+
+        $date = new Zend_Date(array('year' => 2007, 'month' => 1, 'day' => 1,
+                                    'hour' => 20, 'minute' => 45, 'second' => 37, 'en_US'));
+        $this->assertSame($date->getIso(), '2007-01-01T20:45:37+00:00');
+
+        date_default_timezone_set('CET'); 
+        $date = new Zend_Date(array('year' => 2007, 'month' => 1, 'day' => 1,
+                                    'hour' => 1, 'minute' => 45, 'second' => 37, 'en_US'));
+        $this->assertSame($date->getIso(), '2007-01-01T01:45:37+01:00');
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date
