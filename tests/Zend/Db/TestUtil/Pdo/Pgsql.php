@@ -93,6 +93,12 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         if ($type == 'DATETIME') {
             return 'TIMESTAMP';
         }
+        if ($type == 'CLOB') {
+            return 'TEXT';
+        }
+        if ($type == 'BLOB') {
+            return 'TEXT';
+        }
         return $type;
     }
 

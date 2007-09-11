@@ -58,6 +58,9 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
         if ($type == 'IDENTITY') {
             return 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT';
         }
+        if ($type == 'CLOB') {
+            return 'TEXT';
+        }
         return $type;
     }
 

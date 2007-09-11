@@ -40,6 +40,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
             'username' => 'TESTS_ZEND_DB_ADAPTER_DB2_USERNAME',
             'password' => 'TESTS_ZEND_DB_ADAPTER_DB2_PASSWORD',
             'dbname'   => 'TESTS_ZEND_DB_ADAPTER_DB2_DATABASE',
+            'port'     => 'TESTS_ZEND_DB_ADAPTER_DB2_PORT'
         );
         return parent::getParams($constants);
     }
@@ -69,6 +70,21 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
             $row['product_id'] = new Zend_Db_Expr('NEXTVAL FOR '.$this->_db->quoteIdentifier('zfproducts_seq', true));
         }
         return $data;
+    }
+
+    protected function _getDataDocuments()
+    {
+        return array (
+            array(
+                'doc_id'    => 1,
+                'doc_clob'  => 'this is the clob that never ends...'.
+                               'this is the clob that never ends...'.
+                               'this is the clob that never ends...',
+                'doc_blob'  => new Zend_Db_Expr("BLOB('this is the blob that never ends...".
+                               "this is the blob that never ends...".
+                               "this is the blob that never ends...')")
+            )
+        );
     }
 
     public function getSqlType($type)
