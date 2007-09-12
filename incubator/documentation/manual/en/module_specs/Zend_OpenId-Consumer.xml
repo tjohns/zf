@@ -38,7 +38,7 @@
         </para>
 
         <example id="zend.openid.consumer.example-1">
-            <title>example-1.php</title>
+            <title>The Simple OpenID Login form</title>
             <programlisting role="php"><![CDATA[<html><body>
 <form method="post" action="example-1_2.php"><fieldset>
 <legend>OpenID Login</legend>
@@ -58,7 +58,7 @@
         </para>
 
         <example id="zend.openid.consumer.example-1_2">
-            <title>example-1_2.php</title>
+            <title>The Authentication Request Handler</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
@@ -105,7 +105,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         </para>
 
         <example id="zend.openid.consumer.example-1_3">
-            <title>example-1_3.php</title>
+            <title>The Authentication Response Verifier</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
@@ -139,7 +139,7 @@ if ($consumer->verify($_GET, $id)) {
         </para>
 
         <example id="zend.openid.consumer.example-2">
-            <title>example-2.php</title>
+            <title>The Complete OpenID Login Script</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
@@ -210,7 +210,7 @@ if (isset($_POST['openid_action']) &&
         </para>
 
         <example id="zend.openid.consumer.example-3_2">
-            <title>example-3_2.php</title>
+            <title>Authentication Request for Specified Realm</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
@@ -241,7 +241,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-3_3.php', 'http://*.
         </para>
 
         <example id="zend.openid.consumer.example-4">
-            <title>example-4_2.php</title>
+            <title>The Immediate Check without Interaction</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
@@ -282,29 +282,33 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
 
         <para>
             The following example demonstrates a simple storage that uses
-            <code>Zend_Db</code> as a backend. It contains two groups of
-            functions. First is to work with associations and the second is to
-            cache discovery information. The class implemented in such a way
-            that it can be easily used with existing or new database. If
-            necessary database tables don't exist, it creates them.
+            <code>Zend_Db</code> as a backend. It contains three groups of
+            functions. First is to work with associations, the second is to
+            cache discovery information and the third is to check responce
+            uniqueness. The class implemented in such a way that it can be
+            easily used with existing or new database. If necessary database
+            tables don't exist, it creates them.
         </para>
 
         <example id="zend.openid.consumer.example-5">
-            <title>example-5.php</title>
+            <title>Databse Storage</title>
             <programlisting role="php"><![CDATA[<?php
 class DbStorage extends Zend_OpenId_Consumer_Storage
 {
     private $_db;
     private $_association_table;
     private $_discovery_table;
+    private $_nonce_table;
 
     public function __construct($db,
                                 $association_table = "association",
-                                $discovery_table = "discovery")
+                                $discovery_table = "discovery",
+                                $nonce_table = "nonce")
     {
         $this->_db = $db;
         $this->_association_table = $association_table;
         $this->_discovery_table = $discovery_table;
+        $this->_nonce_table = $nonce_table;
         $tables = $this->_db->listTables();
         if (!in_array($association_table, $tables)) {
             $this->_db->getConnection()->exec(
@@ -324,6 +328,13 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " server  varchar(256) not null," .
                 " version float," .
                 " expires timestamp" .
+                ")");
+        }
+        if (!in_array($nonce_table, $tables)) {
+            $this->_db->getConnection()->exec(
+                "create table $nonce_table (" .
+                " nonce   varchar(256) not null primary key," .
+                " created timestamp default current_timestamp" .
                 ")");
         }
     }
@@ -403,6 +414,21 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         $this->_db->query("delete from $table where id = '$id'");
         return true;
     }
+
+    public function isUniqueNonce($nonce)
+    {
+        $table = $this->_nonce_table;
+        try {
+            $ret = $this->_db->query("insert into $table (nonce) values ('$nonce')");
+        } catch (Zend_Db_Statement_Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    public function purgeNonces($date=null)
+    {
+    }
 }
 
 $db = Zend_Db::factory('Pdo_Sqlite',
@@ -421,7 +447,7 @@ $consumer = new Zend_OpenId_Consumer($storage);
     </sect2>
 
     <sect2 id="zend.openid.consumer.sreg">
-        <title>Simple Registration Extensions</title>
+        <title>Simple Registration Extension</title>
         <para>
             In addition to authentication OpenID can be used for light-weight
             profile exchange. This feature is not covered by OpenID
@@ -489,7 +515,7 @@ $consumer = new Zend_OpenId_Consumer($storage);
         </para>
 
         <example id="zend.openid.consumer.example-6_2">
-            <title>example-6_2.php</title>
+            <title>Sending Request with Simple Registration Extension</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
@@ -522,7 +548,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-6_3.php', null, $sre
         </para>
 
         <example id="zend.openid.consumer.example-6_3">
-            <title>example-6_3.php</title>
+            <title>Verifying Response with Simple Registration Extension</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
@@ -595,7 +621,7 @@ if ($consumer->verify($_GET, $id, $sreg)) {
         </para>
 
         <example id="zend.openid.consumer.example-7">
-            <title>example-7.php</title>
+            <title>Zend_Auth Adapter for OpenID</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/Auth.php";
