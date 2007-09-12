@@ -798,7 +798,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'sha256', $macFunc );
         $storage->delAssociation(self::HANDLE);
 
-        // OpenID 1.0 with SHA1
+        // OpenID 1.1 with SHA1
         $storage->addAssociation(self::HANDLE, "sha1", pack("H*", '0102030405060708091011121314151617181920'), time() + 3660);
         $response = new Zend_OpenId_ResponseHelper(true);
         $ret = $provider->respondToConsumer(array(

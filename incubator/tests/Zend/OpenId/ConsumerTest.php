@@ -66,7 +66,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         $storage = new Zend_OpenId_Consumer_Storage_File();
         $storage->delDiscoveryInfo(self::ID);
-        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.0, $expiresIn) );
+        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn) );
         $storage->delAssociation(self::SERVER);
         $this->assertTrue( $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
 
@@ -217,7 +217,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         $storage = new Zend_OpenId_Consumer_Storage_File();
         $storage->delDiscoveryInfo(self::ID);
-        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.0, $expiresIn) );
+        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn) );
         $storage->delAssociation(self::SERVER);
         $this->assertTrue( $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn) );
 
@@ -385,9 +385,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $http->setAdapter($test);
         $consumer->SetHttpClient($http);
 
-        // Test OpenID 1.0 association request with DH-SHA1
+        // Test OpenID 1.1 association request with DH-SHA1
         $consumer->clearAssociation();
-        $this->assertFalse( $consumer->associate(self::SERVER, 1.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+        $this->assertFalse( $consumer->associate(self::SERVER, 1.1, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
         $this->assertSame( "POST / HTTP/1.1\r\n" .
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
@@ -422,7 +422,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "openid.dh_consumer_public=GaLlROlBGgSopPzo1ewYISnnT4BUFBfIKlgDPoS9U41t5eQb8QYqgcw7%2BW3dSF1VlWcvJGR0UbZIEhJ3UrCs6p69q6sgl%2FOZ7P%2B17rme7OynqszA3pqD6MJoQVZ5Ht%2FR%2BjmMjK08ajcgYEZU1GG4U5k8eYbcFnje00%2FTGfjKY0I%3D",
                            $http->getLastRequest() );
 
-        // Test OpenID 1.0 association response with DH-SHA1
+        // Test OpenID 1.1 association response with DH-SHA1
         $consumer->clearAssociation();
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
                            "assoc_type:HMAC-SHA1\n" .
@@ -431,7 +431,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "session_type:DH-SHA1\n".
                            "dh_server_public:AIoP3d+ZTkd5vZj6G82XVIQ6KRAfSKmLz2Q3qVMzZ5tt7Z7St714GccipYXzCs5Tzgkc+Nt/uDE5xQ/f0Zn0uDS65CZHx3MOPqAANw/9YC/CafF1CD1MxW5TiN50GsjT/wGkcJFcpPXYVigQDOjIkHjKCysk53ktFvCoT60nFKGc\n".
                            "enc_mac_key:ON+M6/X8uUcOfxw1HF4sw/0XYyw=\n");
-        $this->assertTrue( $consumer->associate(self::SERVER, 1.0, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
+        $this->assertTrue( $consumer->associate(self::SERVER, 1.1, pack("H*", "60017f7ebf0ef29ace27f0dfee2aaa6528d170e147b1260cc3987d7851cb67d49fbfdbb42c56494e61b1e1e39fa42315db0bf4f879787fcf1e807d0629d47cf05d3ac50602b1e7f6e73cd370320ddcdcf7f7aa86f35a3273d187de9c9efa959a02ce3a9c80f47dfcc83cfaad60b673e1806a764227344deae158ceec9ca4d60e")) );
         $this->assertTrue( $storage->getAssociation(self::SERVER, $handle, $macFunc, $secret, $expires) );
         $this->assertSame( "0123456789absdef0123456789absdef", $handle );
         $this->assertSame( "sha1", $macFunc );
@@ -562,7 +562,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $id = self::ID;
         $this->assertFalse( $consumer->discovery($id, $server, $version) );
 
-        // Test HTML based discovery (OpenID 1.0)
+        // Test HTML based discovery (OpenID 1.1)
         $storage->delDiscoveryInfo(self::ID);
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
                            "<html><head>\n" .
@@ -573,9 +573,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $consumer->discovery($id, $server, $version) );
         $this->assertSame( self::REAL_ID, $id );
         $this->assertSame( self::SERVER, $server );
-        $this->assertSame( 1.0, $version );
+        $this->assertSame( 1.1, $version );
 
-        // Test HTML based discovery (OpenID 1.0)
+        // Test HTML based discovery (OpenID 1.1)
         $storage->delDiscoveryInfo(self::ID);
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
                            "<html><head>\n" .
@@ -586,7 +586,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $consumer->discovery($id, $server, $version) );
         $this->assertSame( self::REAL_ID, $id );
         $this->assertSame( self::SERVER, $server );
-        $this->assertSame( 1.0, $version );
+        $this->assertSame( 1.1, $version );
 
         // Test HTML based discovery (OpenID 2.0)
         $storage->delDiscoveryInfo(self::ID);
@@ -614,7 +614,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $this->assertSame( self::SERVER, $server );
         $this->assertSame( 2.0, $version );
 
-        // Test HTML based discovery (OpenID 1.0 and 2.0)
+        // Test HTML based discovery (OpenID 1.1 and 2.0)
         $storage->delDiscoveryInfo(self::ID);
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
                            "<html><head>\n" .
@@ -648,6 +648,8 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         $storage = new Zend_OpenId_Consumer_Storage_File();
         $consumer = new Zend_OpenId_ConsumerHelper($storage);
+
+        $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
 
         // Wrong arguments
         $this->assertFalse( $consumer->verify(array()) );
@@ -740,6 +742,8 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $storage->purgeNonces();
         $this->assertTrue( $consumer->verify($params) );
         $this->assertFalse( $storage->getAssociation(self::SERVER."1", $handle, $func, $secret, $expires) );
+
+        $storage->delDiscoveryInfo(self::ID);
     }
 
     /**
@@ -762,7 +766,8 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $http->setAdapter($test);
         $consumer->SetHttpClient($http);
         $storage->delDiscoveryInfo(self::ID);
-        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::ID, self::SERVER, 1.0, $expiresIn) );
+        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn) );
+        $this->assertTrue( $storage->addDiscoveryInfo(self::REAL_ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn) );
 
         // Wrong arguments (no identity)
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\nis_valid:true");
@@ -817,7 +822,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $params = array(
             "openid_return_to" => "http://www.zf-test.com/test.php",
             "openid_assoc_handle" => self::HANDLE,
-            "openid_identity" => self::ID,
+            "openid_identity" => self::REAL_ID,
             "openid_response_nonce" => "2007-08-14T12:52:33Z46c1a59124ffe",
             "openid_mode" => "id_res",
             "openid_signed" => "assoc_handle,return_to,identity,response_nonce,mode,signed",
@@ -827,6 +832,8 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( $consumer->verify($params) );
 
         // SREG
+        $this->assertTrue( $storage->delDiscoveryInfo(self::ID) );
+        $this->assertTrue( $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 2.0, $expiresIn) );
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\nis_valid:true");
         $consumer->clearAssociation();
         $storage->delAssociation(self::SERVER);
@@ -871,6 +878,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\nis_valid:false\ninvalidate_handle:".self::HANDLE."1"."\n");
         $consumer->clearAssociation();
         $params = array(
+            "openid_ns"        => Zend_OpenId::NS_2_0,
             "openid_return_to" => "http://www.zf-test.com/test.php",
             "openid_assoc_handle" => self::HANDLE,
             "openid_claimed_id" => self::ID,

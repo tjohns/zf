@@ -145,7 +145,6 @@ class Zend_OpenId_Consumer
      * @param Zend_Controller_Response_Abstract $response an optional response
      *  object to perform HTTP or HTML form redirection
      * @return bool
-     * @todo OpenID 2.0 (11.2) Verifying Discovered Information
      */
     public function check($id, $returnTo=null, $root=null, $extensions,
                           Zend_Controller_Response_Abstract $response = null)
@@ -205,8 +204,6 @@ class Zend_OpenId_Consumer
             return false;
         }
 
-        /* TODO: OpenID 2.0 (11.2) Verifying Discovered Information */
-
         /* OpenID 2.0 (11.3) Checking the Nonce */
         if (isset($params['openid_response_nonce'])) {
             if (!$this->_storage->isUniqueNonce($params['openid_response_nonce'])) {
@@ -241,6 +238,18 @@ class Zend_OpenId_Consumer
                 if (!Zend_OpenId_Extension::forAll($extensions, 'parseResponse', $params)) {
                     return false;
                 }
+                /* OpenID 2.0 (11.2) Verifying Discovered Information */
+                if (isset($params['openid_claimed_id'])) {
+                    $id = $params['openid_claimed_id'];
+                    if (!$this->_discovery($id, $discovered_server, $discovered_version) ||
+                        (isset($params['openid_identity']) &&
+                         $params["openid_identity"] != $id) ||
+                        (isset($params['openid_op_endpoint']) &&
+                         $params['openid_op_endpoint'] != $discovered_server) ||
+                        $discovered_version != $version) {
+                        return false;
+                    }
+                }
                 return true;
             }
             $this->_storage->delAssociation($url);
@@ -256,9 +265,19 @@ class Zend_OpenId_Consumer
             } else {
                 return false;
             }
-            if (!$this->_discovery($id, $server, $version)) {
+            if (!$this->_discovery($id, $server, $discovered_version)) {
                 return false;
             }
+
+            /* OpenID 2.0 (11.2) Verifying Discovered Information */
+            if ((isset($params['openid_identity']) &&
+                 $params["openid_identity"] != $id) ||
+                (isset($params['openid_op_endpoint']) &&
+                 $params['openid_op_endpoint'] != $server) ||
+                $discovered_version != $version) {
+                return false;
+            }
+
             $params2 = array();
             foreach ($params as $key => $val) {
                 if (strpos($key, 'openid_ns_') === 0) {
@@ -606,7 +625,7 @@ class Zend_OpenId_Consumer
                     $r)) {
                 return false;
             }
-            $version = 1.0;
+            $version = 1.1;
         }
         $server = $r[1];
         if ($version >= 2.0) {
