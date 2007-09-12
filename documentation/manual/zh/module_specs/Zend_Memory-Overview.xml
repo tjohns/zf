@@ -1,193 +1,147 @@
-<sect1 id="zend.memory.memory-manager">
-    <title>内存管理器</title>
+<sect1 id="zend.memory.overview">
+    <title>概述</title>
 
-    <sect2 id="zend.memory.memory-manager.creation">
-
-        <title>创建一个内存管理器</title>
-
+    <sect2 id="zend.memory.introduction">
+        <title>间接</title>
         <para>
-            你可以使用<code>Zend_Memory::factory($backendName [, $backendOprions])</code>
-            方法创建一个新的内存管理器(<code>Zend_Memory_Manager</code> 对象).
+            Zend_Memory组件用于在一个受限制的内存环境下管理数据.
         </para>
 
         <para>
-            第一个参数<code>$backendName</code>是一个字符串,他的名字是ZendCache提供的后端实现之一.
+            内存对象(内存容器)是由内存管理器按照请求生成并在需要的时候透明地交换/加载的.
         </para>
 
         <para>
-            第二个参数<code>$backendOptions</code>是一个可选的后端选项参数.
+            例如,如果由于受管理对象的创建或加载导致内存使用量超过你所指定的限制,一些管理对象将被复制到内存以外的缓存存储中.
+            用这种方法,受管理对象的总内存使用量不会超过强制的限制.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <para>
+            内存管理器使用<link linkend="zend.cache.backends">Zend_Cache backends</link>作为存储提供者
+        </para>
+
+        <example id="zend.memory.introduction.example-1">
+            <title>使用 Zend_Memory 组件</title>
+            <para>
+                <code>Zend_Memory::factory()</code> 用指定的后端选项实例化内存管理器对象.
+            </para>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Memory.php';
+
 $backendOptions = array(
     'cacheDir' => './tmp/' // Directory where to put the swapped memory blocks
 );
 
-$memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
-        </programlisting>
+$memoryManager = Zend_Memory::factory('File', $backendOptions);
 
-        <para>
-            Zend_Memory使用<link linkend="zend.cache.backends">Zend_Cache backends</link>作为存储提供者.
-        </para>
+$loadedFiles = array();
 
-        <para>
-            除了标准的Zend_Cache后端之外,你可以使用特殊名称'<code>None</code>'作为后端名称.
+for ($count = 0; $count < 10000; $count++) {
+    $f = fopen($fileNames[$count], 'rb');
+    $data = fread($f, filesize($fileNames[$count]));
+    $fclose($f);
 
-            <programlisting role="php"><![CDATA[<?php
-$memoryManager = Zend_Memory::factory('None');]]>
+    $loadedFiles[] = $memoryManager->create($data);
+}
+
+echo $loadedFiles[$index1]->value;
+
+$loadedFiles[$index2]->value = $newValue;
+
+$loadedFiles[$index3]->value[$charIndex] = '_';]]>
             </programlisting>
-        </para>
-
-        <para>
-            如你是使用'<code>None</code>'作为后端名称,内城管理绝不会交换数据块.这在你知道内存没有做限制,
-            或则对象的总体大小绝不会超过内存限制的情况下非常有用.
-        </para>
-
-        <para>
-            '<code>None</code>' 后端不需要任何特定的后端选项.
-        </para>
-
+        </example>
     </sect2>
 
-    <sect2 id="zend.memory.memory-manager.objects-management">
+    <sect2 id="zend.memory.theory-of-operation">
 
-        <title>管理内存对象</title>
+        <title>操作原理</title>
 
         <para>
-            这一节描述了在受管理的内存中创建和销毁对象,和控制内存管理的行为的设置.
+            Zend_Memory 组件操作有如下的概念:
+            <itemizedlist>
+                <listitem>
+                    <para>内存管理器</para>
+                </listitem>
+                <listitem>
+                    <para>内存容器</para>
+                </listitem>
+                <listitem>
+                    <para>锁定的内存对象</para>
+                </listitem>
+                <listitem>
+                    <para>可移动的内存对象</para>
+                </listitem>
+            </itemizedlist>
         </para>
 
-        <sect3 id="zend.memory.memory-manager.objects-management.movable">
+        <sect3 id="zend.memory.theory-of-operation.manager">
 
-            <title>创建可移动的对象</title>
-
-            <para>
-                使用<code>Zend_Memory_Manager::create([$data])</code> 方法创建可移动的对象 (对象可以被交换):
-                <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->create($data);]]>
-                </programlisting>
-
-            </para>
+            <title>内存管理器</title>
 
             <para>
-                <code>$data</code>是可选的并且用于初始化对象的值.如果<code>$data</code>参数被省略,默认值为空字符串.
+                内存管理器按照用户应用程序的请求生成内存对象(锁定的或可移动的)并返回已交换到内存容器对象中的那些.
             </para>
 
         </sect3>
 
-        <sect3 id="zend.memory.memory-manager.objects-management.locked">
+        <sect3 id="zend.memory.theory-of-operation.container">
 
-            <title>创建锁定的对象</title>
+            <title>内存容器</title>
 
             <para>
-                使用<code>Zend_Memory_Manager::createLocked([$data])</code>方法创建锁定的(对象不能被交换)对象:
-                <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->createLocked($data);]]>
-                </programlisting>
+                内存容器有一个虚拟的或者实际的字符串类型的<code>值</code>.
+                这个属性包含了在内存对象创建时指定的数据值.
             </para>
 
             <para>
-                <code>$data</code>是可选的并且用于初始化对象的值.如果<code>$data</code>参数被省略,默认值为空字符串.
+                你可以作为对象属性操作这个<code>值</code>属性:
+
+                <programlisting role="php"><![CDATA[<?php
+$memObject = $memoryManager->create($data);
+
+echo $memObject->value;
+
+$memObject->value = $newValue;
+
+$memObject->value[$index] = '_';
+
+echo ord($memObject->value[$index1]);
+
+$memObject->value = substr($memObject->value, $start, $length);]]>
+                </programlisting>
+            </para>
+
+            <note>
+                <para>
+                    如果你使用的PHP版本小于5.2,使用<link linkend="zend.memory.memory-objects.api.getRef">getRef()</link>
+                    方法而不是直接访问属性值.
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.memory.theory-of-operation.locked">
+
+            <title>锁定的内存</title>
+
+            <para>
+                锁定的内存对象总是存储在内存中.存储在锁定内存对象中的数据绝不会被交换到缓存后端中去.
             </para>
 
         </sect3>
 
-        <sect3 id="zend.memory.memory-manager.objects-management.destruction">
+        <sect3 id="zend.memory.theory-of-operation.movable">
 
-            <title>销毁对象</title>
+            <title>可移动内存</title>
 
             <para>
-                当内存对象超出作用域它们被从内存管理器中自动销毁和删除:
-
-                <programlisting role="php"><![CDATA[<?php
-function foo()
-{
-    global $memoryManager, $memList;
-
-    ...
-
-    $memObject1 = $memoryManager->create($data1);
-    $memObject2 = $memoryManager->create($data2);
-    $memObject3 = $memoryManager->create($data3);
-
-    ...
-
-    $memList[] = $memObject3;
-
-    ...
-
-    unset($memObject2); // $memObject2 is destroyed here
-
-    ...
-    // $memObject1 is destroyed here
-    // but $memObject2 object is still referenced by $memList and is not destroyed
-}]]>
-                </programlisting>
+                当需要时,可移动内存对象由Zend_Memory透明的交换到缓存后端或则从缓存后端加载.
             </para>
 
             <para>
-                应用和可移动对象和锁定对象.
-            </para>
-
-        </sect3>
-
-    </sect2>
-
-    <sect2 id="zend.memory.memory-manager.settings">
-
-        <title>内存管理器设置</title>
-
-        <sect3 id="zend.memory.memory-manager.settings.memory-limit">
-
-            <title>内存限制</title>
-
-            <para>
-                内存限制是可以被加载的可移动对象使用的一个字节数量.
-            </para>
-
-            <para>
-                如果加载和创建导致内存使用量超出了限制,内存管理将交换其他对象.
-            </para>
-
-            <para>
-                你可以使用<code>getMemoryLimit()</code> and <code>setMemoryLimit($newLimit)</code>方法
-                检索和设置内存限制:
-                <programlisting role="php"><![CDATA[<?php
-$oldLimit = $memoryManager->getMemoryLimit();  // Get memory limit in bytes
-$memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes]]>
-                </programlisting>
-            </para>
-
-            <para>
-                负值表示'没有限制'.
-            </para>
-
-            <para>
-                默认值是在php.ini配置文件中'<code>memory_limit</code>'选项的2/3大小,
-                否则如果'<code>memory_limit</code>'没有在php.ini中设置则为'没有限制'(-1)
-            </para>
-
-        </sect3>
-
-        <sect3 id="zend.memory.memory-manager.settings.min-size">
-
-            <title>MinSize</title>
-
-            <para>
-                可以被内存管理器交换的最小对象大小.内存管理器不会交换小于此设置的对象.这是为了减少交换/加载操作的数量.
-            </para>
-
-            <para>
-                你可以分别使用<code>getMinSize()</code> 和 <code>setMinSize($newSize)</code>方法
-                检索和设置对象的最小大小:
-                <programlisting role="php"><![CDATA[<?php
-$oldMinSize = $memoryManager->getMinSize();  // Get MinSize in bytes
-$memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes]]>
-                </programlisting>
-            </para>
-
-            <para>
-                默认的最小大小是16KB(16384字节).
+                由于性能的考虑,内存管理器不会交换小于指定大小的内存对象.细节请查看
+                <xref linkend="zend.memory.memory-manager.settings.min-size" />
             </para>
 
         </sect3>
