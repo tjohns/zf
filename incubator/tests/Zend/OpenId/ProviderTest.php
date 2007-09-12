@@ -1080,7 +1080,20 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( "nickname", $query2['openid.sreg.required'] );
 
         // Logged in user (untrusted site)
-        $this->assertTrue( $provider->denySite('http://www.test.com/test.php') );
+        $this->assertTrue( $provider->denySite('http://www.test.com') );
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $this->assertTrue($provider->handle(array(
+            'openid_mode'=>'checkid_immediate',
+            'openid_identity'=>self::USER,
+            'openid_return_to'=>'http://www.test.com/test.php'),
+            null, $response));
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $this->assertSame( 'http://www.test.com/test.php?openid.mode=cancel', $headers[0]['value'] );
+
+        // Logged in user (untrusted site with wildcard)
+        $this->assertTrue( $provider->delSite('http://www.test.com') );
+        $this->assertTrue( $provider->denySite('http://*.test.com') );
         $response = new Zend_OpenId_ResponseHelper(true);
         $this->assertTrue($provider->handle(array(
             'openid_mode'=>'checkid_immediate',
@@ -1092,7 +1105,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'http://www.test.com/test.php?openid.mode=cancel', $headers[0]['value'] );
 
         // Logged in user (trusted site)
-        $this->assertTrue( $provider->delSite('http://www.test.com/test.php') );
+        $this->assertTrue( $provider->delSite('http://*.test.com') );
         $this->assertTrue( $provider->allowSite('http://www.test.com/') );
         $response = new Zend_OpenId_ResponseHelper(true);
         $this->assertTrue($provider->handle(array(

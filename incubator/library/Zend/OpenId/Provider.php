@@ -326,7 +326,7 @@ class Zend_OpenId_Provider
             } else {
                 return false;
             }
-        }    
+        }
         $version = 1.1;
         if (isset($params['openid_ns']) &&
             $params['openid_ns'] == Zend_OpenId::NS_2_0) {
@@ -485,7 +485,6 @@ class Zend_OpenId_Provider
      * @param mixed $extensions extension object or array of extensions objects
      * @param Zend_Controller_Response_Abstract $response
      * @return array
-     * @todo OpenID 2.0 (9.2) check for realm wild-card matching
      */
     protected function _checkId($version, $params, $immediate, $extensions=null,
         Zend_Controller_Response_Abstract $response = null)
@@ -542,14 +541,30 @@ class Zend_OpenId_Provider
         /* Check if user trusts to the consumer */
         $trusted = null;
         $sites = $this->_storage->getTrustedSites($params['openid_identity']);
+        if (isset($params['openid_return_to'])) {
+            $root = $params['openid_return_to'];
+        }
         if (isset($sites[$root])) {
             $trusted = $sites[$root];
         } else {
             foreach ($sites as $site => $t) {
-                /* TODO: OpenID 2.0 (9.2) check for realm wild-card matching */
                 if (strpos($root, $site) === 0) {
-                    $trusted = $t;                    
+                    $trusted = $t;
                     break;
+                } else {
+                    /* OpenID 2.0 (9.2) check for realm wild-card matching */
+                    $n = strpos($site, '://*.');
+                    if ($n != false) {
+                        $regex = '/^'
+                               . preg_quote(substr($site, 0, $n+3), '/')
+                               . '[A-Za-z1-9_\.]+?'
+                               . preg_quote(substr($site, $n+4), '/')
+                               . '/';
+                        if (preg_match($regex, $root)) {
+                            $trusted = $t;
+                            break;
+                        }
+                    }
                 }
             }
         }
