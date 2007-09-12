@@ -699,14 +699,23 @@ if ($translate->isTranslated('message1', false, 'de')) {
         </para>
 
         <para>
-            <code>getMessageIds()</code> メソッドは、
+            <code>getMessageIds($locale = null)</code> メソッドは、
             すべてのメッセージの ID を配列で返します。
         </para>
 
         <para>
-            そして、<code>getMessages()</code> メソッドは
+            そして、<code>getMessages($locale = null)</code> メソッドは
             翻訳前のソースを配列で返します。メッセージ ID がキー、
             それに対応するデータが値となります。
+        </para>
+
+        <para>
+            どちらのメソッドについても、オプションのパラメータ <code>$locale</code>
+            を指定することができます。これを指定すると、
+            指定した言語についての翻訳情報を返します。
+            このパラメータを省略した場合は、実際に設定されている言語を対象とします。
+            注意してほしいのは、普通はすべての言語ですべての翻訳が存在すべきであるということです。
+            つまり、通常はこのパラメータを指定する必要はないはずです。
         </para>
 
         <example id="zend.translate.using.sourcedata.example">
@@ -715,6 +724,11 @@ if ($translate->isTranslated('message1', false, 'de')) {
 ...
 // すべてのメッセージ ID を返します
 $messageids = $translate->getMessageIds();
+print_r($messageids);
+
+...
+// あるいは指定した言語の ID を返します
+$messageids = $translate->getMessageIds('en_US');
 print_r($messageids);
 
 ...
