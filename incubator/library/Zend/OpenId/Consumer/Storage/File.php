@@ -283,4 +283,47 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
         @unlink($name);
         return true;
     }
+
+    /**
+     * The function checks the uniqueness of openid.response_nonce
+     *
+     * @nonce string openid.response_nonce field from authentication response
+     * @return bool
+     */
+    public function isUniqueNonce($nonce)
+    {
+        $name = $this->_dir . '/nonce_' . md5($nonce);
+        $f = @fopen($name, 'x');
+        if ($f === false) {
+            return false;
+        }
+        fwrite($f, $nonce);
+        fclose($f);
+        return true;
+    }
+
+    /**
+     * Removes data from the uniqueness database that is older then given date
+     *
+     * @param mixed date of expired data
+     */
+    public function purgeNonces($date=null)
+    {
+        if (!is_int($date) && !is_string($date)) {
+            foreach (glob($this->_dir . '/nonce_*') as $name) {
+                unlink($name);
+            }
+        } else {
+            if (is_string($date)) {
+                $time = time($date);
+            } else {
+                $time = $date;
+            }
+            foreach (glob($this->_dir . '/nonce_*') as $name) {
+                if (filectime($name) < $time) {
+                    unlink($name);
+                }
+            }
+        }
+    }
 }

@@ -210,4 +210,37 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
         sleep(2);
         $this->assertFalse( $storage->getDiscoveryInfo(self::ID, $realId, $server, $version, $expires) );
     }
+
+    /**
+     * testing isUniqueNonce
+     *
+     */
+    public function testIsUniqueNonce()
+    {
+        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage->purgeNonces();
+        $this->assertTrue( $storage->isUniqueNonce('1') );
+        $this->assertTrue( $storage->isUniqueNonce('2') );
+        $this->assertFalse( $storage->isUniqueNonce('1') );
+        $this->assertFalse( $storage->isUniqueNonce('2') );
+        $storage->purgeNonces();
+        $this->assertTrue( $storage->isUniqueNonce('1') );
+        sleep(2);
+        $date = date("r", time());
+        sleep(2);
+        $this->assertTrue( $storage->isUniqueNonce('2') );
+        $storage->purgeNonces($date);
+        $this->assertTrue( $storage->isUniqueNonce('1') );
+        $this->assertFalse( $storage->isUniqueNonce('2') );
+        $storage->purgeNonces();
+        $this->assertTrue( $storage->isUniqueNonce('1') );
+        sleep(2);
+        $date = time();
+        sleep(2);
+        $this->assertTrue( $storage->isUniqueNonce('2') );
+        $storage->purgeNonces($date);
+        $this->assertTrue( $storage->isUniqueNonce('1') );
+        $this->assertFalse( $storage->isUniqueNonce('2') );
+        $storage->purgeNonces();
+    }
 }

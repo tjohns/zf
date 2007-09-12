@@ -146,7 +146,6 @@ class Zend_OpenId_Consumer
      *  object to perform HTTP or HTML form redirection
      * @return bool
      * @todo OpenID 2.0 (11.2) Verifying Discovered Information
-     * @todo OpenID 2.0 (11.3) Checking the Nonce
      */
     public function check($id, $returnTo=null, $root=null, $extensions,
                           Zend_Controller_Response_Abstract $response = null)
@@ -208,7 +207,12 @@ class Zend_OpenId_Consumer
 
         /* TODO: OpenID 2.0 (11.2) Verifying Discovered Information */
 
-        /* TODO: OpenID 2.0 (11.3) Checking the Nonce */
+        /* OpenID 2.0 (11.3) Checking the Nonce */
+        if (isset($params['openid_response_nonce'])) {
+            if (!$this->_storage->isUniqueNonce($params['openid_response_nonce'])) {
+                return false;
+            }
+        }
 
         if (!empty($params['openid_invalidate_handle'])) {
             if ($this->_storage->getAssociationByHandle(

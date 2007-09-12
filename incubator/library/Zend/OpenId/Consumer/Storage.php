@@ -113,4 +113,19 @@ abstract class Zend_OpenId_Consumer_Storage
      * @return bool
      */
     abstract public function delDiscoveryInfo($id);
+
+    /**
+     * The function checks the uniqueness of openid.response_nonce
+     *
+     * @param string $nonce openid.response_nonce field from authentication response
+     * @return bool
+     */
+    abstract public function isUniqueNonce($nonce);
+
+    /**
+     * Removes data from the uniqueness database that is older then given date
+     *
+     * @param string date of expired data
+     */
+    abstract public function purgeNonces($date=null);
 }
