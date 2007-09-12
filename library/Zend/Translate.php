@@ -223,22 +223,26 @@ class Zend_Translate {
 
     /**
      * Returns all actual known message ids as array
+     * If no locale is given, the actual language will be used
      *
+     * @param  $locale  String|Zend_Locale  Language to return the message ids from
      * @return array
      */
-    public function getMessageIds()
+    public function getMessageIds($locale = null)
     {
-        return $this->_adapter->getMessageIds();
+        return $this->_adapter->getMessageIds($locale);
     }
 
 
     /**
      * Returns all known messages with  ids
+     * If no locale is given, the actual language will be used
      *
+     * @param  $locale  String|Zend_Locale  Language to return the message ids from
      * @return array
      */
-    public function getMessages()
+    public function getMessages($locale = null)
     {
-        return $this->_adapter->getMessages();
+        return $this->_adapter->getMessages($locale);
     }
 }

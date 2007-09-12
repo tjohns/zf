@@ -669,17 +669,24 @@ if ($translate->isTranslated('message1', false, 'de')) {
         <title>Access to the source data</title>
 
         <para>
-            Of course sometimes it is usefull to have access to the translation source data. Therefor two functions
-            exist.
+            Of course sometimes it is usefull to have access to the translation source data. Therefor two
+            functions exist.
         </para>
 
         <para>
-            The <code>getMessageIds()</code> method returns all known message ids as array.
+            The <code>getMessageIds($locale = null)</code> method returns all known message ids as array.
         </para>
 
         <para>
-            And the <code>getMessages()</code> method returns the complete translation source as array. The
-            message id is used as key and the translation data as value.
+            And the <code>getMessages($locale = null)</code> method returns the complete translation source as
+            array. The message id is used as key and the translation data as value.
+        </para>
+
+        <para>
+            Both methods accept an optional parameter <code>$locale</code> which, when set, returns the
+            translation data for the specified language. If this parameter is not given, the actual set
+            language will be used. Keep in mind that normally all translations should be avaiable in all
+            languages. Which means that in a normal situation you will not have to set this parameter.
         </para>
 
         <example id="zend.translate.using.sourcedata.example">
@@ -688,6 +695,11 @@ if ($translate->isTranslated('message1', false, 'de')) {
 ...
 // returns all known message ids
 $messageids = $translate->getMessageIds();
+print_r($messageids);
+
+...
+// or just for the specified language
+$messageids = $translate->getMessageIds('en_US');
 print_r($messageids);
 
 ...
