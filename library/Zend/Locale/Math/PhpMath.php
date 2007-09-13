@@ -86,14 +86,7 @@ function Zend_Locale_Math_Sub($op1, $op2, $op3 = null)
             $result = ceil($result);
         }
     }
-    if ($op3 > 0) {
-        if ((string) $result == "0")  {
-            $result = "0.";
-        }
-        if (strlen($result) < ($op3 + 2)) {
-            $result = str_pad($result, ($op3 + 2), "0", STR_PAD_RIGHT);
-        }
-    }
+
     return $result;
 }
 
