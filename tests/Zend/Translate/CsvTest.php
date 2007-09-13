@@ -51,6 +51,7 @@ class Zend_Translate_CsvTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv', 'en');
 
         $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (en)');
+        $this->assertEquals($adapter->_('Message 1'), 'Message 1 (en)');
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5 (en)');
 
         $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en2.csv', 'en', array('separator' => ','));

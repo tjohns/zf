@@ -51,6 +51,7 @@ class Zend_Translate_QtTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Qt(dirname(__FILE__) . '/_files/translation_de.ts', 'de');
 
         $this->assertEquals($adapter->translate('Message 1'), 'Nachricht 1');
+        $this->assertEquals($adapter->_('Message 1'), 'Nachricht 1');
         $this->assertEquals($adapter->translate('Message 5'), 'Message 5');
     }
 
