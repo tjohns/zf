@@ -34,6 +34,8 @@ require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/OpenIdTest.php';
 require_once 'Zend/OpenId/AllTests.php';
+require_once 'Zend/Translate/TbxTest.php';
+require_once 'Zend/Translate/XmlTmTest.php';
 
 
 /**
@@ -62,7 +64,9 @@ class Zend_AllTests
         $suite->addTest(Zend_Json_AllTests::suite());
         $suite->addTestSuite('Zend_OpenIdTest');
         $suite->addTest(Zend_OpenId_AllTests::suite());
-
+        $suite->addTestSuite('Zend_Translate_TbxTest');
+        $suite->addTestSuite('Zend_Translate_XmlTmTest');
+        
         return $suite;
     }
 }
