@@ -839,9 +839,10 @@ abstract class Zend_Db_Table_Row_Abstract
         $callerMap = $this->_prepareReference($intersectionTable, $this->_getTable(), $callerRefRule);
 
         for ($i = 0; $i < count($callerMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
+            $callerColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
+            $value = $this->_data[$callerColumnName];
             $interColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
             $interCol = $db->quoteIdentifier("i.$interColumnName", true);
-            $value = $this->_data[$interColumnName];
             $matchColumnName = $db->foldCase($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
             $matchInfo = $matchTable->info();
             $type = $matchInfo[Zend_Db_Table_Abstract::METADATA][$matchColumnName]['DATA_TYPE'];
