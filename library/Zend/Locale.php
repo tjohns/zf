@@ -855,4 +855,15 @@ class Zend_Locale {
         }
         return false;
     }
+
+
+    /**
+     * Returns a list of all known locales where the locale is the key
+     * 
+     * @return  array
+     */
+    public static function getLocaleList()
+    {
+        return self::$_localeData;
+    }
 }
