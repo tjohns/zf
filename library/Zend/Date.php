@@ -2582,6 +2582,10 @@ class Zend_Date extends Zend_Date_DateObject {
                         if (self::$_Options['format_type'] == 'php') {
                             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
                         }
+                        if (empty($part)) {
+                            $part  = Zend_Locale_Format::getDateFormat($locale) . " ";
+                            $part .= Zend_Locale_Format::getTimeFormat($locale);
+                        }
                         $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $part, 'locale' => $locale, 'fix_date' => true, 'format_type' => 'iso'));
                         if ($calc == 'set') {
                             if (isset($parsed['month'])) {
