@@ -877,4 +877,87 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
         $this->assertEquals(array('account_name' => 'goofy'), $reporter->toArray());
     }
 
+    /**
+     * Create database table based on BUGS_PRODUCTS bug with alternative
+     * spellings of column names.  Then create a Table class for this
+     * physical table and return it.
+     */
+    protected function _getBugsProductsWithDissimilarColumns()
+    {
+        $altCols = array(
+            'boog_id'      => 'INTEGER NOT NULL',
+            'produck_id'   => 'INTEGER NOT NULL',
+            'PRIMARY KEY'  => 'boog_id,produck_id'
+        );
+        $this->_util->createTable('AltBugsProducts', $altCols);
+        $altBugsProducts = $this->_db->quoteIdentifier($this->_db->foldCase('zfalt_bugs_products'), true);
+        $bugsProducts = $this->_db->quoteIdentifier($this->_db->foldCase('zfbugs_products'), true);
+        $this->_db->query("INSERT INTO $altBugsProducts SELECT * FROM $bugsProducts");
+
+        $refMap    = array(
+            'Boog' => array(
+                'columns'           => array('boog_id'),
+                'refTableClass'     => 'Zend_Db_Table_TableBugs',
+                'refColumns'        => array('bug_id')
+            ),
+            'Produck' => array(
+                'columns'           => array('produck_id'),
+                'refTableClass'     => 'Zend_Db_Table_TableProducts',
+                'refColumns'        => array('product_id')
+            )
+        );
+        $options = array('name' => 'zfalt_bugs_products', 'referenceMap' => $refMap);
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial', $options);
+        return $table;
+    }
+
+    /**
+     * Test that findParentRow() works even if the column names are
+     * not the same.
+     */
+    public function testTableRelationshipFindParentRowWithDissimilarColumns()
+    {
+        $bug_id = $this->_db->foldCase('bug_id');
+        $product_id = $this->_db->foldCase('product_id');
+
+        $intersectionTable = $this->_getBugsProductsWithDissimilarColumns();
+        $intRow = $intersectionTable->find(2, 3)->current();
+
+        $bugRow = $intRow->findParentRow('Zend_Db_Table_TableBugs');
+        $this->assertEquals(2, $bugRow->$bug_id);
+
+        $productRow = $intRow->findParentRow('Zend_Db_Table_TableProducts');
+        $this->assertEquals(3, $productRow->$product_id);
+    }
+
+    /**
+     * Test that findDependentRowset() works even if the column names are
+     * not the same.
+     */
+    public function testTableRelationshipFindDependentRowsetWithDissimilarColumns()
+    {
+        $intersectionTable = $this->_getBugsProductsWithDissimilarColumns();
+        $bugsTable = $this->_getTable('Zend_Db_Table_TableBugs');
+        $bugRow = $bugsTable->find(2)->current();
+
+        $intRows = $bugRow->findDependentRowset($intersectionTable);
+        $this->assertEquals(array(2, 3), array_values($intRows->current()->toArray()));
+    }
+
+    /**
+     * Test that findManyToManyRowset() works even if the column names are
+     * not the same.
+     */
+    public function testTableRelationshipFindManyToManyRowsetWithDissimilarColumns()
+    {
+        $product_id = $this->_db->foldCase('product_id');
+
+        $intersectionTable = $this->_getBugsProductsWithDissimilarColumns();
+        $bugsTable = $this->_getTable('Zend_Db_Table_TableBugs');
+        $bugRow = $bugsTable->find(2)->current();
+
+        $productRows = $bugRow->findManyToManyRowset('Zend_Db_Table_TableProducts', $intersectionTable);
+        $this->assertEquals(3, $productRows->current()->$product_id);
+    }
+
 }

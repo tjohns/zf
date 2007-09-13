@@ -540,10 +540,15 @@ abstract class Zend_Db_Table_Row_Abstract
     {
         $primary = array_flip($this->_primary);
         if ($useDirty) {
-            return array_intersect_key($this->_data, $primary);
+            $array = array_intersect_key($this->_data, $primary);
         } else {
-            return array_intersect_key($this->_cleanData, $primary);
+            $array = array_intersect_key($this->_cleanData, $primary);
         }
+        if (count($primary) != count($array)) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception("The specified Table '$this->_tableClass' does not have the same primary key as the Row");
+        }
+        return $array;
     }
 
     /**
@@ -834,9 +839,10 @@ abstract class Zend_Db_Table_Row_Abstract
         $callerMap = $this->_prepareReference($intersectionTable, $this->_getTable(), $callerRefRule);
 
         for ($i = 0; $i < count($callerMap[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
+            $callerColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
+            $value = $this->_data[$callerColumnName];
             $interColumnName = $db->foldCase($callerMap[Zend_Db_Table_Abstract::COLUMNS][$i]);
             $interCol = $db->quoteIdentifier("i.$interColumnName", true);
-            $value = $this->_data[$interColumnName];
             $matchColumnName = $db->foldCase($matchMap[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
             $matchInfo = $matchTable->info();
             $type = $matchInfo[Zend_Db_Table_Abstract::METADATA][$matchColumnName]['DATA_TYPE'];

@@ -29,6 +29,8 @@ require_once 'Zend/Db/Table/TestSetup.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+require_once 'Zend/Db/Table/Row.php';
+
 
 /**
  * @category   Zend
@@ -313,6 +315,24 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertType('Zend_Db_Table_Row_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
             $this->assertEquals("Specified column \"$column\" is not in the row", $e->getMessage());
+        }
+    }
+
+    public function testTableRowExceptionBogusPrimaryKey()
+    {
+        $table = $this->_table['bugs_products'];
+        $bogusData = array(
+            'bug_id' => 3,
+            'foo'    => 'bar'
+        );
+        $row = new Zend_Db_Table_Row(array('table' => $table, 'data' => $bogusData));
+        try {
+            $rowsAffected = $row->delete();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Row_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
+            $this->assertEquals("The specified Table 'Zend_Db_Table_TableBugsProducts' does not have the same primary key as the Row", $e->getMessage());
         }
     }
 
