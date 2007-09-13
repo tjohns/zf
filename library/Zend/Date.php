@@ -2577,7 +2577,7 @@ class Zend_Date extends Zend_Date_DateObject {
                 break;
 
             default :
-                if (!is_numeric($date)) {
+                if (!is_numeric($date) || !empty($part)) {
                     try {
                         if (self::$_Options['format_type'] == 'php') {
                             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
@@ -2607,7 +2607,9 @@ class Zend_Date extends Zend_Date_DateObject {
                             1 + $parsed['month'], 1 + $parsed['day'], 1970 + $parsed['year'],
                             false), $this->getUnixTimestamp(), false);
                     } catch (Zend_Locale_Exception $e) {
-                        throw new Zend_Date_Exception($e->getMessage(), $date);
+                        if (!is_numeric($date)) {
+                            throw new Zend_Date_Exception($e->getMessage(), $date);
+                        }
                     }
                 }
                 return $this->_assign($calc, $date, $this->getUnixTimestamp(), false);

@@ -131,6 +131,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         $date = new Zend_Date('13',Zend_Date::HOUR);
         $this->assertTrue($date instanceof Zend_Date);
+
+        $date = new Zend_Date('20070802', 'YYYYMMdd');
+        $this->assertSame($date->getIso(), "2007-08-02T00:00:00+05:00");
     }
 
     /**
