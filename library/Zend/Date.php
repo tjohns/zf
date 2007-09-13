@@ -484,13 +484,13 @@ class Zend_Date extends Zend_Date_DateObject {
 
                 // years
                 case 'yy' :
-                    $output[$i] = $this->get(Zend_Date::YEAR_SHORT, $locale);
+                    $output[$i] = str_pad($this->get(Zend_Date::YEAR_SHORT, $locale), 2, '0', STR_PAD_LEFT);
                     break;
 
 
                 // ISO years
                 case 'YY' :
-                    $output[$i] = $this->get(Zend_Date::YEAR_SHORT_8601, $locale);
+                    $output[$i] = str_pad($this->get(Zend_Date::YEAR_SHORT_8601, $locale), 2, '0', STR_PAD_LEFT);
                     break;
 
 
