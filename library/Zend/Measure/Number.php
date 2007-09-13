@@ -344,7 +344,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             throw new Zend_Measure_Exception('Unknown type of number:' . $type);
         }
 
-        $value = $this->toDecimal($this->getValue(), $this->getType());
+        $value = $this->toDecimal($this->getValue(-1), $this->getType(-1));
         $value = $this->fromDecimal($value, $type);
 
         $this->_value = $value;

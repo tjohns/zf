@@ -101,10 +101,15 @@ abstract class Zend_Measure_Abstract
 
     /**
      * Returns the internal value
+     *
+     * @param  integer  $round  OPTIONAL rounds the value to an given precision
      */
-    public function getValue()
+    public function getValue($round = 2)
     {
-        return $this->_value;
+        if ($round < 1) {
+            return $this->_value;
+        }
+        return Zend_Locale_Math::round($this->_value, $round);
     }
 
 
@@ -208,7 +213,7 @@ abstract class Zend_Measure_Abstract
 
             // Convert to expected value
             if (is_array($this->_UNITS[$type][0])) {
-                foreach ($this->_UNITS[$type][0] as $key => $found) {
+                foreach (array_reverse($this->_UNITS[$type][0]) as $key => $found) {
                     switch ($key) {
                         case "/":
                             $value = call_user_func(Zend_Locale_Math::$mul, $value, $found, 25);
@@ -257,11 +262,12 @@ abstract class Zend_Measure_Abstract
     /**
      * Returns a string representation
      *
+     * @param  integer  $round  OPTIONAL rounds the value to an given exception
      * @return string
      */
-    public function toString()
+    public function toString($round = -1)
     {
-        return $this->getValue() . ' ' . $this->_UNITS[$this->getType()][1];
+        return $this->getValue($round) . ' ' . $this->_UNITS[$this->getType()][1];
     }
 
 
@@ -290,13 +296,14 @@ abstract class Zend_Measure_Abstract
     /**
      * Alias function for setType returning the converted unit
      *
-     * @param $type  type
+     * @param $type   type
+     * @param $round  integer  OPTIONAL rounds the value to a given precision
      * @return string
      */
-    public function convertTo($type)
+    public function convertTo($type, $round = 2)
     {
         $this->setType($type);
-        return $this->toString();
+        return $this->toString($round);
     }
 
 

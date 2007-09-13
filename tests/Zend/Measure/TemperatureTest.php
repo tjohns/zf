@@ -396,4 +396,17 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($unit), 'Array expected');
     }
 
+
+    /**
+     * test Detail conversions which often fail
+     *
+     */
+    public function testDetailConversion()
+    {
+        $unit= new Zend_Measure_Temperature(100, Zend_Measure_Temperature::KELVIN);
+        $this->assertSame($unit->convertTo(Zend_Measure_Temperature::FAHRENHEIT), '-279.67 °F');
+
+        $unit= new Zend_Measure_Temperature(100, Zend_Measure_Temperature::FAHRENHEIT);
+        $this->assertSame($unit->convertTo(Zend_Measure_Temperature::KELVIN), '310.93 °K');
+    }
 }
