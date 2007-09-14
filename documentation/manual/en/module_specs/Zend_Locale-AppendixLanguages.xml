@@ -55,6 +55,10 @@
                         <entry>Bengali</entry>
                     </row>
                     <row>
+                        <entry>bo</entry>
+                        <entry>Tibetan</entry>
+                    </row>
+                    <row>
                         <entry>bs</entry>
                         <entry>Bosnian</entry>
                     </row>
@@ -69,6 +73,10 @@
                     <row>
                         <entry>cch</entry>
                         <entry>Atsam</entry>
+                    </row>
+                    <row>
+                        <entry>cop</entry>
+                        <entry>Coptic</entry>
                     </row>
                     <row>
                         <entry>cs</entry>
@@ -129,6 +137,10 @@
                     <row>
                         <entry>fi</entry>
                         <entry>Finnish</entry>
+                    </row>
+                    <row>
+                        <entry>fil</entry>
+                        <entry>Filipino</entry>
                     </row>
                     <row>
                         <entry>fo</entry>
@@ -207,6 +219,10 @@
                         <entry>Igbo</entry>
                     </row>
                     <row>
+                        <entry>ii</entry>
+                        <entry>Sichuan Yi</entry>
+                    </row>
+                    <row>
                         <entry>is</entry>
                         <entry>Icelandic</entry>
                     </row>
@@ -267,6 +283,10 @@
                         <entry>Konkani</entry>
                     </row>
                     <row>
+                        <entry>kpe</entry>
+                        <entry>Kpelle</entry>
+                    </row>
+                    <row>
                         <entry>ku</entry>
                         <entry>Kurdish</entry>
                     </row>
@@ -317,6 +337,10 @@
                     <row>
                         <entry>mt</entry>
                         <entry>Maltese</entry>
+                    </row>
+                    <row>
+                        <entry>my</entry>
+                        <entry>Burmese</entry>
                     </row>
                     <row>
                         <entry>nb</entry>
@@ -423,6 +447,10 @@
                         <entry>Swati</entry>
                     </row>
                     <row>
+                        <entry>ssy</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
                         <entry>st</entry>
                         <entry>Southern Sotho</entry>
                     </row>
@@ -467,6 +495,10 @@
                         <entry>Tswana</entry>
                     </row>
                     <row>
+                        <entry>to</entry>
+                        <entry>Tonga</entry>
+                    </row>
+                    <row>
                         <entry>tr</entry>
                         <entry>Turkish</entry>
                     </row>
@@ -479,8 +511,16 @@
                         <entry>Tatar</entry>
                     </row>
                     <row>
+                        <entry>ug</entry>
+                        <entry>Uighur</entry>
+                    </row>
+                    <row>
                         <entry>uk</entry>
                         <entry>Ukrainian</entry>
+                    </row>
+                    <row>
+                        <entry>und</entry>
+                        <entry>Unknown or Invalid Language</entry>
                     </row>
                     <row>
                         <entry>ur</entry>
@@ -501,6 +541,10 @@
                     <row>
                         <entry>wal</entry>
                         <entry>Walamo</entry>
+                    </row>
+                    <row>
+                        <entry>wo</entry>
+                        <entry>Wolof</entry>
                     </row>
                     <row>
                         <entry>xh</entry>
