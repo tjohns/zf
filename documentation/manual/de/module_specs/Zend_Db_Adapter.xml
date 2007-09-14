@@ -22,6 +22,11 @@
     <itemizedlist>
         <listitem>
             <para>
+                IBM DB2 und Informix Dynamic Server (IDS), verwenden die <ulink url="http://www.php.net/pdo-ibm">pdo_ibm</ulink> PHP Erweiterung
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 MySQL, verwendet die <ulink url="http://www.php.net/pdo-mysql">pdo_mysql</ulink> PHP Erweiterung
             </para>
         </listitem>
@@ -1671,6 +1676,30 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         den <ulink url="http://www.freetds.org/">FreeTDS</ulink> Satz von Libraries verwendet wird.
                         Siehe auch <ulink url="http://www.php.net/manual/en/ref.pdo-dblib.connection.php">http://www.php.net/manual/en/ref.pdo-dblib.connection.php</ulink>
                         für weitere Informationen über die DNS Prefixe die von diesem Treiber verwendet werden.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+
+        <sect3 id="zend.db.adapter.adapter-notes.pdo-ibm">
+            <title>PDO für IBM DB2 und Informix Dynamic Server (IDS)</title>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Dieser Adapter wird in der <code>factory()</code> Methode mit dem Namen
+                        'Pdo_Ibm' spezifiziert.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Dieser Adapter nutzt die PHP Erweiterungen pdo und pdo_ibm.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Es muß mindestens die PDO_IBM Erweiterung mit der Version 1.2.2 verwendet werden.
+                        Wenn eine ältere Version verwendet wird, muß die PDO_IBM Erweiterung über
+                        PECL hochgerüstet werden.
                     </para>
                 </listitem>
             </itemizedlist>
