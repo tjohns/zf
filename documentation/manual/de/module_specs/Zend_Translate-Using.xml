@@ -668,17 +668,27 @@ if ($translate->isTranslated('message1', false, 'de')) {
         <title>Zugang zu Quell Daten</title>
 
         <para>
-            Natürlich ist es manchmal nützlich Zugang zu den übersetzten Quelldaten zu erhalten. Hierfür existieren
-            zwei Methoden.
+            Natürlich ist es manchmal nützlich Zugang zu den übersetzten Quelldaten zu erhalten.
+            Hierfür existieren zwei Methoden.
         </para>
 
         <para>
-            Die <code>getMessageIds()</code> Methode gibt alle bekannten Ids für Übersetzungen als Array zurück.
+            Die <code>getMessageIds($locale = null)</code> Methode gibt alle bekannten Ids für
+            Übersetzungen als Array zurück.
         </para>
 
         <para>
-            Und die <code>getMessages()</code> Methode gibt die komplette Übersetzungs-Quelle als Array zurück. Die
-            Ids der Übersetzungen werden als Schlüssel und die Übersetzten Daten als Wert verwendet.
+            Und die <code>getMessages($locale = null)</code> Methode gibt die komplette Übersetzungs-Quelle
+            als Array zurück. Die Ids der Übersetzungen werden als Schlüssel und die Übersetzten Daten als
+            Wert verwendet.
+        </para>
+
+        <para>
+            Beide Methoden akzeptieren einen optionalen Parameter <code>$locale</code> welcher, wenn er
+            gesetzt wird, die Übersetzungsdaten für die spezifizierte Sprache, zurückgibt. Wenn dieser
+            Parameter nicht angegeben wird, wird die aktuell gesetzte Sprache verwendet. Es ist zu beachten
+            das normalerweise alle Übersetzungen in allen Sprachen vorhanden sein sollten. Das bedeutet das
+            man in einer normalen Situation diesen Parameter nicht angeben muß.
         </para>
 
         <example id="zend.translate.using.sourcedata.example">
@@ -687,6 +697,11 @@ if ($translate->isTranslated('message1', false, 'de')) {
 ...
 // gibt alle bekannten Übersetzungs Ids zurück
 $messageids = $translate->getMessageIds();
+print_r($messageids);
+
+...
+// oder nur die spezifizierte Sprache
+$messageids = $translate->getMessageIds('en_US');
 print_r($messageids);
 
 ...
