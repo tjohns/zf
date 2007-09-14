@@ -146,7 +146,7 @@ class Zend_Locale_Data
         if (!empty(self::$_ldml[(string) $locale])) {
             while ($tok !== false) {
                 $search = $search . '/' . $tok;
-                if ((strpos($tok, '[@') !== false) and (strpos($tok, ']') === false)) {
+                if (((strpos($tok, '[@') !== false) or (strpos($search, '[@'))) and (strpos($tok, ']') === false)) {
                     $tok = strtok('/');
                     continue;
                 }

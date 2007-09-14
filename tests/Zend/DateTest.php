@@ -922,13 +922,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
         $date->setTimezone('UTC');
         $this->assertSame($date->get(Zend_Date::ERA_NAME),'n. Chr.');
-        $this->assertSame($date->get(Zend_Date::ERA_NAME, 'es'),'CE');
+        $this->assertSame($date->get(Zend_Date::ERA_NAME, 'es'),'anno Dómini');
         $date->setTimezone('Indian/Maldives');
 
         $this->assertSame($date->get(Zend_Date::DATES),'14.02.2009');
         $date->setTimezone('UTC');
         $this->assertSame($date->get(Zend_Date::DATES),'13.02.2009');
-        $this->assertSame($date->get(Zend_Date::DATES, 'es'),'13-feb-09');
+        $this->assertSame($date->get(Zend_Date::DATES, 'es'),'13/02/2009');
         $date->setTimezone('Indian/Maldives');
 
         $this->assertSame($date->get(Zend_Date::DATE_FULL),'Samstag, 14. Februar 2009');
@@ -946,7 +946,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::DATE_MEDIUM),'14.02.2009');
         $date->setTimezone('UTC');
         $this->assertSame($date->get(Zend_Date::DATE_MEDIUM),'13.02.2009');
-        $this->assertSame($date->get(Zend_Date::DATE_MEDIUM, 'es'),'13-feb-09');
+        $this->assertSame($date->get(Zend_Date::DATE_MEDIUM, 'es'),'13/02/2009');
         $date->setTimezone('Indian/Maldives');
 
         $this->assertSame($date->get(Zend_Date::DATE_SHORT),'14.02.09');
@@ -964,7 +964,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::TIME_FULL),'04:31 Uhr MVT');
         $date->setTimezone('UTC');
         $this->assertSame($date->get(Zend_Date::TIME_FULL),'23:31 Uhr UTC');
-        $this->assertSame($date->get(Zend_Date::TIME_FULL, 'es'),'23H3130" UTC');
+        $this->assertSame($date->get(Zend_Date::TIME_FULL, 'es'),'11:31:30 p.m. UTC');
         $date->setTimezone('Indian/Maldives');
 
         $this->assertSame($date->get(Zend_Date::TIME_LONG),'04:31:30 MVT');
@@ -4519,11 +4519,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         //Saturday [ar_EG]
         // The right value for AM/PM has to be set in arabic letters
-        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 5:00:00 ص');
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08‏/01‏/1970 5:00:00 ص');
         $date->setTimeZone('UTC');
-        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 12:00:00 ص');
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08‏/01‏/1970 12:00:00 ص');
         $date->setTimeZone('Indian/Maldives');
-        $this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 5:00:00 ص');
+        $this->assertSame($date->getWeek('ar_EG')->toString(), '08‏/01‏/1970 5:00:00 ص');
 
         //Sunday [start of a new week as defined per ISO 8601]
         $date->addDay(1);

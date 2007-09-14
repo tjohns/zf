@@ -631,10 +631,14 @@ class Zend_Date extends Zend_Date_DateObject {
 
 
                 // zone
+                // @todo: v needs to be reworked as it's the long wall time and not the timezone
+                case 'vvvv' :
                 case 'zzzz' :
                     $output[$i] = $this->get(Zend_Date::TIMEZONE_NAME, $locale);
                     break;
 
+                // @todo: v needs to be reworked as it's the short wall time and not the timezone
+                case 'v' :
                 case 'zzz' :
                 case 'zz'  :
                 case 'z'   :
