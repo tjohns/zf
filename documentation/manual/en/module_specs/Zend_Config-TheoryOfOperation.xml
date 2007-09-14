@@ -10,6 +10,12 @@
         it may be appropriate to do so in certain situations.
     </para>
     <para>
+        Each configuration data array value becomes a property of the <code>Zend_Config</code> object. The key is used
+        as the property name. If a value is itself an array, then the resulting object property is created as a new
+        <code>Zend_Config</code> object, loaded with the array data. This occurs recursively, such that a hierarchy of
+        configuration data may be created with any number of levels.
+    </para>
+    <para>
         <code>Zend_Config</code> implements the <code>Countable</code> and <code>Iterator</code>
         interfaces in order to facilitate simple access to configuration data.
         Thus, one may use the <ulink url="http://php.net/count"><code>count()</code></ulink>
