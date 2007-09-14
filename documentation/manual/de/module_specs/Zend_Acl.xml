@@ -251,7 +251,7 @@ require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
-// Füge Gruppen zur Rollenregistrierung hinzu unter Verwendung von Zend_Acl_Role
+// Fügt Gruppen zur Rollenregistrierung hinzu unter Verwendung von Zend_Acl_Role
 require_once 'Zend/Acl/Role.php';
 
 // Gast erbt keine Zugriffsrechte
@@ -262,7 +262,7 @@ $acl->addRole($roleGuest);
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
 /* alternativ kann das obige wie folgt geschrieben werden:
-$roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
+$acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
 // Redakteur erbt von Mitarbeiter
@@ -311,7 +311,7 @@ $acl->allow($roleGuest, null, 'view');
 
 /* alternativ kann das obige wie folgt geschrieben werden:
 $acl->allow('guest', null, 'view');
-//*/
+*/
 
 // Mitarbeiter erbt 'ansehen' Rechte von Gast, benötigt aber zusätzliche Rechte
 $acl->allow('staff', null, array('edit', 'submit', 'revise'));
