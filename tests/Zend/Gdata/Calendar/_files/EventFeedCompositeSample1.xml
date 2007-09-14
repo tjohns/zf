@@ -12,10 +12,113 @@
 		<email>gdata.ops.demo@gmail.com</email>
 	</author>
 	<generator version="1.0" uri="http://www.google.com/calendar">Google Calendar</generator>
-	<openSearch:totalResults>6</openSearch:totalResults>
+	<openSearch:totalResults>7</openSearch:totalResults>
 	<openSearch:startIndex>1</openSearch:startIndex>
 	<openSearch:itemsPerPage>25</openSearch:itemsPerPage>
 	<gCal:timezone value="America/Chicago"/>
+  <entry>
+    <id>
+    http://www.google.com/calendar/feeds/default/private/composite/5v9l3sqdqt0b7mg1nhnmgdfup8</id>
+    <published>2007-09-14T15:37:53.000Z</published>
+    <updated>2007-09-14T15:37:53.000Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind'
+    term='http://schemas.google.com/g/2005#event' />
+    <title type='text'>Specialized Event</title>
+    <content type='text'></content>
+    <link rel='alternate' type='text/html'
+    href='http://www.google.com/calendar/event?eid=NXY5bDNzcWRxdDBiN21nMW5obm1nZGZ1cDhfMjAwNzA5MTNUMTUwMDAwWiBnZGF0YS5vcHMuZGVtb0Bt'
+    title='alternate' />
+    <link rel='self' type='application/atom+xml'
+    href='http://www.google.com/calendar/feeds/default/private/composite/5v9l3sqdqt0b7mg1nhnmgdfup8' />
+    <author>
+      <name>GData Ops Demo</name>
+      <email>gdata.ops.demo@gmail.com</email>
+    </author>
+    <gd:recurrence>DTSTART;TZID=America/Los_Angeles:20070913T080000
+    DTEND;TZID=America/Los_Angeles:20070913T090000
+    RRULE:FREQ=DAILY;UNTIL=20070920T150000Z;WKST=SU BEGIN:VTIMEZONE
+    TZID:America/Los_Angeles X-LIC-LOCATION:America/Los_Angeles
+    BEGIN:DAYLIGHT TZOFFSETFROM:-0800 TZOFFSETTO:-0700 TZNAME:PDT
+    DTSTART:19700308T020000 RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+    END:DAYLIGHT BEGIN:STANDARD TZOFFSETFROM:-0700 TZOFFSETTO:-0800
+    TZNAME:PST DTSTART:19701101T020000
+    RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU END:STANDARD
+    END:VTIMEZONE</gd:recurrence>
+    <gd:eventStatus value='http://schemas.google.com/g/2005#event.confirmed' />
+    <gd:visibility value='http://schemas.google.com/g/2005#event.default' />
+    <gd:transparency value='http://schemas.google.com/g/2005#event.opaque' />
+    <gCal:uid value='5v9l3sqdqt0b7mg1nhnmgdfup8@google.com' />
+    <gCal:sequence value='0' />
+    <gd:reminder minutes='10' method='sms' />
+    <gd:reminder minutes='10' method='alert' />
+    <gCal:sendEventNotifications value="false"/>
+    <gd:recurrenceException specialized='false'>
+      <gd:entryLink>
+        <entry>
+          <id>5v9l3sqdqt0b7mg1nhnmgdfup8_20070914T150000Z</id>
+          <published>2007-09-14T15:37:53.000Z</published>
+          <updated>2007-09-14T15:41:06.000Z</updated>
+          <category scheme='http://schemas.google.com/g/2005#kind'
+          term='http://schemas.google.com/g/2005#event' />
+          <title type='text'>Specialized Event</title>
+          <content type='text'></content>
+          <link rel='alternate' type='text/html'
+          href='http://www.google.com/calendar/event?eid=NXY5bDNzcWRxdDBiN21nMW5obm1nZGZ1cDhfMjAwNzA5MTRUMTUwMDAwWiBnZGF0YS5vcHMuZGVtb0Bt'
+          title='alternate' />
+          <author>
+            <name>GData Ops Demo</name>
+            <email>gdata.ops.demo@gmail.com</email>
+          </author>
+          <gd:originalEvent id='5v9l3sqdqt0b7mg1nhnmgdfup8'
+          href='http://www.google.com/calendar/feeds/default/private/composite/5v9l3sqdqt0b7mg1nhnmgdfup8'>
+  
+            <gd:when startTime='2007-09-14T08:00:00.000-07:00' />
+          </gd:originalEvent>
+          <gd:comments>
+            <gd:feedLink href='http://www.google.com/calendar/feeds/default/private/full/5v9l3sqdqt0b7mg1nhnmgdfup8_20070914T150000Z/comments'>
+    
+              <feed>
+                <id>
+                http://www.google.com/calendar/feeds/default/private/full/5v9l3sqdqt0b7mg1nhnmgdfup8_20070914T150000Z/comments</id>
+                <updated>2007-09-14T15:42:41.390Z</updated>
+                <category scheme='http://schemas.google.com/g/2005#kind'
+                term='http://schemas.google.com/g/2005#message' />
+                <title type='text'>Comments for: Specialized
+                Event</title>
+                <link rel='alternate' type='text/html'
+                href='http://www.google.com/calendar/feeds/default/private/full/5v9l3sqdqt0b7mg1nhnmgdfup8_20070914T150000Z/comments'
+                title='alternate' />
+              </feed>
+            </gd:feedLink>
+          </gd:comments>
+          <gd:eventStatus value='http://schemas.google.com/g/2005#event.confirmed' />
+          <gd:visibility value='http://schemas.google.com/g/2005#event.default' />
+          <gd:transparency value='http://schemas.google.com/g/2005#event.opaque' />
+          <gCal:uid value='5v9l3sqdqt0b7mg1nhnmgdfup8@google.com' />
+          <gCal:sequence value='0' />
+          <gd:when startTime='2007-09-14T08:00:00.000-07:00'
+          endTime='2007-09-14T09:00:00.000-07:00'>
+            <gd:reminder minutes='10' method='alert' />
+          </gd:when>
+          <gd:who rel='http://schemas.google.com/g/2005#event.attendee'
+          valueString='gdata ops' email='gdata.ops.test@gmail.com'>
+            <gd:attendeeStatus value='http://schemas.google.com/g/2005#event.invited' />
+          </gd:who>
+          <gd:who rel='http://schemas.google.com/g/2005#event.organizer'
+          valueString='GData Ops Demo'
+          email='gdata.ops.demo@gmail.com'>
+            <gd:attendeeStatus value='http://schemas.google.com/g/2005#event.accepted' />
+          </gd:who>
+          <gd:where valueString='' />
+        </entry>
+      </gd:entryLink>
+    </gd:recurrenceException>
+    <gd:who rel='http://schemas.google.com/g/2005#event.organizer'
+    valueString='GData Ops Demo' email='gdata.ops.demo@gmail.com'>
+      <gd:attendeeStatus value='' />
+    </gd:who>
+    <gd:where valueString='' />
+  </entry>
 	<entry>
 		<id>http://www.google.com/calendar/feeds/default/private/composite/sh6kv08egsls7mc5tf6np8hi9c</id>
 		<published>2007-05-24T20:49:14.000Z</published>
