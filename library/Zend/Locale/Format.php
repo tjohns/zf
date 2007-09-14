@@ -44,6 +44,7 @@ class Zend_Locale_Format
                                      'format_type'   => 'iso',
                                      'fix_date'      => false,
                                      'locale'        => null,
+                                     'cache'         => null,
                                      'precision'     => null);
 
     private static $_signs = array(
@@ -165,6 +166,11 @@ class Zend_Locale_Format
                             throw new Zend_Locale_Exception("'" .
                                 (gettype($value) === 'object' ? get_class($value) : $value)
                                 . "' is not a known locale.");
+                        }
+                        break;
+                    case 'cache' :
+                        if ($value instanceof Zend_Cache_Core) {
+                            Zend_Locale_Data::setCache($value);
                         }
                         break;
                     case 'precision' :
