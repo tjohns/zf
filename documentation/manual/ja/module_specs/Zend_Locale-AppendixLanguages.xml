@@ -55,6 +55,10 @@
                         <entry>ベンガル語</entry>
                     </row>
                     <row>
+                        <entry>bo</entry>
+                        <entry>チベット語</entry>
+                    </row>
+                    <row>
                         <entry>bs</entry>
                         <entry>ボスニア語</entry>
                     </row>
@@ -69,6 +73,10 @@
                     <row>
                         <entry>cch</entry>
                         <entry>Atsam</entry>
+                    </row>
+                    <row>
+                        <entry>cop</entry>
+                        <entry>コプト語</entry>
                     </row>
                     <row>
                         <entry>cs</entry>
@@ -129,6 +137,10 @@
                     <row>
                         <entry>fi</entry>
                         <entry>フィンランド語</entry>
+                    </row>
+                    <row>
+                        <entry>fil</entry>
+                        <entry>フィリピノ語</entry>
                     </row>
                     <row>
                         <entry>fo</entry>
@@ -207,6 +219,10 @@
                         <entry>イボ語</entry>
                     </row>
                     <row>
+                        <entry>ii</entry>
+                        <entry>四川イ語</entry>
+                    </row>
+                    <row>
                         <entry>is</entry>
                         <entry>アイスランド語</entry>
                     </row>
@@ -267,6 +283,10 @@
                         <entry>コンカニ語</entry>
                     </row>
                     <row>
+                        <entry>kpe</entry>
+                        <entry>クペレ語</entry>
+                    </row>
+                    <row>
                         <entry>ku</entry>
                         <entry>クルド語</entry>
                     </row>
@@ -317,6 +337,10 @@
                     <row>
                         <entry>mt</entry>
                         <entry>マルタ語</entry>
+                    </row>
+                    <row>
+                        <entry>my</entry>
+                        <entry>ビルマ語</entry>
                     </row>
                     <row>
                         <entry>nb</entry>
@@ -423,6 +447,10 @@
                         <entry>シスワティ語</entry>
                     </row>
                     <row>
+                        <entry>ssy</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
                         <entry>st</entry>
                         <entry>南部ソト語</entry>
                     </row>
@@ -467,6 +495,10 @@
                         <entry>ツワナ語</entry>
                     </row>
                     <row>
+                        <entry>to</entry>
+                        <entry>トンガ語</entry>
+                    </row>
+                    <row>
                         <entry>tr</entry>
                         <entry>トルコ語</entry>
                     </row>
@@ -479,8 +511,16 @@
                         <entry>タタール語</entry>
                     </row>
                     <row>
+                        <entry>ug</entry>
+                        <entry>ウイグル語</entry>
+                    </row>
+                    <row>
                         <entry>uk</entry>
                         <entry>ウクライナ語</entry>
+                    </row>
+                    <row>
+                        <entry>und</entry>
+                        <entry>未知あるいは無効な言語</entry>
                     </row>
                     <row>
                         <entry>ur</entry>
@@ -501,6 +541,10 @@
                     <row>
                         <entry>wal</entry>
                         <entry>ワッラモ語</entry>
+                    </row>
+                    <row>
+                        <entry>wo</entry>
+                        <entry>ウォロフ語</entry>
                     </row>
                     <row>
                         <entry>xh</entry>

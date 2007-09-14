@@ -215,6 +215,10 @@
                         <entry>グリーンランド</entry>
                     </row>
                     <row>
+                        <entry>GN</entry>
+                        <entry>ギニア</entry>
+                    </row>
+                    <row>
                         <entry>GR</entry>
                         <entry>ギリシャ</entry>
                     </row>
@@ -321,6 +325,10 @@
                     <row>
                         <entry>LI</entry>
                         <entry>リヒテンシュタイン</entry>
+                    </row>
+                    <row>
+                        <entry>LR</entry>
+                        <entry>リベリア</entry>
                     </row>
                     <row>
                         <entry>LT</entry>
@@ -507,6 +515,10 @@
                         <entry>スロバキア</entry>
                     </row>
                     <row>
+                        <entry>SN</entry>
+                        <entry>セネガル</entry>
+                    </row>
+                    <row>
                         <entry>SO</entry>
                         <entry>ソマリア</entry>
                     </row>
@@ -533,6 +545,10 @@
                     <row>
                         <entry>TN</entry>
                         <entry>チュニジア</entry>
+                    </row>
+                    <row>
+                        <entry>TO</entry>
+                        <entry>トンガ</entry>
                     </row>
                     <row>
                         <entry>TR</entry>
@@ -597,6 +613,10 @@
                     <row>
                         <entry>ZW</entry>
                         <entry>ジンバブエ</entry>
+                    </row>
+                    <row>
+                        <entry>ZZ</entry>
+                        <entry>未知あるいは無効な地域</entry>
                     </row>
                 </tbody>
             </tgroup>
