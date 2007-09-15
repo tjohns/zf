@@ -364,10 +364,51 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('bar' => 'bar', 'bat' => 'bat'), $messageFlags);
     }
 
-       
+    public function testGetHeaderFieldSingle()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+        $this->assertEquals($message->getHeaderField('subject'), 'multipart');       
+    }
+    
+    public function testGetHeaderFieldDefault()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+        $this->assertEquals($message->getHeaderField('content-type'), 'multipart/alternative');       
+    }
+    
+    public function testGetHeaderFieldNamed()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+        $this->assertEquals($message->getHeaderField('content-type', 'boundary'), 'crazy-multipart');       
+    }
+    
+    public function testGetHeaderFieldMissing()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+        $this->assertNull($message->getHeaderField('content-type', 'foo'));       
+    }
+    
+    public function testGetHeaderFieldInvalid()
+    {
+        $message = new Zend_Mail_Message(array('file' => $this->_file));
+        try {
+            $message->getHeaderField('fake-header-name', 'foo');
+        } catch (Zend_Mail_Exception $e) {
+            return;
+        }
+        $this->fail('No exception thrown while requesting invalid field name');
+    }
+  	 	       
     public function testCaseInsensitiveMultipart()
     {
         $message = new Zend_Mail_Message(array('raw' => "coNTent-TYpe: muLTIpaRT/x-empty\r\n\r\n"));
         $this->assertTrue($message->isMultipart());
+    }
+    
+    public function testCaseInsensitiveField()
+    {
+        $header = 'test; fOO="this is a test"';
+        $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'Foo'), 'this is a test');
+        $this->assertEquals(Zend_Mime_Decode::splitHeaderField($header, 'bar'), null);
     }
 }
