@@ -281,5 +281,35 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
 
     }
     
+    public function testUnsetException()
+    {
+        // allow modifications is off - expect an exception
+        $config = new Zend_Config($this->_all, false);
+
+        $this->assertTrue(isset($config->hostname)); // top level
+        
+        try {
+            unset($config->hostname);
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('is read only', $expected->getMessage());
+            return;
+        }
+
+    }
+    public function testUnset()
+    {
+        // allow modifications is on
+        $config = new Zend_Config($this->_all, true);
+
+        $this->assertTrue(isset($config->hostname));
+        $this->assertTrue(isset($config->db->name));
+
+        unset($config->hostname);
+        unset($config->db->name);
+
+        $this->assertFalse(isset($config->hostname));
+        $this->assertFalse(isset($config->db->name));
+    
+    }
 }
 
