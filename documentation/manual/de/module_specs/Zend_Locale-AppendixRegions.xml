@@ -215,6 +215,10 @@
                         <entry>Grönland</entry>
                     </row>
                     <row>
+                        <entry>GN</entry>
+                        <entry>Guinea</entry>
+                    </row>
+                    <row>
                         <entry>GR</entry>
                         <entry>Griechenland</entry>
                     </row>
@@ -321,6 +325,10 @@
                     <row>
                         <entry>LI</entry>
                         <entry>Liechtenstein</entry>
+                    </row>
+                    <row>
+                        <entry>LR</entry>
+                        <entry>Liberia</entry>
                     </row>
                     <row>
                         <entry>LT</entry>
@@ -507,6 +515,10 @@
                         <entry>Slowakei</entry>
                     </row>
                     <row>
+                        <entry>SN</entry>
+                        <entry>Senegal</entry>
+                    </row>
+                    <row>
                         <entry>SO</entry>
                         <entry>Somalia</entry>
                     </row>
@@ -533,6 +545,10 @@
                     <row>
                         <entry>TN</entry>
                         <entry>Tunesien</entry>
+                    </row>
+                    <row>
+                        <entry>TO</entry>
+                        <entry>Tonga</entry>
                     </row>
                     <row>
                         <entry>TR</entry>
@@ -597,6 +613,10 @@
                     <row>
                         <entry>ZW</entry>
                         <entry>Simbabwe</entry>
+                    </row>
+                    <row>
+                        <entry>ZZ</entry>
+                        <entry>Unbekannte oder ungültige Region</entry>
                     </row>
                 </tbody>
             </tgroup>

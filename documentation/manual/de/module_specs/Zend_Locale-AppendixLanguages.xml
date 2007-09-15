@@ -55,6 +55,10 @@
                         <entry>Bengalisch</entry>
                     </row>
                     <row>
+                        <entry>bo</entry>
+                        <entry>Tibetisch</entry>
+                    </row>
+                    <row>
                         <entry>bs</entry>
                         <entry>Bosnisch</entry>
                     </row>
@@ -69,6 +73,10 @@
                     <row>
                         <entry>cch</entry>
                         <entry>Atsam</entry>
+                    </row>
+                    <row>
+                        <entry>cop</entry>
+                        <entry>Koptisch</entry>
                     </row>
                     <row>
                         <entry>cs</entry>
@@ -129,6 +137,10 @@
                     <row>
                         <entry>fi</entry>
                         <entry>Finnisch</entry>
+                    </row>
+                    <row>
+                        <entry>fil</entry>
+                        <entry>Phillipinisch</entry>
                     </row>
                     <row>
                         <entry>fo</entry>
@@ -207,6 +219,10 @@
                         <entry>Igbo-Sprache</entry>
                     </row>
                     <row>
+                        <entry>ii</entry>
+                        <entry>Sichuan Yi</entry>
+                    </row>
+                    <row>
                         <entry>is</entry>
                         <entry>Isländisch</entry>
                     </row>
@@ -267,6 +283,10 @@
                         <entry>Konkani</entry>
                     </row>
                     <row>
+                        <entry>kpe</entry>
+                        <entry>Kpelle-Sprache</entry>
+                    </row>
+                    <row>
                         <entry>ku</entry>
                         <entry>Kurdisch</entry>
                     </row>
@@ -317,6 +337,10 @@
                     <row>
                         <entry>mt</entry>
                         <entry>Maltesisch</entry>
+                    </row>
+                    <row>
+                        <entry>my</entry>
+                        <entry>Burmesisch</entry>
                     </row>
                     <row>
                         <entry>nb</entry>
@@ -423,6 +447,10 @@
                         <entry>Swazi</entry>
                     </row>
                     <row>
+                        <entry>ssy</entry>
+                        <entry></entry>
+                    </row>
+                    <row>
                         <entry>st</entry>
                         <entry>Süd-Sotho-Sprache</entry>
                     </row>
@@ -467,6 +495,10 @@
                         <entry>Tswana-Sprache</entry>
                     </row>
                     <row>
+                        <entry>to</entry>
+                        <entry>Tongaisch</entry>
+                    </row>
+                    <row>
                         <entry>tr</entry>
                         <entry>Türkisch</entry>
                     </row>
@@ -479,8 +511,16 @@
                         <entry>Tatarisch</entry>
                     </row>
                     <row>
+                        <entry>ug</entry>
+                        <entry>Uigurisch</entry>
+                    </row>
+                    <row>
                         <entry>uk</entry>
                         <entry>Ukrainisch</entry>
+                    </row>
+                    <row>
+                        <entry>und</entry>
+                        <entry>Sprache nicht ermittelt</entry>
                     </row>
                     <row>
                         <entry>ur</entry>
@@ -501,6 +541,10 @@
                     <row>
                         <entry>wal</entry>
                         <entry>Walamo-Sprache</entry>
+                    </row>
+                    <row>
+                        <entry>wo</entry>
+                        <entry>Wolof</entry>
                     </row>
                     <row>
                         <entry>xh</entry>
