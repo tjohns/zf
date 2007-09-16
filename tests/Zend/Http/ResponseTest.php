@@ -8,6 +8,11 @@
  */
 
 /**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
+/**
  * Zend_Http_Response
  */
 require_once 'Zend/Http/Response.php';
@@ -240,6 +245,16 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(Zend_Http_Response::extractHeaders($response_str) === array());
 	}
 
+	/**
+	 * Make sure a response with some leading whitespace in the response body
+	 * does not get modified (see ZF-1924)
+	 *
+	 */
+	public function testLeadingWhitespaceBody()
+	{
+		$body = Zend_Http_Response::extractBody($this->readResponse('response_leadingws'));
+		$this->assertEquals($body, "\r\n\t  \n\r\tx", 'Extracted body is not identical to expected body');
+	}
 	
 	/**
 	 * Helper function: read test response from file

@@ -46,7 +46,7 @@
             as they all have default values.
             <table>
                 <title>Zend_Http_Client configuration parameters</title>
-                <tgroup cols="3">
+                <tgroup cols="4">
                     <thead>
                         <row>
                             <entry>Parameter</entry>
