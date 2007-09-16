@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Gapps/UserFeed.php';
 require_once 'Zend/Gdata/Gapps/NicknameFeed.php';
 
 /**
- * @see Zend_Gdata_Gapps_EmailListeed
+ * @see Zend_Gdata_Gapps_EmailListFeed
  */
 require_once 'Zend/Gdata/Gapps/EmailListFeed.php';
 
