@@ -309,7 +309,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getUserFeed($location = null)
     {
@@ -332,7 +331,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getNicknameFeed($location = null)
     {
@@ -356,7 +354,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getEmailListFeed($location = null)
     {
@@ -379,7 +376,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getEmailListRecipientFeed($location)
     {
@@ -403,7 +399,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getUserEntry($location)
     {
@@ -427,7 +422,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getNicknameEntry($location)
     {
@@ -451,7 +445,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getEmailListEntry($location)
     {
@@ -475,7 +468,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function getEmailListRecipientEntry($location)
     {
@@ -503,7 +495,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function insertUser($user, $uri = null)
     {
@@ -527,7 +518,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function insertNickname($nickname, $uri = null)
     {
@@ -551,7 +541,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function insertEmailList($emailList, $uri = null)
     {
@@ -575,7 +564,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function insertEmailListRecipient($emailList, $uri = null)
     {
@@ -652,7 +640,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function createUser ($username, $givenName, $familyName, $password, 
             $passwordHashFunction = null, $quotaLimitInMB = null) {
@@ -707,7 +694,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrievePageOfUsers ($startUsername = null) {
         $query = $this->newUserQuery();
@@ -726,7 +712,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllUsers () {
         return $this->retrieveAllEntriesForFeed($this->retrievePageOfUsers());
@@ -749,7 +734,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function updateUser($username, $userEntry) {
         return $this->updateEntry($userEntry, $this->getBaseUrl() . 
@@ -766,7 +750,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function suspendUser($username) {
         $user = $this->retrieveUser($username);
@@ -784,7 +767,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function restoreUser($username) {
         $user = $this->retrieveUser($username);
@@ -800,7 +782,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function deleteUser($username) {
         $this->delete($this->getBaseUrl() . self::APPS_USER_PATH . '/' . 
@@ -818,7 +799,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function createNickname($username, $nickname) {
         $entry = $this->newNicknameEntry();
@@ -837,7 +817,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveNickname($nickname) {
         $query = $this->newNicknameQuery();
@@ -865,7 +844,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveNicknames($username) {
         $query = $this->newNicknameQuery();
@@ -887,7 +865,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrievePageOfNicknames ($startNickname = null) {
         $query = $this->newNicknameQuery();
@@ -906,7 +883,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllNicknames () {
         return $this->retrieveAllEntriesForFeed($this->retrievePageOfNicknames());
@@ -919,7 +895,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function deleteNickname($nickname) {
         $this->delete($this->getBaseUrl() . self::APPS_NICKNAME_PATH . '/' . $nickname);
@@ -934,7 +909,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function createEmailList($emailList) {
         $entry = $this->newEmailListEntry();
@@ -954,7 +928,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveEmailLists($recipient) {
         $query = $this->newEmailListQuery();
@@ -974,7 +947,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrievePageOfEmailLists ($startNickname = null) {
         $query = $this->newEmailListQuery();
@@ -993,7 +965,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllEmailLists() {
         return $this->retrieveAllEntriesForFeed($this->retrievePageOfEmailLists());
@@ -1006,7 +977,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function deleteEmailList($emailList) {
         $this->delete($this->getBaseUrl() . self::APPS_EMAIL_LIST_PATH . '/' 
@@ -1025,7 +995,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function addRecipientToEmailList($recipientAddress, $emailList) {
         $entry = $this->newEmailListRecipientEntry();
@@ -1051,7 +1020,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrievePageOfRecipients ($emailList, 
             $startRecipient = null) {
@@ -1073,7 +1041,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function retrieveAllRecipients($emailList) {
         return $this->retrieveAllEntriesForFeed(
@@ -1089,7 +1056,6 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @throws Zend_Gdata_App_Exception
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
-     * @return Zend_Gdata_App_Feed
      */
     public function removeRecipientFromEmailList($recipientAddress, $emailList) {
         $this->delete($this->getBaseUrl() . self::APPS_EMAIL_LIST_PATH . '/' 
