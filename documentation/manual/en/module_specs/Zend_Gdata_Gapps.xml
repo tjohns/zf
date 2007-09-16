@@ -455,7 +455,7 @@ echo 'Owner: ' . $nickname->login->username . "\n";
 
             <programlisting role="php"><![CDATA[<?php
 $query = $gdata->newNicknameQuery('bar');
-$nickname = $gdata->getNickname($query);
+$nickname = $gdata->getNicknameEntry($query);
 
 echo 'Nickname: ' . $nickname->nickname->name . "\n";
 echo 'Owner: ' . $nickname->login->username . "\n";
