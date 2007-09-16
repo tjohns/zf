@@ -177,7 +177,7 @@ $acl->addRole($roleGuest);
 $acl->addRole(new Zend_Acl_Role('staff'), $roleGuest);
 
 /* 另外, 上面的也可这样来写：
-$roleGuest = $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
+$acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 //*/
 
 // Editor 从 staff 继承
