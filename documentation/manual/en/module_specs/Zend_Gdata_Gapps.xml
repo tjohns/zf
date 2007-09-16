@@ -248,7 +248,7 @@ foreach ($feed as $user) {
 $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
-$user = $gdata->save();
+$user = $user->save();
 ?>]]></programlisting>
             
             <sect4 id="zend.gdata.gapps.users.updating.resettingPassword">
