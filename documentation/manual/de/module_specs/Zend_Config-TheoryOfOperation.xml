@@ -9,7 +9,14 @@
         Situationen kann das angebracht sein.
     </para>
     <para>
-        <code>Zend_Config</code> implementiert die Programmieradapter <code>Countable</code> und <code>Iterator</code>
+        Jeder Konfigurationswert des Arrays wird zu einer Eigenschaft des <code>Zend_Config</code> Objektes.
+        Der Schlüssel wird als Name der Eigenschaft verwendet. Wenn ein Wert selbst ein Array ist, wird die
+        resultierende Eigenschaft des Objektes selbst als ein neues <code>Zend_Config</code> Objekt erstellt und
+        mit den Array Daten geladen. Das findet rekursiv statt, sodas hirarchische Konfigurationswerte mit einer
+        beliebigen Anzahl an Level erstellt werden können. 
+    </para>
+    <para>
+        <code>Zend_Config</code> implementiert die Interfaces <code>Countable</code> und <code>Iterator</code>
         um den einfachen Zugriff auf Konfigurationsdaten zu gewährleisten. Dementsprechend kann man die
         <ulink url="http://php.net/count"><code>count()</code></ulink>-Funktion und auch PHP-Konstrukte wie
         <ulink url="http://php.net/foreach"><code>foreach</code></ulink> auf <code>Zend_Config</code>-Objekte
@@ -19,7 +26,10 @@
         Standardmäßig gewährt <code>Zend_Config</code> nur Lesezugriff auf die Daten und der Versuch einer
         Wertzuweisung (wie z. B. <code><![CDATA[$config->database->host = 'example.com']]></code>) löst eine
         Ausnahme aus. Dieses Standard-Verhalten kann mit Hilfe des Konstruktors aber so überschrieben werden,
-        dass die Veränderung von Daten erlaubt ist.
+        dass die Veränderung von Daten erlaubt ist. Wenn auch Änderungen erlaubt sind, unterstützt
+        <code>Zend_Config</code> das entfernen von Werten (z.B.
+        <code><![CDATA[unset($config->database->host);]]></code>).
+
         <note>
             <para>
                 Es muss angemerkt werden, dass hierbei nur die Daten im Speicher verändert werden. Es wird keine
