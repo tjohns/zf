@@ -257,7 +257,7 @@ foreach ($feed as $user) {
 $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
-$user = $gdata->save();
+$user = $user->save();
 ?>]]></programlisting>
             
             <sect4 id="zend.gdata.gapps.users.updating.resettingPassword">
@@ -463,7 +463,7 @@ echo '所有者: ' . $nickname->login->username . "\n";
 
             <programlisting role="php"><![CDATA[<?php
 $query = $gdata->newNicknameQuery('bar');
-$nickname = $gdata->getNickname($query);
+$nickname = $gdata->getNicknameEntry($query);
 
 echo 'ニックネーム: ' . $nickname->nickname->name . "\n";
 echo '所有者: ' . $nickname->login->username . "\n";

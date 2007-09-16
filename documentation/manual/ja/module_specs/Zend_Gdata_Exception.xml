@@ -50,7 +50,25 @@ try {
                     たとえば、カレンダーの可視性に "banana"
                     を指定したり、blog の名前を省略して Blogger のフィードを取得したりといった場合です。
                 </para>
-            </listitem>
+              </listitem>
+              <listitem>
+                <para>
+                  <code>Zend_Gdata_App_CaptchaRequiredException</code>
+                  は、ClientLogin を試みた際に認証サービスから
+                  <trademark>CAPTCHA</trademark> チャレンジを受け取った場合にスローされます。
+                  この例外の中には、トークン ID および
+                  <trademark>CAPTCHA</trademark> チャレンジ画像への URL
+                  が含まれています。この画像はパズルのようなもので、
+                  これをユーザに対して表示させる必要があります。
+                  チャレンジ画像に対するユーザからの応答を受け取ったら、
+                  それを用いて再度 ClientLogin を試みることができます。
+                  あるいは、ユーザが直接
+                  <ulink url="https://www.google.com/accounts/DisplayUnlockCaptcha"/>
+                  を使用することもできます。詳細な情報は
+                  <link linkend="zend.gdata.clientlogin">ClientLogin のドキュメント</link>
+                  を参照ください。
+                </para>
+              </listitem>
         </itemizedlist>
     </para>
 
@@ -69,8 +87,7 @@ try {
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data のサーバに接続できませんでした
-    die($httpEx->getMessage);
-}]]>
+    die($httpEx->getMessage);}]]>
     </programlisting>
 
 </sect1>

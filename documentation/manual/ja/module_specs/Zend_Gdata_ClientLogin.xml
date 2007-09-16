@@ -61,9 +61,23 @@
         </para>
 
         <para>
+          オプションの六番目のパラメータには、サーバが発行する
+          <trademark>CAPTCHA</trademark> チャレンジ用の文字列 ID を設定します。
+          これが必要となるのは、一度ログインを試みた際にサーバから
+          <trademark>CAPTCHA</trademark> チャレンジを受け取った後の再ログイン時のみです。
+        </para>
+
+        <para>
+          オプションの七番目のパラメータには、サーバが発行する
+          <trademark>CAPTCHA</trademark> チャレンジに対するユーザからの応答を設定します。
+          これが必要となるのは、一度ログインを試みた際にサーバから
+          <trademark>CAPTCHA</trademark> チャレンジを受け取った後の再ログイン時のみです。
+        </para>
+
+        <para>
             以下の例は、PHP のウェブアプリケーションのコードです。
             Google Calendar サービスに対する認証を行い、
-            認証済みの Http クライアントを使用して Zend_Gdata
+            認証済みの Zend_Http_Client を使用して Zend_Gdata
             クライアントオブジェクトを作成します。
         </para>
 
@@ -71,7 +85,14 @@
 // Google アカウントの情報を指定します
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';
-$client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
+try {
+   $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
+} catch (Zend_Gdata_App_CaptchaRequiredException $cre) {
+    echo 'CAPTCHA 画像の URL: ' . $cre->getCaptchaUrl() . "\n";
+    echo 'トークン ID: ' . $cre->getCaptchaToken() . "\n"; 
+} catch (Zend_Gdata_App_AuthException $ae) {
+   echo '認証に失敗: ' . $ae->exception() . "\n";
+}
 
 $cal = new Zend_Gdata_Calendar($client);]]>
         </programlisting>
