@@ -61,11 +61,11 @@
     </para>
     <para>
         If you have two <code>Zend_Config</code> objects, you can merge them into a single
-        object using the <code>merge()</code> function. For example, given $config and 
-        $localConfig, you can merge $localConfig into $config using 
-        <code>$config->merge($localConfig);</code>. The items in $localConfig will override 
-        the same named items in $config.
-    </paral
+        object using the <code>merge()</code> function. For example, given <code>$config</code> and
+        <code>$localConfig</code>, you can merge data from <code>$localConfig</code> to <code>$config</code> using
+        <code>$config->merge($localConfig);</code>. The items in <code>$localConfig</code> will override
+        any items with the same name in <code>$config</code>.
+    </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
