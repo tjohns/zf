@@ -23,6 +23,9 @@
     <para>
         <code>Zend_Config</code>适配器类支持单继承模型，它允许配置数据从一个节到另一个节被继承，这是为了为不同目的而减少或消除复制配置数据而提供的。一个继承的节也可以重写从父节继承过来的值。象PHP类继承，一个节可以从一个父节继承，这个父节可能是从祖父节继承的，等等，但是多重继承（例如，节C直接从父节A和B继承）不被支持。
     </para>
+    <para>
+        如果你有两个<code>Zend_Config</code>对象，你可以用<code>merge()</code>函数把它们合并成一个单个的对象。例如，对<code>$config</code>和<code>$localConfig</code>，使用<code>$config->merge($localConfig);</code>，你可以把数据从<code>$localConfig</code>合并到<code>$config</code。在<code>$localConfig</code>中的条目将覆盖在<code>$config</code>中同名的条目。
+    </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
