@@ -265,7 +265,33 @@ class Zend_Config implements Countable, Iterator
     {
         return $this->_loadedSection === null;
     }
-
+    
+    
+    /**
+     * Merge another Zend_Config with this one. The items
+     * in $merge will override the same named items in
+     * the current config.
+     *
+     * @param Zend_Config $merge
+     * @return Zend_Config
+     */
+    public function merge(Zend_Config $merge)
+    {
+        foreach($merge as $key => $item) {
+            if(array_key_exists($key, $this->_data)) {
+                if($item instanceof Zend_Config && $this->$key instanceof Zend_Config) {
+                    $this->$key = $this->$key->merge($item);
+                } else {
+                    $this->$key = $item;
+                }
+            } else {
+                $this->$key = $item;
+            }
+        }
+        
+        return $this;
+    }
+    
     /**
      * Throws an exception if $extendingSection may not extend $extendedSection,
      * and tracks the section extension if it is valid.

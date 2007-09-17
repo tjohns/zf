@@ -52,6 +52,13 @@
         which may inherit from a grandparent section, and so on, but multiple inheritance
         (i.e., section C inheriting directly from parent sections A and B) is not supported.
     </para>
+    <para>
+        If you have two <code>Zend_Config</code> objects, you can merge them into a single
+        object using the <code>merge()</code> function. For example, given $config and 
+        $localConfig, you can merge $localConfig into $config using 
+        <code>$config->merge($localConfig);</code>. The items in $localConfig will override 
+        the same named items in $config.
+    </paral
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
