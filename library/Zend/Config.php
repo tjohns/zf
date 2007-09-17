@@ -185,6 +185,21 @@ class Zend_Config implements Countable, Iterator
     {
         return isset($this->_data[$name]);
     }
+    
+    /**
+     * Support unset() overloading on PHP 5.1
+     *
+     * @param string $name
+     */
+    protected function __unset($name)
+    {
+        if ($this->_allowModifications) {
+            unset($this->_data[$name]);    
+        } else {
+            throw new Zend_Config_Exception('Zend_Config is read only');
+        }
+        
+    }    
 
     /**
      * Defined by Countable interface
