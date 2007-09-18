@@ -82,7 +82,7 @@ $feed = $spreadsheetService->getWorksheetFeed($query);]]>
             worksheet either as a list-based feed, in which each entry
             represents a row, or as a cell-based feed, in which each
             entry represents a single cell. For information on cell-based
-            feeds, see Interacting with cell-based feeds.
+            feeds, see <link linkend="zend.gdata.spreadsheets.cellfeeds">Interacting with cell-based feeds</link>.
         </para>
 
         <para>
