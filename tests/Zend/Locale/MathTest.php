@@ -26,6 +26,7 @@
  * Zend_Locale_Format
  */
 require_once 'Zend/Locale/Math.php';
+require_once 'Zend/Locale/Math/PhpMath.php';
 
 /**
  * PHPUnit test case
@@ -1355,5 +1356,159 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
         foreach ($rounder as $val => $precision) {
             $this->assertEquals((string)Zend_Locale_Math::round($val, $precision), (string) round($val, $precision));
         }
+    }
+
+    public function testAdd()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Add(1, 2), 3);
+        $this->assertEquals(Zend_Locale_Math_Add(null, 2), 2);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Add(9E+100, 9E+200), 2);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Add(10.4444, 4.5556, 2), 15);
+        $this->assertEquals(Zend_Locale_Math_Add(10.4444, 4.5556, 0), 15);
+        $this->assertEquals(Zend_Locale_Math_Add(-10.4444, -4.5556, 0), -15);
+    }
+
+    public function testSub()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Sub(1, 2), -1);
+        $this->assertEquals(Zend_Locale_Math_Sub(null, 2), -2);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Sub(-9E+100, -9E+200), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Sub(10.4444, 4.5556, 2), 5.89);
+        $this->assertEquals(Zend_Locale_Math_Sub(10.4444, 4.5556, 0), 5);
+        $this->assertEquals(Zend_Locale_Math_Sub(-10.4444, -4.5556, 0), -5);
+        $this->assertEquals(Zend_Locale_Math_Sub(10, 11, 2), -1);
+    }
+
+    public function testPow()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Pow(1, 2), 1);
+        $this->assertEquals(Zend_Locale_Math_Pow(null, 2), 0);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Pow(9E+300, 9E+200), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Pow(10.4444, 4.5556, 2), 43815.29);
+        $this->assertEquals(Zend_Locale_Math_Pow(10.4444, 4.5556, 0), 43815);
+        $this->assertEquals(Zend_Locale_Math_Pow(-10.4444, 4, 0), 11899);
+        $this->assertEquals(Zend_Locale_Math_Pow(10, 11, 2), 100000000000);
+    }
+
+    public function testMul()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Mul(1, 2), 2);
+        $this->assertEquals(Zend_Locale_Math_Mul(null, 2), 0);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Mul(9E+300, 9E+200), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Mul(10.4444, 4.5556, 2), 47.58);
+        $this->assertEquals(Zend_Locale_Math_Mul(10.4444, 4.5556, 0), 47);
+        $this->assertEquals(Zend_Locale_Math_Mul(-10.4444, 4, 0), -41);
+        $this->assertEquals(Zend_Locale_Math_Mul(10, 11, 2), 110);
+    }
+
+    public function testDiv()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Div(1, 2), 0);
+        $this->assertEquals(Zend_Locale_Math_Div(null, 2), 0);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Div(10, null), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        try {
+            $this->assertEquals(Zend_Locale_Math_Div(9E-300, 9E+200), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Div(10.4444, 4.5556, 2), 2.29);
+        $this->assertEquals(Zend_Locale_Math_Div(10.4444, 4.5556, 0), 2);
+        $this->assertEquals(Zend_Locale_Math_Div(-10.4444, 4, 0), -2);
+        $this->assertEquals(Zend_Locale_Math_Div(10, 11, 2), 0.91);
+    }
+
+    public function testComp()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Comp(1, 2), -1);
+        $this->assertEquals(Zend_Locale_Math_Comp(null, 2), -1);
+        $this->assertEquals(Zend_Locale_Math_Comp(9E+100, 9E+200), -1);
+        $this->assertEquals(Zend_Locale_Math_Comp(10.5556, 10.4444, 2), 1);
+        $this->assertEquals(Zend_Locale_Math_Comp(10.5556, 10.4444, 0), 0);
+        $this->assertEquals(Zend_Locale_Math_Comp(-10.4444, -4.5556, 0), -1);
+    }
+
+    public function testSqrt()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Sqrt(1), 1);
+        $this->assertEquals(Zend_Locale_Math_Sqrt(null), 0);
+        $this->assertEquals(Zend_Locale_Math_Sqrt(10.5556, 2), 3.25);
+        $this->assertEquals(Zend_Locale_Math_Sqrt(10.5556, 0), 3);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Sqrt(-10.4444, 0), -1);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+    }
+
+    public function testMod()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertEquals(Zend_Locale_Math_Mod(1, 2), 1);
+        $this->assertEquals(Zend_Locale_Math_Mod(null, 2), 0);
+        try {
+            $this->assertEquals(Zend_Locale_Math_Mod(10, null), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        try {
+            $this->assertEquals(Zend_Locale_Math_Mod(9E-300, 9E+200), 0);
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Mod(10.4444, 4.5556), 2);
+        $this->assertEquals(Zend_Locale_Math_Mod(10.4444, 4.5556), 2);
+        $this->assertEquals(Zend_Locale_Math_Mod(-10.4444, 4), -2);
+        $this->assertEquals(Zend_Locale_Math_Mod(10, 11), 10);
+    }
+
+    public function testScale()
+    {
+        Zend_Locale_Math_PhpMath::disable();
+        $this->assertTrue(Zend_Locale_Math_Scale(3));
+        try {
+            $this->assertTrue(Zend_Locale_Math_Scale(10));
+            $this->fail();
+        } catch (Zend_Locale_Math_Exception $e) {
+            // success
+        }
+        $this->assertEquals(Zend_Locale_Math_Comp(10.5556, 10.4444), 1);
+        $this->assertTrue(Zend_Locale_Math_Scale(0));
+        $this->assertEquals(Zend_Locale_Math_Comp(10.5556, 10.4444), 0);
     }
 }
