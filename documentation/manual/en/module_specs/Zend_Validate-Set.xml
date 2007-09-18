@@ -131,7 +131,9 @@
             and no greater than a maximum (when the max option is not <code>null</code>). Since version 1.1.0, the
             <code>setMin()</code> method throws an exception if the minimum length is set to a value greater than the
             set maximum length, and the <code>setMax()</code> method throws an exception if the maximum length is set
-            to a value less than than the set minimum length.
+            to a value less than than the set minimum length. Since version 1.0.2, this class supports UTF-8 and other
+            character encodings, based on the current value of
+            <ulink url="http://www.php.net/manual/en/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>.
         </para>
     </sect2>
 
