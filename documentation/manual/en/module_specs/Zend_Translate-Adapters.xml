@@ -36,23 +36,33 @@
                     <entry>GNU standard for linux; very fast; thread-safe; needs tools for translation</entry>
                 </row>
                 <row>
-                    <entry>TMX</entry>
+                    <entry>Tbx</entry>
+                    <entry>Use termbase exchange (*.tbx/*.xml) files</entry>
+                    <entry>Industry standard for inter application terminology strings; XML format</entry>
+                </row>
+                <row>
+                    <entry>Tmx</entry>
                     <entry>Use tmx (*.tmx/*.xml) files</entry>
                     <entry>Industry standard for inter application translation; XML format; human readable</entry>
                 </row>
                 <row>
-                    <entry>QT</entry>
+                    <entry>Qt</entry>
                     <entry>Use qt linguist (*.ts) files</entry>
                     <entry>Cross platform application framework; XML format; human readable</entry>
                 </row>
                 <row>
-                    <entry>XLIFF</entry>
+                    <entry>Xliff</entry>
                     <entry>Use xliff (*.xliff/*.xml) files</entry>
                     <entry>A simpler format as TMX but related to it; XML format; human readable</entry>
                 </row>
                 <row>
+                    <entry>XmlTm</entry>
+                    <entry>Use xmltm (*.xml) files</entry>
+                    <entry>Industry standard for XML document translation memory; XML format; human readable</entry>
+                </row>
+                <row>
                     <entry>Others</entry>
-                    <entry>*.sql, *.tbx, *.tm</entry>
+                    <entry>*.sql</entry>
                     <entry>Different other adapters may be implemented in the future</entry>
                 </row>
             </tbody>
@@ -134,6 +144,29 @@
             </para>
         </sect3>
 
+        <sect3 id="zend.translate.adapter.tbx">
+
+            <title>Zend_Translate_Adapter_Tbx</title>
+
+            <para>
+                The Tbx Adapter is an Adapter which will be used by customers
+                which already use the TBX format for their internal translation
+                system. Tbx is no standard translation format but more a collection
+                of already translated and pre translated source strings. When you
+                use this adapter you have to be sure that all your needed source
+                string are translated.
+                TBX is a XML file based format and a completly new format.
+                XML files are human-readable, but the parsing is not as fast
+                as with gettext files.
+            </para>
+
+            <para>
+                This adapter is perfect for companies when pre translated
+                source files already exist.
+                The files are human readable and system-independent.
+            </para>
+        </sect3>
+
         <sect3 id="zend.translate.adapter.tmx">
 
             <title>Zend_Translate_Adapter_Tmx</title>
@@ -189,6 +222,25 @@
 
             <para>
                 Most medium companies use this adapter.
+                The files are human readable and system-independent.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.translate.adapter.xmltm">
+
+            <title>Zend_Translate_Adapter_XmlTm</title>
+
+            <para>
+                The XmlTm Adapter is the Adapter which will be used by customers
+                which do their layout themself. XmlTm is a format which allows the
+                complete html source to be included in the translation source, so
+                the translation is coupled with the layout.
+                XLIFF is a XML file based format, which is related to XLIFF but
+                its not as simple to read.
+            </para>
+
+            <para>
+                This adapter sould only be used when source files already exist.
                 The files are human readable and system-independent.
             </para>
         </sect3>

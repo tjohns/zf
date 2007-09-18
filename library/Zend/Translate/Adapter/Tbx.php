@@ -36,16 +36,17 @@ require_once 'Zend/Translate/Adapter.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
+class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
     // Internal variables
     private $_file        = false;
     private $_cleared     = array();
-    private $_lang        = null;
+    private $_langset     = null;
+    private $_termentry   = null;
     private $_content     = null;
-    private $_tag         = null;
+    private $_defined     = false;
 
     /**
-     * Generates the xmltm adapter
+     * Generates the tbx adapter
      * This adapter reads with php's xml_parser
      *
      * @param  string              $data     Translation data
@@ -59,21 +60,24 @@ class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
 
 
     /**
-     * Load translation data (XMLTM file reader)
+     * Load translation data (TBX file reader)
      *
-     * @param  string  $locale    Locale/Language to add data for, identical with locale identifier,
-     *                            see Zend_Locale for more information
-     * @param  string  $filename  XMLTM file to add, full path must be given for access
+     * @param  string  $filename  TBX file to add, full path must be given for access
+     * @param  string  $locale    Locale has no effect for TBX because TBX defines all languages within
+     *                            the source file
      * @param  array   $option    OPTIONAL Options to use
      * @throws Zend_Translation_Exception
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
         $options = array_merge($this->_options, $options);
-        $this->_lang = $locale;
 
-        if ($options['clear']  ||  !isset($this->_translate[$locale])) {
-            $this->_translate[$locale] = array();
+        if ($options['clear']) {
+            $this->_translate = array();
+        }
+
+        if ((in_array('defined_language', $options)) and !empty($options['defined_language'])) {
+            $this->_defined = true;
         }
 
         if (!is_readable($filename)) {
@@ -92,13 +96,34 @@ class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
                       xml_get_current_line_number($this->_file)));
             xml_parser_free($this->_file);
         }
+
+        if ($this->_defined !== true) {
+            foreach ($this->_translate as $key => $value) {
+                if (!in_array($key, $this->_languages)) {
+                    $this->_languages[$key] = $key;
+                }
+            }
+        }
     }
 
     private function _startElement($file, $name, $attrib)
     {
         switch(strtolower($name)) {
-            case 'tm:tu':
-                $this->_tag     = $attrib['id'];
+            case 'termentry':
+                $this->_termentry = null;
+                break;
+            case 'langset':
+                if (array_key_exists('xml:lang', $attrib)) {
+                    $this->_langset = $attrib['xml:lang'];
+                    if (!array_key_exists($this->_langset, $this->_translate)) {
+                        $this->_translate[$this->_langset] = array();
+                    }
+                    if (!array_key_exists($this->_langset, $this->_languages) and ($this->_defined === true)) {
+                        $this->_languages[$this->_langset] = $this->_langset;
+                    }
+                }
+                break;
+            case 'term':
                 $this->_content = null;
                 break;
             default:
@@ -109,13 +134,16 @@ class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
     private function _endElement($file, $name)
     {
         switch (strtolower($name)) {
-            case 'tm:tu':
-                if (!empty($this->_tag) and !empty($this->_content) or
-                    !array_key_exists($this->_tag, $this->_translate[$this->_lang])) {
-                    $this->_translate[$this->_lang][$this->_tag] = $this->_content;
+            case 'langset':
+                $this->_langset = null;
+                break;
+            case 'term':
+                if (empty($this->_termentry)) {
+                    $this->_termentry = $this->_content;
                 }
-                $this->_tag     = null;
-                $this->_content = null;
+                if (!empty($this->_content) or !array_key_exists($this->_termentry, $this->_translate[$this->_langset])) {
+                    $this->_translate[$this->_langset][$this->_termentry] = $this->_content;
+                }
                 break;
             default:
                 break;
@@ -124,7 +152,7 @@ class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
 
     private function _contentElement($file, $data)
     {
-        if (($this->_tag !== null)) {
+        if ($this->_langset !== null) {
             $this->_content .= $data;
         }
     }
@@ -136,6 +164,6 @@ class Zend_Translate_Adapter_XmlTm extends Zend_Translate_Adapter {
      */
     public function toString()
     {
-        return "XmlTm";
+        return "Tbx";
     }
 }
