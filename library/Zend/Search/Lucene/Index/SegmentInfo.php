@@ -413,6 +413,16 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
+     * Returns array of FieldInfo objects.
+     *
+     * @return array
+     */
+    public function getFieldInfos()
+    {
+        return $this->_fields;
+    }
+
+    /**
      * Returns actual deletions file generation number.
      *
      * @return integer
