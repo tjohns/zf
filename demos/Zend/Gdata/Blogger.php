@@ -43,7 +43,7 @@ Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  2005 Zend Technologies
- * @license    http://www.zend.com/license/3_0.txt   PHP License 3.0
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class SimpleCRUD
 {

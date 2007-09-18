@@ -28,7 +28,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @subpackage UnitTests
  * @version    $Id$
  * @copyright 
- * @license
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase 
 {

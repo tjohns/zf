@@ -1024,6 +1024,35 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Ensures that a role-inherited assertion is passed the role to which the isAllowed() query applies
+     *
+     * @return void
+     */
+    public function testInheritedAssertionGetsQueryRole()
+    {
+        // create parent and child roles
+        $roleParent = new Zend_Acl_Role('parent');
+        $roleChild = new Zend_Acl_Role('child');
+
+        // register the roles to the ACL
+        $this->_acl->addRole($roleParent)
+                   ->addRole($roleChild, 'parent');
+
+        // allow the parent role access to everything under condition of successful assertion
+        $assertTrue = new Zend_AclTest_AssertTrue();
+        $this->_acl->allow('parent', null, null, $assertTrue);
+
+        // ensure that the child role is allowed access to everything
+        $this->assertTrue($this->_acl->isAllowed('child'));
+
+        // ensure that the assertion object was queried only once
+        $this->assertEquals(1, count($assertTrue->assertParameters));
+
+        // ensure that the assertion object was passed the queried role (child role)
+        $this->assertSame($roleChild, $assertTrue->assertParameters[0]['role']);
+    }
+
 }
 
 
@@ -1032,16 +1061,26 @@ class Zend_AclTest_AssertFalse implements Zend_Acl_Assert_Interface
     public function assert(Zend_Acl $acl, Zend_Acl_Role_Interface $role = null, Zend_Acl_Resource_Interface $resource = null,
                            $privilege = null)
     {
-       return false;
+        return false;
     }
 }
 
 
 class Zend_AclTest_AssertTrue implements Zend_Acl_Assert_Interface
 {
+    public $assertParameters = array();
+
     public function assert(Zend_Acl $acl, Zend_Acl_Role_Interface $role = null, Zend_Acl_Resource_Interface $resource = null,
                            $privilege = null)
     {
-       return true;
+        $this->assertParameters[] = array(
+            'acl'       => $acl,
+            'role'      => $role,
+            'resource'  => $resource,
+            'privilege' => $privilege
+            );
+
+        return true;
     }
 }
+

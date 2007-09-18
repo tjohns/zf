@@ -16,7 +16,7 @@
  * @package      Zend_Gdata
  * @subpackage   UnitTests
  * @copyright    Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com);
- * @license      http://framework.zend.com/license/new-bsd     New BSD License
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 require_once 'Zend/Gdata/Extension/OpenSearchItemsPerPage.php';
