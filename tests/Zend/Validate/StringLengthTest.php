@@ -67,6 +67,7 @@ class Zend_Validate_StringLengthTest extends PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
+        iconv_set_encoding('internal_encoding', 'UTF-8');
         /**
          * The elements of each array are, in order:
          *      - minimum length
@@ -81,7 +82,9 @@ class Zend_Validate_StringLengthTest extends PHPUnit_Framework_TestCase
             array(2, 2, false, array('a', 'abc')),
             array(1, null, false, array('')),
             array(2, 3, true, array('ab', 'abc')),
-            array(2, 3, false, array('a', 'abcd'))
+            array(2, 3, false, array('a', 'abcd')),
+            array(3, 3, true, array('äöü')),
+            array(6, 6, true, array('Müller'))
             );
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_StringLength($element[0], $element[1]);
