@@ -79,7 +79,8 @@ $feed = $spreadsheetService->getWorksheetFeed($query);]]>
             ワークシートのデータを取得するには、リストベースのフィード
             (各エントリがひとつの行を表す) かあるいはセルベースのフィード
             (各エントリがひとつのセルを表す) を使用します。
-            セルベースのフィードについては、「セルベースのフィードの扱い」
+            セルベースのフィードについては、
+            「<link linkend="zend.gdata.spreadsheets.cellfeeds">セルベースのフィードの扱い</link>」
             を参照ください。
         </para>
 
@@ -245,7 +246,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);]]>
+$updatedListEntry = $spreadsheetService->updateRow($oldListEntry, $newRowData);]]>
             </programlisting>
 
             <para>
