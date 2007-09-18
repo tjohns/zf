@@ -146,7 +146,7 @@ class Zend_Validate_StringLength extends Zend_Validate_Abstract
     {
         $valueString = (string) $value;
         $this->_setValue($valueString);
-        $length = strlen($valueString);
+        $length = iconv_strlen($valueString);
         if ($length < $this->_min) {
             $this->_error(self::TOO_SHORT);
         }
