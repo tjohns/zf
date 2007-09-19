@@ -4,23 +4,18 @@
 
     <sect2 id="zend.acl.advanced.storing">
 
-        <title>Постоянное хранение данных ACL<!--Storing ACL Data for Persistence--></title>
+        <title>Постоянное хранение данных ACL</title>
 
         <para>
             Zend_Acl спроектирован таким образом, что не требует для хранения
-            данных ACL использования определенных технологий хранения - таких,
-            как база данных или сервер кеша. Его реализация на чистом PHP
+            данных ACL использования строго определенных технологий хранения -
+            таких, как база данных или сервер кеша. Его реализация на чистом PHP
             позволяет создавать административные инструменты под управлением
             Zend_Acl с относительной простотой и гибкостью.
             Многие ситуации требуют некоторой интерактивной поддержки от ACL, и
             Zend_Acl предоставляет методы для настройки, произведения запросов,
             контроля доступа приложением.
-<!--     Zend_Acl was designed in such a way that it does not require any particular backend technology such
-        as a database or cache server for storage of the ACL data. Its complete PHP implementation enables
-        customized administration tools to be built upon Zend_Acl with relative ease and flexibility. Many
-        situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods
-        setting up, and querying against, the access controls of an application.
---></para>
+       </para>
 
         <para>
             Тем не менее, хранение данных ACL остается задачей разработчика,
@@ -30,33 +25,22 @@
             <ulink url="http://php.net/serialize"><code>serialize()</code></ulink>,
             и результаты можно хранить там, где пожелает разработчик - например,
             в файле, базе данных или с помощью механизма кэширования.
-<!--    Storage of ACL data is therefore left as a task for the developer, since use cases are expected to
-        vary widely for various situations. Because Zend_Acl is serializable, ACL objects may be serialized
-        with PHP's <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> function, and the
-        results may be stored anywhere the developer should desire, such as a file, database, or caching
-        mechanism.
- -->
      </para>
 
     </sect2>
 
     <sect2 id="zend.acl.advanced.assertions">
 
-        <title>Написание условных правил ACL с утверждениями<!-- Writing Conditional ACL Rules with Assertions --></title>
+        <title>Написание условных правил ACL с утверждениями</title>
 
         <para>
-            Иногда правило разрешения или запрета доступа Роли к Ресурсу должно
+            Иногда правило разрешения или запрета доступа роли к ресурсу должно
             быть не безусловным, а зависеть от различных критериев. Например,
             определенный доступ должен быть разрешен, но только с 8:00 до 17:00.
             Другой пример - доступ должен быть запрещен, если запрос поступил
-            с IP-адреса, находящегося в "черном списке". В Zend_Acl имеет
+            с IP-адреса, находящегося в "черном списке". Zend_Acl имеет
             встроеную поддержку для применения правил, основанных на любых
             нужных разработчику условиях.
-<!--         Sometimes a rule for allowing or denying an Role access to a Resource should not be absolute but dependent
-        upon various criteria. For example, suppose that certain access should be allowed, but only between the
-        hours of 8:00am and 5:00pm. Another example would be denying access because a request comes from an
-        IP address that has been flagged as a source of abuse. Zend_Acl has built-in support for implementing
-        rules based on whatever conditions the developer needs. -->
         </para>
 
         <para>
@@ -65,10 +49,6 @@
             Чтобы использовать интерфейс утверждений, разработчик должен
             написать класс, который реализует метод <code>assert()</code>
             интерфейса:
-<!-- Zend_Acl provides support for conditional rules with <code>Zend_Acl_Assert_Interface</code>. In order
-        to use the rule assertion interface, a developer writes a class that implements the
-        <code>assert()</code> method of the interface:
-         -->
          </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -86,56 +66,45 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]></programlisting>
+}]]>
+        </programlisting>
 
         <para>
             После объявления класса утверждения разработчик должен передавать
             экземпляр этого класса при определении условных правил. Правило,
             которое создается с утверждением, применяется
             только тогда, когда метод утверждения возвращает true.
-<!-- Once an assertion class is available, the developer must supply an instance of the assertion class
-        when assigning conditional rules. A rule that is created with an assertion only applies when the
-        assertion method returns true.
-         --></para>
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]></programlisting>
+$acl->allow(null, null, null, new CleanIPAssertion());]]>
+        </programlisting>
 
         <para>
-            Представленный выше код создает условное правило, которое разрешает
+            Код выше создает условное правило, разрешающее
             всем доступ ко всем привилегиям всех ресурсов, за исключением
             случаев, когда IP-адрес запрашивающего занесен в "черный список".
             Если запрос приходит с IP-адреса, который не определяется как
             "белый", то правило не применяется.
-            Поскольку правило применяется ко всем Ролям, всем Ресурсам и всем
+            Поскольку правило применяется ко всем ролям, всем ресурсам и всем
             привилегиям, то "черный" IP приведет к запрещению доступа.
             Тем не менее, это особый случай, и следует понимать, что во всех
-            других случаях (например, когда для правила были указаны Роль,
-            Ресурс, или привилегия), невыполнение утверждения приводит к тому,
+            других случаях (например, когда для правила были указаны роль,
+            ресурс, или привилегия), невыполнение утверждения приводит к тому,
             что правило не применяется, и для определения того, реазрешить ли
             доступ или запретить, могут использоваться другие правила.
-<!-- The above code creates a conditional allow rule that allows access to all privileges on everything
-        by everyone, except when the requesting IP is "blacklisted." If a request comes in from an IP that
-        is not considered "clean," then the allow rule does not apply. Since the rule applies to all Roles,
-        all Resources, and all privileges, an "unclean" IP would result in a denial of access. This is a special
-        case, however, and it should be understood that in all other cases (i.e., where a specific Role,
-        Resource, or privilege is specified for the rule), a failed assertion results in the rule not applying,
-        and other rules would be used to determine whether access is allowed or denied.
-         --></para>
+        </para>
 
         <para>
             Методу <code>assert()</code> объекта утверждения передаются ACL,
-            Роль, Ресурс и привилегия, к которым применяется запрос на
+            роль, ресурс и привилегия, к которым применяется запрос на
             авторизацию (например, <code>isAllowed()</code>). Это нужно для
             предоставления контекста классу утверждения и определения его
             условий там, где это нужно.
-<!-- The <code>assert()</code> method of an assertion object is passed the ACL, Role, Resource, and privilege
-        to which the authorization query (i.e., <code>isAllowed()</code>) applies, in order to provide
-        a context for the assertion class to determine its conditions where needed.
-         --></para>
+        </para>
 
     </sect2>
 
