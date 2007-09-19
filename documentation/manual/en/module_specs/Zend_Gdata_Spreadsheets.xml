@@ -251,7 +251,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData, $spreadsheetKey, $
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-$updatedListEntry = $spreadsheetService->insertRow($oldListEntry, $newRowData);
+$updatedListEntry = $spreadsheetService->updateRow($oldListEntry, $newRowData);
 ?>]]></programlisting>
 
             <para>
