@@ -156,4 +156,4 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown');    
     }
 }
-?>
+

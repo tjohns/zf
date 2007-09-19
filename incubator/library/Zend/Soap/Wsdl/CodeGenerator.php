@@ -118,4 +118,4 @@ class Zend_Soap_Wsdl_CodeGenerator {
         return $php_code;
     }
 }
-?>
+

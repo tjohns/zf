@@ -71,4 +71,4 @@ class Zend_Cache_OutputFrontendTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('foobar', $data);
     }
 }
-?>
+

@@ -534,4 +534,4 @@ EOT;
 */
 } // End of class Zend_Json_JsonXMLTest
 
-?>
+

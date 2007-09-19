@@ -254,4 +254,4 @@ if (PHPUnit_MAIN_METHOD == "Zend_Controller_Plugin_ErrorHandlerTest::main")
 {
     Zend_Controller_Plugin_ErrorHandlerTest::main();
 }
-?>
+

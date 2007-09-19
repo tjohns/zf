@@ -265,4 +265,4 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         }
     }
 }
-?>
+

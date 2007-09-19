@@ -4,4 +4,3 @@ $confluenceWsdl  = 'http://framework.zend.com/wiki//rpc/soap-axis/confluenceserv
 $confluenceUser  = '';
 $confluencePass  = '';
 
-?>

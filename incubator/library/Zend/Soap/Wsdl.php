@@ -373,4 +373,4 @@ class Zend_Soap_Wsdl {
     }
 }
 
-?>
+

@@ -43,4 +43,4 @@ class Zend_Soap_Wsdl_Parser_Result {
     }
 }
 
-?>
+

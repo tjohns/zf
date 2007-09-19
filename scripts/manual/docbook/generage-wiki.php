@@ -334,4 +334,3 @@ if (count($book->chapter)) {
     }
 }
 
-?>

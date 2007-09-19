@@ -349,4 +349,4 @@ if (($user == null) || ($pass == null)) {
 $sample = new SimpleCRUD($user, $pass); 
 $sample->run();
 
-?>
+

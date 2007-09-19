@@ -176,4 +176,4 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('DEBUG HEADER : This is a cached page !foo', $data);
     }   
 }
-?>
+

@@ -78,4 +78,4 @@ class Zend_Cache_ZendPlatformBackendTest extends Zend_Cache_CommonBackendTest {
     public function testCleanModeNotMatchingTags() {}
 }
 
-?>
+
