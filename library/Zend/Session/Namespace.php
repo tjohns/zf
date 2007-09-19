@@ -300,14 +300,14 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
 
     /**
      * apply() - enables applying user-selected function, such as array_merge() to the namespace
+     * Parameters following the $callback argument are passed to the callback function.
      * Caveat: ignores members expiring now.
      *
      * Example:
      *   $namespace->apply('array_merge', array('tree' => 'apple', 'fruit' => 'peach'), array('flower' => 'rose'));
      *   $namespace->apply('count');
      *
-     * @param string $callback - callback function
-     * @param mixed  OPTIONAL arguments passed to the callback function
+     * @param string|array $callback - callback function
      */
     public function apply($callback)
     {
@@ -319,13 +319,14 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
 
     /**
      * applySet() - enables applying user-selected function, and sets entire namespace to the result
-     * Result of $callback must be an array. Caveat: ignores members expiring now.
+     * Result of $callback must be an array.
+     * Parameters following the $callback argument are passed to the callback function.
+     * Caveat: ignores members expiring now.
      *
      * Example:
      *   $namespace->applySet('array_merge', array('tree' => 'apple', 'fruit' => 'peach'), array('flower' => 'rose'));
      *
-     * @param string $callback - callback function
-     * @param mixed  OPTIONAL arguments passed to the callback function
+     * @param string|array $callback - callback function
      */
     public function applySet($callback)
     {
@@ -337,7 +338,7 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
              * @see Zend_Session_Exception
              */
             require_once 'Zend/Session/Exception.php';
-            throw new Zend_Session_Exception("Result must be an array. Got: " . gettype($result));
+            throw new Zend_Session_Exception('Result must be an array. Got: ' . gettype($result));
         }
         $_SESSION[$this->_namespace] = $result;
         return $result;
