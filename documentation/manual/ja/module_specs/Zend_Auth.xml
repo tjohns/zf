@@ -291,7 +291,7 @@ $result = $auth->authenticate($authAdapter);]]>
 
                 <para>
                     ID を持続させるストレージクラスを
-                    <code>Zend_Auth_Storage_Session</code> のかわりに使用するには、
+                    <code>Zend_Auth_Storage_Session</code> の代わりに使用するには、
                     <code>Zend_Auth_Storage_Interface</code> を実装します。
 
                     <programlisting role="php"><![CDATA[<?php
