@@ -213,7 +213,7 @@ class Zend_Controller_Action_Helper_FlashMessenger extends Zend_Controller_Actio
             return new ArrayObject($this->getMessages());
         }
 
-        return ArrayObject();
+        return new ArrayObject();
     }
 
     /**
