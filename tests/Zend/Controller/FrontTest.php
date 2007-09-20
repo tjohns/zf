@@ -364,6 +364,16 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/index.php', $this->_controller->getBaseUrl());
     }
 
+    public function testSetGetBaseUrlPopulatesRequest()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $this->_controller->setRequest($request);
+        $this->_controller->setBaseUrl('/index.php');
+        $this->assertEquals('/index.php', $request->getBaseUrl());
+
+        $this->assertEquals($request->getBaseUrl(), $this->_controller->getBaseUrl());
+    }
+
     public function testSetBaseUrlThrowsExceptionOnNonString()
     {
         try {
