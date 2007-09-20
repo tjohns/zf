@@ -266,7 +266,7 @@ $result = $auth->authenticate($authAdapter);]]>
                 <title>Using a Custom Storage Class</title>
 
                 <para>
-                    In order to use a identity persistence storage class other than
+                    In order to use an identity persistence storage class other than
                     <code>Zend_Auth_Storage_Session</code>, a developer implements
                     <code>Zend_Auth_Storage_Interface</code>:
 
