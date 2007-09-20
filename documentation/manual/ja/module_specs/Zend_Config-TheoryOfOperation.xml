@@ -39,7 +39,7 @@
         コンストラクタでこの振る舞いを変更し、データの変更を許可することも可能です。
         また、変更を許可した場合には、<code>Zend_Config</code>
         は値の設定の解除もサポートしています
-        (<code><![CDATA[unset($config->database->host);]></code> とします)。
+        (<code><![CDATA[unset($config->database->host);]]></code> とします)。
         <note>
             <para>
                 メモリ上で変更したデータを何らかのメディアに保存しようとする際に、
