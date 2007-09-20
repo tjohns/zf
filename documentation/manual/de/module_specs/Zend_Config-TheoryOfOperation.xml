@@ -60,9 +60,9 @@
     <para>
         Wenn zwei <code>Zend_Config</code> Objekte vorhanden sind, können diese in ein einzelnes Objekt
         zusammengeführt werden indem die <code>merge()</code> Funktion verwendet wird. Angenommen es gibt
-        $config und $localConfig, kann $localConfig in $config zusammengeführt werden indem
-        <code>$config->merge($localConfig);</code> aufgerufen wird. Die Elemente in $localConfig überschreiben
-        gleichnamige Elemente in $config.
+        <code>$config</code> und <code>$localConfig</code>, kann <code>$localConfig</code> in <code>$config</code>
+        zusammengeführt werden indem <code>$config->merge($localConfig);</code> aufgerufen wird.
+        Die Elemente in <code>$localConfig</code> überschreiben gleichnamige Elemente in <code>$config</code>.
     </para>
 </sect1>
 <!--
