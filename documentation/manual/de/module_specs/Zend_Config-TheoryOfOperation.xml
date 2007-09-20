@@ -57,6 +57,13 @@
         wiederum von einer Großeltern-Sektion geerbt hat und so weiter. Mehrfaches Erben (Beispielsweise der Fall,
         dass Sektion C direkt von den Eltern-Sektionen A und B erbt) wird dagegen nicht unterstützt.
     </para>
+    <para>
+        Wenn zwei <code>Zend_Config</code> Objekte vorhanden sind, können diese in ein einzelnes Objekt
+        zusammengeführt werden indem die <code>merge()</code> Funktion verwendet wird. Angenommen es gibt
+        $config und $localConfig, kann $localConfig in $config zusammengeführt werden indem
+        <code>$config->merge($localConfig);</code> aufgerufen wird. Die Elemente in $localConfig überschreiben
+        gleichnamige Elemente in $config.
+    </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
