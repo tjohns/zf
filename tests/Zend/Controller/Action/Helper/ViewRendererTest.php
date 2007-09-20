@@ -291,6 +291,21 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertTrue($this->helper->getNeverRender());
     }
 
+    public function testNeverRenderFlagDisablesRendering()
+    {
+        $this->helper->setNeverRender();
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('test')
+                      ->setDispatched(true);
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+        $this->helper->setActionController($controller);
+        $this->helper->postDispatch();
+
+        $content = $this->response->getBody();
+        $this->assertNotContains('Rendered index/test.phtml', $this->response->getBody());
+    }
+
     public function testNoRenderFlag()
     {
         $this->assertFalse($this->helper->getNoRender());

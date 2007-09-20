@@ -46,6 +46,9 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         $this->front->setParam('noViewRenderer', true)
                     ->setParam('noErrorHandler', true);
         Zend_Controller_Action_HelperBroker::resetHelpers();
+
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $viewRenderer->setActionController();
     }
     
     public function testLoadingAndReturningHelper()
@@ -214,6 +217,62 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         $helpers = Zend_Controller_Action_HelperBroker::getExistingHelpers();
         $this->assertTrue(is_array($helpers));
         $this->assertEquals(1, count($helpers));
+    }
+
+    public function testHelperPullsResponseFromRegisteredActionController()
+    {
+        $helper = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+
+        $aRequest   = new Zend_Controller_Request_Http();
+        $aRequest->setModuleName('default')
+                 ->setControllerName('zend_controller_action_helper-broker')
+                 ->setActionName('index');
+        $aResponse  = new Zend_Controller_Response_Cli();
+        $controller = new Zend_Controller_Action_HelperBrokerController($aRequest, $aResponse, array());
+
+        $fRequest   = new Zend_Controller_Request_Http();
+        $fRequest->setModuleName('foo')
+                 ->setControllerName('foo-bar')
+                 ->setActionName('baz');
+        $fResponse  = new Zend_Controller_Response_Cli();
+        $this->front->setRequest($fRequest)
+                    ->setResponse($fResponse);
+
+        $helper->setActionController($controller);
+
+        $hRequest  = $helper->getRequest();
+        $this->assertSame($hRequest, $aRequest);
+        $this->assertNotSame($hRequest, $fRequest);
+        $hResponse = $helper->getResponse();
+        $this->assertSame($hResponse, $aResponse);
+        $this->assertNotSame($hResponse, $fResponse);
+    }
+
+    public function testHelperPullsResponseFromFrontControllerWithNoRegisteredActionController()
+    {
+        $helper = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $this->assertNull($helper->getActionController());
+
+        $aRequest   = new Zend_Controller_Request_Http();
+        $aRequest->setModuleName('default')
+                 ->setControllerName('zend_controller_action_helper-broker')
+                 ->setActionName('index');
+        $aResponse  = new Zend_Controller_Response_Cli();
+
+        $fRequest   = new Zend_Controller_Request_Http();
+        $fRequest->setModuleName('foo')
+                 ->setControllerName('foo-bar')
+                 ->setActionName('baz');
+        $fResponse  = new Zend_Controller_Response_Cli();
+        $this->front->setRequest($fRequest)
+                    ->setResponse($fResponse);
+
+        $hRequest  = $helper->getRequest();
+        $this->assertNotSame($hRequest, $aRequest);
+        $this->assertSame($hRequest, $fRequest);
+        $hResponse = $helper->getResponse();
+        $this->assertNotSame($hResponse, $aResponse);
+        $this->assertSame($hResponse, $fResponse);
     }
 }
 
