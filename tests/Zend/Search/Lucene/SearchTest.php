@@ -306,4 +306,28 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
     }
+
+    public function testLimitingResult()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_files/_indexSample');
+
+        $storedResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
+
+        Zend_Search_Lucene::setResultSetLimit(3);
+
+        $hits = $index->find('"reporting bugs"', 'path');
+
+        $this->assertEquals(count($hits), 3);
+        $expectedResultset = array(array(7, 0.212395, 'IndexSource/contributing.bugs.html'),
+                                   array(0, 0.247795, 'IndexSource/contributing.documentation.html'),
+                                   array(2, 0.176996, 'IndexSource/contributing.patches.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+
+        Zend_Search_Lucene::setResultSetLimit($storedResultSetLimit);
+    }
 }
