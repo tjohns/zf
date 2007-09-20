@@ -49,6 +49,20 @@ try {
                     soll ohne einen Blog Namen zu spezifizieren.
                 </para>
             </listitem>
+              <listitem>
+                <para>
+                    <code>Zend_Gdata_App_CaptchaRequiredException</code> wird geworfen wenn ein ClientLogin
+                    Versuch stattfindet und eine <trademark>CAPTCHA</trademark> Challenge vom Authentifikations
+                    Service empfangen wird. Diese Ausnahme enthält eine Token ID und eine URL zu einem
+                    <trademark>CAPTCHA</trademark> Challenge Bild. Dieses Bild ist ein visuelles Puzzle das dem
+                    Benutzer angezeigt werden sollte. Nachdem die Antwort des Benutzers auf dieses Challenge
+                    Bild gesammelt wurde, kann die Antwort im nächsten ClientLogin Versuch inkludiert werden.
+                    Alternativ kann der Benutzer direkt zu dieser Webseite geleitet werden:
+                    <ulink url="https://www.google.com/accounts/DisplayUnlockCaptcha"/>
+                    Weitere Informationen können in der
+                    <link linkend="zend.gdata.clientlogin">ClientLogin Dokumentation</link> gefunden werden.
+                </para>
+            </listitem>
         </itemizedlist>
     </para>
 
@@ -67,8 +81,7 @@ try {
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data Server konnten nicht erreicht werden.
-    die($httpEx->getMessage);
-}]]>
+    die($httpEx->getMessage);}]]>
     </programlisting>
 
 </sect1>

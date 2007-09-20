@@ -53,16 +53,36 @@
         </para>
 
         <para>
+            Der optionale sechste Parameter ist eine String ID für eine <trademark>CAPTCHA</trademark> Challenge
+            die vom Server angefordert wird. Er wird nur benötigt wenn eingeloggt werden soll nachdem eine
+            <trademark>CAPTCHA</trademark> Challenge von einem vorhergehenden Login Versuch empfangen wurde.
+        </para>
+
+        <para>
+            Der optionale siebente Parameter ist die Antwort des Benutzer's zu einer
+            <trademark>CAPTCHA</trademark> Challenge die von dem Server angefordert wurde. Er wird nur benötigt
+            wenn eingeloggt werden soll nachdem eine <trademark>CAPTCHA</trademark> Challenge von einem
+            vorhergehenden Login Versuch empfangen wurde.
+        </para>
+
+        <para>
             Anbei ist ein Beispiel in PHP Code für eine Web Anwendung die Authentifizierung benötigt um das
             Google Calendar Service zu verwenden und ein Zend_Gdata Client Objekt zu erstellen das diesen
-            authentifizierten Http Client verwendet.
+            authentifizierten Zend_Http_Client verwendet.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 // Die Google Zugangdaten angeben
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';
-$client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
+try {
+   $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
+} catch (Zend_Gdata_App_CaptchaRequiredException $cre) {
+    echo 'URL des CAPTCHA Bildes: ' . $cre->getCaptchaUrl() . "\n";
+    echo 'Token ID: ' . $cre->getCaptchaToken() . "\n"; 
+} catch (Zend_Gdata_App_AuthException $ae) {
+   echo 'Authentifizierungs Problem: ' . $ae->exception() . "\n";
+}
 
 $cal = new Zend_Gdata_Calendar($client);]]>
         </programlisting>
