@@ -1459,13 +1459,13 @@ echo "The table name is " . $info['name'] . "\n";
 
             В обоих случаях определением кэша может быть <code>null</code>
             (т.е. не используется кэширование) или экземпляр класса
-            <link linkend="zend.cache.core"><code>Zend_Cache_Core</code></link>.
+            <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>.
             Эти методы могут использоваться вместе для того, чтобы
             использовать по умолчанию определенный объект кэша и при этом иметь
             возможность изменять его для конкретного объекта таблицы.
 <!--
             In both cases, the cache specification must be either <code>null</code> (i.e., no cache used) or an
-            instance of <link linkend="zend.cache.core"><code>Zend_Cache_Core</code></link>. The methods may be used
+            instance of <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>. The methods may be used
             in conjunction when it is desirable to have both a default metadata cache and the ability to change the
             cache for individual table objects.
 -->
