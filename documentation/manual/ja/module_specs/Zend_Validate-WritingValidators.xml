@@ -240,17 +240,17 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
             $isValid = false;
         }
 
-        if (!preg_match('/[A-Z]/', $value) {
+        if (!preg_match('/[A-Z]/', $value)) {
             $this->_error(self::UPPER);
             $isValid = false;
         }
 
-        if (!preg_match('/[a-z]/', $value) {
+        if (!preg_match('/[a-z]/', $value)) {
             $this->_error(self::LOWER);
             $isValid = false;
         }
 
-        if (!preg_match('/\d/', $value) {
+        if (!preg_match('/\d/', $value)) {
             $this->_error(self::DIGIT);
             $isValid = false;
         }
