@@ -832,6 +832,19 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->assertContains($base. '_templates', $e->getMessage());
         }
     }
+
+    public function testGetHelperIsCaseInsensitive()
+    {
+        $view = new Zend_View();
+        $hidden = $view->formHidden('foo', 'bar');
+        $this->assertContains('<input type="hidden"', $hidden);
+
+        $hidden = $view->getHelper('formHidden')->formHidden('foo', 'bar');
+        $this->assertContains('<input type="hidden"', $hidden);
+
+        $hidden = $view->getHelper('FormHidden')->formHidden('foo', 'bar');
+        $this->assertContains('<input type="hidden"', $hidden);
+    }
 }
 
 /**
