@@ -274,6 +274,17 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         $this->assertNotSame($hResponse, $aResponse);
         $this->assertSame($hResponse, $fResponse);
     }
+
+    public function testHelperPathStackIsLifo()
+    {
+        Zend_Controller_Action_HelperBroker::addPath(
+            dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'Helpers',
+            'MyApp'
+            );
+
+        $urlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('url');
+        $this->assertTrue($urlHelper instanceof MyApp_Url);
+    }
 }
 
 class Zend_Controller_Action_HelperBroker_TestHelper extends Zend_Controller_Action_Helper_Abstract
