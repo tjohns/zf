@@ -43,9 +43,10 @@ $currency = new Zend_Currency();]]>
     </example>
 
     <para>
-        Of course, depending on your needs, several parameters can be given at creation. Each of this parameters
-        is optional and can be supressed. Even the order of the parameters can be switched. The meaning of each
-        parameter is described in this list:
+        Natürlich können, abhängig von den eigenen Bedürfnissen, verschiedene Parameter bei der Erstellung
+        angegeben werden. Jeder dieser Parameter ist optional und kann unterdrückt werden. Selbst die
+        Reihenfolge dieser Parameter kann gewechselt werden. Die Bedeutung dieser Parmeter wird in der
+        folgenden Liste beschrieben:
     </para>
 
     <itemizedlist mark='opencircle'>
@@ -54,12 +55,13 @@ $currency = new Zend_Currency();]]>
                 <emphasis role="strong">currency</emphasis>:
             </para>
             <para>
-                A locale can include several currencies. Therefor the first parameter
-                <emphasis role="strong">'currency'</emphasis> can define which currency should be used by giving
-                the short name of that currency. If that currency in not known in any locale an exception will
-                be thrown. Currency short names are always 3 lettered and written uppercase. Well known currency
-                shortnames are for example <code>USD</code> or <code>EUR</code>. For a list of all known
-                currencies see the informational methods of <code>Zend_Currency</code>.
+                Ein Gebietsschema kann verschiedene Währungen beinhalten. Deshalb kann der erste Parameter
+                <emphasis role="strong">'currency'</emphasis> definieren welche Währung verwendet werden soll
+                indem der Kurzname dieser Währung angegeben wird. Wenn die angegebene Währung in keinem
+                Gebietsschema bekannt ist, wird eine Ausnahme geworfen. Kurznamen von Währungen bestehen immer
+                aus 3 Buchstaben und werden groß geschrieben. Bekannte Kurznamen von Währungen sind zum Beispiel
+                <code>USD</code> oder <code>EUR</code>. Für eine Liste aller bekannten Währungen gibt es die
+                Informativen Methoden von <code>Zend_Currency</code>.
             </para>
         </listitem>
         <listitem>
@@ -67,12 +69,14 @@ $currency = new Zend_Currency();]]>
                 <emphasis role="strong">script</emphasis>:
             </para>
             <para>
-                The second parameter <emphasis role="strong">'script'</emphasis> defines in which script the output
-                should be given. The standard script is 'Latn' which includes the global known digits from
-                <emphasis role="strong">'0'</emphasis> to <emphasis role="strong">'9'</emphasis>. Other scripts
-                like <emphasis role="strong">'Arab'</emphasis> can include other digits. For more information
-                about scripts see
-                <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
+                Der zweite Parameter <emphasis role="strong">'script'</emphasis> definiert in welcher
+                Schreibweise die Ausgabe geschrieben werden soll. Die Standardschreibweise ist 'Latn' welche
+                die global bekannten Ziffern von <emphasis role="strong">'0'</emphasis> bis
+                <emphasis role="strong">'9'</emphasis> beinhaltet. Andere Schreibweisen wie zum Beispiel
+                <emphasis role="strong">'Arab'</emphasis> können andere Ziffern beinhalten. Für weitere
+                Informationen über Schreibweisen kann in
+                <link linkend="zend.locale.appendix.numberscripts.supported">unterstützte Schreibweisen für Ziffern</link>
+                nachgesehen werden.
             </para>
         </listitem>
         <listitem>
@@ -80,17 +84,19 @@ $currency = new Zend_Currency();]]>
                 <emphasis role="strong">locale</emphasis>:
             </para>
             <para>
-                The third parameter <emphasis role="strong">'locale'</emphasis> defines which locale should be
-                used for formatting the currency. The given locale will also be used to get the standard script
-                and currency of this currency if these parameters are not given.
+                Der dritte Parameter <emphasis role="strong">'locale'</emphasis> definiert welches
+                Gebietsschema für die Formatierung der Währung verwendet werden soll. Das angegebene
+                Gebietsschema wird auch verwendet um die Standardschreibweise und die Währung dieses
+                Gebietsschemas zu erhalten wenn diese Parameter nicht angegeben werden.
             </para>
             <note>
                 <para>
-                    Note that Zend_Currency only accepts locales which include a region. This means that all
-                    given locale which only include the language will throw an exception. For example the locale
-                    <emphasis role="strong">en</emphasis> will throw an exception whereas the locale
-                    <emphasis role="strong">en_US</emphasis> will return <emphasis role="strong">USD</emphasis>
-                    as currency.
+                    Es gilt zu Beachten das Zend_Currency nur Gebietsschema akzeptiert die eine Region
+                    beinhalten. Das bedeutet das alle angegebenen Gebietsschemata die nur eine Sprache
+                    beinhalten eine Ausnahme werfen. Zum Beispiel wird das Gebietsschema
+                    <emphasis role="strong">en</emphasis> eine Ausnahme werfen, aber das Gebietsschema
+                    <emphasis role="strong">en_US</emphasis> wird als Währung
+                    <emphasis role="strong">USD</emphasis> zurückgeben.
                 </para>
             </note>
         </listitem>
@@ -98,59 +104,65 @@ $currency = new Zend_Currency();]]>
 
     <example id="zend.currency.useage.example2">
 
-        <title>Other examples for creating an instance of Zend_Currency</title>
+        <title>Andere Beispiele für die Erstellung einer Instanz von Zend_Currency</title>
 
         <programlisting role="php"><![CDATA[<?php
-// expect standard locale 'de_AT'
+// Wir nehmen das Standardgebietsschema 'de_AT' an
 require_once 'Zend/Currency.php';
 
-// creates an instance from 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+// Erstellt eine Instanz von from 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
+// da diese die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
-// creates an instance from the actual locale ('de_AT') using 'EUR' as currency but displaying it in 'Arab' script
+// Erstellt eine Instanz vom aktuellen Gebietsschema ('de_AT') und verwendet 'EUR'
+// als Währung zeigt diese aber in der Schreibweise 'Arab' an
 $currency = new Zend_Currency('Arab');
 
-// creates an instance using 'EUR' as currency, 'en_US' for number formating and 'Arab' for the script
+// Erstellt eine Instanz und verwendet 'EUR' als Währung, 'en_US' für die Formatierung der Ziffern
+// und 'Arab' für die Schreibweise
 $currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
         </programlisting>
 
     </example>
 
     <para>
-        So you can supress any of these parameters if you want to use the default ones. This has no negative effect
-        on handling the currencies. It can be usefull f.e. if you dont know the default currency for a region.
+        Es können also alle diese Parameter unterdrückt werden wenn man die Standardwerte verwenden will.
+        Das hat keine negativen Effekte bei der Handhabung von Währungen. Es kann aber nützlich sein, wenn man
+        z.B. die Standardwährung einer Region nicht weiß.
     </para>
 
     <note>
         <para>
-            For many countries there are several known currencies. One currency will actually be used and
-            maybe several ancient currencies. If the '<emphasis role="strong">currency</emphasis>' parameter
-            is supressed the actual currency will be used. The region '<emphasis role="strong">de</emphasis>' for
-            example knows the currencies '<emphasis role="strong">EUR</emphasis>' and
-            '<emphasis role="strong">DEM</emphasis>'... '<emphasis role="strong">EUR</emphasis>' is the actual one
-            and will be used if the parameter is supressed.
+            Für viele Länder gibt es verschiedene bekannt Währungen. Eine Währung wird immer aktuell gerade
+            verwendet und es gibt eventuell noch alte Währungen. Wenn der
+            '<emphasis role="strong">currency</emphasis>' Parameter unterdrückt wird, wird immer die aktuelle
+            Währung verwendet. Die Region '<emphasis role="strong">de</emphasis>' zum Beispiel kennt die
+            Währungen '<emphasis role="strong">EUR</emphasis>' und
+            '<emphasis role="strong">DEM</emphasis>'... '<emphasis role="strong">EUR</emphasis>' ist die
+            aktuell verwendete Währung und wird verwendet wenn der Parameter unterdrückt wird.
         </para>
     </note>
 
     <sect2 id="zend.currency.useage.tocurrency">
 
-        <title>Create output from an currency</title>
+        <title>Eine Ausgabe von einer Währung erstellen</title>
 
         <para>
-            To get an existing value converted to a currency formatted output the method
-            <emphasis role="strong">toCurrency()</emphasis> can be used. It takes a value which should be converted.
-            The value itself can be any normalized number.
+            Um einen bestehenden Wert in eine formatierte Ausgabe einer Währung zu konvertieren, muß die
+            Methode <emphasis role="strong">toCurrency()</emphasis> verwendet werden. Sie nimmt einen
+            Wert der konvertiert werden soll. Der Wert selbst kann jede normalisierte Zahl sein.
         </para>
 
         <para>
-            If you have a localized number you will have to convert it first to an normalized number with
-            <link linkend="zend.locale.number.normalize">Zend_Locale_Format::getNumber()</link>. Afterwards it can
-            be used with <code>toCurrency()</code> to create an currency output.
+            Wenn man nur eine lokalisierte Zahl hat, muß diese zuerst mit
+            <link linkend="zend.locale.number.normalize">Zend_Locale_Format::getNumber()</link>
+            in einen normalisierte Zahl konvertiert werden. Danach kann Sie mit <code>toCurrency()</code>
+            verwendet werden um eine Ausgabe einer Währung zu erstellen.
         </para>
 
         <para>
-            <code>toCurrency()</code> accepts two optional parameters which can be used to temporary set another
-            format.
+            <code>toCurrency()</code> akzeptiert zwei optionale Parameter welche temporär gesetzt werden können
+            um ein anderes Format zu setzen.
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -159,14 +171,15 @@ $currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
                     <emphasis role="strong">script</emphasis>:
                 </para>
                 <para>
-                    The first parameter '<emphasis role="strong">script</emphasis>' defines in which script the
-                    output should be given. The standard script is '<emphasis role="strong">Latn</emphasis>' which
-                    includes the global known digits from <emphasis role="strong">'0'</emphasis> to
-                    <emphasis role="strong">'9'</emphasis>. Other scripts like
-                    '<emphasis role="strong">Arab</emphasis>' can include other digits. For more information about
-                    scripts see
-                    <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
-                    If this parameter is given, the given script is only used temporary for this method call.
+                    Der erste Parameter '<emphasis role="strong">script</emphasis>' definiert in welcher
+                    Schreibweise die Ausgabe erfolgen soll. Das Standardscript ist
+                    '<emphasis role="strong">Latn</emphasis>' welches die global bekannten Ziffern von
+                    <emphasis role="strong">'0'</emphasis> bis <emphasis role="strong">'9'</emphasis>
+                    enthält. Andere Schreibweisen wie '<emphasis role="strong">Arab</emphasis>' können andere
+                    Ziffern enthalten. Für weitere Informationen über Schreibweisen kann in
+                    <link linkend="zend.locale.appendix.numberscripts.supported">unterstützte Schreibweisen für Ziffern</link>
+                    nachgesehen werden. Wenn der Parameter angegeben wird, wird temporär für den aktuellen
+                    Aufruf der Methode die Schreibweise verwendet.
                 </para>
             </listitem>
             <listitem>
@@ -174,31 +187,34 @@ $currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
                     <emphasis role="strong">locale</emphasis>:
                 </para>
                 <para>
-                    The second parameter '<emphasis role="strong">locale</emphasis>' defines which locale should be
-                    used for formatting the currency. The given locale will also be used to get the standard script
-                    and currency of this currency if these parameters are not given. If this parameter is given, the
-                    given locale is only used temporary for this method call.
+                    Der zweite Parameter '<emphasis role="strong">locale</emphasis>' definiert welches
+                    Gebietsschema für die Formatierung der Währung verwendet werden soll. Das angegebene
+                    Gebietsschema wird verwendet um die Standardschreibweise und die Währung dieses
+                    Gebietsschemas zu erhalten wenn diese Parameter nicht angegeben wurden. Wenn dieser
+                    Parameter angegeben wird, wird das angegebene Gebietsschema temporär für diesen
+                    Methodenaufruf verwendet.
                 </para>
             </listitem>
         </itemizedlist>
 
         <example id="zend.currency.useage.tocurrency.example">
 
-            <title>Creating output for an currency</title>
+            <title>Eine Ausgabe für eine Währung erstellen</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
 
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
+// da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
-// prints '$ 1,000.00'
+// Gibt '$ 1,000.00' aus
 echo $currency->toCurrency(1000);
 
-// prints '$ 1.000,00'
+// Gibt '$ 1.000,00' aus
 echo $currency->toCurrency(1000, 'de_AT');
 
-// prints '$ ١٬٠٠٠٫٠٠'
+// Gibt '$ ١٬٠٠٠٫٠٠' aus
 echo $currency->toCurrency(1000, 'Arab');]]>
             </programlisting>
 
@@ -207,34 +223,35 @@ echo $currency->toCurrency(1000, 'Arab');]]>
 
     <sect2 id="zend.currency.useage.setformat">
 
-        <title>Changing the format of a currency</title>
+        <title>Das Format einer Währung ändern</title>
 
         <para>
-            The format which is used by creation of a <code>Zend_Currency</code> instance is of course the
-            standard format. But sometimes it is necessary to change this format for own purposes.
+            Das Format das bei der Erstellung der <code>Zend_Currency</code> Instanz angegeben wurde, ist
+            natürlich das Standardformat. Aber manchmal ist es nützlich dieses Format für eigene Zwecke
+            anzupassen.
         </para>
 
         <para>
-            The format of an currency output includes the following parts:
+            Das Format einer Währung enthält die folgenden Teile:
         </para>
 
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    <emphasis role="strong">Currency symbol, shortname or name</emphasis>:
+                    <emphasis role="strong">Symbol, Kurzname oder Name der Währung</emphasis>:
                 </para>
                 <para>
-                    The symbol of the currency is normally displayed within an currency output. It can be supressed
-                    when needed or even overwritten.
+                    Das Symbol der Währung wird normalerweise bei der Ausgabe einer Währung angezeigt.
+                    Es kann unterdrückt oder sogar überschrieben werden wenn das notwendig ist.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Currency position</emphasis>:
+                    <emphasis role="strong">Position der Währung</emphasis>:
                 </para>
                 <para>
-                    The position of the currency sign is normally automatically defined by the locale. It can be
-                    changed if necessary.
+                    Die Position des Währungssymbols ist normalerweise automatisch durch das
+                    Gebietsschema definiert. Es kann geändert werden wenn das notwendig ist.
                 </para>
             </listitem>
             <listitem>
@@ -242,19 +259,22 @@ echo $currency->toCurrency(1000, 'Arab');]]>
                     <emphasis role="strong">Script</emphasis>:
                 </para>
                 <para>
-                    The script which shall be used to display digits. Detailed information about scripts and their
-                    useage can be found in the documentation of <code>Zend_Locale</code> in
-                    <link linkend="zend.locale.appendix.numberscripts.supported">supported number scripts</link>.
+                    Die Schreibweise die verwendet werden soll um Ziffern anzuzeigen. Detailierte
+                    Informationen über Schreibweisen und deren verwendung kann in der Dokumentation von
+                    <code>Zend_Locale</code> unter 
+                    <link linkend="zend.locale.appendix.numberscripts.supported">unterstützte Schreibweisen für Ziffern</link>
+                    gefunden werden.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Number formatting</emphasis>:
+                    <emphasis role="strong">Zahlenformat</emphasis>:
                 </para>
                 <para>
-                    The amount of currency (formally known as value of money) is formatted by the useage of
-                    formatting rules within the locale. For example is in english the ',' sign used as seperator for
-                    thousands, and in german the '.' sign.
+                    Der Wert der Währung (üblicherweise bekannt als Geldwert) wird durch die Verwendung der
+                    Formatierungsregeln des Gebietsschemas formatiert. Zum Beispiel wird im Englischen das
+                    ',' Zeichen als Separator für Tausender verwendet wärend im Deutschen das '.' Zeichen
+                    verwendet wird.
                 </para>
             </listitem>
         </itemizedlist>
