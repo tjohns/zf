@@ -484,9 +484,9 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         $resVectorsSizes = array();
         $resVectorsIds   = array(); // is used to prevent arrays comparison
         foreach ($this->_subqueries as $subqueryId => $subquery) {
-        	$resVectors[]      = $subquery->matchedDocs();
-        	$resVectorsSizes[] = count(end($resVectors));
-        	$resVectorsIds[]   = $subqueryId;
+            $resVectors[]      = $subquery->matchedDocs();
+            $resVectorsSizes[] = count(end($resVectors));
+            $resVectorsIds[]   = $subqueryId;
         }
         // sort resvectors in order of subquery cardinality increasing
         array_multisort($resVectorsSizes, SORT_ASC, SORT_NUMERIC,
@@ -500,15 +500,15 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                 //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
                 
                 /**
-                 * This code is used as workaround for array_intersect_key() slowness probleb.
+                 * This code is used as workaround for array_intersect_key() slowness problem.
                  */
                 $updatedVector = array();
-				foreach ($this->_resVector as $id => $value) {
-				    if (isset($nextResVector[$id])) {
-				        $updatedVector[$id] = $value;
-				    }
-				}
-				$this->_resVector = $updatedVector;
+                foreach ($this->_resVector as $id => $value) {
+                    if (isset($nextResVector[$id])) {
+                        $updatedVector[$id] = $value;
+                    }
+                }
+                $this->_resVector = $updatedVector;
             }
 
             if (count($this->_resVector) == 0) {
@@ -537,9 +537,9 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         foreach ($this->_subqueries as $subqueryId => $subquery) {
             if ($this->_signs[$subqueryId] === true) {
                 // required
-            	$requiredVectors[]      = $subquery->matchedDocs();
-	            $requiredVectorsSizes[] = count(end($requiredVectors));
-	            $requiredVectorsIds[]   = $subqueryId;
+                $requiredVectors[]      = $subquery->matchedDocs();
+                $requiredVectorsSizes[] = count(end($requiredVectors));
+                $requiredVectorsIds[]   = $subqueryId;
             } elseif ($this->_signs[$subqueryId] === false) {
                 // prohibited
                 // Do nothing. matchedDocs() may include non-matching id's
@@ -565,7 +565,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                 //$required = array_intersect_key($required, $nextResVector);
                 
                 /**
-                 * This code is used as workaround for array_intersect_key() slowness probleb.
+                 * This code is used as workaround for array_intersect_key() slowness problem.
                  */
                 $updatedVector = array();
                 foreach ($required as $id => $value) {

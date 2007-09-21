@@ -435,10 +435,10 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             if($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
-                //$this->_resVector = array_intersect_key($this->_resVector, array_flip($reader->termDocs($term)));
+                //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
                 
                 /**
-                 * This code is used as workaround for array_intersect_key() slowness probleb.
+                 * This code is used as workaround for array_intersect_key() slowness problem.
                  */
                 $updatedVector = array();
                 foreach ($this->_resVector as $id => $value) {

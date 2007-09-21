@@ -335,10 +335,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             if($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
-                //$this->_resVector = array_intersect_key($this->_resVector, array_flip($reader->termDocs($term)));
+                //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
                 
                 /**
-                 * This code is used as workaround for array_intersect_key() slowness probleb.
+                 * This code is used as workaround for array_intersect_key() slowness problem.
                  */
                 $updatedVector = array();
                 foreach ($this->_resVector as $id => $value) {
@@ -374,8 +374,6 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         
         $optional   = array();
         $prohibited = array();
-
-
         
         foreach ($this->_terms as $termId => $term) {
             $termDocs = array_flip($reader->termDocs($term));
@@ -411,7 +409,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                 //$required = array_intersect_key($required, $nextResVector);
                 
                 /**
-                 * This code is used as workaround for array_intersect_key() slowness probleb.
+                 * This code is used as workaround for array_intersect_key() slowness problem.
                  */
                 $updatedVector = array();
                 foreach ($required as $id => $value) {
@@ -429,25 +427,25 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         }
                 
         if ($required !== null) {
-        	$this->_resVector = $required;
+            $this->_resVector = $required;
         } else {
-        	$this->_resVector = $optional;
+            $this->_resVector = $optional;
         }
 
         if (count($prohibited) != 0) {
             // $this->_resVector = array_diff_key($this->_resVector, $prohibited);
             
             /**
-             * This code is used as workaround for array_diff_key() slowness probleb.
+             * This code is used as workaround for array_diff_key() slowness problem.
              */
             if (count($this->_resVector) < count($prohibited)) {
-            	$updatedVector = $this->_resVector;
-	            foreach ($this->_resVector as $id => $value) {
-	                if (isset($prohibited[$id])) {
-	                    unset($updatedVector[$id]);
-	                }
-	            }
-	            $this->_resVector = $updatedVector;
+                $updatedVector = $this->_resVector;
+                foreach ($this->_resVector as $id => $value) {
+                    if (isset($prohibited[$id])) {
+                        unset($updatedVector[$id]);
+                    }
+                }
+                $this->_resVector = $updatedVector;
             } else {
                 $updatedVector = $this->_resVector;
                 foreach ($prohibited as $id => $value) {
