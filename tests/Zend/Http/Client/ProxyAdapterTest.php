@@ -24,7 +24,7 @@ require_once 'SocketTest.php';
  * @subpackage UnitTests
  * @version    $Id$
  * @copyright  
- * @license    
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Http_Client_ProxyAdapterTest extends Zend_Http_Client_SocketTest
 {

@@ -17,7 +17,7 @@
  * @package      Zend_Gdata_Gapps
  * @subpackage   UnitTests
  * @copyright    Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com);
- * @license      http://framework.zend.com/license/new-bsd     New BSD License
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 require_once 'Zend/Gdata/Gapps/EmailListEntry.php';
