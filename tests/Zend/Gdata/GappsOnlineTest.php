@@ -43,8 +43,8 @@ class Zend_Gdata_GappsOnlineTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->id = uniqid('ZF-');
-        $username = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
-        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $username = constant('TESTS_ZEND_GDATA_GAPPS_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_GAPPS_PASSWORD');
         $this->domain = constant('TESTS_ZEND_GDATA_GAPPS_DOMAIN');
         $client = Zend_Gdata_ClientLogin::getHttpClient($username, $pass, Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
         $this->gdata = new Zend_Gdata_Gapps($client, $this->domain);
@@ -359,7 +359,7 @@ class Zend_Gdata_GappsOnlineTest extends PHPUnit_Framework_TestCase
 
         // Try retrieving the email list feed
         $feed = $this->gdata->retrievePageOfEmailLists();
-        $this->assertTrue(count($feed->entry) > 1);
+        $this->assertTrue(count($feed->entry) > 0);
     }
 
     public function testCanRetrieveAllEmailLists() {

@@ -219,10 +219,17 @@ define('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED', false);
 /*
  * This is the fully-qualified domain name for a domiain hosted using 
  * Google Apps. This domain must be registered with Google Apps and 
- * have API access enabled.
+ * have API access enabled.  This should be a TEST domain only.
  */
 define('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_GAPPS_DOMAIN', 'example.com.invalid');
+define('TESTS_ZEND_GDATA_GAPPS_EMAIL', 'example@example.com');
+define('TESTS_ZEND_GDATA_GAPPS_PASSWORD', 'password');
+
+/*
+ * This is the ONLINE_ENABLED property for Google Base.
+ */
+define('TESTS_ZEND_GDATA_GBASE_ONLINE_ENABLED', false);
 
 /**
  * Zend_Date tests

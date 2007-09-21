@@ -67,6 +67,14 @@ require_once 'Zend/Gdata/WhenTest.php';
 require_once 'Zend/Gdata/WhereTest.php';
 require_once 'Zend/Gdata/WhoTest.php';
 
+require_once 'Zend/Gdata/Gbase/ItemEntryTest.php';
+require_once 'Zend/Gdata/Gbase/ItemFeedTest.php';        
+require_once 'Zend/Gdata/Gbase/ItemQueryTest.php';
+require_once 'Zend/Gdata/Gbase/SnippetFeedTest.php';
+require_once 'Zend/Gdata/Gbase/SnippetQueryTest.php';        
+require_once 'Zend/Gdata/Gbase/QueryTest.php';
+require_once 'Zend/Gdata/Gbase/BaseAttributeTest.php';
+
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/CalendarFeedTest.php';
 require_once 'Zend/Gdata/CalendarEventTest.php';
@@ -120,13 +128,14 @@ require_once 'Zend/Gdata/Gapps/UserEntryTest.php';
 require_once 'Zend/Gdata/Gapps/UserFeedTest.php';
 require_once 'Zend/Gdata/Gapps/UserQueryTest.php';
 
-
 /**
  * Tests that do require online access to servers
  * and authentication credentials
  */
 
 require_once 'Zend/Gdata/GdataOnlineTest.php';
+
+require_once 'Zend/Gdata/GbaseOnlineTest.php';
 
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
 
@@ -182,6 +191,14 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_WhenTest');
         $suite->addTestSuite('Zend_Gdata_WhereTest');
         $suite->addTestSuite('Zend_Gdata_WhoTest');
+
+        $suite->addTestSuite('Zend_Gdata_Gbase_ItemEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Gbase_ItemFeedTest');        
+        $suite->addTestSuite('Zend_Gdata_Gbase_ItemQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Gbase_SnippetFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Gbase_SnippetQueryTest');        
+        $suite->addTestSuite('Zend_Gdata_Gbase_QueryTest');
+        $suite->addTestSuite('Zend_Gdata_Gbase_BaseAttributeTest');
 
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
         $suite->addTestSuite('Zend_Gdata_CalendarFeedTest');
@@ -248,7 +265,12 @@ class Zend_Gdata_AllTests
             constant('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
             }
-            
+
+            if (defined('TESTS_ZEND_GDATA_GBASE_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_GBASE_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_GbaseOnlineTest');
+            }
+
             if (defined('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_CALENDAR_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_CalendarOnlineTest');

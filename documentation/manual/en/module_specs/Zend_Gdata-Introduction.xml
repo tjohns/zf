@@ -47,6 +47,13 @@
             </listitem>
             <listitem>
                 <para>
+                    <link linkend="zend.gdata.gbase">Google Base</link>
+                    provides the ability to retrieve, post, update, and
+                    delete items in Google Base.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     Google Blogger
                     is a popular Internet provider of
                     "push-button publishing" and syndication.
@@ -70,8 +77,8 @@
     <note>
         <title>Unsupported services</title>
         <para>
-            Google Data API also supports Google Base and Picasa Web Albums,
-            but Zend_Gdata does not provide helper classes for these products
+            Google Data API also supports Picasa Web Albums,
+            but Zend_Gdata does not provide helper classes for this product
             in this release.
         </para>
 
