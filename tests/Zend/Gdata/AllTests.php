@@ -43,6 +43,7 @@ require_once 'Zend/Gdata/App/ContentTest.php';
 require_once 'Zend/Gdata/App/ControlTest.php';
 require_once 'Zend/Gdata/App/FeedTest.php';
 require_once 'Zend/Gdata/App/GeneratorTest.php';
+require_once 'Zend/Gdata/App/CaptchaRequiredExceptionTest.php';
 require_once 'Zend/Gdata/GdataTest.php';
 require_once 'Zend/Gdata/QueryTest.php';
 
@@ -158,6 +159,7 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_App_ControlTest');
         $suite->addTestSuite('Zend_Gdata_App_FeedTest');
         $suite->addTestSuite('Zend_Gdata_App_GeneratorTest');
+        $suite->addTestSuite('Zend_Gdata_App_CaptchaRequiredExceptionTest');
         $suite->addTestSuite('Zend_Gdata_GdataTest');
         $suite->addTestSuite('Zend_Gdata_QueryTest');
         
