@@ -643,8 +643,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $helpers = $view->getHelpers();
         $this->assertEquals(1, count($helpers));
-        $this->assertTrue(isset($helpers['stub2']));
-        $stub2 = $helpers['stub2'];
+        $this->assertTrue(isset($helpers['Stub2']));
+        $stub2 = $helpers['Stub2'];
         $this->assertTrue($stub2 instanceof Zend_View_Helper_Stub2);
         $this->assertTrue(isset($stub2->view));
         $this->assertSame($view, $stub2->view);
@@ -844,6 +844,15 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $hidden = $view->getHelper('FormHidden')->formHidden('foo', 'bar');
         $this->assertContains('<input type="hidden"', $hidden);
+    }
+
+    public function testGetHelperUsingDifferentCasesReturnsSameInstance()
+    {
+        $view    = new Zend_View();
+        $helper1 = $view->getHelper('formHidden');
+        $helper2 = $view->getHelper('FormHidden');
+
+        $this->assertSame($helper1, $helper2);
     }
 }
 
