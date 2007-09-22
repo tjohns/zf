@@ -353,18 +353,10 @@ $dryRun = true;
 $createdEntry = $service->insertGbaseItem($newEntry, $dryRun);]]>
             </programlisting>
         </sect3>
-		<sect3 id="zend.gdata.gbase.crud.modify">
-			<title>アイテムの変更</title>
+        <sect3 id="zend.gdata.gbase.crud.modify">
+            <title>アイテムの変更</title>
             <para>
-                アイテムを更新するには、<code>updateGbaseItem()</code>
-                メソッドを次のように使用します。
-            </para>
-            <programlisting role="php"><![CDATA[<?php
-$dryRun = false;
-$service->updateGbaseItem($oldEntry, $newEntry, $dryRun);]]>
-            </programlisting>
-            <para>
-                また、アイテムの各属性要素を順に更新することもできます。
+                アイテムの各属性要素の値を変更することができます。
             </para>
             <programlisting role="php"><![CDATA[<?php
 // タイトルを更新します
@@ -401,13 +393,21 @@ foreach ($baseAttributes as $note) {
 $entry->addGbaseAttribute("note", "PHP 5", "text");
 $entry->addGbaseAttribute("note", "Web Programming", "text");
 
-// 変更内容を保存します
+// エントリオブジェクトの save() を実行して変更内容を保存します
 $dryRun = true;
-$entry->save($dryRun);]]>
+$entry->save($dryRun);
+
+// あるいは、サービスオブジェクトの updateGbaseItem() をコールして変更を保存します
+// $dryRun = true;
+// $service->updateGbaseItem($entry, $dryRun);
+]]>
             </programlisting>
             <para>
-                変更した後は、<code>save()</code>
-                メソッドを実行してその内容を保存する必要があります。
+                変更した後は、<code>Zend_Gdata_Gbase_ItemEntry</code>
+                オブジェクトの <code>save($dryRun)</code> メソッドを実行するか
+                <code>Zend_Gdata_Gbase</code> オブジェクトの
+                <code>updateGbaseItem($entry, $dryRun)</code>
+                メソッドをコールしてその内容を保存する必要があります。
             </para>
         </sect3>
 		<sect3 id="zend.gdata.gbase.crud.delete">
