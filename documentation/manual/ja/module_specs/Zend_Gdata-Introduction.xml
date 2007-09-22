@@ -47,6 +47,13 @@
             </listitem>
             <listitem>
                 <para>
+                    <link linkend="zend.gdata.gbase">Google Base</link>
+                    は、Google Base のアイテムを取得したり
+                    アイテムを投稿、更新、あるいは削除したりすることができます。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     Google Blogger
                     は、人気のあるインターネットプロバイダです。
                     "ボタンひとつで簡単に" 記事を配信することができます。
@@ -70,10 +77,10 @@
     <note>
         <title>サポートしていないサービス</title>
         <para>
-            Google Data API は、その他に Google Base や Picasa Web Albums
-            などもサポートしています。
+            Google Data API は、その他に Picasa Web Albums
+            もサポートしています。
             しかし、今回のリリースでは Zend_Gdata は
-            これらのプロダクト用のヘルパークラスを用意していません。
+            このプロダクト用のヘルパークラスを用意していません。
         </para>
 
         <para>
