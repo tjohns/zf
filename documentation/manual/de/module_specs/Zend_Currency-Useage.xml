@@ -280,10 +280,10 @@ echo $currency->toCurrency(1000, 'Arab');]]>
         </itemizedlist>
 
         <para>
-            So if you are in need to change the format, you can use the
-            <emphasis role="strong">setFormat()</emphasis> method. If no parameter is given the standard
-            settings from the actual or set locale is used. <code>setFormat</code> supports the following
-            settings:
+            Wenn man also das Format ändern muß, kann die <emphasis role="strong">setFormat()</emphasis>
+            Methode verwendet werden. Wenn kein Parameter angegeben wird, werden die Standardeinstellungen
+            des aktuellen oder gesetzten Gebietsschematas verwendet. <code>setFormat</code> unterstützt
+            die folgenden Parameter:
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -292,8 +292,8 @@ echo $currency->toCurrency(1000, 'Arab');]]>
                     <emphasis role="strong">rules</emphasis>:
                 </para>
                 <para>
-                    This parameter selects what currency symbol or name should be displayed and where.
-                    Details are described below.
+                    Dieser Parameter wählt aus welches Währungssymbol oder welcher Name angezeigt werden soll
+                    und wo. Details sind nachfolgend beschrieben.
                 </para>
             </listitem>
             <listitem>
@@ -301,8 +301,9 @@ echo $currency->toCurrency(1000, 'Arab');]]>
                     <emphasis role="strong">script</emphasis>:
                 </para>
                 <para>
-                    This parameter selects what script should be used for displaying digits. 'Latn' is the
-                    default script for most locales. But others like 'Arab' (arabian) are also supported.
+                    Dieser Parameter wählt die Schreibweise aus die verwendet werden soll um Ziffern
+                    anzuzeigen. 'Latn' ist die Standardschreibweise für die meisten Gebietsschemata.
+                    Aber andere wie 'Arab' (arabisch) werden auch unterstützt.
                 </para>
             </listitem>
             <listitem>
@@ -310,49 +311,51 @@ echo $currency->toCurrency(1000, 'Arab');]]>
                     <emphasis role="strong">locale</emphasis>:
                 </para>
                 <para>
-                    This parameter selects what locale should be used for formatting the numbers.
+                    Dieser Parameter wählt das Gebietsschema aus das für die Formatierung der Zahlen
+                    verwendet werden soll.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The 'rules' parameter accepts a string as input or any of the below described constants to define
-            where the currency signs should be displayed and what to display in detail. A given string will
-            override any previous set currency shortsign or currency name.
+            Der 'rules' Parameter akzeptiert einen String als Eingabe, oder eine der nachfolgend beschriebenen
+            Konstanten die definieren wo das Währungssymbol angezeigt werden soll, und was im Detail sichtbar
+            ist. Ein angegebener String überschreibt alle vorher gesetzten Währungs Kurzbezeichnungen oder
+            Namen.
         </para>
 
         <table id="zend.currency.useage.setformat.constantsdescription">
 
-            <title>Constants for the selecting the currency description</title>
+            <title>Konstanten für die Auswahl der Beschreibung einer Währung</title>
 
             <tgroup cols="3" align="left">
                 <thead>
                     <row>
-                        <entry>constant</entry>
-                        <entry>value</entry>
-                        <entry>description</entry>
+                        <entry>Konstante</entry>
+                        <entry>Wert</entry>
+                        <entry>Beschreibung</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>NO_SYMBOL</entry>
                         <entry>1</entry>
-                        <entry>Do not display any currency representation</entry>
+                        <entry>Keine Repräsentation der Währung anzeigen</entry>
                     </row>
                     <row>
                         <entry>USE_SYMBOL</entry>
                         <entry>2</entry>
-                        <entry>Display the currency symbol as currency description</entry>
+                        <entry>Das Währungssymbol als Beschreibung der Währung anzeigen</entry>
                     </row>
                     <row>
                         <entry>USE_SHORTNAME</entry>
                         <entry>3</entry>
-                        <entry>Display the 3 lettered currency abbreviation as currency description</entry>
+                        <entry>Die Abkürzung der Währung (3 Buchstaben) als Beschreibung der Währung anzeigen</entry>
                     </row>
                     <row>
                         <entry>USE_NAME</entry>
                         <entry>4</entry>
-                        <entry>Display the currency name as currency description</entry>
+                        <entry>Den Währungsnamen als Beschreibung der Währung anzeigen</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -361,31 +364,31 @@ echo $currency->toCurrency(1000, 'Arab');]]>
 
         <table id="zend.currency.useage.setformat.constantsposition">
 
-            <title>Constants for the selecting the currency position</title>
+            <title>Konstanten für die Auswahl der Position der Währung</title>
 
             <tgroup cols="3" align="left">
                 <thead>
                     <row>
-                        <entry>constant</entry>
-                        <entry>value</entry>
-                        <entry>description</entry>
+                        <entry>Konstante</entry>
+                        <entry>Wert</entry>
+                        <entry>Beschreibung</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>STANDARD</entry>
                         <entry>8</entry>
-                        <entry>Set the position of the description to standard as defined within the locale</entry>
+                        <entry>Setzt die Position der Beschreibung auf den Standard wie im Gebietsschema definiert</entry>
                     </row>
                     <row>
                         <entry>RIGHT</entry>
                         <entry>16</entry>
-                        <entry>Display the currency description at the right side of the currency value</entry>
+                        <entry>Die Beschreibung der Währung an der rechten Seite vom Wert anzeigen</entry>
                     </row>
                     <row>
                         <entry>LEFT</entry>
                         <entry>32</entry>
-                        <entry>Display the currency description at the left side of the currency value</entry>
+                        <entry>Die Beschreibung der Währung an der linken Seite vom Wert anzeigen</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -394,23 +397,24 @@ echo $currency->toCurrency(1000, 'Arab');]]>
 
         <example id="zend.currency.useage.setformat.example">
 
-            <title>Changing the displayed format of a currency</title>
+            <title>Das Anzeigeformat der Währung ändern</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
 
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
+// da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
-// prints 'US$ 1,000.00'
+// Gibt 'US$ 1,000.00' aus
 echo $currency->toCurrency(1000);
 
 $currency->setFormat(Zend_Currency::USE_NAME&Zend_Currency::RIGHT);
-// prints '1.000,00 US Dollar'
+// Gibt '1.000,00 US Dollar' aus
 echo $currency->toCurrency(1000);
 
-$currency->setFormat("American Dollar");
-// prints '1.000,00 American Dollar'
+$currency->setFormat("Amerikanische Dollar");
+// Gibt '1.000,00 Amerikanische Dollar' aus
 echo $currency->toCurrency(1000);]]>
             </programlisting>
 
@@ -419,12 +423,12 @@ echo $currency->toCurrency(1000);]]>
 
     <sect2 id="zend.currency.useage.informational">
 
-        <title>Informational methods for Zend_Currency</title>
+        <title>Informative Methoden von Zend_Currency</title>
 
         <para>
-            Of course, <code>Zend_Currency</code> supports also methods to get informations about any existing
-            and many ancient currencies from <code>Zend_Locale</code>. The supported
-            methods are:
+            Natürlich bietet <code>Zend_Currency</code> auch Methoden an um Informationen über jede existierende
+            und viele historische Währungen von <code>Zend_Locale</code> zu bekommen. Die unterstützten
+            Methoden sind:
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -433,9 +437,9 @@ echo $currency->toCurrency(1000);]]>
                     <emphasis role="strong">getSymbol()</emphasis>:
                 </para>
                 <para>
-                    Returns the known sign of the actual currency or a given currency. For example
-                    <emphasis role="strong">$</emphasis> for the US Dollar within the locale
-                    '<emphasis role="strong">en_US</emphasis>.
+                    Gibt das bekannte Symbol der aktuellen oder einer angegebenen Währung zurück.
+                    Zum Beispiel <emphasis role="strong">$</emphasis> für den US Dollar innerhalb des
+                    Gebietsschemas '<emphasis role="strong">en_US</emphasis>'.
                 </para>
             </listitem>
             <listitem>
@@ -443,9 +447,9 @@ echo $currency->toCurrency(1000);]]>
                     <emphasis role="strong">getShortName()</emphasis>:
                 </para>
                 <para>
-                    Returns the abbreviation of the actual currency or a given currency.  For example
-                    <emphasis role="strong">USD</emphasis> for the US Dollar within the locale
-                    '<emphasis role="strong">en_US</emphasis>.
+                    Gibt die Abkürzung der aktuellen oder einer angegebenen Währung zurück. Zum Beispiel
+                    <emphasis role="strong">USD</emphasis> für den US Dollar innerhalb des
+                    Gebietsschemas '<emphasis role="strong">en_US</emphasis>'.
                 </para>
             </listitem>
             <listitem>
@@ -453,9 +457,9 @@ echo $currency->toCurrency(1000);]]>
                     <emphasis role="strong">getName()</emphasis>:
                 </para>
                 <para>
-                    Returns the full name of the actual currency of a given currency. For example
-                    <emphasis role="strong">US Dollar</emphasis> for the US Dollar within the locale
-                    '<emphasis role="strong">en_US</emphasis>.
+                    Gibt den kompletten Namen der aktuellen oder einer angegebenen Währung zurück. Zum Beispiel
+                    <emphasis role="strong">US Dollar</emphasis> für den US Dollar innerhalb des
+                    Gebietsschemas '<emphasis role="strong">en_US</emphasis>'.
                 </para>
             </listitem>
             <listitem>
@@ -463,9 +467,9 @@ echo $currency->toCurrency(1000);]]>
                     <emphasis role="strong">getRegionList()</emphasis>:
                 </para>
                 <para>
-                    Returns a list of regions where the actual currency or a given one is known to be used.
-                    It is possible that a currency is used within several regions therefor the return value
-                    is always an array.
+                    Gibt eine Liste von Regionen zurück in denen die aktuelle oder eine angegebene
+                    Währung verwendet wird. Es ist möglich das eine Währung in mehreren Regionen Verwendung
+                    findet, deswegen ist der Rückgabewert immer ein Array.
                 </para>
             </listitem>
             <listitem>
@@ -473,42 +477,44 @@ echo $currency->toCurrency(1000);]]>
                     <emphasis role="strong">getCurrencyList()</emphasis>:
                 </para>
                 <para>
-                    Returns a list of currencies which are known to be used in the given region.
+                    Gibt eine Liste von Währungen zurück die in einer angegebenen Region verwendet werden.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            The function <code>getSymbol()</code>, <code>getShortName()</code> and <code>getName()</code> accept
-            two optional parameters. If no parameter is given the expected data will be returned from the actual
-            set currency. The first parameter takes the shortname of a currency. Short names are always three
-            lettered, for example EUR for euro or USD for US Dollar. The second parameter defines from which
-            locale the data should be read. If no locale is given, the actual set locale is used.
+            Die Funktion <code>getSymbol()</code>, <code>getShortName()</code> und <code>getName()</code>
+            akzeptieren zwei optionale Parameter. Wenn kein Parameter angegeben wird, werden die Daten von
+            der aktuell gesetzten Währung zurückgegeben. Der erste Parameter akzeptiert den Kurznamen der
+            Währung. Kurznamen bestehen immer aus drei Buchstaben, zum Beispiel EUR für Euro oder USD für
+            US Dollar. Der zweite Parameter definiert von welchem Gebietsschema die Daten gelesen werden sollen.
+            Wenn kein Gebietsschema angegeben wird, wird das aktuelle Gebietsschema verwendet. 
         </para>
 
         <example id="zend.currency.useage.informational.example">
 
-            <title>Getting informations from currencies</title>
+            <title>Informationen von Währungen erhalten</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
 
-// creates an instance with 'en_US' using 'USD', 'Latin' and 'en_US' as these are the default values from 'en_US'
+// Erstellt eine Instanz mit 'en_US' und verwendet 'USD', 'Latin' und 'en_US'
+// da das die Standardwerte von 'en_US' sind
 $currency = new Zend_Currency('en_US');
 
-// prints '$'
+// Gibt '$' aus
 echo $currency->getSymbol();
 
-// prints 'EUR'
+// Gibt 'EUR' aus
 echo $currency->getShortName('EUR');
 
-// prints 'Österreichische Schilling'
+// Gibt 'Österreichische Schilling' aus
 echo $currency->getName('ATS', 'de_AT');
 
-// returns an array with all regions where USD is used
+// Gibt ein Array aus mit allen Regionen in denen USD verwendet wird
 print_r($currency->getRegionList();
 
-// returns an array with all currencies which were ever used in this region
+// Gibt ein Array aus mit allen Währungen die jemals in dieser Region verwendet wurden 
 print_r($currency->getCurrencyList('de_AT');]]>
             </programlisting>
 
@@ -518,13 +524,13 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
     <sect2 id="zend.currency.useage.cache">
 
-        <title>Speed up Zend_Currency</title>
+        <title>Zend_Currency schneller machen</title>
 
         <para>
-            The work of <code>Zend_Currency</code> can be speed up by the useage of <code>Zend_Cache</code>.
-            By using the static method <code>Zend_Currency::setCache($cache)</code> which accepts one option, an
-            <code>Zend_Cache</code> adapter. When you set it, the localization data of the methods from
-            Zend_Currency are cached.
+            <code>Zend_Currency</code> kann schneller gemacht werden indem <code>Zend_Cache</code> verwendet
+            wird. Durch die Verwendung der statischen Methode <code>Zend_Currency::setCache($cache)</code>
+            welche eine Option akzeptiert, nämlich einen <code>Zend_Cache</code> Adapter. Wenn dieser
+            gesetzt wird, werden die Lokalisierungsdaten der Methoden von Zend_Currency gecached.
         </para>
 
     </sect2>
