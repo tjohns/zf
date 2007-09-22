@@ -941,7 +941,7 @@ echo "Der Name der Tabelle ist " . $info['name'] . "\n";]]></programlisting>
             <listitem>
                 <para>
                     <emphasis role="strong">schema</emphasis> => der Name des Schemas (oder der
-                    Datenbakn oder dem Tabellenraum) für diese Tabelle.
+                    Datenbank oder dem Tabellenraum) für diese Tabelle.
                 </para>
             </listitem>
         </itemizedlist>
@@ -953,54 +953,61 @@ echo "Der Name der Tabelle ist " . $info['name'] . "\n";]]></programlisting>
         <title>Tabellen Metadaten cachen</title>
 
         <para>
-            By default, <code>Zend_Db_Table_Abstract</code> queries the underlying database for
-            <link linkend="zend.db.table.info">table metadata</link> upon instantiation of a table object. That is,
-            when a new table object is created, the object's default behavior is to fetch the table metadata from
-            the database using the adapter's <code>describeTable()</code> method.
+            Standardmäßig fragt <code>Zend_Db_Table_Abstract</code> die darunterliegende Datenbank für die
+            <link linkend="zend.db.table.info">Metadaten der Tabelle</link> ab, wärend der Instanzierung
+            des Table Objektes. Das ist, wenn ein neues Table Objekt erstellt wird, das Standardverhalten
+            des Objekts das die Metadaten der Tabelle von der Datenbank geholt werden durch verwenden der
+            <code>describeTable()</code> Methode des Adapters.
         </para>
 
         <para>
-            In some circumstances, particularly when many table objects are instantiated against the same database
-            table, querying the database for the table metadata for each instance may be undesirable from a
-            performance standpoint. In such cases, users may benefit by caching the table metadata retrieved from the
-            database.
+            In einigen Fällen, speziell wenn viele Table Objekte auf der gleichen Datenbanktabelle instanziert
+            werden kann das Abfragen der Datenbank nach den Metadaten der Tabelle für jede Instanz unerwünscht
+            sein wegen der Geschwindigkeit. In solchen Fällen, können Benutzer davon profitieren das
+            die Metadaten der Tabelle, die von der Datenbank empfangen werden, gecached werden.
         </para>
 
         <para>
-            There are two primary ways in which a user may take advantage of table metadata caching:
+            Es gibt zwei grundsätzliche Wege bei denen ein Benutzer Vorteile davon haben kann wenn die
+            Metadaten der Tabelle gecached werden:
 
             <itemizedlist>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Call Zend_Db_Table_Abstract::setDefaultMetadataCache()</emphasis> -
-                        This allows a developer to once set the default cache object to be used for all table classes.
+                        <emphasis role="strong">Aufruf von Zend_Db_Table_Abstract::setDefaultMetadataCache()</emphasis> -
+                        Das erlaubt es Entwicklern das Standardcacheobjekt zu setzen das für alle Tabellenklassen
+                        verwendet werden soll.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <emphasis role="strong">Configure Zend_Db_Table_Abstract::__construct()</emphasis> - This
-                        allows a developer to set the cache object to be used for a particular table class instance.
+                        <emphasis role="strong">Konfigurieren von Zend_Db_Table_Abstract::__construct()</emphasis> -
+                        Das erlaubt es Entwicklern das Cacheobjekt zu setzen das für eine spezielle Instanz
+                        der Tabellenklasse verwendet werden soll.
                     </para>
                 </listitem>
             </itemizedlist>
 
-            In both cases, the cache specification must be either <code>null</code> (i.e., no cache used) or an
-            instance of <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>. The methods may be used
-            in conjunction when it is desirable to have both a default metadata cache and the ability to change the
-            cache for individual table objects.
+            In beiden Fällen muß die Spezifikation des Caches entweder <code>null</code> (wenn kein Cache
+            verwendet wird) oder eine Instanz von
+            <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link> sein. Die Methoden
+            können in Verbindung zueinander verwendet werden wenn es gewünscht ist beides zu haben, einen
+            standardmäßigen Cache für die Metadaten und die Möglichkeit den Cache eines individuellen
+            Tabellenobjektes zu ändern.
         </para>
 
         <example id="zend.db.table.metadata.caching-default">
 
-            <title>Using a Default Metadata Cache for all Table Objects</title>
+            <title>Verwenden eines standardmäßigen Caches fpr Metadaten für alle Tabellenobjekte</title>
 
             <para>
-                The following code demonstrates how to set a default metadata cache to be used for all table objects:
+                Der folgende Code demonstriert wie ein standardmäßiger Cache für die Metadaten gesetzt werden
+                kann der für alle Tabellenobjekte verwendet wird:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 
-// First, set up the Cache
+// Zuerst muß der Cache vorbereitet werden
 
 require_once 'Zend/Cache.php';
 
@@ -1015,14 +1022,14 @@ $backendOptions  = array(
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 
-// Next, set the cache to be used with all table objects
+// Als nächstes, den Cache setzen der mit allen Tabellenobjekten verwendet werden soll
 
 require_once 'Zend/Db/Table/Abstract.php';
 
 Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
 
 
-// A table class is also needed
+// Eine Tabellenklasse wird auch benötigt
 
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -1030,7 +1037,7 @@ class Bugs extends Zend_Db_Table_Abstract
 }
 
 
-// Each instance of Bugs now uses the default metadata cache
+// Jede Instanz von Bugs verwenden nur den Standardmäßigen Cache fpr die Metadaten
 
 $bugs = new Bugs();]]></programlisting>
 
@@ -1038,15 +1045,16 @@ $bugs = new Bugs();]]></programlisting>
 
         <example id="zend.db.table.metadata.caching-instance">
 
-            <title>Using a Metadata Cache for a Specific Table Object</title>
+            <title>Einen Metadaten Cache für ein spezielles Tabellenobjekt verwenden</title>
 
             <para>
-                The following code demonstrates how to set a metadata cache for a specific table object instance:
+                Der folgende Code demonstriert wie ein Cache für Metadaten für eine spezielle Instanz
+                eines Tabellenobjektes gesetzt werden kann: 
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 
-// First, set up the Cache
+// Zuerst den Cache vorbereiten
 
 require_once 'Zend/Cache.php';
 
@@ -1061,7 +1069,7 @@ $backendOptions  = array(
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 
-// A table class is also needed
+// Eine Tabellenklasse wird auch benötigt
 
 require_once 'Zend/Db/Table/Abstract.php';
 
@@ -1071,7 +1079,7 @@ class Bugs extends Zend_Db_Table_Abstract
 }
 
 
-// Configure an instance upon instantiation
+// Eine Instanz für die Instanzierung konfgurieren
 
 $bugs = new Bugs(array('metadataCache' => $cache));]]></programlisting>
 
@@ -1079,53 +1087,49 @@ $bugs = new Bugs(array('metadataCache' => $cache));]]></programlisting>
 
         <note>
 
-            <title>Automatic Serialization with the Cache Frontend</title>
+            <title>Automatische Serialisierung mit dem Cache Frontend</title>
 
             <para>
-                Since the information returned from the adapter's describeTable() method is an array, ensure that the
-                <code>automatic_serialization</code> option is set to <code>true</code> for the
-                <code>Zend_Cache_Core</code> frontend.
+                Da die Information die von der describeTable() Methode des Adapters zurückgegeben wird, ein
+                Array ist, muß sichergestellt werden das die <code>automatic_serialization</code> Option für das
+                <code>Zend_Cache_Core</code> Frontend auf <code>true</code> gesetzt wird.
             </para>
 
         </note>
 
         <para>
-            Though the above examples use <code>Zend_Cache_Backend_File</code>, developers may use whatever cache
-            backend is appropriate for the situation. Please see <link linkend="zend.cache">Zend_Cache</link> for more
-            information.
+            Obwohl die obigen Beispiele <code>Zend_Cache_Backend_File</code> verwenden, können Entwickler
+            jegliches Cache Backend verwenden das der Situation am besten entspricht. Siehe
+            <link linkend="zend.cache">Zend_Cache</link> für weitere Informationen.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.extending">
 
-        <title>Customizing and Extending a Table Class</title>
+        <title>Eine Table Klasse erweitern und anpassen</title>
 
         <sect3 id="zend.db.table.extending.row-rowset">
 
-            <title>Using Custom Row or Rowset Classes</title>
+            <title>Verwenden eigener Zeilen oder Rowset Klassen</title>
 
             <para>
-                By default, methods of the Table class return a
-                Rowset in instances of the concrete class
-                Zend_Db_Table_Rowset, and Rowsets contain a
-                collection of instances of the concrete class
-                Zend_Db_Table_Row.  You can specify an alternative
-                class to use for either of these, but they must
-                be classes that extend Zend_Db_Table_Rowset_Abstract
-                and Zend_Db_Table_Row_Abstract, respectively.
+                Standardmäßig geben die Methoden der Table Klasse ein Rowset als Instanzen der konkreten Klasse
+                Zend_Db_Table_Rowset, und Rowsets enthalten eine Kollektion von Instanzen der konkreten Klasse
+                Zend_Db_Table_Row. Eine alternative Klasse kann für jede von Ihnen als alternative Klasse
+                definiert werden die verwendet werden soll, aber es müssen Klassen sein die 
+                Zend_Db_Table_Rowset_Abstract erweitern und respektiv Zend_Db_Table_Row_Abstract.
             </para>
 
             <para>
-                You can specify Row and Rowset classes using the
-                Table constructor's options array, in keys
-                <code>'rowClass'</code> and
-                <code>'rowsetClass'</code> respectively.
-                Specify the names of the classes using strings.
+                Es können Zeilen und Rowset Klassen definiert werden indem das Optionsarray des Table
+                Konstruktors verwendet wird, respektiv die Schlüssel <code>'rowClass'</code> und
+                <code>'rowsetClass'</code>. Die Namen der Klassen müssen spezifiziert werden indem Strings
+                verwendet werden.
             </para>
 
             <example id="zend.db.table.extending.row-rowset.example">
-                <title>Example of specifying the Row and Rowset classes</title>
+                <title>Beispiel dafür wie die Zeilen und Rowset Klassen spezifiziert werden können</title>
                 <programlisting role="php"><![CDATA[<?php
 
 class My_Row extends Zend_Db_Table_Row_Abstract
@@ -1147,8 +1151,8 @@ $table = new Bugs(
 
 $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
 
-// Returns an object of type My_Rowset,
-// containing an array of objects of type My_Row.
+// Gibt ein Objekt des Typs My_Rowset zurück
+// das ein Array von Objekten des Typs My_Row enthält.
 $rows = $table->fetchAll($where);]]></programlisting>
             </example>
 
