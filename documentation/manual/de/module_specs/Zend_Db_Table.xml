@@ -306,9 +306,9 @@ $table = new Bugs();]]></programlisting>
             </example>
 
             <para>
-                Es kann geeignet sein den Datenbankadapter an einer zentralen Stelle der Applikation, wie dem
+                Es kann geeignet sein den Datenbankadapter an einer zentralen Stelle der Anwendung, wie dem
                 Bootstrap, zu erzeugen, und als Standardadapter zu speichern.
-                Dies hilft sicher zu stellen, das der verwendete Adapter in der gesamten Applikation der gleiche
+                Dies hilft sicher zu stellen, das der verwendete Adapter in der gesamten Anwendung der gleiche
                 ist. Allerdings kann nur eine einzelne Adapterinstanz als Standardadapter verwendet werden.
             </para>
 
@@ -355,9 +355,9 @@ $table = new Bugs(array('db' => 'my_db'));]]></programlisting>
         <title>Zeilen in eine Tabelle einfügen</title>
 
         <para>
-            Table Objekte können verwendet werden um Zeilen in die Datenbank Tabelle einzufügen auf der das
-            Table Objekt basiert. Hierzu kann die <code>insert()</code> Methode des Table Objektes verwendet
-            werden. Das Argument ist ein assoziatives Array, das Spalten Namen mit Werten verbindet.
+            Tabellen Objekte können verwendet werden um Zeilen in die Datenbank Tabelle einzufügen auf der das
+            Tabellen Objekt basiert. Hierzu kann die <code>insert()</code> Methode des Tabellen Objektes
+            verwendet werden. Das Argument ist ein assoziatives Array, das Spalten Namen mit Werten verbindet.
         </para>
 
         <example id="zend.db.table.insert.example">
@@ -376,101 +376,95 @@ $table->insert($data);]]></programlisting>
         </example>
 
         <para>
-            By default, the values in your data array are inserted as
-            literal values, using parameters.  If you need them to be
-            treated as SQL expressions, you must make sure they are distinct
-            from plain strings.  Use an object of type Zend_Db_Expr to do this.
+            Standardmäßig werden Werte im Daten Array als literale Werte eingefügt durch das Verwenden von
+            Parametern. Wenn es notwendig ist das diese als SQL Ausdruck behandelt werden, muß sichergestellt
+            werden das Sie sich von reinen Strings unterscheiden. Es kann ein Objekt vom Typ Zend_Db_Expr
+            verwendet werden um das zu bewerkstelligen.
         </para>
 
         <example id="zend.db.table.insert.example-expr">
-            <title>Example of inserting expressions to a Table</title>
+            <title>Beispiel für das Einfügen von Ausdrücken in einer Tabelle</title>
             <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
 $data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
-    'bug_description' => 'Something wrong',
-    'bug_status'      => 'NEW'
+    'bug_description' => 'Irgendwas ist falsch',
+    'bug_status'      => 'NEU'
 );]]></programlisting>
         </example>
 
         <para>
-            In the examples of inserting rows above, it is assumed that the
-            table has an auto-incrementing primary key.  This is the default
-            behavior of Zend_Db_Table_Abstract, but there are other types
-            of primary keys as well.  The following sections describe how to
-            support different types of primary keys.
+            Um obigen Beispiel vom Einfügen von Reihen, wird angenommen das die Tabelle einen automatisch
+            hinzugefügten Primären Schlüssel hat. Das ist das Standardverhalten von Zend_Db_Table_Abstract,
+            aber es gibt auch andere Typen von Primären Schlüssel. Das folgende Kapitel beschreibt wie
+            verschiedene Typen von Primären Schlüssel unterstützt werden.
         </para>
 
         <sect3 id="zend.db.table.insert.key-auto">
 
-            <title>Using a Table with an Auto-incrementing Key</title>
+            <title>Eine Tabelle mit einem automatisch hinzugefügten Primären Schlüssel verwenden</title>
 
             <para>
-                An auto-incrementing primary key generates a unique integer
-                value for you if you omit the primary key column from your
-                SQL <code>INSERT</code> statement.
+                Ein automatisch hinzugefügter Primärer Schlüssel erzeigt einen eindeutigen Integerwert wenn die
+                Spalte des Primären Typs in der eigenen SQL <code>INSERT</code> Anweisung unterdrückt wird.
             </para>
 
             <para>
-                In Zend_Db_Table_Abstract, if you define the protected
-                variable <code>$_sequence</code> to be the Boolean value
-                <code>true</code>, then the class assumes that the table
-                has an auto-incrementing primary key.
+                Wenn die geschützte Variable <code>$_sequence</code>, in Zend_Db_Table_Abstract, als
+                boolscher Wert <code>true</code> definiert wird, nimmt die Klasse an das die Tabelle
+                einen automatisch hinzugefügten Primären Schlüssel hat.
             </para>
 
             <example id="zend.db.table.insert.key-auto.example">
-                <title>Example of declaring a Table with auto-incrementing primary key</title>
+                <title>Beispiel des deklarierens einer Tabelle mit einem automatisch hinzugefügten Primären Schlüssel</title>
                 <programlisting role="php"><![CDATA[<?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 
-    // This is the default in the Zend_Db_Table_Abstract class;
-    // you do not need to define this.
+    // Das ist der Standardwert in der Zend_Db_Table_Abstract Klasse;
+    // er muß nicht definiert werden.
     protected $_sequence = true;
 }]]></programlisting>
             </example>
 
             <para>
-                MySQL, Microsoft SQL Server, and SQLite are examples of
-                RDBMS brands that support auto-incrementing primary keys.
+                MySQL, Microsoft SQL Server, und SQLite sind Beispiele von RDBMS Marken die automatisch
+                hinzugefpgte Primäre Schlüssel unterstützen.
             </para>
 
             <para>
-                PostgreSQL has a <code>SERIAL</code> notation that implicitly
-                defines a sequence based on the table and column name, and uses
-                the sequence to generate key values for new rows.
-                IBM DB2 has an <code>IDENTITY</code> notation that works similarly.
-                If you use either of these notations, treat your Zend_Db_Table
-                class as having an auto-incrementing column with respect to
-                declaring the <code>$_sequence</code> member as <code>true</code>.
+                PostgreSQL hat eine <code>SERIAL</code> Notation die implizit eine sequenz definiert die auf dem
+                Tabellen und Spaltennamen basiert und diese Sequenz verwendet um einen Schlüsselwert für neue
+                Reihen zu erstellen. IBM DB2 hat eine <code>IDENTITY</code> Notation die ähnlich arbeitet.
+                Wenn eine dieser Notationen verwendet wird, muß der Zend_Db_Table Klasse mitgeteilt werden das
+                Sie eine automatisch hinzugefügte Spalte hat, indem <code>$_sequence</code> auf <code>true</code>
+                gesetzt wird.
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-sequence">
 
-            <title>Using a Table with a Sequence</title>
+            <title>Eine Tabelle mit einer Sequenz verwenden</title>
 
             <para>
-                A sequence is a database object that generates a unique
-                value, which can be used as a primary key value in one or
-                more tables of the database.
+                Eine Sequenz ist ein Datenbank Objekt das einen eindeutigen Wert erstellt, der als
+                primärer Schlüsselwert in einer oder mehreren Tabellen der Datenbank verwendet werden kann. 
             </para>
 
             <para>
-                If you define <code>$_sequence</code> to be a string,
-                then Zend_Db_Table_Abstract assumes the string to name
-                a sequence object in the database.  The sequence is invoked
-                to generate a new value, and this value is used in the
-                <code>INSERT</code> operation.
+                Wenn <code>$_sequence</code> als String definiert wird, nimmt Zend_Db_Table_Abstract an das der
+                String den Namen des Sequenz Objektes in der Datenbank benennt. Die Sequenz wird aufgerufen um
+                einen neuen Wert zu erstellen, und dieser Wert wird in der <code>INSERT</code> Operation
+                verwendet.
             </para>
 
             <example id="zend.db.table.insert.key-sequence.example">
-                <title>Example of declaring a Table with a sequence</title>
+                <title>Beispiel der Deklaration einer Tabelle mit einer Sequenz</title>
                 <programlisting role="php"><![CDATA[<?php
 
 class Bugs extends Zend_Db_Table_Abstract
@@ -482,24 +476,23 @@ class Bugs extends Zend_Db_Table_Abstract
             </example>
 
             <para>
-                Oracle, PostgreSQL, and IBM DB2 are examples of RDBMS
-                brands that support sequence objects in the database.
+                Oracle, PostgreSQL, und IBM DB2 sind Beispiele von RDBMS Marken die Sequenz Objekte in der
+                Datenbank unterstützen.
             </para>
 
             <para>
-                PostgreSQL and IBM DB2 also have syntax that defines
-                sequences implicitly and associated with columns.
-                If you use this notation, treat the table as having
-                an auto-incrementing key column.  Define the sequence
-                name as a string only in cases where you would invoke
-                the sequence explicitly to get the next key value.
+                PostgreSQL und IBM DB2 haben auch einen Syntax der Sequenzen implizit definiert und diese
+                mit Spalten assoziiert. Wenn diese Notation verwendet wird, muß der Tabelle gesagt werden
+                das Sie einen automatisch hinzugefügte Schlüsselspalte besitzt. Der Name der Sequenz muß
+                nur in den Fällen als String definiert werden in denen die Sequenz explizit aufgerufen
+                wird um den nächsten Schlüsselwert zu erhalten.
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.table.insert.key-natural">
 
-            <title>Using a Table with a Natural Key</title>
+            <title>Eine Tabelle mit einem natürlichen Schlüssel verwenden</title>
 
             <para>
                 Some tables have a natural key.  This means that the key is
