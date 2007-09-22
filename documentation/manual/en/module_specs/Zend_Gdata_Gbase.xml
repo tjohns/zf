@@ -300,17 +300,10 @@ $dryRun = true;
 $createdEntry = $service->insertGbaseItem($newEntry, $dryRun);]]>
             </programlisting>
         </sect3>
-		<sect3 id="zend.gdata.gbase.crud.modify">
-			<title>Modify an Item</title>
+        <sect3 id="zend.gdata.gbase.crud.modify">
+            <title>Modify an Item</title>
             <para>
-                You can update an item by calling <code>updateGbaseItem()</code> method as follows:
-            </para>
-            <programlisting role="php"><![CDATA[<?php
-$dryRun = false;
-$service->updateGbaseItem($oldEntry, $newEntry, $dryRun);]]>
-            </programlisting>
-            <para>
-                Also, you can update each attribute element of an item as you iterate through them:
+                You can update each attribute element of an item as you iterate through them:
             </para>
             <programlisting role="php"><![CDATA[<?php
 // Update the title
@@ -347,12 +340,17 @@ foreach ($baseAttributes as $note) {
 $entry->addGbaseAttribute("note", "PHP 5", "text");
 $entry->addGbaseAttribute("note", "Web Programming", "text");
 
-// Save the changes
+// Save the changes by invoking save() on the entry object itself
 $dryRun = true;
-$entry->save($dryRun);]]>
+$entry->save($dryRun);
+
+// Or, save the changes by calling updateGbaseItem() on the service object
+// $dryRun = true;
+// $service->updateGbaseItem($entry, $dryRun);
+]]>
             </programlisting>
             <para>
-                After making the changes, invoke <code>save()</code> method to save the changes.
+                After making the changes, either invoke <code>save($dryRun)</code> method on the <code>Zend_Gdata_Gbase_ItemEntry</code> object or call <code>updateGbaseItem($entry, $dryRun)</code> method on the <code>Zend_Gdata_Gbase</code> object to save the changes.
             </para>
         </sect3>
 		<sect3 id="zend.gdata.gbase.crud.delete">

@@ -151,6 +151,19 @@ class Zend_Gdata_Gbase extends Zend_Gdata
     }
 
     /**
+     * Update an entry
+     *
+     * @param Zend_Gdata_Gbase_ItemEntry $entry The Base entry to be updated
+     * @param boolean $dryRun Flag for the 'dry-run' parameter
+     * @return Zend_Gdata_Gbase_ItemEntry
+     */
+    public function updateGbaseItem($entry, $dryRun = false)
+    {
+        $returnedEntry = $entry->save($dryRun);
+        return $returnedEntry;
+    }
+
+    /**
      * Delete an entry
      *
      * @param Zend_Gdata_Gbase_ItemEntry $entry The Base entry to remove
