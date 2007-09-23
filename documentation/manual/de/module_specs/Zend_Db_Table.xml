@@ -1157,58 +1157,54 @@ $rows = $table->fetchAll($where);]]></programlisting>
             </example>
 
             <para>
-                You can change the classes by specifying
-                them with the <code>setRowClass()</code> and
-                <code>setRowsetClass()</code> methods.  This applies to
-                rows and rowsets created subsequently; it does not change
-                the class of any row or rowset objects you have created
-                previously.
+                Die klassen können geändert werden indem Sie mit den <code>setRowClass()</code> und
+                <code>setRowsetClass()</code> Methoden spezifiziert werden. Das entspricht den Zeilen
+                und Rowsets die nachfolgend erstellt werden; es ändert aber nicht die Klasse von Zeilen-
+                oder Rowsetobjekten die bereits davor erstellt wurden.
             </para>
 
             <example id="zend.db.table.extending.row-rowset.example2">
-                <title>Example of changing the Row and Rowset classes</title>
+                <title>Beispiel für das Ändern von Zeilen und Rowset Klassen</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
 
-// Returns an object of type Zend_Db_Table_Rowset
-// containing an array of objects of type Zend_Db_Table_Row.
+// Gibt ein Objekt vom Typ Zend_Db_Table_Rowset zurück das ein Array
+// von Objekten des Typs Zend_Db_Table_Row enthält.
 $rowsStandard = $table->fetchAll($where);
 
 $table->setRowClass('My_Row');
 $table->setRowsetClass('My_Rowset');
 
-// Returns an object of type My_Rowset,
-// containing an array of objects of type My_Row.
+// Gibt ein Objekt vom Typ My_Rowset zurück das ein Array
+// von Objekten des Typs My_Row enthält.
 $rowsCustom = $table->fetchAll($where);
 
-// The $rowsStandard object still exists, and it is unchanged.]]></programlisting>
+// Das $rowsStandard Objekt existiert noch immer, und es bleibt unverändert.]]></programlisting>
             </example>
 
             <para>
-                For more information on the Row and Rowset classes,
-                see <xref linkend="zend.db.table.row" /> and
-                <xref linkend="zend.db.table.rowset" />.
+                Für weitere Informationen über Zeilen und Rowset Klassenm siehe
+                <xref linkend="zend.db.table.row" /> und <xref linkend="zend.db.table.rowset" />.
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.table.extending.insert-update">
 
-            <title>Defining Custom Logic for Insert, Update, and Delete</title>
+            <title>Selbst definierte Logik für das Einfügen, Aktualisieren und Löschen</title>
 
             <para>
-                You can override the <code>insert()</code> and
-                <code>update()</code> methods in your Table class.
-                This gives you the opportunity to implement custom code
-                that is executed before performing the database operation.
-                Be sure to call the parent class method when you are done.
+                Die <code>insert()</code> und <code>update()</code> Methoden in der Table Klasse können
+                überschrieben werden. Das bietet die Möglichkeit eigenen Code einzufügen der ausgeführt
+                wird bevor die Datenbank Operation durchgeführt wird. Es muß sichergestellt werden das die
+                Methode der Elternklasse aufgerufen wird wenn man fertig ist.
             </para>
 
             <example id="zend.db.table.extending.insert-update.example">
-                <title>Custom logic to manage timestamps</title>
+                <title>Eigene Logik um Zeitstempel zu managen</title>
                 <programlisting role="php"><![CDATA[<?php
 
 class Bugs extends Zend_Db_Table_Abstract
@@ -1217,7 +1213,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
     public function insert(array $data)
     {
-        // add a timestamp
+        // Einen Zeitstempel hinzufügen
         if (empty($data['created_on'])) {
             $data['created_on'] = time();
         }
@@ -1226,7 +1222,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
     public function update(array $data, $where)
     {
-        // add a timestamp
+        // Einen Zeitstempel hinzufügen
         if (empty($data['updated_on'])) {
             $data['updated_on'] = time();
         }
@@ -1236,29 +1232,26 @@ class Bugs extends Zend_Db_Table_Abstract
             </example>
 
             <para>
-                You can also override the <code>delete()</code> method.
+                Auch die <code>delete()</code> Methode kann überschrieben werden.
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.table.extending.finders">
 
-            <title>Define Custom Search Methods in Zend_Db_Table</title>
+            <title>Eigene Such Methoden in Zend_Db_Table definieren</title>
 
             <para>
-                You can implement custom query methods in your Table class,
-                if you have frequent need to do queries against this table
-                with specific criteria.  Most queries can be written using
-                <code>fetchAll()</code>, but this requires that you duplicate
-                code to form the query conditions if you need to run the
-                query in several places in your application.
-                Therefore it can be convenient to implement a method
-                in the Table class to perform frequently-used queries
-                against this table.
+                Es können eigene Abfrage Methoden in der Table Klasse implementiert werden, wenn oft die
+                Notwendigkeit besteht Abragen mit speziellen Kriterien auf der Table Klasse durchzuführen.
+                Die meisten Abfragen können mit <code>fetchAll()</code> geschrieben werden, das bedeutet aber
+                das Code dupliziert werden muß um Abfragekonditionen zu formen die Abfrage in verschiedenen
+                Orten der Anwendung auszuführen. Hierfür kann es nützlich sein eine Methode in der Table Klasse
+                zu definieren um oft benutzte Abfragen an dieser Tabelle durchzuführen.
             </para>
 
             <example id="zend.db.table.extending.finders.example">
-                <title>Custom method to find bugs by status</title>
+                <title>Eigene Methode um Fehler durch den Status zu finden</title>
                 <programlisting role="php"><![CDATA[<?php
 
 class Bugs extends Zend_Db_Table_Abstract
@@ -1277,59 +1270,51 @@ class Bugs extends Zend_Db_Table_Abstract
 
         <sect3 id="zend.db.table.extending.inflection">
 
-            <title>Define Inflection in Zend_Db_Table</title>
+            <title>Beugung (Inflection) in Zend_Db_Table definieren</title>
 
             <para>
-                Some people prefer that the table class name match a table
-                name in the RDBMS by using a string transformation called
-                <emphasis>inflection</emphasis>.
+                Einige Leute bevorzugen das der Name der Table Klasse einem Tabellennamen in der RDBMS, durch
+                eine Stringumwandlung die <emphasis>Beugung</emphasis> (Inflection) genannt wird, entspricht.
             </para>
 
             <para>
-                For example, if your table class name is
-                "<code>BugsProducts</code>", it would match the physical table
-                in the database called "<code>bugs_products</code>,"
-                if you omit the explicit declaration of the <code>$_name</code>
-                class property.
-                In this inflection mapping, the class name spelled in
-                "CamelCase" format would be transformed to lower case,
-                and words are separated with an underscore.
+                Wenn zum Beispeil der Name der Table Klasse "<code>BugsProducts</code>" ist, würde Sie der
+                physikalischen Tabelle in der Datenbank entsprechen die "<code>bugs_products</code>" heißt,
+                wenn die explizite Definition der <code>$_name</code> Eigenschaft der Klasse unterdrückt wird.
+                In dieser Übereinstimmung der Beugung, wird der Klassenname im "CamelCase" Format geschrieben
+                und in Kleinschreibung transformiert, und Wörter mit einem Unterstrich seperiert.
             </para>
 
             <para>
-                You can specify the database table name independently from
-                the class name by declaring the table name with the
-                <code>$_name</code> class property in each of your table
-                classes.
+                Der Tabellenname der Datenbank kann unabhängig vom Klassennamen spezifiziert werden indem der
+                Tabellenname mit der Klasseneigenschaft <code>$_name</code> in jeder der eigenen Tabellenklassen
+                deklariert wird.
             </para>
 
             <para>
-                Zend_Db_Table_Abstract performs no inflection to
-                map the class name to the table name.  If you omit the
-                declaration of <code>$_name</code> in your table class,
-                the class maps to a database table that matches the
-                spelling of the class name exactly.
+                Zend_Db_Table_Abstract fürht keine Beugung durch um die Klassennamen mit den Tabellennamen
+                in Übereinstimmung zu brigen. Wenn die Deklaration von <code>$_name</code> in der eigenen
+                Tabellenklasse unterdrückt wird, wird die Klasse mit der Datenbanktabelle in Verbindung
+                gebracht die der Schreibweise des Klassennamens exakt entspricht.
             </para>
 
             <para>
-                It is inappropriate to transform identifiers from the database,
-                because this can lead to ambiguity or make some identifiers
-                inaccessible.
-                Using the SQL identifiers exactly as they appear in the database
-                makes Zend_Db_Table_Abstract both simpler and more flexible.
+                Es ist unzureichend Identifizierer von der Datenbank zu transformieren, da das zu
+                Doppeldeutigkeiten führen kann oder einige Identifizierer sogar unerreichbar macht.
+                Die Verwendung der SQL Identifizierer exakt so wie Sie in der Datenbank vorhanden sind,
+                macht Zend_Db_Table_Abstract sowohl einfacher als auch flexibler.
             </para>
 
             <para>
-                If you prefer to use inflection, then you must implement
-                the transformation yourself, by overriding the
-                <code>_setupTableName()</code> method in your Table classes.
-                One way to do this is to define an abstract class that extends
-                Zend_Db_Table_Abstract, and then the rest of your tables
-                extend your new abstract class.
+                Wenn man es vorzieht Beugung zu verwenden, muß die Transformation selbst durch das
+                Überschreiben der <code>_setupTableName()</code> Methode in der eigenen Tabellenklasse
+                implementiert werden. Ein Weg um das zu tun ist die Definition einer abstrakten Klase die
+                Zend_Db_Table_Abstract erweitert. Der Rest der eigenen Klassen erweitert dann die eigene
+                neue abstrakte Klasse.
             </para>
 
             <example id="zend.db.table.extending.inflection.example">
-                <title>Example of an abstract table class that implements inflection</title>
+                <title>Beispiel einer abstrakten Tabellenklasse die Beugung implementiert</title>
                 <programlisting role="php"><![CDATA[<?php
 
 abstract class MyAbstractTable extends Zend_Db_Table_Abstract
@@ -1349,9 +1334,8 @@ class BugsProducts extends MyAbstractTable
             </example>
 
             <para>
-                You are responsible for writing the functions to
-                perform inflection transformation.
-                Zend Framework does not provide such a function.
+                Man ist selbst für das Schreiben von Funktionen verantwortlich um die Transformation der
+                Beugung auszuführen. Der Zend Framework bietet solche Funktionen nicht an.
             </para>
 
         </sect3>
