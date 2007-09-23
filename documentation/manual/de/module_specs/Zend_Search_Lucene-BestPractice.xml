@@ -1,0 +1,567 @@
+<sect1 id="zend.search.lucene.best-practice">
+    <title>Beste Praxis</title>
+
+    <sect2 id="zend.search.lucene.best-practice.field-names">
+        <title>Feldnamen</title>
+
+        <para>
+            Es gibt keine Begrenzungen für Feldnamen in Zend_Search_Lucene.
+        </para>
+
+        <para>
+            Trotzdem ist es eine gute Idee die '<emphasis>id</emphasis>' und '<emphasis>score</emphasis>'
+            Namen nicht zu verwenden um Doppeldeutigkeiten in den Namen der <code>QueryHit</code> Eigenschaften
+            zu verhindern.
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Search_QueryHit</code> <code>id</code> und <code>score</code>
+            Eigenschaften referieren immer zum internen Lucene Dokumenten ID und Treffer-
+            <link linkend="zend.search.lucene.searching.results-scoring">Anzahl</link>. Wenn ein indiziertes
+            Dokument das gleiche Feld gespeichert hat, muß die <code>getDocument()</code> Methode verwendet werden
+            um darauf zuzugreifen:
+
+            <programlisting role="php"><![CDATA[<?php
+$hits = $index->find($query);
+
+foreach ($hits as $hit) {
+    // Das 'title' Dokumentfeld erhalten
+    $title = $hit->title;
+
+    // Das 'contents' Dokumentfeld erhalten
+    $contents = $hit->contents;
+
+
+    // Die interne Lucene Dokument ID erhalten
+    $id = $hit->id;
+
+    // Die Anzahl der Abfragetreffer erhalten
+    $score = $hit->score;
+
+
+    // Das 'id' Dokumentfeld erhalten
+    $docId = $hit->getDocument()->id;
+
+    // Das 'score' Dokumentfeld erhalten
+    $docId = $hit->getDocument()->score;
+
+    // Ein anderer Weg um das 'title' Dokumentfeld zu erhalten
+    $title = $hit->getDocument()->title;
+}]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+
+    <sect2 id="zend.search.lucene.best-practice.indexing-performance">
+        <title>Geschwindigkeit von Indezes</title>
+
+        <para>
+            Die Geschwindigkeit von Indezes ist ein Kompromiss zwischen verwendeten Ressourcen, der Zeit
+            für das Indizieren und die Qualität des Index.
+        </para>
+
+        <para>
+            Die Qualität des Index wird komplett eruiert durch die Anzahl an Indexsegmenten.
+        </para>
+
+        <para>
+            Jedes Indexsegment ist ein komplett unabhängiger Teil von Daten. Deshalb benötigt ein Index der mehr
+            Segmente hat, auch mehr Speicher und mehr Zeit für das Suchen.
+        </para>
+
+        <para>
+            Index Optimierung ist ein Prozess der mehrere Segmente in ein neues zusammenfügt. Ein komplett
+            optimierter Index enthält nur ein Segment.
+        </para>
+
+        <para>
+            Komplette Index Optimierung kann mit der 'optimize()' Methode durchgeführt werden:
+            <programlisting role="php"><![CDATA[<?php
+$index = Zend_Search_Lucene::open($indexPath);
+
+$index->optimize();]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Index Optimierung arbeitet mit Daten Streams und benötigt nicht viel Speicher, aber Prozessor
+            Ressourcen und Zeit.
+        </para>
+
+        <para>
+            Lucene Index Segmente sind nicht aktualisierbar durch Ihre Natur (Aktuslisierung erfordert das die
+            Segment Datei komplett neu geschrieben wird). Deshalb erzeugt das Hinzufügen neuer Dokumente zu einem
+            Index auch immer ein neues Segment. Das verkleinert die Qualität des Indexes.
+        </para>
+
+        <para>
+            Der automatische Optimierungsprozess des Index wird nach jeder Erstellung eines Segments
+            durchgeführt und besteht darin das verschiedene Segmente zusammengeführt werden.
+        </para>
+
+        <para>
+            Es gibt drei Optionen um das Verhalten der automatischen Optimierung zu beeinflussen
+            (siehe das Kapitel <link linkend="zend.search.lucene.index-creation.optimization">Index Optimierung</link>):
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis>MaxBufferedDocs</emphasis> ist die Anzahl an Dokumenten die im Speicher
+                        gepuffert werden bevor ein neues Segent erstellt und auf die Festplatte geschrieben wird.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>MaxMergeDocs</emphasis> ist die maximale Anzahl an Dokumenten die durch den
+                        automatischen Optimierungsprozess in ein neues Segment zusamengeführt werden.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>MergeFactor</emphasis> ermittelt wie oft die automatische Optimierung
+                        durchgeführt wird.
+                    </para>
+                </listitem>
+            </itemizedlist>
+            <note>
+                <para>
+                    Alle diese Optionen sind Eigenschaften des Zend_Search_Lucene Objektes, aber keine
+                    Eigenschaften des Index. Deshalb beeinflussen Sie nur das Verhalten des aktuellen
+                    <code>Zend_Search_Lucene</code> Objektes und können für verschiedene Skripte unterschiedlich
+                    sein.
+                </para>
+            </note>
+        </para>
+
+        <para>
+            <emphasis>MaxBufferedDocs</emphasis> ist es egal ob nur ein Dokument pro Skriptausführung indiziert
+            wird. Im Gegensatz dazu ist das sehr wichtig für die Batchindizierung. Größere Werte erhöhen die
+            Geschwindigkeit des Indizierens, benötigen aber auch mehr Speicher.
+        </para>
+
+        <para>
+            Es gibt keinen Weg um den besten Wert für den <emphasis>MaxBufferedDocs</emphasis> Parameter zu
+            berechnen weil es von der Größe des Dokuments abhängt, dem verwendeten Analysierer und dem erlaubten
+            Speicher.
+        </para>
+
+        <para>
+            Ein guter Weg um den richtigen Wert herauszufinden, ist die Durchführung von verschiedenen Tests
+            mit den größten Dokumenten von denen erwartet wird das Sie indiziert werden.
+            
+            <footnote>
+                <para>
+                    <code>memory_get_usage()</code> und <code>memory_get_peak_usage()</code> können verwendet
+                    werden um die Verwendung des Speichers zu kontrollieren.
+                </para>
+            </footnote>
+            
+            Es ist eine gute Idee nicht mehr als die Hälfte des erlaubten Speichers zu verwenden.
+        </para>
+
+
+        <para>
+            <emphasis>MaxMergeDocs</emphasis> limitiert die Größe des Segments (in Abschnitten von Dokumenten).
+            Es begrenzt also die Zeit für die automatische Optimierung. Das garantiert das die
+            <code>addDocument()</code> Methode nicht länger als eine bestimmte Zeit ausgeführt wird. Das ist
+            wichtig für interaktive Anwendungen.
+        </para>
+
+        <para>
+            Das Verkleinern des <emphasis>MaxMergeDocs</emphasis> Parameters kann auch die Geschwindigkeit
+            des Batchinzieierens beeinflussen. Automatische Optimierung des Index ist ein iterativer Prozess
+            und wird Schritt für Schritt durchgeführt. Kleine Segmente werden in größere zusammengeführt, und
+            irgendwann werden Sie in sogar noch größere zusammengeführt und so weiter. Komplette
+            Optimierung des Index ist viel effektiver.
+        </para>
+
+        <para>
+            Auf der anderen Seite, verkleinern kleiner Segmente die Qualität des Indezes und können zu viele
+            Segmente erzeugen. Das kann zu einem "Too many open files" Fehler führen, ausgelöst durch die
+            Beschränkungen des Betriebsystems.
+            
+            <footnote>
+                <para>
+                    Zend_Search_Lucene hält jedes Segment offen um die Geschwindigkeit des Suchens zu erhöhen.
+                </para>
+            </footnote>
+        </para>
+
+        <para>
+            Deshalb sollte die Optimierung des Indezes im Hintergrund für den Interaktiven Indexmodus
+            durchgeführt werden und <emphasis>MaxMergeDocs</emphasis> sollte nichz zu klein sein für
+            die Batchindizierung.
+        </para>
+
+
+        <para>
+            <emphasis>MergeFactor</emphasis> beeinflußt die Frequenz der automatischen Optimierung. Kleinere
+            Werte erhöhen die Qualität des nicht optimierten Index. Größere Werte erhöhen die Geschwindigkeit
+            des Indizierens, erhöht aber auch die Anzahl an Segmenten. Das kann auch wieder zu einem Fall
+            von "Too many open files" Fehler führen.
+        </para>
+
+        <para>
+            <emphasis>MergeFactor</emphasis> gruppiert Indexsegmente anhand Ihrer Größe:
+            <orderedlist>
+                <listitem>
+                    <para>
+                        Nicht größer als <emphasis>MaxBufferedDocs</emphasis>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Größer als <emphasis>MaxBufferedDocs</emphasis>, aber nicht größer als
+                        <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Größer als <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>, aber
+                        nicht größer als
+                        <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>*<emphasis>MergeFactor</emphasis>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>...</para>
+                </listitem>
+            </orderedlist>
+        </para>
+
+        <para>
+            Zend_Search_Lucene prüft bei jedem Aufruf von <code>addDocument()</code> ob das Zusammenführen
+            irgendwelcher Segmentgruppen dazu führt das neu erstellte Segmente in die nächste Gruppe verschoben
+            werden. Wenn ja, wird das Zusammenführen durchgeführt. 
+        </para>
+
+        <para>
+            Also kann ein Index mit N Gruppen
+            <emphasis>MaxBufferedDocs</emphasis> + (N-1)*<emphasis>MergeFactor</emphasis> Segmente und zumindest
+            <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis><superscript>(N-1)</superscript>
+            Dokumente enthalten.
+        </para>
+
+        <para>
+            Das gibt eine gute Näherung für die Anzahl an Segmenten im Index:
+        </para>
+        <para>
+            <emphasis>NumberOfSegments</emphasis> &lt;= <emphasis>MaxBufferedDocs</emphasis> + <emphasis>MergeFactor</emphasis>*log
+            <subscript><emphasis>MergeFactor</emphasis></subscript> (<emphasis>NumberOfDocuments</emphasis>/<emphasis>MaxBufferedDocs</emphasis>)
+        </para>
+
+        <para>
+            <emphasis>MaxBufferedDocs</emphasis> wird durch den erlaubten Speicher eruiert. Das bietet die
+            Möglichkeit einen erwünschten Faktor für das Zusammenführen auszuwählen um eine erwünschte
+            Anzahl an Segmenten zu erhalten.
+        </para>
+
+
+        <para>
+            Das tunen des <emphasis>MergeFactor</emphasis> Parameters ist effektiver für die Geschwindigkeit
+            der Batchindizierung als <emphasis>MaxMergeDocs</emphasis>. Aber es ist auch grober. Deshalb sollte
+            die obige Annäherung für das tuten von <emphasis>MergeFactor</emphasis> verwendet werden und
+            anschließend mit <emphasis>MaxMergeDocs</emphasis> gespielt werden um die beste
+            Geschwindigkeit für die Batchindizierung zu erhalten.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.shutting-down">
+        <title>Den Index herunterfahren</title>
+
+        <para>
+            Ein <code>Zend_Search_Lucene</code> Objekt führt einiges an Arbeit durch während des Herunterfahrens
+            wenn irgendwelche Dokumente dem Index hinzugefügt wurden.
+        </para>
+
+        <para>
+            Es ist Beschäftigt mit dem Buffern von hinzugefügten Dokumenten bevor ein neues Segment erstellt wird.
+        </para>
+
+        <para>
+            Es kann auch einen automatischen Optimierungsprozess ausführen.
+        </para>
+
+        <para>
+            Das Indexobjekt wird automatisch Heruntergefahren wenn es selbst, und alle zurückgegebenen QueryHit
+            Objekte, ausserhalb des Sichtbereichs sind.
+        </para>
+
+        <para>
+            Wenn das Indexobjekt in einer globalen Variable gespeichert wird, dann wird es nur am Ende der
+            Skriptausführung zerstört
+            
+            <footnote>
+                <para>
+                    Das kann auch vorkommen das, wenn Index oder QueryHit Objekte im komplexen Datenstrukturen
+                    referenziert werden. Z.B. zerstört PHP Objekte mit zyklischen Referenzen nur am Ende der
+                    Skriptausführung.
+                </para>
+            </footnote>.
+        </para>
+
+        <para>
+            Die Behandlung von PHP Ausnahmen ist aktuell auch ein Herunterfahren. 
+        </para>
+
+        <para>
+            Das beeinflußt den normalen Shutdown Prozess des Index nicht, kann aber verhindern das korrekte
+            Fehlerdisgnostik durchgeführt werden kann wenn ein Fehler stattfindet.
+        </para>
+
+        <para>
+            Es gibt zwei Wege welche helfen das Problem zu verhindern.
+        </para>
+
+        <para>
+            Der erste ist, das das Herausgehen aus dem Sichtbereich erzwungen wird:
+            <programlisting role="php"><![CDATA[<?php
+$index = Zend_Search_Lucene::open($indexPath);
+
+...
+
+unset($index);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Und der zweite ist, das eine commit Operation vor dem Ende der Ausführung des Skripts stattfindet:
+            <programlisting role="php"><![CDATA[<?php
+$index = Zend_Search_Lucene::open($indexPath);
+
+$index->commit();]]>
+            </programlisting>
+            Diese Möglichkeit wird auch im Kapitel
+            "<link linkend="zend.search.lucene.advanced.static">Fortgeschrittene Verwendung von Indezes als statische Eigenschaften</link>"
+            der Dokumentation beschrieben.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.unique-id">
+        <title>Dokumente anhand der eindeutigen Id erhalten</title>
+
+        <para>
+            Es ist eine übliche Praxis das eindeutige Dokument IDs in dem Index gespeichert werden. Zum
+            Beispiel URL, Pfad, Datenbank ID oder einige andere.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene</code> bietet die <code>termDocs()</code> Methode damit Dokumente empfangen
+            werden können die spezielle Terme enthalten.
+        </para>
+
+        <para>
+            Das ist effektiver als die <code>find()</code> Methode:
+            <programlisting role="php"><![CDATA[<?php
+// Dokumente mit find() erhalten indem ein Abfragestring verwendet wird
+$query = $idFieldName . ':' . $docId;
+$hits  = $index->find($query);
+foreach ($hits as $hit) {
+    $title    = $hit->title;
+    $contents = $hit->contents;
+    ...
+}
+...
+
+// Dokumente mit der find() Methode erhalten indem die Anfrage API verwendet wird
+$term = new Zend_Search_Lucene_Index_Term($docId, idFieldName);
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
+$hits  = $index->find($query);
+foreach ($hits as $hit) {
+    $title    = $hit->title;
+    $contents = $hit->contents;
+    ...
+}
+
+...
+
+// Dokumente mit der termDocs() Methode erhalten
+$term = new Zend_Search_Lucene_Index_Term($docId, idFieldName);
+$docIds  = $index->termDocs($term);
+foreach ($docIds as $id) {
+    $doc = $index->getDocument($id);
+    $title    = $doc->title;
+    $contents = $doc->contents;
+    ...
+}]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.memory-usage">
+        <title>Speicherverwendung</title>
+
+        <para>
+            Zend_Search_Lucene ist ein Modul das sehr viel Speicher benötigt.
+        </para>
+
+        <para>
+            Es verwendet Speicher um Informationen zu cachen und das Suchen und Indizieren schneller zu machen.
+        </para>
+
+        <para>
+            Es verhält sich unterschiedlich für unterschiedliche Modi.
+        </para>
+
+        <para>
+            Der Verzeichnisindex der Terme wird während der Suche geladen. Das ist aktuelle jeder 128
+            <superscript>te</superscript> Term des kompletten Verzeichnisses.
+            
+            <footnote>
+                <para>
+                    Das Lucene Dateiformat erlaubt es diese Zahl zu ändern, aber Zend_Search_Lucene bietet
+                    keine Möglichkeit das über seine API durchzuführen. Trotzdem gibt es die Möglichkeit
+                    diesen Wert zu ändern wenn er mit einer anderen Lucene Implementation vorbereitet wird.
+                </para>
+            </footnote>
+        </para>
+
+        <para>
+            Der Speicherverbrauch wird erhöht wenn man eine große Anzahl an eindeutigen Termen hat. Das kann
+            passieren wen man ungeteilte Phrasen als Feld Werte verwendet, oder ein großes Volumen von
+            nicht-text Informationen hat.
+        </para>
+
+        <para>
+            Ein nicht optimierter Index besteht aus verschiedenen Segmenten. Er erhöht auch den
+            Speicherverbrauch. Segmente sind voneinander unabhängig, sodas jedes Segment sein eigenes
+            Verzeichnis an Termen enthält und den Verzeichnisindex der Terme. Wenn der Index aus
+            <emphasis>N</emphasis> Segmenten besteht kann der Speicherverbrauch im schlimmsten Fall
+            <emphasis>N</emphasis> mal so groß sein. Eine Optimierung des Index kann durchgeführt werden
+            um alle Segmente in eines zusammenzuführen. 
+        </para>
+
+        <para>
+            Indizierung verwendet den gleichen Speicher wie das Suchen und zusätzlich Speicher für das
+            puffern von Dokumenten. Die Größe des Speichers der hierfür verwendet wird kann mit dem
+            <emphasis>MaxBufferedDocs</emphasis> Parameter verwaltet werden.
+        </para>
+
+        <para>
+            Index Optimierung (komplett oder teilweise) verwendet Streams wie beim Bearbeiten von Daten und
+            benötigt nicht viel Speicher.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.encoding">
+        <title>Verschlüsselung</title>
+
+        <para>
+            Zend_Search_Lucene arbeitet intern mit UTF-8 Strings. Das bedeutet also das alle von
+            Zend_Search_Lucene zurückgegebenen Strings UTF-8 verschlüsselt sind.
+        </para>
+
+        <para>
+            Man sollte sich keine Gedanken über Verschlüsselung machen solange man mit reinen ASCII Daten
+            arbeitet, aber in allen anderen Fällen sollte man Vorsichtig sein.
+        </para>
+
+        <para>
+            Eine falsche Verschlüsselung kann Fehlernotizen bei der Konvertierung der Verschlüsselung
+            oder den Verlust von Daten verursachen.
+        </para>
+
+        <para>
+            Zend_Search_Lucene bietet einen weiten Bereich von Möglichkeiten um die aktuelle Verschlüsselung
+            von indizierten Dokumenten zu spezifizieren und Abfragen zu parsen.
+        </para>
+
+        <para>
+            Verschlüsselung kann explizit als optionaler Parameter bei den Felderstellung Methoden
+            spezifiziert werden: 
+            <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
+            </programlisting>
+            Das ist der beste Weg um Problemen bei der Spezifikation von Verschlüsselung vorzubeugen.
+        </para>
+
+        <para>
+            Wenn der optionale Parameter der Verschlüsselung unterdrückt wird, wird das aktuelle
+            Gebietsschema verwendet zusätzlich zur Information der Sprache.
+            <programlisting role="php"><![CDATA[<?php
+setlocale(LC_ALL, 'fr_FR');
+...
+
+setlocale(LC_ALL, 'de_DE.iso-8859-1');
+...
+
+setlocale(LC_ALL, 'ru_RU.UTF-8');
+...]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Der selbe Weg wird verwendet um die Verschlüsselung beim Abfragestring zu spezifizieren.
+        </para>
+
+        <para>
+            Wenn die Verschlüsselung nicht auf einen speziellen Weg definiert wird, wird das aktuelle
+            Gebietsschema verwendet.
+        </para>
+
+        <para>
+            Verschlüsselung kann als optionaler Parameter angegeben werden, wenn die Abfrage explizit vor der
+            Suche geparsed wird:
+            <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+$hits = $index->find($query);
+...]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Die Standardverschlüsselung kann auch mit der <code>setDefaultEncoding()</code> Methode spezifiziert
+            werden:
+            <programlisting role="php"><![CDATA[<?php
+Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
+$hits = $index->find($queryStr);
+...]]>
+            </programlisting>
+            Ein leerer String bedeutet das 'aktuelle Gebietsschema'.
+        </para>
+
+        <para>
+            Sobald die richtige Verschlüsselung spezifiziert wurde, kann Sie korrekt vom Analysator
+            ausgeführt werden. Das aktuelle Verhalten hängt vom verwendeten Analysator ab. Siehe
+            das Kapitel <link linkend="zend.search.lucene.charset">Zeichensatz</link> der Dokumentation
+            für Details.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.best-practice.maintenance">
+        <title>Index Wartung</title>
+
+        <para>
+            Es sollte klar sein, das Zend_Search_Lucene, genauso wie jede andere Lucene Implementation,
+            keine "Datenbank" ist.
+        </para>
+
+        <para>
+            Es sollte auf einigen Arten von Datenspeichern nicht verwendet werden. Es bietet keine
+            teilweisen Backup/Wiederherstellungs Funktionen, Journal, Logging, Transactions und viele
+            andere Dinge die von Datenbank Management Systemen angeboten werden.
+        </para>
+
+        <para>
+            Trotzdem versucht Zend_Search_Lucene den Index jederzeit in einem gültigen Status zu halten.
+        </para>
+
+        <para>
+            Index Backup/Wiederherstellung sollte off-line durchgeführt werden durch komplettes Kopieren des
+            Index Verzeichnisses.
+        </para>
+
+        <para>
+            Wenn der Index durch irgendeinen Grund beschädigt wird, sollte er komplett wiederhergestellt oder
+            neu gebaut werden.
+        </para>
+
+        <para>
+            Es ist also eine gute Idee von großen Indezes ein Backup zu machen und irgendwo ein Änderungslog
+            zu speichern um manuelle Wiederherstellung + Roll-Forward Operationen durchzuführen wenn das
+            notwendig ist. Es ist essentiell die Wiederherstellungszeit des Index zu reduzieren.
+        </para>
+
+    </sect2>
+</sect1>
