@@ -20,13 +20,17 @@
  * @version    $Id: DataTest.php 3776 2007-03-06 22:50:56Z thomas $
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Currency
  */
 require_once 'Zend/Locale.php';
 require_once 'Zend/Currency.php';
-         
+
 /**
  * PHPUnit test case
  */
@@ -43,11 +47,11 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         require_once 'Zend/Cache.php';
-        $cache = Zend_Cache::factory('Core', 'File', 
-                 array('lifetime' => 120, 'automatic_serialization' => true), 
+        $cache = Zend_Cache::factory('Core', 'File',
+                 array('lifetime' => 120, 'automatic_serialization' => true),
                  array('cache_dir' => dirname(__FILE__) . '/_files/'));
         Zend_Currency::setCache($cache);
-        
+
     }
 
     /**
