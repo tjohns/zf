@@ -59,5 +59,5 @@ class Zend_Http_AllTests
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Http_AllTests::main') {
-    Zend_AllTests::main();
+    Zend_Http_AllTests::main();
 }

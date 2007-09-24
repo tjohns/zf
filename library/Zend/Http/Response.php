@@ -531,7 +531,7 @@ class Zend_Http_Response
     public static function extractBody($response_str)
     {
         $parts = preg_split('|(?:\r?\n){2}|m', $response_str, 2);
-        if ($parts[1]) { 
+        if (isset($parts[1])) { 
         	return $parts[1];
         } else {
         	return '';
