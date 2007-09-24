@@ -56,6 +56,9 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $locale = new Zend_Locale('de');
         $this->assertTrue(new Zend_Locale($locale) instanceof Zend_Locale,'Zend_Locale Object not returned');
+
+        $locale = new Zend_Locale('auto');
+        $this->assertTrue(new Zend_Locale($locale) instanceof Zend_Locale,'Zend_Locale Object not returned');
     }
 
 
@@ -178,6 +181,15 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $value->setLocale('xx_AA');
         $this->assertEquals($value->toString(), 'root', 'Environment Locale not set');
+
+        $value->setLocale('auto');
+        $this->assertTrue(is_string($value->toString()), 'Automatic Locale not found');
+
+        $value->setLocale('browser');
+        $this->assertTrue(is_string($value->toString()), 'Browser Locale not found');
+
+        $value->setLocale('environment');
+        $this->assertTrue(is_string($value->toString()), 'Environment Locale not found');
     }
 
 
@@ -205,6 +217,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value->getLanguageTranslation('de'), 'Deutsch', 'Language Display not returned');
         $this->assertEquals($value->getLanguageTranslation('de', 'en'), 'German', 'Language Display not returned');
         $this->assertFalse($value->getLanguageTranslation('xyz'), 'Language Display should be false');
+        $this->assertTrue(is_string($value->getLanguageTranslation('de', 'auto')), 'Language Display not returned');
     }
 
 
@@ -289,6 +302,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($value->getTerritoryTranslation('002'), 'Afrika', 'No territory found');
         $this->assertEquals($value->getTerritoryTranslation('002', 'en'), 'Africa', 'No territory found');
         $this->assertFalse($value->getTerritoryTranslation('xyz'), 'Territory Display should be false');
+        $this->assertEquals(is_string($value->getTerritoryTranslation('002', 'auto')), 'No territory found');
     }
 
 

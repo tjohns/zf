@@ -68,7 +68,8 @@ class Zend_Locale {
         'ug'    => true, 'uk_UA' => true, 'uk'    => true, 'und_ZZ'=> true, 'und'   => true, 'ur_IN' => true, 'ur_PK' => true, 'ur'    => true, 'uz_AF' => true, 'uz_UZ' => true,
         'uz'    => true, 've_ZA' => true, 've'    => true, 'vi_VN' => true, 'vi'    => true, 'wal_ET'=> true, 'wal'   => true, 'wo_SN' => true, 'wo'    => true, 'xh_ZA' => true,
         'xh'    => true, 'yo_NG' => true, 'yo'    => true, 'zh_CN' => true, 'zh_HK' => true, 'zh_MO' => true, 'zh_SG' => true, 'zh_TW' => true, 'zh'    => true, 'zu_ZA' => true,
-        'zu'    => true
+        'zu'    => true, 
+        'auto'  => false, 'browser' => false, 'environment' => false
     );
 
 
@@ -91,6 +92,12 @@ class Zend_Locale {
      */
     private $_Codeset;
 
+    /**
+     * Automatic detected locale
+     */
+    private static $_auto;
+    private static $_browser;
+    private static $_environment;
 
     /**
      * Generates a locale object
@@ -107,6 +114,15 @@ class Zend_Locale {
      */
     public function __construct($locale = null)
     {
+        if (empty(self::$_auto)) {
+            self::$_auto        = $this->getDefault(null, false);
+            self::$_browser     = $this->getDefault(self::BROWSER, false);
+            self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
+            if (empty($locale) and empty(self::$_auto)) {
+                throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
+            }
+        }
+
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         }
@@ -317,6 +333,16 @@ class Zend_Locale {
         if (($locale == self::BROWSER) or ($locale == self::ENVIRONMENT) or ($locale === null)) {
             $locale = $this->getDefault($locale, true);
         }
+
+        if (($locale == 'auto') or ($locale === null)) {
+            $locale = self::$_auto;
+        }
+        if ($locale == 'browser') {
+            $locale = self::$_browser;
+        }
+        if ($locale == 'environment') {
+            $locale = self::$_environment;
+        }
         if (is_array($locale)) {
             $locale = key($locale);
         }
@@ -440,6 +466,18 @@ class Zend_Locale {
             $locale = $this->_Locale;
         }
 
+        if ($locale == 'auto') {
+            $locale = self::$_auto;
+        }
+        if ($locale == 'browser') {
+            $locale = self::$_browser;
+        }
+        if ($locale == 'environment') {
+            $locale = self::$_environment;
+        }
+        if (is_array($locale)) {
+            $locale = key($locale);
+        }
         switch (strtolower($type)) {
             case 'language' :
                 return Zend_Locale_Data::getContent($locale, 'languagelist');
@@ -617,6 +655,18 @@ class Zend_Locale {
             $locale = $this->_Locale;
         }
 
+        if ($locale == 'auto') {
+            $locale = self::$_auto;
+        }
+        if ($locale == 'browser') {
+            $locale = self::$_browser;
+        }
+        if ($locale == 'environment') {
+            $locale = self::$_environment;
+        }
+        if (is_array($locale)) {
+            $locale = key($locale);
+        }
         switch (strtolower($type)) {
             case 'language' :
                 $list = Zend_Locale_Data::getContent($locale, 'language', $what);
@@ -814,6 +864,18 @@ class Zend_Locale {
             $locale = $this->_Locale;
         }
 
+        if ($locale == 'auto') {
+            $locale = self::$_auto;
+        }
+        if ($locale == 'browser') {
+            $locale = self::$_browser;
+        }
+        if ($locale == 'environment') {
+            $locale = self::$_environment;
+        }
+        if (is_array($locale)) {
+            $locale = key($locale);
+        }
         $quest = Zend_Locale_Data::getContent($locale, 'questionstrings');
         $yes = explode(':', $quest['yes']);
         $no  = explode(':', $quest['no']);
@@ -846,6 +908,26 @@ class Zend_Locale {
         }
         if (!is_string($locale)) {
             return false;
+        }
+        if (empty(self::$_auto)) {
+            self::$_auto        = $this->getDefault(null, false);
+            self::$_browser     = $this->getDefault(self::BROWSER, false);
+            self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
+            if (empty($locale) and empty(self::$_auto)) {
+                throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
+            }
+        }
+        if ($locale == 'auto') {
+            $locale = self::$_auto;
+        }
+        if ($locale == 'browser') {
+            $locale = self::$_browser;
+        }
+        if ($locale == 'environment') {
+            $locale = self::$_environment;
+        }
+        if (is_array($locale)) {
+            $locale = key($locale);
         }
 
         if (array_key_exists($locale, self::$_localeData)) {
