@@ -41,7 +41,7 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
 
     protected function _isCleanIP($ip)
     {
-        // ...
+        //...
     }
 }]]>
     	</programlisting>

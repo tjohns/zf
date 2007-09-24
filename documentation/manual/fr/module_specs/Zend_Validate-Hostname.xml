@@ -67,11 +67,43 @@ $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zen
 
     <para>
         Certains noms de domaines nationaux (Country Code Top Level Domains ou ccTLD), comme .de (Allemagne), supporte les caractères internationaux dans leurs noms de domaine. Ceci est connu sous le nom de Nom de Domaine International (IDN). Ces domaines peuvent être vérifiés par Zend_Validate_Hostname grâce aux caractères étendus qui sont utilisés dans le processus de validation.
+    </para>
 
-        Pour l'instant, la liste des ccTLD supportés inclus : at, ch, li, de, fi, hu, no, se.
+    <para>
+        Pour l'instant, la liste des ccTLD supportés inclus :
+           <itemizedlist>
+                <listitem>
+                    <para>at (Autriche)</para>
+                </listitem>
+                <listitem>
+                    <para>ch (Suisse)</para>
+                </listitem>
+                <listitem>
+                    <para>li (Liechtenstein)</para>
+                </listitem>
+                <listitem>
+                    <para>de (Allemagne)</para>
+                </listitem>
+                <listitem>
+                    <para>fi (Finlande)</para>
+                </listitem>
+                <listitem>
+                    <para>hu (Hongrie)</para>
+                </listitem>
+                <listitem>
+                    <para>no (Norvège)</para>
+                </listitem>
+                <listitem>
+                    <para>se (Suède)</para>
+                </listitem>
+        </itemizedlist>
+    </para>
 
+    <para>
         Pour vérifier un domaine IDN c'est aussi simple que d'utiliser le validateur standard de nom de domaine puisque la validation IDN est activé par défaut. Si vous voulez mettre hors service la validation IDN, cela peut être fait par le passage d'un paramètre au constructeur Zend_Validate_Hostname ou via la méthode <code>$validator->setValidateIdn()</code>.
+    </para>
 
+    <para>
         Vous pouvez aussi désactiver la validation IDN en passant un second paramètre au constructeur du Zend_Validate_Hostname comme ceci :
 
         <programlisting role="php"><![CDATA[<?php
@@ -81,7 +113,9 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
         Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à <code>$validator->setValidateIdn()</code> pour activer ou désactiver la validation IDN.
 
         Si vous essayez de vérifier un nom de domaine IDN qui n'est pas actuellement soutenu il est probable qu'il retournera une erreur s'il y a des caractères internationaux. Quand un fichier de ccTLD spécifiant les caratères supplémentaires n'existe pas dans Zend/Validate/Hostname,une validation de nom de domaine normale est réalisée.
+    </para>
 
+    <para>
         Notez cependant que les IDNs sont seulement validés si vous autorisez la validation des noms de domaine.
     </para>
 
@@ -99,7 +133,9 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true,
 	    </programlisting>
 
         Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à <code>$validator->setValidateTld()</code> pour activer ou désactiver la validation TLD.
+    </para>
 
+    <para>
         Notez cependant que les TLDs sont seulement validés si vous autorisez la validation des noms de domaine.
     </para>
 

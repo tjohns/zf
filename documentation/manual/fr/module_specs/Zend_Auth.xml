@@ -3,17 +3,17 @@
     <title>Introduction</title>
 
     <para>
-        Zend_Auth fournit une API pour l'authentification et inclut des adaptateurs concrets
+        <code>Zend_Auth</code> fournit une API pour l'authentification et inclut des adaptateurs concrets
         d'authentification pour les cas les plus courants.
     </para>
 
     <para>
-        Zend_Auth est uniquement concerné par <emphasis role="strong">le processus d'authentification</emphasis>
+        <code>Zend_Auth</code> est uniquement concerné par <emphasis role="strong">le processus d'authentification</emphasis>
         et non pas par <emphasis role="strong">le processus d'autorisation</emphasis>.
         L'authentification est définie de manière lâche (souple) afin de déterminer si une entité donnée est bien
         celle qu'elle prétend être (c.-à-d. identification), sur la base d'identifiants donnés. L'autorisation,
         l'action de décider si une entité donnée peut accéder à d'autres entités et/ou exécuter des opérations
-        sur celles-ci ne fait pas partie des prérogatives de Zend_Auth. Pour plus d'informations sur les autorisations
+        sur celles-ci ne fait pas partie des prérogatives de <code>Zend_Auth</code>. Pour plus d'informations sur les autorisations
         et le contrôle d'accès via le Zend Framework, voyez <link linkend="zend.acl">Zend_Acl</link>.
     </para>
 
@@ -30,14 +30,14 @@
         <title>Adaptateurs</title>
 
         <para>
-            Un adaptateur Zend_Auth est utilisé pour authentifier un service particulier d'authentification, comme LDAP, RDBMS ou un stockage basé sur des fichiers. Les différents adaptateurs peuvent posséder des options et des comportements très divers. Cependant, quelques méthodes de base
+            Un adaptateur <code>Zend_Auth</code> est utilisé pour authentifier un service particulier d'authentification, comme LDAP, RDBMS ou un stockage basé sur des fichiers. Les différents adaptateurs peuvent posséder des options et des comportements très divers. Cependant, quelques méthodes de base
             leur sont communes. Par exemple, accepter des éléments d'authentification (incluant une
             identité prétendue), authentifier et  retourner un résultat sont des éléments communs aux adaptateurs
-            Zend_Auth.
+            <code>Zend_Auth</code>.
         </para>
 
         <para>
-            Chaque classe d'authentification, adaptateur de Zend_Auth implémente <code>Zend_Auth_Adapter_Interface</code>.
+            Chaque classe d'authentification, adaptateur de <code>Zend_Auth</code> implémente <code>Zend_Auth_Adapter_Interface</code>.
             Cette interface définit une méthode, <code>authenticate</code>, celle-ci est implémentée par une classe adaptateur
             à fin de l'authentification. Chaque classe adaptateur doit être préparée avant tout appel de <code>authenticate()</code>.
             Cela implique que chaque adaptateur fournisse la possibilité de définir des éléments d'authentification
@@ -91,12 +91,12 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
         <title>Resultats</title>
 
         <para>
-            Les adaptateurs Zend_Auth retournent une instance de <code>Zend_Auth_Result</code> via
+            Les adaptateurs <code>Zend_Auth</code> retournent une instance de <code>Zend_Auth_Result</code> via
             <code>authenticate()</code> de manière à présenter les résultats d'une tentative
             d'authentification.
             Les adaptateurs alimentent l'objet <code>Zend_Auth_Result</code> lors de sa construction,
             de manière à ce que les trois méthodes suivantes fournissent un lot de base d'opérations
-            communes aux résultats des adaptateurs Zend_Auth :
+            communes aux résultats des adaptateurs <code>Zend_Auth</code> :
             <itemizedlist>
                 <listitem>
                     <para>
@@ -355,7 +355,7 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
         <title>Utilisation de Zend_Auth</title>
 
         <para>
-            Deux manières d'utiliser les adaptateurs Zend_Auth sont fournies
+            Deux manières d'utiliser les adaptateurs <code>Zend_Auth</code> sont fournies
             <orderedlist>
             <listitem>
                 <para>
@@ -371,8 +371,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
         </para>
 
         <para>
-            L'exemple suivant illustre la manière d'utiliser un adaptateur Zend_Auth de manière indirecte via
-            l'utilisation de la classe Zend_Auth :
+            L'exemple suivant illustre la manière d'utiliser un adaptateur <code>Zend_Auth</code> de manière indirecte via
+            l'utilisation de la classe <code>Zend_Auth</code> :
 
             <programlisting role="php"><![CDATA[<?php
 // Obtention d'une référence de l'instance du singleton de Zend_Auth
