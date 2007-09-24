@@ -1,6 +1,132 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 1.0.2 / 25-Sep-2007 / based on revision 6501 =
+- Documentation
+  ZF-108  Document Framework Requirements
+- Zend_Auth
+  ZF-1968 Documentation typo: "a" instead of "an"
+- Zend_Config
+  ZF-1948 Provide example of how to use Zend_Config with PHP config file
+  ZF-1700 Zend_Config doesn't support unset()
+  ZF-998  Possibility to merge two Zend_Config objects
+- Zend_Controller
+  ZF-1875 Controller plugin example methods do not match abstract plugin class method definitions
+  ZF-1855 Wrong Path Search Order in Zend_Controller_Action_HelperBroker
+  ZF-1744 Inconsistency with get/setBaseUrl() in the FrontController
+  ZF-1727 Wrong return from dispatcher's isDispatchable() function
+  ZF-1725 dispatch chain bug with action helpers
+  ZF-1723 FlashMessenger - call to undefined function ArrayObject() in method getIterator()
+  ZF-1678 ViewRenderer neverRender flag has no effect
+- Zend_Date
+  ZF-1931 Documentation missing array() language construct
+  ZF-1878 Correct Zend_Date ISO 8601 output for 'yy' token
+  ZF-1832 Zend_Date::setWeekDay wrong result for a week overlaping 2 years
+  ZF-1802 Zend_Date create with strict format
+  ZF-1772 Auto integrate time on ISO dates without defining the ISO constant
+- Zend_Db
+  ZF-1943 Zend_Db_Statement testStatementGetColumnMeta() failure for pdo_mysql
+  ZF-1932 Adapter for PDO_IBM extension
+  ZF-1861 Profiler does not obey filtered query types set by method setFilterQueryType()
+  ZF-1823 Support schema in Table sequence name
+  ZF-1813 find() and MySQL primary BIGINT ZEROFILL
+  ZF-1775 Support Zend_Config in Zend_Db factory and constructor
+  ZF-1766 Support setting custom Profiler
+  ZF-1746 fetchAssoc() in PDO MySQL with FETCH_OBJ still returns array of objects
+  ZF-1738 Zend_Db_Statement::fetchObject() crash if no result
+  ZF-1679 Zend_Db_Adapter_Pdo_Sqlite throws PDOException while using schema
+  ZF-1675 Zend_Db::factory() is hardcoded
+- Zend_Db_Adapter_Db2
+  ZF-1708 DB2: Improvements for Transaction Unit Tests
+- Zend_Db_Adapter_Mysqli
+  ZF-1796 Class 'mysqli' not found <= should instead raise an exception
+- Zend_Db_Profiler
+  ZF-1864 Zend_Db_Profiler replaces bind variables
+- Zend_Db_Select
+  ZF-1824 Document Zend_Db_Select::limitPage() method
+  ZF-1822 Multi-line argument for Zend_Db_Select::order()
+  ZF-1664 Quote properly strings that contain digits
+- Zend_Db_Table
+  ZF-1935 Correct table relationships queries when column names are dissimilar
+  ZF-1899 Zend_Db_Table::createRow()->save() inserts row, but throws an exception
+  ZF-1892 Throw exception when declared primary key does not match real primary key
+  ZF-1865 Declare param in find() function to match docblock @param
+  ZF-1803 update() fails because _schema isn't used in the query
+  ZF-1728 'findParentRow( )' will not work with some '_referenceMap' arrays
+- Zend_Feed
+  ZF-1963 Zend_Feed_Abstract throws an exception if HTTP response is not 200, but don't have Zend/Feed/Exception.php included.
+- Zend_Filter_Input
+  ZF-1709 Validating array of fields validates twice
+- Zend_Gdata
+  ZF-1981 Gbase.php doesn't have a method for updating a Gbase item
+  ZF-1980 Zend_Gdata_App_Extension_Control doesnt load Zend/Gdata/App/Extension/Draft before using it
+  ZF-1979 Need separate u/p for Gapps for system tests
+  ZF-1961 AttendeeStatus/@value not in DOM when blank
+  ZF-1958 CalendarFeedCompositeTest cases don't match the test data committed to r6351
+  ZF-1957 Zend_Gdata unit tests failing after applying r6351
+  ZF-1947 Letters transposed in the word 'specialized' when specialized=false on a recurring event exception
+  ZF-1902 Change parameter on Gapps::insertEmailListRecipient from $emailList to $recipient
+  ZF-1873 Example code has $gdata->save() in Zend_Gdata_Gapps documentation
+  ZF-1871 Correction for "Retrieving a nickname"
+  ZF-1827 Wrong variable names listed in docs for Gapps::insertNickname, insertEmailList, and insertEmailListRecipient
+  ZF-1810 Fix syntax errors in inline docs
+  ZF-1805 Typo in Gapps API Reference
+  ZF-1784 Cannot run online tests in standalone mode
+  ZF-1760 Add ability to disable calendar online tests
+  ZF-1757 Add hyperlink to "Interacting with cell-based feeds" in Spreadsheet documentation
+  ZF-1756 Spreadsheets documentation uses insertRow in sample code for updating a row
+  ZF-1755 Add ability to retrieve custom spreadsheet elements by name
+  ZF-1749 App::get returns fatal error: "Call to a member function setConfig() on a non-object"
+  ZF-1659 Calendar_EventQuery::getQueryUrl checks the wrong url value
+  ZF-1633 Change Zend_Gdata_EntryAtom to Zend_Gdata_Entry in inline documentation
+  ZF-1617 Add support for the Base data API
+  ZF-743  Add support for CAPTCHA in Gdata
+- Zend_Http_Client
+  ZF-1004 Add support for stream context in the Socket adapter
+- Zend_Http_Response
+  ZF-1924 Zend_Http_Response::extractBody() is trimming leading white space
+- Zend_Loader
+  ZF-1857 Provide method to unregister autoloader
+- Zend_Log
+  ZF-1791 Zend_log attributes should be protected instead of private
+  ZF-1790 Use exact equals test to compare fwrite() === false
+- Zend_Mail
+  ZF-1933 SMTP transport adds extra EOL characters for many MTAs
+  ZF-1925 Corrupted messages
+  ZF-1900 Zend_Mail_Part - problems with headers
+  ZF-1849 "Retrieve" is spelt as "Retrive" in the Zend_Mail_*_Pop3
+  ZF-1829 Zend_Mail doesn't consistently provide a fluent interface
+  ZF-1794 Problem with fetching messeges via pop3 from SmarterMail
+- Zend_Mail_Read
+  ZF-1847 Zend_Mail_Part::isMultipart() does not recognize multipart messages if content type is not all lower-case
+- Zend_Measure
+  ZF-1826 Conversion from Standard to other unit not mathematically correct
+- Zend_Pdf
+  ZF-1665 Document properties processing
+  ZF-1309 Unable to clone Zend_Pdf_Page
+  ZF-294  The Zend_Pdf::properties() method returns nothing
+- Zend_Search_Lucene
+  ZF-1975 array_intersect_key() and array_diff_key() are actually too slow
+  ZF-1429 Zend_Search_Lucene needs something to manage index security
+  ZF-1395 Result set limitation
+- Zend_Service_Amazon
+  ZF-1952 Description of "SalesRank" is not string but int.
+- Zend_Translate
+  ZF-1839 Add the possibility to use/add self created adapter classes
+  ZF-1807 Add method Zend_Translate_Adapter::_() as an alias for Zend_Translate_Adapter::translate()
+- Zend_Uri
+  ZF-1844 Forgotten echo
+- Zend_Validate
+  ZF-1913 Zend_Validate_StringLength not UTF-8 safe
+  ZF-1804 Zend_Validate_Date uses improper regular expression
+  ZF-1786 Typo in Zend_Validate_Hostname
+- Zend_View
+  ZF-1695 Zend_View accessing helpers via overloading is case-insensitive, but the gethelper function is case sensitive.
+- Zend_XmlRpc_Client
+  ZF-1927 Exception Typo in Collection.php corrected
+- Total of 93 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 1.0.1 / 28-Jul-2007 / based on revision 5906 =
 - Zend_Cache
   ZF-1656 Using specific lifetime record for cache with infinite lifetime
