@@ -26,8 +26,7 @@
  */
 require_once 'Zend/Locale.php';
 require_once 'Zend/Currency.php';
-
-
+         
 /**
  * PHPUnit test case
  */
@@ -40,6 +39,16 @@ require_once 'PHPUnit/Framework.php';
  */
 class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
 {
+
+    public function setUp()
+    {
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File', 
+                 array('lifetime' => 120, 'automatic_serialization' => true), 
+                 array('cache_dir' => dirname(__FILE__) . '/_files/'));
+        Zend_Currency::setCache($cache);
+        
+    }
 
     /**
      * tests the creation of Zend_Currency
@@ -316,6 +325,7 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testSetFormat()
     {
+        $locale = new Zend_Locale('en_US');
         $USD = new Zend_Currency('USD','en_US');
 
         $USD->setFormat(null, 'Arab');
@@ -327,28 +337,52 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         $USD->setFormat(null, 'Latn', 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
 
+        $USD->setFormat(null, 'Latn', $locale);
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53,292.18');
+
         // allignment of currency signs
         $USD->setFormat(Zend_Currency::RIGHT, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), '53.292,18 $');
 
+        $USD->setFormat(Zend_Currency::RIGHT, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), '53,292.18 $');
+
         $USD->setFormat(Zend_Currency::LEFT, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
 
+        $USD->setFormat(Zend_Currency::LEFT, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53,292.18');
+
         $USD->setFormat(Zend_Currency::STANDARD, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
+
+        $USD->setFormat(Zend_Currency::STANDARD, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53,292.18');
 
         // enable/disable currency symbols & currency names
         $USD->setFormat(Zend_Currency::NO_SYMBOL, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), '53.292,18');
 
+        $USD->setFormat(Zend_Currency::NO_SYMBOL, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), '53,292.18');
+
         $USD->setFormat(Zend_Currency::USE_SHORTNAME, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), 'USD 53.292,18');
+
+        $USD->setFormat(Zend_Currency::USE_SHORTNAME, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), 'USD 53,292.18');
 
         $USD->setFormat(Zend_Currency::USE_NAME, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), 'US Dollar 53.292,18');
 
+        $USD->setFormat(Zend_Currency::USE_NAME, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), 'US Dollar 53,292.18');
+
         $USD->setFormat(Zend_Currency::USE_SYMBOL, null, 'de_AT');
         $this->assertSame($USD->toCurrency(53292.18), '$ 53.292,18');
+
+        $USD->setFormat(Zend_Currency::USE_SYMBOL, null, $locale);
+        $this->assertSame($USD->toCurrency(53292.18), '$ 53,292.18');
     }
 
 

@@ -262,7 +262,7 @@ class Zend_Locale_Data
             if (is_array($val)) {
                 $val = implode('_' . $value);
             }
-            $id = 'Zend_Locale_' . $locale . '_' . $path . '_' . implode('_' . $val);
+            $id = 'Zend_Locale_' . $locale . '_' . $path . '_' . $val;
             
             if ($result = self::$_cache->load($id)) {
                 return unserialize($result);
