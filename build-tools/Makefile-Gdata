@@ -21,7 +21,7 @@
 # Main targets:
 #  dist - produce zip and tarball.
 #  zip - produce zip from staged tree.
-#  tarball - produce tarball from staged tree.
+#  tar - produce tarball from staged tree.
 #  stage - produce staged product tree.
 #  export - get files from subversion.
 #  docbook - build and stage manual from docbook sources.
@@ -33,28 +33,29 @@
 
 # -- parameters you are likely to want to change --
 
-# PHPDOC is the command to run to run phpDocumentor.  On Cygwin,
+# PHPDOC is the command to run to run phpDocumentor.  This can simply
+# be 'phpdoc' if phpDocumentor is in your PATH.  On Cygwin, you can
 # run 'php' with the phpdoc script as the argument, in Windows-style
-# path format, e.g.  "C:/php/phpdoc".  On UNIX/Linux you can just run
-# 'phpdoc' if that script is in your PATH.
-PHPDOC=php c:/php/phpdoc
+# path format; e.g., "C:/php/phpdoc".
+PHPDOC=phpdoc
 
-# ZF_TAG is the subversion tag to use to export the files.
-# Typically use 'HEAD' until the tree is tagged for a release
-# candidate, then use that tag.
-ZF_TAG=HEAD
-ZF_BRANCH=branch/release-1.0
+# ZF_SVN_REVISION is the Subversion revision number used for exporting
+# the release files. ZF_SVN_DIR is the path to the directory in SVN
+# from which the release should be created, relative to the repository
+# location (e.g., trunk, branch/release-1.0).
+ZF_SVN_REVISION=6503
+ZF_SVN_DIR=branch/release-1.0
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
 # staging directory and the names of the zip and tarball files.
 ZF_VERSION=1.0.2
 
-# For LANG, use '*' if you want to build all manual
-# translations.  If you want to build one language, use one of the
-# names of language directories, e.g. 'en', 'de', etc.  You also can
-# use any file-globbing pattern.
-LANG=xx
+# For ZF_LANG, use '*' if you want to build all manual translations.
+# If you want to build one language, use one of the names of language
+# directories (e.g., 'en', 'de').  You also can use any file-globbing
+# pattern.
+ZF_LANG=en
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_URL=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
@@ -66,13 +67,12 @@ SVN=svn
 SVN_USER=
 SVN_PASS=
 
-ZF_SVN_URL=http://framework.zend.com/svn/framework/$(ZF_BRANCH)
-ZF_PRODUCTNAME=ZendFramework
-ZF_EXPORT_DIR=./ZendFramework-export-$(ZF_TAG)
+ZF_SVN_URL=http://framework.zend.com/svn/framework/$(ZF_SVN_DIR)
+ZF_EXPORT_DIR=./ZendFramework-export-$(ZF_SVN_REVISION)
 GDATA_PRODUCT_NAME=Zend Gdata
 GDATA_PRODUCTNAME=ZendGdata
 GDATA_PRODUCT=$(GDATA_PRODUCTNAME)-$(ZF_VERSION)
-GDATA_EXPORT_DIR=./$(GDATA_PRODUCTNAME)-export-$(ZF_TAG)
+GDATA_EXPORT_DIR=./$(GDATA_PRODUCTNAME)-export-$(ZF_SVN_REVISION)
 STAGE_HOME=stage
 GDATA_STAGE_DIR=$(STAGE_HOME)/$(GDATA_PRODUCT)
 
@@ -87,20 +87,20 @@ API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
 
 .PHONY: clean clean-docbook clean-export
 
-dist: export stage zipball tarball
+dist: export stage zip tar
 
-zip: zipball
-zipball:
+zip:
 	@echo "== CREATING ZIP ARCHIVE =="
 	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) $(GDATA_PRODUCT))
 
-tar: tarball
-tarball:
+tar:
 	@echo "== CREATING TAR.GZ ARCHIVE =="
 	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) $(GDATA_PRODUCT))
 
-stage: stage-files stage-docs
-	@echo "$(GDATA_PRODUCT_NAME) Release Candidate $(GDATA_VERSION) (build $(ZF_TAG))" > $(GDATA_STAGE_DIR)/VERSION.txt
+stage: stage-files stage-docs stage-version
+
+stage-version:
+	@echo "$(GDATA_PRODUCT_NAME) Release $(ZF_VERSION) (build $(ZF_SVN_REVISION))" > $(GDATA_STAGE_DIR)/VERSION.txt
 
 stage-files:
 	@echo "== STAGING FILES =="
@@ -143,7 +143,6 @@ stage-files:
 	@(pwd=`pwd` ; cd $(GDATA_EXPORT_DIR) && rsync --quiet --archive \
 	    --delete --exclude-from="$$pwd/exclude-files-gdata" ./ $$pwd/$(GDATA_STAGE_DIR))
 
-checkout: export
 export:
 	@echo "== EXPORTING SVN FILES =="
 	@[ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] || $(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
@@ -154,22 +153,12 @@ docbook: docbook-core
 
 docbook-core:
 	-mkdir -p $(GDATA_STAGE_DIR)/documentation/manual/core
-	@for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG) ; do \
+	@for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(ZF_LANG) ; do \
 	    [ -d $$language ] || continue ; \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
 	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
 	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/manual/core/$$lang ; \
-	done
-
-docbook-incubator:
-	-mkdir -p $(GDATA_STAGE_DIR)/documentation/manual/incubator
-	@for language in $(GDATA_EXPORT_DIR)/incubator/documentation/manual/$(LANG) ; do \
-	    [ -d $$language ] || continue ; \
-	    lang=`basename $$language` ; \
-	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
-	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e clean html ) ; \
-	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/manual/incubator/$$lang ; \
 	done
 
 phpdoc: phpdoc-core
@@ -187,26 +176,13 @@ phpdoc-core:
 	    echo "...core API documentation is up to date." ; \
 	fi
 
-phpdoc-incubator:
-	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
-	-mkdir -p $(GDATA_STAGE_DIR)/documentation/api/incubator
-	@if [ ! -f $(GDATA_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(GDATA_STAGE_DIR)/library -newer $(GDATA_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-	    $(PHPDOC) --quiet off \
-	      --target $(GDATA_STAGE_DIR)/documentation/api/incubator \
-	      --directory $(GDATA_STAGE_DIR)/incubator/library \
-	      --title "$(API_DOC_TITLE_INCUBATOR)" \
-	      --output $(API_DOC_OUTPUT_STYLE) ; \
-	else \
-	    echo "...incubator API documentation is up to date." ; \
-	fi
-
 clean:
 	-rm -rf $(GDATA_STAGE_DIR)
 	-rm -f $(GDATA_ZIPBALL)
 	-rm -f $(GDATA_TARBALL)
 
 clean-docbook:
-	for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
+	for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(ZF_LANG)/ ; do \
 	    ( cd $$language && make cleanall ) \
 	done
 
