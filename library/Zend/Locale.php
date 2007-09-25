@@ -910,10 +910,10 @@ class Zend_Locale {
             return false;
         }
         if (empty(self::$_auto)) {
-            $locale = new Zend_Locale();
-            self::$_auto        = $locale->getDefault(null, false);
-            self::$_browser     = $locale->getDefault(self::BROWSER, false);
-            self::$_environment = $locale->getDefault(self::ENVIRONMENT, false);
+            $temp = new Zend_Locale();
+            self::$_auto        = $temp->getDefault(null, false);
+            self::$_browser     = $temp->getDefault(self::BROWSER, false);
+            self::$_environment = $temp->getDefault(self::ENVIRONMENT, false);
         }
         if ($locale == 'auto') {
             $locale = self::$_auto;
