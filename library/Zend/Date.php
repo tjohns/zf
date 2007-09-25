@@ -197,13 +197,17 @@ class Zend_Date extends Zend_Date_DateObject {
         // set datepart
         if (($part !== null && $part !== Zend_Date::TIMESTAMP) or (!is_numeric($date))) {
             // switch off dst handling for value setting
-            $fix = self::$_Options['fix_dst'];
-            self::$_Options['fix_dst'] = false;
-
             $this->setUnixTimestamp($this->getGmtOffset());
             $this->set($date, $part, $this->_Locale);
 
-            self::$_Options['fix_dst'] = $fix;
+            // DST fix 
+            if (is_array($date) and array_key_exists('hour', $date)) {
+                $hour = $this->toString('H');
+                $hour = $date['hour'] - $hour;
+                if ($hour !== 0) {
+                    $this->addTimestamp($hour * 3600);
+                }
+            }
         } else {
             $this->setUnixTimestamp($date);
         }
@@ -225,7 +229,7 @@ class Zend_Date extends Zend_Date_DateObject {
         foreach ($options as $name => $value) {
             $name  = strtolower($name);
 
-            if (isset(self::$_Options[$name])) {
+            if (array_key_exists($name, self::$_Options)) {
                 switch($name) {
                     case 'format_type' :
                         if ((strtolower($value) != 'php') && (strtolower($value) != 'iso')) {
