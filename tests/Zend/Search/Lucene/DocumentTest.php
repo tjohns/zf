@@ -67,11 +67,7 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
 
         $doc->highlight('document', '#66ffff');
-        $this->assertEquals($doc->getHTML(), "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">
-<html>
-<head><title>Page title</title></head>
-<body><p><b style=\"color:black;background-color:#66ffff\">Document</b> body.</p></body>
-</html>\n");
+        $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#66ffff\">Document</b> body.") !== false);
 
         $doc =  Zend_Search_Lucene_Document_Html::loadHTMLFile(dirname(__FILE__) . '/_files/_indexSource/contributing.documentation.html', true);
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
