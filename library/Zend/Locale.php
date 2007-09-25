@@ -910,12 +910,10 @@ class Zend_Locale {
             return false;
         }
         if (empty(self::$_auto)) {
-            self::$_auto        = $this->getDefault(null, false);
-            self::$_browser     = $this->getDefault(self::BROWSER, false);
-            self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
-            if (empty($locale) and empty(self::$_auto)) {
-                throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
-            }
+            $locale = new Zend_Locale();
+            self::$_auto        = $locale->getDefault(null, false);
+            self::$_browser     = $locale->getDefault(self::BROWSER, false);
+            self::$_environment = $locale->getDefault(self::ENVIRONMENT, false);
         }
         if ($locale == 'auto') {
             $locale = self::$_auto;

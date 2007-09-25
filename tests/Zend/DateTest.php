@@ -62,6 +62,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('Indian/Maldives');
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File',
+                 array('lifetime' => 120, 'automatic_serialization' => true),
+                 array('cache_dir' => dirname(__FILE__) . '/_files/'));
+        Zend_Date::setOptions(array('cache' => $cache));
     }
 
     /**
