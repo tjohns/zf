@@ -33,23 +33,33 @@
                     <entry>Norme GNU pour linux ; très rapide ; thread-safe ; besoin d'outils pour la traduction</entry>
                 </row>
                 <row>
-                    <entry>TMX</entry>
+                    <entry>Tbx</entry>
+                    <entry>Use termbase exchange (*.tbx/*.xml) files</entry>
+                    <entry>Industry standard for inter application terminology strings ; format XML</entry>
+                </row>
+                <row>
+                    <entry>Tmx</entry>
                     <entry>Utilise les fichiers tmx (*.tmx/*.xml)</entry>
                     <entry>Industriellement compatible avec la traduction d'inter-application ; format XML ; lisible par l'homme</entry>
                 </row>
                 <row>
-                    <entry>QT</entry>
+                    <entry>Qt</entry>
                     <entry>Utilise les fichiers qt linguist (*.ts)</entry>
                     <entry>Framework pour les applications mutualisées ; format XML ; lisible par l'homme</entry>
                 </row>
                 <row>
-                    <entry>XLIFF</entry>
+                    <entry>Xliff</entry>
                     <entry>Utilise les fichiers xliff (*.xliff/*.xml)</entry>
                     <entry>Un format plus simple que TMX mais lié à lui ; format XML ; lisible par l'homme</entry>
                 </row>
                 <row>
+                    <entry>XmlTm</entry>
+                    <entry>Use xmltm (*.xml) files</entry>
+                    <entry>Industry standard for XML document translation memory ; format XML ; lisible par l'homme</entry>
+                </row>
+                <row>
                     <entry>Autres</entry>
-                    <entry>*.sql, *.tbx</entry>
+                    <entry>*.sql</entry>
                     <entry>Différents adaptateurs pourront être implémentés dans l'avenir.</entry>
                 </row>
             </tbody>
@@ -103,6 +113,19 @@
             </para>
         </sect3>
 
+        <sect3 id="zend.translate.adapter.tbx">
+
+            <title>Zend_Translate_Adapter_Tbx</title>
+
+            <para>
+                L'adaptateur Tbx est un adaptateur qui sera utilisé par les clients qui utilisent déjà le format TBX pour leur système de traduction interne. Tbx n'est pas un format de traduction standard, mais plus une collection de chaînes de caractère sources déjà traduites et pré traduites. Quand vous utilisez cet adaptateur vous devez être sûrs que toute votre chaîne de caractère source nécessaire est traduite. TBX est un fichier basé sur le format XML et un format complètement nouveau. XML des fichiers sont lisibles par l'homme, mais l'analyse syntaxique n'est pas auusi rapide qu'avec des fichiers gettext.
+            </para>
+
+            <para>
+                Cet adaptateur est parfait pour les sociétés dont les fichiers source pré-traduits existent déjà. Les fichiers sont lisibles par l'homme et sont indépendants de système.
+            </para>
+        </sect3>
+
         <sect3 id="zend.translate.adapter.tmx">
 
             <title>Zend_Translate_Adapter_Tmx</title>
@@ -141,6 +164,48 @@
                 La plupart des moyennes entreprises utilisent cet adaptateur. Les fichiers sont lisibles par l'homme et sont indépendants du système.
             </para>
         </sect3>
+
+        <sect3 id="zend.translate.adapter.xmltm">
+
+            <title>Zend_Translate_Adapter_XmlTm</title>
+
+            <para>
+                L'adaptateur XmlTm est l'adaptateur qui sera utilisé par les clients qui font leur mise en page eux-mêmes. XmlTm est un format qui permet à la source HTML complète d'être incluse dans la source de traduction, donc la traduction est couplée avec la mise en page. XmlTm est un fichier basé sur le format XML, qui est proche de XLIFF, mais qui n'est pas aussi simple à lire.
+            </para>
+
+            <para>
+                Cet adaptateur devrait être seulement utilisé quand des fichiers source existent déjà. Les fichiers sont lisibles par l'homme et sont indépendants du système.
+            </para>
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.translate.adapter.selfwritten">
+
+        <title>Intégrer ses propres adaptateurs</title>
+
+        <para>
+            <code>Zend_Translate</code> vous permet d'intégrer et d'utiliser vos propres classes d'adaptateurs. Elles peuvent être utilisées commes les claases standards qui sont déjà incluses dans <code>Zend_Translate</code>.
+        </para>
+
+        <para>
+            Toute classe d'adaptateur que vous voulez utiliser avec <code>Zend_Translate</code> doit être une sous-classe de <code>Zend_Translate_Adapter</code>. <code>Zend_Translate_Adapter</code> est une classe abstraite qui définit déjà tout ce qui est nécessaire pour la traduction. Ce qui doit être fait par vous, est la définition du lecteur des données traduites.
+        </para>
+
+        <para>
+            L'usage du préfixe "Zend" devrait être limité au Zend Framework. Si vous étendez <code>Zend_Translate</code> avec votre propre adaptateur, vous devriez le nommer "MonEntreprise_Translate_Adapter_MonFormat". Le code suivant montre un exemple de la manière dont une classe d'adaptateur personnalisée peut être implémentée :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+try {
+    $translate = new Zend_Translate('MonEntreprise_Translate_Adapter_MonFormat', '/chemin/vers/translate.xx', 'fr', array('monoption' => 'mavaleur'));
+} catch (Exception $e) {
+    // Ficher non trouvé, pas de classe d'adaptateur...
+    // Echec de l'application
+}]]>
+        </programlisting>
 
     </sect2>
 
