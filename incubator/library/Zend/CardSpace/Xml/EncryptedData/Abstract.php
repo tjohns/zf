@@ -36,8 +36,5 @@ abstract class Zend_CardSpace_Xml_EncryptedData_Abstract extends Zend_CardSpace_
 		return $dom->getAttribute('Algorithm');
 	}
 	
-	
-	public function getCipherData() {
-		$this->xpath('//enc:CipherData');
-	}
+	abstract function getCipherValue();
 }
