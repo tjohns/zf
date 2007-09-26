@@ -76,13 +76,12 @@ class Zend_Search_Lucene_Storage_FileTest extends PHPUnit_Framework_TestCase
         $file->writeString("UTF-8 string with non-ascii (Cyrillic) symbols\nUTF-8 строка с не-ASCII (кириллическими) символами");
         $file->writeVInt(8); $file->writeBytes("\xFF\x00\xAA\x11\xBB\x44\x66\x99");
         $file->flush();
+        $file->unlock();
+        $file->close();
 
         $fh = fopen($testFName, 'rb');
         $this->assertEquals($fileData, fread($fh, filesize($testFName)));
         fclose($fh);
-
-        $file->unlock();
-        $file->close();
 
         unlink($testFName);
     }
