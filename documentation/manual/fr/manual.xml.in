@@ -164,11 +164,11 @@
         <xi:include href="module_specs/Zend_Date-Introduction.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Introduction.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Date-Basic.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Basic.xml" /></xi:fallback>
-        </xi:include>
         <xi:include href="module_specs/Zend_Date-Theory.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Theory.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Date-Basic.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Basic.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Date-Overview.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Date-Overview.xml" /></xi:fallback>
@@ -283,6 +283,12 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Spreadsheets.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_Gapps.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gapps.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_Gbase.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gbase.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Exception.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Exception.xml" /></xi:fallback>
@@ -464,8 +470,8 @@
         <xi:include href="module_specs/Zend_Pdf-Pages.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Pages.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Pdf-Drawing.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Drawing.xml" /></xi:fallback>
+        <xi:include href="module_specs/Zend_Pdf-Properties.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Properties.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Pdf-Usage.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Usage.xml" /></xi:fallback>
