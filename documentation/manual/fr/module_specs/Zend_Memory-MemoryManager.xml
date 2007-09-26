@@ -75,10 +75,10 @@ $memObject = $memoryManager->create($data);]]>
 
         <sect3 id="zend.memory.memory-manager.objects-management.locked">
 
-            <title>Créer des objets vérouillés</title>
+            <title>Créer des objets vérrouillés</title>
 
             <para>
-                Créer des objets vérrouillées (objets qui ne doivent pas être mis en cache) en utilisant la méthode <code>Zend_Memory_Manager::createLocked([$data])</code> :
+                Créer des objets vérrouillés (objets qui ne doivent pas être mis en cache) en utilisant la méthode <code>Zend_Memory_Manager::createLocked([$data])</code> :
                 <programlisting role="php"><![CDATA[<?php
 $memObject = $memoryManager->createLocked($data);]]>
 			    </programlisting>
