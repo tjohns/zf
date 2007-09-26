@@ -59,7 +59,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formRadio($name, $value, $attribs, $options)</code> : crée une série d'éléments &lt;input type="button" /&gt;, une pour chaque élément $options. Dans le tableau $options, la clé de l'élément est la valeur du radio, et la valeur de l'élément est l'étiquette du radio. La radio <code>$value</code> sera précochée pour vous.
+                <code>formRadio($name, $value, $attribs, $options)</code> : crée une série d'éléments &lt;input type="button" /&gt;, un pour chaque élément $options. Dans le tableau $options, la clé de l'élément est la valeur du radio, et la valeur de l'élément est l'étiquette du radio. La radio <code>$value</code> sera précochée pour vous.
             </para></listitem>
 
             <listitem><para>
@@ -67,7 +67,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formSelect($name, $value, $attribs, $options)</code> : crée un bloc &lt;select&gt;...&lt;/select&gt;, avec une &lt;option&gt; pour chaque élément $options. Dans le tableau $options, la clé de l'élément est la valeur de l'option, et la valeur de l'élément est son étiquette optionnelle. L'option (ou les options) $value sera (ou seront) présélectionnées pour vous.
+                <code>formSelect($name, $value, $attribs, $options)</code> : crée un bloc &lt;select&gt;...&lt;/select&gt;, avec une &lt;option&gt; pour chaque élément <code>$options</code>. Dans le tableau <code>$options</code>, la clé de l'élément est la valeur de l'option, et la valeur de l'élément est son étiquette optionnelle. L'option (ou les options) <code>$value</code> sera (ou seront) présélectionnées pour vous.
             </para></listitem>
 
             <listitem><para>
@@ -153,10 +153,7 @@ $view->setHelperPath('/chemin/vers/plus/de/classes/d-aides', 'Ma_View_Helper');]
 	    </programlisting>
 
         <para>
-            En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>addHelperPath()</code>
-            Comme vous ajouter des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus
-            récemment ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de re-définir) la
-            distribution initiale des aides, avec vos propres aides personnalisées.
+            En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>addHelperPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus récemment ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de re-définir) la distribution initiale des aides, avec vos propres aides personnalisées.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -186,7 +183,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
         <itemizedlist>
 
             <listitem><para>
-                Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant la notation Camel. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe doit être au minimum "ActionSpeciale". Vous devriez donner au nom de la classe un préfixe, et il est recommandé d'utiliser "View_Helper" comme partie de ce préfixe : "Ma_View_Helper_ActionSpeciale". (Vous devez alors fournir le préfixe, avec ou sans l'underscore, à <code>addHelperPath()</code> ou à <code>setHelperPath()</code>).
+                Le nom de la classe doit, au minimum, se terminer avec le nom de l'aide en utilisant la notation Camel. Par exemple, si vous écrivez une aide appelée "actionSpeciale", le nom de la classe doit être au minimum "ActionSpeciale". Vous devriez donner au nom de la classe un préfixe, et il est recommandé d'utiliser "Ma_View_Helper" comme partie de ce préfixe : "Ma_View_Helper_ActionSpeciale". (Vous devez alors fournir le préfixe, avec ou sans l'underscore, à <code>addHelperPath()</code> ou à <code>setHelperPath()</code>).
             </para></listitem>
 
             <listitem><para>
