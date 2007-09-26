@@ -1,0 +1,28 @@
+<sect1 id="zend.mail.multiple-emails">
+    <title>通过一个SMTP连接发送多个邮件</title>
+    <para>
+        在缺省状态下，系统会为每一个被发送的邮件建立一个SMTP连接。
+        如果你想通过一个SMTP连接发送多个邮件，你可以自己调用<code>connect()</code>函数。
+        如果在<code>send()</code>被调用之前就已经建立了一个传送连接，那么这个连接会被使用并且不会被自动关闭。
+    </para>
+    <example>
+        <title>通过一个SMTP连接发送多个邮件</title>
+        <programlisting role="php"><![CDATA[
+<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+// build message...
+require_once 'Zend/Mail/Transport/Smtp.php';
+$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
+Zend_Mail::setDefaultTransport($tr);
+$tr->connect();
+for ($i = 0; $i < 5; $i++) {
+$mail->send();
+}
+$tr->disconnect();
+?>]]>   </programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

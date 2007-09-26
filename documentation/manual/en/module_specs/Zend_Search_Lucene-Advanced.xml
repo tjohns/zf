@@ -1,0 +1,84 @@
+<sect1 id="zend.search.lucene.advanced">
+    <title>Advanced</title>
+
+    <sect2 id="zend.search.lucene.advanced.static">
+        <title>Using index as static property</title>
+
+        <para>
+            <code>Zend_Search_Lucene</code> object uses object destructor to commit changes and clean up resources.
+        </para>
+
+        <para>
+            It stores added documents in memory and dumps new index segment to disk depending on <code>MaxBufferedDocs</code> parameter.
+        </para>
+
+        <para>
+            If <code>MaxBufferedDocs</code> limit is not reached then there are some "unsaved" documents which a saved as new segment in object destructor.
+            Index auto-optimization procedure is invoked if necessary depending on <code>MaxBufferedDocs</code>, <code>MaxMergeDocs</code> and
+            <code>MergeFactor</code> parameters.
+        </para>
+
+        <para>
+            Static object properties (see below) are destroyed <emphasis>after</emphasis> the "last line of executed script".
+
+            <programlisting role="php"><![CDATA[<?php
+class Searcher {
+    private static $_index;
+
+    public static function initIndex() {
+        self::$_index = Zend_Search_Lucene::open('path/to/index');
+    }
+}
+
+Searcher::initIndex();]]>
+            </programlisting>
+        </para>
+
+
+        <para>
+            Nevertheless, object destructor for static properties is correctly invoked and has possibility to do everything it has to do.
+        </para>
+
+        <para>
+            Potential problem is an exception handling. Exceptions thrown by destructors of static objects don't have context, because execution is performed
+            "after the end of script".
+        </para>
+
+        <para>
+            You will get "Fatal error: Exception thrown without a stack frame in Unknown on line 0" error message instead of exception description for such cases.
+        </para>
+
+        <para>
+            Zend_Search_Lucene gives the possibility to handle this problem with <code>commit()</code> method. It saves all unsaved changes and frees memory used for storing new segments.
+            You are free to use commit operation any time or several times during script execution. You can still use <code>Zend_Search_Lucene</code> object for searching,
+            adding or deleting document after commit operation. But <code>commit()</code> call guarantees, that if there are no document adding or deleting after commit call, then
+            <code>Zend_Search_Lucene</code> destructor has nothing to do and doesn't throw any exception:
+
+            <programlisting role="php"><![CDATA[<?php
+class Searcher {
+    private static $_index;
+
+    public static function initIndex() {
+        self::$_index = Zend_Search_Lucene::open('path/to/index');
+    }
+
+    ...
+
+    public static function commit() {
+        self::$_index->commit();
+    }
+}
+
+Searcher::initIndex();
+
+...
+
+// Script shutdown routine
+...
+Searcher::commit();
+...]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+</sect1>

@@ -1,0 +1,557 @@
+<sect1 id="zend.locale.functions">
+
+    <title>Zend_Locale の使用法</title>
+
+    <para>
+        <code>Zend_Locale</code> は、各ロケールについての情報も、
+        自分自身のロケールに合わせた形式で提供します。
+        たとえば他のロケールの名前や曜日名、月名などがこれにあたります。
+    </para>
+
+    <sect2 id="zend.locale.copying">
+
+        <title>ロケールオブジェクトのコピー、クローン作成およびシリアライズ</title>
+
+        <para>
+            <ulink url="http://php.net/language.oop5.cloning">オブジェクトのクローンを作成</ulink>し、
+            ロケールオブジェクトを正確かつ効率的に複製することができます。
+            ロケール対応のメソッドのほとんどは、<code>$locale->toString()</code>
+            が返す文字列表現のロケールを受け付けます。
+        </para>
+
+        <example id="zend.locale.copying.example-1">
+            <title>clone</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('ar');
+
+// $locale オブジェクトをシリアライズして保存します
+$serializedLocale = $locale->serialize();
+// もとのオブジェクトを再度作成します
+$localeObject = unserialize($serializedLocale);
+
+// ロケールの文字列表記を取得します
+$stringLocale = $locale->toString();
+
+// $local オブジェクトの複製を作成します
+$copiedLocale = clone $locale;
+
+print "copied: ", $copiedLocale->toString();
+print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に toString() をコールします]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.equals">
+
+        <title>等式</title>
+
+        <para>
+            <code>Zend_Locale</code> は、
+            二つのロケールを比較するための便利な関数も提供しています。
+            ロケール対応のクラスはすべて、これと同等の同一性チェック機能を提供しなければなりません。
+        </para>
+
+        <example id="zend.locale.equals.example-1">
+            <title>ロケールが同一かどうかの調査</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+$mylocale = new Zend_Locale('en_US');
+
+// ロケールが同一かどうかを調べます
+if ($locale->equals($mylocale)) {
+    print "これらのロケールは同一です";
+}]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getdefault">
+
+        <title>デフォルトのロケール</title>
+
+        <para>
+            <code>getDefault()</code> メソッドは、関連するロケールの配列を返します。
+            これは、ユーザのウェブブラウザからの情報 (取得できる場合)、
+            ホストサーバの環境変数および ZF の設定をもとに取得します。
+            <code>Zend_Locale</code> のコンストラクタの最初のパラメータで、
+            <link linkend="zend.locale.selection">
+              (<code>BROWSER</code>、<code>ENVIRONMENT</code> あるいは <code>FRAMEWORK</code> のうちの)
+            </link>
+            どの情報を優先するかを選択します。
+            二番目のパラメータでは、マッチしたロケールをすべて返すのか
+            あるいは最初にマッチした/一番マッチしたものを返すのかを指定します。
+            ロケール対応のコンポーネントは、通常は最初のロケールのみを使用します。
+            優先度が指定されている場合は、それも考慮します。
+        </para>
+
+        <example id="zend.locale.getdefault.example-1">
+            <title>デフォルトロケールの取得</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// すべてのデフォルトロケールを返します
+$found = $locale->getDefault();
+print_r($found);
+
+// ブラウザのロケールのみを返します
+$found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
+print_r($found2);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            <link linkend="zend.locale.selection"><code>BROWSER</code>、<code>ENVIRONMENT</code> あるいは <code>FRAMEWORK</code>
+            </link> のいずれかに対応するデフォルトロケールを取得するには、
+            それぞれ対応するメソッドを使用します。
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>getEnvironment()</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getBrowser()</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getLocale()</code>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.locale.setlocale">
+
+        <title>新しいロケールの設定</title>
+
+        <para>
+            新しいロケールを設定するには、関数 <code>setLocale()</code>
+            を使用します。この関数は、ロケール文字列をパラメータとして受け取ります。
+            ロケールを省略した場合は、ロケールが
+            <link linkend="zend.locale.selection">自動的に選択</link>
+            されます。Zend_Locale オブジェクトは "light"
+            なので、このメソッドは既存のインスタンスを参照しているすべてのコードに影響をおよぼします。
+        </para>
+
+        <example id="zend.locale.setlocale.example-1">
+            <title>setLocale</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// 実際のロケール
+print $locale->toString();
+
+// 新しいロケール
+$locale->setLocale('aa_DJ');
+print $locale->toString();]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getlocale">
+
+        <title>言語および地域の取得</title>
+
+        <para>
+            <code>getLanguage()</code> を使用して、二文字の言語コード文字列を
+            ロケール識別文字列から取得します。また、
+            <code>getRegion()</code> を使用して、二文字の地域コード文字列を
+            ロケール識別文字列から取得します。
+        </para>
+
+        <example id="zend.locale.getlocale.example-1">
+            <title>getLanguage および getRegion</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+
+// ロケールが 'ja_JP' の場合は、'ja' が言語として返されます
+print $locale->getLanguage();
+
+// ロケールが 'ja_JP' の場合は、地域として 'JP' が返されます
+print $locale->getRegion();]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getdata">
+
+        <title>地域化された文字列の取得</title>
+
+        <para>
+            <code>getTranslationList()</code> を使用すると、地域化された情報を利用することができます。
+            これらの情報は、各地域に特化したデータを顧客に対して提供する際に
+            翻訳の必要がなくなるので便利です。
+            これらはすでに使用可能となっています。
+        </para>
+
+        <para>
+            情報の一覧は、常に連想配列形式で返されます。配列のキーは、
+            翻訳された値の国際的な省略形となります。
+            <code>getTranslation()</code> メソッドでこれを使用すると、翻訳を取得することができます。
+        </para>
+
+        <example id="zend.locale.getdata.example-1">
+            <title>getTranslationList</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('de_AT');
+$list = $locale->getTranslationList('language');
+
+print_r ($list);
+// キーと値の組み合わせの例...
+// [de] -> Deutsch
+// [en] -> Englisch
+
+// これらのキーのいずれかを getTranslation() メソッドで使用します
+print $locale->getTranslation('de', 'language', 'zh');
+// これは、言語 'de' を中国語で表した文字列を返します]]>
+            </programlisting>
+        </example>
+
+        <para>
+            すべての言語についてこの情報を取得できます。しかし、
+            言語によってはすべての情報が提供されているわけではないものもあります。
+            これらの型のいくつかについては、その型に特化した関数を用意して簡単に使用できるようにしています。
+            詳細はこの一覧を参照ください。
+        </para>
+
+        <table id="zend.locale.getdata.table-1">
+            <title>getTranslationList($type = null, $locale = null) の詳細</title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>型</entry>
+                        <entry>特化した関数</entry>
+                        <entry>説明</entry>
+                        <entry>完全性</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Language</entry>
+                        <entry>getLanguageTranslationList</entry>
+                        <entry>地域化された全言語の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Script</entry>
+                        <entry>getScriptTranslationList</entry>
+                        <entry>地域化された全文字の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Country</entry>
+                        <entry>getCountryTranslationList</entry>
+                        <entry>地域化された全国名の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Territory</entry>
+                        <entry>getTerritoryTranslationList</entry>
+                        <entry>地域化された全領域の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Calendar</entry>
+                        <entry />
+                        <entry>地域化された全ての暦の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Month</entry>
+                        <entry />
+                        <entry>地域化された全月名の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Month_short</entry>
+                        <entry />
+                        <entry>地域化された全月名 (通常 2 文字から 4 文字の短縮形) の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Month_narrow</entry>
+                        <entry />
+                        <entry>地域化された全月名 (通常 1 文字の短縮形) の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Day</entry>
+                        <entry />
+                        <entry>地域化された全ての曜日名の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Day_short</entry>
+                        <entry />
+                        <entry>地域化された全ての曜日名 (通常 2 文字から 4 文字の短縮形) の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Day_narrow</entry>
+                        <entry />
+                        <entry>地域化された全ての曜日名 (通常 1 文字の短縮形) の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Dateformat</entry>
+                        <entry />
+                        <entry>地域化された全ての日付書式の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Timeformat</entry>
+                        <entry />
+                        <entry>地域化された全ての時刻書式の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Timezone</entry>
+                        <entry />
+                        <entry>地域化された全てのタイムゾーンの一覧</entry>
+                        <entry>不完全、言語によって異なります</entry>
+                    </row>
+                    <row>
+                        <entry>Currency</entry>
+                        <entry />
+                        <entry>地域化された全ての通貨の一覧</entry>
+                        <entry>不完全、言語によって異なります</entry>
+                    </row>
+                    <row>
+                        <entry>Currency_sign</entry>
+                        <entry />
+                        <entry>地域化された全ての通貨記号の一覧</entry>
+                        <entry>不完全、言語によって異なります</entry>
+                    </row>
+                    <row>
+                        <entry>Currency_detail</entry>
+                        <entry />
+                        <entry>地域化された、全ての国とその国で用いられる通貨の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Territory_detail</entry>
+                        <entry />
+                        <entry>地域化された、全ての領域とその領域内の国の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Language_detail</entry>
+                        <entry />
+                        <entry>地域化された、全ての国とその国で用いられる言語の一覧</entry>
+                        <entry>完全</entry>
+                    </row>
+                    <row>
+                        <entry>Characters</entry>
+                        <entry />
+                        <entry>このロケールでの既知の文字の一覧を表す正規表現</entry>
+                        <entry>完全</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+
+        <para>
+            単一の翻訳データがほしい場合は、<code>getTranslationList()</code> ではなく <code>getTranslation()</code>
+            を使用します。この関数は文字列あるいは配列を返します。これは、返り値が複数となりえる (たとえば language_detail
+            など。というのも、ひとつの言語が複数の国で用いられることもあるからです) か、あるいはひとつにしかなりえない
+            (たとえば language など。言語に対応する翻訳はひとつしかありません) によって決まります。これらの両方の関数で、
+            上のリストの型を使用できます。利便性のため、以下のような関数も用意しています。これは上のふたつの関数と等価です。
+        </para>
+
+        <example id="zend.locale.getdata.example-2">
+            <title>getTranslation() 系の便利な関数</title>
+            <programlisting role="php"><![CDATA[<?php
+getCountryTranslation($what, $locale = null);
+getCountryTranslationList($locale = null);
+getLanguageTranslation($what, $locale = null);
+getLanguageTranslationList($locale = null);
+getScriptTranslation($what, $locale = null);
+getScriptTranslationList($locale = null);
+getTerritoryTranslation($what, $locale = null);
+getTerritoryTranslationList($locale = null);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            以下の例は、さまざまな言語でのものの名前を取得する方法を示すものです。
+        </para>
+
+        <example id="zend.locale.getdata.example-3">
+            <title>getTranslationList</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale('en_US');
+// すべての国名をドイツ語で表示します
+print_r($locale->getTranslationList('country', 'de'));]]>
+            </programlisting>
+        </example>
+
+        <para>
+            次の例は、ある言語の名前を別の言語でどのようにいうのかを、
+            二文字の CLDR 国コードを知らない場合に調べるものです。
+        </para>
+
+        <example id="zend.locale.getdata.example-4">
+            <title>国の名前を、ある言語から別の言語に変換する</title>
+            <programlisting role="php"><![CDATA[<?php
+require 'Zend/Locale.php';
+$locale = new Zend_Locale('en_US');
+$code2name = $locale->getLanguageTranslationList();
+$name2code = array_flip($code2name);
+$frenchCode = $name2code['French'];
+echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
+// 出力は、「フランス語」を表すドイツ語の名前になります]]>
+            </programlisting>
+        </example>
+
+        <para>
+            何ができるのかをもう少し詳しく知るには、次の例の出力を確認してみましょう。
+        </para>
+
+        <example id="zend.locale.getdata.example-5">
+            <title>使用できるすべての翻訳</title>
+            <programlisting role="php"><![CDATA[<?php
+// すべての翻訳の一覧を取得します
+$lists = $locale->getTranslationList();
+
+// 使用できるすべての翻訳を表示します (大量に出力されます。すべて英語で表示されます)
+foreach ($lists as $list) {
+    echo "List $list = ";
+    print_r($locale->getTranslationList($list));
+}]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Zend_Locale で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
+            以下の例をウェブページで使用してみましょう。
+            同様に <code>getCountryTranslationList()</code> および
+            <code>getCountryTranslation()</code> を使用すると、
+            あなたのネイティブ言語での地域名と別の言語での地域名の対応表を作成できます。
+            <code>try .. catch</code> ブロックで、
+            存在しないロケールを使用した場合の例外を処理するようにしましょう。
+            すべての言語がすべてのロケールに対応しているわけではありません。
+            この例では、例外を無視することで、
+            スクリプトが途中で終わってしまうことを防いでいます。
+        </para>
+
+        <example id="zend.locale.getdata.example-6">
+            <title>すべての言語を、その国のネイティブ言語で書き出す</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$sourceLanguage = null; // あなたのネイティブ言語のコードを設定します
+$locale = new Zend_Locale($sourceLanguage);
+$list = $locale->getLanguageTranslationList();
+
+foreach($list as $language => $content) {
+    try {
+        $output = $locale->getLanguageTranslation($language, $language);
+        if (is_string($output)) {
+            print "\n<br>[".$language."] ".$output;
+        }
+    } catch (Exception $e) {
+        continue;
+    }
+}]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getquestion">
+
+        <title>"yes" および "no" に対応する翻訳の取得</title>
+
+        <para>
+            プログラム上で、ユーザに "はい" あるいは "いいえ"
+            で答えてもらうことがよくあります。
+            <code>getQuestion()</code> を使用すると、
+            ユーザに問い合わせるときに使用する単語あるいは正規表現文字列を含む配列を、
+            特定の $locale (デフォルトは、そのオブジェクトのロケール)
+            にあわせて返します。この配列には六つの要素が含まれます。それぞれが
+            "はい"、"いいえ" とその省略形、
+            そして適切にパースするための正規表現文字列を表します。
+            以下の例を参照ください。
+        </para>
+
+        <example id="zend.locale.getquestion.example-1">
+            <title>getQuestion()</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$locale = new Zend_Locale();
+// 設問の文字列
+print_r($locale->getQuestion('de'));
+
+- - - 出力 - - -
+
+Array
+(
+    [yes]ja[/yes]
+    [no]nein[/no]
+    [yesabbr]j[/yesabbr]
+    [noabbr]n[/noabbr]
+    [yesexpr]^([yY]([eE][sS])?)|([jJ][aA]?)[/yesexpr]
+    [noexpr]^([nN]([oO]|([eE][iI][nN]))?)[/noexpr]
+)]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.getlocalelist">
+
+        <title>既知のロケールの一覧の取得</title>
+
+        <para>
+            すべての既知のロケールの一覧を取得したいこともあるでしょう。
+            たとえば、ロケール選択用の select 要素を作成する場合などに必要となるはずです。
+            このようなときには、静的メソッド
+            <code>getLocaleList()</code> を使用します。
+            このメソッドは、すべての既知のロケールの一覧を返します。
+        </para>
+
+        <example id="zend.locale.getquestion.example-1">
+            <title>getLocaleList()</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+
+$localelist = Zend_Locale::getLocaleList();
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                返された配列のキーがロケール名となっていることに注意しましょう。
+                キーに対応する値は、常に true です。
+            </para>
+        </note>
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

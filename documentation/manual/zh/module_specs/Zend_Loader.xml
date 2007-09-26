@@ -1,0 +1,118 @@
+<sect1 id="zend.loader.load">
+
+    <title>动态加载文件和类</title>
+
+    <para>
+        Zend_Loader类可以帮助你动态加载文件。
+    </para>
+
+    <tip>
+        <title>Zend_Loader vs. require_once()</title>
+        <para>
+            Zend_Loader最适合于加载的文件名是变量的情况（例如你要加载的文件的名称来自于用户的输入或者某个方法的参数）。如果你加载的文件名或类名是一个常量（即确定的文件，如/lib/test.php），则使用Zend_Loader并不比传统的PHP函数 <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>有什么优势。
+        </para>
+    </tip>
+
+    <sect2 id="zend.loader.load.file">
+
+        <title>加载文件</title>
+
+        <para>
+           静态方法Zend::loadFile()用来包含PHP文件。它其实是将PHP的<ulink url="http://php.net/include"><code>include()</code></ulink>函数封装而成的一个静态方法。当包含文件失败时，会抛出异常Zend_Exception 。
+        </para>
+
+        <example id="zend.loader.file.example">
+            <title>Example of loadFile() method</title>
+            <programlisting role="php"><![CDATA[<?php
+
+Zend_Loader::loadFile($filename, $dirs=null, $once=false)
+
+?>]]></programlisting>
+    </example>
+
+        <para>
+        <code>$filename</code>参数指定需要加载的文件，注意<code>$filename</code>不需要指定任何路径，只需要文件名即可。ZF会对文件作安全性检查。$filename只能由字母，数字，连接符-,下划线_及英文句号.组成(半角)。<code>$dirs</code>参数则不限，可以使用中文等。
+        </para>
+
+        <para>
+            $dirs参数用来指定文件所在目录，可以是一个字符串或者数组。如果为空，则程序将会到系统的include_path下寻找文件是否存在（include_path可在php.ini中设置--Haohappy注）
+        </para>
+
+        <para>
+          $once 参数为布尔类型，只能是true或false，两者区别就和include()和include_once()的区别一样。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.loader.load.class">
+
+        <title>加载类</title>
+
+        <para>
+            静态方法<code>Zend_Loader::loadClass($class, $dirs)</code>用来加载一个PHP类文件，该文件名格式为“$className.php”（也就是说加载的文件名称必须和文件中的类同名）。loadClass()会检查文件中的类是否存在。
+        </para>
+
+        <example id="zend.loader.class.example">
+            <title>loadClass() 示例：</title>
+            <programlisting role="php"><![CDATA[<?php
+
+Zend_Loader::loadClass('Container_Tree',
+    array(
+        '/home/production/mylib',
+        '/home/production/myapp'
+    )
+);
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            类名将会根据下划线（作为目录分隔线）对应到相应目录下的PHP文件，比如Container_Tree会指向Container/Tree.php。
+        </para>
+
+       <para>
+        如果<code>$dirs</code>是一个字符串或数组， <code>Zend_Loader::loadClass()</code>会根据顺序查找相应目录，并加载第一个匹配的文件。如果文件不存在，则会查找inculde_path指定的目录。
+        </para>
+
+        <para>
+
+
+            如果文件不存在或者文件中相应的类不存在，那么<code>Zend_Loader::loadClass()</code>就会抛出一个Zend_Exception异常。
+        </para>
+
+        <para>
+            类名中只能包含字母，连接符-、下划线_和句点.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.loader.load.isreadable">
+
+        <title>判定某个文件是否可读</title>
+
+        <para>
+            静态方法<code>Zend_Loader::isReadable($pathname)</code>判定某个文件是否存在并可读，可读则返回true，否则返回false。
+        </para>
+
+        <example id="zend.loader.isreadable.example">
+            <title>isReadable()示例：</title>
+            <programlisting role="php"><![CDATA[<?php
+
+if (Zend_Loader::isReadable($filename)) {
+    // do something with $filename
+}
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+             <code>$filename</code>参数指定了要检查的文件名，包括路径信息。这个方法是将PHP函数<ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>封装而成的，is_readable()不会自动查找include_path下的文件，而Zend::isReadable()可以。
+
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
