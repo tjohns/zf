@@ -1,27 +1,27 @@
 <sect1 id="zend.openid.provider">
     <title>Zend_OpenId_Provider</title>
     <para>
-        <code>Zend_OpenId_Provider</code> is used to implement OpenID servers.
-        This chapter provides only very basic examples those allow to build
-        working server, but implementation of production OpenID server (like
-        <ulink href="www.myopenid.com">www.myopenid.com</ulink>) may require
-        solving of additional problems.
+        The <code>Zend_OpenId_Provider</code> is used to implement OpenID
+        servers. This chapter provides very basic examples demonstrating how to
+        build a working server. However, for implementation of a production OpenID
+        server (like <ulink href="www.myopenid.com">www.myopenid.com</ulink>) you
+        may be required to deal with more complex issues.
     </para>
 
     <sect2 id="zend.openid.provider.start">
         <title>Quick Start</title>
         <para>
-            The following identity includes code to create a user account
-            using <code>Zend_OpenId_Provider::register</code>. The link element
-            with <code>rel="openid.server"</code> points to our own server
-            script. If you submit this identity to OpenID-enabled site, it will
-            perform authentication on this server.
+            The following identity includes the code for creating a user account
+            using <code>Zend_OpenId_Provider::register</code>. The link element with
+            <code>rel="openid.server"</code> points to our own server script. If you
+            submit this identity to an OpenID-enabled site, it will perform
+            authentication on this server.
         </para>
 
         <para>
             The code before &lt;html&gt; is just a trick that automatically
-            creates user account. You don't need such code on your real
-            identity.
+            creates a user account. You wont need such code when using real
+            identities.
         </para>
 
         <example id="zend.openid.provider.example-1">
@@ -46,18 +46,19 @@ if (!$server->hasUser(TEST_ID)) {
 
         <para>
             The following identity server script handles two kinds of requests
-            from OpenID-enabled sites (for association and authentication).
-            Both of them are handled by the same method <code>Zend_OpenId_Provider::handle</code>.
-            Two arguments to <code>Zend_OpenId_Provider</code> are URLs
-            of login and trust pages, those ask interaction from end-user.
+            from OpenID-enabled sites (for association and authentication). Both of
+            them are handled by the same method
+            <code>Zend_OpenId_Provider::handle</code>. The two arguments to
+            <code>Zend_OpenId_Provider</code> are URLs of login and trust pages, these
+            ask for interaction from the end-user.
         </para>
 
         <para>
-            On success method <code>Zend_OpenId_Provider::handle</code> returns
-            string that should be passed back to OpenID-enabled site. On failure
-            it returns <code>false</code> and the example returns HTTP 403
-            response. You will get it if you try to open this page by
-            web-browser, because it sends non-OpenID conformed request.
+            On success, the method <code>Zend_OpenId_Provider::handle</code>
+            returns a string that should be passed back to the OpenID-enabled site. On
+            failure, it returns <code>false</code> - in this example it will return a
+            HTTP 403 response. You will get it if you try to open this page by
+            web-browser, because it sends a non-OpenID conformed request.
         </para>
 
         <example id="zend.openid.provider.example-2">
@@ -76,32 +77,32 @@ if (is_string($ret)) {
         </example>
 
         <para>
-            It is a good idea to use secure connection (HTTPS) for this and
-            especially for the following interactive scripts, to prevent
-            password disclosures.
+            It is a good idea to use a secure connection (HTTPS) for this and
+            especially for the following interactive scripts, to prevent password
+            disclosure.
         </para>
 
         <para>
-            The following script implements a login screen for identity
-            server. <code>Zend_OpenId_Provider</code> redirects to this
-            page when required user is not logged-in yet. On this page user
-            should enter a password to login.
+            The following script implements a login screen for an identity
+            server <code>Zend_OpenId_Provider</code> and redirects to this page when a
+            required user has not yet logged-in. On this page, users enter a password
+            to login.
         </para>
 
         <para>
-            You should use password "123" that was used during tricky user
-            registration from identity script.
+            You should use the password "123" that was used during a tricky user
+            registration from an identity script.
         </para>
 
         <para>
-            On submit the script calls <code>Zend_OpenId_Provider::login</code>
-            with accepted end-user's identity and password, and then redirects
-            back to main identity provider's script. On success the 
-            <code>Zend_OpenId_Provider::login</code> establishes a session
-            between end-user and identity-provider and stores information
-            about logged-in user. So, all following requests from the same
-            end-user won't require login procedure (even if they come from
-            another OpenID enabled web-site).
+            On submit, the script calls <code>Zend_OpenId_Provider::login</code>
+            with the accepted end-user's identity and password, then redirects it back
+            to the main identity provider's script. On success, the
+            <code>Zend_OpenId_Provider::login</code> establishes a session between the
+            end-user and the identity-provider and stores the information about
+            logged-in user. So, all following requests from the same end-user won't
+            require login procedure (even if they come from another OpenID enabled
+            web-site).
         </para>
 
         <para>
@@ -132,20 +133,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 echo $_GET['openid_identity'];
 ?>"></td></tr>
 <tr><td>Password:</td><td><input type="text" name="openid_password" value=""></td></tr>
-<tr><td>&nbsp</td><td><input type="submit" name="openid_action" value="login"></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="openid_action" value="login"></td></tr>
 </table></fieldset></form></body></html>]]>
             </programlisting>
         </example>
-    
+
         <para>
-            The fact that user is logged-in doesn't mean that authentication
-            must succeed. The user may decide to trust or not to trust to 
-            particular OpenID enabled sites. The following trust screen
-            allows end-user to make a chouse. This chouse may be done only
-            for current request or "forever". In last case information
-            about trusted/untrusted site is stored in internal database and
-            all following authentication requests from this site will be
-            handled automatic, without interaction with user.
+            The fact that the user is logged-in doesn't mean that the
+            authentication must succeed. The user may decide to trust or not to trust
+            particular OpenID enabled sites. The following trust screen allows the
+            end-user to make that choise. This choise may be done only for current
+            requests or "forever". In the last case information about
+            trusted/untrusted sites is stored in an internal database and all
+            following authentication requests from this site will be handled
+            automatically, without user interaction.
         </para>
 
         <example id="zend.openid.provider.example-4">
@@ -173,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 ?>
 <html><body>
 <p>A site identifying as <a href="<?php echo $server->getSiteRoot($_GET);?>">
-<?php echo $server->getSiteRoot($_GET);?></a> has asked us for confirmation that 
+<?php echo $server->getSiteRoot($_GET);?></a> has asked us for confirmation that
 <a href="<?php echo $server->getLoggedInUser();?>">
 <?php echo $server->getLoggedInUser();?></a> is your identity URL.</p>
 <form method="post">
@@ -185,30 +186,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
 </form></body></html>]]>
             </programlisting>
         </example>
-    
+
         <para>
             Production OpenID servers usually support Simple Registration
-            Extension that allows consumers to ask some information about user
-            from provider. In this case the trust page is usually extended
-            with ability to enter requested fields or to select user profile.
+            Extension that allows consumers to ask some information about user from
+            provider. In this case the trust page is usually extended with ability to
+            enter requested fields or to select user profile.
         </para>
-
     </sect2>
-    
+
     <sect2 id="zend.openid.provider.all">
         <title>Combine all together</title>
         <para>
-            It is possible to combine all provider functions in one script.
-            In this case login and trust URLs are omitted, and <code>Zend_OpenId_Provider</code>
-            assumes that they point to the same page with additional
-            "openid.action" GET argument.
+            It is possible to combine all provider functions in one script. In
+            this case login and trust URLs are omitted, and
+            <code>Zend_OpenId_Provider</code> assumes that they point to the same page
+            with additional "openid.action" GET argument.
         </para>
 
         <para>
             The following example is not complete. It doesn't provide GUI for
-            end-user like it should, but perform automatic login and trusting
-            instead. It is done just to simplify the example, and real server
-            must include code from previous examples.
+            end-user like it should, but performs automatic login and trusting instead.
+            It is done just to simplify the example, and real server must include code
+            from previous examples.
         </para>
 
         <example id="zend.openid.provider.example-5">
@@ -242,25 +242,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
 }]]>
             </programlisting>
         </example>
-    
+
         <para>
             If you compare this example with previous example divided to
-            separate page, in addition to dispatch code you will see only the
-            one difference - <code>unset($_GET['openid_action'])</code>.
-            This <code>unset</code> is necessary to route next request to
-            main handler. 
+            separate page, in addition to dispatch code you will see only the one
+            difference - <code>unset($_GET['openid_action'])</code>. This
+            <code>unset</code> is necessary to route next request to main
+            handler.
         </para>
-
-    </sect2>         
+    </sect2>
 
     <sect2 id="zend.openid.provider.sreg">
         <title>Simple Registration Extension</title>
         <para>
-            The following identity page makes a trick again. It creates new
-            user account and associates it with profile (nickname and password).
-            Such tricks aren't needed in real life where end-user registers
-            on OpenID server and fill-in their profiles, but implementing this
-            GUI is not a subject of this manual.
+            The following identity page makes a trick again. It creates new user
+            account and associates it with profile (nickname and password). Such
+            tricks aren't needed in real life where end-user registers on OpenID
+            server and fill-in their profiles, but implementing this GUI is not a
+            subject of this manual.
         </para>
 
         <example id="zend.openid.provider.example-6">
@@ -292,27 +291,27 @@ if (!$server->hasUser(TEST_ID)) {
 </body></html>]]>
             </programlisting>
         </example>
-    
+
         <para>
             You should pass this identity to OpenID-enabled site (use Simple
-            Registration Extension example from previous chapter) and it will
-            use the following OpenID server script.
+            Registration Extension example from previous chapter) and it will use the
+            following OpenID server script.
         </para>
 
         <para>
             It is a variation from previous "All together" example. It uses the
-            same automatic login mechanism, but it doesn't contain any code for
-            trust page. The user already trusts "forever" to example scripts.
-            This trust was made by <code>Zend_OpenId_Provider::alowSite</code>
-            method in identity script. The same method associated profile with
-            trusted URL and this profile will be returned automatically on
-            request from this trusted URL.
+            same automatic login mechanism, but it doesn't contain any code for trust
+            page. The user already trusts "forever" to example scripts. This trust was
+            made by <code>Zend_OpenId_Provider::alowSite</code> method in identity
+            script. The same method associated profile with trusted URL and this
+            profile will be returned automatically on request from this trusted
+            URL.
         </para>
 
         <para>
             The only thing necessary to make Simple Registration Extension work
-            is passing object of <code>Zend_OpenId_Extension_Sreg</code> as
-            second argument to <code>Zend_OpenId_Provider::handle</code>.
+            is passing object of <code>Zend_OpenId_Extension_Sreg</code> as second
+            argument to <code>Zend_OpenId_Provider::handle</code>.
         </para>
 
         <example id="zend.openid.provider.example-7">
@@ -347,32 +346,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
 }]]>
             </programlisting>
         </example>
-
-    </sect2>         
+    </sect2>
 
     <sect2 id="zend.openid.provider.else">
-        <title>What else?</title>
+        <title>What Else?</title>
         <para>
-            Building OpenID servers is less usual tasks then building OpenID-enabled
-            sites, so this manual don't try to cover all <code>Zend_OpenId_Provider</code>
-            features as it was done for <code>Zend_OpenId_Consumer</code>.
+            Building OpenID servers is less usual tasks then building
+            OpenID-enabled sites, so this manual don't try to cover all
+            <code>Zend_OpenId_Provider</code> features as it was done for
+            <code>Zend_OpenId_Consumer</code>.
         </para>
 
         <para>
             In two words in additional it provides:
         </para>
-        
+
         <itemizedlist>
             <listitem>
                 a set of methods to build end-user's GUI interface that allows
-                users to register, manage their trusted sites and profiles. 
+                users to register, manage their trusted sites and profiles.
             </listitem>
             <listitem>
-                an abstraction storage layer to store information about
-                users, their sites and profiles. It also stores associations
-                between provider and OpenID-enabled sites. This layer is very
-                similar to the <code>Zend_OpenId_Consumer</code>'s one. It also
-                uses file storage by default but may be substituted with another
+                an abstraction storage layer to store information about users,
+                their sites and profiles. It also stores associations between
+                provider and OpenID-enabled sites. This layer is very similar
+                to the <code>Zend_OpenId_Consumer</code>'s one. It also uses
+                file storage by default but may be substituted with another
                 implementation.
             </listitem>
             <listitem>
@@ -388,7 +387,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
             <code>Zend_OpenId_Extension</code>s or by creating a child class.
         </para>
     </sect2>
-
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
