@@ -26,13 +26,13 @@ class Zend_Search_Lucene_Storage_DirectoryTest extends PHPUnit_Framework_TestCas
 {
     public function testFilesystem()
     {
-        $tempPath = dirname(__FILE__) . '/_tempFiles';
+        $tempPath = dirname(__FILE__) . '/_tempFiles/_files';
 
         // remove files from temporary direcytory
         $dir = opendir($tempPath);
         while (($file = readdir($dir)) !== false) {
             if (!is_dir($tempPath . '/' . $file)) {
-                unlink($tempPath . '/' . $file);
+                @unlink($tempPath . '/' . $file);
             }
         }
         closedir($dir);
@@ -91,13 +91,13 @@ class Zend_Search_Lucene_Storage_DirectoryTest extends PHPUnit_Framework_TestCas
 
     public function testFilesystemSubfoldersAutoCreation()
     {
-        $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_tempFiles/dir1/dir2/dir3');
+        $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_tempFiles/_files/dir1/dir2/dir3');
         $this->assertTrue($directory instanceof Zend_Search_Lucene_Storage_Directory);
         $directory->close();
 
-        rmdir(dirname(__FILE__) . '/_tempFiles/dir1/dir2/dir3');
-        rmdir(dirname(__FILE__) . '/_tempFiles/dir1/dir2');
-        rmdir(dirname(__FILE__) . '/_tempFiles/dir1');
+        rmdir(dirname(__FILE__) . '/_tempFiles/_files/dir1/dir2/dir3');
+        rmdir(dirname(__FILE__) . '/_tempFiles/_files/dir1/dir2');
+        rmdir(dirname(__FILE__) . '/_tempFiles/_files/dir1');
     }
 }
 
