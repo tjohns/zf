@@ -31,7 +31,7 @@ class Zend_Search_Lucene_Storage_FileTest extends PHPUnit_Framework_TestCase
 {
     public function testFilesystem()
     {
-        $file = new Zend_Search_Lucene_Storage_File_Filesystem(dirname(__FILE__) . '/sample_data/_files'); // open file object for reading
+        $file = new Zend_Search_Lucene_Storage_File_Filesystem(dirname(__FILE__) . '/_files/sample_data'); // open file object for reading
         $this->assertTrue($file instanceof  Zend_Search_Lucene_Storage_File);
 
         $fileSize = filesize(dirname(__FILE__) . '/_files/sample_data');
@@ -65,7 +65,7 @@ class Zend_Search_Lucene_Storage_FileTest extends PHPUnit_Framework_TestCase
         unset($file);
 
 
-        $testFName = dirname(__FILE__) . '/_tempFiles/sample_data(1)';
+        $testFName = dirname(__FILE__) . '/_files/sample_data_1';
         $file = new Zend_Search_Lucene_Storage_File_Filesystem($testFName, 'wb');
         $file->lock(LOCK_EX);
         $file->writeByte(10);
