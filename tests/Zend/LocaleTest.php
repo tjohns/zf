@@ -30,6 +30,8 @@ require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php'
  * Zend_Locale
  */
 require_once 'Zend/Locale.php';
+require_once 'Zend/Cache.php';
+
 
 // echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
@@ -43,12 +45,23 @@ require_once 'Zend/Locale.php';
 class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 {
 
+    public function setUp()
+    {
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File',
+                 array('lifetime' => 120, 'automatic_serialization' => true),
+                 array('cache_dir' => dirname(__FILE__) . '/_files/'));
+        Zend_Locale::setCache($cache);
+    }
+
     /**
      * test for object creation
      * expected object instance
      */
     public function testObjectCreation()
     {
+        $this->assertTrue(is_string(Zend_Locale::isLocale('de')), 'true expected');
+
         $this->assertTrue(new Zend_Locale() instanceof Zend_Locale,'Zend_Locale Object not returned');
         $this->assertTrue(new Zend_Locale('root') instanceof Zend_Locale,'Zend_Locale Object not returned');
         $this->assertTrue(new Zend_Locale(Zend_Locale::ENVIRONMENT) instanceof Zend_Locale,'Zend_Locale Object not returned');
@@ -314,7 +327,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Locale('de_DE');
         $this->assertTrue(is_array($value->getTranslation('xx')));
-        $this->assertTrue(in_array('language', $value->getTranslation('xx')));
+        $this->assertTrue(in_array('currency_sign', $value->getTranslation('xx')));
 
         $this->assertEquals($value->getTranslation('de', 'language'), 'Deutsch');
         $this->assertEquals($value->getTranslation('de', 'language', 'en'), 'German');
@@ -391,6 +404,12 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('DE', $value->getTranslation('de', 'language_detail')));
         $this->assertTrue(in_array('DE', $value->getTranslation('de', 'language_detail', 'en')));
         $this->assertFalse($value->getTranslation('xxx', 'language_detail'));
+
+        $this->assertEquals('[a-z]', $value->getTranslation(null, 'characters', 'en'));
+
+        $this->assertTrue(in_array('014', $value->getTranslation('002', 'territory_detail', 'auto')));
+        $this->assertTrue(in_array('014', $value->getTranslation('002', 'territory_detail', 'browser')));
+        $this->assertTrue(in_array('014', $value->getTranslation('002', 'territory_detail', 'environment')));
     }
 
 
@@ -463,6 +482,13 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(in_array('currency', $value->getTranslationList('xxx')));
         $this->assertTrue(in_array('currency', $value->getTranslationList()));
+
+        $this->assertTrue(in_array('[a-z]', $value->getTranslationList('characters')));
+        $this->assertTrue(in_array('[a-z]', $value->getTranslationList('characters', 'en')));
+
+        $this->assertTrue(in_array('CZ', $value->getTranslationList('language_detail', 'auto')));
+        $this->assertTrue(in_array('CZ', $value->getTranslationList('language_detail', 'browser')));
+        $this->assertTrue(in_array('CZ', $value->getTranslationList('language_detail', 'environment')));
     }
 
 
@@ -492,6 +518,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $list = $value->getQuestion('de');
         $this->assertTrue(isset($list['yes']), 'Question not returned');
+
+        $this->assertTrue(is_array($value->getQuestion('auto')));
+        $this->assertTrue(is_array($value->getQuestion('browser')));
+        $this->assertTrue(is_array($value->getQuestion('environment')));
     }
 
 
@@ -541,6 +571,9 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Locale::isLocale(1234), "false expected");
         $locale = Zend_Locale::isLocale('', true);
         $this->assertTrue(is_string($locale), "true expected");
+        $this->assertTrue(is_string(Zend_Locale::isLocale('auto')), "true expected");
+        $this->assertTrue(is_string(Zend_Locale::isLocale('browser')), "true expected");
+        $this->assertTrue(is_string(Zend_Locale::isLocale('environment')), "true expected");
     }
 
 
