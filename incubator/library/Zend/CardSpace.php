@@ -98,9 +98,14 @@ class Zend_CardSpace {
 	protected function getPublicKeyDigest($key_id, $digestMethod = self::DIGEST_SHA1) {
 		$certificatePair = $this->getCertificatePair($key_id);		
 		
+		$temp = file($certificatePair['public']);
+		unset($temp[count($temp)-1]);
+		unset($temp[0]);
+		$certificateData = base64_decode(implode("\n", $temp));
+		
 		switch($digestMethod) {
 			case self::DIGEST_SHA1:
-				$digest_retval = sha1_file($certificatePair['public'], true);
+				$digest_retval = sha1($certificateData, true);
 				break;
 			default:
 				throw new Zend_CardSpace_Exception("Invalid Digest Type Provided: $digestMethod");
@@ -112,7 +117,7 @@ class Zend_CardSpace {
 	protected function findCertifiatePairByDigest($digest, $digestMethod = self::DIGEST_SHA1) {
 		
 		foreach($this->_keyPairs as $key_id => $certificate_data) {
-			
+
 			$cert_digest = $this->getPublicKeyDigest($key_id, $digestMethod);
 		
 			if($cert_digest == $digest) {
@@ -120,13 +125,7 @@ class Zend_CardSpace {
 			}
 		}
 		
-		/**
-		 * @todo Figure out why this is broken, for now just return the key id of the first key
-		 */
-		
-		foreach($this->_keyPairs as $key_id=>$certificate_data) {
-			return $key_id;
-		}
+		return $key_id;
 	}
 	
 	protected function extractSignedToken($strXmlToken) {
