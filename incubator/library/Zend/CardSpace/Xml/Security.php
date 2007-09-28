@@ -75,6 +75,14 @@ class Zend_CardSpace_Xml_Security {
 			$transformer->addTransform((string)$transform['Algorithm']);
 		}
 
+		$transformed_xml = $transformer->applyTransforms($strXMLInput);
+		
+		$transformed_xml_binhash = pack("H*", sha1($transformed_xml));
+
+		if($transformed_xml_binhash != $dValue) {
+			throw new Zend_CardSpace_Xml_Security_Exception("Locally Transformed XML does not match XML Document. Cannot Verify Signature");
+		}
+		
 		$public_key = null;
 		
 		switch(true) {
@@ -92,6 +100,7 @@ class Zend_CardSpace_Xml_Security {
 				if(!$public_key) {
 					throw new Zend_CardSpace_Xml_Security_Exception("Unable to extract and prcoess X509 Certificate from KeyValue");
 				}
+				
 				break;
 			case isset($sxe->Signature->KeyInfo->KeyValue->RSAKeyValue):
 				
@@ -100,8 +109,8 @@ class Zend_CardSpace_Xml_Security {
 					throw new Zend_CardSpace_Xml_Security_Exception("RSA Key Value not in Modulus/Exponent form");   	
 				}
 				 
-				$modulus = base64_decode((string)$sxe->Signature->KeyInfo->KeyValue->RSAKeyValue->Modulus, true);
-				$exponent = base64_decode((string)$sxe->Signature->KeyInfo->KeyValue->RSAKeyValue->Exponent, true);
+				$modulus = (string)$sxe->Signature->KeyInfo->KeyValue->RSAKeyValue->Modulus;
+				$exponent = (string)$sxe->Signature->KeyInfo->KeyValue->RSAKeyValue->Exponent;
 				
 				$public_key = kimssl_pkey_get_public($modulus, $exponent);
 					
@@ -110,53 +119,37 @@ class Zend_CardSpace_Xml_Security {
 				throw new Zend_CardSpace_Xml_Security_Exception("Unable to determine or unsupported representation of the KeyValue block");
 		}
 
-		$transformed_xml = $transformer->applyTransforms($strXMLInput);
+		$transformer = new Zend_CardSpace_Xml_Security_Transform();
+		$transformer->addTransform((string)$sxe->Signature->SignedInfo->CanonicalizationMethod['Algorithm']);
 		
-		$transformed_xml_binhash = pack("H*", sha1($transformed_xml));
-
-		if($transformed_xml_binhash != $dValue) {
-			throw new Zend_CardSpace_Xml_Security_Exception("Locally Transformed XML does not match XML Document. Cannot Verify Signature");
+		// The way we are doing our XML processing requires that we specifically add this
+		// (even though it's in the <Signature> parent-block).. otherwise, our canonical form
+		// fails signature verification
+		$sxe->Signature->SignedInfo->addAttribute('xmlns', 'http://www.w3.org/2000/09/xmldsig#');
+		
+		$canonical_signedinfo = $transformer->applyTransforms($sxe->Signature->SignedInfo->asXML());
+		
+		if(openssl_verify($canonical_signedinfo, $signatureValue, $public_key)) {
+			return (string)$sxe->Signature->SignedInfo->Reference['URI'];
 		}
 		
-		print_binary("Signature Value", $signatureValue);
-		
-		$x = new Zend_CardSpace_Xml_Security_Transform_XmlExcC14N();
-		
-		return (bool)openssl_verify($sxe->Signature->SignedInfo->asXML(), $signatureValue, $public_key);
+		return false;
 	}
 }
 
 function kimssl_pkey_get_public ($modulus, $exponent)
 {
-	
-	print_binary("Modulus", $modulus);
-	print_binary("Exponent", $exponent);
-	
     // decode to binary
- //   $modulus = base64_decode($modulus);
-  //  $exponent = base64_decode($exponent);
+    $modulus = base64_decode($modulus);
+    $exponent = base64_decode($exponent);
 
     // make an ASN publicKeyInfo
     $exponentEncoding = makeAsnSegment(0x02, $exponent);    
-    
-    print_binary("Exponent Encoding", $exponentEncoding);
-    
     $modulusEncoding = makeAsnSegment(0x02, $modulus);    
-    
-    print_binary("Modulus Encoding", $modulusEncoding);
-    
     $sequenceEncoding = makeAsnSegment(0x30, 
         $modulusEncoding.$exponentEncoding);
-        
-    print_binary("Sequence Encoding", $sequenceEncoding);
-    
     $bitstringEncoding = makeAsnSegment(0x03, $sequenceEncoding);
-    
-    print_binary("bitString Encoding", $bitstringEncoding);
-    
     $rsaAlgorithmIdentifier = pack("H*", "300D06092A864886F70D0101010500"); 
-    
-    
     $publicKeyInfo = makeAsnSegment (0x30, 
         $rsaAlgorithmIdentifier.$bitstringEncoding);
 
@@ -170,8 +163,6 @@ function kimssl_pkey_get_public ($modulus, $exponent)
     }
     $encoding = $encoding."-----END PUBLIC KEY-----\n";
 
-    print_binary('PK', $publicKeyInfo);
-    
     // use the PEM version of the key to get a key handle
     $publicKey = openssl_pkey_get_public ($encoding);
 
@@ -207,7 +198,7 @@ function makeAsnSegment($type, $string)
        $output = sprintf("%c%c%c%c%s", $type, 0x82, $length/0x0100, $length%0x0100, $string);
     }
     else {
-        throw new Exception("Busted");
+        $output = NULL;
     }
 
     return($output);

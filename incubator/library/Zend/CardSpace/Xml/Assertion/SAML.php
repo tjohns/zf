@@ -1,12 +1,22 @@
 <?php
 
 require_once 'Zend/CardSpace/Xml/Element.php';
+require_once 'Zend/CardSpace/Xml/Assertion.php';
 
-class Zend_CardSpace_Xml_Assertion_SAML extends Zend_CardSpace_Xml_Element {
+class Zend_CardSpace_Xml_Assertion_SAML extends Zend_CardSpace_Xml_Element
+                                        implements Zend_CardSpace_Xml_Assertion_Interface {
 	
 	const CONDITION_AUDIENCE = 'AudienceRestrictionCondition';
 	const CONFIRMATION_BEARER = 'urn:oasis:names:tc:SAML:1.0:cm:bearer';
 
+	public function validateConditions($conditions) {
+		return true;	
+	}
+	
+	public function getAssertionURI() {
+		return Zend_CardSpace_Xml_Assertion::TYPE_SAML;
+	}
+	
 	public function getMajorVersion() {
 		return (string)$this['MajorVersion'];
 	}

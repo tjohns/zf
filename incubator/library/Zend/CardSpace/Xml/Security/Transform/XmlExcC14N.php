@@ -11,7 +11,7 @@ class Zend_CardSpace_Xml_Security_Transform_XmlExcC14N implements Zend_CardSpace
 		$dom->loadXML($strXMLData);
 
 		if(method_exists($dom, 'C14N')) {
-			return $dom->C14N(true);
+			return $dom->C14N(true, false);
 		}
 		
 		throw new Zend_CardSpace_Xml_Security_Transform_Exception("This transform requires the C14N() method to exist in the DOM extension");

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Zend/CardSpace/Xml/Exception.php';
+require_once 'Zend/CardSpace/Xml/Assertion/Interface.php';
 
 final class Zend_CardSpace_Xml_Assertion {
 
