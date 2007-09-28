@@ -258,6 +258,88 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // フレームワーク�
 
     </sect2>
 
+
+    <sect2 id="zend.locale.selection.automatic">
+
+        <title>自動ロケールの使用法</title>
+
+        <para>
+            <code>Zend_Locale</code> では、さらに 3 つのロケールを用意しています。
+            これらのロケールは、どこか特定の言語や地域を表すものではありません。
+            これらは "自動" ロケール、つまり
+            <code>getDefault()</code> メソッドと同じような働きをするものです。
+            しかし、インスタンスを作成したりといった余計な作業が不要になります。
+            これらの "自動" ロケールは、標準のロケールを使用できるところなら
+            どこででも使用可能で、文字列で指定することになります。
+            これを使用することで、ブラウザが提供するロケール情報などをうまく利用できるようになります。
+        </para>
+
+        <para>
+            以下の 3 つのロケールは、それぞれ微妙に異なる働きをします。
+
+            <orderedlist>
+                <listitem>
+                    <para>
+                        <code>'browser'</code> - <code>Zend_Locale</code>
+                        は、ユーザが使用するウェブブラウザが提供する情報を使用します。
+                        これは、PHP のグローバル変数 <code>HTTP_ACCEPT_LANGUAGE</code>
+                        で取得します。
+                    </para>
+                    <para>
+                        ブラウザが複数のロケールを指定している場合は、
+                        <code>Zend_Locale</code> は最初に見つけたロケールを使用します。
+                        ブラウザがロケールを指定していなかったり、
+                        あるいはコマンドラインからスクリプトを実行したりした場合は、
+                        代わりに自動ロケール <code>'environment'</code>
+                        を使用してその結果を返します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>'environment'</code> - <code>Zend_Locale</code> は、
+                        サーバが提供する情報を使用します。これは、PHP の内部関数
+                        <code>setlocale()</code> で取得します。
+                    </para>
+                    <para>
+                        複数のロケールを指定している場合は、
+                        <code>Zend_Locale</code> は最初に見つけたロケールを使用します。
+                        サーバがロケールを指定していない場合は、
+                        代わりに自動ロケール <code>'browser'</code>
+                        を使用してその結果を返します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>'auto'</code> - <code>Zend_Locale</code> は、
+                        可能な限りの方法でロケールを検出しようとします。
+                        まず最初にユーザが指定するロケールを探し、
+                        それに失敗するとホストのロケールを探します。
+                    </para>
+                    <para>
+                        ロケールの検出に失敗した場合は例外をスローし、
+                        自動検出に失敗したことを通知します。
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+
+        <example id="zend.locale.selection.example-1">
+            <title>自動ロケールの使用法</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Date.php';
+
+// 自動検出なし
+//$locale = new Zend_Locale(Zend_Locale::BROWSER);
+//$date = new Zend_Date($locale);
+
+// 自動検出つき
+$date = new Zend_Date('auto');]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
     <sect2 id="zend.locale.interoperate">
 
         <title>ZF のロケール対応のクラス</title>
