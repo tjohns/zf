@@ -227,6 +227,80 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // perfer framework app de
 
     </sect2>
 
+
+    <sect2 id="zend.locale.selection.automatic">
+
+        <title>Usage of automatic Locales</title>
+
+        <para>
+            <code>Zend_Locale</code> provides three additionally locales. These locales do not belong to
+            any language or region. They are "automatic" locales which means that they have the same effect
+            as the method <code>getDefault()</code> but without the negative effects like creating an instance. 
+            These "automatic" locales can be used anywhere, where also a standard locale and also the
+            definition of a locale, it's string representation, can be used. This offers simplicity for
+            situations like working with locales which are provided by a browser.
+        </para>
+
+        <para>
+            There are three locales which have a slightly different behaviour:
+
+            <orderedlist>
+                <listitem>
+                    <para>
+                        <code>'browser'</code> - <code>Zend_Locale</code> should work with the information
+                        which is provided by the user's Web browser. It is published by PHP in the global
+                        variable <code>HTTP_ACCEPT_LANGUAGE</code>.
+                    </para>
+                    <para>
+                        If a user provides more than one locale within his browser, <code>Zend_Locale</code>
+                        will use the first found locale. If the user does not provide a locale or the script is
+                        being called from the commandline the automatic locale <code>'environment'</code>
+                        will automatically be used and returned.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>'environment'</code> - <code>Zend_Locale</code> should work with the information
+                        which is provided by the host server. It is published by PHP via the internal function
+                        <code>setlocale()</code>.
+                    </para>
+                    <para>
+                        If a environment provides more than one locale, <code>Zend_Locale</code> will use the
+                        first found locale. If the host does not provide a locale the automatic locale
+                        <code>'browser'</code> will automatically be used and returned.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>'auto'</code> - <code>Zend_Locale</code> should automatically detect any locale
+                        which can be worked with. It will first search for a users locale and then, if not
+                        successfull, search for the host locale.
+                    </para>
+                    <para>
+                        If no locale can be detected, it will throw an exception and tell you that the
+                        automatical detection has been failed.
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+
+        <example id="zend.locale.selection.example-1">
+            <title>Using automatic locales</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Date.php';
+
+// without automatic detection
+//$locale = new Zend_Locale(Zend_Locale::BROWSER);
+//$date = new Zend_Date($locale);
+
+// with automatic detection
+$date = new Zend_Date('auto');]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
     <sect2 id="zend.locale.interoperate">
 
         <title>ZF Locale-Aware Classes</title>
