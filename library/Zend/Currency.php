@@ -242,7 +242,7 @@ class Zend_Currency
     {
         //validate the passed number
         if (!isset($value) || !is_numeric($value)) {
-            throw new Zend_Currency_Exception("Value '$value' must be an number");
+            throw new Zend_Currency_Exception("Value '$value' has to be numeric");
         }
 
         //format the number
