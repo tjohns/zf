@@ -1,6 +1,4 @@
-<chapter id="requirements">
-<!-- EN-Revision: 5154 Maintainer: mikespook Status: ready -->
-<!-- $Revision: $-->
+<appendix id="requirements">
 
     <title>系统需求</title>
 
@@ -938,7 +936,7 @@
     </sect1>
 
 
-</chapter>
+</appendix>
 <!--
 vim:se ts=4 sw=4 et:
 -->
