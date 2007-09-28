@@ -107,6 +107,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $lang->setAdapter(Zend_Translate::AN_ARRAY, array());
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
+
+        try {
+            $lang->xxxFunction();
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
     }
 
     public function testAddTranslation()
