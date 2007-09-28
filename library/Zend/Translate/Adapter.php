@@ -140,7 +140,11 @@ abstract class Zend_Translate_Adapter {
         }
 
         if (!in_array($locale, $this->_languages)) {
-            throw new Zend_Translate_Exception("Language ({$locale}) has to be added before it can be used.");
+            $temp = explode('_', $locale);
+            if (!in_array($temp[0], $this->_languages)) {
+                throw new Zend_Translate_Exception("Language ({$locale}) has to be added before it can be used.");
+            }
+            $locale = $temp[0];
         }
 
         $this->_locale = $locale;

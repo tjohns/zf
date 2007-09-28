@@ -36,8 +36,10 @@ class Zend_Translate {
     const AN_CSV     = 'csv';
     const AN_GETTEXT = 'gettext';
     const AN_QT      = 'qt';
+    const AN_TBX     = 'tbx';
     const AN_TMX     = 'tmx';
     const AN_XLIFF   = 'xliff';
+    const AN_XMLTM   = 'xmltm';
 
     /**
      * Adapter
@@ -87,11 +89,17 @@ class Zend_Translate {
             case 'qt':
                 $adapter = 'Zend_Translate_Adapter_Qt';
                 break;
+            case 'tbx':
+                $adapter = 'Zend_Translate_Adapter_Tbx';
+                break;
             case 'tmx':
                 $adapter = 'Zend_Translate_Adapter_Tmx';
                 break;
             case 'xliff':
                 $adapter = 'Zend_Translate_Adapter_Xliff';
+                break;
+            case 'xmltm':
+                $adapter = 'Zend_Translate_Adapter_XmlTm';
                 break;
         }
 

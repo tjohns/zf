@@ -584,8 +584,10 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
         <para>
             The <code>setLocale()</code> method sets a new standard language for translation. This prevents the
             need of setting the optional language parameter more than once to the <code>translate()</code> method.
-            If the given language does not exist, or no translation data is avaiable for the language, an
-            exception will be thrown.
+            If the given language does not exist, or no translation data is avaiable for the language,
+            <code>setLocale()</code> tries to downgrade to the language without the region if any was given.
+            A language of <code>en_US</code> would be downgraded to <code>en</code>. When also the downgraded
+            language can not be found an exception will be thrown.
         </para>
 
         <para>
@@ -610,6 +612,9 @@ $actual = $translate->getLocale();
 echo $translate->_("my_text", "fr");
 // or set a new standard language
 $translate->setLocale("fr");
+echo $translate->_("my_text");
+// refer to the base language... fr_CH will be downgraded to fr and be used
+$translate->setLocale("fr_CH");
 echo $translate->_("my_text");
 
 ...
