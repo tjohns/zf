@@ -365,9 +365,17 @@ class Zend_Currency
     public static function getSymbol($currency = null, $locale = null)
     {
         //manage the params
-        if (empty($locale) && !empty($currency) && (Zend_Locale::isLocale($currency))) {
-            $locale = $currency;
-            $currency = null;
+        if (empty($locale) && !empty($currency) ) {
+        
+            if (Zend_Locale::isLocale($currency)) {
+                $locale = $currency;
+                $currency = null;
+            } else if ($currency instanceof self) {
+                return $currency->_symbol;
+            } else {
+                $locale = new Zend_Locale();
+            }
+            
         } else if (empty($locale)) {
             $locale = new Zend_Locale();
         }
@@ -411,9 +419,17 @@ class Zend_Currency
     public static function getShortName($currency = null, $locale = null)
     {
         //manage the params
-        if (empty($locale) && !empty($currency) && (Zend_Locale::isLocale($currency))) {
-            $locale = $currency;
-            $currency = null;
+        if (empty($locale) && !empty($currency) ) {
+        
+            if (Zend_Locale::isLocale($currency)) {
+                $locale = $currency;
+                $currency = null;
+            } else if ($currency instanceof self) {
+                return $currency->_shortName;
+            } else {
+                $locale = new Zend_Locale();
+            }
+            
         } else if (empty($locale)) {
             $locale = new Zend_Locale();
         }
@@ -458,9 +474,17 @@ class Zend_Currency
     public static function getName($currency = null, $locale = null)
     {
         //manage the params
-        if (empty($locale) && !empty($currency) && (Zend_Locale::isLocale($currency))) {
-            $locale = $currency;
-            $currency = null;
+        if (empty($locale) && !empty($currency) ) {
+        
+            if (Zend_Locale::isLocale($currency)) {
+                $locale = $currency;
+                $currency = null;
+            } else if ($currency instanceof self) {
+                return $currency->_fullName;
+            } else {
+                $locale = new Zend_Locale();
+            }
+            
         } else if (empty($locale)) {
             $locale = new Zend_Locale();
         }

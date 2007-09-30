@@ -37,6 +37,13 @@ require_once 'Zend/Currency.php';
 require_once 'PHPUnit/Framework.php';
 
 
+//fix for the problem when auto-detection of locale fails
+try{
+    new Zend_Locale();
+}catch(Zend_Locale_Exception $e) {
+    putenv('HTTP_ACCEPT_LANGUAGE=fr_FR');
+}
+
 /**
  * @package    Zend_Currency
  * @subpackage UnitTests
@@ -395,10 +402,13 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     public function testGetSign()
     {
         $locale = new Zend_Locale('ar_EG');
-
+        $currency = new Zend_Currency('ar_EG');
+        
         $this->assertSame(Zend_Currency::getSymbol('EGP','ar_EG'), 'ج.م.‏');
         $this->assertSame(Zend_Currency::getSymbol('ar_EG'), 'ج.م.‏');
         $this->assertSame(Zend_Currency::getSymbol('ar_EG'), 'ج.م.‏');
+        $this->assertSame(Zend_Currency::getSymbol($currency), 'ج.م.‏');
+        
         try {
             $this->assertSame(is_string(Zend_Currency::getSymbol('EGP')), true);
         } catch (Zend_Currency_Exception $e) {
@@ -421,10 +431,13 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $locale = new Zend_Locale('ar_EG');
-
+        $currency = new Zend_Currency('ar_EG');
+        
         $this->assertSame(Zend_Currency::getName('EGP','ar_EG'), 'جنيه مصرى');
         $this->assertSame(Zend_Currency::getName('EGP',$locale), 'جنيه مصرى');
         $this->assertSame(Zend_Currency::getName('ar_EG'), 'جنيه مصرى');
+        $this->assertSame(Zend_Currency::getName($currency), 'جنيه مصرى');
+        
         try {
             $this->assertSame(is_string(Zend_Currency::getName('EGP')), true);
         } catch (Zend_Currency_Exception $e) {
@@ -447,10 +460,13 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
     public function testGetShortName()
     {
         $locale = new Zend_Locale('de_AT');
-
+        $currency = new Zend_Currency('de_AT');
+        
         $this->assertSame(Zend_Currency::getShortName('EUR','de_AT'), 'Euro');
         $this->assertSame(Zend_Currency::getShortName('EUR',$locale), 'Euro');
         $this->assertSame(Zend_Currency::getShortName('de_AT'), 'Euro');
+        $this->assertSame(Zend_Currency::getShortName($currency), 'EUR');
+        
         try {
             $this->assertSame(is_string(Zend_Currency::getShortName('EUR')), true);
         } catch (Zend_Currency_Exception $e) {
