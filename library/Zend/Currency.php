@@ -53,56 +53,56 @@ class Zend_Currency
      *
      * @var string
      */
-    private $_locale = null;
+    protected $_locale = null;
 
     /**
      * the short name of the currency
      *
      * @var string
      */
-    private $_shortName = null;
+    protected $_shortName = null;
 
     /**
      * the full name of the currency
      *
      * @var string
      */
-    private $_fullName = null;
+    protected $_fullName = null;
 
     /**
      * the symbol of the currency
      *
      * @var string
      */
-    private $_symbol = null;
+    protected $_symbol = null;
 
     /**
      * the position of the symbol
      *
      * @var const
      */
-    private $_position = null;
+    protected $_position = null;
 
     /**
      * the script name which used to format the outputed numbers
      *
      * @var string
      */
-    private $_script = null;
+    protected $_script = null;
 
     /**
      * the locale for formating the output
      *
      * @var string
      */
-    private $_formatLocale = null;
+    protected $_formatLocale = null;
 
     /**
      * which sign to use for currency display
      *
      * @var const
      */
-    private $_usedSign = 1;
+    protected $_usedSign = 1;
 
     /**
      * Creates a currency instance. Every supressed parameter is used from the actual or the given locale.
