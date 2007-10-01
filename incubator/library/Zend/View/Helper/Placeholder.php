@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_View_Helper_Placeholder_Container */
-require_once 'Zend/View/Helper/Placeholder/Container.php';
+/** Zend_Registry */
+require_once 'Zend/Registry.php';
 
 /**
  * Helper for passing data between otherwise segregated Views. It's called
@@ -45,6 +45,29 @@ class Zend_View_Helper_Placeholder
      * @var array
      */  
     protected $_items = array();  
+
+    /**
+     * @var Zend_View_Helper_Placeholder_Registry
+     */
+    protected $_registry;
+
+    /**
+     * Constructor
+     *
+     * Retrieve container registry from Zend_Registry, or create new one and register it.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        if (Zend_Registry::isRegistered('Zend_View_Helper_Placeholder_Registry')) {
+            $this->_registry == Zend_Registry::get('Zend_View_Helper_Placeholder_Registry');
+        } else {
+            include_once 'Zend/View/Helper/Placeholder/Registry.php';
+            $this->_registry = new Zend_View_Helper_Placeholder_Registry();
+            Zend_Registry::set('Zend_View_Helper_Placeholder_Registry', $this->_registry);
+        }
+    }
   
     /**
      * Set view
@@ -66,10 +89,16 @@ class Zend_View_Helper_Placeholder
     public function placeholder($name)  
     {  
         $name = (string) $name;  
-        if (!isset($this->_items[$name])) {  
-            $this->_items[$name] = new Zend_View_Helper_Placeholder_Container(array());  
-        }  
-  
-        return $this->_items[$name];  
+        return $this->_registry->getContainer($name);
     }  
+
+    /**
+     * Retrieve the registry
+     * 
+     * @return Zend_View_Helper_Placeholder_Registry
+     */
+    public function getRegistry()
+    {
+        return $this->_registry;
+    }
 }
