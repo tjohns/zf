@@ -360,158 +360,173 @@ class Zend_Search_Lucene_Index_Writer
         // Write generation (first copy)
         $genFile->writeLong($generation);
 
-        // Write format marker
-        $newSegmentFile->writeInt((int)0xFFFFFFFD);
+        try {
+	        // Write format marker
+	        $newSegmentFile->writeInt((int)0xFFFFFFFD);
+	
+	        // Skip format identifier
+	        $segmentsFile->seek(4, SEEK_CUR);
+	        // $version = $segmentsFile->readLong() + $this->_versionUpdate;
+	        // Process version on 32-bit platforms
+	        $versionHigh = $segmentsFile->readInt();
+	        $versionLow  = $segmentsFile->readInt();
+	        $version = $versionHigh * ((double)0xFFFFFFFF + 1) +
+	                   (($versionLow < 0)? (double)0xFFFFFFFF - (-1 - $versionLow) : $versionLow);
+	        $version += $this->_versionUpdate;
+	        $this->_versionUpdate = 0;
+	        $newSegmentFile->writeInt((int)($version/((double)0xFFFFFFFF + 1)));
+	        $newSegmentFile->writeInt((int)($version & 0xFFFFFFFF));
+	
+	        // Write segment name counter
+	        $newSegmentFile->writeInt($segmentsFile->readInt());
+	
+	        // Get number of segments offset
+	        $numOfSegmentsOffset = $newSegmentFile->tell();
+	        // Write dummy data (segment counter)
+	        $newSegmentFile->writeInt(0);
+	
+	        // Read number of segemnts
+	        $segmentsCount = $segmentsFile->readInt();
+	
+	        $segments = array();
+	        for ($count = 0; $count < $segmentsCount; $count++) {
+	            $segName = $segmentsFile->readString();
+	            $segSize = $segmentsFile->readInt();
+	
+	            if ($generation == 0) {
+	                // pre-2.1 index format
+	                $delGenHigh = 0;
+	                $delGenLow  = 0;
+	                $hasSingleNormFile = false;
+	                $numField = (int)0xFFFFFFFF;
+	                $isCompound = 1;
+	            } else {
+	                //$delGen          = $segmentsFile->readLong();
+	                $delGenHigh        = $segmentsFile->readInt();
+	                $delGenLow         = $segmentsFile->readInt();
+	                $hasSingleNormFile = $segmentsFile->readByte();
+	                $numField          = $segmentsFile->readInt();
+	
+	                $normGens = array();
+	                if ($numField != (int)0xFFFFFFFF) {
+	                    for ($count1 = 0; $count1 < $numField; $count1++) {
+	                        $normGens[] = $segmentsFile->readLong();
+	                    }
+	                }
+	                $isCompound        = $segmentsFile->readByte();
+	            }
+	
+	            if (!in_array($segName, $this->_segmentsToDelete)) {
+	            	// Load segment if necessary
+	            	if (!isset($this->_segmentInfos[$segName])) {
+	            		$delGen = $delGenHigh * ((double)0xFFFFFFFF + 1) +
+	                   			  (($delGenLow < 0)? (double)0xFFFFFFFF - (-1 - $delGenLow) : $delGenLow);
+	            		$this->_segmentInfos[$segName] = 
+	                                new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
+	                                                                         $segName,
+	                                                                         $segSize,
+	                                                                         $delGen,
+	                                                                         $hasSingleNormFile,
+	                                                                         $isCompound);
+	            	} else {
+	            		// Retrieve actual detetions file generation number
+	            		$delGen = $this->_segmentInfos[$segName]->getDelGen();
+	            		
+	            		if ($delGen >= 0) {
+		            		$delGenHigh = (int)($delGen/((double)0xFFFFFFFF + 1));
+		            		$delGenLow  =(int)($delGen & 0xFFFFFFFF);
+	            		} else {
+	            			$delGenHigh = $delGenLow = (int)0xFFFFFFFF;
+	            		}
+	            	}
+	            	
+	                $newSegmentFile->writeString($segName);
+	                $newSegmentFile->writeInt($segSize);
+	                $newSegmentFile->writeInt($delGenHigh);
+	                $newSegmentFile->writeInt($delGenLow);
+	                $newSegmentFile->writeByte($hasSingleNormFile);
+	                $newSegmentFile->writeInt($numField);
+	                if ($numField != (int)0xFFFFFFFF) {
+	                    foreach ($normGens as $normGen) {
+	                        $newSegmentFile->writeLong($normGen);
+	                    }
+	                }
+	                $newSegmentFile->writeByte($isCompound);
+	
+	                $segments[$segName] = $segSize;
+	            }
+	        }
+	        $segmentsFile->close();
+	
+	        $segmentsCount = count($segments) + count($this->_newSegments);
+	
+	        foreach ($this->_newSegments as $segName => $segmentInfo) {
+	            $newSegmentFile->writeString($segName);
+	            $newSegmentFile->writeInt($segmentInfo->count());
+	
+	            // delete file generation: -1 (there is no delete file yet)
+	            $newSegmentFile->writeInt((int)0xFFFFFFFF);$newSegmentFile->writeInt((int)0xFFFFFFFF);
+	            // HasSingleNormFile
+	            $newSegmentFile->writeByte($segmentInfo->hasSingleNormFile());
+	            // NumField
+	            $newSegmentFile->writeInt((int)0xFFFFFFFF);
+	            // IsCompoundFile
+	            $newSegmentFile->writeByte($segmentInfo->isCompound());
+	
+	            $segments[$segmentInfo->getName()] = $segmentInfo->count();
+	            $this->_segmentInfos[$segName] = $segmentInfo;
+	        }
+	        $this->_newSegments = array();
+	
+	        $newSegmentFile->seek($numOfSegmentsOffset);
+	        $newSegmentFile->writeInt($segmentsCount);  // Update segments count
+	        $newSegmentFile->close();
+	
+	        // Clean-up directory
+	        foreach ($this->_directory->fileList() as $file) {
+	            if ($file == 'deletable' ||
+	                $file == 'segments'  ||
+	                isset(self::$_indexExtensions[substr($file, strlen($file)-4)]) ||
+	                preg_match('/^segments_[a-zA-Z0-9]+$/i', $file) /* matches 'segments_xxx' file names */ ||
+	                preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
+	                    // check, that file is not used by current index generation
+	                    if ($file == Zend_Search_Lucene::getSegmentFileName($generation) ||
+	                        isset($segments[substr($file, 0, strlen($file)-4)]) ||
+	                        isset($segments[substr($file, 0, strpos($file, '.f'))])) {
+	                        continue;
+	                    }
+	
+	                    try {
+	                        $this->_directory->deleteFile($file);
+	                    } catch (Zend_Search_Lucene_Exception $e) {
+	                        if (strpos($e->getMessage(), 'Can\'t delete file') === 0) {
+	                            // File is under processing
+	                            // Stop clean-up process
+	                            break;
+	                        } else {
+	                            throw $e;
+	                        }
+	                    }
+	                }
+	        }
+        } catch (Exception $e) {
+        	/** Restore previous index generation */
+        	$generation--;
+        	$genFile->seek(4, SEEK_SET);
+        	// Write generation number twice
+        	$genFile->writeLong($generation); $genFile->writeLong($generation);
 
-        // Skip format identifier
-        $segmentsFile->seek(4, SEEK_CUR);
-        // $version = $segmentsFile->readLong() + $this->_versionUpdate;
-        // Process version on 32-bit platforms
-        $versionHigh = $segmentsFile->readInt();
-        $versionLow  = $segmentsFile->readInt();
-        $version = $versionHigh * ((double)0xFFFFFFFF + 1) +
-                   (($versionLow < 0)? (double)0xFFFFFFFF - (-1 - $versionLow) : $versionLow);
-        $version += $this->_versionUpdate;
-        $this->_versionUpdate = 0;
-        $newSegmentFile->writeInt((int)($version/((double)0xFFFFFFFF + 1)));
-        $newSegmentFile->writeInt((int)($version & 0xFFFFFFFF));
-
-        // Write segment name counter
-        $newSegmentFile->writeInt($segmentsFile->readInt());
-
-        // Get number of segments offset
-        $numOfSegmentsOffset = $newSegmentFile->tell();
-        // Write dummy data (segment counter)
-        $newSegmentFile->writeInt(0);
-
-        // Read number of segemnts
-        $segmentsCount = $segmentsFile->readInt();
-
-        $segments = array();
-        for ($count = 0; $count < $segmentsCount; $count++) {
-            $segName = $segmentsFile->readString();
-            $segSize = $segmentsFile->readInt();
-
-            if ($generation == 0) {
-                // pre-2.1 index format
-                $delGenHigh = 0;
-                $delGenLow  = 0;
-                $hasSingleNormFile = false;
-                $numField = (int)0xFFFFFFFF;
-                $isCompound = 1;
-            } else {
-                //$delGen          = $segmentsFile->readLong();
-                $delGenHigh        = $segmentsFile->readInt();
-                $delGenLow         = $segmentsFile->readInt();
-                $hasSingleNormFile = $segmentsFile->readByte();
-                $numField          = $segmentsFile->readInt();
-
-                $normGens = array();
-                if ($numField != (int)0xFFFFFFFF) {
-                    for ($count1 = 0; $count1 < $numField; $count1++) {
-                        $normGens[] = $segmentsFile->readLong();
-                    }
-                }
-                $isCompound        = $segmentsFile->readByte();
-            }
-
-            if (!in_array($segName, $this->_segmentsToDelete)) {
-            	// Load segment if necessary
-            	if (!isset($this->_segmentInfos[$segName])) {
-            		$delGen = $delGenHigh * ((double)0xFFFFFFFF + 1) +
-                   			  (($delGenLow < 0)? (double)0xFFFFFFFF - (-1 - $delGenLow) : $delGenLow);
-            		$this->_segmentInfos[$segName] = 
-                                new Zend_Search_Lucene_Index_SegmentInfo($this->_directory,
-                                                                         $segName,
-                                                                         $segSize,
-                                                                         $delGen,
-                                                                         $hasSingleNormFile,
-                                                                         $isCompound);
-            	} else {
-            		// Retrieve actual detetions file generation number
-            		$delGen = $this->_segmentInfos[$segName]->getDelGen();
-            		
-            		if ($delGen >= 0) {
-	            		$delGenHigh = (int)($delGen/((double)0xFFFFFFFF + 1));
-	            		$delGenLow  =(int)($delGen & 0xFFFFFFFF);
-            		} else {
-            			$delGenHigh = $delGenLow = (int)0xFFFFFFFF;
-            		}
-            	}
-            	
-                $newSegmentFile->writeString($segName);
-                $newSegmentFile->writeInt($segSize);
-                $newSegmentFile->writeInt($delGenHigh);
-                $newSegmentFile->writeInt($delGenLow);
-                $newSegmentFile->writeByte($hasSingleNormFile);
-                $newSegmentFile->writeInt($numField);
-                if ($numField != (int)0xFFFFFFFF) {
-                    foreach ($normGens as $normGen) {
-                        $newSegmentFile->writeLong($normGen);
-                    }
-                }
-                $newSegmentFile->writeByte($isCompound);
-
-                $segments[$segName] = $segSize;
-            }
-        }
-        $segmentsFile->close();
-
-        $segmentsCount = count($segments) + count($this->_newSegments);
-
-        foreach ($this->_newSegments as $segName => $segmentInfo) {
-            $newSegmentFile->writeString($segName);
-            $newSegmentFile->writeInt($segmentInfo->count());
-
-            // delete file generation: -1 (there is no delete file yet)
-            $newSegmentFile->writeInt((int)0xFFFFFFFF);$newSegmentFile->writeInt((int)0xFFFFFFFF);
-            // HasSingleNormFile
-            $newSegmentFile->writeByte($segmentInfo->hasSingleNormFile());
-            // NumField
-            $newSegmentFile->writeInt((int)0xFFFFFFFF);
-            // IsCompoundFile
-            $newSegmentFile->writeByte($segmentInfo->isCompound());
-
-            $segments[$segmentInfo->getName()] = $segmentInfo->count();
-            $this->_segmentInfos[$segName] = $segmentInfo;
-        }
-        $this->_newSegments = array();
-
-        $newSegmentFile->seek($numOfSegmentsOffset);
-        $newSegmentFile->writeInt($segmentsCount);  // Update segments count
-        $newSegmentFile->close();
-
-        // Clean-up directory
-        foreach ($this->_directory->fileList() as $file) {
-            if ($file == 'deletable' ||
-                $file == 'segments'  ||
-                isset(self::$_indexExtensions[substr($file, strlen($file)-4)]) ||
-                preg_match('/^segments_[a-zA-Z0-9]+$/i', $file) /* matches 'segments_xxx' file names */ ||
-                preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
-                    // check, that file is not used by current index generation
-                    if ($file == Zend_Search_Lucene::getSegmentFileName($generation) ||
-                        isset($segments[substr($file, 0, strlen($file)-4)]) ||
-                        isset($segments[substr($file, 0, strpos($file, '.f'))])) {
-                        continue;
-                    }
-
-                    try {
-                        $this->_directory->deleteFile($file);
-                    } catch (Zend_Search_Lucene_Exception $e) {
-                        if (strpos($e->getMessage(), 'Can\'t delete file') === 0) {
-                            // File is under processing
-                            // Stop clean-up process
-                            break;
-                        } else {
-                            throw $e;
-                        }
-                    }
-                }
+        	// Release index write lock
+            Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
+            
+            // Throw the exception
+            throw $e;
         }
 
         // Write generation (second copy)
         $genFile->writeLong($generation);
         
+        // Release index write lock
         Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
 
         // Remove unused segments from segments list
