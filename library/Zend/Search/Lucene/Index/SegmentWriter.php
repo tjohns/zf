@@ -396,7 +396,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         $this->_tiiFile->writeVInt(0);                    // DocFreq
         $this->_tiiFile->writeVInt(0);                    // FreqDelta
         $this->_tiiFile->writeVInt(0);                    // ProxDelta
-        $this->_tiiFile->writeVInt(20);                   // IndexDelta
+        $this->_tiiFile->writeVInt(24);                   // IndexDelta
 
         $this->_frqFile = $this->_directory->createFile($this->_name . '.frq');
         $this->_prxFile = $this->_directory->createFile($this->_name . '.prx');
