@@ -74,7 +74,7 @@ class Zend_CardSpace_Auth_Adapter implements Zend_Auth_Adapter_Interface
 		}
 		
 		if(!$claims->isValid()) {
-			switch($claims->getErrorCode()) {
+			switch($claims->getCode()) {
 				case Zend_CardSpace_Claims::RESULT_PROCESSING_FAILURE:
 					return new Zend_Auth_Result(Zend_Auth_Result::FAILURE,
 					                            $claims, array('Processing Failure',

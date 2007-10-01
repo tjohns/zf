@@ -5,5 +5,5 @@ interface Zend_CardSpace_Xml_Assertion_Interface {
 	public function getAttributes();
 	public function getAssertionURI();
 	public function getConditions();
-	public function validateConditions($conditions);
+	public function validateConditions(Array $conditions);
 }

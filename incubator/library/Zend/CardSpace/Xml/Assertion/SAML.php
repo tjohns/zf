@@ -1,15 +1,60 @@
 <?php
 
 require_once 'Zend/CardSpace/Xml/Element.php';
-require_once 'Zend/CardSpace/Xml/Assertion.php';
+require_once 'Zend/CardSpace/Xml/Assertion/Interface.php';
 
 class Zend_CardSpace_Xml_Assertion_SAML extends Zend_CardSpace_Xml_Element
                                         implements Zend_CardSpace_Xml_Assertion_Interface {
 	
 	const CONDITION_AUDIENCE = 'AudienceRestrictionCondition';
 	const CONFIRMATION_BEARER = 'urn:oasis:names:tc:SAML:1.0:cm:bearer';
+	const CONDITION_TIME_ADJ = 3600; // +- 5 minutes
+	
+	public function validateConditions(Array $conditions) {
+		
+		$currentTime = time();
 
-	public function validateConditions($conditions) {
+		if(!empty($conditions)) {
+			foreach($conditions as $condition => $conditionValue) {
+				switch(strtolower($condition)) {
+					case 'notbefore':
+						$notbeforetime = strtotime($conditionValue);
+						if(($currentTime < $notbeforetime) &&
+						   ($currentTime + self::CONDITION_TIME_ADJ < $notbeforetime)) {
+							return array($condition, 'Current time is before specified window');
+						   }
+						break;
+					case 'notonorafter':
+						$notonoraftertime = strtotime($conditionValue);
+
+						if(($currentTime >= $notonoraftertime) &&
+						   ($currentTime - self::CONDITION_TIME_ADJ >= $notonoraftertime)) {
+							return array($condition, 'Current time is after specified window');
+						}
+						break;
+					case 'audience':
+						
+						$self_aliases = array("https://{$_SERVER['SERVER_NAME']}/",
+						                      "https://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}");
+						$found = false;
+				                      
+						if(is_array($conditionValue)) {
+							foreach($conditionValue as $audience) {
+								if(in_array($audience, $self_aliases)) {
+									$found = true;
+									break;
+								}
+							}
+						}
+						
+						if(!$found) {
+							return array($condition, 'Could not find self in allowed audience list');
+						}
+						
+						break;
+				}
+			}
+		}
 		return true;	
 	}
 	

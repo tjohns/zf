@@ -1,8 +1,12 @@
 <?php
 
 require_once 'Zend/CardSpace/Xml/EncryptedData.php';
+require_once 'Zend/CardSpace/Xml/Assertion.php';
 require_once 'Zend/CardSpace/Exception.php';
 require_once 'Zend/CardSpace/Cipher.php';
+require_once 'Zend/CardSpace/Xml/Security.php';
+require_once 'Zend/CardSpace/Adapter/Interface.php';
+require_once 'Zend/CardSpace/Claims.php';
 
 class Zend_CardSpace {
 	
@@ -12,6 +16,21 @@ class Zend_CardSpace {
 	
 	protected $_pkCipherObj;
 	protected $_symCipherObj;
+	protected $_adapter;
+	
+	public function setAdapter(Zend_CardSpace_Adapter_Interface $a) {
+		$this->_adapter = $a;
+		return $this;
+	}
+	
+	public function getAdapter() {
+		if(is_null($this->_adapter)) {
+			Zend_Loader::loadClass('Zend_CardSpace_Adapter_Default');
+			$this->setAdapter(new Zend_CardSpace_Adapter_Default());
+		}
+		
+		return $this->_adapter;
+	}
 	
 	public function getPKCipherObject() {
 		return $this->_pkCipherObj;
@@ -188,9 +207,67 @@ class Zend_CardSpace {
 	}
 	
 	public function process($strXmlToken) {
-		$signedToken = $this->extractSignedToken($strXmlToken);
 		
-		print $signedToken;
+		$retval = new Zend_CardSpace_Claims();
+		
+		try {
+			$signedAssertionsXml = $this->extractSignedToken($strXmlToken);
+		} catch(Zend_CardSpace_Exception $e) {
+			$retval->setError('Failed to extract assertion document');
+			$retval->setCode(Zend_CardSpace_Claims::RESULT_PROCESSING_FAILURE);
+			return $retval;
+		}
+		
+		try {
+			$assertions = Zend_CardSpace_Xml_Assertion::getInstance($signedAssertionsXml);
+		} catch(Zend_CardSpace_Exception $e) {
+			$retval->setError('Failure processing assertion document');
+			$retval->setCode(Zend_CardSpace_Claims::RESULT_PROCESSING_FAILURE);
+			return $retval;
+		}
+		
+		if(!($assertions instanceof Zend_CardSpace_Xml_Assertion_Interface)) {
+			throw new Zend_CardSpace_Exception("Invalid Assertion Object returned");
+		}
+		
+		if(!($reference_id = Zend_CardSpace_Xml_Security::validateXMLSignature($assertions->asXML()))) {
+			$retval->setError("Failure Validating the Signature of the assertion document");
+			$retval->setCode(Zend_CardSpace_Claims::RESULT_VALIDATION_FAILURE);
+			return $retval;
+		}
+
+		// The reference id should be locally scoped as far as I know
+		if($reference_id[0] == '#') {
+			$reference_id = substr($reference_id, 1);
+		} else {
+			$retval->setError("Reference of document signature does not reference the local document");
+			$retval->setCode(Zend_CardSpace_Claims::RESULT_VALIDATION_FAILURE);
+			return $retval;
+		}
+		
+		// Make sure the signature is in reference to the same document as the assertions
+		if($reference_id != $assertions->getAssertionID()) {
+			$retval->setError("Reference of document signature does not reference the local document");
+			$retval->setCode(Zend_CardSpace_Claims::RESULT_VALIDATION_FAILURE);
+		}
+		
+		// Validate we haven't seen this before and the conditions are acceptable
+		$conditions = $this->getAdapter()->retrieveAssertion($assertions->getAssertionURI(), $assertions->getAssertionID());
+		
+		if($conditions === false) {
+			$conditions = $assertions->getConditions();
+		}
+		
+		if(is_array($condition_error = $assertions->validateConditions($conditions))) {
+			$retval->setError("Conditions of assertion document are not met: {$condition_error[1]} ({$condition_error[0]})");
+			$retval->setCode(Zend_CardSpace_Claims::RESULT_VALIDATION_FAILURE);
+		}
+					
+		$attributes = $assertions->getAttributes();
+		
+		$retval->setClaims($attributes);
+		$retval->setCode(Zend_CardSpace_Claims::RESULT_SUCCESS);
+		return $retval;
 	}
 }
 

@@ -12,7 +12,7 @@ class Zend_CardSpace_Claims {
 	protected $_isValid = true;
 	protected $_error;
 	protected $_claims;
-	protected $_errorcode;
+	protected $_code;
 	
 	public function forceValid() {
 		trigger_error("Forcing Claims to be valid although it is a security risk", E_USER_WARNING);
@@ -86,20 +86,20 @@ class Zend_CardSpace_Claims {
 		$this->_claims = $claims;
 	}
 	
-	public function setErrorCode($code) {
+	public function setCode($code) {
 		switch($code) {
 			case self::RESULT_PROCESSING_FAILURE:
 			case self::RESULT_SUCCESS:
 			case self::RESULT_VALIDATION_FAILURE:
-				$this->_errorcode = $code;
+				$this->_code = $code;
 				return $this;
 		}
 		
 		throw new Zend_CardSpace_Exception("Attempted to set unknown error code");
 	}
 	
-	public function getErrorCode() {
-		return $this->_errorcode;
+	public function getCode() {
+		return $this->_code;
 	}
 	
 	public function getClaim($claimURI) {
