@@ -410,7 +410,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         $this->_prevTermInfo      = null;
         $this->_prevIndexTerm     = null;
         $this->_prevIndexTermInfo = null;
-        $this->_lastIndexPosition = 20;
+        $this->_lastIndexPosition = 24;
         $this->_termCount         = 0;
 
     }
