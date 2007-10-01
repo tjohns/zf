@@ -256,7 +256,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         }
         $this->assertTrue($count === 4);
     }
-    
+
     public function testZf1019_HandlingInvalidKeyNames()
     {
         $config = new Zend_Config($this->_leadingdot);
@@ -271,7 +271,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertContains('test', $array[' ']);
         $this->assertContains('test', $array['']);
     }
-    
+
     public function testZF1417_DefaultValues()
     {
         $config = new Zend_Config($this->_all);
@@ -280,14 +280,14 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($config->notThere === null);
 
     }
-    
+
     public function testUnsetException()
     {
         // allow modifications is off - expect an exception
         $config = new Zend_Config($this->_all, false);
 
         $this->assertTrue(isset($config->hostname)); // top level
-        
+
         try {
             unset($config->hostname);
         } catch (Zend_Config_Exception $expected) {
@@ -309,9 +309,9 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse(isset($config->hostname));
         $this->assertFalse(isset($config->db->name));
-    
+
     }
-    
+
     public function testMerge()
     {
         $stdArray = array(
@@ -323,7 +323,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
             2 => 123,
         );
         $stdConfig = new Zend_Config($stdArray, true);
-        
+
         $devArray = array(
             'test_feature'=>true,
             'some_files' => array(
@@ -333,15 +333,36 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
             2 => 456,
         );
         $devConfig = new Zend_Config($devArray);
-        
+
         $stdConfig->merge($devConfig);
-        
+
         $this->assertTrue($stdConfig->test_feature);
         $this->assertEquals('myDir/bar.xml', $stdConfig->some_files->bar);
         $this->assertEquals('myDir/baz.xml', $stdConfig->some_files->baz);
         $this->assertEquals('dir/foo.xml', $stdConfig->some_files->foo);
         $this->assertEquals(456, $stdConfig->{2});
-        
+
+    }
+
+    /**
+     * Ensures that toArray() supports objects of types other than Zend_Config
+     *
+     * @return void
+     */
+    public function testToArraySupportsObjects()
+    {
+        $configData = array(
+            'a' => new stdClass(),
+            'b' => array(
+                'c' => new stdClass(),
+                'd' => new stdClass()
+                )
+            );
+        $config = new Zend_Config($configData);
+        $this->assertEquals($config->toArray(), $configData);
+        $this->assertType('stdClass', $config->a);
+        $this->assertType('stdClass', $config->b->c);
+        $this->assertType('stdClass', $config->b->d);
     }
 }
 
