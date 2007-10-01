@@ -387,13 +387,13 @@ class Zend_Search_Lucene_Index_Writer
 	
 	        // Read number of segemnts
 	        $segmentsCount = $segmentsFile->readInt();
-	
+
 	        $segments = array();
 	        for ($count = 0; $count < $segmentsCount; $count++) {
 	            $segName = $segmentsFile->readString();
 	            $segSize = $segmentsFile->readInt();
 	
-	            if ($generation == 0) {
+	            if ($generation == 1 /* retrieved generation is 0 */) {
 	                // pre-2.1 index format
 	                $delGenHigh = 0;
 	                $delGenLow  = 0;
