@@ -492,7 +492,8 @@ class Zend_Search_Lucene_Index_Writer
 	                    // check, that file is not used by current index generation
 	                    if ($file == Zend_Search_Lucene::getSegmentFileName($generation) ||
 	                        isset($segments[substr($file, 0, strlen($file)-4)]) ||
-	                        isset($segments[substr($file, 0, strpos($file, '.f'))])) {
+	                        isset($segments[substr($file, 0, strpos($file, '.f'))]) ||
+	                        substr($file, strlen($file)-4) == '.del') {
 	                        continue;
 	                    }
 	
