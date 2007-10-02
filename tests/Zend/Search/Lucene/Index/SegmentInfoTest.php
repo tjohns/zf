@@ -219,29 +219,31 @@ class Zend_Search_Lucene_Index_SegmentInfoTest extends PHPUnit_Framework_TestCas
     {
         $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_source/_files');
 
-        $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2);
+        $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2, 0 /* search for _1.del file */);
         $this->assertFalse($segmentInfo->hasDeletions());
 
         $segmentInfo->delete(0);
         $this->assertTrue($segmentInfo->hasDeletions());
+        $delGen = $segmentInfo->getDelGen();
         // don't write changes
         unset($segmentInfo);
 
-        $segmentInfo1 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2);
+        $segmentInfo1 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2, $delGen);
         // Changes wasn't written, segment still has no deletions
         $this->assertFalse($segmentInfo1->hasDeletions());
 
         $segmentInfo1->delete(0);
         $segmentInfo1->writeChanges();
+        $delGen = $segmentInfo1->getDelGen(); 
         unset($segmentInfo1);
 
-        $segmentInfo2 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2);
+        $segmentInfo2 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2, $delGen);
         $this->assertTrue($segmentInfo2->hasDeletions());
         unset($segmentInfo2);
 
-        $directory->deleteFile('_1.del');
+        $directory->deleteFile('_1_' . base_convert($delGen, 10, 36) . '.del');
 
-        $segmentInfo3 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2);
+        $segmentInfo3 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_1', 2, -1 /* no detetions file */);
         $this->assertFalse($segmentInfo3->hasDeletions());
     }
 
