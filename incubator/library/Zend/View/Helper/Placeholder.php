@@ -36,6 +36,12 @@ require_once 'Zend/Registry.php';
 class Zend_View_Helper_Placeholder  
 {  
     /**
+     * Zend_Registry key under which placeholder registry exists
+     * @const string
+     */
+    const REGISTRY_KEY = 'Zend_View_Helper_Placeholder_Registry';
+
+    /**
      * @var Zend_View_Interface
      */  
     public $view;  
@@ -60,12 +66,12 @@ class Zend_View_Helper_Placeholder
      */
     public function __construct()
     {
-        if (Zend_Registry::isRegistered('Zend_View_Helper_Placeholder_Registry')) {
-            $this->_registry == Zend_Registry::get('Zend_View_Helper_Placeholder_Registry');
+        if (Zend_Registry::isRegistered(self::REGISTRY_KEY)) {
+            $this->_registry = Zend_Registry::get(self::REGISTRY_KEY);
         } else {
             include_once 'Zend/View/Helper/Placeholder/Registry.php';
             $this->_registry = new Zend_View_Helper_Placeholder_Registry();
-            Zend_Registry::set('Zend_View_Helper_Placeholder_Registry', $this->_registry);
+            Zend_Registry::set(self::REGISTRY_KEY, $this->_registry);
         }
     }
   

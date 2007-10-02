@@ -17,6 +17,9 @@ require_once "PHPUnit/Framework/TestSuite.php";
 /** Zend_View_Helper_Placeholder */
 require_once 'Zend/View/Helper/Placeholder.php';
 
+/** Zend_Registry */
+require_once 'Zend/Registry.php';
+
 /**
  * Test class for Zend_View_Helper_Placeholder.
  *
@@ -26,6 +29,11 @@ require_once 'Zend/View/Helper/Placeholder.php';
  */
 class Zend_View_Helper_PlaceholderTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * @var Zend_View_Helper_Placeholder
+     */
+    public $placeholder;
+
     /**
      * Runs the test methods of this class.
      *
@@ -47,6 +55,7 @@ class Zend_View_Helper_PlaceholderTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->placeholder = new Zend_View_Helper_Placeholder();
     }
 
     /**
@@ -57,39 +66,58 @@ class Zend_View_Helper_PlaceholderTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        unset($this->placeholder);
+        Zend_Registry::getInstance()->offsetUnset(Zend_View_Helper_Placeholder::REGISTRY_KEY);
     }
 
     /**
-     * @todo Implement testSetView().
+     * @return void
+     */
+    public function testConstructorCreatesRegistryOffset()
+    {
+        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY));
+    }
+
+    public function testMultiplePlaceholdersUseSameRegistry()
+    {
+        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY));
+        $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
+        $this->assertSame($registry, $this->placeholder->getRegistry());
+
+        $placeholder = new Zend_View_Helper_Placeholder();
+
+        $this->assertSame($registry, $placeholder->getRegistry());
+        $this->assertSame($this->placeholder->getRegistry(), $placeholder->getRegistry());
+    }
+
+    /**
+     * @return void
      */
     public function testSetView()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        include_once 'Zend/View.php';
+        $view = new Zend_View();
+        $this->placeholder->setView($view);
+        $this->assertSame($view, $this->placeholder->view);
     }
 
     /**
-     * @todo Implement testPlaceholder().
+     * @return void
      */
-    public function testPlaceholder()
+    public function testPlaceholderRetrievesContainer()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $container = $this->placeholder->placeholder('foo');
+        $this->assertTrue($container instanceof Zend_View_Helper_Placeholder_Container_Abstract);
     }
 
     /**
-     * @todo Implement testGetRegistry().
+     * @return void
      */
-    public function testGetRegistry()
+    public function testPlaceholderRetrievesSameContainerOnSubsequentCalls()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $container1 = $this->placeholder->placeholder('foo');
+        $container2 = $this->placeholder->placeholder('foo');
+        $this->assertSame($container1, $container2);
     }
 }
 
