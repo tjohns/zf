@@ -27,6 +27,11 @@ require_once 'Zend/View/Helper/Placeholder/Registry.php';
 class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCase 
 {
     /**
+     * @var Zend_View_Helper_Placeholder_Registry
+     */
+    public $registry;
+
+    /**
      * Runs the test methods of this class.
      *
      * @return void
@@ -47,6 +52,7 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
      */
     public function setUp()
     {
+        $this->registry = new Zend_View_Helper_Placeholder_Registry();
     }
 
     /**
@@ -57,62 +63,102 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
      */
     public function tearDown()
     {
+        unset($this->registry);
     }
 
     /**
-     * @todo Implement testCreateContainer().
+     * @return void
      */
     public function testCreateContainer()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertFalse($this->registry->containerExists('foo'));
+        $this->registry->createContainer('foo');
+        $this->assertTrue($this->registry->containerExists('foo'));
     }
 
     /**
-     * @todo Implement testGetContainer().
+     * @return void
      */
-    public function testGetContainer()
+    public function testCreateContainerCreatesDefaultContainerClass()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertFalse($this->registry->containerExists('foo'));
+        $container = $this->registry->createContainer('foo');
+        $this->assertTrue($container instanceof Zend_View_Helper_Placeholder_Container);
     }
 
     /**
-     * @todo Implement testSetContainer().
+     * @return void
      */
-    public function testSetContainer()
+    public function testGetContainerCreatesContainerIfNonExistent()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertFalse($this->registry->containerExists('foo'));
+        $container = $this->registry->getContainer('foo');
+        $this->assertTrue($container instanceof Zend_View_Helper_Placeholder_Container_Abstract);
+        $this->assertTrue($this->registry->containerExists('foo'));
     }
 
     /**
-     * @todo Implement testSetContainerClass().
+     * @return void
      */
-    public function testSetContainerClass()
+    public function testSetContainerCreatesRegistryEntry()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $foo = new Zend_View_Helper_Placeholder_Container(array('foo', 'bar'));
+        $this->assertFalse($this->registry->containerExists('foo'));
+        $this->registry->setContainer('foo', $foo);
+        $this->assertTrue($this->registry->containerExists('foo'));
     }
 
     /**
-     * @todo Implement testGetContainerClass().
+     * @return void
      */
-    public function testGetContainerClass()
+    public function testSetContainerCreatesRegistersContainerInstance()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $foo = new Zend_View_Helper_Placeholder_Container(array('foo', 'bar'));
+        $this->assertFalse($this->registry->containerExists('foo'));
+        $this->registry->setContainer('foo', $foo);
+        $container = $this->registry->getContainer('foo');
+        $this->assertSame($foo, $container);
     }
+
+    /**
+     * @return void
+     */
+    public function testContainerClassAccessorsSetState()
+    {
+        $this->assertEquals('Zend_View_Helper_Placeholder_Container', $this->registry->getContainerClass());
+        $this->registry->setContainerClass('Zend_View_Helper_Placeholder_RegistryTest_Container');
+        $this->assertEquals('Zend_View_Helper_Placeholder_RegistryTest_Container', $this->registry->getContainerClass());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetContainerClassThrowsExceptionWithInvalidContainerClass()
+    {
+        try {
+            $this->registry->setContainerClass('Zend_View_Helper_Placeholder_RegistryTest_BogusContainer');
+            $this->fail('Invalid container classes should not be accepted');
+        } catch (Exception $e) {
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testUsingCustomContainerClassCreatesContainersOfCustomClass()
+    {
+        $this->registry->setContainerClass('Zend_View_Helper_Placeholder_RegistryTest_Container');
+        $container = $this->registry->createContainer('foo');
+        $this->assertTrue($container instanceof Zend_View_Helper_Placeholder_RegistryTest_Container);
+    }
+}
+
+class Zend_View_Helper_Placeholder_RegistryTest_Container extends Zend_View_Helper_Placeholder_Container_Abstract
+{
+}
+
+class Zend_View_Helper_Placeholder_RegistryTest_BogusContainer
+{
 }
 
 // Call Zend_View_Helper_Placeholder_RegistryTest::main() if this source file is executed directly.

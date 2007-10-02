@@ -39,7 +39,7 @@ class Zend_View_Helper_Placeholder_Registry
      * Default container class
      * @var string
      */
-    protected $_containerClass = 'Zend_View_Helper_Placholder_Container';
+    protected $_containerClass = 'Zend_View_Helper_Placeholder_Container';
 
     /**
      * Placeholder containers
@@ -50,11 +50,11 @@ class Zend_View_Helper_Placeholder_Registry
     /**
      * createContainer 
      * 
-     * @param mixed $key 
-     * @param array $value 
-     * @return void
+     * @param  string $key 
+     * @param  array $value 
+     * @return Zend_View_Helper_Placeholder_Container_Abstract
      */
-    public function createContainer($key, array $value)
+    public function createContainer($key, array $value = array())
     {
         $key = (string) $key;
 
@@ -81,17 +81,46 @@ class Zend_View_Helper_Placeholder_Registry
     }
 
     /**
+     * Does a particular container exist?
+     * 
+     * @param  string $key 
+     * @return bool
+     */
+    public function containerExists($key)
+    {
+        $key = (string) $key;
+        return isset($this->_items[$key]);
+    }
+
+    /**
      * Set the container for an item in the registry
      * 
-     * @param  stirng $key 
+     * @param  string $key 
      * @param  Zend_View_Placeholder_Container_Abstract $container 
      * @return Zend_View_Placeholder_Registry
      */
-    public function setContainer($key, Zend_View_Placeholder_Container_Abstract $container)
+    public function setContainer($key, Zend_View_Helper_Placeholder_Container_Abstract $container)
     {
         $key = (string) $key;
         $this->_items[$key] = $container;
         return $this;
+    }
+
+    /**
+     * Delete a container
+     * 
+     * @param  string $key 
+     * @return bool
+     */
+    public function deleteContainer($key)
+    {
+        $key = (string) $key;
+        if (isset($this->_items[$key])) {
+            unset($this->_items[$key]);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -102,6 +131,7 @@ class Zend_View_Helper_Placeholder_Registry
      */
     public function setContainerClass($name)
     {
+        include_once 'Zend/Loader.php';
         Zend_Loader::loadClass($name);
 
         $reflection = new ReflectionClass($name);
