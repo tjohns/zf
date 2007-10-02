@@ -19,6 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_View_Helper_Placeholder_Container_Abstract */
+require_once 'Zend/View/Helper/Placeholder/Container/Abstract.php';
+
 /** Zend_View_Helper_Placeholder_Container */
 require_once 'Zend/View/Helper/Placeholder/Container.php';
 
@@ -54,6 +57,7 @@ class Zend_View_Helper_Placeholder_Registry
     public function createContainer($key, array $value)
     {
         $key = (string) $key;
+
         $this->_items[$key] = new $this->_containerClass(array());
         return $this->_items[$key];
     }
@@ -62,7 +66,7 @@ class Zend_View_Helper_Placeholder_Registry
      * Retrieve a placeholder container
      * 
      * @param  string $key 
-     * @return Zend_View_Helper_Placeholder_Container
+     * @return Zend_View_Helper_Placeholder_Container_Abstract
      */
     public function getContainer($key)
     {
@@ -80,10 +84,10 @@ class Zend_View_Helper_Placeholder_Registry
      * Set the container for an item in the registry
      * 
      * @param  stirng $key 
-     * @param  Zend_View_Placeholder_Container $container 
+     * @param  Zend_View_Placeholder_Container_Abstract $container 
      * @return Zend_View_Placeholder_Registry
      */
-    public function setContainer($key, Zend_View_Placeholder_Container $container)
+    public function setContainer($key, Zend_View_Placeholder_Container_Abstract $container)
     {
         $key = (string) $key;
         $this->_items[$key] = $container;
@@ -98,6 +102,14 @@ class Zend_View_Helper_Placeholder_Registry
      */
     public function setContainerClass($name)
     {
+        Zend_Loader::loadClass($name);
+
+        $reflection = new ReflectionClass($name);
+        if (!$reflection->isSubclassOf(new ReflectionClass('Zend_View_Helper_Placeholder_Container_Abstract'))) {
+            include_once 'Zend/View/Helper/Placeholder/Registry/Exception.php';
+            throw new Zend_View_Helper_Placeholder_Registry_Exception('Invalid Container class specified');
+        }
+
         $this->_containerClass = $name;
         return $this;
     }

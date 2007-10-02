@@ -21,14 +21,12 @@
  */
 
 
-/**
- * Zend_Exception
- */
-require_once 'Zend/Exception.php';
+/** Zend_View_Exception */
+require_once 'Zend/View/Exception.php';
 
 
 /**
- * Exception for Zend_View_Placeholder family.
+ * Exception for Zend_View_Helper_Placeholder_Registry class.
  *
  * @category   Zend
  * @package    Zend_View
@@ -36,6 +34,6 @@ require_once 'Zend/Exception.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Placeholder_Exception extends Zend_Exception
+class Zend_View_Helper_Placeholder_Registry_Exception extends Zend_View_Exception
 {
 }

@@ -84,7 +84,7 @@ class Zend_View_Helper_Placeholder
      * Placeholder helper
      * 
      * @param  string $name 
-     * @return Zend_View_Helper_Placeholder_Container
+     * @return Zend_View_Helper_Placeholder_Container_Abstract
      */  
     public function placeholder($name)  
     {  
