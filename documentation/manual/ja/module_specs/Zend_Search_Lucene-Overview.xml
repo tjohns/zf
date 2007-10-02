@@ -32,12 +32,36 @@
             </itemizedlist>
 
             Zend_Search_Lucene は Apache Lucene プロジェクトから派生したものです。
-            現在サポートしているのは、Lucene バージョン 2.0 です。
+            現在サポートしているのは、Lucene バージョン 2.2 です。
+            <footnote>
+               <para>
+                   Lucene 2.1 インデックスフォーマット (これは Lucene 2.2
+                   でも用いられています) に対応しているのは、現在の "trunk" バージョンです。
+                   このバージョンは、SVN リポジトリあるいは最新の nightly
+                   スナップショットから取得できます。
+               </para>
+               <para>
+                   Lucene 2.1 インデックスフォーマットのサポートは
+                   ZF 1.1.0 に組み込まれる予定です。現在のリリース版 (ZF V1.0.2) は
+                   Lucene 1.9-2.0 に対応しています。
+               </para>
+            </footnote>.
             Lucene についての詳細は
             <ulink url="http://lucene.apache.org/java/docs/"/>
-            (<ulink url="http://lucene.apache.org/java/2_0_0/"/>)
+            (<ulink url="http://lucene.apache.org/java/2_2_0/"/>)
             を参照ください。
         </para>
+        <note>
+            <para>
+                以前の Zend_Search_Lucene の実装は Lucene 1.9 インデックスフォーマットに対応しています。
+            </para>
+            <para>
+                現時点では、これらのバージョンで作成されたインデックスは
+                自動的に Lucene 2.1 フォーマットにアップグレードされるようになっています。
+                いったんアップグレードされたインデックスは旧バージョンの
+                で読み込むことができません。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.documents-and-fields">

@@ -140,7 +140,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
             (Lucene インデックスファイルのフォーマットについての詳細は、
             <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">http://lucene.apache.org/java/2_0_0/fileformats.html</ulink>
             を参照ください)
-            <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.0 です</para></footnote>。
+            <footnote><para>現在サポートしている Lucene インデックスファイルフォーマットのバージョンは v2.1 です</para></footnote>。
             このことより、新しいドキュメントをインデックスに追加する際には、
             新しいセグメントを作成することになります。
         </para>
