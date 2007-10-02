@@ -177,7 +177,8 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     public function captureStart($type = Zend_View_Helper_Placeholder_Container_Abstract::APPEND)
     {
         if ($this->_captureLock) {
-            throw new Zend_View_Helper_Placeholder_Exception('Cannot nest placeholder captures for the same placeholder');
+            require_once 'Zend/View/Helper/Placeholder/Container/Exception.php';
+            throw new Zend_View_Helper_Placeholder_Container_Exception('Cannot nest placeholder captures for the same placeholder');
         }
 
         $this->_captureLock = true;

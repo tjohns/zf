@@ -142,6 +142,21 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
         }
     }
 
+    public function testDeletingContainerRemovesFromRegistry()
+    {
+        $this->registry->createContainer('foo');
+        $this->assertTrue($this->registry->containerExists('foo'));
+        $result = $this->registry->deleteContainer('foo');
+        $this->assertFalse($this->registry->containerExists('foo'));
+        $this->assertTrue($result);
+    }
+
+    public function testDeleteContainerReturnsFalseIfContainerDoesNotExist()
+    {
+        $result = $this->registry->deleteContainer('foo');
+        $this->assertFalse($result);
+    }
+
     /**
      * @return void
      */

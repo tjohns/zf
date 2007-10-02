@@ -208,6 +208,25 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
     /**
      * @return void
      */
+    public function testNestedCapturesThrowsException()
+    {
+        $this->container[] = 'foo';
+        $caught = false;
+        try {
+            $this->container->captureStart('set');
+                $this->container->captureStart('set');
+                $this->container->captureEnd();
+            $this->container->captureEnd();
+        } catch (Exception $e) {
+            $caught = true;
+        }
+
+        $this->assertTrue($caught, 'Nested captures should throw exceptions');
+    }
+
+    /**
+     * @return void
+     */
     public function testToStringWithNoModifiersAndSingleValueReturnsValue()
     {
         $this->container->set('foo');
