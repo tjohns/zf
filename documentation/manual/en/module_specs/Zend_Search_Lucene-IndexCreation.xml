@@ -128,7 +128,7 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
             Lucene index segment files can't be updated by their nature. A segment update needs full segment
             reorganization. See Lucene index file formats for details
             (<ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">http://lucene.apache.org/java/2_0_0/fileformats.html</ulink>)
-            <footnote><para>Currently supported Lucene index file format version is v2.0</para></footnote>.
+            <footnote><para>Currently supported Lucene index file format version is v2.1</para></footnote>.
             Thus new documents are added to the index by creating new segment.
         </para>
         <para>

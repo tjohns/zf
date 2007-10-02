@@ -11,7 +11,7 @@
         <para>
           A detailed description of this format is available here:
           <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
-          <footnote><para>Currently supported Lucene index file format version is v2.0</para></footnote>.
+          <footnote><para>Currently supported Lucene index file format version is v2.1</para></footnote>.
         </para>
     </sect2>
 

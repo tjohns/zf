@@ -29,9 +29,28 @@
                 </listitem>
             </itemizedlist>
 
-            Zend_Search_Lucene was derived from the Apache Lucene project.  Currently supported Lucene version is 2.0.
-            For more information on Lucene, visit <ulink url="http://lucene.apache.org/java/docs/"/> (<ulink url="http://lucene.apache.org/java/2_0_0/"/>).
+            Zend_Search_Lucene was derived from the Apache Lucene project.  Currently supported Lucene version is 2.2
+            <footnote>
+               <para>
+                   Lucene 2.1 index format support (which is also used in Lucene 2.2) is included into current "trunk" version. 
+                   You could take it using SVN repository or with one of the latest nightly snapshots.
+               </para>
+               <para>
+                   It's planned to include Lucene 2.1 index format support into ZF 1.1.0. Current release (ZF V1.0.2) works with
+                   Lucene 1.9-2.0.
+               </para>
+            </footnote>.
+            For more information on Lucene, visit <ulink url="http://lucene.apache.org/java/docs/"/> (<ulink url="http://lucene.apache.org/java/2_2_0/"/>).
         </para>
+        <note>
+            <para>
+                Previous Zend_Search_Lucene implementations works with Lucene 1.9 index format. 
+            </para>
+            <para>
+                Currently index created using these versions are automatically upgraded to Lucene 2.1 format on first update and can't be read using
+                previous ZF versions.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.documents-and-fields">
