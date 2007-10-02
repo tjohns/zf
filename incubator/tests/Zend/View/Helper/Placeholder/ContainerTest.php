@@ -27,6 +27,11 @@ require_once 'Zend/View/Helper/Placeholder/Container.php';
 class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestCase 
 {
     /**
+     * @var Zend_View_Helper_Placeholder_Container
+     */
+    public $container;
+
+    /**
      * Runs the test methods of this class.
      *
      * @return void
@@ -47,6 +52,7 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
      */
     public function setUp()
     {
+        $this->container = new Zend_View_Helper_Placeholder_Container(array());
     }
 
     /**
@@ -57,138 +63,210 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
      */
     public function tearDown()
     {
+        unset($this->container);
     }
 
     /**
-     * @todo Implement testSet().
+     * @return void
      */
-    public function testSet()
+    public function testSetSetsASingleValue()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->container['foo'] = 'bar';
+        $this->container['bar'] = 'baz';
+        $this->assertEquals('bar', $this->container['foo']);
+        $this->assertEquals('baz', $this->container['bar']);
+
+        $this->container->set('foo');
+        $this->assertEquals(1, count($this->container));
+        $this->assertEquals('foo', $this->container[0]);
     }
 
     /**
-     * @todo Implement testGetValue().
+     * @return void
      */
-    public function testGetValue()
+    public function testGetValueReturnsScalarWhenOneElementRegistered()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->container->set('foo');
+        $this->assertEquals('foo', $this->container->getValue());
     }
 
     /**
-     * @todo Implement testSetPrefix().
+     * @return void
      */
-    public function testSetPrefix()
+    public function testGetValueReturnsArrayWhenMultipleValuesPresent()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->container['foo'] = 'bar';
+        $this->container['bar'] = 'baz';
+        $expected = array('foo' => 'bar', 'bar' => 'baz');
+        $return   = $this->container->getValue();
+        $this->assertEquals($expected, $return);
     }
 
     /**
-     * @todo Implement testGetPrefix().
+     * @return void
      */
-    public function testGetPrefix()
+    public function testPrefixAccesorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertEquals('', $this->container->getPrefix());
+        $this->container->setPrefix('<ul><li>');
+        $this->assertEquals('<ul><li>', $this->container->getPrefix());
     }
 
     /**
-     * @todo Implement testSetPostfix().
+     * @return void
      */
-    public function testSetPostfix()
+    public function testSetPrefixImplementsFluentInterface()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $result = $this->container->setPrefix('<ul><li>');
+        $this->assertSame($this->container, $result);
     }
 
     /**
-     * @todo Implement testGetPostfix().
+     * @return void
      */
-    public function testGetPostfix()
+    public function testPostfixAccesorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertEquals('', $this->container->getPostfix());
+        $this->container->setPostfix('</li></ul>');
+        $this->assertEquals('</li></ul>', $this->container->getPostfix());
     }
 
     /**
-     * @todo Implement testSetSeparator().
+     * @return void
      */
-    public function testSetSeparator()
+    public function testSetPostfixImplementsFluentInterface()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $result = $this->container->setPostfix('</li></ul>');
+        $this->assertSame($this->container, $result);
     }
 
     /**
-     * @todo Implement testGetSeparator().
+     * @return void
      */
-    public function testGetSeparator()
+    public function testSeparatorAccesorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertEquals('', $this->container->getSeparator());
+        $this->container->setSeparator('</li><li>');
+        $this->assertEquals('</li><li>', $this->container->getSeparator());
     }
 
     /**
-     * @todo Implement testCaptureStart().
+     * @return void
      */
-    public function testCaptureStart()
+    public function testSetSeparatorImplementsFluentInterface()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $result = $this->container->setSeparator('</li><li>');
+        $this->assertSame($this->container, $result);
     }
 
     /**
-     * @todo Implement testCaptureEnd().
+     * @return void
      */
-    public function testCaptureEnd()
+    public function testCapturingToPlaceholderStoresContent()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->container->captureStart();
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $value = $this->container->getValue();
+        $this->assertContains('This is content intended for capture', $value);
     }
 
     /**
-     * @todo Implement testToString().
+     * @return void
      */
-    public function testToString()
+    public function testCapturingToPlaceholderAppendsContent()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->container[] = 'foo';
+        $this->container->captureStart();
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $this->assertEquals(2, count($this->container));
+
+        $value = $this->container->getValue();
+        $this->assertEquals('foo', $value[0]);
+        $this->assertContains('This is content intended for capture', $value[1]);
     }
 
     /**
-     * @todo Implement test__toString().
+     * @return void
      */
-    public function test__toString()
+    public function testCapturingToPlaceholderUsingSetOverwritesContent()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->container[] = 'foo';
+        $this->container->captureStart('set');
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $this->assertEquals(1, count($this->container));
+
+        $value = $this->container->getValue();
+        $this->assertContains('This is content intended for capture', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToStringWithNoModifiersAndSingleValueReturnsValue()
+    {
+        $this->container->set('foo');
+        $value = $this->container->toString();
+        $this->assertEquals($this->container->getValue(), $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToStringWithModifiersAndSingleValueReturnsFormattedValue()
+    {
+        $this->container->set('foo');
+        $this->container->setPrefix('<li>')
+                        ->setPostfix('</li>');
+        $value = $this->container->toString();
+        $this->assertEquals('<li>foo</li>', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToStringWithNoModifiersAndCollectionReturnsImplodedString()
+    {
+        $this->container[] = 'foo';
+        $this->container[] = 'bar';
+        $this->container[] = 'baz';
+        $value = $this->container->toString();
+        $this->assertEquals('foobarbaz', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testToStringWithModifiersAndCollectionReturnsFormattedString()
+    {
+        $this->container[] = 'foo';
+        $this->container[] = 'bar';
+        $this->container[] = 'baz';
+        $this->container->setPrefix('<ul><li>')
+                        ->setSeparator('</li><li>')
+                        ->setPostfix('</li></ul>');
+        $value = $this->container->toString();
+        $this->assertEquals('<ul><li>foo</li><li>bar</li><li>baz</li></ul>', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function test__toStringProxiesToToString()
+    {
+        $this->container[] = 'foo';
+        $this->container[] = 'bar';
+        $this->container[] = 'baz';
+        $this->container->setPrefix('<ul><li>')
+                        ->setSeparator('</li><li>')
+                        ->setPostfix('</li></ul>');
+        $value = $this->container->__toString();
+        $this->assertEquals('<ul><li>foo</li><li>bar</li><li>baz</li></ul>', $value);
     }
 }
 
