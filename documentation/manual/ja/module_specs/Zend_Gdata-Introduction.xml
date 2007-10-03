@@ -54,7 +54,14 @@
             </listitem>
             <listitem>
                 <para>
-                    Google Blogger
+                    <link linkend="zend.gdata.youtube">YouTube</link>
+                    は、動画やコメント、お気に入り、登録チャンネル、
+                    ユーザのプロファイルといった情報を検索して取得することができます。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</link>
                     は、人気のあるインターネットプロバイダです。
                     "ボタンひとつで簡単に" 記事を配信することができます。
                 </para>
