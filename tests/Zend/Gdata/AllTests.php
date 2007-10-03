@@ -128,21 +128,31 @@ require_once 'Zend/Gdata/Gapps/UserEntryTest.php';
 require_once 'Zend/Gdata/Gapps/UserFeedTest.php';
 require_once 'Zend/Gdata/Gapps/UserQueryTest.php';
 
+require_once 'Zend/Gdata/YouTube/PlaylistListFeedTest.php';
+require_once 'Zend/Gdata/YouTube/PlaylistListEntryTest.php';
+require_once 'Zend/Gdata/YouTube/SubscriptionFeedTest.php';
+require_once 'Zend/Gdata/YouTube/SubscriptionEntryTest.php';
+require_once 'Zend/Gdata/YouTube/PlaylistVideoEntryTest.php';
+require_once 'Zend/Gdata/YouTube/VideoEntryTest.php';
+require_once 'Zend/Gdata/YouTube/PlaylistVideoFeedTest.php';
+require_once 'Zend/Gdata/YouTube/VideoFeedTest.php';
+require_once 'Zend/Gdata/YouTube/UserProfileEntryTest.php';
+require_once 'Zend/Gdata/YouTube/CommentFeedTest.php';
+require_once 'Zend/Gdata/YouTube/CommentEntryTest.php';
+require_once 'Zend/Gdata/YouTube/ContactFeedTest.php';
+require_once 'Zend/Gdata/YouTube/ContactEntryTest.php';
+
+
 /**
  * Tests that do require online access to servers
  * and authentication credentials
  */
-
 require_once 'Zend/Gdata/GdataOnlineTest.php';
-
 require_once 'Zend/Gdata/GbaseOnlineTest.php';
-
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
-
 require_once 'Zend/Gdata/SpreadsheetsOnlineTest.php';
-
 require_once 'Zend/Gdata/GappsOnlineTest.php';
-
+require_once 'Zend/Gdata/YouTubeOnlineTest.php';
 require_once 'Zend/Gdata/SkipTests.php';
 
 class Zend_Gdata_AllTests
@@ -253,10 +263,24 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_Gapps_UserFeedTest');
         $suite->addTestSuite('Zend_Gdata_Gapps_UserQueryTest');
 
+        $suite->addTestSuite('Zend_Gdata_YouTube_PlaylistListFeedTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_PlaylistListEntryTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_SubscriptionFeedTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_SubscriptionEntryTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_PlaylistVideoEntryTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_VideoEntryTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_PlaylistVideoFeedTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_VideoFeedTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_UserProfileEntryTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_CommentFeedTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_CommentEntryTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_ContactFeedTest');
+        $suite->addTestSuite('Zend_Gdata_YouTube_ContactEntryTest');
+
         if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
-        constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true &&
-        defined('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED') &&
-        constant('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED') == true) {
+            constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true &&
+            defined('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED') == true) {
             /**
              * Tests that do require online access to servers
              * and authentication credentials
@@ -281,11 +305,20 @@ class Zend_Gdata_AllTests
                 $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
             }
             
+        } else if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
+                   constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true) {
+            /**
+             * Tests that do require online access to servers, but
+             * don't require the standard authentication credentials
+             */ 
             if (defined('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_GappsOnlineTest');
             }
-            
+            if (defined('TESTS_ZEND_GDATA_YOUTUBE_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_YOUTUBE_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_YouTubeOnlineTest');
+            }
         } else {
             $suite->addTestSuite('Zend_Gdata_SkipOnlineTest');
         }

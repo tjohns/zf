@@ -54,7 +54,15 @@
             </listitem>
             <listitem>
                 <para>
-                    Google Blogger
+                    <link linkend="zend.gdata.youtube">YouTube</link>
+                    provides the ability to search and retrieve videos,
+                    comments, favorites, subscriptions, user profiles
+                    and more.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</link>
                     is a popular Internet provider of
                     "push-button publishing" and syndication.
                 </para>

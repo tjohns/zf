@@ -24,6 +24,8 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
 
 require_once 'Zend/Http/Client.php';
 require_once 'Zend/Gdata.php';
+require_once 'Zend/Gdata/App/MediaEntry.php';
+require_once 'Zend/Gdata/App/MediaFileSource.php';
 require_once 'Zend/Gdata/ClientLogin.php';
 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
 
@@ -167,6 +169,65 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Gdata_App_InvalidArgumentException $e) {
             // we're expecting to cause an exception here
         }
+    }
+
+    public function testMediaUpload()
+    {
+        // the standard sevice for GData testing is Blogger, due to the strong
+        // match to the standard GData/APP protocol.  However, Blogger doesn't
+        // currently support media uploads, so we're using Picasa Web Albums
+        // for this test instead
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $this->blog = constant('TESTS_ZEND_GDATA_BLOG_ID');
+        $service = 'lh2';
+        $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+        $gd = new Zend_Gdata($client);
+
+        // setup the photo content
+        $fs = $gd->newMediaFileSource('Zend/Gdata/_files/testImage.jpg');
+        $fs->setContentType('image/jpeg');
+
+
+        // create a new picasa album
+        $albumEntry = $gd->newEntry();
+        $albumEntry->setTitle($gd->newTitle('My New Test Album'));
+        $albumEntry->setCategory(array($gd->newCategory(
+                'http://schemas.google.com/photos/2007#album',
+                'http://schemas.google.com/g/2005#kind'
+                )));
+        $createdAlbumEntry = $gd->insertEntry($albumEntry, 
+                'http://picasaweb.google.com/data/feed/api/user/default');
+        $this->assertEquals('My New Test Album', 
+                $createdAlbumEntry->title->text);
+        $albumUrl = $createdAlbumEntry->getLink('http://schemas.google.com/g/2005#feed')->href;
+    
+        // post the photo to the new album, without any metadata 
+        // other than the slug
+        // add a slug header to the media file source
+        $fs->setSlug('Going to the park');
+        $createdPhotoBinaryOnly = $gd->insertEntry($fs, $albumUrl);
+        $this->assertEquals('Going to the park', 
+                $createdPhotoBinaryOnly->title->text);
+
+        // post the photo to the new album along with the entry 
+        // remove slug header from the media file source
+        $fs->setSlug(null);
+
+        // setup an entry with metadata
+        $mediaEntry = $gd->newMediaEntry();
+        $mediaEntry->setMediaSource($fs);
+
+        $mediaEntry->setTitle($gd->newTitle('My New Test Photo'));
+        $mediaEntry->setSummary($gd->newSummary('My New Test Photo Summary'));
+        $mediaEntry->setCategory(array($gd->newCategory(
+                'http://schemas.google.com/photos/2007#photo ',
+                'http://schemas.google.com/g/2005#kind'
+                )));
+        $createdPhotoMultipart = $gd->insertEntry($mediaEntry, $albumUrl);
+        $this->assertEquals('My New Test Photo', 
+                $createdPhotoMultipart->title->text);
+        
     }
 
 }

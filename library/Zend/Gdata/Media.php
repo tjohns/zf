@@ -20,29 +20,35 @@
  */
 
 /**
- * @see Zend_Gdata_App_MediaEntry
+ * @see Zend_Gdata
  */
-require_once 'Zend/Gdata/App/MediaEntry.php';
+require_once 'Zend/Gdata.php';
 
 /**
- * Represents the GData flavor of an Atom entry
+ * Service class for interacting with the services which use the media extensions
+ * @link http://code.google.com/apis/gdata/calendar.html
  *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Entry extends Zend_Gdata_App_MediaEntry
+class Zend_Gdata_Media extends Zend_Gdata
 {
 
-    protected $_entryClassName = 'Zend_Gdata_Entry';
+    public static $namespaces = array(
+            'media' => 'http://search.yahoo.com/mrss/');
 
-    public function __construct($element = null)
+    /**
+     * Create Gdata_Media object
+     *
+     * @param Zend_Http_Client $client The optional pre-configured HTTP client
+     */
+    public function __construct($client = null)
     {
-        foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
-        parent::__construct($element);
+        $this->registerPackage('Zend_Gdata_Media');
+        $this->registerPackage('Zend_Gdata_Media_Extension');
+        parent::__construct($client);
     }
 
 }

@@ -20,29 +20,32 @@
  */
 
 /**
- * @see Zend_Gdata_App_MediaEntry
+ * @see Zend_Gdata_App_Extension
  */
-require_once 'Zend/Gdata/App/MediaEntry.php';
+require_once 'Zend/Gdata/App/Extension.php';
 
 /**
- * Represents the GData flavor of an Atom entry
+ * Represents the media:keywords element
  *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Entry extends Zend_Gdata_App_MediaEntry
+class Zend_Gdata_Media_Extension_MediaKeywords extends Zend_Gdata_Extension
 {
+    protected $_rootElement = 'keywords';
+    protected $_rootNamespace = 'media';
 
-    protected $_entryClassName = 'Zend_Gdata_Entry';
-
-    public function __construct($element = null)
+    /**
+     * Constructs a new MediaKeywords element
+     */
+    public function __construct()
     {
-        foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
+        foreach (Zend_Gdata_Media::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct($element);
+        parent::__construct();
     }
 
 }

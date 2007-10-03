@@ -20,29 +20,34 @@
  */
 
 /**
- * @see Zend_Gdata_App_MediaEntry
+ * @see Zend_Gdata_Extension
  */
-require_once 'Zend/Gdata/App/MediaEntry.php';
+require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the GData flavor of an Atom entry
+ * Represents the yt:noembed element used by the YouTube data API
  *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Entry extends Zend_Gdata_App_MediaEntry
+class Zend_Gdata_YouTube_Extension_NoEmbed extends Zend_Gdata_Extension
 {
 
-    protected $_entryClassName = 'Zend_Gdata_Entry';
+    protected $_rootNamespace = 'yt';
+    protected $_rootElement = 'noembed';
 
-    public function __construct($element = null)
+    /**
+     * Constructs a new Zend_Gdata_YouTube_Extension_VideoShare object.
+     * @param bool $enabled(optional) The enabled value of the element.
+     */
+    public function __construct($enabled = null) 
     {
-        foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
+        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct($element);
+        parent::__construct();        
     }
 
 }
