@@ -59,22 +59,23 @@ class Zend_View_Helper_Action
      */
     public function __construct()
     {
-        $front               = Zend_Controller_Front::getInstance(); 
-
+        $front   = Zend_Controller_Front::getInstance(); 
         $modules = $front->getControllerDirectory();
         if (empty($modules)) {
             require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('Action helper depends on valid front controller instance');
         }
 
-        $this->request       = clone $front->getRequest(); 
-        $this->response      = clone $front->getResponse(); 
+        $request  = $front->getRequest(); 
+        $response = $front->getResponse(); 
 
-        if (empty($this->request) || empty($this->response)) {
+        if (empty($request) || empty($response)) {
             require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('Action view helper requires both a registered request and response object in the front controller instance');
         }
 
+        $this->request       = clone $request;
+        $this->response      = clone $response;
         $this->dispatcher    = clone $front->getDispatcher(); 
         $this->defaultModule = $front->getDefaultModule();
     }
