@@ -25,11 +25,11 @@
  *
  * @package    Zend_View
  * @subpackage Helpers
- * @copyright  Copyright (c) 2007 Pádraic Brady (http://blog.astrumfutura.com)
- * @license    New BSD
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Partial {
-
+class Zend_View_Helper_Partial 
+{
     /**
      * Instance of parent Zend_View object
      *
