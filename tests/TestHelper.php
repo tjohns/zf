@@ -33,7 +33,7 @@ require_once 'PHPUnit/Util/Filter.php';
 error_reporting( E_ALL | E_STRICT );
 
 /*
- * Determine the root, library, and tests directories of the framework 
+ * Determine the root, library, and tests directories of the framework
  * distribution.
  */
 $zfRoot        = dirname(dirname(__FILE__));
@@ -46,29 +46,30 @@ $zfCoreTests   = $zfRoot . DIRECTORY_SEPARATOR . 'tests';
  * loading other copies of the framework code and tests that would supersede
  * this copy.
  */
-$path = array();
-$path[] = $zfCoreTests;
-$path[] = $zfCoreLibrary;
-$path[] = get_include_path();
+$path = array(
+    $zfCoreLibrary,
+    $zfCoreTests,
+    get_include_path()
+    );
 set_include_path(implode(PATH_SEPARATOR, $path));
 
 /*
- * Load the user-defined test configuration file, if it exists; otherwise, load 
+ * Load the user-defined test configuration file, if it exists; otherwise, load
  * the default configuration.
  */
 if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
-    require_once 'TestConfiguration.php';
+    require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
 } else {
-    require_once 'TestConfiguration.php.dist';
+    require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist';
 }
 
 /*
- * Add Zend Framework library/ directory to the PHPUnit code coverage 
- * whitelist. This has the effect that only production code source files appear 
- * in the code coverage report and that all production code source files, even 
+ * Add Zend Framework library/ directory to the PHPUnit code coverage
+ * whitelist. This has the effect that only production code source files appear
+ * in the code coverage report and that all production code source files, even
  * those that are not covered by a test yet, are processed.
  */
-if (TESTS_GENERATE_REPORT === TRUE &&
+if (TESTS_GENERATE_REPORT === true &&
     version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
     PHPUnit_Util_Filter::addDirectoryToWhitelist($zfCoreLibrary);
 }
@@ -76,4 +77,4 @@ if (TESTS_GENERATE_REPORT === TRUE &&
 /*
  * Unset global variables that are no longer needed.
  */
-unset($zfRoot, $zfCoreLibrary, $zfCoreTests);
+unset($zfRoot, $zfCoreLibrary, $zfCoreTests, $path);

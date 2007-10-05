@@ -58,12 +58,7 @@ class Zend_AllTests
         /*
          * Perform the tests for Zend_Db component now.
          */
-        $suite->addTest(Zend_Db_AllTests::suite());
-
-        /*
-         * Perform the tests for Zend_TimeSync component now.
-         */
-        $suite->addTestSuite('Zend_TimeSyncTest');
+        //$suite->addTest(Zend_Db_AllTests::suite());
 
         /*
          * Perform the tests for Zend_Validate_Barcode component now.
@@ -74,12 +69,17 @@ class Zend_AllTests
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());
-        $suite->addTestSuite('Zend_OpenIdTest');
 
         /*
          * Perform the tests for Zend_OpenId component now.
          */
+        $suite->addTestSuite('Zend_OpenIdTest');
         $suite->addTest(Zend_OpenId_AllTests::suite());
+
+        /*
+         * Perform the tests for Zend_TimeSync component now.
+         */
+        //$suite->addTestSuite('Zend_TimeSyncTest');
 
         return $suite;
     }

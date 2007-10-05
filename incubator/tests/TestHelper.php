@@ -20,7 +20,12 @@
  * @version    $Id: TestHelper.php 4528 2007-04-17 23:10:47Z darby $
  */
 
+require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/Runner/Version.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'PHPUnit/Util/Filter.php';
 
 /*
@@ -29,7 +34,7 @@ require_once 'PHPUnit/Util/Filter.php';
 error_reporting( E_ALL | E_STRICT );
 
 /*
- * Determine the root, library, and tests directories of the framework 
+ * Determine the root, library, and tests directories of the framework
  * distribution.
  */
 $zfRoot        = dirname(dirname(dirname(__FILE__)));
@@ -44,33 +49,32 @@ $zfCoreTests   = $zfRoot . DIRECTORY_SEPARATOR . 'tests';
  * loading other copies of the framework code and tests that would supersede
  * this copy.
  */
-$path = array();
-$path[] = $zfIncTests;
-if ($zfUseCoreTests === true) {
-    $path[] = $zfCoreTests;
-}
-$path[] = $zfIncLibrary;
-$path[] = $zfCoreLibrary;
-$path[] = get_include_path();
+$path = array(
+    $zfIncLibrary,
+    $zfIncTests,
+    $zfCoreLibrary,
+    $zfCoreTests,
+    get_include_path()
+    );
 set_include_path(implode(PATH_SEPARATOR, $path));
 
 /*
- * Load the user-defined test configuration file, if it exists; otherwise, load 
+ * Load the user-defined test configuration file, if it exists; otherwise, load
  * the default configuration.
  */
 if (is_readable($zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
-    require_once 'TestConfiguration.php';
+    require_once $zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
 } else {
-    require_once 'TestConfiguration.php.dist';
+    require_once $zfIncTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist';
 }
 
 /*
- * Add Zend Framework library/ directory to the PHPUnit code coverage 
- * whitelist. This has the effect that only production code source files appear 
- * in the code coverage report and that all production code source files, even 
+ * Add Zend Framework library/ directory to the PHPUnit code coverage
+ * whitelist. This has the effect that only production code source files appear
+ * in the code coverage report and that all production code source files, even
  * those that are not covered by a test yet, are processed.
  */
-if (TESTS_GENERATE_REPORT === TRUE &&
+if (TESTS_GENERATE_REPORT === true &&
     version_compare(PHPUnit_Runner_Version::id(), '3.1.6', '>=')) {
     PHPUnit_Util_Filter::addDirectoryToWhitelist($zfCoreLibrary);
     PHPUnit_Util_Filter::addDirectoryToWhitelist($zfIncLibrary);
@@ -79,5 +83,4 @@ if (TESTS_GENERATE_REPORT === TRUE &&
 /*
  * Unset global variables that are no longer needed.
  */
-unset($zfRoot, $zfCoreLibrary, $zfCoreTests);
-unset($zfIncLibrary, $zfIncTests, $zfUseCoreTests);
+unset($zfRoot, $zfIncLibrary, $zfIncTests, $zfCoreLibrary, $zfCoreTests, $path);
