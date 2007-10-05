@@ -17,12 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Config_Xml
@@ -90,13 +91,13 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('cannot be found in', $expected->getMessage());
         }
-        
+
         try {
             $config = @new Zend_Config_Xml($this->_xmlFileConfig, array('notthere', 'all'));
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('cannot be found in', $expected->getMessage());
-        }        
+        }
     }
 
     public function testErrorNoExtendsSection()
@@ -148,7 +149,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
             $this->assertContains('circular inheritance', $expected->getMessage());
         }
     }
-    
+
     public function testErrorNoFile()
     {
         try {

@@ -17,12 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Config_Ini
@@ -190,7 +191,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             $this->assertContains('Filename is not set', $expected->getMessage());
         }
     }
-    
+
     public function testErrorMultipleExensions()
     {
         try {
@@ -201,7 +202,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             $this->assertContains('may not extend multiple sections', $expected->getMessage());
         }
     }
-    
+
     public function testErrorNoSectionFound()
     {
         try {
@@ -228,5 +229,5 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('live', $config->db->name);
         $this->assertEquals('multi', $config->one->two->three);
     }
- 
+
 }
