@@ -35,6 +35,7 @@ require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/OpenIdTest.php';
 require_once 'Zend/OpenId/AllTests.php';
 require_once 'Zend/Validate/BarcodeTest.php';
+require_once 'Zend/View/Helper/AllTests.php';
 
 
 /**
@@ -80,6 +81,11 @@ class Zend_AllTests
          * Perform the tests for Zend_TimeSync component now.
          */
         //$suite->addTestSuite('Zend_TimeSyncTest');
+
+        /**
+         * Zend_View_Helper tests
+         */
+        $suite->addTest(Zend_View_Helper_AllTests::suite());
 
         return $suite;
     }
