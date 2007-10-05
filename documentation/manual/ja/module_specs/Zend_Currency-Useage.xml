@@ -55,29 +55,13 @@ $currency = new Zend_Currency();]]>
                 ひとつのロケールには複数の通貨を含めることができます。
                 最初のパラメータ <emphasis role="strong">'currency'</emphasis>
                 では、どの通貨を使用するのかを定義します。
-                定義する際には、その通貨の短い名前を使用します。
+                定義する際には、その通貨の短い名前あるいは完全な名前を使用します。
                 未知の通貨を指定した場合は例外をスローします。
                 通貨の短い名前は、アルファベット大文字で 3 文字となります。
                 たとえば <code>USD</code> (米ドル) や <code>EUR</code> (ユーロ)
                 などがよく知られています。
                 既知の通貨の一覧を得るメソッドが <code>Zend_Currency</code>
                 に用意されています。
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                <emphasis role="strong">script</emphasis>:
-            </para>
-            <para>
-                2 番目のパラメータ <emphasis role="strong">'script'</emphasis>
-                は、出力に使用する数字の種類を定義します。標準の数字は 'Latn'
-                で、これは世界的によく知られている
-                <emphasis role="strong">'0'</emphasis> から <emphasis role="strong">'9'</emphasis>
-                までの文字を使用するものです。それ以外にも、たとえば
-                <emphasis role="strong">'Arab'</emphasis> (アラビア数字)
-                のような他の数字も指定できます。数字についての詳細な情報は
-                <link linkend="zend.locale.appendix.numberscripts.supported">サポートする数値系</link>
-                を参照ください。
             </para>
         </listitem>
         <listitem>
@@ -110,14 +94,14 @@ $currency = new Zend_Currency();]]>
 // 標準のロケールが 'de_AT' であるものとします
 require_once 'Zend/Currency.php';
 
-// 'en_US' でインスタンスを作成します。これは 'USD'、'Latin' そして 'en_US' を使用します (これらは 'en_US' のデフォルトです)
+// 'en_US' でインスタンスを作成します。これは 'USD' を使用します ('en_US' のデフォルトの通貨です)
 $currency = new Zend_Currency('en_US');
 
-// 実際のロケール ('de_AT') で通貨として 'EUR' を使用するが、表示する数字は 'Arab' となるインスタンスを作成します
+// 実際のロケール ('de_AT') で通貨として 'EUR' を使用するインスタンスを作成します
 $currency = new Zend_Currency('Arab');
 
-// 通貨として 'EUR'、数値フォーマットに 'en_US'、数字に 'Arab' を使用するインスタンスを作成します
-$currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
+// 通貨として 'EUR'、数値フォーマットに 'en_US' を使用するインスタンスを作成します
+$currency = new Zend_Currency('en_US', 'EUR');]]>
         </programlisting>
 
     </example>
@@ -163,42 +147,12 @@ $currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
         </para>
 
         <para>
-            <code>toCurrency()</code> にはオプションで 2 つのパラメータを指定することができます。
-            このパラメータでは、一時的にフォーマットを設定します。
+            <code>toCurrency()</code> にはオプションで配列を指定することができます。
+            この配列では、一時的なフォーマットや通貨表現を設定します。
+            使用できるオプションについての詳細は
+            <link linkend="zend.currency.useage.setFormat">通貨の表示形式の変更</link>
+            を参照ください。
         </para>
-
-        <itemizedlist mark='opencircle'>
-            <listitem>
-                <para>
-                    <emphasis role="strong">script</emphasis>:
-                </para>
-                <para>
-                    最初のパラメータ '<emphasis role="strong">script</emphasis>'
-                    は、出力に使用する数字の種類を定義します。標準の数字は '<emphasis role="strong">Latn</emphasis>'
-                    で、これは世界的によく知られている
-                    <emphasis role="strong">'0'</emphasis> から <emphasis role="strong">'9'</emphasis>
-                    までの文字を使用するものです。それ以外にも、たとえば
-                    '<emphasis role="strong">'Arab'</emphasis>' (アラビア数字)
-                    のような他の数字も指定できます。数字についての詳細な情報は
-                    <link linkend="zend.locale.appendix.numberscripts.supported">サポートする数値系</link>
-                    を参照ください。これを指定すると、
-                    このメソッドのコール時にだけ一時的にその数字を使用します。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">locale</emphasis>:
-                </para>
-                <para>
-                    2 番目のパラメータ '<emphasis role="strong">'locale'</emphasis>'
-                    は、通貨のフォーマットの際に使用するロケールを定義します。
-                    script や currency が省略された場合は、
-                    このパラメータの内容をもとに標準の数字と通貨を取得します。
-                    これを指定すると、
-                    このメソッドのコール時にだけ一時的にそのロケールを使用します。
-                </para>
-            </listitem>
-        </itemizedlist>
 
         <example id="zend.currency.useage.tocurrency.example">
 
@@ -207,17 +161,17 @@ $currency = new Zend_Currency('en_US', 'EUR', 'Arab');]]>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
 
-// 'en_US' でインスタンスを作成します。これは 'USD'、'Latin' そして 'en_US' を使用します (これらは 'en_US' のデフォルトです)
+// 'en_US' でインスタンスを作成します。これは 'USD' を使用します ('en_US' のデフォルトの通貨です)
 $currency = new Zend_Currency('en_US');
 
 // '$ 1,000.00' と表示します
 echo $currency->toCurrency(1000);
 
 // '$ 1.000,00' と表示します
-echo $currency->toCurrency(1000, 'de_AT');
+echo $currency->toCurrency(1000, array('format' => 'de_AT'));
 
 // '$ ١٬٠٠٠٫٠٠' と表示します
-echo $currency->toCurrency(1000, 'Arab');]]>
+echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             </programlisting>
 
         </example>
@@ -282,46 +236,79 @@ echo $currency->toCurrency(1000, 'Arab');]]>
         <para>
             出力形式を変更したい場合は
             <emphasis role="strong">setFormat()</emphasis> メソッドを使用します。
-            パラメータを省略した場合は、実際のロケールあるいは設定されているロケールの標準設定を使用します。
-            <code>setFormat</code> がサポートする設定項目は次のとおりです。
+            このメソッドに、変更したいすべてのオプションを含む配列を渡します。
+            <code>options</code> 配列がサポートしている設定は、次のとおりです。
         </para>
 
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    <emphasis role="strong">rules</emphasis>:
-                </para>
-                <para>
-                    このパラメータは、通貨記号あるいは名前のどれをどの位置に表示するのかを選択します。
-                    詳細は以下で説明します。
+                    <emphasis role="strong">position</emphasis>:
+                    通貨記号をどの位置に表示するのかを定義します。サポートしている位置は
+                    <link linkend="zend.currency.useage.setformat.constantsposition">この表</link>
+                    を参照ください。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">script</emphasis>:
-                </para>
-                <para>
-                    このパラメータは、数字の表示に使用する文字の種類を選択します。
-                    大半のロケールではデフォルトは 'Latn' です。しかし
-                    'Arab' (アラビア数字) のような別の文字もサポートしています。
+                    数値の表示に使用する数字の種類を定義します。ほとんどのロケールでは、
+                    デフォルトの数字は <emphasis role="strong">'Latn'</emphasis>
+                    です。これは 0 から 9 を使用します。それ以外には
+                    'Arab' (アラビア数字) なども使用できます。サポートしている数字は
+                    <link linkend="zend.locale.appendix.numberscripts.supported">この表</link>
+                    を参照ください。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">locale</emphasis>:
+                    <emphasis role="strong">format</emphasis>:
+                    数値を表示する際に使用するロケールを定義します。
+                    数値フォーマットに含まれる内容としては、たとえば 3 桁ごとの区切り文字などがあります。
+                    省略した場合は <code>Zend_Currency</code> オブジェクトのロケールを使用します。
                 </para>
+            </listitem>
+            <listitem>
                 <para>
-                    このパラメータは、数値の表示形式を決める際に使用するロケールを選択します。
+                    <emphasis role="strong">display</emphasis>:
+                    通貨を表す際に、通貨のどの部分を使用するのかを定義します。
+                    使用できる表示形式は 4 通りです。
+                    <link linkend="zend.currency.useage.setformat.constantsdescription">this table</link>
+                    を参照ください。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">precision</emphasis>:
+                    通貨を表現する際の精度を定義します。デフォルト値は
+                    <emphasis role="strong">2</emphasis> です。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">name</emphasis>:
+                    表示に使用する完全な通貨名を定義します。
+                    このオプションは、<code>Zend_Currency</code>
+                    の作成時に設定した通貨名を上書きします。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">currency</emphasis>:
+                    表示に使用する国際通貨略称を定義します。
+                    このオプションは、<code>Zend_Currency</code>
+                    の作成時に設定した通貨略称を上書きします。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">symbol</emphasis>:
+                    表示に使用する通貨記号を定義します。
+                    このオプションは、<code>Zend_Currency</code>
+                    の作成時に設定した通貨記号を上書きします。
                 </para>
             </listitem>
         </itemizedlist>
-
-        <para>
-            パラメータ 'rules' に指定するのは、文字列あるいは以下の定数のいずれかです。
-            これにより、通貨記号をどの位置に表示するのか、
-            そして実際にどんな内容を表示するのかが決まります。
-            文字列を指定すると、それまでに設定されていた通貨記号あるいは通貨名が上書きされます。
-        </para>
 
         <table id="zend.currency.useage.setformat.constantsdescription">
 
@@ -331,30 +318,25 @@ echo $currency->toCurrency(1000, 'Arab');]]>
                 <thead>
                     <row>
                         <entry>定数</entry>
-                        <entry>値</entry>
                         <entry>説明</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>NO_SYMBOL</entry>
-                        <entry>1</entry>
                         <entry>通貨を表す内容を表示しない</entry>
                     </row>
                     <row>
                         <entry>USE_SYMBOL</entry>
-                        <entry>2</entry>
                         <entry>通貨記号を表示する</entry>
                     </row>
                     <row>
                         <entry>USE_SHORTNAME</entry>
-                        <entry>3</entry>
-                        <entry>3 文字で表される通過名の略称を表示する</entry>
+                        <entry>3 文字で表される国際通貨略称を表示する</entry>
                     </row>
                     <row>
                         <entry>USE_NAME</entry>
-                        <entry>4</entry>
-                        <entry>通貨の名称を表示する</entry>
+                        <entry>通貨の完全な名称を表示する</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -369,25 +351,21 @@ echo $currency->toCurrency(1000, 'Arab');]]>
                 <thead>
                     <row>
                         <entry>定数</entry>
-                        <entry>値</entry>
                         <entry>説明</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>STANDARD</entry>
-                        <entry>8</entry>
                         <entry>そのロケールにおける標準の位置に表示する</entry>
                     </row>
                     <row>
                         <entry>RIGHT</entry>
-                        <entry>16</entry>
-                        <entry>通貨の値の右側に表示する</entry>
+                        <entry>通貨表現を値の右側に表示する</entry>
                     </row>
                     <row>
                         <entry>LEFT</entry>
-                        <entry>32</entry>
-                        <entry>通貨の値の左側に表示する</entry>
+                        <entry>通貨表現を値の左側に表示する</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -527,6 +505,37 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
     </sect2>
 
+    <sect2 id="zend.currency.useage.setlocale">
+
+        <title>新しいデフォルト値の設定</title>
+
+        <para>
+            <code>setLocale</code> メソッドは、
+            <code>Zend_Currency</code> に新しいロケールを設定します。
+            この関数をコールすると、通貨のすべてのデフォルト値が上書きされます。
+            つまり、通貨名や略称、記号などが上書きされるということです。
+        </para>
+
+        <example id="zend.currency.useage.setlocale.example">
+
+            <title>新しいロケールの設定</title>
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Currency.php';
+
+// 米国の通貨を取得します
+$currency = new Zend_Currency('en_US');
+print $currency->toCurrency(1000);
+
+// オーストリアの通貨を取得します
+$currency->setLocale('de_AT');
+print $currency->toCurrency(1000);
+]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
     <sect2 id="zend.currency.useage.cache">
 
         <title>Zend_Currency の高速化</title>
@@ -538,6 +547,22 @@ print_r($currency->getCurrencyList('de_AT');]]>
             に <code>Zend_Cache</code> アダプタを指定します。そうすると、
             Zend_Currency のメソッドで地域化したデータがキャッシュされるようになります。
         </para>
+
+        <example id="zend.currency.useage.informational.example">
+
+            <title>通貨からの情報の取得</title>
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Currency.php';
+require_once 'Zend/Cache.php';
+
+// キャッシュオブジェクトを作成します
+$cache = Zend_Cache::factory('Core', 'File',
+             array('lifetime' => 120, 'automatic_serialization' => true),
+             array('cache_dir' => dirname(__FILE__) . '/_files/'));
+Zend_Currency::setCache($cache);]]>
+            </programlisting>
+        </example>
 
     </sect2>
 
