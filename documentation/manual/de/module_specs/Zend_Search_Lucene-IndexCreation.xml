@@ -137,6 +137,11 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
             benötigt eine komplette Reorganisation der Segmente. Siehe auch die Lucene Indexdateiformate für weitere
             Details
             (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+            <footnote>
+                <para>
+                    Die aktuell unterstützte Version des Lucene Index File Formats ist v2.1
+                </para>
+            </footnote>.
             Deshalb werden neue Dokumente durch Erstellen neuer Segmente zum Index hinzugefügt.
         </para>
         <para>

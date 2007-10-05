@@ -11,6 +11,12 @@
         <para>
             Eine detaillierte Beschreibung dieses Formats ist hier erhältlich:
             <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
+            <footnote>
+                <para>
+                    Die aktuell unterstützte Version des Lucene Index File Formats
+                    ist v2.1
+                </para>
+            </footnote>.
         </para>
     </sect2>
 

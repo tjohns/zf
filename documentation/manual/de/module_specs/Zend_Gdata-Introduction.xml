@@ -49,7 +49,15 @@
             </listitem>
             <listitem>
                 <para>
-                    Google Blogger ist ein populärer Internet Provider von "push-button Veröffentlichung" und
+                    <link linkend="zend.gdata.youtube">YouTube</link>
+                    bietet die Möglichkeit Videos, Kommentare, Favoriten, Einschreibungen, Benutzerprofile
+                    und vieles mehr zu Suchen und zu Empfangen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</link>
+                    ist ein populärer Internet Provider von "push-button Veröffentlichung" und
                     Verbreitung.
                 </para>
             </listitem>

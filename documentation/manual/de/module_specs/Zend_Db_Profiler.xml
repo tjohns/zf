@@ -41,15 +41,15 @@ $db->getProfiler()->setEnabled(true);]]>
         </programlisting>
 
         <para>
-            Der Wert der 'profiler' Option ist flexibel. Er wird unterschiedlich interpretiert, abhängig von seinem
-            Typ. Meistens sollte ein einfacher Boolscher Wert verwendet werden, aber andere Werte ermöglichen es
-            das Verhalten des Profilers anzupassen.
+            Der Wert der <code>profiler</code> Option ist flexibel. Er wird unterschiedlich interpretiert,
+            abhängig von seinem Typ. Meistens sollte ein einfacher Boolscher Wert verwendet werden, aber
+            andere Typen ermöglichen es das Verhalten des Profilers anzupassen.
         </para>
 
         <para>
             Ein boolsches Argument aktiviert den Profiler wenn es der Wert <code>true</code> ist, oder schaltet
-            ihn mit <code>false</code> aus. Die Profiler Klasse ist die Standard Profiler Klasse des Adapters,
-            bzw. Zend_Db_Profiler.
+            ihn mit <code>false</code> aus. Die Profiler Klasse ist die Standard Profiler Klasse des Adapters
+            <code>Zend_Db_Profiler</code>.
             <programlisting role="php"><![CDATA[
 $params['profiler'] = true;
 $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
@@ -57,50 +57,41 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
         </para>
 
         <para>
-            Ein String Argument benennt die Klasse für als eigener Profiler verwendet werden soll. Die Klasse
-            muß entweder Zend_Db_Profiler oder eine Subklasse sein. Die erstellte Instanz des Profilers wird
-            standardmäßig ausgeschaltet, und muß in einem eigenen Aufruf mit <code>setEnabled()</code>
-            eingeschaltet werden.
+            Eine Instanz eines Profiler Objektes führt dazu das der Adapter dieses Objekt verwendet. Der
+            Typ des Objektes muß hierfür <code>Zend_Db_Profiler</code> oder eine Subklasse sein.
+            Der Profiler muß seperat eingeschaltet werden.
             <programlisting role="php"><![CDATA[
-$params['profiler'] = 'MyProject_Db_Profiler'
-$db = Zend_Db::factory('PDO_MYSQL', $params);
-$db->getProfiler()->setEnabled(true);]]>
-            </programlisting>
-        </para>
-
-        <para>
-            Eine Instanz eines Zend_Db_Profiler Objektes führt dazu das der Adapter dieses Objekt verwendet.
-            Der Typ des Objektes muß Zend_Db_Profiler oder eine Subklasse sein. Der Profiler muß seperat
-            eingeschaltet werden, durch den Aufruf von <code>setEnabled()</code>.
-            <programlisting role="php"><![CDATA[
-$profiler = MyProject_Db_Profiler(true);
+$profiler = MyProject_Db_Profiler();
+$profiler->setEnabled(true);
 $params['profiler'] = $profiler;
-$db = Zend_Db::factory('PDO_MYSQL', $params);
-$db->getProfiler()->setEnabled(true);]]>
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             </programlisting>
         </para>
 
         <para>
             Ein Argument kann ein assoziatives Array sein das eines oder alle der folgenden Schlüssel enthält:
-            'enabled', 'class', oder 'instance', welche den boolschen, String oder Objekt Typen die vorher
-            dokumentiert sind, entsprechen.
+            '<code>enabled</code>', '<code>instance</code>', oder '<code>class</code>'. Die '<code>enabled</code>'
+            und '<code>instance</code>' Schlüssel korrespondieren zu den zuvor dokumentierten boolschen und Instanz
+            Typen. Der '<code>class</code>' Schlüssel wird verwendet um die Klasse die für einen eigenen Profiler
+            verwendet werden soll, zu benennen. Die Klasse muß <code>Zend_Db_Profiler</code> oder eine
+            Subklasse sein. Die Klasse wird ohne Konstruktor Argumente instanziert. Die '<code>class</code>'
+            Option wird ignoriert wenn die '<code>instance</code>' Option angegeben wurde.
             <programlisting role="php"><![CDATA[
 $params['profiler'] = array(
     'enabled' => true,
-    'class' => 'MyProject_Db_Profiler'
+    'class'   => 'MyProject_Db_Profiler'
 );
 $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             </programlisting>
         </para>
 
         <para>
-            Ein Argument kann ein Objekt des Typs Zend_Config sein das eine oder beide Eigenschaften, 'enabled'
-            oder 'class', enthält. Diese werden als Array Schlüssel die oben beschrieben behandelt. Ein
-            Zend_Config Objekt kann keine Objekt Instanz enthalten. Zum Beispiel könnte die Datei "config.ini"
-            die folgenden Daten enthalten:
+            Letztendlich kann das Argument ein Objekt des Typs <code>Zend_Config</code> sein das
+            Eigenschaften enthält welche als Array Schlüssel verwendet werden wie anbei beschrieben.
+            Zum Beispiel könnte die Datei "config.ini" die folgenden Daten enthalten:
             <programlisting role="php"><![CDATA[
 [main]
-db.profiler.class = "MyProject_Db_Profiler"
+db.profiler.class   = "MyProject_Db_Profiler"
 db.profiler.enabled = true]]>
             </programlisting>
 
@@ -111,6 +102,19 @@ $config = new Zend_Config_Ini('config.ini', 'main');
 $params['profiler'] = $config->db->profiler;
 $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             </programlisting>
+
+            Die '<code>instance</code>' Eigenschaft kann wie folgt verwendet werden:
+            <programlisting role="php"><![CDATA[
+$profiler = new MyProject_Db_Profiler();
+$profiler->setEnabled(true);
+$configData = array(
+    'instance' => $profiler
+    );
+$config = new Zend_Config($configData);
+$params['profiler'] = $config;
+$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+            </programlisting>
+
         </para>
 
     </sect2>

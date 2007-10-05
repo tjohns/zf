@@ -281,6 +281,9 @@
         <xi:include href="module_specs/Zend_Gdata_Gbase.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gbase.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_YouTube.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_YouTube.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Exception.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Exception.xml" /></xi:fallback>
         </xi:include>
