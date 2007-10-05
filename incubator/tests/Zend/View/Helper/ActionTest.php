@@ -1,13 +1,7 @@
 <?php
 // Call Zend_View_Helper_ActionTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    $base = dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))));
-    $paths = array(
-        $base . '/incubator/tests',
-        $base . '/incubator/library',
-        $base . '/library'
-    );
-    set_include_path(implode(PATH_SEPARATOR, $paths) . PATH_SEPARATOR . get_include_path());
+    require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_ActionTest::main");
 }
 
