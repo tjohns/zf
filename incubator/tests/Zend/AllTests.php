@@ -34,6 +34,7 @@ require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/OpenIdTest.php';
 require_once 'Zend/OpenId/AllTests.php';
+require_once 'Zend/Validate/BarcodeTest.php';
 
 
 /**
@@ -54,15 +55,32 @@ class Zend_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
+        /*
+         * Perform the tests for Zend_Db component now.
+         */
         $suite->addTest(Zend_Db_AllTests::suite());
+
+        /*
+         * Perform the tests for Zend_TimeSync component now.
+         */
         $suite->addTestSuite('Zend_TimeSyncTest');
+
+        /*
+         * Perform the tests for Zend_Validate_Barcode component now.
+         */
+        $suite->addTestSuite('Zend_Validate_BarcodeTest');
+
         /*
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());
         $suite->addTestSuite('Zend_OpenIdTest');
+
+        /*
+         * Perform the tests for Zend_OpenId component now.
+         */
         $suite->addTest(Zend_OpenId_AllTests::suite());
-        
+
         return $suite;
     }
 }
