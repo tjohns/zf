@@ -60,6 +60,12 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     protected $_separator = '';
 
     /**
+     * What string to use as the indentation of output, this will typically be spaces. Eg: '    '
+     * @var string
+     */
+    protected $_indent = '';
+    
+    /**
      * Whether or not we're already capturing for this given container
      * @var bool
      */
@@ -168,6 +174,33 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     }
 
     /**
+     * Set the indentation string for __toString() serialization,
+     * optionally, if a number is passed, it will be the number of spaces
+     *
+     * @param string|int $indent
+     * @return Zend_View_Helper_Placeholder_Container
+     */
+    public function setIndent($indent)
+    {
+        if (is_int($indent)) {
+            $indent = str_repeat(' ', $indent);
+        }
+        
+        $this->_indent = (string) $indent;
+        return $this;
+    }
+
+    /**
+     * Retrieve indentation
+     *
+     * @return string
+     */
+    public function getIndent()
+    {
+        return $this->_indent;
+    }
+    
+    /**
      * Start capturing content to push into placeholder
      *
      * @param  int $type How to capture content into placeholder; append or set
@@ -211,12 +244,17 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      *
      * @return string
      */
-    public function toString()
+    public function toString($indent = null)
     {
+        $indent = ($indent != null) ? $indent : $this->_indent;
+        $indent = (is_int($indent)) ? str_repeat(' ', $indent) : $indent;
+        
         $items  = $this->getArrayCopy();
-        $return = $this->getPrefix()
+        $return = $indent 
+                . $this->getPrefix()
                 . implode($this->getSeparator(), $items)
                 . $this->getPostfix();
+        $return = str_replace("\n", "\n{$indent}", $return);
         return $return;
     }
 

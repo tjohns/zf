@@ -156,6 +156,27 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
     /**
      * @return void
      */
+    public function testIndentAccesorsWork()
+    {
+        $this->assertEquals('', $this->container->getIndent());
+        $this->container->setIndent('    ');
+        $this->assertEquals('    ', $this->container->getIndent());
+        $this->container->setIndent(5);
+        $this->assertEquals('     ', $this->container->getIndent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetIndentImplementsFluentInterface()
+    {
+        $result = $this->container->setIndent('    ');
+        $this->assertSame($this->container, $result);
+    }
+    
+    /**
+     * @return void
+     */
     public function testCapturingToPlaceholderStoresContent()
     {
         $this->container->captureStart();
@@ -267,6 +288,24 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
         $this->assertEquals('<ul><li>foo</li><li>bar</li><li>baz</li></ul>', $value);
     }
 
+    /**
+     * @return void
+     */
+    public function testToStringWithModifiersAndCollectionReturnsFormattedStringWithIndentation()
+    {
+        $this->container[] = 'foo';
+        $this->container[] = 'bar';
+        $this->container[] = 'baz';
+        $this->container->setPrefix('<ul><li>')
+                        ->setSeparator('</li>' . PHP_EOL . '<li>')
+                        ->setPostfix('</li></ul>')
+                        ->setIndent('    ');
+        $value = $this->container->toString();
+        $expectedValue = '    <ul><li>foo</li>' . PHP_EOL . '    <li>bar</li>' . PHP_EOL . '    <li>baz</li></ul>';
+        $this->assertEquals($expectedValue, $value);
+    }
+    
+    
     /**
      * @return void
      */
