@@ -57,7 +57,7 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
      */
     public function __toString()
     {
-        $this->toString();
+        return $this->toString();
     }
     
 }

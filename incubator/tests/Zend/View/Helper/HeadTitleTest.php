@@ -99,12 +99,27 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('<title>my title</title>', $this->helper->toString());
     }
     
-    public function testToStringPrefixPostfixSeparatorCalledFromHelperMethod()
+    public function testToStringPrefixPostfixSeparatorCalledFromHelperMethodWithSingleTitle()
     {
-        $this->helper->headTitle('my title', 'NAME OF SITE', 'SITE.COM', ' >> ');
+        $this->helper->headTitle('my title', 'NAME OF SITE >> ', ' >> SITE.COM', null, 'SET');
         $this->assertEquals('<title>NAME OF SITE >> my title >> SITE.COM</title>', $this->helper->toString());
     }
     
+    public function testToStringPrefixPostfixSeparatorCalledFromHelperMethodWithMultiTitles()
+    {
+        $this->helper->append('title one');
+        $this->helper->headTitle('title two', 'NAME OF SITE ++ ', ' ++ SITE.COM', ' >> ');
+        $this->helper->append('title three');
+        $this->assertEquals('<title>NAME OF SITE ++ title one >> title two >> title three ++ SITE.COM</title>', $this->helper->toString());
+    }
+    
+    public function testToStringPrefixPostfixSeparatorCalledWithMultipleTitles()
+    {
+        $this->helper->append('title 1');
+        $this->helper->append('title 2');
+        $this->helper->setSeparator(' >> ');
+        $this->assertEquals('<title>title 1 >> title 2</title>', $this->helper->toString());
+    }
     
 }
 

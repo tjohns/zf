@@ -210,7 +210,7 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
     public function testCapturingToPlaceholderUsingSetOverwritesContent()
     {
         $this->container[] = 'foo';
-        $this->container->captureStart('set');
+        $this->container->captureStart('SET');
         echo 'This is content intended for capture';
         $this->container->captureEnd();
 
@@ -228,8 +228,8 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
         $this->container[] = 'foo';
         $caught = false;
         try {
-            $this->container->captureStart('set');
-                $this->container->captureStart('set');
+            $this->container->captureStart('SET');
+                $this->container->captureStart('SET');
                 $this->container->captureEnd();
             $this->container->captureEnd();
         } catch (Exception $e) {
