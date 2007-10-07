@@ -76,9 +76,14 @@ abstract class Zend_Translate_Adapter {
         if ($locale === null) {
             $locale = new Zend_Locale();
         }
+        if ($locale instanceof Zend_Locale) {
+            $locale = $locale->toString();
+        }
 
         $this->addTranslation($data, $locale, $options);
-        $this->setLocale($locale);
+        if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
+            $this->setLocale($locale);
+        }
     }
 
 

@@ -46,13 +46,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testLocaleInitialization()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array(), 'en');
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'), 'en');
         $this->assertEquals($lang->getLocale(), 'en');
     }
 
     public function testDefaultLocale()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array());
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'));
 
         $defaultLocale = new Zend_Locale();
         $this->assertEquals($lang->getLocale(), $defaultLocale->toString());
