@@ -262,6 +262,10 @@ class Zend_Currency
      */
     public function getSymbol($currency = null, $locale = null)
     {
+        if (($currency === null) and ($locale === null)) {
+            return $this->_options['symbol'];
+        }
+
         $params = self::_checkParams($currency, $locale);
 
         //get the symbol
@@ -283,6 +287,10 @@ class Zend_Currency
      */
     public function getShortName($currency = null, $locale = null)
     {
+        if (($currency === null) and ($locale === null)) {
+            return $this->_options['currency'];
+        }
+
         $params = self::_checkParams($currency, $locale);
 
         //get the shortname
@@ -309,6 +317,10 @@ class Zend_Currency
      */
     public function getName($currency = null, $locale = null)
     {
+        if (($currency === null) and ($locale === null)) {
+            return $this->_options['name'];
+        }
+
         $params = self::_checkParams($currency, $locale);
 
         //get the name
