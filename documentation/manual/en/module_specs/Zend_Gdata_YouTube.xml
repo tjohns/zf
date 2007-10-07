@@ -122,7 +122,8 @@ $videoFeed = $yt->getTopRatedVideoFeed();
 
             <para>
                 There are also query parameters to specify the time period
-                over which the standard feed is computed.
+                over which the standard feed is computed.  Only valid with the
+                top_rated and most_viewed standard feeds.
             </para>
 
             <para>
