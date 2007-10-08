@@ -127,6 +127,8 @@ $videoFeed = $yt->getTopRatedVideoFeed();
 
             <para>
                 取得する標準フィードの期間を指定するクエリパラメータもあります。
+                これは、標準フィード top_rated および most_viewed
+                でのみ有効です。
             </para>
 
             <para>
