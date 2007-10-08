@@ -235,6 +235,83 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellu
 
     </sect2>
 
+    <sect2 id="zend.locale.selection.automatic">
+
+        <title>Verwenden automatischer Gebietsschemata</title>
+
+        <para>
+            <code>Zend_Locale</code> bietet drei zusätzliche Gebietsschemata. Diese Gebietsschemata gehören
+            nicht zu irgendeiner Sprache oder Region. Es sind "automatische" Gebietsschemata was bedeutet das
+            Sie den gleichen Effekt wie die Methode <code>getDefault()</code> haben, aber ohne die negativen
+            Effekte wie die Erstellung einer Instanz. Diese "automatischen" gebietsschemata können überall
+            verwendet werden, wo auch standard Gebietsschemata verwendet werden können, und für die
+            Definition eines Gebietsschemas, kann auch die String Repräsentation verwendet werden. Das bietet
+            Einfachheit für Situationen wo mit Gebietsschemas gearbeitet wird die vom Browser geliefert
+            werden.
+        </para>
+
+        <para>
+            Es gibt drei Gebietsschemata mit leicht unterschiedlichem Verhalten:
+
+            <orderedlist>
+                <listitem>
+                    <para>
+                        <code>'browser'</code> - <code>Zend_Locale</code> soll mit den Informationen arbeiten
+                        die durch den Web Browser des Benutzers geliefert werden. Sie werden von PHP in der
+                        globalen Variable <code>HTTP_ACCEPT_LANGUAGE</code> veröffentlicht.
+                    </para>
+                    <para>
+                        Wenn ein Benutzer mehr als ein Gebietsschema in seinem Browser anbietet, wird
+                        <code>Zend_Locale</code> das erste gefundene Gebietsschema verwenden. Wenn der
+                        Benutzer kein Gebietsschema liefert oder das Skript von der Kommandozeile aufgerufen
+                        wird, wird automatisch das Gebietsschema <code>'environment'</code> verwendet und
+                        zurückgegeben.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>'environment'</code> - <code>Zend_Locale</code> soll mit den Informationen arbeiten
+                        welche vom Host Server geliefert werden. Sie werden vom PHP über die interne Funktion
+                        <code>setlocale()</code> veröffentlicht.
+                    </para>
+                    <para>
+                        Wenn eine Umgebung mehr als ein Gebietsschema anbietet, wird <code>Zend_Locale</code>
+                        das erste gefundene Gebietsschema verwenden. Wenn der Host kein Gebietsschema anbietet
+                        wird automatisch das Gebietsschema <code>'browser'</code> verwendet und zurückgegeben.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>'auto'</code> - <code>Zend_Locale</code> soll automatisch jedes beliebige
+                        Gebietsschema erkennen mit dem gearbeitet werden kann. Zuerst wird nach dem
+                        Gebietsschema des Benutzers gesucht und anschließend, wenn das nicht erfolgreich war,
+                        nach dem Gebietsschema des Hosts. 
+                    </para>
+                    <para>
+                        Wenn kein Gebietsschema gefunden werden konnte, wird eine Ausnahme geworfen und
+                        bekanntgeben das die automatische Erkennung fehlgeschlagen ist.
+                    </para>
+                </listitem>
+            </orderedlist>
+        </para>
+
+        <example id="zend.locale.selection.example-1">
+            <title>Verwenden automatischer Gebietsschemata</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Date.php';
+
+// ohne automatische Erkennung
+//$locale = new Zend_Locale(Zend_Locale::BROWSER);
+//$date = new Zend_Date($locale);
+
+// mit automatischer Erkennung
+$date = new Zend_Date('auto');]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
     <sect2 id="zend.locale.interoperate">
 
         <title>ZF lokalisierbare Klassen</title>
