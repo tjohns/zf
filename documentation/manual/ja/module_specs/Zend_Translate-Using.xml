@@ -722,6 +722,20 @@ if ($translate->isTranslated('message1', false, 'de')) {
             つまり、通常はこのパラメータを指定する必要はないはずです。
         </para>
 
+        <para>
+            さらに、<code>getMessages()</code> メソッドで翻訳辞書全体を返すこともできます。
+            その際には、疑似ロケール 'all' を指定します。
+            これを指定すると、追加された各ロケールについてのすべての翻訳データを返します。
+        </para>
+
+        <note>
+            <para>
+                注意: 追加されているロケールの数や翻訳データの量によっては、
+                返される配列は <emphasis role="strong">非常に大きな</emphasis>
+                ものとなります。
+            </para>
+        </note>
+
         <example id="zend.translate.using.sourcedata.example">
             <title>アダプタでの言語の処理</title>
             <programlisting role="php"><![CDATA[
