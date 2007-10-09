@@ -694,6 +694,19 @@ if ($translate->isTranslated('message1', false, 'de')) {
             languages. Which means that in a normal situation you will not have to set this parameter.
         </para>
 
+        <para>
+            Additionally the <code>getMessages()</code> method is able to return the complete
+            translation dictionary with the pseudo-locale 'all'. This will return all avaiable
+            translation data for each added locale.
+        </para>
+
+        <note>
+            <para>
+                Attention: The returned array can be <emphasis role="strong">very big</emphasis>,
+                depending on the count of added locales and the amount of translation data.
+            </para>
+        </note>
+
         <example id="zend.translate.using.sourcedata.example">
             <title>Handling languages with adapters</title>
             <programlisting role="php"><![CDATA[

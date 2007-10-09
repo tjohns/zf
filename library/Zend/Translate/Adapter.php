@@ -186,12 +186,16 @@ abstract class Zend_Translate_Adapter {
     /**
      * Returns all avaiable translations from this adapter
      * If no locale is given, the actual language will be used
+     * If 'all' is given the complete translation dictionary will be returned
      *
      * @param  $locale  String|Zend_Locale  Language to return the messages from
      * @return array
      */
     public function getMessages($locale = null)
     {
+        if ($locale == 'all') {
+            return $this->_translate;
+        }
         if (empty($locale) or !$this->isAvaiable($locale)) {
             $locale = $this->_locale;
         }
