@@ -507,9 +507,9 @@ print $currency->toCurrency(1000);
             Zend_Currency are cached.
         </para>
 
-        <example id="zend.currency.useage.informational.example">
+        <example id="zend.currency.useage.cache.example">
 
-            <title>Getting informations from currencies</title>
+            <title>Caching currencies</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
