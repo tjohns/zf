@@ -88,7 +88,7 @@ require_once 'Zend/Currency.php';
 $currency = new Zend_Currency('en_US');
 
 // creates an instance from the actual locale ('de_AT') using 'EUR' as currency
-$currency = new Zend_Currency('Arab');
+$currency = new Zend_Currency();
 
 // creates an instance using 'EUR' as currency, 'en_US' for number formating
 $currency = new Zend_Currency('en_US', 'EUR');]]>
