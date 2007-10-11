@@ -697,6 +697,19 @@ if ($translate->isTranslated('message1', false, 'de')) {
             man in einer normalen Situation diesen Parameter nicht angeben muß.
         </para>
 
+        <para>
+            Zusätzlich kann die <code>getMessages()</code> Methode das komplette Übersetzungsverzeichnis,
+            mit dem Pseudo-Gebietsschema 'all', zurückgeben. Das gibt alle vorhandenen Übersetzungsdaten
+            für jedes hinzugefügte Gebietsschema zurück.
+        </para>
+
+        <note>
+            <para>
+                Achtung: Das zurückgegebene Array kann <emphasis role="strong">sehr groß</emphasis> sein,
+                abhängig von der Anzahl an hinzugefügten Gebietsschemata und der Anzahl an Übersetzungsdaten.
+            </para>
+        </note>
+
         <example id="zend.translate.using.sourcedata.example">
             <title>Handhabung von Quell Daten</title>
             <programlisting role="php"><![CDATA[
