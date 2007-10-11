@@ -1,0 +1,284 @@
+<sect1 id="zend.auth.adapter.http">
+
+    <title>HTTP Authentication Adapter</title>
+
+    <sect2 id="zend.auth.adapter.http.introduction">
+
+        <title>Einführung</title>
+
+        <para>
+            <code>Zend_Auth_Adapter_Http</code> bietet die am meisten entsprechende Implementation von
+            <ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink>,
+            <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basis</ulink> und 
+            <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Digest</ulink> HTTP
+            Authentifizierung. Digest Authentifizierung ist eine Methode der HTTP Authentifikation die die
+            Basis Authentifizierung erweitert indem ein Weg angeboten wird um sich zu authentifizieren ohne
+            das das Passwort im Klartext über das netzwerk geschickt werden muß.
+        </para>
+
+        <para>
+            <emphasis role="strong">Hauptsächliche Features:</emphasis>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Unterstützt sowohl Basis als auch Digest Authentifizierung.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Enthält Aufrufe für alle unterstützten Schemas, damit Klienten mit jedem unterstützten
+                        Schema arbeiten können.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Bietet Proxi Authentifizierung.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Enthält Unterstützung für die Authentifizierung gegenüber Textdateien und bietet ein
+                        Interface für die Authentifizierung gegenüber anderen Quellen, wie z.B. Datenbanken.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Es gibt ein paar nennenswerte Features von RFC-2617 die bis jetzt nicht implementiert wurden:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Einstweilige Verfolgung, welche "stale" Support erlaubt und die Unterstützung bei
+                        wiederholenden Attacken erhöht.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Authentifizierung mit Integritäts-Prüfung, oder "auth-int".
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Authentifizierungs-Info HTTP Header.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.design_overview">
+
+        <title>Design Übersicht</title>
+
+        <para>
+            Dieser Adapter besteht aus zwei Sub-Komponenten, die HTTP Authentifizierungs Klasse selbst, und
+            den sogenannten "Auflöser". Die HTTP Authentifizierungs Klasse kapselt die Logik für die Ausführung
+            beider, sowohl der Basis als auch der Digest Authentifizierung. Sie verwendet einen Auflöser um
+            die Identität eines Klienten in Datenspeichern nachzusehen (standardmäßig eine Textdatei),
+            und die Zeugnisse vom Datenspeicher zu empfangen. Die "aufgelösten" Zeugnisse werden dann
+            mit den Werten verglichen die vom Klienten übermittelt wurden um zu eruieren ob die Authentifizierung
+            erfolgreich war.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.configuration_options">
+
+        <title>Konfigurations Optionen</title>
+
+        <para>
+            Die <code>Zend_Auth_Adapter_Http</code> Klasse benötigt ein Konfigurations Array das Ihrem
+            Konstruktor übergeben werden muß. Es sind verschiedene Konfigurations Optionen vorhanden, und einige
+            davon werden benötigt:
+            <table id="zend.auth.adapter.configuration_options.table">
+                <title>Konfigurations Optionen</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row>
+                            <entry>Options Name</entry>
+                            <entry>Benötigt</entry>
+                            <entry>Beschreibung</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><code>accept_schemes</code></entry>
+                            <entry>Ja</entry>
+                            <entry>
+                                Ermittelt welches Authentifizierungs Schema der Adapter vom Klienten akzeptiert.
+                                Muß eine Leerzeichen-getrennte Liste sein, die <code>'basic'</code> und/oder
+                                <code>'digest'</code> enthält.
+                            </entry>
+                        </row>
+                        <row>
+                            <entry><code>realm</code></entry>
+                            <entry>Ja</entry>
+                            <entry>
+                                Setzt das Authentifizierungs-Bereich; Benutzernamen sollten im angegebenen
+                                Bereich einmalig sein. 
+                            </entry>
+                        </row>
+                        <row>
+                            <entry><code>digest_domains</code></entry>
+                            <entry>Ja, wenn <code>'accept_schemes'</code> <code>'digest'</code> enthält</entry>
+                            <entry>
+                                Leerzeichen-getrennte Liste von URIs für die die gleichen Authentifizierungs
+                                Informationen gültig sind. Die URIs müssen nicht alle auf den gleichen Server
+                                zeigen.
+                            </entry>
+                        </row>
+                        <row>
+                            <entry><code>nonce_timeout</code></entry>
+                            <entry>Ja, wenn <code>'accept_schemes'</code> <code>'digest'</code> enthält</entry>
+                            <entry>
+                                Setzt die Anzahl an Sekunden für die die Verfolgung gültig ist. Siehe
+                                die Notizen anbei.
+                            </entry>
+                        </row>
+                        <row>
+                            <entry><code>proxy_auth</code></entry>
+                            <entry>Nein</entry>
+                            <entry>
+                                Standardmäßig ausgeschaltet. Einschalten um Proxi Authentifizierung durchzuführen
+                                statt normaler originaler Server Authentifizierung.
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+
+        <note>
+            <para>
+                The current implementation of the <code>nonce_timeout</code> has some interesting side effects. This
+                setting is supposed to determine the valid lifetime of a given nonce, or effectively how long a client's
+                authentication information is accepted. Currently, if it's set to 3600 (for example), it will cause the
+                adapter to prompt the client for new credentials every hour, on the hour. This will be resolved in a
+                future release, once nonce tracking and stale support are implemented.
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.http.resolvers">
+
+        <title>Resolvers</title>
+
+        <para>
+            The resolver's job is to take a username and realm, and return some kind of credential value. Basic
+            authentication expects to receive the Base64 encoded version of the user's password. Digest authentication
+            expects to receive a hash of the user's username, the realm, and their password (each separated by colons).
+            Currently, the only supported hash algorithm is MD5.
+        </para>
+
+        <para>
+            <code>Zend_Auth_Adapter_Http</code> relies on objects implementing
+            <code>Zend_Auth_Adapter_Http_Resolver_Interface</code>. A text file resolver class is included with this
+            adapter, but any other kind of resolver can be created simply by implementing the resolver interface.
+        </para>
+
+        <sect3 id="zend.auth.adapter.http.resolvers.file">
+
+            <title>File Resolver</title>
+
+            <para>
+                The file resolver is a very simple class. It has a single property specifying a filename, which can also
+                be passed to the constructor. Its <code>resolve()</code> method walks through the text file, searching
+                for a line with a matching username and realm. The text file format similar to Apache htpasswd files:
+                <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>
+                Each line consists of three fields - username, realm, and credentials - each separated by a colon. The
+                credentials field is opaque to the file resolver; it simply returns that value as-is to the caller.
+                Therefore, this same file format serves both Basic and Digest authentication. In Basic authentication,
+                the credentials field should be the Base64 encoding of the user's password. In Digest authentication, it
+                should be the MD5 hash discribed above.
+            </para>
+
+            <para>
+                There are two equally easy ways to create a File resolver:
+                <programlisting role="php"><![CDATA[<?php
+$path     = 'files/passwd.txt';
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
+                </programlisting>
+                or
+                <programlisting role="php"><![CDATA[<?php
+$path     = 'files/passwd.txt';
+$resolver = new Zend_Auth_Adapter_Http_Resolver_File();
+$resolver->setFile($path);]]>
+                </programlisting>
+                If the given path is empty or not readable, an exception is thrown.
+            </para>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.auth.adapter.http.basic_usage">
+
+        <title>Basic Usage</title>
+
+        <para>
+            First, set up an array with the required configuration values:
+            <programlisting role="php"><![CDATA[<?php
+$config = array(
+    'accept_schemes' => 'basic digest',
+    'realm'          => 'My Web Site',
+    'digest_domains' => '/members_only /my_account',
+    'nonce_timeout'  => 3600,
+);]]>
+            </programlisting>
+            This array will cause the adapter to accept either Basic or Digest authentication, and will require
+            authenticated access to all the areas of the site under <code>/members_only</code> and
+            <code>/my_account</code>. The realm value is usually displayed by the browser in the password dialog box.
+            The <code>nonce_timeout</code>, of course, behaves as described above.
+        </para>
+
+        <para>
+            Next, create the Zend_Auth_Adapter_Http object:
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Auth/Adapter/Http.php';
+$adapter = new Zend_Auth_Adapter_Http($config);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Since we're supporting both Basic and Digest authentication, we need two different resolver objects. Note
+            that this could just as easily be two different classes:
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
+
+$basicResolver = new Zend_Auth_Adapter_Http_Resolver_File();
+$basicResolver->setFile('files/basicPasswd.txt');
+
+$digestResolver = new Zend_Auth_Adapter_Http_Resolver_File();
+$digestResolver->setFile('files/digestPasswd.txt');
+
+$adapter->setBasicResolver($basicResolver);
+$adapter->setDigestResolver($digestResolver);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Finally, we perform the authentication. The adapter needs a reference to both the Request and Response
+            objects in order to do its job:
+            <programlisting role="php"><![CDATA[<?php
+assert($request instanceof Zend_Controller_Request_Http);
+assert($response instanceof Zend_Controller_Response_Http);
+
+$adapter->setRequest($request);
+$adapter->setResponse($response);
+
+$result = $adapter->authenticate();
+if (!$result->isValid()) {
+    // Bad userame/password, or canceled password prompt
+}]]>
+            </programlisting>
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
