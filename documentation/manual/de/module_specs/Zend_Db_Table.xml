@@ -1157,7 +1157,7 @@ $rows = $table->fetchAll($where);]]></programlisting>
             </example>
 
             <para>
-                Die klassen können geändert werden indem Sie mit den <code>setRowClass()</code> und
+                Die Klassen können geändert werden indem Sie mit den <code>setRowClass()</code> und
                 <code>setRowsetClass()</code> Methoden spezifiziert werden. Das entspricht den Zeilen
                 und Rowsets die nachfolgend erstellt werden; es ändert aber nicht die Klasse von Zeilen-
                 oder Rowsetobjekten die bereits davor erstellt wurden.
@@ -1278,7 +1278,7 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                Wenn zum Beispeil der Name der Table Klasse "<code>BugsProducts</code>" ist, würde Sie der
+                Wenn zum Beispiel der Name der Table Klasse "<code>BugsProducts</code>" ist, würde Sie der
                 physikalischen Tabelle in der Datenbank entsprechen die "<code>bugs_products</code>" heißt,
                 wenn die explizite Definition der <code>$_name</code> Eigenschaft der Klasse unterdrückt wird.
                 In dieser Übereinstimmung der Beugung, wird der Klassenname im "CamelCase" Format geschrieben
@@ -1292,8 +1292,8 @@ class Bugs extends Zend_Db_Table_Abstract
             </para>
 
             <para>
-                Zend_Db_Table_Abstract fürht keine Beugung durch um die Klassennamen mit den Tabellennamen
-                in Übereinstimmung zu brigen. Wenn die Deklaration von <code>$_name</code> in der eigenen
+                Zend_Db_Table_Abstract führt keine Beugung durch um die Klassennamen mit den Tabellennamen
+                in Übereinstimmung zu bringen. Wenn die Deklaration von <code>$_name</code> in der eigenen
                 Tabellenklasse unterdrückt wird, wird die Klasse mit der Datenbanktabelle in Verbindung
                 gebracht die der Schreibweise des Klassennamens exakt entspricht.
             </para>
