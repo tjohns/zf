@@ -77,20 +77,21 @@
             규칙들을 상속받습니다.
         </para>
         <para>
-            Though the ability to inherit from multiple Roles is very useful, multiple inheritance also
-            introduces some degree of complexity. The following example illustrates the ambiguity condition and how
-            Zend_Acl solves it.
+            다중 롤로부터 상속받는 능력은 매우 유용하지만, 다중 상속은 다소 복잡성의 정도를 
+            증가시키는 경우도 있습니다. 다음 예제는 애매한 조건에서 Zend_Acl로 처리하는 방법을 
+            설명합니다.
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
-            <title>Multiple inheritance between Roles</title>
+            <title>롤들 간의 다중 상속</title>
             <para>
-                The following code defines three base Roles - "<code>guest</code>", "<code>member</code>", and
-                "<code>admin</code>" - from which other Roles may inherit. Then, a Role identified by
-                "<code>someUser</code>" is established and inherits from the three other Roles. The order in
-                which these Roles appear in the <code>$parents</code> array is important. When necessary,
-                Zend_Acl searches for access rules defined not only for the queried Role (herein,
-                "<code>someUser</code>"), but also upon the Roles from which the queried Role inherits
-                (herein, "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"):
+                다음 코드는 세 개의 기본 롤들 "<code>guest</code>", "<code>member</code>" 그리고
+                "<code>admin</code>"을 정의하고 있습니다. 다른 롤들은 이 기본 롤들로부터 상속받습니다. 
+                다음으로, "<code>someUser</code>"라는 롤을 만들고, 세 개의 기본 롤들로부터 
+                상속받습니다. 이들 롤이 $parent 배열에 선언된 순서가 중요합니다. 필요할 때, 
+                Zenc_Acl은 질의된 롤 (여기에서는 "<code>someUser</code>")뿐만 아니라, 
+                질의된 롤이 상속받은 롤들 (여기에서는, "<code>guest</code>", 
+                "<code>member</code>", 그리고 "<code>admin</code>")로 정의된 
+                접근 규칙들을 검색합니다. 
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Acl.php';
@@ -113,31 +114,30 @@ $acl->allow('member', 'someResource');
 echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
             </programlisting>
             <para>
-                Since there is no rule specifically defined for the "<code>someUser</code>" Role and
-                "<code>someResource</code>", Zend_Acl must search for rules that may be defined for Roles that
-                "<code>someUser</code>" inherits. First, the "<code>admin</code>" role is visited, and there
-                is no access rule defined for it. Next, the "<code>member</code>" role is visited, and
-                Zend_Acl finds that there is a rule specifying that "<code>member</code>" is allowed access to
-                "<code>someResource</code>".
+                "<code>someUser</code>"와 "<code>someResource</code>"에 특별히 정의된 
+                규칙이 없기 때문에, Zend_Acl은 "<code>someUser</code>"가 상속받은 롤들에 대해 
+                정의되었을 지도 모르는 규칙들을 검색해야만 합니다. 먼저, "<code>admin</code>"롤을 
+                방문하지만, "<code>someResource</code>"를 위해 정의된 접근 규칙이 없습니다. 
+                다음으로 "<code>member</code>"롤을 방문합니다. Zend_Acl은 "<code>member</code>"
+                가 "<code>someResource</code>"에 접근이 허가되어 있는 규칙이 있다는 것을 발견합니다.
             </para>
             <para>
-                If Zend_Acl were to continue examining the rules defined for other parent Roles, however, it
-                would find that "<code>guest</code>" is denied access to "<code>someResource</code>". This
-                fact introduces an ambiguity because now "<code>someUser</code>" is both denied and allowed
-                access to "<code>someResource</code>", by reason of having inherited conflicting rules from
-                different parent Roles.
+                그러나, 만약 Zend_Acl이 다른 부모 롤들에 정의된 규칙들을 계속해서 검사한다면, 
+                "<code>guest</code>"는 "<code>someResource</code>"에 접근이 거부되었다는 
+                것을 알 수 있습니다. 이 사실이 모호성을 나타냅니다. 왜냐하면, 서로 다른 부모로부터 
+                상속받은 롤들의 충돌로 인해, "<code>someUser</code>"는 현재 
+                "<code>someResource</code>"에 대한 접근 권한이 허가와 거부 둘 다 가지고 있습니다. 
             </para>
             <para>
-                Zend_Acl resolves this ambiguity by completing a query when it finds the first rule that is
-                directly applicable to the query. In this case, since the "<code>member</code>" Role is
-                examined before the "<code>guest</code>" Role, the example code would print
-                "<code>allowed</code>".
+                Zend_Acl은 직접적으로 질의에 적용가능한 첫번째 규칙을 발견했을 때, 질의를 
+                완료함으로써 이러한 모호성을 해결합니다. 이 경우에는 "<code>member</code>" 
+                롤이 "<code>guest</code>" 롤보다 먼저 검색되기 때문에, 이 예제 코드는 
+                "allowed"를 출력합니다.
             </para>
         </example>
         <note>
             <para>
-                When specifying multiple parents for a Role, keep in mind that the last parent listed is the
-                first one searched for rules applicable to an authorization query.
+                롤에 대해 다중 부모를 지정할 때, 배열 목록의 마지막 부모가 인증 질의에 유용한 규칙을 찾기 위한 첫번째 부모 롤이 된다는 것을 명심하시기 바랍니다.
             </para>
         </note>
     </sect2>
@@ -338,6 +338,3 @@ echo $acl->isAllowed('administrator', null, 'update') ?
 
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
