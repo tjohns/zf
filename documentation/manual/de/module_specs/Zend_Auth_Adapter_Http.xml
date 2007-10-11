@@ -152,11 +152,12 @@
 
         <note>
             <para>
-                The current implementation of the <code>nonce_timeout</code> has some interesting side effects. This
-                setting is supposed to determine the valid lifetime of a given nonce, or effectively how long a client's
-                authentication information is accepted. Currently, if it's set to 3600 (for example), it will cause the
-                adapter to prompt the client for new credentials every hour, on the hour. This will be resolved in a
-                future release, once nonce tracking and stale support are implemented.
+                Die aktuelle Implementation von <code>nonce_timeout</code> hat einige interessante Nebeneffekte.
+                Diese Einstellung soll die gültige Lebenszeit einer gegebenen Verfolgung ermitteln, oder
+                effektiv, wie lange die Authentifizierungs Information eines Klienten akzeptiert wird. Aktuell
+                ist es auf 3600 (zum Beispiel) gesetzt, und führt dazu das der Klient jede Stunde um neue
+                Zeugnisse gebeten wird. Das wird in einem zukünftigen Release behoben werden, sobald
+                Verfolgung und "stale" Support implementiert werden.
             </para>
         </note>
 
@@ -164,50 +165,54 @@
 
     <sect2 id="zend.auth.adapter.http.resolvers">
 
-        <title>Resolvers</title>
+        <title>Auflöser</title>
 
         <para>
-            The resolver's job is to take a username and realm, and return some kind of credential value. Basic
-            authentication expects to receive the Base64 encoded version of the user's password. Digest authentication
-            expects to receive a hash of the user's username, the realm, and their password (each separated by colons).
-            Currently, the only supported hash algorithm is MD5.
+            Der Job des Auflösers ist es einen Benutzernamen und einen Bereich, und gibt eine Art von
+            Zeugnisswert zurück. Basis Authentifizierung erwartet einen Hash des Benutzernamens, des Bereichs,
+            und dessen Passwörter (jedes seperiert durch ein Komma). Aktuell ist der einzige unterstützte
+            Hash Algorithmus MD5.
         </para>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> relies on objects implementing
-            <code>Zend_Auth_Adapter_Http_Resolver_Interface</code>. A text file resolver class is included with this
-            adapter, but any other kind of resolver can be created simply by implementing the resolver interface.
+            <code>Zend_Auth_Adapter_Http</code> ist darauf angewiesen das Objekte
+            <code>Zend_Auth_Adapter_Http_Resolver_Interface</code> implementieren. Eine Textdatei Auflöser Klasse
+            ist mit diesem Adapter inkludiert, aber jede Art von Auflöser kann einfach erstellt werden indem
+            das Resolver Interface implementiert wird.
         </para>
 
         <sect3 id="zend.auth.adapter.http.resolvers.file">
 
-            <title>File Resolver</title>
+            <title>Datei Auflöser</title>
 
             <para>
-                The file resolver is a very simple class. It has a single property specifying a filename, which can also
-                be passed to the constructor. Its <code>resolve()</code> method walks through the text file, searching
-                for a line with a matching username and realm. The text file format similar to Apache htpasswd files:
-                <programlisting><![CDATA[<username>:<realm>:<credentials>\n]]></programlisting>
-                Each line consists of three fields - username, realm, and credentials - each separated by a colon. The
-                credentials field is opaque to the file resolver; it simply returns that value as-is to the caller.
-                Therefore, this same file format serves both Basic and Digest authentication. In Basic authentication,
-                the credentials field should be the Base64 encoding of the user's password. In Digest authentication, it
-                should be the MD5 hash discribed above.
+                Der Datei Auflöser ist eine sehr einfache Klasse. Sie hat eine einzelne Eigenschaft die einen
+                Dateinamen spezifiziert, welcher auch dem Konstruktor übergeben werden kann. Ihre
+                <code>resolve()</code> Methode geht durch die Textdatei, und sucht nach einer Zeile mit einem
+                entsprechenden Benutzernamen und Bereich. Das Format der Textdatei ist ähnlich dem von Apache
+                htpasswd Dateien:
+                <programlisting><![CDATA[<benutzername>:<bereich>:<zeugnisse>\n]]></programlisting>
+                Jede Zeile besteht aus drei Feldern - Benutzername, Bereich und Zeugnisse - jede abgeteilt
+                durch einen Doppelpunkt. Das Zeugnis Feld ist für den Datei Auflöser nicht sichtbar; es gibt
+                den Wert einfach, wie er ist, an den Aufrufer zurück. Deswegen kann dieses Dateiformat sowohl
+                Basis als auch Digest Authentifizierung behandeln. In der Basis Authentifizierung sollte
+                das Zeugnis Feld das Base64 kodierte Benutzer Passwort sein. In der Digest Authentifizierung
+                sollte es der oben beschriebene MD5 Hash sein.
             </para>
 
             <para>
-                There are two equally easy ways to create a File resolver:
+                Es gibt zwei gleiche einfache Wege um einen Datei Auflöser zu erstellen:
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File($path);]]>
                 </programlisting>
-                or
+                oder
                 <programlisting role="php"><![CDATA[<?php
 $path     = 'files/passwd.txt';
 $resolver = new Zend_Auth_Adapter_Http_Resolver_File();
 $resolver->setFile($path);]]>
                 </programlisting>
-                If the given path is empty or not readable, an exception is thrown.
+                Wenn der angegebene Pfad leer oder nicht lesbar ist, wird eine Ausnahme geworfen.
             </para>
 
         </sect3>
@@ -216,10 +221,10 @@ $resolver->setFile($path);]]>
 
     <sect2 id="zend.auth.adapter.http.basic_usage">
 
-        <title>Basic Usage</title>
+        <title>Grundsätzliche Verwendung</title>
 
         <para>
-            First, set up an array with the required configuration values:
+            Zuerst muß ein Array mit den benötigen Konfigurationswerten gesetzt werden:
             <programlisting role="php"><![CDATA[<?php
 $config = array(
     'accept_schemes' => 'basic digest',
@@ -228,14 +233,15 @@ $config = array(
     'nonce_timeout'  => 3600,
 );]]>
             </programlisting>
-            This array will cause the adapter to accept either Basic or Digest authentication, and will require
-            authenticated access to all the areas of the site under <code>/members_only</code> and
-            <code>/my_account</code>. The realm value is usually displayed by the browser in the password dialog box.
-            The <code>nonce_timeout</code>, of course, behaves as described above.
+            Dieses Array bringt den Adapter dazu entwedet Basis oder Digest Authentifizierung zu akzeptieren,
+            und benötigt einen authentifizierten Zugriff auf alle Areale der Site unter <code>/members_only</code>
+            und <code>/my_account</code>. Der Bereichs Wert wird normalerweise durch den Browser in der
+            Passwort Dialog Box angezeigt. <code>nonce_timeout</code> verhält sich natürlich so wie oben
+            beschrieben.
         </para>
 
         <para>
-            Next, create the Zend_Auth_Adapter_Http object:
+            Dann wird ein Zend_Auth_Adapter_Http Objekt erstellt:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http.php';
 $adapter = new Zend_Auth_Adapter_Http($config);]]>
@@ -243,8 +249,9 @@ $adapter = new Zend_Auth_Adapter_Http($config);]]>
         </para>
 
         <para>
-            Since we're supporting both Basic and Digest authentication, we need two different resolver objects. Note
-            that this could just as easily be two different classes:
+            Da beides, Basis und Digest Authentifizierung, unterstützt werden, werden zwei unterschiedliche
+            Auflösungs-Objekte benötigt. Man könnte das auch einfach durch die Verwendung von zwei
+            unterschiedlichen Klassen bewerkstelligen:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Http/Resolver/File.php';
 
@@ -260,8 +267,8 @@ $adapter->setDigestResolver($digestResolver);]]>
         </para>
 
         <para>
-            Finally, we perform the authentication. The adapter needs a reference to both the Request and Response
-            objects in order to do its job:
+            Letztendlich führen wir die Authentifizierung durch. Der Adapter benötigt eine Referenz zu beidem,
+            dem Anfrage und Antwort Objekten um seinen Job durchführen zu können:
             <programlisting role="php"><![CDATA[<?php
 assert($request instanceof Zend_Controller_Request_Http);
 assert($response instanceof Zend_Controller_Response_Http);
@@ -271,7 +278,7 @@ $adapter->setResponse($response);
 
 $result = $adapter->authenticate();
 if (!$result->isValid()) {
-    // Bad userame/password, or canceled password prompt
+    // Schlechter Benutzername/Passwort, oder abgebrochener Passwort Prompt
 }]]>
             </programlisting>
         </para>
