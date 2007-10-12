@@ -53,7 +53,7 @@ $client->setCookie('flavor', 'chocolate chips');
 $client->setCookie('flavor=chocolate%20chips');
 
 // Zend_Http_Cookie オブジェクトを指定します。
-$cookie = Zend_Http_Cookie::factory('flavor=chocolate%20chips');
+$cookie = Zend_Http_Cookie::fromString('flavor=chocolate%20chips');
 $client->setCookie($cookie);]]>
                 </programlisting>
             </example>
