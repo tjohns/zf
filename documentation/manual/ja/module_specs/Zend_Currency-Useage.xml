@@ -98,7 +98,7 @@ require_once 'Zend/Currency.php';
 $currency = new Zend_Currency('en_US');
 
 // 実際のロケール ('de_AT') で通貨として 'EUR' を使用するインスタンスを作成します
-$currency = new Zend_Currency('Arab');
+$currency = new Zend_Currency();
 
 // 通貨として 'EUR'、数値フォーマットに 'en_US' を使用するインスタンスを作成します
 $currency = new Zend_Currency('en_US', 'EUR');]]>
@@ -548,9 +548,9 @@ print $currency->toCurrency(1000);
             Zend_Currency のメソッドで地域化したデータがキャッシュされるようになります。
         </para>
 
-        <example id="zend.currency.useage.informational.example">
+        <example id="zend.currency.useage.cache.example">
 
-            <title>通貨からの情報の取得</title>
+            <title>通貨のキャッシュ処理</title>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Currency.php';
