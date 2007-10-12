@@ -1220,7 +1220,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set(1234567890);
         try {
-            $date->set(7, Zend_Date::WEEKDAY_8601);
+            $date->set(0, Zend_Date::WEEKDAY_8601);
             $this->fail('exception expected');
         } catch (Zend_Date_Exception $e) {
             // success
@@ -1264,7 +1264,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set(1234567890);
         try {
-            $date->set(0, Zend_Date::WEEKDAY_DIGIT);
+            $date->set(7, Zend_Date::WEEKDAY_DIGIT);
             $this->fail();
         } catch (Zend_Date_Exception $e) {
             // success
