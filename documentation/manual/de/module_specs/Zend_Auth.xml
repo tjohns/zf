@@ -99,49 +99,54 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>Ergebnisse</title>
 
         <para>
-            Zend_Auth adapters return an instance of <code>Zend_Auth_Result</code> with
-            <code>authenticate()</code> in order to represent the results of an authentication attempt. Adapters
-            populate the <code>Zend_Auth_Result</code> object upon construction, so that the following three methods
-            provide a basic set of user-facing operations that are common to the results of Zend_Auth adapters:
+            Zend_Auth Adapter geben eine Instanz von <code>Zend_Auth_Result</code> mit Hilfe von
+            <code>authenticate()</code> zurück um die Ergebnisse des Authentifizierungs-Versuches darzustellen.
+            Adapter veröffentlichen das <code>Zend_Auth_Result</code> Objekt bei der Erstellung, so das die
+            folgenden drei Methoden ein grundsätzliches Set von Benutzerbezogenen Operationen bieten die
+            für die Ergebnisse von Zend_Auth Adapter üblich sind:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>isValid()</code> - returns true if and only if the result represents a
-                        successful authentication attempt
+                        <code>isValid()</code> - Gibt true zurück wenn und nur wenn das Ergebnis einen
+                        erfolgreichen Authentifizierungs-Versuch repräsentiert
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getCode()</code> - returns a <code>Zend_Auth_Result</code> constant identifier for
-                        determining the type of authentication failure or whether success has occurred. This may be
-                        used in situations where the developer wishes to distinguish among several authentication
-                        result types. This allows developers to maintain detailed authentication result statistics,
-                        for example. Another use of this feature is to provide specific, customized messages to
-                        users for usability reasons, though developers are encouraged to consider the risks of
-                        providing such detailed reasons to users, instead of a general authentication failure
-                        message. For more information, see the notes below.
+                        <code>getCode()</code> - Gibt einen konstanten <code>Zend_Auth_Result</code>
+                        Identifizierer damit der Typ des Authentifizierungs-Fehlers, oder des Erfolgs der
+                        stattgefunden hat, ermittelt werden kann. Das kann in Situationen verwendet werden
+                        in denen der Entwickler die verschiedenen Ergebnistypen der Authentifizierung
+                        unterschiedlich behandeln will. Das erlaubt es dem Entwickler zum Beispiel detailierte
+                        Statistiken über die Authentifizierungs-Ergebnisse zu erhalten. Eine andere Verwendung
+                        dieses Features ist es spezielle, benutzerdefinierte Nachrichten anzubieten, um Benutzern
+                        eine bessere Usability zu ermöglichen, einfach dadurch das Entwickler dazu aufgerufen
+                        sind die Risiken solche defailierte Informationen Benutzern anzubieten, statt einer
+                        generellen Nachricht eines Authentifizierungs-Fehlers. Für weitere Informationen siehe
+                        die Notiz anbei.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getIdentity()</code> - returns the identity of the authentication attempt
+                        <code>getIdentity()</code> - Gibt die Identität des Authentifizierungs-Versuchs zurück
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>getMessages()</code> - returns an array of messages regarding a failed
-                        authentication attempt
+                        <code>getMessages()</code> - Gibt ein Array von Nachrichten zurück nach einem
+                        fehlgeschlagenen Authentifizierungs-Versuch
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <para>
-            A developer may wish to branch based on the type of authentication result in order to perform more
-            specific operations. Some operations developers might find useful are locking accounts after too many
-            unsuccessful password attempts, flagging an IP address after too many nonexistent identities are
-            attempted, and providing specific, customized authentication result messages to the user. The following
-            result codes are available:
+            Ein Entwickler kann wünschen basierend auf dem Typ des Authentifizierungs-Ergebnisses zu
+            verzweigen um spezialisiertere Operationen durchzuführen. Einige Operationen die für Entwickler
+            nützlich sein können sind zum Beispiel das Sperren von Konten nachdem zu oft ein falsches
+            Passwort angegeben wurde, das markieren von IP Adressen nachdem zuviele nicht existierende
+            Identitäten angegeben wurden und das anbieten von speziellen, benutzerdefinierten Nachrichten
+            für Authentifizierungs-Ergebnisse an den Benutzer. Die folgenden Ergebniscodes sind vorhanden:
 
             <programlisting role="php"><![CDATA[Zend_Auth_Result::SUCCESS
 Zend_Auth_Result::FAILURE
@@ -154,28 +159,28 @@ Zend_Auth_Result::FAILURE_UNCATEGORIZED]]>
         </para>
 
         <para>
-            The following example illustrates how a developer may branch on the result code:
+            Das folgende Beispiel zeigt wie ein Entwickler anhand des Ergebniscodes verzweigen könnte:
 
             <programlisting role="php"><![CDATA[<?php
-// inside of AuthController / loginAction
+// Innerhalb von AuthController / loginAction
 $result = $this->_auth->authenticate($adapter);
 
 switch ($result->getCode()) {
 
     case Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND:
-        /** do stuff for nonexistent identity **/
+        /** Was wegen nicht existierender Identität machen **/
         break;
 
     case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
-        /** do stuff for invalid credential **/
+        /** Was wegen ungültigen Zeugnissen machen **/
         break;
 
     case Zend_Auth_Result::SUCCESS:
-        /** do stuff for successful authentication **/
+        /** Was wegen erfolgreicher Authentifizierung machen **/
         break;
 
     default:
-        /** do stuff for other failure **/
+        /** Was wegen anderen Fehlern machen **/
         break;
 }]]>
             </programlisting>
@@ -186,23 +191,23 @@ switch ($result->getCode()) {
 
     <sect2 id="zend.auth.introduction.persistence">
 
-        <title>Identity Persistence</title>
+        <title>Dauerhafte Identitäten</title>
 
         <para>
-            Authenticating a request that includes authentication credentials is useful per se, but it is also
-            important to support maintaining the authenticated identity without having to present the
-            authentication credentials with each request.
+            Eine Anfrage zu authentifizieren die Authentifizierungs Zeugnisse enthält ist per se nützlich,
+            aber auch wichtig um die Authentifizierungs Identität bearbeiten zu können ohne das immer die
+            Authentifizierungs Zeugnisse mit jeder Anfrage vorhanden sein müssen. 
         </para>
 
         <para>
-            HTTP is a stateless protocol, however, and techniques such as cookies and sessions have been
-            developed in order to facilitate maintaining state across multiple requests in server-side web
-            applications.
+            Trotzdem ist HTTP ein statusloses Protokoll, und Techniken wie Cookies und Sessions wurden
+            entwickelt um Stati über mehrere Anfragen hinweg in Server-seitigen Web Anwendungen zu
+            erhalten. 
         </para>
 
         <sect3 id="zend.auth.introduction.persistence.default">
 
-            <title>Default Persistence in the PHP Session</title>
+            <title>Normale Persistenz in PHP Sessions</title>
 
             <para>
                  By default, <code>Zend_Auth</code> provides persistent storage of the identity from a successful
@@ -391,23 +396,23 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
             the <code>Zend_Auth</code> class:
 
             <programlisting role="php"><![CDATA[<?php
-// Get a reference to the Singleton instance of Zend_Auth
+// Eine Referenz zur Singleton-Instanz von Zend_Auth erhalten
 require_once 'Zend/Auth.php';
 $auth = Zend_Auth::getInstance();
 
-// Set up the authentication adapter
+// Authentifizierungs Adapter erstellen
 $authAdapter = new MyAuthAdapter($username, $password);
 
-// Attempt authentication, saving the result
+// Authentifizierungs Versuch, das Ergebnis abspeichern
 $result = $auth->authenticate($authAdapter);
 
 if (!$result->isValid()) {
-    // Authentication failed; print the reasons why
+    // Authentifizierung fehlgeschlagen; die genauen Gründe ausgeben
     foreach ($result->getMessages() as $message) {
         echo "$message\n";
     }
 } else {
-    // Authentication succeeded; the identity ($username) is stored in the session
+    // Authentifizierung erfolgreich; die Identität ($username) wird in der Session gespeichert
     // $result->getIdentity() === $auth->getIdentity()
     // $result->getIdentity() === $username
 }]]>
@@ -420,7 +425,7 @@ if (!$result->isValid()) {
             <programlisting role="php"><![CDATA[<?php
 $auth = Zend_Auth::getInstance();
 if ($auth->hasIdentity()) {
-    // Identity exists; get it
+    // Identität existiert; auslesen
     $identity = $auth->getIdentity();
 }]]>
             </programlisting>
@@ -443,19 +448,19 @@ Zend_Auth::getInstance()->clearIdentity();]]>
             <code>MyAuthAdapter</code>:
 
             <programlisting role="php"><![CDATA[<?php
-// Set up the authentication adapter
+// Den Authentifizierungs Adapter erstellen
 $authAdapter = new MyAuthAdapter($username, $password);
 
-// Attempt authentication, saving the result
+// Authentifizierungs Versuch, speichere das Ergebnis
 $result = $authAdapter->authenticate();
 
 if (!$result->isValid()) {
-    // Authentication failed; print the reasons why
+    // Authentifizierung fehlgeschlagen; die genauen Gründe ausgeben
     foreach ($result->getMessages() as $message) {
         echo "$message\n";
     }
 } else {
-    // Authentication succeeded
+    // Authentifizierung erfolgreich
     // $result->getIdentity() === $username
 }]]>
             </programlisting>
