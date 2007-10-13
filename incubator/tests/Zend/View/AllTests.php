@@ -31,6 +31,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/View/Helper/AllTests.php';
 require_once 'Zend/View/InflectorTest.php';
+require_once 'Zend/View/Inflector/Rule/ActionTest.php';
 require_once 'Zend/View/Inflector/Rule/ControllerActionTest.php';
 
 
@@ -54,6 +55,7 @@ class Zend_View_AllTests
 
         $suite->addTest(Zend_View_Helper_AllTests::suite());
         $suite->addTestSuite('Zend_View_InflectorTest');
+        $suite->addTestSuite('Zend_View_Inflector_Rule_ActionTest');
         $suite->addTestSuite('Zend_View_Inflector_Rule_ControllerActionTest');
 
         return $suite;
