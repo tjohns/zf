@@ -24,46 +24,34 @@
 require_once 'Zend/View/Inflector/Rule/Abstract.php';
 
 /**
- * Inflect controller/action into view script path
+ * Transform a module name into a view script base path
  *
  * @package    Zend_View
  * @subpackage Inflector
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Inflector_Rule_ControllerAction extends Zend_View_Inflector_Rule_Abstract
+class Zend_View_Inflector_Rule_ModulePath extends Zend_View_Inflector_Rule_Abstract
 {
     /**
      * View script path specification string
      * @var string
      */
-    protected $_pathSpec = ':controller/:action.:suffix';
+    protected $_pathSpec = ':module/views';
 
     /**
-     * View script suffix
-     * @var string
-     */
-    protected $_suffix   = 'phtml';
-
-    /**
-     * Get parameters for inflection
+     * Transform a path name according to rules
      * 
      * @param  string $path 
-     * @param  array $params 
-     * @return array
+     * @return string Inflected path
      */
     public function getParams($path, array $params = array())
     {
-        $request    = $this->getRequest();
-        $controller = $request->getControllerName();
-        $action     = $path;
-        $suffix     = $this->getSuffix();
+        $module     = $path;
 
         foreach ($params as $key => $value) {
             switch ($key) {
-                case 'controller':
-                case 'action':
-                case 'suffix':
+                case 'module':
                     $$key = (string) $value;
                     break;
                 default:
@@ -71,42 +59,15 @@ class Zend_View_Inflector_Rule_ControllerAction extends Zend_View_Inflector_Rule
             }
         }
 
-        $params = compact('controller', 'action', 'suffix');
-        return $params;
+        return compact('module');
     }
 
-    /**
-     * Retrieve script suffix
-     *
-     * @return string
-     */
-    public function getSuffix()
+    public function inflectModule($module)
     {
-        return $this->_suffix;
+        $this->initDelimiters();
+        return str_replace(
+            $this->_wordDelimiters,
+            '-',
+            strtolower(str_replace($this->_pathDelimiters, '/', $module)));
     }
-
-    /**
-     * Inflect suffix
-     *
-     * Does nothing
-     * 
-     * @return string
-     */
-    public function inflectSuffix($suffix)
-    {
-        return $suffix;
-    }
-
-    /**
-     * Set script suffix
-     *
-     * @param  string $value
-     * @return Zend_View_Inflector_Rule_ControllerAction
-     */
-    public function setSuffix($suffix)
-    {
-        $this->_suffix = (string) $suffix;
-        return $this;
-    }
-
 }

@@ -20,8 +20,8 @@
  * @version    $Id$
  */
 
-/** Zend_View_Inflector_Rule_Interface */
-require_once 'Zend/View/Inflector/Rule/Interface.php';
+/** Zend_View_Inflector_Rule_Abstract */
+require_once 'Zend/View/Inflector/Rule/Abstract.php';
 
 /**
  * Transform an action name to a view script name
@@ -31,40 +31,13 @@ require_once 'Zend/View/Inflector/Rule/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Inflector_Rule_Action implements Zend_View_Inflector_Rule_Interface
+class Zend_View_Inflector_Rule_Action extends Zend_View_Inflector_Rule_Abstract
 {
-    /**
-     * @var Zend_Controller_Dispatcher_Interface
-     */
-    protected $_dispatcher;
-
-    /**
-     * @var Zend_Controller_Front
-     */
-    protected $_front;
-
-    /**
-     * Characters representing path delimiters in the controller
-     * @var string|array
-     */
-    protected $_pathDelimiters;
-
-    /**
-     * Word delimiters
-     * @var array
-     */
-    protected $_wordDelimiters;
-
     /**
      * View script path specification string
      * @var string
      */
     protected $_pathSpec = ':action.:suffix';
-
-    /**
-     * @var Zend_Controller_Request_Abstract
-     */
-    protected $_request;
 
     /**
      * View script suffix
@@ -73,41 +46,12 @@ class Zend_View_Inflector_Rule_Action implements Zend_View_Inflector_Rule_Interf
     protected $_suffix   = 'phtml';
 
     /**
-     * Get front controller
-     * 
-     * @return Zend_Controller_Front
-     */
-    public function getFrontController()
-    {
-        if (null === $this->_front) {
-            $this->_front = Zend_Controller_Front::getInstance();
-        }
-
-        return $this->_front;
-    }
-
-    /**
-     * Get dispatcher
-     * 
-     * @return Zend_Controller_Dispatcher_Interface
-     */
-    public function getDispatcher()
-    {
-        if (null === $this->_dispatcher) {
-            $front = $this->getFrontController();
-            $this->_dispatcher = $front->getDispatcher();
-        }
-
-        return $this->_dispatcher;
-    }
-
-    /**
      * Transform a path name according to rules
      * 
      * @param  string $path 
      * @return string Inflected path
      */
-    public function inflect($path, array $params = array())
+    public function getParams($path, array $params = array())
     {
         $action     = $path;
         $suffix     = $this->getSuffix();
@@ -123,26 +67,18 @@ class Zend_View_Inflector_Rule_Action implements Zend_View_Inflector_Rule_Interf
             }
         }
 
-        // Module, controller, and action names need normalized delimiters
-        if (null === $this->_pathDelimiters) {
-            $this->_pathDelimiters = $this->getDispatcher()->getPathDelimiter();
-        }
-        if (null === $this->_wordDelimiters) {
-            $dispatcher        = $this->getDispatcher();
-            $wordDelimiters    = $dispatcher->getWordDelimiter();
-            $pathDelimiters    = $dispatcher->getPathDelimiter();
-            $this->_wordDelimiters = array_unique(array_merge($wordDelimiters, (array) $this->_pathDelimiters));
-        }
+        return compact('action', 'suffix');
+    }
 
-        $wordDelimiters = $this->_wordDelimiters;
-        $replacements = array(
-            ':action'     => str_replace($wordDelimiters, '-', strtolower($action)),
-            ':suffix'     => $suffix
-        );
-        $value = str_replace(array_keys($replacements), array_values($replacements), $this->_pathSpec);
-        $value = preg_replace('/-+/', '-', $value);
-
-        return $value;
+    /**
+     * Inflect suffix
+     * 
+     * @param  string $suffix 
+     * @return string
+     */
+    public function inflectSuffix($suffix)
+    {
+        return $suffix;
     }
 
     /**
