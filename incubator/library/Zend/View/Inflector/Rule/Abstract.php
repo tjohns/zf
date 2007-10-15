@@ -193,4 +193,26 @@ abstract class Zend_View_Inflector_Rule_Abstract implements Zend_View_Inflector_
             $this->_wordDelimiters = array_unique(array_merge($wordDelimiters, (array) $this->_pathDelimiters));
         }
     }
+
+    /**
+     * Retrieve current path specification
+     * 
+     * @return string
+     */
+    public function getPathSpec()
+    {
+        return $this->_pathSpec;
+    }
+
+    /**
+     * Set path specification
+     * 
+     * @param  string $path 
+     * @return Zend_View_Inflector_Rule_Abstract
+     */
+    public function setPathSpec($path)
+    {
+        $this->_pathSpec = (string) $path;
+        return $this;
+    }
 }

@@ -150,6 +150,24 @@ class Zend_View_Inflector_Rule_ControllerActionTest extends PHPUnit_Framework_Te
         $this->rule->setSuffix('foo');
         $this->assertEquals('foo', $this->rule->getSuffix());
     }
+
+    /**
+     * @return void
+     */
+    public function testDefaultPathSpecAccessible()
+    {
+        $this->assertEquals(':controller/:action.:suffix', $this->rule->getPathSpec());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPathSpecIsModifiableViaAccessors()
+    {
+        $spec = 'foo/views/:controller/:action.php';
+        $this->rule->setPathSpec($spec);
+        $this->assertEquals($spec, $this->rule->getPathSpec());
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == "Zend_View_Inflector_Rule_ControllerActionTest::main") {
