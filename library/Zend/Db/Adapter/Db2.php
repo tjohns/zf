@@ -116,7 +116,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
              * @see Zend_Db_Adapter_Db2_Exception
              */
             require_once 'Zend/Db/Adapter/Db2/Exception.php';
-            throw new Zend_DB_Adapter_Db2_Exception('The IBM DB2 extension is required for this adapter but the extension is not loaded');
+            throw new Zend_Db_Adapter_Db2_Exception('The IBM DB2 extension is required for this adapter but the extension is not loaded');
         }
 
         if ($this->_config['persistent']) {
