@@ -77,13 +77,9 @@ class Zend_Cache_AllTests
             $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
 	    $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
             $suite->addTest($skipTest);
-        } else if (!extension_loaded('pdo')) {
+        } else if (!extension_loaded('sqlite')) {
 	    $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
-	    $skipTest->message = "Extension 'PDO' is not loaded";
-            $suite->addTest($skipTest);
-        } else if (!in_array('sqlite', PDO::getAvailableDrivers())) {
-	    $skipTest = new Zend_Cache_SqliteBackendTest_SkipTests();
-	    $skipTest->message = "PDO driver 'sqlite' is not available";
+	    $skipTest->message = "Extension 'sqlite' is not loaded";
             $suite->addTest($skipTest);
         } else {
             $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
