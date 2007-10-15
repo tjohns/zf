@@ -445,6 +445,11 @@
                         <entry>Virtually all components</entry>
                     </row>
                     <row>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>SQLite</code></ulink></entry>
+                        <entry>Dependency</entry>
+                        <entry>Zend_Cache_Backend_Sqlite</entry>
+                    </row>
+                    <row>
                         <entry><code>standard</code></entry>
                         <entry>Dependency</entry>
                         <entry>Virtually all components</entry>
@@ -586,7 +591,9 @@
                             <ulink url="http://www.php.net/manual/en/ref.apc.php"><code>apc</code></ulink>
                             ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / Dependency )
                             <ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>memcache</code></ulink>
-                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / Dependency )
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Memcached</code></ulink> / Dependency )
+                            <ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>sqlite</code></ulink>
+                            ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Sqlite</code></ulink> / Dependency )
                             <ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink>
                             ( <ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html"><code>Zend_Cache_Backend_Apc</code></ulink> / Dependency )
                         </entry>
