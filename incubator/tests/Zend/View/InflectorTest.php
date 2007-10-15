@@ -260,6 +260,15 @@ class Zend_View_InflectorTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('Foo_Bar_fooBar', $this->inflector->getRuleClass('fooBar', 'Foo_Bar'));
     }
+
+    /**
+     * @return void
+     */
+    public function testGetRuleReturnsAppropriateRuleObject()
+    {
+        $rule = $this->inflector->getRule('controllerAction');
+        $this->assertTrue($rule instanceof Zend_View_Inflector_Rule_ControllerAction, 'Could not retrieve rule class; received variable of type ' . gettype($rule));
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == "Zend_View_InflectorTest::main") {

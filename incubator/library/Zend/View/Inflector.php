@@ -65,6 +65,12 @@ class Zend_View_Inflector
     protected $_loadedRules = array();
 
     /**
+     * Array of loaded rule classes
+     * @var array
+     */
+    protected $_loadedRuleClasses = array();
+
+    /**
      * Constructor
      * 
      * @return void
@@ -213,8 +219,8 @@ class Zend_View_Inflector
     public function loadRuleClass($rule)
     {
         $rule  = ucfirst($rule);
-        if (isset($this->_loadedRules[$rule])) {
-            return $this->_loadedRules[$rule];
+        if (isset($this->_loadedRuleClasses[$rule])) {
+            return $this->_loadedRuleClasses[$rule];
         }
 
         $class = null;
@@ -248,7 +254,7 @@ class Zend_View_Inflector
             throw new Zend_View_Inflector_Exception(sprintf('View inflector rule "%s" not found', $rule));
         }
 
-        $this->_loadedRules[$rule] = $class;
+        $this->_loadedRuleClasses[$rule] = $class;
         return $class;
     }
 
@@ -262,6 +268,23 @@ class Zend_View_Inflector
     public function getRuleClass($rule, $prefix)
     {
         return $prefix . '_' . $rule;
+    }
+
+    /**
+     * Retrieve rule object
+     * 
+     * @param  string $rule 
+     * @return Zend_View_Inflector_Rule_Interface
+     */
+    public function getRule($rule)
+    {
+        $rule = ucfirst($rule);
+        if (!isset($this->_loadedRules[$rule])) {
+            $class = $this->loadRuleClass($rule);
+            $this->_loadedRules[$rule] = new $class;
+        }
+
+        return $this->_loadedRules[$rule];
     }
 
     /**
