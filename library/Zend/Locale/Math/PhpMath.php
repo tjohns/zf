@@ -63,17 +63,7 @@ function Zend_Locale_Math_Add($op1, $op2, $op3 = null)
     if ($op3 === null) {
         $op3 = Zend_Locale_Math_PhpMath::$_scale;
     }
-    if ($op3 <> 0) {
-        $result = round($result, $op3);
-    } else {
-        if ($result > 0) {
-            $result = floor($result);
-        } else {
-            $result = ceil($result);
-        }
-    }
-
-    return $result;
+    return Zend_Locale_Math::round($result, $op3);
 }
 
 function Zend_Locale_Math_Sub($op1, $op2, $op3 = null)
@@ -89,17 +79,7 @@ function Zend_Locale_Math_Sub($op1, $op2, $op3 = null)
     if ($op3 === null) {
         $op3 = Zend_Locale_Math_PhpMath::$_scale;
     }
-    if ($op3 <> 0) {
-        $result = round($result, $op3);
-    } else {
-        if ($result > 0) {
-            $result = floor($result);
-        } else {
-            $result = ceil($result);
-        }
-    }
-
-    return $result;
+    return Zend_Locale_Math::round($result, $op3);
 }
 
 function Zend_Locale_Math_Pow($op1, $op2, $op3 = null)
@@ -112,16 +92,7 @@ function Zend_Locale_Math_Pow($op1, $op2, $op3 = null)
     if ($op3 === null) {
         $op3 = Zend_Locale_Math_PhpMath::$_scale;
     }
-    if ($op3 <> 0) {
-        $result = round($result, $op3);
-    } else {
-        if ($result > 0) {
-            $result = floor($result);
-        } else {
-            $result = ceil($result);
-        }
-    }
-    return $result;
+    return Zend_Locale_Math::round($result, $op3);
 }
 
 function Zend_Locale_Math_Mul($op1, $op2, $op3 = null)
@@ -137,16 +108,7 @@ function Zend_Locale_Math_Mul($op1, $op2, $op3 = null)
     if ($op3 === null) {
         $op3 = Zend_Locale_Math_PhpMath::$_scale;
     }
-    if ($op3 <> 0) {
-        $result = round($result, $op3);
-    } else {
-        if ($result > 0) {
-            $result = floor($result);
-        } else {
-            $result = ceil($result);
-        }
-    }
-    return $result;
+    return Zend_Locale_Math::round($result, $op3);
 }
 
 function Zend_Locale_Math_Div($op1, $op2, $op3 = null)
@@ -166,16 +128,7 @@ function Zend_Locale_Math_Div($op1, $op2, $op3 = null)
     if ($op3 === null) {
         $op3 = Zend_Locale_Math_PhpMath::$_scale;
     }
-    if ($op3 <> 0) {
-        $result = round($result, $op3);
-    } else {
-        if ($result > 0) {
-            $result = floor($result);
-        } else {
-            $result = ceil($result);
-        }
-    }
-    return $result;
+    return Zend_Locale_Math::round($result, $op3);
 }
 
 function Zend_Locale_Math_Comp($op1, $op2, $op3 = null)
@@ -222,16 +175,7 @@ function Zend_Locale_Math_Sqrt($op1, $op3 = null)
     if ($op3 === null) {
         $op3 = Zend_Locale_Math_PhpMath::$_scale;
     }
-    if ($op3 <> 0) {
-        $result = round($result, $op3);
-    } else {
-        if ($result > 0) {
-            $result = floor($result);
-        } else {
-            $result = ceil($result);
-        }
-    }
-    return $result;
+    return Zend_Locale_Math::round($result, $op3);
 }
 
 function Zend_Locale_Math_Mod($op1, $op2)
