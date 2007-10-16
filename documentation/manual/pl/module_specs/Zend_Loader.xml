@@ -221,6 +221,14 @@ class My_Loader extends Zend_Loader
 Zend_Loader::registerAutoload('My_Loader');]]>
             </programlisting>
         </example>
+        
+        <para>
+            Możesz usunąć metodą autoloadera. Metoda
+            <code>registerAutoload()</code> przyjmuje opcjonalny drugi argument,
+            ktorego wartością domyślna jest <code>true</code>. Jeśli ten argument
+            ma wartość <code>false</code>, metoda autoloadera zostanie 
+            wyrejestrowana ze stosu autoloaderów SPL.
+        </para>
 
     </sect2>
 

@@ -62,7 +62,8 @@
             Poniżej jest przykładowy adapter uwierzytelniania, który do
             przeprowadzenia procesu wymaga ustawionej nazwy użytkownika oraz
             hasła. Inne szczegóły, takie jak sposób przeprowadzania zapytania
-            uwierzytelniającego, zostały pominięte w celu zwiększenia czytelności:
+            uwierzytelniającego, zostały pominięte w celu zwiększenia 
+            czytelności:
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/Interface.php';

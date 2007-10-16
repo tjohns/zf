@@ -13,8 +13,8 @@
         implementacja w PHP pozwala na podstawie Zend_Acl budować dostosowane
         narzędzia administracyjne, które są relatywnie łatwe oraz elastyczne.
         Wiele sytuacji wymaga pewnej formy interaktywnego zarządzania ACL, a
-        Zend_Acl zapewnia metody ustawiania oraz odpytywania kontroli dostępu
-        aplikacji.
+        Zend_Acl zapewnia metody do ustawiania oraz odpytywania kontroli 
+        dostępu aplikacji.
         </para>
 
         <para>

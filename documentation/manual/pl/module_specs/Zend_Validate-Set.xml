@@ -141,7 +141,9 @@
             zadana wartość minimalna jest ustawiona na wartość większą od 
             zadanej wartości maksymalnej, a metoda <code>setMax()</code> wyrzuca
             wyjątek jeśli zadana wartość maksymalna jest ustawiona na wartość 
-            mniejszą od zadanej wartości minimalnej.
+            mniejszą od zadanej wartości minimalnej. Od wersji 1.0.2, ta klasa 
+            obsługuje UTF-8 i inne kodowania znaków, w oparciu o obecną wartość dyrektywy
+            <ulink url="http://www.php.net/manual/en/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>.
         </para>
     </sect2>
 

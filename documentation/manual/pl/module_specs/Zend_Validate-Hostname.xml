@@ -91,14 +91,48 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend
         characters in domain names. These are known as International Domain Names (IDN). These domains
         can be matched by Zend_Validate_Hostname via extended characters that are used in the validation
         process.
-
-        At present the list of supported ccTLDs include: at, ch, li, de, fi, hu, no, se.
-
+    </para>
+    
+    <para>
+        At present the list of supported ccTLDs include:
+   
+        <itemizedlist>
+                <listitem>
+                    <para>at (Austria)</para>
+                </listitem>
+                <listitem>
+                    <para>ch (Switzerland)</para>
+                </listitem>
+                <listitem>
+                    <para>li (Liechtenstein)</para>
+                </listitem>
+                <listitem>
+                    <para>de (Germany)</para>
+                </listitem>
+                <listitem>
+                    <para>fi (Finland)</para>
+                </listitem>
+                <listitem>
+                    <para>hu (Hungary)</para>
+                </listitem>
+                <listitem>
+                    <para>no (Norway)</para>
+                </listitem>
+                <listitem>
+                    <para>se (Sweden)</para>
+                </listitem>
+        </itemizedlist>
+    
+    </para>
+    
+    <para>
         To match an IDN domain it's as simple as just using the standard Hostname validator since IDN
         matching is enabled by default. If you wish to disable IDN validation this can be done by
         by either passing a parameter to the Zend_Validate_Hostname constructor or via the
         <code>$validator->setValidateIdn()</code> method.
-
+    </para>
+    
+    <para>
         You can disable IDN validation by passing a second parameter to the Zend_Validate_Hostname
         constructor in the following way.
 
@@ -113,7 +147,9 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
         it will fail validation if it has any international characters in it. Where a ccTLD file
         doesn't exist in Zend/Validate/Hostname specifying the additional characters a normal
         hostname validation is performed.
-
+    </para>
+    
+    <para>
         Please note IDNs are only validated if you allow DNS hostnames to be validated.
     </para>
 
@@ -124,7 +160,6 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
     <para>
         By default a hostname will be checked against a list of known TLDs. If this functionality
         is not required it can be disabled in much the same way as disabling IDN support.
-
         You can disable TLD validation by passing a third parameter to the Zend_Validate_Hostname constructor.
         In the example below we are supporting IDN validation via the second parameter.
 
@@ -134,7 +169,9 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true,
 
         Alternatively you can either pass TRUE or FALSE to
         <code>$validator->setValidateTld()</code> to enable or disable TLD validation.
-
+    </para>
+    
+    <para>
         Please note TLDs are only validated if you allow DNS hostnames to be validated.
     </para>
 

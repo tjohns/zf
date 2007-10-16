@@ -44,8 +44,8 @@ $front->setParam('noErrorHandler', true);]]>
         </para>
 
         <para>
-            There are several strategies you can take to update your code. In
-            the short term, you can globally disable the
+            There are several strategies you can take to update your code. 
+            In the short term, you can globally disable the
             <code>ViewRenderer</code> in your front controller bootstrap prior
             to dispatching:
         </para>
@@ -56,8 +56,8 @@ $front->setParam('noViewRenderer', true);]]>
         </programlisting>
 
         <para>
-            However, this is not a good long term strategy, as it means most
-            likely you'll be writing more code.
+            Jednak długoterminowo nie jest to dobra strategia, ponieważ będziesz 
+            musiał pisać więcej kodu.
         </para>
 
         <para>
@@ -152,7 +152,7 @@ public function preDispatch()
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
-// Assuming $view has already been defined
+// Zakładając, że obiekt $view został już zdefiniowany
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 </programlisting>
@@ -171,12 +171,13 @@ $viewRenderer->setView($view);]]>
         </itemizedlist>
 
         <para>
-            There are many ways to modify the <code>ViewRenderer</code>, including setting a
-            different view script to render, specifying replacements for all
-            replaceable elements of a view script path (including the suffix),
-            choosing a response named segment to utilize, and more. If you
-            aren't using the conventional modular directory structure, you can
-            even associate different path specifications with the <code>ViewRenderer</code>.
+            There are many ways to modify the <code>ViewRenderer</code>, 
+            including setting a different view script to render, specifying 
+            replacements for all replaceable elements of a view script path 
+            (including the suffix), choosing a response named segment to 
+            utilize, and more. If you aren't using the conventional modular 
+            directory structure, you can even associate different path 
+            specifications with the <code>ViewRenderer</code>.
         </para>
 
         <para>

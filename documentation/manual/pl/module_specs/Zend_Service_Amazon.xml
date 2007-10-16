@@ -302,7 +302,7 @@ foreach ($results as $result) {
                             </row>
                             <row>
                                 <entry>SalesRank</entry>
-                                <entry>string</entry>
+                                <entry>int</entry>
                                 <entry>Ranking sprzedaży dla przedmiotu</entry>
                             </row>
                             <row>

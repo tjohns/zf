@@ -4,8 +4,9 @@
 
     <para>
         W skryptach widoków często potrzebne jest przeprowadzanie złożonych
-        funkcji: na przykład formatowanie daty, generowanie elementów formularzy,
-        czy wyświetlanie odnośnikow akcji. Możesz użyć klas pomocników w tym celu.
+        funkcji: na przykład formatowanie daty, generowanie elementów 
+        formularzy, czy wyświetlanie odnośnikow akcji. Możesz użyć klas 
+        pomocników w tym celu.
     </para>
 
     <para>
