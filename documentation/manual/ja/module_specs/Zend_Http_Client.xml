@@ -64,6 +64,12 @@ $client->setConfig(array(
                             <entry>5</entry>
                         </row>
                         <row>
+                            <entry>strict</entry>
+                            <entry>false に設定すると、いくつかの検証関数をスキップします。通常はこれを変更してはいけません。</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
+                        </row>
+                        <row>
                             <entry>strictredirects</entry>
                             <entry>リダイレクトの際に RFC に厳密に従うかどうか (<xref linkend="zend.http.client.redirections" /> を参照ください)</entry>
                             <entry>boolean</entry>
