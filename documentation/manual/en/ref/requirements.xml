@@ -447,7 +447,7 @@
                     <row>
                         <entry><ulink url="http://www.php.net/manual/en/ref.sqlite.php"><code>SQLite</code></ulink></entry>
                         <entry>Dependency</entry>
-                        <entry>Zend_Cache_Backend_Sqlite</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.cache.backends.html">Zend_Cache_Backend_Sqlite</ulink></entry>
                     </row>
                     <row>
                         <entry><code>standard</code></entry>
