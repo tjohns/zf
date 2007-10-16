@@ -61,6 +61,12 @@ $client->setConfig(array(
                             <entry>5</entry>
                         </row>
                         <row>
+                            <entry>strict</entry>
+                            <entry>Einige Prüf-Funktionen werden übersprungen wenn auf false gesetzt. Sollte normalerweise nicht geändert werden</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
+                        </row>
+                        <row>
                             <entry>strictredirects</entry>
                             <entry>Ob beim Umleiten genau dem RFC zu folgen ist (siehe
                             <xref linkend="zend.http.client.redirections" />)</entry>
@@ -69,7 +75,7 @@ $client->setConfig(array(
                         </row>
                         <row>
                             <entry>useragent</entry>
-                            <entry>String zu Identifizierung des User Agents (gesendet in den
+                            <entry>String zur Identifizierung des User Agents (gesendet in den
                             Anfrageheadern)</entry>
                             <entry>string</entry>
                             <entry>'Zend_Http_Client'</entry>
