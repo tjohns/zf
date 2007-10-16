@@ -86,7 +86,8 @@ class Zend_Http_Client
         'adapter'         => 'Zend_Http_Client_Adapter_Socket',
         'httpversion'     => self::HTTP_1,
         'keepalive'       => false,
-        'storeresponse'   => true
+        'storeresponse'   => true,
+        'strict'          => true
     );
 
     /**
@@ -326,8 +327,8 @@ class Zend_Http_Client
             if ($value === null && (strpos($name, ':') > 0))
                 list($name, $value) = explode(':', $name, 2);
 
-            // Make sure the name is valid
-            if (! preg_match('/^[a-zA-Z0-9-]+$/', $name)) {
+            // Make sure the name is valid if we are in strict mode
+            if ($this->config['strict'] && (! preg_match('/^[a-zA-Z0-9-]+$/', $name))) {
                 throw new Zend_Http_Client_Exception("{$name} is not a valid HTTP header name");
             }
             

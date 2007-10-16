@@ -124,6 +124,22 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
+	 * Make sure non-strict mode disables header name validation
+	 *
+	 */
+	public function testInvalidHeaderNonStrictMode() 
+	{
+	    // Disable strict validation
+	    $this->client->setConfig(array('strict' => false));
+	    
+		try {
+			$this->client->setHeaders('Ina_lid* Hea%der', 'is not good');
+		} catch (Zend_Http_Client_Exception $e) {
+			$this->fail('Invalid header names should be allowed in non-strict mode');
+		}
+	}
+	
+	/**
 	 * Test we can get already set headers
 	 *
 	 */

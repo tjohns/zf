@@ -61,6 +61,12 @@ $client->setConfig(array(
                             <entry>5</entry>
                         </row>
                         <row>
+                            <entry>strict</entry>
+                            <entry>When set to false, some validation functions will be skipped. Usually this should not be changed</entry>
+                            <entry>boolean</entry>
+                            <entry>true</entry>
+                        </row>
+                        <row>
                             <entry>strictredirects</entry>
                             <entry>Whether to strictly follow the RFC when redirecting (see <xref linkend="zend.http.client.redirections" />)</entry>
                             <entry>boolean</entry>
