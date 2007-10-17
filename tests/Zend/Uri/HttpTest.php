@@ -151,6 +151,28 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that setQuery() can handle unencoded query parameters (as other
+     * browsers do), ZF-1934
+     *
+     * @return void
+     */
+    public function testUnencodedQueryParameters()
+    {
+         $uri = Zend_Uri::factory('http://foo.com/bar');
+         
+         // First, make sure no exceptions are thrown
+         try { 
+             $uri->setQuery('id=123&url=http://example.com/?bar=foo baz');
+         } catch (Exception $e) {
+             $this->fail('setQuery() was expected to handle unencoded parameters, but failed');
+         }
+         
+         // Second, make sure the query string was properly encoded
+         $parts = parse_url($uri->getUri());
+         $this->assertEquals('id=123&url=http%3A%2F%2Fexample.com%2F%3Fbar%3Dfoo+baz', $parts['query']);
+    }
+    
+    /**
      * Test a known valid URI
      *
      * @param string $uri

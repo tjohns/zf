@@ -516,52 +516,40 @@ class Zend_Uri_Http extends Zend_Uri
      * Set the query string for the current URI, and return the old query
      * string This method accepts both strings and arrays.
      *
-     * @param string|array $query The query string or array
-     * @return string Old query string
+     * @param  string|array $query The query string or array
+     * @return string              Old query string
      */
     public function setQuery($query)
     {
         $oldQuery = $this->_query;
-        $this->_query = $this->_parseQuery($query);
-        return $oldQuery;
-    }
-
-    /**
-     * Parse a query string or array, validate it and return it as a query string
-     *
-     * @param string|array $query
-     * @return string
-     */
-    protected function _parseQuery($query)
-    {
-        // If query is empty, return an empty string
+        
+        // If query is empty, set an empty string
         if (empty($query)) {
-            return '';
+            $this->_query = '';
+            return $oldQuery;
         }
 
         // If query is an array, make a string out of it
         if (is_array($query)) {
-            // fails on PHP < 5.1.2
-            $query_str = @http_build_query($query, '', '&');
-            // If it failed, try calling with only 2 args
-            if (!$query_str) {
-                $query_str = http_build_query($query, '');
-            }
-            // Just in case they use &amp; in their php.ini, replace it with &
-               $query_str = str_replace("&amp;", "&", $query_str);
-
-            $query = $query_str;
+            $query = http_build_query($query, '', '&');
+        
+        // If it is a string, make sure it is valid. If not parse and encode it
         } else {
             $query = (string) $query;
+            if (! $this->validateQuery($query)) {
+                parse_str($query, $query_array);
+                $query = http_build_query($query_array, '', '&');   
+            }
         }
 
         // Make sure the query is valid, and set it
-           if ($this->validateQuery($query)) {
-               return $query;
-           } else {
-               throw new Zend_Uri_Exception("'$query' is not a valid query string");
-           }
-        return $query;
+        if (! $this->validateQuery($query)) {
+            throw new Zend_Uri_Exception("'$query' is not a valid query string");
+        }
+        
+        $this->_query = $query;
+        
+        return $oldQuery;
     }
 
     /**
