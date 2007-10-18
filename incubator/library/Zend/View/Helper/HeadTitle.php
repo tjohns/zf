@@ -48,16 +48,5 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
         $return = parent::toString($indent);
         return '<title>' . $return . '</title>';
     }
-
-    
-    /**
-     * __toString()
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toString();
-    }
     
 }

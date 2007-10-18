@@ -78,6 +78,22 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     protected $_captureType;
 
     /**
+     * The protected member of container items, available to all subclasses
+     * @var array
+     */
+    protected $_items = array();
+    
+    /**
+     * Constructor - This is needed so that we can attach a class member as the ArrayObject container
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct(&$this->_items, parent::ARRAY_AS_PROPS);
+    }
+    
+    /**
      * Set a single value
      *
      * @param  mixed $value
@@ -85,7 +101,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function set($value)
     {
-        $this->exchangeArray(array($value));
+        $this->_items = array($value);
     }
 
     /**
@@ -230,15 +246,26 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
         $this->_captureLock = false;
         switch ($this->_captureType) {
             case self::SET:
-                $this->exchangeArray(array($data));
+                $this->_items = array($data);
                 break;
             case self::APPEND:
             default:
-                $this[] = $data;
+                $this->_items[] = $data;
                 break;
         }
     }
 
+    /**
+     * Next Index
+     *
+     * as defined by the PHP manual
+     * @return int
+     */
+    public function nextIndex()
+    {
+        return $nextIndex = max(array_keys($this->_items)) + 1;
+    }
+    
     /**
      * Render the placeholder
      *
