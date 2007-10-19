@@ -216,4 +216,24 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
         $this->_connection->data($this->header . Zend_Mime::LINEEND . $this->body);
     }
 
+    /**
+     * Format and fix headers
+     *
+     * Some SMTP servers do not strip BCC headers. Most clients do it themselves as do we.
+     *
+     * @access protected
+     * @param array $headers
+     * @return void
+     */
+    protected function _prepareHeaders($headers)
+    {
+        if (!$this->_mail) {
+            throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered Zend_Mail object');
+        }
+
+		unset($headers['Bcc']);
+
+        // Prepare headers
+        parent::_prepareHeaders($headers);
+    }
 }
