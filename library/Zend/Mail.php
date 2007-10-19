@@ -368,7 +368,7 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Return a count of message parts
      *
-     * @return void
+     * @return integer
      */
     public function getPartCount()
     {

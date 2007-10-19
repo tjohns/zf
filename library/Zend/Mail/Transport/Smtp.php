@@ -145,7 +145,11 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
     public function __destruct()
     {
         if ($this->_connection instanceof Zend_Mail_Protocol_Smtp) {
-            $this->_connection->quit();
+            try {
+                $this->_connection->quit();
+            } catch (Zend_Mail_Protocol_Exception $e) {
+            	// ignore
+            }
             $this->_connection->disconnect();
         }
     }
