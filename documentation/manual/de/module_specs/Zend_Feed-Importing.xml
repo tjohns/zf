@@ -39,10 +39,11 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]>
         <title>Eigene Feeds</title>
 
         <para>
-            <code>Zend_Feed</code> enables developers to create custom feeds very easily. You just have to create an
-            array and to import it with Zend_Feed. This array can be imported with <code>Zend_Feed::importArray()</code>
-            or with <code>Zend_Feed::importBuilder()</code>. In this last case the array will be computed on the fly by
-            a custom data source implementing <code>Zend_Feed_Builder_Interface</code>.
+            <code>Zend_Feed</code> ermöglicht es Entwicklern Ihre eigenen Feeds sehr einfach zu erstellen. Man
+            muß nur ein Array erstellen und es in Zend_Feed importieren, Dieses Array kann mit
+            <code>Zend_Feed::importArray()</code> oder mit <code>Zend_Feed::importBuilder()</code>
+            importiert werden. Im letzteren Fall wird das Array on the Fly durch eine eigene Datenquelle
+            berechnet die <code>Zend_Feed_Builder_Interface</code> implementiert.
         </para>
 
         <sect3 id="zend.feed.importing.custom.importarray">
@@ -53,118 +54,118 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]>
 // Importieren eines Feeds von einem Array
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
-// the following line is equivalent to the above; by default a Zend_Feed_Atom instance is returned
+// Die folgende Zeile ist identisch mit der obigen; standardmäßig wird eine Zend_Feed_Atom Instanz zurückgegeben
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
-// Inportieren eines RSS Feeds von einem Array
+// Importieren eines RSS Feeds von einem Array
 $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
             </programlisting>
 
             <para>
-                The format of the array must conform to this structure:
+                Das Format des Arrays muß dieser Struktur entsprechen:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 array(
-      'title'       => 'title of the feed', //required
-      'link'        => 'canonical url to the feed', //required
-      'lastUpdate'  => 'timestamp of the update date', // optional
-      'published'   => 'timestamp of the publication date', //optional
-      'charset'     => 'charset of the textual data', // required
-      'description' => 'short description of the feed', //optional
-      'author'      => 'author/publisher of the feed', //optional
-      'email'       => 'email of the author', //optional
-      'webmaster'   => 'email address for person responsible for technical issues' // optional, ignored if atom is used
-      'copyright'   => 'copyright notice', //optional
-      'image'       => 'url to image', //optional
-      'generator'   => 'generator', // optional
-      'language'    => 'language the feed is written in', // optional
-      'ttl'         => 'how long in minutes a feed can be cached before refreshing', // optional, ignored if atom is used
-      'rating'      => 'The PICS rating for the channel.', // optional, ignored if atom is used
+      'title'       => 'Titel des Feeds', // benötigt
+      'link'        => 'Kanonische URL zu dem Feed', // benötigt
+      'lastUpdate'  => 'Zeitstempel des Update Datums', // optional
+      'published'   => 'Zeitstempel des Veröffentlichungs Datums', //optional
+      'charset'     => 'Zeichensatz der textuellen Daten', // benötigt
+      'description' => 'Kurzbeschreibung des Feeds', //optional
+      'author'      => 'Author, Veröffentlicher des Feeds', //optional
+      'email'       => 'Email des Authors', //optional
+      'webmaster'   => 'Email Adresse der Person die für technische Belange verantwortlich ist' // optional, ignoriert wenn Atom verwendet wird
+      'copyright'   => 'Copyright Notiz', //optional
+      'image'       => 'URL zu Bildern', //optional
+      'generator'   => 'Ersteller', // optional
+      'language'    => 'Sprache in der der Feed geschrieben ist', // optional
+      'ttl'         => 'Wie lange ein Feed gecached werden kann bevor er erneut werden muß', // optional, ignoriert wenn Atom verwendet wird
+      'rating'      => 'Die PICS Rate dieses Kanals', // optional, ignoriert wenn Atom verwendet wird
       'cloud'       => array(
-                             'domain'            => 'domain of the cloud, e.g. rpc.sys.com' // required
-                             'port'              => 'port to connect to' // optional, default to 80
-                             'path'              => 'path of the cloud, e.g. /RPC2' //required
-                             'registerProcedure' => 'procedure to call, e.g. myCloud.rssPleaseNotify' // required
-                             'protocol'          => 'protocol to use, e.g. soap or xml-rpc' // required
-                             ), // a cloud to be notified of updates // optional, ignored if atom is used
+                             'domain'            => 'Domain der Wolke, e.g. rpc.sys.com' // benötigt
+                             'port'              => 'Port zu dem verbunden wird' // optional, standard ist 80
+                             'path'              => 'Pfad der Wolke, e.g. /RPC2' // benötigt
+                             'registerProcedure' => 'Prozedur die aufgerufen wird, z.B. myCloud.rssPleaseNotify' // benötigt
+                             'protocol'          => 'Protokoll das verwendet wird, z.B. soap oder xml-rpc' // benötigt
+                             ), // eine Wolke die über Updates benachrichtigt wird // optional, ignoriert wenn Atom verwendet wird
       'textInput'   => array(
-                             'title'       => 'the label of the Submit button in the text input area' // required,
-                             'description' => 'explains the text input area' // required
-                             'name'        => 'the name of the text object in the text input area' // required
-                             'link'        => 'the URL of the CGI script that processes text input requests' // required
-                             ) // a text input box that can be displayed with the feed // optional, ignored if atom is used
+                             'title'       => 'Die Überschrift des Senden Buttons im Texteingabefeld' // benötigt,
+                             'description' => 'Beschreibt das Texteingabefeld' // benötigt
+                             'name'        => 'Der Name des Text Objekts im Texteingabefeld' // benötigt
+                             'link'        => 'Die URL des CGI Skripts das Texteingabe Anfragen bearbeitet' // benötigt
+                             ) // Eine Texteingabebox die im Feed angezeigt werden kann // optional, ignoriert wenn Atom verwendet wird
       'skipHours'   => array(
-                             'hour in 24 format', // e.g 13 (1pm)
-                             // up to 24 rows whose value is a number between 0 and 23
-                             ) // Hint telling aggregators which hours they can skip // optional, ignored if atom is used
+                             'hour in 24 format', // z.B. 13 (1pm)
+                             // bis zu 24 Zeilen dessen Werte eine Nummer zwichen 0 und 23 sein müssen
+                             ) // Hinweise geben welche Stunden übersprungen werden können // optional, ignoriert wenn Atom verwendet wird
       'skipDays '   => array(
-                             'a day to skip', // e.g Monday
-                             // up to 7 rows whose value is a Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday
-                             ) // Hint telling aggregators which days they can skip // optional, ignored if atom is used
+                             'a day to skip', // z.B. Montag
+                             // bus zu 7 Zeilen dessen Werte Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag oder Sonntag sind
+                             ) // Hinweise geben welche Tage übersprungen werden können // optional, ignoriert wenn Atom verwendet wird
       'itunes'      => array(
-                             'author'       => 'Artist column' // optional, default to the main author value
+                             'author'       => 'Musiker Spalte' // optional, Standard der Wert der author Spalte
                              'owner'        => array(
-                                                     'name' => 'name of the owner' // optional, default to main author value
-                                                     'email' => 'email of the owner' // optional, default to main email value
-                                                     ) // Owner of the podcast // optional
-                             'image'        => 'album/podcast art' // optional, default to the main image value
-                             'subtitle'     => 'short description' // optional, default to the main description value
-                             'summary'      => 'longer description' // optional, default to the main description value
-                             'block'        => 'Prevent an episode from appearing (yes|no)' // optional
+                                                     'name' => 'Name des Eigentümers' // optional, Standard ist der Wert der author Spalte
+                                                     'email' => 'Email des Eigentümers' // optional, Standard ist der Haupt email Wert
+                                                     ) // Eigentümer des Podcasts // optional
+                             'image'        => 'Album/Podcast Bild' // optional, Standard ist der image Wert
+                             'subtitle'     => 'Kurzbeschreibung' // optional, Standard ist der description Wert
+                             'summary'      => 'Langbeschreibung' // optional, Standard ist der description Wert
+                             'block'        => 'Verhindern das eine Episode erscheint (ja|nein)' // optional
                              'category'     => array(
-                                                     array('main' => 'main category', // required
-                                                           'sub'  => 'sub category' // optional
+                                                     array('main' => 'Hauptkategorie', // benötigt
+                                                           'sub'  => 'Unterkategorie' // optional
                                                            ),
-                                                     // up to 3 rows
-                                                     ) // 'Category column and in iTunes Music Store Browse' // required
-                             'explicit'     => 'parental advisory graphic (yes|no|clean)' // optional
-                             'keywords'     => 'a comma separated list of 12 keywords maximum' // optional
-                             'new-feed-url' => 'used to inform iTunes of new feed URL location' // optional
-                             ) // Itunes extension data // optional, ignored if atom is used
+                                                     // bis zu 3 Zeilen
+                                                     ) // 'Kategoriespalte und iTunes Music Store Browse' // benötigt
+                             'explicit'     => 'Elterliche Anweisungsspalte (ja|nein|löschen)' // optional
+                             'keywords'     => 'Eine kommagetrennte Liste von maximal 12 Schlüsselwörtern' // optional
+                             'new-feed-url' => 'Verwendet um iTunes über eine neue URL Lokation zu informieren' // optional
+                             ) // Itunes Erweiterungsdaten // optional, ignoriert wenn Atom verwendet wird
       'entries'     => array(
                              array(
-                                   'title'        => 'title of the feed entry', //required
-                                   'link'         => 'url to a feed entry', //required
-                                   'description'  => 'short version of a feed entry', // only text, no html, required
-                                   'guid'         => 'id of the article, if not given link value will used', //optional
-                                   'content'      => 'long version', // can contain html, optional
-                                   'lastUpdate'   => 'timestamp of the publication date', // optional
-                                   'comments'     => 'comments page of the feed entry', // optional
-                                   'commentRss'   => 'the feed url of the associated comments', // optional
+                                   'title'        => 'Titel des Feedeintrags', // benötigt
+                                   'link'         => 'URL zum Feedeintrag', // benötigt
+                                   'description'  => 'Kurzversion des Feedeintrags', // nur Text, kein HTML, benötigt
+                                   'guid'         => 'Id des Artikels, wenn nicht angegeben wird der link Wert verwendet', //optional
+                                   'content'      => 'Langversion', // kann HTML enthalten, optional
+                                   'lastUpdate'   => 'Zeitstempel des Veröffnetlichungsdatums', // optional
+                                   'comments'     => 'Kommentarseite des Feedeintrags', // optional
+                                   'commentRss'   => 'Die FeedURL der zugehörenden Kommentare', // optional
                                    'source'       => array(
-                                                           'title' => 'title of the original source' // required,
-                                                           'url' => 'url of the original source' // required
-                                                           ) // original source of the feed entry // optional
+                                                           'title' => 'Titel der Originalen Quelle' // benötigt
+                                                           'url' => 'URL der originalen Quelle' // benötigt
+                                                           ) // Originale Quelle des Feedeintrags // optional
                                    'category'     => array(
                                                            array(
-                                                                 'term' => 'first category label' // required,
-                                                                 'scheme' => 'url that identifies a categorization scheme' // optional
+                                                                 'term' => 'Überschrift der ersten Kategorie' // benötigt
+                                                                 'scheme' => 'URL die das Kategorisierungsschema identifiziert' // optional
                                                                  ),
                                                            array(
-                                                                 //data for the second category and so on
+                                                                 //Daten der zweiten Kategorie und so weiter
                                                                  )
-                                                           ) // list of the attached categories // optional
+                                                           ) // Liste der zugeordneten Kategorien // optional
                                    'enclosure'    => array(
                                                            array(
-                                                                 'url' => 'url of the linked enclosure' // required
-                                                                 'type' => 'mime type of the enclosure' // optional
-                                                                 'length' => 'length of the linked content in octets' // optional
+                                                                 'url' => 'URL des verlinkten Anhangs' // benötigt
+                                                                 'type' => 'Mime Typ des Anhangs' // optional
+                                                                 'length' => 'Länge des verlinkten Inhalts oktal' // optional
                                                                  ),
                                                            array(
-                                                                 //data for the second enclosure and so on
+                                                                 // Daten für den zweiten Anhang und so weiter
                                                                  )
-                                                           ) // list of the enclosures of the feed entry // optional
+                                                           ) // Liste der Anhänge des Feedeintrags // optional
                                    ),
                              array(
-                                   //data for the second entry and so on
+                                   // Daten für den zweiten Eintrag und so weiter
                                    )
                              )
        );]]>
             </programlisting>
 
             <para>
-                References:
+                Referenzen:
                 <itemizedlist>
                     <listitem>
                         <para>
@@ -178,15 +179,15 @@ array(
                     </listitem>
                     <listitem>
                         <para>
-                            WFW Spezifikation: <ulink url="http://wellformedweb.org/news/wfw_namespace_elements">Well
-                            Formed Web</ulink>
+                            WFW Spezifikation: <ulink url="http://wellformedweb.org/news/wfw_namespace_elements">Gut
+                            geformtes Web</ulink>
                         </para>
                     </listitem>
                     <listitem>
                         <para>
                             iTunes Spezifikation:
-                            <ulink url="http://www.apple.com/itunes/store/podcaststechspecs.html">iTunes Technical
-                            Specifications</ulink>
+                            <ulink url="http://www.apple.com/itunes/store/podcaststechspecs.html">iTunes Technische
+                            Spezifikation</ulink>
                         </para>
                     </listitem>
                 </itemizedlist>
@@ -199,35 +200,38 @@ array(
             <title>Importieren einer eigenen Daten Quelle</title>
 
             <para>
-                You can create a Zeed_Feed instance from any data source implementing
-                <code>Zend_Feed_Builder_Interface</code>. You just have to implement the <code>getHeader()</code> and
-                <code>getEntries()</code> methods to be able to use your object with
-                <code>Zend_Feed::importBuilder()</code>. As a simple reference implementation, you can use
-                <code>Zend_Feed_Builder</code>, which takes an array in its constructor, performs some minor validation,
-                and then can be used in the <code>importBuilder()</code> method. The <code>getHeader()</code> method
-                must return an instance of <code>Zend_Feed_Builder_Header</code>, and <code>getEntries()</code> must
-                return an array of <code>Zend_Feed_Builder_Entry</code> instances.
+                Eine Zend_Feed Instanz kann von jeder Datenquelle erstellt werden die
+                <code>Zend_Feed_Builder_Interface</code> implementiert. Die <code>getHeader()</code> und
+                <code>getEntries()</code> Methoden müssen implementiert werden damit das Objekt mit
+                <code>Zend_Feed::importBuilder()</code> verwendet werden kann. Als einfache Referenz
+                Implementation kann <code>Zend_Feed_Builder</code> verwendet werden, welches ein Array im
+                Kontruktor entgegen nimmt, einige einfache Prüfungen durchführt, und anschließend in der
+                <code>importBuilder()</code> Methode verwendet werden kann. Die <code>getHeader()</code>
+                Methode muß eine Instanz von <code>Zend_Feed_Builder_Header</code> zurückgeben, und
+                <code>getEntries()</code> muß ein Array von <code>Zend_Feed_Builder_Entry</code> Instanzen
+                zurückgeben.
             </para>
 
             <note>
                 <para>
-                    <code>Zend_Feed_Builder</code> serves as a concrete implementation to demonstrate the usage. Users
-                    are encouraged to make their own classes to implement <code>Zend_Feed_Builder_Interface</code>.
+                    <code>Zend_Feed_Builder</code> arbeitet als konkrete Implementation um die Verwendung zu
+                    demonstrieren. Benutzer sind angehlaten Ihre eigenen Klassen zu Erstellen um
+                    <code>Zend_Feed_Builder_Interface</code> zu implementieren.
                 </para>
             </note>
 
             <para>
-                Here is an example of <code>Zend_Feed::importBuilder()</code> usage:
+                Hier ist ein Beispiel der Verwendung von <code>Zend_Feed::importBuilder()</code>:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// importing a feed from a custom builder source
+// Einen Feed von einer eigenen Erstellungsquelle importieren
 $atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// the following line is equivalent to the above; by default a Zend_Feed_Atom instance is returned
+// Die folgende Zeile ist mit der obigen äquivalent; standardmäßig wird eine Zend_Feed_Atom Instanz zurückgegeben
 $atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
-// importing a rss feed from a custom builder array
+// Einen RSS Feeed von einem Array von eigenen Erstellungsquellen importieren
 $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
             </programlisting>
 
@@ -238,17 +242,17 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
             <title>Ausgeben des Inhalts eines Feeds</title>
 
             <para>
-                To dump the contents of a <code>Zend_Feed_Abstract</code> instance, you may use <code>send()</code> or
-                <code>saveXml()</code> methods.
+                Um den Inhalt einer <code>Zend_Feed_Abstract</code> Instanz auszugeben können die
+                <code>send()</code> oder <code>saveXml()</code> Methoden verwendet werden.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 assert($feed instanceof Zend_Feed_Abstract);
 
-// dump the feed to standard output
+// Den Feed an der Standardausgabe ausgeben
 print $feed->saveXML();
 
-// send http headers and dump the feed
+// HTTP Header und den Feed ausgeben
 $feed->send();]]>
             </programlisting>
 
