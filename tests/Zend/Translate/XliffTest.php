@@ -92,10 +92,6 @@ class Zend_Translate_XliffTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Translate_Exception $e) {
             // success
         }
-
-        $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_en2.xliff', 'de', array('clear' => true));
-        $this->assertEquals($adapter->translate('Message 1'), 'Message 1 (en)');
-        $this->assertEquals($adapter->translate('Message 5'), 'Message 5');
     }
 
     public function testOptions()

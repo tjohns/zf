@@ -39,6 +39,7 @@ abstract class Zend_Translate_Adapter {
      * @var string|null
      */
     protected $_locale;
+    private   $_automatic = true;
 
     /**
      * Table of all supported languages
@@ -84,6 +85,7 @@ abstract class Zend_Translate_Adapter {
         if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
             $this->setLocale($locale);
         }
+        $this->_automatic = true;
     }
 
 
@@ -153,6 +155,11 @@ abstract class Zend_Translate_Adapter {
         }
 
         $this->_locale = $locale;
+        if ($locale == "auto") {
+            $this->_automatic = true;
+        } else {
+            $this->_automatic = false;
+        }
     }
 
 
@@ -252,6 +259,17 @@ abstract class Zend_Translate_Adapter {
         }
 
         $this->_loadTranslationData($data, $locale, $options);
+        if ($this->_automatic === true) {
+            $find = new Zend_Locale($locale);
+            $browser = $find->getBrowser() + $find->getEnvironment();
+            arsort($browser);
+            foreach($browser as $language => $quality) {
+                if (in_array($language, $this->_languages)) {
+                    $this->_locale = $language;
+                    break;
+                }
+            }
+        }
     }
 
 
