@@ -626,6 +626,65 @@ if ($translate->isAvaiable("fr")) {
             </programlisting>
         </example>
 
+        <sect3 id="zend.translate.using.languages.automatic">
+
+            <title>Automatische Handhabung von Sprachen</title>
+
+            <para>
+                Es gilt zu beachten das, solange man neue Sprachquellen mit der <code>addTranslation()</code>
+                Methode hinzufügt, <code>Zend_Translate</code> automatisch die am besten passende Sprache für
+                die eigene Umgebung auswählt. Man muß normalerweise also <code>setLocale()</code> nicht
+                aufrufen.
+            </para>
+
+            <para>
+                Der Algorithmus sucht nach dem am besten passenden Gebietsschema abhängig vom Browser des
+                Benutzers und der eigenen Umgebung. Siehe das folgende Beispiel für Details:
+            </para>
+
+            <example id="zend.translate.using.languages.automatic.example">
+                <title>Wie das automatische Erkennen der Sprache funktioniert</title>
+                <programlisting role="php"><![CDATA[
+// Angenommen der Browser gibt folgende Spracheneinstellungen zurück
+HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
+
+// Beispiel 1:
+$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
+$translate->addTranslation("\my_es.mo","es_UG");
+// keine passende Sprache gefunden, die MessageID wird zurückgegeben
+
+// Beispiel 2:
+$translate = new Zend_Translate("gettext", "\my_en.mo", "en_US");
+$translate->addTranslation("\my_it.mo","it_IT");
+// Die am besten passende Sprache ist "en_US"
+
+// Beispiel 3:
+$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
+$translate->addTranslation("\my_de.mo","de");
+// Die am besten passende Sprache ist "de" weil "de_AT" zu "de" degradiert wird
+
+// Beispiel 4:
+$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
+$translate->addTranslation("\my_ru.mo","ru");
+$translate->setLocale("it_IT");
+$translate->addTranslation("\my_de.mo","de");
+// gibt "it_IT" als Übersetzungsquelle zurück]]>
+                </programlisting>
+            </example>
+
+            <para>
+                Nachdem eine Sprache per Hand mit der <code>setLocale()</code> Methode gesetzt wurde, wird
+                die automatische Erkennung ausgeschaltet und übergangen.
+            </para>
+
+            <para>
+                Wenn man die Automatik wieder verwenden will, kann die Sprache
+                <emphasis role="strong">auto</emphasis> mit <code>setLocale()</code> gesetzt werden, was die
+                automatische Erkennung für <code>Zend_Translate</code> wieder reaktiviert.
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.translate.using.istranslated">
