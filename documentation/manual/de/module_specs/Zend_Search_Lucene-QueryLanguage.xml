@@ -67,85 +67,90 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             und danach den Ausdruck nach dem gesucht wird.
         </para>
         <para>
-            As an example, let's assume a Lucene index contains two fields, title and text and text is the default field.
-            If you want to find the document entitled "The Right Way" which contains the text "don't go this way",
-            you can enter:
+            Als Beispiel nehmen wir an das ein Lucene Index zwei Felder enthält, title und text. Text ist der
+            Standardwert. Wenn man das "Der richtige Weg" benannte Dokument finden will welches den Text
+            "gehe nicht diesen Weg" enthält, geht das mit:
         </para>
-        <programlisting role="querystring"><![CDATA[title:"The Right Way" AND text:go]]>
+        <programlisting role="querystring"><![CDATA[title:"Der richtige Weg" AND text:go]]>
         </programlisting>
         <para>
-            or
+            oder
         </para>
-        <programlisting role="querystring"><![CDATA[title:"Do it right" AND go]]>
+        <programlisting role="querystring"><![CDATA[title:"Mach es richtig" AND go]]>
         </programlisting>
         <para>
-            If "text" is the default field, the field indicator is not required.
+            Wenn "text" das Standardfeld ist, wird der Feld Indikator nicht benötigt.
         </para>
 
         <para>
-            Note: The field is only valid for the term, phrase or subquery that it directly precedes,
-            so the query
-            <programlisting role="querystring"><![CDATA[title:Do it right]]>
+            Beachte: Das Feld nur nur für den Ausdruck, die Phrase oder die Unterabfrage gültig die direkt
+            danach folgt, sodas die Abfrage
+            <programlisting role="querystring"><![CDATA[title:Mach es richtig]]>
             </programlisting>
-            Will only find "Do" in the title field. It will find "it" and "right" in the default field,
-            if default field is set, or in the all indexed fields, if default field is set to <code>null</code>.
+            nur "Mach" im title Feld finden wird. Es findet "es" und "richtig" im Standardfeld, wenn das
+            Standardfeld gesetzt ist, oder in allen indizierten Felder, wenn das Standardfeld auf
+            <code>null</code> gesetzt ist.
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
         <title>Wildcards</title>
         <para>
-            Lucene supports single and multiple character wildcard searches within single terms (not within phrase queries).
+            Lucene unterstützt Einzelzeichen und Mehrfachzeichen Suchen mit Wildcards in einzelnen Ausdrücken
+            (nicht innerhalb von Phrasenabfragen).
         </para>
 
         <para>
-            To perform a single character wildcard search use the "?" symbol.
+            Um eine Einzelzeichen Wildcardsuche durchzuführen kann das "?" Zeichen verwendet werden.
         </para>
 
         <para>
-            To perform a multiple character wildcard search use the "*" symbol.
+            Um eine Mehrzeichen Wildcardsuche durchzuführen kann das "*" Zeichen verwendet werden.
         </para>
 
         <para>
-            The single character wildcard search looks for terms that match that with the single character replaced.
-            For example, to search for "text" or "test" you can use the search:
-            <programlisting role="querystring"><![CDATA[te?t]]>
+            Die Einzelzeichen Wildcardsuche schaut nach Ausdrücken die dem ausgetauschten Einzelzeichen
+            entsprechen. Um, zum Beispiel, nach "Text" oder "Test" zu suchen kann die folgende Suche
+            verwendet werden:
+            <programlisting role="querystring"><![CDATA[Te?t]]>
             </programlisting>
         </para>
 
         <para>
-            Multiple character wildcard searches looks for 0 or more characters. For example, to search for test,
-            tests or tester, you can use the search:
-            <programlisting role="querystring"><![CDATA[test*]]>
+            Mehrzeichen Wildcardsuche sucht nach 0 oder mehr Zeichen. Um, zum Beispiel, nach Test, Tests oder
+            Tester zu suchen, kann die folgende Suche verwendet werden: 
+            <programlisting role="querystring"><![CDATA[Test*]]>
             </programlisting>
         </para>
 
         <para>
-            You can use "?", "*" or both at any place of the term:
-            <programlisting role="querystring"><![CDATA[*wr?t*]]>
+            Es können "?", "*" oder beide an jeder Stelle des Ausdrucks verwendet werden:
+            <programlisting role="querystring"><![CDATA[*schrei?t*]]>
             </programlisting>
-            It searches for "write", "wrote", "written", "rewrite", "rewrote" and so on.
+            Sucht nach "schreibt", "schreibtisch", "beschreibt", "schreist" und so weiter.
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.modifiers">
-        <title>Term Modifiers</title>
+        <title>Ausdrücke verändern</title>
 
         <para>
-            Lucene supports modifying query terms to provide a wide range of searching options.
+            Lucene unterstützt die Veränderung von Abfrageausdrücken und bietet damit ein beites Spektrum von
+            Suchoptionen.
         </para>
         <para>
-            Zend_Search_Lucene supports "~" modifier only for phrases now
+            Zend_Search_Lucene unterstützt den "~" Modifikator aktuell nur für Phrasen
             <footnote>
                 <para>
-                    "~" for terms is used for fuzzy search, but fuzzy search queries are not supported yet.
+                    "~" für Ausdrücke wird für Fuzzy Suche verwendet, aber die Fuzzy Suche von Abfragen wird bis
+                    dato noch nicht unterstützt.
                 </para>
             </footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>Range Searches</title>
+        <title>Bereiche suchen</title>
 
         <para>
             Range queries allow one to match documents whose field(s) values are between the lower and upper bound specified by the range query.
