@@ -648,6 +648,66 @@ if ($translate->isAvaiable("fr")) {
             </programlisting>
         </example>
 
+        <sect3 id="zend.translate.using.languages.automatic">
+
+            <title>言語の自動処理</title>
+
+            <para>
+                新しい翻訳ソースの追加を <code>addTranslation()</code>
+                メソッドでのみ行っている場合は、<code>Zend_Translate</code>
+                は環境にあわせて適切な言語を自動設定します。
+                つまり、通常は <code>setLocale()</code> をコールする必要はありません。
+            </para>
+
+            <para>
+                ユーザのブラウザやサーバの環境に応じて、最適なロケールを探します。
+                詳細は、以下の例を参照ください。
+            </para>
+
+            <example id="zend.translate.using.languages.automatic.example">
+                <title>言語の自動検出の動作例</title>
+                <programlisting role="php"><![CDATA[
+// ブラウザから返される言語設定は次のようなものであると仮定します
+HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
+
+// 例 1:
+$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
+$translate->addTranslation("\my_es.mo","es_UG");
+// 適切な言語がみつからないので、メッセージ ID を返します
+
+// 例 2:
+$translate = new Zend_Translate("gettext", "\my_en.mo", "en_US");
+$translate->addTranslation("\my_it.mo","it_IT");
+// 適切な言語は "en_US" となります
+
+// 例 3:
+$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
+$translate->addTranslation("\my_de.mo","de");
+// 適切な言語は "de" となります。"de_AT" の代替言語は "de" だからです
+
+// 例 4:
+$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
+$translate->addTranslation("\my_ru.mo","ru");
+$translate->setLocale("it_IT");
+$translate->addTranslation("\my_de.mo","de");
+// 翻訳ソースとして "it_IT" を返します]]>
+                </programlisting>
+            </example>
+
+            <para>
+                <code>setLocale()</code> メソッドで言語を手動設定したら、
+                自動設定機能は無効となります。
+            </para>
+
+            <para>
+                自動検出を再度有効にしたい場合は、<code>setLocale()</code>
+                で言語として <emphasis role="strong">auto</emphasis>
+                を指定します。これにより、<code>Zend_Translate</code>
+                の時度検出機能が再度有効になります。
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.translate.using.istranslated">
