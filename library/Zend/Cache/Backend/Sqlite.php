@@ -72,16 +72,6 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     private $_db = null;
 
-    /**
-     * backward compatibility becase of ZF-879 and ZF-1172 (it will be removed in ZF 1.1)
-     *
-     * @var array
-     */
-    protected $_backwardCompatibilityArray = array(
-        'cacheDBCompletePath' => 'cache_db_complete_path',
-        'automaticVacuumFactor' => 'automatic_vacuum_factor'
-    );
-
     // ----------------------
     // --- Public methods ---
     // ----------------------

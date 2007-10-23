@@ -99,38 +99,6 @@ class Zend_Cache_Core
      */
     private $_lastId = null;
 
-    /**
-     * backward compatibility becase of ZF-879 and ZF-1172 (it will be removed in ZF 1.1)
-     *
-     * @var array
-     */
-    protected $_backwardCompatibilityArray = array(
-        'lifeTime' => 'lifetime',
-        'writeControl' => 'write_control',
-        'automaticSerialization' => 'automatic_serialization',
-        'automaticCleaningFactor' => 'automatic_cleaning_factor',
-        'cachedEntity' => 'cached_entity',
-        'cacheByDefault' => 'cache_by_default',
-        'cachedMethods' => 'cached_methods',
-        'nonCachedMethods' => 'non_cached_methods',
-        'cachedFunctions' => 'cached_functions',
-        'nonCachedFunctions' => 'non_cached_functions',
-        'masterFile' => 'master_file',
-        'httpConditional' => 'http_conditional',
-        'debugHeader' => 'debug_header',
-        'defaultOptions' => 'default_options',
-        'cacheWithGetVariables' => 'cache_with_get_variables',
-        'cacheWithPostVariables' => 'cache_with_post_variables',
-        'cacheWithSessionVariables' => 'cache_with_session_variables',
-        'cacheWithFilesVariables' => 'cache_with_files_variables',
-        'cacheWithCookieVariables' => 'cache_with_cookie_variables',
-        'makeIdWithGetVariables' => 'make_id_with_get_variables',
-        'makeIdWithPostVariables' => 'make_id_with_post_variables',
-        'makeIdWithSessionVariables' => 'make_id_with_session_variables',
-        'makeIdWithFilesVariables' => 'make_id_with_files_variables',
-        'makeIdWithCookieVariables' => 'make_id_with_cookie_variables'
-    );
-
     // ----------------------
     // --- Public methods ---
     // ----------------------
@@ -182,13 +150,7 @@ class Zend_Cache_Core
     public function setOption($name, $value)
     {
         if (is_string($name)) {
-            if (array_key_exists($name, $this->_backwardCompatibilityArray)) {
-                $tmp = $this->_backwardCompatibilityArray[$name];
-                $this->_log("$name option is deprecated, use $tmp instead (same syntax) !");
-                $name = $tmp;
-            } else {
-                $name = strtolower($name);
-            }
+            $name = strtolower($name);
             if (array_key_exists($name, $this->_options)) {
                 // This is a Core option
                 $this->_setOption($name, $value);

@@ -100,13 +100,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     public function __construct($options = array())
     {
         while (list($name, $value) = each($options)) {
-            if (array_key_exists($name, $this->_backwardCompatibilityArray)) {
-                $tmp = $this->_backwardCompatibilityArray[$name];
-                $this->_log("$name option is deprecated, use $tmp instead (same syntax) !");
-                $name = $tmp;
-            } else {
-                $name = strtolower($name);
-            }
+            $name = strtolower($name);
             switch ($name) {
             case 'regexps':
                 $this->_setRegexps($value);
@@ -136,13 +130,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             Zend_Cache::throwException('default_options must be an array !');
         }
         foreach ($options as $key=>$value) {
-            if (array_key_exists($key, $this->_backwardCompatibilityArray)) {
-                $tmp = $this->_backwardCompatibilityArray[$key];
-                $this->_log("$key option is deprecated, use $tmp instead (same syntax) !");
-                $key = $tmp;
-            } else {
-                $key = strtolower($key);
-            }
+            $key = strtolower($key);
             if (!isset($this->_specificOptions['default_options'][$key])) {
                 Zend_Cache::throwException("unknown option [$key] !");
             } else {
@@ -167,13 +155,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             }
             $validKeys = array_keys($this->_specificOptions['default_options']);
             foreach ($conf as $key=>$value) {
-                if (array_key_exists($key, $this->_backwardCompatibilityArray)) {
-                    $tmp = $this->_backwardCompatibilityArray[$key];
-                    $this->_log("$key option is deprecated, use $tmp instead (same syntax) !");
-                    $key = $tmp;
-                } else {
-                    $key = strtolower($key);
-                }
+                $key = strtolower($key);
                 if (!in_array($key, $validKeys)) {
                     Zend_Cache::throwException("unknown option [$key] !");
                 }

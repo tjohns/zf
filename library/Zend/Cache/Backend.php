@@ -59,13 +59,6 @@ class Zend_Cache_Backend
      */
     protected $_options = array();
 
-    /**
-     * backward compatibility becase of ZF-879 and ZF-1172 (it will be removed in ZF 1.1)
-     *
-     * @var array
-     */
-    protected $_backwardCompatibilityArray = array();
-
     // ----------------------
     // --- Public methods ---
     // ----------------------
@@ -116,13 +109,7 @@ class Zend_Cache_Backend
         if (!is_string($name)) {
             Zend_Cache::throwException("Incorrect option name : $name");
         }
-        if (array_key_exists($name, $this->_backwardCompatibilityArray)) {
-            $tmp = $this->_backwardCompatibilityArray[$name];
-            $this->_log("$name option is deprecated, use $tmp instead (same syntax) !");
-            $name = $tmp;
-        } else {
-            $name = strtolower($name);
-        }
+        $name = strtolower($name);
         if (!array_key_exists($name, $this->_options)) {
             Zend_Cache::throwException("Incorrect option name : $name");
         }

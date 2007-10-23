@@ -95,21 +95,6 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         'file_name_prefix' => 'zend_cache'
     );
 
-    /**
-     * backward compatibility becase of ZF-879 and ZF-1172 (it will be removed in ZF 1.1)
-     *
-     * @var array
-     */
-    protected $_backwardCompatibilityArray = array(
-        'cacheDir' => 'cache_dir',
-        'fileLocking' => 'file_locking',
-        'readControl' => 'read_control',
-        'readControlType' => 'read_control_type',
-        'hashedDirectoryLevel' => 'hashed_directory_level',
-        'hashedDirectoryUmask' => 'hashed_directory_umask',
-        'fileNamePrefix' => 'file_name_prefix'
-    );
-
     // ----------------------
     // --- Public methods ---
     // ----------------------
