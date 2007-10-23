@@ -142,7 +142,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     public function setCacheDir($value)
     {
         // add a trailing DIRECTORY_SEPARATOR if necessary
-        $value = rtrim($value, '\\/') . DIRECTORY_SEPARATOR;
+        $value = rtrim(realpath($value), '\\/') . DIRECTORY_SEPARATOR;
         $this->setOption('cache_dir', $value);
     }
 
