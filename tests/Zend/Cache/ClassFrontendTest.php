@@ -46,7 +46,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     {
         if (!$this->_instance1) {
             $options1 = array(
-                'cachedEntity' => 'test'
+                'cached_entity' => 'test'
             );
             $this->_instance1 = new Zend_Cache_Frontend_Class($options1);
             $this->_backend1 = new Zend_Cache_Backend_Test();
@@ -54,7 +54,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         }
         if (!$this->_instance2) {
             $options2 = array(
-                'cachedEntity' => new test()
+                'cached_entity' => new test()
             );
             $this->_instance2 = new Zend_Cache_Frontend_Class($options2);
             $this->_backend2 = new Zend_Cache_Backend_Test();
@@ -71,8 +71,8 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorCorrectCall1()
     {
         $options = array(
-            'cacheByDefault' => false,
-            'cachedEntity' => 'test'
+            'cache_by_default' => false,
+            'cached_entity' => 'test'
         );
         $test = new Zend_Cache_Frontend_Class($options);      
     }
@@ -80,8 +80,8 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorCorrectCall2()
     {
         $options = array(
-            'cacheByDefault' => false,
-            'cachedEntity' => new test()
+            'cache_by_default' => false,
+            'cached_entity' => new test()
         );
         $test = new Zend_Cache_Frontend_Class($options);      
     }
@@ -89,7 +89,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorBadCall()
     {
         $options = array(
-            'cacheByDefault' => true
+            'cache_by_default' => true
         );
         try {
             $test = new Zend_Cache_Frontend_Class($options);      
@@ -150,7 +150,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     public function testCallCorrectCall5()
     {
         // cacheByDefault = false
-        $this->_instance1->setOption('cacheByDefault', false);
+        $this->_instance1->setOption('cache_by_default', false);
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
@@ -165,8 +165,8 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     {
         // cacheByDefault = false
         // cachedMethods = array('foobar')
-        $this->_instance1->setOption('cacheByDefault', false);
-        $this->_instance1->setOption('cachedMethods', array('foobar'));
+        $this->_instance1->setOption('cache_by_default', false);
+        $this->_instance1->setOption('cached_methods', array('foobar'));
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
@@ -181,8 +181,8 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     {
         // cacheByDefault = true
         // nonCachedMethods = array('foobar')
-        $this->_instance1->setOption('cacheByDefault', true);
-        $this->_instance1->setOption('nonCachedMethods', array('foobar'));
+        $this->_instance1->setOption('cache_by_default', true);
+        $this->_instance1->setOption('non_cached_methods', array('foobar'));
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance1->foobar('param1', 'param2');
@@ -197,7 +197,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     {
         try {
             $options = array(
-                'cachedEntity' => array()
+                'cached_entity' => array()
             );
             $instance = new Zend_Cache_Frontend_Class($options);           
         } catch (Zend_Cache_Exception $e) {

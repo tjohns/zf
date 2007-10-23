@@ -46,8 +46,8 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorCorrectCall()
     {
         $options = array(
-            'cacheByDefault' => false,
-            'cachedFunctions' => array('foo', 'bar')
+            'cache_by_default' => false,
+            'cached_functions' => array('foo', 'bar')
         );
         $test = new Zend_Cache_Frontend_Function($options);      
     }
@@ -55,7 +55,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorBadCall()
     {
         $options = array(
-            'cacheByDefault' => false,
+            'cache_by_default' => false,
             'foo' => array('foo', 'bar')
         );
         try {
@@ -93,7 +93,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     public function testCallCorrectCall3()
     {
         // cacheByDefault = false
-        $this->_instance->setOption('cacheByDefault', false);
+        $this->_instance->setOption('cache_by_default', false);
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
@@ -108,8 +108,8 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     {
         // cacheByDefault = false
         // cachedFunctions = array('foobar')
-        $this->_instance->setOption('cacheByDefault', false);
-        $this->_instance->setOption('cachedFunctions', array('foobar'));
+        $this->_instance->setOption('cache_by_default', false);
+        $this->_instance->setOption('cached_functions', array('foobar'));
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
@@ -124,8 +124,8 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     {
         // cacheByDefault = true
         // nonCachedFunctions = array('foobar')
-        $this->_instance->setOption('cacheByDefault', true);
-        $this->_instance->setOption('nonCachedFunctions', array('foobar'));
+        $this->_instance->setOption('cache_by_default', true);
+        $this->_instance->setOption('non_cached_functions', array('foobar'));
         ob_start();
         ob_implicit_flush(false);
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
