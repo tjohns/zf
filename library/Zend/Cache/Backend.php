@@ -175,7 +175,7 @@ class Zend_Cache_Backend
                     }
                 }
             }
-            return '\temp';
+            return '\\temp';
         } else {
             // unix...
             if (isset($_ENV['TMPDIR']))    return $_ENV['TMPDIR'];
