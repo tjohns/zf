@@ -222,17 +222,6 @@ class Zend_Cache_Core
     }
 
     /**
-     * THIS METHOD IS DEPRECATED : USE LOAD() INSTEAD (same syntax) !
-     *
-     * it will be removed in ZF 1.1 !
-     */
-    public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
-    {
-        $this->_log("get() method is deprecated => use load() method instead (same syntax) !");
-        return $this->load($id, $doNotTestCacheValidity, $doNotUnserialize);
-    }
-
-    /**
      * Test if a cache is available for the given id
      *
      * @param string $id cache id
