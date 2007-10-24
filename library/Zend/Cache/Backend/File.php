@@ -211,43 +211,34 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         $lifetime = $this->getLifetime($specificLifetime);
         $expire = $this->_expireTime($lifetime);
         $file = $this->_file($id, $expire);
+        $path = $this->_path($id);
         $firstTry = true;
-        $result = false;
-        while (1 == 1) {
-            $fp = @fopen($file, "wb");
-            if ($fp) {
-                // we can open the file, so the directory structure is ok
-                if ($this->_options['file_locking']) @flock($fp, LOCK_EX);
-                if ($this->_options['read_control']) {
-                    @fwrite($fp, $this->_hash($data, $this->_options['read_control_type']), 32);
-                }
-                $mqr = get_magic_quotes_runtime();
-                set_magic_quotes_runtime(0);
-                @fwrite($fp, $data);
-                if ($this->_options['file_locking']) @flock($fp, LOCK_UN);
-                @fclose($fp);
-                set_magic_quotes_runtime($mqr);
-                $result = true;
-                break;
+        $result = false;      
+        if ($this->_options['hashed_directory_level'] > 0) {
+            if (!is_writable($path)) {
+                // maybe, we just have to build the directory structure
+                @mkdir($this->_path($id), $this->_options['hashed_directory_umask'], true);
+                @chmod($this->_path($id), $this->_options['hashed_directory_umask']); // see #ZF-320 (this line is required in some configurations)      
             }
-            // we can't open the file but it's maybe only the directory structure
-            // which has to be built
-            if ($this->_options['hashed_directory_level']==0) break;
-            if ((!$firstTry) || ($this->_options['hashed_directory_level'] == 0)) {
-                // it's not a problem of directory structure
-                break;
-            }
-            $firstTry = false;
-            // In this case, maybe we just need to create the corresponding directory
-            @mkdir($this->_path($id), $this->_options['hashed_directory_umask'], true);
-            @chmod($this->_path($id), $this->_options['hashed_directory_umask']); // see #ZF-320 (this line is required in some configurations)
+        }        
+        $fp = @fopen($file, "wb");
+        if (!($fp)) {
+            return false;
         }
-        if ($result) {
-            foreach ($tags as $tag) {
-                $this->_registerTag($id, $tag);
-            }
+        if ($this->_options['file_locking']) @flock($fp, LOCK_EX);
+        if ($this->_options['read_control']) {
+            @fwrite($fp, $this->_hash($data, $this->_options['read_control_type']), 32);
         }
-        return $result;
+        $mqr = get_magic_quotes_runtime();
+        set_magic_quotes_runtime(0);
+        @fwrite($fp, $data);
+        if ($this->_options['file_locking']) @flock($fp, LOCK_UN);
+        @fclose($fp);
+        set_magic_quotes_runtime($mqr);
+        foreach ($tags as $tag) {
+            $this->_registerTag($id, $tag);
+        }
+        return true;
     }
 
     /**
