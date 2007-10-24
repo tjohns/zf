@@ -220,6 +220,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                 @mkdir($this->_path($id), $this->_options['hashed_directory_umask'], true);
                 @chmod($this->_path($id), $this->_options['hashed_directory_umask']); // see #ZF-320 (this line is required in some configurations)      
             }
+            if (!is_writable($path)) {
+                return false;    
+            }
         }        
         $fp = @fopen($file, "wb");
         if (!($fp)) {
