@@ -234,6 +234,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         @fwrite($fp, $data);
         if ($this->_options['file_locking']) @flock($fp, LOCK_UN);
         @fclose($fp);
+        @chmod($file, 0600);
         set_magic_quotes_runtime($mqr);
         foreach ($tags as $tag) {
             $this->_registerTag($id, $tag);
