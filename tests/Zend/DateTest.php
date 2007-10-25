@@ -5394,6 +5394,23 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
                                     'hour' => 12, 'minute' => 3, 'second' => 10, 'de_AT'));
         $this->assertSame($date->getIso(), '2006-04-18T12:03:10+02:00');
     }
+
+    public function testExtendedDst()
+    {
+        Zend_Date::setOptions(array('format_type' => 'iso'));
+        $date = new Zend_Date();
+        $date->setTimezone('UTC');
+        $date->set('25-05-2050 12:00:00');
+        $this->assertSame($date->get('YYYY-MM-dd HH:mm:ss'), '2050-05-25 12:00:00');
+        $date->setTimezone('Europe/Warsaw');
+        $this->assertSame($date->get('YYYY-MM-dd HH:mm:ss'), '2050-05-25 14:00:00');
+
+        $date->setTimezone('UTC');
+        $date->set('25-05-2020 12:00:00');
+        $this->assertSame($date->get('YYYY-MM-dd HH:mm:ss'), '2020-05-25 12:00:00');
+        $date->setTimezone('Europe/Warsaw');
+        $this->assertSame($date->get('YYYY-MM-dd HH:mm:ss'), '2020-05-25 14:00:00');
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date

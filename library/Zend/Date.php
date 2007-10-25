@@ -38,7 +38,7 @@ require_once 'Zend/Locale/Math.php';
  */
 class Zend_Date extends Zend_Date_DateObject {
 
-    private $_Locale  = null;
+    private   $_Locale  = null;
 
     // Fractional second variables
     private $_Fractional = 0;
@@ -247,6 +247,10 @@ class Zend_Date extends Zend_Date_DateObject {
                         }
                         break;
                     case 'cache' :
+                        if (!$value instanceof Zend_Cache_Core) {
+                            throw new Zend_Date_Exception("Instance of Zend_Cache expected");
+                        }
+                        parent::$_cache = $value;
                         Zend_Locale_Data::setCache($value);
                         break;
                 }
