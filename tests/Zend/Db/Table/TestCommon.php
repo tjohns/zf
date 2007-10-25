@@ -1187,8 +1187,8 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         );
 
         $backendOptions  = array(
-            'cacheDir'                => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
-            'fileNamePrefix'          => 'Zend_Db_Table_TestCommon'
+            'cache_dir'                 => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
+            'file_name_prefix'          => 'Zend_Db_Table_TestCommon'
         );
 
         $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
