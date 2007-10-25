@@ -1314,6 +1314,21 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals("1+2+3", $value,
             "Incorrect quote() CHAR type result for Zend_Db_Expr");
     }
+    
+    /**
+     * Ensures that the character sequence ":0'" is quoted properly
+     * 
+     * @link   http://framework.zend.com/issues/browse/ZF-2059
+     * @return void 
+     */
+    public function testQuoteStringColonZeroApostrophe()
+    {
+        $value       = ':0\'';
+        $valueQuoted = $this->_db->quote($value);
+        $sql = 'SELECT bug_id FROM zfbugs WHERE bug_status != ' . $valueQuoted;
+        $results = $this->_db->fetchAll($sql);
+        $this->assertEquals(4, count($results));
+    }
 
     public function testAdapterSetFetchMode()
     {
@@ -1581,5 +1596,5 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $value = $this->_db->fetchCol("SELECT $bug_status FROM $bugs");
         $this->assertEquals(array_fill(0, 4, 'EMPTY'), $value);
     }
-
+    
 }
