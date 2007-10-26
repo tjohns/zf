@@ -41,10 +41,10 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">流暢なインターフェイス</emphasis>
+                    <emphasis role="strong">流れるようなインターフェイス</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> は、可能な限り「流暢な」インターフェイスを採用しています。
+                    <code>Zend_Currency</code> は、可能な限り「流れるような」インターフェイスを採用しています。
                 </para>
             </listitem>
             <listitem>

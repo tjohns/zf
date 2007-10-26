@@ -160,7 +160,7 @@ $posts[0]->save();]]>
             <title>メソッドコールの連結</title>
             <para>
                すべての設定用メソッドは post オブジェクトを返すので、
-               「流暢なインターフェイス」を使用してメソッドコールを連結することができます。
+               「流れるようなインターフェイス」を使用してメソッドコールを連結することができます。
             </para>
             <programlisting role="php"><![CDATA[<?php
 $delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
