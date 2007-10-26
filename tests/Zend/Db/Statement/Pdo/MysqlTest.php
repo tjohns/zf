@@ -42,6 +42,19 @@ class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_Pdo_TestCommon
         $stmt->closeCursor();
     }
 
+    /**
+     * Ensures that the character sequence ":0'" is handled properly
+     *
+     * @link   http://framework.zend.com/issues/browse/ZF-2059
+     * @return void
+     */
+    public function testZF2059()
+    {
+        $sql = "SELECT bug_id FROM zfbugs WHERE bug_status != ':0\''";
+        $results = $this->_db->fetchAll($sql);
+        $this->assertEquals(4, count($results));
+    }
+
     public function getDriver()
     {
         return 'Pdo_Mysql';
