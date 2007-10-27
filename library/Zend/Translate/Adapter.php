@@ -48,12 +48,19 @@ abstract class Zend_Translate_Adapter {
      */
     protected $_languages = array();
 
+    // Scan options
+    const LOCALE_DIRECTORY = 1;
+    const LOCALE_FILENAME  = 2;
+
     /**
      * Array with all options, each adapter can have own additional options
      *
      * @var array
      */
-    protected $_options = array('clear' => false);
+    protected $_options = array(
+        'clear' => false, // clear previous loaded translation data
+        'scan'  => null   // where to find the locale
+    );
 
     /**
      * Translation table
@@ -81,9 +88,57 @@ abstract class Zend_Translate_Adapter {
             $locale = $locale->toString();
         }
 
-        $this->addTranslation($data, $locale, $options);
-        if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
-            $this->setLocale($locale);
+        $options = array_merge($this->_options, $options);
+        if (is_string($data) and is_dir($data)) {
+            foreach (new RecursiveIteratorIterator(
+                     new RecursiveDirectoryIterator($data, RecursiveDirectoryIterator::KEY_AS_PATHNAME), 
+                     RecursiveIteratorIterator::SELF_FIRST) as $file => $info) {
+                if ($info->isDir()) {
+
+                    $directory = $info->getPath();
+                    // pathname as locale
+                    if (($options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale((string) $info))) {
+                        $locale = (string) $info;
+                    }
+
+                } else if ($info->isFile()) {
+
+                    // filename as locale
+                    if ($options['scan'] === self::LOCALE_FILENAME) {
+                        if (Zend_Locale::isLocale((string) $info)) {
+                            $locale = (string) $info;
+                        } else {
+                            $found = false;
+                            $parts = explode('.', (string) $info);
+                            foreach($parts as $token) {
+                                $parts = array_merge(explode('_', $token), $parts);
+                            }
+                            foreach($parts as $token) {
+                                $parts = array_merge(explode('-', $token), $parts);
+                            }
+                            $parts = array_unique($parts);
+                            foreach($parts as $token) {
+                                if (Zend_Locale::isLocale($token)) {
+                                    $locale = $token;
+                                }
+                            }
+                        }
+                    }
+                    try {
+                        $this->addTranslation((string) $info->getPathname(), $locale, $options);
+                        if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
+                            $this->setLocale($locale);
+                        }
+                    } catch (Zend_Translate_Exception $e) {
+                        // ignore failed sources while scanning
+                    }
+                }
+            }
+        } else {
+            $this->addTranslation($data, $locale, $options);
+            if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
+                $this->setLocale($locale);
+            }
         }
         $this->_automatic = true;
     }

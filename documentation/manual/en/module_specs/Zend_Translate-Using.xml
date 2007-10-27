@@ -543,6 +543,16 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                         instead of creating a new instance when reading new translation data</entry>
                     </row>
                     <row>
+                        <entry>all</entry>
+                        <entry>scan</entry>
+                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>If set to null, no scanning of the directory structure will be done.
+                        If set to Zend_Translate::LOCALE_DIRECTORY the locale will be detected within the
+                        directory. It set to Zend_Translate::LOCALE_FILENAME the locale will be detected
+                        within the filename. See <xref linkend="zend.translate.using.detection" />
+                        for details</entry>
+                    </row>
+                    <row>
                         <entry>Csv</entry>
                         <entry>separator</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
@@ -680,6 +690,215 @@ $translate->addTranslation("\my_de.mo","de");
                 <emphasis role="strong">auto</emphasis> with <code>setLocale()</code> which will reactivate
                 the automatically detection for <code>Zend_Translate</code>.
             </para>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.detection">
+
+        <title>Automatic source detection</title>
+
+        <para>
+            Zend_Translate can detect translation sources automatically. So you don't have
+            to declare each source file manually. You can let Zend_Translate do this job and
+            scan the complete directory structure for source files. 
+        </para>
+
+        <note>
+            <para>
+                Automatic source detection is avaiable since Zend Framework version 1.1 .
+            </para>
+        </note>
+
+        <para>
+            The useage is quite the same as initiating a single translation source with one difference.
+            You must give a directory which has to be scanned instead a file.
+        </para>
+
+        <example id="zend.translate.using.languages.automatic.example">
+            <title>Scanning a directory structure for sources</title>
+            <programlisting role="php"><![CDATA[
+// expect we have the following structure
+//  /language
+//  /language/login/login.tmx
+//  /language/logout/logout.tmx
+//  /language/error/loginerror.tmx
+//  /language/error/logouterror.tmx
+
+$translate = new Zend_Translate('tmx', '/language');]]>
+            </programlisting>
+        </example>
+
+        <para>
+            So Zend_Translate does not only search the given directory, but also all subdirectories for
+            translation source files. This makes the usage quite simple. But Zend_Translate will ignore all
+            files which are no sources or which produce failures while reading the translation data. So you
+            have to get sure that all of your translation sources are correct and readable because you will
+            not get any failure if a file is bogus or can not be read.
+        </para>
+
+        <note>
+            <para>
+                Depending on how deep your directory structure is and how much files are within this structure
+                it can take a long time for Zend_Translate to complete.
+            </para>
+        </note>
+
+        <para>
+            In our example we have used the TMX format which includes the language to be used within the
+            source. But many of the other source formats are not able to include the language within the
+            file. Even this sources can be used with automatic scanning if you do some pre-requisits as
+            described below:
+            scanned. 
+        </para>
+
+        <sect3 id="zend.translate.using.detection.directory">
+
+            <title>Language through naming directories</title>
+
+            <para>
+                One way to include automatic language detection is to name the directories related to the
+                language which is used for the sources within this directory. This is the easiest way and
+                is used for example within standard gettext implementations.
+            </para>
+
+            <para>
+                Zend_Translate needs the 'scan' option to know that it should search the names of all
+                directories for languages. See the following example for details:
+            </para>
+
+            <example id="zend.translate.using.detection.directory.example">
+                <title>Directory scanning for languages</title>
+                <programlisting role="php"><![CDATA[
+// expect we have the following structure
+//  /language
+//  /language/de/login/login.tmx
+//  /language/de/error/loginerror.tmx
+//  /language/en/login/login.tmx
+//  /language/en/error/loginerror.tmx
+
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
+                </programlisting>
+            </example>
+
+            <note>
+                <para>
+                    This works only for adapters which do not include the language within the source file.
+                    Using this option for example with TMX will be ignored. Also language definitions within
+                    the filename will be ignored when using this option.
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.translate.using.detection.filename">
+
+            <title>Language through filenames</title>
+
+            <para>
+                Another way to detect the langage automatically is to use special filenames. You can eighter
+                name the complete file or parts of a file with the used language. To use this way of detection
+                you will have to set the 'scan' option at initiation. There are several ways of naming the
+                sourcefiles which are described below:
+            </para>
+
+            <example id="zend.translate.using.detection.filename.example">
+                <title>Filename scanning for languages</title>
+                <programlisting role="php"><![CDATA[
+// expect we have the following structure
+//  /language
+//  /language/login/login_en.tmx
+//  /language/login/login_de.tmx
+//  /language/error/loginerror_en.tmx
+//  /language/error/loginerror_de.tmx
+
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
+                </programlisting>
+            </example>
+
+            <sect4 id="zend.translate.using.detection.filename.complete">
+
+                <title>Complete Filename</title>
+
+                <para>
+                    Having the whole file named after the language is the simplest way but only usable
+                    if you have only one file per directory.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  en.mo
+  de.mo
+  es.mo]]>
+                </programlisting>
+
+            </sect4>
+
+            <sect4 id="zend.translate.using.detection.filename.extension">
+
+                <title>Extension of the file</title>
+
+                <para>
+                    Another very simple way if to use the extension of the file for the language detection.
+                    But this may be confusing because you will no longer know which file extension the file
+                    originally was.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view.en
+  view.de
+  view.es]]>
+                </programlisting>
+
+            </sect4>
+
+            <sect4 id="zend.translate.using.detection.filename.token">
+
+                <title>Filename tokens</title>
+
+                <para>
+                    Zend_Translate is also captable of detecting the language if it is included within the
+                    filename. But if you use this way you will have to seperate the language with a token.
+                    There are three supported tokens which can be used: A point '.', a underline '_', or
+                    a hyphen '-'.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en.mo  -> detects english
+  view_de.mo  -> detects german
+  view_it.mo  -> detects italian]]>
+                </programlisting>
+
+                <para>
+                    The first found token which can be detected as locale will be used. See the following
+                    example for details.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en_de.mo  -> detects english
+  view_en_es.mo  -> detects english and overwrites the first file because the same messageids are used
+  view_it_it.mo  -> detects italian]]>
+                </programlisting>
+
+                <para>
+                    All three tokens are used to detect the locale. The first one is the point '.', the second
+                    is the underline '_' and the third the hyphen '-'. If you have several tokens within the
+                    filename the first found depending on the order of the tokens will be used. See the following
+                    example for details.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en-it.mo  -> detects english because '_' will be used before '-'
+  view-en_it.mo  -> detects italian because '_' will be used before '-'
+  view_en.it.mo  -> detects italian because '.' will be used before '_']]>
+                </programlisting>
+
+            </sect4>
 
         </sect3>
 

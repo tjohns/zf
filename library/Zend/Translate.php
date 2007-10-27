@@ -41,6 +41,8 @@ class Zend_Translate {
     const AN_XLIFF   = 'xliff';
     const AN_XMLTM   = 'xmltm';
 
+    const LOCALE_DIRECTORY = 1;
+    const LOCALE_FILENAME  = 2;
     /**
      * Adapter
      *
