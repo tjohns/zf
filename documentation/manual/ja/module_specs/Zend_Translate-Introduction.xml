@@ -89,6 +89,13 @@
                 設定を検出し、Zend_Translate で使用することができます。
             </para>
         </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">自動的なソースの検出:</emphasis>
+                Zend_Translate は、複数のソースファイルを検出して統合することができます。
+                さらに、ディレクトリやファイル名に応じて使用するロケールを自動検出することもできます。
+            </para>
+        </listitem>
     </itemizedlist>
 
     <sect2 id="zend.translate.introduction.adapters">

@@ -554,6 +554,20 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                         </entry>
                     </row>
                     <row>
+                        <entry>すべて</entry>
+                        <entry>scan</entry>
+                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>
+                            null にすると、ディレクトリ構造のスキャンを行いません。
+                            Zend_Translate::LOCALE_DIRECTORY にすると、
+                            ディレクトリからロケールを検出します。
+                            Zend_Translate::LOCALE_FILENAME にすると、
+                            ファイル名からロケールを検出します。
+                            詳細は <xref linkend="zend.translate.using.detection" />
+                            を参照ください。
+                        </entry>
+                    </row>
+                    <row>
                         <entry>Csv</entry>
                         <entry>separator</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
@@ -705,6 +719,229 @@ $translate->addTranslation("\my_de.mo","de");
                 を指定します。これにより、<code>Zend_Translate</code>
                 の時度検出機能が再度有効になります。
             </para>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.detection">
+
+        <title>自動的なソースの検出</title>
+
+        <para>
+            Zend_Translate は、翻訳ソースを自動的に検出することができます。
+            つまり、各ソースファイルを手動で宣言する必要はないということです。
+            そんな作業は Zend_Translate に任せてしまい、
+            ディレクトリ内からソースファイルを見つけさせることができるのです。
+        </para>
+
+        <note>
+            <para>
+                自動的なソース検出機能は、Zend Framework バージョン 1.1
+                以降で使用可能です。
+            </para>
+        </note>
+
+        <para>
+            使用法は、翻訳ソースを個別に登録していくのとほとんど同じですが、
+            ひとつだけ違う点があります。ファイル名の代わりに、
+            ソースを探すディレクトリを指定するのです。
+        </para>
+
+        <example id="zend.translate.using.languages.automatic.example">
+            <title>ディレクトリを指定してソースを探す</title>
+            <programlisting role="php"><![CDATA[
+// 以下のようなディレクトリ構造があることを想定しています
+//  /language
+//  /language/login/login.tmx
+//  /language/logout/logout.tmx
+//  /language/error/loginerror.tmx
+//  /language/error/logouterror.tmx
+
+$translate = new Zend_Translate('tmx', '/language');]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Zend_Translate は、指定したディレクトリだけでなく
+            そのサブディレクトリすべてから翻訳ソースファイルを探します。
+            おかげで、非常に簡単に使用できるようになっています。
+            しかし、Zend_Translate では
+            ソースを含まないファイルは無視します。
+            また翻訳データの読み込みに失敗した場合もそのファイルを無視します。
+            つまり、翻訳ソースが正しい形式であることと
+            読み込み可能であることを確認しておく必要があります。
+            ファイルの形式が間違っていたり読み込みに失敗したりした場合でもエラーは発生しないからです。
+        </para>
+
+        <note>
+            <para>
+                ディレクトリ階層の深さやその中のファイルの数によっては、
+                Zend_Translate の処理に長い時間がかかることもあります。
+            </para>
+        </note>
+
+        <para>
+            この例では TMX フォーマットを使用しており、言語の情報をソース内に含んでいます。
+            しかし、他のフォーマットの多くは言語の情報をファイル内に持たせることができません。
+            そんなソースであっても自動検索させることができます。
+            ただし、次に示す条件を満たす必要があります。
+        </para>
+
+        <sect3 id="zend.translate.using.detection.directory">
+
+            <title>ディレクトリ名からの言語の取得</title>
+
+            <para>
+                自動的に言語を検出させる方法のひとつは、
+                言語名を表すディレクトリの配下にソースファイルを配置することです。
+                これはもっとも簡単な方法であり、標準的な gettext
+                の実装でも用いられています。
+            </para>
+
+            <para>
+                Zend_Translate に 'scan' オプションを指定すると、
+                ディレクトリ名から言語を検出させることができます。
+                詳細は次の例を参照ください。
+            </para>
+
+            <example id="zend.translate.using.detection.directory.example">
+                <title>ディレクトリ名による言語の検出</title>
+                <programlisting role="php"><![CDATA[
+// 以下のようなディレクトリ構造があることを想定しています
+//  /language
+//  /language/de/login/login.tmx
+//  /language/de/error/loginerror.tmx
+//  /language/en/login/login.tmx
+//  /language/en/error/loginerror.tmx
+
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
+                </programlisting>
+            </example>
+
+            <note>
+                <para>
+                    これが動作するのは、
+                    ソースファイル中に言語情報を持たないフォーマットを使用している場合のみです。
+                    たとえば TMX などでこのオプションを使用しても、無視されます。
+                    また、このオプションを使用した場合は
+                    ファイル名による言語の自動検出は無視されます。
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.translate.using.detection.filename">
+
+            <title>ファイル名からの言語の取得</title>
+
+            <para>
+                言語を自動検出するもうひとつの方法は、特別なファイル名を使用することです。
+                ファイル名を言語名そのものにするか、あるいはその一部に言語名を含めます。
+                この方式を使用する場合は、初期化時に 'scan'
+                オプションを設定する必要があります。
+                ファイル名のつけかたには、以下に示すようにいくつかの方法があります。
+            </para>
+
+            <example id="zend.translate.using.detection.filename.example">
+                <title>ファイル名からの言語の取得</title>
+                <programlisting role="php"><![CDATA[
+// 以下のようなディレクトリ構造があることを想定しています
+//  /language
+//  /language/login/login_en.tmx
+//  /language/login/login_de.tmx
+//  /language/error/loginerror_en.tmx
+//  /language/error/loginerror_de.tmx
+
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
+                </programlisting>
+            </example>
+
+            <sect4 id="zend.translate.using.detection.filename.complete">
+
+                <title>ファイル名全体</title>
+
+                <para>
+                    言語名そのものをファイル名にしてしまうのは一番シンプルな方法ですが、
+                    同一ディレクトリにソースファイルがひとつだけの場合にしか使用できません。
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  en.mo
+  de.mo
+  es.mo]]>
+                </programlisting>
+
+            </sect4>
+
+            <sect4 id="zend.translate.using.detection.filename.extension">
+
+                <title>ファイルの拡張子</title>
+
+                <para>
+                    もうひとつのシンプルな方法としては、
+                    ファイル名の拡張子を用いて言語を検出させるというものがあります。
+                    しかしこの方法にも問題があり、本来の拡張子が何であったのかがわからなくなります。
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view.en
+  view.de
+  view.es]]>
+                </programlisting>
+
+            </sect4>
+
+            <sect4 id="zend.translate.using.detection.filename.token">
+
+                <title>ファイル名の一部</title>
+
+                <para>
+                    Zend_Translate は、
+                    ファイル名の一部に言語名が含まれている場合にもそれを検出することができます。
+                    しかし、この方式を使用する場合は言語名をトークンで分割する必要があります。
+                    トークンとしてサポートされているのは、小数点 '.' かアンダーライン '_'、
+                    あるいはハイフン '=' のいずれかです。
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en.mo  -> 英語となります。
+  view_de.mo  -> ドイツ語となります。
+  view_it.mo  -> イタリア語となります。]]>
+                </programlisting>
+
+                <para>
+                    ロケールとして判断できる部分が複数あった場合は、
+                    最初に見つかったものを使用します。詳細は次の例でご確認ください。
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en_de.mo  -> 英語となります。
+  view_en_es.mo  -> 英語となり、最初のファイルを上書きします。メッセージ ID が同じだからです。
+  view_it_it.mo  -> イタリア語となります。]]>
+                </programlisting>
+
+                <para>
+                    3 種類のトークンのどれを用いても言語を検出することができます。
+                    まず最初に使用するのが小数点 '.'、次に使用するのがアンダーライン
+                    '_'、そして最後に使用するのがハイフン '-' となります。
+                    ひとつのファイル名の中に複数のトークンが用いられている場合、
+                    トークンの優先順位の順に調べて最初に見つかったものを使用します。
+                    詳細は次の例でご確認ください。
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en-it.mo  -> 英語となります。'_' のほうが '-' より優先されるからです。
+  view-en_it.mo  -> イタリア語となります。'_' のほうが '-' より優先されるからです。
+  view_en.it.mo  -> イタリア語となります。'.' のほうが '_' より優先されるからです。]]>
+                </programlisting>
+
+            </sect4>
 
         </sect3>
 
