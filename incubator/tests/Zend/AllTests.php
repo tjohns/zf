@@ -32,6 +32,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Json/AllTests.php';
+require_once 'Zend/Crypt/AllTests.php';
 require_once 'Zend/OpenIdTest.php';
 require_once 'Zend/OpenId/AllTests.php';
 require_once 'Zend/Validate/BarcodeTest.php';
@@ -70,6 +71,11 @@ class Zend_AllTests
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());
+
+        /*
+         * Perform the tests for Zend_Crypt component now.
+         */
+        $suite->addTest(Zend_Crypt::suite());
 
         /*
          * Perform the tests for Zend_OpenId component now.
