@@ -762,10 +762,6 @@ abstract class Zend_Db_Table_Row_Abstract
     {
         $db = $this->_getTable()->getAdapter();
         
-        if ($select === null) {
-            $select = $this->select();
-        }
-
         if (is_string($dependentTable)) {
             try {
                 Zend_Loader::loadClass($dependentTable);
@@ -784,6 +780,10 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception("Dependent table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        if ($select === null) {
+            $dependentTable = $this->select();
+        }
+
         $map = $this->_prepareReference($dependentTable, $this->_getTable(), $ruleKey);
 
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
@@ -795,6 +795,7 @@ abstract class Zend_Db_Table_Row_Abstract
             $type = $dependentInfo[Zend_Db_Table_Abstract::METADATA][$dependentColumnName]['DATA_TYPE'];
             $select->where("$dependentColumn = ?", $value, $type);
         }
+
         return $dependentTable->fetchAll($select);
     }
 
