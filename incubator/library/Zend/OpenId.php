@@ -499,6 +499,8 @@ class Zend_OpenId
      */
     static public function hashHmac($macFunc, $data, $secret)
     {
+//        require_once "Zend/Crypt/Hmac.php";
+//        return Zend_Crypt_Hmac::compute($secret, $macFunc, $data, Zend_Crypt_Hmac::BINARY);
         if (function_exists('hash_hmac')) {
             return hash_hmac($macFunc, $data, $secret, 1);
         } else {
