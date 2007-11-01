@@ -781,7 +781,7 @@ abstract class Zend_Db_Table_Row_Abstract
         }
 
         if ($select === null) {
-            $dependentTable = $this->select();
+            $select = $dependentTable->select();
         }
 
         $map = $this->_prepareReference($dependentTable, $this->_getTable(), $ruleKey);
