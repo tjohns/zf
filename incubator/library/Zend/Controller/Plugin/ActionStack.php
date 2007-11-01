@@ -153,10 +153,10 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
     /**
      * Push an item onto the stack
      * 
-     * @param  array $next 
+     * @param  Zend_Controller_Request_Abstract $next 
      * @return Zend_Controller_Plugin_ActionStack
      */
-    public function pushStack(array $next)
+    public function pushStack(Zend_Controller_Request_Abstract $next)
     {
         $stack = $this->getStack();
         array_push($stack, $next);
@@ -167,7 +167,7 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
      * Pop an item off the action stack
      * 
      * @param  array $stack 
-     * @return array
+     * @return false|Zend_Controller_Request_Abstract
      */
     public function popStack(array &$stack)
     {
@@ -176,29 +176,25 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
         }
 
         $next = array_pop($stack);
-        if (!is_array($next) || !isset($next['action'])) {
+        if (!$next instanceof Zend_Controller_Request_Abstract) {
+            require_once 'Zend/Controller/Exception.php';
+            throw new Zend_Controller_Exception('ArrayStack should only contain request objects');
+        }
+        $action = $next->getActionName();
+        if (empty($action)) {
             return $this->popStack($stack);
         }
 
-        $request = $this->getRequest();
-        if (!isset($next['controller'])) {
-            $next['controller'] = $request->getControllerName();
-        }
-        if (!isset($next['module'])) {
-            $next['module'] = $request->getModuleName();
+        $request    = $this->getRequest();
+        $controller = $next->getControllerName();
+        if (empty($controller)) {
+            $next->setControllerName($request->getControllerName());
         }
 
-        $params = array();
-        if (isset($next['params'])) {
-            $params = $next['params'];
+        $module = $next->getModuleName();
+        if (empty($module)) {
+            $next->setModuleName($request->getModuleName());
         }
-        foreach ($next as $key => $value) {
-            if(!in_array($key, $this->_validKeys)) {
-                $params[$key] = $value;
-                unset($next[$key]);
-            }
-        }
-        $next['params'] = $params;
 
         return $next;
     }
@@ -217,7 +213,7 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
             return;
         }
         $next = $this->popStack($stack);
-        if (!$next || !is_array($next)) {
+        if (!$next) {
             return;
         }
 
@@ -230,12 +226,12 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
      * @param  array $next 
      * @return void
      */
-    public function forward(array $next)
+    public function forward(Zend_Controller_Request_Abstract $next)
     {
-        $this->getRequest()->setModuleName($next['module'])
-                           ->setControllerName($next['controller'])
-                           ->setActionName($next['action'])
-                           ->setParams($next['params'])
+        $this->getRequest()->setModuleName($next->getModuleName())
+                           ->setControllerName($next->getControllerName())
+                           ->setActionName($next->getActionName())
+                           ->setParams($next->getParams())
                            ->setDispatched(false);
     }
 }

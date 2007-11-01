@@ -61,12 +61,23 @@ class Zend_Controller_Action_Helper_ActionStack extends Zend_Controller_Action_H
     }
 
     /**
+     * Retrieve new request
+     * 
+     * @return Zend_Controller_Request_Simple
+     */
+    protected function _getNewRequest()
+    {
+        require_once 'Zend/Controller/Request/Simple.php';
+        return new Zend_Controller_Request_Simple();
+    }
+
+    /**
      * Push onto the stack 
      * 
-     * @param  array $next 
+     * @param  Zend_Controller_Request_Abstract $next 
      * @return Zend_Controller_Action_Helper_ActionStack
      */
-    public function pushStack(array $next)
+    public function pushStack(Zend_Controller_Request_Abstract $next)
     {
         $this->_actionStack->pushStack($next);
         return $this;
@@ -83,13 +94,21 @@ class Zend_Controller_Action_Helper_ActionStack extends Zend_Controller_Action_H
      */
     public function actionToStack($action, $controller = null, $module = null, array $params = array())
     {
-        $next = array(
-            'action'     => $action,
-            'controller' => $controller,
-            'module'     => $module,
-            'params'     => $params
-        );
-        return $this->pushArrayToStack($next);
+        if ($action instanceof Zend_Controller_Request_Abstract) {
+            return $this->pushStack($action);
+        } elseif (!is_string($action)) {
+            require_once 'Zend/Controller/Action/Exception';
+            throw new Zend_Controller_Action_Exception('ActionStack requires either a request object or minimally a string action');
+        }
+
+        $request = $this->getRequest();
+        $next    = $this->_getNewRequest();
+
+        $next->setActionName($action)
+             ->setControllerName(((null === $controller) ? $request->getControllerName() : $controller))
+             ->setModuleName(((null === $module) ? $request->getModuleName() : $module))
+             ->setParams($params);
+        return $this->pushStack($next);
     }
 
     /**
