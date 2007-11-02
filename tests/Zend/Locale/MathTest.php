@@ -1367,6 +1367,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(Zend_Locale_Math_Add(9E+100, 9E+200), 2);
             $this->fail();
         } catch (Zend_Locale_Math_Exception $e) {
+            $this->assertEquals($e->getResults(), array(9E+100, 9E+200, 9E+200));
             // success
         }
         $this->assertEquals(Zend_Locale_Math_Add(10.4444, 4.5556, 2), 15);

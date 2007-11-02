@@ -42,7 +42,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
      * test for reading with standard locale
      * expected array
      */
-    public function testLDMLNoLocale()
+    public function testNoLocale()
     {
         $this->assertTrue(is_array(Zend_Locale_Data::getContent(null, 'languagelist')),'array expected');
 
@@ -62,7 +62,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
      * test for reading without type
      * expected empty array
      */
-    public function testLDMLNoType()
+    public function testNoType()
     {
         try {
             $value = Zend_Locale_Data::getContent('de','');
@@ -84,36 +84,96 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
      * test for reading the languagelist from locale
      * expected array
      */
-    public function testLDMLReadingLanguageList()
+    public function testLanguageList()
     {
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de','languagelist')),'array expected');
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'scriptlist')), 'array expected');
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'variantlist')), 'array expected');
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'keylist')), 'array expected');
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'typelist')), 'array expected');
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'type', 'calendar')), 'array expected');
-        $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'territorylist')), 'array expected');
+        $data = Zend_Locale_Data::getContent('de','languagelist');
+        $this->assertEquals($data['de'], 'Deutsch', "'Deutsch' instead of '" . $data['de']."' expected");
+        $this->assertEquals($data['en'], 'Englisch', "'Englisch' instead of '" . $data['en']."' expected");
 
         $value = Zend_Locale_Data::getContent('de', 'language', 'de');
-        $this->assertEquals($value['de'], 'Deutsch', 'wrong content');
-
-        $value = Zend_Locale_Data::getContent('de_AT', 'script', 'Arab');
-        $this->assertEquals($value['Arab'], 'Arabisch', 'wrong content');
-
-        $value = Zend_Locale_Data::getContent('de_AT', 'variant', 'POSIX');
-        $this->assertEquals($value['POSIX'], 'Posix', 'wrong content');
-
-        $value = Zend_Locale_Data::getContent('de_AT', 'key', 'collation');
-        $this->assertEquals($value['collation'], 'Sortierung', 'wrong content');
-
-        $value = Zend_Locale_Data::getContent('de_AT', 'type', 'chinese');
-        $this->assertEquals($value['chinese'], 'Chinesischer Kalender', 'wrong value');
-
-        $value = Zend_Locale_Data::getContent('de_AT', 'territory', 'AT');
-        $this->assertEquals($value['AT'], 'Österreich', 'wrong content');
-
+        $this->assertEquals($value['de'], 'Deutsch', "'Deutsch' instead of '" . $value['de']."' expected");
     }
 
+    /**
+     * test for reading the scriptlist from locale
+     * expected array
+     */
+    public function testScriptList()
+    {
+        $data = Zend_Locale_Data::getContent('de_AT', 'scriptlist');
+        $this->assertEquals($data['Arab'], 'Arabisch', "'Arabisch' instead of '" . $data['Arab']."' expected");
+        $this->assertEquals($data['Latn'], 'Lateinisch', "'Lateinisch' instead of '" . $data['Latn']."' expected");
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'script', 'Arab');
+        $this->assertEquals($value['Arab'], 'Arabisch', "'Arabisch' instead of '" . $value['Arab']."' expected");
+    }
+
+    /**
+     * test for reading the territorylist from locale
+     * expected array
+     */
+    public function testTerritoryList()
+    {
+        $data = Zend_Locale_Data::getContent('de_AT', 'territorylist');
+        $this->assertEquals($data['AT'], 'Österreich', "'Österreich' instead of '" . $data['AT']."' expected");
+        $this->assertEquals($data['MQ'], 'Martinique', "'Martinique' instead of '" . $data['MQ']."' expected");
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'territory', 'AT');
+        $this->assertEquals($value['AT'], 'Österreich', "'Österreich' instead of '" . $value['AT']."' expected");
+    }
+
+    /**
+     * test for reading the variantlist from locale
+     * expected array
+     */
+    public function testVariantList()
+    {
+        $data = Zend_Locale_Data::getContent('de_AT', 'variantlist');
+        $this->assertEquals($data['BOONT'], 'Boontling', "'Boontling' instead of '" . $data['BOONT']."' expected");
+        $this->assertEquals($data['SAAHO'], 'Saho', "'Saho' instead of '" . $data['SAAHO']."' expected");
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'variant', 'POSIX');
+        $this->assertEquals($value['POSIX'], 'Posix', "'Posix' instead of '" . $value['POSIX']."' expected");
+    }
+
+    /**
+     * test for reading the keylist from locale
+     * expected array
+     */
+    public function testKeyList()
+    {
+        $data = Zend_Locale_Data::getContent('de_AT', 'keylist');
+        $this->assertEquals($data['calendar'], 'Kalender', "'Kalender' instead of '" . $data['calendar']."' expected");
+        $this->assertEquals($data['collation'], 'Sortierung', "'Sortierung' instead of '" . $data['collation']."' expected");
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'key', 'collation');
+        $this->assertEquals($value['collation'], 'Sortierung', "'Sortierung' instead of '" . $value['collation']."' expected");
+    }
+
+    /**
+     * test for reading the typelist from locale
+     * expected array
+     */
+    public function testTypeList()
+    {
+        $data = Zend_Locale_Data::getContent('de_AT', 'typelist');
+        $this->assertEquals($data['chinese'], 'Chinesischer Kalender', "'Chinesischer Kalender' instead of '" . $data['chinese']."' expected");
+        $this->assertEquals($data['stroke'], 'Strichfolge', "'Strichfolge' instead of '" . $data['stroke']."' expected");
+    }
+
+    /**
+     * test for reading the calendar from locale
+     * expected array
+     */
+    public function testCalendar()
+    {
+        $data = Zend_Locale_Data::getContent('de_AT', 'type', 'calendar');
+        $this->assertEquals($data['chinese'], 'Chinesischer Kalender', "'Chinesischer Kalender' instead of '" . $data['chinese']."' expected");
+        $this->assertEquals($data['japanese'], 'Japanischer Kalender', "'Japanischer Kalender' instead of '" . $data['japanese']."' expected");
+    
+        $value = Zend_Locale_Data::getContent('de_AT', 'type', 'chinese');
+        $this->assertEquals($value['chinese'], 'Chinesischer Kalender', "'Chinesischer Kalender' instead of '" . $value['chinese']."' expected");
+    }
 
     /**
      * test for reading orientation from locale

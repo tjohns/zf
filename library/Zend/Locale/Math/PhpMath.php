@@ -160,7 +160,7 @@ function Zend_Locale_Math_Div($op1, $op2, $op3 = null)
 {
     if (empty($op2)) {
         require_once 'Zend/Locale/Math/Exception.php';
-        throw new Zend_Locale_Math_Exception("can not divide by zero");
+        throw new Zend_Locale_Math_Exception("can not divide by zero", $op1, $op2, null);
     }
     if (empty($op1)) {
         $op1 = 0;
@@ -248,7 +248,7 @@ function Zend_Locale_Math_Mod($op1, $op2)
     }
     if (empty($op2)) {
         require_once 'Zend/Locale/Math/Exception.php';
-        throw new Zend_Locale_Math_Exception("can not modulo by zero: $op1 % $op2", $op1, $op2);
+        throw new Zend_Locale_Math_Exception("can not modulo by zero: $op1 % $op2", $op1, $op2, null);
     }
     $result = $op1 / $op2;
     if (($result === INF) or ((string)($result * $op2) != (string)$op1)) {
@@ -263,7 +263,7 @@ function Zend_Locale_Math_Scale($op1)
 {
     if ($op1 > 9) {
         require_once 'Zend/Locale/Math/Exception.php';
-        throw new Zend_Locale_Math_Exception("can not scale to precision $op1", $op1);
+        throw new Zend_Locale_Math_Exception("can not scale to precision $op1", $op1, null, null);
     }
     Zend_Locale_Math_PhpMath::$_scale = $op1;
     return true;
