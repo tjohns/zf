@@ -2489,7 +2489,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set(1234567890);
         $date->set('Sat, 14 Feb 2009 00:31:30 +0500', Zend_Date::RSS);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+05:00');
-
+        $date->set('Sat, 14 Feb 2009 00:31:30 GMT', Zend_Date::RSS);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+05:00');
+        $date->set('Sat, 14 Feb 09 00:31:30 GMT', Zend_Date::RSS);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+05:00');
+        $date->set('Sat, 14 Feb 09 00:31:30 +0500', Zend_Date::RSS);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+05:00');
+        
         $date->set(1234567890);
         try {
             $date->set('noday', Zend_Date::W3C);
