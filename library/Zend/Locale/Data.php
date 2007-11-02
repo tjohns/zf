@@ -773,6 +773,6 @@ class Zend_Locale_Data
      */
     public static function setCache(Zend_Cache_Core $cache)
     {
-        self::$cache = $cache;
+        self::$_cache = $cache;
     }
 }
