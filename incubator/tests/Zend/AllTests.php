@@ -30,7 +30,6 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Db/AllTests.php';
-// require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/Gdata/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 
@@ -53,11 +52,6 @@ class Zend_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTest(Zend_Db_AllTests::suite());
-
-        /*
-         * Do not include Zend_Currency because empty testbeds can cause phpunit to crash.
-         */
-        // $suite->addTest(Zend_Currency_AllTests::suite());
 
         /*
          * TimeSync tests are slow. Enable as needed. :-)
