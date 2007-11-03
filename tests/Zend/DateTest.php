@@ -62,6 +62,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('Indian/Maldives');
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File',
+                 array('lifetime' => 120, 'automatic_serialization' => true),
+                 array('cache_dir' => dirname(__FILE__) . '/_files/'));
+        Zend_Date::setOptions(array('cache' => $cache));
     }
 
     /**
@@ -237,6 +242,16 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(0,null,$locale);
         $result = $date->addTimestamp(10000000);
         $this->assertSame((string)$result->getTimestamp(), '10000000');
+
+        $result = $date->addTimestamp(array('timestamp' => 1000));
+        $this->assertSame((string)$result->getTimestamp(), '10001000');
+
+        try {
+            $result = $date->addTimestamp(array('notimestamp' => 1000));
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
     }
 
     /**
@@ -5313,6 +5328,26 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
+
+        try {
+            Zend_Date::setOptions(array('fix_dst' => 2));
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+
+        try {
+            Zend_Date::setOptions(array('fix_dst' => 2));
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+
+        require_once 'Zend/Cache.php';
+        $cache = Zend_Cache::factory('Core', 'File',
+                 array('lifetime' => 120, 'automatic_serialization' => true),
+                 array('cache_dir' => dirname(__FILE__) . '/_files/'));
+        Zend_Date::setOptions(array('cache' => $cache));
     }
 
     public function testIsDate()
@@ -5355,6 +5390,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(array('year' => 2007, 'month' => 1, 'day' => 1,
                                     'hour' => 1, 'minute' => 45, 'second' => 37, 'en_US'));
         $this->assertSame($date->getIso(), '2007-01-01T01:45:37+01:00');
+
+        $date = new Zend_Date(array('year' => 2006, 'month' => 4, 'day' => 18,
+                                    'hour' => 12, 'minute' => 3, 'second' => 10, 'de_AT'));
+        $this->assertSame($date->getIso(), '2006-04-18T12:03:10+02:00');
     }
 }
 

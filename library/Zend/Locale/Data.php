@@ -249,20 +249,20 @@ class Zend_Locale_Data
             $locale = new Zend_Locale();
         }
 
-        if (!Zend_Locale::isLocale($locale)) {
-            throw new Zend_Locale_Exception("Locale ($locale) is a unknown locale");
-        }
-
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         }
 
+        if (!Zend_Locale::isLocale($locale)) {
+            throw new Zend_Locale_Exception("Locale ($locale) is a unknown locale");
+        }
+
         if (isset(self::$_cache)) {
             $val = $value;
-            if (is_array($val)) {
-                $val = implode('_' . $value);
+            if (is_array($value)) {
+                $val = implode('_' , $value);
             }
-            $id = 'Zend_Locale_' . $locale . '_' . $path . '_' . $val;
+            $id = strtr('Zend_Locale_' . $locale . '_' . $path . '_' . $val, '-', '_');
 
             if ($result = self::$_cache->load($id)) {
                 return unserialize($result);
