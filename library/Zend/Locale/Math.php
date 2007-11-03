@@ -136,5 +136,3 @@ if ((defined('TESTS_ZEND_LOCALE_BCMATH_ENABLED') && !TESTS_ZEND_LOCALE_BCMATH_EN
     || !extension_loaded('bcmath')) {
     require_once 'Zend/Locale/Math/PhpMath.php';
 }
-
-
