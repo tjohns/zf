@@ -101,7 +101,7 @@ class Zend_Translate_XmlTmTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_XmlTm(dirname(__FILE__) . '/_files/XmlTm_test_en.xml', 'en');
 
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey', 'clear' => false));
+        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey', 'clear' => false, 'scan' => null));
         $this->assertEquals($adapter->getOptions('testoption'), 'testkey');
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }
