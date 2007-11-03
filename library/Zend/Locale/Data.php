@@ -65,7 +65,7 @@ class Zend_Locale_Data
 
 
     /**
-     *      * Read the content from locale
+     * Read the content from locale
      *
      * Can be called like:
      * <ldml>
@@ -253,7 +253,7 @@ class Zend_Locale_Data
             $locale = $locale->toString();
         }
 
-        if (!Zend_Locale::isLocale($locale)) {
+        if (!($locale = Zend_Locale::isLocale($locale))) {
             throw new Zend_Locale_Exception("Locale ($locale) is a unknown locale");
         }
 
@@ -263,7 +263,6 @@ class Zend_Locale_Data
                 $val = implode('_' , $value);
             }
             $id = strtr('Zend_Locale_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '/' => '_'));
-
             if ($result = self::$_cache->load($id)) {
                 return unserialize($result);
             }

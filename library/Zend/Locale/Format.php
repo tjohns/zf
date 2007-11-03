@@ -391,7 +391,6 @@ class Zend_Locale_Format
         }
 
         // get fraction and format lengths
-        $number = call_user_func(Zend_Locale_Math::$sub, $value, '0');
         if (strpos($value, '.') !== false) {
             $number = substr((string) $value, 0, strpos($value, '.'));
         } else {

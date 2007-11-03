@@ -154,6 +154,7 @@ abstract class Zend_Date_DateObject {
      */
     protected function mktime($hour, $minute, $second, $month, $day, $year, $gmt = false)
     {
+
         // complete date but in 32bit timestamp - use PHP internal
         if ((1901 < $year) and ($year < 2038)) {
 
@@ -225,7 +226,6 @@ abstract class Zend_Date_DateObject {
             }
 
             $date += $day - 1;
-
             $date = (($date * 86400) + ($hour * 3600) + ($minute * 60) + $second);
         } else {
 
@@ -671,6 +671,7 @@ abstract class Zend_Date_DateObject {
      */
     protected function getDateParts($timestamp = null, $fast = null)
     {
+
         // actual timestamp
         if ($timestamp === null) {
             return getdate();
@@ -813,7 +814,7 @@ abstract class Zend_Date_DateObject {
         $seconds = $timestamp - $minutes * 60;
 
         if ($fast === true) {
-            $array = return array(
+            $array = array(
                 'seconds' => $seconds,
                 'minutes' => $minutes,
                 'hours'   => $hours,

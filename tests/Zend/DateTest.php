@@ -5328,7 +5328,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Date_Exception $e) {
             // success
         }
-
         try {
             Zend_Date::setOptions(array('fix_dst' => 2));
             $this->fail();

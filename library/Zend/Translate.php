@@ -59,7 +59,7 @@ class Zend_Translate {
      *                                       Depends on the Adapter
      * @param  string|Zend_Locale  $locale   OPTIONAL locale to use
      * @param  array               $options  OPTIONAL options for the adapter
-     *      * @throws Zend_Translate_Exception
+     * @throws Zend_Translate_Exception
      */
     public function __construct($adapter, $data, $locale = null, array $options = array())
     {

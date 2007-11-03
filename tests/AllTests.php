@@ -23,8 +23,14 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'AllTests::main');
 }
 
+/**
+ * Test helper
+ */
 require_once 'TestHelper.php';
 
+/**
+ * @see Zend_AllTests
+ */
 require_once 'Zend/AllTests.php';
 
 class AllTests
@@ -48,8 +54,6 @@ class AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework');
-
-        // $suite->addTestSuite('ZendTest');
 
         $suite->addTest(Zend_AllTests::suite());
 

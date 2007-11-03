@@ -231,22 +231,29 @@ abstract class Zend_Translate_Adapter {
 
     /**
      * Returns all avaiable message ids from this adapter
+     * If no locale is given, the actual language will be used
      *
+     * @param  $locale  String|Zend_Locale  Language to return the message ids from
      * @return array
      */
-    public function getMessageIds()
+    public function getMessageIds($locale = null)
     {
-        return array_keys($this->_translate);
+        if (empty($locale) or !$this->isAvaiable($locale)) {
+            $locale = $this->_locale;
+        }
+        return array_keys($this->_translate[$locale]);
     }
 
 
     /**
      * Returns all avaiable translations from this adapter
+     * If no locale is given, the actual language will be used
      * If 'all' is given the complete translation dictionary will be returned
      *
+     * @param  $locale  String|Zend_Locale  Language to return the messages from
      * @return array
      */
-    public function getMessages()
+    public function getMessages($locale = null)
     {
         if ($locale == 'all') { 
             return $this->_translate; 
@@ -254,7 +261,6 @@ abstract class Zend_Translate_Adapter {
         if (empty($locale) or !$this->isAvaiable($locale)) { 
             $locale = $this->_locale; 
         } 
-
         return $this->_translate[$locale];
     }
 

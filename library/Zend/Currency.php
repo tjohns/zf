@@ -92,7 +92,6 @@ class Zend_Currency
         if (($this->_options['currency'] === null) and ($this->_options['name'] === null)) {
             throw new Zend_Currency_Exception("Currency '$currency' not found");
         }
-
         // get the format
         $this->_options['position'] = $this->_updateFormat();
         $this->_options['display']     = self::NO_SYMBOL;
@@ -232,6 +231,9 @@ class Zend_Currency
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         }
+
+        //validate the locale and get the country short name
+        $country = null;
         if ($locale = Zend_Locale::isLocale($locale) and (strlen($locale) > 4)) {
             $country = substr($locale, strpos($locale, '_')+1 );
         } else {
@@ -274,7 +276,8 @@ class Zend_Currency
         return array_key_exists($params['currency'], $symbols) ? $symbols[$params['currency']] : null;
    }
 
-    /**
+
+   /**
      * Returns the actual or details of other currency shortnames
      *
      * @param  string              $currency   OPTIONAL Currency's name

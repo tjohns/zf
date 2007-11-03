@@ -20,6 +20,10 @@
  * @version    $Id: DataTest.php 3776 2007-03-06 22:50:56Z thomas $
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Currency
