@@ -44,6 +44,7 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
     private $_termentry   = null;
     private $_content     = null;
     private $_defined     = false;
+    private $_term        = null;
 
     /**
      * Generates the tbx adapter
@@ -108,51 +109,65 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
 
     private function _startElement($file, $name, $attrib)
     {
-        switch(strtolower($name)) {
-            case 'termentry':
-                $this->_termentry = null;
-                break;
-            case 'langset':
-                if (array_key_exists('xml:lang', $attrib)) {
-                    $this->_langset = $attrib['xml:lang'];
-                    if (!array_key_exists($this->_langset, $this->_translate)) {
-                        $this->_translate[$this->_langset] = array();
+        if ($this->_term !== null) {
+            $this->_content .= "<".$name;
+            foreach($attrib as $key => $value) {
+                $this->_content .= " $key=\"$value\"";
+            }
+            $this->_content .= ">";
+        } else {
+            switch(strtolower($name)) {
+                case 'termentry':
+                    $this->_termentry = null;
+                    break;
+                case 'langset':
+                    if (array_key_exists('xml:lang', $attrib)) {
+                        $this->_langset = $attrib['xml:lang'];
+                        if (!array_key_exists($this->_langset, $this->_translate)) {
+                            $this->_translate[$this->_langset] = array();
+                        }
+                        if (!array_key_exists($this->_langset, $this->_languages) and ($this->_defined === true)) {
+                            $this->_languages[$this->_langset] = $this->_langset;
+                        }
                     }
-                    if (!array_key_exists($this->_langset, $this->_languages) and ($this->_defined === true)) {
-                        $this->_languages[$this->_langset] = $this->_langset;
-                    }
-                }
-                break;
-            case 'term':
-                $this->_content = null;
-                break;
-            default:
-                break;
+                    break;
+                case 'term':
+                    $this->_term    = true;
+                    $this->_content = null;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     private function _endElement($file, $name)
     {
-        switch (strtolower($name)) {
-            case 'langset':
-                $this->_langset = null;
-                break;
-            case 'term':
-                if (empty($this->_termentry)) {
-                    $this->_termentry = $this->_content;
-                }
-                if (!empty($this->_content) or !array_key_exists($this->_termentry, $this->_translate[$this->_langset])) {
-                    $this->_translate[$this->_langset][$this->_termentry] = $this->_content;
-                }
-                break;
-            default:
-                break;
+        if (($this->_term !== null) and ($name != "term")) {
+            $this->_content .= "</".$name.">";
+        } else {
+            switch (strtolower($name)) {
+                case 'langset':
+                    $this->_langset = null;
+                    break;
+                case 'term':
+                    $this->_term = null;
+                    if (empty($this->_termentry)) {
+                        $this->_termentry = $this->_content;
+                    }
+                    if (!empty($this->_content) or !array_key_exists($this->_termentry, $this->_translate[$this->_langset])) {
+                        $this->_translate[$this->_langset][$this->_termentry] = $this->_content;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     private function _contentElement($file, $data)
     {
-        if ($this->_langset !== null) {
+        if ($this->_term !== null) {
             $this->_content .= $data;
         }
     }

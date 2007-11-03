@@ -910,7 +910,7 @@ class Zend_Locale {
             return false;
         }
         if (empty(self::$_auto)) {
-            $temp = new Zend_Locale();
+            $temp = new Zend_Locale($locale);
             self::$_auto        = $temp->getDefault(null, false);
             self::$_browser     = $temp->getDefault(self::BROWSER, false);
             self::$_environment = $temp->getDefault(self::ENVIRONMENT, false);
