@@ -180,12 +180,20 @@ abstract class Zend_Translate_Adapter {
 
     /**
      * Returns all avaiable translations from this adapter
+     * If 'all' is given the complete translation dictionary will be returned
      *
      * @return array
      */
     public function getMessages()
     {
-        return $this->_translate;
+        if ($locale == 'all') { 
+            return $this->_translate; 
+        } 
+        if (empty($locale) or !$this->isAvaiable($locale)) { 
+            $locale = $this->_locale; 
+        } 
+
+        return $this->_translate[$locale];
     }
 
 

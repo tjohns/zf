@@ -349,7 +349,7 @@ class Zend_Locale_Format
 
             if (strpos($format, '.')) {
                 if (is_numeric($options['precision'])) {
-                    $value = round($value, $options['precision']);
+                    $value = Zend_Locale_Math::round($value, $options['precision']);
                 } else {
                     if (substr($format, strpos($format, '.') + 1, 3) == '###') {
                         $options['precision'] = null;
@@ -361,18 +361,18 @@ class Zend_Locale_Format
                     }
                 }
             } else {
-                $value = round($value, 0);
+                $value = Zend_Locale_Math::round($value, 0);
                 $options['precision'] = 0;
             }
             $value = Zend_Locale_Math::normalize($value);
         }
 
         // get number parts
-        if (strlen($value) != strlen(round($value, 0))) {
+        if (strlen($value) != strlen(Zend_Locale_Math::round($value, 0))) {
             if ($options['precision'] === null) {
-                $precstr = iconv_substr($value, strlen(round($value, 0)) + 1);
+                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1);
             } else {
-                $precstr = iconv_substr($value, strlen(round($value, 0)) + 1, $options['precision']);
+                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1, $options['precision']);
                 if (iconv_strlen($precstr) < $options['precision']) {
                     $precstr = $precstr . str_pad("0", ($options['precision'] - iconv_strlen($precstr)), "0");
                 }
@@ -392,12 +392,20 @@ class Zend_Locale_Format
 
         // get fraction and format lengths
         $number = call_user_func(Zend_Locale_Math::$sub, $value, '0');
+        if (strpos($value, '.') !== false) {
+            $number = substr((string) $value, 0, strpos($value, '.'));
+        } else {
+            $number = $value;
+        }
         $prec   = call_user_func(Zend_Locale_Math::$sub, $value, $number, $options['precision']);
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
-        if (($options['precision'] + 2) > strlen($prec)) {
-            $prec = $prec . str_pad("0", ($options['precision'] - iconv_strlen($prec)), "0");
+        if (($prec == 0) and ($options['precision'] > 0)) {
+            $prec = "0.0";
+        }
+        if (($options['precision'] + 2) > iconv_strlen($prec)) {
+            $prec = str_pad((string) $prec, $options['precision'] + 2, "0", STR_PAD_RIGHT);
         }
         if (iconv_strpos($number, '-') !== false) {
             $number = iconv_substr($number, 1);

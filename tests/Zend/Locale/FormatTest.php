@@ -845,7 +845,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     public function testConvertPhpToIso()
     {
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('d'), 'dd');
-        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('D'), 'EEE');
+        $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('D'), 'EE');
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('j'), 'd');
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('l'), 'EEEE');
         $this->assertSame(Zend_Locale_Format::convertPhpToIsoFormat('N'), 'e');

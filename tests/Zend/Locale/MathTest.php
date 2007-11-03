@@ -1387,8 +1387,8 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             // success
         }
         $this->assertEquals(Zend_Locale_Math_Sub(10.4444, 4.5556, 2), 5.89);
-        $this->assertEquals(Zend_Locale_Math_Sub(10.4444, 4.5556, 0), 5);
-        $this->assertEquals(Zend_Locale_Math_Sub(-10.4444, -4.5556, 0), -5);
+        $this->assertEquals(Zend_Locale_Math_Sub(10.4444, 4.5556, 0), 6); 
+        $this->assertEquals(Zend_Locale_Math_Sub(-10.4444, -4.5556, 0), -6);
         $this->assertEquals(Zend_Locale_Math_Sub(10, 11, 2), -1);
     }
 
@@ -1405,7 +1405,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(Zend_Locale_Math_Pow(10.4444, 4.5556, 2), 43815.29);
         $this->assertEquals(Zend_Locale_Math_Pow(10.4444, 4.5556, 0), 43815);
-        $this->assertEquals(Zend_Locale_Math_Pow(-10.4444, 4, 0), 11899);
+        $this->assertEquals(Zend_Locale_Math_Pow(-10.4444, 4, 0), 11900);
         $this->assertEquals(Zend_Locale_Math_Pow(10, 11, 2), 100000000000);
     }
 
@@ -1421,15 +1421,15 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
             // success
         }
         $this->assertEquals(Zend_Locale_Math_Mul(10.4444, 4.5556, 2), 47.58);
-        $this->assertEquals(Zend_Locale_Math_Mul(10.4444, 4.5556, 0), 47);
-        $this->assertEquals(Zend_Locale_Math_Mul(-10.4444, 4, 0), -41);
+        $this->assertEquals(Zend_Locale_Math_Mul(10.4444, 4.5556, 0), 48);
+        $this->assertEquals(Zend_Locale_Math_Mul(-10.4444, 4, 0), -42);
         $this->assertEquals(Zend_Locale_Math_Mul(10, 11, 2), 110);
     }
 
     public function testDiv()
     {
         Zend_Locale_Math_PhpMath::disable();
-        $this->assertEquals(Zend_Locale_Math_Div(1, 2), 0);
+        $this->assertEquals(Zend_Locale_Math_Div(1, 2), 1);
         $this->assertEquals(Zend_Locale_Math_Div(null, 2), 0);
         try {
             $this->assertEquals(Zend_Locale_Math_Div(10, null), 0);
@@ -1445,7 +1445,7 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(Zend_Locale_Math_Div(10.4444, 4.5556, 2), 2.29);
         $this->assertEquals(Zend_Locale_Math_Div(10.4444, 4.5556, 0), 2);
-        $this->assertEquals(Zend_Locale_Math_Div(-10.4444, 4, 0), -2);
+        $this->assertEquals(Zend_Locale_Math_Div(-10.4444, 4, 0), -3);
         $this->assertEquals(Zend_Locale_Math_Div(10, 11, 2), 0.91);
     }
 
