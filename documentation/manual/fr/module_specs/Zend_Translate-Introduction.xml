@@ -58,6 +58,11 @@
                 <emphasis role="strong">Détection  de la langue de l'utilisateur :</emphasis> Zend_Translate peut détecter et se servir de la langue préférée de l'utilisateur accédant à l'application.
             </para>
         </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">Détection automatique de la source :</emphasis> Zend_Translate est capable de détecter et d'intégrer des fichiers source multiples et de détecter de plus la localisation à utiliser selon les répertoires ou les noms de fichier.
+            </para>
+        </listitem>
     </itemizedlist>
 
     <sect2 id="zend.translate.introduction.adapters">
