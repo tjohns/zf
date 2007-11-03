@@ -958,6 +958,9 @@ class Zend_Locale {
      */
     public static function setCache(Zend_Cache_Core $cache)
     {
+        // load class within method for speed
+        require_once 'Zend/Locale/Data.php';
+
         Zend_Locale_Data::setCache($cache);
     }
 }

@@ -47,7 +47,6 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
                  array('lifetime' => 120, 'automatic_serialization' => true), 
                  array('cache_dir' => dirname(__FILE__) . '/_files/'));
         Zend_Currency::setCache($cache);
-        
     }
 
     /**

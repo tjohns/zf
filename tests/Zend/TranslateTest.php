@@ -78,23 +78,16 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/_files/translation_de.ts', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Qt);
 
+        $lang = new Zend_Translate('xmltm' , dirname(__FILE__) . '/Translate/_files/XmlTm_test_en.xml', 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_XmlTm);
+
+        $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/_files/translation_en.tbx', 'en');
+        $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Tbx);
+
         try {
             $lang = new Zend_Translate('sql' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
             $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
-        } catch (Zend_Exception $e) {
-            // success - not implemented
-        }
-
-        try {
-            $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
-            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
-        } catch (Zend_Exception $e) {
-            // success - not implemented
-        }
-
-        try {
-            $lang = new Zend_Translate('xmltm' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
-            $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+            $this->fail();
         } catch (Zend_Exception $e) {
             // success - not implemented
         }
@@ -102,6 +95,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         try {
             $lang = new Zend_Translate('noadapter' , dirname(__FILE__) . '/Translate/_files/translation_en.xliff', 'en');
             $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
+            $this->fail();
         } catch (Zend_Exception $e) {
             // success - not implemented
         }
@@ -113,6 +107,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $lang->setAdapter(Zend_Translate::AN_ARRAY, array());
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Array);
+
+        try { 
+            $lang->xxxFunction(); 
+            $this->fail(); 
+        } catch (Zend_Translate_Exception $e) { 
+            // success 
+        } 
     }
 
     public function testAddTranslation()
@@ -144,6 +145,11 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($lang->getLocale(), 'en');
 
         $lang->setLocale('ru');
+        $this->assertEquals($lang->getLocale(), 'ru');
+
+        $lang->setLocale('en');
+        $this->assertEquals($lang->getLocale(), 'en');
+        $lang->setLocale('ru_RU');
         $this->assertEquals($lang->getLocale(), 'ru');
     }
 
