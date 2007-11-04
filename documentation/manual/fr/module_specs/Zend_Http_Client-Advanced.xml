@@ -53,7 +53,7 @@ $client->setCookie('parfum', 'pépites de chocolat');
 $client->setCookie('parfum=p%C3%A9pites%20de%20chocolat');
 
 // En fournissant un objet Zend_Http_Cookie
-$cookie = Zend_Http_Cookie::factory('parfum=p%C3%A9pites%20de%20chocolat');
+$cookie = Zend_Http_Cookie::fromString('parfum=p%C3%A9pites%20de%20chocolat');
 $client->setCookie($cookie);]]>
     			</programlisting>
             </example>
