@@ -107,6 +107,34 @@ class Zend_Layout
     }
 
     /**
+     * Set options en masse
+     * 
+     * @param  array $options 
+     * @return void
+     */
+    protected function _setOptions(array $options)
+    {
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
+
+    /**
+     * Set options from a config object
+     * 
+     * @param  Zend_Config $config 
+     * @return Zend_Layout
+     */
+    public function setConfig(Zend_Config $config)
+    {
+        $this->_setOptions($config->toArray());
+        return $this;
+    }
+
+    /**
      * Initialize placeholder container for layout vars
      * 
      * @return Zend_View_Helper_Placeholder_Container
