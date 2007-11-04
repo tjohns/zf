@@ -42,6 +42,18 @@ class Zend_Layout
     protected $_enabled = true;
 
     /**
+     * Inflector used to resolve layout script
+     * @var Zend_Filter_Inflector
+     */
+    protected $_inflector;
+
+    /**
+     * Flag: is inflector enabled?
+     * @var bool
+     */
+    protected $_inflectorEnabled = true;
+
+    /**
      * Layout view
      * @var string
      */
@@ -217,6 +229,60 @@ class Zend_Layout
     } 
  
     /**
+     * Set inflector to use when resolving layout names
+     *
+     * @param  Zend_Filter_Inflector $inflector
+     * @return Zend_Layout
+     */
+    public function setInflector(Zend_Filter_Inflector $inflector)
+    {
+        $this->_inflector = $inflector;
+        return $this;
+    }
+
+    /**
+     * Retrieve inflector
+     *
+     * @return Zend_Filter_Inflector
+     */
+    public function getInflector()
+    {
+        return $this->_inflector;
+    }
+
+    /**
+     * Enable inflector
+     * 
+     * @return Zend_Layout
+     */
+    public function enableInflector()
+    {
+        $this->_inflectorEnabled = true;
+        return $this;
+    }
+
+    /**
+     * Disable inflector
+     * 
+     * @return Zend_Layout
+     */
+    public function disableInflector()
+    {
+        $this->_inflectorEnabled = false;
+        return $this;
+    }
+
+    /**
+     * Return status of inflector enabled flag
+     * 
+     * @return bool
+     */
+    public function inflectorEnabled()
+    {
+        return $this->_inflectorEnabled;
+    }
+
+    /**
      * Set layout variable
      * 
      * @param  string $key 
@@ -293,7 +359,7 @@ class Zend_Layout
         include_once 'Zend/Layout/Exception.php';
         throw new Zend_Layout_Exception('Invalid values passed to assign()');
     }
- 
+
     /**
      * Render layout
      *
@@ -306,5 +372,19 @@ class Zend_Layout
      */ 
     public function render($name = null) 
     { 
-    } 
+        if (null === $name) {
+            $name = $this->getLayout();
+        }
+
+        if ($this->inflectorEnabled() && (null !== ($inflector = $this->getInflector())))
+        {
+            $name = $this->_inflector->filter($name);
+        }
+
+        if (null !== ($path = $this->getLayoutPath())) {
+            $view->addScriptPath($path);
+        }
+
+        return $this->getView()->render($name);
+    }
 }
