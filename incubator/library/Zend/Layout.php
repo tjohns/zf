@@ -185,6 +185,7 @@ class Zend_Layout
     protected function _initVarContainer()
     {
         if (null === $this->_container) {
+            include_once 'Zend/View/Helper/Placeholder.php';
             if (Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY)) {
                 $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
             } else {
