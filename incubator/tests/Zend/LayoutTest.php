@@ -9,6 +9,10 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Layout.php';
+require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/View/Interface.php';
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_Layout.
@@ -36,6 +40,13 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        Zend_Controller_Front::getInstance()->resetInstance();
+        if (Zend_Controller_Action_HelperBroker::hasHelper('Layout')) {
+            Zend_Controller_Action_HelperBroker::removeHelper('Layout');
+        }
+        if (Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
+            Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
+        }
     }
 
     /**
@@ -60,7 +71,7 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetConfig().
+     * @return void
      */
     public function testSetConfigModifiesAttributes()
     {
@@ -81,146 +92,112 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetLayout().
+     * @return void
      */
-    public function testSetLayout()
+    public function testLayoutAccessorsModifyAndRetrieveLayoutValue()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->setLayout('foo');
+        $this->assertEquals('foo', $layout->getLayout());
     }
 
     /**
-     * @todo Implement testGetLayout().
+     * @return void
      */
-    public function testGetLayout()
+    public function testSetLayoutEnablesLayouts()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->disableLayout();
+        $this->assertFalse($layout->isEnabled());
+        $layout->setLayout('foo');
+        $this->assertTrue($layout->isEnabled());
     }
 
     /**
-     * @todo Implement testDisableLayout().
+     * @return void
      */
-    public function testDisableLayout()
+    public function testDisableLayoutDisablesLayouts()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $this->assertTrue($layout->isEnabled());
+        $layout->disableLayout();
+        $this->assertFalse($layout->isEnabled());
     }
 
     /**
-     * @todo Implement testEnableLayout().
+     * @return void
      */
-    public function testEnableLayout()
+    public function testEnableLayoutEnablesLayouts()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $this->assertTrue($layout->isEnabled());
+        $layout->disableLayout();
+        $this->assertFalse($layout->isEnabled());
+        $layout->enableLayout();
+        $this->assertTrue($layout->isEnabled());
     }
 
     /**
-     * @todo Implement testIsEnabled().
+     * @return void
      */
-    public function testIsEnabled()
+    public function testLayoutPathAccessorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->setLayoutPath(dirname(__FILE__));
+        $this->assertEquals(dirname(__FILE__), $layout->getLayoutPath());
     }
 
     /**
-     * @todo Implement testSetLayoutPath().
+     * @return void
      */
-    public function testSetLayoutPath()
+    public function testContentKeyAccessorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->setContentKey('foo');
+        $this->assertEquals('foo', $layout->getContentKey());
     }
 
     /**
-     * @todo Implement testGetLayoutPath().
+     * @return void
      */
-    public function testGetLayoutPath()
+    public function testMvcEnabledAccessorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->setMvcEnabled(false);
+        $this->assertFalse($layout->getMvcEnabled());
     }
 
     /**
-     * @todo Implement testSetContentKey().
+     * @return void
      */
-    public function testSetContentKey()
+    public function testGetViewRetrievesViewWhenNoneSet()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $view = $layout->getView();
+        $this->assertTrue($view instanceof Zend_View_Interface);
     }
 
     /**
-     * @todo Implement testGetContentKey().
+     * @return void
      */
-    public function testGetContentKey()
+    public function testGetViewRetrievesViewFromViewRenderer()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $view = $layout->getView();
+        $vr = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $this->assertSame($vr->view, $view);
     }
 
     /**
-     * @todo Implement testSetMvcEnabled().
+     * @return void
      */
-    public function testSetMvcEnabled()
+    public function testViewAccessorsAllowSettingView()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testGetMvcEnabled().
-     */
-    public function testGetMvcEnabled()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testSetView().
-     */
-    public function testSetView()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testGetView().
-     */
-    public function testGetView()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $view   = new Zend_View();
+        $layout->setView($view);
+        $received = $layout->getView();
+        $this->assertSame($view, $received);
     }
 
     /**
