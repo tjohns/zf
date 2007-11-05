@@ -36,6 +36,12 @@ class Zend_Layout
     protected $_container;
 
     /**
+     * Key used to store content from 'default' named response segment
+     * @var string
+     */
+    protected $_contentKey = 'content';
+
+    /**
      * Are layouts enabled?
      * @var bool
      */
@@ -66,6 +72,12 @@ class Zend_Layout
     protected $_layoutPath;
 
     /**
+     * Flag: is MVC integration enabled?
+     * @var bool
+     */
+    protected $_mvcEnabled = true;
+
+    /**
      * @var Zend_View_Interface
      */
     protected $_view;
@@ -81,7 +93,7 @@ class Zend_Layout
      * Layout script path, either as argument or as key in options, is 
      * required.
      *
-     * If useMvc flag is false from options, simply sets layout script path. 
+     * If mvcEnabled flag is false from options, simply sets layout script path. 
      * Otherwise, also instantiates and registers action helper and controller 
      * plugin.
      * 
@@ -104,6 +116,10 @@ class Zend_Layout
         }
 
         $this->_initVarContainer();
+
+        if ($this->getMvcEnabled()) {
+            $this->_initMvc();
+        }
     }
 
     /**
@@ -119,6 +135,32 @@ class Zend_Layout
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
+        }
+    }
+
+    /**
+     * Initialize MVC integration
+     * 
+     * @return void
+     */
+    protected function _initMvc()
+    {
+        include_once 'Zend/Controller/Front.php';
+
+        $front = Zend_Controller_Front::getInstance();
+        if (!$front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
+            include_once 'Zend/Layout/Controller/Plugin/Layout.php';
+            $front->registerPlugin(
+                new Zend_Layout_Controller_Plugin_Layout($this)
+            );
+        }
+
+        include_once 'Zend/Controller/Action/HelperBroker.php';
+        if (!Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
+            include_once 'Zend/Layout/Controller/Action/Helper/Layout.php';
+            Zend_Controller_Action_HelperBroker::addHelper(
+                new Zend_Layout_Controller_Action_Helper_Layout($this)
+            );
         }
     }
 
@@ -202,6 +244,16 @@ class Zend_Layout
         $this->_enabled = true;
         return $this;
     }
+
+    /**
+     * Is layout enabled?
+     * 
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->_enabled;
+    }
  
     /**
      * Set layout script path
@@ -224,7 +276,52 @@ class Zend_Layout
     {
         return $this->_layoutPath;
     } 
- 
+
+    /**
+     * Set content key
+     *
+     * Key in namespace container denoting default content
+     *
+     * @param  string $contentKey
+     * @return Zend_Layout
+     */
+    public function setContentKey($contentKey)
+    {
+        $this->_contentKey = (string) $contentKey;
+        return $this;
+    }
+     /**
+     * Retrieve content key
+     *
+     * @return string
+     */
+    public function getContentKey()
+    {
+        return $this->_contentKey;
+    }
+
+    /**
+     * Set MVC enabled flag
+     *
+     * @param  bool $mvcEnabled
+     * @return Zend_Layout
+     */
+    public function setMvcEnabled($mvcEnabled)
+    {
+        $this->_mvcEnabled = ($mvcEnabled) ? true : false;
+        return $this;
+    }
+
+    /**
+     * Retrieve MVC enabled flag
+     *
+     * @return bool
+     */
+    public function getMvcEnabled()
+    {
+        return $this->_mvcEnabled;
+    }
+
     /**
      * Set view object
      * 
