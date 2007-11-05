@@ -151,7 +151,8 @@ class Zend_Layout
         if (!$front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
             include_once 'Zend/Layout/Controller/Plugin/Layout.php';
             $front->registerPlugin(
-                new Zend_Layout_Controller_Plugin_Layout($this)
+                // register to run last
+                new Zend_Layout_Controller_Plugin_Layout($this, 99)
             );
         }
 
