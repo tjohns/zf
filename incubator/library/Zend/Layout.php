@@ -341,6 +341,7 @@ class Zend_Layout
      *
      * If no view object currently set, retrieves it from the ViewRenderer.
      * 
+     * @todo Set inflector from view renderer at same time
      * @return Zend_View_Interface
      */ 
     public function getView() 
