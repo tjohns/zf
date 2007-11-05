@@ -1,25 +1,24 @@
 <?php
+// Call Zend_LayoutTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(__FILE__) . '/../TestHelper.php';
+    require_once dirname(dirname(__FILE__)) . '/TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_LayoutTest::main");
 }
 
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
-require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Layout.php';
 
 /**
- * Test class for Zend_Layout
+ * Test class for Zend_Layout.
  */
 class Zend_LayoutTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Runs the test methods of this class.
      *
-     * @access public
-     * @static
+     * @return void
      */
     public static function main()
     {
@@ -37,8 +36,6 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        Zend_Controller_Front::getInstance()->resetInstance();
-        $this->layout = new Zend_Layout();
     }
 
     /**
@@ -49,26 +46,306 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->layout);
+    }
+
+    public function testDefaultLayoutStatusAtInitialization()
+    {
+        $layout = new Zend_Layout();
+        $this->assertEquals('layout', $layout->getLayout());
+        $this->assertEquals('content', $layout->getContentKey());
+        $this->assertTrue($layout->isEnabled());
+        $this->assertTrue($layout->inflectorEnabled());
+        $this->assertNull($layout->getLayoutPath());
+        $this->assertTrue($layout->getMvcEnabled());
     }
 
     /**
-     * @return void
+     * @todo Implement testSetConfig().
      */
-    public function testDefaultLayoutExists()
+    public function testSetConfigModifiesAttributes()
     {
-        $this->markTestIncomplete('Test for default layout incomplete');
+        $layout = new Zend_Layout();
+
+        require_once 'Zend/Config.php';
+        $config = new Zend_Config(array(
+            'layout'           => 'foo',
+            'contentKey'       => 'foo',
+            'layoutPath'       => dirname(__FILE__),
+            'mvcEnabled'       => false,
+        ));
+        $layout->setConfig($config);
+        $this->assertEquals('foo', $layout->getLayout());
+        $this->assertEquals('foo', $layout->getContentKey());
+        $this->assertEquals(dirname(__FILE__), $layout->getLayoutPath());
+        $this->assertFalse($layout->getMvcEnabled());
     }
 
     /**
-     * @return void
+     * @todo Implement testSetLayout().
      */
-    public function testChangingLayoutIsPossible()
+    public function testSetLayout()
     {
-        $this->markTestIncomplete('Test for changing layout incomplete');
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testGetLayout().
+     */
+    public function testGetLayout()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testDisableLayout().
+     */
+    public function testDisableLayout()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testEnableLayout().
+     */
+    public function testEnableLayout()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testIsEnabled().
+     */
+    public function testIsEnabled()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testSetLayoutPath().
+     */
+    public function testSetLayoutPath()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testGetLayoutPath().
+     */
+    public function testGetLayoutPath()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testSetContentKey().
+     */
+    public function testSetContentKey()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testGetContentKey().
+     */
+    public function testGetContentKey()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testSetMvcEnabled().
+     */
+    public function testSetMvcEnabled()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testGetMvcEnabled().
+     */
+    public function testGetMvcEnabled()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testSetView().
+     */
+    public function testSetView()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testGetView().
+     */
+    public function testGetView()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testSetInflector().
+     */
+    public function testSetInflector()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testGetInflector().
+     */
+    public function testGetInflector()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testEnableInflector().
+     */
+    public function testEnableInflector()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testDisableInflector().
+     */
+    public function testDisableInflector()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testInflectorEnabled().
+     */
+    public function testInflectorEnabled()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement test__set().
+     */
+    public function test__set()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement test__get().
+     */
+    public function test__get()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement test__isset().
+     */
+    public function test__isset()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement test__unset().
+     */
+    public function test__unset()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testAssign().
+     */
+    public function testAssign()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+
+    /**
+     * @todo Implement testRender().
+     */
+    public function testRender()
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
     }
 }
 
+// Call Zend_LayoutTest::main() if this source file is executed directly.
 if (PHPUnit_MAIN_METHOD == "Zend_LayoutTest::main") {
     Zend_LayoutTest::main();
 }

@@ -189,9 +189,10 @@ class Zend_Layout
             if (Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY)) {
                 $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
             } else {
+                require_once 'Zend/View/Helper/Placeholder.php';
                 require_once 'Zend/View/Helper/Placeholder/Registry.php';
                 $registry = new Zend_View_Helper_Placeholder_Registry();
-                Zend_Registry::set(self::REGISTRY_KEY, $this->_registry);
+                Zend_Registry::set(Zend_View_Helper_Placeholder::REGISTRY_KEY, $registry);
             }
 
             $this->_container = $registry->getContainer(__CLASS__);
