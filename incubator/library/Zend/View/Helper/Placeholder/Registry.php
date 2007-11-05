@@ -131,12 +131,12 @@ class Zend_View_Helper_Placeholder_Registry
      */
     public function setContainerClass($name)
     {
-        include_once 'Zend/Loader.php';
+        require_once 'Zend/Loader.php';
         Zend_Loader::loadClass($name);
 
         $reflection = new ReflectionClass($name);
         if (!$reflection->isSubclassOf(new ReflectionClass('Zend_View_Helper_Placeholder_Container_Abstract'))) {
-            include_once 'Zend/View/Helper/Placeholder/Registry/Exception.php';
+            require_once 'Zend/View/Helper/Placeholder/Registry/Exception.php';
             throw new Zend_View_Helper_Placeholder_Registry_Exception('Invalid Container class specified');
         }
 

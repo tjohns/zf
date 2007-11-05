@@ -69,7 +69,7 @@ class Zend_View_Helper_Placeholder
         if (Zend_Registry::isRegistered(self::REGISTRY_KEY)) {
             $this->_registry = Zend_Registry::get(self::REGISTRY_KEY);
         } else {
-            include_once 'Zend/View/Helper/Placeholder/Registry.php';
+            require_once 'Zend/View/Helper/Placeholder/Registry.php';
             $this->_registry = new Zend_View_Helper_Placeholder_Registry();
             Zend_Registry::set(self::REGISTRY_KEY, $this->_registry);
         }

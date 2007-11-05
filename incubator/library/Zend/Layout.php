@@ -110,7 +110,7 @@ class Zend_Layout
             } elseif ($options instanceof Zend_Config) {
                 $this->setConfig($options);
             } else {
-                include_once 'Zend/Layout/Exception.php';
+                require_once 'Zend/Layout/Exception.php';
                 throw new Zend_Layout_Exception('Invalid option provided to constructor');
             }
         }
@@ -145,20 +145,20 @@ class Zend_Layout
      */
     protected function _initMvc()
     {
-        include_once 'Zend/Controller/Front.php';
+        require_once 'Zend/Controller/Front.php';
 
         $front = Zend_Controller_Front::getInstance();
         if (!$front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
-            include_once 'Zend/Layout/Controller/Plugin/Layout.php';
+            require_once 'Zend/Layout/Controller/Plugin/Layout.php';
             $front->registerPlugin(
                 // register to run last
                 new Zend_Layout_Controller_Plugin_Layout($this, 99)
             );
         }
 
-        include_once 'Zend/Controller/Action/HelperBroker.php';
+        require_once 'Zend/Controller/Action/HelperBroker.php';
         if (!Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
-            include_once 'Zend/Layout/Controller/Action/Helper/Layout.php';
+            require_once 'Zend/Layout/Controller/Action/Helper/Layout.php';
             Zend_Controller_Action_HelperBroker::addHelper(
                 new Zend_Layout_Controller_Action_Helper_Layout($this)
             );
@@ -185,11 +185,11 @@ class Zend_Layout
     protected function _initVarContainer()
     {
         if (null === $this->_container) {
-            include_once 'Zend/View/Helper/Placeholder.php';
+            require_once 'Zend/View/Helper/Placeholder.php';
             if (Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY)) {
                 $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
             } else {
-                include_once 'Zend/View/Helper/Placeholder/Registry.php';
+                require_once 'Zend/View/Helper/Placeholder/Registry.php';
                 $registry = new Zend_View_Helper_Placeholder_Registry();
                 Zend_Registry::set(self::REGISTRY_KEY, $this->_registry);
             }
@@ -484,7 +484,7 @@ class Zend_Layout
             return $this;
         }
 
-        include_once 'Zend/Layout/Exception.php';
+        require_once 'Zend/Layout/Exception.php';
         throw new Zend_Layout_Exception('Invalid values passed to assign()');
     }
 

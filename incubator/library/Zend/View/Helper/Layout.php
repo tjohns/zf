@@ -55,14 +55,14 @@ class Zend_View_Helper_Layout
     public function getLayout()
     {
         if (null === $this->_layout) {
-            include_once 'Zend/Controller/Front.php';
+            require_once 'Zend/Controller/Front.php';
             $front = Zend_Controller_Front::getInstance();
             if ($front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
                 $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
                 $this->_layout = $plugin->getLayout();
             } else {
                 // Implicitly sets layout object
-                include_once 'Zend/Layout.php';
+                require_once 'Zend/Layout.php';
                 $layout = new Zend_Layout();
             }
         }

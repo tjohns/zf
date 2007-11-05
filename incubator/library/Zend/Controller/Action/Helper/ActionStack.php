@@ -52,7 +52,7 @@ class Zend_Controller_Action_Helper_ActionStack extends Zend_Controller_Action_H
     {
         $front = Zend_Controller_Front::getInstance();
         if (!$front->hasPlugin('Zend_Controller_Plugin_ActionStack')) {
-            include_once 'Zend/Controller/Plugin/ActionStack.php';
+            require_once 'Zend/Controller/Plugin/ActionStack.php';
             $this->_actionStack = new Zend_Controller_Plugin_ActionStack();
             $front->registerPlugin($this->_actionStack, 97);
         } else {
