@@ -83,7 +83,14 @@ class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstra
      */
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
+        // Return early if forward detected
+        if (!$request->isDispatched()) {
+            return;
+        }
+
         $layout     = $this->getLayout();
+
+        // Return early if layout has been disabled
         if (!$layout->isEnabled()) {
             return;
         }
