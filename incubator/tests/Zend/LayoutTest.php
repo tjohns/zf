@@ -201,124 +201,89 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testSetInflector().
+     * @return void
      */
-    public function testSetInflector()
+    public function testInflectorAccessorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $inflector = new Zend_Filter_Inflector();
+        $layout->setInflector($inflector);
+        $this->assertSame($inflector, $layout->getInflector());
     }
 
     /**
-     * @todo Implement testGetInflector().
-     */
-    public function testGetInflector()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testEnableInflector().
+     * @return void
      */
     public function testEnableInflector()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->disableInflector();
+        $this->assertFalse($layout->inflectorEnabled());
+        $layout->enableInflector();
+        $this->assertTrue($layout->inflectorEnabled());
     }
 
     /**
-     * @todo Implement testDisableInflector().
+     * @return void
      */
     public function testDisableInflector()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->disableInflector();
+        $this->assertFalse($layout->inflectorEnabled());
     }
 
     /**
-     * @todo Implement testInflectorEnabled().
+     * @return void
      */
-    public function testInflectorEnabled()
+    public function testOverloadingAccessorsWork()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->foo = 'bar';
+        $this->assertTrue(isset($layout->foo));
+        $this->assertEquals('bar', $layout->foo);
+        unset($layout->foo);
+        $this->assertFalse(isset($layout->foo));
     }
 
     /**
-     * @todo Implement test__set().
+     * @return void
      */
-    public function test__set()
+    public function testAssignWithKeyValuePairPopulatesPropertyAccessibleViaOverloading()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->assign('foo', 'bar');
+        $this->assertEquals('bar', $layout->foo);
     }
 
     /**
-     * @todo Implement test__get().
+     * @return void
      */
-    public function test__get()
+    public function testAssignWithArrayPopulatesPropertiesAccessibleViaOverloading()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $layout->assign(array(
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ));
+        $this->assertEquals('bar', $layout->foo);
+        $this->assertEquals('baz', $layout->bar);
     }
 
     /**
-     * @todo Implement test__isset().
+     * @return void
      */
-    public function test__isset()
+    public function testRenderWithNoInflection()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement test__unset().
-     */
-    public function test__unset()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testAssign().
-     */
-    public function testAssign()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testRender().
-     */
-    public function testRender()
-    {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $layout = new Zend_Layout();
+        $view   = new Zend_View();
+        $layout->setLayoutPath(dirname(__FILE__) . '/Layout/_files/layouts')
+               ->setLayout('layout.phtml')
+               ->setView($view);
+        $layout->message = 'Rendered layout';
+        $received = $layout->render();
+        $this->assertContains('Testing layouts:', $received);
+        $this->assertContains($layout->message, $received);
     }
 }
 

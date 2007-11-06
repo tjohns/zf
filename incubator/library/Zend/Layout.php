@@ -510,10 +510,12 @@ class Zend_Layout
             $name = $this->_inflector->filter($name);
         }
 
+        $view = $this->getView();
+
         if (null !== ($path = $this->getLayoutPath())) {
             $view->addScriptPath($path);
         }
 
-        return $this->getView()->render($name);
+        return $view->render($name);
     }
 }
