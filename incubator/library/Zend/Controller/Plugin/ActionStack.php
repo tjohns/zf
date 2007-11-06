@@ -143,7 +143,7 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
      * @param  array $stack 
      * @return Zend_Controller_Plugin_ActionStack
      */
-    public function saveStack(array $stack)
+    protected function _saveStack(array $stack)
     {
         $registry = $this->getRegistry();
         $registry[$this->getRegistryKey()] = $stack;
@@ -160,22 +160,24 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
     {
         $stack = $this->getStack();
         array_push($stack, $next);
-        return $this->saveStack();
+        return $this->_saveStack($stack);
     }
 
     /**
      * Pop an item off the action stack
      * 
-     * @param  array $stack 
      * @return false|Zend_Controller_Request_Abstract
      */
-    public function popStack(array &$stack)
+    public function popStack()
     {
+        $stack = $this->getStack();
         if (0 == count($stack)) {
             return false;
         }
 
         $next = array_pop($stack);
+        $this->_saveStack($stack);
+
         if (!$next instanceof Zend_Controller_Request_Abstract) {
             require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Exception('ArrayStack should only contain request objects');
