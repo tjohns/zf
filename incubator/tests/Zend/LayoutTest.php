@@ -11,6 +11,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 require_once 'Zend/Layout.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Filter/Inflector.php';
 require_once 'Zend/View/Interface.php';
 require_once 'Zend/View.php';
 
