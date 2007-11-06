@@ -152,7 +152,7 @@ class Zend_Layout
             require_once 'Zend/Layout/Controller/Plugin/Layout.php';
             $front->registerPlugin(
                 // register to run last
-                new Zend_Layout_Controller_Plugin_Layout($this, 99)
+                new Zend_Layout_Controller_Plugin_Layout($this), 99
             );
         }
 
