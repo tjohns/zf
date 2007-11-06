@@ -63,7 +63,7 @@ class Zend_View_Helper_Layout
             } else {
                 // Implicitly sets layout object
                 require_once 'Zend/Layout.php';
-                $layout = new Zend_Layout();
+                $this->_layout = new Zend_Layout();
             }
         }
 

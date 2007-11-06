@@ -8,6 +8,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/View/Helper/ActionTest.php';
 require_once 'Zend/View/Helper/HeadTitleTest.php';
+require_once 'Zend/View/Helper/LayoutTest.php';
 require_once 'Zend/View/Helper/PartialTest.php';
 require_once 'Zend/View/Helper/PartialLoopTest.php';
 require_once 'Zend/View/Helper/PlaceholderTest.php';
@@ -35,6 +36,7 @@ class Zend_View_Helper_AllTests
 
         $suite->addTestSuite('Zend_View_Helper_ActionTest');
         $suite->addTestSuite('Zend_View_Helper_HeadTitleTest');
+        $suite->addTestSuite('Zend_View_Helper_LayoutTest');
         $suite->addTestSuite('Zend_View_Helper_PartialTest');
         $suite->addTestSuite('Zend_View_Helper_PartialLoopTest');
         $suite->addTestSuite('Zend_View_Helper_PlaceholderTest');
