@@ -24,7 +24,9 @@
  */
 require_once 'Zend/Filter/Interface.php';
 
-/** Zend_Loader_PluginLoader */
+/**
+ * @see Zend_Loader_PluginLoader 
+ */
 require_once 'Zend/Loader/PluginLoader.php';
 
 /**
@@ -121,6 +123,23 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     }
 
     /**
+     * Enter description here...
+     *
+     * @param reference $target
+     * @return Zend_Filter_Inflector
+     */
+    public function setTargetReference(&$target)
+    {
+        $this->_target =& $target;
+        return $this;
+    }
+    
+    /**
+     * AddRules() is similar to a multi-call to setting filter rules.  If prefixed
+     * with a ":" (semicolon), a filter rule will be added.  If prefixed with an "&",
+     * a referenced static replacement will be added.  If not prefixed, a static
+     * replacement will be added.
+     * 
      * ex:
      * array(
      *     ':controller' => array('CamelCaseToUnderscore','StringToLower'),
