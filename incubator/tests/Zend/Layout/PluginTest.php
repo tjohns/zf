@@ -98,6 +98,32 @@ class Zend_Layout_PluginTest extends PHPUnit_Framework_TestCase
         $request  = new Zend_Controller_Request_Simple();
         $response = new Zend_Controller_Response_Cli();
 
+        $request->setDispatched(true);
+        $response->setBody('Application content');
+        $front->setRequest($request)
+              ->setResponse($response);
+
+        $layout = new Zend_Layout();
+        $layout->setLayoutPath(dirname(__FILE__) . '/_files/layouts')
+               ->setLayout('plugin.phtml')
+               ->disableInflector();
+
+        $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
+        $plugin->setResponse($response);
+        $plugin->postDispatch($request);
+
+        $body = $response->getBody();
+        $this->assertContains('Application content', $body, $body);
+        $this->assertContains('Site Layout', $body, $body);
+    }
+
+    public function testPostDispatchDoesNotRenderLayoutWhenForwardDetected()
+    {
+        $front    = Zend_Controller_Front::getInstance();
+        $request  = new Zend_Controller_Request_Simple();
+        $response = new Zend_Controller_Response_Cli();
+
+        $request->setDispatched(false);
         $response->setBody('Application content');
         $front->setRequest($request)
               ->setResponse($response);
@@ -113,7 +139,33 @@ class Zend_Layout_PluginTest extends PHPUnit_Framework_TestCase
 
         $body = $response->getBody();
         $this->assertContains('Application content', $body);
-        $this->assertContains('Site Layout', $body);
+        $this->assertNotContains('Site Layout', $body);
+    }
+
+    public function testPostDispatchDoesNotRenderLayoutWhenLayoutDisabled()
+    {
+        $front    = Zend_Controller_Front::getInstance();
+        $request  = new Zend_Controller_Request_Simple();
+        $response = new Zend_Controller_Response_Cli();
+
+        $request->setDispatched(true);
+        $response->setBody('Application content');
+        $front->setRequest($request)
+              ->setResponse($response);
+
+        $layout = new Zend_Layout();
+        $layout->setLayoutPath(dirname(__FILE__) . '/_files/layouts')
+               ->setLayout('plugin.phtml')
+               ->disableInflector()
+               ->disableLayout();
+
+        $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
+        $plugin->setResponse($response);
+        $plugin->postDispatch($request);
+
+        $body = $response->getBody();
+        $this->assertContains('Application content', $body);
+        $this->assertNotContains('Site Layout', $body);
     }
 }
 
