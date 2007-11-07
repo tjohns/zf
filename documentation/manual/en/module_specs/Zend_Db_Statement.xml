@@ -5,7 +5,7 @@
     <para>
         In addition to convenient methods such as <code>fetchAll()</code> and
         <code>insert()</code> documented in <xref linkend="zend.db.adapter" />,
-        you can use an statement object to gain more options for running
+        you can use a statement object to gain more options for running
         queries and fetching result sets.  This section describes how to get an
         instance of a statement object, and how to use its methods.
     </para>
