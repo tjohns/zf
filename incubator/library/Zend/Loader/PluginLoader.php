@@ -79,8 +79,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
      */
     public function __construct(Array $prefixToPaths = array(), $staticRegistryName = null)
     {
-        
-        if ($staticRegistryName != '' && is_string($staticRegistryName)) {
+        if (is_string($staticRegistryName) && !empty($staticRegistryName)) {
             $this->_useStaticRegistry = $staticRegistryName;
             self::$_staticPrefixToPaths[$staticRegistryName] = array();
             self::$_staticLoadedHelpers[$staticRegistryName] = array();
@@ -89,7 +88,17 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
         foreach ($prefixToPaths as $prefix => $path) {
             $this->addPrefixPath($prefix, $path);
         }
+    }
 
+    /**
+     * Format prefix for internal use
+     * 
+     * @param  string $prefix 
+     * @return string
+     */
+    protected function _formatPrefix($prefix)
+    {
+        return rtrim($prefix, '_') . '_';
     }
     
     /**
@@ -106,7 +115,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
             throw new Zend_Loader_PluginLoader_Exception('Zend_Loader_PluginLoader::addPrefixPath() method only takes strings for prefix and path.');
         }
 
-        $prefix = rtrim($prefix, '_') . '_';
+        $prefix = $this->_formatPrefix($prefix);
         $path   = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         
         if ($this->_useStaticRegistry) {
@@ -115,6 +124,74 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
             $this->_prefixToPaths[$prefix][] = $path;
         }
         return $this;
+    }
+
+    /**
+     * Get path stack
+     * 
+     * @param  string $prefix 
+     * @return false|array False if prefix does not exist, array otherwise
+     */
+    public function getPaths($prefix = null)
+    {
+        if ((null !== $prefix) && is_string($prefix)) {
+            $prefix = $this->_formatPrefix($prefix);
+            if ($this->_useStaticRegistry) {
+                if (isset($this->_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
+                    return self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix];
+                }
+
+                return false;
+            }
+
+            if (isset($this->_prefixToPaths[$prefix])) {
+                return $this->_prefixToPaths[$prefix];
+            }
+
+            return false;
+        }
+
+        if ($this->_useStaticRegistry) {
+            return self::$_staticPrefixToPaths[$this->_useStaticRegistry];
+        }
+
+        return $this->_prefixToPaths;
+    }
+
+    /**
+     * Clear path stack
+     * 
+     * @param  string $prefix 
+     * @return bool False only if $prefix does not exist
+     */
+    public function clearPaths($prefix = null)
+    {
+        if ((null !== $prefix) && is_string($prefix)) {
+            $prefix = $this->_formatPrefix($prefix);
+            if ($this->_useStaticRegistry) {
+                if (isset($this->_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
+                    unset(self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix]);
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (isset($this->_prefixToPaths[$prefix])) {
+                unset($this->_prefixToPaths[$prefix]);
+                return true;
+            }
+
+            return false;
+        }
+
+        if ($this->_useStaticRegistry) {
+            self::$_staticPrefixToPaths[$this->_useStaticRegistry] = array();
+        } else {
+            $this->_prefixToPaths = array();
+        }
+
+        return true;
     }
     
     /**
