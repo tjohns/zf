@@ -47,7 +47,6 @@ class Zend_Filter_Digits implements Zend_Filter_Interface
      *
      * Checks if PCRE is compiled with UTF-8 and Unicode support
      *
-     * @param  boolean $allowWhiteSpace
      * @return void
      */
     public function __construct()
@@ -68,10 +67,10 @@ class Zend_Filter_Digits implements Zend_Filter_Interface
     public function filter($value)
     {
         if (!self::$_unicodeEnabled) {
-            // POSIX named classes are not supported, use alternative a-zA-Z0-9 match
+            // POSIX named classes are not supported, use alternative 0-9 match
             $pattern = '/[^0-9]/';
         } else {
-            $pattern = '/[\p{^N}]/';
+            $pattern = '/[\p{^N}]/u';
         }
 
         return preg_replace($pattern, '', (string) $value);

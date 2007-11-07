@@ -44,9 +44,9 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Filter_DigitsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Zend_Filter_Digits object
+     * Zend_Filter_Digits object extended for checking whether Unicode PCRE is enabled
      *
-     * @var Zend_Filter_Digits
+     * @var Zend_Filter_DigitsTest_Filter
      */
     protected $_filter;
 
@@ -57,7 +57,7 @@ class Zend_Filter_DigitsTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_filter = new Zend_Filter_Digits();
+        $this->_filter = new Zend_Filter_DigitsTest_Filter();
     }
 
     /**
@@ -82,5 +82,36 @@ class Zend_Filter_DigitsTest extends PHPUnit_Framework_TestCase
                 "Expected '$input' to filter to '$output', but received '$result' instead"
                 );
         }
+    }
+
+    /**
+     * Ensures that the filter follows expected behavior for multibyte characters
+     *
+     * @return void
+     */
+    public function testMultiByte()
+    {
+        if (!$this->_filter->getUnicodeEnabled()) {
+            $this->markTestSkipped('Multibyte test not run; Unicode PCRE is not supported on this platform');
+        }
+        $valuesExpected = array(
+            '一'  => '一'
+            );
+        foreach ($valuesExpected as $input => $output) {
+            $this->assertEquals(
+                $output,
+                $result = $this->_filter->filter($input),
+                "Expected '$input' to filter to '$output', but received '$result' instead"
+                );
+        }
+    }
+}
+
+
+class Zend_Filter_DigitsTest_Filter extends Zend_Filter_Digits
+{
+    public function getUnicodeEnabled()
+    {
+        return self::$_unicodeEnabled;
     }
 }
