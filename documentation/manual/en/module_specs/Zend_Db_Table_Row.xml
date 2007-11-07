@@ -182,16 +182,6 @@ $row->bug_status = 'FIXED';
 $row->save();]]></programlisting>
             </example>
 
-            <note>
-                <para>
-                    Currently Zend_Db_Table_Row_Abstract throws an exception
-                    if you try to set the value of the primary key column(s)
-                    in the row.  This is intended to change in Zend Framework
-                    1.0.  The Row class should permit the primary key columns
-                    to be set, to support sequences and natural primary keys.
-                </para>
-            </note>
-
         </sect3>
 
         <sect3 id="zend.db.table.row.write.insert">
