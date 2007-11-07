@@ -251,6 +251,7 @@ class Zend_Controller_Plugin_ActionStackTest extends PHPUnit_Framework_TestCase
     {
         $plugin   = new Zend_Controller_Plugin_ActionStack();
         $request  = new Zend_Controller_Request_Simple();
+        $request->setDispatched(true);
         $plugin->setRequest($request);
 
         $request1 = $this->getNewRequest();
@@ -309,6 +310,25 @@ class Zend_Controller_Plugin_ActionStackTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($clone->getControllerName(), $request->getControllerName());
         $this->assertEquals($clone->getModuleName(), $request->getModuleName());
         $this->assertTrue($request->isDispatched());
+    }
+
+    public function testPostDispatchDoesNothingWithExistingForwardRequest()
+    {
+        $plugin   = new Zend_Controller_Plugin_ActionStack();
+        $request  = new Zend_Controller_Request_Simple();
+        $request->setDispatched(false);
+        $plugin->setRequest($request);
+
+        $request1 = new Zend_Controller_Request_Simple();
+        $request2 = new Zend_Controller_Request_Simple();
+        $request3 = new Zend_Controller_Request_Simple();
+        $plugin->pushStack($request1)
+               ->pushStack($request2)
+               ->pushStack($request3);
+
+        $plugin->postDispatch($request);
+        $stack = $plugin->getStack();
+        $this->assertEquals(3, count($stack));
     }
 }
 

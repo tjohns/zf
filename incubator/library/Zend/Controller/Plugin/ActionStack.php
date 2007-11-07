@@ -209,6 +209,12 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
      */
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
+        // Don't move on to next request if this is already an attempt to 
+        // forward
+        if (!$request->isDispatched()) {
+            return;
+        }
+
         $this->setRequest($request);
         $stack = $this->getStack();
         if (empty($stack)) {

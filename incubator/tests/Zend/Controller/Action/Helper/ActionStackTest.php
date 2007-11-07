@@ -10,6 +10,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Action/Helper/ActionStack.php';
 require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Request/Simple.php';
 
 /**
  * Test class for Zend_Controller_Action_Helper_ActionStack.
@@ -70,37 +71,76 @@ class Zend_Controller_Action_Helper_ActionStackTest extends PHPUnit_Framework_Te
         $this->assertSame($plugin, $registered);
     }
 
-    /**
-     * @todo Implement testPushStack().
-     */
-    public function testPushStack()
+    public function testPushStackPushesToPluginStack()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $front  = Zend_Controller_Front::getInstance();
+        $helper = new Zend_Controller_Action_Helper_ActionStack();
+        $plugin = $front->getPlugin('Zend_Controller_Plugin_ActionStack');
+
+        $request = new Zend_Controller_Request_Simple();
+        $request->setModuleName('foo')
+                ->setControllerName('bar')
+                ->setActionName('baz');
+
+        $helper->pushStack($request);
+
+        $next = $plugin->popStack();
+        $this->assertTrue($next instanceof Zend_Controller_Request_Abstract);
+        $this->assertEquals($request->getModuleName(), $next->getModuleName());
+        $this->assertEquals($request->getControllerName(), $next->getControllerName());
+        $this->assertEquals($request->getActionName(), $next->getActionName());
+        $this->assertFalse($next->isDispatched());
     }
 
-    /**
-     * @todo Implement testActionToStack().
-     */
-    public function testActionToStack()
+    public function testActionToStackPushesNewRequestToPluginStack()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $front  = Zend_Controller_Front::getInstance();
+        $helper = new Zend_Controller_Action_Helper_ActionStack();
+        $plugin = $front->getPlugin('Zend_Controller_Plugin_ActionStack');
+
+        $helper->actionToStack('baz', 'bar', 'foo');
+        $next = $plugin->popStack();
+        $this->assertTrue($next instanceof Zend_Controller_Request_Abstract);
+        $this->assertEquals('foo', $next->getModuleName());
+        $this->assertEquals('bar', $next->getControllerName());
+        $this->assertEquals('baz', $next->getActionName());
+        $this->assertFalse($next->isDispatched());
     }
 
-    /**
-     * @todo Implement testDirect().
-     */
-    public function testDirect()
+    public function testPassingRequestToActionToStackPushesRequestToPluginStack()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $front  = Zend_Controller_Front::getInstance();
+        $helper = new Zend_Controller_Action_Helper_ActionStack();
+        $plugin = $front->getPlugin('Zend_Controller_Plugin_ActionStack');
+
+        $request = new Zend_Controller_Request_Simple();
+        $request->setModuleName('foo')
+                ->setControllerName('bar')
+                ->setActionName('baz');
+
+        $helper->actionToStack($request);
+
+        $next = $plugin->popStack();
+        $this->assertTrue($next instanceof Zend_Controller_Request_Abstract);
+        $this->assertEquals($request->getModuleName(), $next->getModuleName());
+        $this->assertEquals($request->getControllerName(), $next->getControllerName());
+        $this->assertEquals($request->getActionName(), $next->getActionName());
+        $this->assertFalse($next->isDispatched());
+    }
+
+    public function testDirectProxiesToActionToStack()
+    {
+        $front  = Zend_Controller_Front::getInstance();
+        $helper = new Zend_Controller_Action_Helper_ActionStack();
+        $plugin = $front->getPlugin('Zend_Controller_Plugin_ActionStack');
+
+        $helper->direct('baz', 'bar', 'foo');
+        $next = $plugin->popStack();
+        $this->assertTrue($next instanceof Zend_Controller_Request_Abstract);
+        $this->assertEquals('foo', $next->getModuleName());
+        $this->assertEquals('bar', $next->getControllerName());
+        $this->assertEquals('baz', $next->getActionName());
+        $this->assertFalse($next->isDispatched());
     }
 }
 
