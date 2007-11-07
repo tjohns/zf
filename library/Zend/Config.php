@@ -147,7 +147,7 @@ class Zend_Config implements Countable, Iterator
     {
         if ($this->_allowModifications) {
             if (is_array($value)) {
-                $this->_data[$name] = new Zend_Config($value, true);
+                $this->_data[$name] = new self($value, true);
             } else {
                 $this->_data[$name] = $value;
             }
