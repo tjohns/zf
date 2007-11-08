@@ -78,19 +78,13 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     protected $_captureType;
 
     /**
-     * The protected member of container items, available to all subclasses
-     * @var array
-     */
-    protected $_items = array();
-    
-    /**
      * Constructor - This is needed so that we can attach a class member as the ArrayObject container
      *
      * @return void
      */
     public function __construct()
     {
-        parent::__construct($this->_items, parent::ARRAY_AS_PROPS);
+        parent::__construct(array(), parent::ARRAY_AS_PROPS);
     }
     
     /**
@@ -101,7 +95,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function set($value)
     {
-        $this->_items = array($value);
+        $this->exchangeArray(array($value));
     }
 
     /**
@@ -115,7 +109,9 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     public function getValue()
     {
         if (1 == count($this)) {
-            return $this[0];
+            $keys = $this->getKeys();
+            $key  = array_shift($keys);
+            return $this[$key];
         }
 
         return $this->getArrayCopy();
@@ -246,13 +242,24 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
         $this->_captureLock = false;
         switch ($this->_captureType) {
             case self::SET:
-                $this->_items = array($data);
+                $this->exchangeArray(array($data));
                 break;
             case self::APPEND:
             default:
-                $this->_items[] = $data;
+                $this[$this->nextIndex()] = $data;
                 break;
         }
+    }
+
+    /**
+     * Get keys
+     * 
+     * @return array
+     */
+    public function getKeys()
+    {
+        $array = $this->getArrayCopy();
+        return array_keys($array);
     }
 
     /**
@@ -263,7 +270,12 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function nextIndex()
     {
-        return $nextIndex = max(array_keys($this->_items)) + 1;
+        $keys = $this->getKeys();
+        if (0 == count($keys)) {
+            return 0;
+        }
+
+        return $nextIndex = max($keys) + 1;
     }
     
     /**

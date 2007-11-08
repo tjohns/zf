@@ -137,7 +137,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
         if ((null !== $prefix) && is_string($prefix)) {
             $prefix = $this->_formatPrefix($prefix);
             if ($this->_useStaticRegistry) {
-                if (isset($this->_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
+                if (isset(self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
                     return self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix];
                 }
 
@@ -169,7 +169,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
         if ((null !== $prefix) && is_string($prefix)) {
             $prefix = $this->_formatPrefix($prefix);
             if ($this->_useStaticRegistry) {
-                if (isset($this->_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
+                if (isset(self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
                     unset(self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix]);
                     return true;
                 }
@@ -203,6 +203,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
      */
     public function removePrefixPath($prefix, $path = null) 
     {
+        $prefix = $this->_formatPrefix($prefix);
         if ($this->_useStaticRegistry) {
             $registry =& self::$_staticPrefixToPaths[$this->_useStaticRegistry];
         } else {
@@ -228,49 +229,65 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
     }
     
     /**
-     * Whether or not a Helper by a specific name
+     * Normalize plugin name
+     * 
+     * @param  string $name 
+     * @return string
+     */
+    protected function _formatName($name)
+    {
+        return ucfirst((string) $name);
+    }
+
+    /**
+     * Whether or not a Helper by a specific name is loaded
      *
      * @param string $name
      * @return Zend_Loader_PluginLoader
      */
     public function isLoaded($name)
     {
+        $name = $this->_formatName($name);
         if ($this->_useStaticRegistry) {
-            return array_key_exists($name, self::$_staticLoadedHelpers[$this->_useStaticRegistry]);
-        } else {
-            return array_key_exists($name, $this->_loadedHelpers);
-        }
+            return isset(self::$_staticLoadedHelpers[$this->_useStaticRegistry][$name]);
+        } 
+
+        return isset($this->_loadedHelpers[$name]);
     }
-    
+   
     /**
      * Return full class name for a named helper
      *
      * @param string $name
-     * @return string
+     * @return string|false False if class not found, class name otherwise
      */
     public function getClassName($name)
     {
-        // check to see if is loaded first?
-        
-        if ($this->_useStaticRegistry) {
+        $name = $this->_formatName($name);
+        if ($this->_useStaticRegistry &&
+            isset(self::$_staticLoadedHelpers[$this->_useStaticRegistry][$name]))
+        {
             return self::$_staticLoadedHelpers[$this->_useStaticRegistry][$name];
-        } else {
+        } elseif (isset($this->_loadedHelpers[$name])) {
             return $this->_loadedHelpers[$name];
         }
+
+        return false;
     }
     
     /**
      * Load a helper via the name provided
      *
-     * @param string $name
+     * @param  string $name
      * @return string
      */
     public function load($name)
     {
+        $name = $this->_formatName($name);
         if ($this->_useStaticRegistry) {
-            $registry =& self::$_staticPrefixToPaths[$this->_useStaticRegistry];
+            $registry = self::$_staticPrefixToPaths[$this->_useStaticRegistry];
         } else {
-            $registry =& $this->_prefixToPaths;
+            $registry = $this->_prefixToPaths;
         }
 
         if ($this->isLoaded($name)) {
@@ -311,6 +328,6 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
         }
 
         require_once 'Zend/Loader/PluginLoader/Exception.php';
-        throw new Zend_Loader_PluginLoader_Exception('Helper by ' . $name . ' was not found in the registry.');
+        throw new Zend_Loader_PluginLoader_Exception('Helper by name ' . $name . ' was not found in the registry.');
     }
 }

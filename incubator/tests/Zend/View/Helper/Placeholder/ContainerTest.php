@@ -193,15 +193,19 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
     public function testCapturingToPlaceholderAppendsContent()
     {
         $this->container[] = 'foo';
+        $originalCount = count($this->container);
+
         $this->container->captureStart();
         echo 'This is content intended for capture';
         $this->container->captureEnd();
 
-        $this->assertEquals(2, count($this->container));
+        $this->assertEquals($originalCount + 1, count($this->container));
 
-        $value = $this->container->getValue();
-        $this->assertEquals('foo', $value[0]);
-        $this->assertContains('This is content intended for capture', $value[1]);
+        $value     = $this->container->getValue();
+        $keys      = array_keys($value);
+        $lastIndex = array_pop($keys);
+        $this->assertEquals('foo', $value[$lastIndex - 1]);
+        $this->assertContains('This is content intended for capture', $value[$lastIndex]);
     }
 
     /**
@@ -233,6 +237,7 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
                 $this->container->captureEnd();
             $this->container->captureEnd();
         } catch (Exception $e) {
+            $this->container->captureEnd();
             $caught = true;
         }
 
