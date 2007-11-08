@@ -33,6 +33,20 @@ class Zend_Filter_PregReplaceTest extends PHPUnit_Framework_TestCase
         $this->filter = new Zend_Filter_PregReplace();
     }
 
+    public function testPassingMatchPatternToConstructorSetsMatchPattern()
+    {
+        $pattern = '#^controller/(?P<action>[a-z_-]+)#';
+        $filter  = new Zend_Filter_PregReplace($pattern);
+        $this->assertEquals($pattern, $filter->getMatchPattern());
+    }
+
+    public function testPassingReplacementToConstructorSetsReplacement()
+    {
+        $replace = 'foo/bar';
+        $filter  = new Zend_Filter_PregReplace(null, $replace);
+        $this->assertEquals($replace, $filter->getReplacement());
+    }
+
     public function testIsUnicodeSupportEnabledReturnsSaneValue()
     {
         $enabled = (@preg_match('/\pL/u', 'a')) ? true : false;
@@ -73,6 +87,22 @@ class Zend_Filter_PregReplaceTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals($string, $filtered);
         $this->assertEquals('foo/bar', $filtered);
     }
+
+    public function testFilterThrowsExceptionWhenNoMatchPatternPresent()
+    {
+        $string = 'controller/action';
+        $this->filter->setReplacement('foo/bar');
+        try {
+            $filtered = $this->filter->filter($string);
+            $this->fail('Replacement should fail when no match pattern present');
+        } catch (Exception $e) {
+        }
+    }
+}
+
+if (!class_exists('Zend_Filter_Exception')) {
+    require_once 'Zend/Exception.php';
+    class Zend_Filter_Exception extends Zend_Exception {}
 }
 
 // Call Zend_Filter_PregReplaceTest::main() if this source file is executed directly.
