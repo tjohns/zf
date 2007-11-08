@@ -146,7 +146,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
     public function testRemovePrefixPathThrowsExceptionIfPrefixPathPairNotRegistered()
     {
         $loader = new Zend_Loader_PluginLoader();
-        $loader->addPrefixPath('Foo_Bar', dirname(__FILE__));
+        $loader->addPrefixPath('Foo_Bar', realpath(dirname(__FILE__)));
         $paths = $loader->getPaths();
         $this->assertTrue(isset($paths['Foo_Bar_']));
         try {
@@ -154,6 +154,60 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
             $this->fail('Removing non-existent prefix/path pair should throw an exception');
         } catch (Exception $e) {
         }
+    }
+
+    public function testClearPathsNonStaticallyClearsPathArray()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths();
+        $this->assertEquals(2, count($paths));
+        $loader->clearPaths();
+        $paths = $loader->getPaths();
+        $this->assertEquals(0, count($paths));
+    }
+
+    public function testClearPathsStaticallyClearsPathArray()
+    {
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths();
+        $this->assertEquals(2, count($paths));
+        $loader->clearPaths();
+        $paths = $loader->getPaths();
+        $this->assertEquals(0, count($paths));
+    }
+
+    public function testClearPathsWithPrefixNonStaticallyClearsPathArray()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths();
+        $this->assertEquals(2, count($paths));
+        $loader->clearPaths('Zend_Loader');
+        $paths = $loader->getPaths();
+        $this->assertEquals(1, count($paths));
+    }
+
+    public function testClearPathsWithPrefixStaticallyClearsPathArray()
+    {
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths();
+        $this->assertEquals(2, count($paths));
+        $loader->clearPaths('Zend_Loader');
+        $paths = $loader->getPaths();
+        $this->assertEquals(1, count($paths));
     }
 
     public function testGetClassNameNonStaticallyReturnsFalseWhenClassNotLoaded()
