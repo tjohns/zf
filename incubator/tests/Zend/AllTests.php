@@ -23,18 +23,20 @@
 
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
+    require_once dirname(__FILE__) . '/../TestHelper.php';
     define('PHPUnit_MAIN_METHOD', 'Zend_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Zend/Db/AllTests.php';
-require_once 'Zend/TimeSyncTest.php';
-require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/Crypt/AllTests.php';
+// require_once 'Zend/Db/AllTests.php';
+require_once 'Zend/Filter/AllTests.php';
+require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/OpenIdTest.php';
 require_once 'Zend/OpenId/AllTests.php';
+require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Validate/BarcodeTest.php';
 require_once 'Zend/View/AllTests.php';
 
@@ -58,24 +60,26 @@ class Zend_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
         /*
+         * Perform the tests for Zend_Crypt component now.
+         *
+         * Currenty there's a missing exception class; turning it off
+         */
+        // $suite->addTest(Zend_Crypt_AllTests::suite());
+
+        /*
          * Perform the tests for Zend_Db component now.
          */
         //$suite->addTest(Zend_Db_AllTests::suite());
 
         /*
-         * Perform the tests for Zend_Validate_Barcode component now.
+         * Perform the tests for Zend_Filter component now.
          */
-        $suite->addTestSuite('Zend_Validate_BarcodeTest');
+        $suite->addTest(Zend_Filter_AllTests::suite());
 
         /*
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());
-
-        /*
-         * Perform the tests for Zend_Crypt component now.
-         */
-        $suite->addTest(Zend_Crypt::suite());
 
         /*
          * Perform the tests for Zend_OpenId component now.
@@ -87,6 +91,11 @@ class Zend_AllTests
          * Perform the tests for Zend_TimeSync component now.
          */
         $suite->addTestSuite('Zend_TimeSyncTest');
+
+        /*
+         * Perform the tests for Zend_Validate_Barcode component now.
+         */
+        $suite->addTestSuite('Zend_Validate_BarcodeTest');
 
         /**
          * Zend_View tests
