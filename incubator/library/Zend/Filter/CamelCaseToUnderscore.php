@@ -30,20 +30,11 @@ require_once 'Zend/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_CamelCaseToUnderscore implements Zend_Filter_Interface
+class Zend_Filter_CamelCaseToUnderscore extends Zend_Filter_CamelCaseToSeperator
 {
-    /**
-     * Convert CamelCaseNames to Underscore_Separated_Names
-     *
-     * @param  string $value 
-     * @return string
-     */
-    public function filter($value)
+
+    public function __construct()
     {
-        $output = 
-            preg_replace('/([a-zd])([A-Z])/','\1_\2',
-                preg_replace('/([A-Z]+)([A-Z][a-z])/','\1_\2',$value)
-                );
-        return $output;
+        parent::__construct('_');
     }
 }

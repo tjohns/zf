@@ -16,13 +16,13 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: CamelCaseToDashed.php 6695 2007-10-30 20:09:32Z darby $
  */
 
 /**
- * @see Zend_Filter_Interface
+ * @see Zend_Filter_PregReplace
  */
-require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/PregReplace.php';
 
 /**
  * @category   Zend
@@ -30,41 +30,23 @@ require_once 'Zend/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_RegexReplace implements Zend_Filter_Interface
+class Zend_Filter_CamelCaseToSeperated extends Zend_Filter_PregReplace
 {
-    /**
-     * Pattern to match
-     * @var string
-     */
-    protected $_match = null;
-
-    /**
-     * Replacement pattern
-     * @var string
-     */
-    protected $_replace = null;
-    
-    /**
-     * Constructor
-     * 
-     * @param  string $match 
-     * @param  string $replace 
-     * @return void
-     */
-    public function __construct($match, $replace)
+    public function __construct($seperator = ' ')
     {
-        $this->_match = $match;
-        $this->_replace = $replace;
-    }
-    
-    /**
-     * Perform regexp replacement as filter
-     * 
-     * @param  string $value 
-     * @return string
-     */
-    public function filter($value)
-    {
-        return preg_replace($this->_match, $this->_replace, $value);
+        if (self::isUnicodeSupportEnabled()) {
+            $pregMatches = array(
+                '#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#' => $seperator . '\1', 
+                '#(?<=(?:\p{Ll}))(\p{Lu})#'       => $seperator . '\1'
+                );
+        } else {
+            $pregMatches = array(
+                '#(?<=(?:[A-Z]))([A-Z]+)([A-Z][A-z])#' => '\1' . $seperator . '\2',
+                '#(?<=(?:[a-z]))([A-Z])#'              => $seperator . '\1'
+                );
+        }
+        
+        $this->setMatchPattern(array_keys($pregMatches));
+        $this->setReplacement(array_values($pregMatches));
     }
 }
