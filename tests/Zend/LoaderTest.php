@@ -19,6 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+// Call Zend_LoaderTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    define("PHPUnit_MAIN_METHOD", "Zend_LoaderTest::main");
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
 /**
  * Test helper
  */
@@ -38,6 +46,19 @@ require_once 'Zend/Loader.php';
  */
 class Zend_LoaderTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_LoaderTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     /**
      * Tests that a class can be loaded from a well-formed PHP file
      */
@@ -346,4 +367,9 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($found, "Failed to unregister Zend_Loader::autoload() with spl_autoload");
     }
 
+}
+
+// Call Zend_LoaderTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_LoaderTest::main") {
+    Zend_LoaderTest::main();
 }

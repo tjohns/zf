@@ -195,21 +195,11 @@ class Zend_Loader
             return true;
         }
 
-        $path = get_include_path();
-        $dirs = explode(PATH_SEPARATOR, $path);
-
-        foreach ($dirs as $dir) {
-            // No need to check against current dir -- already checked
-            if ('.' == $dir) {
-                continue;
-            }
-
-            if (@is_readable($dir . DIRECTORY_SEPARATOR . $filename)) {
-                return true;
-            }
+        if (!$fh = @fopen($filename, 'r', true)) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
