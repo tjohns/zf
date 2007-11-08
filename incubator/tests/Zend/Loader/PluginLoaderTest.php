@@ -37,6 +37,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->libPath = realpath(dirname(__FILE__) . '/../../../library');
+        $this->key = null;
     }
 
     /**
@@ -47,69 +48,209 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        $this->clearStaticPaths();
     }
 
-    public function clearStaticPaths($key) 
+    public function clearStaticPaths() 
     {
-        $loader = new Zend_Loader_PluginLoader(array(), $key);
-        $loader->clearPaths();
+        if (null !== $this->key) {
+            $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+            $loader->clearPaths();
+        }
     }
 
     public function testAddPrefixPathNonStatically()
     {
         $loader = new Zend_Loader_PluginLoader();
         $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
-               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader');
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
         $paths = $loader->getPaths();
         $this->assertEquals(2, count($paths));
         $this->assertTrue(array_key_exists('Zend_View_', $paths));
         $this->assertTrue(array_key_exists('Zend_Loader_', $paths));
         $this->assertEquals(1, count($paths['Zend_View_']));
-        $this->assertEquals(1, count($paths['Zend_Loader_']));
+        $this->assertEquals(2, count($paths['Zend_Loader_']));
     }
 
-    /**
-     * @todo Implement testRemovePrefixPath().
-     */
-    public function testRemovePrefixPath()
+    public function testAddPrefixPathStatically()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths();
+        $this->assertEquals(2, count($paths));
+        $this->assertTrue(array_key_exists('Zend_View_', $paths));
+        $this->assertTrue(array_key_exists('Zend_Loader_', $paths));
+        $this->assertEquals(1, count($paths['Zend_View_']));
+        $this->assertEquals(2, count($paths['Zend_Loader_']));
     }
 
-    /**
-     * @todo Implement testIsLoaded().
-     */
-    public function testIsLoaded()
+    public function testAddPrefixPathThrowsExceptionWithNonStringPrefix()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $loader = new Zend_Loader_PluginLoader();
+        try {
+            $loader->addPrefixPath(array(), $this->libPath);
+            $this->fail('addPrefixPath() should throw exception with non-string prefix');
+        } catch (Exception $e) {
+        }
     }
 
-    /**
-     * @todo Implement testGetClassName().
-     */
-    public function testGetClassName()
+    public function testAddPrefixPathThrowsExceptionWithNonStringPath()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $loader = new Zend_Loader_PluginLoader();
+        try {
+            $loader->addPrefixPath('Foo_Bar', array());
+            $this->fail('addPrefixPath() should throw exception with non-string path');
+        } catch (Exception $e) {
+        }
     }
 
-    /**
-     * @todo Implement testLoad().
-     */
-    public function testLoad()
+    public function testRemoveAllPathsForGivenPrefixNonStatically()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths('Zend_Loader');
+        $this->assertEquals(2, count($paths));
+        $loader->removePrefixPath('Zend_Loader');
+        $this->assertFalse($loader->getPaths('Zend_Loader'));
+    }
+
+    public function testRemoveAllPathsForGivenPrefixStatically()
+    {
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View', $this->libPath . '/Zend/View')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend/Loader')
+               ->addPrefixPath('Zend_Loader', $this->libPath . '/Zend');
+        $paths = $loader->getPaths('Zend_Loader');
+        $this->assertEquals(2, count($paths));
+        $loader->removePrefixPath('Zend_Loader');
+        $this->assertFalse($loader->getPaths('Zend_Loader'));
+    }
+
+    public function testRemovePrefixPathThrowsExceptionIfPrefixNotRegistered()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        try {
+            $loader->removePrefixPath('Foo_Bar');
+            $this->fail('Removing non-existent prefix should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testRemovePrefixPathThrowsExceptionIfPrefixPathPairNotRegistered()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Foo_Bar', dirname(__FILE__));
+        $paths = $loader->getPaths();
+        $this->assertTrue(isset($paths['Foo_Bar_']));
+        try {
+            $loader->removePrefixPath('Foo_Bar', $this->libPath);
+            $this->fail('Removing non-existent prefix/path pair should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testGetClassNameNonStaticallyReturnsFalseWhenClassNotLoaded()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        $this->assertFalse($loader->getClassName('FormElement'));
+    }
+
+    public function testGetClassNameStaticallyReturnsFalseWhenClassNotLoaded()
+    {
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        $this->assertFalse($loader->getClassName('FormElement'));
+    }
+
+    public function testLoadPluginNonStaticallyLoadsClass()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        try {
+            $className = $loader->load('Partial');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertEquals('Zend_View_Helper_Partial', $className);
+        $this->assertTrue(class_exists('Zend_View_Helper_Partial'));
+        $this->assertTrue($loader->isLoaded('Partial'));
+    }
+
+    public function testLoadPluginStaticallyLoadsClass()
+    {
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        try {
+            $className = $loader->load('Placeholder');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertEquals('Zend_View_Helper_Placeholder', $className);
+        $this->assertTrue(class_exists('Zend_View_Helper_Placeholder'));
+        $this->assertTrue($loader->isLoaded('Placeholder'));
+    }
+
+    public function testLoadThrowsExceptionIfFileFoundInPrefixButClassNotLoaded()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Foo_Helper', $this->libPath . '/Zend/View/Helper');
+        try {
+            $className = $loader->load('DocType');
+            $this->fail('Invalid prefix for a path should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testLoadThrowsExceptionIfNoHelperClassLoaded()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Foo_Helper', $this->libPath . '/Zend/View/Helper');
+        try {
+            $className = $loader->load('FooBarBazBat');
+            $this->fail('Not finding a helper should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testGetClassAfterNonStaticLoadReturnsResolvedClassName()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        try {
+            $className = $loader->load('PartialLoop');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertEquals($className, $loader->getClassName('PartialLoop'));
+        $this->assertEquals('Zend_View_Helper_PartialLoop', $loader->getClassName('PartialLoop'));
+    }
+
+    public function testGetClassAfterStaticLoadReturnsResolvedClassName()
+    {
+        $this->key = 'foobar';
+        $loader = new Zend_Loader_PluginLoader(array(), $this->key);
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        try {
+            $className = $loader->load('HeadTitle');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertEquals($className, $loader->getClassName('HeadTitle'));
+        $this->assertEquals('Zend_View_Helper_HeadTitle', $loader->getClassName('HeadTitle'));
     }
 }
 
