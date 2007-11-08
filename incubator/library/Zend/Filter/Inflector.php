@@ -20,12 +20,13 @@
  */
 
 /**
+ * @see Zend_Filter
  * @see Zend_Filter_Interface
  */
-require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter.php';
 
 /**
- * @see Zend_Loader_PluginLoader 
+ * @see Zend_Loader_PluginLoader
  */
 require_once 'Zend/Loader/PluginLoader.php';
 
@@ -111,6 +112,7 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     }
 
     /**
+     * Set a Target
      * ex: 'scripts/:controller/:action.:suffix'
      * 
      * @param string
@@ -123,7 +125,7 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     }
 
     /**
-     * Enter description here...
+     * Set Target Reference
      *
      * @param reference $target
      * @return Zend_Filter_Inflector

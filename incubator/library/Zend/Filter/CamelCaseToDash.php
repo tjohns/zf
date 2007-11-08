@@ -22,7 +22,8 @@
 /**
  * @see Zend_Filter_Interface
  */
-require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/CamelCaseToSeperated.php';
+
 
 /**
  * @category   Zend
@@ -30,21 +31,11 @@ require_once 'Zend/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_CamelCaseToDashed implements Zend_Filter_Interface
+class Zend_Filter_CamelCaseToDashed extends Zend_Filter_CamelCaseToSeperated 
 {
-    
-    /**
-     * Filter CamelCasedNames to dash-separated-names
-     * 
-     * @param  string $value 
-     * @return string
-     */
-    public function filter($value)
+
+    public function __construct()
     {
-        $output = 
-            preg_replace('/([a-zd])([A-Z])/','\1-\2',
-                preg_replace('/([A-Z]+)([A-Z][a-z])/','\1-\2',$value)
-                );
-        return $output;
+        parent::__construct('-');
     }
 }
