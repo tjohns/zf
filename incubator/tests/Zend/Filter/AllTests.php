@@ -33,6 +33,12 @@ require_once 'Zend/Filter/AlphaTest.php';
 require_once 'Zend/Filter/CamelCaseToDashTest.php';
 require_once 'Zend/Filter/CamelCaseToSeparatorTest.php';
 require_once 'Zend/Filter/CamelCaseToUnderscoreTest.php';
+require_once 'Zend/Filter/SeparatorToCamelCaseTest.php';
+require_once 'Zend/Filter/DashToCamelCaseTest.php';
+require_once 'Zend/Filter/UnderscoreToCamelCaseTest.php';
+require_once 'Zend/Filter/DashToUnderscoreTest.php';
+require_once 'Zend/Filter/UnderscoreToDashTest.php';
+
 require_once 'Zend/Filter/InflectorTest.php';
 require_once 'Zend/Filter/PregReplaceTest.php';
 
@@ -60,6 +66,11 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_CamelCaseToUnderscoreTest');
         $suite->addTestSuite('Zend_Filter_InflectorTest');
         $suite->addTestSuite('Zend_Filter_PregReplaceTest');
+        $suite->addTestSuite('Zend_Filter_SeparatorToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_DashToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_UnderscoreToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_DashToUnderscoreTest');
+        $suite->addTestSuite('Zend_Filter_UnderscoreToDashTest');
 
         return $suite;
     }
