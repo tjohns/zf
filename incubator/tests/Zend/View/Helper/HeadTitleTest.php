@@ -127,4 +127,3 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
 if (PHPUnit_MAIN_METHOD == "Zend_View_Helper_HeadTitleTest::main") {
     Zend_View_Helper_HeadTitleTest::main();
 }
-?>

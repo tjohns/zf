@@ -120,6 +120,15 @@ class Zend_Layout
         if ($this->getMvcEnabled()) {
             $this->_initMvc();
         }
+
+        if (null === $this->getInflector()) {
+            $inflector = new Zend_Filter_Inflector(':script.:suffix');
+            $inflector->addRules(array(
+                ':script' => array('CamelCaseToDash', 'StringToLower'),
+                'suffix'  => 'phtml'
+            ));
+            $this->setInflector($inflector);
+        }
     }
 
     /**
@@ -496,6 +505,8 @@ class Zend_Layout
      * Sets internal script path as last path on script path stack, assigns 
      * layout variables to view, determines layout name using inflector, and 
      * renders layout view script.
+     *
+     * $name will be passed to the inflector as the key 'script'.
      * 
      * @param  mixed $name 
      * @return mixed
@@ -508,7 +519,7 @@ class Zend_Layout
 
         if ($this->inflectorEnabled() && (null !== ($inflector = $this->getInflector())))
         {
-            $name = $this->_inflector->filter($name);
+            $name = $this->_inflector->filter(array('script' => $name));
         }
 
         $view = $this->getView();
