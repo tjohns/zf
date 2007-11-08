@@ -68,7 +68,7 @@ class Zend_Filter_PregReplace implements Zend_Filter_Interface
     /**
      * Method to cache the regex needed to determine if unicode support is available
      *
-     * @return void
+     * @return bool
      */
     static protected function _determineUnicodeSupport()
     {
@@ -104,6 +104,16 @@ class Zend_Filter_PregReplace implements Zend_Filter_Interface
         $this->_matchPattern = $match;
         return $this;
     }
+
+    /**
+     * Get currently set match pattern
+     * 
+     * @return string
+     */
+    public function getMatchPattern()
+    {
+        return $this->_matchPattern;
+    }
     
     /**
      * Set the Replacement pattern/string for the preg_replace called in filter
@@ -115,6 +125,16 @@ class Zend_Filter_PregReplace implements Zend_Filter_Interface
     {
         $this->_replacement = $replacement;
         return $this;
+    }
+
+    /**
+     * Get currently set replacement value
+     * 
+     * @return string
+     */
+    public function getReplacement()
+    {
+        return $this->_replacement;
     }
     
     /**

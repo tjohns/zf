@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_Filter_Interface
+ * @see Zend_Filter_CamelCaseToSeparator
  */
-require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/CamelCaseToSeparator.php';
 
 /**
  * @category   Zend
@@ -30,9 +30,13 @@ require_once 'Zend/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_CamelCaseToUnderscore extends Zend_Filter_CamelCaseToSeperator
+class Zend_Filter_CamelCaseToUnderscore extends Zend_Filter_CamelCaseToSeparator
 {
-
+    /**
+     * Constructor
+     * 
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct('_');

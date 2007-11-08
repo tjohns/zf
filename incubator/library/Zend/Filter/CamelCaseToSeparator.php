@@ -30,19 +30,25 @@ require_once 'Zend/Filter/PregReplace.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_CamelCaseToSeperated extends Zend_Filter_PregReplace
+class Zend_Filter_CamelCaseToSeparator extends Zend_Filter_PregReplace
 {
-    public function __construct($seperator = ' ')
+    /**
+     * Constructor
+     * 
+     * @param  string $separator Space by default
+     * @return void
+     */
+    public function __construct($separator = ' ')
     {
         if (self::isUnicodeSupportEnabled()) {
             $pregMatches = array(
-                '#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#' => $seperator . '\1', 
-                '#(?<=(?:\p{Ll}))(\p{Lu})#'       => $seperator . '\1'
+                '#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#' => $separator . '\1', 
+                '#(?<=(?:\p{Ll}))(\p{Lu})#'       => $separator . '\1'
                 );
         } else {
             $pregMatches = array(
-                '#(?<=(?:[A-Z]))([A-Z]+)([A-Z][A-z])#' => '\1' . $seperator . '\2',
-                '#(?<=(?:[a-z]))([A-Z])#'              => $seperator . '\1'
+                '#(?<=(?:[A-Z]))([A-Z]+)([A-Z][A-z])#' => '\1' . $separator . '\2',
+                '#(?<=(?:[a-z]))([A-Z])#'              => $separator . '\1'
                 );
         }
         

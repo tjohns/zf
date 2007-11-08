@@ -22,7 +22,7 @@
 /**
  * @see Zend_Filter_Interface
  */
-require_once 'Zend/Filter/CamelCaseToSeperated.php';
+require_once 'Zend/Filter/CamelCaseToSeparator.php';
 
 
 /**
@@ -31,9 +31,13 @@ require_once 'Zend/Filter/CamelCaseToSeperated.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_CamelCaseToDashed extends Zend_Filter_CamelCaseToSeperator
+class Zend_Filter_CamelCaseToDash extends Zend_Filter_CamelCaseToSeparator
 {
-
+    /**
+     * Constructor
+     * 
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct('-');
