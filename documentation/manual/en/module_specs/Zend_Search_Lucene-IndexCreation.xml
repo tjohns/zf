@@ -5,8 +5,8 @@
         <title>Creating a New Index</title>
 
         <para>
-            Index creation and updating capabilities are implemented within Zend_Search_Lucene module and Java Lucene.
-            You can use both of these capabilities.
+            Index creation and updating capabilities are implemented within the Zend_Search_Lucene component, as well as the Java Lucene project.
+            You can use either of these options to create indexes that Zend_Search_Lucene can search.
         </para>
 
         <para>
@@ -20,18 +20,18 @@ $index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
-// Store document URL to identify it in search result.
+// Store document URL to identify it in the search results
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-// Index document content
+// Index document contents
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Add document to the index.
+// Add document to the index
 $index->addDocument($doc);]]>
         </programlisting>
 
         <para>
-            Newly added documents could be immediately retrieved from an index.
+            Newly added documents are immediately searchable in the index.
         </para>
     </sect2>
 
@@ -62,7 +62,8 @@ $index->addDocument($doc);]]>
         <title>Updating Documents</title>
 
         <para>
-            Lucene index file format doesn't support document updating. Document should be removed and re-added to do this.
+            The Lucene index file format doesn't support document updating.
+            Documents should be removed and re-added to the index to effectively update them.
         </para>
 
         <para>
@@ -80,16 +81,16 @@ foreach ($hits as $hit) {
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
-        <title>Retrieving Index size</title>
+        <title>Retrieving Index Size</title>
 
         <para>
-            There are two methods to retrieve index size in Zend_Search_Lucene.
+            There are two methods to retrieve the size of an index in Zend_Search_Lucene.
         </para>
 
         <para>
              <code>Zend_Search_Lucene::maxDoc()</code> returns one greater than the largest possible document number.
-             It's actually overall number of the documents in the index including deleted documents.
-             So it has a synonym: <code>Zend_Search_Lucene::count()</code>.
+             It's actually the overall number of the documents in the index including deleted documents, 
+             so it has a synonym: <code>Zend_Search_Lucene::count()</code>.
         </para>
 
         <para>
@@ -102,7 +103,7 @@ $documents = $index->numDocs();]]>
         </programlisting>
 
         <para>
-            <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if document is deleted.
+            <code>Zend_Search_Lucene::isDeleted($id)</code> method may be used to check if a document is deleted.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -114,7 +115,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </programlisting>
 
         <para>
-            Index optimization removes deleted documents and squeezes documents' IDs. So internal document id may be changed.
+            Index optimization removes deleted documents and squeezes documents' IDs in to a smaller range.
+            A document's internal id may therefore change during index optimization.
         </para>
     </sect2>
 
@@ -122,25 +124,26 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         <title>Index optimization</title>
 
         <para>
-            Lucene index is consist of segments. Each segment is a completely independent portion of data.
+            A Lucene index consists of many segments. Each segment is a completely independent set of data.
         </para>
         <para>
-            Lucene index segment files can't be updated by their nature. A segment update needs full segment
+            Lucene index segment files can't be updated by design. A segment update needs full segment
             reorganization. See Lucene index file formats for details
             (<ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html">http://lucene.apache.org/java/2_0_0/fileformats.html</ulink>)
-            <footnote><para>Currently supported Lucene index file format version is v2.1</para></footnote>.
-            Thus new documents are added to the index by creating new segment.
+            <footnote>
+        		<para>The currently supported Lucene index file format is version 2.1.</para>
+        	</footnote>.
+            New documents are added to the index by creating new segment.
         </para>
         <para>
             Increasing number of segments reduces quality of the index, but index optimization restores it.
-            Optimization is reduced to merging several segments into one. This process also doesn't update segments.
-            It generates new large segment, which contains new optimized segment instead of the set of old segments,
-            and updates segment list ('segments' file).
+            Optimization essentially merges several segments into a new one. This process also doesn't update segments.
+            It generates one new large segment and updates segment list ('segments' file).
         </para>
 
         <para>
-            Full index optimization can be invoked by <code>Zend_Search_Lucene::optimize()</code> call. It merges all
-            index segments into new one:
+            Full index optimization can be trigger by calling the <code>Zend_Search_Lucene::optimize()</code> method. It merges all
+            index segments into one new segment:
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Open existing index
@@ -151,18 +154,18 @@ $index->optimize();]]>
         </programlisting>
 
         <para>
-            Automatic index optimization is performed to keep index in a consistent state.
+            Automatic index optimization is performed to keep indexes in a consistent state.
         </para>
         <para>
             Automatic optimization is an iterative process managed by several index options. It merges very small segments
-            into larger one, then merges these larger segments into more larger and so on.
+            into larger ones, then merges these larger segments into even larger segments and so on.
         </para>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.maxbuffereddocs">
             <title><emphasis>MaxBufferedDocs</emphasis> auto-optimization option</title>
             <para>
                 <emphasis>MaxBufferedDocs</emphasis> is a minimal number of documents required before
-                the buffered in-memory documents are written into a new Segment.
+                the buffered in-memory documents are written into a new segment.
             </para>
             <para>
                 <emphasis>MaxBufferedDocs</emphasis> can be retrieved or set by <code>$index->getMaxBufferedDocs()</code> or
@@ -213,8 +216,8 @@ $index->optimize();]]>
             </para>
             <para>
                 Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/luke-0.6/">http://www.getopt.org/luke/luke-0.6/</ulink>)
-                can also be used to optimize index. Luke v0.6 has to be used to be compatible with Zend_Search_Lucene component. Later Luke versions are
-                based on Lucene v2.1 which uses new index file format. Full Luke project information can be found here -
+                can also be used to optimize an index. Luke v0.6 must be used to be compatible with Zend_Search_Lucene component. Later Luke versions are
+                based on Lucene v2.1 which uses the newer index file format. Full Luke project information can be found here -
                 <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>
             </para>
         </sect3>
@@ -224,11 +227,11 @@ $index->optimize();]]>
         <title>Permissions</title>
 
         <para>
-            Index files are available for read and writing for everyone by default.
+            By default, index files are available for reading and writing by everyone.
         </para>
 
         <para>
-            It's possible to override this with <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> method:
+            It's possible to override this with the <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> method:
         </para>
 
 
@@ -256,7 +259,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         </sect3>
 
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
-            <title>Supported filesystems</title>
+            <title>Supported Filesystems</title>
             <para>
                 Zend_Search_Lucene uses <code>flock()</code> to provide concurrent searching, index updating and optimization.
             </para>

@@ -6,20 +6,20 @@
 
         <para>
             There are two ways to search the index. The first method uses
-            Query Parser to construct query from a string. The second provides
-            the ability to create your own queries through the Zend_Search_Lucene API.
+            query parser to construct a query from a string. The second is
+            to programmatically create your own queries through the Zend_Search_Lucene API.
         </para>
 
         <para>
-        Before choosing to use the provided Query Parser, please consider
+        Before choosing to use the provided query parser, please consider
         the following:
 
             <orderedlist>
                 <listitem>
                     <para>
-                        If you are programmatically generating a query string and then parsing
-                        it with the query parser then you should seriously consider building
-                        your queries directly with the query API. In other words, the query
+                        If you are programmatically creating a query string and then parsing
+                        it with the query parser then you should consider building
+                        your queries directly with the query API. Generally speaking, the query
                         parser is designed for human-entered text, not for program-generated text.
                     </para>
                 </listitem>
@@ -31,7 +31,7 @@
                         be constructed programmatically.
                         An analyzer, which the query parser uses, is designed to convert
                         human-entered text to terms. Program-generated values, like dates,
-                        keywords, etc., should be consistently program-generated.
+                        keywords, etc., should be added with the query API.
                     </para>
                 </listitem>
                 <listitem>
@@ -45,8 +45,8 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Boolean queries allow to mix several other queries into new one.
-                        Thus it's the best way to add some additional criteria to user search, defined by
+                        Boolean queries allow the programmer to logically combine two or more queries into new one.
+                        Thus it's the best way to add additional criteria to a search defined by
                         a query string.
                     </para>
                 </listitem>
@@ -66,38 +66,37 @@ $index = Zend_Search_Lucene::open('/data/my_index');
 $index->find($query);]]>
         </programlisting>
         <para>
-            The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
-            uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
-            from a string.
+            The <code>Zend_Search_Lucene::find()</code> method determines the input type automatically and
+            uses the query parser to construct an appropriate Zend_Search_Lucene_Search_Query object
+            from an input of type string.
         </para>
 
         <para>
-            It is important to note that query parser uses standard analyzer to tokenize separate parts of query string.
-            Thus all transformations, which are done on indexed text are also done on query string entries.
+            It is important to note that the query parser uses the standard analyzer to tokenize separate parts of query string.
+            Thus all transformations which are applied to indexed text are also applied to query strings.
         </para>
         <para>
-            It may be transforming to lower case to make search case-insensitive, removing stop-words, stemming and
-            much more other things.
+            The standard analyzer may transform the query string to lower case for case-insensitivity, remove stop-words, and stem among other transformations.
         </para>
         <para>
-            As opposed to it, API method doesn't transform or filter input terms. Thus it's more suitable for
+            The API method doesn't transform or filter input terms in any way. It's therefore more suitable for
             computer generated or untokenized fields.
         </para>
 
         <sect3 id="zend.search.lucene.searching.query_building.parsing">
-            <title>Query parsing</title>
+            <title>Query Parsing</title>
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query string
-                into query object.
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method may be used to parse query strings
+                into query objects.
             </para>
 
             <para>
-                This object may be used in query construction API methods to combine user entered queries with
-                machine generated queries.
+                This query object may be used in query construction API methods to combine user entered queries with
+                programmatically generated queries.
             </para>
 
             <para>
-                Actually, in some cases it's only way to search for values within untokenized fields:
+                Actually, in some cases it's the only way to search for values within untokenized fields:
 
                 <programlisting role="php"><![CDATA[<?php
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
@@ -114,7 +113,7 @@ $hits = $index->find($query);]]>
             </para>
 
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes optional encoding parameter,
+                <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> method also takes an optional encoding parameter,
                 which can specify query string encoding:
             <programlisting role="php"><![CDATA[<?php
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');]]>
@@ -122,11 +121,11 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5
             </para>
 
             <para>
-                If encoding is omitted, then current locale is used.
+                If the encoding parameter is omitted, then current locale is used.
             </para>
 
             <para>
-                It's also possible to specify default query string encoding with
+                It's also possible to specify the default query string encoding with
                 <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> method:
                 <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
@@ -136,8 +135,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
             </para>
 
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns current default query
-                string encoding (empty string means "current locale").
+                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> returns the current default query
+                string encoding (the empty string means "current locale").
             </para>
         </sect3>
     </sect2>
@@ -148,13 +147,12 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
             The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
             two properties: <code>$hit->document</code> is a document number within
             the index and <code>$hit->score</code> is a score of the hit in
-            a search result. Result is ordered by score (top scores come first).
+            a search result. The results are ordered by score (descending from highest score).
         </para>
 
         <para>
-            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
-            the hit as a property of the hit.  In this example, a hit is returned and
-            the corresponding document has two fields: title and author.
+            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found in the search 
+            as a property of the hit.  In the following example, a hit is returned with two fields from the corresponding document: title and author.
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once('Zend/Search/Lucene.php');
@@ -217,10 +215,10 @@ foreach ($hits as $hit) {
     </sect2>
 
     <sect2 id="zend.search.lucene.searching.results-limiting">
-        <title>Limiting result set</title>
+        <title>Limiting the Result Set</title>
 
         <para>
-            Most expensive part of searching is score calculation. It may take several seconds for large result sets (tens thousands hits).
+            The most computationally expensive part of searching is score calculation. It may take several seconds for large result sets (tens of thousands of hits).
         </para>
 
         <para>
@@ -231,12 +229,11 @@ $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
 
 Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
             </programlisting>
-            0 (default value) means 'no limit'.
+            The default value of 0 means 'no limit'.
         </para>
 
         <para>
-            It doesn't give 'best N' results, but only 'first N'<footnote><para>Returned hits are still ordered by score or in another way if it's
-            specified.</para></footnote>.
+            It doesn't give the 'best N' results, but only the 'first N'<footnote><para>Returned hits are still ordered by score or by the the specified order, if given.</para></footnote>.
         </para>
     </sect2>
 
@@ -244,8 +241,8 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
         <title>Results Scoring</title>
         <para>
             Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Hits in search result are ordered by score by default. Hits with greater score come first, and
-            documents having higher scores match the query more than documents having lower scores.
+            All hits in the search result are ordered by score by default. Hits with greater score come first, and
+            documents having higher scores should match the query more precisely than documents having lower scores.
         </para>
 
         <para>
@@ -254,7 +251,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
         </para>
 
         <para>
-            A scores can be retrieved by accessing the <code>score</code> property of a hit:
+            A hit's score can be retrieved by accessing the <code>score</code> property of the hit:
         </para>
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
@@ -266,7 +263,7 @@ foreach ($hits as $hit) {
         </programlisting>
 
         <para>
-            Zend_Search_Lucene_Search_Similarity class is used to calculate score.
+            The Zend_Search_Lucene_Search_Similarity class is used to calculate the score for each hit.
             See <link linkend="zend.search.lucene.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
         </para>
 
@@ -275,7 +272,7 @@ foreach ($hits as $hit) {
     <sect2 id="zend.search.lucene.searching.sorting">
         <title>Search Result Sorting</title>
         <para>
-            Search result is sorted by score by default. You change this by setting a sort field (or fields), sort type
+            By default, the search results are ordered by score. The programmer can change this behavior by setting a sort field (or a list of fields), sort type
             and sort order parameters.
         </para>
 
@@ -287,19 +284,19 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
         </para>
 
         <para>
-            <code>$sortField</code> is a name of stored field to sort result.
+             A name of stored field by which to sort result should be passed as the <code>$sortField</code> parameter.
         </para>
 
         <para>
-            <code>$sortType</code> may be omitted or take values
-            <code>SORT_REGULAR</code> (compare items normally, default value),
+            <code>$sortType</code> may be omitted or take the following enumerated values:
+            <code>SORT_REGULAR</code> (compare items normally- default value),
             <code>SORT_NUMERIC</code> (compare items numerically),
             <code>SORT_STRING</code> (compare items as strings).
         </para>
 
         <para>
-            <code>$sortOrder</code> may be omitted or take values
-            <code>SORT_ASC</code> (sort in ascending order, default value),
+            <code>$sortOrder</code> may be omitted or take the following enumerated values:
+            <code>SORT_ASC</code> (sort in ascending order- default value),
             <code>SORT_DESC</code> (sort in descending order).
         </para>
 
@@ -317,16 +314,16 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]
         </para>
 
         <para>
-            Please be careful when using non-default search order.
-            It needs to retrive documents completely from an index and may drammatically slow down search performance.
+            Please use caution when using a non-default search order;
+            the query needs to retrieve documents completely from an index, which may dramatically reduce search performance.
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.searching.highlighting">
         <title>Search Results Highlighting</title>
         <para>
-            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows to highlight HTML document terms
-            in context of search query:
+            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows the developer to highlight HTML document terms
+            in the context of a search query:
             <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
@@ -338,7 +335,7 @@ $highlightedHTML = $query->highlightMatches($sourceHTML);]]>
         <para>
             <code>highlightMatches()</code> method utilizes <code>Zend_Search_Lucene_Document_Html</code> class
             (see <link linkend="zend.search.lucene.index-creation.html-documents">HTML documents section</link> for details)
-            for HTML processing. So it has the same requirements for HTML source.
+            for HTML processing, so it has the same requirements for HTML source.
         </para>
     </sect2>
 </sect1>

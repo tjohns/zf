@@ -1,13 +1,13 @@
 <sect1 id="zend.search.lucene.charset">
-    <title>Character set.</title>
+    <title>Character Set</title>
 
     <sect2 id="zend.search.lucene.charset.description">
-        <title>UTF-8 and single-byte character sets support.</title>
+        <title>UTF-8 and single-byte character set support</title>
 
         <para>
-            Zend_Search_Lucene works with UTF-8 charset internally. Index files store
+            Zend_Search_Lucene works with the UTF-8 charset internally. Index files store
             unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
-            completely supports it with one exception.
+            completely supports this encoding with one exception.
             <footnote>
                <para>
                    Zend_Search_Lucene supports only Basic Multilingual Plane
@@ -35,14 +35,14 @@
     <sect2 id="zend.search.lucene.charset.default_analyzer">
         <title>Default text analyzer.</title>
         <para>
-            However, default text analyzer (which is also used within query parser) uses
+            However, the default text analyzer (which is also used within query parser) uses
             ctype_alpha() for tokenizing text and queries.
         </para>
 
         <para>
-            ctype_alpha() is not UTF-8 compatible, so analyzer converts text to 'ASCII//TRANSLIT' encoding before
-            indexing. The same processing is performed during query parsing, so it's done
-            transparently.
+            ctype_alpha() is not UTF-8 compatible, so the analyzer converts text to 'ASCII//TRANSLIT' encoding before
+            indexing. The same processing is transparently performed during query parsing.
+            .
             <footnote>
                <para>
                    Conversion to 'ASCII//TRANSLIT' may depend on current locale and OS.
@@ -55,7 +55,7 @@
         <title>UTF-8 compatible text analyzer.</title>
 
         <para>
-            Zend_Search_Lucene also contains limited functionality utf-8 analyzer. It can be turned on with the following code:
+            Zend_Search_Lucene also contains a UTF-8 analyzer with limited functionality. It can be enabled with the following code:
 
             <programlisting role="php"><![CDATA[<?php
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
@@ -64,27 +64,27 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            It tokenizes data for indexing in UTF-8 mode and has no problems with any UTF-8 compatible character.
+            It tokenizes data for indexing in UTF-8 mode and has no problems with any UTF-8 compatible characters.
         </para>
 
         <para>
-            It has two limitations:
+            The two limitations of this analyzer are as follows:
             <itemizedlist>
                 <listitem>
-                    <para>treats all non-ascii characters as letters (it's not always true);</para>
+                    <para>It assumes all non-ascii characters are letters (this is not always the case).</para>
                 </listitem>
                 <listitem>
-                    <para>is case-sensitive;</para>
+                    <para>It is case-sensitive.</para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <para>
-            Because of these limitations it's not set as default, but may be helpful for someone.
+            Because of these limitations it's not set as the default, but may prove helpful for some developers.
         </para>
 
         <para>
-            Case insensitivity my be emulated with <code>strtolower()</code> conversion:
+            Case insensitivity may be emulated with a <code>strtolower()</code> conversion:
             <programlisting role="php"><![CDATA[<?php
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 
@@ -108,7 +108,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]>
         </para>
 
         <para>
-            The same conversion has to be performed with query string:
+            The same conversion must be performed with the query string:
             <programlisting role="php"><![CDATA[<?php
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 

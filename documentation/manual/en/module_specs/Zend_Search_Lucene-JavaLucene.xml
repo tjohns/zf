@@ -4,14 +4,14 @@
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>File Formats</title>
         <para>
-          Zend_Search_Lucene index file formats are binary compatible with a Lucene
-          version 1.4 and above.
+          Zend_Search_Lucene index file formats are binary compatible with Java Lucene
+          version 1.4 and greater.
         </para>
 
         <para>
           A detailed description of this format is available here:
           <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>
-          <footnote><para>Currently supported Lucene index file format version is v2.1</para></footnote>.
+          <footnote><para>The currently supported Lucene index file format version is v2.1.</para></footnote>.
         </para>
     </sect2>
 
@@ -25,18 +25,18 @@
         <itemizedlist>
             <listitem>
                 <para>
-                <filename>segments</filename> file is a list of index segments.
+                The <filename>segments</filename> file is a list of index segments.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                <filename>*.cfs</filename> files contain index segments.
-                Note! Optimized index has always only one segment.
+                The <filename>*.cfs</filename> files contain index segments.
+                Note! An optimized index always has only one segment.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                <filename>deletable</filename> file is a list of files that are no longer used
+                The <filename>deletable</filename> file is a list of files that are no longer used
                 by the index, but which could not be deleted.
                 </para>
             </listitem>

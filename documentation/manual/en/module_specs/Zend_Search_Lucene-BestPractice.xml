@@ -1,5 +1,5 @@
 <sect1 id="zend.search.lucene.best-practice">
-    <title>Best practice</title>
+    <title>Best Practices</title>
 
     <sect2 id="zend.search.lucene.best-practice.field-names">
         <title>Field names</title>
@@ -9,14 +9,14 @@
         </para>
 
         <para>
-            Nevertheless it's good idea not to use '<emphasis>id</emphasis>' and '<emphasis>score</emphasis>' names
+            Nevertheless it's a good idea not to use '<emphasis>id</emphasis>' and '<emphasis>score</emphasis>' names
             to avoid ambiguity in <code>QueryHit</code> properties names.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Search_QueryHit</code> <code>id</code> and <code>score</code> properties always refer
+            The <code>Zend_Search_Lucene_Search_QueryHit</code> <code>id</code> and <code>score</code> properties always refer
             to internal Lucene document id and hit <link linkend="zend.search.lucene.searching.results-scoring">score</link>.
-            If indexed document has the same stored fields, you have to use <code>getDocument()</code> method to access them:
+            If the indexed document has the same stored fields, you have to use the <code>getDocument()</code> method to access them:
 
             <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
@@ -62,17 +62,17 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Each index segment is entirely independent portion of data. So index containing more segments needs
-            more memory and more time for searching.
+            Each index segment is entirely independent portion of data. So indexes containing more segments need
+            more memory and time for searching.
         </para>
 
         <para>
-            Index optimization is a process of merging several segments into new one. Fully optimized index contains
+            Index optimization is a process of merging several segments into a new one. A fully optimized index contains
             only one segment.
         </para>
 
         <para>
-            Full index optimization may be performed with 'optimize()' method:
+            Full index optimization may be performed with the <code>optimize()</code> method:
             <programlisting role="php"><![CDATA[<?php
 $index = Zend_Search_Lucene::open($indexPath);
 
@@ -81,30 +81,30 @@ $index->optimize();]]>
         </para>
 
         <para>
-            Index optimization works with data streams and doesn't take a lot of memory, but takes processor resources and time.
+            Index optimization works with data streams and doesn't take a lot of memory but does require processor resources and time.
         </para>
 
         <para>
-            Lucene index segments are not updatable by their nature (update operation needs segment file
-            to be completely rewritten). So adding new document(s) to the index always generates new segment.
-            It decreases index quality.
+            Lucene index segments are not updatable by their nature (the update operation requires the segment file
+            to be completely rewritten). So adding new document(s) to an index always generates a new segment.
+            This, in turn, decreases index quality.
         </para>
 
         <para>
-            Index auto-optimization process is performed after each segment generation and consists in partial segments merging.
+            An index auto-optimization process is performed after each segment generation and consists of merging partial segments.
         </para>
 
         <para>
-            There are three options to control behavior of auto-optimization
+            There are three options to control the behavior of auto-optimization
             (see <link linkend="zend.search.lucene.index-creation.optimization">Index optimization</link> section):
             <itemizedlist>
                 <listitem>
-                    <para><emphasis>MaxBufferedDocs</emphasis> is a number of documents buffered in memory before new segment is generated
-                          and written to a hard drive.</para>
+                    <para><emphasis>MaxBufferedDocs</emphasis> is the number of documents that can be buffered in memory before a new segment is generated
+                          and written to the hard drive.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis>MaxMergeDocs</emphasis> is a maximum number of documents merged by auto-optimization process
-                          into new segment.</para>
+                    <para><emphasis>MaxMergeDocs</emphasis> is the maximum number of documents merged by auto-optimization process
+                          into a new segment.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis>MergeFactor</emphasis> determines how often auto-optimization is performed.</para>
@@ -112,55 +112,55 @@ $index->optimize();]]>
             </itemizedlist>
             <note>
                 <para>
-                    All these options are Zend_Search_Lucene object properties, but not index properties. So they affect only current
+                    All these options are Zend_Search_Lucene object properties- not index properties. They affect only current
                     <code>Zend_Search_Lucene</code> object behavior and may vary for different scripts.
                 </para>
             </note>
         </para>
 
         <para>
-            <emphasis>MaxBufferedDocs</emphasis> doesn't matter if you index only one document per script execution. To the contrary, it's very important
-            for batch indexing. Greater value increases indexing performance, but also needs more memory.
+            <emphasis>MaxBufferedDocs</emphasis> doesn't have any effect if you index only one document per script execution. On the other hand, it's very important
+            for batch indexing. Greater values increase indexing performance, but also require more memory.
         </para>
 
         <para>
-            There are no way to calculate best value for <emphasis>MaxBufferedDocs</emphasis> parameter because it depends on documents size, used
-            analyzer and allowed memory.
+            There is simply no way to calculate the best value for the <emphasis>MaxBufferedDocs</emphasis> parameter because it depends on average document size, the
+            analyzer in use and allowed memory.
         </para>
 
         <para>
-            Good way to get right value is to perform several tests with largest document you expect to be added to the index
+            A good way to find the right value is to perform several tests with the largest document you expect to be added to the index
             <footnote><para><code>memory_get_usage()</code> and <code>memory_get_peak_usage()</code> may be used to control
-            memory usage.</para></footnote>. That's good idea not to use more than a half of allowed memory.
+            memory usage.</para></footnote>. It's a best practice not to use more than a half of the allowed memory.
         </para>
 
 
         <para>
-            <emphasis>MaxMergeDocs</emphasis> limits segment size (in terms of documents). So it limits auto-optimization time. That guarantees
-            <code>addDocument()</code> method to be not executed more than a certain time. It's important for interactive application.
+            <emphasis>MaxMergeDocs</emphasis> limits the segment size (in terms of documents). It therefore also limits auto-optimization time by guaranteeing
+            that the <code>addDocument()</code> method is not executed more than a certain number of times. This is very important for interactive applications.
         </para>
 
         <para>
-            Decreasing <emphasis>MaxMergeDocs</emphasis> parameter also may improve batch indexing performance. Index auto-optimization is iterative process
-            and is performed step by step. Small segments are merged into larger, at some moment they are merged into even greater and
-            so on. Full index optimization is much more effective.
+            Lowering the <emphasis>MaxMergeDocs</emphasis> parameter also may improve batch indexing performance. Index auto-optimization is an iterative process
+            and is performed from bottom up. Small segments are merged into larger segment, which are in turn merged into even larger segments and
+            so on. Full index optimization is achieved when only one large segment file remains.
         </para>
 
         <para>
-            On the over hand, smaller segments decreases index quality and may generate too many segments. It may be a cause of
+            Small segments generally decrease index quality. Many small segments may also trigger
             the "Too many open files" error determined by OS limitations <footnote><para>Zend_Search_Lucene keeps each segment file opened
             to improve search performance.</para></footnote>.
         </para>
 
         <para>
-            So background index optimization should be performed for interactive indexing mode and <emphasis>MaxMergeDocs</emphasis> shouldn't be
+            in general, background index optimization should be performed for interactive indexing mode and <emphasis>MaxMergeDocs</emphasis> shouldn't be
             too low for batch indexing.
         </para>
 
 
         <para>
-            <emphasis>MergeFactor</emphasis> affects auto-optimization frequency. Less values increases quality of unoptimized index. Larger values increases
-            indexing performance, but also increases number of segments. It again may be a cause of the "Too many open files" error.
+            <emphasis>MergeFactor</emphasis> affects auto-optimization frequency. Lower values increase the quality of unoptimized indexes. Larger values increase
+            indexing performance, but also increase the number of merged segments. This again may trigger the "Too many open files" error.
         </para>
 
         <para>
@@ -176,17 +176,17 @@ $index->optimize();]]>
         </para>
 
         <para>
-            Zend_Search_Lucene checks at each <code>addDocument()</code> call if merging of any segments group may move newly created segment
-            into next group. If yes, then merging is performed.
+            Zend_Search_Lucene checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
+            into the next group. If yes, then merging is performed.
         </para>
 
         <para>
-            So index with N groups may contain <emphasis>MaxBufferedDocs</emphasis> + (N-1)*<emphasis>MergeFactor</emphasis> segments and contains at least
+            So an index with N groups may contain <emphasis>MaxBufferedDocs</emphasis> + (N-1)*<emphasis>MergeFactor</emphasis> segments and contains at least
             <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis><superscript>(N-1)</superscript> documents.
         </para>
 
         <para>
-            It gives good approximation for number of segments in the index:
+            This gives good approximation for the number of segments in the index:
         </para>
         <para>
             <emphasis>NumberOfSegments</emphasis>  &lt;= <emphasis>MaxBufferedDocs</emphasis> + <emphasis>MergeFactor</emphasis>*log
@@ -194,39 +194,35 @@ $index->optimize();]]>
         </para>
 
         <para>
-            <emphasis>MaxBufferedDocs</emphasis> is determined by allowed memory. It gives the possibility to choose appropriate merge factor to get reasonable
+            <emphasis>MaxBufferedDocs</emphasis> is determined by allowed memory. This allows for the appropriate merge factor to get a reasonable
             number of segments.
         </para>
 
 
         <para>
-            Tuning <emphasis>MergeFactor</emphasis> parameter is more effective for batch indexing performance than <emphasis>MaxMergeDocs</emphasis>. But it's more rough.
-            So use above estimation for tuning <emphasis>MergeFactor</emphasis>, then play with <emphasis>MaxMergeDocs</emphasis> to get best batch indexing performance.
+            Tuning the <emphasis>MergeFactor</emphasis> parameter is more effective for batch indexing performance than <emphasis>MaxMergeDocs</emphasis>. But it's also more course-grained.
+            So use the estimation above for tuning <emphasis>MergeFactor</emphasis>, then play with <emphasis>MaxMergeDocs</emphasis> to get best batch indexing performance.
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.shutting-down">
-        <title>Index shutting down</title>
+        <title>Index during Shut Down</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> object performs some work at shutting down time if any documents were added to the index.
+            The <code>Zend_Search_Lucene</code> instance performs some work at exit time if any documents were added to the index but not written to a new segment.
         </para>
 
         <para>
-            It's concerned with buffering added document before generating new segment.
+            It also may trigger an auto-optimization process.
         </para>
 
         <para>
-            It also may cause auto-optimization process.
+            The index object is automatically closed when it, and all returned QueryHit objects, go out of scope.
         </para>
 
         <para>
-            Index object is automatically shut down when it, and all returned QueryHit objects, go out of scope.
-        </para>
-
-        <para>
-            If index object is stored in global variable than it's destroyed only at the end of script execution<footnote><para>It also
-            may occur if index or QueryHit objects are referred in some complex data structures. Ex. PHP destroys objects
+            If index object is stored in global variable than it's closed only at the end of script execution<footnote><para>This also
+            may occur if the index or QueryHit instances are referred to in some cyclical data structures, because PHP garbage collects objects
             with cyclic references only at the end of script execution.</para></footnote>.
         </para>
 
@@ -235,11 +231,11 @@ $index->optimize();]]>
         </para>
 
         <para>
-            It doesn't prevent normal index shutdown process, but may prevent to get correct error diagnostic if any error occurs.
+            It doesn't prevent normal index shutdown process, but may prevent accurate error diagnostic if any error occurs during shutdown.
         </para>
 
         <para>
-            There are two ways which may help to avoid this problem.
+            There are two ways with which you may avoid this problem.
         </para>
 
         <para>
@@ -254,14 +250,14 @@ unset($index);]]>
         </para>
 
         <para>
-            And the second is to perform commit operation before the end of script execution:
+            And the second is to perform a commit operation before the end of script execution:
             <programlisting role="php"><![CDATA[<?php
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();]]>
             </programlisting>
-            This possibility is also described in "<link linkend="zend.search.lucene.advanced.static">Advanced. Using index as static property</link>"
-            documentation section.
+            This possibility is also described in the "<link linkend="zend.search.lucene.advanced.static">Advanced. Using index as static property</link>"
+            section.
         </para>
     </sect2>
 
@@ -269,17 +265,17 @@ $index->commit();]]>
         <title>Retrieving documents by unique id</title>
 
         <para>
-            It's common practice to store some unique document id in the index. Ex. url, path, database id or some other.
+            It's a common practice to store some unique document id in the index. Examples include url, path, or database id.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> provides <code>termDocs()</code> method for retrieving documents containing specified term.
+            <code>Zend_Search_Lucene</code> provides a <code>termDocs()</code> method for retrieving documents containing specified terms.
         </para>
 
         <para>
-            It's more effective than <code>find()</code> method:
+            This is more efficient than using the <code>find()</code> method:
             <programlisting role="php"><![CDATA[<?php
-// Retrieving documents with find() method using query string
+// Retrieving documents with find() method using a query string
 $query = $idFieldName . ':' . $docId;
 $hits  = $index->find($query);
 foreach ($hits as $hit) {
@@ -289,7 +285,7 @@ foreach ($hits as $hit) {
 }
 ...
 
-// Retrieving documents with find() method using query API
+// Retrieving documents with find() method using the query API
 $term = new Zend_Search_Lucene_Index_Term($docId, idFieldName);
 $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);
@@ -315,45 +311,45 @@ foreach ($docIds as $id) {
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.memory-usage">
-        <title>Memory usage</title>
+        <title>Memory Usage</title>
 
         <para>
-            Zend_Search_Lucene is memory expensive module.
+            Zend_Search_Lucene is a relatively memory-intensive module.
         </para>
 
         <para>
-            It uses memory to cache some information and speed up search and indexing.
+            It uses memory to cache some information and optimize searching and indexing performance.
         </para>
 
         <para>
-            The behavior differs for different modes.
+            The memory required differs for different modes.
         </para>
 
         <para>
-            Terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
-            <footnote><para>Lucene file format allows you to change this number, but Zend_Search_Lucene doesn't give a possibility
-            to do this through its API. Nevertheless you still have possibility to change this value if index is prepared with another
-            Lucene implementation.</para></footnote> term of full dictionary.
+            The terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
+            <footnote><para>The Lucene file format allows you to configure this number, but Zend_Search_Lucene doesn't expose this
+            in its API. Nevertheless you still have the ability to configure this value if the index is prepared with another
+            Lucene implementation.</para></footnote> term of the full dictionary.
         </para>
 
         <para>
-            Thus memory usage is increased if you have high number of unique terms. This may happen if you use untokenized phrases as a field values
+            Thus memory usage is increased if you have a high number of unique terms. This may happen if you use untokenized phrases as a field values
             or index a large volume of non-text information.
         </para>
 
         <para>
-            Unoptimized index consists of several segments. It also increases memory usage. Segments are independent, so each segment contains
-            his own terms dictionary and terms dictionary index. If index consists of <emphasis>N</emphasis> segments it may increase memory
-            usage by <emphasis>N</emphasis> times in worst case. Perform index optimization to merge all segments into one.
+            An unoptimized index consists of several segments. It also increases memory usage. Segments are independent, so each segment contains
+            its own terms dictionary and terms dictionary index. If an index consists of <emphasis>N</emphasis> segments it may increase memory
+            usage by <emphasis>N</emphasis> times in worst case. Perform index optimization to merge all segments into one to avoid such memory consumption.
         </para>
 
         <para>
-            Indexing uses the same memory as searching plus memory for buffering documents. The amount of memory used for this may be managed with
+            Indexing uses the same memory as searching plus memory for buffering documents. The amount of memory used may be managed with
             <emphasis>MaxBufferedDocs</emphasis> parameter.
         </para>
 
         <para>
-            Index optimization (full or partial) uses stream like data processing and doesn't take a lot of memory.
+            Index optimization (full or partial) uses stream-style data processing and doesn't require a lot of memory.
         </para>
     </sect2>
 
@@ -365,15 +361,15 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            You shouldn't care about encoding if you works with pure ASCII data, but should be careful in other cases.
+            You shouldn't be concerned with encoding if you work with pure ASCII data, but you should be careful if this is not the case.
         </para>
 
         <para>
-            Wrong encoding may cause error notices at the encoding conversion time or cause loss of data.
+            Wrong encoding may cause error notices at the encoding conversion time or loss of data.
         </para>
 
         <para>
-            Zend_Search_Lucene gives wide range of the possibilities to specify actual encoding of indexed documents and parsed queries.
+            Zend_Search_Lucene offers a wide range of encoding possibilities for indexed documents and parsed queries.
         </para>
 
         <para>
@@ -383,12 +379,12 @@ $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
             </programlisting>
-            That's the best way to avoid ambiguity in encoding specification.
+            This is the best way to avoid ambiguity in the encoding used.
         </para>
 
         <para>
-            If optional encoding parameter is omitted, then current locale is used. Current locale may also contain character set specification
-            in addition to the language information:
+            If optional encoding parameter is omitted, then the current locale is used. The current locale may contain character encoding data
+            in addition to the language specification:
             <programlisting role="php"><![CDATA[<?php
 setlocale(LC_ALL, 'fr_FR');
 ...
@@ -402,15 +398,15 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
         </para>
 
         <para>
-            The same approach is used to specify query string encoding.
+            The same approach is used to set query string encoding.
         </para>
 
         <para>
-            If encoding is not specified in any special way, then current locale is used.
+            If encoding is not specified, then the current locale is used to determine the encoding.
         </para>
 
         <para>
-            Encoding may be pointed as an optional parameter, if query is parsed explicitly before search:
+            Encoding may be passed as an optional parameter, if the query is parsed explicitly before search:
             <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
@@ -425,12 +421,12 @@ Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...]]>
             </programlisting>
-            Empty string means 'current locale'.
+            The empty string implies 'current locale'.
         </para>
 
         <para>
-            Since correct encoding is specified it can be correctly processed by analyzer. The actual behavior depends on analyzer been used.
-            See <link linkend="zend.search.lucene.charset">Character set</link> documentation section for details.
+            If the correct encoding is specified it can be correctly processed by analyzer. The actual behavior depends on which analyzer is used.
+            See the <link linkend="zend.search.lucene.charset">Character Set</link> documentation section for details.
         </para>
     </sect2>
 
@@ -438,29 +434,29 @@ $hits = $index->find($queryStr);
         <title>Index maintenance</title>
 
         <para>
-            It should be clear, that Zend_Search_Lucene as well as any other Lucene implementation is not a "database".
+            It should be clear that Zend_Search_Lucene as well as any other Lucene implementation does not comprise a "database".
         </para>
 
         <para>
-            It should not be used as some kind of data storage. It doesn't provide partial backup/restoring functionality, journaling, logging, transactions
-            and many other things provided by database management systems.
+            Indexes should not be used for data storage. They do not provide partial backup/restore functionality, journaling, logging, transactions
+            and many other feautures associated with database management systems.
         </para>
 
         <para>
-            Nevertheless, Zend_Search_Lucene tries to keep index in a consistent state at any time.
+            Nevertheless, Zend_Search_Lucene attempts to keep indexes in a consistent state at all times.
         </para>
 
         <para>
-            Index backup/restoring should be performed off-line by complete copying of index folder.
+            Index backup and restoration should be performed by copying the contents of the index folder.
         </para>
 
         <para>
-            If index corruption happens because of any reason, then index should be completely restored or rebuilt.
+            If index corruption occures for any reason, the corrupted index should be restored or completely rebuilt.
         </para>
 
         <para>
-            So that's good idea to backup large indexes and store changelog somewhere to perform manual restore + roll-forward operation
-            if it's necessary. It essentially reduces index restoring time.
+            So it's a good idea to backup large indexes and store changelogs to perform manual restoration and roll-forward operations
+            if necessary. This practice dramatically reduces index restoration time.
         </para>
 
     </sect2>
