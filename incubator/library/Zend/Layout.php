@@ -122,6 +122,7 @@ class Zend_Layout
         }
 
         if (null === $this->getInflector()) {
+            require_once 'Zend/Filter/Inflector.php';
             $inflector = new Zend_Filter_Inflector(':script.:suffix');
             $inflector->addRules(array(
                 ':script' => array('CamelCaseToDash', 'StringToLower'),
