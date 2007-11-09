@@ -304,14 +304,9 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     	            }
     	            $processedParts['#:'.$ruleName.'#'] = $processedPart;
     	        }
-    	    } else {
-                if (is_string($ruleValue)) {
-                    $processedParts['#:'.$ruleName.'#'] = $ruleValue;
-                } else {
-                    require_once 'Zend/Filter/Exception.php';
-                    throw new Zend_Filter_Exception('Rule ' . $ruleName . ' was set but not provided as part of the source of this filter.');
-                }
-    	    }
+    	    } elseif (is_string($ruleValue)) {
+                $processedParts['#:'.$ruleName.'#'] = $ruleValue;
+            }
     	}
     	
     	return preg_replace(array_keys($processedParts), array_values($processedParts), $this->_target);
