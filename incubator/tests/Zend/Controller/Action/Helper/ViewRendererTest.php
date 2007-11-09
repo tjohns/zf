@@ -688,6 +688,24 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->assertSame($newInflector, $receivedInflector);
         $this->assertNotSame($newInflector, $inflector);
     }
+
+    public function testCustomInflectorCanUseItsOwnTarget()
+    {
+        $this->request->setModuleName('bar')
+                      ->setControllerName('index')
+                      ->setActionName('index');
+        $controller = new Bar_IndexController($this->request, $this->response, array());
+
+        $this->helper->view->addBasePath($this->basePath . '/_files/modules/bar/views');
+
+        $inflector = new Zend_Filter_Inflector('test.phtml');
+        $inflector->addFilterRule(':controller', array('CamelCaseToDash'));
+        $this->helper->setInflector($inflector);
+
+        $this->helper->render();
+        $body = $this->response->getBody();
+        $this->assertContains('Rendered test.phtml in bar module', $body);
+    }
 }
 
 // Call Zend_Controller_Action_Helper_ViewRendererTest::main() if this source file is executed directly.

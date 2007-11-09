@@ -93,6 +93,18 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected $_inflector;
 
     /**
+     * Inflector target
+     * @var string
+     */
+    protected $_inflectorTarget = '';
+
+    /**
+     * Current module directory
+     * @var string
+     */
+    protected $_moduleDir = '';
+
+    /**
      * Whether or not to autorender using controller name as subdirectory;
      * global setting (not reset at next invocation)
      * @var boolean
@@ -235,7 +247,8 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         if ((null === $moduleDir) || is_array($moduleDir)) {
             throw new Zend_Controller_Action_Exception('ViewRenderer cannot locate module directory');
         }
-        return dirname($moduleDir);
+        $this->_moduleDir = dirname($moduleDir);
+        return $this->_moduleDir;
     }
 
     /**
@@ -258,9 +271,13 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
                          'StringToLower'
                      ),
                  ))
-                 ->setStaticRuleReference('suffix', $this->_viewSuffix);
+                 ->setStaticRuleReference('suffix', $this->_viewSuffix)
+                 ->setStaticRuleReference('moduleDir', $this->_moduleDir)
+                 ->setTargetReference($this->_inflectorTarget);
         }
-        $this->_inflector->setStaticRule('moduleDir', $this->getModuleDirectory());
+
+        // Ensure that module directory is current
+        $this->getModuleDirectory();
 
         return $this->_inflector;
     }
@@ -275,6 +292,38 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     {
         $this->_inflector = $inflector;
         return $this;
+    }
+
+    /**
+     * Set inflector target
+     * 
+     * @param  string $target 
+     * @return void
+     */
+    protected function _setInflectorTarget($target)
+    {
+        $this->_inflectorTarget = (string) $target;
+    }
+
+    /**
+     * Set internal module directory representation
+     * 
+     * @param  string $dir 
+     * @return void
+     */
+    protected function _setModuleDir($dir)
+    {
+        $this->_moduleDir = (string) $dir;
+    }
+
+    /**
+     * Get internal module directory representation
+     * 
+     * @return string
+     */
+    protected function _getModuleDir()
+    {
+        return $this->_moduleDir;
     }
 
     /**
@@ -306,7 +355,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         }
 
         $inflector = $this->getInflector();
-        $inflector->setTarget($this->getViewBasePathSpec());
+        $this->_setInflectorTarget($this->getViewBasePathSpec());
         $path = $inflector->filter(array());
         return $path;
     }
@@ -540,9 +589,9 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
 
         $inflector = $this->getInflector();
         if ($this->getNoController() || $this->getNeverController()) {
-            $inflector->setTarget($this->getViewScriptPathNoControllerSpec());
+            $this->_setInflectorTarget($this->getViewScriptPathNoControllerSpec());
         } else {
-            $inflector->setTarget($this->getViewScriptPathSpec());
+            $this->_setInflectorTarget($this->getViewScriptPathSpec());
         }
         return $this->_translateSpec($vars);
     }
@@ -768,20 +817,21 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         }
 
         if (isset($params['suffix'])) {
-            $inflector->setStaticRule('suffix', $params['suffix']);
+            $origSuffix = $this->getViewSuffix();
+            $this->setViewSuffix($params['suffix']);
         }
         if (isset($moduleDir)) {
-            $origModuleDir = $inflector->getRules('moduleDir');
-            $inflector->setStaticRule('moduleDir', $params['moduleDir']);
+            $origModuleDir = $this->_getModuleDir();
+            $this->_setModuleDir($params['moduleDir']);
         }
 
         $filtered = $inflector->filter($params);
 
         if (isset($params['suffix'])) {
-            $inflector->setStaticRuleReference('suffix', $this->_viewSuffix);
+            $this->setViewSuffix($origSuffix);
         }
         if (isset($moduleDir)) {
-            $inflector->setStaticRule('moduleDir', $origModuleDir);
+            $this->_setModuleDir($origModuleDir);
         }
 
         return $filtered;
