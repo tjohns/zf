@@ -303,10 +303,6 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         $inflector = $this->getInflector();
         $inflector->setTarget($this->getViewBasePathSpec());
         $path = $inflector->filter(array());
-require_once 'Zend/Log.php';
-require_once 'Zend/Log/Writer/Stream.php';
-$log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/filter.log'));
-$log->info(sprintf('View base path is: %s', $path));
         return $path;
     }
 
