@@ -286,11 +286,17 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * Set inflector
      * 
      * @param  Zend_Filter_Inflector $inflector 
+     * @param  bool $reference Whether the moduleDir, target, and suffix should be set as references to ViewRenderer properties
      * @return Zend_Controller_Action_Helper_ViewRenderer
      */
-    public function setInflector(Zend_Filter_Inflector $inflector)
+    public function setInflector(Zend_Filter_Inflector $inflector, $reference = false)
     {
         $this->_inflector = $inflector;
+        if ($reference) {
+            $this->_inflector->setStaticRuleReference('suffix', $this->_viewSuffix)
+                 ->setStaticRuleReference('moduleDir', $this->_moduleDir)
+                 ->setTargetReference($this->_inflectorTarget);
+        }
         return $this;
     }
 
