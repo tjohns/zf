@@ -279,11 +279,39 @@ class Zend_LayoutTest extends PHPUnit_Framework_TestCase
         $layout = new Zend_Layout();
         $view   = new Zend_View();
         $layout->setLayoutPath(dirname(__FILE__) . '/Layout/_files/layouts')
+               ->disableInflector()
                ->setLayout('layout.phtml')
                ->setView($view);
         $layout->message = 'Rendered layout';
         $received = $layout->render();
         $this->assertContains('Testing layouts:', $received);
+        $this->assertContains($layout->message, $received);
+    }
+
+    public function testRenderWithDefaultInflection()
+    {
+        $layout = new Zend_Layout();
+        $view   = new Zend_View();
+        $layout->setLayoutPath(dirname(__FILE__) . '/Layout/_files/layouts')
+               ->setView($view);
+        $layout->message = 'Rendered layout';
+        $received = $layout->render();
+        $this->assertContains('Testing layouts:', $received);
+        $this->assertContains($layout->message, $received);
+    }
+
+    public function testRenderWithCustomInflection()
+    {
+        $layout = new Zend_Layout();
+        $view   = new Zend_View();
+        $layout->setLayoutPath(dirname(__FILE__) . '/Layout/_files/layouts')
+               ->setView($view);
+        $inflector = $layout->getInflector();
+        $inflector->setTarget('test/:script.:suffix')
+                  ->setStaticRule('suffix', 'php');
+        $layout->message = 'Rendered layout';
+        $received = $layout->render();
+        $this->assertContains('Testing layouts with custom inflection:', $received);
         $this->assertContains($layout->message, $received);
     }
 }
