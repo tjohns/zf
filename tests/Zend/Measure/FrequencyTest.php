@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Frequency initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::STANDARD,'de');
         $value->setType(Zend_Measure_Frequency::KILOHERTZ);
-        $this->assertEquals($value->getType(), Zend_Measure_Frequency::KILOHERTZ, 'Zend_Measure_Frequency type expected');
+        $this->assertEquals(Zend_Measure_Frequency::KILOHERTZ, $value->getType(), 'Zend_Measure_Frequency type expected');
     }
 
 
@@ -331,7 +325,7 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::RADIAN_PER_HOUR,'de');
         $value->setType(Zend_Measure_Frequency::RPM);
-        $this->assertEquals($value->getType(), Zend_Measure_Frequency::RPM, 'Zend_Measure_Frequency type expected');
+        $this->assertEquals(Zend_Measure_Frequency::RPM, $value->getType(), 'Zend_Measure_Frequency type expected');
     }
 
 
@@ -343,7 +337,7 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::RPM,'de');
         $value->setType(Zend_Measure_Frequency::RADIAN_PER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Frequency::RADIAN_PER_HOUR, 'Zend_Measure_Frequency type expected');
+        $this->assertEquals(Zend_Measure_Frequency::RADIAN_PER_HOUR, $value->getType(), 'Zend_Measure_Frequency type expected');
     }
 
 
@@ -370,7 +364,7 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
     public function testFrequencyToString()
     {
         $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 Hz', 'Value -100 Hz expected');
+        $this->assertEquals('-100 Hz', $value->toString(), 'Value -100 Hz expected');
     }
 
 
@@ -381,7 +375,7 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
     public function testFrequency_ToString()
     {
         $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 Hz', 'Value -100 Hz expected');
+        $this->assertEquals('-100 Hz', $value->__toString(), 'Value -100 Hz expected');
     }
 
 

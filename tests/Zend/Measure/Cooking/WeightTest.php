@@ -22,12 +22,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Mass initialisation
      * expected instance
@@ -302,7 +296,7 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::STANDARD,'de');
         $value->setType(Zend_Measure_Cooking_Weight::CUP);
-        $this->assertEquals($value->getType(), Zend_Measure_Cooking_Weight::CUP, 'Zend_Measure_Cooking_Weight type expected');    }
+        $this->assertEquals(Zend_Measure_Cooking_Weight::CUP, $value->getType(), 'Zend_Measure_Cooking_Weight type expected');    }
 
 
     /**
@@ -313,7 +307,7 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::STANDARD,'de');
         $value->setType(Zend_Measure_Cooking_Weight::CUP);
-        $this->assertEquals($value->getType(), Zend_Measure_Cooking_Weight::CUP, 'Zend_Measure_Cooking_Weight type expected');
+        $this->assertEquals(Zend_Measure_Cooking_Weight::CUP, $value->getType(), 'Zend_Measure_Cooking_Weight type expected');
     }
 
 
@@ -325,7 +319,7 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::CUP,'de');
         $value->setType(Zend_Measure_Cooking_Weight::STANDARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Cooking_Weight::STANDARD, 'Zend_Measure_Cooking_Weight type expected');
+        $this->assertEquals(Zend_Measure_Cooking_Weight::STANDARD, $value->getType(), 'Zend_Measure_Cooking_Weight type expected');
     }
 
 
@@ -352,7 +346,7 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
     public function testCooking_WeightToString()
     {
         $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 g', 'Value -100 g expected');
+        $this->assertEquals('-100 g', $value->toString(), 'Value -100 g expected');
     }
 
 
@@ -363,7 +357,7 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
     public function testCooking_Weight_ToString()
     {
         $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 g', 'Value -100 g expected');
+        $this->assertEquals('-100 g', $value->__toString(), 'Value -100 g expected');
     }
 
 

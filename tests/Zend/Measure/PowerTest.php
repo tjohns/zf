@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Power initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::STANDARD,'de');
         $value->setType(Zend_Measure_Power::CALORIE_PER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::CALORIE_PER_HOUR, 'Zend_Measure_Power type expected');
+        $this->assertEquals(Zend_Measure_Power::CALORIE_PER_HOUR, $value->getType(), 'Zend_Measure_Power type expected');
     }
 
 
@@ -331,7 +325,7 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::CALORIE_PER_HOUR,'de');
         $value->setType(Zend_Measure_Power::STANDARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::STANDARD, 'Zend_Measure_Power type expected');
+        $this->assertEquals(Zend_Measure_Power::STANDARD, $value->getType(), 'Zend_Measure_Power type expected');
     }
 
 
@@ -343,7 +337,7 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::CALORIE_PER_HOUR,'de');
         $value->setType(Zend_Measure_Power::JOULE_PER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::JOULE_PER_HOUR, 'Zend_Measure_Power type expected');
+        $this->assertEquals(Zend_Measure_Power::JOULE_PER_HOUR, $value->getType(), 'Zend_Measure_Power type expected');
     }
 
 
@@ -355,7 +349,7 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::JOULE_PER_HOUR,'de');
         $value->setType(Zend_Measure_Power::CALORIE_PER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::CALORIE_PER_HOUR, 'Zend_Measure_Power type expected');
+        $this->assertEquals(Zend_Measure_Power::CALORIE_PER_HOUR, $value->getType(), 'Zend_Measure_Power type expected');
     }
 
 
@@ -382,7 +376,7 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
     public function testPowerToString()
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 W', 'Value -100 W expected');
+        $this->assertEquals('-100 W', $value->toString(), 'Value -100 W expected');
     }
 
 
@@ -393,7 +387,7 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
     public function testPower_ToString()
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 W', 'Value -100 W expected');
+        $this->assertEquals('-100 W', $value->__toString(), 'Value -100 W expected');
     }
 
 

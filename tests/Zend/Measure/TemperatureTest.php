@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Temperature initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::STANDARD,'de');
         $value->setType(Zend_Measure_Temperature::KELVIN);
-        $this->assertEquals($value->getType(), Zend_Measure_Temperature::KELVIN, 'Zend_Measure_Temperature type expected');
+        $this->assertEquals(Zend_Measure_Temperature::KELVIN, $value->getType(), 'Zend_Measure_Temperature type expected');
     }
 
 
@@ -331,7 +325,7 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::FAHRENHEIT,'de');
         $value->setType(Zend_Measure_Temperature::REAUMUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Temperature::REAUMUR, 'Zend_Measure_Temperature type expected');
+        $this->assertEquals(Zend_Measure_Temperature::REAUMUR, $value->getType(), 'Zend_Measure_Temperature type expected');
     }
 
 
@@ -343,7 +337,7 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::REAUMUR,'de');
         $value->setType(Zend_Measure_Temperature::FAHRENHEIT);
-        $this->assertEquals($value->getType(), Zend_Measure_Temperature::FAHRENHEIT, 'Zend_Measure_Temperature type expected');
+        $this->assertEquals(Zend_Measure_Temperature::FAHRENHEIT, $value->getType(), 'Zend_Measure_Temperature type expected');
     }
 
 
@@ -370,7 +364,7 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
     public function testTemperatureToString()
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 °K', 'Value -100 °K expected');
+        $this->assertEquals('-100 °K', $value->toString(), 'Value -100 °K expected');
     }
 
 
@@ -381,7 +375,7 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
     public function testTemperature_ToString()
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 °K', 'Value -100 °K expected');
+        $this->assertEquals('-100 °K', $value->__toString(), 'Value -100 °K expected');
     }
 
 
@@ -404,9 +398,9 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
     public function testDetailConversion()
     {
         $unit= new Zend_Measure_Temperature(100, Zend_Measure_Temperature::KELVIN);
-        $this->assertSame($unit->convertTo(Zend_Measure_Temperature::FAHRENHEIT), '-279.67 °F');
+        $this->assertSame('-279.67 °F', $unit->convertTo(Zend_Measure_Temperature::FAHRENHEIT));
 
         $unit= new Zend_Measure_Temperature(100, Zend_Measure_Temperature::FAHRENHEIT);
-        $this->assertSame($unit->convertTo(Zend_Measure_Temperature::KELVIN), '310.93 °K');
+        $this->assertSame('310.93 °K', $unit->convertTo(Zend_Measure_Temperature::KELVIN));
     }
 }

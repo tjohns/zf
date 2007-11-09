@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Torque initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
         $value->setType(Zend_Measure_Torque::NEWTON_CENTIMETER);
-        $this->assertEquals($value->getType(), Zend_Measure_Torque::NEWTON_CENTIMETER, 'Zend_Measure_Torque type expected');
+        $this->assertEquals(Zend_Measure_Torque::NEWTON_CENTIMETER, $value->getType(), 'Zend_Measure_Torque type expected');
     }
 
 
@@ -331,7 +325,7 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
         $value->setType(Zend_Measure_Torque::POUND_INCH);
-        $this->assertEquals($value->getType(), Zend_Measure_Torque::POUND_INCH, 'Zend_Measure_Torque type expected');
+        $this->assertEquals(Zend_Measure_Torque::POUND_INCH, $value->getType(), 'Zend_Measure_Torque type expected');
     }
 
 
@@ -343,7 +337,7 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::POUND_INCH,'de');
         $value->setType(Zend_Measure_Torque::STANDARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Torque::STANDARD, 'Zend_Measure_Torque type expected');
+        $this->assertEquals(Zend_Measure_Torque::STANDARD, $value->getType(), 'Zend_Measure_Torque type expected');
     }
 
 
@@ -370,7 +364,7 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
     public function testTorqueToString()
     {
         $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 Nm', 'Value -100 Nm expected');
+        $this->assertEquals('-100 Nm', $value->toString(), 'Value -100 Nm expected');
     }
 
 
@@ -381,7 +375,7 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
     public function testTorque_ToString()
     {
         $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 Nm', 'Value -100 Nm expected');
+        $this->assertEquals('-100 Nm', $value->__toString(), 'Value -100 Nm expected');
     }
 
 

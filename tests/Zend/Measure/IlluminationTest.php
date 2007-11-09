@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_IlluminationTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Illumination initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_IlluminationTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Illumination('-100',Zend_Measure_Illumination::STANDARD,'de');
         $value->setType(Zend_Measure_Illumination::NOX);
-        $this->assertEquals($value->getType(), Zend_Measure_Illumination::NOX, 'Zend_Measure_Illumination type expected');
+        $this->assertEquals(Zend_Measure_Illumination::NOX, $value->getType(), 'Zend_Measure_Illumination type expected');
     }
 
 
@@ -346,7 +340,7 @@ class Zend_Measure_IlluminationTest extends PHPUnit_Framework_TestCase
     public function testIlluminationToString()
     {
         $value = new Zend_Measure_Illumination('-100',Zend_Measure_Illumination::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 lx', 'Value -100 lx expected');
+        $this->assertEquals('-100 lx', $value->toString(), 'Value -100 lx expected');
     }
 
 
@@ -357,7 +351,7 @@ class Zend_Measure_IlluminationTest extends PHPUnit_Framework_TestCase
     public function testIllumination_ToString()
     {
         $value = new Zend_Measure_Illumination('-100',Zend_Measure_Illumination::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 lx', 'Value -100 lx expected');
+        $this->assertEquals('-100 lx', $value->__toString(), 'Value -100 lx expected');
     }
 
 
