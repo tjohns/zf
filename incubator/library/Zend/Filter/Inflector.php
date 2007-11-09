@@ -49,7 +49,17 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
      * @var string
      */
     protected $_target = null;
+        
+    /**
+     * @var bool
+     */
+    protected $_throwTargetExceptionsOn = true;
     
+    /**
+     * @var string
+     */
+    protected $_targetReplacementIdentifier = ':';
+
     /**
      * @var array
      */
@@ -61,7 +71,7 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
      * @param string $target
      * @param array $rules
      */
-    public function __construct($target = null, Array $rules = array())
+    public function __construct($target = null, Array $rules = array(), $throwTargetExceptionsOn = null, $targetReplacementIdentifer = null)
     {
         if ((null !== $target) && is_string($target)) {
             $this->setTarget($target);
@@ -69,6 +79,14 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
 
         if (null !== $rules) {
             $this->addRules($rules);
+        }
+        
+        if ($throwTargetExceptionsOn != null) {
+            $this->setThrowTargetExceptionsOn($throwTargetExceptionsOn);
+        }
+        
+        if ($targetReplacementIdentifer != null) {
+            $this->setTargetReplacementIdentifier($targetReplacementIdentifer);
         }
     }
     
@@ -145,7 +163,52 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
         $this->_target =& $target;
         return $this;
     }
-
+    
+    /**
+     * Set Whether or not the inflector should throw an exception when a replacement
+     * identifier is still found within an inflected target.
+     *
+     * @param bool $throwTargetExceptions
+     * @return Zend_Filter_Inflector
+     */
+    public function setThrowTargetExceptionsOn($throwTargetExceptionsOn)
+    {
+        $this->_throwTargetExceptionsOn = ($throwTargetExceptionsOn == true) ? true : false;
+        return $this;
+    }
+    
+    /**
+     * Will exceptions be thrown?
+     *
+     * @return bool
+     */
+    public function isThrowTargetExceptionsOn()
+    {
+        return $this->_throwTargetExceptionsOn;
+    }
+    
+    /**
+     * Set the Target Replacement Identifier, by default ':'
+     *
+     * @param string $targetReplacementIdentifier
+     * @return Zend_Filter_Inflector
+     */
+    public function setTargetReplacementIdentifier($targetReplacementIdentifier)
+    {
+        $this->_targetReplacementIdentifier = (string) $targetReplacementIdentifier;
+        return $this;
+    }
+    
+    /**
+     * Get Target Replacement Identifier
+     *
+     * @return string
+     */
+    public function getTargetReplacementIdentifier()
+    {
+        return $this->_targetReplacementIdentifier;
+    }
+    
     /**
      * Normalize spec string
      * 
@@ -249,21 +312,20 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     }
     
     /**
-     * AddRules() is similar to a multi-call to setting filter rules.  
-     *
-     * If prefixed
-     * with a ":" (semicolon), a filter rule will be added. If not prefixed, a 
-     * static
+     * AddRules() is similar to a multi-call to setting filter rules.  If prefixed
+     * with a ":" (colon), a filter rule will be added.  If prefixed with an "&",
+     * a referenced static replacement will be added.  If not prefixed, a static
      * replacement will be added.
      * 
      * ex:
      * array(
      *     ':controller' => array('CamelCaseToUnderscore','StringToLower'),
      *     ':action'     => array('CamelCaseToUnderscore','StringToLower'),
-     *     'suffix'      => 'phtml'
+     *     '&suffix'     => $this->_mySuffix,
+     *     'suffix'      => 'phtml'                        // OR LIKE THIS
      *     );
      * 
-     * @param  array
+     * @param array
      * @return Zend_Filter_Inflector
      */
     public function addRules(Array $rules)
@@ -271,6 +333,8 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
         foreach ($rules as $spec => $rule) {
             if ($spec[0] == ':') {
                 $this->addFilterRule($spec, $rule);
+            } elseif ($spec[0] == '&') {
+                $this->setStaticRuleReference($spec, $rule);
             } else {
                 $this->setStaticRule($spec, $rule);
             }
@@ -292,24 +356,33 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
             $source[ltrim($sourceName, ':')] = $sourceValue;
         }
 
+        $pregQuotedTargetReplacementIdentifier = preg_quote($this->_targetReplacementIdentifier, '#');
+        
     	foreach ($this->_rules as $ruleName => $ruleValue) {
     	    if (isset($source[$ruleName])) {
     	        if (is_string($ruleValue)) {
     	            // overriding the set rule
-    	            $processedParts['#:'.$ruleName.'#'] = $source[$ruleName];
+    	            $processedParts['#'.$pregQuotedTargetReplacementIdentifier.$ruleName.'#'] = $source[$ruleName];
     	        } elseif (is_array($ruleValue)) {
     	            $processedPart = $source[$ruleName];
     	            foreach ($ruleValue as $ruleFilter) {
     	                $processedPart = $ruleFilter->filter($processedPart);
     	            }
-    	            $processedParts['#:'.$ruleName.'#'] = $processedPart;
+    	            $processedParts['#'.$pregQuotedTargetReplacementIdentifier.$ruleName.'#'] = $processedPart;
     	        }
     	    } elseif (is_string($ruleValue)) {
-                $processedParts['#:'.$ruleName.'#'] = $ruleValue;
+                $processedParts['#'.$pregQuotedTargetReplacementIdentifier.$ruleName.'#'] = $ruleValue;
             }
     	}
     	
-    	return preg_replace(array_keys($processedParts), array_values($processedParts), $this->_target);
+    	$inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->_target);
+    	
+    	if ($this->_throwTargetExceptionsOn && (preg_match('#'.$pregQuotedTargetReplacementIdentifier.'#', $inflectedTarget) == true)) {
+    	    require_once 'Zend/Filter/Exception.php';
+    	    throw new Zend_Filter_Exception('A replacement identifier ' . $this->_targetReplacementIdentifier . ' was found inside the inflected target, perhaps a rule was not satisfied with a target source?');
+    	}
+    	
+    	return $inflectedTarget;
     }
     
     /**

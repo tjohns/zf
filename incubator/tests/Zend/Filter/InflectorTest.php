@@ -215,6 +215,72 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         ));
         $this->assertEquals('Foo-Bar/baz-Bat.phtml', $filtered);
     }
+    
+    public function testTargetReplacementIdentiferAccessorsWork()
+    {
+        $this->assertEquals(':', $this->inflector->getTargetReplacementIdentifier());
+        $this->inflector->setTargetReplacementIdentifier('?=');
+        $this->assertEquals('?=', $this->inflector->getTargetReplacementIdentifier());
+    }
+
+    public function testTargetReplacementIdentiferWorksWhenInflected()
+    {
+        $this->inflector = new Zend_Filter_Inflector(
+            '?=##controller/?=##action.?=##suffix', 
+            array(
+                 ':controller' => array('CamelCaseToDash'),
+                 ':action'     => array('CamelCaseToDash'),
+                 'suffix'      => 'phtml'
+                 ),
+            null,
+            '?=##'
+            );
+
+        $filtered = $this->inflector->filter(array(
+            'controller' => 'FooBar',
+            'action'     => 'bazBat'
+        ));
+
+        $this->assertEquals('Foo-Bar/baz-Bat.phtml', $filtered);
+    }
+    
+    public function testThrowTargetExceptionsAccessorsWork()
+    {
+        $this->assertEquals(':', $this->inflector->getTargetReplacementIdentifier());
+        $this->inflector->setTargetReplacementIdentifier('?=');
+        $this->assertEquals('?=', $this->inflector->getTargetReplacementIdentifier());
+    }
+    
+
+    public function testThrowTargetExceptionsOnAccessorsWork()
+    {
+        $this->assertTrue($this->inflector->isThrowTargetExceptionsOn());
+        $this->inflector->setThrowTargetExceptionsOn(false);
+        $this->assertFalse($this->inflector->isThrowTargetExceptionsOn());
+    }
+    
+    public function testTargetExceptionThrownWhenTargetSourceNotSatisfied()
+    {
+        $this->inflector = new Zend_Filter_Inflector(
+            '?=##controller/?=##action.?=##suffix', 
+            array(
+                 ':controller' => array('CamelCaseToDash'),
+                 ':action'     => array('CamelCaseToDash'),
+                 'suffix'      => 'phtml'
+                 ),
+            true,
+            '?=##'
+            );
+
+        try {
+            $filtered = $this->inflector->filter(array('controller' => 'FooBar'));
+            $this->fail();
+        } catch (Exception $e) {
+            $this->assertTrue($e instanceof Zend_Filter_Exception);
+        }
+
+    }
+    
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.
