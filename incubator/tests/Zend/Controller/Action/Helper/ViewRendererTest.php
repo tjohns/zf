@@ -651,7 +651,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $controller = new Bar_IndexController($this->request, $this->response, array());
         $this->helper->setActionController($controller);
         $scriptName = $this->helper->getViewScript();
-        $this->assertEquals('foo/mybar.phtml', $scriptName);
+        $this->assertEquals('foo/my-bar.phtml', $scriptName);
 
         $this->request->setModuleName('default')
                       ->setControllerName('foo')
