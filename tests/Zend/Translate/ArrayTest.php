@@ -31,7 +31,6 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ));
-
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
     }
 
@@ -41,8 +40,7 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ));
-
-        $this->assertEquals($adapter->toString(), 'Array');
+        $this->assertEquals('Array', $adapter->toString());
     }
 
     public function testTranslate()
@@ -51,9 +49,8 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ));
-
-        $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
-        $this->assertEquals($adapter->translate('msg4'), 'msg4');
+        $this->assertEquals('Message 1 (en)', $adapter->translate('msg1'));
+        $this->assertEquals('msg4',           $adapter->translate('msg4'));
     }
 
     public function testIsTranslated()
@@ -62,9 +59,8 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ));
-
-        $this->assertEquals($adapter->isTranslated('msg1'), true);
-        $this->assertEquals($adapter->isTranslated('msg4'), false);
+        $this->assertTrue( $adapter->isTranslated('msg1'));
+        $this->assertFalse($adapter->isTranslated('msg4'));
     }
 
     public function testLoadTranslationData()
@@ -74,40 +70,38 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg3' => 'Message 3 (en)',
                                                          ),
                                                     'en');
-
-        $this->assertEquals($adapter->translate('msg1'), 'Message 1 (en)');
-        $this->assertEquals($adapter->_('msg1'), 'Message 1 (en)');
-        $this->assertEquals($adapter->translate('msg4'), 'msg4');
+        $this->assertEquals('Message 1 (en)', $adapter->translate('msg1'));
+        $this->assertEquals('Message 1 (en)', $adapter->_('msg1'        ));
+        $this->assertEquals('msg4',           $adapter->translate('msg4'));
 
         $adapter->addTranslation(array('msg4' => 'Message 4 (en)',
                                        'msg5' => 'Message 5 (en)',
                                        'msg6' => 'Message 6 (en)'
                                       ),'en');
-        $this->assertEquals($adapter->translate('msg5'), 'Message 5 (en)');
+        $this->assertEquals('Message 5 (en)', $adapter->translate('msg5'));
 
         $adapter->addTranslation(array('msg1' => 'Message 1 (ru)',
                                        'msg2' => 'Message 2 (ru)',
                                        'msg3' => 'Message 3 (ru)'
                                       ), 'ru');
-        $this->assertEquals($adapter->translate('msg1', 'ru'), 'Message 1 (ru)');
+        $this->assertEquals('Message 1 (ru)', $adapter->translate('msg1', 'ru'));
 
         $adapter->addTranslation(array('msg4' => 'Message 4 (ru)',
                                        'msg5' => 'Message 5 (ru)',
                                        'msg6' => 'Message 6 (ru)'
                                       ), 'ru',
                                  array('clear' => true));
-        $this->assertEquals($adapter->translate('msg2', 'ru'), 'msg2');
-        $this->assertEquals($adapter->translate('msg4', 'ru'), 'Message 4 (ru)');
-
-        $this->assertEquals($adapter->translate('msg1', 'xx'), 'msg1');
-        $this->assertEquals($adapter->translate('msg4', 'ru_RU'), 'Message 4 (ru)');
+        $this->assertEquals('msg2',           $adapter->translate('msg2', 'ru'));
+        $this->assertEquals('Message 4 (ru)', $adapter->translate('msg4', 'ru'));
+        $this->assertEquals('msg1',           $adapter->translate('msg1', 'xx'));
+        $this->assertEquals('Message 4 (ru)', $adapter->translate('msg4', 'ru_RU'));
 
         try {
             $adapter->addTranslation(array('msg1' => 'Message 1 (ru)',
                                            'msg2' => 'Message 2 (ru)',
                                            'msg3' => 'Message 3 (ru)'
                                           ), 'xx');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
@@ -119,10 +113,9 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ), 'en');
-
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey', 'clear' => false, 'scan' => null));
-        $this->assertEquals($adapter->getOptions('testoption'), 'testkey');
+        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null), $adapter->getOptions());
+        $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }
 
@@ -132,20 +125,20 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ), 'en');
-
-        $this->assertEquals($adapter->getLocale(), 'en');
+        $this->assertEquals('en', $adapter->getLocale());
         $locale = new Zend_Locale('en');
         $adapter->setLocale($locale);
-        $this->assertEquals($adapter->getLocale(), 'en');
+        $this->assertEquals('en', $adapter->getLocale());
+
         try {
             $adapter->setLocale('nolocale');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
         try {
             $adapter->setLocale('de');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
@@ -157,15 +150,12 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg2' => 'Message 2 (en)',
                                                           'msg3' => 'Message 3 (en)',
                                                          ), 'en');
-
-
-        $this->assertEquals($adapter->getList(), array('en' => 'en'));
+        $this->assertEquals(array('en' => 'en'), $adapter->getList());
         $adapter->addTranslation(array('msg1'), 'de');
-        $this->assertEquals($adapter->getList(), array('en' => 'en', 'de' => 'de'));
-
+        $this->assertEquals(array('en' => 'en', 'de' => 'de'), $adapter->getList());
         $this->assertTrue($adapter->isAvailable('de'));
         $locale = new Zend_Locale('en');
-        $this->assertTrue($adapter->isAvailable($locale));
-        $this->assertFalse($adapter->isAvailable('sr'));
+        $this->assertTrue( $adapter->isAvailable($locale));
+        $this->assertFalse($adapter->isAvailable('sr'   ));
     }
 }
