@@ -717,7 +717,7 @@ $translate->addTranslation("\my_de.mo","de");
                 自動検出を再度有効にしたい場合は、<code>setLocale()</code>
                 で言語として <emphasis role="strong">auto</emphasis>
                 を指定します。これにより、<code>Zend_Translate</code>
-                の時度検出機能が再度有効になります。
+                の自動検出機能が再度有効になります。
             </para>
 
         </sect3>
