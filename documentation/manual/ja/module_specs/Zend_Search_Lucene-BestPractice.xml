@@ -82,7 +82,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            インデックスの最適化を行うには 'optimize()' メソッドを使用します。
+            インデックスの最適化を行うには <code>optimize()</code> メソッドを使用します。
             <programlisting role="php"><![CDATA[<?php
 $index = Zend_Search_Lucene::open($indexPath);
 
@@ -276,11 +276,8 @@ $index->optimize();]]>
         <para>
             <code>Zend_Search_Lucene</code> オブジェクトは、
             終了時にちょっとした作業を行います。
-            これは、インデックスにドキュメントが追加された場合に行われます。
-        </para>
-
-        <para>
-            まず、バッファに追加されたままでセグメントが作成されていないドキュメントの処理をします。
+            これは、インデックスにドキュメントが追加されたけれども
+            新しいセグメントに書き込まれていないという場合に行われます。
         </para>
 
         <para>

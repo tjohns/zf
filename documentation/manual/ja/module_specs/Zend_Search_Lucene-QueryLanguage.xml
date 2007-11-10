@@ -6,7 +6,7 @@
     </para>
 
     <para>
-        これらふたつはほぼ同じですが、微妙に異なる点もあります。
+        これらの言語はほぼ同じものですが、微妙に異なる点もあります。
         異なる点については以下で説明します。
     </para>
 
@@ -50,7 +50,7 @@
             デフォルトのフィールドは現在の設定によって決まります。
         </para>
         <para>
-            Java Lucene との最初の (そして大きな) 違いは、デフォルトでは
+            Java Lucene との最初の (そしてもっとも大きな) 違いは、デフォルトでは
             <emphasis>すべてのフィールド</emphasis> が検索の対象になるということです。
         </para>
         <para>
@@ -68,7 +68,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             これがデフォルトの設定です。
         </para>
         <para>
-            フィールドを指定するには、まずフィールド名をタイプし、その後にコロン ":"
+            特定のフィールドを検索するには、まずフィールド名をタイプし、その後にコロン ":"
             を続け、探したい単語を指定します。
         </para>
         <para>
@@ -85,7 +85,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         <programlisting role="querystring"><![CDATA[title:"Do it right" AND go]]>
         </programlisting>
         <para>
-            とします。"text" がデフォルトのフィールドなら、フィールドの指定は必須ではなくなります。
+            とします。"text" はデフォルトのフィールドなので、フィールドの指定は必須ではなくなります。
         </para>
 
         <para>
@@ -117,7 +117,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
 
         <para>
             単一文字のワイルドカードは、
-            その部分を別の一文字に置き換えたものにマッチする単語を探します。
+            単語の中の "?" を別の一文字に置き換えたものにマッチする単語を探します。
             たとえば、"text" あるいは "test" を探したい場合は
             <programlisting role="querystring"><![CDATA[te?t]]>
             </programlisting>
@@ -151,7 +151,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             Zend_Search_Lucene では、現在は "~" 修正子をフレーズについてのみサポートしています。
             <footnote>
                 <para>
-                    "~" はあいまい検索に用いられます。しかし、あいまい検索のクエリはまだサポートされていません。
+                    "~" 修正子はあいまい検索に使用します。しかし、あいまい検索のクエリはまだサポートされていません。
                 </para>
             </footnote>
         </para>
@@ -236,12 +236,6 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             Lucene では、論理演算子として AND、"+"、OR、NOT および "-"
             をサポートしています。Java Lucene では論理演算子をすべて大文字にする必要がありますが、
             Zend_Search_Lucene ではその必要はありません。
-        </para>
-
-        <para>
-            論理演算子によって、複数の単語を組み合わせることができます。
-            Lucene では、論理演算子として AND、"+"、OR、NOT および "-"
-            をサポートしています。
         </para>
 
         <para>

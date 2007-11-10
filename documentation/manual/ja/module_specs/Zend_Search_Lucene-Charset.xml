@@ -49,7 +49,7 @@
             したがって、この解析器は
             テキストをインデックス化する前に 'ASCII//TRANSLIT'
             エンコーディングに変換します。
-            同じ処理がクエリのパース時にも行われますが、これは透過的に行われます。
+            同じ処理がクエリのパース時にも透過的に行われます。
             <footnote>
                <para>
                    'ASCII//TRANSLIT' への変換は、現在のロケールおよび
@@ -78,7 +78,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            制限事項は次のふたつです。
+            この解析器には、次のふたつの制限事項があります。
             <itemizedlist>
                 <listitem>
                     <para>非 ascii 文字を、すべて文字として扱う (常にそうだというわけではありません)</para>

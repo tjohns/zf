@@ -5,7 +5,7 @@
         <title>ファイルフォーマット</title>
         <para>
           Zend_Search_Lucene のインデックスファイルのフォーマットは、
-          Lucene バージョン 1.4 以降とバイナリ互換性があります。
+          Lucene バージョン 1.4 以降のフォーマットとバイナリ互換性があります。
         </para>
 
         <para>

@@ -36,7 +36,7 @@
             <footnote>
                <para>
                    Lucene 2.1 インデックスフォーマット (これは Lucene 2.2
-                   でも用いられています) に対応しているのは、現在の "trunk" バージョンです。
+                   でも用いられています) に対応しているものは、現在の "trunk" ブランチに存在します。
                    このバージョンは、SVN リポジトリあるいは最新の nightly
                    スナップショットから取得できます。
                </para>
@@ -57,9 +57,10 @@
             </para>
             <para>
                 現時点では、これらのバージョンで作成されたインデックスは
+                Zend_Search_Lucene をアップグレードすると
                 自動的に Lucene 2.1 フォーマットにアップグレードされるようになっています。
                 いったんアップグレードされたインデックスは旧バージョンの
-                で読み込むことができません。
+                Zend_Search_Lucene で読み込むことができません。
             </para>
         </note>
     </sect2>
@@ -163,7 +164,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
             </para>
 
             <para>
-                フィールドの名前は自由につけることができます。
+                フィールドの名前は <code>addField()</code> メソッドで自由につけることができます。
             </para>
 
             <para>
@@ -339,7 +340,7 @@ $index->addDocument($doc);]]>
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
                                                    time()));
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('updated',
                                                    time()));
 $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
                                               'Document annotation text'));

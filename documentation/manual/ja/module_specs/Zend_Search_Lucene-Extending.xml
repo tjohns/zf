@@ -160,17 +160,17 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> フィルタ
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> フィルタ
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> フィルタ
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -248,7 +248,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
         </para>
 
         <para>
-            idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code> -
+            idf(t) - <code>Zend_Search_Lucene_Search_Similarity::tf($term, $reader)</code> -
             指定したインデックスに対する単純な単語の重み要素。
         </para>
 

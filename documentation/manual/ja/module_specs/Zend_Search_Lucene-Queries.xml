@@ -2,7 +2,7 @@
     <title>クエリ作成用の API</title>
 
     <para>
-        クエリを自動的にパースするだけではなく、クエリを API で作成することもできます。
+        文字列のクエリを自動的にパースするだけではなく、クエリを API で作成することもできます。
     </para>
 
     <para>
@@ -207,9 +207,7 @@ $hits  = $index->find($query);]]>
 
         <para>
             文字列によるクエリ
-            <programlisting role="querystring"><![CDATA[test*
-field1:test*]]>
-            </programlisting>
+            <programlisting role="querystring"><![CDATA[field1:test*]]></programlisting>
         </para>
 
 
@@ -305,16 +303,13 @@ Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $
         <para>
             <code>$offsets</code> は整数の配列で、
             フレーズ内の単語の位置を指定します。指定しなかったり
-            null を渡したりした場合は、単語の位置は
-            <code>array(0, 1, 2, 3, ...)</code> であると解釈されます。
+            null を渡したりした場合は、単語の位置はシーケンシャルであり、
+            すきまはないと解釈されます。
         </para>
 
         <para>
             <code>$field</code> は文字列で、検索対象となるドキュメントのフィールドを指定します。
             指定しなかったり null を渡したりした場合は、デフォルトのフィールドが対象となります。
-            このバージョンの Zend_Search_Lucene では、デフォルトのフィールドは
-            'contents' となります。しかし、次のバージョンではこれを
-            "any field" に変更する予定です。
         </para>
 
         <para>
@@ -461,7 +456,7 @@ $hits  = $index->find($query);]]>
             <programlisting role="php"><![CDATA[<?php
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');
-$query = new Zend_Search_Lucene_Search_Query_Range($from, $to, falce /* non-inclusive */);
+$query = new Zend_Search_Lucene_Search_Query_Range($from, $to, false /* non-inclusive */);
 $hits  = $index->find($query);]]>
             </programlisting>
         </para>
