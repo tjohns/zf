@@ -179,16 +179,6 @@ $row->bug_status = 'FIXED';
 $row->save();]]></programlisting>
             </example>
 
-            <note>
-                <para>
-                    現在は、主キーカラムの値を設定しようとすると
-                    Zend_Db_Table_Row_Abstract は例外をスローします。
-                    これは Zend Framework 1.0 までには変更するつもりです。
-                    シーケンスや自然主キーに対応するため、
-                    行クラスは主キーカラムの変更も受け入れるべきです。
-                </para>
-            </note>
-
         </sect3>
 
         <sect3 id="zend.db.table.row.write.insert">
