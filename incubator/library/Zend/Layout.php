@@ -155,8 +155,18 @@ class Zend_Layout
      */
     protected function _initMvc()
     {
-        require_once 'Zend/Controller/Front.php';
+        $this->_initPlugin();
+        $this->_initHelper();
+    }
 
+    /**
+     * Initialize front controller plugin
+     * 
+     * @return void
+     */
+    protected function _initPlugin()
+    {
+        require_once 'Zend/Controller/Front.php';
         $front = Zend_Controller_Front::getInstance();
         if (!$front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
             require_once 'Zend/Layout/Controller/Plugin/Layout.php';
@@ -166,7 +176,15 @@ class Zend_Layout
                 101
             );
         }
+    }
 
+    /**
+     * Initialize action helper
+     * 
+     * @return void
+     */
+    protected function _initHelper()
+    {
         require_once 'Zend/Controller/Action/HelperBroker.php';
         if (!Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
             require_once 'Zend/Layout/Controller/Action/Helper/Layout.php';
