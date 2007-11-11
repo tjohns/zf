@@ -55,6 +55,14 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testCreationNull()
     {
+        // look if locale is detectable
+        try {
+            $locale = new Zend_Locale();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of locale failed');
+            return;
+        }
+        
         $date = new Zend_Date(0);
         $this->assertTrue($date instanceof Zend_Date);
     }
@@ -64,6 +72,14 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testCreationNegative()
     {
+        // look if locale is detectable
+        try {
+            $locale = new Zend_Locale();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of locale failed');
+            return;
+        }
+        
         $date = new Zend_Date(1000);
         $this->assertTrue($date instanceof Zend_Date);
     }
@@ -73,6 +89,14 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testCreationFailed()
     {
+        // look if locale is detectable
+        try {
+            $locale = new Zend_Locale();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of locale failed');
+            return;
+        }
+        
         try {
             $date = new Zend_Date("notimestamp");
             $this->fail("exception expected");

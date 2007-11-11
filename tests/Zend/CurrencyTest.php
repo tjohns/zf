@@ -58,6 +58,14 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testSingleCreation()
     {
+        // look if locale is detectable
+        try {
+            $locale = new Zend_Locale();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of locale failed');
+            return;
+        }
+        
         $locale = new Zend_Locale('de_AT');
 
         $currency = new Zend_Currency();
@@ -415,6 +423,14 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRegionList()
     {
+        // look if locale is detectable
+        try {
+            $locale = new Zend_Locale();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of locale failed');
+            return;
+        }
+        
         $currency = new Zend_Currency('USD');
         $this->assertTrue(in_array('US', $currency->getRegionList()));
     }
@@ -425,6 +441,14 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
      */
     public function testGetCurrencyList()
     {
+        // look if locale is detectable
+        try {
+            $locale = new Zend_Locale();
+        } catch (Zend_Locale_Exception $e) {
+            $this->markTestSkipped('Autodetection of locale failed');
+            return;
+        }
+        
         $currency = new Zend_Currency('ar_EG');
         $this->assertTrue(array_key_exists('EGP', $currency->getCurrencyList()));
     }
