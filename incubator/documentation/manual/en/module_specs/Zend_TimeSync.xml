@@ -66,7 +66,7 @@
 
     </sect2>
 
-    <sect2 id="zend.timesync.introduction.problematic.extensive">
+    <sect2 id="zend.timesync.introduction.decision">
 
         <title>Decide which server to use</title>
 
@@ -104,10 +104,25 @@
                 <para>
                     Do not use always the same server. All timeservers will lock request from servers which
                     are flooding the server. If your application makes excessive use of timeservers you
-                    should not use a single timeserver but one of the gateways described later.
+                    should not use a single timeserver but one of the pools described later.
                 </para>
             </listitem>
         </itemizedlist>
+
+        <para>
+            So where can you find a timeserver ? Generally you can use any timeserver you know. This can be
+            a timeserver within you LAN or any public timeserver you know. If you decide to use a public
+            timeserver you should use a server pool. Serverpools are public addresses where you will get
+            a random timeserver from the pool if you request the time. This way you will not have to split your
+            requests. There are public serverpools avaiable for different regions so you will not have any of the
+            problems mentioned above.
+        </para>
+
+        <para>
+            Take a look at <link linkend="http://www.pool.ntp.org">pool.ntp.org</link> to get your nearest
+            serverpool. So if your server is located within germany for example you can connect to
+            <code>server 0.<emphasis role="strong">de</emphasis>.pool.ntp.org</code> and so on.
+        </para>
 
     </sect2>
 
