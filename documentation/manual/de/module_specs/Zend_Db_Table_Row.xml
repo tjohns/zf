@@ -173,15 +173,6 @@ $row->bug_status = 'FIXED';
 $row->save();]]></programlisting>
             </example>
 
-            <note>
-                <para>
-                    Im Moment wirft Zend_Db_Table_Row_Abstract eine Exception, wenn versucht wird, den Wert einer
-                    Primärschlüsselspalte zu setzen. Das soll sich in Version 1.0 ändern. Die Zeilenklasse sollte
-                    erlauben, dass der Primärschlüssel gesetzt wird, um Sequenzen und natürliche Primärschlüssel zu
-                    unterstützen.
-                </para>
-            </note>
-
         </sect3>
 
         <sect3 id="zend.db.table.row.write.insert">
