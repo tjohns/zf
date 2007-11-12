@@ -3,10 +3,11 @@
     <title>Zend_Db_Statement</title>
 
     <para>
-        Zusätzlich zu den herkömmlichen Methoden wie <code>fetchAll()</code> und <code>insert()</code>, beschrieben
-        in <xref linkend="zend.db.adapter" />, kann auch ein Statement-Objekt verwendet werden, um mehr
-        Möglichkeiten beim Ausführen von Abfragen und holen von Ergebnissätzen zu erhalten. Dieser Abschnitt
-        beschreibt wie eine Instanz eines Statement-Objekts erzeugt wird, und wie dessen Methoden verwendet werden.
+        Zusätzlich zu den herkömmlichen Methoden wie <code>fetchAll()</code> und <code>insert()</code>,
+        beschrieben in <xref linkend="zend.db.adapter" />, kann auch ein Statement-Objekt verwendet werden,
+        um zusätzliche Möglichkeiten beim Ausführen von Abfragen und holen von Ergebnissätzen zu erhalten.
+        Dieser Abschnitt beschreibt wie eine Instanz eines Statement-Objekts erzeugt wird, und wie dessen
+        Methoden verwendet werden.
     </para>
 
     <para>
