@@ -227,6 +227,53 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
     /**
      * @return void
      */
+    public function testCapturingToPlaceholderKeyUsingSetCapturesContent()
+    {
+        $this->container->captureStart('SET', 'key');
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $this->assertEquals(1, count($this->container));
+        $this->assertTrue(isset($this->container['key']));
+        $value = $this->container['key'];
+        $this->assertContains('This is content intended for capture', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCapturingToPlaceholderKeyUsingSetReplacesContentAtKey()
+    {
+        $this->container['key'] = 'Foobar';
+        $this->container->captureStart('SET', 'key');
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $this->assertEquals(1, count($this->container));
+        $this->assertTrue(isset($this->container['key']));
+        $value = $this->container['key'];
+        $this->assertContains('This is content intended for capture', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCapturingToPlaceholderKeyUsingAppendAppendsContentAtKey()
+    {
+        $this->container['key'] = 'Foobar ';
+        $this->container->captureStart('APPEND', 'key');
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $this->assertEquals(1, count($this->container));
+        $this->assertTrue(isset($this->container['key']));
+        $value = $this->container['key'];
+        $this->assertContains('Foobar This is content intended for capture', $value);
+    }
+
+    /**
+     * @return void
+     */
     public function testNestedCapturesThrowsException()
     {
         $this->container[] = 'foo';

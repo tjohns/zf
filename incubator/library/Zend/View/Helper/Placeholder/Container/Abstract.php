@@ -78,6 +78,12 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     protected $_captureType;
 
     /**
+     * Key to which to capture content
+     * @var string
+     */
+    protected $_captureKey;
+
+    /**
      * Constructor - This is needed so that we can attach a class member as the ArrayObject container
      *
      * @return void
@@ -219,7 +225,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      * @return void
      * @throws Zend_View_Helper_Placeholder_Exception if nested captures detected
      */
-    public function captureStart($type = Zend_View_Helper_Placeholder_Container_Abstract::APPEND)
+    public function captureStart($type = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $key = null)
     {
         if ($this->_captureLock) {
             require_once 'Zend/View/Helper/Placeholder/Container/Exception.php';
@@ -228,6 +234,9 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
 
         $this->_captureLock = true;
         $this->_captureType = $type;
+        if ((null !== $key) && is_scalar($key)) {
+            $this->_captureKey = (string) $key;
+        }
         ob_start();
     }
 
@@ -238,15 +247,27 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function captureEnd()
     {
-        $data = ob_get_clean();
+        $data               = ob_get_clean();
+        $key                = null;
         $this->_captureLock = false;
+        if (null !== $this->_captureKey) {
+            $key = $this->_captureKey;
+        }
         switch ($this->_captureType) {
             case self::SET:
-                $this->exchangeArray(array($data));
+                if (null !== $key) {
+                    $this[$key] = $data;
+                } else {
+                    $this->exchangeArray(array($data));
+                }
                 break;
             case self::APPEND:
             default:
-                $this[$this->nextIndex()] = $data;
+                if (null !== $key) {
+                    $this[$key] .= $data;
+                } else {
+                    $this[$this->nextIndex()] = $data;
+                }
                 break;
         }
     }
