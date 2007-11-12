@@ -87,6 +87,13 @@
                 Zend_Translate erkannt und automatisch verwendet werden.
             </para>
         </listitem>
+        <listitem>
+            <para>
+                <emphasis role="strong">Automatische Erkennung der Quelle:</emphasis>
+                Zend_Translate kann mehrere Quelldateien erkennen und integrieren und zusätzlich das
+                zu verwendende Gebietsschema erkennen abhängig vom Verzeichnis oder Dateinamen.
+            </para>
+        </listitem>
     </itemizedlist>
 
     <sect2 id="zend.translate.introduction.adapters">

@@ -541,6 +541,16 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);]]>
                         gelesen werden</entry>
                     </row>
                     <row>
+                        <entry>all</entry>
+                        <entry>scan</entry>
+                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>Wenn null gesetzt wird, wird die Verzechnisstruktur nicht gescannt.
+                        Wenn Zend_Translate::LOCALE_DIRECTORY gesetzt wird, wird das Gebietsschema im
+                        Verzeichnis gesucht. Wenn Zend_Translate::LOCALE_FILENAME gesetzt wird, wird das
+                        Gebietsschema im Dateinamen gesucht. Siehe
+                        <xref linkend="zend.translate.using.detection" /> für Details</entry>
+                    </row>
+                    <row>
                         <entry>Csv</entry>
                         <entry>separator</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
@@ -682,6 +692,217 @@ $translate->addTranslation("\my_de.mo","de");
                 <emphasis role="strong">auto</emphasis> mit <code>setLocale()</code> gesetzt werden, was die
                 automatische Erkennung für <code>Zend_Translate</code> wieder reaktiviert.
             </para>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.detection">
+
+        <title>Automatische Erkennung von Quellen</title>
+
+        <para>
+            Zend_Translate kann Übersetzungsquellen automatisch erkennen. Es muß also nicht jede Quelldatei
+            manuell deklariert werden. Man kann diesen Job Zend_Translate überlassen welches die komplette
+            Verzeichnisstruktur nach Quelldateien durchsucht.
+        </para>
+
+        <note>
+            <para>
+                Automatische Erkennung der Quellen ist seit Zend Framework Version 1.1 vorhanden.
+            </para>
+        </note>
+
+        <para>
+            Die Verwendung ist fast die selbe wie bei der Initiierung einer einzelnen Übersetzungsquelle
+            mit einem Unterschied. Es darf nur ein Verzeichnis angegeben werden, statt einer Datei, welches
+            gescannt werden soll.
+        </para>
+
+        <example id="zend.translate.using.languages.automatic.example">
+            <title>Scannen nach Quellen in einer Verzeichnisstruktur</title>
+            <programlisting role="php"><![CDATA[
+// Angenommen wir haben die folgende Struktur
+//  /language
+//  /language/login/login.tmx
+//  /language/logout/logout.tmx
+//  /language/error/loginerror.tmx
+//  /language/error/logouterror.tmx
+
+$translate = new Zend_Translate('tmx', '/language');]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Zend_Translate muß also nicht nur das angegebene Verzeichnis durchsuchen, sondern auch alle
+            Unterverzeichnisse nach Dateien für Übersetzungsen. Das macht die Verwendung sehr einfach.
+            Aber Zend_Translate wird alle Dateien ignorieren, welche keine Quellen sind, oder wärend des
+            Einlesens der Übersetzungsdaten Fehler produzieren. Man sollte also sicherstellen das alle
+            Übersetzungsquellen korrekt sind und gelesen werden können weil man keinen Fehler erhält wenn
+            eine Datei fehlerhaft ist oder nicht gelesen werden kann.
+        </para>
+
+        <note>
+            <para>
+                Abhängig davon wie tief die Verzeichnisstruktur ist und wieviele Dateien innerhalb dieser
+                Struktur vorhanden sind, kann es eine sehr lange Zeit dauern bis Zend_Translate fertig ist.
+            </para>
+        </note>
+
+        <para>
+            In unserem Beispiel haben wir das TMX Format verwendet welches die Sprache enthält die innerhalb
+            der Quelle verwendet wird. Aber viele der anderen Quellformate sind nicht dazu fähig die Sprache
+            in der Datei selbst zu inkludieren. Aber auch diese quellen können mit der automatischen
+            Erkennung verwendet werden wenn ein paar Dinge berücksichtigt werden die anbei beschrieben sind:
+        </para>
+
+        <sect3 id="zend.translate.using.detection.directory">
+
+            <title>Sprachen durch die Benennung von Verzeichnissen</title>
+
+            <para>
+                Ein Weg, die automatische Spracherkennung zu inkludieren, ist es die Verzechnisse relativ zur
+                Sprache zu benennen, welche in den Quellen des betreffenden Verzechnisses verwendet wird. Das
+                ist der einfachste Weg und wird zum Beispiel in Standard Gettext Implementationen verwendet.
+            </para>
+
+            <para>
+                Zend_Translate benötigt die 'scan' Option um zu wissen das es die Namen aller Verzeichnisse
+                nach Sprachen durchsuchen soll. Siehe das folgende Beispiel für Details:
+            </para>
+
+            <example id="zend.translate.using.detection.directory.example">
+                <title>Verzeichnisse nach Sprachen durchsuchen</title>
+                <programlisting role="php"><![CDATA[
+// Angenommen wir haben die folgende Struktur
+//  /language
+//  /language/de/login/login.tmx
+//  /language/de/error/loginerror.tmx
+//  /language/en/login/login.tmx
+//  /language/en/error/loginerror.tmx
+
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));]]>
+                </programlisting>
+            </example>
+
+            <note>
+                <para>
+                    Das funktioniert nur für Adapter die die Sprache nicht in der Quelldatei enthalten. Die
+                    Verwendung dieser Option wird zum Beispiel mit TMX ignoriert. Sprachdefinitionen im
+                    Dateinamen werden bei der Verwendung dieser Option ignoriert.
+                </para>
+            </note>
+
+        </sect3>
+
+        <sect3 id="zend.translate.using.detection.filename">
+
+            <title>Sprache durch Dateinamen</title>
+
+            <para>
+                Ein anderer Weg um die Sprache automatisch zu erkennen ist die Verwendung von speziellen
+                Dateienamen. Man kann entweder die komplette Datei oder Teile der Datei nach der verwendeten
+                Sprache benennen. Um diese Option zu Verwenden muß die 'scan' Option bei der Initiierung
+                gesetzt werden. Es gibt verschiedene Wege die Quelldateien zu benennen welche im folgenden
+                beschrieben werden:
+            </para>
+
+            <example id="zend.translate.using.detection.filename.example">
+                <title>Suchen nach Sprachen im Dateinamen</title>
+                <programlisting role="php"><![CDATA[
+// Angenommen wir haben die folgende Struktur
+//  /language
+//  /language/login/login_en.tmx
+//  /language/login/login_de.tmx
+//  /language/error/loginerror_en.tmx
+//  /language/error/loginerror_de.tmx
+
+$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
+                </programlisting>
+            </example>
+
+            <sect4 id="zend.translate.using.detection.filename.complete">
+
+                <title>Komplette Dateinamen</title>
+
+                <para>
+                    Die komplette Datei nach der Sprache zu benennen ist der einfachste weg, aber nur
+                    praktikabel wenn nur eine Datei pro Verzeichnis verwendet wird.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  en.mo
+  de.mo
+  es.mo]]>
+                </programlisting>
+
+            </sect4>
+
+            <sect4 id="zend.translate.using.detection.filename.extension">
+
+                <title>Erweiterung der Datei</title>
+
+                <para>
+                    Ein anderer sehr einfacher Weg ist die Verwendung der Dateiextension für die
+                    Spracherkennung. Aber das kann verwirrend sein weil die ursprügliche verwendete
+                    Dateiextension nicht mehr vorhanden ist.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view.en
+  view.de
+  view.es]]>
+                </programlisting>
+
+            </sect4>
+
+            <sect4 id="zend.translate.using.detection.filename.token">
+
+                <title>Teile von Dateinamen</title>
+
+                <para>
+                    Zend_Translate kann die Sprache auch erkennen wenn Sie im Dateinamen enthalten ist.
+                    Aber wenn dieser Weg verwendet wird, muß die Sprache mit einem Trennzeichen seperiert
+                    werden. Es gibt drei unterstützte Trennzeichen welche verwendet werden können. Ein Punkt
+                    '.', ein Unterstrich '_', oder ein Bindestrich '-'.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en.mo  -> erkennt englisch
+  view_de.mo  -> erkennt deutsch
+  view_it.mo  -> erkennt italienisch]]>
+                </programlisting>
+
+                <para>
+                    Das erste gefundene Trennzeichen welches als Gebietsschema erkannt wird, wird verwendet.
+                    Siehe das folgende Beispiel für Details.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en_de.mo  -> erkennt englisch
+  view_en_es.mo  -> erkennt englisch und überschreibt die erste Datei weil die gleichen MessageIDs verwendet werden
+  view_it_it.mo  -> erkennt italienisch]]>
+                </programlisting>
+
+                <para>
+                    Alle drei Trennzeichen werden verwendet um das Gebietsschema zu erkennen. Das erste ist der
+                    Punkt '.', das zweite ist der Unterstrich '_' und das dritte ist der Bindestrich '-'. Wenn
+                    mehrere Trennzeichen im Dateinamen vorhanden sind, wird das erste gefundene, abhängig von
+                    der Reihenfolge der Trennzeichen, verwendet. Siehe das folgende Beispiel für Details.
+                </para>
+
+                <programlisting><![CDATA[
+/languages
+  view_en-it.mo  -> erkennt englisch weil '_' vor '-' verwendet wird
+  view-en_it.mo  -> erkennt italienisch weil '_' vor '-' verwendet wird
+  view_en.it.mo  -> erkennt italienisch weil '.' vor '_' verwendet wird]]>
+                </programlisting>
+
+            </sect4>
 
         </sect3>
 
