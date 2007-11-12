@@ -76,7 +76,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Komplette Index Optimierung kann mit der 'optimize()' Methode durchgeführt werden:
+            Komplette Index Optimierung kann mit der <code>optimize()</code> Methode durchgeführt werden:
             <programlisting role="php"><![CDATA[<?php
 $index = Zend_Search_Lucene::open($indexPath);
 
@@ -85,14 +85,14 @@ $index->optimize();]]>
         </para>
 
         <para>
-            Index Optimierung arbeitet mit Daten Streams und benötigt nicht viel Speicher, aber Prozessor
+            Index Optimierung arbeitet mit Daten Streams und benötigt nicht viel Speicher, aber sehrwohl Prozessor
             Ressourcen und Zeit.
         </para>
 
         <para>
             Lucene Index Segmente sind nicht aktualisierbar durch Ihre Natur (Aktuslisierung erfordert das die
             Segment Datei komplett neu geschrieben wird). Deshalb erzeugt das Hinzufügen neuer Dokumente zu einem
-            Index auch immer ein neues Segment. Das verkleinert die Qualität des Indexes.
+            Index auch immer ein neues Segment. Das verkleinert natürlich die Qualität des Indexes.
         </para>
 
         <para>
@@ -141,8 +141,8 @@ $index->optimize();]]>
 
         <para>
             Es gibt keinen Weg um den besten Wert für den <emphasis>MaxBufferedDocs</emphasis> Parameter zu
-            berechnen weil es von der Größe des Dokuments abhängt, dem verwendeten Analysierer und dem erlaubten
-            Speicher.
+            berechnen weil es von der durchschnittlichen Größe des Dokuments abhängt, dem verwendeten Analysierer
+            und dem erlaubten Speicher.
         </para>
 
         <para>
@@ -162,9 +162,9 @@ $index->optimize();]]>
 
         <para>
             <emphasis>MaxMergeDocs</emphasis> limitiert die Größe des Segments (in Abschnitten von Dokumenten).
-            Es begrenzt also die Zeit für die automatische Optimierung. Das garantiert das die
+            Es begrenzt also die Zeit für die automatische Optimierung indem es garantiert das die
             <code>addDocument()</code> Methode nicht länger als eine bestimmte Zeit ausgeführt wird. Das ist
-            wichtig für interaktive Anwendungen.
+            sehr wichtig für interaktive Anwendungen.
         </para>
 
         <para>
@@ -172,13 +172,13 @@ $index->optimize();]]>
             des Batchinzieierens beeinflussen. Automatische Optimierung des Index ist ein iterativer Prozess
             und wird Schritt für Schritt durchgeführt. Kleine Segmente werden in größere zusammengeführt, und
             irgendwann werden Sie in sogar noch größere zusammengeführt und so weiter. Komplette
-            Optimierung des Index ist viel effektiver.
+            Optimierung des Index wird durchgeführt wenn nur mehr ein großes Segment überbleibt.
         </para>
 
         <para>
-            Auf der anderen Seite, verkleinern kleiner Segmente die Qualität des Indezes und können zu viele
-            Segmente erzeugen. Das kann zu einem "Too many open files" Fehler führen, ausgelöst durch die
-            Beschränkungen des Betriebsystems.
+            Kleiner Segmente verkleinern die Qualität des Indezes und können zu viele
+            Segmente erzeugen. Viele kleine Segmente können zu einem "Too many open files" Fehler führen,
+            ausgelöst durch die Beschränkungen des Betriebsystems.
             
             <footnote>
                 <para>
@@ -274,10 +274,6 @@ $index->optimize();]]>
         </para>
 
         <para>
-            Es ist Beschäftigt mit dem Buffern von hinzugefügten Dokumenten bevor ein neues Segment erstellt wird.
-        </para>
-
-        <para>
             Es kann auch einen automatischen Optimierungsprozess ausführen.
         </para>
 
@@ -332,7 +328,7 @@ $index->commit();]]>
             </programlisting>
             Diese Möglichkeit wird auch im Kapitel
             "<link linkend="zend.search.lucene.advanced.static">Fortgeschrittene Verwendung von Indezes als statische Eigenschaften</link>"
-            der Dokumentation beschrieben.
+            beschrieben.
         </para>
     </sect2>
 
@@ -391,15 +387,16 @@ foreach ($docIds as $id) {
         <title>Speicherverwendung</title>
 
         <para>
-            Zend_Search_Lucene ist ein Modul das sehr viel Speicher benötigt.
+            Zend_Search_Lucene ist ein relativ speicherintensives Modul.
         </para>
 
         <para>
-            Es verwendet Speicher um Informationen zu cachen und das Suchen und Indizieren schneller zu machen.
+            Es verwendet Speicher um Informationen zu cachen, die Suchen zu optimieren und das Indizieren
+            zu beschleunigen.
         </para>
 
         <para>
-            Es verhält sich unterschiedlich für unterschiedliche Modi.
+            Der Speicherverbrauch ist verschieden für unterschiedliche Modi.
         </para>
 
         <para>
@@ -427,7 +424,7 @@ foreach ($docIds as $id) {
             Verzeichnis an Termen enthält und den Verzeichnisindex der Terme. Wenn der Index aus
             <emphasis>N</emphasis> Segmenten besteht kann der Speicherverbrauch im schlimmsten Fall
             <emphasis>N</emphasis> mal so groß sein. Eine Optimierung des Index kann durchgeführt werden
-            um alle Segmente in eines zusammenzuführen. 
+            um alle Segmente in eines zusammenzuführen und diesen Speicherverbrauch zu verhindern . 
         </para>
 
         <para>
