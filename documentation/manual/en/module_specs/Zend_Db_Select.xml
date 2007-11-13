@@ -658,6 +658,30 @@ $select = $db->select()
             </example>
 
             <para>
+                As third argument you can give the type of the value to
+                the <code>where()</code> method. If no value is given the
+                third argument will be ignored
+            </para>
+
+            <example id="zend.db.select.building.where.example-paramtype">
+                <title>Example of a parameter in the where() method with an type</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Build this query:
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE (price < 100.50)
+
+$minimumPrice = 100;
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('price < ?', $price, Zend_Db::FLOAT_TYPE);]]></programlisting>
+            </example>
+
+            <para>
                 You can invoke the <code>where()</code> method multiple times
                 on the same Zend_Db_Select object.  The resulting query combines
                 the multiple terms together using <code>AND</code> between them.

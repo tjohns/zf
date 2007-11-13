@@ -570,22 +570,14 @@ class Zend_Db_Select
      * $db->fetchAll($select, array('id' => 5));
      * </code>
      *
-     * @param string $cond The WHERE condition.
-     * @param string $val A single value to quote into the condition.
+     * @param string   $cond  The WHERE condition.
+     * @param string   $value OPTIONAL A single value to quote into the condition.
+     * @param constant $type  OPTIONAL The type of the given value
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function where($cond)
+    public function where($cond, $value = null, $type = null)
     {
-        if (func_num_args() > 1) {
-            $val = func_get_arg(1);
-            $cond = $this->_adapter->quoteInto($cond, $val);
-        }
-
-        if ($this->_parts[self::WHERE]) {
-            $this->_parts[self::WHERE][] = "AND ($cond)";
-        } else {
-            $this->_parts[self::WHERE][] = "($cond)";
-        }
+        $this->_parts[self::WHERE][] = $this->_where($cond, true, $value, $type);
 
         return $this;
     }
@@ -595,26 +587,46 @@ class Zend_Db_Select
      *
      * Otherwise identical to where().
      *
-     * @param string $cond The WHERE condition.
-     * @param string $val A value to quote into the condition.
+     * @param string   $cond  The WHERE condition.
+     * @param string   $value OPTIONAL A single value to quote into the condition.
+     * @param constant $type  OPTIONAL The type of the given value
      * @return Zend_Db_Select This Zend_Db_Select object.
      *
      * @see where()
      */
-    public function orWhere($cond)
+    public function orWhere($cond, $value = null, $type = null)
     {
-        if (func_num_args() > 1) {
-            $val = func_get_arg(1);
-            $cond = $this->_adapter->quoteInto($cond, $val);
-        }
-
-        if ($this->_parts[self::WHERE]) {
-            $this->_parts[self::WHERE][] = "OR ($cond)";
-        } else {
-            $this->_parts[self::WHERE][] = "($cond)";
-        }
+        $this->_parts[self::WHERE][] = $this->_where($cond, false, $value, $type);
 
         return $this;
+    }
+
+    /**
+     * Internal function for creating the where clause
+     *
+     * @param string   $condition
+     * @param boolean  $bool  true = AND, false = OR
+     * @param string   $value  optional
+     * @param string   $type   optional
+     * @return string  clause
+     */
+    protected function _where($condition, $bool = true, $value = null, $type = null)
+    {
+        if ($value !== null) {
+            $condition = $this->_adapter->quoteInto($condition, $value, $type);
+        }
+
+        $cond = "";
+        if ($this->_parts[self::WHERE]) {
+            if ($bool === true) {
+                $cond = "AND ";
+            } else {
+                $cond = "OR ";
+            }
+        }
+        $condition = $cond . "($condition)";
+
+        return $condition;
     }
 
     /**
