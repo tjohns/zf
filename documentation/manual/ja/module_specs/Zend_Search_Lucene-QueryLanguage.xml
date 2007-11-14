@@ -101,7 +101,11 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
-        <title>ワイルドカード</title>
+        <title>1.1 以降でサポートするワイルドカード
+          <footnote><para>ワイルドカードクエリのサポートは
+          SVN 版か最新のスナップショットで提供されます。
+          現在のリリース版には存在しません。</para>></footnote>
+        </title>
         <para>
             Lucene は、単一の文字あるいは複数の文字を表すワイルドカードをサポートしています
             これは、単語検索でのみ使用可能です (フレーズクエリでは使用できません)。
@@ -158,7 +162,11 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>範囲検索</title>
+        <title>1.1 以降でサポートする範囲検索
+          <footnote><para>範囲指定クエリのサポートは
+          SVN 版か最新のスナップショットで提供されます。
+          現在のリリース版には存在しません。</para>></footnote>
+        </title>
 
         <para>
             範囲検索は、フィールドの値の下限と上限を指定して
