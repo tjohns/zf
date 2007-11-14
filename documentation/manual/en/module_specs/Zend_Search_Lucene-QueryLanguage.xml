@@ -90,7 +90,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
-        <title>Wildcards</title>
+        <title>Wildcards<footnote><para>Wildcard queries  support is available with SVN and latest snapshot versions and 
+               doesn't included into current release.</para>></footnote></title>
         <para>
             Lucene supports single and multiple character wildcard searches within single terms (but not within phrase queries).
         </para>
@@ -142,8 +143,8 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>Range Searches</title>
-
+        <title>Range Searches<footnote><para>Range queries support is available with SVN and latest snapshot versions and 
+               doesn't included into current release.</para>></footnote></title>
         <para>
             Range queries allow the developer or user to match documents whose field(s) values are between the lower and upper bound specified by the range query.
             Range Queries can be inclusive or exclusive of the upper and lower bounds. Sorting is performed lexicographically.
