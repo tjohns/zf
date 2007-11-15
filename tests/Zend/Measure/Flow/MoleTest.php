@@ -22,12 +22,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for mole initialisation
      * expected instance
@@ -302,7 +296,7 @@ class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Flow_Mole('-100',Zend_Measure_Flow_Mole::STANDARD,'de');
         $value->setType(Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY);
-        $this->assertEquals($value->getType(), Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY, 'Zend_Measure_Flow_Mole type expected');
+        $this->assertEquals(Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY, $value->getType(), 'Zend_Measure_Flow_Mole type expected');
     }
 
 
@@ -314,7 +308,7 @@ class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Flow_Mole('-100',Zend_Measure_Flow_Mole::STANDARD,'de');
         $value->setType(Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY);
-        $this->assertEquals($value->getType(), Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY, 'Zend_Measure_Flow_Mole type expected');
+        $this->assertEquals(Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY, $value->getType(), 'Zend_Measure_Flow_Mole type expected');
     }
 
 
@@ -326,7 +320,7 @@ class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Flow_Mole('-100',Zend_Measure_Flow_Mole::MILLIMOLE_PER_DAY,'de');
         $value->setType(Zend_Measure_Flow_Mole::STANDARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Flow_Mole::STANDARD, 'Zend_Measure_Flow_Mole type expected');
+        $this->assertEquals(Zend_Measure_Flow_Mole::STANDARD, $value->getType(), 'Zend_Measure_Flow_Mole type expected');
     }
 
 
@@ -353,7 +347,7 @@ class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
     public function testFlow_MoleToString()
     {
         $value = new Zend_Measure_Flow_Mole('-100',Zend_Measure_Flow_Mole::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 mol/s', 'Value -100 mol/s expected');
+        $this->assertEquals('-100 mol/s', $value->toString(), 'Value -100 mol/s expected');
     }
 
 
@@ -364,7 +358,7 @@ class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
     public function testFlow_Mole_ToString()
     {
         $value = new Zend_Measure_Flow_Mole('-100',Zend_Measure_Flow_Mole::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 mol/s', 'Value -100 mol/s expected');
+        $this->assertEquals('-100 mol/s', $value->__toString(), 'Value -100 mol/s expected');
     }
 
 

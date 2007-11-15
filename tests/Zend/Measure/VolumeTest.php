@@ -319,7 +319,7 @@ class Zend_Measure_VolumeTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Volume('-100',Zend_Measure_Volume::STANDARD,'de');
         $value->setType(Zend_Measure_Volume::CORD);
-        $this->assertEquals($value->getType(), Zend_Measure_Volume::CORD, 'Zend_Measure_Volume type expected');
+        $this->assertEquals(Zend_Measure_Volume::CORD, $value->getType(), 'Zend_Measure_Volume type expected');
     }
 
 
@@ -331,7 +331,7 @@ class Zend_Measure_VolumeTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Volume('-100',Zend_Measure_Volume::STANDARD,'de');
         $value->setType(Zend_Measure_Volume::CUBIC_YARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Volume::CUBIC_YARD, 'Zend_Measure_Volume type expected');
+        $this->assertEquals(Zend_Measure_Volume::CUBIC_YARD, $value->getType(), 'Zend_Measure_Volume type expected');
     }
 
 
@@ -343,7 +343,7 @@ class Zend_Measure_VolumeTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Volume('-100',Zend_Measure_Volume::CUBIC_YARD,'de');
         $value->setType(Zend_Measure_Volume::STANDARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Volume::STANDARD, 'Zend_Measure_Volume type expected');
+        $this->assertEquals(Zend_Measure_Volume::STANDARD, $value->getType(), 'Zend_Measure_Volume type expected');
     }
 
 
@@ -370,7 +370,7 @@ class Zend_Measure_VolumeTest extends PHPUnit_Framework_TestCase
     public function testVolumeToString()
     {
         $value = new Zend_Measure_Volume('-100',Zend_Measure_Volume::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 m³', 'Value -100 m³ expected');
+        $this->assertEquals('-100 m³', $value->toString(), 'Value -100 m³ expected');
     }
 
 
@@ -381,7 +381,7 @@ class Zend_Measure_VolumeTest extends PHPUnit_Framework_TestCase
     public function testVolume_ToString()
     {
         $value = new Zend_Measure_Volume('-100',Zend_Measure_Volume::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 m³', 'Value -100 m³ expected');
+        $this->assertEquals('-100 m³', $value->__toString(), 'Value -100 m³ expected');
     }
 
 

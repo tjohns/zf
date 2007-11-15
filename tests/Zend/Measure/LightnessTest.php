@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_LightnessTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Lightness initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_LightnessTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Lightness('-100',Zend_Measure_Lightness::STANDARD,'de');
         $value->setType(Zend_Measure_Lightness::STILB);
-        $this->assertEquals($value->getType(), Zend_Measure_Lightness::STILB, 'Zend_Measure_Lightness type expected');
+        $this->assertEquals(Zend_Measure_Lightness::STILB, $value->getType(), 'Zend_Measure_Lightness type expected');
     }
 
 
@@ -346,7 +340,7 @@ class Zend_Measure_LightnessTest extends PHPUnit_Framework_TestCase
     public function testLightnessToString()
     {
         $value = new Zend_Measure_Lightness('-100',Zend_Measure_Lightness::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 cd/m²', 'Value -100 cd/m² expected');
+        $this->assertEquals('-100 cd/m²', $value->toString(), 'Value -100 cd/m² expected');
     }
 
 
@@ -357,7 +351,7 @@ class Zend_Measure_LightnessTest extends PHPUnit_Framework_TestCase
     public function testLightness_ToString()
     {
         $value = new Zend_Measure_Lightness('-100',Zend_Measure_Lightness::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 cd/m²', 'Value -100 cd/m² expected');
+        $this->assertEquals('-100 cd/m²', $value->__toString(), 'Value -100 cd/m² expected');
     }
 
 

@@ -39,12 +39,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Weight initialisation
      * expected instance
@@ -319,7 +313,7 @@ class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::STANDARD,'de');
         $value->setType(Zend_Measure_Weight::GRAM);
-        $this->assertEquals($value->getType(), Zend_Measure_Weight::GRAM, 'Zend_Measure_Weight type expected');
+        $this->assertEquals(Zend_Measure_Weight::GRAM, $value->getType(), 'Zend_Measure_Weight type expected');
     }
 
 
@@ -331,7 +325,7 @@ class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::DRAM,'de');
         $value->setType(Zend_Measure_Weight::OUNCE);
-        $this->assertEquals($value->getType(), Zend_Measure_Weight::OUNCE, 'Zend_Measure_Weight type expected');
+        $this->assertEquals(Zend_Measure_Weight::OUNCE, $value->getType(), 'Zend_Measure_Weight type expected');
     }
 
 
@@ -343,7 +337,7 @@ class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::OUNCE,'de');
         $value->setType(Zend_Measure_Weight::DRAM);
-        $this->assertEquals($value->getType(), Zend_Measure_Weight::DRAM, 'Zend_Measure_Weight type expected');
+        $this->assertEquals(Zend_Measure_Weight::DRAM, $value->getType(), 'Zend_Measure_Weight type expected');
     }
 
 
@@ -370,7 +364,7 @@ class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
     public function testWeightToString()
     {
         $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 kg', 'Value -100 kg expected');
+        $this->assertEquals('-100 kg', $value->toString(), 'Value -100 kg expected');
     }
 
 
@@ -381,7 +375,7 @@ class Zend_Measure_WeightTest extends PHPUnit_Framework_TestCase
     public function testWeight_ToString()
     {
         $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 kg', 'Value -100 kg expected');
+        $this->assertEquals('-100 kg', $value->__toString(), 'Value -100 kg expected');
     }
 
 

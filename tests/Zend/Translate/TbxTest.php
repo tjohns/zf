@@ -28,19 +28,17 @@ class Zend_Translate_TbxTest extends PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx');
-
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Tbx);
 
         try {
             $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/nofile.tbx', 'en');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
-
         try {
             $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/failed.tbx', 'en');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
@@ -49,81 +47,76 @@ class Zend_Translate_TbxTest extends PHPUnit_Framework_TestCase
     public function testToString()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx');
-
-        $this->assertEquals($adapter->toString(), 'Tbx');
+        $this->assertEquals('Tbx', $adapter->toString());
     }
 
     public function testTranslate()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
-
-        $this->assertEquals($adapter->translate('Message 1'), 'Message 1');
-        $this->assertEquals($adapter->_('Message 1'), 'Message 1');
-        $this->assertEquals($adapter->translate('Message 1', 'fr'), 'Message 1 (fr)');
-        $this->assertEquals($adapter->translate('Message 5'), 'Message 5');
+        $this->assertEquals('Message 1',      $adapter->translate('Message 1'      ));
+        $this->assertEquals('Message 1',      $adapter->_('Message 1'              ));
+        $this->assertEquals('Message 1 (fr)', $adapter->translate('Message 1', 'fr'));
+        $this->assertEquals('Message 5',      $adapter->translate('Message 5'      ));
     }
 
     public function testIsTranslated()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
-
-        $this->assertEquals($adapter->isTranslated('Message 1'), true);
-        $this->assertEquals($adapter->isTranslated('Message 6'), false);
-        $this->assertEquals($adapter->isTranslated('Message 1', true), true);
-        $this->assertEquals($adapter->isTranslated('Message 1', true, 'en'), true);
-        $this->assertEquals($adapter->isTranslated('Message 1', false, 'es'), false);
+        $this->assertTrue( $adapter->isTranslated('Message 1'             ));
+        $this->assertFalse($adapter->isTranslated('Message 6'             ));
+        $this->assertTrue( $adapter->isTranslated('Message 1', true       ));
+        $this->assertTrue( $adapter->isTranslated('Message 1', true,  'en'));
+        $this->assertFalse($adapter->isTranslated('Message 1', false, 'es'));
     }
 
     public function testLoadTranslationData()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
 
-        $this->assertEquals($adapter->translate('Message 1'),       'Message 1');
-        $this->assertEquals($adapter->translate('Message 5'),       'Message 5');
-        $this->assertEquals($adapter->translate('Message 2', 'ru'), 'Message 2');
-
-        $this->assertEquals($adapter->translate('Message 1', 'xx'), 'Message 1');
-        $this->assertEquals($adapter->translate('Message 1', 'en_US'), 'Message 1');
+        $this->assertEquals('Message 1', $adapter->translate('Message 1'         ));
+        $this->assertEquals('Message 5', $adapter->translate('Message 5'         ));
+        $this->assertEquals('Message 2', $adapter->translate('Message 2', 'ru'   ));
+        $this->assertEquals('Message 1', $adapter->translate('Message 1', 'xx'   ));
+        $this->assertEquals('Message 1', $adapter->translate('Message 1', 'en_US'));
 
         try {
             $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_en.tbx', 'xx');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
 
         $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_en2.tbx', 'de', array('clear' => true));
-        $this->assertEquals($adapter->translate('Message 1'), 'Message 1');
-        $this->assertEquals($adapter->translate('Message 8'), 'Message 8');
+        $this->assertEquals('Message 1', $adapter->translate('Message 1'));
+        $this->assertEquals('Message 8', $adapter->translate('Message 8'));
     }
 
     public function testOptions()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
-
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals($adapter->getOptions(), array('testoption' => 'testkey', 'clear' => false, 'scan' => null));
-        $this->assertEquals($adapter->getOptions('testoption'), 'testkey');
+        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null), $adapter->getOptions());
+        $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }
 
     public function testLocale()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
-
-        $this->assertEquals($adapter->getLocale(), 'en');
+        $this->assertEquals('en', $adapter->getLocale());
         $locale = new Zend_Locale('en');
         $adapter->setLocale($locale);
-        $this->assertEquals($adapter->getLocale(), 'en');
+        $this->assertEquals('en', $adapter->getLocale());
+
         try {
             $adapter->setLocale('nolocale');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
         try {
             $adapter->setLocale('ar');
-            $this->fail();
+            $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
         }
@@ -132,11 +125,10 @@ class Zend_Translate_TbxTest extends PHPUnit_Framework_TestCase
     public function testList()
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
-        $this->assertEquals($adapter->getList(), array('en' => 'en', 'fr' => 'fr'));
-
+        $this->assertEquals(array('en' => 'en', 'fr' => 'fr'), $adapter->getList());
         $this->assertTrue($adapter->isAvailable('fr'));
         $locale = new Zend_Locale('en');
-        $this->assertTrue($adapter->isAvailable($locale));
-        $this->assertFalse($adapter->isAvailable('sr'));
+        $this->assertTrue( $adapter->isAvailable($locale));
+        $this->assertFalse($adapter->isAvailable('sr'   ));
     }
 }

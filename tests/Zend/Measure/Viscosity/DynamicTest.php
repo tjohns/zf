@@ -22,12 +22,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-    }
-
-
     /**
      * test for Mass initialisation
      * expected instance
@@ -302,7 +296,7 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Viscosity_Dynamic('-100',Zend_Measure_Viscosity_Dynamic::STANDARD,'de');
         $value->setType(Zend_Measure_Viscosity_Dynamic::POISE);
-        $this->assertEquals($value->getType(), Zend_Measure_Viscosity_Dynamic::POISE, 'Zend_Measure_Viscosity_Dynamic type expected');
+        $this->assertEquals(Zend_Measure_Viscosity_Dynamic::POISE, $value->getType(), 'Zend_Measure_Viscosity_Dynamic type expected');
     }
 
 
@@ -314,7 +308,7 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Viscosity_Dynamic('-100',Zend_Measure_Viscosity_Dynamic::STANDARD,'de');
         $value->setType(Zend_Measure_Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR, 'Zend_Measure_Viscosity_Dynamic type expected');
+        $this->assertEquals(Zend_Measure_Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR, $value->getType(), 'Zend_Measure_Viscosity_Dynamic type expected');
     }
 
 
@@ -326,7 +320,7 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Viscosity_Dynamic('-100',Zend_Measure_Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR,'de');
         $value->setType(Zend_Measure_Viscosity_Dynamic::STANDARD);
-        $this->assertEquals($value->getType(), Zend_Measure_Viscosity_Dynamic::STANDARD, 'Zend_Measure_Viscosity_Dynamic type expected');
+        $this->assertEquals(Zend_Measure_Viscosity_Dynamic::STANDARD, $value->getType(), 'Zend_Measure_Viscosity_Dynamic type expected');
     }
 
 
@@ -353,7 +347,7 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
     public function testViscosity_DynamicToString()
     {
         $value = new Zend_Measure_Viscosity_Dynamic('-100',Zend_Measure_Viscosity_Dynamic::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 kg/ms', 'Value -100 kg/ms expected');
+        $this->assertEquals('-100 kg/ms', $value->toString(), 'Value -100 kg/ms expected');
     }
 
 
@@ -364,7 +358,7 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
     public function testViscosity_Dynamic_ToString()
     {
         $value = new Zend_Measure_Viscosity_Dynamic('-100',Zend_Measure_Viscosity_Dynamic::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 kg/ms', 'Value -100 kg/ms expected');
+        $this->assertEquals('-100 kg/ms', $value->__toString(), 'Value -100 kg/ms expected');
     }
 
 

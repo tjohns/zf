@@ -68,14 +68,12 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-
         try {
             $value = new Zend_Measure_Number('novalue',Zend_Measure_Number::STANDARD,'de');
             $this->fail('Exception expected because of empty value');
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-
         try {
             $value = new Zend_Measure_Number('100',Zend_Measure_Number::STANDARD,'nolocale');
             $this->fail('Exception expected because of unknown locale');
@@ -126,7 +124,6 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-
         try {
             $value = new Zend_Measure_Number('100',Zend_Measure_Number::STANDARD,'de');
             $value->setValue('novalue',Zend_Measure_Number::STANDARD,'de');
@@ -134,7 +131,6 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Measure_Exception $e) {
             // success
         }
-
         try {
             $value = new Zend_Measure_Number('100',Zend_Measure_Number::STANDARD,'de');
             $value->setValue('200',Zend_Measure_Number::STANDARD,'nolocale');
@@ -156,53 +152,53 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Number('-100',Zend_Measure_Number::STANDARD,'de');
         $value->setType(Zend_Measure_Number::BINARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::BINARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::BINARY, $value->getType(), 'Zend_Measure_Number type expected');
         $value->setType(Zend_Measure_Number::ROMAN);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::ROMAN, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::ROMAN, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1001020',Zend_Measure_Number::BINARY,'de');
         $value->setType(Zend_Measure_Number::HEXADECIMAL);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::HEXADECIMAL, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::HEXADECIMAL, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('MCXVII',Zend_Measure_Number::ROMAN,'de');
         $value->setType(Zend_Measure_Number::HEXADECIMAL);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::HEXADECIMAL, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::HEXADECIMAL, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('102122',Zend_Measure_Number::TERNARY,'de');
         $value->setType(Zend_Measure_Number::OCTAL);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::OCTAL, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::OCTAL, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1032402',Zend_Measure_Number::QUATERNARY,'de');
         $value->setType(Zend_Measure_Number::QUINARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::QUINARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::QUINARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1052402',Zend_Measure_Number::QUINARY,'de');
         $value->setType(Zend_Measure_Number::QUATERNARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::QUATERNARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::QUATERNARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1632402',Zend_Measure_Number::SENARY,'de');
         $value->setType(Zend_Measure_Number::SEPTENARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::SEPTENARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::SEPTENARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1632702', Zend_Measure_Number::SEPTENARY, 'de');
         $value->setType(Zend_Measure_Number::SENARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::SENARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::SENARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1832402',Zend_Measure_Number::NONARY,'de');
         $value->setType(Zend_Measure_Number::SEPTENARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::SEPTENARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::SEPTENARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1632402',Zend_Measure_Number::DUODECIMAL,'de');
         $value->setType(Zend_Measure_Number::SEPTENARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::SEPTENARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::SEPTENARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1234ACE',Zend_Measure_Number::HEXADECIMAL,'de');
         $value->setType(Zend_Measure_Number::TERNARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::TERNARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::TERNARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         $value = new Zend_Measure_Number('1234075',Zend_Measure_Number::OCTAL,'de');
         $value->setType(Zend_Measure_Number::TERNARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::TERNARY, 'Zend_Measure_Number type expected');
+        $this->assertEquals(Zend_Measure_Number::TERNARY, $value->getType(), 'Zend_Measure_Number type expected');
 
         try {
             $value = new Zend_Measure_Number('-100',Zend_Measure_Number::STANDARD,'de');
@@ -221,7 +217,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testNumberToString()
     {
         $value = new Zend_Measure_Number('-100',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals($value->toString(), '100 ⑽', 'Value 100 ⑽ expected');
+        $this->assertEquals('100 ⑽', $value->toString(), 'Value 100 ⑽ expected');
     }
 
 
@@ -232,7 +228,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testNumber_ToString()
     {
         $value = new Zend_Measure_Number('-100',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '100 ⑽', 'Value 100 ⑽ expected');
+        $this->assertEquals('100 ⑽', $value->__toString(), 'Value 100 ⑽ expected');
     }
 
 
@@ -253,12 +249,12 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testConvertTo()
     {
         $value = new Zend_Measure_Number('III',Zend_Measure_Number::ROMAN, 'en');
-        $this->assertEquals($value->convertTo(Zend_Measure_Number::DECIMAL), 3);
+        $this->assertEquals(3, $value->convertTo(Zend_Measure_Number::DECIMAL));
 
         $value = new Zend_Measure_Number('XXV',Zend_Measure_Number::ROMAN, 'en');
-        $this->assertEquals($value->convertTo(Zend_Measure_Number::DECIMAL), 25);
+        $this->assertEquals(25, $value->convertTo(Zend_Measure_Number::DECIMAL));
 
         $value = new Zend_Measure_Number('_X',Zend_Measure_Number::ROMAN, 'en');
-        $this->assertEquals($value->convertTo(Zend_Measure_Number::DECIMAL), 10000);
+        $this->assertEquals(10000, $value->convertTo(Zend_Measure_Number::DECIMAL));
     }
 }
