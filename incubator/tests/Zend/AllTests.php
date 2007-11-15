@@ -36,6 +36,7 @@ require_once 'Zend/Filter/AllTests.php';
 require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/OpenIdTest.php';
 require_once 'Zend/OpenId/AllTests.php';
+require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Validate/BarcodeTest.php';
 require_once 'Zend/View/AllTests.php';
@@ -86,6 +87,11 @@ class Zend_AllTests
          */
         $suite->addTestSuite('Zend_OpenIdTest');
         $suite->addTest(Zend_OpenId_AllTests::suite());
+
+        /*
+         * Perform the tests for Zend_Service component now.
+         */
+        $suite->addTest(Zend_Service_AllTests::suite());
 
         /*
          * Perform the tests for Zend_TimeSync component now.
