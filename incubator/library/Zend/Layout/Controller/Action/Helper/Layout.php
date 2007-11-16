@@ -40,6 +40,8 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
      */
     protected $_layout;
 
+    protected $_isActionControllerSuccessful = false;
+    
     /**
      * Constructor
      * 
@@ -51,8 +53,19 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
         if (null !== $layout) {
             $this->setLayout($layout);
         }
+        
+        $front = $this->getFrontController();
+        if ($front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
+            $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
+            $plugin->setLayoutActionHelper($this);
+        }
     }
 
+    public function init()
+    {
+        $this->_isActionControllerSuccessful = false;
+    }
+    
     /**
      * Get layout object
      * 
@@ -88,6 +101,27 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
         return $this;
     }
 
+    /**
+     * Mark Action Controller (according to this plugin) as Running successfully
+     *
+     * @return Zend_Layout_Controller_Action_Helper_Layout
+     */
+    public function postDispatch()
+    {
+        $this->_isActionControllerSuccessful = true;
+        return $this;
+    }
+    
+    /**
+     * Did the previous action successfully complete?
+     *
+     * @return bool
+     */
+    public function isActionControllerSuccessful()
+    {
+        return $this->_isActionControllerSuccessful;
+    }
+    
     /**
      * Strategy pattern; call object as method
      *

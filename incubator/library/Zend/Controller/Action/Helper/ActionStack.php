@@ -61,17 +61,6 @@ class Zend_Controller_Action_Helper_ActionStack extends Zend_Controller_Action_H
     }
 
     /**
-     * Retrieve new request
-     * 
-     * @return Zend_Controller_Request_Simple
-     */
-    protected function _getNewRequest()
-    {
-        require_once 'Zend/Controller/Request/Simple.php';
-        return new Zend_Controller_Request_Simple();
-    }
-
-    /**
      * Push onto the stack 
      * 
      * @param  Zend_Controller_Request_Abstract $next 
@@ -102,13 +91,14 @@ class Zend_Controller_Action_Helper_ActionStack extends Zend_Controller_Action_H
         }
 
         $request = $this->getRequest();
-        $next    = $this->_getNewRequest();
 
-        $next->setActionName($action)
-             ->setControllerName(((null === $controller) ? $request->getControllerName() : $controller))
-             ->setModuleName(((null === $module) ? $request->getModuleName() : $module))
-             ->setParams($params);
-        return $this->pushStack($next);
+        $controller = (null === $controller) ? $request->getControllerName() : $controller;
+        $module = (null === $module) ? $request->getModuleName() : $module;
+
+        require_once 'Zend/Controller/Request/Simple.php';
+        $newRequest = new Zend_Controller_Request_Simple($action, $controller, $module, $params);
+
+        return $this->pushStack($newRequest);
     }
 
     /**

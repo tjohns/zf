@@ -35,6 +35,8 @@ require_once 'Zend/Controller/Plugin/Abstract.php';
  */
 class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstract
 {
+    protected $_layoutActionHelper = null;
+    
     /**
      * @var Zend_Layout
      */
@@ -75,6 +77,12 @@ class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstra
         return $this;
     }
 
+    public function setLayoutActionHelper(Zend_Layout_Controller_Action_Helper_Layout $layoutActionHelper)
+    {
+        $this->_layoutActionHelper = $layoutActionHelper;
+        return $this;
+    }
+    
     /**
      * postDispatch() plugin hook -- render layout
      *
@@ -84,11 +92,11 @@ class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstra
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
         // Return early if forward detected
-        if (!$request->isDispatched()) {
+        if (!$request->isDispatched() || ($this->_layout->getMvcSuccessfulActionOnly() && !$this->_layoutActionHelper->isActionControllerSuccessful())) {
             return;
         }
 
-        $layout     = $this->getLayout();
+        $layout = $this->getLayout();
 
         // Return early if layout has been disabled
         if (!$layout->isEnabled()) {
@@ -99,12 +107,29 @@ class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstra
         $content    = $response->getBody(true);
         $contentKey = $layout->getContentKey();
 
-        $content[$contentKey] = $content['default'];
+        if (isset($content['default'])) {
+            $content[$contentKey] = $content['default'];
+        }
         if ('default' != $contentKey) {
             unset($content['default']);
         }
 
         $layout->assign($content);
-        $response->setBody($layout->render());
+        
+        $fullContent = null;
+        $obStartLevel = ob_get_level();
+        try {
+            $fullContent = $layout->render();
+            $response->setBody($fullContent);
+        } catch (Exception $e) {
+            while (ob_get_level() > $obStartLevel) {
+                $fullContent .= ob_get_clean();
+            }
+            $request->setParam('layoutFullContent', $fullContent);
+            $request->setParam('layoutContent', $layout->content);
+            $response->setBody(null);
+            throw $e;
+        }
+
     }
 }

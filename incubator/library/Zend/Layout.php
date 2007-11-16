@@ -78,6 +78,12 @@ class Zend_Layout
     protected $_mvcEnabled = true;
 
     /**
+     * Flag: is MVC successful action only flag set?
+     * @var bool
+     */
+    protected $_mvcSuccessfulActionOnly = true;
+    
+    /**
      * @var Zend_View_Interface
      */
     protected $_view;
@@ -171,9 +177,9 @@ class Zend_Layout
         if (!$front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
             require_once 'Zend/Layout/Controller/Plugin/Layout.php';
             $front->registerPlugin(
-                // register to run last
+                // register to run last | BUT before the ErrorHandler (if its available)
                 new Zend_Layout_Controller_Plugin_Layout($this), 
-                101
+                99
             );
         }
     }
@@ -354,6 +360,28 @@ class Zend_Layout
         return $this->_mvcEnabled;
     }
 
+    /**
+     * Set MVC Successful Action Only flag
+     *
+     * @param bool $successfulActionOnly
+     * @return Zend_Layout
+     */
+    public function setMvcSuccessfulActionOnly($successfulActionOnly)
+    {
+        $this->_mvcSuccessfulActionOnly = ($successfulActionOnly) ? true : false;
+        return $this;
+    }
+    
+    /**
+     * Get MVC Successful Action Only Flag
+     *
+     * @return bool
+     */
+    public function getMvcSuccessfulActionOnly()
+    {
+        return $this->_mvcSuccessfulActionOnly;
+    }
+    
     /**
      * Set view object
      * 
