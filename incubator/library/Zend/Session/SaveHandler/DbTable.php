@@ -254,7 +254,7 @@ class Zend_Session_SaveHandler_DbTable extends Zend_Db_Table_Abstract implements
             unset($this->_primaryAssignment[0]);
         }
 
-        if (array_intersect_key($this->_primaryAssignment, $this->_primary) != $this->_primaryAssignment) {
+        if (count($this->_primaryAssignment) !== count($this->_primary)) {
             require_once 'Zend/Session/SaveHandler/Exception.php';
 
             throw new Zend_Session_SaveHandler_Exception(
