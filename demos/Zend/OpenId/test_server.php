@@ -1,6 +1,6 @@
 <?php
-$dir = realpath(dirname(__FILE__)."/../../../..");
-set_include_path("$dir/library" . PATH_SEPARATOR . "$dir/incubator/library" . PATH_SEPARATOR . get_include_path());
+$dir = realpath(dirname(__FILE__)."/../../..");
+set_include_path("$dir/library" . PATH_SEPARATOR . get_include_path());
 require_once "Zend/OpenId/Provider.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
 require_once "Zend/Session/Namespace.php";

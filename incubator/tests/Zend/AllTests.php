@@ -34,8 +34,6 @@ require_once 'Zend/Crypt/AllTests.php';
 // require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/Filter/AllTests.php';
 require_once 'Zend/Json/AllTests.php';
-require_once 'Zend/OpenIdTest.php';
-require_once 'Zend/OpenId/AllTests.php';
 require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Validate/BarcodeTest.php';
@@ -81,12 +79,6 @@ class Zend_AllTests
          * Perform the tests for Zend_Json component now.
          */
         $suite->addTest(Zend_Json_AllTests::suite());
-
-        /*
-         * Perform the tests for Zend_OpenId component now.
-         */
-        $suite->addTestSuite('Zend_OpenIdTest');
-        $suite->addTest(Zend_OpenId_AllTests::suite());
 
         /*
          * Perform the tests for Zend_Service component now.
