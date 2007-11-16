@@ -87,11 +87,11 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testLanguageList()
     {
         $data = Zend_Locale_Data::getContent('de','languagelist');
-        $this->assertEquals($data['de'], 'Deutsch', "'Deutsch' instead of '" . $data['de']."' expected");
-        $this->assertEquals($data['en'], 'Englisch', "'Englisch' instead of '" . $data['en']."' expected");
+        $this->assertEquals('Deutsch',  $data['de'], "'Deutsch' instead of '" . $data['de']."' expected" );
+        $this->assertEquals('Englisch', $data['en'], "'Englisch' instead of '" . $data['en']."' expected");
 
         $value = Zend_Locale_Data::getContent('de', 'language', 'de');
-        $this->assertEquals($value['de'], 'Deutsch', "'Deutsch' instead of '" . $value['de']."' expected");
+        $this->assertEquals('Deutsch', $value['de'], "'Deutsch' instead of '" . $value['de']."' expected");
     }
 
     /**
@@ -101,11 +101,11 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testScriptList()
     {
         $data = Zend_Locale_Data::getContent('de_AT', 'scriptlist');
-        $this->assertEquals($data['Arab'], 'Arabisch', "'Arabisch' instead of '" . $data['Arab']."' expected");
-        $this->assertEquals($data['Latn'], 'Lateinisch', "'Lateinisch' instead of '" . $data['Latn']."' expected");
+        $this->assertEquals('Arabisch',   $data['Arab'], "'Arabisch' instead of '" . $data['Arab']."' expected"  );
+        $this->assertEquals('Lateinisch', $data['Latn'], "'Lateinisch' instead of '" . $data['Latn']."' expected");
 
         $value = Zend_Locale_Data::getContent('de_AT', 'script', 'Arab');
-        $this->assertEquals($value['Arab'], 'Arabisch', "'Arabisch' instead of '" . $value['Arab']."' expected");
+        $this->assertEquals('Arabisch', $value['Arab'], "'Arabisch' instead of '" . $value['Arab']."' expected");
     }
 
     /**
@@ -115,11 +115,11 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testTerritoryList()
     {
         $data = Zend_Locale_Data::getContent('de_AT', 'territorylist');
-        $this->assertEquals($data['AT'], 'Österreich', "'Österreich' instead of '" . $data['AT']."' expected");
-        $this->assertEquals($data['MQ'], 'Martinique', "'Martinique' instead of '" . $data['MQ']."' expected");
+        $this->assertEquals('Österreich', $data['AT'], "'Österreich' instead of '" . $data['AT']."' expected");
+        $this->assertEquals('Martinique', $data['MQ'], "'Martinique' instead of '" . $data['MQ']."' expected");
 
         $value = Zend_Locale_Data::getContent('de_AT', 'territory', 'AT');
-        $this->assertEquals($value['AT'], 'Österreich', "'Österreich' instead of '" . $value['AT']."' expected");
+        $this->assertEquals('Österreich', $value['AT'], "'Österreich' instead of '" . $value['AT']."' expected");
     }
 
     /**
@@ -129,11 +129,11 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testVariantList()
     {
         $data = Zend_Locale_Data::getContent('de_AT', 'variantlist');
-        $this->assertEquals($data['BOONT'], 'Boontling', "'Boontling' instead of '" . $data['BOONT']."' expected");
-        $this->assertEquals($data['SAAHO'], 'Saho', "'Saho' instead of '" . $data['SAAHO']."' expected");
+        $this->assertEquals('Boontling', $data['BOONT'], "'Boontling' instead of '" . $data['BOONT']."' expected");
+        $this->assertEquals('Saho',      $data['SAAHO'], "'Saho' instead of '" . $data['SAAHO']."' expected"     );
 
         $value = Zend_Locale_Data::getContent('de_AT', 'variant', 'POSIX');
-        $this->assertEquals($value['POSIX'], 'Posix', "'Posix' instead of '" . $value['POSIX']."' expected");
+        $this->assertEquals('Posix', $value['POSIX'], "'Posix' instead of '" . $value['POSIX']."' expected");
     }
 
     /**
@@ -143,11 +143,11 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testKeyList()
     {
         $data = Zend_Locale_Data::getContent('de_AT', 'keylist');
-        $this->assertEquals($data['calendar'], 'Kalender', "'Kalender' instead of '" . $data['calendar']."' expected");
-        $this->assertEquals($data['collation'], 'Sortierung', "'Sortierung' instead of '" . $data['collation']."' expected");
+        $this->assertEquals('Kalender',   $data['calendar'],  "'Kalender' instead of '" . $data['calendar']."' expected"   );
+        $this->assertEquals('Sortierung', $data['collation'], "'Sortierung' instead of '" . $data['collation']."' expected");
 
         $value = Zend_Locale_Data::getContent('de_AT', 'key', 'collation');
-        $this->assertEquals($value['collation'], 'Sortierung', "'Sortierung' instead of '" . $value['collation']."' expected");
+        $this->assertEquals('Sortierung', $value['collation'], "'Sortierung' instead of '" . $value['collation']."' expected");
     }
 
     /**
@@ -157,8 +157,8 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testTypeList()
     {
         $data = Zend_Locale_Data::getContent('de_AT', 'typelist');
-        $this->assertEquals($data['chinese'], 'Chinesischer Kalender', "'Chinesischer Kalender' instead of '" . $data['chinese']."' expected");
-        $this->assertEquals($data['stroke'], 'Strichfolge', "'Strichfolge' instead of '" . $data['stroke']."' expected");
+        $this->assertEquals('Chinesischer Kalender', $data['chinese'], "'Chinesischer Kalender' instead of '" . $data['chinese']."' expected");
+        $this->assertEquals('Strichfolge',           $data['stroke'],  "'Strichfolge' instead of '" . $data['stroke']."' expected"           );
     }
 
     /**
@@ -168,11 +168,11 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testCalendar()
     {
         $data = Zend_Locale_Data::getContent('de_AT', 'type', 'calendar');
-        $this->assertEquals($data['chinese'], 'Chinesischer Kalender', "'Chinesischer Kalender' instead of '" . $data['chinese']."' expected");
-        $this->assertEquals($data['japanese'], 'Japanischer Kalender', "'Japanischer Kalender' instead of '" . $data['japanese']."' expected");
-    
+        $this->assertEquals('Chinesischer Kalender', $data['chinese'],  "'Chinesischer Kalender' instead of '" . $data['chinese']."' expected");
+        $this->assertEquals('Japanischer Kalender',  $data['japanese'], "'Japanischer Kalender' instead of '" . $data['japanese']."' expected");
+
         $value = Zend_Locale_Data::getContent('de_AT', 'type', 'chinese');
-        $this->assertEquals($value['chinese'], 'Chinesischer Kalender', "'Chinesischer Kalender' instead of '" . $value['chinese']."' expected");
+        $this->assertEquals('Chinesischer Kalender', $value['chinese'], "'Chinesischer Kalender' instead of '" . $value['chinese']."' expected");
     }
 
     /**
@@ -236,10 +236,10 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('de_AT', 'questionstrings')), 'array expected');
 
         $value = Zend_Locale_Data::getContent('de_AT', 'month', array('gregorian', 'format', 'wide', 12));
-        $this->assertEquals($value['12'], 'Dezember', 'wrong value');
+        $this->assertEquals('Dezember', $value['12'], 'wrong value');
 
         $value = Zend_Locale_Data::getContent('de_AT', 'day', array('gregorian', 'format', 'wide', 'mon'));
-        $this->assertEquals($value['mon'], 'Montag', 'wrong value');
+        $this->assertEquals('Montag', $value['mon'], 'wrong value');
 
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('ar', 'month', array('islamic', 'format', 'abbreviated', '1'))), 'array expected');
         $this->assertTrue(is_array(Zend_Locale_Data::getContent('az_AZ', 'language', 'az')), 'array expected');
