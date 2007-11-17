@@ -36,10 +36,18 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
 class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action_Helper_Abstract
 {
     /**
+     * @var Zend_Controller_Front
+     */
+    protected $_frontController;
+
+    /**
      * @var Zend_Layout
      */
     protected $_layout;
 
+    /**
+     * @var bool
+     */
     protected $_isActionControllerSuccessful = false;
     
     /**
@@ -65,6 +73,21 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
     {
         $this->_isActionControllerSuccessful = false;
     }
+
+    /**
+     * Get front controller instance
+     * 
+     * @return Zend_Controller_Front
+     */
+    public function getFrontController()
+    {
+        if (null === $this->_frontController) {
+            require_once 'Zend/Controller/Front.php';
+            $this->_frontController = Zend_Controller_Front::getInstance();
+        }
+
+        return $this->_frontController;
+    }
     
     /**
      * Get layout object
@@ -74,8 +97,7 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
     public function getLayout()
     {
         if (null === $this->_layout) {
-            require_once 'Zend/Controller/Front.php';
-            $front = Zend_Controller_Front::getInstance();
+            $front = $this->getFrontController();
             if ($front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
                 $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
                 $this->_layout = $plugin->getLayout();
