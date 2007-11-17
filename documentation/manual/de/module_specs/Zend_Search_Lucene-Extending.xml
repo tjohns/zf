@@ -5,22 +5,22 @@
         <title>Textanalyse</title>
         <para>
             Die <code>Zend_Search_Lucene_Analysis_Analyzer</code> Klasse wird vom Indexer verwendet,
-            um die Textfelder des Dokuments in Token aufzuteilen.
+            um die Textfelder der Dokumente in Abschnitte aufzuteilen.
         </para>
 
         <para>
-            Die Methoden <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> und
-            <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> werden verwendet, um
-            den Standardanalysator zu erhalten oder zu festzulegen.
+            Die <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> und
+            <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> Methoden werden verwendet, um
+            den Standardanalysator zu bekommen oder festzulegen.
         </para>
 
         <para>
-            Deshalb kannst Du deinen eigene Textanalysator festlegen oder ihn aus den vordefinierten
+            Man kann einen eigenen Textanalysator zuordnen oder ihn aus den vordefinierten
             Analysatoren auswählen: <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code>
             und <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
-            (Standard). Beide interpretieren einen Token als eine Sequenz aus Buchstaben.
+            (Standard). Beide interpretieren einen Abschnitt als eine Sequenz aus Buchstaben.
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
-            konvertiert Token in Kleinbuchstaben.
+            konvertiert alle Abschnitte in Kleinbuchstaben.
         </para>
 
         <para>
@@ -35,21 +35,21 @@ $index->addDocument($doc);]]>
         </programlisting>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> wurde als Vorgänger für alle
+            Die <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> Klasse wurde als Anker für alle
             benutzerdefinierten Analysatoren entwickelt. Benutzer sollten nur die
-            <code>reset()</code> und <code>nextToken()</code> Methoden definieren, die einen String
-            der $_input Eigenschaft nimmt und einen Token schrittweise zurück gibt
-            (<code>null</code> gibt das Ende des Stroms an).
+            <code>reset()</code> und <code>nextToken()</code> Methoden definieren, welche ihren String
+            von der $_input Eigenschaft nimmt und die Abschnitte Stück für Stück zurückgibt
+            (ein <code>null</code> Wert indiziert das Ende des Streams).
         </para>
 
         <para>
             Die <code>nextToken()</code> Methode sollte die <code>normalize()</code> Methode auf
-            jeden Token anwenden. Dies erlaubt die Verwendung von Tokenfiltern in deinem Analysator.
+            jedem Token aufrufen. Das erlaubt die Verwendung von Abschnittsfiltern im eigenen Analysator.
         </para>
 
         <para>
             Hier ist ein Beispiel für einen eigenen Analysator, welcher Wörter mit Ziffern als
-            Begriffe verwendet:
+            Begriffe akzeptiert:
 
             <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>Eigener Textanalysator</title>
@@ -132,36 +132,36 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     <sect2 id="zend.search.lucene.extending.filters">
         <title>Filtern von Tokens</title>
         <para>
-            Der <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> Analyzer bietet auch einen
+            Der <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> Analisator bietet auch einen
             Mechanismus zum Filtern von Tokens.
         </para>
 
         <para>
-            Die <code>Zend_Search_Lucene_Analysis_TokenFilter</code> Klasse ist eine abstrakte
-            Ebene für solche Filter. Sie sollte vor den eigenen Filtern verwendet werden.
+            Die <code>Zend_Search_Lucene_Analysis_TokenFilter</code> Klasse bietet ein abstraktes Interface für
+            solche Filter. Eigene Filter sollten diese Klasse direkt oder indirekt erweitern.
         </para>
 
         <para>
-            Eigene Filter müssen die <code>normalize()</code> Methode implementieren, welche den
-            Eingabe Token verändern oder signalisieren, dass der Token übersprungen werden kann.
+            Alle eigenen Filter müssen die <code>normalize()</code> Methode implementieren, welche den
+            Eingabe Token verändern oder signalisieren, dass der Token übersprungen werden sollte.
         </para>
 
         <para>
-            Es gibt bereits drei im Analyzer Unterpaket definierte Filter:
+            Es gibt bereits drei Filter die im Analyse Unterpaket definierte sind:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> Filter.
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> Filter.
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> Filter.
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -169,13 +169,13 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             Der <code>LowerCase</code> Filter wird bereits standardmäßig für den
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> Analyzer
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> Analysator
             verwendet.
         </para>
 
         <para>
-            <code>ShortWords</code> und <code>StopWords</code> können mit bereits definierten oder
-            einem eigenen Analyzer wie folgt verwendet werden:
+            Die <code>ShortWords</code> und <code>StopWords</code> Filter können mit bereits definierten oder
+            eigenen Analysatoren wie folgt verwendet werden:
             <programlisting role="php"><![CDATA[<?php
 $stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
 $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
@@ -208,13 +208,13 @@ $analyzer->addFilter($stopWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
             </programlisting>
-            Die Datei sollte eine normale Textdatei mit einem Wort pro Zeile sein. '#' markiert eine
+            Die Datei sollte eine normale Textdatei mit einem Wort pro Zeile sein. Das '#' Zeichen markiert eine
             Zeile als Kommentar.
         </para>
 
         <para>
             Der <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> Konstruktor hat ein
-            optionales Argument. Es ist das Limit für die Wortlänge. Der Standardwert ist 2.
+            optionales Argument. Es ist das Limit für die Wortlänge, der standardmäßig 2 ist.
         </para>
 
     </sect2>
@@ -238,12 +238,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
         </para>
 
         <para>
-            idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code> -
-            ein Punktwertfaktor für einen einfachen Begriff eines spezifischen Indizes.
+            idf(t) - <code>Zend_Search_Lucene_Search_Similarity::tf($term, $reader)</code> -
+            ein Punktwertfaktor für einen einfachen Begriff mit dem spezifischen Index.
         </para>
 
         <para>
-            getBoost(t.field in d) - Verstärkungsfaktor für das Begriffsfeld.
+            getBoost(t.field in d) - der Verstärkungsfaktor für das Begriffsfeld.
         </para>
 
         <para>
@@ -284,11 +284,11 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
         </para>
 
         <para>
-            Algorithmen für Punktwertermittlung können durch die Definition einer eigenen
+            Der Algorithmen für die Punktwertermittlung kann durch die Definition einer eigenen
             Ähnlichkeitsklasse angepasst werden. Hierfür muss die
-            Zend_Search_Lucene_Search_Similarity Klasse wie unten angegeben erweitert werden und
-            dann die <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code>
-            Methode für das Setzen des Standards verwendet werden.
+            Zend_Search_Lucene_Search_Similarity Klasse wie unten angegeben erweitert und anschließend die
+            <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code> Methode verwendet
+            werden um Sie als Standard zu setzen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -330,7 +330,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);]]>
     <sect2 id="zend.search.lucene.extending.storage">
         <title>Storage Container</title>
         <para>
-            Eine abstrakte Klasse <code>Zend_Search_Lucene_Storage_Directory</code> definiert
+            Die abstrakte Klasse <code>Zend_Search_Lucene_Storage_Directory</code> definiert
             Funktionalitäten für Verzeichnisse.
         </para>
 
@@ -341,13 +341,13 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);]]>
 
         <para>
             Die <code>Zend_Search_Lucene_Storage_Directory_Filesystem</code> Klasse implementiert
-            Verzeichnisfunktionalitäten für das Dateisystem.
+            Verzeichnisfunktionalitäten für ein Dateisystem.
         </para>
 
         <para>
             Wenn ein String als Eingabe für den <code>Zend_Search_Lucene</code> Konstruktur
             verwendet wird, behandelt der Indexleser (das <code>Zend_Search_Lucene Objekt</code>)
-            es wie einen Dateipfad und instanziiert ein
+            es wie einen Dateipfad und instanziiert das
             <code>Zend_Search_Lucene_Storage_Directory_Filesystem</code> Objekt.
         </para>
 
@@ -389,7 +389,7 @@ abstract function deleteFile($filename);
 
 
 /**
- * Gibtv true zurück, wenn eine Datei mit dem übergebenen Dateinamen $filename existiert
+ * Gibt true zurück, wenn eine Datei mit dem übergebenen Dateinamen $filename existiert
  *
  * @param string $filename
  * @return boolean
@@ -447,8 +447,8 @@ abstract function getFileObject($filename);
         </programlisting>
 
         <para>
-            Die <code>getFileObject($filename)</code> Methode der
-            <code>Zend_Search_Lucene_Storage_Directory</code> Klasse gibt ein
+            Die <code>getFileObject($filename)</code> Methode einer
+            <code>Zend_Search_Lucene_Storage_Directory</code> Instanz gibt ein
             <code>Zend_Search_Lucene_Storage_File</code> Objekt zurück.
         </para>
         <para>
@@ -456,12 +456,12 @@ abstract function getFileObject($filename);
             Funktionen für Dateiabstraktion und das Lesen von Indexdateien.
         </para>
         <para>
-            Du musst außerdem <code>Zend_Search_Lucene_Storage_File</code> für deine
-            Verzeichnisimplementation erweitern.
+            Es muß außerdem <code>Zend_Search_Lucene_Storage_File</code> für eine eigene
+            Verzeichnisimplementation erweitert werden.
         </para>
         <para>
             Nur zwei Methoden der <code>Zend_Search_Lucene_Storage_File</code> Klasse müssen in
-            deiner Implementation überladen werden:
+            der eigenen Implementation überschrieben werden:
         </para>
 
         <programlisting><![CDATA[<?php
