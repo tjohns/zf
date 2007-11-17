@@ -577,7 +577,12 @@ class Zend_Db_Select
      */
     public function where($cond, $value = null, $type = null)
     {
-        $this->_parts[self::WHERE][] = $this->_where($cond, true, $value, $type);
+        if ((func_num_args() > 3) or (($type !== null) and ($type !== 0) and ($type !== 1) and ($type !==2))) {
+            $value = func_get_args();
+            array_shift($value);
+            $type = null;
+        }
+        $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
 
         return $this;
     }
@@ -596,7 +601,12 @@ class Zend_Db_Select
      */
     public function orWhere($cond, $value = null, $type = null)
     {
-        $this->_parts[self::WHERE][] = $this->_where($cond, false, $value, $type);
+        if ((func_num_args() > 3) or (($type !== null) and ($type !== 0) and ($type !== 1) and ($type !==2))) {
+            $value = func_get_args();
+            array_shift($value);
+            $type = null;
+        }
+        $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, false);
 
         return $this;
     }
@@ -605,14 +615,28 @@ class Zend_Db_Select
      * Internal function for creating the where clause
      *
      * @param string   $condition
-     * @param boolean  $bool  true = AND, false = OR
      * @param string   $value  optional
      * @param string   $type   optional
+     * @param boolean  $bool  true = AND, false = OR
      * @return string  clause
      */
-    protected function _where($condition, $bool = true, $value = null, $type = null)
+    protected function _where($condition, $value = null, $type = null, $bool = true)
     {
-        if ($value !== null) {
+        if (is_array($value)) {
+            foreach($value as $key => $token) {
+                if (is_numeric($key)) {
+                    $condition = $this->_adapter->quoteInto($condition, $token, null, 1);
+                } else {
+                    if ($key[0] !== ":") {
+                        $key = ":" . $key;
+                    }
+                    if (strpos($condition, $key) === false) {
+                        throw new Zend_Db_Select_Exception("Invalid token '$key' given");
+                    }
+                    $condition = str_replace($key, $this->_adapter->quote($token), $condition);
+                }
+            }
+        } else if ($value !== null) {
             $condition = $this->_adapter->quoteInto($condition, $value, $type);
         }
 
