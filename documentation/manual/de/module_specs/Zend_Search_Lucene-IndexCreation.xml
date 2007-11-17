@@ -6,8 +6,8 @@
 
         <para>
             Die Funktionen für das Erstellen und Aktualisieren eines Index wurden innerhalb der
-            Zend_Search_Lucene Komponente und von Java Lucene implementiert. Du kannst diese beiden
-            Funktionalitäten verwenden.
+            Zend_Search_Lucene Komponente implementiert genau wie im Java Lucene Projekt. Man kann beide dieser
+            Optionen verwenden um einen Index zu erstellen der mit Zend_Search_Lucene durchsucht werden kann.
         </para>
 
         <para>
@@ -21,10 +21,10 @@ $index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
-// Speichere die URL des Dokuments, um es für Suchergebnisse ermitteln zu können
+// Speichere die URL des Dokuments, um sie in Suchergebnissen ermitteln zu können
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-// Indiziere den Dokumenteninhalt
+// Inhalte des Dokumentenindex
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu
@@ -32,7 +32,7 @@ $index->addDocument($doc);]]>
         </programlisting>
 
         <para>
-            Neu hinzugefügte Dokumente können sofort aus einem Index zurückgeholt werden.
+            Neu hinzugefügte Dokumente können sofort im Index gesucht werden.
         </para>
     </sect2>
 
@@ -66,8 +66,7 @@ $index->addDocument($doc);]]>
 
         <para>
             Das Lucene Indexdateiformat unterstützt keine Aktualisierung von Dokumenten. Ein
-            Dokument sollte entfernt und wieder hinzugefügt werden, um eine Aktualisierung zu
-            erreichen.
+            Dokument sollte entfernt und wieder hinzugefügt werden um es effektiv zu Aktualisieren.
         </para>
 
         <para>
@@ -86,15 +85,15 @@ foreach ($hits as $hit) {
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.counting">
-        <title>Die Größe des Indezes erhalten</title>
+        <title>Die Größe des Index erhalten</title>
 
         <para>
-            Es gibt zwei Methoden um die Indexgröße in Zend_Search_Lucene zu erhalten.
+            Es gibt zwei Methoden um die Größe eines Index in Zend_Search_Lucene zu erhalten.
         </para>
 
         <para>
              <code>Zend_Search_Lucene::maxDoc()</code> gibt einen Mehr als die größte Anzahl an Dokumenten zurück.
-             Das ist aktuell die Gesamtanzahl der Dokumente im Index inklusive gelöschter Dokumente. Deswegen hat
+             Das ist die Gesamtanzahl der Dokumente im Index inklusive gelöschter Dokumente. Deswegen hat
              es das Synonym: <code>Zend_Search_Lucene::count()</code>.
         </para>
 
@@ -121,8 +120,8 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         </programlisting>
 
         <para>
-            Index Optimierung entfernt gelöschte Dokumente und verkleinert die Dokument IDs. Die interne Id von
-            Dokumenten könnte also geändert werden.
+            Index Optimierung entfernt gelöschte Dokumente und quetscht die Dokument Ids in einen kleineren
+            Bereich. Die interne Id des Dokuments könnte also wärend der Indexoptinierung verändert werden.
         </para>
     </sect2>
 
@@ -130,10 +129,10 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
         <title>Indexoptimierung</title>
 
         <para>
-            Ein Lucene Index besteht aus Segmenten. Jedes Segment ist ein komplett unabhängiger Datensatz.
+            Ein Lucene Index besteht aus Segmenten. Jedes Segment ist ein komplett unabhängiges Set von Daten.
         </para>
         <para>
-            Lucene Indexsegmentdateien können aufgrund ihrer Natur nicht aktualisiert werden. Eine Segmentaktualisierung
+            Lucene Indexsegmentdateien können aufgrund ihres Designs nicht aktualisiert werden. Eine Segmentaktualisierung
             benötigt eine komplette Reorganisation der Segmente. Siehe auch die Lucene Indexdateiformate für weitere
             Details
             (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
@@ -142,19 +141,18 @@ for ($count = 0; $count < $index->maxDoc(); $count++) {
                     Die aktuell unterstützte Version des Lucene Index File Formats ist v2.1
                 </para>
             </footnote>.
-            Deshalb werden neue Dokumente durch Erstellen neuer Segmente zum Index hinzugefügt.
+            Neue Dokumente werden durch Erstellen neuer Segmente zum Index hinzugefügt.
         </para>
         <para>
             Eine steigende Anzahl an Segmente verringert die Qualität des Index, aber die Indexoptimierung stellt
-            diese wieder her. Die Optimierung beschränkt sich darauf, mehrere Segmente zu einem zusammen zu fassen.
-            Dieser Prozess aktualisiert die Segmente ebenfalls nicht. Er erstellt neue große Segmente, welche ein
-            neues optimiertes Segment anstatt einen Satz alte Segmente enthalten, und aktualisiert die Segmentenliste
-            ('segments' Datei).
+            diese wieder her. Die Optimierung verschiebt verschiedene Segmente in ein neues. Dieser Prozess
+            aktualisiert die Segmente auch nicht. Es erzeugt ein neues großes Segment und aktualisiert die
+            Segmentliste (die 'sements' Datei).
         </para>
 
         <para>
             Eine komplette Indexoptimierung kann durch einen Aufruf von <code>Zend_Search_Lucene::optimize()</code>
-            gestartet werden. Sie fügt alle Segmente in ein größeres zusammen.
+            getriggert werden. Sie fügt alle Segmente in ein größeres zusammen.
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Öffne bestehenden Index
@@ -165,7 +163,8 @@ $index->optimize();]]>
         </programlisting>
 
         <para>
-            Die automatische Indexoptimierung wird durchgeführt, um einen Index konsistens zu halten.
+            Die automatische Indexoptimierung wird durchgeführt, um einen Index in einem konsistenten Status
+            zu halten.
         </para>
         <para>
             Die automatische Indexoptimierung ist ein schrittweise Prozess, der durch verschiedene Indexoptionen gesteuert
@@ -231,7 +230,11 @@ $index->optimize();]]>
             </para>
             <para>
                 Lucene Java und Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-                können auch für die Optimierung eines Index verwendet werden.
+                können auch für die Optimierung eines Index verwendet werden. Luke 0.6 muß verwendet werden um
+                mit der Zend_Search_Lucene Komponente kompatibel zu sein. Spätere Luke Versionen basieren auf
+                Lucene v2.1 welches das neuere Indexdateiformat verwendet. Die komplette Projektinformation zu
+                Luke kann hier gefunden werden -
+                <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>
             </para>
         </sect3>
     </sect2>
@@ -246,7 +249,7 @@ $index->optimize();]]>
         <para>
             Es ist möglich das mit der
             <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code>
-            Methode zu umgehen. 
+            Methode zu überschreiben. 
         </para>
 
 
