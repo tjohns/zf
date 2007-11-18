@@ -673,6 +673,95 @@ $select = $db->select()
             </example>
 
             <para>
+                任意の数の引数を指定することができます。
+                指定した引数は、同じ数のプレースホルダに挿入されます。
+                つまり、ひとつの where 句の中に複数のプレースホルダを指定して、
+                それを指定した引数で置き換えることが可能になるということです。
+                これを用いると、複雑な where 句の作成が簡単にできるようになります。
+            </para>
+
+            <note>
+                <para>
+                    ひとつだけ制限があります。
+                    値をふたつだけ指定したい場合は配列を使った方がいいでしょう。
+                    2 番目の値が型として解釈できる場合に、それが型であるとみなされてしまい、
+                    予期せぬ振る舞いをすることがあるからです。
+                </para>
+            </note>
+
+            <example id="zend.db.select.building.where.example-paramlist">
+                <title>where() メソッドにおけるパラメータリストの例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE ((price < 100.50) OR ((price > 200) AND (product_id > 5))) 
+
+$minPrice = 100.5;
+$maxPrice = 200;
+$product  = 5;
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('(price < ?) OR ((price > ?) AND (product_id > ?)', $minimumPrice, $maxPrice, $product);]]></programlisting>
+            </example>
+
+            <para>
+                パラメータのリストを渡すよりも、
+                ひとつの配列を作成してそれを渡すほうがよりシンプルになります。
+                この方式もサポートしています。
+                値を配列形式で渡すと、配列のすべての値をその順でプレースホルダに使用します。
+                プレースホルダに渡す配列は、数値添字形式でなければなりません。
+            </para>
+
+            <example id="zend.db.select.building.where.example-paramarray">
+                <title>where() メソッドにパラメータの配列を渡す例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE ((price < 100.50) OR ((price > 200) AND (product_id > 5))) 
+
+$parameters = array(100.50, 200, 5);
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('(price < ?) OR ((price > ?) AND (product_id > ?)', $parameters);]]></programlisting>
+            </example>
+
+            <para>
+                値の並び順が保証できない場合でも、
+                プレースホルダではなく値に名前をバインドするという方法を使うことができます。
+                <code>where()</code> メソッドに含まれない値を指定すると、例外が発生します。
+                また、where 句に含まれる値を指定しなかった場合は、
+                データを取得する際の最後の値が設定されます。
+            </para>
+
+            <example id="zend.db.select.building.where.example-bindingarray">
+                <title>where() メソッドに配列をバインドする例</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// できあがるクエリは、このようになります
+//   SELECT product_id, product_name, price
+//   FROM "products"
+//   WHERE ((price < 100.50) OR ((price > 200) AND (product_id > 5))) 
+
+$parameters = array('id' => 5, 'min' => 100.50, 'max' => 200);
+
+$select = $db->select()
+    ->from(
+        'products',
+        array('product_id', 'product_name', 'price'))
+    ->where('(price < :min) OR ((price > :max) AND (product_id > :id)', $parameters);]]></programlisting>
+            </example>
+
+            <para>
                 Zend_Db_Select オブジェクト上で、<code>where()</code>
                 メソッドを複数回実行することもできます。その結果のクエリは、
                 指定した条件を <code>AND</code> でひとつにまとめたものとなります。
