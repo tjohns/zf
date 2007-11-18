@@ -27,34 +27,9 @@
 require_once 'Zend/Service/Technorati/Exception.php';
 
 /** 
- * @see Zend_Service_Technorati_Result 
- */
-require_once 'Zend/Service/Technorati/Result.php';
-
-/** 
- * @see Zend_Service_Technorati_ResultSet 
- */
-require_once 'Zend/Service/Technorati/ResultSet.php';
-
-/** 
- * @see Zend_Service_Technorati_CosmosResult 
- */
-require_once 'Zend/Service/Technorati/CosmosResult.php';
-
-/** 
- * @see Zend_Service_Technorati_CosmosResultSet 
- */
-require_once 'Zend/Service/Technorati/CosmosResultSet.php';
-
-/** 
  * @see Zend_Service_Technorati_Author 
  */
 require_once 'Zend/Service/Technorati/Author.php';
-
-/** 
- * @see Zend_Service_Technorati_KeyInfoResult
- */
-require_once 'Zend/Service/Technorati/KeyInfoResult.php';
 
 /**
  * @see Zend_Service_Technorati_Weblog
@@ -182,6 +157,10 @@ class Zend_Service_Technorati
         $dom->loadXML($response->getBody());
         self::_checkErrors($dom);
 
+        /** 
+         * @see Zend_Service_Technorati_CosmosResultSet 
+		 */
+		require_once 'Zend/Service/Technorati/CosmosResultSet.php';
         return new Zend_Service_Technorati_CosmosResultSet($dom);
     }
 
@@ -255,7 +234,11 @@ class Zend_Service_Technorati
         $dom = new DOMDocument();
         $dom->loadXML($response->getBody());
         self::_checkErrors($dom);
-
+		
+		/** 
+		 * @see Zend_Service_Technorati_KeyInfoResult
+		 */
+		require_once 'Zend/Service/Technorati/KeyInfoResult.php';		
         return new Zend_Service_Technorati_KeyInfoResult($dom, $this->_apiKey);
     }
 
