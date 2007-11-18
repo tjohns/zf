@@ -16,7 +16,7 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id:$
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -36,22 +36,25 @@ class Zend_Service_Technorati_Key
      * Technorati API key
      *
      * @var     string
+     * @access  protected
      */
-    public $apiKey;
+    protected $_apiKey;
 
     /**
      * Number of queries used today
      *
      * @var     string
+     * @access  protected
      */
-    public $apiQueries;
+    protected $_apiQueries;
 
     /**
      * Total number of available queries per day
      *
      * @var     string
+     * @access  protected
      */
-    public $maxQueries;
+    protected $_maxQueries;
 
 
     /*
@@ -72,24 +75,66 @@ class Zend_Service_Technorati_Key
 
 
     /**
-     * Parse given Key Element
+     * Construct a Key object
+     * 
+     * Parses given Key element from $dom and sets API key string.
      *
      * @param   DomElement $dom The ReST fragment for this Key object
-     * @param   Zend_Service_Technorati $technorati Object that generated the request
+     * @param   String $apiKey  The API Key string
      * @return  void
      */
-    public function __construct(DomDocument $dom, $technorati)
+    public function __construct(DomDocument $dom, $apiKey = null)
     {
         // $this->_dom   = $dom;
         // $this->_xpath = new DOMXPath($dom);
         $xpath = new DOMXPath($dom);
         
         /** @todo improve xpath expression */
-        $this->apiQueries   = (int) $xpath->query('//apiqueries/text()')->item(0)->data;
-        $this->maxQueries   = (int) $xpath->query('//maxqueries/text()')->item(0)->data;
-        $this->apiKey       = $technorati->getApiKey();
+        $this->_apiQueries   = (int) $xpath->query('//apiqueries/text()')->item(0)->data;
+        $this->_maxQueries   = (int) $xpath->query('//maxqueries/text()')->item(0)->data;
+        $this->setApiKey($apiKey);
+    }
+    
+    
+    /**
+     * Return API Key string
+     * 
+     * @return  String  API Key string
+     */
+    public function getApiKey() {
+        return $this->_apiKey;
+    }
+    
+    /**
+     * Return the number of queries sent today
+     * 
+     * @return  Int     Number of queries sent today
+     */
+    public function getApiQueries() {
+        return $this->_apiQueries;
+    }
+    
+    /**
+     * Return Key's daily query limit
+     * 
+     * @return  Int     Maximum number of available queries per day
+     */
+    public function getMaxQueries() {
+        return $this->_maxQueries;
+    }
+    
+    
+    /**
+     * Set API Key string
+     * 
+     * @param   String $apiKey  The API Key string
+     * @return  void
+     */
+    public function setApiKey($apiKey) {
+        $this->_apiKey = $apiKey;
     }
 
+    
     /*
      * Return the response XML document
      *
