@@ -175,7 +175,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      *
      * @return Zend_Db_Table_Select_Exception.
      */
-    public function forUpdate()
+    public function forUpdate($flag = true)
     {
         require_once 'Zend/Db/Table/Select/Exception.php';
         throw new Zend_Db_Table_Select_Exception("SELECT FOR UPDATE is not supported");
