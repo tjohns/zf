@@ -43,7 +43,7 @@ class Zend_Service_Technorati_KeyInfoResult
     /**
      * Number of queries used today
      *
-     * @var     string
+     * @var     int
      * @access  protected
      */
     protected $_apiQueries;
@@ -51,7 +51,7 @@ class Zend_Service_Technorati_KeyInfoResult
     /**
      * Total number of available queries per day
      *
-     * @var     string
+     * @var     int
      * @access  protected
      */
     protected $_maxQueries;

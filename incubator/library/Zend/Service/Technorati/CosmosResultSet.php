@@ -62,7 +62,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
          *          inboundblogs    -> url == a weblog
          *          weblog          -> url == a weblog
          */
-        // TODO: improve xpath expression
+        // @todo    Improve xpath expression
         $this->totalResultsAvailable = (int) $this->_xpath->query("//result/inboundlinks/text()")->item(0)->data;
 
         /**

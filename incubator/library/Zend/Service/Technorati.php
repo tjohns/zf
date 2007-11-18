@@ -147,7 +147,7 @@ class Zend_Service_Technorati
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateCosmos($options);
 
-        // now search for cosmos
+        // make request
         $restClient = $this->getRestClient();
         $restClient->getHttpClient()->resetParameters();
         $response = $restClient->restGet('/cosmos', $options);
@@ -206,14 +206,58 @@ class Zend_Service_Technorati
      * Blog information
      * - http://technorati.com/developers/api/bloginfo.html
      * - http://technorati.com/developers/api/blogposttags.html
-     * Member information
-     * - http://technorati.com/developers/api/getinfo.html
      */
 
     /**
+     * GetInfo Query
+     * 
+     * The getinfo query tells you things that Technorati knows about a member.
+     * 
+     * The returned info is broken up into two sections: 
+     * The first part describes some information that the user wants 
+     * to allow people to know about him- or herself. 
+     * The second part of the document is a listing of the weblogs 
+     * that the user has successfully claimed and the information 
+     * that Technorati knows about these weblogs.
+     *
+     * @param   String $username    Set this to the Technorati user name you are searching for.
+     * @return  Zend_Service_Technorati_GetInfoResult GetInfo result
+     * @link    http://technorati.com/developers/api/getinfo.html Technorati API: GetInfo reference
+     */
+    public function getInfo($username) {
+        static $defaultOptions = array('format' => 'xml');
+
+        $options['username'] = $username;
+
+        $options = $this->_prepareOptions($options, $defaultOptions);
+        $this->_validateGetInfo($options);
+
+        // make request
+        $restClient = $this->getRestClient();
+        $restClient->getHttpClient()->resetParameters();
+        $response = $restClient->restGet('/getinfo', $options);
+        self::_checkResponseErrors($response);
+
+        $dom = new DOMDocument();
+        $dom->loadXML($response->getBody());
+        self::_checkErrors($dom);
+
+        /** 
+         * @see Zend_Service_Technorati_GetInfoResult
+         */
+        require_once 'Zend/Service/Technorati/GetInfoResult.php';
+        return new Zend_Service_Technorati_GetInfoResult($dom);
+    }
+    
+    /**
      * KeyInfo Query
      *
-     * TODO: phpdoc
+     * The keyinfo query provides information on daily usage of an API key. 
+     * Key Info Queries do not count against a key's daily query limit.
+     * 
+     * A day is defined as 00:00-23:59 Pacific time.
+     * 
+     * @return  Zend_Service_Technorati_KeyInfoResult KeyInfo result
      * @link    http://developers.technorati.com/wiki/KeyInfo Technorati API: Key Info reference
      */
     public function keyInfo()
@@ -234,11 +278,11 @@ class Zend_Service_Technorati
         $dom = new DOMDocument();
         $dom->loadXML($response->getBody());
         self::_checkErrors($dom);
-		
-		/** 
-		 * @see Zend_Service_Technorati_KeyInfoResult
-		 */
-		require_once 'Zend/Service/Technorati/KeyInfoResult.php';		
+
+        /** 
+         * @see Zend_Service_Technorati_KeyInfoResult
+         */
+        require_once 'Zend/Service/Technorati/KeyInfoResult.php';		
         return new Zend_Service_Technorati_KeyInfoResult($dom, $this->_apiKey);
     }
 
@@ -329,7 +373,7 @@ class Zend_Service_Technorati
         $validateGreaterThan = new Zend_Validate_GreaterThan(0);
 
 
-        // Validate Url (required)
+        // Validate url (required)
         if (empty($options['url'])) {
             throw new Zend_Service_Technorati_Exception('Cosmos query requires an "url" option');
         }
@@ -350,7 +394,7 @@ class Zend_Service_Technorati
                         ' is not valid for the "limit" option');
         }
 
-        // Validate start (required)
+        // Validate start (optional)
         if (isset($options['start']) && !$validateGreaterThan->isValid($options['start'])) {
             /**
              * @see Zend_Service_Technorati_Exception
@@ -359,32 +403,57 @@ class Zend_Service_Technorati
                         ' is not valid for the "start" option');
         }
 
-        // Validate current (required)
+        // Validate current (optional)
         if (isset($options['current'])) {
             $tmp = $filterInt->filter($options['current']);
             $options['current'] = $tmp ? 'yes' : 'no';
         }
 
-        // Validate format (required)
-        if (isset($options['format']) && $options['format'] != 'xml') {
-            /**
-             * @see Zend_Service_Technorati_Exception
-             */
-            throw new Zend_Service_Technorati_Exception($options['format'] . 
-                        ' is not valid for the "format" option, Zend_Service_Technorati supporty only "xml"');
-        }
-
-        // Validate claim (required)
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+        
+        // Validate claim (optional)
         if (isset($options['claim'])) {
             $options['claim'] = $filterInt->filter($options['highlight']);
         }
 
-        // Validate highlight (required)
+        // Validate highlight (optional)
         if (isset($options['highlight'])) {
             $options['highlight'] = $filterInt->filter($options['highlight']);
         }
     }
 
+    /**
+     * Validate GetInfo Options
+     *
+     * @param   array   $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     */
+    protected function _validateGetInfo($options)
+    {
+        static $validOptions = array('key', 'username',
+            'format');
+
+        if (!is_array($options)) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            throw new Zend_Service_Technorati_Exception('Options must be specified as an array');
+        }
+
+        // Validate keys in the $options array
+        $this->_compareOptions($options, $validOptions);
+
+        // Validate username (required)
+        if (empty($options['username'])) {
+            throw new Zend_Service_Technorati_Exception('GetInfo query requires "username" option');
+        }
+
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+    }    
+    
     /**
      * Validate Search Options
      * 
@@ -431,7 +500,27 @@ class Zend_Service_Technorati
             throw new Zend_Service_Technorati_Exception("Invalid value for $name");
         }
     }
-
+    
+    /**
+     * Validate "format" option
+     * 
+     * Be aware that Zend_Service_Technorati supports only XML as format value.
+     * 
+     * @param   array $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception if format value != XML
+     */
+    private function _validateOptionFormat($options) {
+        if (isset($options['format']) && $options['format'] != 'xml') {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            throw new Zend_Service_Technorati_Exception($options['format'] . 
+                        ' is not valid for the "format" option,' .
+                        ' Zend_Service_Technorati supports only "xml"');
+        }
+    }
+    
     /**
      * Check Result for errors
      *

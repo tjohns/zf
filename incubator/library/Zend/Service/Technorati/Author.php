@@ -93,12 +93,12 @@ class Zend_Service_Technorati_Author
      */
     public function __construct(DomElement $dom)
     {
-    	$xpath = new DOMXPath($dom->ownerDocument);
+        $xpath = new DOMXPath($dom->ownerDocument);
 
-    	/**
-    	 * @todo   Create accessor method
-    	 */
-    	
+        /**
+         * @todo   Create accessor method
+         */
+
         $result = $xpath->query('./firstname/text()', $dom);
         if ($result->length == 1) $this->setFirstName($result->item(0)->data);
         
@@ -114,7 +114,7 @@ class Zend_Service_Technorati_Author
         $result = $xpath->query('./bio/text()', $dom);
         if ($result->length == 1) $this->setBio($result->item(0)->data);
 
-        
+
         /* 
          * The following elements need more attention 
          */
@@ -132,7 +132,7 @@ class Zend_Service_Technorati_Author
     public function getFirstName() {
         return $this->_firstName;
     }
-    
+
     /**
      * Return Author last name
      * 
@@ -141,7 +141,7 @@ class Zend_Service_Technorati_Author
     public function getLastName() {
         return $this->_lastName;
     }
-    
+
     /**
      * Return Technorati account username
      * 
@@ -150,7 +150,7 @@ class Zend_Service_Technorati_Author
     public function getUsername() {
         return $this->_username;
     }
-    
+
     /**
      * Return Technorati account description
      * 
@@ -159,7 +159,7 @@ class Zend_Service_Technorati_Author
     public function getDescription() {
         return $this->_description;
     }
-    
+
     /**
      * Return Technorati account biography
      * 
@@ -168,7 +168,7 @@ class Zend_Service_Technorati_Author
     public function getBio() {
         return $this->_bio;
     }
-        
+
     /**
      * Return Technorati account thumbnail picture
      * 
@@ -177,8 +177,8 @@ class Zend_Service_Technorati_Author
     public function getThumbnailPicture() {
         return $this->_thumbnailPicture;
     }
-    
-    
+
+
     /**
      * Set author first name
      * 
@@ -188,7 +188,7 @@ class Zend_Service_Technorati_Author
     public function setFirstName($input) {
         $this->_firstName = (string) $input;
     }
-    
+
     /**
      * Set author last name
      * 
@@ -198,7 +198,7 @@ class Zend_Service_Technorati_Author
     public function setLastName($input) {
         $this->_lastName = (string) $input;
     }
-    
+
     /**
      * Set Technorati account username
      * 
@@ -218,7 +218,7 @@ class Zend_Service_Technorati_Author
     public function setBio($input) {
         $this->_bio = (string) $input;
     }
-        
+
     /**
      * Set Technorati account description
      * 
@@ -228,12 +228,13 @@ class Zend_Service_Technorati_Author
     public function setDescription($input) {
         $this->_description = (string) $input;
     }
-        
+
     /**
      * Set Technorati account thumbnail picture
      * 
      * @param   String|Zend_Uri_Http Thumbnail Picture URI
      * @return  void
+     * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
      */
     public function setThumbnailPicture($input) {
         /**
@@ -241,19 +242,19 @@ class Zend_Service_Technorati_Author
          */
         require_once 'Zend/Uri.php';
               
-    	if ($input instanceof Zend_Uri_Http || $input === null) {
-    		$uri = $input;
-    	}
-    	else {
-    		try {
-    			$uri = Zend_Uri::factory((string) $input);
-    		}
-    		catch (Exception $e) {
-    			throw new Zend_Service_Technorati_Exception($e);
-    		}
-    	}
-    	
+        if ($input instanceof Zend_Uri_Http || $input === null) {
+            $uri = $input;
+        }
+        else {
+            try {
+                $uri = Zend_Uri::factory((string) $input);
+            }
+            catch (Exception $e) {
+                throw new Zend_Service_Technorati_Exception($e);
+            }
+        }
+
         $this->_thumbnailPicture = $uri;
     }
-    
+
 }
