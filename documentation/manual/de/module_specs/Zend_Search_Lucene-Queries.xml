@@ -6,13 +6,12 @@
     </para>
 
     <para>
-        Benutzerabfragen können mit durch API erstellte Abfragen kombiniert werden. Der Abfrage Parser kann verwendet
-        werden um eine Abfrage von einem String zu erstellen:
+        Benutzerabfragen können mit Abfragen die durch die API erstellte wurden kombiniert werden. Einfach den
+        Abfrageparser verwenden um eine Abfrage von einem String zu erstellen:
         <programlisting role="php"><![CDATA[<?php
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]>
         </programlisting>
     </para>
-
 
     <sect2 id="zend.search.lucene.queries.exceptions">
         <title>Abfrageparser Ausnahmen</title>
@@ -27,13 +26,13 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);]]>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Search_QueryParserException</code> wird geworfen im Fall einer
-                        Abfragesyntax Ausnahme.
+                        <code>Zend_Search_Lucene_Search_QueryParserException</code> wird geworfen wenn ein
+                        Fehler im Syntax der Abfrage ist.
                     </para>
                 </listitem>
             </itemizedlist>
-            Deswegen ist es eine gute Idee die Zend_Search_Lucene_Search_QueryParserException zu fangen und
-            entsprechende Nachrichten zu erstellen:
+            Es ist eine gute Idee die Zend_Search_Lucene_Search_QueryParserException abzufangen und
+            richtig abzuarbeiten:
             <programlisting role="php"><![CDATA[<?php
 try {
     $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
@@ -44,15 +43,14 @@ try {
         </para>
 
         <para>
-            Die selbe Technik kann (und sollte) für die find() Methode des Zend_Search_Lucene Objektes verwendet
-            werden.
+            Die selbe Technik sollte für die find() Methode des Zend_Search_Lucene Objektes verwendet werden.
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.term-query">
         <title>Begriffsabfrage</title>
         <para>
-            Begriffsabfragen sind für Suchen nach einem einzelnen Begriff gedacht.
+            Begriffsabfragen können für das Suchen mit einem einzelnen Begriff verwendet werden.
         </para>
 
         <para>
@@ -73,10 +71,11 @@ $hits  = $index->find($query);]]>
         </programlisting>
 
         <para>
-            Das Term Feld ist optional. Zend_Search_Lucene durchsucht alle Felder wenn das Feld nicht spezifiziert
+            Das Term Feld ist optional. Zend_Search_Lucene durchsucht alle indizierten Felder in jedem
+            Dokument wenn das Feld nicht spezifiziert
             wurde:
             <programlisting role="php"><![CDATA[<?php
-$term  = new Zend_Search_Lucene_Index_Term('wort1');  // Sucht 'word1' durch alle indizierten Felder
+$term  = new Zend_Search_Lucene_Index_Term('wort1');  // Sucht nach 'word1' in allen indizierten Feldern
 $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);]]>
             </programlisting>
@@ -119,10 +118,9 @@ $hits  = $index->find($query);]]>
         </para>
 
         <para>
-            Beim Hinzufügen optionaler Begriffe zu einer Abfrage mit notwendigen Begriffen wird
-            zwar derselbe Ergebnissatz (wie ohne die optionalen Begriffe) zurückgegeben, die
-            Treffer, welche die optionalen Begriffe enthalten, werden aber weiter oben im
-            Ergebnissatz erscheinen.
+            Wenn einer Abfrage mit notwendigen Begriffen optionale Betriffe hinzugefügt werden, werden beide
+            Abfragen das gleiche Set an Ergebnissen haben, aber der optionale Begriff kann die Bewertung
+            der passenden Dokumente beeinflussen.
         </para>
 
         <para>
@@ -148,7 +146,7 @@ $hits  = $index->find($query);]]>
             <listitem>
                 <para>
                     Der 'field:' Präfix wird für die Angabe des Dokumentenfelds für die Suche verwendet.
-                    Wenn er weggelassen wird, wird 'contents' verwendet.
+                    Wenn er weggelassen wird, werden alle Felder durchsucht.
                 </para>
             </listitem>
         </itemizedlist>
@@ -193,8 +191,8 @@ $hits  = $index->find($query);]]>
     <sect2 id="zend.search.lucene.queries.wildcard">
         <title>Wildcard Abfragen</title>
         <para>
-            Wildcard Abfragen sind dazu gedacht um nach einem Set von Ausdrücken zu suchen die einem definierten
-            Pattern entsprechen.
+            Wildcard Abfragen können dazu verwendet werden um nach Dokumenten zu suchen die Strings enthalten
+            welche den spezifizierten Patterns entsprechen. 
         </para>
 
         <para>
@@ -207,9 +205,7 @@ $hits  = $index->find($query);]]>
 
         <para>
             Abfragestring:
-            <programlisting role="querystring"><![CDATA[test*
-field1:test*]]>
-            </programlisting>
+            <programlisting role="querystring"><![CDATA[field1:test*]]></programlisting>
         </para>
 
         <para>oder</para>
@@ -224,8 +220,8 @@ $hits  = $index->find($query);]]>
         </para>
 
         <para>
-            Ausdrucksfelder sind optional. Zend_Search_Lucene durchsucht alle Felder wenn das Feld nicht spezifiziert
-            wurde:
+            Die Ausdrucksfelder sind optional. Zend_Search_Lucene durchsucht alle Felder in jedem
+            Dokument wenn kein Feld spezifiziert wurde:
             <programlisting role="php"><![CDATA[<?php
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -237,16 +233,16 @@ $hits  = $index->find($query);]]>
     <sect2 id="zend.search.lucene.queries.phrase-query">
         <title>Phrasenabfrage</title>
         <para>
-            Phrasenabfragen sind für Suchen nach einer Phrase gedacht.
+            Phrasenabfragen können für das Suchen einer Phrase innerhalb von Dokumenten verwendet werden.
         </para>
 
         <para>
-            Phrasenabfragen sind sehr flexibel und erlauben es, sowohl nach einer exakten Phrase als
-            auch nach ungenauen Phrasen zu suchen.
+            Phrasenabfragen sind sehr flexibel und erlauben dem Benutzer oder Entwickler nach exakten Phrasen
+            zu suchen wie auch nach 'ungenauen' Phrasen.
         </para>
 
         <para>
-            Phrasen können auch Lücken oder mehrere Begriffe an der selben Stelle enthalten. Diese
+            Phrasen können auch Lücken oder mehrere Begriffe an der selben Stelle enthalten; diese
             können mit Hilfe das Analysators für verschiedene Zwecke generiert werden, z.B. kann ein
             Begriff verdoppelt werden, um das Gewicht des Begriffs zu erhöhen oder verschiedene
             Synonyme können an einer Stelle platziert werden.
@@ -282,9 +278,9 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </programlisting>
 
         <para>
-            Eine Phrasenabfrage kann in einem Schritt mit einem Klassenkonstruktor oder Schritt für
-            Schritt mit der <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> Methode
-            erstellt werden.
+            Eine Phrasenabfrage kann in einem Schritt mit einem Klassenkonstruktor erstellt werden
+            oder Schritt für Schritt mit der <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>
+            Methode.
         </para>
 
         <para>
@@ -296,29 +292,26 @@ Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $
         </programlisting>
 
         <para>
-            <code>$terms</code> ist ein Array mit Strings, welche einen Satz von Begriffen für die
-            Phrase enthalten. Wenn dies ausgelassen wird oder null entspricht, wird eine leere
-            Abfrage erstellt.
+            Der <code>$terms</code> Parameter ist ein Array von Strings die ein Set von Phrasen Strings
+            enthalten. Wenn er ausgelassen wird oder null ist, wird eine leere Abfrage erstellt.
         </para>
 
         <para>
-            <code>$offsets</code> ist ein Array mit ganzen Zahlen, welche den Offset der jeweiligen
-            Begriffe der Phrase enthalten. Wenn dies ausgelassen wird oder null entspricht, werden
-            die Positionen der Begriffe als <code>array(0, 1, 2, 3, ...)</code> angenommen.
+            Der <code>$offsets</code> Parameter ist von ganzen Zahlen, welche den Offset von Begriffen in
+            einer Phrase enthalten. Wenn er ausgelassen wird oder null ist, werden die Positionen der Begriffe
+            als sequentiell, ohne Zwischenräume, angenommen.
         </para>
 
         <para>
-            <code>$field</code> ist ein String, der das zu durchsuchende Dokumentenfeld angibt.
+            Der <code>$field</code> Parameter ist ein String, der das zu durchsuchende Dokumentenfeld angibt.
             Wenn dies ausgelassen wird oder null entspricht, wird das Standardfeld durchsucht.
-            Diese Version von Zend_Search_Lucene verwendet das 'contents' Feld als Standard, aber
-            es ist für weitere Versionen geplant, dieses Verhalten auf "jedes Feld" zu ändern.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]>
         </programlisting>
         <para>
-            Demnach wird hier nach der Phrase 'zend framework' gesucht.
+            Wird nach der Phrase 'zend framework' in allen Feldern suchen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -336,7 +329,7 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), 
         </programlisting>
 
         <para>
-            Es wird nach der Phrase 'zend framework' im 'title' Feld gesucht.
+            Wird nach der Phrase 'zend framework' im 'title' Feld suchen.
         </para>
 
 
@@ -391,18 +384,17 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]>
         </para>
 
         <para>
-            Der Ungenauigkeitsfaktor (slop factor) legt die Anzahl der anderen erlaubten Begriffe
-            zwischen Begriffen der Phrasenabfrage fest. Wenn die Anzahl 0 ist, entspricht dies
-            der Suche nach einer exakten Phrase. Für größere Werte verhält es sich wie ein
-            WITHIN (innerhalb) oder NEAR (nahe) Operator.
+            Der Ungenauigkeitsfaktor (slop factor) legt die Anzahl der anderen Wörter fest die zwischen den
+            spezifizierten Phrasenabfragen erlaubt sind. Wenn der Wert 0 ist, ist die entsprechende Abfrage
+            eine exakte Suche nach der Phrase. Für größere Werte funktioniert das ähnlich dem WITHIN (innerhalb)
+            oder NEAR (nahe) Operator.
         </para>
         <para>
-            Die Ungenauigkeit ist tatsächlich eine veränderbare Distanz, bei der die Einheiten
-            den Schritten entsprechen, die sich ein Begriff in der Phrasenabfrage von seiner
-            eigentlichen Position entfernen darf. Um zum Beispiel die Reihenfolge zweier Worte zu
-            vertauschen, werden zwei Schritte benötigt (der erste Schritt platziert die Worte
-            übereinander). Um also für Phrasen eine Neuanordnun zu erlauben, muss die Ungenauigkeit
-            mindestens zwei entsprechen.
+            Der Ungenauigkeitsfaktor ist tatsächlich eine veränderbare Distanz, wobei die Veränderung dem
+            Verschieben von Begriffen in der Phrasenabfrage entspricht. Um zum Beispiel die Reihenfolge von
+            zwei Wörtern zu wechseln, werden zwei Verschiebungen benötigt (die erste Verschiebung plaziert die
+            Wörter übereinander). Um also die Neusortierung der Phrasen zu erlauben, muß der
+            Ungenauigkeitsfaktor mindestens zwei sein.
         </para>
         <para>
             Exaktere Treffer werden höher bewertet als ungenauere Treffer, so dass die
@@ -459,13 +451,13 @@ $hits  = $index->find($query);]]>
             <programlisting role="php"><![CDATA[<?php
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');
-$query = new Zend_Search_Lucene_Search_Query_Range($from, $to, falce /* non-inclusive */);
+$query = new Zend_Search_Lucene_Search_Query_Range($from, $to, false /* non-inclusive */);
 $hits  = $index->find($query);]]>
             </programlisting>
         </para>
 
         <para>
-            Jede (aber nicht beide) der Begrenzungsausdrücke können auf null gesetzt werden. Zend_Search_Lucene sucht
+            Jede (aber nicht beide) der Begrenzungsausdrücke kann auf null gesetzt werden. Zend_Search_Lucene sucht
             vom Anfang oder bis zum Ende des Verzeichnisses für die spezifizierten Feld(er) für diesen Fall:
             <programlisting role="php"><![CDATA[<?php
 $from = new Zend_Search_Lucene_Index_Term('20020101', 'mod_date');

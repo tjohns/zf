@@ -5,7 +5,7 @@
         <title>Dateiformate</title>
 
         <para>
-            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit Lucene Version 1.4 und höher.
+            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit der Java Lucene Version 1.4 und größer.
         </para>
 
         <para>
@@ -13,8 +13,7 @@
             <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
             <footnote>
                 <para>
-                    Die aktuell unterstützte Version des Lucene Index File Formats
-                    ist v2.1
+                    Die aktuell unterstützte Version des Lucene Index Dateiformats ist v2.1
                 </para>
             </footnote>.
         </para>
@@ -41,8 +40,8 @@
             </listitem>
             <listitem>
                 <para>
-                    Die <filename>deletable</filename> Datei ist eine Liste von Dateien, die nicht
-                    mehr vom Index verwendet werden, aber nicht gelöscht werden konnten.
+                    Die <filename>deletable</filename> Datei ist eine Liste von Dateien, die vom
+                    Index nicht mehr verwendet werden, aber noch nicht gelöscht werden konnten.
                 </para>
             </listitem>
         </itemizedlist>
