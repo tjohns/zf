@@ -16,7 +16,7 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id:$
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -52,9 +52,9 @@ require_once 'Zend/Service/Technorati/CosmosResultSet.php';
 require_once 'Zend/Service/Technorati/Author.php';
 
 /** 
- * @see Zend_Service_Technorati_Key 
+ * @see Zend_Service_Technorati_KeyInfoResult
  */
-require_once 'Zend/Service/Technorati/Key.php';
+require_once 'Zend/Service/Technorati/KeyInfoResult.php';
 
 /**
  * @see Zend_Service_Technorati_Weblog
@@ -256,7 +256,7 @@ class Zend_Service_Technorati
         $dom->loadXML($response->getBody());
         self::_checkErrors($dom);
 
-        return new Zend_Service_Technorati_Key($dom, $this);
+        return new Zend_Service_Technorati_KeyInfoResult($dom, $this->_apiKey);
     }
 
 

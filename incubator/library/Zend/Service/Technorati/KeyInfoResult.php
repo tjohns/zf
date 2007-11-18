@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_Key
+class Zend_Service_Technorati_KeyInfoResult
 {
     /**
      * Technorati API key
@@ -75,7 +75,7 @@ class Zend_Service_Technorati_Key
 
 
     /**
-     * Construct a Key object
+     * Construct a KeyInfoResult object
      * 
      * Parses given Key element from $dom and sets API key string.
      *
