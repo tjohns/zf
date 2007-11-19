@@ -20,6 +20,12 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+      
+/**
+ * @see Zend_Service_Technorati_Utils
+ */
+require_once 'Zend/Service/Technorati/Utils.php';        
+
 
 /**
  * TODO: phpdoc
@@ -127,7 +133,7 @@ class Zend_Service_Technorati_Author
     /**
      * Return Author first name
      * 
-     * @return  String  Author first name
+     * @return  string  Author first name
      */
     public function getFirstName() {
         return $this->_firstName;
@@ -136,7 +142,7 @@ class Zend_Service_Technorati_Author
     /**
      * Return Author last name
      * 
-     * @return  String  Author last name
+     * @return  string  Author last name
      */
     public function getLastName() {
         return $this->_lastName;
@@ -145,7 +151,7 @@ class Zend_Service_Technorati_Author
     /**
      * Return Technorati account username
      * 
-     * @return  String  Technorati account username
+     * @return  string  Technorati account username
      */
     public function getUsername() {
         return $this->_username;
@@ -154,7 +160,7 @@ class Zend_Service_Technorati_Author
     /**
      * Return Technorati account description
      * 
-     * @return  String  Technorati account description
+     * @return  string  Technorati account description
      */
     public function getDescription() {
         return $this->_description;
@@ -163,7 +169,7 @@ class Zend_Service_Technorati_Author
     /**
      * Return Technorati account biography
      * 
-     * @return  String  Technorati account biography
+     * @return  string  Technorati account biography
      */
     public function getBio() {
         return $this->_bio;
@@ -182,7 +188,7 @@ class Zend_Service_Technorati_Author
     /**
      * Set author first name
      * 
-     * @param   String First Name input value 
+     * @param   string $input   First Name input value 
      * @return  void
      */
     public function setFirstName($input) {
@@ -192,7 +198,7 @@ class Zend_Service_Technorati_Author
     /**
      * Set author last name
      * 
-     * @param   String  Last Name input value 
+     * @param   string $input   Last Name input value 
      * @return  void
      */
     public function setLastName($input) {
@@ -202,7 +208,7 @@ class Zend_Service_Technorati_Author
     /**
      * Set Technorati account username
      * 
-     * @param   String  Username input value 
+     * @param   string $input   Username input value 
      * @return  void
      */
     public function setUsername($input) {
@@ -212,7 +218,7 @@ class Zend_Service_Technorati_Author
     /**
      * Set Technorati account biography
      * 
-     * @param   String  Biography input value
+     * @param   string $input   Biography input value
      * @return  void
      */
     public function setBio($input) {
@@ -222,7 +228,7 @@ class Zend_Service_Technorati_Author
     /**
      * Set Technorati account description
      * 
-     * @param   String  Description input value
+     * @param   string $input   Description input value
      * @return  void
      */
     public function setDescription($input) {
@@ -232,29 +238,13 @@ class Zend_Service_Technorati_Author
     /**
      * Set Technorati account thumbnail picture
      * 
-     * @param   String|Zend_Uri_Http Thumbnail Picture URI
+     * @param   string|Zend_Uri_Http $input Thumbnail Picture URI
      * @return  void
      * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
+     *          (via Zend_Service_Technorati_Utils::setUriHttp)
      */
     public function setThumbnailPicture($input) {
-        /**
-         * @see Zend_Uri
-         */
-        require_once 'Zend/Uri.php';
-              
-        if ($input instanceof Zend_Uri_Http || $input === null) {
-            $uri = $input;
-        }
-        else {
-            try {
-                $uri = Zend_Uri::factory((string) $input);
-            }
-            catch (Exception $e) {
-                throw new Zend_Service_Technorati_Exception($e);
-            }
-        }
-
-        $this->_thumbnailPicture = $uri;
+        $this->_thumbnailPicture = Zend_Service_Technorati_Utils::setUriHttp($input);
     }
 
 }
