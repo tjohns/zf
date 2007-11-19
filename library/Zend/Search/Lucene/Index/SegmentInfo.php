@@ -184,16 +184,34 @@ class Zend_Search_Lucene_Index_SegmentInfo
      * @param integer $delGen
      * @param boolean $isCompound
      */
-    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name, $docCount, $delGen = 0, $hasSingleNormFile = false, $isCompound = true)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $name, $docCount, $delGen = 0, $hasSingleNormFile = false, $isCompound = null)
     {
         $this->_directory = $directory;
         $this->_name              = $name;
         $this->_docCount          = $docCount;
         $this->_hasSingleNormFile = $hasSingleNormFile;
         $this->_delGen            = $delGen;
-        $this->_isCompound        = $isCompound;
+        $this->_termDictionary    = null;
 
-        $this->_termDictionary = null;
+        if (!is_null($isCompound)) {
+            $this->_isCompound    = $isCompound;
+        } else {
+        	// It's a pre-2.1 segment
+        	// detect if it uses compond file
+        	$this->_isCompound = true;
+        	
+        	try {
+        		// Try to open compound file
+        		$this->_directory->getFileObject($name . '.cfs');
+        	} catch (Zend_Search_Lucene_Exception $e) {
+        		if (strpos($e->getMessage(), 'is not readable') !== false) {
+        			// Compound file is not found or is not readable
+        			$this->_isCompound = false;
+        		} else {
+        			throw $e;
+        		}
+        	}
+        }
 
         $this->_segFiles = array();
         if ($this->_isCompound) {
