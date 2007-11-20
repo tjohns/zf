@@ -18,17 +18,33 @@ application/
         controllers/
             IndexController.php
             FooController.php
+        models/
+        views/
+            scripts/
+                index/
+                foo/
+            helpers/
+            filters/
     blog/
         controllers/
             IndexController.php
         models/
         views/
+            scripts/
+                index/
+            helpers/
+            filters/
     news/
         controllers/
             IndexController.php
             ListController.php
         models/
-        views/]]>
+        views/
+            scripts/
+                index/
+                list/
+            helpers/
+            filters/]]>
         </programlisting>
 
         <para>
