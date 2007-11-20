@@ -217,6 +217,38 @@ $response   = $controller->dispatch();]]>
             </programlisting>
 
         </sect3>
+
+        <sect3 id="zend.controller.request.http.ajax">
+            <title>Detecting AJAX Requests</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> has a rudimentary
+                method for detecting AJAX requests:
+                <code>isXmlHttpRequest()</code>. This method looks for an
+                HTTP request header <code>X-Requested-With</code> with the value
+                'XMLHttpRequest'; if found, it returns true.
+            </para>
+
+            <para>
+                Currently, this header is known to be passed by default with the
+                following JS libraries:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>Prototype/Scriptaculous (and libraries derived
+                        from Prototype)</para></listitem>
+                <listitem><para>Yahoo! UI Library</para></listitem>
+                <listitem><para>jQuery</para></listitem>
+                <listitem><para>MochiKit</para></listitem>
+            </itemizedlist>
+
+            <para>
+                Most AJAX libraries allow you to send custom HTTP request
+                headers; if your library does not send this header, simply add
+                it as a request header to ensure the
+                <code>isXmlHttpRequest()</code> method works for you.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.request.subclassing">
