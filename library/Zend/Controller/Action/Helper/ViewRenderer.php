@@ -49,7 +49,7 @@ require_once 'Zend/View.php';
  * Usage:
  * <code>
  * // In your bootstrap:
- * Zend_Controller_Action_HelperBroker::addHelper(new Wopnet_Controller_Action_Helper_Abstract());
+ * Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
  *
  * // In your action controller methods:
  * $viewHelper = $this->_helper->getHelper('view');
