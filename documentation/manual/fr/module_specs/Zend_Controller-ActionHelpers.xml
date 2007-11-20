@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2003/XInclude">
+﻿<sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2003/XInclude">
     <title>Aides d'action (Helper)</title>
 
     <sect2 id="zend.controller.actionhelper.introduction">
@@ -125,6 +125,26 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </programlisting>
 
         <para>
+            Il existe aussi deux méthodes statiques pour récupérer les aides issues du gestionnaire d'aide : <code>getExistingHelper()</code> et <code>getStaticHelper()</code>.<code>getExistingHelper()</code> récupérera un aide seulement s'il a précédemment été invoqué par ou explicitement enregistré dans le gestionnaire d'aide; la méthode lèvera une exception si non. <code>getStaticHelper()</code> réalise la même chose que <code>getExistingHelper()</code>, mais tentera d'instancier l'aide si elle n'a pas déjà été enregistrée dans la pile des aides. <code>getStaticHelper()</code> est un bon choix pour récupérer les aides que vous voulez configurer.
+        </para>
+
+        <para>
+            Les deux méthodes prennent un unique paramètre, <code>$name</code>, qui est le nom court de l'aide (c'est-à-dire sans le préfixe).
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire, et l'extrait :
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+}
+
+// Ou, simplement le récupère, sans se soucier s'il a ou non été
+// enregistré précédemment :
+$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+}]]>
+        </programlisting>
+
+        <para>
             Enfin, pour effacer une aide enregistrée du gestionnaire, utilisez <code>removeHelper($name)</code>, où <code>$name</code> est le nom raccourci de l'aide (sans le préfixe) :
         </para>
 
@@ -145,7 +165,9 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
 
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
-        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
+        <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-ActionHelpers-ViewRenderer.xml" /></xi:fallback>
+        </xi:include>
     </sect2>
 
     <sect2 id="zend.controller.actionhelper.writingyourown">
