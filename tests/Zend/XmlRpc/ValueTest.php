@@ -1,5 +1,12 @@
 <?php
-require_once 'PHPUnit/Framework/TestCase.php';
+// Call Zend_XmlRpc_ValueTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    require_once dirname(__FILE__) . '/../../TestHelper.php';
+    define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_ValueTest::main");
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/XmlRpc/Value.php';
 require_once 'Zend/XmlRpc/Value/Scalar.php';
@@ -22,6 +29,19 @@ require_once 'Zend/XmlRpc/Value/Struct.php';
  */
 class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_ValueTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     // Boolean
     
     public function testFactoryAutodetectsBoolean()
@@ -313,6 +333,18 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertType('DomElement', $val->getAsDOM());
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());                    
     }    
+
+    public function testXmlRpcValueBase64GeneratedXmlContainsBase64EncodedText()
+    {
+        $native = 'foo';
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($native,
+                                    Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+                    
+        $this->assertXmlRpcType('base64', $val);
+        $xml = $val->saveXML();
+        $encoded = base64_encode($native);
+        $this->assertContains($encoded, $xml);
+    }
     
     // Exceptions
     
@@ -338,4 +370,9 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
     {
         return "<?xml version=\"1.0\"?>\n$xml\n";
     }
+}
+
+// Call Zend_XmlRpc_ValueTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_XmlRpc_ValueTest::main") {
+    Zend_XmlRpc_ValueTest::main();
 }
