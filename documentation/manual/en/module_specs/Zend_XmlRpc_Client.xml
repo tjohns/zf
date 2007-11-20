@@ -367,7 +367,7 @@ try {
 
     $client->call('bar', array($arg1, $arg2));
 
-} catch (Zend_XmlRpc_HttpException $e) {
+} catch (Zend_XmlRpc_Client_HttpException $e) {
 
     // $e->getCode() returns 404
     // $e->getMessage() returns "Not Found"
@@ -415,7 +415,7 @@ try {
 
     $client->call('badMethod');
 
-} catch (Zend_XmlRpc_FaultException $e) {
+} catch (Zend_XmlRpc_Client_FaultException $e) {
 
     // $e->getCode() returns 1
     // $e->getMessage() returns "Unknown method"
@@ -426,7 +426,7 @@ try {
 
             <para>
                 When the <code>call()</code> method is used to make the
-                request, the <code>Zend_XmlRpc_FaultException</code> will be
+                request, the <code>Zend_XmlRpc_Client_FaultException</code> will be
                 thrown on fault. A <code>Zend_XmlRpc_Response</code> object
                 containing the fault will also be available by calling
                 <code>getLastResponse()</code>.
