@@ -169,6 +169,37 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </programlisting>
 
         <para>
+            ヘルパーブローかからヘルパーを取得する静的メソッドには、さらに
+            <code>getExistingHelper()</code> と
+            <code>getStaticHelper()</code> のふたつがあります。
+            <code>getExistingHelper()</code> は、すでに起動されているか、
+            あるいは明示的にヘルパーブローカに登録されているヘルパーのみを取得します。
+            存在しない場合は例外をスローします。
+            <code>getStaticHelper()</code> は
+            <code>getExistingHelper()</code> と同じですが、
+            ヘルパースタックに登録されていないヘルパーについてはそのインスタンスを作成しようとします。
+            自分で設定をしたいヘルパーを取得するには
+            <code>getStaticHelper()</code> がおすすめです。
+        </para>
+
+        <para>
+            どちらのメソッドも、引数はひとつだけです。
+            この引数 <code>$name</code>
+            には、ヘルパーのショートネーム (プレフィックスを除いたもの)
+            を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// 'redirector' ヘルパーがブローカに登録されているかどうかを調べ、取得します
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+}
+
+// あるいは、登録されているかどうかを気にせずに単純に取得します
+$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+}]]></programlisting>
+
+        <para>
             最後に、登録済みのヘルパーをブローカから削除するには
             <code>removeHelper($name)</code> を使用します。<code>$name</code>
             には、ヘルパーのショートネーム (プレフィックスを除いたもの)
