@@ -132,6 +132,11 @@
                     <code>POST</code> パラメータ、<code>COOKIE</code>
                     パラメータの順になります。このメソッドを使用する際には、この点に注意しましょう。
                 </para>
+
+                <para>
+                    <code>setParam()</code> で設定したパラメータからだけ取得したい場合は、
+                    <code>getUserParam()</code> を使用します。
+                </para>
             </note>
 
             <note>
@@ -220,6 +225,39 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
             </programlisting>
 
+        </sect3>
+
+        <sect3 id="zend.controller.request.http.ajax">
+            <title>AJAX リクエストの検出</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> には、
+                AJAX リクエストを検出するための基本的なメソッド
+                <code>isXmlHttpRequest()</code> が用意されています。
+                このメソッドは、HTTP リクエストヘッダ
+                <code>X-Requested-With</code> に
+                'XMLHttpRequest' という値が設定されているかどうかを調べ、
+                設定されている場合に true を返します。
+            </para>
+
+            <para>
+                現時点では、次の JS ライブラリがデフォルトでこのヘッダを渡すようです。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>Prototype/Scriptaculous (その他
+                        Prototype 系のライブラリ)</para></listitem>
+                <listitem><para>Yahoo! UI Library</para></listitem>
+                <listitem><para>jQuery</para></listitem>
+                <listitem><para>MochiKit</para></listitem>
+            </itemizedlist>
+
+            <para>
+                大半の AJAX ライブラリは、独自の HTTP リクエストヘッダを送信することができます。
+                ご利用のライブラリがこのヘッダを送信していない場合は、
+                自分でこのヘッダを追加することで
+                <code>isXmlHttpRequest()</code> メソッドの動作を期待通りにすることができます。
+            </para>
         </sect3>
     </sect2>
 
