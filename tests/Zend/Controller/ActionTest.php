@@ -1,15 +1,8 @@
 <?php
 // Call Zend_Controller_ActionTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
+    require_once dirname(__FILE__) . '/../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_ActionTest::main");
-
-    $basePath = realpath(dirname(__FILE__) . str_repeat(DIRECTORY_SEPARATOR . '..', 3));
-
-    set_include_path(
-        $basePath . DIRECTORY_SEPARATOR . 'tests'
-        . PATH_SEPARATOR . $basePath . DIRECTORY_SEPARATOR . 'library'
-        . PATH_SEPARATOR . get_include_path()
-    );
 }
 
 require_once "PHPUnit/Framework/TestCase.php";
@@ -337,6 +330,28 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
         $script = $controller->getViewScript('foo');
         $this->assertContains('view' . DIRECTORY_SEPARATOR . 'foo.phtml', $script);
+    }
+
+    public function testGetViewScriptDoesNotOverwriteNoControllerFlagWhenNullPassed()
+    {
+        require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'ViewController.php';
+        Zend_Controller_Front::getInstance()->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+
+        $request    = new Zend_Controller_Request_Http();
+        $request->setControllerName('view')
+                ->setActionName('test');
+        $response   = new Zend_Controller_Response_Cli();
+        $controller = new ViewController($request, $response);
+
+        $this->assertSame($viewRenderer->getActionController(), $controller);
+        $viewRenderer->setNoController(true);
+
+        $this->assertTrue($viewRenderer->getNoController());
+
+        $script = $controller->getViewScript();
+
+        $this->assertTrue($viewRenderer->getNoController());
     }
 
     public function testRenderScript()
