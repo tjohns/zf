@@ -366,7 +366,7 @@ try {
 
     $client->call('bar', array($arg1, $arg2));
 
-} catch (Zend_XmlRpc_HttpException $e) {
+} catch (Zend_XmlRpc_Client_HttpException $e) {
 
     // $e->getCode() は 404 を返します
     // $e->getMessage() は "Not Found" を返します
@@ -412,7 +412,7 @@ try {
 
     $client->call('badMethod');
 
-} catch (Zend_XmlRpc_FaultException $e) {
+} catch (Zend_XmlRpc_Client_FaultException $e) {
 
     // $e->getCode() は 1 を返します
     // $e->getMessage() は "Unknown method" を返します
@@ -423,7 +423,7 @@ try {
 
             <para>
                 <code>call()</code> メソッドを使用してリクエストを作成した場合は、
-                fault の際に <code>Zend_XmlRpc_FaultException</code>
+                fault の際に <code>Zend_XmlRpc_Client_FaultException</code>
                 がスローされます。fault を含む <code>Zend_XmlRpc_Response</code>
                 オブジェクトを取得するには
                 <code>getLastResponse()</code> をコールします。
