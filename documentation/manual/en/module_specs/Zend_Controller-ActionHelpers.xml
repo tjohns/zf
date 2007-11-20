@@ -166,6 +166,35 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </programlisting>
 
         <para>
+            There are also two static methods for retrieving helpers from the helper
+            broker: <code>getExistingHelper()</code> and
+            <code>getStaticHelper()</code>. <code>getExistingHelper()</code>
+            will retrieve a helper only if it has previously been invoked by or
+            explicitly registered with the helper broker; it will throw an
+            exception if not. <code>getStaticHelper()</code> does the same as
+            <code>getExistingHelper()</code>, but will attempt to instantiate
+            the helper if has not yet been registered with the helper stack.
+            <code>getStaticHelper()</code> is a good choice for retrieving
+            helpers which you wish to configure.
+        </para>
+
+        <para>
+            Both methods take a single argument, <code>$name</code>, which is
+            the short name of the helper (minus the prefix).
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Check if 'redirector' helper is registered with the broker, and fetch:
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+}
+
+// Or, simply retrieve it, not worrying about whether or not it was previously
+// registered:
+$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+}]]></programlisting>
+
+        <para>
             Finally, to delete a registered helper from the broker, use
             <code>removeHelper($name)</code>, where <code>$name</code> is the
             short name of the helper (minus the prefix):
