@@ -131,6 +131,11 @@
                     and finally <code>COOKIE</code> parameters. Be aware of this
                     when pulling data via this method.
                 </para>
+
+                <para>
+                    If you wish to pull only from parameters you set via
+                    <code>setParam()</code>, use the <code>getUserParam()</code>.
+                </para>
             </note>
 
             <note>
