@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.controller.request">
+<sect1 id="zend.controller.request">
     <title>L'objet Requête</title>
     <sect2 id="zend.controller.request.introduction">
         <title>Introduction</title>
@@ -75,6 +75,9 @@
                 <para>
                     Afin d'effectuer une partie de son travail, <code>getParam()</code> recherche réellement dans plusieurs sources. Dans l'ordre de priorité, ceux-ci incluent : l'ensemble de paramètres d'utilisateur réglés par l'intermédiaire de <code>setParam()</code>, les paramètres <code>GET</code>, les paramètres <code>POST</code>, et finalement les paramètres <code>COOKIE</code>. Faites attention à ceci lorsque vous récupérez des données par l'intermédiaire de cette méthode.
                 </para>
+                <para>
+                    Si vous souhaitez rechercher seulement dans les valeurs que vous avez paramètrées avec <code>setParam()</code>, utilisez <code>getUserParam()</code>.
+                </para>
             </note>
             <note>
                 <title>Caprices d'Apache</title>
@@ -128,6 +131,28 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
 		    </programlisting>
 
+        </sect3>
+        <sect3 id="zend.controller.request.http.ajax">
+            <title>Détecter les requêtes AJAX</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> possède une méthode rudimentaire pour détecter les requêtes AJAX : <code>isXmlHttpRequest()</code>. Cette méthode parcourt les entêtes de la requête HTTP à la recherche de <code>X-Requested-With</code> ayant la valeur "XMLHttpRequest" ; si celui-ci est trouvé, la méthode retourne <code>true</code>.
+            </para>
+
+            <para>
+                Actuellement, on sait que cet entête est fourni par défaut par les bibliothèques JS suivantes :
+            </para>
+
+            <itemizedlist>
+                <listitem><para>Prototype/Scriptaculous (et les librairies dérivées de Prototype)</para></listitem>
+                <listitem><para>Yahoo! UI Library</para></listitem>
+                <listitem><para>jQuery</para></listitem>
+                <listitem><para>MochiKit</para></listitem>
+            </itemizedlist>
+
+            <para>
+                La plupart des librairies AJAX vous permettent d'envoyer vos propres entêtes de requête HTTP ; si votre librairie n'envoie pas cet entête, ajoutez le simplement afin d'être sûr que la méthode <code>isXmlHttpRequest()</code> fonctionne dans votre cas.
+            </para>
         </sect3>
     </sect2>
 
