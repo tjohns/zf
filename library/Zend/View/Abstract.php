@@ -18,14 +18,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend
- */
+/** Zend_Loader */
 require_once 'Zend/Loader.php';
 
-/**
- * Zend_View_Interface
- */
+/** Zend_View_Interface */
 require_once 'Zend/View/Interface.php';
 
 /**
