@@ -367,7 +367,7 @@ try {
 
     $client->call('bar', array($arg1, $arg2));
 
-} catch (Zend_XmlRpc_HttpException $e) {
+} catch (Zend_XmlRpc_Client_HttpException $e) {
 
     // $e->getCode() gibt 404 zurück
     // $e->getMessage() gibt "Not Found" zurück
@@ -414,7 +414,7 @@ try {
 
     $client->call('badMethod');
 
-} catch (Zend_XmlRpc_FaultException $e) {
+} catch (Zend_XmlRpc_Client_FaultException $e) {
 
     // $e->getCode() gibt 1 zurück
     // $e->getMessage() gibt "Unknown method" zurück
@@ -425,7 +425,7 @@ try {
 
             <para>
                 Wenn die Methode <code>call()</code> genutzt wird, um eine
-                Anfrage zu starten, wird die <code>Zend_XmlRpc_FaultException</code>
+                Anfrage zu starten, wird die <code>Zend_XmlRpc_Client_FaultException</code>
                 bei einem Fehler geworfen. Ein <code>Zend_XmlRpc_Response</code>-Objekt,
                 das den Fehler enthält, ist allerdings auch verfübar durch die
                 Methode <code>getLastResponse()</code>.

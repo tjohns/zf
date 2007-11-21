@@ -160,11 +160,25 @@ $hits  = $index->find($query);]]>
 $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
 $query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
-$query->addTerm(new Zend_Search_Lucene_Index_Term('word2'), null);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word2', 'author'), null);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
 
 $hits  = $index->find($query);]]>
         </programlisting>
+
+        <para>
+            Es ist auch möglich Begriffslisten in einem MultiTerm Anfrage Konstruktor zu spezifizieren:
+            <programlisting role="php"><![CDATA[<?php
+$terms = array(new Zend_Search_Lucene_Index_Term('word1'),
+               new Zend_Search_Lucene_Index_Term('word2', 'author'),
+               new Zend_Search_Lucene_Index_Term('word3'));
+$signs = array(true, null, false);
+
+$query = new Zend_Search_Lucene_Search_Query_MultiTerm($terms, $signs);
+
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
 
         <para>
             Das <code>$signs</code> Array enthält Informationen über den Begriffstyp:
@@ -185,6 +199,146 @@ $hits  = $index->find($query);]]>
                     </para>
                 </listitem>
             </itemizedlist>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.queries.boolean-query">
+        <title>Boolsche Abfragen</title>
+        <para>
+            Boolsche Abfragen erlauben die Erstellung von Abfragen die andere Abfragen und boolsche Operatoren
+            verwenden.
+        </para>
+
+        <para>
+            Jede Subabfrage in einem Set kann als <emphasis>required</emphasis>, <emphasis>prohibited</emphasis>,
+            oder <emphasis>optional</emphasis> definiert werden.
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis>required</emphasis> bedeutet das Dokumente die dieser Unterabfrage nicht
+                        entsprechen auch der Gesamtabfrage nicht entsprechen;
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>prohibited</emphasis> bedeutet das Dokumente die dieser Unterabfrage entsprechen
+                        auch der Gesamtabfrage nicht entsprechen;
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis>optional</emphasis>, in dem Fall das entsprechende Dokumente in der
+                        Unterabfrage weder verboten noch benötigt werden. Ein Dokument muß trotzdem zumindest in 1
+                        Unterabfrage entsprechen damit es der in der Gesamtabfrage entspricht.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Wenn optionale Unterabfragen einer Abfrage mit benötigen Unterabfragen hinzugefügt werden,
+            werden beide Abfragen das gleiche Ergebnisset haben, aber die optionale Unterabfrage kann die
+            Wertung der passenden Dokumente beeinflussen.
+        </para>
+
+        <para>
+            Beide Suchmethoden können für boolsche Abfragen verwendet werden.
+        </para>
+
+        <para>
+            Abfrage String:
+        </para>
+        <programlisting role="querystring"><![CDATA[+(word1 word2 word3) author:(word4 word5) -word6]]>
+        </programlisting>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    '+' wird verwendet um eine benötigte Unterabfrage zu definieren.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    '-' wird verwendet um eine verbotene Unterabfrage zu definieren.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    'field:' Der Prefix wird verwendet um ein Feld des Dokuments für eine Suche zu markieren.
+                    Wenn es nicht angegeben wird, werden alle Felder durchsucht.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>oder</para>
+
+        <para>
+            Konstruktion der Abfrage durch die API:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+$query = new Zend_Search_Lucene_Search_Query_Boolean();
+
+$subquery1 = new Zend_Search_Lucene_Search_Query_MultiTerm();
+$subquery1->addTerm(new Zend_Search_Lucene_Index_Term('word1'));
+$subquery1->addTerm(new Zend_Search_Lucene_Index_Term('word2'));
+$subquery1->addTerm(new Zend_Search_Lucene_Index_Term('word3'));
+
+$subquery2 = new Zend_Search_Lucene_Search_Query_MultiTerm();
+$subquery2->addTerm(new Zend_Search_Lucene_Index_Term('word4', 'author'));
+$subquery2->addTerm(new Zend_Search_Lucene_Index_Term('word5', 'author'));
+
+$term6 = new Zend_Search_Lucene_Index_Term('word6');
+$subquery3 = new Zend_Search_Lucene_Search_Query_Term($term6);
+
+$query->addSubquery($subquery1, true  /* benötigt (required) */);
+$query->addSubquery($subquery2, null  /* optional */);
+$query->addSubquery($subquery3, false /* verboten (prohibited) */);
+
+$hits  = $index->find($query);]]>
+        </programlisting>
+
+        <para>
+            Es ist auch möglich Listen von Unterabfragen im Konstruktor der Boolschen Abfrage zu definieren: 
+            <programlisting role="php"><![CDATA[<?php
+...
+$subqueries = array($subquery1, $subquery2, $subquery3);
+$signs = array(true, null, false);
+
+$query = new Zend_Search_Lucene_Search_Query_Boolean($subqueries, $signs);
+
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Das <code>$signs</code> Array enthält Informationen über den Typ der Unterabfrage:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>true</code> wird verwendet um eine benötigte Unterabfrage zu definieren.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>false</code> wird verwendet um eine verbotene Unterabfrage zu definieren.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>null</code> wird verwendet um eine Unterabfrage zu definieren die weder benötigt
+                        noch verboten ist.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        
+        <para>
+            Jede Abfrage die boolsche Operatoren verwendet kann, kann auch auch umgeschrieben werden damit Sie
+            die Vorzeichen-Schreibweise verwendet und mit Hilfe der API erstellt wird. Zum Beispiel:
+                 <programlisting role="querystring"><![CDATA[word1 AND (word2 AND word3 AND NOT word4) OR word5]]></programlisting>
+                 ist identisch mit
+            <programlisting role="querystring"><![CDATA[(+(word1) +(+word2 +word3 -word4)) (word5)]]></programlisting>
         </para>
     </sect2>
 

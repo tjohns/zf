@@ -114,9 +114,14 @@
                     Um einiges Ihrer Arbeit zu tun, empfängt <code>getParam()</code> von verschiedenen Quellen.
                     Je nach Priorität inkludieren diese: Benutzer Parameter die über <code>setParam()</code>
                     gesetzt wurden, <code>GET</code> Parameter, <code>POST</code> Parameter, und letztendlich
-                    <code>COOKIE</code> Parameter. Achtung davor wenn Daten über diese Methode durchlaufen werden.
+                    <code>COOKIE</code> Parameter. Aufpassen vor dem Durchlaufen von Daten mit dieser Methode.
                 </para>
             </note>
+
+            <para>
+                Wenn man nur Parameter erhalten will die vorher mit <code>setParam()</code> gesetzt wurden,
+                muß <code>getUserParam()</code> verwendet werden.
+            </para>
 
             <note>
                 <title>Apache Quirks</title>
@@ -194,6 +199,34 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
             </programlisting>
 
+        </sect3>
+
+        <sect3 id="zend.controller.request.http.ajax">
+            <title>Erkennen von AJAX Anfragen</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> hat eine rudimentäre Methode für die Erkennung von
+                AJAX Anfragen: <code>isXmlHttpRequest()</code>. Diese Methode sucht nach einem HTTP Anfrageheader
+                <code>X-Requested-With</code> mit dem Wert 'XMLHttpRequest'; wenn er gefunden wird, gibt er
+                true zurück.
+            </para>
+
+            <para>
+                Aktuell wird dieser Header standardmäßig mit den folgenden JS Bibliotheken geschickt: 
+            </para>
+
+            <itemizedlist>
+                <listitem><para>Prototype/Scriptaculous (und von Prototype abgeleitete Bibliotheken)</para></listitem>
+                <listitem><para>Yahoo! UI Library</para></listitem>
+                <listitem><para>jQuery</para></listitem>
+                <listitem><para>MochiKit</para></listitem>
+            </itemizedlist>
+
+            <para>
+                Die meisten AJAX Bibliotheken erlauben das senden von eigenen HTTP Anfrageheadern; wenn die
+                eigene Bibliothek diesen Header nicht sendet, muß dieser einfach and Anfrageheader hinzugefügt
+                werden um sicherzustellen das die <code>isXmlHttpRequest()</code> Methode funktioniert.
+            </para>
         </sect3>
     </sect2>
 

@@ -152,6 +152,32 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </programlisting>
 
         <para>
+            Es gibt auch zwei statische Methoden für das bekommen von Helfern vom Helferbroker:
+            <code>getExistingHelper()</code> und <code>getStaticHelper()</code>. <code>getExistingHelper()</code>
+            empfängt einen Helfer nur dann wenn er davor durch den Helferbroker ausgerufen wirde oder explizit
+            in Ihm registriert wurde; wenn nicht wird eine Ausnahme geworfen. <code>getStaticHelper()</code>
+            macht das selbe wie <code>getExistingHelper()</code>, wird aber versuchen den Helfer zu
+            initiieren wenn dieser davor noch nicht im Helferstack registriert wurde.
+            <code>getStaticHelper()</code> ist eine gute Wahl für das empfangen von Helfern welche man
+            konfigurieren will.
+        </para>
+
+        <para>
+            Beide Methoden nehmen ein einzelnes Argument, <code>$name</code>, welches der Kurzname des
+            Helfers (ohne den Präfix) ist.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Prüfe ob der 'redirector' Helfer im Broker registriert ist und holt Ihn:
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+}
+
+// Oder, Ihn einfach empfangen, ohne darüber nachzudenken ob er bereits registriert wurde oder nicht:
+$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+}]]></programlisting>
+
+        <para>
             Schlußendlich, um einen registrierten Helfer vom Broker zu entfernen, kann
             <code>removeHelper($name)</code> verwendet werden, wobei <code>$name</code> der Kurzname des Helfers
             ist (ohne den Prefix):
