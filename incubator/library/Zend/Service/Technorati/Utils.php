@@ -40,7 +40,6 @@ class Zend_Service_Technorati_Utils
          * @see Zend_Uri
          */
         require_once 'Zend/Uri.php';
-              
         if ($input instanceof Zend_Uri_Http || $input === null) {
             $uri = $input;
         }
@@ -49,6 +48,10 @@ class Zend_Service_Technorati_Utils
                 $uri = Zend_Uri::factory((string) $input);
             }
             catch (Exception $e) {
+                /**
+                 * @see Zend_Service_Technorati_Exception
+                 */
+                require_once 'Zend/Service/Technorati/Exception.php';  
                 throw new Zend_Service_Technorati_Exception($e);
             }
         }
