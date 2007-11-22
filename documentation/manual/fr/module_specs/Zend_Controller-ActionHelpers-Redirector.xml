@@ -198,7 +198,7 @@ class ForwardController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
-            <title>Utilisation de l'assemblage de la route avec gotoRout()</title>
+            <title>Utilisation de l'assemblage de la route avec gotoRoute()</title>
 
             <para>
                 L'exemple suivant utilise la méthode <code>assemble()</code> du <link linkend="zend.controller.router">router</link> pour créer une URL basé sur un tableau associatif de paramètres fournis. Il suppose que la route suivante a été enregistrée :
