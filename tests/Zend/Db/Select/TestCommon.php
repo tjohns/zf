@@ -517,29 +517,6 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
-     * Test support for where() with a parameter,
-     * e.g. where('id = ?', 1).
-     */
-    protected function _selectWhereWithType()
-    {
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        $select = $this->_db->select()
-            ->from('zfproducts')
-            ->where("$product_id = ?", 2, Zend_Db::INT_TYPE);
-        return $select;
-    }
-
-    public function testSelectWhereWithType()
-    {
-        $select = $this->_selectWhereWithType();
-        $stmt = $this->_db->query($select);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result));
-        $this->assertEquals(2, $result[0]['product_id']);
-    }
-
-    /**
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
     protected function _selectWhereOr()
@@ -581,31 +558,6 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testSelectWhereOrWithParameter()
     {
         $select = $this->_selectWhereOrWithParameter();
-        $stmt = $this->_db->query($select);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(2, count($result));
-        $this->assertEquals(1, $result[0]['product_id']);
-        $this->assertEquals(2, $result[1]['product_id']);
-    }
-
-    /**
-     * Test support for where() with a parameter,
-     * e.g. orWhere('id = ?', 2).
-     */
-    protected function _selectWhereOrWithType()
-    {
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        $select = $this->_db->select()
-            ->from('zfproducts')
-            ->orWhere("$product_id = ?", 1, Zend_Db::INT_TYPE)
-            ->orWhere("$product_id = ?", 2, Zend_Db::INT_TYPE);
-        return $select;
-    }
-
-    public function testSelectWhereOrWithType()
-    {
-        $select = $this->_selectWhereOrWithType();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(2, count($result));

@@ -290,18 +290,6 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
-     * Test support for where() with a type,
-     * e.g. where('id = ?', 1, Zend_Db::INT_TYPE).
-     */
-
-    public function testSelectWhereWithType()
-    {
-        $select = $this->_selectWhereWithType();
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 2)', $sql);
-    }
-
-    /**
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
 
@@ -320,18 +308,6 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
     public function testSelectWhereOrWithParameter()
     {
         $select = $this->_selectWhereOrWithParameter();
-        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
-        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 1) OR ("product_id" = 2)', $sql);
-    }
-
-    /**
-     * Test support for where() with a type,
-     * e.g. orWhere('id = ?', 1, Zend_Db::INT_TYPE).
-     */
-
-    public function testSelectWhereOrWithType()
-    {
-        $select = $this->_selectWhereOrWithType();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
         $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE ("product_id" = 1) OR ("product_id" = 2)', $sql);
     }
