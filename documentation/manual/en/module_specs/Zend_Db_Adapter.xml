@@ -1313,23 +1313,7 @@ echo $sql;
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
 
 echo $sql;
-// SELECT * FROM bugs WHERE bug_id = 1234]]>
-                </programlisting>
-            </example>
-
-            <para>
-                Additionally you can use the optional fourth parameter of <code>quoteInto()</code>
-                to specify the amount of placeholder symbols which shall be quoted. This way it is
-                possible to have the placeholder symbol still avaiable within the query.
-            </para>
-
-            <example id="zend.db.adapter.quoting.quote-into.example-3">
-                <title>Using quoteInto() with count</title>
-                <programlisting role="php"><![CDATA[<?php
-$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ? and reported_by = 'O?'", '1234', null, 1);
-
-echo $sql;
-// SELECT * FROM bugs WHERE bug_id = 1234 and reported_by = 'O?']]>
+// SELECT * FROM bugs WHERE reported_by = 1234]]>
                 </programlisting>
             </example>
 

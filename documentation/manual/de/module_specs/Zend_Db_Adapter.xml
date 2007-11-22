@@ -1205,24 +1205,7 @@ echo $sql;
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
 
 echo $sql;
-// SELECT * FROM bugs WHERE bug_id = 1234]]>
-                </programlisting>
-            </example>
-
-            <para>
-                Zusätzlich kann der optionale vierte Parameter von <code>quoteInto()</code> verwendet werden
-                um die Anzahl an Platzhalter Symbolen zu definierten welche in Anführungszeichen gesetzt
-                werden sollen. Auf diesem Weg ist es möglich das einige Platzhalter Symbole weiterhin in der
-                Abfrage haben.
-            </para>
-
-            <example id="zend.db.adapter.quoting.quote-into.example-3">
-                <title>Verwenden von quoteInto() mit einer Anzahl</title>
-                <programlisting role="php"><![CDATA[<?php
-$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ? and reported_by = 'O?'", '1234', null, 1);
-
-echo $sql;
-// SELECT * FROM bugs WHERE bug_id = 1234 and reported_by = 'O?']]>
+// SELECT * FROM bugs WHERE reported_by = 1234]]>
                 </programlisting>
             </example>
 

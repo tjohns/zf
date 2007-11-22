@@ -570,19 +570,22 @@ class Zend_Db_Select
      * $db->fetchAll($select, array('id' => 5));
      * </code>
      *
-     * @param string   $cond  The WHERE condition.
-     * @param string   $value OPTIONAL A single value to quote into the condition.
-     * @param constant $type  OPTIONAL The type of the given value
+     * @param string $cond The WHERE condition.
+     * @param string $val A single value to quote into the condition.
      * @return Zend_Db_Select This Zend_Db_Select object.
      */
-    public function where($cond, $value = null, $type = null)
+    public function where($cond)
     {
-        if ((func_num_args() > 3) or (($type !== null) and ($type !== 0) and ($type !== 1) and ($type !==2))) {
-            $value = func_get_args();
-            array_shift($value);
-            $type = null;
+        if (func_num_args() > 1) {
+            $val = func_get_arg(1);
+            $cond = $this->_adapter->quoteInto($cond, $val);
         }
-        $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, true);
+
+        if ($this->_parts[self::WHERE]) {
+            $this->_parts[self::WHERE][] = "AND ($cond)";
+        } else {
+            $this->_parts[self::WHERE][] = "($cond)";
+        }
 
         return $this;
     }
@@ -592,65 +595,26 @@ class Zend_Db_Select
      *
      * Otherwise identical to where().
      *
-     * @param string   $cond  The WHERE condition.
-     * @param string   $value OPTIONAL A single value to quote into the condition.
-     * @param constant $type  OPTIONAL The type of the given value
+     * @param string $cond The WHERE condition.
+     * @param string $val A value to quote into the condition.
      * @return Zend_Db_Select This Zend_Db_Select object.
      *
      * @see where()
      */
-    public function orWhere($cond, $value = null, $type = null)
+    public function orWhere($cond)
     {
-        if ((func_num_args() > 3) or (($type !== null) and ($type !== 0) and ($type !== 1) and ($type !==2))) {
-            $value = func_get_args();
-            array_shift($value);
-            $type = null;
+        if (func_num_args() > 1) {
+            $val = func_get_arg(1);
+            $cond = $this->_adapter->quoteInto($cond, $val);
         }
-        $this->_parts[self::WHERE][] = $this->_where($cond, $value, $type, false);
+
+        if ($this->_parts[self::WHERE]) {
+            $this->_parts[self::WHERE][] = "OR ($cond)";
+        } else {
+            $this->_parts[self::WHERE][] = "($cond)";
+        }
 
         return $this;
-    }
-
-    /**
-     * Internal function for creating the where clause
-     *
-     * @param string   $condition
-     * @param string   $value  optional
-     * @param string   $type   optional
-     * @param boolean  $bool  true = AND, false = OR
-     * @return string  clause
-     */
-    protected function _where($condition, $value = null, $type = null, $bool = true)
-    {
-        if (is_array($value)) {
-            foreach($value as $key => $token) {
-                if (is_numeric($key)) {
-                    $condition = $this->_adapter->quoteInto($condition, $token, null, 1);
-                } else {
-                    if ($key[0] !== ":") {
-                        $key = ":" . $key;
-                    }
-                    if (strpos($condition, $key) === false) {
-                        throw new Zend_Db_Select_Exception("Invalid token '$key' given");
-                    }
-                    $condition = str_replace($key, $this->_adapter->quote($token), $condition);
-                }
-            }
-        } else if ($value !== null) {
-            $condition = $this->_adapter->quoteInto($condition, $value, $type);
-        }
-
-        $cond = "";
-        if ($this->_parts[self::WHERE]) {
-            if ($bool === true) {
-                $cond = "AND ";
-            } else {
-                $cond = "OR ";
-            }
-        }
-        $condition = $cond . "($condition)";
-
-        return $condition;
     }
 
     /**
