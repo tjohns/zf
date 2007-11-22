@@ -307,7 +307,9 @@ class Zend_Locale {
             foreach($country2 as $country) {
                 $languages[$region . '_' . strtoupper($country)] = $quality;
             }
-            $languages[$region] = $quality;
+            if (!isset($languages[$region]) || ($languages[$region] < $quality)) {
+                $languages[$region] = $quality;
+            }
         }
         return $languages;
     }
