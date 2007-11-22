@@ -20,6 +20,7 @@ require_once 'Helper/FormCheckboxTest.php';
 require_once 'Helper/FormLabelTest.php';
 require_once 'Helper/FormTextTest.php';
 require_once 'Helper/HtmlListTest.php';
+require_once 'Helper/UrlTest.php';
 
 class Zend_View_AllTests
 {
@@ -37,6 +38,7 @@ class Zend_View_AllTests
         $suite->addTestSuite('Zend_View_Helper_FormLabelTest');
         $suite->addTestSuite('Zend_View_Helper_FormTextTest');
         $suite->addTestSuite('Zend_View_Helper_HtmlListTest');
+        $suite->addTestSuite('Zend_View_Helper_UrlTest');
 
         return $suite;
     }

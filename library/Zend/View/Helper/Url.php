@@ -31,6 +31,11 @@
 class Zend_View_Helper_Url {
 
     /**
+     * @var Zend_View Instance
+     */
+    public $view;
+
+    /**
      * Generates an url given the name of a route.
      *
      * @access public
@@ -40,32 +45,44 @@ class Zend_View_Helper_Url {
      * @param  bool $reset Whether or not to reset the route defaults with those provided
      * @return string Url for the link href attribute.
      */
-    public function url(array $urlOptions = array(), $name = null, $reset = false)
+    public function url(array $urlOptions = array(), $name = null, $reset = false, $encode = true)
     {
 
-        $ctrl = Zend_Controller_Front::getInstance();
+        $front = Zend_Controller_Front::getInstance();
 
-        $router = $ctrl->getRouter();
+        $router = $front->getRouter();
 
         if (empty($name)) {
             try {
                 $name = $router->getCurrentRouteName();
             } catch (Zend_Controller_Router_Exception $e) {
-                if ($router->hasRoute('default')) {
-                    $name = 'default';
-                }
+                $name = 'default';
+            }
+        }
+        
+        if ($encode) {
+            foreach ($urlOptions as $key => $option) {
+	        $urlOptions[$key] = urlencode($option);
             }
         }
 
         $route = $router->getRoute($name);
 
-        $request = $ctrl->getRequest();
-
-        $url = rtrim($request->getBaseUrl(), '/') . '/';
+        $url = rtrim($front->getBaseUrl(), '/') . '/';
         $url .= $route->assemble($urlOptions, $reset);
 
         return $url;
 
     }
 
+    /**
+     * Set the view object
+     *
+     * @param Zend_View_Interface $view
+     * @return void
+     */
+    public function setView(Zend_View_Interface $view)
+    {
+        $this->view = $view;
+    }
 }
