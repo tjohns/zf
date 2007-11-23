@@ -231,7 +231,7 @@ class ForwardController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
-            <title>Verwenden von Routen die mit gotoRout() zusammengebaut wurden</title>
+            <title>Verwenden von Routen die mit gotoRoute() zusammengebaut wurden</title>
 
             <para>
                 Das folgende Beispiel verwendet die <code>assemble()</code> Methode des
