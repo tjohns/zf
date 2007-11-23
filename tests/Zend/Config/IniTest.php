@@ -50,6 +50,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->_iniFileCircularConfig = dirname(__FILE__) . '/_files/circular.ini';
         $this->_iniFileMultipleInheritanceConfig = dirname(__FILE__) . '/_files/multipleinheritance.ini';
         $this->_iniFileSeparatorConfig = dirname(__FILE__) . '/_files/separator.ini';
+        $this->_nonReadableConfig = dirname(__FILE__) . '/_files/nonreadable.ini';
     }
 
     public function testLoadSingleSection()
@@ -230,4 +231,15 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('multi', $config->one->two->three);
     }
 
+    public function testZF2207_Nonreadablefile()
+    {
+        touch($this->_nonReadableConfig);
+        chmod($this->_nonReadableConfig, 000);
+        try {
+            $config = new Zend_Config_Ini($this->_nonReadableConfig, null);
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Unable to read config file', $expected->getMessage());
+        }
+        unlink($this->_nonReadableConfig); 
+    }
 }
