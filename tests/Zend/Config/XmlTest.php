@@ -49,6 +49,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->_xmlFileCircularConfig = dirname(__FILE__) . '/_files/circular.xml';
         $this->_xmlFileTopLevelStringConfig = dirname(__FILE__) . '/_files/toplevelstring.xml';
         $this->_xmlFileOneTopLevelStringConfig = dirname(__FILE__) . '/_files/onetoplevelstring.xml';
+        $this->_nonReadableConfig = dirname(__FILE__) . '/_files/nonreadable.xml';
     }
 
     public function testLoadSingleSection()
@@ -174,5 +175,17 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $config = new Zend_Config_Xml($this->_xmlFileOneTopLevelStringConfig, 'one');
         $this->assertEquals('one', $config->one);
         
+    }
+    
+    public function testZF2207_Nonreadablefile()
+    {
+        touch($this->_nonReadableConfig);
+        chmod($this->_nonReadableConfig, 000);
+        try {
+            $config = new Zend_Config_Xml($this->_nonReadableConfig, null);
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Unable to read config file', $expected->getMessage());
+        }
+        unlink($this->_nonReadableConfig);
     }
 }
