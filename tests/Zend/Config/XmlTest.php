@@ -47,6 +47,8 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->_xmlFileConfig = dirname(__FILE__) . '/_files/config.xml';
         $this->_xmlFileAllSectionsConfig = dirname(__FILE__) . '/_files/allsections.xml';
         $this->_xmlFileCircularConfig = dirname(__FILE__) . '/_files/circular.xml';
+        $this->_xmlFileTopLevelStringConfig = dirname(__FILE__) . '/_files/toplevelstring.xml';
+        $this->_xmlFileOneTopLevelStringConfig = dirname(__FILE__) . '/_files/onetoplevelstring.xml';
     }
 
     public function testLoadSingleSection()
@@ -157,5 +159,20 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('Filename is not set', $expected->getMessage());
         }
+    }
+    
+    public function testZF2162_TopLevelString()
+    {
+        $config = new Zend_Config_Xml($this->_xmlFileTopLevelStringConfig, null);
+        $this->assertEquals('one', $config->one);
+        $this->assertEquals('three', $config->two->three);
+        $this->assertEquals('five', $config->two->four->five);
+        $this->assertEquals('six', $config->six);
+        
+        $config = new Zend_Config_Xml($this->_xmlFileOneTopLevelStringConfig);
+        $this->assertEquals('one', $config->one);
+        $config = new Zend_Config_Xml($this->_xmlFileOneTopLevelStringConfig, 'one');
+        $this->assertEquals('one', $config->one);
+        
     }
 }
