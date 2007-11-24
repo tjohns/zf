@@ -542,7 +542,7 @@
         <title>Zend Framework Components</title>
 
         <para>
-            Below is a table that lists all avaiable Zend Framework Components
+            Below is a table that lists all available Zend Framework Components
             and which PHP extension they need. This can help guide you
             to know which extensions are required for your application.
             Not all extensions used by Zend Framework are required for every
