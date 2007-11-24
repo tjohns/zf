@@ -67,9 +67,9 @@
     <para>
         Sobald eine Kopie des Zend Framework vorhanden ist, muß die eigene Anwendung fähig sein die Zend Framework
         Klassen aufzurufen. Obwohl es
-        <ulink url="http://www.php.net/manual/en/configuration.changes.php">
+        <ulink url="http://www.php.net/manual/de/configuration.changes.php">
         verschiedene Wege gibt das zu erreichen</ulink>, muß PHP's
-        <ulink url="http://www.php.net/manual/en/ini.core.php#ini.include-path"><code>include_path</code></ulink>
+        <ulink url="http://www.php.net/manual/de/ini.core.php#ini.include-path"><code>include_path</code></ulink>
         den Pfad zur Zend Framework Bibliothek enthalten.
     </para>
 

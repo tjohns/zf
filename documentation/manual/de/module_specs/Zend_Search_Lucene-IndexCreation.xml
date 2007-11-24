@@ -284,7 +284,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
             </para>
 
             <para>
-                Entsprechend der PHP <ulink url="http://www.php.net/manual/en/function.flock.php">Dokumentation</ulink>,
+                Entsprechend der PHP <ulink url="http://www.php.net/manual/de/function.flock.php">Dokumentation</ulink>,
                 "funktioniert <code>flock()</code> nicht auf NFS und vielen anderen Netzwerk Dateisystemen".
             </para>
 

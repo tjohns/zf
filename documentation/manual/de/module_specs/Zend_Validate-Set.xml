@@ -139,7 +139,7 @@
             Länge, und die <code>setMax()</code> Methode wirft eine Ausnahme wenn die maximale Länge auf einen
             kleineren Wert als die minimale Länge gesetzt wird. Seit Version 1.0.2 unterstützt diese Klasse
             UTF-8 und andere Zeichensätze, basierend auf dem aktuellen Wert von
-            <ulink url="http://www.php.net/manual/en/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>.
+            <ulink url="http://www.php.net/manual/de/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>.
         </para>
     </sect2>
 

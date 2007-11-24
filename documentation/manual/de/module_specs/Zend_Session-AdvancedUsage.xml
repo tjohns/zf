@@ -44,7 +44,7 @@ Zend_Session::start();]]>
             <listitem>
                 <para>
                     Falsch: PHP's
-                    <ulink url="http://www.php.net/manual/en/ref.session.php#ini.session.auto-start"><code>                    session.auto_start</code>
+                    <ulink url="http://www.php.net/manual/de/ref.session.php#ini.session.auto-start"><code>                    session.auto_start</code>
                     Einstellung</ulink> darf nicht eingeschaltet werden. Wenn keine Möglichkeit besteht
                     diese Einstellung in php.ini zu deaktivieren, und mod_php (oder ähnliches) verwendet wird,
                     und die Einstellung schon in <code>php.ini</code> aktiviert ist, kann das folgende in der
@@ -432,7 +432,7 @@ echo $myNamespace->someArray['foo']; // gibt "bar" aus]]>
 
         <para>
              Wenn Objekte in einer PHP Session fixiert werden sollen, muß bedacht werden das diese für das Speichern
-             <ulink url="http://www.php.net/manual/en/language.oop.serialization.php">serialisiert</ulink> werden.
+             <ulink url="http://www.php.net/manual/de/language.oop.serialization.php">serialisiert</ulink> werden.
              Deshalb muß jedes Objekt das in einer PHP Session verewigt wurde deserialisiert werden nachdem es vom
              Speicher empfangen wurde. Das impliziert das der Entwickler sicherstellen muß das die Klassen für das
              verewigte Objekt definiert werden müssen befor das Objekt vom Session Speicher deserialisiert wird.

@@ -27,7 +27,7 @@ $logger->info('Informational message');]]>
 
     <para>
       Um Daten in eine Datei zu schreiben, muß eine der
-      <ulink url="http://www.php.net/manual/en/wrappers.php#wrappers.file">Dateisystem
+      <ulink url="http://www.php.net/manual/de/wrappers.php#wrappers.file">Dateisystem
       URLs</ulink> verwendet werden:
 
       <programlisting role="php"><![CDATA[<?php

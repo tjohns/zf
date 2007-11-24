@@ -98,7 +98,7 @@
                     Anwendungen funktionieren sollten, kann es notwendig werden diese zu Ändern wenn
                     man sich zu Server verbinden muß die ein spezielles Client Setup benötigen. Wenn
                     dem so ist, sollte
-                    <ulink url="http://www.php.net/manual/en/transports.phphttp://framework.zend.com/manual/en/zend.search.lucene.searching.html#transports.inet">hier</ulink>
+                    <ulink url="http://www.php.net/manual/de/transports.phphttp://framework.zend.com/manual/de/zend.search.lucene.searching.html#transports.inet">hier</ulink>
                     im Kapitel über SSL Transport Layer und Optionen nachgelesen werden.
                 </para>
             </note>

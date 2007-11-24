@@ -19,7 +19,7 @@
         diesem nur dann zur Verfügung wenn der Server-seitige Sourcecode diese Daten freiwillig zur Verfügung stellt
         und diese vom Client angefragt werden. Innerhalb dieser Komponente und der Dokumentation bezeichnt der Term
         "Session Daten" die Server-seitigen Daten welche in
-        <ulink url="http://www.php.net/manual/en/reserved.variables.php#reserved.variables.session"><code>$_SESSION[]</code></ulink>
+        <ulink url="http://www.php.net/manual/de/reserved.variables.php#reserved.variables.session"><code>$_SESSION[]</code></ulink>
         gespeichert, durch <code>Zend_Session</code> verwaltet und durch <code>Zend_Session_Namespace</code>
         Zugriffsobjekte individuell verändert werden. <emphasis role="bold">Session Namensräume</emphasis> gestatten
         den Zugriff auf Session Daten durch Verwendung klassischer
@@ -49,7 +49,7 @@
 
     <para>
         Das standardmäßige
-        <ulink url="http://www.php.net/manual/en/function.session-set-save-handler.php">ext/session Speichermodul</ulink>
+        <ulink url="http://www.php.net/manual/de/function.session-set-save-handler.php">ext/session Speichermodul</ulink>
         löst das Problem des Verwaltens dieser Verbindung unter bestimmten Bedingungen nicht, weil Session Daten
         am Dateisystem des Servers gespeichert werden der auf die Anfrage antwortet. Wenn eine Anfrage von einem
         anderen Server beantwortet wird and dem wo die Session Daten vorhanden sind, hat der antwortende Server keinen

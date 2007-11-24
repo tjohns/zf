@@ -1674,7 +1674,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                         beeinflusst den DNS Prefix, welchen der Adapter beim Konstruieren des DNS Strings benutzt.
                         Sowohl "freetds" als auch "sybase" implementieren einen Prefix von "sybase:", welcher für
                         den <ulink url="http://www.freetds.org/">FreeTDS</ulink> Satz von Libraries verwendet wird.
-                        Siehe auch <ulink url="http://www.php.net/manual/en/ref.pdo-dblib.connection.php">http://www.php.net/manual/en/ref.pdo-dblib.connection.php</ulink>
+                        Siehe auch <ulink url="http://www.php.net/manual/de/ref.pdo-dblib.connection.php">http://www.php.net/manual/de/ref.pdo-dblib.connection.php</ulink>
                         für weitere Informationen über die DNS Prefixe die von diesem Treiber verwendet werden.
                     </para>
                 </listitem>
