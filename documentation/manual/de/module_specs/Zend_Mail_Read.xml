@@ -268,7 +268,7 @@ if (is_string($received)) {
 
         <programlisting role="php"><![CDATA[<?php
 // Alle Kopfzeilen wegschmeißen
-foreach ($message->getHeaders as $name => $value) {
+foreach ($message->getHeaders() as $name => $value) {
     if (is_string($value)) {
         echo "$name: $value\n";
         continue;

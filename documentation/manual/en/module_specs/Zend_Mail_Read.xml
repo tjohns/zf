@@ -259,7 +259,7 @@ if (is_string($received)) {
 
         <programlisting role="php"><![CDATA[<?php
 // dump all headers
-foreach ($message->getHeaders as $name => $value) {
+foreach ($message->getHeaders() as $name => $value) {
     if (is_string($value)) {
         echo "$name: $value\n";
         continue;
