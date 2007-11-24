@@ -7,9 +7,9 @@
 ]>
 <book id="manual" lang="it">
     <bookinfo>
-        <title>Guida di Riferimento per il Programmatore</title>
+        <title>Guida di Riferimento per il programmatore</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Guida di Riferimento a Framework Zend per il Programmatore</edition>
+        <edition>Guida di Riferimento al Framework Zend per il programmatore</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
