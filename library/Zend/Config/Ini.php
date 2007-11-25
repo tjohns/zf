@@ -88,9 +88,6 @@ class Zend_Config_Ini extends Zend_Config
         if (empty($filename)) {
             throw new Zend_Config_Exception('Filename is not set');
         }
-        if (!is_readable($filename)) {
-            throw new Zend_Config_Exception('Unable to read config file');
-        }
         
         $allowModifications = false;
         if (is_bool($config)) {

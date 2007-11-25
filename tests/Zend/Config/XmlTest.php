@@ -177,15 +177,4 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         
     }
 
-    public function testZF2207_Nonreadablefile()
-    {
-        touch($this->_nonReadableConfig);
-        chmod($this->_nonReadableConfig, 000);
-            try {
-            $config = new Zend_Config_Xml($this->_nonReadableConfig, null);
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Unable to read config file', $expected->getMessage());
-        }
-        unlink($this->_nonReadableConfig);        
-    }
 }
