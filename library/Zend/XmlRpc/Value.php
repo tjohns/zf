@@ -327,13 +327,25 @@ abstract class Zend_XmlRpc_Value
                 // If the XML is valid, $value must be an SimpleXML element and contain the <data> tag
                 if (!$value instanceof SimpleXMLElement) {
                     throw new Zend_XmlRpc_Value_Exception('XML string is invalid for XML-RPC native '. self::XMLRPC_TYPE_ARRAY .' type');
-                } elseif (empty($value->data)) {
+                } 
+
+                // PHP 5.2.4 introduced a regression in how empty($xml->value) 
+                // returns; need to look for the item specifically
+                $data = null;
+                foreach ($value->children() as $key => $value) {
+                    if ('data' == $key) {
+                        $data = $value;
+                        break;
+                    }
+                }
+                
+                if (null === $data) {
                     throw new Zend_XmlRpc_Value_Exception('Invalid XML for XML-RPC native '. self::XMLRPC_TYPE_ARRAY .' type: ARRAY tag must contain DATA tag');
                 }
                 $values = array();
                 // Parse all the elements of the array from the XML string
                 // (simple xml element) to Zend_XmlRpc_Value objects
-                foreach ($value->data->value as $element) {
+                foreach ($data->value as $element) {
                     $values[] = self::_xmlStringToNativeXmlRpc($element);
                 }
                 $xmlrpc_val = new Zend_XmlRpc_Value_Array($values);

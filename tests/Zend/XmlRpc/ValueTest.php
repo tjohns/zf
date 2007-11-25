@@ -212,6 +212,24 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertType('DomElement', $val->getAsDOM());
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());   
     }
+
+    public function testEmptyXmlRpcArrayResultsInEmptyArray()
+    {
+        $native = array();
+        $xml    = '<value><array><data/></array></value>';
+
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml, 
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('array', $val);
+        $this->assertEquals('array', $val->getType());
+        $this->assertSame($native, $val->getValue());
+
+        $value = Zend_XmlRpc_Value::getXmlRpcValue($xml, Zend_XmlRpc_Value::XML_STRING);
+        $this->assertXmlRpcType('array', $value);
+        $this->assertEquals('array', $value->getType());
+        $this->assertSame($native, $value->getValue());
+    }
     
     // Struct
 
