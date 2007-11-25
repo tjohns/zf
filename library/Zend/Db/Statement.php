@@ -182,10 +182,8 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         // get a version of the SQL statement with all quoted
         // values and delimited identifiers stripped out
         // remove "foo\"bar"
-print "\n1:/$d($de|[^$d])*$d/";
         $sql = preg_replace("/$d($de|[^$d])*$d/", '', $sql);
         // remove 'foo\'bar'
-print "\n2:/$q($qe|[^$q])*$q/";
         $sql = preg_replace("/$q($qe|[^$q])*$q/", '', $sql);
 
         return $sql;
