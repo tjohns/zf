@@ -33,7 +33,6 @@ class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_Pdo_TestCommon
         $stmt = $this->_db->prepare($select->__toString());
         try {
             $stmt->nextRowset();
-            $this->fail('Expected to catch Zend_Db_Statement_Exception');
         } catch (Zend_Db_Statement_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));

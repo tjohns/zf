@@ -91,7 +91,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         $this->assertEquals(1, $result1[0]['product_id']);
 
         $select = $this->_db->select();
-        $select->from('ZFPRODUCTS');
+        $select->from('zfproducts');
         try {
             $stmt = $this->_db->query($select);
             $result2 = $stmt->fetchAll();
