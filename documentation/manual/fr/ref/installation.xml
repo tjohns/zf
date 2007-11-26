@@ -41,7 +41,7 @@
     </para>
 
     <para>
-        Une fois votre copie du Zend Framework disponible, votre application nécessite d'avoir accès aux classes du framework. Bien qu'il y ait <ulink url="http://www.php.net/manual/en/configuration.changes.php">plusieurs manières de réaliser ceci</ulink>, votre <ulink url="http://www.php.net/manual/en/ini.core.php#ini.include-path"><code>include_path</code></ulink> de PHP doit contenir le chemin vers la bibliothèque du Zend Framework.
+        Une fois votre copie du Zend Framework disponible, votre application nécessite d'avoir accès aux classes du framework. Bien qu'il y ait <ulink url="http://www.php.net/manual/fr/configuration.changes.php">plusieurs manières de réaliser ceci</ulink>, votre <ulink url="http://www.php.net/manual/fr/ini.core.php#ini.include-path"><code>include_path</code></ulink> de PHP doit contenir le chemin vers la bibliothèque du Zend Framework.
     </para>
 
     <para>

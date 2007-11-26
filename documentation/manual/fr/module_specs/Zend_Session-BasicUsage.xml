@@ -110,7 +110,7 @@ foreach ($aNamespace as $index => $valeur) {
         <title>Accesseurs pour les espaces de nommage de session</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> implémente <code>__get()</code>, <code>__set()</code>, <code>__isset()</code>, et <code>__unset()</code>. <ulink url="http://www.php.net/manual/en/language.oop5.overloading.php">Les méthodes magiques</ulink> ne devraient pas être utilisées directement, excepté à l'intérieur d'une sous-classe. Au lieu de cela, utilisez les opérateurs normaux pour appeler ces méthodes magiques, comme :
+            <code>Zend_Session_Namespace</code> implémente <code>__get()</code>, <code>__set()</code>, <code>__isset()</code>, et <code>__unset()</code>. <ulink url="http://www.php.net/manual/fr/language.oop5.overloading.php">Les méthodes magiques</ulink> ne devraient pas être utilisées directement, excepté à l'intérieur d'une sous-classe. Au lieu de cela, utilisez les opérateurs normaux pour appeler ces méthodes magiques, comme :
         </para>
 
         <example id="zend.session.basic_usage.accessors.example">

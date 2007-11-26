@@ -219,7 +219,7 @@
         <title>Chiffres romains</title>
 
         <para>
-            Les chiffres romains plus grands que 4000 sont supportés. <ulink url="http://fr.wikipedia.org/wiki/Chiffre_romain#Extensions_classiques">Ces nombres sont écrits avec une barre au dessus</ulink>. Comme cette barre ne peut pas être représentée sur l'ordinateur, il faut utiliser un tiret bas en début de chaîne.
+            Les chiffres romains plus grands que 4000 sont supportés. <ulink url="http://fr.wikipedia.org/wiki/Num%C3%A9ration_romaine#Extensions_classiques">Ces nombres sont écrits avec une barre au dessus</ulink>. Comme cette barre ne peut pas être représentée sur l'ordinateur, il faut utiliser un tiret bas en début de chaîne.
         </para>
 
 		<programlisting role="php"><![CDATA[<?php

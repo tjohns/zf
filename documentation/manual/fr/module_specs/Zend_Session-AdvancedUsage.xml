@@ -33,7 +33,7 @@ Zend_Session::start();]]>
         <orderedlist>
             <listitem>
                 <para>
-                    Mauvaise : ne pas activer <ulink url="http://www.php.net/manual/en/ref.session.php#ini.session.auto-start"><code>session.auto_start</code></ulink> de PHP. Si vous n'avez pas la possibilité de désactiver ce réglage dans le php.ini, ou que vous utilisez mod_php (ou équivalent), et que le réglage est déjà activé dans le <code>php.ini</code>, alors ajoutez le code suivant à votre fichier <code>.htaccess</code> (habituellement votre dossier de démarrage HTML) :
+                    Mauvaise : ne pas activer <ulink url="http://www.php.net/manual/fr/ref.session.php#ini.session.auto-start"><code>session.auto_start</code></ulink> de PHP. Si vous n'avez pas la possibilité de désactiver ce réglage dans le php.ini, ou que vous utilisez mod_php (ou équivalent), et que le réglage est déjà activé dans le <code>php.ini</code>, alors ajoutez le code suivant à votre fichier <code>.htaccess</code> (habituellement votre dossier de démarrage HTML) :
                     <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]></programlisting>
                 </para>
             </listitem>
@@ -329,7 +329,7 @@ echo $myNamespace->someArray['foo']; // affiche "bar"]]>
         <title>Utiliser les sessions avec des objets</title>
 
         <para>
-            Si vous prévoyez de rendre persistant des objets dans les sessions PHP, pensez qu'ils peuvent être <ulink url="http://www.php.net/manual/en/language.oop.serialization.php">sérialisé</ulink> pour le stockage. Ainsi, tout objet persistant dans les sessions PHP doit être désérialisé après sa récupération à partir du stockage. L'implication est que le développeur doit s'assurer que les classes des objets persistants doivent avoir été définies avant que l'objet ne soit désérialisé du stockage. Si aucune classe n'est définie pour l'objet désérialisé, alors il devient une instance de <code>stdClass</code>.
+            Si vous prévoyez de rendre persistant des objets dans les sessions PHP, pensez qu'ils peuvent être <ulink url="http://www.php.net/manual/fr/language.oop.serialization.php">sérialisé</ulink> pour le stockage. Ainsi, tout objet persistant dans les sessions PHP doit être désérialisé après sa récupération à partir du stockage. L'implication est que le développeur doit s'assurer que les classes des objets persistants doivent avoir été définies avant que l'objet ne soit désérialisé du stockage. Si aucune classe n'est définie pour l'objet désérialisé, alors il devient une instance de <code>stdClass</code>.
         </para>
 
     </sect2>

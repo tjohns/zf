@@ -22,7 +22,7 @@ $logger->info("Message d'information");]]>
     </para>
 
     <para>
-        Pour écrire des données dans un fichier, employer un des <ulink url="http://www.php.net/manual/en/wrappers.php#wrappers.file">Filesystem
+        Pour écrire des données dans un fichier, employer un des <ulink url="http://www.php.net/manual/fr/wrappers.php#wrappers.file">Filesystem
       URLs</ulink>:
 
       <programlisting role="php"><![CDATA[<?php

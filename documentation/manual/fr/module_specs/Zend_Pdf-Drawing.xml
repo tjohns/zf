@@ -427,7 +427,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </para>
         <para>
              Lisez la documentation de PHP pour plus d'informations
-            (<ulink url="http://www.php.net/manual/fr/ref.image.php">http://www.php.net/manual/fr/ref.image.php</ulink> et <ulink url="http://www.php.net/manual/en/ref.zlib.php">http://www.php.net/manual/en/ref.zlib.php</ulink>).
+            (<ulink url="http://www.php.net/manual/fr/ref.image.php">http://www.php.net/manual/fr/ref.image.php</ulink> et <ulink url="http://www.php.net/manual/fr/ref.zlib.php">http://www.php.net/manual/fr/ref.zlib.php</ulink>).
         </para>
     </sect2>
 

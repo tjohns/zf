@@ -7,7 +7,7 @@
         <title>Introduction</title>
 
         <para>
-            <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">L'authentification "Digest"</ulink> est une méthode d'authentification HTTP qui améliore <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">l'authentication basique</ulink> en fournissant un moyen d'authentifier sans avoir à transmettre le mot de passe en clair sur le réseau.
+            <ulink url="http://fr.wikipedia.org/wiki/HTTP_Authentification#M.C3.A9thode_Digest">L'authentification "Digest"</ulink> est une méthode d'authentification HTTP qui améliore <ulink url="http://fr.wikipedia.org/wiki/HTTP_Authentification#M.C3.A9thode_Basic">l'authentication basique</ulink> en fournissant un moyen d'authentifier sans avoir à transmettre le mot de passe en clair sur le réseau.
         </para>
 
         <para>
