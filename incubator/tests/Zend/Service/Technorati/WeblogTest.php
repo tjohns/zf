@@ -33,11 +33,6 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR 
 if (!ini_get('date.timezone')) date_default_timezone_set(@date_default_timezone_get());
 
 /**
- * @see Zend_Http_Client_Adapter_Test
- */
-require_once 'Zend/Http/Client/Adapter/Test.php';
-
-/**
  * @see Zend_Service_Technorati
  */
 require_once 'Zend/Service/Technorati.php';

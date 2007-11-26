@@ -25,7 +25,7 @@
  * @see Zend_Service_Technorati_Author
  */
 require_once 'Zend/Service/Technorati/Author.php';
-      
+
 /**
  * @see Zend_Service_Technorati_Utils
  */
