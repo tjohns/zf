@@ -4,15 +4,19 @@
  * @subpackage UnitTests
  */
 
+// Call Zend_Rest_ServerTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    require_once dirname(__FILE__) . '/../../TestHelper.php';
+    define("PHPUnit_MAIN_METHOD", "Zend_Rest_ServerTest::main");
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
+
 /**
  * Zend_Rest_Server
  */
 require_once 'Zend/Rest/Server.php';
-
-/**
- * PHPUnit Test Case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Test cases for Zend_Rest_Server
@@ -22,6 +26,19 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Rest_ServerTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         if (isset($this->request)) {
@@ -413,6 +430,42 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($result));
         $this->assertContains('<foo>bar</foo>', $response);
     }
+
+    public function testGeneratedXmlEncodesScalarAmpersands()
+    {
+        $server = new Zend_Rest_Server();
+        $server->returnResponse(true);
+        $server->setClass('Zend_Rest_Server_Test');
+        ob_start();
+        $response = $server->handle(array('method' => 'testScalarEncoding'));
+        $result = ob_get_clean();
+        $this->assertTrue(empty($result));
+        $this->assertContains('This string has chars &amp; ampersands', $response);
+    }
+
+    public function testGeneratedXmlEncodesStructAmpersands()
+    {
+        $server = new Zend_Rest_Server();
+        $server->returnResponse(true);
+        $server->setClass('Zend_Rest_Server_Test');
+        ob_start();
+        $response = $server->handle(array('method' => 'testStructEncoding'));
+        $result = ob_get_clean();
+        $this->assertTrue(empty($result));
+        $this->assertContains('bar &amp; baz', $response);
+    }
+
+    public function testGeneratedXmlEncodesFaultAmpersands()
+    {
+        $server = new Zend_Rest_Server();
+        $server->returnResponse(true);
+        $server->setClass('Zend_Rest_Server_Test');
+        ob_start();
+        $response = $server->handle(array('method' => 'testExceptionsEncoding'));
+        $result = ob_get_clean();
+        $this->assertTrue(empty($result));
+        $this->assertContains('testing class method exception &amp; encoding', $response);
+    }
 }
 
 /* Test Functions */
@@ -603,6 +656,38 @@ class Zend_Rest_Server_Test
     {
         return "Hello $who, How are you $when";
     }
+
+    /**
+     * Test scalar encoding
+     * 
+     * @return string
+     */
+    public function testScalarEncoding()
+    {
+        return 'This string has chars & ampersands';
+    }
+
+    /**
+     * Test structs encode correctly
+     * 
+     * @return struct
+     */
+    public function testStructEncoding()
+    {
+        return array(
+            'foo' => 'bar & baz'
+        );
+    }
+
+    /**
+     * Test exceptions encode correctly
+     *
+     * @return void
+     */
+    public function testExceptionsEncoding()
+    {
+        throw new Exception('testing class method exception & encoding');
+    }
 }
 
 class Zend_Rest_Server_Test2
@@ -663,3 +748,8 @@ class Zend_Rest_Server_Test2
 }
 
 class Zend_Rest_TestException extends Exception { }
+
+// Call Zend_Rest_ServerTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Rest_ServerTest::main") {
+    Zend_Rest_ServerTest::main();
+}
