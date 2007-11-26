@@ -145,6 +145,8 @@ ytvbp.sendRequest = function(filePath, params, resultDivName) {
       if (xmlhr.responseText) {
         resultDiv.innerHTML = xmlhr.responseText;
       }
+    } else if (xmlhr.readyState == 4) {
+      alert('Invalid response received - Status: ' + xmlhr.status);
     }
   }
   xmlhr.send(params);
@@ -156,7 +158,7 @@ ytvbp.sendRequest = function(filePath, params, resultDivName) {
  * @param {String} videoId The ID of the YouTube video to show
  */
 ytvbp.presentVideo = function(videoId) {
-  var params = "queryType=show_video&videoId=" + videoId;
+  var params = 'queryType=show_video&videoId=' + videoId;
   var filePath = 'index.php';
   ytvbp.sendRequest(filePath, params, ytvbp.VIDEO_PLAYER_DIV);
 }
@@ -169,10 +171,10 @@ ytvbp.presentVideo = function(videoId) {
  * @param {String} searchTerm The search terms to pass to the specified feed
  */
 ytvbp.presentFeed = function(queryType, maxResults, startIndex, searchTerm){
-  var params = "queryType=" + queryType + 
-               "&maxResults=" + maxResults +
-               "&startIndex=" + startIndex + 
-               "&searchTerm=" + searchTerm;
+  var params = 'queryType=' + queryType + 
+               '&maxResults=' + maxResults +
+               '&startIndex=' + startIndex + 
+               '&searchTerm=' + searchTerm;
   var filePath = 'index.php';
   ytvbp.sendRequest(filePath, params, ytvbp.VIDEO_LIST_CONTAINER_DIV);
 }

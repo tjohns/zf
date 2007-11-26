@@ -47,7 +47,7 @@ Zend_Loader::loadClass('Zend_Gdata_YouTube');
 function findFlashUrl($entry) 
 {
     foreach ($entry->mediaGroup->content as $content) {
-        if ($content->type == 'application/x-shockwave-flash') {
+        if ($content->type === 'application/x-shockwave-flash') {
             return $content->url;
         }
     }
@@ -232,7 +232,6 @@ if ($queryType === null) {
     $yt = new Zend_Gdata_YouTube();
     $query = $yt->newVideoQuery();
     $query->setQuery($searchTerm);
-    $query->setRacy('include');
     $query->setStartIndex($startIndex);
     $query->setMaxResults($maxResults);
    
