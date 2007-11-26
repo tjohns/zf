@@ -1,6 +1,12 @@
 <?php
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
+// Call Zend_XmlRpc_Server_FaultTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    require_once dirname(__FILE__) . '/../../../TestHelper.php';
+    define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Server_FaultTest::main");
+}
+
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Fault.php';
@@ -14,6 +20,20 @@ require_once 'Zend/XmlRpc/Server/Fault.php';
  */
 class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase 
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_XmlRpc_Server_FaultTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     /**
      * Zend_XmlRpc_Server_Fault::getInstance() test
      */
@@ -50,6 +70,20 @@ class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(411, $fault->getCode());
         }
         Zend_XmlRpc_Server_Fault::detachFaultException($exceptions);
+    }
+
+    /**
+     * Tests ZF-1825
+     * @return void
+     */
+    public function testAttachFaultExceptionAllowsForDerivativeExceptionClasses()
+    {
+        Zend_XmlRpc_Server_Fault::attachFaultException('zxrs_fault_test_exception');
+        $e = new zxrs_fault_test_exception4('test exception', 411);
+        $fault = Zend_XmlRpc_Server_Fault::getInstance($e);
+        $this->assertEquals('test exception', $fault->getMessage());
+        $this->assertEquals(411, $fault->getCode());
+        Zend_XmlRpc_Server_Fault::detachFaultException('zxrs_fault_test_exception');
     }
 
     /**
@@ -182,6 +216,7 @@ class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase
 class zxrs_fault_test_exception extends Exception {}
 class zxrs_fault_test_exception2 extends Exception {}
 class zxrs_fault_test_exception3 extends Exception {}
+class zxrs_fault_test_exception4 extends zxrs_fault_test_exception {}
 
 class zxrs_fault_observer 
 {
@@ -216,4 +251,9 @@ class zxrs_fault_observer
     {
         return self::getInstance()->observed;
     }
+}
+
+// Call Zend_XmlRpc_Server_FaultTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_XmlRpc_Server_FaultTest::main") {
+    Zend_XmlRpc_Server_FaultTest::main();
 }
