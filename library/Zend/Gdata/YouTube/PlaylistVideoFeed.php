@@ -20,26 +20,45 @@
  */
 
 /**
- * @see Zend_Gdata_App_MediaEntry
+ * @see Zend_Gdata_Media_Feed
  */
-require_once 'Zend/Gdata/App/MediaEntry.php';
+require_once 'Zend/Gdata/Media/Feed.php';
 
 /**
- * Represents the GData flavor of an Atom entry
+ * @see Zend_Gdata_YouTube_PlaylistVideoEntry
+ */
+require_once 'Zend/Gdata/YouTube/PlaylistVideoEntry.php';
+
+/**
+ * The YouTube video playlist flavor of an Atom Feed with media support
+ * Represents a list of videos contained in a playlist.  Each entry inthis
+ * feed represents an individual video.
  *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Entry extends Zend_Gdata_App_MediaEntry
+class Zend_Gdata_YouTube_PlaylistVideoFeed extends Zend_Gdata_Media_Feed
 {
 
-    protected $_entryClassName = 'Zend_Gdata_Entry';
+    /**
+     * The classname for individual feed elements.
+     *
+     * @var string
+     */
+    protected $_entryClassName = 'Zend_Gdata_YouTube_PlaylistVideoEntry';
 
+    /**
+     * Creates a Play Video feed, representing a list of videos contained
+     * within a single playlist.
+     *
+     * @param DOMElement $element (optional) DOMElement from which this
+     *          object should be constructed.
+     */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata::$namespaces as $nsPrefix => $nsUri) {
+        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
         parent::__construct($element);
