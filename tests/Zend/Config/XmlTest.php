@@ -168,7 +168,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('one', $config->one);
         $this->assertEquals('three', $config->two->three);
         $this->assertEquals('five', $config->two->four->five);
-        $this->assertEquals('six', $config->six);
+        $this->assertEquals('three', $config->six->three);
         
         $config = new Zend_Config_Xml($this->_xmlFileOneTopLevelStringConfig);
         $this->assertEquals('one', $config->one);
