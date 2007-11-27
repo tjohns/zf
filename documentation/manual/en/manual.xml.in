@@ -86,7 +86,7 @@
         <title>Zend_Currency</title>
         <xi:include href="module_specs/Zend_Currency-Introduction.xml" />
         <xi:include href="module_specs/Zend_Currency-Useage.xml" />
-        <xi:include href="module_specs/Zend_Currency-Migration.xml" />
+        <xi:include href="module_specs/Zend_Currency-Migrating.xml" />
     </chapter>
     <chapter id="zend.date">
         <title>Zend_Date</title>
