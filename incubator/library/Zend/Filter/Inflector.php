@@ -358,11 +358,11 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
 
         $pregQuotedTargetReplacementIdentifier = preg_quote($this->_targetReplacementIdentifier, '#');
         
-    	foreach ($this->_rules as $ruleName => $ruleValue) {
-    	    if (isset($source[$ruleName])) {
-    	        if (is_string($ruleValue)) {
+        foreach ($this->_rules as $ruleName => $ruleValue) {
+            if (isset($source[$ruleName])) {
+                if (is_string($ruleValue)) {
     	            // overriding the set rule
-    	            $processedParts['#'.$pregQuotedTargetReplacementIdentifier.$ruleName.'#'] = $source[$ruleName];
+                    $processedParts['#'.$pregQuotedTargetReplacementIdentifier.$ruleName.'#'] = $source[$ruleName];
     	        } elseif (is_array($ruleValue)) {
     	            $processedPart = $source[$ruleName];
     	            foreach ($ruleValue as $ruleFilter) {
@@ -376,8 +376,8 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     	}
     	
     	$inflectedTarget = preg_replace(array_keys($processedParts), array_values($processedParts), $this->_target);
-    	
-    	if ($this->_throwTargetExceptionsOn && (preg_match('#'.$pregQuotedTargetReplacementIdentifier.'#', $inflectedTarget) == true)) {
+
+    	if ($this->_throwTargetExceptionsOn && (preg_match('#(?='.$pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget) == true)) {
     	    require_once 'Zend/Filter/Exception.php';
     	    throw new Zend_Filter_Exception('A replacement identifier ' . $this->_targetReplacementIdentifier . ' was found inside the inflected target, perhaps a rule was not satisfied with a target source?');
     	}

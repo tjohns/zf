@@ -281,6 +281,29 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
 
     }
     
+    public function testTargetExceptionNotThrownOnIdentifierNotFollowedByCharacter()
+    {
+        $this->inflector = new Zend_Filter_Inflector(
+            'e:\path\to\:controller\:action.:suffix',
+            array(
+                 ':controller' => array('CamelCaseToDash', 'StringToLower'),
+                 ':action'     => array('CamelCaseToDash'),
+                 'suffix'      => 'phtml'
+                ),
+            true,
+            ':'
+            );
+            
+        try {
+            $filtered = $this->inflector->filter(array('controller' => 'FooBar', 'action' => 'MooToo'));
+            $this->assertEquals($filtered, 'e:\path\to\foo-bar\Moo-Too.phtml');
+        } catch (Exception $e) {
+            $this->fail();
+        }
+            
+            
+    }
+    
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.
