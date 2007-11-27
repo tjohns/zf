@@ -67,7 +67,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
             $this->_url = Zend_Gdata_YouTube::STANDARD_MOST_VIEWED_URI;
             break;
         case 'recently featured':
-            $this->_url = Zend_Gdata_YouTube::STANDARD_RECENTLY_FEATURED;
+            $this->_url = Zend_Gdata_YouTube::STANDARD_RECENTLY_FEATURED_URI;
             break;
         case 'mobile':
             $this->_url = Zend_Gdata_YouTube::STANDARD_WATCH_ON_MOBILE_URI;
