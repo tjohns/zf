@@ -1,6 +1,102 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 1.0.3 / 30-Nov-2007 / based on revision ???? =
+- Documentation
+  ZF-2040 Literal error in example 9.21
+  ZF-1753 Typo error
+- Zend_Config
+  ZF-2240 Zend_Config_Xml can't find extended nodes (possibly only when empty)
+  ZF-2232 is_readable keeps Zend_Config_Ini from allowing files in include path
+  ZF-2209 Zend_Config* contructor should have the section defaults to null
+  ZF-2162 Zend_Config_Xml usage without sections bug
+  ZF-2061 Add a setReadOnly() method to Zend_Config
+  ZF-2021 Zend_Config::toArray() does not support generic object values
+- Zend_Controller
+  ZF-2025 $_noController value overwritten due to a flaw in the logic...
+  ZF-2000 Interesting intro at ViewRenderer in API Docs
+  ZF-1999 The missing getStaticHelper()
+  ZF-1915 Missing prefix in action controller helper url
+  ZF-1759 Document isXmlHttpRequest()
+  ZF-1730 Conventional modular doc examples need improvement
+  ZF-1966 Documentation missing getUserParam() for Request object
+  ZF-1946 Singleton object clonable
+- Zend_Currency
+  ZF-2063 toCurrency leaves off ending when bcmath is disabled
+  ZF-2011 A typo in toCurrency()
+  ZF-2010 Static methods poorly written
+  ZF-2009 Basic functions to get full name, short name and symbol from current instance
+  ZF-2008 Poorely written cunstructor and its flexible parameters
+  ZF-2007 Zend_Currency variables should be protected, not private
+- Zend_Date
+  ZF-2047 Date parts set would be incorrect if locale region is zh
+  ZF-2046 Export the weekday not properly in Chinese
+  ZF-2039 DST doesn't work on dates after 2038
+  ZF-2032 testSet2(Zend_DateTest) failing
+  ZF-1990 Time specified in Zend_Date::__construct assumed to be GMT-time
+  ZF-1929 "fix_dst" problem
+  ZF-1741 Zend_Date::RSS won't parse some valid dates
+  ZF-2182 Zend_CurrencyTest, Zend_DateTest failing
+- Zend_Db
+  ZF-2226 Zend_Db_Statement prints out debug information
+  ZF-2127 Outdated note in Zend_Db_Table_Row documentation
+  ZF-2126 Zend_Db_Statement documentation grammar fix
+  ZF-2111 PDO MSSQL Adapter does not work with port
+  ZF-2016 Can not enable db profiler from zend_config_ini
+- Zend_Db_Table
+  ZF-1907 Fix incorrect Zend_Db_Table_Abstract::fetchRow() docblock
+- Zend_Locale
+  ZF-2174 getBrowser() can mess up language priority
+  ZF-1974 library/Zend/Locale/Math/PhpMath.php contains globally-scoped functions and executed code
+  ZF-1941 Only Zend_Locale_Math_Sub() bcsub substitution function process scale argument
+  ZF-1771 Integrate a new locale for autoselecting best fitting locale
+  ZF-1061 Use of PHP's setlocale() may break functionality in Zend_Locale_Format
+  ZF-1049 Problem with Zend_Locale_Format and setlocale()
+- Zend_Mail
+  ZF-1944 Zend_Mail can't send mails to qmail server
+- Zend_Measure
+  ZF-2031 testTemperatureSetType1(Zend_Measure_TemperatureTest) failing
+- Zend_Pdf
+  ZF-1991 Unit tests error "Creating default object from empty value"
+- Zend_Rest_Client
+  ZF-2222 phpDoc of _prepareRest in Zend_Rest_Client has wrong throws name
+- Zend_Rest_Server
+  ZF-2084 escape values by default
+- Zend_Search_Lucene
+  ZF-2202 Wildcard and range queries are described in the documentation but not included into current current release
+  ZF-1996 Test failure testFilesystem(Zend_Search_Lucene_Storage_FileTest)
+  ZF-1977 testFilesystem(Zend_Search_Lucene_Storage_FileTest) failed
+  ZF-1349 testHtml(Zend_Search_Lucene_DocumentTest) failing
+- Zend_Session
+  ZF-2164 Zend_Session_Validator_Interface method docblocks do not include return types
+- Zend_Translate
+  ZF-2086 Zend_Translate TMX adapter collapses XML tags
+  ZF-1967 Allow setLocale to work with autodetection
+  ZF-1939 Zend_Translate - Implements __call() magic method
+  ZF-1938 Zend_Translate_Adapter - Dictionary inconsistence with Tmx adapter
+  ZF-1937 Zend_Translate_Adapter - Required method to retrieve Zend_Translate_Adapter::$_translate
+  ZF-1936 Zend_Translate_Adapter::getMessageIds() - Returns locales list instead of locale message ids
+  ZF-1807 Add method Zend_Translate_Adapter::_() as an alias for Zend_Translate_Adapter::translate()
+  ZF-1774 New option to scan all subdirectories for source files
+  ZF-1773 New option to scan the complete directory for source files
+  ZF-1770 Integrate a way to autoset the best found locale as language
+  ZF-1751 Zend_Translate class ambigous _constructor
+- Zend_View
+  ZF-2218 Zend_View_Helper_Url and url encoding
+  ZF-2129 Wrong subpackage tag in DeclareVars and Url helpers' docblock
+  ZF-1956 Zend class in Zend_View's docblock
+  ZF-1930 [patch] Zend_View_Helper_FormSelect mistakenly sets options with value of 0 to selected
+  ZF-1687 Values in Zend_View_Helper_FormCheckbox - Unexpected Functionality
+- Zend_XmlRpc_Client
+  ZF-2092 XML-RPC client fails during parsing of response with empty array on PHP-5.2.4
+  ZF-2090 More efficient differentiation between structs and arrays
+  ZF-1951 exception name of example of Zend_XmlRpc_Client Document is needed to correct
+  ZF-1799 Zend_XmlRpc_Value_Base64 is saved to XML request in decoded form
+  ZF-2053 Undefined property: Zend_XmlRpc_Request::$_xmlRpcParams
+  ZF-1825 Zend_XmlRpc_Server_Fault whitelist checks for exact class
+- Total of 74 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 1.0.2 / 25-Sep-2007 / based on revision 6501 =
 - Documentation
   ZF-108  Document Framework Requirements
