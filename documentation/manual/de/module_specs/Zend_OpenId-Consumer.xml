@@ -126,16 +126,15 @@ if ($consumer->verify($_GET, $id)) {
     <sect2 id="zend.openid.consumer.combine">
         <title>Alle Schritte in einer Seite kombinieren</title>
         <para>
-            The following example combines all three steps together. It doesn't
-            provide any additional functionality. The only advantage is that now
-            developers don't need to specify any URL's of scripts that handle the next
-            step. By default, all steps use the same URL. However, the script now
-            includes a dispatch code that calls appropriate code for each step of
-            authentication.
+            Das folgende Beispiel kombiniert alle drei Schritte. Es bietet keine zusätzlichen Funktionalitäten.
+            Der einzige Vorteil ist, das Entwickler jetzt keine URLs für Skripte definieren müssen, die den
+            nächsten Schritt handhaben. Standardmäßig verwenden alle Schritte die gleiche URL. Trotzdem
+            enthält das Skript den Dispatchcode der den korrekten Code für jeden Schritt der Authentifikation
+            aufruft.
         </para>
 
         <example id="zend.openid.consumer.example-2">
-            <title>The Complete OpenID Login Script</title>
+            <title>Das komplette OpenID Login Skript</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
@@ -146,18 +145,18 @@ if (isset($_POST['openid_action']) &&
 
     $consumer = new Zend_OpenId_Consumer();
     if (!$consumer->login($_POST['openid_identifier'])) {
-        $status = "OpenID login failed.<br>";
+        $status = "OpenID Login fehlgeschlagen.<br>";
     }
 } else if (isset($_GET['openid_mode'])) {
     if ($_GET['openid_mode'] == "id_res") {
         $consumer = new Zend_OpenId_Consumer();
         if ($consumer->verify($_GET, $id)) {
-            $status = "VALID $id";
+            $status = "GÜLTIG $id";
         } else {
-            $status = "INVALID $id";
+            $status = "UNGÜLTIG $id";
         }
     } else if ($_GET['openid_mode'] == "cancel") {
-        $status = "CANCELED";
+        $status = "ABGEBROCHEN";
     }
 }
 ?>
@@ -172,119 +171,114 @@ if (isset($_POST['openid_action']) &&
         </example>
 
         <para>
-            In addition, this code differenciates between canceled and wrong
-            authentication responses. The provider retuns a canceled responce in cases
-            when an identity provider doesn't know the supplied identity or the user
-            is not logged-in or they don't trust the site. A wrong response assumes
-            that the responce is wrong or incorrectly signed.
+            Zusätzlich unterscheidet dieser Code zwischen abgebrochen und falschen Authentifizierungs Antworten.
+            Der Provider gibt eine abgebrochene Antwort in den Fällen zurück, wenn ein Identitäts Provider
+            die gegebene Identität nicht kennt oder der Benutzer nicht angemeldet ist oder dieser der Seite
+            nicht vertraut. Eine falsche Antwort nimmt an das die Antwort falsch oder nicht korrekt signiert
+            wurde.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.realm">
-        <title>Realm</title>
+        <title>Bereiche</title>
         <para>
-            When an OpenID-enabled site passes authentication requests to a
-            provider, it identifies itself with a realm URL. This URL may be
-            considered as a root of a trusted site. If the user trusts the URL they
-            will also trust to matched and subsequent URLs.
+            Wenn eine OpenID-aktivierte Site eine Authentifikations Anfrage an einen Provider übergibt,
+            identifiziert diese sich selbst mit einer Bereichs URL. Diese URL kann als Root der vertrauten
+            Site betrachtet werden. Wenn der Benutzer der URL vertraut, dann vertraut er der passenden und
+            den untergeordneten URLs.
         </para>
 
         <para>
-            By default, the realm URL is automatically set to the URL of the
-            directory where the login script is. This decision is useful for most, but
-            not all cases. Sometimes a whole site and not directory is used, or even a
-            combination of several servers from one domain.
+            Standardmäßig wird der Bereich automatisch auf die URL des Verzeichnisses gesetzt indem das Login
+            Skript ist. Diese Wahl ist für die meisten, aber nicht alle, Fälle ausreichend. Zeitweise wird
+            die komplette Site und nicht ein Verzeichnis verwendet, oder sogar eine Kombination von
+            verschiedenen Server aus einer Domain.
         </para>
 
         <para>
-            To implement this ability, developers may pass the realm value as a
-            third argument to the <code>Zend_OpenId_Consumer::login</code> method. In
-            the following example the single interaction asks for trusted access to
-            all php.net sites.
+            Um diese Fähigkeit zu implementieren müssen Entwickler den realm Wert als drittes Argument an die
+            <code>Zend_OpenId_Consumer::login</code> Methode übergeben. Im folgenden Beispiel fragt eine einzelne
+            Interaktion nach vertrauten Zugriff auf alle php.net Sites.
         </para>
 
         <example id="zend.openid.consumer.example-3_2">
-            <title>Authentication Request for Specified Realm</title>
+            <title>Authentifizierungs Anfrage für spezielle Bereiche</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'], 'example-3_3.php', 'http://*.php.net/')) {
-    die("OpenID login failed.");
+    die("OpenID Login fehlgeschlagen.");
 }]]>
             </programlisting>
         </example>
 
         <para>
-            The example below only implements the second step of authentication,
-            the first and third steps are the same as in the first example.
+            Das Beispiel implementiert nur den zweiten Schritt der Authentifikation, der erste und dritte
+            Schritt sind die gleichen wie im ersten Beispiel.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.check">
-        <title>Immediate Check</title>
+        <title>Sofortige Prüfung</title>
         <para>
-            In some situations it is necissary to see if a user is already
-            logged-in into a trusted OpenID server without any interaction with the
-            user. The <code>Zend_OpenId_Consumer::check</code> method does precisely
-            that. It is executed with exactly the same arguments as
-            <code>Zend_OpenId_Consumer::login</code> but it doesn't show the user any
-            OpenID server pages. Therefore from the users point of view it is
-            transparent and it seems as if they never left the site. The third step
-            succeedes if user is already logged-in and trusted to the site otherwise
-            it will fail.
+            In einigen Situationen ist es notwendig zu sehen ob ein Benutzer bereits auf einem vertrauten
+            OpenID Server eingeloggt ist ohne einer Interaktion mit dem Benutzer. Die
+            <code>Zend_OpenId_Consumer::check</code> Methode führt genau das durch. Sie wird mit genau den
+            gleichen Argumenten wie <code>Zend_OpenId_Consumer::login</code> ausgeführt, aber Sie zeigt dem
+            Benutzer keine OpenID Serverseiten. Deswegen ist Sie aus Sicht des Benutzers transparent und es
+            scheint als ob er nie die Site verlassen hätte. Der dritte Schritt ist erfolgreich wenn der
+            Benutzer bereits angemeldet ist und der Site vertraut, andernfalls ist er erfolglos.
         </para>
 
         <example id="zend.openid.consumer.example-4">
-            <title>Immediate Check without Interaction</title>
+            <title>Sofortige Prüfung ohne Interaktion</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
-    die("OpenID login failed.");
+    die("OpenID Login fehlgeschlaten.");
 }]]>
             </programlisting>
         </example>
 
         <para>
-            The example below only implements the second step of authentication,
-            first and third steps are the same as in the first example.
+            Das Beispiel implementiert nur den zweiten Schritt der Authentifikation, der erste und dritte
+            Schritt sind die gleichen wie im ersten Beispiel.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.storage">
         <title>Zend_OpenId_Consumer_Storage</title>
         <para>
-            There are three steps to the OpenID authentication procedure, each
-            step is performed by a separate HTTP request. To store information between
-            requests <code>Zend_OpenId_Consumer</code> uses internal storage.
+            Es gibt drei Schritte beim Authentifizierungs Prozess von OpenID, und jeder wird durch eine
+            seperate HTTP Anfrage durchgeführt. Um die Informationen zwischen den Anfragen zu speichern
+            verwendet <code>Zend_OpenId_Consumer</code> einen internen Speicher.
         </para>
 
         <para>
-            Developers may not care about this storage because by default
-            <code>Zend_OpenId_Consumer</code> uses file-based storage under /tmp
-            similar to PHP sessions. However, this storage may be not suitable in all
-            cases. Some may want to store information in a database while others may
-            need to use common storage suitable for big web-farms. Fortunately,
-            developers may easily replace the default storage with their own. The only
-            thing to implement is it's own storage class as a child of
-            the <code>Zend_OpenId_Consumer_Storage</code> method and pass it as a first
-            argument to the <code>Zend_OpenId_Consumer</code> constructor.
+            Entwickler müssen auf diese Speicherung keine Acht geben weil <code>Zend_OpenId_Consumer</code>
+            standardmäßig einen dateibasierten Speicher unter /tmp verwendet, ähnlich wie PHP Sessions.
+            Trotzdem kann dieser Speicher nicht in allen Situationen richtig sein. Einige wollen Informationen
+            in einer Datenbank speichern, wärend andere einen üblichen Speicher für große Web-Farmen verwenden
+            wollen. Glücklicherweise können Entwickler den Standardspeicher sehr einfach mit Ihrem eigenen
+            tauschen. Das einzige was implementiert werden muß ist eine eigene Speicherklasse als Kind von
+            der <code>Zend_OpenId_Consumer_Storage</code> Methode und diese als erstes Argument an den
+            <code>Zend_OpenId_Consumer</code> Konsturktor zu übergeben.
         </para>
 
         <para>
-            The following example demonstrates a simple storage that uses
-            <code>Zend_Db</code> as the backend containing three groups of functions.
-            the first is for working with associations, the second is to cache
-            discovery information and the third is to check responce uniqueness. The
-            class is implemented in such a way that it can be easily used with
-            existing or new databases. If necessary, it will create database tables if
-            they don't exist.
+            Das folgende Beispiel demonstriert einen einfachen Speicher der <code>Zend_Db</code> als Backend
+            verwendet und drei Gruppen von Funktionen enthält. Der erste ist für die Arbeit mit Assoziationen,
+            der zweite dient dazu erkannte Informationen zu cachen und der dritte ist die Antwort eindeutig zu
+            prüfen. Die Klasse ist in einer Art implementiert das Sie einfach mit bestehenden oder neuen
+            Datenbaknen verwendet werden kann. Wenn das notwendig ist, wird eine Datenbanktabelle erstellt
+            wenn diese nicht existiert.
         </para>
 
         <example id="zend.openid.consumer.example-5">
-            <title>Databse Storage</title>
+            <title>Datenbank Speicher</title>
             <programlisting role="php"><![CDATA[<?php
 class DbStorage extends Zend_OpenId_Consumer_Storage
 {
@@ -432,14 +426,13 @@ $consumer = new Zend_OpenId_Consumer($storage);]]>
         </example>
 
         <para>
-            The example doesn't include OpenID authentication code itself, but
-            it is based on the same logic as in the previous or following
-            examples.
+            Das Beispiel enthält keinen OpenID Authentifikations Code, aber er basiert auf der gleichen Logik
+            wie die vorhergehenden oder folgenden Beispiele.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.sreg">
-        <title>Simple Registration Extension</title>
+        <title>Einfache Registrations Erweiterung</title>
         <para>
             In addition to authentication, the OpenID can be used for
             light-weight profile exchange. This feature is not covered by OpenID
@@ -687,14 +680,14 @@ if ((isset($_POST['openid_action']) &&
         </example>
 
         <para>
-            With <code>Zend_Auth</code> the end-user's identity is saved in the
-            session's data. It may be checked with <code>Zend_Auth::hasIdentity</code>
-            and <code>Zend_Auth::getIdentity</code>.
+            Mit <code>Zend_Auth</code> wird die Identität des End-Benutzes in den Session Daten gespeichert.
+            Sie kann mit <code>Zend_Auth::hasIdentity</code> und <code>Zend_Auth::getIdentity</code>
+            geprüft werden.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.mvc">
-        <title>Integration with Zend_Controller</title>
+        <title>IIntegration mit Zend_Controller</title>
         <para>
             Finally a couple of words about integration into
             Model-View-Controller applications. Such Zend Framework applications are
