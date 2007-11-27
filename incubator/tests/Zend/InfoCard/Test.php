@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_CardSpace
+ * @package    Zend_InfoCard
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id:$
@@ -29,7 +29,7 @@ require_once 'PHPUnit/Framework.php';
  * for more details
  *
  */
-class Zend_CardSpace_Test extends PHPUnit_Framework_TestCase
+class Zend_InfoCard_Test extends PHPUnit_Framework_TestCase
 {
 	public function testDemo() {
 		$this->assertTrue(true);

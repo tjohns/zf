@@ -34,4 +34,6 @@ require_once 'Zend/InfoCard/Xml/Security/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security_Transform_Exception extends Zend_InfoCard_Xml_Security_Exception { }
+class Zend_InfoCard_Xml_Security_Transform_Exception extends Zend_InfoCard_Xml_Security_Exception 
+{
+}

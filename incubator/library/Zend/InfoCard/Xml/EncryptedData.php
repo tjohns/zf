@@ -37,18 +37,26 @@ require_once 'Zend/InfoCard/Xml/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-final class Zend_InfoCard_Xml_EncryptedData {
-	
-	private function __construct() { }
+final class Zend_InfoCard_Xml_EncryptedData 
+{
+    /**
+     * Constructor (disabled)
+     * 
+     * @return void
+     */
+    private function __construct() 
+    {
+    }
 	
 	/**
 	 * Returns an instance of the class
 	 *
-	 * @throws Zend_InfoCard_Xml_Exception
 	 * @param string $xmlData The XML EncryptedData String
 	 * @return Zend_InfoCard_Xml_EncryptedData_Abstract
+     * @throws Zend_InfoCard_Xml_Exception
 	 */
-	static public function getInstance($xmlData) {
+    static public function getInstance($xmlData) 
+    {
 		
 		if($xmlData instanceof Zend_InfoCard_Xml_Element) {
 			$strXmlData = $xmlData->asXML();

@@ -44,8 +44,8 @@ require_once 'Zend/InfoCard/Adapter/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Adapter_Default implements Zend_InfoCard_Adapter_Interface {
-	
+class Zend_InfoCard_Adapter_Default implements Zend_InfoCard_Adapter_Interface 
+{
 	/**
 	 * Store the assertion (pass-thru does nothing)
 	 *
@@ -54,7 +54,8 @@ class Zend_InfoCard_Adapter_Default implements Zend_InfoCard_Adapter_Interface {
 	 * @param array $conditions An array of claims to store associated with the assertion
 	 * @return bool Always returns true (would return false on store failure)
 	 */
-	public function storeAssertion($assertionURI, $assertionID, $conditions) {
+	public function storeAssertion($assertionURI, $assertionID, $conditions) 
+    {
 		return true;
 	}
 	
@@ -66,7 +67,8 @@ class Zend_InfoCard_Adapter_Default implements Zend_InfoCard_Adapter_Interface {
 	 * @return mixed False if the assertion ID was not found for that URI, or an array of
 	 *               conditions associated with that assertion if found (always returns false)
 	 */
-	public function retrieveAssertion($assertionURI, $assertionID) {
+	public function retrieveAssertion($assertionURI, $assertionID) 
+    {
 		return false;
 	}
 	
@@ -77,7 +79,8 @@ class Zend_InfoCard_Adapter_Default implements Zend_InfoCard_Adapter_Interface {
 	 * @param string $assertionID The assertion ID to remove
 	 * @return bool Always returns true (false on removal failure)
 	 */
-	public function removeAssertion($assertionURI, $assertionID) {
+	public function removeAssertion($assertionURI, $assertionID) 
+    {
 		return null;
 	}
 }

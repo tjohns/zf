@@ -26,7 +26,6 @@
  */
 require_once 'Zend/InfoCard/Xml/Element.php';
 
-
 /**
  * Factory class to return a XML KeyInfo block based on input XML
  * 
@@ -37,18 +36,26 @@ require_once 'Zend/InfoCard/Xml/Element.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_KeyInfo {
-	
-	private function __construct() { }
+class Zend_InfoCard_Xml_KeyInfo 
+{
+    /**
+     * Constructor (disabled)
+     * 
+     * @return void
+     */
+    private function __construct() 
+    {
+    }
 	
 	/**
 	 * Returns an instance of KeyInfo object based on the input KeyInfo XML block
 	 *
-	 * @throws Zend_InfoCard_Xml_Exception
 	 * @param string $xmlData The KeyInfo XML Block
 	 * @return Zend_InfoCard_Xml_KeyInfo_Abstract
+     * @throws Zend_InfoCard_Xml_Exception
 	 */
-	static public function getInstance($xmlData) {
+    static public function getInstance($xmlData) 
+    {
 		
 		if($xmlData instanceof Zend_InfoCard_Xml_Element) {
 			$strXmlData = $xmlData->asXML();
@@ -77,5 +84,4 @@ class Zend_InfoCard_Xml_KeyInfo {
 		include_once 'Zend/InfoCard/Xml/KeyInfo/Default.php';
 		return simplexml_load_string($strXmlData, 'Zend_InfoCard_Xml_KeyInfo_Default');
 	}
-	
 }

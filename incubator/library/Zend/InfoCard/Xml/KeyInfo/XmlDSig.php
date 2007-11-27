@@ -44,16 +44,18 @@ require_once 'Zend/InfoCard/Xml/KeyInfo/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_KeyInfo_XmlDSig extends Zend_InfoCard_Xml_KeyInfo_Abstract
-                                         implements Zend_InfoCard_Xml_KeyInfo_Interface  {
-	
+class Zend_InfoCard_Xml_KeyInfo_XmlDSig 
+    extends Zend_InfoCard_Xml_KeyInfo_Abstract
+    implements Zend_InfoCard_Xml_KeyInfo_Interface  
+{
 	/**
 	 * Returns an instance of the EncryptedKey Data Block
 	 *
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return Zend_InfoCard_Xml_EncryptedKey
 	 */
-	public function getEncryptedKey() {
+	public function getEncryptedKey() 
+    {
 		$this->registerXPathNamespace('e', 'http://www.w3.org/2001/04/xmlenc#');
 		list($encryptedkey) = $this->xpath('//e:EncryptedKey');
 		
@@ -69,7 +71,8 @@ class Zend_InfoCard_Xml_KeyInfo_XmlDSig extends Zend_InfoCard_Xml_KeyInfo_Abstra
 	 *
 	 * @return Zend_InfoCard_Xml_KeyInfo_Default
 	 */
-	public function getKeyInfo() {
+	public function getKeyInfo() 
+    {
 		return $this->getEncryptedKey()->getKeyInfo();
 	}
 }

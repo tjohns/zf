@@ -46,9 +46,10 @@ require_once 'Zend/InfoCard/Xml/KeyInfo/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_EncryptedKey extends Zend_InfoCard_Xml_Element 
-                                      implements Zend_InfoCard_Xml_KeyInfo_Interface {
-
+class Zend_InfoCard_Xml_EncryptedKey 
+    extends Zend_InfoCard_Xml_Element 
+    implements Zend_InfoCard_Xml_KeyInfo_Interface 
+{
     /**
      * Return an instance of the object based on input XML Data
      *
@@ -56,7 +57,8 @@ class Zend_InfoCard_Xml_EncryptedKey extends Zend_InfoCard_Xml_Element
      * @param string $xmlData The EncryptedKey XML Block
      * @return Zend_InfoCard_Xml_EncryptedKey
      */
-	static public function getInstance($xmlData) {
+	static public function getInstance($xmlData) 
+    {
 		if($xmlData instanceof Zend_InfoCard_Xml_Element) {
 			$strXmlData = $xmlData->asXML();
 		} else if (is_string($xmlData)) {
@@ -80,7 +82,8 @@ class Zend_InfoCard_Xml_EncryptedKey extends Zend_InfoCard_Xml_Element
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return string the Encryption method algorithm URI
 	 */
-	public function getEncryptionMethod() {
+	public function getEncryptionMethod() 
+    {
 		
 		$this->registerXPathNamespace('e', 'http://www.w3.org/2001/04/xmlenc#');
 		list($encryption_method) = $this->xpath("//e:EncryptionMethod");	
@@ -105,7 +108,8 @@ class Zend_InfoCard_Xml_EncryptedKey extends Zend_InfoCard_Xml_Element
 	 * @throws Zend_InfoCard_Xml_Exception 
 	 * @return string the Digest Method Algorithm URI
 	 */
-	public function getDigestMethod() {
+	public function getDigestMethod() 
+    {
 		$this->registerXPathNamespace('e', 'http://www.w3.org/2001/04/xmlenc#');
 		list($encryption_method) = $this->xpath("//e:EncryptionMethod");	
 		
@@ -133,7 +137,8 @@ class Zend_InfoCard_Xml_EncryptedKey extends Zend_InfoCard_Xml_Element
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return Zend_InfoCard_Xml_KeyInfo_Abstract
 	 */
-	public function getKeyInfo() {
+	public function getKeyInfo() 
+    {
 		
 		if(isset($this->KeyInfo)) {
 			return Zend_InfoCard_Xml_KeyInfo::getInstance($this->KeyInfo);
@@ -148,7 +153,8 @@ class Zend_InfoCard_Xml_EncryptedKey extends Zend_InfoCard_Xml_Element
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return string The Value of the CipherValue block in base64 format
 	 */
-	public function getCipherValue() {
+	public function getCipherValue() 
+    {
 		
 		$this->registerXPathNamespace('e', 'http://www.w3.org/2001/04/xmlenc#');
 			

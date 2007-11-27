@@ -41,8 +41,9 @@ require_once 'Zend/InfoCard/Xml/Security/Transform/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security_Transform_XmlExcC14N implements Zend_InfoCard_Xml_Security_Transform_Interface {
-	
+class Zend_InfoCard_Xml_Security_Transform_XmlExcC14N 
+    implements Zend_InfoCard_Xml_Security_Transform_Interface 
+{
 	/**
 	 * Transform the input XML based on C14n XML Exclusive Canonicalization rules
 	 *
@@ -50,8 +51,8 @@ class Zend_InfoCard_Xml_Security_Transform_XmlExcC14N implements Zend_InfoCard_X
 	 * @param string $strXMLData The input XML
 	 * @return string The output XML
 	 */
-	public function transform($strXMLData) {
-		
+    public function transform($strXMLData) 
+    {
 		$dom = new DOMDocument();
 		$dom->loadXML($strXMLData);
 

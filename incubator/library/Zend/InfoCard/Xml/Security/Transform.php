@@ -37,8 +37,8 @@ require_once 'Zend/Loader.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security_Transform {
-	
+class Zend_InfoCard_Xml_Security_Transform 
+{
 	/**
 	 * A list of transforms to apply
 	 *
@@ -53,7 +53,8 @@ class Zend_InfoCard_Xml_Security_Transform {
 	 * @param string $uri The transform URI
 	 * @return string The transform implementation class name
 	 */
-	protected function findClassbyURI($uri) {
+	protected function _findClassbyURI($uri) 
+    {
 		switch($uri) {
 			case 'http://www.w3.org/2000/09/xmldsig#enveloped-signature':
 				return 'Zend_InfoCard_Xml_Security_Transform_EnvelopedSignature';
@@ -70,9 +71,9 @@ class Zend_InfoCard_Xml_Security_Transform {
 	 * @param string $uri The Transform URI
 	 * @return Zend_InfoCard_Xml_Security_Transform
 	 */
-	public function addTransform($uri) {
-		
-		$class = $this->findClassbyURI($uri);
+	public function addTransform($uri) 
+    {
+		$class = $this->_findClassbyURI($uri);
 		
 		$this->_transformList[] = array('uri' => $uri,
 		                                'class' => $class);
@@ -84,7 +85,8 @@ class Zend_InfoCard_Xml_Security_Transform {
 	 *
 	 * @return array The list of transforms
 	 */
-	public function getTransformList() {
+	public function getTransformList() 
+    {
 		return $this->_transformList;
 	}
 	
@@ -94,7 +96,8 @@ class Zend_InfoCard_Xml_Security_Transform {
 	 * @param string $strXmlDocument The input XML
 	 * @return string The XML after the transformations have been applied
 	 */
-	public function applyTransforms($strXmlDocument) {
+	public function applyTransforms($strXmlDocument) 
+    {
 		foreach($this->_transformList as $transform) {
 			Zend_Loader::loadClass($transform['class']);			
 			

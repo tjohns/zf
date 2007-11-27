@@ -36,8 +36,8 @@ require_once 'Zend/InfoCard/Cipher/PKI/Adapter/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Cipher_PKI_RSA_Interface {
-    
+interface Zend_InfoCard_Cipher_PKI_RSA_Interface 
+{
 	/**
      * Decrypts RSA encrypted data using the given private key
      *

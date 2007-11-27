@@ -59,16 +59,17 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 *
 	 * @var Zend_InfoCard
 	 */
-	protected $_InfoCard;
+	protected $_infoCard;
 	
 	/**
 	 * Constructor
 	 *
 	 * @param string $strXmlDocument The XML Token provided by the client
 	 */
-	public function __construct($strXmlDocument) {
+	public function __construct($strXmlDocument) 
+    {
 		$this->_xmlToken = $strXmlDocument;
-		$this->_InfoCard = new Zend_InfoCard();
+		$this->_infoCard = new Zend_InfoCard();
 	}
 	
 	/**
@@ -77,8 +78,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @param Zend_InfoCard_Adapter_Interface $a
 	 * @return Zend_InfoCard_Auth_Adapter
 	 */
-	public function setAdapter(Zend_InfoCard_Adapter_Interface $a) {
-		$this->_InfoCard->setAdapter($a);
+	public function setAdapter(Zend_InfoCard_Adapter_Interface $a) 
+    {
+		$this->_infoCard->setAdapter($a);
 		return $this;
 	}
 	
@@ -87,8 +89,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 *
 	 * @return Zend_InfoCard_Adapter_Interface
 	 */
-	public function getAdapter() {
-		return $this->_InfoCard->getAdapter();
+	public function getAdapter() 
+    {
+		return $this->_infoCard->getAdapter();
 	}
 	
 	/**
@@ -96,8 +99,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 *
 	 * @return Zend_InfoCard_Cipher_PKI_Interface
 	 */
-	public function getPKCipherObject() {
-		return $this->_InfoCard->getPKCipherObject();
+	public function getPKCipherObject() 
+    {
+		return $this->_infoCard->getPKCipherObject();
 	}
 	
 	/**
@@ -106,8 +110,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @param Zend_InfoCard_Cipher_PKI_Interface $cipherObj
 	 * @return Zend_InfoCard_Auth_Adapter
 	 */
-	public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj) {
-		$this->_InfoCard->setPKICipherObject($cipherObj);
+	public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj) 
+    {
+		$this->_infoCard->setPKICipherObject($cipherObj);
 		return $this;
 	}
 	
@@ -116,8 +121,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 *
 	 * @return Zend_InfoCard_Cipher_Symmetric_Interface
 	 */
-	public function getSymCipherObject() {
-		return $this->_InfoCard->getSymCipherObject();
+	public function getSymCipherObject() 
+    {
+		return $this->_infoCard->getSymCipherObject();
 	}
 	
 	/**
@@ -126,8 +132,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @param Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj
 	 * @return Zend_InfoCard_Auth_Adapter
 	 */
-	public function setSymCipherObject(Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj) {
-		$this->_InfoCard->setSymCipherObject($cipherObj);
+	public function setSymCipherObject(Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj) 
+    {
+		$this->_infoCard->setSymCipherObject($cipherObj);
 		return $this;
 	}	
 	
@@ -138,8 +145,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @param string $key_id The Certificate Key ID returned from adding the certificate pair 
 	 * @return Zend_InfoCard_Auth_Adapter
 	 */
-	public function removeCertificatePair($key_id) {
-		$this->_InfoCard->removeCertificatePair($key_id);
+	public function removeCertificatePair($key_id) 
+    {
+		$this->_infoCard->removeCertificatePair($key_id);
 		return $this;
 	}
 	
@@ -153,8 +161,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @param string $password (optional) The password for the private key file if necessary
 	 * @return string A key ID representing this key pair in the component
 	 */	
-	public function addCertificatePair($private_key_file, $public_key_file, $type = Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, $password = null) {
-		return $this->_InfoCard->addCertificatePair($private_key_file, $public_key_file, $type, $password);
+	public function addCertificatePair($private_key_file, $public_key_file, $type = Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, $password = null) 
+    {
+		return $this->_infoCard->addCertificatePair($private_key_file, $public_key_file, $type, $password);
 	}
 
 	/**
@@ -165,8 +174,9 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @return array An array containing the path to the private/public key files, 
 	 *               the type URI and the password if provided
 	 */	
-	public function getCertificatePair($key_id) {
-		return $this->_InfoCard->getCertificatePair($key_id);
+	public function getCertificatePair($key_id) 
+    {
+		return $this->_infoCard->getCertificatePair($key_id);
 	}
 	
 	/**
@@ -175,7 +185,8 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 * @param string $strXmlToken The XML token to process
 	 * @return Zend_InfoCard_Auth_Adapter
 	 */
-	public function setXmlToken($strXmlToken) {
+	public function setXmlToken($strXmlToken) 
+    {
 		$this->_xmlToken = $strXmlToken;
 		return $this;
 	}
@@ -185,7 +196,8 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 *
 	 * @return string The XML token to be processed
 	 */
-	public function getXmlToken() {
+	public function getXmlToken() 
+    {
 		return $this->_xmlToken;
 	}
 	
@@ -194,10 +206,11 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 	 *
 	 * @return Zend_Auth_Result The result of the authentication
 	 */
-	public function authenticate() {
+	public function authenticate() 
+    {
 
 		try {
-			$claims = $this->_InfoCard->process($this->getXmlToken());
+			$claims = $this->_infoCard->process($this->getXmlToken());
 		} catch(Exception $e) {
 			return new Zend_Auth_Result(Zend_Auth_Result::FAILURE , null, array('Exception Thrown', 
 			                                                                    $e->getMessage(),
@@ -207,25 +220,42 @@ class Zend_InfoCard_Auth_Adapter implements Zend_Auth_Adapter_Interface
 		
 		if(!$claims->isValid()) {
 			switch($claims->getCode()) {
-				case Zend_InfoCard_Claims::RESULT_PROCESSING_FAILURE:
-					return new Zend_Auth_Result(Zend_Auth_Result::FAILURE,
-					                            $claims, array('Processing Failure',
-					                                         $claims->getErrorMsg()));
+				case Zend_infoCard_Claims::RESULT_PROCESSING_FAILURE:
+                    return new Zend_Auth_Result(
+                        Zend_Auth_Result::FAILURE,
+                        $claims, 
+                        array(
+                            'Processing Failure',
+                            $claims->getErrorMsg()
+                        )
+                    );
 					break;
 				case Zend_InfoCard_Claims::RESULT_VALIDATION_FAILURE:
-					return new Zend_Auth_Result(Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID,
-					                            $claims, array('Validation Failure',
-					                                            $claims->getErrorMsg()));
+                    return new Zend_Auth_Result(
+                        Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID,
+                        $claims, 
+                        array(
+                            'Validation Failure',
+                            $claims->getErrorMsg()
+                        )
+                    );
 					break;
 				default:
-					return new Zend_Auth_Result(Zend_Auth_Result::FAILURE,
-					                            $claims, array('Unknown Failure',
-					                                           $claims->getErrorMsg()));
+                    return new Zend_Auth_Result(
+                        Zend_Auth_Result::FAILURE,
+                        $claims, 
+                        array(
+                            'Unknown Failure',
+                            $claims->getErrorMsg()
+                        )
+                    );
 					break;
 			}
 		} 
 		
-		return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS,
-		                            $claims);
+        return new Zend_Auth_Result(
+            Zend_Auth_Result::SUCCESS,
+            $claims
+        );
 	}
 }

@@ -41,8 +41,9 @@ require_once 'Zend/InfoCard/Xml/Security/Transform/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security_Transform_EnvelopedSignature implements Zend_InfoCard_Xml_Security_Transform_Interface {
-	
+class Zend_InfoCard_Xml_Security_Transform_EnvelopedSignature 
+    implements Zend_InfoCard_Xml_Security_Transform_Interface 
+{
 	/**
 	 * Transforms the XML Document according to the EnvelopedSignature Transform
 	 *
@@ -50,8 +51,8 @@ class Zend_InfoCard_Xml_Security_Transform_EnvelopedSignature implements Zend_In
 	 * @param string $strXMLData The input XML data
 	 * @return string the transformed XML data
 	 */
-	public function transform($strXMLData) {
-		
+    public function transform($strXMLData) 
+    {
 		$sxe = simplexml_load_string($strXMLData);
 		
 		if(!$sxe->Signature) {

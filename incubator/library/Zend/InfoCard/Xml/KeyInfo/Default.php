@@ -43,16 +43,16 @@ require_once 'Zend/InfoCard/Xml/SecurityTokenReference.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_KeyInfo_Default extends Zend_InfoCard_Xml_KeyInfo_Abstract {
-	
+class Zend_InfoCard_Xml_KeyInfo_Default extends Zend_InfoCard_Xml_KeyInfo_Abstract 
+{
 	/**
 	 * Returns the object representation of the SecurityTokenReference block
 	 *
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return Zend_InfoCard_Xml_SecurityTokenReference
 	 */
-	public function getSecurityTokenReference() {
-		
+    public function getSecurityTokenReference() 
+    {
 		$this->registerXPathNamespace('o', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd');
 		
 		list($sectokenref) = $this->xpath('//o:SecurityTokenReference');

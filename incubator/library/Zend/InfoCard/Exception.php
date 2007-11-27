@@ -21,15 +21,13 @@
  * @author     John Coggeshall <john@zend.com>
  */
 
-if(class_exists("Zend_Exception")) {
-	
-	abstract class Zend_InfoCard_Exception_Abstract extends Zend_Exception {
-		
+if (class_exists("Zend_Exception")) {
+    abstract class Zend_InfoCard_Exception_Abstract extends Zend_Exception 
+    {
 	}
-	
 } else {
-	abstract class Zend_InfoCard_Exception_Abstract extends Exception {
-		
+    abstract class Zend_InfoCard_Exception_Abstract extends Exception 
+    {
 	}
 }
 
@@ -42,6 +40,6 @@ if(class_exists("Zend_Exception")) {
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Exception extends Zend_InfoCard_Exception_Abstract {
-	
+class Zend_InfoCard_Exception extends Zend_InfoCard_Exception_Abstract 
+{
 }

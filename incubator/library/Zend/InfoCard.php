@@ -63,8 +63,8 @@ require_once 'Zend/InfoCard/Claims.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard {
-	
+class Zend_InfoCard 
+{
 	/**
 	 * URI for XML Digital Signature SHA1 Digests
 	 */
@@ -106,7 +106,8 @@ class Zend_InfoCard {
 	 *
 	 * @throws Zend_InfoCard_Exception
 	 */
-	public function __construct() {
+	public function __construct() 
+    {
 		$this->_keyPairs = array();
 		
 		if(!extension_loaded('mcrypt')) {
@@ -125,7 +126,8 @@ class Zend_InfoCard {
 	 * @param Zend_InfoCard_Adapter_Interface $a The Adapter instance
 	 * @return Zend_InfoCard The instnace
 	 */
-	public function setAdapter(Zend_InfoCard_Adapter_Interface $a) {
+	public function setAdapter(Zend_InfoCard_Adapter_Interface $a) 
+    {
 		$this->_adapter = $a;
 		return $this;
 	}
@@ -136,7 +138,8 @@ class Zend_InfoCard {
 	 *
 	 * @return Zend_InfoCard_Adapter_Interface The Adapter instance
 	 */
-	public function getAdapter() {
+	public function getAdapter() 
+    {
 		if(is_null($this->_adapter)) {
 			Zend_Loader::loadClass('Zend_InfoCard_Adapter_Default');
 			$this->setAdapter(new Zend_InfoCard_Adapter_Default());
@@ -150,7 +153,8 @@ class Zend_InfoCard {
 	 *
 	 * @return Zend_InfoCard_Cipher_PKI_Interface
 	 */
-	public function getPKCipherObject() {
+	public function getPKCipherObject() 
+    {
 		return $this->_pkCipherObj;
 	}
 	
@@ -160,7 +164,8 @@ class Zend_InfoCard {
 	 * @param Zend_InfoCard_Cipher_PKI_Interface $cipherObj
 	 * @return Zend_InfoCard
 	 */
-	public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj) {
+	public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj) 
+    {
 		$this->_pkCipherObj = $cipherObj;	
 		return $this;
 	}
@@ -170,7 +175,8 @@ class Zend_InfoCard {
 	 *
 	 * @return Zend_InfoCard_Cipher_Symmetric_Interface
 	 */
-	public function getSymCipherObject() {
+	public function getSymCipherObject() 
+    {
 		return $this->_symCipherObj;
 	}
 	
@@ -180,7 +186,8 @@ class Zend_InfoCard {
 	 * @param Zend_InfoCard_Cipher_Symmetric_Interface $cipherObj
 	 * @return Zend_InfoCard
 	 */
-	public function setSymCipherObject($cipherObj) {
+	public function setSymCipherObject($cipherObj) 
+    {
 		$this->_symCipherObj = $cipherObj;
 		return $this;
 	}
@@ -192,7 +199,8 @@ class Zend_InfoCard {
 	 * @param string $key_id The Certificate Key ID returned from adding the certificate pair 
 	 * @return Zend_InfoCard
 	 */
-	public function removeCertificatePair($key_id) {
+	public function removeCertificatePair($key_id) 
+    {
 		
 		if(!key_exists($key_id, $this->_keyPairs)) {
 			throw new Zend_InfoCard_Exception("Attempted to remove unknown key id: $key_id");
@@ -212,7 +220,8 @@ class Zend_InfoCard {
 	 * @param string $password (optional) The password for the private key file if necessary
 	 * @return string A key ID representing this key pair in the component
 	 */
-	public function addCertificatePair($private_key_file, $public_key_file, $type = Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, $password = null) {
+	public function addCertificatePair($private_key_file, $public_key_file, $type = Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, $password = null) 
+    {
 		if(!file_exists($private_key_file) ||
 		   !file_exists($public_key_file)) {
 		   	throw new Zend_InfoCard_Exception("Could not locate the public and private certificate pair files: $private_key_file, $public_key_file");
@@ -257,7 +266,8 @@ class Zend_InfoCard {
 	 * @return array An array containing the path to the private/public key files, 
 	 *               the type URI and the password if provided
 	 */
-	public function getCertificatePair($key_id) {
+	public function getCertificatePair($key_id) 
+    {
 		if(key_exists($key_id, $this->_keyPairs)) {
 			return $this->_keyPairs[$key_id];
 		} 
@@ -274,7 +284,8 @@ class Zend_InfoCard {
 	 * @param string $digestMethod The URI of the digest method to use (default SHA1)
 	 * @return string The digest value in binary format 
 	 */
-	protected function getPublicKeyDigest($key_id, $digestMethod = self::DIGEST_SHA1) {
+	protected function _getPublicKeyDigest($key_id, $digestMethod = self::DIGEST_SHA1) 
+    {
 		$certificatePair = $this->getCertificatePair($key_id);		
 		
 		$temp = file($certificatePair['public']);
@@ -300,11 +311,12 @@ class Zend_InfoCard {
 	 * @param string $digestMethod The URI of the digest method used to calculate the digest
 	 * @return mixed The Key ID of the matching certificate pair or false if not found
 	 */
-	protected function findCertifiatePairByDigest($digest, $digestMethod = self::DIGEST_SHA1) {
+	protected function _findCertifiatePairByDigest($digest, $digestMethod = self::DIGEST_SHA1) 
+    {
 		
 		foreach($this->_keyPairs as $key_id => $certificate_data) {
 
-			$cert_digest = $this->getPublicKeyDigest($key_id, $digestMethod);
+			$cert_digest = $this->_getPublicKeyDigest($key_id, $digestMethod);
 		
 			if($cert_digest == $digest) {
 				return $key_id;
@@ -321,7 +333,8 @@ class Zend_InfoCard {
 	 * @param string $strXmlToken The EncryptedData XML block
 	 * @return string The XML of the Signed Token inside of the EncryptedData block
 	 */
-	protected function extractSignedToken($strXmlToken) {
+	protected function _extractSignedToken($strXmlToken) 
+    {
 		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($strXmlToken);
 		
 		// Determine the Encryption Method used to encrypt the token
@@ -355,7 +368,7 @@ class Zend_InfoCard {
 		
 		$securityTokenRef = $encryptedKey->getKeyInfo()->getSecurityTokenReference();
 		
-		$key_id = $this->findCertifiatePairByDigest($securityTokenRef->getKeyReference());
+		$key_id = $this->_findCertifiatePairByDigest($securityTokenRef->getKeyReference());
 		
 		if(!$key_id) {
 			throw new Zend_InfoCard_Exception("Unable to find key pair used to encrypt symmetric InfoCard Key");
@@ -387,12 +400,13 @@ class Zend_InfoCard {
 	 * @param string $strXmlToken The XML token sent to the server from the client
 	 * @return Zend_Infocard_Claims The Claims object containing the claims, or any errors which occurred
 	 */
-	public function process($strXmlToken) {
+	public function process($strXmlToken) 
+    {
 		
 		$retval = new Zend_InfoCard_Claims();
 		
 		try {
-			$signedAssertionsXml = $this->extractSignedToken($strXmlToken);
+			$signedAssertionsXml = $this->_extractSignedToken($strXmlToken);
 		} catch(Zend_InfoCard_Exception $e) {
 			$retval->setError('Failed to extract assertion document');
 			$retval->setCode(Zend_InfoCard_Claims::RESULT_PROCESSING_FAILURE);

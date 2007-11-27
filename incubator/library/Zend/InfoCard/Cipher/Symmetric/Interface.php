@@ -29,6 +29,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Cipher_Symmetric_Interface {
-	
+interface Zend_InfoCard_Cipher_Symmetric_Interface 
+{
 }

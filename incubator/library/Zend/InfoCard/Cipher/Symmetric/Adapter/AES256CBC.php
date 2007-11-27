@@ -46,9 +46,10 @@ require_once 'Zend/InfoCard/Cipher/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC extends Zend_InfoCard_Cipher_Symmetric_Adapter_Abstract
-                                                         implements Zend_InfoCard_Cipher_Symmetric_AES256CBC_Interface {
-	
+class Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC 
+    extends Zend_InfoCard_Cipher_Symmetric_Adapter_Abstract
+    implements Zend_InfoCard_Cipher_Symmetric_AES256CBC_Interface 
+{
 	/**
 	 * The MCRYPT Cipher constant for this encryption
 	 */
@@ -69,7 +70,8 @@ class Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC extends Zend_InfoCard_Cip
 	 * 
 	 * @throws Zend_InfoCard_Cipher_Exception
 	 */
-	public function __construct() {
+	public function __construct() 
+    {
 		if(!extension_loaded('mcrypt')) {
 			throw new Zend_InfoCard_Cipher_Exception("Use of the AES256CBC Cipher requires the mcrypt extension");
 		}
@@ -84,7 +86,8 @@ class Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC extends Zend_InfoCard_Cip
 	 * @param integer $iv_length The IV length to use
 	 * @return string the decrypted data with any terminating nulls removed
 	 */
-	public function decrypt($encryptedData, $decryptionKey, $iv_length = null) {
+	public function decrypt($encryptedData, $decryptionKey, $iv_length = null) 
+    {
 		
 		$iv_length = is_null($iv_length) ? self::IV_LENGTH : $iv_length;
 		
@@ -107,6 +110,4 @@ class Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC extends Zend_InfoCard_Cip
 		
 		return rtrim($decrypted, "\0");
 	}
-	
 }
-

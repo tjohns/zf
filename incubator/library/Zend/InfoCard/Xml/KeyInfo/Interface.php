@@ -29,8 +29,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Xml_KeyInfo_Interface {
-	
+interface Zend_InfoCard_Xml_KeyInfo_Interface 
+{
 	/**
 	 * Return an object representing a KeyInfo data type
 	 *

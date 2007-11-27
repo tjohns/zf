@@ -34,7 +34,7 @@ require_once 'Zend/InfoCard/Cipher/Symmetric/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-abstract class Zend_InfoCard_Cipher_Symmetric_Adapter_Abstract implements Zend_InfoCard_Cipher_Symmetric_Interface {
-	
-	
+abstract class Zend_InfoCard_Cipher_Symmetric_Adapter_Abstract 
+    implements Zend_InfoCard_Cipher_Symmetric_Interface 
+{
 }

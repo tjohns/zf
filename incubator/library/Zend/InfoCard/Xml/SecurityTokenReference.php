@@ -36,8 +36,8 @@ require_once 'Zend/InfoCard/Xml/Element.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element {
-
+class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element 
+{
 	/**
 	 * Base64 Binary Encoding URI
 	 */
@@ -46,11 +46,12 @@ class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element
 	/**
 	 * Return an instance of the object based on the input XML
 	 *
-	 * @throws Zend_InfoCard_Xml_Exception
 	 * @param string $xmlData The SecurityTokenReference XML Block
 	 * @return Zend_InfoCard_Xml_SecurityTokenReference
+	 * @throws Zend_InfoCard_Xml_Exception
 	 */
-	static public function getInstance($xmlData) {
+	static public function getInstance($xmlData) 
+    {
 		if($xmlData instanceof Zend_InfoCard_Xml_Element) {
 			$strXmlData = $xmlData->asXML();
 		} else if (is_string($xmlData)) {
@@ -71,10 +72,11 @@ class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element
 	/**
 	 * Return the Key Identifier XML Object
 	 *
-	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return Zend_InfoCard_Xml_Element
+	 * @throws Zend_InfoCard_Xml_Exception
 	 */
-	protected function getKeyIdentifier() {
+	protected function _getKeyIdentifier() 
+    {
 		$this->registerXPathNamespace('o', 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd');
 		list($keyident) = $this->xpath('//o:KeyIdentifier');
 		
@@ -88,12 +90,13 @@ class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element
 	/**
 	 * Return the Key URI identifying the thumbprint type used
 	 * 
-	 * @throws  Zend_InfoCard_Xml_Exception
 	 * @return string The thumbprint type URI
+	 * @throws  Zend_InfoCard_Xml_Exception
 	 */
-	public function getKeyThumbprintType() {
+	public function getKeyThumbprintType() 
+    {
 
-		$keyident = $this->getKeyIdentifier();
+		$keyident = $this->_getKeyIdentifier();
 		
 		$dom = self::convertToDOM($keyident);
 
@@ -108,12 +111,13 @@ class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element
 	/**
 	 * Return the thumbprint encoding type used as a URI
 	 *
-	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return string the URI of the thumbprint encoding used
+	 * @throws Zend_InfoCard_Xml_Exception
 	 */
-	public function getKeyThumbprintEncodingType() {
+	public function getKeyThumbprintEncodingType() 
+    {
 		
-		$keyident = $this->getKeyIdentifier();
+		$keyident = $this->_getKeyIdentifier();
 		
 		$dom = self::convertToDOM($keyident);
 		
@@ -127,12 +131,13 @@ class Zend_InfoCard_Xml_SecurityTokenReference extends Zend_InfoCard_Xml_Element
 	/**
 	 * Get the key reference data used to identify the public key
 	 *
-	 * @throws Zend_InfoCard_Xml_Exception
 	 * @param bool $decode if true, will return a decoded version of the key
 	 * @return string the key reference thumbprint, either in binary or encoded form
+	 * @throws Zend_InfoCard_Xml_Exception
 	 */
-	public function getKeyReference($decode = true) {
-		$keyIdentifier = $this->getKeyIdentifier();
+	public function getKeyReference($decode = true) 
+    {
+		$keyIdentifier = $this->_getKeyIdentifier();
 		
 		$dom = self::convertToDOM($keyIdentifier);
 		$encoded = $dom->nodeValue;

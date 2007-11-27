@@ -40,8 +40,8 @@ require_once 'Zend/InfoCard/Xml/Security/Transform.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Security {
-
+class Zend_InfoCard_Xml_Security 
+{
 	/**
 	 * ASN.1 type INTEGER class
 	 */
@@ -56,8 +56,6 @@ class Zend_InfoCard_Xml_Security {
 	 * ASN.1 type SEQUENCE class
 	 */
 	const ASN_TYPE_SEQUENCE = 0x30;
-	
-	private function __construct() { }
 	
 	/**
 	 * The URI for Canonical Method C14N Exclusive
@@ -78,16 +76,25 @@ class Zend_InfoCard_Xml_Security {
 	 * The Identifier for RSA Keys
 	 */
 	const RSA_KEY_IDENTIFIER = '300D06092A864886F70D0101010500';
+
+    /**
+     * Constructor  (disabled)
+     * 
+     * @return void
+     */
+    private function __construct() 
+    {
+    }
 	
 	/**
 	 * Validates the signature of a provided XML block
 	 *
-	 * @throws Zend_InfoCard_Xml_Security_Exception
-	 * @param string $strXMLInput An XML block containing a Signature
+	 * @param  string $strXMLInput An XML block containing a Signature
 	 * @return bool True if the signature validated, false otherwise
+     * @throws Zend_InfoCard_Xml_Security_Exception
 	 */
-	static public function validateXMLSignature($strXMLInput) {
-		
+	static public function validateXMLSignature($strXMLInput) 
+    {
 		if(!extension_loaded('openssl')) {
 			throw new Zend_InfoCard_Xml_Security_Exception("You must have the openssl extension installed to use this class");
 		}
@@ -185,7 +192,7 @@ class Zend_InfoCard_Xml_Security {
 				$modulus = base64_decode((string)$sxe->Signature->KeyInfo->KeyValue->RSAKeyValue->Modulus);
 				$exponent = base64_decode((string)$sxe->Signature->KeyInfo->KeyValue->RSAKeyValue->Exponent);
 				
-				$pem_public_key = self::getPublicKeyFromModExp($modulus, $exponent);
+				$pem_public_key = self::_getPublicKeyFromModExp($modulus, $exponent);
 			    
 				print "<PRE>$pem_public_key</PRE>";
 				
@@ -221,107 +228,120 @@ class Zend_InfoCard_Xml_Security {
 	 * @param string $exponent The RSA exponent in binary format
 	 * @return string The PEM encoded version of the key
 	 */
-	static protected function getPublicKeyFromModExp( $modulus, $exponent ) {
-	        //Encode modulus into ASN.1 INTEGER type
-	        $modulusInteger  = self::encodeInteger( $modulus );
-	
-	        //Encode exponent into ASN.1 INTEGER type
-	        $exponentInteger = self::encodeInteger( $exponent );
-	
-	        //Encode modulus/exponent into ASN.1 SEQUENCE type
-	        $modExpSequence  = self::encodeSequence( $modulusInteger . $exponentInteger );
-	
-	        //Encode the modulus/exponent sequence into ASN.1 BIT STRING type
-	        $modExpBitString = self::encodeBitString( $modExpSequence );
-	
-	        //Pack the RSA_KEY_IDENTIFIER value into a binary string
-	        //format: Hex string, high nibble first
-	        $binRsaKeyIdentifier = pack( "H*", self::RSA_KEY_IDENTIFIER );
-	
-	        //Encode RSAPublicKey SEQUENCE with the
-	        //key identifier and encoded bitstring
-	        $publicKeySequence = self::encodeSequence( $binRsaKeyIdentifier . $modExpBitString );
-	
-	        //Base64 encode the string;
-	        $publicKeyInfoBase64 = base64_encode( $publicKeySequence );
-	
-	        //Split into 64 char chunks
-	        $lenPublicKeyInfo = strlen( $publicKeyInfoBase64 );
-	        $lines = $lenPublicKeyInfo/64;
-	        $tmpPublicKeyString = '';
-	        for ($i=0;$i<$lines;$i++) {
-	                $tmpPublicKeyString .= substr( $publicKeyInfoBase64, $i * 64, 64 ) . "\n";
-	        }
-	        //Enclose encoded public key string x.509 within public key tags
-	        $publicKeyString = "-----BEGIN PUBLIC KEY-----\n";
-	        $publicKeyString .= $tmpPublicKeyString;
-	        $publicKeyString .= "-----END PUBLIC KEY-----\n";
-	
-	        return $publicKeyString;
+	static protected function _getPublicKeyFromModExp($modulus, $exponent) 
+    {
+        //Encode modulus into ASN.1 INTEGER type
+        $modulusInteger  = self::_encodeInteger( $modulus );
+
+        //Encode exponent into ASN.1 INTEGER type
+        $exponentInteger = self::_encodeInteger( $exponent );
+
+        //Encode modulus/exponent into ASN.1 SEQUENCE type
+        $modExpSequence  = self::_encodeSequence( $modulusInteger . $exponentInteger );
+
+        //Encode the modulus/exponent sequence into ASN.1 BIT STRING type
+        $modExpBitString = self::_encodeBitString( $modExpSequence );
+
+        //Pack the RSA_KEY_IDENTIFIER value into a binary string
+        //format: Hex string, high nibble first
+        $binRsaKeyIdentifier = pack( "H*", self::RSA_KEY_IDENTIFIER );
+
+        //Encode RSAPublicKey SEQUENCE with the
+        //key identifier and encoded bitstring
+        $publicKeySequence = self::_encodeSequence( $binRsaKeyIdentifier . $modExpBitString );
+
+        //Base64 encode the string;
+        $publicKeyInfoBase64 = base64_encode( $publicKeySequence );
+
+        //Split into 64 char chunks
+        $lenPublicKeyInfo = strlen( $publicKeyInfoBase64 );
+        $lines = $lenPublicKeyInfo/64;
+        $tmpPublicKeyString = '';
+        for ($i=0;$i<$lines;$i++) {
+                $tmpPublicKeyString .= substr( $publicKeyInfoBase64, $i * 64, 64 ) . "\n";
+        }
+        //Enclose encoded public key string x.509 within public key tags
+        $publicKeyString = "-----BEGIN PUBLIC KEY-----\n";
+        $publicKeyString .= $tmpPublicKeyString;
+        $publicKeyString .= "-----END PUBLIC KEY-----\n";
+
+        return $publicKeyString;
 	}
 	
 	/**
-	* Encodes an ASN.1 value of the type INTEGER
-	*/
-	static protected function encodeInteger( $inContent ) {
-	        $encodedIntegerVal = '';
-	        //Content class/type
-	        $type = self::ASN_TYPE_INTEGER;
-	        //$type = 0x02;
-	        //INTEGER is represented as a primitive
-	        //If value of first octet > 127, then we require another octet
-	        //so we add a leading 0 ..
-	        if ( ord($inContent > 127 )) {
-	                $inContent = chr(0) . $inContent;
-	        }
-	
-	        //Length of content
-	        $length = strlen( $inContent );
-	
-	        //Encode Bit String
-	        $encodedIntegerVal = sprintf( "%c%c%s", $type, $length, $inContent );
-	        return $encodedIntegerVal;
+	 * Encodes an ASN.1 value of the type INTEGER
+     *
+     * @param  string $inContent
+     * @return string
+	 */
+	static protected function _encodeInteger($inContent) 
+    {
+        $encodedIntegerVal = '';
+        //Content class/type
+        $type = self::ASN_TYPE_INTEGER;
+        //$type = 0x02;
+        //INTEGER is represented as a primitive
+        //If value of first octet > 127, then we require another octet
+        //so we add a leading 0 ..
+        if ( ord($inContent > 127 )) {
+                $inContent = chr(0) . $inContent;
+        }
+
+        //Length of content
+        $length = strlen( $inContent );
+
+        //Encode Bit String
+        $encodedIntegerVal = sprintf( "%c%c%s", $type, $length, $inContent );
+        return $encodedIntegerVal;
 	}
 	
 	/**
-	* Encodes an ASN.1 value of the type BIT STRING
-	*/
-	static protected function encodeBitString( $inContent ) {
-	        $encodedBitString = '';
-	        //Content class/type
-	        $type = self::ASN_TYPE_BITSTRING;
-	        //Bit string is represented as a primitive
-	        //Add leading 0
-	        $inContent = chr(0) . $inContent;
-	
-	        //Length of content
-	        $length = strlen( $inContent );
-	
-	        //Encode Bit String
-	        $encodedBitString = sprintf( "%c%c%s", $type, $length, $inContent );
-	
-	        return $encodedBitString;
+	 * Encodes an ASN.1 value of the type BIT STRING
+     *
+     * @param  string $inContent
+     * @return string
+	 */
+	static protected function _encodeBitString($inContent) 
+    {
+        $encodedBitString = '';
+        //Content class/type
+        $type = self::ASN_TYPE_BITSTRING;
+        //Bit string is represented as a primitive
+        //Add leading 0
+        $inContent = chr(0) . $inContent;
+
+        //Length of content
+        $length = strlen( $inContent );
+
+        //Encode Bit String
+        $encodedBitString = sprintf("%c%c%s", $type, $length, $inContent);
+
+        return $encodedBitString;
 	}
 	
 	/**
-	* Encodes an ASN.1 value of the type SEQUENCE
-	*/
-	static protected function encodeSequence( $inContent ) {
-	//Note: SEQUENCE value has to be constructed / not primitive.
-	// We are doing this in the calling function
-	//so the content octet already has been encoded for
-	//the individual types constituting the values in the sequence
+	 * Encodes an ASN.1 value of the type SEQUENCE
+     *
+     * @param  string $inContent
+     * @return string
+	 */
+	static protected function _encodeSequence($inContent) 
+    {
+        //Note: SEQUENCE value has to be constructed / not primitive.
+        // We are doing this in the calling function
+        //so the content octet already has been encoded for
+        //the individual types constituting the values in the sequence
 	
-	        $encodedSequence = '';
-	        //Content class/type
-	        $type = self::ASN_TYPE_SEQUENCE;
-	
-	        //Length of content
-	        $length = strlen( $inContent );
-	
-	        //Encode Bit String
-	        $encodedSequence = sprintf( "%c%c%s", $type, $length, $inContent );
-	
-	        return $encodedSequence;
+        $encodedSequence = '';
+        //Content class/type
+        $type = self::ASN_TYPE_SEQUENCE;
+
+        //Length of content
+        $length = strlen( $inContent );
+
+        //Encode Bit String
+        $encodedSequence = sprintf( "%c%c%s", $type, $length, $inContent );
+
+        return $encodedSequence;
 	}	
 }

@@ -42,14 +42,16 @@ require_once 'Zend/InfoCard/Xml/KeyInfo.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-abstract class Zend_InfoCard_Xml_EncryptedData_Abstract extends Zend_InfoCard_Xml_Element {
+abstract class Zend_InfoCard_Xml_EncryptedData_Abstract extends Zend_InfoCard_Xml_Element 
+{
 	
 	/**
 	 * Returns the KeyInfo Block
 	 *
 	 * @return Zend_InfoCard_Xml_KeyInfo_Abstract
 	 */
-	public function getKeyInfo() {
+	public function getKeyInfo() 
+    {
 		return Zend_InfoCard_Xml_KeyInfo::getInstance($this->KeyInfo[0]);
 	}
 	
@@ -60,7 +62,8 @@ abstract class Zend_InfoCard_Xml_EncryptedData_Abstract extends Zend_InfoCard_Xm
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return string The URI of the Symmetric Encryption Method used
 	 */
-	public function getEncryptionMethod() {
+	public function getEncryptionMethod() 
+    {
 		
 		/**
 		 * @todo This is pretty hacky unless we can always be confident that the first

@@ -46,14 +46,17 @@ require_once 'Zend/Loader.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-abstract class Zend_InfoCard_Xml_Element extends SimpleXMLElement implements Zend_InfoCard_Xml_Element_Interface {
-		
+abstract class Zend_InfoCard_Xml_Element 
+    extends SimpleXMLElement 
+    implements Zend_InfoCard_Xml_Element_Interface 
+{
 	/**
 	 * Convert the object to a string by displaying its XML content
 	 *
 	 * @return string an XML representation of the object
 	 */
-	public function __toString() {
+	public function __toString() 
+    {
 		return $this->asXML();
 	}
 
@@ -64,7 +67,8 @@ abstract class Zend_InfoCard_Xml_Element extends SimpleXMLElement implements Zen
 	 * @param Zend_InfoCard_Xml_Element $e The object to convert
 	 * @return DOMElement A DOMElement representation of the same object
 	 */
-	static public function convertToDOM(Zend_InfoCard_Xml_Element $e) {
+	static public function convertToDOM(Zend_InfoCard_Xml_Element $e) 
+    {
 		$dom = dom_import_simplexml($e);
 		
 		if(!($dom instanceof DOMElement)) {
@@ -82,7 +86,8 @@ abstract class Zend_InfoCard_Xml_Element extends SimpleXMLElement implements Zen
 	 * @param string $classname The name of the class to convert it to (must inhert from Zend_InfoCard_Xml_Element)
 	 * @return Zend_InfoCard_Xml_Element a Xml Element object from the DOM element
 	 */
-	static public function convertToObject(DOMElement $e, $classname) {
+	static public function convertToObject(DOMElement $e, $classname) 
+    {
 		
 		Zend_Loader::loadClass($classname);
 		

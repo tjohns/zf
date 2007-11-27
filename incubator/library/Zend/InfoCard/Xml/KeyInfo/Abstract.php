@@ -34,6 +34,6 @@ require_once 'Zend/InfoCard/Xml/Element.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-abstract class Zend_InfoCard_Xml_KeyInfo_Abstract extends Zend_InfoCard_Xml_Element {
-
+abstract class Zend_InfoCard_Xml_KeyInfo_Abstract extends Zend_InfoCard_Xml_Element 
+{
 }

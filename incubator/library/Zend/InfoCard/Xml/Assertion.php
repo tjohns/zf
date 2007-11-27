@@ -41,14 +41,21 @@ require_once 'Zend/InfoCard/Xml/Assertion/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-final class Zend_InfoCard_Xml_Assertion {
-
+final class Zend_InfoCard_Xml_Assertion 
+{
 	/**
 	 * The namespace for a SAML-formatted Assertion document
 	 */
 	const TYPE_SAML = 'urn:oasis:names:tc:SAML:1.0:assertion';
 
-	private function __construct() { }
+    /**
+     * Constructor (disabled)
+     * 
+     * @return void
+     */
+    private function __construct() 
+    {
+    }
 	
 	/**
 	 * Returns an instance of a InfoCard Assertion object based on the XML data provided
@@ -56,8 +63,10 @@ final class Zend_InfoCard_Xml_Assertion {
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @param string $xmlData The XML-Formatted Assertion
 	 * @return Zend_InfoCard_Xml_Assertion_Interface
+     * @throws Zend_InfoCard_Xml_Exception
 	 */
-	static public function getInstance($xmlData) {
+    static public function getInstance($xmlData) 
+    {
 		
 		if($xmlData instanceof Zend_InfoCard_Xml_Element) {
 			$strXmlData = $xmlData->asXML();

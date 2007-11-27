@@ -42,15 +42,18 @@ require_once 'Zend/InfoCard/Cipher/PKI/RSA/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Cipher_PKI_Adapter_RSA extends Zend_InfoCard_Cipher_PKI_Adapter_Abstract
-                                            implements Zend_InfoCard_Cipher_PKI_RSA_Interface {
+class Zend_InfoCard_Cipher_PKI_Adapter_RSA 
+    extends Zend_InfoCard_Cipher_PKI_Adapter_Abstract
+    implements Zend_InfoCard_Cipher_PKI_RSA_Interface 
+{
 
 	/**
 	 * Object Constructor
 	 *
 	 * @param integer $padding The type of Padding to use
 	 */
-    public function __construct($padding = Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING) {
+    public function __construct($padding = Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING) 
+    {
     	if(!extension_loaded('openssl')) {
     		throw new Zend_InfoCard_Cipher_Exception("Use of this PKI RSA Adapter requires the openssl extension loaded");
     	}
@@ -68,8 +71,8 @@ class Zend_InfoCard_Cipher_PKI_Adapter_RSA extends Zend_InfoCard_Cipher_PKI_Adap
      * @param integer $padding The padding to use during decryption (of not provided object value will be used)
      * @return string The decrypted data
      */
-	public function decrypt($encryptedData, $privateKey, $password = null, $padding = null) {
-		
+	public function decrypt($encryptedData, $privateKey, $password = null, $padding = null) 
+    {
 		$private_key = openssl_pkey_get_private(array($privateKey, $password));
 		
 		if(!$private_key) {

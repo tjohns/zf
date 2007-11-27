@@ -31,8 +31,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-interface Zend_InfoCard_Xml_Element_Interface {
-	
+interface Zend_InfoCard_Xml_Element_Interface 
+{
 	/**
 	 * Return the data within the object as an XML document
 	 */

@@ -33,4 +33,6 @@ require_once 'Zend/InfoCard/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Adapter_Exception extends Zend_InfoCard_Exception { }
+class Zend_InfoCard_Adapter_Exception extends Zend_InfoCard_Exception 
+{
+}

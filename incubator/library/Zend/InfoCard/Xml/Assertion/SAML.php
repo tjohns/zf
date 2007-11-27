@@ -41,8 +41,10 @@ require_once 'Zend/InfoCard/Xml/Assertion/Interface.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
-                                        implements Zend_InfoCard_Xml_Assertion_Interface {
+class Zend_InfoCard_Xml_Assertion_SAML 
+    extends Zend_InfoCard_Xml_Element
+    implements Zend_InfoCard_Xml_Assertion_Interface 
+{
 	
 	/**
 	 * Audience Restriction Condition
@@ -66,7 +68,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 * @param array $conditions An array of condtions for the assertion taken from getConditions()
 	 * @return mixed Boolean true on success, an array of condition, error message on failure
 	 */
-	public function validateConditions(Array $conditions) {
+	public function validateConditions(Array $conditions) 
+    {
 		
 		$currentTime = time();
 
@@ -119,7 +122,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return string the Assertion URI
 	 */
-	public function getAssertionURI() {
+	public function getAssertionURI() 
+    {
 		return Zend_InfoCard_Xml_Assertion::TYPE_SAML;
 	}
 	
@@ -128,7 +132,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return integer The major version number
 	 */
-	public function getMajorVersion() {
+	public function getMajorVersion() 
+    {
 		return (int)(string)$this['MajorVersion'];
 	}
 	
@@ -137,7 +142,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return integer The minor version number
 	 */
-	public function getMinorVersion() {
+	public function getMinorVersion() 
+    {
 		return (int)(string)$this['MinorVersion'];
 	}
 	
@@ -146,7 +152,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return string The Assertion ID
 	 */
-	public function getAssertionID() {
+	public function getAssertionID() 
+    {
 		return (string)$this['AssertionID'];
 	}
 	
@@ -155,7 +162,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return string the URI of the assertion Issuer
 	 */
-	public function getIssuer() {
+	public function getIssuer() 
+    {
 		return (string)$this['Issuer'];
 	}
 	
@@ -164,7 +172,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return integer a UNIX timestamp representing when the assertion was issued
 	 */
-	public function getIssuedTimestamp() {
+	public function getIssuedTimestamp() 
+    {
 		return strtotime((string)$this['IssueInstant']);
 	}
 	
@@ -174,7 +183,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 * @throws Zend_InfoCard_Xml_Exception
 	 * @return array an array of conditions
 	 */
-	public function getConditions() {
+	public function getConditions() 
+    {
 		
 		list($conditions) = $this->xpath("//saml:Conditions");
 
@@ -208,7 +218,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 * @todo Not Yet Implemented
 	 * @ignore 
 	 */
-	public function getSubjectKeyInfo() {
+	public function getSubjectKeyInfo() 
+    {
 		/**
 		 * @todo Not sure if this is part of the scope for now..
 		 */
@@ -223,7 +234,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return string The confirmation method URI
 	 */
-	public function getConfirmationMethod() {
+	public function getConfirmationMethod() 
+    {
 		list($confirmation) = $this->xPath("//saml:ConfirmationMethod");
 		return (string)$confirmation;
 	}
@@ -233,7 +245,8 @@ class Zend_InfoCard_Xml_Assertion_SAML extends Zend_InfoCard_Xml_Element
 	 *
 	 * @return array An array of attributes / claims within the assertion
 	 */
-	public function getAttributes() {
+	public function getAttributes() 
+    {
 		$attributes = $this->xPath('//saml:Attribute');
 		
 		$retval = array();

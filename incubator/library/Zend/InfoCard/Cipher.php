@@ -37,8 +37,8 @@ require_once 'Zend/InfoCard/Cipher/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @author     John Coggeshall <john@zend.com>
  */
-class Zend_InfoCard_Cipher {
-	
+class Zend_InfoCard_Cipher 
+{
 	/**
 	 * AES 256 Encryption with CBC
 	 */
@@ -59,7 +59,14 @@ class Zend_InfoCard_Cipher {
 	 */
 	const ENC_RSA            = 'http://www.w3.org/2001/04/xmlenc#rsa-1_5';
 
-	private function __construct() { }
+    /**
+     * Constructor (disabled)
+     * 
+     * @return void
+     */
+    private function __construct() 
+    { 
+    }
 
 	/**
 	 * Returns an instance of a cipher object supported based on the URI provided
@@ -69,8 +76,8 @@ class Zend_InfoCard_Cipher {
 	 * @return mixed an Instance of Zend_InfoCard_Cipher_Symmetric_Interface or Zend_InfoCard_Cipher_PKI_Interface
 	 *               depending on URI
 	 */
-	static public function getInstanceByURI($uri) {
-		
+    static public function getInstanceByURI($uri) 
+    {
 		switch($uri) {
 			case self::ENC_AES256CBC:
 				include_once 'Zend/InfoCard/Cipher/Symmetric/Adapter/AES256CBC.php';
@@ -94,5 +101,4 @@ class Zend_InfoCard_Cipher {
 				throw new Zend_InfoCard_Cipher_Exception("Unknown Cipher URI");
 		}
 	}
-	
 }
