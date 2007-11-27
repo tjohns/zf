@@ -254,7 +254,6 @@ define('TESTS_ZEND_GDATA_DOCS_ONLINE_ENABLED', false);
  */
 define('TESTS_ZEND_GDATA_PHOTOS_ONLINE_ENABLED', false);
 
-
 /**
  * Zend_Date tests
  *
