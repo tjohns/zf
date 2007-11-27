@@ -30,6 +30,8 @@ documentation/manual/en/module_specs/Zend_Gdata_Gapps.xml
 documentation/manual/en/module_specs/Zend_Gdata_Gbase.xml
 documentation/manual/en/module_specs/Zend_Gdata_Spreadsheets.xml
 documentation/manual/en/module_specs/Zend_Gdata_YouTube.xml
+documentation/manual/en/module_specs/Zend_Gdata_Photos.xml
+documentation/manual/en/module_specs/Zend_Gdata_Docs.xml
 documentation/manual/en/module_specs/Zend_Gdata-Introduction.xml
 documentation/manual/en/configure.in
 documentation/manual/en/Makefile.in
