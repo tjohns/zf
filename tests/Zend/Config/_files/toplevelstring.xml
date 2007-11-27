@@ -7,5 +7,5 @@
             <five>five</five>
         </four>
     </two>
-    <six>six</six>
+    <six extends="two"></six>
 </config>

@@ -139,8 +139,8 @@ class Zend_Config_Xml extends Zend_Config
                     $config[$key] = (string) $value;
                 }
             }
-        } else  {
-            // object has no children: it's a string
+        } elseif (!isset($xmlObject['extends'])) {
+            // object has no children and doesn't use the extends attribute: it's a string
             $config = (string) $xmlObject;
         }
         return $config;
