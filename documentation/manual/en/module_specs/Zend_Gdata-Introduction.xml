@@ -39,6 +39,13 @@
             </listitem>
             <listitem>
                 <para>
+                    <link linkend="zend.gdata.docs">Google Documents List</link>
+                    provides an online list of all spreadsheets, word processing documents,
+                    and presentations stored in a Google account.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <link linkend="zend.gdata.gapps">Google Provisioning</link>
                     provides the ability to create, retrieve, update, and
                     delete user accounts, nicknames, and email lists on a
@@ -58,6 +65,12 @@
                     provides the ability to search and retrieve videos,
                     comments, favorites, subscriptions, user profiles
                     and more.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="zend.gdata.photos">Picasa Web Albums</link>
+                    provides an online photo sharing application.
                 </para>
             </listitem>
             <listitem>
@@ -84,12 +97,6 @@
 
     <note>
         <title>Unsupported services</title>
-        <para>
-            Google Data API also supports Picasa Web Albums,
-            but Zend_Gdata does not provide helper classes for this product
-            in this release.
-        </para>
-
         <para>
             Zend_Gdata does not provide an interface to any other Google
             service, such as Search, Gmail, Translation, or Maps.

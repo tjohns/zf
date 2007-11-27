@@ -30,7 +30,7 @@
             The YouTube data API provides numerous feeds that return a list of 
             videos, such as standard feeds, related videos, video responses, 
             user's uploads, and user's favorites. For example, the 
-            user's-uploads feed returns all videos uploaded by a specific user. 
+            user's uploads feed returns all videos uploaded by a specific user. 
             See the <ulink url="http://code.google.com/apis/youtube/reference.html#Feeds">
             reference guide</ulink> for a detailed list of all feeds. All the 
             feeds described in this section are "video feeds" -- feeds that return 

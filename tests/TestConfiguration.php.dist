@@ -242,6 +242,19 @@ define('TESTS_ZEND_GDATA_YOUTUBE_ONLINE_ENABLED', false);
  */
 define('TESTS_ZEND_GDATA_YOUTUBE_ACCOUNT', 'zfgdata');
 
+/*
+ * This indicates that online tests for the Google Documents API should
+ * be performed.
+ */
+define('TESTS_ZEND_GDATA_DOCS_ONLINE_ENABLED', false);
+
+/*
+ * This indicates that online tests for the GData Photos API should
+ * be performed.
+ */
+define('TESTS_ZEND_GDATA_PHOTOS_ONLINE_ENABLED', false);
+
+
 /**
  * Zend_Date tests
  *

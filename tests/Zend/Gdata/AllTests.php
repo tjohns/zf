@@ -107,6 +107,22 @@ require_once 'Zend/Gdata/Spreadsheets/DocumentQueryTest.php';
 require_once 'Zend/Gdata/Spreadsheets/CellQueryTest.php';
 require_once 'Zend/Gdata/Spreadsheets/ListQueryTest.php';
 
+require_once 'Zend/Gdata/Docs/DocumentListFeedTest.php';
+require_once 'Zend/Gdata/Docs/DocumentListEntryTest.php';
+require_once 'Zend/Gdata/Docs/QueryTest.php';
+
+require_once 'Zend/Gdata/Photos/PhotosAlbumEntryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosAlbumFeedTest.php';
+require_once 'Zend/Gdata/Photos/PhotosAlbumQueryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosCommentEntryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosPhotoEntryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosPhotoFeedTest.php';
+require_once 'Zend/Gdata/Photos/PhotosPhotoQueryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosTagEntryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosUserEntryTest.php';
+require_once 'Zend/Gdata/Photos/PhotosUserFeedTest.php';
+require_once 'Zend/Gdata/Photos/PhotosUserQueryTest.php';
+
 require_once 'Zend/Gdata/GappsTest.php';
 require_once 'Zend/Gdata/Gapps/EmailListEntryTest.php';
 require_once 'Zend/Gdata/Gapps/EmailListFeedTest.php';
@@ -151,6 +167,8 @@ require_once 'Zend/Gdata/GdataOnlineTest.php';
 require_once 'Zend/Gdata/GbaseOnlineTest.php';
 require_once 'Zend/Gdata/CalendarOnlineTest.php';
 require_once 'Zend/Gdata/SpreadsheetsOnlineTest.php';
+require_once 'Zend/Gdata/DocsOnlineTest.php';
+require_once 'Zend/Gdata/PhotosOnlineTest.php';
 require_once 'Zend/Gdata/GappsOnlineTest.php';
 require_once 'Zend/Gdata/YouTubeOnlineTest.php';
 require_once 'Zend/Gdata/SkipTests.php';
@@ -241,6 +259,22 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_DocumentQueryTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_CellQueryTest');
         $suite->addTestSuite('Zend_Gdata_Spreadsheets_ListQueryTest');
+        
+        $suite->addTestSuite('Zend_Gdata_Docs_DocumentListFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Docs_DocumentListEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Docs_QueryTest');
+
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosAlbumEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosAlbumFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosAlbumQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosCommentEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosPhotoEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosPhotoFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosPhotoQueryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosTagEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosUserEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosUserFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Photos_PhotosUserQueryTest');
 
         $suite->addTestSuite('Zend_Gdata_GappsTest');
         $suite->addTestSuite('Zend_Gdata_Gapps_EmailListEntryTest');
@@ -277,6 +311,7 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_YouTube_ContactFeedTest');
         $suite->addTestSuite('Zend_Gdata_YouTube_ContactEntryTest');
 
+        $skippingOnlineTests = true;
         if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true &&
             defined('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED') &&
@@ -285,6 +320,7 @@ class Zend_Gdata_AllTests
              * Tests that do require online access to servers
              * and authentication credentials
              */
+            $skippingOnlineTests = false;
             if (defined('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_BLOGGER_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_GdataOnlineTest');
@@ -304,13 +340,24 @@ class Zend_Gdata_AllTests
             constant('TESTS_ZEND_GDATA_SPREADSHEETS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_SpreadsheetsOnlineTest');
             }
-            
-        } else if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
+
+            if (defined('TESTS_ZEND_GDATA_DOCS_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_DOCS_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_DocsOnlineTest');
+            }
+
+            if (defined('TESTS_ZEND_GDATA_PHOTOS_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_PHOTOS_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_PhotosOnlineTest');
+            }
+        } 
+        if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
                    constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true) {
             /**
              * Tests that do require online access to servers, but
              * don't require the standard authentication credentials
              */ 
+            $skippingOnlineTests = false;
             if (defined('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_GAPPS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_GappsOnlineTest');
@@ -319,7 +366,8 @@ class Zend_Gdata_AllTests
             constant('TESTS_ZEND_GDATA_YOUTUBE_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_YouTubeOnlineTest');
             }
-        } else {
+        }
+        if ($skippingOnlineTests) {
             $suite->addTestSuite('Zend_Gdata_SkipOnlineTest');
         }
         return $suite;

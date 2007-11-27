@@ -441,7 +441,7 @@ class Zend_Gdata_App
             $response = $this->_httpClient->request('POST');
         } catch (Zend_Http_Client_Exception $e) {
             require_once 'Zend/Gdata/App/HttpException.php';
-            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e, $response);
+            throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
         }
         /**
          * set "S" cookie to avoid future redirects.

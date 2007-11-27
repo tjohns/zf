@@ -77,7 +77,7 @@ class Zend_Gdata_Query
     /**
      * @return string querystring
      */
-    protected function getQueryString()
+    public function getQueryString()
     {
         $queryArray = array();
         foreach ($this->_params as $name => $value) {
