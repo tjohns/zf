@@ -306,7 +306,18 @@ class Zend_Config implements Countable, Iterator
 
         return $this;
     }
-
+    
+    /**
+     * Prevent any more modifications being made to this instance. Useful
+     * after merge() has been used to merge multiple Zend_Config objects
+     * into one object which should then not be modified again.
+     *
+     */
+    public function setReadOnly()
+    {
+        $this->_allowModifications = false;
+    }
+    
     /**
      * Throws an exception if $extendingSection may not extend $extendedSection,
      * and tracks the section extension if it is valid.

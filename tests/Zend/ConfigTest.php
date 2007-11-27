@@ -295,7 +295,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
             $this->assertContains('is read only', $expected->getMessage());
             return;
         }
-
+        $this->fail('Expected read only exception has not been raised.');
     }
     public function testUnset()
     {
@@ -364,6 +364,28 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertType('stdClass', $config->a);
         $this->assertType('stdClass', $config->b->c);
         $this->assertType('stdClass', $config->b->d);
+    }
+    
+    /**
+     * ensure that modification is not allowed after calling setReadOnly()
+     *
+     */
+    public function testSetReadOnly()
+    {
+        $configData = array(
+            'a' => 'a'
+            );
+        $config = new Zend_Config($configData, true);
+        $config->b = 'b';
+        
+        $config->setReadOnly();
+        try {
+            $config->c = 'c';
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('is read only', $expected->getMessage());
+            return;
+        }        
+        $this->fail('Expected read only exception has not been raised.');
     }
 }
 
