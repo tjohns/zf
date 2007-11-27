@@ -20,7 +20,7 @@
  */
 
 /**
- * @see Zend_Gdata_eed
+ * @see Zend_Gdata_feed
  */
 require_once 'Zend/Gdata/Feed.php';
 

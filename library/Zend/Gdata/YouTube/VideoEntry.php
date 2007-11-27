@@ -378,7 +378,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function getVideoResponsesLink()
     {
-        return $this->getLink('http://gdata.youtube.com/schemas/2007#video.responses');
+        return $this->getLink(Zend_Gdata_YouTube::VIDEO_RESPONSES_REL);
     }
 
     /**
@@ -388,7 +388,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function getVideoRatingsLink()
     {
-        return $this->getLink('http://gdata.youtube.com/schemas/2007#video.ratings');
+        return $this->getLink(Zend_Gdata_YouTube::VIDEO_RATINGS_REL);
     }
 
     /**
@@ -398,13 +398,24 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function getVideoComplaintsLink()
     {
-        return $this->getLink('http://gdata.youtube.com/schemas/2007#video.complaints');
+        return $this->getLink(Zend_Gdata_YouTube::VIDEO_COMPLAINTS_REL);
     }
 
-    // TODO: Check type of result from strrpos, return exception if not null
+    /**
+     * Gets the YouTube video ID based upon the atom:id value
+     *
+     * @return string The video ID
+     */
     public function getVideoId()
     {
         $fullId = $this->getId();
-        return substr($fullId, strrpos($fullId,'/') + 1);
+        $position = strrpos($fullId, '/');
+        if ($pos === false) {
+            require_once 'Zend/Gdata/App/Exception.php';
+            throw new Zend_Gdata_App_Exception('Slash not found in atom:id');
+        } else {
+            return substr($fullId, strrpos($fullId,'/') + 1);
+        }
     }
+
 }

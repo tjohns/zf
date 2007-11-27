@@ -31,7 +31,7 @@ require_once 'Zend/Gdata/YouTube/PlaylistVideoEntry.php';
 
 /**
  * The YouTube video playlist flavor of an Atom Feed with media support
- * Represents a list of videos contained in a playlist.  Each entry inthis
+ * Represents a list of videos contained in a playlist.  Each entry in this
  * feed represents an individual video.
  *
  * @category   Zend
