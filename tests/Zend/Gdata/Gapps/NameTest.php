@@ -33,44 +33,44 @@ class Zend_Gdata_Gapps_NameTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp() {
-        $this->nameText = file_get_contents(
+        $this->theNameText = file_get_contents(
                 'Zend/Gdata/Gapps/_files/NameElementSample1.xml',
                 true);
-        $this->name = new Zend_Gdata_Gapps_Extension_Name();
+        $this->theName = new Zend_Gdata_Gapps_Extension_Name();
     }
 
     public function testEmptyNameShouldHaveNoExtensionElements() {
-        $this->assertTrue(is_array($this->name->extensionElements));
-        $this->assertTrue(count($this->name->extensionElements) == 0);
+        $this->assertTrue(is_array($this->theName->extensionElements));
+        $this->assertTrue(count($this->theName->extensionElements) == 0);
     }
 
     public function testEmptyNameShouldHaveNoExtensionAttributes() {
-        $this->assertTrue(is_array($this->name->extensionAttributes));
-        $this->assertTrue(count($this->name->extensionAttributes) == 0);
+        $this->assertTrue(is_array($this->theName->extensionAttributes));
+        $this->assertTrue(count($this->theName->extensionAttributes) == 0);
     }
 
     public function testSampleNameShouldHaveNoExtensionElements() {
-        $this->name->transferFromXML($this->nameText);
-        $this->assertTrue(is_array($this->name->extensionElements));
-        $this->assertTrue(count($this->name->extensionElements) == 0);
+        $this->theName->transferFromXML($this->theNameText);
+        $this->assertTrue(is_array($this->theName->extensionElements));
+        $this->assertTrue(count($this->theName->extensionElements) == 0);
     }
 
     public function testSampleNameShouldHaveNoExtensionAttributes() {
-        $this->name->transferFromXML($this->nameText);
-        $this->assertTrue(is_array($this->name->extensionAttributes));
-        $this->assertTrue(count($this->name->extensionAttributes) == 0);
+        $this->theName->transferFromXML($this->theNameText);
+        $this->assertTrue(is_array($this->theName->extensionAttributes));
+        $this->assertTrue(count($this->theName->extensionAttributes) == 0);
     }
 
     public function testNormalNameShouldHaveNoExtensionElements() {
-        $this->name->givenName = "John";
-        $this->name->familyName = "Doe";
+        $this->theName->givenName = "John";
+        $this->theName->familyName = "Doe";
 
-        $this->assertEquals("John", $this->name->givenName);
-        $this->assertEquals("Doe", $this->name->familyName);
+        $this->assertEquals("John", $this->theName->givenName);
+        $this->assertEquals("Doe", $this->theName->familyName);
 
-        $this->assertEquals(0, count($this->name->extensionElements));
+        $this->assertEquals(0, count($this->theName->extensionElements));
         $newName = new Zend_Gdata_Gapps_Extension_Name();
-        $newName->transferFromXML($this->name->saveXML());
+        $newName->transferFromXML($this->theName->saveXML());
         $this->assertEquals(0, count($newName->extensionElements));
         $newName->extensionElements = array(
                 new Zend_Gdata_App_Extension_Element('foo', 'atom', null, 'bar'));
@@ -88,7 +88,7 @@ class Zend_Gdata_Gapps_NameTest extends PHPUnit_Framework_TestCase
     }
 
     public function testEmptyNameToAndFromStringShouldMatch() {
-        $nameXml = $this->name->saveXML();
+        $nameXml = $this->theName->saveXML();
         $newName = new Zend_Gdata_Gapps_Extension_Name();
         $newName->transferFromXML($nameXml);
         $newNameXml = $newName->saveXML();
@@ -96,25 +96,25 @@ class Zend_Gdata_Gapps_NameTest extends PHPUnit_Framework_TestCase
     }
 
     public function testNameWithValueToAndFromStringShouldMatch() {
-        $this->name->givenName = "John";
-        $this->name->familyName = "Doe";
-        $nameXml = $this->name->saveXML();
+        $this->theName->givenName = "John";
+        $this->theName->familyName = "Doe";
+        $nameXml = $this->theName->saveXML();
         $newName = new Zend_Gdata_Gapps_Extension_Name();
         $newName->transferFromXML($nameXml);
         $newNameXml = $newName->saveXML();
         $this->assertTrue($nameXml == $newNameXml);
-        $this->assertEquals("John", $this->name->givenName);
-        $this->assertEquals("Doe", $this->name->familyName);
+        $this->assertEquals("John", $this->theName->givenName);
+        $this->assertEquals("Doe", $this->theName->familyName);
     }
 
     public function testExtensionAttributes() {
-        $extensionAttributes = $this->name->extensionAttributes;
+        $extensionAttributes = $this->theName->extensionAttributes;
         $extensionAttributes['foo1'] = array('name'=>'foo1', 'value'=>'bar');
         $extensionAttributes['foo2'] = array('name'=>'foo2', 'value'=>'rab');
-        $this->name->extensionAttributes = $extensionAttributes;
-        $this->assertEquals('bar', $this->name->extensionAttributes['foo1']['value']);
-        $this->assertEquals('rab', $this->name->extensionAttributes['foo2']['value']);
-        $nameXml = $this->name->saveXML();
+        $this->theName->extensionAttributes = $extensionAttributes;
+        $this->assertEquals('bar', $this->theName->extensionAttributes['foo1']['value']);
+        $this->assertEquals('rab', $this->theName->extensionAttributes['foo2']['value']);
+        $nameXml = $this->theName->saveXML();
         $newName = new Zend_Gdata_Gapps_Extension_Name();
         $newName->transferFromXML($nameXml);
         $this->assertEquals('bar', $newName->extensionAttributes['foo1']['value']);
@@ -122,9 +122,9 @@ class Zend_Gdata_Gapps_NameTest extends PHPUnit_Framework_TestCase
     }
 
     public function testConvertFullNameToAndFromString() {
-        $this->name->transferFromXML($this->nameText);
-        $this->assertEquals("Susan", $this->name->givenName);
-        $this->assertEquals("Jones", $this->name->familyName);
+        $this->theName->transferFromXML($this->theNameText);
+        $this->assertEquals("Susan", $this->theName->givenName);
+        $this->assertEquals("Jones", $this->theName->familyName);
     }
 
 }
