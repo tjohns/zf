@@ -83,6 +83,9 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const USER_SUBSCRIPTIONS_REL = 'http://gdata.youtube.com/schemas/2007#user.subscriptions';
     const USER_CONTACTS_REL = 'http://gdata.youtube.com/schemas/2007#user.contacts';
     const USER_FAVORITES_REL = 'http://gdata.youtube.com/schemas/2007#user.favorites';
+    const VIDEO_RESPONSES_REL = 'http://gdata.youtube.com/schemas/2007#video.responses';
+    const VIDEO_RATINGS_REL = 'http://gdata.youtube.com/schemas/2007#video.ratings';
+    const VIDEO_COMPLAINTS_REL = 'http://gdata.youtube.com/schemas/2007#video.complaints';
 
     const FAVORITES_URI_SUFFIX = 'favorites';
     const UPLAODS_URI_SUFFIX = 'uploads';
