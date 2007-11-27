@@ -73,7 +73,7 @@ class Zend_Gdata_YouTube_Extension_Racy extends Zend_Gdata_Extension
 
     /**
      * Given a DOMNode representing an attribute, tries to map the data into
-     * instance members.  If no mapping is defined, the name and valueare 
+     * instance members.  If no mapping is defined, the name and value are 
      * stored in an array.
      *
      * @param DOMNode $attribute The DOMNode attribute needed to be handled
