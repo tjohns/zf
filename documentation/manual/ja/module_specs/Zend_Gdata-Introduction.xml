@@ -39,6 +39,13 @@
             </listitem>
             <listitem>
                 <para>
+                    <link linkend="zend.gdata.docs">Google Documents List</link>
+                    は、その Google アカウントに保存されているすべてのスプレッドシートやワープロ文書、
+                    プレゼンテーションの一覧を取得します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <link linkend="zend.gdata.gapps">Google Provisioning</link>
                     は、Google Apps がホストするドメイン上の
                     ユーザアカウントやニックネーム、そしてメーリングリストの
@@ -57,6 +64,12 @@
                     <link linkend="zend.gdata.youtube">YouTube</link>
                     は、動画やコメント、お気に入り、登録チャンネル、
                     ユーザのプロファイルといった情報を検索して取得することができます。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <link linkend="zend.gdata.photos">Picasa Web Albums</link>
+                    は、オンラインの写真共有アプリケーションです。
                 </para>
             </listitem>
             <listitem>
@@ -83,13 +96,6 @@
 
     <note>
         <title>サポートしていないサービス</title>
-        <para>
-            Google Data API は、その他に Picasa Web Albums
-            もサポートしています。
-            しかし、今回のリリースでは Zend_Gdata は
-            このプロダクト用のヘルパークラスを用意していません。
-        </para>
-
         <para>
             Zend_Gdata には、これら以外の Google のサービス
             (例えば検索、Gmail、翻訳、マップなど)
