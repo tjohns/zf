@@ -434,73 +434,69 @@ $consumer = new Zend_OpenId_Consumer($storage);]]>
     <sect2 id="zend.openid.consumer.sreg">
         <title>Einfache Registrations Erweiterung</title>
         <para>
-            In addition to authentication, the OpenID can be used for
-            light-weight profile exchange. This feature is not covered by OpenID
-            authentication specification but by the OpenID Simple Registration
-            Extension protocol. This protocol allows OpenID-enabled sites to ask for
-            information about an end-user from OpenID providers. Such information may
-            include:
+            Zusätzlich zur Authentifikation kann OpenID für einen leichtgewichtigen Profiltausch verwendet werden.
+            Dieses Feature wird nicht durch die OpenID Authentifikations Spezifikation abgedeckt, aber vom
+            OpenID Einfachen Registrierungs Erweiterungs Protokoll unterstützt. Dieses Protokoll erlaubt es
+            OpenID-aktivierten Sites nach Informationen über End-Benutzern von OpenID Providers zu fragen.
+            Diese Informationen können folgendes beinhalten:
         </para>
 
         <itemizedlist>
             <listitem>
                 <emphasis>nickname</emphasis>
-                 - any UTF-8 string that the end user wants to use as a nickname.
+                 - ein UTF-8 String den der End-Benutzer als Spitzname verwenden will.
             </listitem>
             <listitem>
                 <emphasis>email</emphasis>
-                - the email address of the end user as specified in section 3.4.1
-                of RFC2822.
+                - die Email Adresse des End-Benutzers wie in Sektion 3.4.1 von RFC2822 spezifiziert.
             </listitem>
             <listitem>
                 <emphasis>fullname</emphasis>
-                - a UTF-8 string representation of the end user's full name.
+                - eine UTF-8 String Repräsentation des kompletten Namens des End-Benutzers.
             </listitem>
             <listitem>
                 <emphasis>dob</emphasis>
-                - the end user's date of birth as YYYY-MM-DD. Any values whose
-                representation uses fewer than the specified number of digits
-                should be zero-padded. The length of this value must always be
-                10. If the end user does not want to reveal any particular
-                component of this value, it must be set to zero. For instance,
-                if a end user wants to specify that his date of birth is in 1980,
-                but not the month or day, the value returned shall be "1980-00-00".
+                - das Geburtsdatum des End-Benutzers als YYYY-MM-DD. Jeder Wert dessen Repräsentation weniger
+                als die speifizierte Anzahl an Ziffern verwendet sollte mit Nullen aufgefüllt werden. Die Länge
+                dieses Wertes muß immer 10 sein. Wenn der End-Benutzer irgendeinen Teil dieser Komponente nicht
+                angeben will, dann muß dieser auf Null gesetzt werden. Wenn ein Benutzer zum Beispiel angeben
+                will das sein Geburtsdatum um 1980 war, aber nicht den Monat oder Tag, dann sollte der
+                zurückgegebene Wert "1980-00-00" sein.
             </listitem>
             <listitem>
                 <emphasis>gender</emphasis>
-                - the end user's gender, "M" for male, "F" for female.
+                - das Geschlecht des End-Benutzers, "M" für männlich, "F" für weiblich.
             </listitem>
             <listitem>
                 <emphasis>postcode</emphasis>
-                - UTF-8 string that should conform to the end user's country's
-                postal system.
+                - UTF-8 String der dem Postleitzahl System des Landes des End-Benutzers entsprechen sollte.
             </listitem>
             <listitem>
                 <emphasis>country</emphasis>
-                - the End User's country of residence as specified by ISO3166.
+                - das Land des Wohnsitzes des End-Benutzers wie spezifiziert in ISO3166.
             </listitem>
             <listitem>
                 <emphasis>language</emphasis>
-                - end User's preferred language as specified by ISO639.
+                - die bevorzugte Sprache des End-Benutzers wie spezifiziert in ISO639.
             </listitem>
             <listitem>
                 <emphasis>timezone</emphasis>
-                - ASCII string from TimeZone database. For example,
-                "Europe/Paris" or "America/Los_Angeles".
+                - ASCII String von der Zeitzonen Datenbank. Zum Beispiel, "Europe/Paris" oder
+                "America/Los_Angeles".
             </listitem>
         </itemizedlist>
 
         <para>
-            An OpenID-enabled web site may ask for any combination of these
-            fields. It may also strictly require some information and allow end-users
-            to provide or hide other information. The following example creates an
-            object of the <code>Zend_OpenId_Extension_Sreg</code> class that requires
-            a <emphasis>nickname</emphasis> and optionally ask for
-            <emphasis>email</emphasis> and <emphasis>fullname</emphasis>.
+            Eine OpenID-aktivierte Web-Seite kann nach jeder beliebigen Kombination dieser Felder fragen.
+            Sie kann auch einige Informationen strikt fordern und es End-Benutzern erlauben andere Informationen
+            anzubieten oder zu verstecken. Das folgende Beispiel erzeugt ein Objekt der
+            <code>Zend_OpenId_Extension_Sreg</code> Klasse das einen <emphasis>Spitznamen</emphasis>
+            (nickname) benötigt und optional nach einer <emphasis>E-Mail</emphasis> (email) und einem
+            <emphasis>vollständigen Namen</emphasis> (fullname) fragt.
         </para>
 
         <example id="zend.openid.consumer.example-6_2">
-            <title>Sending Requests with a Simple Registration Extension</title>
+            <title>Anfragen mit einer einfachen Registrations Erweiterung senden</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
@@ -511,31 +507,28 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
     'fullname'=>false), null, 1.1);
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'], 'example-6_3.php', null, $sreg)) {
-    die("OpenID login failed.");
+    die("OpenID Login fehlgeschlagen.");
 }]]>
             </programlisting>
         </example>
 
         <para>
-            As you can see the <code>Zend_OpenId_Extension_Sreg</code>
-            constructor accepts an array of asked fields. This array has the names of
-            fields as indexes and requirements flag as values.
-            <emphasis>true</emphasis> means the field is required and
-            <emphasis>false</emphasis> means the field is optional. The
-            <code>Zend_OpenId_Consumer::login</code> accepts extensions or list of
-            extensions as a fourth argument.
+            Wie man sieht akzeptiert der <code>Zend_OpenId_Extension_Sreg</code> Konstruktor ein Array an
+            abgefragten Feldern. Das Array hat den Namen der Felder als Indezes und die erfordert Flags als
+            Werte. <emphasis>true</emphasis> bedeutet der Wert wird benötigt und <emphasis>false</emphasis>
+            bedeutet das Feld ist optional. <code>Zend_OpenId_Consumer::login</code> akzeptiert Erweiterungen
+            oder Listen von Erweiterungen als viertes Argument.
         </para>
 
         <para>
-            On the third step of authentication, the
-            <code>Zend_OpenId_Extension_Sreg</code> object should be passed to
-            <code>Zend_OpenId_Consumer::verify</code>. Then on successful authentication
-            <code>Zend_OpenId_Extension_Sreg::getProperties</code> will return an
-            associative array of requested fields.
+            Im dritten Schritt der Authentifikation sollte das <code>Zend_OpenId_Extension_Sreg</code> Objekt
+            an <code>Zend_OpenId_Consumer::verify</code> übergeben werden. Anschließend wird
+            <code>Zend_OpenId_Extension_Sreg::getProperties</code>, bei erfolgreicher Authentifizierung,
+            ein assoziatives Array von benötigten Feldern zurückgeben.
         </para>
 
         <example id="zend.openid.consumer.example-6_3">
-            <title>Verifying Responses with a Simple Registration Extension</title>
+            <title>Antworten mit einer einfachen Registierungs Erweiterung prüfen</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/OpenId/Extension/Sreg.php";
@@ -546,69 +539,63 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
     'fullname'=>false), null, 1.1);
 $consumer = new Zend_OpenId_Consumer();
 if ($consumer->verify($_GET, $id, $sreg)) {
-    echo "VALID $id<br>\n";
+    echo "GÜLTIG $id<br>\n";
     $data = $sreg->getProperties();
     if (isset($data['nickname'])) {
-        echo "nickname: " . $data['nickname'] . "<br>\n";
+        echo "Spitzname: " . $data['nickname'] . "<br>\n";
     }
     if (isset($data['email'])) {
-        echo "email: " . $data['email'] . "<br>\n";
+        echo "Email: " . $data['email'] . "<br>\n";
     }
     if (isset($data['fullname'])) {
-        echo "fullname: " . $data['fullname'] . "<br>\n";
+        echo "Vollständiger Name: " . $data['fullname'] . "<br>\n";
     }
 } else {
-    echo "INVALID $id";
+    echo "UNGÜLTIG $id";
 }]]>
             </programlisting>
         </example>
 
         <para>
-            If <code>Zend_OpenId_Extension_Sreg</code> was created without any
-            arguments, the user code should check for the existence of the required
-            data itself. However, if the object is created with the same list of
-            required fields as on the second step, it will automatically check for the
-            existence of required data. In this case, <code>Zend_OpenId_Consumer::verify</code>
-             will return <emphasis>false</emphasis> if any of the required fields are
-            missing.
+            Wenn <code>Zend_OpenId_Extension_Sreg</code> ohne Argumente erstellt wurde, sollte der Benutzercode
+            selbst das Vorhandensein der benötigten Daten prüfen. Trotzdem, wenn das Objekt mit der gleichen
+            Liste an benötigten Feldern wie im zweiten Schritt erstellt wird, wird es automatisch die Existenz
+            der benötigten Daten prüfen. In diesem Fall wird <code>Zend_OpenId_Consumer::verify</code>
+            <emphasis>false</emphasis> zurückgeben wenn irgendeines der benötigten Felder fehlt.
         </para>
 
         <para>
-            By default, <code>Zend_OpenId_Extension_Sreg</code> uses version
-            1.0, because the specification for version 1.1 is not yet finalized.
-            However, some libraries don't fully support version 1.0. For example,
-            www.myopenid.com requires an SREG namespace in requests which is only
-            available in 1.1. To work with this server, explicitly set the version to
-            1.1 in the <code>Zend_OpenId_Extension_Sreg</code> constructor.
+            Standardmäßig verwendet <code>Zend_OpenId_Extension_Sreg</code> die Version 1.0 weil die
+            Spezifikation der Version 1.1 noch nicht fertiggestellt wurde. Trotzdem unterstützen einige
+            Bibliotheken die Version 1.0 nicht vollständig. Zum Beispiel benötigt www.myopenid.com einen
+            SREG Namensraum in den Anfragen der nur in 1.1 vorhanden ist. Um mit diesem Server zu Arbeiten
+            muß die Version 1.1 explizit im <code>Zend_OpenId_Extension_Sreg</code> Konstruktor gesetzt werden.
         </para>
 
         <para>
-            The second argument of the <code>Zend_OpenId_Extension_Sreg</code>
-            constructor is a policy URL, that should be provided to the end-user by
-            the identity provider.
+            Das zweite Argument des <code>Zend_OpenId_Extension_Sreg</code> Konstruktors ist eine Policy URL,
+            die dem End-Benutzer durch den Identitäts Provider zur Verfügung gestellt werden sollte.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.auth">
-        <title>Integration with Zend_Auth</title>
+        <title>Integration mit Zend_Auth</title>
         <para>
-            Zend Framework provides a special class to support user
-            authentication - <code>Zend_Auth</code>. This class can be used together
-            with <code>Zend_OpenId_Consumer</code>. The following example shows how
-            <code>OpenIdAdapter</code> implements
-            the <code>Zend_Auth_Adapter_Interface</code> with the
-            <code>authenticate</code> method.This performs an authentication query and
-            verification.
+            Zend Framework bietet eine spezielle Klasse für die Unterstützung von Benutzer Authentifikation - 
+            <code>Zend_Auth</code>. Diese Klasse kann zusammen mit <code>Zend_OpenId_Consumer</code> verwendet
+            werden. Das folgende Beispiel zeigt wie <code>OpenIdAdapter</code> das
+            <code>Zend_Auth_Adapter_Interface</code> mit der <code>authenticate</code> Methode implementiert.
+            Diese führt eine Authentifikations Anfrage und Verifikation durch.
         </para>
 
         <para>
-            The big difference between this adapter and existing ones, is that
-            it works on two HTTP requests and includes a dispatch code to perform the
-            second or third step of OpenID authentication.
+            Der große Unterschied zwischen diesem Adapter und dem bestehenden ist, das er mit zwei HTTP
+            Anfragen arbeitet und einen Dispatch code enthält um den zweiten oder dritten Schritt der
+            OpenID Authentifikation durchzuführen.
         </para>
 
         <example id="zend.openid.consumer.example-7">
-            <title>Zend_Auth Adapter for OpenID</title>
+            <title>Zend_Auth Adapter für OpenID</title>
             <programlisting role="php"><![CDATA[<?php
 require_once "Zend/OpenId/Consumer.php";
 require_once "Zend/Auth.php";
@@ -627,16 +614,16 @@ class OpenIdAdapter implements Zend_Auth_Adapter_Interface {
             $consumer = new Zend_OpenId_Consumer();
             if (!$consumer->login($id)) {
                 $ret = false;
-                $mdg = "Authentication failed.";
+                $mdg = "Authentifizierung fehlgeschlagen.";
             }
         } else {
             $consumer = new Zend_OpenId_Consumer();
             if ($consumer->verify($_GET, $id)) {
                 $ret = true;
-                $msg = "Authentication successful";
+                $msg = "Authentifizierung erfolgreich";
             } else {
                 $ret = false;
-                $msg = "Authentication failed";
+                $msg = "Authentifizierung fehlgeschlagen";
             }
         }
         return new Zend_Auth_Result($ret, $id, array($msg));
@@ -664,7 +651,7 @@ if ((isset($_POST['openid_action']) &&
         $_POST['openid_action'] == "logout") {
         $auth->clearIdentity();
     } else {
-        $status = "Yoy are logged-in as " . $auth->getIdentity() . "<br>\n";
+        $status = "Du bist angemeldet als " . $auth->getIdentity() . "<br>\n";
     }
 }
 ?>
@@ -687,25 +674,23 @@ if ((isset($_POST['openid_action']) &&
     </sect2>
 
     <sect2 id="zend.openid.consumer.mvc">
-        <title>IIntegration mit Zend_Controller</title>
+        <title>Integration mit Zend_Controller</title>
         <para>
-            Finally a couple of words about integration into
-            Model-View-Controller applications. Such Zend Framework applications are
-            implemented using the <code>Zend_Controller</code> class and they use
-            objects of the <code>Zend_Controller_Response_Http</code> class to prepare
-            HTTP responses and send them back to the end user's web-browser.
+            Zuletzt ein paar Worte über die Integration in Model-View-Controller Anwendungen. Solche
+            Zend Framework Anwendungen werden implementiert durch Verwenden der <code>Zend_Controller</code>
+            Klasse und Sie verwenden die <code>Zend_Controller_Response_Http</code> Klasse um HTTP Antworten
+            vorzubereiten und an den Web-Browser des End-Benutzers zurückzusenden.
         </para>
 
         <para>
-            <code>Zend_OpenId_Consumer</code> doesn't provide any GUI
-            capabilities but it performs HTTP redirections on success of
-            <code>Zend_OpenId_Consumer::login</code> and
-            <code>Zend_OpenId_Consumer::check</code>. These redirections, may work
-            incorrectly or not work at all if some data was already sent to the
-            web-browser. To properly perform HTTP redirection in MVC code the real
-            <code>Zend_Controller_Response_Http</code> should be sent to
-            <code>Zend_OpenId_Consumer::login</code> or
-            <code>Zend_OpenId_Consumer::check</code> as the last argument.
+            <code>Zend_OpenId_Consumer</code> bietet keine GUI Möglichkeiten aber es führt HTTP Umleitungen
+            bei erflgreichen <code>Zend_OpenId_Consumer::login</code> und
+            <code>Zend_OpenId_Consumer::check</code> durch. Diese Umleitungen könnten nicht richtig funktionieren
+            oder sogar überhaupt nicht Arbeiten wenn einige Daten bereits an den Web-Browser gesendet wurden. Um
+            HTTP Umleitungen im MVC Code richtig durchzuführen sollte die echte
+            <code>Zend_Controller_Response_Http</code> als letztes Argument an
+            <code>Zend_OpenId_Consumer::login</code> oder <code>Zend_OpenId_Consumer::check</code> gesendet
+            werden.
         </para>
     </sect2>
 </sect1>
