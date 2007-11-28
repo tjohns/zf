@@ -1,0 +1,312 @@
+<sect1 id="zend.controller.dispatcher">
+    <title>Диспетчер<!--The Dispatcher--></title>
+
+    <sect2 id="zend.controller.dispatcher.overview">
+        <title>Обзор<!--Overview--></title>
+
+        <para>
+            Диспетчеризация — это процесс принятия объекта запроса
+            (<code>Zend_Controller_Request_Abstract</code>), извлечения
+            содержащихся в нем имени модуля, имени контроллера, имени действия и
+            необязательных параметров, затем инстанцирования контроллера и
+            вызова действия в нем. Если не найдены модуль, контроллер или
+            действие, то будут использоваться значения по умолчанию.
+            <code>Zend_Controller_Dispatcher_Standard</code> определяет
+            <code>index</code> как значение по умолчанию для контроллера и
+            действия, и <code>default</code> - для модуля, но позволяет
+            разработчику изменять эти значения, используя
+            <code>setDefaultController()</code>,
+            <code>setDefaultAction()</code> и <code>setDefaultModule()</code>,
+            соответственно.
+<!--
+            Dispatching is the process of taking the request object,
+            <code>Zend_Controller_Request_Abstract</code>, extracting the module
+            name, controller name, action name, and optional parameters
+            contained in it, and then instantiating a controller and calling an
+            action of that controller. If any of the module, controller, or
+            action are not found, it will use default values for them.
+            <code>Zend_Controller_Dispatcher_Standard</code> specifies
+            <code>index</code> for each of the controller and action defaults
+            and <code>default</code> for the module default value, but allows
+            the developer to change the default values for each using the
+            <code>setDefaultController()</code>,
+            <code>setDefaultAction()</code>, and <code>setDefaultModule()</code>
+            methods, respectively.
+-->
+        </para>
+
+        <para>
+            Диспетчеризация производится циклически во фронт-контроллере.
+            До того, как будет запущен процесс диспетчеризации,
+            фронт-контроллер выполняет маршрутизацию запроса для нахождения
+            пользовательских значений модуля, контроллера, действия и
+            необязательных параметров. Затем он входит в цикл диспетчеризации,
+            обрабатывая запрос.
+<!--
+            Dispatching happens in a loop in the front controller. Before
+            dispatching occurs, the front controller routes the request to find
+            user specified values for the module, controller, action, and optional
+            parameters. It then enters a dispatch loop, dispatching the request.
+-->
+        </para>
+
+        <para>
+            В начале каждой итерации цикла он устанавливает флаг в объекте
+            запроса, означающий, что действие было запущено. Если
+            действие или методы pre/postDispatch установленного плагина сбросят
+            этот флаг, то цикл диспетчеризации продолжится и будет произведена
+            попытка обработать новый запрос. Изменяя контроллер и/или действие в
+            запросе и сбрасывая флаг диспетчеризации, разработчик может
+            задавать цепочку запросов для обработки.
+<!--
+            At the beginning of each iteration, it sets a flag in the request
+            object indicating that the action has been dispatched. If an action
+            or pre/postDispatch plugin resets that flag, the dispatch loop will
+            continue and attempt to dispatch the new request. By changing the
+            controller and/or action in the request and resetting the dispatched
+            flag, the developer may define a chain of requests to perform.
+-->
+        </para>
+
+        <para>
+            Метод действия в контроллере, который таким образом управляет
+            диспетчеризацией, называется <code>_forward()</code>; вызывайте
+            этот метод из любых методов pre/postDispatch() или методов действий,
+            указывая действие, контроллер, модуль и опционально любые
+            дополнительные параметры, которые хотите передать новому
+            действию.
+<!--
+            The action controller method that controlls such dispatching is
+            <code>_forward()</code>; call this method from any of the
+            pre/postDispatch() or action methods, providing an action, controller,
+            module, and optionally any additional parameters you may wish to
+            send to the new action:
+-->
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+public function fooAction()
+{
+    // переход к другому действию в текущем контроллере и модуле:
+    $this->_forward('bar', null, null, array('baz' => 'bogus'));
+}
+
+public function barAction()
+{
+    // переход к действию в другом контроллере FooController::bazAction()
+    // в текущем модуле
+    $this->_forward('baz', 'foo', null, array('baz' => 'bogus'));
+}
+
+public function bazAction()
+{
+    // переход к действию в другом контроллере в другом модуле
+    // Foo_BarController::bazAction():
+    $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
+}]]>
+        </programlisting>
+    </sect2>
+
+    <sect2 id="zend.controller.dispatcher.subclassing">
+        <title>Создание подклассов диспетчера<!--Subclassing the Dispatcher--></title>
+
+        <para>
+            <code>Zend_Controller_Front</code> сначала вызывает
+            маршрутизатор для получения первого действия в запросе. Затем он
+            входит в цикл диспетчеризации, в котором вызывается диспетчер для
+            запуска действия.
+<!--
+            <code>Zend_Controller_Front</code> will first call the router to
+            determine the first action in the request. It then enters a dispatch
+            loop, which calls on the dispatcher to dispatch the action.
+-->
+        </para>
+
+        <para>
+            Диспетчеру для своей работы требуются различные данные - ему нужно
+            "знать", как формировать имена контроллеров
+            и действий, где искать файлы классов контроллеров, является ли
+            допустимым или нет предоставленное имя модуля, и API для
+            определения на основе другой доступной информации того, возможна
+            ли диспетчеризация данного запроса.
+<!--
+            The dispatcher needs a variety of data in order to do its work - it
+            needs to know how to format controller and action names, where to
+            look for controller class files, whether or not a provided module
+            name is valid, and an API for determining if a given request is even
+            dispatchable based on the other information available.
+-->
+        </para>
+
+        <para>
+            <code>Zend_Controller_Dispatcher_Interface</code> определяет
+            следующие методы, которые требуется использовать во всех реализациях
+            диспетчера:
+<!--
+            <code>Zend_Controller_Dispatcher_Interface</code> defines the
+            following methods as required for any dispatcher implementation:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+interface Zend_Controller_Dispatcher_Interface
+{
+    /**
+     * Формирует из данной строки имя класса контроллера.
+     *
+     * @param string $unformatted
+     * @return string
+     */
+    public function formatControllerName($unformatted);
+
+    /**
+     * Формирует из данной строки имя метода действия.
+     *
+     * @param string $unformatted
+     * @return string
+     */
+    public function formatActionName($unformatted);
+
+    /**
+     * Определяет, доступен ли для диспетчеризации запрос
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return boolean
+     */
+    public function isDispatchable(Zend_Controller_Request_Abstract $request);
+
+    /**
+     * Устанавливает пользовательский параметр
+     * (через фронт-контроллер или для локального использования) 
+     * 
+     * @param string $name 
+     * @param mixed $value 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setParam($name, $value);
+
+    /**
+     * Устанавливает массив пользовательских параметров
+     * 
+     * @param array $params 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setParams(array $params);
+
+    /**
+     * Возвращает один пользовательский параметр
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
+     * Возвращает все пользовательские параметры
+     * 
+     * @return array
+     */
+    public function getParams();
+
+    /**
+     * Очищает весь стек пользовательских параметров
+     * или удаляет один пользовательский параметр
+     *
+     * @param null|string|array один ключ или массив ключей для удаления
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function clearParams($name = null);
+
+    /**
+     * Устанавливает объект ответа для использования, если есть
+     * 
+     * @param Zend_Controller_Response_Abstract|null $response 
+     * @return void
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response = null);
+
+    /**
+     * Возвращает объект ответа, если есть
+     * 
+     * @return Zend_Controller_Response_Abstract|null
+     */
+    public function getResponse();
+
+    /**
+     * Добавляет директорию в стек директорий контроллеров
+     * 
+     * @param string $path 
+     * @param string $args
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function addControllerDirectory($path, $args = null);
+
+    /**
+     * Устанавливает директорию(-ии), в которой хранятся файлы контроллеров
+     *
+     * @param string|array $dir 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setControllerDirectory($path);
+
+    /**
+     * Возвращает установленную в данное время директорию(-ии) для поиска
+     * файлов контроллеров
+     * 
+     * @return array
+     */
+    public function getControllerDirectory();
+
+    /**
+     * Направляет запрос (модулю/)контроллеру/действию.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @param  Zend_Controller_Response_Abstract $response
+     * @return Zend_Controller_Request_Abstract|boolean
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
+
+    /**
+     * Валиден или нет данный модуль
+     * 
+     * @param string $module 
+     * @return boolean
+     */
+    public function isValidModule($module);
+}]]>
+        </programlisting>
+
+        <para>
+            Однако в большинстве случаев вам достаточно будет только расширить
+            абстрактный класс <code>Zend_Controller_Dispatcher_Abstract</code>,
+            в котором уже определены все эти методы или класс
+            <code>Zend_Controller_Dispatcher_Standard</code> для изменения
+            функционала стандартного диспетчера.
+<!--
+            In most cases, however, you should simply extend the abstract class
+            <code>Zend_Controller_Dispatcher_Abstract</code>, in which each of
+            these have already been defined, or
+            <code>Zend_Controller_Dispatcher_Standard</code> to modify
+            functionality of the standard dispatcher.
+-->
+        </para>
+
+        <para>
+            Основаниями для создания подклассов диспетчера могут быть
+            желание использовать иную схему именования в своих контроллерах
+            действий, либо другую парадигму диспетчеризации -
+            например, файлы действий в директориях контроллеров вместо методов
+            действий в классах контроллеров.
+<!--
+            Possible reasons to subclass the dispatcher include a desire to
+            use a different class or method naming schema in your action
+            controllers, or a desire to use a different dispatching paradigm
+            such as dispatching to action files under controller directories
+            (instead of dispatching to class methods).
+-->
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,122 @@
+<sect1 id="zend.config.theory_of_operation">
+    <title>Основы работы<!--Theory of Operation--></title>
+    <para>
+        Конфигурационные данные передаются конструктору <code>Zend_Config</code>
+        в виде ассоциативного массива, который может быть многомерным, что
+        дает возможность организовывать данные от общего к частному. Классы
+        адаптеров предназначены для того, чтобы преобразовать конфигурационные
+        данные из хранилища в ассоциативный массив для конструктора
+        <code>Zend_Config</code>. Пользовательские скрипты могут также
+        передавать массивы непосредственно конструктору <code>Zend_Config</code>
+        без использования класса адаптера, так как это может быть наиболее
+        подходящим решением в определенных ситуациях.
+<!--
+        Configuration data are made accessible to the <code>Zend_Config</code>
+        constructor through an associative array, which may be multidimensional,
+        in order to support organizing the data from general to specific.
+        Concrete adapter classes function to adapt configuration data from
+        storage to produce the associative array for the <code>Zend_Config</code>
+        constructor. User scripts may provide such arrays directly to the
+        <code>Zend_Config</code> constructor, without using an adapter class,
+        since it may be appropriate to do so in certain situations.
+-->
+    </para>
+    <para>
+        <code>Zend_Config</code> реализует интерфейсы <code>Countable</code>
+        и <code>Iterator</code> для того, чтобы обеспечить простой доступ
+        к конфигурационным данным. Поэтому применительно к объектам
+        <code>Zend_Config</code> можно использовать функцию
+        <ulink url="http://php.net/count"><code>count()</code></ulink> и
+        такие конструкции языка PHP, как
+        <ulink url="http://php.net/foreach"><code>foreach</code></ulink>.
+<!--
+        <code>Zend_Config</code> implements the <code>Countable</code> and
+        <code>Iterator</code> interfaces in order to facilitate simple access
+        to configuration data. Thus, one may use the
+        <ulink url="http://php.net/count"><code>count()</code></ulink> function
+        and PHP constructs such as
+        <ulink url="http://php.net/foreach"><code>foreach</code></ulink>
+        upon <code>Zend_Config</code> objects.
+-->
+    </para>
+    <para>
+        По умолчанию через <code>Zend_Config</code> конфигурационные данные
+        доступны только для чтения, и операция присваивания (например,
+        <code><![CDATA[$config->database->host = 'example.com']]></code>)
+        вызовет исключение. Это поведение, принятое по умолчанию,
+        может быть отменено при вызове конструктора и тогда
+        можно будет изменять конфигурационные данные.
+<!--
+        By default, configuration data made available through
+        <code>Zend_Config</code> are read-only, and an assignment (e.g.,
+        <code><![CDATA[$config->database->host = 'example.com']]></code>)
+        results in a thrown exception. This default behavior may be overridden
+        through the constructor, however, to allow modification of data values.
+-->
+        <note>
+            <para>
+                Важно не путать изменение данных в памяти с сохранением
+                конфигурационных данных на физическом носителе данных. Инструменты
+                для создания и изменения конфигурационных данных для различных
+                носителей данных не входят в сферу назначений <code>Zend_Config</code>.
+                Для этих целей доступны продукты сторонних разработчиков
+                с открытым исходным кодом к различным носителям информации.
+<!--
+                It is important not to confuse such in-memory modifications with
+                saving configuration data out to specific storage media. Tools for
+                creating and modifying configuration data for various storage media
+                are out of scope with respect to <code>Zend_Config</code>. Third
+                party open source solutions are readily available for the purpose
+                of creating and modifying configuration data for various storage media.
+-->
+            </para>
+        </note>
+    </para>
+    <para>
+        Классы адаптеров наследуют от класса <code>Zend_Config</code>,
+        и, следовательно, имеют тот же функционал.
+<!--
+        Adapter classes inherit from the <code>Zend_Config</code> class since
+        they utilize its functionality.
+-->
+    </para>
+    <para>
+        Семейство классов <code>Zend_Config</code> дает возможность
+        организовывать конфигурационные данные, разбивая их на разделы.
+        В объекты адаптеров <code>Zend_Config</code> может быть загружен
+        один определенный раздел, несколько разделов или все разделы
+        данных (если не указан ни один раздел).
+<!--
+        The <code>Zend_Config</code> family of classes enables configuration
+        data to be organized into sections. <code>Zend_Config</code> adapter
+        objects may be loaded with a single specified section, multiple
+        specified sections, or all sections (if none are specified).
+-->
+    </para>
+    <para>
+        Классы адаптеров <code>Zend_Config</code> поддерживают единую модель
+        наследования, которая позволяет одному разделу наследовать
+        конфигурационные данные из другого. Это сделано для того, чтобы
+        уменьшить или устранить необходимость дублирования конфигурационных
+        данных разного назначения. Наследующий раздел может замещать данные,
+        унаследованные от родительского раздела. Как и при наследовании классов PHP,
+        раздел может наследовать от родительского раздела, который в свою очередь
+        наследует от другого и т.д., но множественное наследование (т.е. раздел
+        C наследует напрямую от разделов A и B) не поддерживается.
+<!--
+        <code>Zend_Config</code> adapter classes support a single inheritance
+        model that enables configuration data to be inherited from one section
+        of configuration data into another. This is provided in order to reduce
+        or eliminate the need for duplicating configuration data for different
+        purposes. An inheriting section may also override the values that it
+        inherits through its parent section. Like PHP class inheritance, a
+        section may inherit from a parent section, which may inherit from a
+        grandparent section, and so on, but multiple inheritance (i.e.,
+        section C inheriting directly from parent sections A and B) is not
+        supported.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

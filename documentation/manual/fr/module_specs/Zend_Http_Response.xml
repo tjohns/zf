@@ -1,0 +1,65 @@
+<sect1 id="zend.http.response">
+    <title>Zend_Http_Response</title>
+    <sect2 id="zend.http.response.introduction">
+        <title>Introduction</title>
+        <para>
+            La classe <code>Zend_Http_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.http.client" />.
+            Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue suite à une requête :
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>isError()</code>: Renvoie TRUE si un code HTTP d'erreur a été reçu; FALSE sinon
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>isSuccessful()</code>: Renvoie TRUE si un code HTTP de succès a été reçu; FALSE sinon
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>isRedirect()</code>: Renvoie TRUE si un code HTTP de redirection a été reçu; FALSE sinon
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getStatus()</code>: Renvoie le code d'état HTTP
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getHeaders()</code>: Renvoie un tableau des en-têtes HTTP de la réponse, sous forme de chaîne
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>getBody()</code>: Renvoie le corps de la réponse HTTP sous forme de chaîne
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <example>
+            <title>Manipuler les données d'une réponse HTTP</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
+try {
+    $http = new Zend_Http_Client('http://exemple.org');
+    $reponse = $http->get();
+    if ($reponse->isSuccessful()) {
+        echo $reponse->getBody();
+    } else {
+        echo "<p>Une erreur a eu lieu</p>\n";
+        echo "Code d'état HTTP : " . $reponse->getStatus() . "\n";
+        echo "En-têtes HTTP :\n";
+        $enTetesDeReponse = $reponse->getHeaders();
+        foreach ($enTetesDeReponse as $nomEnTete => $valeurEnTete) {
+            echo "$nomEnTete: $valeurEnTete\n";
+        }
+    }
+} catch (Zend_Http_Client_Exception $e) {
+    echo '<p>Une erreur a eu lieu (' .$e->getMessage(). ')</p>';
+}]]>
+    		</programlisting>
+        </example>
+    </sect2>
+</sect1>

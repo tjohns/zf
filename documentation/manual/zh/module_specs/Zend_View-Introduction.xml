@@ -1,0 +1,96 @@
+<sect1 id="zend.view.introduction">
+
+    <title>简介</title>
+
+    <para>
+        Zend_View是用来在MVC模式中处理View（视图）部份的一个类。也就是说它用来使视图部份的代码与Model及controller部分分离。它提供了helper,output filter,variable escaping等几个功能组件。
+    </para>
+
+    <para>
+        Zend_View使用PHP本身作为你的模板，或者你也可以建立其它模板引擎的实例，并用你的view代码来对其进行操作。
+    </para>
+
+    <para>
+       使用Zend_View主要有两步： 1. 你的Controller建立一个Zend_View实例，并将需要的变量传递给它； 2. Controller告诉Zend_View显示一个特定的视图，生成View输出的内容。
+    </para>
+
+    <sect2 id="zend.view.introduction.controller">
+
+        <title>控制器脚本</title>
+
+        <para>
+            下面是一个简单的例子。假设你有一个书籍清单，想把它打印出来。控制器代码可能看起来是这样的：
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+//使用一个模型来获取书籍作者和标题相关数据
+$data = array(
+    array(
+        'author' => 'Hernando de Soto',
+        'title' => 'The Mystery of Capitalism'
+    ),
+    array(
+        'author' => 'Henry Hazlitt',
+        'title' => 'Economics in One Lesson'
+    ),
+    array(
+        'author' => 'Milton Friedman',
+        'title' => 'Free to Choose'
+    )
+);
+
+//传递数据给Zend_View类的实例　
+Zend_Loader::loadClass('Zend_View');
+$view = new Zend_View();
+$view->books = $data;
+
+//调用一段View代码"booklist.php"来显示数据
+echo $view->render('booklist.php');
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.view.introduction.view">
+
+        <title>视图脚本</title>
+
+        <para>
+            现在我们看看相关的视图代码"booklist.php"。这是一段普通的代码，但是有一点特别：它是在Zend_View实例的内部运行的。 (controller传递给Zend_View实例的变量是public的)。一段非常基本的视图代码看起来是这样的：
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+
+    <!-- A table of some books. -->
+    <table>
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+        </tr>
+
+        <?php foreach ($this->books as $key => $val): ?>
+        <tr>
+            <td><?php echo $this->escape($val['author']) ?></td>
+            <td><?php echo $this->escape($val['title']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+
+    </table>
+
+<?php else: ?>
+
+    <p>There are no books to display.</p>
+
+<?php endif; ?>]]>
+        </programlisting>
+
+        <para>
+            注意我们使用escapte()来转义输出。
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

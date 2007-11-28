@@ -1,0 +1,124 @@
+<sect1 id="zend.search.lucene.java-lucene">
+    <title>与 Java Lucene 的互操作性</title>
+
+    <sect2 id="zend.search.lucene.index-creation.file-formats">
+        <title>文件格式</title>
+        <para>
+          Zend_Search_Lucene 的索引文件格式和 1.4 或更高版本的 Lucene 二进制兼容。
+        </para>
+
+        <para>
+          关于文件格式的更详细的描述在这里：
+          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.index-directory">
+        <title>索引目录</title>
+
+        <para>
+        在创建了索引之后，索引目录中将包含下列文件：
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                <filename>segments</filename> 文件是一个索引分段的清单。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                <filename>*.cfs</filename> 文件包含索引分段。请注意！优化了的索引总是只有一个分段。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                <filename>deletable</filename> 文件是一个不再被索引使用但是无法删除的文件清单。
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.java-lucene.source-code">
+        <title>Java 源代码</title>
+        <para>
+            下面的 Java 程序提供了一个如何使用 Java Lucene 索引文件的例子：
+        </para>
+
+        <programlisting role="java"><![CDATA[
+/**
+* Index creation:
+*/
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.document.*;
+
+import java.io.*
+
+...
+
+IndexWriter indexWriter = new IndexWriter("/data/my_index",
+                                          new SimpleAnalyzer(), true);
+
+...
+
+String filename = "/path/to/file-to-index.txt"
+File f = new File(filename);
+
+Document doc = new Document();
+doc.add(Field.Text("path", filename));
+doc.add(Field.Keyword("modified",DateField.timeToString(f.lastModified())));
+doc.add(Field.Text("author", "unknown"));
+FileInputStream is = new FileInputStream(f);
+Reader reader = new BufferedReader(new InputStreamReader(is));
+doc.add(Field.Text("contents", reader));
+
+indexWriter.addDocument(doc);]]>
+        </programlisting>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.java-lucene.jar">
+        <title>使用 LuceneIndexCreation.jar</title>
+
+        <para>
+            为了更快的开始使用 Zend_Search_Lucene，人们创建了一个基于 Java 的 JAR 文件用以通过命令行生成索引。要了解 JAR 文件的详情，请访问：
+         <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>。
+        </para>
+
+        <para>
+            LuceneIndexCreation.jar 读取文本文件并从它们创建索引。用法是：
+        <programlisting role="java"><![CDATA[
+    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
+    -c   - force index to be case sensitive
+    -s   - store content in the index
+    ]]></programlisting>
+            这个命令读取目录 <code>&lt;document_dir&gt;</code>，包括它的子目录，并产生 Lucene 索引。索引是一组保存在由 <code>&lt;index_dir&gt;</code>指定的独立目录中的文件。
+        </para>
+
+        <para>
+            对于每一个被索引的文档，LuceneIndexCreation 创建一个包含三个字段的文档对象：一个 <emphasis>contents</emphasis>
+            内容字段包含文档内容，一个 <emphasis>modified</emphasis> 修改字段包含文档的修改时间，以及一个
+          <emphasis>path</emphasis> 路径字段包含完整的路径和文件名。
+        </para>
+
+        <para>
+            如果声明了 <option>-c</option> 选项，则索引被强制为大小写相关。否则所有搜索项在加入索引之前被转化为小写。
+        </para>
+
+        <para>
+            如果声明了 <option>-s</option> 那么文档的内容也被保存在索引中，可以通过 <code>path</code> 和 <code>modified</code> 字段直接获取。
+        </para>
+
+        <para>
+            否则，只有 <code>path</code> 和 <code>modified</code> 字段被保存，而 <code>contents</code> 字段仅进行索引。这种情况下文档内容只能通过其路径字段从原始文件中获取。
+        </para>
+
+        <para>
+            请小心，使用 <option>-s</option> 选项会让索引的大小扩大近五倍。
+        </para>
+    </sect2>
+
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

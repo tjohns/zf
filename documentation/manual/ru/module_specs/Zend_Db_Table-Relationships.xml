@@ -1,0 +1,1483 @@
+<sect1 id="zend.db.table.relationships">
+
+    <title>Связи между таблицами Zend_Db_Table</title>
+
+    <sect2 id="zend.db.table.relationships.introduction">
+
+        <title>Введение<!--Introduction--></title>
+
+        <para>
+            В реляционной БД таблицы имеют связи друг с другом. Запись в таблице
+            может быть связана с одной или более записей в другой таблице с
+            использованием ограничений ссылочной целостности, определенных в
+            конкретной БД.
+<!--
+            Tables have relationships to each other in a relational database.
+            An entity in one table can be linked to one or more entities in
+            another table by using referential integrity constraints
+            defined in the database schema.
+-->
+        </para>
+
+        <para>
+            Класс Zend_Db_Table_Row имеет методы для запрашивания связанных
+            строк в другой таблице.
+<!--
+            The Zend_Db_Table_Row class has methods for querying
+            related rows in other tables.
+-->
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.relationships.defining">
+
+        <title>Определение связей<!--Defining Relationships--></title>
+
+        <para>
+            В этом разделе мы будем использовать для примера базу данных,
+            которая служит для отслеживания ошибок в проекте разработки ПО. Эта
+            база данных содержит три таблицы:
+<!--
+
+            In this section, we use an example database that shows
+            several types of relationships between tables.
+            This database tracks bugs in a software development
+            project.  The database contains three tables:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Accounts</code> (учетные записи) хранит информацию
+                    о всех пользователях системы отслеживания ошибок.
+<!--
+                    <code>Accounts</code> stores information about
+                    each user of the bug-tracking database.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>Products</code> (продукты) хранит информацию о всех
+                    продуктах, для которых могут вестись журналы ошибок.
+<!--
+                    <code>Products</code> stores information about
+                    each product for which a bug can be logged.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>Bugs</code> (ошибки) хранит информацию об ошибках,
+                    включая: продукт, в котором обнаружена ошибка, лицо,
+                    сообщившее об ошибке, лицо, которому назначено устранение
+                    ошибки и лицо, которому назначена проверка устранения
+                    ошибки.
+<!--
+
+                    <code>Bugs</code> stores information about bugs,
+                    including the product that has the bug,
+                    the person who reported the bug,
+                    the person who is assigned to fix the bug,
+                    and the person who is assigned to verify the fix.
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Следующий псевдокод для определения данных SQL описывает таблицу в
+            этой БД.
+<!--
+            The following SQL data definition language pseudocode
+            describes the tables in this example database.
+-->
+        </para>
+
+        <programlisting role="sql"><![CDATA[
+CREATE TABLE accounts (
+  account_id        PRIMARY KEY,
+  name              VARCHAR
+);
+
+CREATE TABLE products (
+  product_id        PRIMARY KEY,
+  product_name      VARCHAR
+);
+
+CREATE TABLE bugs (
+  bug_id            PRIMARY KEY,
+  product_id        FOREIGN KEY REFERENCES products(product_id),
+  reported_by       FOREIGN KEY REFERENCES accounts(account_id),
+  assigned_to       FOREIGN KEY REFERENCES accounts(account_id),
+  verified_by       FOREIGN KEY REFERENCES accounts(account_id),
+  bug_description   VARCHAR,
+  bug_status        VARCHAR
+);]]>
+        </programlisting>
+
+        <para>
+            Таблица <code>products</code> имеет связь "один-ко-многим" с
+            таблицей <code>bugs</code>.
+            Таблица <code>accounts</code> также имеет связь "один-ко-многим" с
+            таблицей <code>bugs</code>.
+            Таблица <code>products</code> имеет связь "многие-ко-многим" с
+            таблицей <code>accounts</code>.
+<!--
+
+            The <code>products</code> table has a one-to-many relationship to
+            the <code>bugs</code> table.
+            The <code>accounts</code> table also has a one-to-many relationship
+            to the <code>bugs</code> table.
+            Thus the <code>products</code> table has a many-to-many relationship
+            to the <code>accounts</code> table.
+-->
+        </para>
+
+        <para>
+            Также обратите внимание, что таблица <code>bugs</code> содержит
+            несколько внешних ключей, ссылающихся на таблицу
+            <code>accounts</code>. Для данной ошибки эти внешние ключи могут
+            ссылаться на разные строки в таблице <code>accounts</code>.
+<!--
+            Also notice that the <code>bugs</code> table contains multiple
+            foreign key references to the <code>accounts</code> table.
+            Each of these foreign keys may reference a different row in the
+            <code>accounts</code> table for a given bug.
+-->
+        </para>
+
+        <para>
+            Определите классы для каждой из этих таблиц, расширяя абстрактный
+            класс Zend_Db_Table_Abstract, как описано в <xref
+            linkend="zend.db.table.defining" />. В классах объявите связи между
+            таблицами в массивах <code>protected $_referenceMap</code>
+            и <code>protected $_dependentTables</code>.
+<!--
+            Define classes for each of these tables, extending the abstract
+            class Zend_Db_Table_Abstract, as described in
+            <xref linkend="zend.db.table.defining" />.
+            In the class file for each child table, declare the reference
+            relationships in the <code>protected $_referenceMap</code>
+            and <code>protected $_dependentTables</code>
+            array variables.
+-->
+        </para>
+
+        <para>
+            Ниже приведено определение классов для этих таблиц:
+<!--
+            Below are the PHP class definitions for these tables:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+class Accounts extends Zend_Db_Table_Abstract
+{
+    protected $_name            = 'accounts';
+    protected $_primary         = array('account_id');
+    protected $_dependentTables = array('Bugs');
+}
+
+class Products extends Zend_Db_Table_Abstract
+{
+    protected $_name            = 'products';
+    protected $_primary         = array('product_id');
+    protected $_dependentTables = array('Bugs');
+}
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name            = 'bugs';
+    protected $_referenceMap    = array(
+        'Reporter' => array(
+            'columns'           => 'reported_by',
+            'refTableClass'     => 'Accounts',
+            'refColumns'        => 'account_id'
+        ),
+        'Engineer' => array(
+            'columns'           => 'assigned_to',
+            'refTableClass'     => 'Accounts',
+            'refColumns'        => 'account_id'
+        ),
+        'Verifier' => array(
+            'columns'           => array('verified_by'),
+            'refTableClass'     => 'Accounts',
+            'refColumns'        => array('account_id')
+        ),
+        'Product' => array(
+            'columns'           => array('product_id'),
+            'refTableClass'     => 'Products',
+            'refColumns'        => array('product_id')
+        )
+    );
+}
+
+?>]]>
+        </programlisting>
+
+        <para>
+            Объявите массив <code>$_dependentTables</code> в классе для
+            родительской таблицы. Перечислите имена классов всех зависимых
+            таблиц. Используйте имена классов, а не таблиц в БД.
+<!--
+            Declare the <code>$_dependentTables</code> array in the
+            class for the parent table.  List the class name for each
+            dependent table.  Use the class name, not the physical name
+            of the SQL table.
+-->
+        </para>
+
+        <para>
+            Объявите массив <code>$_referenceMap</code> во всех классах
+            зависимых таблиц. Это ассоциативный массив правил связей. Правило
+            связи определяет, какая таблица является родительской в связи и
+            какие столбцы в зависимой таблице ссылаются на какие столбцы в
+            родительской таблице.
+<!--
+            Declare the <code>$_referenceMap</code> array in the
+            class for each dependent table.  This is an associative array
+            of reference "rules".  A reference rule identifies which table
+            is the parent table in the relationship, and also lists
+            which columns in the dependent table reference which columns
+            in the parent table.
+-->
+        </para>
+
+        <para>
+            Ключом правила является строка, используемая как индекс массива
+            <code>$_referenceMap</code>. Этот ключ правила используется для
+            идентификации каждой связи. Выбирайте для него описательное имя.
+            Лучше всего использовать строку, которая может быть частью имени
+            метода, как вы увидите позднее.
+<!--
+            The rule key is a string used as an index to the
+            <code>$_referenceMap</code> array.
+            This rule key is used to identify each reference relationship.
+            Choose a descriptive name for this rule key.
+            It's best to use a string that can be part of a PHP method name,
+            as you will see later.
+-->
+        </para>
+
+        <para>
+            В примере PHP-кода выше ключами правил являются:
+            <code>'Reporter'</code>,
+            <code>'Engineer'</code>,
+            <code>'Verifier'</code>, и
+            <code>'Product'</code>.
+<!--
+            In the example PHP code above, the rule keys are:
+            <code>'Reporter'</code>,
+            <code>'Engineer'</code>,
+            <code>'Verifier'</code>, and
+            <code>'Product'</code>.
+-->
+        </para>
+
+        <para>
+            Значением каждого правила в массиве <code>$_referenceMap</code>
+            является также ассоциативный массив. Элементы этого массива описаны
+            ниже:
+<!--
+            The value of each rule entry in the <code>$_referenceMap</code>
+            array is also an associative array.
+            The elements of this rule entry are described below:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">columns</emphasis> =>
+                    Строка или массив строк, в котором перечислены имена
+                    столбцов внешних ключей в зависимой таблице.
+<!--
+                    A string or an array of strings naming the foreign key column name(s)
+                    in the dependent table.
+-->
+                </para>
+                <para>
+                    Обычно это один столбец, но некоторые таблицы имеют
+                    составные ключи (из нескольких столбцов).
+<!--
+                    It's common for this to be a single column, but some
+                    tables have multi-column keys.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">refTableClass</emphasis> =>
+                    Имя класса родительской таблицы. Используйте имя класса, а
+                    не таблицы в БД.
+<!--
+                    The class name of the parent table.
+                    Use the class name, not the physical name of the SQL table.
+-->
+                </para>
+                <para>
+                    Обычно зависимые таблицы имеют одну связь со своей
+                    родительской таблицей, но некоторые таблицы имеют
+                    множественные связи с одной и той же родительской таблицей.
+                    В базе данных, которую мы рассматриваем для примера, таблица
+                    <code>bugs</code> ссылается на таблицу
+                    <code>products</code>, но имеет также три связи с таблицей
+                    <code>accounts</code>.
+                    Помещайте каждую ссылку в отдельную запись в массиве
+                    <code>$_referenceMap</code>.
+<!--
+                    It's common for a dependent table to have only one reference
+                    to its parent table, but some tables have multiple
+                    references to the same parent table.  In the example
+                    database, there is one reference from the <code>bugs</code>
+                    table to the <code>products</code> table, but three
+                    references from the <code>bugs</code> table to the
+                    <code>accounts</code> table.
+                    Put each reference in a separate entry in
+                    the <code>$_referenceMap</code> array.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">refColumns</emphasis> =>
+                    Строка или массив строк, в котором перечислены имена
+                    столбцов первичного ключа в родительской таблице.
+<!--
+                    <emphasis role="strong">refColumns</emphasis> =>
+                    A string or an array of strings naming the primary key column name(s) in
+                    the parent table.
+-->
+                </para>
+                <para>
+                    Обычно это один столбец, но некоторые таблицы имеют
+                    составные ключи. Если ссылка использует составной ключ, то
+                    порядок столбцов в элементе <code>'columns'</code> должен
+                    соответствовать порядку столбцов в элементе
+                    <code>'refColumns'</code>.
+<!--
+                    It's common for this to be a single column, but
+                    some tables have multi-column keys.
+                    If the reference uses a
+                    multi-column key, the order of columns in the
+                    <code>'columns'</code> entry must match the order of
+                    columns in the <code>'refColumns'</code> entry.
+-->
+                </para>
+                <para>
+                    Этот элемент является опциональным. Если вы не определите
+                    <code>refColumns</code>, то по умолчанию используются имена
+                    столбцов, объявленных как столбцы первичных ключей
+                    родительской таблицы.
+<!--
+                    It is optional to specify this element.
+                    If you don't specify the <code>refColumns</code>,
+                    the column(s) reported as the primary key columns
+                    of the parent table are used by default.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">onDelete</emphasis> =>
+                    Правило для действия, выполняемого, когда в родительской
+                    таблице удаляется строка. За более подробной информацией см.
+                    "<xref linkend="zend.db.table.relationships.cascading" />".
+<!--
+                    The rule for an action to execute if a row is
+                    deleted in the parent table.
+                    See "<xref linkend="zend.db.table.relationships.cascading" />" for
+                    more information.
+-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">onUpdate</emphasis> =>
+                    Правило для действия, выполняемого, когда изменяются
+                    значения в столбцах первичного ключа родительской таблицы.
+                    За более подробной информацией см.
+                    "<xref linkend="zend.db.table.relationships.cascading" />".
+<!--
+                    <emphasis role="strong">onUpdate</emphasis> =>
+                    The rule for an action to execute if values in
+                    primary key columns are updated in the parent table.
+                    See "<xref linkend="zend.db.table.relationships.cascading" />" for
+                    more information.
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.relationships.fetching.dependent">
+
+        <title>Извлечение зависимых строк<!--Fetching a Dependent Rowset--></title>
+
+        <para>
+            Если вы имеете объект Row (строка) в результате запроса к
+            родительской таблице, то вы можете извлечь строки из зависимых
+            таблиц, ссылающихся на текущую строку.
+            Используйте этот метод:
+<!--
+            If you have a Row object as the result of a query on a parent
+            table, you can fetch rows from dependent tables that reference
+            the current row.
+            Use the method:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$row->findDependentRowset($table, [$rule])
+]]>
+        </programlisting>
+
+        <para>
+            Этот метод возвращает объект Zend_Db_Table_Rowset_Abstract,
+            содержащий набор строк из зависимой таблицы <code>$table</code>,
+            ссылающихся на строку, представленную объектом <code>$row</code>.
+<!--
+            This method returns a Zend_Db_Table_Rowset_Abstract object,
+            containing a set of rows from the dependent table
+            <code>$table</code> that refer to the row identified by
+            the <code>$row</code> object.
+-->
+        </para>
+
+        <para>
+            Первый аргумент <code>$table</code> может быть строкой с именем
+            класса зависимой таблицы. Вы можете также определить зависимую
+            таблицу, используя объект класса этой таблицы.
+<!--
+            The first argument <code>$table</code> can be a string
+            that specifies the dependent table by its class name.
+            You can also specify the dependent table by using an object
+            of that table class.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.fetching.dependent.example">
+            <title>Извлечение зависимых строк<!--Fetching a Dependent Rowset--></title>
+            <para>
+                Этот пример демонстрирует получение объекта строки из таблицы
+                <code>Accounts</code> и поиск ошибок в таблице
+                <code>Bugs</code>, о которых сообщил данный пользователь.
+<!--
+                This example shows getting a Row object from the table
+                <code>Accounts</code>, and finding the <code>Bugs</code>
+                reported by that account.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$accountsTable      = new Accounts();
+$accountsRowset     = $accountsTable->find(1234);
+$user1234           = $accountsRowset->current();
+
+$bugsReportedByUser = $user1234->findDependentRowset('Bugs');
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Втрой аргумент <code>$rule</code> является опциональным. Это строка
+            с ключом правила в массиве <code>$_referenceMap</code> класса
+            зависимой таблицы.
+            Если вы не определите правило, то будет использоваться первое
+            правило в массиве, ссылающееся на родительскую таблицу.
+            Для того, чтобы использовать правило, отличное от первого,
+            необходимо указать ключ.
+<!--
+            The second argument <code>$rule</code> is optional.  It is a
+            string that names the rule key in the <code>$_referenceMap</code>
+            array of the dependent table class.
+            If you don't specify a rule, the first rule in the array that
+            references the parent table is used.
+            If you need to use a rule other than the first, you need to
+            specify the key.
+-->
+        </para>
+
+        <para>
+            В примере выше ключ правила не определен, поэтому используется
+            первое правило, соответствующее родительской таблице. Это правило
+            <code>'Reporter'</code>.
+<!--
+            In the example code above, the rule key is not specified, so
+            the rule used by default is the first one that matches
+            the parent table.  This is the rule <code>'Reporter'</code>.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.fetching.dependent.example-by">
+            <title>Извлечение зависимых строк по определенному правилу<!--Fetching a Dependent Rowset By a Specific Rule--></title>
+            <para>
+                Этот пример демонстрирует получение объекта строки из таблицы
+                <code>Accounts</code> и поиск ошибок в таблице
+                <code>Bugs</code>, устранение которых назначено данному
+                пользователю. Ключ правила, соответствующий этой связи в данном
+                примере - <code>'Engineer'</code>.
+<!--
+                This example shows getting a Row object from the table
+                <code>Accounts</code>, and finding the <code>Bugs</code>
+                assigned to be fixed by the user of that account.
+                The rule key string that corresponds to this reference
+                relationship in this example is <code>'Engineer'</code>.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$accountsTable      = new Accounts();
+$accountsRowset     = $accountsTable->find(1234);
+$user1234           = $accountsRowset->current();
+
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Вы можете также запрашивать строки из зависимой таблицы, используя
+            специальный механизм, называемый "магический метод".
+            Zend_Db_Table_Row_Abstract вызывает метод:
+            <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>,
+            если вы вызываете метод объекта строки,
+            соответствующий одному из следующих шаблонов:
+<!--
+            Alternatively, you can query rows from a dependent table using
+            a special mechanism called a "magic method".
+            Zend_Db_Table_Row_Abstract invokes the method:
+            <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>
+            if you invoke a method on the Row object matching either
+            of the following patterns:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>$row->find&lt;TableClass&gt;()</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$row->find&lt;TableClass&gt;By&lt;Rule&gt;()</code>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            В этих шаблонах <code>&lt;TableClass&gt;</code> и
+            <code>&lt;Rule&gt;</code> являются именем класса зависимой таблицы
+            и ключом правила зависимой таблицы, ссылающегося на родительскую
+            таблицу.
+<!--
+            In the patterns above, <code>&lt;TableClass&gt;</code> and
+            <code>&lt;Rule&gt;</code> are strings that correspond
+            to the class name of the dependent table, and the dependent
+            table's rule key that references the parent table.
+-->
+        </para>
+
+        <note>
+            <para>
+                Некоторые фреймворки приложений, такие, как Ruby on Rails,
+                используют механизм, называемый "инфлексией" (inflection) и
+                состоящий в изменении написания идентификаторов в зависимости от
+                использования. Для простоты Zend_Db_Table_Row не предоставляет
+                никакого механизма инфлексии. Имя таблицы и ключ правила в
+                вызовах методов должны в точности соответствовать написанию
+                имени класса таблицы и ключа правила при объявлении.
+<!--
+                Some application frameworks, such as Ruby on Rails, use
+                a mechanism called "inflection" to allow the spelling of
+                identifiers to change depending on usage.
+                For simplicity, Zend_Db_Table_Row does not provide any
+                inflection mechanism.
+                The table identity and the rule key named in the method call
+                must match the spelling of the class and rule key exactly.
+-->
+            </para>
+        </note>
+
+        <example id="zend.db.table.relationships.fetching.dependent.example-magic">
+            <title>Извлечение зависимых строк с использованием магического метода<!--Fetching Dependent Rowsets using the Magic Method--></title>
+            <para>
+                Этот пример демонстрирует поиск зависимых строк, эквивалентный
+                тому, что был в предыдущих примерах. В данном случае приложение
+                использует вызов магического метода вместо передачи имени
+                таблицы и ключа правила в качестве аргументов.
+<!--
+                This example shows finding dependent Rowsets equivalent to
+                those in the previous examples.  In this case, the application
+                uses the magic method invocation instead of specifying the
+                table and rule as strings.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$accountsTable    = new Accounts();
+$accountsRowset   = $accountsTable->find(1234);
+$user1234         = $accountsRowset->current();
+
+// Используется правило связи по умолчанию
+$bugsReportedBy   = $user1234->findBugs();
+
+// Задается правило связи
+$bugsAssignedTo   = $user1234->findBugsByEngineer();
+
+?>]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.relationships.fetching.parent">
+
+        <title>Извлечение родителькой строки<!--Fetching a Parent Row--></title>
+
+        <para>
+            Если вы имеете объект Row в результате запроса к зависимой таблице,
+            то можете извлечь ту строку из родительской таблицы, на которую
+            ссылается зависимая строка.
+            Используйте метод:
+<!--
+            If you have a Row object as the result of a query on a dependent
+            table, you can fetch the row in the parent to which the dependent
+            row refers.
+            Use the method:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$row->findParentRow($table, [$rule])
+]]>
+        </programlisting>
+
+        <para>
+            Зависимая строка всегда должна ссылаться только на одну строку в
+            родительской таблице, поэтому этот метод возвращает объект Row, а не
+            Rowset.
+<!--
+            There always should be exactly one row in the parent table
+            referenced by a dependent row, therefore this method returns
+            a Row object, not a Rowset object.
+-->
+        </para>
+
+        <para>
+            Первый аргумент <code>$table</code> может быть строкой с именем
+            класса родительской таблицы. Вы можете также задавать родительскую
+            таблицу, используя объект класса этой таблицы.
+<!--
+            The first argument <code>$table</code> can be a string
+            that specifies the parent table by its class name.
+            You can also specify the parent table by using an object
+            of that table class.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.fetching.parent.example">
+            <title>Извлечение родительской строки<!--Fetching the Parent Row--></title>
+            <para>
+                Этот пример демонстрирует получение объекта Row из таблицы
+                <code>Bugs</code> (для примера, одна из этих ошибок имеет статус
+                'NEW'), и поиск строки в таблице <code>Accounts</code>,
+                соответствующей пользователю, сообщившем об этой ошибке.
+<!--
+                This example shows getting a Row object from the table
+                <code>Bugs</code> (for example one of those bugs with status
+                'NEW'), and finding the row in the <code>Accounts</code>
+                table for the user who reported the bug.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$bugsTable         = new Bugs();
+$bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
+$bug1              = $bugsRowset->current();
+
+$reporter          = $bug1->findParentRow('Accounts');
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Второй аргумент <code>$rule</code> является опциональным. Это строка
+            с ключом правила в массиве <code>$_referenceMap</code> класса
+            зависимой таблицы.
+            Если вы не определите правило, то будет использоваться первое
+            правило в массиве, ссылающееся на родительскую таблицу.
+            Для того, чтобы использовать правило, отличное от первого,
+            необходимо указать ключ.
+<!--
+            The second argument <code>$rule</code> is optional.  It is a
+            string that names the rule key in the <code>$_referenceMap</code>
+            array of the dependent table class.
+            If you don't specify a rule, the first rule in the array that
+            references the parent table is used.
+            If you need to use a rule other than the first, you need to
+            specify the key.
+-->
+        </para>
+
+        <para>
+            В примере кода выше ключ правила не определен, поэтому используется
+            первое правило, соответствующее родительской таблице. Это правило
+            <code>'Reporter'</code>.
+<!--
+            In the example above, the rule key is not specified, so
+            the rule used by default is the first one that matches
+            the parent table.  This is the rule <code>'Reporter'</code>.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.fetching.parent.example-by">
+            <title>Извлечение родительской строки по определенному правилу<!--Fetching a Parent Row By a Specific Rule--></title>
+            <para>
+                Этот пример демонстрирует получение объекта Row из таблицы
+                <code>Bugs</code> и поиск аккаунта пользователя, которому
+                назначено исправление этой ошибки. Ключ правила,
+                соответствующего этой связи в данном примере -
+                <code>'Engineer'</code>.
+<!--
+                This example shows getting a Row object from the table
+                <code>Bugs</code>, and finding the account for the
+                engineer assigned to fix that bug.
+                The rule key string that corresponds to this reference
+                relationship in this example is <code>'Engineer'</code>.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$bugsTable         = new Bugs();
+$bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
+$bug1              = $bugsRowset->current();
+
+$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Вы можете также запрашивать строки из родительской таблицы,
+            используя "магический метод".
+            Zend_Db_Table_Row_Abstract вызывает метод:
+            <code>findParentRow('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>,
+            если вы вызываете метод объекта Row, соответствующий одному из
+            следующих шаблонов:
+<!--
+            Alternatively, you can query rows from a parent table using
+            a "magic method".
+            Zend_Db_Table_Row_Abstract invokes the method:
+            <code>findParentRow('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>
+            if you invoke a method on the Row object matching either
+            of the following patterns:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>$row->findParent&lt;TableClass&gt;()</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$row->findParent&lt;TableClass&gt;By&lt;Rule&gt;()</code>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            В этих шаблонах <code>&lt;TableClass&gt;</code> и
+            <code>&lt;Rule&gt;</code> - имя класса родительской таблицы и ключ
+            правила зависимой таблицы, ссылающегося на родительскую таблицу.
+<!--
+            In the patterns above, <code>&lt;TableClass&gt;</code> and
+            <code>&lt;Rule&gt;</code> are strings that correspond
+            to the class name of the parent table, and the dependent
+            table's rule key that references the parent table.
+-->
+        </para>
+
+        <note>
+            <para>
+                Имя таблицы и ключ правила в вызовах методов должны в точности
+                соответствовать написанию имени класса таблицы и ключа правила
+                при объявлении.
+<!--
+                The table identity and the rule key named in the method call
+                must match the spelling of the class and rule key exactly.
+-->
+            </para>
+        </note>
+
+        <example id="zend.db.table.relationships.fetching.parent.example-magic">
+            <title>Извлечение родительской строки с использованием магического метода<!--Fetching the Parent Row using the Magic Method--></title>
+            <para>
+                Этот пример демонстрирует поиск родительской строки,
+                эквивалентный тому, что был в предыдущих примерах. В данном
+                случае используется вызов магического метода вместо передачи
+                имени таблицы и ключа правила в качестве аргументов.
+<!--
+                This example shows finding parent Rows equivalent to
+                those in the previous examples.  In this case, the application
+                uses the magic method invocation instead of specifying the
+                table and rule as strings.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$bugsTable         = new Bugs();
+$bugsRowset        = $bugsTable->fetchAll('bug_status = ?', 'NEW');
+$bug1              = $bugsRowset->current();
+
+// Используется правило связи по умолчанию
+$reporter          = $bug1->findParentAccounts();
+
+// Задается правило связи
+$engineer          = $bug1->findParentAccountsByEngineer();
+
+?>]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.relationships.fetching.many-to-many">
+
+        <title>Извлечение строк через связи "многие-ко многим"<!--Fetching a Rowset via a Many-to-many Relationship--></title>
+
+        <para>
+            Если вы имеете объект Row в результате выполнения запроса к одной из
+            таблиц, находящихся в связи "многие-ко-многим" (в рамках данного
+            примера будем называть эту таблицу "исходной"), вы можете извлечь
+            соответствующие строки в другой таблице ("целевая" таблица) через
+            таблицу пересечений. Используйте метод:
+<!--
+            If you have a Row object as the result of a query on one table
+            in a many-to-many relationship (for purposes of the example,
+            call this the "origin" table), you can fetch corresponding rows
+            in the other table (call this the "destination" table)
+            via an intersection table.
+            Use the method:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2]])
+]]>
+        </programlisting>
+
+        <para>
+            Этот метод возвращает объект Zend_Db_Table_Rowset_Abstract,
+            содержащий строки из таблицы <code>$table</code>, соответствующие
+            связи "многие-ко-многим". Текущий объект строки <code>$row</code>
+            исходной таблицы используется в поиске строк в таблице пересечений и
+            производится объединение с целевой таблицей.
+<!--
+            This method returns a Zend_Db_Table_Rowset_Abstract containing rows
+            from the table <code>$table</code>, satisfying the many-to-many
+            relationship.  The current Row object <code>$row</code> from the
+            origin table is used to find rows in the intersection table, and
+            that is joined to the destination table.
+-->
+        </para>
+
+        <para>
+            Первый аргумент <code>$table</code> может быть именем класса целевой
+            таблицы в связи "многие-ко-многим". Вы можете также задавать целевую
+            таблицу, используя объект класса этой таблицы.
+<!--
+            The first argument <code>$table</code> can be a string
+            that specifies the destination table in the many-to-many
+            relationship by its class name.
+            You can also specify the destination table by using an object
+            of that table class.
+-->
+        </para>
+
+        <para>
+            Второй аргумент <code>$intersectionTable</code> может быть именем
+            класса таблицы пересечений между двумя таблицами в связи
+            "многие-ко многим". Вы можете также задавать таблицу пересечений,
+            используя объект класса этой таблицы.
+<!--
+            The second argument <code>$intersectionTable</code> can be a string
+            that specifies the intersection table between the two tables in
+            the the many-to-many relationship by its class name.
+            You can also specify the intersection table by using an object
+            of that table class.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.fetching.many-to-many.example">
+            <title>Извлечение строк через метод для связей "многие-ко-многим"<!--Fetching a Rowset with the Many-to-many Method--></title>
+            <para>
+                Этот пример демонстрирует получение объекта Row из исходной
+                таблицы <code>Accounts</code> и поиск строк в целевой таблице
+                <code>Products</code>, соответствующих продуктам, об ошибках в
+                которых сообщил этот пользователь.
+<!--
+                This example shows geting a Row object from from the origin
+                table <code>Accounts</code>, and finding rows from the
+                destination table <code>Products</code>, representing products
+                against which that account has reported bugs.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$accountsTable    = new Accounts();
+$accountsRowset   = $accountsTable->find(1234);
+$user1234         = $accountsRowset->current();
+
+$productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs');
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Третий и четвертый аргументы <code>$rule1</code> и
+            <code>$rule2</code> являются опциональными. Это строки с ключами
+            правил в массиве <code>$_referenceMap</code> класса таблицы
+            пересечений.
+<!--
+            The third and fourth arguments <code>$rule1</code> and
+            <code>$rule2</code> are optional.
+            These are strings that name the rule keys in the
+            <code>$_referenceMap</code> array of the intersection table.
+-->
+        </para>
+
+        <para>
+            <code>$rule1</code> должен содержать ключ правила для ссылок таблицы
+            пересечений на исходную таблицу. В данном примере это связь между
+            таблицами <code>Bugs</code> и <code>Accounts</code>.
+<!--
+            The <code>$rule1</code> key names the rule for the relationship
+            from the intersection table to the origin table.  In this example,
+            this is the relationship from <code>Bugs</code> to
+            <code>Accounts</code>.
+-->
+        </para>
+
+        <para>
+            <code>$rule2</code> должен содержать ключ правила для ссылок таблицы
+            пересечений на целевую таблицу. В данном примере это связь между
+            таблицами <code>Bugs</code> и <code>Products</code>
+<!--
+            The <code>$rule2</code> key names the rule for the relationship
+            from the intersection table to the destination table.  In this example,
+            this is the relationship from <code>Bugs</code> to
+            <code>Products</code>.
+-->
+        </para>
+
+        <para>
+            Как и в случае методов для извлечения родительских и зависимых
+            строк, если вы не зададите правило, то метод использует первое
+            правило в массиве <code>$_referenceMap</code>, соответствующее
+            таблицам в связи. Если нужно использовать правило, отличное от
+            первого, то необходимо указать ключ.
+<!--
+            Similarly to the methods for finding parent and dependent rows,
+            if you don't specify a rule, the method uses the first rule in the
+            <code>$_referenceMap</code> array that matches the tables in the
+            relationship.  If you need to use a rule other than the first,
+            you need to specify the key.
+-->
+        </para>
+
+        <para>
+            В примере кода выше ключ правила не указан, поэтому по умолчанию
+            используются первые подходящие правила из массива. В данном случае
+            для правила <code>$rule1</code> будет использоваться
+            <code>'Reporter'</code>, для правила <code>$rule2</code> -
+            <code>'Product'</code>.
+<!--
+            In the example code above, the rule key is not specified, so
+            the rules used by default are the first ones that match.
+            In this case, <code>$rule1</code> is <code>'Reporter'</code>
+            and <code>$rule2</code> is <code>'Product'</code>.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.fetching.many-to-many.example-by">
+            <title>Извлечение строк через метод для связей "многие-ко-многим" по определенному правилу<!--Fetching a Rowset with the Many-to-many Method By a Specific Rule--></title>
+            <para>
+                Этот пример демонстрирует получение объекта Row из исходной
+                таблицы <code>Accounts</code> и поиск строк в целевой таблице,
+                <code>Products</code>, соответствующих продуктам, ошибки в
+                которых должен исправить этот пользователь.
+<!--
+                This example shows geting a Row object from from the origin
+                table <code>Accounts</code>, and finding rows from the
+                destination table <code>Products</code>, representing products
+                for which that account is assigned to fix bugs.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$accountsTable    = new Accounts();
+$accountsRowset   = $accountsTable->find(1234);
+$user1234         = $accountsRowset->current();
+
+$productsRowset   = $user1234->findManyToManyRowset('Products', 'Bugs', 'Engineer');
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Вы можете также запрашивать строки из целевой таблицы в связи
+            "многие-ко-многим", используя "магический метод".
+            Zend_Db_Table_Row_Abstract вызывает метод
+            <code>findManyToManyRowset('&lt;TableClass&gt;', '&lt;IntersectionTableClass&gt;', '&lt;Rule1&gt;', '&lt;Rule2&gt;')</code>, если вы вызываете метод, соотвествующий
+            одному из следующих шаблонов:
+<!--
+            Alternatively, you can query rows from the destination table
+            in a many-to-many relationship using a "magic method."
+            Zend_Db_Table_Row_Abstract invokes the method:
+            <code>findManyToManyRowset('&lt;TableClass&gt;', '&lt;IntersectionTableClass&gt;', '&lt;Rule1&gt;', '&lt;Rule2&gt;')</code>
+            if you invoke a method matching any of the following patterns:
+-->
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>$row->find&lt;TableClass&gt;Via&lt;IntersectionTableClass&gt;()</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$row->find&lt;TableClass&gt;Via&lt;IntersectionTableClass&gt;By&lt;Rule1&gt;()</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$row->find&lt;TableClass&gt;Via&lt;IntersectionTableClass&gt;By&lt;Rule1&gt;And&lt;Rule2&gt;()</code>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            В этих шаблонах <code>&lt;TableClass&gt;</code> и
+            <code>&lt;IntersectionTableClass&gt;</code> являются именами классов
+            целевой таблицы и таблицы пересечений
+            соответственно. <code>&lt;Rule1&gt;</code> и
+            <code>&lt;Rule2&gt;</code> являются ключами правил в таблице
+            пересечений, соответствующими исходной таблице и целевой таблице
+            соответственно.
+<!--
+            In the patterns above, <code>&lt;TableClass&gt;</code> and
+            <code>&lt;IntersectionTableClass&gt;</code> are strings
+            that correspond to the class names of the destination table
+            and the intersection table, respectively.
+            <code>&lt;Rule1&gt;</code> and <code>&lt;Rule2&gt;</code>
+            are strings that correspond to the rule keys in the
+            intersection table that reference the origin table and the
+            destination table, respectively.
+-->
+        </para>
+
+        <note>
+            <para>
+                Имя таблицы и ключ правила в вызовах методов должны в точности
+                соответствовать написанию имени класса таблицы и ключа правила
+                при объявлении.
+<!--
+                The table identities and the rule keys named in the method call
+                must match the spelling of the class and rule key exactly.
+-->
+            </para>
+        </note>
+
+        <example id="zend.db.table.relationships.fetching.many-to-many.example-magic">
+            <title>Извлечение строк с использованием магического метода для связей "многие-ко-многим" <!--Fetching Rowsets using the Magic Many-to-many Method--></title>
+            <para>
+                Этот пример демонстрирует поиск строк в целевой таблице в связи
+                "многие-ко многим", соответствующих продуктам, об ошибках в
+                которых сообщил этот пользователь и для которых этот
+                пользователь должен устранить ошибки.
+<!--
+                This example shows finding rows in the destination table
+                of a many-to-many relationship representing products against
+                which the user reported bugs, and for which the user has been
+                assigned to fix bugs.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$accountsTable     = new Accounts();
+$accountsRowset    = $accountsTable->find(1234);
+$user1234          = $accountsRowset->current();
+
+// Используется правило связи по умолчанию
+$productsReporting = $user1234->findProductsViaBugs();
+
+// Задается правило связи
+$productsFixing    = $user1234->findProductsViaBugsByEngineer();
+
+?>]]>
+            </programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.relationships.cascading">
+
+        <title>Каскадные операции записи<!--Cascading Write Operations--></title>
+
+        <note>
+            <title>Объявление DRI в БД<!--Declare DRI in the database:--></title>
+            <para>
+                Объявление каскадных операций в Zend_Db_Table предназначено
+                <emphasis role="strong">только</emphasis> для тех СУРБД, которые
+                не поддерживают декларативной ссылочной целостности (declarative
+                referential integrity - сокр. DRI).
+<!--
+                Declaring cascading operations in Zend_Db_Table is intended
+                <emphasis role="strong">only</emphasis> for RDBMS brands
+                that do not support declarative referential integrity (DRI).
+-->
+            </para>
+            <para>
+                Например, если вы используете механизм хранения MyISAM в MySQL
+                или SQLite, не поддерживающие DRI, то для вас может быть
+                полезным объявить каскадные операции через Zend_Db_Table.
+<!--
+                For example, if you use MySQL's MyISAM storage engine,
+                or SQLite, these solutions do not support DRI.
+                You may find it helpful to declare the cascading
+                operations with Zend_Db_Table.
+-->
+            </para>
+            <para>
+                Если ваша СУРБД реализует DRI и поддерживает предложения
+                <code>ON DELETE</code> и <code>ON UPDATE</code>, то вам следует
+                объявить эти предложения в вашей БД вместо использования
+                каскадных возможностей Zend_Db_Table.
+                Объявление каскадных правил DRI в СУРБД лучше в плане
+                производительности, стабильности работы с БД и целостности
+                данных.
+<!--
+                If your RDBMS implements DRI and the <code>ON DELETE</code>
+                and <code>ON UPDATE</code> clauses, you should declare these
+                clauses in your database schema, instead of using the cascading
+                feature in Zend_Db_Table.
+                Declaring cascading DRI rules in the RDBMS is better for
+                database performance, consistency, and integrity.
+-->
+            </para>
+            <para>
+                Что еще более важно, не объявляйте каскадные операции
+                одновременно в СУРБД и в классе Zend_Db_Table.
+<!--
+                Most importantly, do not declare cascading operations both
+                in the RDBMS and in your Zend_Db_Table class.
+-->
+            </para>
+        </note>
+
+        <para>
+            Вы можете объявить каскадные операции для их выполнения в зависимой
+            таблице при применении операций <code>UPDATE</code> и
+            <code>DELETE</code> к строкам в родительской таблице.
+<!--
+            You can declare cascading operations to execute against
+            a dependent table when you apply an <code>UPDATE</code>
+            or a <code>DELETE</code> to a row in a parent table.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.cascading.example-delete">
+            <title>Пример каскадного удаления<!--Example of a Cascading Delete--></title>
+            <para>
+                Этот пример демонстрирует удаление строки в таблице
+                <code>Products</code>, которая была сконфигурирована для
+                автоматического удаления зависимых строк в таблице
+                <code>Bugs</code>.
+<!--
+                This example shows deleting a row in the <code>Products</code>
+                table, which is configured to automatically delete dependent
+                rows in the <code>Bugs</code> table.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+$productsTable  = new Products();
+$productsRowset = $productsTable->find(1234);
+$product1234    = $productsRowset->current();
+
+$product1234->delete();
+// Автоматически выполняется каскадное
+// удаление зависимых строк в таблице Bugs
+
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Аналогично, если вы используете <code>UPDATE</code> для изменения
+            значения первичного ключа в родительской таблице, то при этом часто
+            требуется, чтобы значение внешнего ключа в зависимой таблице также
+            изменялось на новое, и таким образом поддерживалась ссылочная
+            целостность.
+<!--
+            Similarly, if you use <code>UPDATE</code> to change the value
+            of a primary key in a parent table,
+            you may want the value in foreign keys of dependent tables
+            to be updated automatically to match the new value, so that
+            such references are kept up to date.
+-->
+        </para>
+
+        <para>
+            Обычно нет необходимости в том, чтобы изменять значение первичного
+            ключа, которое генерируется последовательностью (sequence) или
+            другим механизмом. Но если вы используете <emphasis>естетственные
+            ключи</emphasis>, которые иногда могут изменять свое значение, то,
+            скорее всего, нужно будет использовать каскадное обновление
+            зависимых таблиц.
+<!--
+            It's usually not necessary to update the value of a primary key
+            that was generated by a sequence or other mechanism.
+            But if you use a <emphasis>natural key</emphasis> that may change
+            value occasionally, it is more likely that you need to apply
+            cascading updates to dependent tables.
+-->
+        </para>
+
+        <para>
+            Для объявления каскадных связей в Zend_Db_Table, отредактируйте
+            правила в массиве <code>$_referenceMap</code>. Установите в
+            ассоциативного массиве под ключами  <code>'onDelete'</code> и
+            <code>'onUpdate'</code> значение 'cascade' (или константу
+            <code>self::CASCADE</code>). До того, как строка будет удалена из
+            родительской таблицы или изменится значение ее первичного ключа,
+            будут удалены или обновлены любые строки в зависимой таблице,
+            ссылающиеся на эту строку родительской таблицы.
+<!--
+            To declare a cascading relationship in the Zend_Db_Table,
+            edit the rules in the <code>$_referenceMap</code>.
+            Set the associative array keys <code>'onDelete'</code> and
+            <code>'onUpdate'</code> to the string 'cascade'
+            (or the constant <code>self::CASCADE</code>).
+            Before a row is deleted from the parent table,
+            or its primary key values updated,
+            any rows in the dependent table that refer to the
+            parent's row are deleted or updated first.
+-->
+        </para>
+
+        <example id="zend.db.table.relationships.cascading.example-declaration">
+            <title>Пример объявления каскадных операций<!--Example Declaration of Cascading Operations--></title>
+            <para>
+                В примере ниже строки в таблице <code>Bugs</code> автоматически
+                удаляются, если строка в таблице <code>Products</code>, на
+                которую они ссылаются, удаляется. Элемент
+                <code>'onDelete'</code> записи в массиве связей установлен в
+                <code>self::CASCADE</code>.
+<!--
+                In the example below, rows in the <code>Bugs</code> table
+                are automatically deleted if the row in the <code>Products</code>
+                table to which they refer is deleted.
+                The <code>'onDelete'</code> element of the reference map entry
+                is set to <code>self::CASCADE</code>.
+-->
+            </para>
+            <para>
+                В примере ниже не выполняется каскадное обновление, если
+                изменяется значение первичного ключа. Элемент
+                <code>'onUpdate'</code> записи в массиве связей установлен в
+                <code>self::RESTRICT</code>. Вы можете получить тот же самый
+                результат, используя значение <code>self::NO_ACTION</code> или
+                пропустив элемент <code>'onUpdate'</code>.
+<!--
+                No cascading update is done in the example below if the primary
+                key value in the parent class is changed.
+                The <code>'onUpdate'</code> element of the reference map entry
+                is <code>self::RESTRICT</code>.
+                You can get the same result using the value
+                <code>self::NO_ACTION</code>, or by omitting the
+                <code>'onUpdate'</code> entry.
+-->
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    ...
+    protected $_referenceMap    = array(
+        'Product' => array(
+            'columns'           => array('product_id'),
+            'refTableClass'     => 'Products',
+            'refColumns'        => array('product_id'),
+            'onDelete'          => self::CASCADE,
+            'onUpdate'          => self::RESTRICT
+        ),
+        ...
+    );
+}
+
+?>
+]]>
+            </programlisting>
+        </example>
+
+        <sect3 id="zend.db.table.relationships.cascading.notes">
+
+            <title>Примечания относительно каскадных операций<!--Notes Regarding Cascading Operations--></title>
+
+            <para>
+                <emphasis role="strong">Каскадные операции, вызываемые
+                Zend_Db_Table, не являются атомарными.</emphasis>
+<!--
+                <emphasis role="strong">Cascading operations invoked by Zend_Db_Table are not atomic.</emphasis>
+-->
+            </para>
+
+            <para>
+                Это означает, что если ваша БД реализует ограничения ссылочной
+                целостности и принуждает к их использованию, то каскадное
+                обновление, выполняемое классом Zend_Db_Table, конфликтует с
+                этими ограничениями и результатом будет нарушение ссылочной
+                целостности.
+                Вы можете использовать каскадное обновление в Zend_Db_Table
+                <emphasis>только</emphasis> если когда ваша БД не принуждает к
+                использованию ограничений ссылочной целостности.
+<!--
+                This means that if your database implements and enforces
+                referential integrity constraints, a cascading
+                <code>UPDATE</code> executed by a Zend_Db_Table class
+                conflicts with the constraint, and results in a referential
+                integrity violation.
+                You can use cascading <code>UPDATE</code> in Zend_Db_Table
+                <emphasis>only</emphasis> if your database does not enforce
+                that referential integrity constraint.
+-->
+            </para>
+
+            <para>
+                Каскадное удаление меньше страдает от проблем нарушения
+                ссылочной целостности. Вы можете удалить зависимые строки в
+                неатомарном действии до удаления родительской строки, на
+                которую они ссылаются.
+<!--
+                Cascading <code>DELETE</code> suffers less from the
+                problem of referential integrity violations.
+                You can delete dependent rows as a non-atomic action
+                before deleting the parent row that they reference.
+-->
+            </para>
+
+            <para>
+                Тем не менее, неатомарность операций изменения и удаления в
+                БД приводит к тому, что есть риск того, что другой пользователь
+                БД будет видеть противоречивые данные. Например, если вы удалите
+                строку и все зависимые строки, то есть небольшая вероятность
+                того, что другой клиент может сделать запрос к БД после того,
+                как вы удалили зависимые строки, но до того, как вы удалите
+                родительскую строку. Эта клиентская программа может увидеть
+                родительскую строку без зависимых строк и решить, что это
+                задуманное состояние данных.
+<!--
+                However, for both <code>UPDATE</code> and <code>DELETE</code>,
+                changing the database in a non-atomic way also creates the
+                risk that another database user can see the data in an
+                inconsistent state.  For example, if you delete
+                a row and all its dependent rows, there is a small
+                chance that another database client program can query
+                the database after you have deleted the dependent rows,
+                but before you delete the parent row.  That client program
+                may see the parent row with no dependent rows, and assume
+                this is the intended state of the data.
+                There is no way for that client to know that its query
+                read the database in the middle of a change.
+-->
+            </para>
+
+            <para>
+                Проблема неатомарных измнений может быть частично решена
+                использованием транзакций для изолирования ваших изменений. Но
+                некоторые СУРБД не поддерживают транзакции или позволяют
+                клиентам читать "грязные" изменения в БД, которые не были еще
+                зафиксированы.
+<!--
+                The issue of non-atomic change can be mitigated by using
+                transactions to isolate your change.  But some RDBMS brands
+                don't support transactions, or allow clients to read "dirty"
+                changes that have not been committed yet.
+-->
+            </para>
+
+            <para>
+                <emphasis role="strong">Каскадные операции в Zend_Db_Table вызываются только классом Zend_Db_Table</emphasis>
+<!--
+                <emphasis role="strong">Cascading operations in
+                Zend_Db_Table are invoked only by Zend_Db_Table.</emphasis>
+-->
+            </para>
+
+            <para>
+                Каскадные операции удаления и добавления, объявленные в ваших
+                классах Zend_Db_Table выполняются, если вы выполняете методы
+                <code>save()</code> и <code>delete()</code> класса Row.
+                Но если вы обновляете или удаляете данные, используя другой
+                интерфейс, например, утилиту запросов или другое приложение, то
+                каскадные операции не выполняются.
+                Даже когда используются методы <code>update()</code> и
+                <code>delete()</code> класса Zend_Db_Adapter, каскадные
+                операции, определенные в ваших классах Zend_Db_Table, не
+                выполняются.
+<!--
+                Cascading deletes and updates defined in your Zend_Db_Table
+                classes are applied if you execute the <code>save()</code> or
+                <code>delete()</code> methods on the Row class.
+                However, if you update or delete data using another interface,
+                such as a query tool or another application, the cascading
+                operations are not applied.
+                Even when using <code>update()</code> and <code>delete()</code>
+                methods in the Zend_Db_Adapter class, cascading operations
+                defined in your Zend_Db_Table classes are not executed.
+-->
+            </para>
+
+            <para>
+                <emphasis role="strong">Не существует каскадного добавления
+                <code>INSERT</code>.</emphasis>
+<!--
+                <emphasis role="strong">No Cascading <code>INSERT</code>.</emphasis>
+-->
+            </para>
+
+            <para>
+                Не поддерживается каскадное добавление <code>INSERT</code>. Вы должны добавить строку в родительской таблице в одной операции и
+                добавить строки в зависимой таблице в другой операции.
+<!--
+                There is no support for a cascading <code>INSERT</code>.
+                You must insert a row to a parent table in one operation,
+                and insert row(s) to a dependent table in a separate operation.
+-->
+            </para>
+
+        </sect3>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
