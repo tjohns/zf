@@ -1,7 +1,7 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
-=RELEASE 1.0.3 / 30-Nov-2007 / based on revision ???? =
+=RELEASE 1.0.3 / 30-Nov-2007 / based on revision 6983 =
 - Documentation
   ZF-2040 Literal error in example 9.21
   ZF-1753 Typo error
