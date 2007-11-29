@@ -28,7 +28,7 @@
         <para>
             Die YouTube Daten API bietet eine Vielzahl von Feeds die eine Liste von Videos zurückgeben, wie zum
             Beispiel Standard Feeds, Abhängige Videos, Antworten auf Videos, Videobewertungen, Benutzer Uploads,
-            und Benutzer Favoriten. Zum Beispiel gibt der Benutzer-Upload Feed alle Videos zurück die von einem
+            und Benutzer Favoriten. Zum Beispiel gibt der Benutzer Upload Feed alle Videos zurück die von einem
             speziellen Benutzer hochgeladen wurden. Siehe auch den
             <ulink url="http://code.google.com/apis/youtube/reference.html#Feeds">Referenz Guide</ulink> für
             eine detailierte Liste aller Feeds. Alle die Feeds die in dieser Sektion beschrieben werden sind
