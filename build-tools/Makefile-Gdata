@@ -18,14 +18,17 @@
 #
 # Makefile - build Zend Framework product and documentation
 #
-# Main targets:
-#  dist - produce zip and tarball.
-#  zip - produce zip from staged tree.
-#  tar - produce tarball from staged tree.
-#  stage - produce staged product tree.
-#  export - get files from subversion.
-#  docbook - build and stage manual from docbook sources.
-#  phpdoc - build and stage API doc using phpDocumentor.
+# Make targets:
+#  dist - build all release packages in one step.
+#    export - get files from subversion.
+#    stage - produce staged product tree in one step.
+#      stage-files - copy files from export tree.
+#      stage-docs - build and stage the DocBook and PHP API documentation in one step.
+#        docbook - build and stage manual from DocBook sources.
+#        phpdoc - build and stage API doc using phpDocumentor.
+#      stage-version - create staged VERSION.txt for the release packages.
+#    zip - produce zip packages from staged tree.
+#    tar - produce tar.gz packages from staged tree.
 #  clean - remove staged files.
 #  clean-docbook - remove temp files under docbook sources.
 #  clean-export - remove exported product tree.
@@ -42,9 +45,9 @@ PHPDOC=phpdoc
 # ZF_SVN_REVISION is the Subversion revision number used for exporting
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
-# location (e.g., trunk, branch/release-1.0).
-ZF_SVN_REVISION=6503
-ZF_SVN_DIR=branch/release-1.0
+# location (e.g., tag/release-1.0.3).
+ZF_SVN_REVISION=6986
+ZF_SVN_DIR=tag/release-1.0.3
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
@@ -58,8 +61,10 @@ ZF_VERSION=1.0.3
 ZF_LANG=en
 
 # Locations of the DocBook DTD and XSL stylesheets
-DTD_URL=http://framework.zend.com/docbook/xml/4.4/docbookx.dtd
-XSL_URL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+DTD_HOST=framework.zend.com
+DTD_URL=http://$(DTD_HOST)/docbook/xml/4.4/docbookx.dtd
+XSL_HOST=framework.zend.com
+XSL_URL=http://$(XSL_HOST)/docbook-xsl/html/chunk.xsl
 
 # -- end of parameters you are likely to want to change --
 
@@ -81,6 +86,7 @@ GDATA_ZIPBALL=$(GDATA_PRODUCT).zip
 TAR=tar
 GDATA_TARBALL=$(GDATA_PRODUCT).tar.gz
 
+API_DOC_DEST=$(GDATA_STAGE_DIR)/documentation/api/core
 API_DOC_TITLE_CORE=Zend Gdata API Documentation
 API_DOC_TITLE_INCUBATOR=Zend Gdata API Incubator Documentation
 API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
@@ -89,21 +95,19 @@ API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
 
 dist: export stage zip tar
 
-zip:
-	@echo "== CREATING ZIP ARCHIVE =="
-	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) $(GDATA_PRODUCT))
-
-tar:
-	@echo "== CREATING TAR.GZ ARCHIVE =="
-	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) $(GDATA_PRODUCT))
+export:
+	@echo "Exporting files from SVN..."
+	@if [ -d "$(ZF_EXPORT_DIR)" ] ; then \
+	    echo "Export directory already exists ($(ZF_EXPORT_DIR))" ; \
+	else \
+	    $(SVN) export -r $(ZF_SVN_REVISION) --force --config-dir ~/.subversion $(ZF_SVN_URL) $(ZF_EXPORT_DIR) ; \
+	fi
+	@echo "...Done exporting files from SVN."
 
 stage: stage-files stage-docs stage-version
 
-stage-version:
-	@echo "$(GDATA_PRODUCT_NAME) Release $(ZF_VERSION) (build $(ZF_SVN_REVISION))" > $(GDATA_STAGE_DIR)/VERSION.txt
-
 stage-files:
-	@echo "== STAGING FILES =="
+	@echo "Staging files..."
 	-mkdir -p $(GDATA_STAGE_DIR)
 	@echo "...copying set of files for Zend Gdata distribution..."
 	@(pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --quiet --archive \
@@ -142,10 +146,7 @@ stage-files:
 	@echo "...staging files..."
 	@(pwd=`pwd` ; cd $(GDATA_EXPORT_DIR) && rsync --quiet --archive \
 	    --delete --exclude-from="$$pwd/exclude-files-gdata" ./ $$pwd/$(GDATA_STAGE_DIR))
-
-export:
-	@echo "== EXPORTING SVN FILES =="
-	@[ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] || $(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
+	@echo "...Done staging files."
 
 stage-docs: docbook phpdoc
 
@@ -175,6 +176,17 @@ phpdoc-core:
 	else \
 	    echo "...core API documentation is up to date." ; \
 	fi
+
+stage-version:
+	@echo "$(GDATA_PRODUCT_NAME) Release $(ZF_VERSION) (build $(ZF_SVN_REVISION))" > $(GDATA_STAGE_DIR)/VERSION.txt
+
+zip:
+	@echo "== CREATING ZIP ARCHIVE =="
+	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) $(GDATA_PRODUCT))
+
+tar:
+	@echo "== CREATING TAR.GZ ARCHIVE =="
+	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) $(GDATA_PRODUCT))
 
 clean:
 	-rm -rf $(GDATA_STAGE_DIR)

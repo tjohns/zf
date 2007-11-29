@@ -18,14 +18,17 @@
 #
 # Makefile - build Zend Framework product and documentation
 #
-# Main targets:
-#  dist - produce zip and tarball.
-#  zip - produce zip from staged tree.
-#  tar - produce tarball from staged tree.
-#  stage - produce staged product tree.
-#  export - get files from subversion.
-#  docbook - build and stage manual from docbook sources.
-#  phpdoc - build and stage API doc using phpDocumentor.
+# Make targets:
+#  dist - build all release packages in one step.
+#    export - get files from subversion.
+#    stage - produce staged product tree in one step.
+#      stage-files - copy files from export tree.
+#      stage-docs - build and stage the DocBook and PHP API documentation in one step.
+#        docbook - build and stage manual from DocBook sources.
+#        phpdoc - build and stage API doc using phpDocumentor.
+#      stage-version - create staged VERSION.txt for the release packages.
+#    zip - produce zip packages from staged tree.
+#    tar - produce tar.gz packages from staged tree.
 #  clean - remove staged files.
 #  clean-docbook - remove temp files under docbook sources.
 #  clean-export - remove exported product tree.
@@ -42,9 +45,9 @@ PHPDOC=phpdoc
 # ZF_SVN_REVISION is the Subversion revision number used for exporting
 # the release files. ZF_SVN_DIR is the path to the directory in SVN
 # from which the release should be created, relative to the repository
-# location (e.g., trunk, branch/release-1.0).
-ZF_SVN_REVISION=6503
-ZF_SVN_DIR=branch/release-1.0
+# location (e.g., tag/release-1.0.3)
+ZF_SVN_REVISION=6986
+ZF_SVN_DIR=tag/release-1.0.3
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the
@@ -55,7 +58,7 @@ ZF_VERSION=1.0.3
 # If you want to build one language, use one of the names of language
 # directories (e.g., 'en', 'de').  You also can use any file-globbing
 # pattern.
-ZF_LANG=xx
+ZF_LANG=de en fr ja ru zh
 
 # Locations of the DocBook DTD and XSL stylesheets
 DTD_HOST=framework.zend.com
@@ -82,6 +85,7 @@ ZF_ZIPBALL=$(ZF_PRODUCT).zip
 TAR=tar
 ZF_TARBALL=$(ZF_PRODUCT).tar.gz
 
+API_DOC_DEST=$(ZF_STAGE_DIR)/documentation/api/core
 API_DOC_TITLE_CORE=Zend Framework API Documentation
 API_DOC_TITLE_INCUBATOR=Zend Framework Incubator API Documentation
 API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
@@ -91,78 +95,66 @@ API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
 dist: export stage zip tar
 
 export:
-	@echo "== EXPORTING SVN FILES =="
-	@if [ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] ; then \
-	    echo "Found files in '$(ZF_EXPORT_DIR)'" ; \
+	@echo "Exporting files from SVN..."
+	@if [ -d "$(ZF_EXPORT_DIR)" ] ; then \
+	    echo "Export directory already exists ($(ZF_EXPORT_DIR))" ; \
 	else \
 	    $(SVN) export -r $(ZF_SVN_REVISION) --force --config-dir ~/.subversion $(ZF_SVN_URL) $(ZF_EXPORT_DIR) ; \
 	fi
+	@echo "...Done exporting files from SVN."
 
 stage: stage-files stage-docs stage-version
 
 stage-files:
-	@echo "== STAGING FILES =="
-	-@mkdir -p $(ZF_STAGE_DIR)
-	@(pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
+	@echo "Staging files..."
+	@if [ -d "$(ZF_STAGE_DIR)" ] ; then \
+	    echo "Staging directory already exists ($(ZF_STAGE_DIR))" ; \
+	else \
+	    mkdir -p $(ZF_STAGE_DIR) ; \
+	    (pwd=`pwd` ; cd $(ZF_EXPORT_DIR) && rsync --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR)) ; \
+	fi
+	@echo "...Done staging files."
 
 stage-docs: docbook phpdoc
 
-docbook: docbook-core docbook-incubator
+docbook: docbook-core
 
 docbook-core:
+	@echo "Building and staging DocBook documentation..."
 	-@mkdir -p $(ZF_STAGE_DIR)/documentation/manual/core
-	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(ZF_LANG)/ ; do \
-	    [ -d $$language ] || continue ; \
-	    lang=`basename $$language` ; \
-	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
-	    ( cd $$language && autoconf && sh ./configure && $(MAKE) -e 2>&1 | tee err.txt ) ; \
-	    rsync --archive --delete --exclude=.svn $$language/html/ $(ZF_STAGE_DIR)/documentation/manual/core/$$lang ; \
+	@for lang in $(ZF_LANG) ; do \
+	    src=$(ZF_EXPORT_DIR)/documentation/manual/$$lang ; \
+	    dest=$(ZF_STAGE_DIR)/documentation/manual/core/$$lang ; \
+	    echo "Building and staging DocBook documentation for language: $$lang..." ; \
+	    ( cd $$src && autoconf && sh ./configure && $(MAKE) -e 2>&1 | tee err.txt ) ; \
+	    rsync --archive --delete $$src/html/ $$dest ; \
+	    echo "...Done building and staging DocBook documentation for language: $$lang." ; \
 	done
+	@echo "...Done building and staging DocBook documentation."
 
-docbook-incubator:
-	-@mkdir -p $(ZF_STAGE_DIR)/documentation/manual/incubator
-	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(ZF_LANG)/ ; do \
-	    [ -d $$language ] || continue ; \
-	    lang=`basename $$language` ; \
-	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
-	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) -e 2>&1 | tee err.txt ) ; \
-	    rsync --archive --delete --exclude=.svn $$language/html/ $(ZF_STAGE_DIR)/documentation/manual/incubator/$$lang ; \
-	done
-
-phpdoc: phpdoc-core phpdoc-incubator
+phpdoc: phpdoc-core
 
 phpdoc-core:
-	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
-	-@mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
-	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+	@echo "Building and staging PHP API documentation..."
+	-@mkdir -p $(API_DOC_DEST)
+	if [ ! -f $(API_DOC_DEST)/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(API_DOC_DEST)/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
 	    $(PHPDOC) --quiet off \
-	      --target $(ZF_STAGE_DIR)/documentation/api/core \
+	      --target $(API_DOC_DEST) \
 	      --directory $(ZF_STAGE_DIR)/library \
 	      --title "$(API_DOC_TITLE_CORE)" \
 	      --output $(API_DOC_OUTPUT_STYLE) ; \
 	else \
-	    echo "...core API documentation is up to date." ; \
+	    echo "PHP API documentation is already staged and up to date." ; \
 	fi
-
-phpdoc-incubator:
-	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
-	-@mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
-	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-	    $(PHPDOC) --quiet off \
-	      --target $(ZF_STAGE_DIR)/documentation/api/incubator \
-	      --directory $(ZF_STAGE_DIR)/incubator/library \
-	      --title "$(API_DOC_TITLE_INCUBATOR)" \
-	      --output $(API_DOC_OUTPUT_STYLE) ; \
-	else \
-	    echo "...incubator API documentation is up to date." ; \
-	fi
+	@echo "...Done building and staging PHP API documentation."
 
 stage-version:
-	@echo "== OVERWRITING VERSION.txt =="
+	@echo "Staging VERSION.txt..."
 	@echo "$(ZF_PRODUCT_NAME) Release $(ZF_VERSION) (revision $(ZF_SVN_REVISION))" > $(ZF_STAGE_DIR)/VERSION.txt
+	@echo "...Done staging VERSION.txt."
 
 zip:
-	@echo "== CREATING ZIP ARCHIVES =="
+	@echo "Creating ZIP archives..."
 	@( cd $(STAGE_HOME) && $(ZIP) -rq $(ZF_ZIPBALL) $(ZF_PRODUCT) -x $(ZF_PRODUCT)/documentation/\* )
 	@echo "Code archive done..."
 	@( cd $(STAGE_HOME) && $(ZIP) -rq $(ZF_PRODUCT)-apidoc.zip \
@@ -177,10 +169,10 @@ zip:
 		$(ZF_PRODUCT)/documentation/manual/core/$$lang ) ; \
 	    echo "Documentation archive for manual language '$$lang' done..." ; \
 	done
-	@echo "Done."
+	@echo "...Done creating ZIP archives."
 
 tar:
-	@echo "== CREATING TAR.GZ ARCHIVES =="
+	@echo "Creating TAR.GZ archives..."
 	@( cd $(STAGE_HOME) && $(TAR) -czf $(ZF_TARBALL) --exclude=$(ZF_PRODUCT)/documentation $(ZF_PRODUCT) )
 	@echo "Code archive done..."
 	@( cd $(STAGE_HOME) && $(TAR) -czf $(ZF_PRODUCT)-apidoc.tar.gz \
@@ -195,7 +187,7 @@ tar:
 		$(ZF_PRODUCT)/documentation/manual/core/$$lang ) ; \
 	    echo "Documentation archive for manual language '$$lang' done..." ; \
 	done
-	@echo "Done."
+	@echo "...Done creating TAR.GZ archives."
 
 clean:
 	-rm -rf $(ZF_STAGE_DIR)
