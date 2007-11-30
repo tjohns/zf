@@ -59,7 +59,7 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
     public function __construct(Zend_Layout $layout = null)
     {
         if (null !== $layout) {
-            $this->setLayout($layout);
+            $this->setLayoutInstance($layout);
         } else {
             $layout = Zend_Layout::getMvcInstance();
         }
@@ -99,7 +99,7 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
      * 
      * @return Zend_Layout
      */
-    public function getLayout()
+    public function getLayoutInstance()
     {
         if (null === $this->_layout) {
             require_once 'Zend/Layout.php';
@@ -117,7 +117,7 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
      * @param  Zend_Layout $layout 
      * @return Zend_Layout_Controller_Action_Helper_Layout
      */
-    public function setLayout(Zend_Layout $layout)
+    public function setLayoutInstance(Zend_Layout $layout)
     {
         $this->_layout = $layout;
         return $this;
@@ -153,6 +153,24 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
      */
     public function direct()
     {
-        return $this->getLayout();
+        return $this->getLayoutInstance();
+    }
+
+    /**
+     * Proxy method calls to layout object
+     * 
+     * @param  string $method 
+     * @param  array $args 
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        $layout = $this->getLayoutInstance();
+        if (method_exists($layout, $method)) {
+            return call_user_func_array(array($layout, $method), $args);
+        }
+
+        require_once 'Zend/Layout/Exception.php';
+        throw new Zend_Layout_Exception(sprintf("Invalid method '%s' called on layout action helper", $method));
     }
 }

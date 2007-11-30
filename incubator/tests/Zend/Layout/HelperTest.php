@@ -63,34 +63,34 @@ class Zend_Layout_HelperTest extends PHPUnit_Framework_TestCase
     {
         $layout = new Zend_Layout();
         $helper = new Zend_Layout_Controller_Action_Helper_Layout($layout);
-        $this->assertSame($layout, $helper->getLayout());
+        $this->assertSame($layout, $helper->getLayoutInstance());
     }
 
     public function testGetLayoutCreatesLayoutObjectWhenNoPluginRegistered()
     {
         $helper = new Zend_Layout_Controller_Action_Helper_Layout();
-        $layout = $helper->getLayout();
+        $layout = $helper->getLayoutInstance();
         $this->assertTrue($layout instanceof Zend_Layout);
     }
 
-    public function testGetLayoutPullsMvcLayoutInstance()
+    public function testGetLayoutInstancePullsMvcLayoutInstance()
     {
         $layout = Zend_Layout::startMvc();
         $helper = new Zend_Layout_Controller_Action_Helper_Layout();
-        $this->assertSame($layout, $helper->getLayout());
+        $this->assertSame($layout, $helper->getLayoutInstance());
     }
 
-    public function testSetLayoutReplacesExistingLayoutObject()
+    public function testSetLayoutInstanceReplacesExistingLayoutObject()
     {
         $layout = Zend_Layout::startMvc();
         $helper = new Zend_Layout_Controller_Action_Helper_Layout();
-        $this->assertSame($layout, $helper->getLayout());
+        $this->assertSame($layout, $helper->getLayoutInstance());
 
         $newLayout = new Zend_Layout();
         $this->assertNotSame($layout, $newLayout);
 
-        $helper->setLayout($newLayout);
-        $this->assertSame($newLayout, $helper->getLayout());
+        $helper->setLayoutInstance($newLayout);
+        $this->assertSame($newLayout, $helper->getLayoutInstance());
     }
 
     public function testDirectFetchesLayoutObject()
@@ -100,6 +100,21 @@ class Zend_Layout_HelperTest extends PHPUnit_Framework_TestCase
 
         $received = $helper->direct();
         $this->assertSame($layout, $received);
+    }
+
+    public function testHelperProxiesToLayoutObjectMethods()
+    {
+        $layout = Zend_Layout::startMvc();
+        $helper = new Zend_Layout_Controller_Action_Helper_Layout();
+
+        $helper->setOptions(array(
+            'layout'     => 'foo.phtml',
+            'layoutPath' => dirname(__FILE__) . '/_files/layouts',
+            'contentKey' => 'foo'
+        ));
+        $this->assertEquals('foo.phtml', $helper->getLayout());
+        $this->assertEquals(dirname(__FILE__) . '/_files/layouts', $helper->getLayoutPath());
+        $this->assertEquals('foo', $helper->getContentKey());
     }
 }
 
