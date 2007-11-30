@@ -41,6 +41,7 @@ class Zend_Layout_PluginTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        Zend_Layout_PluginTest_Layout::$_mvcInstance = null;
         Zend_Controller_Front::getInstance()->resetInstance();
         if (Zend_Controller_Action_HelperBroker::hasHelper('Layout')) {
             Zend_Controller_Action_HelperBroker::removeHelper('Layout');
@@ -167,6 +168,14 @@ class Zend_Layout_PluginTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Application content', $body);
         $this->assertNotContains('Site Layout', $body);
     }
+}
+
+/**
+ * Zend_Layout extension to allow resetting MVC instance
+ */
+class Zend_Layout_PluginTest_Layout extends Zend_Layout
+{
+    public static $_mvcInstance;
 }
 
 // Call Zend_Layout_PluginTest::main() if this source file is executed directly.

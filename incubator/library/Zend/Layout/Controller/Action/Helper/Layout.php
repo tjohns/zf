@@ -60,12 +60,17 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
     {
         if (null !== $layout) {
             $this->setLayout($layout);
+        } else {
+            $layout = Zend_Layout::getMvcInstance();
         }
         
-        $front = $this->getFrontController();
-        if ($front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
-            $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
-            $plugin->setLayoutActionHelper($this);
+        if (null !== $layout) {
+            $pluginClass = $layout->getPluginClass();
+            $front = $this->getFrontController();
+            if ($front->hasPlugin($pluginClass)) {
+                $plugin = $front->getPlugin($pluginClass);
+                $plugin->setLayoutActionHelper($this);
+            }
         }
     }
 
@@ -97,13 +102,8 @@ class Zend_Layout_Controller_Action_Helper_Layout extends Zend_Controller_Action
     public function getLayout()
     {
         if (null === $this->_layout) {
-            $front = $this->getFrontController();
-            if ($front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
-                $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
-                $this->_layout = $plugin->getLayout();
-            } else {
-                // Implicitly sets layout object
-                require_once 'Zend/Layout.php';
+            require_once 'Zend/Layout.php';
+            if (null === ($this->_layout = Zend_Layout::getMvcInstance())) {
                 $this->_layout = new Zend_Layout();
             }
         }

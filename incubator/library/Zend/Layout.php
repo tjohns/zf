@@ -48,6 +48,12 @@ class Zend_Layout
     protected $_enabled = true;
 
     /**
+     * Helper class
+     * @var string
+     */
+    protected $_helperClass = 'Zend_Layout_Controller_Action_Helper_Layout';
+ 
+    /**
      * Inflector used to resolve layout script
      * @var Zend_Filter_Inflector
      */
@@ -78,10 +84,22 @@ class Zend_Layout
     protected $_mvcEnabled = true;
 
     /**
+     * Instance registered with MVC, if any
+     * @var Zend_Layout
+     */
+    protected static $_mvcInstance;
+
+    /**
      * Flag: is MVC successful action only flag set?
      * @var bool
      */
     protected $_mvcSuccessfulActionOnly = true;
+
+    /**
+     * Plugin class
+     * @var string
+     */
+    protected static $_pluginClass = 'Zend_Layout_Controller_Plugin_Layout';
     
     /**
      * @var Zend_View_Interface
@@ -106,13 +124,13 @@ class Zend_Layout
      * @param  string|array|Zend_Config $options 
      * @return void
      */ 
-    public function __construct($options = null) 
+    public function __construct($options = null, $initMvc = false) 
     { 
         if (null !== $options) {
             if (is_string($options)) {
                 $this->setLayoutPath($options);
             } elseif (is_array($options)) {
-                $this->_setOptions($options);
+                $this->setOptions($options);
             } elseif ($options instanceof Zend_Config) {
                 $this->setConfig($options);
             } else {
@@ -123,8 +141,11 @@ class Zend_Layout
 
         $this->_initVarContainer();
 
-        if ($this->getMvcEnabled()) {
+        if ($initMvc) {
+            $this->_setMvcEnabled(true);
             $this->_initMvc();
+        } else {
+            $this->_setMvcEnabled(false);
         }
 
         if (null === $this->getInflector()) {
@@ -139,13 +160,47 @@ class Zend_Layout
     }
 
     /**
+     * Static method for initialization with MVC support
+     * 
+     * @param  string|array|Zend_Config $options 
+     * @return Zend_Layout
+     */
+    public static function startMvc($options = null)
+    {
+        if (null === self::$_mvcInstance) {
+            self::$_mvcInstance = new self($options, true);
+        } else {
+            self::$_mvcInstance->setOptions($options);
+        }
+
+        return self::$_mvcInstance;
+    }
+
+    /**
+     * Retrieve MVC instance of Zend_Layout object
+     * 
+     * @return Zend_Layout|null
+     */
+    public static function getMvcInstance()
+    {
+        return self::$_mvcInstance;
+    }
+
+    /**
      * Set options en masse
      * 
      * @param  array $options 
      * @return void
      */
-    protected function _setOptions(array $options)
+    public function setOptions($options)
     {
+        if ($options instanceof Zend_Config) {
+            $options = $config->toArray();
+        } elseif (!is_array($options)) {
+            require_once 'Zend/Layout/Exception.php';
+            throw new Zend_Layout_Exception('setOptions() expects either an array or a Zend_Config object');
+        }
+
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
@@ -172,13 +227,15 @@ class Zend_Layout
      */
     protected function _initPlugin()
     {
+        $pluginClass = $this->getPluginClass();
         require_once 'Zend/Controller/Front.php';
         $front = Zend_Controller_Front::getInstance();
-        if (!$front->hasPlugin('Zend_Layout_Controller_Plugin_Layout')) {
-            require_once 'Zend/Layout/Controller/Plugin/Layout.php';
+        if (!$front->hasPlugin($pluginClass)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($pluginClass);
             $front->registerPlugin(
                 // register to run last | BUT before the ErrorHandler (if its available)
-                new Zend_Layout_Controller_Plugin_Layout($this), 
+                new $pluginClass($this), 
                 99
             );
         }
@@ -191,11 +248,13 @@ class Zend_Layout
      */
     protected function _initHelper()
     {
+        $helperClass = $this->getHelperClass();
         require_once 'Zend/Controller/Action/HelperBroker.php';
         if (!Zend_Controller_Action_HelperBroker::hasHelper('layout')) {
-            require_once 'Zend/Layout/Controller/Action/Helper/Layout.php';
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($helperClass);
             Zend_Controller_Action_HelperBroker::addHelper(
-                new Zend_Layout_Controller_Action_Helper_Layout($this)
+                new $helperClass($this)
             );
         }
     }
@@ -208,7 +267,7 @@ class Zend_Layout
      */
     public function setConfig(Zend_Config $config)
     {
-        $this->_setOptions($config->toArray());
+        $this->setOptions($config->toArray());
         return $this;
     }
 
@@ -344,7 +403,7 @@ class Zend_Layout
      * @param  bool $mvcEnabled
      * @return Zend_Layout
      */
-    public function setMvcEnabled($mvcEnabled)
+    protected function _setMvcEnabled($mvcEnabled)
     {
         $this->_mvcEnabled = ($mvcEnabled) ? true : false;
         return $this;
@@ -393,6 +452,50 @@ class Zend_Layout
         $this->_view = $view;
         return $this;
     } 
+
+    /**
+     * Retrieve helper class
+     *
+     * @return string
+     */
+    public function getHelperClass()
+    {
+        return $this->_helperClass;
+    }
+
+    /**
+     * Set helper class
+     *
+     * @param  string $helperClass
+     * @return Zend_Layout
+     */
+    public function setHelperClass($helperClass)
+    {
+        $this->_helperClass = (string) $helperClass;
+        return $this;
+    }
+
+    /**
+     * Retrieve plugin class
+     *
+     * @return string
+     */
+    public function getPluginClass()
+    {
+        return self::$_pluginClass;
+    }
+
+    /**
+     * Set plugin class
+     *
+     * @param  string $pluginClass
+     * @return Zend_Layout
+     */
+    public function setPluginClass($pluginClass)
+    {
+        self::$_pluginClass = (string) $pluginClass;
+        return $this;
+    }
  
     /**
      * Get current view object

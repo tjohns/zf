@@ -39,6 +39,7 @@ class Zend_Layout_HelperTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        Zend_Layout_HelperTest_Layout::$_mvcInstance = null;
         Zend_Controller_Front::getInstance()->resetInstance();
         if (Zend_Controller_Action_HelperBroker::hasHelper('Layout')) {
             Zend_Controller_Action_HelperBroker::removeHelper('Layout');
@@ -72,20 +73,20 @@ class Zend_Layout_HelperTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($layout instanceof Zend_Layout);
     }
 
-    public function testGetLayoutPullsLayoutObjectFromRegisteredPlugin()
+    public function testGetLayoutPullsMvcLayoutInstance()
     {
-        $layout = new Zend_Layout();
+        $layout = Zend_Layout::startMvc();
         $helper = new Zend_Layout_Controller_Action_Helper_Layout();
         $this->assertSame($layout, $helper->getLayout());
     }
 
     public function testSetLayoutReplacesExistingLayoutObject()
     {
-        $layout = new Zend_Layout();
+        $layout = Zend_Layout::startMvc();
         $helper = new Zend_Layout_Controller_Action_Helper_Layout();
         $this->assertSame($layout, $helper->getLayout());
 
-        $newLayout = new Zend_Layout(array('mvcEnabled' => false));
+        $newLayout = new Zend_Layout();
         $this->assertNotSame($layout, $newLayout);
 
         $helper->setLayout($newLayout);
@@ -94,12 +95,20 @@ class Zend_Layout_HelperTest extends PHPUnit_Framework_TestCase
 
     public function testDirectFetchesLayoutObject()
     {
-        $layout = new Zend_Layout();
+        $layout = Zend_Layout::startMvc();
         $helper = new Zend_Layout_Controller_Action_Helper_Layout();
 
         $received = $helper->direct();
         $this->assertSame($layout, $received);
     }
+}
+
+/**
+ * Zend_Layout extension to allow resetting MVC instance
+ */
+class Zend_Layout_HelperTest_Layout extends Zend_Layout
+{
+    public static $_mvcInstance;
 }
 
 // Call Zend_Layout_HelperTest::main() if this source file is executed directly.
