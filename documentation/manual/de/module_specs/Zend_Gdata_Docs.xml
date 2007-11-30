@@ -41,7 +41,7 @@ $feed = $docs->getDocumentListFeed();]]>
     <sect2 id="zend.gdata.docs.creating">
         <title>Ein Dokument hochladen</title>
         <para>
-            Man kann ein neues Google Dokument erstellen indem ein Wortbearbeitungs Dokument, eine
+            Man kann ein neues Google Dokument erstellen indem ein Wortverarbeitungs Dokument, eine
             Tabellenkalkulation oder eine Präsentation hochgeladen wird. Dieses Beispiel ist vom interaktiven
             Docs.php Beispiel welches mit der Bibliothek kommt. Es demonstriert das Hochladen einer Datei und
             das Ausdrucken der Information über das Ergebnis vom Server.
@@ -68,23 +68,23 @@ function uploadDocument($docs, $html, $originalFileName,
     $fileToUpload = $temporaryFileLocation;
   }
 
-  // Upload the file and convert it into a Google Document. The original
-  // file name is used as the title of the document and the mime type
-  // is determined based on the extension on the original file name.
+  // Datei hochladen un in ein Google Dokument konvertieren Der originale Dateiname wird als Titel des
+  // Dokuments verwendet und der Mime Typ wird basieren auf der erweiterung des originalen Dateinamens
+  // eruiert.
   $newDocumentEntry = $docs->uploadFile($fileToUpload, $originalFileName,
       null, Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);
 
-  echo "New Document Title: ";
+  echo "Neuer Titel des Dokuments: ";
 
   if ($html) {
-      // Find the URL of the HTML view of this document.
+      // Die URL der HTML Ansicht dieses Dokuments finden.
       $alternateLink = '';
       foreach ($newDocumentEntry->link as $link) {
           if ($link->getRel() === 'alternate') {
               $alternateLink = $link->getHref();
           }
       }
-      // Make the title link to the document on docs.google.com.
+      // Den Titellink zum dokument auf docs.google.com erstellen.
       echo "<a href=\"$alternateLink\">\n";
   }
   echo $newDocumentEntry->title."\n";
@@ -94,23 +94,24 @@ function uploadDocument($docs, $html, $originalFileName,
     </sect2>
 
     <sect2 id="zend.gdata.docs.queries">
-        <title>Searching the documents feed</title>
+        <title>Den Dokumenten Feed durchsuchen</title>
         <para>
-            You can search the Document List using some of the <ulink
-            url="http://code.google.com/apis/gdata/reference.html#Queries">standard
-            Google Data API query parameters</ulink>. Categories are used to 
-            restrict the 
-            type of document (word processor document, spreadsheet) returned.
-            The full-text query string is used to search the content of all 
-            the documents. More detailed information on parameters specific 
-            to the Documents List can be found in the <ulink 
-            url="http://code.google.com/apis/documents/reference.html#Parameters">Documents List Data API Reference Guide</ulink>.
+            Die Dokumenten Liste kann durchsucht werden indem einer der
+            <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">standardmäßigen
+            Google Daten API Abfrageparameter</ulink> verwendet wird. Kategorien werden verwendet um den
+            Typ des Dokuments das zurückgegeben wird (Wortverarbeitungs Dokument, Tabellenkalkulation)
+            einzuschränken. Detailiertere Informationen über Parameter die speziell in der Dokumenten Liste
+            vorhanden sind können in der
+            <ulink url="http://code.google.com/apis/documents/reference.html#Parameters">Dokumenten Listen Daten API Referenz Anleitung</ulink>
+            gefunden werden.
         </para>
     
         <sect3 id="zend.gdata.docs.listwpdocuments">
-            <title>Get a List of Word Processing Documents</title>
+            <title>Eine Liste von Wortverarbeitungs Dokumenten erhalten</title>
             <para>
-                You can also request a feed containing all of your documents of a specific type. For example, to see a list of your work processing documents, you would perform a category query as follows.
+                Ein Feed der alle Dokumente eines speziellen Typs enthält kann auch angefragt werden.
+                Um zum Beispiel eine Liste von eigenen Wortverarbeitungs Dokumenten zu sehen, würde man eine
+                Kategorieanfrage wie folgt durchführen.
             </para>
     
             <programlisting role="php"><![CDATA[<?php
@@ -120,9 +121,10 @@ $feed = $docs->getDocumentListFeed(
         </sect3>
 
         <sect3 id="zend.gdata.docs.listspreadsheets">
-            <title>Get a List of Spreadsheets</title>
+            <title>Eine Liste von Tabellenkalkulationen erhalten</title>
             <para>
-                To request a list of your Google Spreadsheets, use the following category query:
+                Um eine Liste aller eigenen Google Tabellenkalkulationen zu erhalten kann die folgende
+                Abfrage verwendet werden:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -132,13 +134,12 @@ $feed = $docs->getDocumentListFeed(
         </sect3>
 
         <sect3 id="zend.gdata.docs.textquery">
-            <title>Performing a text query</title>
+            <title>Eine Textabfrage durchführen</title>
             <para>
-                You can search the content of documents by using a
-                <code>Zend_Gdata_Docs_Query</code> in your request. A Query object
-                can be used to construct the query URI, with the search term being
-                passed in as a parameter. Here is an example method which queries
-                the documents list for documents which contain the search string:
+                Der Inhalt von Dokumenten kann durch Verwendung von <code>Zend_Gdata_Docs_Query</code> in der
+                Abfrage durchsucht werden. Ein Abfrage Objekt kann verwendet werden um eine Abfrage URI zu
+                erstellen, wobei der Suchbegriff als Parameter übergeben wird. Hier ist eine Beispielmethode
+                welche die Dokumenten Liste nach Dokumenten abfrage die den Suchstring enthalten:
             </para>
             <programlisting role="php"><![CDATA[<?php
 $docsQuery = new Zend_Gdata_Docs_Query();
