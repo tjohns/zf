@@ -108,7 +108,8 @@ $service = new Zend_Gdata_Calendar($client);]]>
             </programlisting>
             <para>
                 Ein Kalender Service der AuthSub verwendet, kann ähnlich erstellt werden, durch eine etwas längere
-                Schreibweise:</para>
+                Schreibweise:
+            </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
