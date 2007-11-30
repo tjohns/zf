@@ -210,7 +210,7 @@ abstract class Zend_Measure_Abstract
             } else {
                 $value = $value * ($this->_UNITS[$this->getType()][0]);
             }
-
+            
             // Convert to expected value
             if (is_array($this->_UNITS[$type][0])) {
                 foreach (array_reverse($this->_UNITS[$type][0]) as $key => $found) {
