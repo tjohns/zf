@@ -99,7 +99,7 @@ class Zend_Layout
      * Plugin class
      * @var string
      */
-    protected static $_pluginClass = 'Zend_Layout_Controller_Plugin_Layout';
+    protected $_pluginClass = 'Zend_Layout_Controller_Plugin_Layout';
     
     /**
      * @var Zend_View_Interface
@@ -482,7 +482,7 @@ class Zend_Layout
      */
     public function getPluginClass()
     {
-        return self::$_pluginClass;
+        return $this->_pluginClass;
     }
 
     /**
@@ -493,7 +493,7 @@ class Zend_Layout
      */
     public function setPluginClass($pluginClass)
     {
-        self::$_pluginClass = (string) $pluginClass;
+        $this->_pluginClass = (string) $pluginClass;
         return $this;
     }
  

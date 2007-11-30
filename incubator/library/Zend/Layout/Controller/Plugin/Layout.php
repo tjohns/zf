@@ -77,10 +77,26 @@ class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstra
         return $this;
     }
 
+    /**
+     * Set layout action helper
+     * 
+     * @param  Zend_Layout_Controller_Action_Helper_Layout $layoutActionHelper 
+     * @return Zend_Layout_Controller_Plugin_Layout
+     */
     public function setLayoutActionHelper(Zend_Layout_Controller_Action_Helper_Layout $layoutActionHelper)
     {
         $this->_layoutActionHelper = $layoutActionHelper;
         return $this;
+    }
+
+    /**
+     * Retrieve layout action helper
+     * 
+     * @return Zend_Layout_Controller_Action_Helper_Layout
+     */
+    public function getLayoutActionHelper()
+    {
+        return $this->_layoutActionHelper;
     }
     
     /**
@@ -91,12 +107,16 @@ class Zend_Layout_Controller_Plugin_Layout extends Zend_Controller_Plugin_Abstra
      */
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
+        $layout = $this->getLayout();
+        $helper = $this->getLayoutActionHelper();
+
         // Return early if forward detected
-        if (!$request->isDispatched() || ($this->_layout->getMvcSuccessfulActionOnly() && !$this->_layoutActionHelper->isActionControllerSuccessful())) {
+        if (!$request->isDispatched() 
+            || ($layout->getMvcSuccessfulActionOnly() 
+                && (!empty($helper) && !$helper->isActionControllerSuccessful()))) 
+        {
             return;
         }
-
-        $layout = $this->getLayout();
 
         // Return early if layout has been disabled
         if (!$layout->isEnabled()) {

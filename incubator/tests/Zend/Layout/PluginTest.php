@@ -41,8 +41,10 @@ class Zend_Layout_PluginTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        Zend_Layout_PluginTest_Layout::$_mvcInstance = null;
         Zend_Controller_Front::getInstance()->resetInstance();
+
+        Zend_Layout_PluginTest_Layout::$_mvcInstance = null;
+
         if (Zend_Controller_Action_HelperBroker::hasHelper('Layout')) {
             Zend_Controller_Action_HelperBroker::removeHelper('Layout');
         }
@@ -109,8 +111,11 @@ class Zend_Layout_PluginTest extends PHPUnit_Framework_TestCase
                ->setLayout('plugin.phtml')
                ->disableInflector();
 
+        $helper = Zend_Controller_Action_HelperBroker::getStaticHelper('layout');
         $plugin = $front->getPlugin('Zend_Layout_Controller_Plugin_Layout');
         $plugin->setResponse($response);
+
+        $helper->postDispatch();
         $plugin->postDispatch($request);
 
         $body = $response->getBody();
