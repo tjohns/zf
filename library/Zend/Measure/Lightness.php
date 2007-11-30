@@ -52,7 +52,7 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
     const KILOCANDELA_PER_SQUARE_INCH   = 'KILOCANDELA_PER_SQUARE_INCH';
     const KILOCANDELA_PER_SQUARE_METER  = 'KILOCANDELA_PER_SQUARE_METER';
     const LAMBERT                       = 'LAMBERT';
-    const MILLIMALBERT                  = 'MILLILAMBERT';
+    const MILLILAMBERT                  = 'MILLILAMBERT';
     const NIT                           = 'NIT';
     const STILB                         = 'STILB';
 
