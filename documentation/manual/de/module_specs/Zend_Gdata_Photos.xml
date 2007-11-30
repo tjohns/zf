@@ -246,28 +246,27 @@ $service = new Zend_Gdata_Photos();]]>
         <itemizedlist>
             <listitem>
                 <para>
-                    <firstterm>User</firstterm>
-                    is used to specify the user whose data is being searched for, and is specified as a username.
-                    If no user is provided, "default" will be used instead to indicate the currently authenticated
-                    user (if authenticated).
+                    <firstterm>User</firstterm> wird verwendet um den Benutzer zu spezifizieren dessen
+                    Daten gesucht werden, und wird als EMail Adresse spezifiziert. Wenn kein Benutzer
+                    angegeben wurde, wird stattdessen "default" verwendet um den aktuellen authentifizierten
+                    Benutzer zu bezeichnen  (wenn er authentifiziert wurde).
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Album</firstterm>
-                    is used to specify the album which is being searched for, and is specified as either an id,
-                    or an album name.
+                    <firstterm>Album</firstterm> wird verwendet um das Album zu spezifizieren das gesucht
+                    werden soll, und wird entweder als ID oder als Name des Albums spezifiziert.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Photo</firstterm>
-                    is used to specify the photo which is being searched for, and is specified as an id.
+                    <firstterm>Photo</firstterm> wird verwendet um das Photo zu spezifizieren das gesucht werden
+                    soll, und wird als ID spezifiziert.
                 </para>
             </listitem>
         </itemizedlist>
         
-        <para>A new <code>UserQuery</code> can be constructed as followed:</para>
+        <para>Eine neue <code>UserQuery</code> kann wie folgt erstellt werden:</para>
         <programlisting role="php"><![CDATA[<?php
 $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -278,106 +277,104 @@ $query->setUser("sample.user");]]>
         </programlisting>
 
         <para>
-            For each query, a number of parameters limiting the search can be requested, or specified, 
-            with get(Parameter) and set(Parameter), respectively.  They are as follows:
+            Für jede Abfrage kann eine Anzahl an Parameter, welche die Suche limitieren, abgefragt, oder
+            mit get(Parameter) und set(Parameter) spezifiziert werden. Diese sind wie folgt:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <firstterm>Projection</firstterm>
-                    sets the format of the data returned in the feed, as either "api" or "base".  Normally,
-                    "api" is desired.  The default is "api".
+                    <firstterm>Projection</firstterm> setzt das Format der im Feed zurückgegebenen Daten
+                    entweder "api" oder "base". Normal wird "api" gewählt. "api" ist auch der Standardwert.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Type</firstterm>
-                    sets the type of element to be returned, as either "feed" or "entry".  The default is "feed".
+                    <firstterm>Type</firstterm> setzt den Typ der Elemente die zurückgegeben werden, entweder
+                    "feed" oder "entry". Der Standardwert ist "feed".
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Access</firstterm>
-                    sets the visibility of items to be returned, as "all", "public", or "private".  The default is
-                    "all".  Non-public elements will only be returned if the query is searching for the
-                    authenticated user.
+                    <firstterm>Access</firstterm> setzt die Sichtbarkeit von Teilen die zurückgegeben werden,
+                    mit "all", "public", oder "private". Der Standardwert ist "all". Nicht-öffentliche Elemente
+                    werden nur zurückgegeben wenn die Abfrage durch authentifizierte Benutzer gesucht wird.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Tag</firstterm>
-                    sets a tag filter for returned items.  When a tag is set, only items tagged with this value
-                    will return.
+                    <firstterm>Tag</firstterm> setzt einen Tag Filter for zurückgegebenen Teile. Wenn ein Tag
+                    gesetzt ist werden nur Teile mit so einem Tag im Wert zurückgegeben.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Kind</firstterm>
-                    sets the kind of elements to return.  When kind is specified, only entries that match this
-                    value will be returned.
+                    <firstterm>Kind</firstterm> setzt die Art von Elementen die zurückgegeben wird. Wenn eine
+                    Art spezifiziert wird, werden nur Einträge zurückgegeben die auf diesen Wert passen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>ImgMax</firstterm>
-                    sets the maximum image size for entries returned.  Only image entries smaller than this value
-                    will be returned.
+                    <firstterm>ImgMax</firstterm> setzt das Maximum der Bildgröße für zurückgegebene Einträge.
+                    Nur Bildeinträge die kleiner als dieser Wert sind werden zurückgegeben.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>Thumbsize</firstterm>
-                    sets the thumbsize of entries that are returned.  Any retrieved entry will have a thumbsize
-                    equal to this value.
+                    <firstterm>Thumbsize</firstterm> setzt die Vorschaugröße von Einträgen die zurückgegeben
+                    werden. Jeder empfangene Eintrag wird eine Vorschaugröße haben die diesem Wert entspricht.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>User</firstterm>
-                    sets the user whose data is being searched for.  The default is "default".
+                    <firstterm>User</firstterm> setzt den Benutzer nach dessen Daten gesucht werden soll.
+                    Der Standardwert ist "default".
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>AlbumId</firstterm>
-                    sets the id of the album being searched for.  This element only applies to album and photo queries.
-                    In the case of photo queries, this specifies the album that contains the requested photo.  The
-                    album id is mutually exclusive with the album's name.  Setting one unsets the other.
+                    <firstterm>AlbumId</firstterm> setzt die ID des Albums nachdem gesucht wird. Dieses Element
+                    ist nur für Album und Photo Abfragen gültig. Im Fall von Photo Abfragen spezifiziert dieser
+                    Wert das Album das die angefragten Photos enthält.  Die Album ID schließt sich gegenseitig
+                    mit dem Album Namen aus. Das Setzen des einen Entfernt den anderen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>AlbumName</firstterm>
-                    sets the name of the album being searched for.  This element only applies to the album and photo
-                    queries.  In the case of photo queries, this specifies the album that contains the requested photo.
-                    The album name is mutually exclusive with the album's id.  Setting one unsets the other.
+                    <firstterm>AlbumName</firstterm> setzt den Namen des Albums nachdem gesucht wird. Dieses
+                    Element ist nur für Album und Photo Abfragen gültig. Im Fall von Phofo Abfragen spezifiziert
+                    dieser Wert das Album das die angefragten Photos enthält. Der Album Name schließt sich
+                    gegenseitig mit der Album ID aus. Das Setzen des einen Entfernt den anderen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <firstterm>PhotoId</firstterm>
-                    sets the id of the photo being searched for.  This element only applies to photo queries.
+                    <firstterm>PhotoId</firstterm> setzt die ID des Photos nachdem gesucht wird. Dieses
+                    Element ist nur für Photo Abfragen gültig.
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.gdata.photos.retrieval">
-        <title>Retrieving Feeds And Entries</title>
+        <title>Feeds und Einträge erhalten</title>
         <para>
-            The service has functions to retrieve a feed, or individual entries, for users, albums,
-            and individual photos.
+            Das Service besitzt Funktionen um einen Feed oder individuelle Einträge für Benutzer, Alben, und
+            individuelle Photos zu erhalten.
         </para>
 
         <sect3 id="zend.gdata.photos.user_retrieval">
-            <title>Retrieving A User</title>
+            <title>Einen Benutzer erhalten</title>
             <para>
-                The service supports retrieving a user feed and list of the user's content.  If the requested
-                user is also the authenticated user, entries marked as "<code>hidden</code>" will also be returned.
+                Dieser Service unterstützt das Erhalten eines Benutzer Feeds und Listen von Benutzer Inhalten.
+                Wenn der abgefragte Benutzer auch der authentifizierter Benutzer ist, werden auch Einträge die
+                als "<code>hidden</code>" markiert sind, zurückgegeben.
             </para>
 
-            <para>The user feed can be accessed by passing the username to the <code>getUserFeed</code> method:</para>
+            <para>
+                Auf den Benutzer Feed kann durch die Übergabe eines Benutzernamens an die
+                <code>getUserFeed</code> Methode zugegriffen werden:
+            </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -386,11 +383,13 @@ $query->setUser("sample.user");]]>
     try {
         $userFeed = $service->getUserFeed("sample.user");
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
 
-            <para>Or, the feed can be accessed by constructing a query, first:</para>
+            <para>
+                Oder, der auf den Feed kann zugegriffen werden indem zuerst eine Abfrage erstellt wird:
+            </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -402,11 +401,13 @@ $query->setUser("sample.user");]]>
     try {
         $userFeed = $service->getUserFeed(null, $query);
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
         
-            <para>Constructing a query also provides the ability to request a user entry object:</para>
+            <para>
+                Die Erstellung einer Abfrage bietet auch die Möglichkeit ein Benutzer Eintrags Objekt abzufragen:
+            </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -419,17 +420,20 @@ $query->setUser("sample.user");]]>
     try {
         $userEntry = $service->getUserEntry($query);
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.album_retrieval">
-            <title>Retrieving An Album</title>
-            <para>The service supports retrieving an album feed and a list of the album's content.</para>
+            <title>Ein Album erhalten</title>
+            <para>
+                Der Service unterstützt auch das erhalten eines Album Feeds und von Listen des Inhalts von Alben.
+            </para>
 
             <para>
-                The album feed is accessed by constructing a query object and passing it to <code>getAlbumFeed</code>:
+                Auf einen Album Feed wird durch die Erstellung eines Abfrage Objekts zugegriffen und dessen
+                Übergabe an <code>getAlbumFeed</code>:
             </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
@@ -443,16 +447,19 @@ $query->setUser("sample.user");]]>
     try {
         $albumFeed = $service->getAlbumFeed($query);
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
 
             <para>
-                Alternatively, the query object can be given an album name with <code>setAlbumName</code>.  Setting
-                the album name is mutually exclusive with setting the album id, and setting one will unset the other.
+                Alternativ kann dem Abfrage Objekt ein Album Name mit <code>setAlbumName</code> angegeben werden.
+                Das Setzen des Album Namens schließt sich gegenseitig mit der Album ID aus und das Setzen des
+                einen entfernt den anderen Wert.
             </para>
 
-            <para>Constructing a query also provides the ability to request an album entry object:</para>
+            <para>
+                Die Erstellung einer Abfragen bietet auch die Möglichkeit ein Album Eintrags Objekt abzufragen:
+            </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -466,17 +473,21 @@ $query->setUser("sample.user");]]>
     try {
         $albumEntry = $service->getAlbumEntry($query);
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.photo_retrieval">
-            <title>Retrieving A Photo</title>
-            <para>The service supports retrieving a photo feed and a list of associated comments and tags.</para>
+            <title>Ein Photo erhalten</title>
+            <para>
+                Der Service unterstützt auch das erhalten eines Photo Feeds und von Listen von zugeordneten
+                Kommentaren und Tags.
+            </para>
 
             <para>
-                The photo feed is accessed by constructing a query object and passing it to <code>getPhotoFeed</code>:
+                Auf einen Photo Feed wird durch die Erstellung eines Abfrage Objekts zugegriffen und dessen
+                Übergabe an <code>getPhotoFeed</code>:
             </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
@@ -491,11 +502,13 @@ $query->setUser("sample.user");]]>
     try {
         $photoFeed = $service->getPhotoFeed($query);
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
 
-            <para>Constructing a query also provides the ability to request a photo entry object:</para>
+            <para>
+                Die Erstellung einer Abfragen bietet auch die Möglichkeit ein Photo Eintrags Objekt abzufragen:
+            </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -510,20 +523,23 @@ $query->setUser("sample.user");]]>
     try {
         $photoEntry = $service->getPhotoEntry($query);
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.comment_retrieval">
-            <title>Retrieving A Comment</title>
+            <title>Ein Kommentar erhalten</title>
             <para>
-                The service supports retrieving comments from a feed of a different type.  By setting a query
-                to return a kind of "comment", a feed request can return comments associated with a specific user,
-                album, or photo.
+                Der Service unterstützt den Erhalt von Kommentaren von einem Feed eines anderen Typs. Durch das
+                Setzen der Abfrage das eine Art von "Kommentar" zurückgegeben wird, kann eine Feed Anfrage
+                mit einem speziellen Benutzer, Album oder Photo assoziierte Kommentare zurückgeben.
             </para>
 
-            <para>Performing an action on each of the comments on a given photo can be accomplished as follows:</para>
+            <para>
+                Die Durchführung von Aktionen auf jedem der Kommentare eines gegebenen Photos kann die folgt
+                vollendet werden:
+            </para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -540,20 +556,21 @@ $query->setUser("sample.user");]]>
     
         foreach ($photoFeed as $entry) {
             if ($entry instanceof Zend_Gdata_Photos_CommentEntry) {
-                // Do something with the comment
+                // Mach irgendwas mit dem Kommentar
             }
         }
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
         </sect3>
 
         <sect3 id="zend.gdata.photos.comment_retrieval">
-            <title>Retrieving A Tag</title>
+            <title>Ein Tag erhalten</title>
             <para>
-                The service supports retrieving tags from a feed of a different type.  By setting a query
-                to return a kind of "tag", a feed request can return tags associated with a specific photo.
+                Der Service unterstützt den Erhalt von Tags von einem Feed eines anderen Typs. Durch das
+                Setzen der Abfrage das eine Art von "Tag" zurückgegeben wird, kann eine Feed Anfrage
+                mit einem speziellen Photo assoziierte Tags zurückgeben.
             </para>
 
             <para>Performing an action on each of the tags on a given photo can be accomplished as follows:</para>
@@ -573,11 +590,11 @@ $query->setUser("sample.user");]]>
     
         foreach ($photoFeed as $entry) {
             if ($entry instanceof Zend_Gdata_Photos_TagEntry) {
-                // Do something with the tag
+                // Mach irgendwas mit dem Tag
             }
         }
     } catch (Zend_Gdata_App_Exception $e) {
-        echo "Error: " . $e->getResponse();
+        echo "Fehler: " . $e->getResponse();
     }]]>
             </programlisting>
         </sect3>
@@ -585,12 +602,12 @@ $query->setUser("sample.user");]]>
     </sect2>
 
     <sect2 id="zend.gdata.photos.creation">
-        <title>Creating Entries</title>
-        <para>The service has functions to create albums, photos, comments, and tags.</para>
+        <title>Einträge erstellen</title>
+        <para>Der Service hat Funktionen für die Erstellung von Alben, Photos, Kommentaren und Tags.</para>
 
         <sect3 id="zend.gdata.photos.album_creation">
-            <title>Creating An Album</title>
-            <para>The service supports creating a new album for an authenticated user:</para>
+            <title>Ein Album erstellen</title>
+            <para>Der Service unterstützt die Erstellung eines neues Albums für authentifizierte Benutzer:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -604,14 +621,14 @@ $query->setUser("sample.user");]]>
         </sect3>
 
         <sect3 id="zend.gdata.photos.photo_creation">
-            <title>Creating A Photo</title>
-            <para>The service supports creating a new photo for an authenticated user:</para>
+            <title>Ein Photo erstellen</title>
+            <para>Der Service unterstützt die Erstellung eines neuen Photos für authentifizierte Benutzer:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
     $service = new Zend_Gdata_Photos($client);
 
-    // $photo is the name of a file uploaded via an HTML form
+    // $photo ist der Name der Datei die durch ein HTML Formular hochgeladen wurde
 
     $fd = $service->newMediaFileSource($photo["tmp_name"]);
     $fd->setContentType($photo["type"]);
@@ -631,8 +648,8 @@ $query->setUser("sample.user");]]>
         </sect3>
     
         <sect3 id="zend.gdata.photos.comment_creation">
-            <title>Creating A Comment</title>
-            <para>The service supports creating a new comment for a photo:</para>
+            <title>Erstellen eines Kommentars</title>
+            <para>Das Service unterstützt die Erstellung von neuen Kommentaren für ein Photo:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -655,8 +672,8 @@ $query->setUser("sample.user");]]>
         </sect3>
     
         <sect3 id="zend.gdata.photos.tag_creation">
-            <title>Creating A Tag</title>
-            <para>The service supports creating a new tag for a photo:</para>
+            <title>Erstellen eines Tags</title>
+            <para>Das Service unterstützt die Erstellung von neuen Tags für ein Photo:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -680,12 +697,12 @@ $query->setUser("sample.user");]]>
     </sect2>
 
     <sect2 id="zend.gdata.photos.deletion">
-        <title>Deleting Entries</title>
-        <para>The service has functions to delete albums, photos, comments, and tags.</para>
+        <title>Einträge löschen</title>
+        <para>Der Service hat Funktionen um Alben, Photos, Kommentare und Tags zu löschen.</para>
 
         <sect3 id="zend.gdata.photos.album_deletion">
-            <title>Deleting An Album</title>
-            <para>The service supports deleting an album for an authenticated user:</para>
+            <title>Ein Album löschen</title>
+            <para>Der Service unterstützt das Löschen von Alben für authentifizierte Benutzer:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -703,8 +720,8 @@ $query->setUser("sample.user");]]>
         </sect3>
 
         <sect3 id="zend.gdata.photos.photo_deletion">
-            <title>Deleting A Photo</title>
-            <para>The service supports deleting a photo for an authenticated user:</para>
+            <title>Löschen eines Photos</title>
+            <para>Der Service unterstützt das Löschen von Photos für authentifizierte Benutzer:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -723,8 +740,8 @@ $query->setUser("sample.user");]]>
         </sect3>
 
         <sect3 id="zend.gdata.photos.comment_deletion">
-            <title>Deleting A Comment</title>
-            <para>The service supports deleting a comment for an authenticated user:</para>
+            <title>Ein Kommentar löschen</title>
+            <para>Der Service unterstützt das Löschen von Kommentaren für authentifizierte Benutzer:</para>
             <programlisting role="php"><![CDATA[<?php
     $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
     $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
@@ -774,20 +791,22 @@ $query->setUser("sample.user");]]>
         </sect3>
 
         <sect3 id="zend.gdata.photos.optimistic_concurrenty">
-            <title>Optimistic Concurrency (Notes On Deletion)</title>
+            <title>Optimistische Gleichzeitigkeit (Notizen für das Löschen)</title>
             <para>
-                GData feeds, including those of the Picasa Web Albums service, implement optimistic concurrency,
-                a versioning system that prevents users from overwriting changes, inadvertently.  When
-                deleting a entry through the service class, if the entry has been modified since it was
-                last fetched, an exception will be thrown, unless explicitly set otherwise (in which case
-                the deletion is retried on the updated entry).
+                GData Feeds, inklusive denen des Picasa Web Album Services, implementieren optimistische
+                Gleichzeitigkeit, ein Versionsverwaltungs System das vermeidet das Benutzer irrtümlich
+                Änderungen überschreiben. Wenn ein Eintrag durch die Service Klasse gelöscht wird, wenn der
+                Eintrag geändert wurde seit er zuletzt geholt wurde, wird eine Ausnahme geworfen, solange das
+                nicht explizit anders gesetzt wurde (in diesem Fall wird die Löschung auf dem aktualisierten
+                Eintrag durchgeführt).
             </para>
 
             <para>
-                An example of how to handle versioning during a deletion is shown by <code>deleteAlbumEntry</code>:
+                Ein Beispiel davon wie die Versionierung wärend einer Löschung handzuhaben ist wird durch
+                <code>deleteAlbumEntry</code> gezeigt:
             </para>
             <programlisting role="php"><![CDATA[<?php
-    // $album is the albumEntry to be deleted
+    // $album ist ein albumEntry der gelöscht werden soll
     try {
         $this->delete($album);
     } catch (Zend_Gdata_App_HttpException $e) {
