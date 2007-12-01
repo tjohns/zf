@@ -39,8 +39,9 @@ abstract class Zend_Date_DateObject {
      * UNIX Timestamp
      */
     private   $_unixTimestamp;
-    protected static $_cache = null;
-
+    protected static $_cache         = null;
+    protected static $_defaultOffset = 0;
+    
 
     /**
      * active timezone

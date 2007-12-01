@@ -48,7 +48,8 @@ class Zend_Date extends Zend_Date_DateObject {
         'format_type'  => 'iso',      // format for date strings 'iso' or 'php'
         'fix_dst'      => true,       // fix dst on summer/winter time change
         'extend_month' => false,      // false - addMonth like SQL, true like excel
-        'cache'        => null        // cache to set
+        'cache'        => null,       // cache to set
+        'timesync'     => null        // timesync server to set
     );
 
     // Class wide Date Constants
@@ -187,11 +188,12 @@ class Zend_Date extends Zend_Date_DateObject {
             }
         }
 
-        if (($date instanceof Zend_TimeSync_Ntp) or
-            ($date instanceof Zend_TimeSync_Sntp)) {
+        if ($date instanceof Zend_TimeSync_Protocol) {
             $date = $date->getInfo();
             $date = $this->_getTime($date['offset']);
             $part = null;
+        } else if (parent::$_defaultOffset != 0) {
+            $date = $this->_getTime(parent::$_defaultOffset);
         }
 
         // set datepart
@@ -252,6 +254,13 @@ class Zend_Date extends Zend_Date_DateObject {
                         }
                         parent::$_cache = $value;
                         Zend_Locale_Data::setCache($value);
+                        break;
+                    case 'timesync' :
+                        if (!$value instanceof Zend_TimeSync_Protocol) {
+                            throw new Zend_Date_Exception("Instance of Zend_TimeSync expected");
+                        }
+                        $date = $value->getInfo();
+                        parent::$_defaultOffset = $date['offset'];
                         break;
                 }
                 self::$_Options[$name] = $value;

@@ -96,6 +96,21 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.timesync">
+
+            <title>Receiving syncronised timestamps with Zend_TimeSync</title>
+
+            <para>
+                Normally the clocks from servers and computers differ from each other. <code>Zend_Date</code>
+                is able to handle such problems with the help of <code>Zend_TimeSync</code>. You can set a
+                timeserver with <code>Zend_Date::setOptions(array('timesync' => $timeserver));</code> which
+                will set the offset between the own actual timestamp and the real actual timestamp for all
+                instances of Zend_Date. Using this option does not change the timestamp of existing instances.
+                So best usage is to set it within the bootstrap file.
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">
