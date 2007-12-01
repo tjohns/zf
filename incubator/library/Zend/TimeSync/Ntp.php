@@ -33,9 +33,8 @@ require_once 'Zend/TimeSync/Protocol.php';
  */
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 {
-    /**
-     * This is the NTP port number (123) assigned by the Internet Assigned 
-     * Numbers Authority to NTP.
+    /* This is the NTP port number (123) assigned by the Internet Assigned 
+     * Numbers Authority to NTP
      *
      * @var int
      */
@@ -60,7 +59,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
      * 
      * NTP timestamps are represented as a 64-bit fixed-point number, in
      * seconds relative to 0000 UT on 1 January 1900.  The integer part is
-     * in the first 32 bits and the fraction part in the last 32 bits.
+     * in the first 32 bits and the fraction part in the last 32 bits
      * 
      * @return string
      */
@@ -78,53 +77,47 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $secb3  = ($sec & 0x0000ff00) >> 8;
         $secb4  = ($sec & 0x000000ff);
 
-        $ntppacket  = chr(0xd9).chr(0x00).chr(0x0a).chr(0xfa); // Flags
+        $nul = chr(0x00);
+        $nulbyte = $nul . $nul . $nul . $nul;
+        $ntppacket  = chr(0xd9) . $nul . chr(0x0a) . chr(0xfa); // Flags
 
-        /*
-         * Root delay
+        /* Root delay
          *
          * Indicates the total roundtrip delay to the primary reference 
-         * source at the root of the synchronization subnet, in seconds.
+         * source at the root of the synchronization subnet, in seconds
          */
-        $ntppacket .= chr(0x00).chr(0x00).chr(0x1c).chr(0x9b);
+        $ntppacket .= $nul . $nul . chr(0x1c) . chr(0x9b);
 
-        /*
-         * Clock Dispersion
+        /* Clock Dispersion
          * 
          * Indicates the maximum error relative to the primary reference source at the
-         * root of the synchronization subnet, in seconds.
+         * root of the synchronization subnet, in seconds
          */
-        $ntppacket .= chr(0x00).chr(0x08).chr(0xd7).chr(0xff);
+        $ntppacket .= $nul . chr(0x08) . chr(0xd7) . chr(0xff);
 
-        /*
-         * ReferenceClockID
+        /* ReferenceClockID
          * 
          * Identifying the particular reference clock
          */
-        $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00);
+        $ntppacket .= $nulbyte;
 
-        /*
-         * The local time, in timestamp format, at the peer
-         * when its latest NTP message was sent. Contanis an integer
+        /* The local time, in timestamp format, at the peer when its latest NTP message
+         * was sent. Contanis an integer and a fractional part
+         */
+        $ntppacket .= chr($secb1)  . chr($secb2)  . chr($secb3)  . chr($secb4);
+        $ntppacket .= chr($fracb1) . chr($fracb2) . chr($fracb3) . chr($fracb4);
+
+        /* The local time, in timestamp format, at the peer. Contains an integer
          * and a fractional part.
          */
-        $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);
-        $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);
+        $ntppacket .= $nulbyte;
+        $ntppacket .= $nulbyte;
 
-        /*
-         * The local time, in timestamp format, at the peer. Contanis an integer
-         * and a fractional part.
+        /* This is the local time, in timestamp format, when the latest NTP message from
+         * the peer arrived. Contanis an integer and a fractional part.
          */
-        $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00);
-        $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00);
-
-        /*
-         * This is the local time, in timestamp format, when the latest
-         * NTP message from the peer arrived. Contanis an integer
-         * and a fractional part.
-         */
-        $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00);
-        $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00);
+        $ntppacket .= $nulbyte;
+        $ntppacket .= $nulbyte;
 
         /*
          * the local time, in timestamp format, at which the
