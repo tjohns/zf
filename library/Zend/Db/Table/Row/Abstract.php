@@ -517,6 +517,16 @@ abstract class Zend_Db_Table_Row_Abstract
     }
 
     /**
+     * Refreshes properties from the database.
+     *
+     * @return void
+     */
+    public function refresh()
+    {
+        return $this->_refresh();
+    }
+
+    /**
      * Retrieves an instance of the parent table.
      *
      * @return Zend_Db_Table_Abstract
@@ -584,7 +594,7 @@ abstract class Zend_Db_Table_Row_Abstract
     protected function _refresh()
     {
         $where = $this->_getWhereQuery();
-        $row = $this->_getTable()->fetchRow($where);
+		$row = $this->_getTable()->fetchRow($where);
 
         if (null === $row) {
             require_once 'Zend/Db/Table/Row/Exception.php';
