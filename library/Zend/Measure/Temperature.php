@@ -47,10 +47,10 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
     const KELVIN     = 'KELVIN';
 
     protected $_UNITS = array(
-        'CELSIUS'    => array(array('' => 1, '+' => 273.15),'°C'),
-        'FAHRENHEIT' => array(array('' => 1, '-' => 32, '/' => 1.8, '+' => 273.15),'°F'),
-        'RANKINE'    => array(array('' => 1, '/' => 1.8),'°R'),
-        'REAUMUR'    => array(array('' => 1, '*' => 1.25, '+' => 273.15),'°r'),
+        'CELSIUS'    => array(array('' => '1', '+' => '273.15'),'°C'),
+        'FAHRENHEIT' => array(array('' => '1', '-' => '32', '/' => '1.8', '+' => '273.15'),'°F'),
+        'RANKINE'    => array(array('' => '1', '/' => '1.8'),'°R'),
+        'REAUMUR'    => array(array('' => '1', '*' => '1.25', '+' => '273.15'),'°r'),
         'KELVIN'     => array(1,'°K'),
         'STANDARD'   => 'KELVIN'
     );
