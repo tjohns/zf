@@ -594,7 +594,7 @@ abstract class Zend_Db_Table_Row_Abstract
     protected function _refresh()
     {
         $where = $this->_getWhereQuery();
-		$row = $this->_getTable()->fetchRow($where);
+        $row = $this->_getTable()->fetchRow($where);
 
         if (null === $row) {
             require_once 'Zend/Db/Table/Row/Exception.php';
