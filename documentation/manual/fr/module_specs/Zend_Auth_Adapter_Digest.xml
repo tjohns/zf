@@ -25,14 +25,14 @@
                 </listitem>
                 <listitem>
                     <para>
-                        hashage MD5 d'un identifiant, domaine et mot de passe, séparés par des virgules.
+                        hashage MD5 d'un identifiant, domaine et mot de passe, séparés par des caractères deux-points.
                     </para>
                 </listitem>
             </itemizedlist>
-            Les éléments ci-dessus sont séparés par des virgules, comme dans l'exemple suivant (dans lequel le mot de passe est "<code>unMotdepasse</code>") :
+            Les éléments ci-dessus sont séparés par des caractères deux-points, comme dans l'exemple suivant (dans lequel le mot de passe est "<code>unMotdepasse</code>") :
         </para>
 
-        <programlisting><![CDATA[unUtilisateur:Un domaine:fde17b91c3a510ecbaf7dbd37f59d4f8]]>
+        <programlisting><![CDATA[unUtilisateur:Un domaine:3b17d7f3a9374666e892cbce58aa724f]]>
     </programlisting>
 
     </sect2>
