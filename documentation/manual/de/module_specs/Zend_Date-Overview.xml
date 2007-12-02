@@ -104,6 +104,22 @@
 
         </sect3>
 
+        <sect3 id="zend.date.options.timesync">
+
+            <title>Syncronisierte Zeiten mit Zend_TimeSync erhalten</title>
+
+            <para>
+                Normalerweise unterscheiden sich die Uhren von Servern und Computern voneinander.
+                <code>Zend_Date</code> ist dazu fähig solche Probleme mit Hilfe von <code>Zend_TimeSync</code>
+                zu handhaben. Mit <code>Zend_Date::setOptions(array('timesync' => $timeserver));</code>
+                kann ein Zeitserver gesetzt werden welcher den Unterschied zwischen dem eigenen aktuellen
+                Zeitpunkt und dem wirklichen aktuellen Zeitpunkt für alle Instanzen von Zend_Date setzt.
+                Die Verwendung dieser Option ändern nicht den Zeitpunkt von bestehenden Instanzen. Am besten
+                ist es also dies innerhalb der Bootstrap Datei zu setzen.
+            </para>
+
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.date.values">
