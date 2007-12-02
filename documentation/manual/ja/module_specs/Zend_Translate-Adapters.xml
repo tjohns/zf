@@ -271,6 +271,47 @@ try {
 
     </sect2>
 
+    <sect2 id="zend.translate.adapter.caching">
+
+        <title>全アダプタの高速化</title>
+
+        <para>
+            <code>Zend_Translate</code> では、内部的に <code>Zend_Cache</code>
+            を使用して翻訳ソースの読み込みを高速化することができます。
+            これは、多数の翻訳ソースを使用していたり
+            XML ベースの複雑なソース形式を使用していたりする場合に非常に便利です。
+        </para>
+
+        <para>
+            キャッシュ機能を使用するには、キャッシュオブジェクトを
+            <code>Zend_Translate::setCache()</code> メソッドで渡します。
+            このメソッドの唯一のパラメータには
+            <code>Zend_Cache</code> のインスタンスを指定します。
+            また、任意のアダプタを直接使用するには
+            <code>setCache()</code> メソッドを使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+Zend_Translate::setCache($cache);
+$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                キャッシュの設定は、アダプタや
+                <code>Zend_Translate</code> のインスタンスを使用したり初期化したりする
+                <emphasis role="strong">前</emphasis> に行わなければなりません。
+                さもないと、新たなソースを
+                <code>addTranslation()</code> メソッドで追加するまで
+                翻訳ソースのキャッシュは行われません。
+            </para>
+        </note>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
