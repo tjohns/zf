@@ -56,6 +56,7 @@ class Zend_Gdata_YouTube_UserProfileEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Fitzwilliam Darcy', $userProfileEntry->author[0]->name->text);
         $this->assertEquals(32, $userProfileEntry->age->text);
         $this->assertEquals('darcy', $userProfileEntry->username->text);
+        $this->assertEquals('A person of great interest', $userProfileEntry->description->text);
         $this->assertEquals('Pride and Prejudice', $userProfileEntry->books->text);
         $this->assertEquals('Self employed', $userProfileEntry->company->text);
         $this->assertEquals('Reading, arguing with Liz', $userProfileEntry->hobbies->text);

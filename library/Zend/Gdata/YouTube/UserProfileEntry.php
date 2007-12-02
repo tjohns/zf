@@ -30,6 +30,11 @@ require_once 'Zend/Gdata/Entry.php';
 require_once 'Zend/Gdata/Extension/FeedLink.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_Description
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Description.php';
+
+/**
  * @see Zend_Gdata_YouTube_Extension_Age
  */
 require_once 'Zend/Gdata/YouTube/Extension/Age.php';
@@ -120,6 +125,13 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
      * @var string
      */ 
     protected $_username = null;
+
+    /**
+     * The description of the user
+     *
+     * @var string
+     */
+    protected $_description = null;
 
     /**
      * The age of the user
@@ -233,6 +245,9 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
+        if ($this->_description != null) {
+            $element->appendChild($this->_description->getDOM($element->ownerDocument));
+        }
         if ($this->_age != null) {
             $element->appendChild($this->_age->getDOM($element->ownerDocument));
         }

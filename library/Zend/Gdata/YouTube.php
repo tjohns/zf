@@ -88,7 +88,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const VIDEO_COMPLAINTS_REL = 'http://gdata.youtube.com/schemas/2007#video.complaints';
 
     const FAVORITES_URI_SUFFIX = 'favorites';
-    const UPLAODS_URI_SUFFIX = 'uploads';
+    const UPLOADS_URI_SUFFIX = 'uploads';
     const RESPONSES_URI_SUFFIX = 'responses';
     const RELATED_URI_SUFFIX = 'related';
 
