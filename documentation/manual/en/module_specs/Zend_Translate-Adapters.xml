@@ -284,6 +284,42 @@ try {
 
     </sect2>
 
+    <sect2 id="zend.translate.adapter.caching">
+
+        <title>Speedup all Adapters</title>
+
+        <para>
+            <code>Zend_Translate</code> allows you use internally <code>Zend_Cache</code> to
+            fasten the loading of translation sources. This comes very handy if you use many
+            translation sources or extensive source formats like XML based files.
+        </para>
+
+        <para>
+            To use caching you will just have to give a cache object to the
+            <code>Zend_Translate::setCache()</code> method. It takes a instance of
+            <code>Zend_Cache</code> as only parameter. Also if you use any adapter direct you
+            can use the <code>setCache()</code> method.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+Zend_Translate::setCache($cache);
+$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                You must set the cache <emphasis role="strong">before</emphasis> you use or initiate
+                any adapter or instance of <code>Zend_Translate</code>. Otherwise your translation
+                source will not be cached until you add a new source with the
+                <code>addTranslation()</code> method.
+            </para>
+        </note>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

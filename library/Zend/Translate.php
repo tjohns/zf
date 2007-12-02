@@ -43,12 +43,14 @@ class Zend_Translate {
 
     const LOCALE_DIRECTORY = 1;
     const LOCALE_FILENAME  = 2;
+
     /**
      * Adapter
      *
      * @var Zend_Translate_Adapter
      */
     private $_adapter;
+    private static $_cache = null;
 
 
     /**
@@ -106,6 +108,9 @@ class Zend_Translate {
         }
 
         Zend_Loader::loadClass($adapter);
+        if (self::$_cache !== null) {
+            call_user_func(array($adapter, 'setCache'), self::$_cache);
+        }
         $this->_adapter = new $adapter($data, $locale, $options);
         if (!$this->_adapter instanceof Zend_Translate_Adapter) {
             require_once 'Zend/Translate/Exception.php';
@@ -122,6 +127,17 @@ class Zend_Translate {
     public function getAdapter()
     {
         return $this->_adapter;
+    }
+
+
+    /**
+     * Sets a cache for all instances of Zend_Translate
+     *
+     * @param Zend_Cache_Core $cache Cache to store to
+     */
+    public static function setCache(Zend_Cache_Core $cache)
+    {
+        self::$_cache = $cache;
     }
 
 

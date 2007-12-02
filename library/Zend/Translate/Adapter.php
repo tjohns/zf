@@ -33,20 +33,9 @@ require_once 'Zend/Translate/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Translate_Adapter {
-    /**
-     * Current locale/language
-     *
-     * @var string|null
-     */
-    protected $_locale;
-    private   $_automatic = true;
 
-    /**
-     * Table of all supported languages
-     *
-     * @var array
-     */
-    protected $_languages = array();
+    private          $_automatic = true;
+    protected static $_cache     = null;
 
     // Scan options
     const LOCALE_DIRECTORY = 1;
@@ -81,6 +70,14 @@ abstract class Zend_Translate_Adapter {
      */
     public function __construct($data, $locale = null, array $options = array())
     {
+        if (isset(self::$_cache)) {
+            $id = 'Zend_Translate_' . $this->toString();
+            if ($result = self::$_cache->load($id)) {
+                $this->_translate = unserialize($result);
+                return true;
+            }
+        }
+        
         if ($locale === null) {
             $locale = new Zend_Locale();
         }
@@ -201,9 +198,9 @@ abstract class Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
-        if (!in_array($locale, $this->_languages)) {
+        if (!array_key_exists($locale, $this->_translate) and empty($this->_translate[$locale])) {
             $temp = explode('_', $locale);
-            if (!in_array($temp[0], $this->_languages)) {
+            if (!array_key_exists($temp[0], $this->_translate)) {
                 throw new Zend_Translate_Exception("Language ({$locale}) has to be added before it can be used.");
             }
             $locale = $temp[0];
@@ -225,7 +222,14 @@ abstract class Zend_Translate_Adapter {
      */
     public function getList()
     {
-        return $this->_languages;
+        $list = array_keys($this->_translate);
+        $result = null;
+        foreach($list as $key => $value) {
+            if (!empty($this->_translate[$value])) {
+                $result[$value] = $value;
+            }
+        }
+        return $result;
     }
 
 
@@ -278,7 +282,7 @@ abstract class Zend_Translate_Adapter {
             $locale = $locale->toString();
         }
 
-        return in_array($locale, $this->_languages);
+        return array_key_exists($locale, $this->_translate);
     }
 
     /**
@@ -309,8 +313,8 @@ abstract class Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
-        if (!in_array($locale, $this->_languages)) {
-            $this->_languages[$locale] = $locale;
+        if (!array_key_exists($locale, $this->_translate)) {
+            $this->_translate[$locale] = array();
         }
 
         $this->_loadTranslationData($data, $locale, $options);
@@ -319,11 +323,16 @@ abstract class Zend_Translate_Adapter {
             $browser = $find->getBrowser() + $find->getEnvironment();
             arsort($browser);
             foreach($browser as $language => $quality) {
-                if (in_array($language, $this->_languages)) {
+                if (array_key_exists($language, $this->_translate)) {
                     $this->_locale = $language;
                     break;
                 }
             }
+        }
+
+        if (isset(self::$_cache)) {
+            $id = 'Zend_Translate_' . $this->toString();
+            self::$_cache->save( serialize($this->_translate), $id);
         }
     }
 
@@ -427,6 +436,17 @@ abstract class Zend_Translate_Adapter {
 
         // no translation found, return original
         return false;
+    }
+
+
+    /**
+     * Sets a cache for all Zend_Translate_Adapters
+     *
+     * @param Zend_Cache_Core $cache Cache to store to
+     */
+    public static function setCache(Zend_Cache_Core $cache)
+    {
+        self::$_cache = $cache;
     }
 
 

@@ -111,7 +111,7 @@ class Zend_Translate_XliffTest extends PHPUnit_Framework_TestCase
             // success
         }
         try {
-            $adapter->setLocale('de');
+            $adapter->setLocale('fr');
             $this->fail("exception expected");
         } catch (Zend_Translate_Exception $e) {
             // success
@@ -121,7 +121,7 @@ class Zend_Translate_XliffTest extends PHPUnit_Framework_TestCase
     public function testList()
     {
         $adapter = new Zend_Translate_Adapter_Xliff(dirname(__FILE__) . '/_files/translation_en.xliff', 'en');
-        $this->assertEquals(array('en' => 'en'), $adapter->getList());
+        $this->assertEquals(array('en' => 'en', 'de' => 'de'), $adapter->getList());
         $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_en.xliff', 'de');
         $this->assertEquals(array('en' => 'en', 'de' => 'de'), $adapter->getList());
         $this->assertTrue($adapter->isAvailable('de'));
