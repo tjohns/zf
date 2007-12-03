@@ -56,6 +56,7 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
         unset($_SERVER['SERVER_NAME']);
         unset($_SERVER['SERVER_PORT']);
         unset($_SERVER['SCRIPT_URL']);
+        unset($_SERVER['REDIRECT_URL']);
         unset($_SERVER['PHP_SELF']);
         unset($_SERVER['SCRIPT_NAME']);
         unset($_SERVER['PATH_INFO']);
@@ -113,6 +114,13 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
         $this->assertSame( 'http://www.test.com/test.php', Zend_OpenId::selfUrl() );
 
         unset($_SERVER['SCRIPT_URL']);
+        $_SERVER['REDIRECT_URL'] = '/ok';
+        $_SERVER['PHP_SELF'] = '/bug.php';
+        $_SERVER['SCRIPT_NAME'] = '/bug.php';
+        $_SERVER['PATH_INFO'] = '/bug';
+        $this->assertSame( 'http://www.test.com/ok', Zend_OpenId::selfUrl() );
+
+        unset($_SERVER['REDIRECT_URL']);
         $_SERVER['PHP_SELF'] = '/test.php';
         $this->assertSame( 'http://www.test.com/test.php', Zend_OpenId::selfUrl() );
 
@@ -123,6 +131,42 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
 
         unset($_SERVER['PATH_INFO']);
         $this->assertSame( 'http://www.test.com/test.php', Zend_OpenId::selfUrl() );
+    }
+
+    /**
+     * testing testAbsolutefUrl
+     *
+     */
+    public function testAbsoluteUrl()
+    {
+        unset($_SERVER['SCRIPT_URI']);
+        unset($_SERVER['HTTPS']);
+        unset($_SERVER['HTTP_HOST']);
+        unset($_SERVER['SERVER_NAME']);
+        unset($_SERVER['SERVER_PORT']);
+        unset($_SERVER['SCRIPT_URL']);
+        unset($_SERVER['REDIRECT_URL']);
+        unset($_SERVER['PHP_SELF']);
+        unset($_SERVER['SCRIPT_NAME']);
+        unset($_SERVER['PATH_INFO']);
+
+        $_SERVER['HTTP_HOST'] = "www.test.com";
+        $_SERVER['SCRIPT_NAME'] = '/a/b/c/test.php';
+
+        $this->assertSame( 'http://www.test.com/a/b/c/test.php', Zend_OpenId::absoluteUrl("") );
+
+        $this->assertSame( 'http://www.test.com/a/b/c/ok.php', Zend_OpenId::absoluteUrl("ok.php") );
+
+        $this->assertSame( 'http://www.test.com/a/ok.php', Zend_OpenId::absoluteUrl("/a/ok.php") );
+
+        $this->assertSame( 'http://www.php.net/ok.php', Zend_OpenId::absoluteUrl("http://www.php.net/ok.php") );
+
+        $this->assertSame( 'https://www.php.net/ok.php', Zend_OpenId::absoluteUrl("https://www.php.net/ok.php") );
+
+        $_SERVER['SCRIPT_NAME'] = '/test.php';
+        $this->assertSame( 'http://www.test.com/a/b.php', Zend_OpenId::absoluteUrl("/a/b.php") );
+    
+        $this->assertSame( 'http://www.test.com/a/b.php', Zend_OpenId::absoluteUrl("a/b.php") );
     }
 
     /**

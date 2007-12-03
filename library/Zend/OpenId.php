@@ -118,6 +118,8 @@ class Zend_OpenId
         $url .= $port;
         if (isset($_SERVER['SCRIPT_URL'])) {
             $url .= $_SERVER['SCRIPT_URL'];
+        } else if (isset($_SERVER['REDIRECT_URL'])) {
+            $url .= $_SERVER['REDIRECT_URL'];
         } else if (isset($_SERVER['PHP_SELF'])) {
             $url .= $_SERVER['PHP_SELF'];
         } else if (isset($_SERVER['SCRIPT_NAME'])) {
@@ -155,12 +157,13 @@ class Zend_OpenId
                         . (empty($port) ? '' : (':' . $port))
                         . $url;
                 } else {
+                    $dir = dirname($path);
                     return $scheme
                         . '://'
                         . $auth
                         . $host
                         . (empty($port) ? '' : (':' . $port))
-                        . dirname($path)
+                        . (strlen($dir) > 1 ? $dir : '')
                         . '/'
                         . $url;
                 }
