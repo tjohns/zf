@@ -9,7 +9,7 @@
             Yahoo! Web search、Yahoo! News、Yahoo! Local、Yahoo! Images
             を検索できるようになります。 Yahoo! REST API を使用するには、
             Yahoo! Application ID が必要です。Application ID を取得するには、
-            <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID リクエストフォーム</ulink>
+            <ulink url="http://developer.yahoo.com/wsregapp/">Application ID リクエストフォーム</ulink>
             を使用してください。
         </para>
     </sect2>
