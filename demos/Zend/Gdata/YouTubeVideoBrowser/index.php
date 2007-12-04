@@ -206,7 +206,7 @@ END;
 /*
  * The main controller logic of the YouTube video browser demonstration app.
  */
-$queryType = $_POST['queryType'];
+$queryType = isset($_POST['queryType']) ? $_POST['queryType'] : null;
 
 if ($queryType === null) {
     /* display the entire interface */
