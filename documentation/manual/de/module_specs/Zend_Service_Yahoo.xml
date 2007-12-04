@@ -6,7 +6,7 @@
             <code>Zend_Service_Yahoo</code> ist eine einfach API für die Benutzung von vielen der Yahoo! REST APIs
             <code>Zend_Service_Yahoo</code> erlaubt die Suche im Web mit Hilfe von Yahoo! Web search, Yahoo! News,
             Yahoo! Local, Yahoo! Images. Um die Yahoo! REST API zu benutzen, muss man eine Yahoo! Application ID haben.
-            Um eine Application ID zu bekommen, die folgende <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID Request Form</ulink>
+            Um eine Application ID zu bekommen, die folgende <ulink url="http://developer.yahoo.com/wsregapp/">Application ID Request Form</ulink>
             ausgefüllt und abgeschickt werden
         </para>
     </sect2>

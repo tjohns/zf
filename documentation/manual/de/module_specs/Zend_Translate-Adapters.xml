@@ -274,6 +274,42 @@ try {
 
     </sect2>
 
+    <sect2 id="zend.translate.adapter.caching">
+
+        <title>Alle Adapter verschnellern</title>
+
+        <para>
+            <code>Zend_Translate</code> erlaubt intern die Verwendung von <code>Zend_Cache</code> um das
+            Laden von Übersetzungs Quellen zu verschnellern. Das kann sehr nützlich sein wenn viele
+            Übersetzungs Quellen oder aufwändige Quellformate, wie XML basierte Dateien, verwendet werden.
+        </para>
+
+        <para>
+            Um das Caching zu verwenden muß nur ein Cache Objekt an die <code>Zend_Translate::setCache()</code>
+            Methode übergeben werden. Diese nimmt eine Instanz von <code>Zend_Cache</code> als einzigen
+            Parameter. Auch wenn irgendein Adapter direkt verwendet wird kann die <code>setCache()</code>
+            Methode verwendet werden.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+Zend_Translate::setCache($cache);
+$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Der Cache muß <emphasis role="strong">vor</emphasis> seiner Verwendung oder Initiierung eines
+                Adapter oder einer Instanz von <code>Zend_Translate</code> gesetzt werden. Andernfalls wird
+                die Übersetzungs Quelle nicht gecached bis eine neue Quelle mit der
+                <code>addTranslation()</code> Methode hinzugefügt wird.
+            </para>
+        </note>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
