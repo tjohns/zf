@@ -46,6 +46,8 @@ class Zend_View_Helper_LayoutTest extends PHPUnit_Framework_TestCase
         if (Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
             Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer');
         }
+
+        Zend_View_Helper_LayoutTest_Layout::$_mvcInstance = null;
     }
 
     /**
@@ -67,18 +69,18 @@ class Zend_View_Helper_LayoutTest extends PHPUnit_Framework_TestCase
 
     public function testGetLayoutPullsLayoutObjectFromRegisteredPlugin()
     {
-        $layout = new Zend_Layout();
+        $layout = Zend_Layout::startMvc();
         $helper = new Zend_View_Helper_Layout();
         $this->assertSame($layout, $helper->getLayout());
     }
 
     public function testSetLayoutReplacesExistingLayoutObject()
     {
-        $layout = new Zend_Layout();
+        $layout = Zend_Layout::startMvc();
         $helper = new Zend_View_Helper_Layout();
         $this->assertSame($layout, $helper->getLayout());
 
-        $newLayout = new Zend_Layout(array('mvcEnabled' => false));
+        $newLayout = new Zend_Layout();
         $this->assertNotSame($layout, $newLayout);
 
         $helper->setLayout($newLayout);
@@ -87,12 +89,20 @@ class Zend_View_Helper_LayoutTest extends PHPUnit_Framework_TestCase
 
     public function testHelperMethodFetchesLayoutObject()
     {
-        $layout = new Zend_Layout();
+        $layout = Zend_Layout::startMvc();
         $helper = new Zend_View_Helper_Layout();
 
         $received = $helper->layout();
         $this->assertSame($layout, $received);
     }
+}
+
+/**
+ * Zend_Layout extension to allow resetting MVC instance
+ */
+class Zend_View_Helper_LayoutTest_Layout extends Zend_Layout
+{
+    public static $_mvcInstance;
 }
 
 // Call Zend_View_Helper_LayoutTest::main() if this source file is executed directly.
