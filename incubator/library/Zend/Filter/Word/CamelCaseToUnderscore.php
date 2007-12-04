@@ -16,13 +16,13 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CamelCaseToSeparator.php 6779 2007-11-08 15:10:41Z matthew $
+ * @version    $Id: CamelCaseToUnderscore.php 6779 2007-11-08 15:10:41Z matthew $
  */
 
 /**
- * @see Zend_Filter_PregReplace
+ * @see Zend_Filter_CamelCaseToSeparator
  */
-require_once 'Zend/Filter/PregReplace.php';
+require_once 'Zend/Filter/Word/CamelCaseToSeparator.php';
 
 /**
  * @category   Zend
@@ -30,17 +30,15 @@ require_once 'Zend/Filter/PregReplace.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_UnderscoreToDash extends Zend_Filter_PregReplace
+class Zend_Filter_Word_CamelCaseToUnderscore extends Zend_Filter_Word_CamelCaseToSeparator
 {
     /**
      * Constructor
      * 
-     * @param  string $separator Space by default
      * @return void
      */
-    public function __construct($separator = ' ')
+    public function __construct()
     {
-        $this->setMatchPattern('#_#');
-        $this->setReplacement('-');
+        parent::__construct('_');
     }
 }

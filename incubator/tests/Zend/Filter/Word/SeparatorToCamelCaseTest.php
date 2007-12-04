@@ -2,18 +2,18 @@
 // Call Zend_Filter_SeparatorToCamelCaseTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
-    define("PHPUnit_MAIN_METHOD", "Zend_Filter_SeparatorToCamelCaseTest::main");
+    define("PHPUnit_MAIN_METHOD", "Zend_Filter_Word_SeparatorToCamelCaseTest::main");
 }
 
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
-require_once 'Zend/Filter/SeparatorToCamelCase.php';
+require_once 'Zend/Filter/Word/SeparatorToCamelCase.php';
 
 /**
- * Test class for Zend_Filter_SeparatorToCamelCase.
+ * Test class for Zend_Filter_Word_SeparatorToCamelCase.
  */
-class Zend_Filter_SeparatorToCamelCaseTest extends PHPUnit_Framework_TestCase 
+class Zend_Filter_Word_SeparatorToCamelCaseTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Runs the test methods of this class.
@@ -24,14 +24,14 @@ class Zend_Filter_SeparatorToCamelCaseTest extends PHPUnit_Framework_TestCase
     public static function main() {
         require_once "PHPUnit/TextUI/TestRunner.php";
 
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_Filter_SeparatorToCamelCaseTest");
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Filter_Word_SeparatorToCamelCaseTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
     public function testFilterSeparatesCamelCasedWordsWithSpacesByDefault()
     {
         $string   = 'camel cased words';
-        $filter   = new Zend_Filter_SeparatorToCamelCase();
+        $filter   = new Zend_Filter_Word_SeparatorToCamelCase();
         $filtered = $filter->filter($string);
 
         $this->assertNotEquals($string, $filtered);
@@ -40,8 +40,8 @@ class Zend_Filter_SeparatorToCamelCaseTest extends PHPUnit_Framework_TestCase
 
     public function testFilterSeparatesCamelCasedWordsWithProvidedSeparator()
     {
-        $string   = 'camel:-:cased:-:words';
-        $filter   = new Zend_Filter_SeparatorToCamelCase(':-:');
+        $string   = 'camel:-:cased:-:Words';
+        $filter   = new Zend_Filter_Word_SeparatorToCamelCase(':-:');
         $filtered = $filter->filter($string);
 
         $this->assertNotEquals($string, $filtered);
@@ -49,7 +49,7 @@ class Zend_Filter_SeparatorToCamelCaseTest extends PHPUnit_Framework_TestCase
     }
 }
 
-// Call Zend_Filter_SeparatorToCamelCaseTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_Filter_SeparatorToCamelCaseTest::main") {
-    Zend_Filter_SeparatorToCamelCaseTest::main();
+// Call Zend_Filter_Word_SeparatorToCamelCaseTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Filter_Word_SeparatorToCamelCaseTest::main") {
+    Zend_Filter_Word_SeparatorToCamelCaseTest::main();
 }

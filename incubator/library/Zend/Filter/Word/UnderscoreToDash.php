@@ -16,14 +16,13 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: CamelCaseToDash.php 6779 2007-11-08 15:10:41Z matthew $
+ * @version    $Id: CamelCaseToSeparator.php 6779 2007-11-08 15:10:41Z matthew $
  */
 
 /**
- * @see Zend_Filter_Interface
+ * @see Zend_Filter_PregReplace
  */
-require_once 'Zend/Filter/SeparatorToCamelCase.php';
-
+require_once 'Zend/Filter/Word/SeparatorToSeparator.php';
 
 /**
  * @category   Zend
@@ -31,15 +30,16 @@ require_once 'Zend/Filter/SeparatorToCamelCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_DashToCamelCase extends Zend_Filter_SeparatorToCamelCase
+class Zend_Filter_Word_UnderscoreToDash extends Zend_Filter_Word_SeparatorToSeparator
 {
     /**
      * Constructor
      * 
+     * @param  string $separator Space by default
      * @return void
      */
     public function __construct()
     {
-        parent::__construct('-');
+        parent::__construct('_', '-');
     }
 }

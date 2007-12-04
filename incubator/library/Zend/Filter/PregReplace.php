@@ -146,9 +146,11 @@ class Zend_Filter_PregReplace implements Zend_Filter_Interface
     public function filter($value)
     {
         if ($this->_matchPattern == null) {
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception(get_class($this) . ' does not have a valid MatchPattern set.');
         }
         
-        return preg_replace($this->_matchPattern, $this->_replacement, $value);
+        return preg_replace($this->_matchPattern, $this->_replacement, $value);    
     }
+    
 }

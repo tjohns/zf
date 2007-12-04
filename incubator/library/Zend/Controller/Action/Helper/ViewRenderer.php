@@ -261,15 +261,12 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         if (null === $this->_inflector) {
             require_once 'Zend/Filter/Inflector.php';
             require_once 'Zend/Filter/PregReplace.php';
+            require_once 'Zend/Filter/Word/UnderscoreToSeparator.php';
             $this->_inflector = new Zend_Filter_Inflector();
             $this->_inflector->addRules(array(
-                     ':module'     => array('CamelCaseToDash', 'stringToLower'),
-                     ':controller' => array('CamelCaseToDash', 'UnderscoreToPathSeparator', 'StringToLower'),
-                     ':action'     => array(
-                         'CamelCaseToDash', 
-                         new Zend_Filter_PregReplace('/[^a-z0-9]+/i', '-'),
-                         'StringToLower'
-                     ),
+                     ':module'     => array('Word_CamelCaseToDash', 'stringToLower'),
+                     ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator(DIRECTORY_SEPARATOR), 'StringToLower'),
+                     ':action'     => array('Word_CamelCaseToDash', new Zend_Filter_PregReplace('/[^a-z0-9]+/i', '-'), 'StringToLower'),
                  ))
                  ->setStaticRuleReference('suffix', $this->_viewSuffix)
                  ->setStaticRuleReference('moduleDir', $this->_moduleDir)

@@ -16,13 +16,13 @@
  * @package    Zend_Filter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: CamelCaseToSeparator.php 6779 2007-11-08 15:10:41Z matthew $
  */
 
 /**
  * @see Zend_Filter_PregReplace
  */
-require_once 'Zend/Filter/PregReplace.php';
+require_once 'Zend/Filter/Word/SeparatorToSeparator.php';
 
 /**
  * @category   Zend
@@ -30,7 +30,7 @@ require_once 'Zend/Filter/PregReplace.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_UnderscoreToPathSeparator extends Zend_Filter_PregReplace
+class Zend_Filter_Word_DashToUnderscore extends Zend_Filter_Word_SeparatorToSeparator 
 {
     /**
      * Constructor
@@ -38,9 +38,8 @@ class Zend_Filter_UnderscoreToPathSeparator extends Zend_Filter_PregReplace
      * @param  string $separator Space by default
      * @return void
      */
-    public function __construct($separator = ' ')
+    public function __construct()
     {
-        $this->setMatchPattern('#_#');
-        $this->setReplacement(DIRECTORY_SEPARATOR);
+        parent::__construct('-', '_');
     }
 }

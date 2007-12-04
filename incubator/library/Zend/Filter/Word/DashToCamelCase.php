@@ -22,8 +22,7 @@
 /**
  * @see Zend_Filter_Interface
  */
-require_once 'Zend/Filter/SeparatorToCamelCase.php';
-
+require_once 'Zend/Filter/Word/SeparatorToCamelCase.php';
 
 /**
  * @category   Zend
@@ -31,7 +30,7 @@ require_once 'Zend/Filter/SeparatorToCamelCase.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_UnderscoreToCamelCase extends Zend_Filter_SeparatorToCamelCase
+class Zend_Filter_Word_DashToCamelCase extends Zend_Filter_Word_SeparatorToCamelCase
 {
     /**
      * Constructor
@@ -40,6 +39,6 @@ class Zend_Filter_UnderscoreToCamelCase extends Zend_Filter_SeparatorToCamelCase
      */
     public function __construct()
     {
-        parent::__construct('_');
+        parent::__construct('-');
     }
 }

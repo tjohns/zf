@@ -22,7 +22,7 @@
 /**
  * @see Zend_Filter_PregReplace
  */
-require_once 'Zend/Filter/PregReplace.php';
+require_once 'Zend/Filter/Word/Separator/Abstract.php';
 
 /**
  * @category   Zend
@@ -30,17 +30,20 @@ require_once 'Zend/Filter/PregReplace.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_DashToUnderscore extends Zend_Filter_PregReplace
+class Zend_Filter_Word_CamelCaseToSeparator extends Zend_Filter_Word_Separator_Abstract
 {
-    /**
-     * Constructor
-     * 
-     * @param  string $separator Space by default
-     * @return void
-     */
-    public function __construct($separator = ' ')
+    
+    public function filter($value)
     {
-        $this->setMatchPattern('#-#');
-        $this->setReplacement('_');
+        if (self::isUnicodeSupportEnabled()) {
+            parent::setMatchPattern(array('#(?<=(?:\p{Lu}))(\p{Lu}\p{Ll})#','#(?<=(?:\p{Ll}))(\p{Lu})#'));
+            parent::setReplacement(array($this->_separator . '\1', $this->_separator . '\1'));
+        } else {
+            parent::setMatchPattern(array('#(?<=(?:[A-Z]))([A-Z]+)([A-Z][A-z])#', '#(?<=(?:[a-z]))([A-Z])#'));
+            parent::setReplacement(array('\1' . $this->_separator . '\2', $this->_separator . '\1'));
+        }
+
+        return parent::filter($value);
     }
+    
 }

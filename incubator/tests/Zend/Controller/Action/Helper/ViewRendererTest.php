@@ -699,7 +699,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
         $this->helper->view->addBasePath($this->basePath . '/_files/modules/bar/views');
 
         $inflector = new Zend_Filter_Inflector('test.phtml');
-        $inflector->addFilterRule(':controller', array('CamelCaseToDash'));
+        $inflector->addFilterRule(':controller', array('Word_CamelCaseToDash'));
         $this->helper->setInflector($inflector);
 
         $this->helper->render();
@@ -716,12 +716,15 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
 
         $this->helper->view->addBasePath($this->basePath . '/_files/modules/bar/views');
 
+        require_once 'Zend/Filter/PregReplace.php';
+        require_once 'Zend/Filter/Word/UnderscoreToSeparator.php';
+        
         $inflector = new Zend_Filter_Inflector('test.phtml');
         $inflector->addRules(array(
-            ':module'     => array('CamelCaseToDash', 'stringToLower'),
-            ':controller' => array('CamelCaseToDash', 'UnderscoreToPathSeparator', 'StringToLower'),
+            ':module'     => array('Word_CamelCaseToDash', 'stringToLower'),
+            ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator(DIRECTORY_SEPARATOR), 'StringToLower'),
             ':action'     => array(
-                'CamelCaseToDash', 
+                'Word_CamelCaseToDash', 
                 new Zend_Filter_PregReplace('/[^a-z0-9]+/i', '-'),
                 'StringToLower'
             ),

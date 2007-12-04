@@ -130,6 +130,51 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     }
 
     /**
+     * Set Whether or not the inflector should throw an exception when a replacement
+     * identifier is still found within an inflected target.
+     *
+     * @param bool $throwTargetExceptions
+     * @return Zend_Filter_Inflector
+     */
+    public function setThrowTargetExceptionsOn($throwTargetExceptionsOn)
+    {
+        $this->_throwTargetExceptionsOn = ($throwTargetExceptionsOn == true) ? true : false;
+        return $this;
+    }
+    
+    /**
+     * Will exceptions be thrown?
+     *
+     * @return bool
+     */
+    public function isThrowTargetExceptionsOn()
+    {
+        return $this->_throwTargetExceptionsOn;
+    }
+
+    /**
+     * Set the Target Replacement Identifier, by default ':'
+     *
+     * @param string $targetReplacementIdentifier
+     * @return Zend_Filter_Inflector
+     */
+    public function setTargetReplacementIdentifier($targetReplacementIdentifier)
+    {
+        $this->_targetReplacementIdentifier = (string) $targetReplacementIdentifier;
+        return $this;
+    }
+    
+    /**
+     * Get Target Replacement Identifier
+     *
+     * @return string
+     */
+    public function getTargetReplacementIdentifier()
+    {
+        return $this->_targetReplacementIdentifier;
+    }
+    
+    /**
      * Set a Target
      * ex: 'scripts/:controller/:action.:suffix'
      * 
@@ -163,63 +208,53 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
         $this->_target =& $target;
         return $this;
     }
-    
-    /**
-     * Set Whether or not the inflector should throw an exception when a replacement
-     * identifier is still found within an inflected target.
-     *
-     * @param bool $throwTargetExceptions
-     * @return Zend_Filter_Inflector
-     */
-    public function setThrowTargetExceptionsOn($throwTargetExceptionsOn)
-    {
-        $this->_throwTargetExceptionsOn = ($throwTargetExceptionsOn == true) ? true : false;
-        return $this;
-    }
-    
-    /**
-     * Will exceptions be thrown?
-     *
-     * @return bool
-     */
-    public function isThrowTargetExceptionsOn()
-    {
-        return $this->_throwTargetExceptionsOn;
-    }
-    
-    /**
-     * Set the Target Replacement Identifier, by default ':'
-     *
-     * @param string $targetReplacementIdentifier
-     * @return Zend_Filter_Inflector
-     */
-    public function setTargetReplacementIdentifier($targetReplacementIdentifier)
-    {
-        $this->_targetReplacementIdentifier = (string) $targetReplacementIdentifier;
-        return $this;
-    }
-    
-    /**
-     * Get Target Replacement Identifier
-     *
-     * @return string
-     */
-    public function getTargetReplacementIdentifier()
-    {
-        return $this->_targetReplacementIdentifier;
-    }
-    
-    /**
-     * Normalize spec string
-     * 
-     * @param  string $spec 
-     * @return string
-     */
-    protected function _normalizeSpec($spec)
-    {
-        return ltrim((string) $spec, ':');
-    }
 
+    /**
+     * SetRules() is the same as calling addRules() with the exception that it
+     * clears the rules before adding them.
+     *
+     * @param array $rules
+     * @return Zend_Filter_Inflector
+     */
+    public function setRules(Array $rules)
+    {
+        $this->clearRules();
+        $this->addRules($rules);
+        return $this;
+    }
+    
+    /**
+     * AddRules() is similar to a multi-call to setting filter rules.  If prefixed
+     * with a ":" (colon), a filter rule will be added.  If prefixed with an "&",
+     * a referenced static replacement will be added.  If not prefixed, a static
+     * replacement will be added.
+     * 
+     * ex:
+     * array(
+     *     ':controller' => array('CamelCaseToUnderscore','StringToLower'),
+     *     ':action'     => array('CamelCaseToUnderscore','StringToLower'),
+     *     '&suffix'     => $this->_mySuffix,
+     *     'suffix'      => 'phtml'                        // OR LIKE THIS
+     *     );
+     * 
+     * @param array
+     * @return Zend_Filter_Inflector
+     */
+    public function addRules(Array $rules)
+    {
+        foreach ($rules as $spec => $rule) {
+            if ($spec[0] == ':') {
+                $this->addFilterRule($spec, $rule);
+            } elseif ($spec[0] == '&') {
+                $this->setStaticRuleReference($spec, $rule);
+            } else {
+                $this->setStaticRule($spec, $rule);
+            }
+        }
+        
+        return $this;
+    }
+    
     /**
      * Get rules
      *
@@ -240,6 +275,35 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
         }
 
         return $this->_rules;
+    }
+    
+    /**
+     * getRule() returns a rule set by setFilterRule(), a numeric index must be provided
+     *
+     * @param string $spec
+     * @param int $index
+     * @return Zend_Filter_Interface|false
+     */
+    public function getRule($spec, $index)
+    {
+        $spec = $this->_normalizeSpec($spec);
+        if (isset($this->_rules[$spec]) && is_array($this->_rules[$spec])) {
+            if (isset($this->_rules[$spec][$index])) {
+                return $this->_rules[$spec][$index];
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * ClearRules() clears the rules currently in the inflector
+     *
+     * @return Zend_Filter_Inflector
+     */
+    public function clearRules()
+    {
+        $this->_rules = array();
+        return $this;
     }
     
     /**
@@ -310,38 +374,6 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
         $this->_rules[$name] =& $reference;
         return $this;
     }
-    
-    /**
-     * AddRules() is similar to a multi-call to setting filter rules.  If prefixed
-     * with a ":" (colon), a filter rule will be added.  If prefixed with an "&",
-     * a referenced static replacement will be added.  If not prefixed, a static
-     * replacement will be added.
-     * 
-     * ex:
-     * array(
-     *     ':controller' => array('CamelCaseToUnderscore','StringToLower'),
-     *     ':action'     => array('CamelCaseToUnderscore','StringToLower'),
-     *     '&suffix'     => $this->_mySuffix,
-     *     'suffix'      => 'phtml'                        // OR LIKE THIS
-     *     );
-     * 
-     * @param array
-     * @return Zend_Filter_Inflector
-     */
-    public function addRules(Array $rules)
-    {
-        foreach ($rules as $spec => $rule) {
-            if ($spec[0] == ':') {
-                $this->addFilterRule($spec, $rule);
-            } elseif ($spec[0] == '&') {
-                $this->setStaticRuleReference($spec, $rule);
-            } else {
-                $this->setStaticRule($spec, $rule);
-            }
-        }
-        
-        return $this;
-    }
 
     /**
      * Inflect
@@ -379,10 +411,21 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
 
     	if ($this->_throwTargetExceptionsOn && (preg_match('#(?='.$pregQuotedTargetReplacementIdentifier.'[A-Za-z]{1})#', $inflectedTarget) == true)) {
     	    require_once 'Zend/Filter/Exception.php';
-    	    throw new Zend_Filter_Exception('A replacement identifier ' . $this->_targetReplacementIdentifier . ' was found inside the inflected target, perhaps a rule was not satisfied with a target source?');
+    	    throw new Zend_Filter_Exception('A replacement identifier ' . $this->_targetReplacementIdentifier . ' was found inside the inflected target, perhaps a rule was not satisfied with a target source?  Unsatisfied inflected target: ' . $inflectedTarget);
     	}
     	
     	return $inflectedTarget;
+    }
+    
+    /**
+     * Normalize spec string
+     * 
+     * @param  string $spec 
+     * @return string
+     */
+    protected function _normalizeSpec($spec)
+    {
+        return ltrim((string) $spec, ':&');
     }
     
     /**
@@ -408,4 +451,5 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
         
         return $ruleObject;
     }
+
 }

@@ -22,7 +22,7 @@
 /**
  * @see Zend_Filter_PregReplace
  */
-require_once 'Zend/Filter/PregReplace.php';
+require_once 'Zend/Filter/Word/Separator/Abstract.php';
 
 /**
  * @category   Zend
@@ -30,36 +30,23 @@ require_once 'Zend/Filter/PregReplace.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_SeparatorToCamelCase extends Zend_Filter_PregReplace
+class Zend_Filter_Word_SeparatorToCamelCase extends Zend_Filter_Word_Separator_Abstract
 {
-    /**
-     * Constructor
-     * 
-     * @param  string $separator Space by default
-     * @return void
-     */
-    public function __construct($separator = ' ')
+
+    public function filter($value)
     {
-        if ($separator == null) {
-            throw new Zend_Filter_Exception('Separator must not be empty.');
-        }
-        
         // a unicode safe way of converting characters to \x00\x00 notation
-        $hexSeparator = '\x' . implode('\x', array_map("bin2hex", preg_split('//', $separator, -1, PREG_SPLIT_NO_EMPTY)));
-        
+        $pregQuotedSeparator = preg_quote($this->_separator, '#');
+
         if (self::isUnicodeSupportEnabled()) {
-            $pregMatches = array(
-                '#('.$hexSeparator.')(\p{L}{1})#e' => "strtoupper('\\2')", 
-                '#(^\p{Ll}{1})#e' => "strtoupper('\\1')"
-                );
-        } else {    
-            $pregMatches = array(
-                '#('.$hexSeparator.')([A-Z]{1})#e' => "strtoupper('\\2')", 
-                '#(^[a-z]{1})#e' => "strtoupper('\\1')"
-                );
+            parent::setMatchPattern(array('#('.$pregQuotedSeparator.')(\p{L}{1})#e','#(^\p{Ll}{1})#e'));
+            parent::setReplacement(array("strtoupper('\\2')","strtoupper('\\1')"));
+        } else {
+            parent::setMatchPattern(array('#('.$pregQuotedSeparator.')([A-Z]{1})#e','#(^[a-z]{1})#e'));
+            parent::setReplacement(array("strtoupper('\\2')","strtoupper('\\1')"));
         }
-        
-        $this->setMatchPattern(array_keys($pregMatches));
-        $this->setReplacement(array_values($pregMatches));
+
+        return parent::filter($value);
     }
+
 }

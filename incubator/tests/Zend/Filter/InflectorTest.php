@@ -200,6 +200,29 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($rules['controller']));
         $this->assertEquals('phtml', $rules['suffix']);
     }
+    
+    public function testSetRulesCreatesAppropriateRuleEntries()
+    {
+        $this->inflector->setStaticRule('some-rules', 'some-value');
+        $rules = $this->inflector->getRules();
+        $this->assertEquals(1, count($rules));
+        $action = 'foo';
+        $this->inflector->setRules(array(
+            ':controller' => array('PregReplace', 'Alpha'),
+            'suffix'      => 'phtml',
+        ));
+        $rules = $this->inflector->getRules();
+        $this->assertEquals(2, count($rules));
+        $this->assertEquals(2, count($rules['controller']));
+        $this->assertEquals('phtml', $rules['suffix']);
+    }
+    
+    public function testGetRule()
+    {
+        $this->inflector->setFilterRule(':controller', array('Alpha', 'StringToLower'));
+        $this->assertTrue($this->inflector->getRule('controller', 1) instanceof Zend_Filter_StringToLower);
+        $this->assertFalse($this->inflector->getRule('controller', 2));
+    }
 
     public function testFilterTransformsStringAccordingToRules()
     {

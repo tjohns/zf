@@ -82,6 +82,8 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      * @var string
      */
     protected $_captureKey;
+    
+    protected $_items = array();
 
     /**
      * Constructor - This is needed so that we can attach a class member as the ArrayObject container
@@ -90,7 +92,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function __construct()
     {
-        parent::__construct(array(), parent::ARRAY_AS_PROPS);
+        parent::__construct(&$this->_items, parent::ARRAY_AS_PROPS);
     }
     
     /**
