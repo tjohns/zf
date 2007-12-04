@@ -410,7 +410,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     {
         $fullId = $this->getId();
         $position = strrpos($fullId, '/');
-        if ($pos === false) {
+        if ($position === false) {
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('Slash not found in atom:id');
         } else {

@@ -45,6 +45,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
     private function verifyAllSamplePropertiesAreCorrect ($videoEntry) {
         $this->assertEquals('http://gdata.youtube.com/feeds/videos/UMFI1hdm96E',
             $videoEntry->id->text);
+        $this->assertEquals('UMFI1hdm96E', $videoEntry->getVideoId());
         $this->assertEquals('2007-01-07T01:50:15.000Z', $videoEntry->updated->text);
         $this->assertEquals('http://schemas.google.com/g/2005#kind', $videoEntry->category[0]->scheme);
         $this->assertEquals('http://gdata.youtube.com/schemas/2007#video', $videoEntry->category[0]->term);
@@ -120,6 +121,23 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1005, $videoEntry->rating->numRaters);
         $this->assertEquals(4.77, $videoEntry->rating->average);
         $this->assertEquals('http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments', $videoEntry->comments->feedLink->href);
+    }
+
+    public function testGetVideoId() {
+        $videoEntry = new Zend_Gdata_YouTube_VideoEntry();
+
+        // assert valid ID
+        $videoEntry->id = new Zend_Gdata_App_Extension_Id('http://gdata.youtube.com/feeds/videos/ABCDEFG12AB');
+        $this->assertEquals('ABCDEFG12AB', $videoEntry->getVideoId());
+    }
+    
+    public function testGetVideoIdException() {
+        $videoEntry = new Zend_Gdata_YouTube_VideoEntry();
+
+        // assert invalid ID
+        $this->setExpectedException('Zend_Gdata_App_Exception');
+        $videoEntry->id = new Zend_Gdata_App_Extension_Id('adfadfasf');
+        $this->assertEquals('adfadfasf', $videoEntry->getVideoId());
     }
 
     public function testEmptyEntryShouldHaveNoExtensionElements() {
