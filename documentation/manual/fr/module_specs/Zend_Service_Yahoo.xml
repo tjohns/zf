@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.service.yahoo">
+<sect1 id="zend.service.yahoo">
     <title>Zend_Service_Yahoo</title>
     <sect2 id="zend.service.yahoo.introduction">
         <title>Introduction</title>
@@ -7,7 +7,7 @@
             <code>Zend_Service_Yahoo</code> vous permet de rechercher dans Yahoo! Web search, Yahoo! News,
             Yahoo! Local et Yahoo! Images. Pour pouvoir utiliser l'API REST de Yahoo!, vous devez avoir un identifiant Yahoo Application.
             Pour obtenir un identifiant Yahoo Application, veuillez compléter et soumettre le
-            <ulink url="http://api.search.yahoo.com/webservices/register_application">formulaire de demande d'identifiant Yahoo! Application</ulink>.
+            <ulink url="https://developer.yahoo.com/wsregapp/">formulaire de demande d'identifiant Yahoo! Application</ulink>.
         </para>
     </sect2>
     <sect2 id="zend.service.yahoo.websearch">
