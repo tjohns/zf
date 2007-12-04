@@ -152,7 +152,7 @@ class Zend_Layout
             require_once 'Zend/Filter/Inflector.php';
             $inflector = new Zend_Filter_Inflector(':script.:suffix');
             $inflector->addRules(array(
-                ':script' => array('CamelCaseToDash', 'StringToLower'),
+                ':script' => array('Word_CamelCaseToDash', 'StringToLower'),
                 'suffix'  => 'phtml'
             ));
             $this->setInflector($inflector);
