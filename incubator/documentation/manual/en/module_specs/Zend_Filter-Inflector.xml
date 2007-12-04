@@ -1,0 +1,36 @@
+<sect1 id="zend.filter.inflector">
+    <title>Zend_Filter_Inflector</title>
+
+    <para>
+        <code>Zend_Filter_Inflector</code> is a general purpose tool for
+        rules-based inflection of strings to a given target.
+    </para>
+
+    <para>
+        As an example, you may find you need to transform CamelCasedWords into a
+        path; for readability, OS policies, or other reasons, you also need to
+        lower case this, and you want to separate the words using a dash ('-').
+        An inflector can do this for you.
+    </para>
+
+    <example id="zend.filter.inflector.camel_case_example">
+        <title>Transforming CamelCaseText to another format</title>
+
+        <programlisting role="php"><![CDATA[<?php
+$inflector = new Zend_Filter_Inflector('pages/:page.:suffix');
+$inflector->setRules(array(
+    ':page'  => array('Word_CamelCaseToDash', 'StringToLower'),
+    'suffix' => 'html'
+));
+
+$string   = 'CamelCasedWords';
+$filtered = $page->filter(array('page' => $string)); // pages/camel-cased-words.html
+
+$string   = 'this_is_not_camel_cased';
+$filtered = $page->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
+?>]]></programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

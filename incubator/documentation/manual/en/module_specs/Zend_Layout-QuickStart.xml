@@ -200,8 +200,10 @@ $layout = Zend_Layout::getMvcInstance();
         
         <para>
             This feature is particularly useful when used in conjunction with
-            the <link linkend="zend.controller.actionhelpers.actionstack">ActionStack</link> 
-            action helper, which you can use to setup a stack of actions through
+            the ActionStack <link linkend="zend.controller.actionhelpers.actionstack">action
+            helper</link> and <link
+            linkend="zend.controller.plugins.standard.actionstack">plugin</link>,
+            which you can use to setup a stack of actions through
             which to loop, and thus create widgetized pages.
         </para>
     </sect2>

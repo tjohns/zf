@@ -214,6 +214,20 @@ $inflector->addRules(array(
 $layout->setInflector($inflector);
 ?>]]></programlisting>
         </example>
+
+        <note>
+            <title>Inflection can be disabled</title>
+
+            <para>
+                Inflection can be disabled and enabled using accessors on the
+                <code>Zend_Layout</code> object. This can be useful if you want
+                to specify an absolute path for a layout view script, or know
+                that the mechanism you will be using for specifying the layout
+                script does not need inflection. Simply use the
+                <code>enableInflection()</code> and
+                <code>disableInflection()</code> methods.
+            </para>
+        </note>
     </sect2>
 </sect1>
 <!--
