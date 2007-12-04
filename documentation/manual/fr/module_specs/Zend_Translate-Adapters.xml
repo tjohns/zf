@@ -209,4 +209,32 @@ try {
 
     </sect2>
 
+    <sect2 id="zend.translate.adapter.caching">
+
+        <title>Améliorer les performances de tous les adaptateurs</title>
+
+        <para>
+            <code>Zend_Translate</code> vous permet d'utiliser en interne <code>Zend_Cache</code> pour accélérer le chargement des sources de traduction. Cela devient très pratique si vous utilisez beaucoup de sources de traduction ou des formats source vastes comme des fichiers au format XML.
+        </para>
+
+        <para>
+            Pour utiliser le cache, vous devez juste fournir un objet de cache à la méthode <code>Zend_Translate::setCache()</code>. Elle prend une instance de <code>Zend_Cache</code> comme seul paramètre. En outre si vous utilisez n'importe quel adaptateur direct, vous pouvez employer la méthode <code>setCache()</code>.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Translate.php';
+
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+Zend_Translate::setCache($cache);
+$translate = new Zend_Translate('gettext', '/chemin/vers/traduction.mo', 'en');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Vous devez paramétrer le cache <emphasis role="strong">avant</emphasis> d'utiliser ou d'initialiser tout adaptateur ou instance de <code>Zend_Translate</code>. Sinon votre source de traduction ne sera pas mise en cache tant que vous n'aurez pas ajouté une nouvelle source avec la méthode <code>addTranslation()</code>.
+            </para>
+        </note>
+
+    </sect2>
+
 </sect1>
