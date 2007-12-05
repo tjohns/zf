@@ -30,8 +30,10 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/InfoCard/XmlParsing.php';
+require_once 'Zend/InfoCard/Process.php';
+require_once 'Zend/InfoCard/Assertion_Test.php';
 
-class Zend_InfoCard_AllTests
+class AllTests
 {
     public static function main()
     {
@@ -40,9 +42,11 @@ class Zend_InfoCard_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_InfoCard');
+        $suite = new PHPUnit_Framework_TestSuite("Zend Framework - Zend_InfoCard");
 
         $suite->addTestSuite('Zend_InfoCard_XmlParsing');
+	$suite->addTestSuite('Zend_InfoCard_Process');
+	$suite->addTestSuite('Zend_InfoCard_Assertion_Test');
 
         return $suite;
     }

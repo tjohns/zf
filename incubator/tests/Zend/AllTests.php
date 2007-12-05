@@ -38,7 +38,7 @@ require_once 'Zend/Service/AllTests.php';
 require_once 'Zend/TimeSyncTest.php';
 require_once 'Zend/Validate/BarcodeTest.php';
 require_once 'Zend/View/AllTests.php';
-
+require_once 'Zend/InfoCard/AllTests.php';
 
 /**
  * @category   Zend
@@ -99,7 +99,8 @@ class Zend_AllTests
          * Zend_View tests
          */
         $suite->addTest(Zend_View_AllTests::suite());
-
+	
+	$suite->addTest(Zend_InfoCard_AllTests::suite());
         return $suite;
     }
 }
