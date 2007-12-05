@@ -24,7 +24,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 // This is a hack so we can run the InfoCard AllTests.php manually
-ini_set('include_path', ini_get('include_path') . ":../..:../../../library:../../../../library");
+ini_set('include_path', ini_get('include_path') . ":..".DIRECTORY_SEPARATOR."..:..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."library:..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."library");
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
