@@ -316,6 +316,34 @@ $german = array('message1' => 'Nachricht1',
 $translate = new Zend_Translate('array', $english, 'en');
 $translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
+
+        <para>
+            リリース 1.1 以降では、配列を外部のファイルに含めることもサポートしています。
+            ファイル名を指定すると、<code>Zend_Translate</code>
+            が自動的にそれをインクルードして配列を探します。
+            詳細は、次の例を参照ください。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// myarray.php
+<?php
+return array(
+    'message1' => 'Nachricht1',
+    'message2' => 'Nachricht2',
+    'message3' => 'Nachricht3');
+
+// コントローラ
+$translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                配列を返さないファイルはインクルードできません。
+                また、このファイル内での出力はすべて無視されます。
+            </para>
+
+        </note>
+
     </sect2>
 
     <sect2 id="zend.translate.using.source.gettext">
