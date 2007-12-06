@@ -350,4 +350,19 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         $this->_value = $value;
         $this->_type  = $type;
     }
+
+
+    /**
+     * Alias function for setType returning the converted unit
+     * Default is 0 as this class only handles numbers without precision
+     *
+     * @param $type   type
+     * @param $round  integer  OPTIONAL Precision to add, will always be 0
+     * @return string
+     */
+    public function convertTo($type, $round = 0)
+    {
+        $this->setType($type);
+        return $this->toString($round);
+    }
 }
