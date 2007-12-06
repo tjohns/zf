@@ -153,7 +153,7 @@ class Zend_InfoCard
 	 *
 	 * @return Zend_InfoCard_Cipher_PKI_Interface
 	 */
-	public function getPKCipherObject() 
+	public function getPKICipherObject() 
     {
 		return $this->_pkCipherObj;
 	}
@@ -448,10 +448,11 @@ class Zend_InfoCard
 		
 		// Validate we haven't seen this before and the conditions are acceptable
 		$conditions = $this->getAdapter()->retrieveAssertion($assertions->getAssertionURI(), $assertions->getAssertionID());
-		
+
 		if($conditions === false) {
 			$conditions = $assertions->getConditions();
 		}
+		
 		
 		if(is_array($condition_error = $assertions->validateConditions($conditions))) {
 			$retval->setError("Conditions of assertion document are not met: {$condition_error[1]} ({$condition_error[0]})");
@@ -461,7 +462,11 @@ class Zend_InfoCard
 		$attributes = $assertions->getAttributes();
 		
 		$retval->setClaims($attributes);
-		$retval->setCode(Zend_InfoCard_Claims::RESULT_SUCCESS);
+		
+		if($retval->getCode() == 0) {
+			$retval->setCode(Zend_InfoCard_Claims::RESULT_SUCCESS);
+		}
+		
 		return $retval;
 	}
 }

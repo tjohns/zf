@@ -62,6 +62,14 @@ class Zend_InfoCard_Xml_Assertion_SAML
 	 */
 	const CONDITION_TIME_ADJ = 3600; // +- 5 minutes
 	
+	protected function _getServerName() {
+		return $_SERVER['SERVER_NAME'];
+	}
+	
+	protected function _getServerPort() {
+		return $_SERVER['SERVER_PORT'];
+	}
+	
 	/**
 	 * Validate the conditions array returned from the getConditions() call
 	 *
@@ -74,27 +82,17 @@ class Zend_InfoCard_Xml_Assertion_SAML
 		$currentTime = time();
 
 		if(!empty($conditions)) {
+			
 			foreach($conditions as $condition => $conditionValue) {
 				switch(strtolower($condition)) {
-					case 'notbefore':
-						$notbeforetime = strtotime($conditionValue);
-						if(($currentTime < $notbeforetime) &&
-						   ($currentTime + self::CONDITION_TIME_ADJ < $notbeforetime)) {
-							return array($condition, 'Current time is before specified window');
-						   }
-						break;
-					case 'notonorafter':
-						$notonoraftertime = strtotime($conditionValue);
-
-						if(($currentTime >= $notonoraftertime) &&
-						   ($currentTime - self::CONDITION_TIME_ADJ >= $notonoraftertime)) {
-							return array($condition, 'Current time is after specified window');
-						}
-						break;
-					case 'audience':
+					case 'audiencerestrictioncondition':
 						
-						$self_aliases = array("https://{$_SERVER['SERVER_NAME']}/",
-						                      "https://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}");
+						$serverName = $this->_getServerName();
+						$serverPort = $this->_getServerPort();
+						
+						$self_aliases[] = "https://{$serverName}/";
+						$self_aliases[] = "https://{{$serverName}:{$serverPort}/";
+						
 						$found = false;
 				                      
 						if(is_array($conditionValue)) {
@@ -111,6 +109,27 @@ class Zend_InfoCard_Xml_Assertion_SAML
 						}
 						
 						break;
+					case 'notbefore':
+						$notbeforetime = strtotime($conditionValue);
+						
+						if($currentTime < $notbeforetime) {
+							if($currentTime + self::CONDITION_TIME_ADJ < $notbeforetime) {
+								return array($condition, 'Current time is before specified window');
+							}
+						}
+						
+						break;
+					case 'notonorafter':
+						$notonoraftertime = strtotime($conditionValue);
+
+						if($currentTime >= $notonoraftertime) {
+							if($currentTime - self::CONDITION_TIME_ADJ >= $notonoraftertime) {
+								return array($condition, 'Current time is after specified window');
+							}
+						}
+						
+						break;
+
 				}
 			}
 		}
@@ -194,9 +213,6 @@ class Zend_InfoCard_Xml_Assertion_SAML
 
 		$retval = array();
 
-		$retval['NotBefore'] = (string)$conditions['NotBefore'];
-		$retval['NotOnOrAfter'] = (string)$conditions['NotOnOrAfter'];
-		
 		foreach($conditions->children('urn:oasis:names:tc:SAML:1.0:assertion') as $key => $value) {
 			switch($key) {
 				case self::CONDITION_AUDIENCE:
@@ -208,6 +224,9 @@ class Zend_InfoCard_Xml_Assertion_SAML
 					break;
 			}
 		}
+
+		$retval['NotBefore'] = (string)$conditions['NotBefore'];
+		$retval['NotOnOrAfter'] = (string)$conditions['NotOnOrAfter'];
 		
 		return $retval;
 	}
@@ -253,9 +272,10 @@ class Zend_InfoCard_Xml_Assertion_SAML
 		foreach($attributes as $key => $value) {
 			
 			$retkey = (string)$value['AttributeNamespace'].'/'.(string)$value['AttributeName']; 
-			$retval[$retkey] = array('name' => (string)$value['AttributeName'],
-			                         'namespace' => (string)$value['AttributeNamespace']);
-		
+			
+			$retval[$retkey]['name'] = (string)$value['AttributeName'];
+			$retval[$retkey]['namespace'] = (string)$value['AttributeNamespace'];
+			
 			list($aValue) = $value->children('urn:oasis:names:tc:SAML:1.0:assertion');
 			$retval[$retkey]['value'] = (string)$aValue;
 		}
