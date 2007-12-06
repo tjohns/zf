@@ -51,6 +51,13 @@ class Zend_InfoCard_XmlParsing extends PHPUnit_Framework_TestCase
 		$this->assertTrue($encryptedData->getKeyInfo() instanceof Zend_InfoCard_Xml_KeyInfo_XmlDSig);
 		
 	}
+
+	public function testTostring() {
+		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument);	
+		$key = $encryptedData->getKeyInfo();
+		
+		$this->assertTrue(is_string($key->__toString()));
+	}
 	
 	public function testConversion() {
 		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument);	

@@ -100,7 +100,35 @@ class Zend_InfoCard_Process extends PHPUnit_Framework_TestCase
 		
 		$this->assertTrue($failed);
 		
-	}
+		try {
+			$infoCard->addCertificatePair("I don't exist", "I don't exist");
+		} catch(Zend_InfoCard_Exception $e) {
+			$this->assertTrue(true);
+		} catch(Exception $e) {
+			$this->assertFalse(true);
+		}
+
+		$key_id = $infoCard->addCertificatePair(self::SSL_PRV_KEY, self::SSL_PUB_KEY, Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, "foo");
+		
+		try {
+			$key_id = $infoCard->addCertificatePair(self::SSL_PRV_KEY, self::SSL_PUB_KEY, Zend_InfoCard_Cipher::ENC_RSA_OAEP_MGF1P, "foo");
+		} catch(Zend_InfoCard_Exception $e) {
+			$this->assertTrue(true);
+		} catch(Exception $e) {
+			$this->assertFalse(true);
+		}
+		
+		$this->assertTrue(!empty($key_id));
+		
+		try {
+			$infoCard->removeCertificatePair($key_id);
+			$infoCard->addCertificatePair(self::SSL_PRV_KEY, self::SSL_PUB_KEY, "Doesn't Exist", "foo");
+		} catch(Zend_InfoCard_Exception $e) {
+			$this->assertTrue(true);
+		} catch(Exception $e) {
+			$this->assertFalse(true);
+		}
+	} 
 	
 	public function testStandAloneProcess() {
 
@@ -164,6 +192,10 @@ class Zend_InfoCard_Process extends PHPUnit_Framework_TestCase
 		
 		$this->assertSame($claims->getCode(), Zend_InfoCard_Claims::RESULT_VALIDATION_FAILURE);
 		
+		$errormsg = $claims->getErrorMsg();
+		$this->assertTrue(!empty($errormsg));
+		
+		
 		@$claims->forceValid();
 		
 		$this->assertTrue($claims->isValid());
@@ -174,6 +206,25 @@ class Zend_InfoCard_Process extends PHPUnit_Framework_TestCase
 		$this->assertSame($claims->getCardID(), "rW1/y9BuncoBK4WSipF2hHYParxxgMHk6ANBrhz1Zr4=");
 		$this->assertSame($claims->getClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"), "john@zend.com");
 		$this->assertSame($claims->getDefaultNamespace(), "http://schemas.xmlsoap.org/ws/2005/05/identity/claims");
+		
+		try {
+			unset($claims->givenname);
+		} catch(Zend_InfoCard_Exception $e) {
+			
+		} catch(Exception $e) {
+			$this->assertFalse(true);
+		}
+		
+		
+		try {
+			$claims->givenname = "Test";
+		} catch(Zend_InfoCard_Exception $e) {
+			
+		} catch(Exception $e) {
+			$this->assertFalse(true);
+		}
+		
+		$this->assertTrue(isset($claims->givenname));
 		
 	}
 	
