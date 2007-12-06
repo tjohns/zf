@@ -322,6 +322,33 @@ $german = array('message1' => 'Nachricht1',
 $translate = new Zend_Translate('array', $english, 'en');
 $translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
+
+        <para>
+            Since Release 1.1 it is also supported to have arrays included within a external file.
+            You just have to give the filename and <code>Zend_Translate</code> will automatically
+            include it and look for the array. See the following example for details:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// myarray.php
+<?php
+return array(
+    'message1' => 'Nachricht1',
+    'message2' => 'Nachricht2',
+    'message3' => 'Nachricht3');
+
+// controller
+$translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Files which do not return an array will fail to be included.
+                Also any output within this file will be ignored and suppressed.
+            </para>
+
+        </note>
+
     </sect2>
 
     <sect2 id="zend.translate.using.source.gettext">
