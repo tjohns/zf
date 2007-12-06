@@ -41,46 +41,8 @@
  * argument to set_include_path in the code below.
  *
  * NOTE: As this is sample code, not all of the functions do full error
- * handling.  Please see getEvent for an example of how errors could
- * be handled and the online code samples for additional information.
+ * handling.  
  */
-
-// ************************ BEGIN WWW CONFIGURATION ************************
-
-/**
- * Docs username. This is the username used for your Google Documents account. 
- * This value is only used when accessing this demo on a web server.
- *
- * For example, your login for Google Documents may look like 
- * 'foo@bar.com.invalid'.
- */
-define('DOCS_USERNAME', 'jeffreyscudderinternaltest@gmail.com');
-
-/**
- * Docs password. This is the password associated with the above
- * username. This value is only used when accessing this demo on a
- * web server.
- */
-define('DOCS_PASSWORD', 'Iwtgd2006');
-
-/**
- * Login password. This password is used to protect your account from
- * unauthorized access when running this demo on a web server.
- *
- * If this field is blank, all access will be denied. A blank password
- * field is not the same as no password (which is disallowed for
- * security reasons).
- *
- * NOTE: While we could technically just ask the user for their Google Docs
- *       credentials, the ClientLogin API is not intended for direct use by
- *       web applications. If you are the only user of the application, this
- *       is fine--- but you should not ask other users to enter their
- *       credentials via your web application.
- */
-define('LOGIN_PASSWORD', '');
-
-// ************************* END WWW CONFIGURATION *************************
-
 
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata');
