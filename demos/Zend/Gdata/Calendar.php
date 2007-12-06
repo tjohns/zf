@@ -784,6 +784,8 @@ if (isset($argc) && $argc >= 2) {
        "createQuickAddEvent\n" .
        "createWebContentEvent\n" .
        "createRecurringEvent\n";
+       "setReminder\n";
+       "addExtendedProperty\n";
 } else {
   // running through web server - demonstrate AuthSub
   processPageLoad();
