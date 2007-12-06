@@ -55,6 +55,7 @@ class Zend_Translate_CsvTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Message 1 (en)',  $adapter->translate('Message 1' ));
         $this->assertEquals('Message 4 (en)',  $adapter->translate('Message 4,'));
         $this->assertEquals('Message 5, (en)', $adapter->translate('Message 5' ));
+        $this->assertEquals('Message 6,addon (en)', $adapter->translate('Message 6,addon,' ));
     }
 
     public function testIsTranslated()
