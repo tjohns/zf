@@ -228,8 +228,8 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
     {
         $this->inflector->setTarget(':controller/:action.:suffix')
              ->addRules(array(
-                 ':controller' => array('CamelCaseToDash'),
-                 ':action'     => array('CamelCaseToDash'),
+                 ':controller' => array('Word_CamelCaseToDash'),
+                 ':action'     => array('Word_CamelCaseToDash'),
                  'suffix'      => 'phtml'
              ));
         $filtered = $this->inflector->filter(array(
@@ -251,8 +251,8 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->inflector = new Zend_Filter_Inflector(
             '?=##controller/?=##action.?=##suffix', 
             array(
-                 ':controller' => array('CamelCaseToDash'),
-                 ':action'     => array('CamelCaseToDash'),
+                 ':controller' => array('Word_CamelCaseToDash'),
+                 ':action'     => array('Word_CamelCaseToDash'),
                  'suffix'      => 'phtml'
                  ),
             null,
@@ -287,8 +287,8 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->inflector = new Zend_Filter_Inflector(
             '?=##controller/?=##action.?=##suffix', 
             array(
-                 ':controller' => array('CamelCaseToDash'),
-                 ':action'     => array('CamelCaseToDash'),
+                 ':controller' => array('Word_CamelCaseToDash'),
+                 ':action'     => array('Word_CamelCaseToDash'),
                  'suffix'      => 'phtml'
                  ),
             true,
@@ -309,8 +309,8 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->inflector = new Zend_Filter_Inflector(
             'e:\path\to\:controller\:action.:suffix',
             array(
-                 ':controller' => array('CamelCaseToDash', 'StringToLower'),
-                 ':action'     => array('CamelCaseToDash'),
+                 ':controller' => array('Word_CamelCaseToDash', 'StringToLower'),
+                 ':action'     => array('Word_CamelCaseToDash'),
                  'suffix'      => 'phtml'
                 ),
             true,
