@@ -265,7 +265,11 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
             case self::APPEND:
             default:
                 if (null !== $key) {
-                    $this[$key] .= $data;
+                    if (empty($this[$key])) {                                                       
+                        $this[$key] = $data;                                                       
+                    } else {                                                                       
+                        $this[$key] .= $data;                                                      
+                    }
                 } else {
                     $this[$this->nextIndex()] = $data;
                 }
