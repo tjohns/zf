@@ -135,6 +135,18 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
 
     /**
      * Array containing the widths of each of the glyphs contained in the font.
+     *
+     * Keys are integers starting from 0, which coresponds to Zend_Pdf_Cmap::MISSING_CHARACTER_GLYPH.
+     *
+     * Font character map may contain gaps for actually used glyphs, nevertheless glyphWidths array
+     * contains widths for all glyphs even they are unused.
+     *
+     * The last entry applies to all subsequent glyphs.
+     * So if width is requested for correct glyph, but it is out of range of glyphWidths keys,
+     * then latest entry must be used.
+     * Thus monospaced fonts may contain only one entry in the glyphWidths array,
+     * but this entry is required
+     *
      * @var array
      */
     protected $_glyphWidths = null;
@@ -473,11 +485,20 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
     {
         $widths = array();
         foreach ($glyphNumbers as $key => $glyphNumber) {
-            if (($glyphNumber < 0) || ($glyphNumber > $this->_glyphMaxIndex)) {
+            /**
+             * @todo move this check plus check for upper boundary into Zend_Pdf_Cmap or
+             * remove it at all (since glypth numbers are usually requested through Zend_Pdf_Cmap::glyphNumbersForCharacters() method)
+             */
+            if ($glyphNumber < 0) {
                 throw new Zend_Pdf_Exception("Glyph number is out of range: $glyphNumber",
                                              Zend_Pdf_Exception::GLYPH_OUT_OF_RANGE);
             }
-            $widths[$key] = $this->_glyphWidths[$glyphNumber];
+
+            if ($glyphNumber > $this->_glyphMaxIndex) {
+                $widths[$key] = end($this->_glyphWidths);
+            } else {
+                $widths[$key] = $this->_glyphWidths[$glyphNumber];
+            }
         }
         return $widths;
     }
@@ -493,9 +514,17 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
      */
     public function widthForGlyph($glyphNumber)
     {
-        if (($glyphNumber < 0) || ($glyphNumber > $this->_glyphMaxIndex)) {
+        /**
+         * @todo move this check plus check for upper boundary into Zend_Pdf_Cmap or
+         * remove it at all (since glypth numbers are usually requested through Zend_Pdf_Cmap::glyphNumbersForCharacters() method)
+         */
+        if ($glyphNumber < 0) {
             throw new Zend_Pdf_Exception("Glyph number is out of range: $glyphNumber",
-                                             Zend_Pdf_Exception::GLYPH_OUT_OF_RANGE);
+                                         Zend_Pdf_Exception::GLYPH_OUT_OF_RANGE);
+        }
+
+        if ($glyphNumber > $this->_glyphMaxIndex) {
+            return end($this->_glyphWidths);
         }
         return $this->_glyphWidths[$glyphNumber];
     }
