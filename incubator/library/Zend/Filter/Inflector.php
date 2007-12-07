@@ -224,17 +224,16 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     }
     
     /**
-     * AddRules() is similar to a multi-call to setting filter rules.  If prefixed
-     * with a ":" (colon), a filter rule will be added.  If prefixed with an "&",
-     * a referenced static replacement will be added.  If not prefixed, a static
-     * replacement will be added.
+     * AddRules(): multi-call to setting filter rules.  
+     *
+     * If prefixed with a ":" (colon), a filter rule will be added.  If not 
+     * prefixed, a static replacement will be added.
      * 
      * ex:
      * array(
      *     ':controller' => array('CamelCaseToUnderscore','StringToLower'),
      *     ':action'     => array('CamelCaseToUnderscore','StringToLower'),
-     *     '&suffix'     => $this->_mySuffix,
-     *     'suffix'      => 'phtml'                        // OR LIKE THIS
+     *     'suffix'      => 'phtml'
      *     );
      * 
      * @param array
@@ -242,13 +241,12 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
      */
     public function addRules(Array $rules)
     {
-        foreach ($rules as $spec => $rule) {
+        $keys = array_keys($rules);
+        foreach ($keys as $spec) {
             if ($spec[0] == ':') {
-                $this->addFilterRule($spec, $rule);
-            } elseif ($spec[0] == '&') {
-                $this->setStaticRuleReference($spec, $rule);
+                $this->addFilterRule($spec, $rules[$spec]);
             } else {
-                $this->setStaticRule($spec, $rule);
+                $this->setStaticRule($spec, $rules[$spec]);
             }
         }
         

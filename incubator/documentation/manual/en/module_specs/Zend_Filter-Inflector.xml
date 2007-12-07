@@ -332,17 +332,13 @@ $inflector->setFilterRule('script', array(
                 Each method takes an array of variable/rule pairs, where the
                 rule may be whatever the type of rule accepts (string, filter
                 object, or array). Variable names accept a special notation to
-                allow setting the three types of rules (static, static
-                references, and filter rules), according to the following rules:
+                allow setting static rules and filter rules, according to the
+                following notation:
             </para>
 
             <itemizedlist>
                 <listitem><para>
                         <emphasis>':' prefix</emphasis>: filter rules.
-                </para></listitem>
-
-                <listitem><para>
-                        <emphasis>'&amp;' prefix</emphasis>: static rule reference.
                 </para></listitem>
 
                 <listitem><para>
@@ -354,13 +350,11 @@ $inflector->setFilterRule('script', array(
                 <title>Setting Multiple Rules at Once</title>
 
                 <programlisting role="php"><![CDATA[<?php
+// Could also use setRules() with this notation:
 $inflector->addRules(array(
     // filter rules:
     ':controller' => array('CamelCaseToUnderscore','StringToLower'),
     ':action'     => array('CamelCaseToUnderscore','StringToLower'),
-
-    // Static rule reference:
-    '&suffix'     => $reference,
 
     // Static rule:
     'suffix'      => 'phtml'
