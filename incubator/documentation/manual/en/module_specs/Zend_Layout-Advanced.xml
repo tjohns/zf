@@ -66,9 +66,10 @@ $layout->setView($view);
                 implementing <code>Zend_View_Interface</code>, you may run into
                 issues if they can not utilize the various
                 <code>Zend_View</code> helpers, particularly the layout and
-                placeholder helpers. This is because <code>Zend_Layout</code>
-                makes variables set in the object available via itself and
-                placeholders. 
+                <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>
+                helpers. This is because <code>Zend_Layout</code> makes
+                variables set in the object available via itself and
+                <link linkend="zend.view.helpers.initial.placeholder">placeholders</link>. 
             </para>
 
             <para>
@@ -84,7 +85,8 @@ $layout->setView($view);
             <para>
                 Alternately, if your view implementation supports any sort of
                 plugin capability, you can access the variables via the
-                'Zend_Layout' placeholder, using the placeholder helper:
+                'Zend_Layout' placeholder, using the <link linkend="zend.view.helpers.initial.placeholder">placeholder
+                    helper</link>:
             </para>
 
             <programlisting role="php"><![CDATA[<?php

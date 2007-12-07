@@ -13,9 +13,9 @@
             In both cases, however, you'll need to create a layout script.
             Layout scripts simply utilize Zend_View (or whatever view
             implementation you are using). Layout variables are registered with
-            a <code>Zend_Layout</code> placeholder, and may be accessed via the
-            placeholder helper or by fetching them as object properties of the
-            layout object via the layout helper.
+            a <code>Zend_Layout</code> <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>, 
+            and may be accessed via the placeholder helper or by fetching them
+            as object properties of the layout object via the layout helper.
         </para>
 
         <para>
@@ -52,7 +52,9 @@
             Because <code>Zend_Layout</code> utilizes <code>Zend_View</code> for
             rendering, you can also use any view helpers registered, and also
             have access to any previously assigned view variables. Particularly
-            useful are the various placeholder helpers, as they allow you to
+            useful are the various <link
+                linkend="zend.view.helpers.initial.placeholder">placeholder
+                helpers</link>, as they allow you to
             retrieve content for areas such as the &lt;head&gt; section,
             navigation, etc.:
         </para>
