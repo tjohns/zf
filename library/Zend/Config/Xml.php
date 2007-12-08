@@ -134,9 +134,17 @@ class Zend_Config_Xml extends Zend_Config
         if (count($xmlObject->children())) {
             foreach ($xmlObject->children() as $key => $value) {
                 if ($value->children()) {
-                    $config[$key] = $this->_toArray($value);
+                    $value = $this->_toArray($value);
                 } else {
-                    $config[$key] = (string) $value;
+                    $value = (string) $value;
+                }
+                if (array_key_exists($key, $config)) {
+                    if (!is_array($config[$key])) {
+                        $config[$key] = array($config[$key]);
+                    }
+                    $config[$key][] = $value;
+                } else {
+                    $config[$key] = $value;
                 }
             }
         } elseif (!isset($xmlObject['extends'])) {
@@ -147,7 +155,7 @@ class Zend_Config_Xml extends Zend_Config
     }
 
     /**
-     * Merge two arrays recursively, overwriting keys of the same name name
+     * Merge two arrays recursively, overwriting keys of the same name
      * in $array1 with the value in $array2.
      *
      * @param array $array1

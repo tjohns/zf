@@ -50,6 +50,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->_xmlFileTopLevelStringConfig = dirname(__FILE__) . '/_files/toplevelstring.xml';
         $this->_xmlFileOneTopLevelStringConfig = dirname(__FILE__) . '/_files/onetoplevelstring.xml';
         $this->_nonReadableConfig = dirname(__FILE__) . '/_files/nonreadable.xml';
+        $this->_xmlFileSameNameKeysConfig = dirname(__FILE__) . '/_files/array.xml';
     }
 
     public function testLoadSingleSection()
@@ -175,6 +176,15 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $config = new Zend_Config_Xml($this->_xmlFileOneTopLevelStringConfig, 'one');
         $this->assertEquals('one', $config->one);
         
+    }
+    
+    public function testZF2285_MultipleKeysOfTheSameName()
+    {
+        $config = new Zend_Config_Xml($this->_xmlFileSameNameKeysConfig, null);
+        $this->assertEquals('2a', $config->one->two->{0});
+        $this->assertEquals('2b', $config->one->two->{1});
+        $this->assertEquals('4', $config->three->four->{0});
+        $this->assertEquals('5', $config->three->four->five);
     }
     
 }
