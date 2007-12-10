@@ -195,7 +195,7 @@ class Zend_Layout
     public function setOptions($options)
     {
         if ($options instanceof Zend_Config) {
-            $options = $config->toArray();
+            $options = $options->toArray();
         } elseif (!is_array($options)) {
             require_once 'Zend/Layout/Exception.php';
             throw new Zend_Layout_Exception('setOptions() expects either an array or a Zend_Config object');
@@ -387,7 +387,8 @@ class Zend_Layout
         $this->_contentKey = (string) $contentKey;
         return $this;
     }
-     /**
+
+    /**
      * Retrieve content key
      *
      * @return string

@@ -110,6 +110,27 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testSetOptionsWithConfigObjectModifiesAttributes()
+    {
+        $layout = new Zend_Layout();
+
+        require_once 'Zend/Config.php';
+        $config = new Zend_Config(array(
+            'layout'           => 'foo',
+            'contentKey'       => 'foo',
+            'layoutPath'       => dirname(__FILE__),
+            'mvcEnabled'       => false,
+        ));
+        $layout->setOptions($config);
+        $this->assertEquals('foo', $layout->getLayout());
+        $this->assertEquals('foo', $layout->getContentKey());
+        $this->assertEquals(dirname(__FILE__), $layout->getLayoutPath());
+        $this->assertFalse($layout->getMvcEnabled());
+    }
+
+    /**
+     * @return void
+     */
     public function testLayoutAccessorsModifyAndRetrieveLayoutValue()
     {
         $layout = new Zend_Layout();
