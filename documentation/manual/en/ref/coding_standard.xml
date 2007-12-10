@@ -7,9 +7,8 @@
             <title>Scope</title>
 
             <para>
-                This document provides the guidelines and resources for developers
-                and teams developing or developing on the Zend Framework. The
-                subjects covered are:
+                This document provides the code guidelines for developers
+                and teams contributing to Zend Framework. The subjects covered are:
 
                 <itemizedlist>
                     <listitem>
@@ -193,7 +192,7 @@ Zend/View/Helper/FormRadio.php]]>
             <para>
                 Function names must always start with a lowercase letter. When a function name consists
                 of more than one word, the first letter of each new word must be capitalized. This is
-                commonly called the "camelCaps" method.
+                commonly called "camelCase" formatting.
             </para>
 
             <para>
@@ -219,6 +218,13 @@ widgetFactory()]]>
                 patterns, the name of the method should contain the pattern name where practical to
                 make the pattern more readily recognizable.
             </para>
+            
+            <para>
+                For methods on objects that are declared with the "private" or "protected" construct,
+                the first character of the variable name must be a single underscore. This is the only
+                acceptable usage of an underscore in a method name. Methods declared "public"
+                may never start with an underscore.
+            </para>
 
             <para>
                 Functions in the global scope ("floating functions") are permitted but discouraged.
@@ -237,7 +243,7 @@ widgetFactory()]]>
             <para>
                 For class member variables that are declared with the "private" or "protected" construct,
                 the first character of the variable name must be a single underscore. This is the only
-                acceptable usage of an underscore in a function name. Member variables declared "public"
+                acceptable usage of an underscore in a variable name. Member variables declared "public"
                 may never start with an underscore.
             </para>
 
@@ -361,7 +367,7 @@ $greeting = "Hello ${name}, welcome back!";]]>
                     be added before and after the "." operator to improve readability:
 
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';]]>
                     </programlisting>
                 </para>
 
@@ -472,13 +478,13 @@ class SampleClass
                     Member variables must be named by following the variable naming conventions.
                 </para><para>
                     Any variables declared in a class must be listed at the top of the class, prior
-                    to declaring any functions.
+                    to declaring any methods.
                 </para><para>
                     The <code>var</code> construct is not permitted.  Member variables always declare
                     their visibility by using one of the <code>private</code>, <code>protected</code>,
                     or <code>public</code> constructs. Accessing member variables directly by making
                     them public is permitted but discouraged in favor of accessor
-                    variables (set/get).
+                    methods (set/get).
                 </para>
             </sect3>
         </sect2>
@@ -492,7 +498,7 @@ class SampleClass
                 <para>
                     Functions must be named by following the naming conventions.
                 </para><para>
-                    Functions inside classes must always declare their visibility by using
+                    Methods inside classes must always declare their visibility by using
                     one of the <code>private</code>, <code>protected</code>,
                     or <code>public</code> constructs.
                 </para><para>
@@ -525,7 +531,7 @@ class Foo
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> Passing by-reference is permitted in the function declaration only:
+                    <emphasis>NOTE:</emphasis> Pass-by-reference is permitted in the function declaration only:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -543,7 +549,7 @@ class Foo
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited.
+                    Call-time pass-by-reference is prohibited.
                 </para>
 
 
@@ -592,10 +598,10 @@ threeArguments(1, 2, 3);]]>
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited. See the function declarations section
+                    Call-time pass-by-reference is prohibited. See the function declarations section
                     for the proper way to pass function arguments by-reference.
                 </para><para>
-                    For functions whose arguments permitted arrays, the function call may include the
+                    For functions whose arguments permit arrays, the function call may include the
                     "array" construct and can be split into multiple lines to improve readability.  In
                     these cases, the standards for writing arrays still apply:
 
@@ -641,8 +647,8 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    For "if" statements that include "elseif" or "else", the formatting must be
-                    as in these examples:
+                    For "if" statements that include "elseif" or "else", the formatting conventions are as shown
+                    in the following examples:
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -724,7 +730,7 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    All source code file written for the Zend Framework or that operates with the framework
+                    All source code files written for Zend Framework or that operate with the framework
                     must contain a "file-level" docblock at the top of each file and a "class-level" docblock
                     immediately above each class. Below are examples of such docblocks.
                 </para>
