@@ -27,9 +27,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once 'Zend/InfoCard/XmlParsing.php';
-require_once 'Zend/InfoCard/Process.php';
-require_once 'Zend/InfoCard/Assertion_Test.php';
+require_once 'Zend/InfoCard/XmlParsingTest.php';
+require_once 'Zend/InfoCard/ProcessTest.php';
+require_once 'Zend/InfoCard/AssertionTest.php';
 
 class Zend_InfoCard_AllTests
 {
