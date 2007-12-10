@@ -83,7 +83,7 @@ class Zend_InfoCard
 	 *
 	 * @var Zend_InfoCard_Cipher_PKI_Interface
 	 */
-	protected $_pkCipherObj;
+	protected $_pkiCipherObj;
 	
 	/**
 	 * The instance to use to decrypt symmetric encrypted data
@@ -155,7 +155,7 @@ class Zend_InfoCard
 	 */
 	public function getPKICipherObject() 
     {
-		return $this->_pkCipherObj;
+		return $this->_pkiCipherObj;
 	}
 	
 	/**
@@ -166,7 +166,7 @@ class Zend_InfoCard
 	 */
 	public function setPKICipherObject(Zend_InfoCard_Cipher_PKI_Interface $cipherObj) 
     {
-		$this->_pkCipherObj = $cipherObj;	
+		$this->_pkiCipherObj = $cipherObj;	
 		return $this;
 	}
 	

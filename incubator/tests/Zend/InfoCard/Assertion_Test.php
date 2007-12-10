@@ -19,33 +19,50 @@
  * @version    $Id:$
  */
 
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework.php';
+// Call Zend_InfoCard_AssertionTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
+    define("PHPUnit_MAIN_METHOD", "Zend_InfoCard_AssertionTest::main");
+}
 
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/InfoCard.php';
 
-class Zend_InfoCard_Assertion_Test extends PHPUnit_Framework_TestCase
+class Zend_InfoCard_AssertionTest extends PHPUnit_Framework_TestCase
 {
-	const TOKEN_DOCUMENT = './_files/signedToken.xml';
+	protected $_xmlDocument;
 	
-	const SSL_PUB_KEY = "./_files/ssl_pub.cert";
-	const SSL_PRV_KEY = "./_files/ssl_private.cert";
-	
-	private $_xmlDocument;
-	
-	protected function setUp() {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_InfoCard_AssertionTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    public function setUp() 
+    {
+        $this->tokenDocument = dirname(__FILE__) . '/_files/signedToken.xml';
+        $this->sslPubKey     = dirname(__FILE__) . '/_files/ssl_pub.cert';
+        $this->sslPrvKey     = dirname(__FILE__) . '/_files/ssl_private.cert';
 		$this->loadXmlDocument();
 	}
 	
-	private function loadXmlDocument() {
-		$this->_xmlDocument = file_get_contents(self::TOKEN_DOCUMENT);
+    public function loadXmlDocument() 
+    {
+		$this->_xmlDocument = file_get_contents($this->tokenDocument);
 	}
 
-	public function testAssertionProcess() {
-		
+    public function testAssertionProcess() 
+    {
 		$assertions = Zend_InfoCard_Xml_Assertion::getInstance($this->_xmlDocument);
 		
 		$this->assertTrue($assertions instanceof Zend_InfoCard_Xml_Assertion_SAML);
@@ -60,3 +77,7 @@ class Zend_InfoCard_Assertion_Test extends PHPUnit_Framework_TestCase
 	}
 }
 
+// Call Zend_InfoCard_AssertionTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_InfoCard_AssertionTest::main") {
+    Zend_InfoCard_AssertionTest::main();
+}

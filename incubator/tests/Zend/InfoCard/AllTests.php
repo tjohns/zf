@@ -20,11 +20,9 @@
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
+    require_once dirname(__FILE__) . '/../../TestHelper.php';
     define('PHPUnit_MAIN_METHOD', 'Zend_InfoCard_AllTests::main');
 }
-
-// This is a hack so we can run the InfoCard AllTests.php manually
-ini_set('include_path', ini_get('include_path') . ":..".DIRECTORY_SEPARATOR."..:..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."library:..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."library");
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
@@ -33,7 +31,7 @@ require_once 'Zend/InfoCard/XmlParsing.php';
 require_once 'Zend/InfoCard/Process.php';
 require_once 'Zend/InfoCard/Assertion_Test.php';
 
-class AllTests
+class Zend_InfoCard_AllTests
 {
     public static function main()
     {
@@ -44,9 +42,9 @@ class AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite("Zend Framework - Zend_InfoCard");
 
-        $suite->addTestSuite('Zend_InfoCard_XmlParsing');
-	$suite->addTestSuite('Zend_InfoCard_Process');
-	$suite->addTestSuite('Zend_InfoCard_Assertion_Test');
+        $suite->addTestSuite('Zend_InfoCard_AssertionTest');
+        $suite->addTestSuite('Zend_InfoCard_ProcessTest');
+        $suite->addTestSuite('Zend_InfoCard_XmlParsingTest');
 
         return $suite;
     }

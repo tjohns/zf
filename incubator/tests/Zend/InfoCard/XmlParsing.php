@@ -19,29 +19,48 @@
  * @version    $Id:$
  */
 
-/**
- * PHPUnit test case
- */
-require_once 'PHPUnit/Framework.php';
+// Call Zend_InfoCard_XmlParsingTest::main() if this source file is executed directly.
+if (!defined("PHPUnit_MAIN_METHOD")) {
+    require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
+    define("PHPUnit_MAIN_METHOD", "Zend_InfoCard_XmlParsingTest::main");
+}
 
+require_once "PHPUnit/Framework/TestCase.php";
+require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/InfoCard/Xml/EncryptedData.php';
 
-class Zend_InfoCard_XmlParsing extends PHPUnit_Framework_TestCase
+class Zend_InfoCard_XmlParsingTest extends PHPUnit_Framework_TestCase
 {
-	const TOKEN_DOCUMENT = './_files/encryptedtoken.xml';
+	protected $_xmlDocument;
 	
-	private $_xmlDocument;
-	
-	protected function setUp() {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @access public
+     * @static
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_InfoCard_XmlParsingTest");
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
+    public function setUp() 
+    {
+        $this->tokenDocument = dirname(__FILE__) . '/_files/encryptedtoken.xml';
 		$this->loadXmlDocument();
 	}
 	
-	private function loadXmlDocument() {
-		$this->_xmlDocument = file_get_contents(self::TOKEN_DOCUMENT);
+    public function loadXmlDocument() 
+    {
+		$this->_xmlDocument = file_get_contents($this->tokenDocument);
 	}
 	
-	public function testEncryptedData() {
+    public function testEncryptedData() 
+    {
 		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument);	
 		
 		$this->assertTrue($encryptedData instanceof Zend_InfoCard_Xml_EncryptedData_XmlEnc);
@@ -49,17 +68,18 @@ class Zend_InfoCard_XmlParsing extends PHPUnit_Framework_TestCase
 
 		$this->assertSame($encryptedData->getEncryptionMethod(), 'http://www.w3.org/2001/04/xmlenc#aes256-cbc');
 		$this->assertTrue($encryptedData->getKeyInfo() instanceof Zend_InfoCard_Xml_KeyInfo_XmlDSig);
-		
 	}
 
-	public function testTostring() {
+    public function testTostring() 
+    {
 		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument);	
 		$key = $encryptedData->getKeyInfo();
 		
 		$this->assertTrue(is_string($key->__toString()));
 	}
 	
-	public function testConversion() {
+    public function testConversion() 
+    {
 		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument);	
 		
 		$keyInfo = $encryptedData->getKeyInfo();
@@ -73,14 +93,16 @@ class Zend_InfoCard_XmlParsing extends PHPUnit_Framework_TestCase
 		$this->assertTrue($sxe instanceof Zend_InfoCard_Xml_KeyInfo_XmlDSig);
 	}
 	
-	public function testEncryptedDataKeyInfo() {
+    public function testEncryptedDataKeyInfo() 
+    {
 		$keyinfo = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument)->getKeyInfo();
 		
 		$this->assertTrue($keyinfo instanceof Zend_InfoCard_Xml_KeyInfo_XmlDSig);
 		$this->assertTrue($keyinfo->getEncryptedKey() instanceof Zend_InfoCard_Xml_EncryptedKey);		
 	}
 	
-	public function testEncryptedKey() {
+    public function testEncryptedKey() 
+    {
 		$enckey = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument)->getKeyInfo()->getEncryptedKey();
 		
 		$this->assertTrue($enckey instanceof Zend_InfoCard_Xml_EncryptedKey);		
@@ -92,14 +114,16 @@ class Zend_InfoCard_XmlParsing extends PHPUnit_Framework_TestCase
 		$this->assertTrue($enckey->getKeyInfo() instanceof Zend_InfoCard_Xml_KeyInfo_Default);
 	}
 
-	public function testEncryptedKeyKeyInfo() {
+    public function testEncryptedKeyKeyInfo() 
+    {
 		$keyinfo = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument)->getKeyInfo()->getEncryptedKey()->getKeyInfo();
 		
 		$this->assertTrue($keyinfo instanceof Zend_InfoCard_Xml_KeyInfo_Default);
 		$this->assertTrue($keyinfo->getSecurityTokenReference() instanceof Zend_InfoCard_Xml_SecurityTokenReference);
 	}
 	
-	public function testSecurityTokenReference() {
+    public function testSecurityTokenReference() 
+    {
 		$sectoken = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument)->getKeyInfo()
 																					  ->getEncryptedKey()
 																					  ->getKeyInfo()
@@ -109,7 +133,10 @@ class Zend_InfoCard_XmlParsing extends PHPUnit_Framework_TestCase
 		$this->assertSame($sectoken->getKeyThumbprintType(), 'http://docs.oasis-open.org/wss/oasis-wss-soap-message-security-1.1#ThumbprintSHA1');
 		$this->assertSame($sectoken->getKeyThumbprintEncodingType(), 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary');
 		$this->assertSame($sectoken->getKeyReference(false), '/OCqQ7Np25sOiA+4OsFh1R6qIeY=');
-		
-		
 	}
+}
+
+// Call Zend_InfoCard_XmlParsingTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_InfoCard_XmlParsingTest::main") {
+    Zend_InfoCard_XmlParsingTest::main();
 }
