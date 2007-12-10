@@ -10,6 +10,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Filter/Inflector.php';
 require_once 'Zend/Filter/PregReplace.php';
+require_once 'Zend/Config.php';
 
 /**
  * Test class for Zend_Filter_Inflector.
@@ -271,7 +272,6 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->inflector->setTargetReplacementIdentifier('?=');
         $this->assertEquals('?=', $this->inflector->getTargetReplacementIdentifier());
     }
-    
 
     public function testThrowTargetExceptionsOnAccessorsWork()
     {
@@ -299,7 +299,6 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->assertTrue($e instanceof Zend_Filter_Exception);
         }
-
     }
     
     public function testTargetExceptionNotThrownOnIdentifierNotFollowedByCharacter()
@@ -321,10 +320,80 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail();
         }
-            
-            
+    }
+
+    public function getOptions()
+    {
+        $options = array(
+            'target' => '$controller/$action.$suffix',
+            'filterPrefixPath' => array(
+                'Zend_View_Filter' => 'Zend/View/Filter/',
+                'Foo_Filter'       => 'foo/filters/'
+            ),
+            'throwTargetExceptionsOn' => true,
+            'targetReplacementIdentifier' => '$',
+            'rules' => array(
+                ':controller' => array(
+                    'rule1' => 'Word_CamelCaseToUnderscore',
+                    'rule2' => 'StringToLower',
+                ),
+                ':action' => array(
+                    'rule1' => 'Word_CamelCaseToDash',
+                    'rule2' => 'StringToUpper',
+                ),
+                'suffix' => 'php'
+            ),
+        );
+        return $options;
+    }
+
+    public function getConfig()
+    {
+        $options = $this->getOptions();
+        return new Zend_Config($options);
     }
     
+    protected function _testOptions($inflector)
+    {
+        $options = $this->getOptions();
+        $loader  = $inflector->getPluginLoader();
+        $this->assertEquals($options['target'], $inflector->getTarget());
+
+        $viewFilterPath = $loader->getPaths('Zend_View_Filter');
+        $this->assertEquals($options['filterPrefixPath']['Zend_View_Filter'], $viewFilterPath[0]);
+        $fooFilterPath = $loader->getPaths('Foo_Filter');
+        $this->assertEquals($options['filterPrefixPath']['Foo_Filter'], $fooFilterPath[0]);
+
+        $this->assertTrue($inflector->isThrowTargetExceptionsOn());
+
+        $this->assertEquals($options['targetReplacementIdentifier'], $inflector->getTargetReplacementIdentifier());
+
+        $rules = $inflector->getRules();
+        foreach (array_values($options['rules'][':controller']) as $key => $rule) {
+            $class = get_class($rules['controller'][$key]);
+            $this->assertContains($rule, $class);
+        }
+        foreach (array_values($options['rules'][':action']) as $key => $rule) {
+            $class = get_class($rules['action'][$key]);
+            $this->assertContains($rule, $class);
+        }
+        $this->assertEquals($options['rules']['suffix'], $rules['suffix']);
+    }
+
+    public function testPassingConfigObjectToConstructorSetsStateAndRules()
+    {
+        $config = $this->getConfig();
+        $inflector = new Zend_Filter_Inflector($config);
+        $this->_testOptions($inflector);
+    }
+
+    public function testSetConfigSetsStateAndRules()
+    {
+        $config = $this->getConfig();
+        $inflector = new Zend_Filter_Inflector();
+        $inflector->setConfig($config);
+        $this->_testOptions($inflector);
+    }
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.

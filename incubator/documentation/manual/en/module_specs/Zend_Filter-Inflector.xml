@@ -410,6 +410,60 @@ $inflector->addRules(array(
             </para></listitem>
         </itemizedlist>
     </sect2>
+
+    <sect2 id="zend.filter.inflector.config">
+        <title>Using Zend_Config with Zend_Filter_Inflector</title>
+
+        <para>
+            You can use <code>Zend_Config</code> to set rules, filter prefix
+            paths, and other object state in your inflectors, either by passing
+            a Zend_Config object to the constructor or <code>setConfig()</code>.
+            The following settings may be specified:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <code>target</code> specifies the inflection target.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>filterPrefixPath</code> specifies one or more filter
+                    prefix/path pairs for use with the inflector.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>throwTargetExceptionsOn</code> should be a boolean
+                    indicating whether or not to throw exceptions when a
+                    replacement identifier is still present after inflection.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>targetReplacementIdentifier</code> specifies the
+                    character to use when identifiying replacement variables in
+                    the target string.
+            </para></listitem>
+
+            <listitem><para>
+                    <code>rules</code> specifies an array of inflection rules;
+                    it should consist of keys that specify either values or
+                    arrays of values, consistent with <code>addRules()</code>.
+            </para></listitem>
+        </itemizedlist>
+
+        <example id="zend.filter.inflector.config.example">
+            <title>Using Zend_Config with Zend_Filter_Inflector</title>
+
+            <programlisting role="php"><![CDATA[<?php
+// With the constructor:
+$config    = new Zend_Config($options);
+$inflector = new Zend_Filter_Inflector($config);
+
+// Or with setConfig():
+$inflector = new Zend_Filter_Inflector();
+$inflector->setConfig($config);
+?>]]></programlisting>
+        </example>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

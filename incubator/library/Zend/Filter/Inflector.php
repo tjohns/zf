@@ -73,20 +73,24 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
      */
     public function __construct($target = null, Array $rules = array(), $throwTargetExceptionsOn = null, $targetReplacementIdentifer = null)
     {
-        if ((null !== $target) && is_string($target)) {
-            $this->setTarget($target);
-        }
+        if ($target instanceof Zend_Config) {
+            $this->setConfig($target);
+        } else {
+            if ((null !== $target) && is_string($target)) {
+                $this->setTarget($target);
+            }
 
-        if (null !== $rules) {
-            $this->addRules($rules);
-        }
-        
-        if ($throwTargetExceptionsOn != null) {
-            $this->setThrowTargetExceptionsOn($throwTargetExceptionsOn);
-        }
-        
-        if ($targetReplacementIdentifer != null) {
-            $this->setTargetReplacementIdentifier($targetReplacementIdentifer);
+            if (null !== $rules) {
+                $this->addRules($rules);
+            }
+            
+            if ($throwTargetExceptionsOn != null) {
+                $this->setThrowTargetExceptionsOn($throwTargetExceptionsOn);
+            }
+            
+            if ($targetReplacementIdentifer != null) {
+                $this->setTargetReplacementIdentifier($targetReplacementIdentifer);
+            }
         }
     }
     
@@ -113,6 +117,44 @@ class Zend_Filter_Inflector implements Zend_Filter_Interface
     public function setPluginLoader(Zend_Loader_PluginLoader_Interface $pluginLoader)
     {
         $this->_pluginLoader = $pluginLoader;
+        return $this;
+    }
+
+    /**
+     * Use Zend_Config object to set object state
+     * 
+     * @param  Zend_Config $config 
+     * @return Zend_Filter_Inflector
+     */
+    public function setConfig(Zend_Config $config)
+    {
+        foreach ($config as $key => $value) {
+            switch ($key) {
+                case 'target':
+                    $this->setTarget($value);
+                    break;
+                case 'filterPrefixPath':
+                    if (is_scalar($value)) {
+                        break;
+                    }
+                    $paths = $value->toArray();
+                    foreach ($paths as $prefix => $path) {
+                        $this->addFilterPrefixPath($prefix, $path);
+                    }
+                    break;
+                case 'throwTargetExceptionsOn':
+                    $this->setThrowTargetExceptionsOn($value);
+                    break;
+                case 'targetReplacementIdentifier':
+                    $this->setTargetReplacementIdentifier($value);
+                    break;
+                case 'rules':
+                    $this->addRules($value->toArray());
+                    break;
+                default:
+                    break;
+            }
+        }
         return $this;
     }
     

@@ -304,7 +304,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
                                 
                 if (class_exists($className)) {
                     $found = true;
-                    break;
+                    break 2;
                 }
                 
                 if (Zend_Loader::isReadable($path . $classFile)) {
@@ -315,7 +315,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
                     }
 
                     $found = true;
-                    break;
+                    break 2;
                 }
             }
         }
