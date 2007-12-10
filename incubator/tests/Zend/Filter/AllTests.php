@@ -30,17 +30,17 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Filter/AlphaTest.php';
-require_once 'Zend/Filter/CamelCaseToDashTest.php';
-require_once 'Zend/Filter/CamelCaseToSeparatorTest.php';
-require_once 'Zend/Filter/CamelCaseToUnderscoreTest.php';
-require_once 'Zend/Filter/SeparatorToCamelCaseTest.php';
-require_once 'Zend/Filter/DashToCamelCaseTest.php';
-require_once 'Zend/Filter/UnderscoreToCamelCaseTest.php';
-require_once 'Zend/Filter/DashToUnderscoreTest.php';
-require_once 'Zend/Filter/UnderscoreToDashTest.php';
-
 require_once 'Zend/Filter/InflectorTest.php';
 require_once 'Zend/Filter/PregReplaceTest.php';
+require_once 'Zend/Filter/Word/CamelCaseToDashTest.php';
+require_once 'Zend/Filter/Word/CamelCaseToSeparatorTest.php';
+require_once 'Zend/Filter/Word/CamelCaseToUnderscoreTest.php';
+require_once 'Zend/Filter/Word/SeparatorToCamelCaseTest.php';
+require_once 'Zend/Filter/Word/DashToCamelCaseTest.php';
+require_once 'Zend/Filter/Word/UnderscoreToCamelCaseTest.php';
+require_once 'Zend/Filter/Word/DashToUnderscoreTest.php';
+require_once 'Zend/Filter/Word/UnderscoreToDashTest.php';
+
 
 /**
  * @category   Zend
@@ -61,16 +61,16 @@ class Zend_Filter_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Filter');
 
         $suite->addTestSuite('Zend_Filter_AlphaTest');
-        $suite->addTestSuite('Zend_Filter_CamelCaseToDashTest');
-        $suite->addTestSuite('Zend_Filter_CamelCaseToSeparatorTest');
-        $suite->addTestSuite('Zend_Filter_CamelCaseToUnderscoreTest');
         $suite->addTestSuite('Zend_Filter_InflectorTest');
         $suite->addTestSuite('Zend_Filter_PregReplaceTest');
-        $suite->addTestSuite('Zend_Filter_SeparatorToCamelCaseTest');
-        $suite->addTestSuite('Zend_Filter_DashToCamelCaseTest');
-        $suite->addTestSuite('Zend_Filter_UnderscoreToCamelCaseTest');
-        $suite->addTestSuite('Zend_Filter_DashToUnderscoreTest');
-        $suite->addTestSuite('Zend_Filter_UnderscoreToDashTest');
+        $suite->addTestSuite('Zend_Filter_Word_CamelCaseToDashTest');
+        $suite->addTestSuite('Zend_Filter_Word_CamelCaseToSeparatorTest');
+        $suite->addTestSuite('Zend_Filter_Word_CamelCaseToUnderscoreTest');
+        $suite->addTestSuite('Zend_Filter_Word_SeparatorToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_Word_DashToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_Word_UnderscoreToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_Word_DashToUnderscoreTest');
+        $suite->addTestSuite('Zend_Filter_Word_UnderscoreToDashTest');
 
         return $suite;
     }

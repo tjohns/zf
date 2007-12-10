@@ -100,11 +100,6 @@ class Zend_Filter_PregReplaceTest extends PHPUnit_Framework_TestCase
     }
 }
 
-if (!class_exists('Zend_Filter_Exception')) {
-    require_once 'Zend/Exception.php';
-    class Zend_Filter_Exception extends Zend_Exception {}
-}
-
 // Call Zend_Filter_PregReplaceTest::main() if this source file is executed directly.
 if (PHPUnit_MAIN_METHOD == "Zend_Filter_PregReplaceTest::main") {
     Zend_Filter_PregReplaceTest::main();

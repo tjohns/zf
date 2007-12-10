@@ -190,7 +190,6 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
     {
         $rules = $this->inflector->getRules();
         $this->assertEquals(0, count($rules));
-        $action = 'foo';
         $this->inflector->addRules(array(
             ':controller' => array('PregReplace', 'Alpha'),
             'suffix'      => 'phtml',
@@ -200,13 +199,12 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($rules['controller']));
         $this->assertEquals('phtml', $rules['suffix']);
     }
-    
+
     public function testSetRulesCreatesAppropriateRuleEntries()
     {
         $this->inflector->setStaticRule('some-rules', 'some-value');
         $rules = $this->inflector->getRules();
         $this->assertEquals(1, count($rules));
-        $action = 'foo';
         $this->inflector->setRules(array(
             ':controller' => array('PregReplace', 'Alpha'),
             'suffix'      => 'phtml',

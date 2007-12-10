@@ -17,6 +17,9 @@ require_once 'Zend/Registry.php';
  */
 class Zend_Controller_Plugin_ActionStackTest extends PHPUnit_Framework_TestCase 
 {
+    public $key       = 'Zend_Controller_Plugin_ActionStack';
+    public $registry;
+
     /**
      * Runs the test methods of this class.
      *
@@ -39,7 +42,7 @@ class Zend_Controller_Plugin_ActionStackTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->key      = 'Zend_Controller_Plugin_ActionStack';
+        $this->removeRegistryEntry();
         $this->registry = Zend_Registry::getInstance();
     }
 
@@ -47,17 +50,23 @@ class Zend_Controller_Plugin_ActionStackTest extends PHPUnit_Framework_TestCase
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      *
-     * @access protected
+     * @return void
      */
     protected function tearDown()
     {
         $this->removeRegistryEntry();
     }
 
+    /**
+     * Ensure registry is clean
+     *
+     * @return void
+     */
     public function removeRegistryEntry()
     {
-        if (isset($this->registry[$this->key])) {
-            unset($this->registry[$this->key]);
+        $registry = Zend_Registry::getInstance();
+        if (isset($registry[$this->key])) {
+            unset($registry[$this->key]);
         }
     }
 
