@@ -252,6 +252,29 @@ $layout->setLayout('foo');
 echo $layout->render();
 ?>]]></programlisting>
     </sect2>
+
+    <sect2 id="zend.layout.quickstart.example">
+        <title>Sample Layout</title>
+
+        <para>
+            Sometimes a picture is worth a thousand words. The following is a
+            sample layout script showing how it might all come together.
+        </para>
+
+         <para>
+            <inlinegraphic align="center" valign="middle"
+                fileref="figures/zend.layout.quickstart.example.png" format="PNG" />
+        </para>
+
+        <para>
+            The actual order of elements may vary, depending on the CSS you've
+            setup; for instance, if you're using absolute positioning, you may
+            be able to have the navigation displayed later in the document, but
+            still show up at the top; the same could be said for the sidebar or
+            header. The actual mechanics of pulling the content remain the same,
+            however.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
