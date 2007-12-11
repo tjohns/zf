@@ -7,7 +7,8 @@
             <title>対象範囲</title>
 
             <para>
-                このドキュメントは、Zend Framework 上で開発を行う開発者 (開発チーム)
+                このドキュメントは、Zend Framework 上で開発を行う開発者
+                (あるいは Zend Framework 開発チーム)
                 のための指針となるものです。扱う範囲は以下のとおりです。
 
                 <itemizedlist>
@@ -200,7 +201,7 @@ Zend/View/Helper/FormRadio.php]]>
                 関数名は小文字で始めなければなりません。
                 関数名が複数の単語で構成されている場合は、
                 各単語の最初の文字を大文字にしなければなりません。
-                一般に、この方式は "camelCaps"
+                一般に、このフォーマットは "camelCaps"
                 と呼ばれています。
             </para>
 
@@ -229,6 +230,14 @@ widgetFactory()]]>
                 などのデザインパターンを使用する場合は、
                 メソッド名にパターンの名前を含めるようにしましょう。こうすることで、
                 どのパターンを使っているのかがわかりやすくなります。
+            </para>
+            
+            <para>
+                オブジェクト内で "private" あるいは "protected"
+                と宣言されているメソッドについては、メソッド名の最初にアンダースコア
+                1 文字をつけなければなりません。アンダースコアを使用できるのは、
+                この場合のみです。"public" と宣言されているメソッドについては、
+                決してアンダースコアで始めてはいけません。
             </para>
 
             <para>
@@ -379,7 +388,7 @@ $greeting = "こんにちは ${name} さん。ようこそ!";]]>
                     "." 演算子の前後には常にスペースを入れなければなりません。
 
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';]]>
                     </programlisting>
                 </para>
 
@@ -494,13 +503,13 @@ class SampleClass
                     メンバ変数は、以下の命名規約に従わなければなりません。
                 </para><para>
                     クラス内で宣言されるすべての変数は、クラスの最初、
-                    つまり関数宣言の始まる前になければなりません。
+                    つまりメソッド宣言の始まる前になければなりません。
                 </para><para>
                     <code>var</code> は使用してはいけません。メンバ変数は、常に
                     <code>private</code>、<code>protected</code> あるいは
                     <code>public</code> を使用して宣言してください。
                     変数を public にして直接アクセスすることも可能ですが、推奨されません。
-                    代わりにアクセサ (set/get) を使用してください。
+                    代わりにアクセサメソッド (set/get) を使用してください。
                 </para>
             </sect3>
         </sect2>
@@ -514,7 +523,7 @@ class SampleClass
                 <para>
                     関数は、以下の命名規約に従わなければなりません。
                 </para><para>
-                    クラス内の関数は、必ず
+                    クラス内のメソッドは、必ず
                     <code>private</code>、<code>protected</code>
                     あるいは <code>public</code> のいずれかを使用して宣言しなければなりません。
                 </para><para>
@@ -664,7 +673,7 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    "elseif" あるいは "else" を含む "if" 文の場合は、
+                    "elseif" あるいは "else" を含む "if" 文の場合の決まりは、
                     以下の例のような書式になります。
 
                     <programlisting role="php"><![CDATA[
