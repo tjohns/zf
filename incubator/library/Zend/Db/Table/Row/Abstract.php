@@ -782,6 +782,8 @@ abstract class Zend_Db_Table_Row_Abstract
 
         if ($select === null) {
             $select = $dependentTable->select();
+        } else {
+            $select->setTable($dependentTable);
         }
 
         $map = $this->_prepareReference($dependentTable, $this->_getTable(), $ruleKey);
@@ -831,6 +833,8 @@ abstract class Zend_Db_Table_Row_Abstract
 
         if ($select === null) {
             $select = $parentTable->select();
+        } else {
+            $select->setTable($parentTable);
         }
 
         $map = $this->_prepareReference($this->_getTable(), $parentTable, $ruleKey);
