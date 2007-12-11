@@ -88,6 +88,23 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     protected $_frontController;
 
     /**
+     * @var Zend_Filter_Inflector
+     */
+    protected $_inflector;
+
+    /**
+     * Inflector target
+     * @var string
+     */
+    protected $_inflectorTarget = '';
+
+    /**
+     * Current module directory
+     * @var string
+     */
+    protected $_moduleDir = '';
+
+    /**
      * Whether or not to autorender using controller name as subdirectory;
      * global setting (not reset at next invocation)
      * @var boolean
@@ -203,6 +220,116 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     }
 
     /**
+     * Get current module name
+     * 
+     * @return string
+     */
+    public function getModule()
+    {
+        $request = $this->getRequest();
+        $module  = $request->getModuleName();
+        if (null === $module) {
+            $module = $this->getFrontController()->getDispatcher()->getDefaultModule();
+        }
+
+        return $module;
+    }
+
+    /**
+     * Get module directory
+     * 
+     * @return string
+     */
+    public function getModuleDirectory()
+    {
+        $module    = $this->getModule();
+        $moduleDir = $this->getFrontController()->getControllerDirectory($module);
+        if ((null === $moduleDir) || is_array($moduleDir)) {
+            throw new Zend_Controller_Action_Exception('ViewRenderer cannot locate module directory');
+        }
+        $this->_moduleDir = dirname($moduleDir);
+        return $this->_moduleDir;
+    }
+
+    /**
+     * Get inflector
+     * 
+     * @return Zend_Filter_Inflector
+     */
+    public function getInflector()
+    {
+        if (null === $this->_inflector) {
+            require_once 'Zend/Filter/Inflector.php';
+            require_once 'Zend/Filter/PregReplace.php';
+            require_once 'Zend/Filter/Word/UnderscoreToSeparator.php';
+            $this->_inflector = new Zend_Filter_Inflector();
+            $this->_inflector->addRules(array(
+                     ':module'     => array('Word_CamelCaseToDash', 'stringToLower'),
+                     ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator(DIRECTORY_SEPARATOR), 'StringToLower'),
+                     ':action'     => array('Word_CamelCaseToDash', new Zend_Filter_PregReplace('/[^a-z0-9]+/i', '-'), 'StringToLower'),
+                 ))
+                 ->setStaticRuleReference('suffix', $this->_viewSuffix)
+                 ->setStaticRuleReference('moduleDir', $this->_moduleDir)
+                 ->setTargetReference($this->_inflectorTarget);
+        }
+
+        // Ensure that module directory is current
+        $this->getModuleDirectory();
+
+        return $this->_inflector;
+    }
+
+    /**
+     * Set inflector
+     * 
+     * @param  Zend_Filter_Inflector $inflector 
+     * @param  bool $reference Whether the moduleDir, target, and suffix should be set as references to ViewRenderer properties
+     * @return Zend_Controller_Action_Helper_ViewRenderer
+     */
+    public function setInflector(Zend_Filter_Inflector $inflector, $reference = false)
+    {
+        $this->_inflector = $inflector;
+        if ($reference) {
+            $this->_inflector->setStaticRuleReference('suffix', $this->_viewSuffix)
+                 ->setStaticRuleReference('moduleDir', $this->_moduleDir)
+                 ->setTargetReference($this->_inflectorTarget);
+        }
+        return $this;
+    }
+
+    /**
+     * Set inflector target
+     * 
+     * @param  string $target 
+     * @return void
+     */
+    protected function _setInflectorTarget($target)
+    {
+        $this->_inflectorTarget = (string) $target;
+    }
+
+    /**
+     * Set internal module directory representation
+     * 
+     * @param  string $dir 
+     * @return void
+     */
+    protected function _setModuleDir($dir)
+    {
+        $this->_moduleDir = (string) $dir;
+    }
+
+    /**
+     * Get internal module directory representation
+     * 
+     * @return string
+     */
+    protected function _getModuleDir()
+    {
+        return $this->_moduleDir;
+    }
+
+    /**
      * Generate a class prefix for helper and filter classes
      *
      * @return string
@@ -230,7 +357,9 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             return '.' . DIRECTORY_SEPARATOR . 'views';
         }
 
-        $path = $this->_translateSpec($this->getViewBasePathSpec());
+        $inflector = $this->getInflector();
+        $this->_setInflectorTarget($this->getViewBasePathSpec());
+        $path = $inflector->filter(array());
         return $path;
     }
 
@@ -461,11 +590,13 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $vars['action'] = $action;
         }
 
-        $path = ($this->getNoController() || $this->getNeverController())
-              ? $this->_translateSpec($this->getViewScriptPathNoControllerSpec(), $vars)
-              : $this->_translateSpec($this->getViewScriptPathSpec(), $vars);
-
-        return $path;
+        $inflector = $this->getInflector();
+        if ($this->getNoController() || $this->getNeverController()) {
+            $this->_setInflectorTarget($this->getViewScriptPathNoControllerSpec());
+        } else {
+            $this->_setInflectorTarget($this->getViewScriptPathSpec());
+        }
+        return $this->_translateSpec($vars);
     }
 
     /**
@@ -653,7 +784,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
     }
 
     /**
-     * Inject values into a spec string
+     * Inflect based on provided vars
      *
      * Allowed variables are:
      * - :moduleDir - current module directory
@@ -662,30 +793,18 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
      * - :action - current action name
      * - :suffix - view script file suffix
      *
-     * @param  string $spec
      * @param  array $vars
      * @return string
      */
-    protected function _translateSpec($spec, array $vars = array())
+    protected function _translateSpec(array $vars = array())
     {
-        $front      = $this->getFrontController();
+        $inflector  = $this->getInflector();
         $request    = $this->getRequest();
         $module     = $request->getModuleName();
         $controller = $request->getControllerName();
         $action     = $request->getActionName();
-        $suffix     = $this->getViewSuffix();
 
-        // Need to get default module name if null returned, so that we get a
-        // controller directory
-        if (null === $module) {
-            $module = $front->getDispatcher()->getDefaultModule();
-        }
-        $moduleDir  = $front->getControllerDirectory($module);
-        if ((null === $moduleDir) || is_array($moduleDir)) {
-            throw new Zend_Controller_Action_Exception('ViewRenderer cannot locate module directory');
-        }
-        $moduleDir = dirname($moduleDir);
-
+        $params     = compact('module', 'controller', 'action');
         foreach ($vars as $key => $value) {
             switch ($key) {
                 case 'module':
@@ -693,34 +812,32 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
                 case 'action':
                 case 'moduleDir':
                 case 'suffix':
-                    $$key = (string) $value;
+                    $params[$key] = (string) $value;
                     break;
                 default:
                     break;
             }
         }
 
-        // Module, controller, and action names need normalized delimiters
-        $dispatcher = $front->getDispatcher();
-        if (null === $this->_pathDelimiters) {
-            $this->_pathDelimiters = $dispatcher->getPathDelimiter();
+        if (isset($params['suffix'])) {
+            $origSuffix = $this->getViewSuffix();
+            $this->setViewSuffix($params['suffix']);
         }
-        if (null === $this->_delimiters) {
-            $wordDelimiters    = $dispatcher->getWordDelimiter();
-            $pathDelimiters    = $dispatcher->getPathDelimiter();
-            $this->_delimiters = array_unique(array_merge($wordDelimiters, (array) $this->_pathDelimiters));
+        if (isset($moduleDir)) {
+            $origModuleDir = $this->_getModuleDir();
+            $this->_setModuleDir($params['moduleDir']);
         }
 
-        $replacements = array(
-            ':moduleDir'  => $moduleDir,
-            ':module'     => str_replace($this->_delimiters, '-', strtolower($module)),
-            ':controller' => str_replace($this->_delimiters, '-', strtolower(str_replace($this->_pathDelimiters, '/', $controller))),
-            ':action'     => str_replace($this->_delimiters, '-', strtolower($action)),
-            ':suffix'     => $suffix
-        );
-        $value = str_replace(array_keys($replacements), array_values($replacements), $spec);
-        $value = preg_replace('/-+/', '-', $value);
-        return $value;
+        $filtered = $inflector->filter($params);
+
+        if (isset($params['suffix'])) {
+            $this->setViewSuffix($origSuffix);
+        }
+        if (isset($moduleDir)) {
+            $this->_setModuleDir($origModuleDir);
+        }
+
+        return $filtered;
     }
 
     /**

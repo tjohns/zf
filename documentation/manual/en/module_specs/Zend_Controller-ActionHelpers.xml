@@ -220,6 +220,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             up the view object in your controllers and rendering views.
         </para>
 
+        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />

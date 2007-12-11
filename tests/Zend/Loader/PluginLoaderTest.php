@@ -230,14 +230,14 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new Zend_Loader_PluginLoader();
         $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
         try {
-            $className = $loader->load('Partial');
+            $className = $loader->load('FormButton');
         } catch (Exception $e) {
             $paths = $loader->getPaths();
             $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
         }
-        $this->assertEquals('Zend_View_Helper_Partial', $className);
-        $this->assertTrue(class_exists('Zend_View_Helper_Partial'));
-        $this->assertTrue($loader->isLoaded('Partial'));
+        $this->assertEquals('Zend_View_Helper_FormButton', $className);
+        $this->assertTrue(class_exists('Zend_View_Helper_FormButton'));
+        $this->assertTrue($loader->isLoaded('FormButton'));
     }
 
     public function testLoadPluginStaticallyLoadsClass()
@@ -246,14 +246,14 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new Zend_Loader_PluginLoader(array(), $this->key);
         $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
         try {
-            $className = $loader->load('Placeholder');
+            $className = $loader->load('FormRadio');
         } catch (Exception $e) {
             $paths = $loader->getPaths();
             $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
         }
-        $this->assertEquals('Zend_View_Helper_Placeholder', $className);
-        $this->assertTrue(class_exists('Zend_View_Helper_Placeholder'));
-        $this->assertTrue($loader->isLoaded('Placeholder'));
+        $this->assertEquals('Zend_View_Helper_FormRadio', $className);
+        $this->assertTrue(class_exists('Zend_View_Helper_FormRadio'));
+        $this->assertTrue($loader->isLoaded('FormRadio'));
     }
 
     public function testLoadThrowsExceptionIfFileFoundInPrefixButClassNotLoaded()
@@ -283,13 +283,13 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new Zend_Loader_PluginLoader();
         $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
         try {
-            $className = $loader->load('PartialLoop');
+            $className = $loader->load('FormSelect');
         } catch (Exception $e) {
             $paths = $loader->getPaths();
             $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
         }
-        $this->assertEquals($className, $loader->getClassName('PartialLoop'));
-        $this->assertEquals('Zend_View_Helper_PartialLoop', $loader->getClassName('PartialLoop'));
+        $this->assertEquals($className, $loader->getClassName('FormSelect'));
+        $this->assertEquals('Zend_View_Helper_FormSelect', $loader->getClassName('FormSelect'));
     }
 
     public function testGetClassAfterStaticLoadReturnsResolvedClassName()
@@ -298,13 +298,13 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new Zend_Loader_PluginLoader(array(), $this->key);
         $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
         try {
-            $className = $loader->load('HeadTitle');
+            $className = $loader->load('FormCheckbox');
         } catch (Exception $e) {
             $paths = $loader->getPaths();
             $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
         }
-        $this->assertEquals($className, $loader->getClassName('HeadTitle'));
-        $this->assertEquals('Zend_View_Helper_HeadTitle', $loader->getClassName('HeadTitle'));
+        $this->assertEquals($className, $loader->getClassName('FormCheckbox'));
+        $this->assertEquals('Zend_View_Helper_FormCheckbox', $loader->getClassName('FormCheckbox'));
     }
 }
 

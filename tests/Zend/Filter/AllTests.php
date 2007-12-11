@@ -80,12 +80,20 @@ require_once 'Zend/Filter/DirTest.php';
  */
 require_once 'Zend/Filter/HtmlEntitiesTest.php';
 
+/**
+ * @see Zend_Filter_InflectorTest
+ */
+require_once 'Zend/Filter/InflectorTest.php';
 
 /**
  * @see Zend_Filter_IntTest
  */
 require_once 'Zend/Filter/IntTest.php';
 
+/**
+ * @see Zend_Filter_PregReplaceTest
+ */
+require_once 'Zend/Filter/PregReplaceTest.php';
 
 /**
  * @see Zend_Filter_RealPathTest
@@ -123,6 +131,18 @@ require_once 'Zend/Filter/InputTest.php';
 
 
 /**
+ * Word filter tests
+ */
+require_once 'Zend/Filter/Word/CamelCaseToDashTest.php';
+require_once 'Zend/Filter/Word/CamelCaseToSeparatorTest.php';
+require_once 'Zend/Filter/Word/CamelCaseToUnderscoreTest.php';
+require_once 'Zend/Filter/Word/SeparatorToCamelCaseTest.php';
+require_once 'Zend/Filter/Word/DashToCamelCaseTest.php';
+require_once 'Zend/Filter/Word/UnderscoreToCamelCaseTest.php';
+require_once 'Zend/Filter/Word/DashToUnderscoreTest.php';
+require_once 'Zend/Filter/Word/UnderscoreToDashTest.php';
+
+/**
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
@@ -156,13 +176,23 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_DigitsTest');
         $suite->addTestSuite('Zend_Filter_DirTest');
         $suite->addTestSuite('Zend_Filter_HtmlEntitiesTest');
+        $suite->addTestSuite('Zend_Filter_InflectorTest');
         $suite->addTestSuite('Zend_Filter_IntTest');
+        $suite->addTestSuite('Zend_Filter_PregReplaceTest');
         $suite->addTestSuite('Zend_Filter_RealPathTest');
         $suite->addTestSuite('Zend_Filter_StringToLowerTest');
         $suite->addTestSuite('Zend_Filter_StringToUpperTest');
         $suite->addTestSuite('Zend_Filter_StringTrimTest');
         $suite->addTestSuite('Zend_Filter_StripTagsTest');
         $suite->addTestSuite('Zend_Filter_InputTest');
+        $suite->addTestSuite('Zend_Filter_Word_CamelCaseToDashTest');
+        $suite->addTestSuite('Zend_Filter_Word_CamelCaseToSeparatorTest');
+        $suite->addTestSuite('Zend_Filter_Word_CamelCaseToUnderscoreTest');
+        $suite->addTestSuite('Zend_Filter_Word_SeparatorToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_Word_DashToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_Word_UnderscoreToCamelCaseTest');
+        $suite->addTestSuite('Zend_Filter_Word_DashToUnderscoreTest');
+        $suite->addTestSuite('Zend_Filter_Word_UnderscoreToDashTest');
 
         return $suite;
     }

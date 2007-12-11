@@ -1,5 +1,5 @@
 <sect1 id="zend.filter.inflector">
-    <title>Introduction</title>
+    <title>Zend_Filter_Inflector</title>
 
     <para>
         <code>Zend_Filter_Inflector</code> is a general purpose tool for

@@ -392,6 +392,101 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
         </itemizedlist>
 
         <para>
+            For fine-grained control over path specifications, you may use
+            <link linkend="zend.filter.inflector">Zend_Filter_Inflector</link>.
+            Under the hood, the <code>ViewRenderer</code> uses an inflector to
+            perform path mappings already. To interact with the inflector --
+            either to set your own for use, or to modify the default inflector,
+            the following methods may be used:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>getInflector()</code> will retrieve the inflector. If
+                    none exists yet in the <code>ViewRenderer</code>, it creates
+                    one using the default rules.
+                </para>
+
+                <para>
+                    By default, it uses static rule references for the suffix
+                    and module directory, as well as a static target; this
+                    allows various <code>ViewRenderer</code> properties the
+                    ability to dynamically modify the inflector.
+                </para>
+            </listitem>
+
+            <listitem><para>
+                    <code>setInflector($inflector, $reference)</code> allows you
+                    to set a custom inflector for use with the
+                    <code>ViewRenderer</code>. If <code>$reference</code> is
+                    true, it will set the suffix and module directory as static
+                    references to <code>ViewRenderer</code> properties, as well
+                    as the target.
+            </para></listitem>
+        </itemizedlist>
+
+        <note>
+            <title>Default Lookup Conventions</title>
+
+            <para>
+                The <code>ViewRenderer</code> does some path normalization to
+                make view script lookups easier. The default rules are as
+                follows:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>:module</code>: CamelCasedWords are separated by
+                        dashes, and the entire string cast to lowercase. E.g.:
+                        "FooBarBaz" becomes "foo-bar-baz".
+                    </para>
+
+                    <para>
+                        Internally, the inflector uses the filters
+                        <code>Zend_Filter_Word_CamelCaseToDash</code> and
+                        <code>Zend_Filter_StringToLower</code>.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:controller</code>: CamelCasedWords are separated
+                        by dashes; underscores are converted to directory
+                        separators, and the entire string cast to lower case.
+                        Examples: "FooBar" becomes "foo-bar"; "FooBar_Admin"
+                        becomes "foo-bar/admin".
+                    </para>
+
+                    <para>
+                        Internally, the inflector uses the filters
+                        <code>Zend_Filter_Word_CamelCaseToDash</code>, 
+                        <code>Zend_Filter_Word_UnderscoreToSeparator</code>, and
+                        <code>Zend_Filter_StringToLower</code>.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:action</code>: CamelCasedWords are separated
+                        by dashes; non-alphanumeric characters are translated to 
+                        dashes, and the entire string cast to lower case.
+                        Examples: "fooBar" becomes "foo-bar"; "foo-barBaz"
+                        becomes "foo-bar-baz".
+                    </para>
+
+                    <para>
+                        Internally, the inflector uses the filters
+                        <code>Zend_Filter_Word_CamelCaseToDash</code>, 
+                        <code>Zend_Filter_PregReplace</code>, and
+                        <code>Zend_Filter_StringToLower</code>.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
+
+        <para>
             The final items in the <code>ViewRenderer</code> API are the methods
             for actually determining view script paths and rendering views.
             These include:

@@ -30,16 +30,19 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'ActionTest.php';
 require_once 'Action/HelperBrokerTest.php';
+require_once 'Action/Helper/ActionStackTest.php';
 require_once 'Action/Helper/FlashMessengerTest.php';
 require_once 'Action/Helper/RedirectorTest.php';
 require_once 'Action/Helper/UrlTest.php';
 require_once 'Action/Helper/ViewRendererTest.php';
 require_once 'Dispatcher/StandardTest.php';
 require_once 'FrontTest.php';
+require_once 'Plugin/ActionStackTest.php';
 require_once 'Plugin/BrokerTest.php';
 require_once 'Plugin/ErrorHandlerTest.php';
 require_once 'Request/Apache404Test.php';
 require_once 'Request/HttpTest.php';
+require_once 'Request/SimpleTest.php';
 require_once 'Response/HttpTest.php';
 require_once 'Router/RouteTest.php';
 require_once 'Router/Route/ModuleTest.php';
@@ -67,16 +70,19 @@ class Zend_Controller_AllTests
 
         $suite->addTestSuite('Zend_Controller_ActionTest');
         $suite->addTestSuite('Zend_Controller_Action_HelperBrokerTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_ActionStackTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_FlashMessengerTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_RedirectorTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_UrlTest');
         $suite->addTestSuite('Zend_Controller_Action_Helper_ViewRendererTest');
         $suite->addTestSuite('Zend_Controller_Dispatcher_StandardTest');
         $suite->addTestSuite('Zend_Controller_FrontTest');
+        $suite->addTestSuite('Zend_Controller_Plugin_ActionStackTest');
         $suite->addTestSuite('Zend_Controller_Plugin_BrokerTest');
         $suite->addTestSuite('Zend_Controller_Plugin_ErrorHandlerTest');
         $suite->addTestSuite('Zend_Controller_Request_Apache404Test');
         $suite->addTestSuite('Zend_Controller_Request_HttpTest');
+        $suite->addTestSuite('Zend_Controller_Request_SimpleTest');
         $suite->addTestSuite('Zend_Controller_Response_HttpTest');
         $suite->addTestSuite('Zend_Controller_Router_RouteTest');
         $suite->addTestSuite('Zend_Controller_Router_Route_ModuleTest');

@@ -20,18 +20,6 @@
         </copyright>
     </bookinfo>
 
-    <chapter id="zend.controller">
-        <title>Zend_Controller</title>
-        <xi:include href="module_specs/Zend_Controller-ActionHelpers-ActionStack.xml" />
-        <xi:include href="module_specs/Zend_Controller-ActionHelpers-ViewRenderer.xml" />
-        <xi:include href="module_specs/Zend_Controller-Plugins-ActionStack.xml" />
-    </chapter>
-
-    <chapter id="zend.filter">
-        <title>Zend_Filter</title>
-        <xi:include href="module_specs/Zend_Filter-Inflector.xml" />
-    </chapter>
-
     <chapter id="zend.http.server">
         <title>Zend_Http_Server</title>
         <xi:include href="module_specs/Zend_Http_Server-Introduction.xml" />
@@ -50,29 +38,10 @@
         <xi:include href="module_specs/Zend_Json-xml2json.xml" />
     </chapter>
 
-    <chapter id="zend.layout">
-        <title>Zend_Layout</title>
-        <xi:include href="module_specs/Zend_Layout-Introduction.xml" />
-        <xi:include href="module_specs/Zend_Layout-QuickStart.xml" />
-        <xi:include href="module_specs/Zend_Layout-Options.xml" />
-        <xi:include href="module_specs/Zend_Layout-Advanced.xml" />
-    </chapter>
-
-    <chapter id="zend.loader">
-        <title>Zend_Loader</title>
-        <xi:include href="module_specs/Zend_Loader.xml" />
-        <xi:include href="module_specs/Zend_Loader-PluginLoader.xml" />
-    </chapter>
-
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
         <xi:include href="module_specs/Zend_TimeSync.xml" />
         <xi:include href="module_specs/Zend_TimeSync-Queries.xml" />
-    </chapter>
-
-    <chapter id="zend.view">
-        <title>Zend_View</title>
-        <xi:include href="module_specs/Zend_View-Helpers.xml" />
     </chapter>
 
     <appendix id="appendix.copyright">
