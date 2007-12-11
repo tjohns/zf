@@ -125,6 +125,32 @@ class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testPartialLoopIteratesOverRecursiveIterator()
+    {
+        $rIterator = new Zend_View_Helper_PartialLoop_RecursiveIteratorTest();
+        for ($i = 0; $i < 5; ++$i) {
+            $data = array(
+                'message' => 'foo' . $i,
+            );
+            $rIterator->addItem(new Zend_View_Helper_PartialLoop_IteratorTest($data));
+        }
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+
+        $result = $this->helper->partialLoop('partialLoop.phtml', $rIterator);
+        foreach ($rIterator as $item) {
+            foreach ($item as $key => $value) {
+                $this->assertContains($value, $result, var_export($value, 1));
+            }
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testPartialLoopThrowsExceptionWithBadIterator()
     {
         $data = array(
@@ -206,6 +232,52 @@ class Zend_View_Helper_PartialLoop_IteratorTest implements Iterator
     {
         return (current($this->items) !== false);
     }
+
+    public function toArray()
+    {
+        return $this->items;
+    }
+}
+
+class Zend_View_Helper_PartialLoop_RecursiveIteratorTest implements Iterator
+{
+    public $items;
+
+    public function __construct()
+    {
+        $this->items = array();
+    }
+
+    public function addItem(Iterator $iterator)
+    {
+        $this->items[] = $iterator;
+        return $this;
+    }
+
+    public function current()
+    {
+        return current($this->items);
+    }
+
+    public function key()
+    {
+        return key($this->items);
+    }
+
+    public function next()
+    {
+        return next($this->items);
+    }
+
+    public function rewind()
+    {
+        return reset($this->items);
+    }
+
+    public function valid()
+    {
+        return (current($this->items) !== false);
+    }
 }
 
 class Zend_View_Helper_PartialLoop_BogusIteratorTest
@@ -216,4 +288,3 @@ class Zend_View_Helper_PartialLoop_BogusIteratorTest
 if (PHPUnit_MAIN_METHOD == "Zend_View_Helper_PartialLoopTest::main") {
     Zend_View_Helper_PartialLoopTest::main();
 }
-?>

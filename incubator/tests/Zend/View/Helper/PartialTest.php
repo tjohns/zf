@@ -170,10 +170,56 @@ class Zend_View_Helper_PartialTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($clonedVars));
         $this->assertNull($clone->foo);
     }
+
+    public function testObjectModelWithPublicPropertiesSetsViewVariables()
+    {
+        $model = new stdClass();
+        $model->foo = 'bar';
+        $model->bar = 'baz';
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+        $return = $this->helper->partial('partialVars.phtml', $model);
+
+        foreach (get_object_vars($model) as $key => $value) {
+            $string = sprintf('%s: %s', $key, $value);
+            $this->assertContains($string, $return);
+        }
+    }
+
+    public function testObjectModelWithToArraySetsViewVariables()
+    {
+        $model = new Zend_View_Helper_PartialTest_Aggregate();
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+        $return = $this->helper->partial('partialVars.phtml', $model);
+
+        foreach ($model->toArray() as $key => $value) {
+            $string = sprintf('%s: %s', $key, $value);
+            $this->assertContains($string, $return);
+        }
+    }
+}
+
+class Zend_View_Helper_PartialTest_Aggregate
+{
+    public $vars = array(
+        'foo' => 'bar',
+        'bar' => 'baz'
+    );
+
+    public function toArray()
+    {
+        return $this->vars;
+    }
 }
 
 // Call Zend_View_Helper_PartialTest::main() if this source file is executed directly.
 if (PHPUnit_MAIN_METHOD == "Zend_View_Helper_PartialTest::main") {
     Zend_View_Helper_PartialTest::main();
 }
-?>
