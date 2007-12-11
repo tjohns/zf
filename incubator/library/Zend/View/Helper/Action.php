@@ -49,6 +49,13 @@ class Zend_View_Helper_Action
      * @var Zend_Controller_Response_Abstract
      */
     public $response;
+    
+    /**
+     * Instance of parent Zend_View object
+     *
+     * @var Zend_View_Interface
+     */
+    public $view = null;
 
     /**
      * Constructor
@@ -115,6 +122,10 @@ class Zend_View_Helper_Action
             $module = $this->defaultModule; 
         } 
 
+        // clone the view object to prevent over-writing of view variables
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $viewRenderer->view = $this->cloneView(); 
+        
         $this->request->setParams($params) 
              ->setModuleName($module) 
              ->setControllerName($controller) 
@@ -126,10 +137,41 @@ class Zend_View_Helper_Action
         if (!$this->request->isDispatched() 
             || $this->response->isRedirect()) 
         { 
+            // reset the view object to it's original state
+            $viewRenderer->view = $this->view;
             // forwards and redirects render nothing 
             return ''; 
         } 
  
-        return $this->response->getBody();
+        $return = $this->response->getBody();
+        
+        // reset the view object to it's original state
+        $viewRenderer->view = $this->view;
+        
+        return $return;
+    }
+    
+    /**
+     * Set view object
+     *
+     * @param  Zend_View_Interface $view
+     * @return Zend_View_Helper_Action
+     */
+    public function setView(Zend_View_Interface $view)
+    {
+        $this->view = $view;
+        return $this;
+    }
+
+    /**
+     * Clone the current View
+     *
+     * @return Zend_View_Interface
+     */
+    public function cloneView()
+    {
+        $view = clone $this->view;
+        $view->clearVars();
+        return $view;
     }
 }

@@ -56,7 +56,9 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
               ->setResponse($this->response)
               ->addModuleDirectory(dirname(__FILE__) . '/_files/modules');
 
+        $this->view   = new Zend_View();
         $this->helper = new Zend_View_Helper_Action();
+        $this->helper->setView($this->view);
     }
 
     /**
@@ -225,6 +227,13 @@ class Zend_View_Helper_ActionTest extends PHPUnit_Framework_TestCase
             $this->fail('No response in front controller should cause action helper to throw exception');
         } catch (Exception $e) {
         }
+    }
+
+    public function testViewObjectRemainsUnchangedAfterAction()
+    {
+        $value = $this->helper->action('bar', 'foo', 'foo');
+        $this->assertContains('In foo module, Foo_FooController::barAction()', $value);
+        $this->assertNull($this->view->bar);
     }
 }
 
