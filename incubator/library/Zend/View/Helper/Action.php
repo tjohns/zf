@@ -101,7 +101,7 @@ class Zend_View_Helper_Action
  
         $this->response->clearBody();
         $this->response->clearHeaders() 
-             ->clearRawHeaders(); 
+                       ->clearRawHeaders(); 
     }
 
     /**
@@ -127,26 +127,24 @@ class Zend_View_Helper_Action
         $viewRenderer->view = $this->cloneView(); 
         
         $this->request->setParams($params) 
-             ->setModuleName($module) 
-             ->setControllerName($controller) 
-             ->setActionName($action) 
-             ->setDispatched(true); 
+                      ->setModuleName($module) 
+                      ->setControllerName($controller) 
+                      ->setActionName($action) 
+                      ->setDispatched(true); 
  
         $this->dispatcher->dispatch($this->request, $this->response); 
  
+        // reset the view object to it's original state
+        $viewRenderer->view = $this->view;
+        
         if (!$this->request->isDispatched() 
             || $this->response->isRedirect()) 
         { 
-            // reset the view object to it's original state
-            $viewRenderer->view = $this->view;
             // forwards and redirects render nothing 
             return ''; 
         } 
  
         $return = $this->response->getBody();
-        
-        // reset the view object to it's original state
-        $viewRenderer->view = $this->view;
         
         return $return;
     }
