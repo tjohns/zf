@@ -6,6 +6,7 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Zend/View/Helper/ActionTest.php';
 require_once 'Zend/View/Helper/DeclareVarsTest.php';
 require_once 'Zend/View/Helper/FormCheckboxTest.php';
 require_once 'Zend/View/Helper/FormLabelTest.php';
@@ -13,6 +14,8 @@ require_once 'Zend/View/Helper/FormSelectTest.php';
 require_once 'Zend/View/Helper/FormTextTest.php';
 require_once 'Zend/View/Helper/HtmlListTest.php';
 require_once 'Zend/View/Helper/LayoutTest.php';
+require_once 'Zend/View/Helper/PartialTest.php';
+require_once 'Zend/View/Helper/PartialLoopTest.php';
 require_once 'Zend/View/Helper/PlaceholderTest.php';
 require_once 'Zend/View/Helper/Placeholder/ContainerTest.php';
 require_once 'Zend/View/Helper/Placeholder/RegistryTest.php';
@@ -37,6 +40,7 @@ class Zend_View_Helper_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_View_Helper');
 
+        $suite->addTestSuite('Zend_View_Helper_ActionTest');
         $suite->addTestSuite('Zend_View_Helper_DeclareVarsTest');
         $suite->addTestSuite('Zend_View_Helper_FormCheckboxTest');
         $suite->addTestSuite('Zend_View_Helper_FormLabelTest');
@@ -44,6 +48,8 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_FormTextTest');
         $suite->addTestSuite('Zend_View_Helper_HtmlListTest');
         $suite->addTestSuite('Zend_View_Helper_LayoutTest');
+        $suite->addTestSuite('Zend_View_Helper_PartialTest');
+        $suite->addTestSuite('Zend_View_Helper_PartialLoopTest');
         $suite->addTestSuite('Zend_View_Helper_PlaceholderTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_ContainerTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_RegistryTest');
