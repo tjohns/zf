@@ -39,7 +39,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options)</code> : crée un élément &lt;input type="checkbox" /&gt;. Le paramètre <code>$options</code> est un tableau dans lequel la première valeur est la valeur &quot;checked&quot;, et la seconde &quot;unchecked&quot; (les valeurs par défaut sont '1' et '0'). Si <code>$value</code> correspond à la valeur &quot;checked&quot;, la boite sera cochée.
+                <code>formCheckbox($name, $value, $attribs, $options)</code> : crée un élément &lt;input type="checkbox" /&gt;. Le paramètre <code>$options</code> est un tableau dans lequel la première valeur est la valeur "checked", et la seconde "unchecked" (les valeurs par défaut sont '1' et '0'). Si <code>$value</code> correspond à la valeur "checked", la boite sera cochée.
             </para></listitem>
 
             <listitem><para>
@@ -137,6 +137,12 @@
 </form>]]>
         </programlisting>
 
+        <xi:include href="Zend_View-Helpers-Action.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Action.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_View-Helpers-Partial.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Partial.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_View-Helpers-Placeholder.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Placeholder.xml" /></xi:fallback>
         </xi:include>
@@ -147,7 +153,7 @@
         <title>Chemin des aides</title>
 
         <para>
-            Comme pour les scripts de vue, votre contrôleur peut spécifier une pile de chemins dans lesquels <code>Zend_View</code> cherchera les classes d'aides. Par défaut, <code>Zend_View</code> cherche dans &quot;Zend/View/Helper/*&quot;. Vous pouvez dire à <code>Zend_View</code> de regarder dans d'autres chemins en utilisant les méthodes <code>setHelperPath()</code> et <code>addHelperPath()</code>. De plus, vous pouvez indiquer un préfixe de classe pour utiliser les aides dans le répertoire fourni, et permettre de donner des espaces de nommage à vos classes d'aide. Par défaut, si aucun préfixe n'est fourni, 'Zend_View_Helper_' est utilisé.
+            Comme pour les scripts de vue, votre contrôleur peut spécifier une pile de chemins dans lesquels <code>Zend_View</code> cherchera les classes d'aides. Par défaut, <code>Zend_View</code> cherche dans "Zend/View/Helper/*". Vous pouvez dire à <code>Zend_View</code> de regarder dans d'autres chemins en utilisant les méthodes <code>setHelperPath()</code> et <code>addHelperPath()</code>. De plus, vous pouvez indiquer un préfixe de classe pour utiliser les aides dans le répertoire fourni, et permettre de donner des espaces de nommage à vos classes d'aide. Par défaut, si aucun préfixe n'est fourni, 'Zend_View_Helper_' est utilisé.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -156,7 +162,7 @@ $view->setHelperPath('/chemin/vers/plus/de/classes/d-aides', 'Ma_View_Helper');]
 	    </programlisting>
 
         <para>
-            En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>addHelperPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus récemment ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de re-définir) la distribution initiale des aides, avec vos propres aides personnalisées.
+            En fait, vous pouvez "empiler" les chemins en utilisant la méthode <code>addHelperPath()</code>. Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus récemment ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de re-définir) la distribution initiale des aides, avec vos propres aides personnalisées.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -190,7 +196,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
             </para></listitem>
 
             <listitem><para>
-                La classe doit avoir une méthode publique dont le nom correspond au nom de l'aide ; c'est la méthode qui sera appelée quand votre template appelera &quot;$this->actionSpeciale()&quot;. Dans notre exemple &quot;$this->actionSpeciale()&quot;, la déclaration de méthode requise serait &quot;public function actionSpeciale()&quot;.
+                La classe doit avoir une méthode publique dont le nom correspond au nom de l'aide ; c'est la méthode qui sera appelée quand votre template appelera "$this->actionSpeciale()". Dans notre exemple "$this->actionSpeciale()", la déclaration de méthode requise serait "public function actionSpeciale()".
             </para></listitem>
 
             <listitem><para>
@@ -198,7 +204,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
             </para></listitem>
 
             <listitem><para>
-                La classe doit être dans un fichier ayant le même nom que la méthode d'aide. Si on utilise la méthode &quot;actionSpeciale()&quot;, le fichier devra être nommé &quot;ActionSpeciale.php&quot;
+                La classe doit être dans un fichier ayant le même nom que la méthode d'aide. Si on utilise la méthode "actionSpeciale()", le fichier devra être nommé "ActionSpeciale.php"
             </para></listitem>
         </itemizedlist>
 
@@ -207,7 +213,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
         </para>
 
         <para>
-            Voici un exemple du fichier &quot;ActionSpeciale.php&quot; :
+            Voici un exemple du fichier "ActionSpeciale.php" :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
