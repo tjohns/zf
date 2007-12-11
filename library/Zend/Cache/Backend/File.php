@@ -278,6 +278,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         if (count($files) == 0) {
             return false;
         }
+        if ($files === false) {
+            return false;
+        }
         foreach ($files as $file) {
             $result1 = $result1 && $this->_remove($file);
         }
@@ -395,6 +398,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         $result = true;
         $prefix = $this->_options['file_name_prefix'];
         $glob = @glob($dir . $prefix . '--*');
+        if ($glob === false) {
+            return true;
+        }
         foreach ($glob as $file)  {
             if (is_file($file)) {
                 if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
@@ -472,6 +478,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     {
         $filesToRemove = @glob($this->_file($this->_tagCacheId($id, '*'), '*'));
         $result = true;
+        if ($filesToRemove === false) {
+            return true;
+        }
         foreach ($filesToRemove as $file) {
             $result = $result && ($this->_remove($file));
         }
@@ -641,6 +650,9 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         $path = $this->_path($id);
         if (is_null($expire)) {
             $glob = @glob($path . $this->_idToFileName($id, '*'));
+            if ($glob === false) {
+                return null;
+            }
             $nbr = count($glob);
             if ($nbr == 1) {
                 return $glob[0];
