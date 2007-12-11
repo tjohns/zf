@@ -46,6 +46,7 @@
 
     <chapter id="zend.view">
         <title>Zend_View</title>
+        <xi:include href="module_specs/Zend_View-Helpers-Action.xml" />
         <xi:include href="module_specs/Zend_View-Helpers-Partial.xml" />
     </chapter>
 
