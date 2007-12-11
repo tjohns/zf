@@ -269,6 +269,9 @@
         <xi:include href="module_specs/Zend_Filter_Input.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Filter_Input.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Filter-Inflector.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Filter-Inflector.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.gdata">
         <title>Zend_Gdata</title>
@@ -336,10 +339,28 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Json-xml2json.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.layout">
+        <title>Zend_Layout</title>
+        <xi:include href="module_specs/Zend_Layout-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Layout-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Layout-QuickStart.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Layout-QuickStart.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Layout-Options.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Layout-Options.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Layout-Advanced.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Layout-Advanced.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.loader">
         <title>Zend_Loader</title>
         <xi:include href="module_specs/Zend_Loader.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Loader.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Loader-PluginLoader.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Loader-PluginLoader.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.locale">
@@ -659,8 +680,8 @@
         <xi:include href="module_specs/Zend_View-Scripts.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_View-Scripts.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_View-Helpers.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_View-Helpers.xml" /></xi:fallback>
+        <xi:include href="module_specs/Zend_View-Helpers.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_View-Helpers.xml" parse="xml"/></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.xmlrpc">

@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.view.helpers">
+<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2003/XInclude">
 
     <title>Aides pour la vue</title>
 
@@ -137,6 +137,9 @@
 </form>]]>
         </programlisting>
 
+        <xi:include href="Zend_View-Helpers-Placeholder.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Placeholder.xml" /></xi:fallback>
+        </xi:include>
     </sect2>
 
     <sect2 id="zend.view.helpers.paths">

@@ -6,23 +6,12 @@
         <sect2 id="coding-standard.overview.scope">
             <title>Portée</title>
             <para>
-                Ce document fournit les lignes directrices et les ressources pour les développeurs et les équipes participant au développement du Zend Framework. Les sujets traités sont :
+                Ce document fournit les lignes directrices pour les développeurs et les équipes contributeurs au Zend Framework. Les sujets traités sont :
                 <itemizedlist>
-                    <listitem>
-                        <para>Formatage des fichiers PHP</para>
-                    </listitem>
-
-                    <listitem>
-                        <para>Conventions de nommage</para>
-                    </listitem>
-
-                    <listitem>
-                        <para>Style de code</para>
-                    </listitem>
-
-                    <listitem>
-                        <para>Documentation</para>
-                    </listitem>
+                    <listitem><para>Formatage des fichiers PHP</para></listitem>
+                    <listitem><para>Conventions de nommage</para></listitem>
+                    <listitem><para>Style de code</para></listitem>
+                    <listitem><para>Documentation</para></listitem>
                 </itemizedlist>
             </para>
         </sect2>
@@ -42,7 +31,7 @@
             <title>Général</title>
 
             <para>
-                Pour les fichiers contenant uniquement du code PHP, le tag de fermeture (&quot;?&gt;&quot;) n'est jamais permis. Il n'est pas requis par PHP. Ne pas l'inclure permet de prévenir les problèmes liés à l'injection accidentelle d'espaces blancs dans la sortie.
+                Pour les fichiers contenant uniquement du code PHP, le tag de fermeture ("?>") n'est jamais permis. Il n'est pas requis par PHP. Ne pas l'inclure permet de se prémunir les problèmes liés à l'injection accidentelle d'espaces blancs dans la sortie.
             </para>
 
             <para>
@@ -68,11 +57,11 @@
             <title>Terminaison de lignes</title>
 
             <para>
-                La terminaison de ligne est la terminaison standard pour les fichier textes UNIX. Les lignes doit finir seulement avec un &quot;linefeed&quot; (LF). Les linefeeds sont représentés comme 10 en ordinal, ou 0x0A en hexadecimal.
+                La terminaison de ligne est la terminaison standard pour les fichier textes UNIX. Les lignes doit finir seulement avec un "linefeed" (LF). Les linefeeds sont représentés comme 10 en ordinal, ou 0x0A en hexadecimal.
             </para>
 
             <para>
-                N'utilisez pas de retour chariots (CR) comme le font les Macintosh (0x0D)
+                N'utilisez pas de retour chariots (CR) comme le font les Macintosh (0x0D).
             </para>
 
             <para>
@@ -88,19 +77,19 @@
             <title>Classes</title>
 
             <para>
-                Le Zend Framework emploie une convention de nommage des classes où les noms des classes mênent directement dans le(s) répertoire(s) dans lesquels elles sont stockées. Le répertoire racine du Zend Framework est le répertoire &quot;Zend&quot;, dans lequel toutes les classes sont stockées de façon hiérarchique.
+                Le Zend Framework emploie une convention de nommage des classes où les noms des classes mênent directement dans les répertoires dans lesquels elles sont stockées. Le répertoire racine du Zend Framework est le répertoire "Zend", dans lequel toutes les classes sont stockées de façon hiérarchique.
             </para>
 
             <para>
-                Les noms de classes ne peuvent contenir que des caractères alphanumériques. Les nombres sont autorisés, mais déconseillés. Les tirets bas (&quot;_&quot;) ne sont autorisés que pour être utilisés comme séparateur de chemin -- le nom de fichier &quot;Zend/Db/Table.php&quot; doit mener à la classe appelée &quot;Zend_Db_Table&quot;.
+                Les noms de classes ne peuvent contenir que des caractères alphanumériques. Les nombres sont autorisés, mais déconseillés. Les tirets bas ("_") ne sont autorisés que pour être utilisés comme séparateur de chemin -- le nom de fichier "Zend/Db/Table.php" doit mener à la classe appelée "Zend_Db_Table".
             </para>
 
             <para>
-                Si un nom de classe comprend plus d'un mot, la première lettre de chaque nouveau mot doit être mis en majuscule. La mise en majuscule de lettres successives n'est pas autorisée, c'est-à-dire qu'une classe &quot;Zend_PDF&quot; est interdit alors que &quot;Zend_Pdf&quot; est autorisé.
+                Si un nom de classe comprend plus d'un mot, la première lettre de chaque nouveau mot doit être mis en majuscule. La mise en majuscule de lettres successives n'est pas autorisée, c'est-à-dire qu'une classe "Zend_PDF" est interdit alors que "Zend_Pdf" est autorisé.
             </para>
 
             <para>
-                Les classes du Zend Framework dont Zend ou les compagnies partenaires participantes sont les auteurs et qui sont distribuées avec le Framework doivent toujours commencer par &quot;Zend_&quot; et doivent être stockée dans le répertoire &quot;Zend&quot; en respectant la hiérarchie.
+                Les classes du Zend Framework dont Zend ou les compagnies partenaires participantes sont les auteurs et qui sont distribuées avec le Framework doivent toujours commencer par "Zend_" et doivent être stockée dans le répertoire "Zend" en respectant la hiérarchie.
             </para>
 
             <para>
@@ -113,7 +102,7 @@ Zend_View
 Zend_View_Helper]]>
                 </programlisting>
 
-                <emphasis>IMPORTANT :</emphasis> le code qui opère avec le Framework mais qui n'en fait par partie, c'est-à-dire le code écrit par un utilisateur et pas Zend ou une des entreprises partenaires, ne doivent jamais commencer par &quot;Zend_&quot;.
+                <emphasis>IMPORTANT :</emphasis> le code qui opère avec le Framework mais qui n'en fait par partie, c'est-à-dire le code écrit par un utilisateur et pas Zend ou une des entreprises partenaires, ne doivent jamais commencer par "Zend_".
             </para>
         </sect2>
 
@@ -121,7 +110,7 @@ Zend_View_Helper]]>
             <title>Interfaces</title>
 
             <para>
-                Les interfaces doivent suivrent les même conventions que les autres classes (cf. ci-dessus), cependant elles doivent finir par le mot &quot;Interface&quot; comme le montre ces exemples :
+                Les interfaces doivent suivre les mêmes conventions que les autres classes (cf. ci-dessus), cependant elles doivent finir par le mot "Interface" comme le montre ces exemples :
                 <programlisting role="php"><![CDATA[
 Zend_Log_Adapter_Interface
 Zend_Controller_Dispatcher_Interface]]>
@@ -130,14 +119,14 @@ Zend_Controller_Dispatcher_Interface]]>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.filenames">
-            <title>Noms de fichier</title>
+            <title>Noms de fichiers</title>
 
             <para>
-                Pour tous les autres fichiers, seuls des caractères alphanumériques, tirets bas et tirets demi-cadratin (&quot;-&quot;) sont autorisés. Les espaces et les caractères spéciaux sont interdits.
+                Pour tous les autres fichiers, seuls des caractères alphanumériques, tirets bas et tirets demi-cadratin ("-") sont autorisés. Les espaces et les caractères spéciaux sont interdits.
             </para>
 
             <para>
-                Tout fichier contenant du code PHP doit se terminer par l'extension &quot;.php&quot;. Ces exemples montrent des noms de fichiers acceptables pour contenir les noms de classes issus des exemples ci-dessus:
+                Tout fichier contenant du code PHP doit se terminer par l'extension ".php". Ces exemples montrent des noms de fichiers acceptables pour contenir les noms de classes issus des exemples ci-dessus :
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
 
@@ -158,7 +147,7 @@ Zend/View/Helper/FormRadio.php]]>
             </para>
 
             <para>
-                Les noms de fonctions doivent toujours commencer avec une lettre en minuscule. Quand un nom de fonction est composé de plus d'un seul mot, la première lettre de chaque mot doit être mise en majuscule. C'est ce que l'on apelle communément la méthode &quot;studlyCaps&quot; ou &quot;camelCaps&quot;.
+                Les noms de fonctions doivent toujours commencer avec une lettre en minuscule. Quand un nom de fonction est composé de plus d'un seul mot, la première lettre de chaque mot doit être mise en majuscule. C'est ce que l'on appelle communément la "notationCamel".
             </para>
 
             <para>
@@ -177,11 +166,15 @@ widgetFactory()]]>
             </para>
 
             <para>
-                Pour la programmation orientée objet, les accesseurs aux objets doivent toujours être préfixés par soit &quot;get&quot; soit &quot;set&quot;. Lorsque vous utilisez des motifs de conception, comme le Singleton ou la Fabrique, le nom de la méthode doit contenir le nom du motif pour permettre une reconnaissance plus simple et plus rapide du motif.
+                Pour la programmation orientée objet, les accesseurs aux objets doivent toujours être préfixés par soit "get" soit "set". Lorsque vous utilisez des motifs de conception, comme le Singleton ou la Fabrique, le nom de la méthode doit contenir le nom du motif pour permettre une reconnaissance plus simple et plus rapide du motif.
             </para>
 
             <para>
-                Les fonctions à portée globale (&quot;les fonctions flottantes &quot;) sont autorisées mais déconseillées. Il est recommandé de mettre ces fonctions dans des classes statiques.
+                Pour des méthodes d'objet qui sont déclarées avec la construction "private" ou "protected", le premier caractère du nom variable doit être un tiret bas simple ("_"). C'est la seule utilisation autorisé d'un tiret bas dans un nom de méthode. Les méthodes déclarées "public" ne devraient jamais commencer par un tiret bas.
+            </para>
+
+            <para>
+                Les fonctions à portée globale ("les fonctions flottantes") sont autorisées mais déconseillées. Il est recommandé de mettre ces fonctions dans des classes statiques.
             </para>
         </sect2>
 
@@ -193,15 +186,15 @@ widgetFactory()]]>
             </para>
 
             <para>
-                Pour les variables membres de classe qui sont déclarées comme &quot;private&quot; ou &quot;protected&quot;, le premier caractère du nom de la variable doit être un seul tiret bas. C'est le seul usage acceptable d'un tiret bas dans un nom de fonction. Les variables membres &quot;public&quot; ne devraient jamais commencer par un tiret bas.
+                Pour les variables membres de classe qui sont déclarées comme "private" ou "protected", le premier caractère du nom de la variable doit être un tiret bas simple ("_"). C'est la seule utilisation autorisé d'un tiret bas dans un nom de variable. Les variables membres "public" ne devraient jamais commencer par un tiret bas.
             </para>
 
             <para>
-                Tout comme les noms de fonction (cf la section 3.3 ci-dessus), les noms de variables doivent toujours commencer par un caractère en minuscule et suivre la convention de capitalisation de la méthode &quot;camelCaps&quot;
+                Tout comme les noms de fonction (cf la section 3.3 ci-dessus), les noms de variables doivent toujours commencer par un caractère en minuscule et suivre la convention de capitalisation de la "notationCamel".
             </para>
 
             <para>
-                La clarté est conseillée. Les variables devraient toujours être aussi claires que pratiques. Des noms de variables comme &quot;$i&quot; et &quot;$n&quot; sont déconseillé pour tout autre usage que les petites boucles. Si une boucle contient plus de 20 lignes de code, les variables pour les indices doivent avoir des noms descriptifs.
+                La clarté est conseillée. Les variables devraient toujours être aussi claires que pratiques. Des noms de variables comme "$i" et "$n" sont déconseillé pour tout autre usage que les petites boucles. Si une boucle contient plus de 20 lignes de code, les variables pour les indices doivent avoir des noms descriptifs.
             </para>
         </sect2>
 
@@ -217,7 +210,7 @@ widgetFactory()]]>
             </para>
 
             <para>
-                Les constantes doivent toujours être définies comme des membres d'une classe, en utilisant la construction &quot;const&quot;. Définir des constantes globales avec &quot;define&quot; est permis mais déconseillé.
+                Les constantes doivent toujours être définies comme des membres d'une classe, en utilisant la construction "const". Définir des constantes globales avec "define" est permis mais déconseillé.
             </para>
         </sect2>
     </sect1>
@@ -229,7 +222,7 @@ widgetFactory()]]>
             <title>Démarcation du code PHP</title>
 
             <para>
-                Les codes PHP doit toujours être délimité dans la forme complète, par les balises PHP standards :
+                Les codes PHP doivent toujours être délimités dans la forme complète, par les balises PHP standards :
                 <programlisting role="php"><![CDATA[
 <?php
 
@@ -260,7 +253,7 @@ $a = 'Example String';]]>
                 <title>Chaînes de caractères litérrales avec apostrophes</title>
 
                 <para>
-                    Lorsque qu'une chaîne litérrale contient des apostrophes, il est permis de les démarquer en utilisant les guillemets doubles Ceci est particulièrement conseillé pour les requêtes SQL :
+                    Lorsque qu'une chaîne litérrale contient des apostrophes, il est permis de les démarquer en utilisant les guillemets doubles. Ceci est particulièrement conseillé pour les requêtes SQL :
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
@@ -283,7 +276,7 @@ $greeting = "Bonjour {$name}, bienvenue!";]]>
                 </para>
 
                 <para>
-                    Pour des raison d'uniformité, cette forme n'est pas permise :
+                    Pour des raisons d'uniformité, cette forme n'est pas permise :
                     <programlisting role="php"><![CDATA[
 $greeting = "Bonjour ${name}, bienvenue!";]]>
                     </programlisting>
@@ -294,14 +287,14 @@ $greeting = "Bonjour ${name}, bienvenue!";]]>
                 <title>Concaténation de chaînes</title>
 
                 <para>
-                    Les chaînes peuvent êtres concaténées en utilisant l'opérateur &quot;.&quot;. Un espace doit toujours être ajouté avant, et après cet opérateur, cela permet d'améliorer la lisibilité:
+                    Les chaînes peuvent êtres concaténées en utilisant l'opérateur ".". Un espace doit toujours être ajouté avant, et après cet opérateur, cela permet d'améliorer la lisibilité :
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';]]>
                     </programlisting>
                 </para>
 
                 <para>
-                    Lors de la concaténation de chaînes avec l'opérateur &quot;.&quot;, il est permis de couper le segment en plusieurs lignes pour améliorer la lisibilité. Dans ces cas, chaque nouvelle ligne doit être remplie avec des espaces, de façon à aligner le &quot;.&quot; sous l'opérateur &quot;=&quot; :
+                    Lors de la concaténation de chaînes avec l'opérateur ".", il est permis de couper le segment en plusieurs lignes pour améliorer la lisibilité. Dans ces cas, chaque nouvelle ligne doit être remplie avec des espaces, de façon à aligner le "." sous l'opérateur "=" :
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
@@ -331,7 +324,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                 </para>
 
                 <para>
-                    Il est aussi permis de déclarer des tableaux indexés sur plusieurs lignes en utilisant la construction <code>array</code>. Dans ce cas, chaque nouvelle ligne doit être remplie par des espaces jusqu'à ce que cette ligne s'aligne, comme il est montré dans l'exemple ci-dessous :
+                    Il est aussi permis de déclarer des tableaux indexés sur plusieurs lignes en utilisant la construction <code>array</code>. Dans ce cas, chaque nouvelle ligne doit être remplie par des espaces jusqu'à ce que cette ligne s'aligne, comme il est montré dans l'exemple suivant :
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
@@ -363,7 +356,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                     Les classes doivent être nommées conformément aux conventions suivantes.
                 </para>
                 <para>
-                    L'accolade est toujours écrite dans la ligne sous le nom de la classe (forme &quot;one true brace&quot;).
+                    L'accolade est toujours écrite dans la ligne sous le nom de la classe (forme "one true brace").
                 </para>
                 <para>
                     Toutes les classes doivent avoir un bloc de documentation conforme aux standards PHPDocumentor.
@@ -375,7 +368,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                     Une seule classe par fichier PHP.
                 </para>
                 <para>
-                    Le placement de code additionnel dans un fichier de classe est permis, mais déconseillé. Dans ces fichier, deux lignes vides doivent séparer la classe du code PHP additionel.
+                    Le placement de code additionnel dans un fichier de classe est permis, mais déconseillé. Dans ces fichiers, deux lignes vides doivent séparer la classe du code PHP additionel.
                 </para>
                 <para>
                     Voici un exemple d'une déclaration de classe autorisée :
@@ -399,10 +392,10 @@ class SampleClass
                     Les variables membres doivent être nommées en respectant les conventions de nommage.
                 </para>
                 <para>
-                    Toute variable déclarée dans une classe doit être listée en haut de cette classe, avant toute déclaration de fonction.
+                    Toute variable déclarée dans une classe doit être listée en haut de cette classe, avant toute déclaration de méthode.
                 </para>
                 <para>
-                    La construction <code>var</code> n'est pas permise. Les variables membres déclarent toujours leur visibilité en utilisant la construction <code>private</code>, <code>protected</code>, ou <code>public</code>. L'accès direct à ces variables membres en le rendant publiques est permis mais déconseillé. Il est préférable d'utiliser des accesseurs (set/get).
+                    La construction <code>var</code> n'est pas permise. Les variables membres déclarent toujours leur visibilité en utilisant la construction <code>private</code>, <code>protected</code>, ou <code>public</code>. L'accès direct à ces variables membres en les rendant publiques est permis mais déconseillé. Il est préférable d'utiliser des accesseurs (set/get).
                 </para>
             </sect3>
         </sect2>
@@ -420,7 +413,7 @@ class SampleClass
                     Les fonctions internes aux classes doivent toujours déclarer leur visibilité en utilisant la construction <code>private</code>, <code>protected</code>, ou <code>public</code>.
                 </para>
                 <para>
-                    Tout comme les classes, l'accolade ouvrante est toujours écrite sous le nom de la fonction (form &quot;one true brace&quot;). Il n'y a pas d'espace entre le nom de la fonction et les parenthèses des arguments. Il n'y a pas d'espace entre la parenthèse fermante et l'accolade.
+                    Tout comme les classes, l'accolade ouvrante est toujours écrite sous le nom de la fonction (form "one true brace"). Il n'y a pas d'espace entre le nom de la fonction et les parenthèses des arguments. Il n'y a pas d'espace entre la parenthèse fermante et l'accolade.
                 </para>
                 <para>
                     Les fonctions globales sont fortement déconseillées.
@@ -482,7 +475,7 @@ threeArguments(1, 2, 3);]]>
                     L'appel par référence est interdit. Référez vous à la section sur la déclaration de fonctions pour la méthode correcte de passage des argument par référence.
                 </para>
                 <para>
-                    Pour les fonctions dont les arguments peuvent être des tableaux, l'appel à la fonction doit inclure la construction &quot;array&quot; et peut être divisé en plusieurs ligne pour améliorer la lecture. Dans ces cas, les standards d'écriture de tableaux s'appliquent aussi :
+                    Pour les fonctions dont les arguments peuvent être des tableaux, l'appel à la fonction doit inclure la construction "array" et peut être divisé en plusieurs ligne pour améliorer la lecture. Dans ces cas, les standards d'écriture de tableaux s'appliquent aussi :
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
 
@@ -518,7 +511,7 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    Pour les instruction &quot;if&quot; qui incluent &quot;elseif&quot; ou &quot;else&quot;, le formatage doit être comme le montre ces exemples :
+                    Pour les instruction "if" qui incluent "elseif" ou "else", le formatage doit être comme le montre les exemples suivants :
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
     $a = 2;
@@ -535,11 +528,11 @@ if ($a != 2) {
    $a = 7;
 }]]>
                     </programlisting>
-                    PHP permet que ces instructions soient écrites sans accolades dans certaines circonstances. La convention de codage ne fait pas de différentiation et toutes les instructions &quot;if&quot;, &quot;elseif&quot; et &quot;else&quot; doivent utiliser des accolades.
+                    PHP permet que ces instructions soient écrites sans accolades dans certaines circonstances. La convention de codage ne fait pas de différentiation et toutes les instructions "if", "elseif" et "else" doivent utiliser des accolades.
                 </para>
 
                 <para>
-                    L'utilisation de la construction &quot;elseif&quot; est permise mais fortement déconseillée au profit de la combinaison &quot;else if&quot;.
+                    L'utilisation de la construction "elseif" est permise mais fortement déconseillée au profit de la combinaison "else if".
                 </para>
             </sect3>
 
@@ -547,11 +540,11 @@ if ($a != 2) {
                 <title>Switch</title>
 
                 <para>
-                    Les instructions de contrôle avec &quot;switch&quot; ne doivent avoir qu'un seul espace avant la parenthèse ouvrante de l'instruction conditionnelle, et aussi un seul espace après la parenthèse fermante.
+                    Les instructions de contrôle avec "switch" ne doivent avoir qu'un seul espace avant la parenthèse ouvrante de l'instruction conditionnelle, et aussi un seul espace après la parenthèse fermante.
                 </para>
 
                 <para>
-                    Tout le contenu à l'intérieur de l'instruction &quot;switch&quot; doit être indenté avec 4 espaces. Le contenu sous chaque &quot;case&quot; doit être indenté avec encore 4 espaces supplémentaires.
+                    Tout le contenu à l'intérieur de l'instruction "switch" doit être indenté avec 4 espaces. Le contenu sous chaque "case" doit être indenté avec encore 4 espaces supplémentaires.
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -584,11 +577,11 @@ switch ($numPeople) {
                 <title>Format de la documentation</title>
 
                 <para>
-                    Tous les blocs de documentation (&quot;docblocks&quot;) doivent être compatible avec le format phpDocumentor. La description du format phpDocumentor n'est pas du ressort de ce document. Pour plus d'information, visitez <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink>
+                    Tous les blocs de documentation ("docblocks") doivent être compatible avec le format phpDocumentor. La description du format phpDocumentor n'est pas du ressort de ce document. Pour plus d'information, visitez <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink>
                 </para>
 
                 <para>
-                    Tout le fichier de code source écrit pour le Zend Framework ou qui opère avec ce framework doit contenir un docblock du fichier, en haut de chaque fichier, et un docblock de classe immédiatement au dessus de chaque classe. Ci-dessous vous trouverez des exemples de tels docblocs.
+                    Tous les fichiers de code source écrits pour le Zend Framework ou qui opèrent avec ce framework doivent contenir un docblock du fichier, en haut de chaque fichier, et un docblock de classe immédiatement au dessus de chaque classe. Ci-dessous vous trouverez des exemples de tels docblocs.
                 </para>
             </sect3>
 
@@ -650,11 +643,11 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    Il n'est pas nécessaire d'utiliser la balise &quot;@access&quot; parce que le niveau d'accès est déjà connu avec les construtions &quot;public&quot;, &quot;private&quot;, &quot;protected&quot; utilisée pour déclarer la fonction.
+                    Il n'est pas nécessaire d'utiliser la balise "@access" parce que le niveau d'accès est déjà connu avec les construtions "public", "private", "protected" utilisée pour déclarer la fonction.
                 </para>
 
                 <para>
-                    Si une fonction/méthode peut lancer une exception, utilisez &quot;@throws&quot; :
+                    Si une fonction/méthode peut lancer une exception, utilisez "@throws" :
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [description]
 ]]>
