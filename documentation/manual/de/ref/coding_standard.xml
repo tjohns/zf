@@ -7,8 +7,8 @@
             <title>Geltungsbereich</title>
 
             <para>
-                Dieses Dokument bietet Richtlinien und Ressourcen für Entwickler und Teams welche entwickeln
-                oder am Zend Framework entwickeln. Die enthaltenen Maßnahmen sind:
+                Dieses Dokument bietet Code Richtlinien für Entwickler und Teams welche am
+                Zend Framework entwickeln. Die enthaltenen Maßnahmen sind:
 
                 <itemizedlist>
                     <listitem>
@@ -194,7 +194,7 @@ Zend/View/Helper/FormRadio.php]]>
             <para>
                 Funktionsnamen müssen immer mit einem Kleinbuchstaben anfangen. Wenn Funktionsnamen aus mehr als
                 einem Wort bestehen, muß der erste Buchstabe jeden Wortes großgeschrieben werden. Das wird
-                normalerweise "camelCaps" Methode genannt.
+                normalerweise "camelCase" Formatierung genannt.
             </para>
 
             <para>
@@ -220,6 +220,13 @@ widgetFactory()]]>
                 Factory Pattern, sollte der Name der Methode den Namen des Pattern enthalten wo es
                 praktikabel ist, um das Pattern schneller begreifbar zu machen.
             </para>
+            
+            <para>
+                 Für Methoden in Objekten die mit dem "private" oder "protected" Konstrukt deklariert
+                 sind, muß das erste Zeichen des variablen Namens ein einzelner Unterstrich sein. Das
+                 ist die einzige akzeptable Verwendung von einem Unterstrich im Namen einer Methode.
+                 Methoden die als "public" deklariert sind dürfen nie mit einem Unterstrich beginnen.
+            </para>
 
             <para>
                 Funktionen im globalen Bereich ("floating functions") sind gestattet aber es wird von Ihnen
@@ -239,7 +246,7 @@ widgetFactory()]]>
             <para>
                 Für Klassenvariablen die mit dem "private" oder "protected" Konstrukt deklariert werden,
                 muß das erste Zeichen des Funktionsnamens ein einzelner Unterstrich sein. Das ist die
-                einzige akzeptierte Verwendung eines Unterstriches in einem Funktionsnamen. Klassenvariablen
+                einzige akzeptierte Verwendung eines Unterstriches in einem variablen Namen. Klassenvariablen
                 welche als "public" deklariert werden dürfen nie mit einem Unterstrich beginnen.
             </para>
 
@@ -359,7 +366,7 @@ $greeting = "Hallo ${name}, willkommen zurück!";]]>
                     immer vor und nach dem "." Operator hinzugefügt werden um die Lesbarkeit zu erhöhen:
 
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';]]>
                     </programlisting>
                 </para>
 
@@ -475,12 +482,12 @@ class SampleClass
                     Klassenvariablen müssen nach den folgenden Variablen-Benennungs-Konventionen benannt werden.
                 </para><para>
                     Jede Variable die in der Klasse deklariert wird muß am Beginn der Klasse ausgelistet werden,
-                    bevor irgendeine Funktion deklariert wird.
+                    bevor irgendeine Methode deklariert wird.
                 </para><para>
                     Das <code>var</code> Konstrukt ist nicht gestattet.  Klassenvariablen definieren Ihre
                     Sichtbarkeit durch die Verwendung des <code>private</code>, <code>protected</code>,
                     oder <code>public</code> Konstrukts. Der direkte Zugriff auf Klassenvariablen durch das
-                    öffentlich machen ist gestattet aber es wird davon abgeraten da hierfür Zugriffsvariablen
+                    öffentlich machen ist gestattet aber es wird davon abgeraten da hierfür Zugriffsmethoden
                     verwendet werden sollten (set/get).
                 </para>
             </sect3>
@@ -495,7 +502,7 @@ class SampleClass
                 <para>
                     Funktionen müssen nach der folgenden Namenskonvention benannt werden.
                 </para><para>
-                    Funktionen innerhalb von Klassen müssen immer Ihre Sichtbarkeit durch Verwendung einer der
+                    Methoden innerhalb von Klassen müssen immer Ihre Sichtbarkeit durch Verwendung einer der
                     <code>private</code>, <code>protected</code>, oder <code>public</code> Konstrukte definieren.
                 </para><para>
                     Wie bei Klassen, wird die Klassem immer in der Zeile unterhalb des Funktionsnamens geschrieben
@@ -526,7 +533,7 @@ class Foo
                 </para>
 
                 <para>
-                    <emphasis>NOTIZ:</emphasis> Das Übergeben durch Referenz ist nur in der Deklaration der Funktion
+                    <emphasis>NOTIZ:</emphasis> Die Übergabe per Referenz ist nur in der Deklaration der Funktion
                     gestattet:
 
                     <programlisting role="php"><![CDATA[
@@ -644,8 +651,8 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    Für "if" Anweisungen die "elseif" oder "else" beinhalten, muß die Formatierung wie in den
-                    folgenden Beispielen stattfinden:
+                    Für "if" Anweisungen die "elseif" oder "else" beinhalten, sind die Konventionen
+                    der Formatierung wie in den folgenden Beispielen gezeigt:
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -730,7 +737,7 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    Alle Sourcecode Datei welche für den Zend Framework geschrieben werden, oder welche mit
+                    Alle Sourcecode Dateien welche für Zend Framework geschrieben werden, oder welche mit
                     dem Framework arbeiten müssen einen "file-level" Docblock am Beginn jeder Datei und einen
                     "class-level" Docblock direkt überhalb jeder Klasse enthalten. Anbei sind Beispiele solcher
                     Docblocks.
