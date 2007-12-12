@@ -19,41 +19,25 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_View_Helper_Placeholder */
-require_once 'Zend/View/Helper/Placeholder.php';
+/** Zend_View_Helper_Placeholder_Container_Standalone */
+require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 
 /**
  * Helper for setting and retrieving title element for HTML head
  *
- * @uses       Zend_View_Helper_Placeholder
+ * @uses       Zend_View_Helper_container
  * @package    Zend_View
  * @subpackage Helpers
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
-class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder
+class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_Standalone
 {
     /**
-     * Placeholder container for title
-     * @var Zend_View_Helper_Placeholder_Container_Abstract
+     * Registry key for placeholder
+     * @var string
      */
-    protected $_placeholder;
-
-    /**
-     * Constructor
-     *
-     * Retrieve container object for this helper and set in 
-     * {@link $_placeholder}; set prefix/postfix for container.
-     * 
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->_placeholder = $this->_registry->getContainer(__CLASS__);
-        $this->_placeholder->setPrefix('<title>')
-                           ->setPostfix('</title>');
-    }
+    protected $_regKey = 'Zend_View_Helper_HeadTitle';
 
     /**
      * Retrieve placeholder for title element and optionally set state
@@ -63,20 +47,26 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder
      * @param  string $separator
      * @return Zend_View_Helper_HeadTitle
      */
-    public function headTitle($title = null, $setType = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $separator = null)
+    public function headTitle($title = null, $setType = Zend_View_Helper_Placeholder_Container_Abstract::APPEND)
     {
         if ($title) {
             if ($setType == Zend_View_Helper_Placeholder_Container_Abstract::SET) {
-                $this->_placeholder->set($title);
+                $this->set($title);
+            } elseif ($setType == Zend_View_Helper_Placeholder_Container_Abstract::PREPEND) {
+                $this->prepend($title);
             } else {
-                $this->_placeholder->append($title);
+                $this->append($title);
             }
         }
         
-        if ($separator) {
-            $this->_placeholder->setSeparator($separator);
-        }
-        
-        return $this->_placeholder;
+        return $this;
+    }
+
+    public function toString($indent = null)
+    {
+        $this->setPrefix('<title>')
+             ->setPostfix('</title>');
+
+        return parent::toString();
     }
 }

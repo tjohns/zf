@@ -11,8 +11,11 @@ require_once "PHPUnit/Framework/TestSuite.php";
 /** Zend_View_Helper_HeadTitle */
 require_once 'Zend/View/Helper/HeadTitle.php';
 
-/** Zend_View */
-require_once 'Zend/View.php';
+/** Zend_View_Helper_Placeholder_Registry */
+require_once 'Zend/View/Helper/Placeholder/Registry.php';
+
+/** Zend_Registry */
+require_once 'Zend/Registry.php';
 
 /**
  * Test class for Zend_View_Helper_HeadTitle.
@@ -54,7 +57,7 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $regKey = Zend_View_Helper_Placeholder::REGISTRY_KEY;
+        $regKey = Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY;
         if (Zend_Registry::isRegistered($regKey)) {
             $registry = Zend_Registry::getInstance();
             unset($registry[$regKey]);
@@ -74,16 +77,21 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         unset($this->helper);
     }
 
-    public function testNamespaceRegisteredInPlaceholderAfterInstantiation()
+    public function testNamespaceRegisteredInPlaceholderRegistryAfterInstantiation()
     {
-        $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
+        $registry = Zend_View_Helper_Placeholder_Registry::getRegistry();
+        if ($registry->containerExists('Zend_View_Helper_HeadTitle')) {
+            $registry->deleteContainer('Zend_View_Helper_HeadTitle');
+        }
+        $this->assertFalse($registry->containerExists('Zend_View_Helper_HeadTitle'));
+        $helper = new Zend_View_Helper_HeadTitle();
         $this->assertTrue($registry->containerExists('Zend_View_Helper_HeadTitle'));
     }
 
-    public function testHeadTitleReturnsPlaceholderContainer()
+    public function testHeadTitleReturnsObjectInstance()
     {
         $placeholder = $this->helper->headTitle();
-        $this->assertTrue($placeholder instanceof Zend_View_Helper_Placeholder_Container_Abstract);
+        $this->assertTrue($placeholder instanceof Zend_View_Helper_HeadTitle);
     }
 
     public function testCanSetTitleViaHeadTitle()
@@ -99,17 +107,17 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         $this->assertContains('FooBar', $placeholder->toString());
     }
 
-    public function testCanSetSeparatorViaHeadTitle()
+    public function testCanPrependTitleViaHeadTitle()
     {
         $placeholder = $this->helper->headTitle('Foo');
-        $placeholder = $this->helper->headTitle('Bar', 'APPEND', ' :: ');
-        $this->assertContains('Foo :: Bar', $placeholder->toString());
+        $placeholder = $this->helper->headTitle('Bar', 'PREPEND');
+        $this->assertContains('BarFoo', $placeholder->toString());
     }
 
     public function testReturnedPlaceholderToStringContainsFullTitleElement()
     {
         $placeholder = $this->helper->headTitle('Foo');
-        $placeholder = $this->helper->headTitle('Bar', 'APPEND', ' :: ');
+        $placeholder = $this->helper->headTitle('Bar', 'APPEND')->setSeparator(' :: ');
         $this->assertEquals('<title>Foo :: Bar</title>', $placeholder->toString());
     }
 }
