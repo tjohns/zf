@@ -26,6 +26,7 @@ require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 /**
  * Helper for setting and retrieving title element for HTML head
  *
+ * @todo       Add PREPEND support
  * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
  * @subpackage Helpers
@@ -118,6 +119,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     /**
      * Set new script item in object
      * 
+     * @todo   Support PREPEND
      * @param  int|string $index 
      * @param  string $scriptOrSourceFile 
      * @param  string $typeOrAttrs 
@@ -157,6 +159,7 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     /**
      * End capture action and store
      * 
+     * @todo   Support PREPEND
      * @return void
      */
     public function captureEnd()
@@ -182,8 +185,10 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * 
      * @return string
      */
-    public function toString()
+    public function toString($indent = null)
     {
+        $indent   = ($indent != null) ? $indent : $this->_indent;
+        $indent   = (is_int($indent)) ? str_repeat(' ', $indent) : $indent;
         $useCdata = $this->view->doctype()->isXhtml() ? true : false;
         $output   = '';
         
@@ -207,15 +212,15 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             
             if ($content) {
                 if ($useCdata) {
-                    $output .= PHP_EOL . $this->_indent . '//<![CDATA[' . PHP_EOL . $this->_indent . $content . PHP_EOL . $this->_indent . '//]]>' . PHP_EOL . $this->_indent;
+                    $output .= PHP_EOL . $indent . '//<![CDATA[' . PHP_EOL . $indent . $content . PHP_EOL . $indent . '//]]>' . PHP_EOL . $indent;
                 } else {
                     $output .= $content;
                 }
             }
             
-            $output .= '</script>' . PHP_EOL . $this->_indent;
+            $output .= '</script>' . PHP_EOL . $indent;
         }
         
-        return $output;
+        return trim($output);
     }
 }
