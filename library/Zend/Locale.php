@@ -885,8 +885,42 @@ class Zend_Locale {
         $quest['yesabbr'] = $yes[1];
         $quest['no']      = $no[0];
         $quest['noabbr']  = $no[1];
+        $quest['yesexpr'] = $this->_getRegex($quest['yes']);
+        $quest['noexpr']  = $this->_getRegex($quest['no']);
 
         return $quest;
+    }
+
+
+    /**
+     * Internal function for creating a regex
+     *
+     * @param string  $input
+     * @return string
+     */
+    private function _getRegex($input)
+    {
+        if (empty($input)) {
+            return false;
+        }
+        $regex = "^(";
+        $one = null;
+        if (strlen($input) > 2) {
+            $one = true;
+        }
+        foreach (str_split($input, 1) as $char) {
+            $regex .= "[" . strtolower($char);
+            $regex .= strtoupper($char) . "]";
+            if ($one === true) {
+                $one = false;
+                $regex .= "(";
+            }
+        }
+        if ($one === false) {
+            $regex .= ")";
+        }
+        $regex .= "?)";
+        return $regex;
     }
 
 
