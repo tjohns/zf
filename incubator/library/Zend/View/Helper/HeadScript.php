@@ -1,17 +1,61 @@
 <?php
 
-class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container_Abstract 
-{
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to version 1.0 of the Zend Framework
+ * license, that is bundled with this package in the file LICENSE.txt, and
+ * is available through the world-wide-web at the following URL:
+ * http://framework.zend.com/license/new-bsd. If you did not receive
+ * a copy of the Zend Framework license and are unable to obtain it
+ * through the world-wide-web, please send a note to license@zend.com
+ * so we can mail you a copy immediately.
+ *
+ * @package    Zend_View
+ * @subpackage Helpers
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Placeholder.php 7078 2007-12-11 14:29:33Z matthew $
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 
-    const FILE = 'FILE';
+/** Zend_View_Helper_Placeholder_Container_Standalone */
+require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
+
+/**
+ * Helper for setting and retrieving title element for HTML head
+ *
+ * @uses       Zend_View_Helper_Placeholder_Container_Standalone
+ * @package    Zend_View
+ * @subpackage Helpers
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container_Standalone
+{
+    /**#@+
+     * Script type contants
+     * @const string
+     */
+    const FILE   = 'FILE';
     const SCRIPT = 'SCRIPT';
+    /**#@-*/
     
-    protected $_captureTypeOrAttrs = null;
-    
-    protected $_view = null;
+    /**
+     * Registry key for placeholder
+     * @var string
+     */
+    protected $_regKey = 'Zend_View_Helper_HeadScript';
 
     /**
-     * headScript is required by the View harness, view's access this object via this method.
+     * Capture type and/or attributes (used for hinting during capture)
+     * @var string
+     */
+    protected $_captureTypeOrAttrs = null;
+    
+    /**
+     * Return headScript object
      *
      * @return Zend_View_Helper_HeadScript
      */
@@ -19,36 +63,67 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     {
         return $this;
     }
-    
-    public function setView($view)
-    {
-        $this->_view = $view;
-    }
-    
+   
+    /**
+     * Append script file to object
+     * 
+     * @param  string $sourceFile 
+     * @param  string $type 
+     * @return Zend_View_Helper_HeadScript
+     */
     public function append($sourceFile, $type = 'text/javascript')
     {
-        $this->_offsetSet($this->nextIndex(), $script, $type, self::FILE);
-        return $this;
+        return $this->_offsetSet($this->nextIndex(), $script, $type, self::FILE);
     }
     
+    /**
+     * Append script to object
+     * 
+     * @param  string $script 
+     * @param  string $type 
+     * @return Zend_View_Helper_HeadScript
+     */
     public function appendScript($script, $type = 'text/javascript')
     {
         $this->_offsetSet($this->nextIndex(), $script, $type, self::SCRIPT);
         return $this;
     }
     
+    /**
+     * Set script item in object
+     * 
+     * @param  string $index 
+     * @param  string $sourceFile 
+     * @param  string $typeOrAttrs 
+     * @return Zend_View_Helper_HeadScript
+     */
     public function offsetSet($index, $sourceFile, $typeOrAttrs = 'text/javascript')
     {
-        $this->_offsetSet($index, $script, $typeOrAttrs, self::FILE);
-        return $this;
+        return $this->_offsetSet($index, $script, $typeOrAttrs, self::FILE);
     }
     
+    /**
+     * Set script item in object
+     * 
+     * @param  string $index 
+     * @param  string $script 
+     * @param  string $typeOrAttrs 
+     * @return Zend_View_Helper_HeadScript
+     */
     public function offsetSetScript($index, $script, $typeOrAttrs = 'text/javascript')
     {
-        $this->_offsetSet($index, $sourceFile, $typeOrAttrs, self::SCRIPT);
-        return $this;
+        return $this->_offsetSet($index, $sourceFile, $typeOrAttrs, self::SCRIPT);
     }
     
+    /**
+     * Set new script item in object
+     * 
+     * @param  int|string $index 
+     * @param  string $scriptOrSourceFile 
+     * @param  string $typeOrAttrs 
+     * @param  string $mode 
+     * @return Zend_View_Helper_HeadScript
+     */
     protected function _offsetSet($index, $scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
     {
         $valueArray = array(
@@ -66,12 +141,24 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         return $this;
     }
     
+    /**
+     * Start capture action
+     * 
+     * @param  mixed $captureType 
+     * @param  string $typeOrAttrs 
+     * @return void
+     */
     public function captureStart($captureType = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $typeOrAttrs = 'text/javascript')
     {
         $this->_captureTypeOrAttrs = $typeOrAttrs;
         return parent::captureStart($captureType);
     }
     
+    /**
+     * End capture action and store
+     * 
+     * @return void
+     */
     public function captureEnd()
     {
         $content = ob_get_clean();
@@ -90,25 +177,17 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         }
     }
     
-    // make sure this method of this object is not publically available.
-    protected function exchangeArray($input)
-    {
-        return parent::exchangeArray($input);
-    }
-    
-    
+    /**
+     * Render as string
+     * 
+     * @return string
+     */
     public function toString()
     {
-        $useCdata = false;
+        $useCdata = $this->view->doctype()->isXhtml() ? true : false;
+        $output   = '';
         
-        if (array_key_exists('doctype', $this->_view->getHelpers())) {
-            $useCdata = (stristr($this->_view->getHelper('doctype')->getDoctype(), 'xhtml')) ? true : false;
-        }
-        
-        $output = '';
-        
-        foreach ($this->_scripts as $script) {
-            
+        foreach ($this as $script) {
             $output .= '<script ';
             
             $content = null;
@@ -135,10 +214,8 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             }
             
             $output .= '</script>' . PHP_EOL . $this->_indent;
-            
         }
         
         return $output;
     }
-
 }
