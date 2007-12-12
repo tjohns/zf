@@ -14,9 +14,6 @@ require_once 'Zend/View/Helper/HeadTitle.php';
 /** Zend_View */
 require_once 'Zend/View.php';
 
-/** Zend_Controller_Front */
-require_once 'Zend/Controller/Front.php';
-
 /**
  * Test class for Zend_View_Helper_HeadTitle.
  *
@@ -57,9 +54,13 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $regKey = Zend_View_Helper_Placeholder::REGISTRY_KEY;
+        if (Zend_Registry::isRegistered($regKey)) {
+            $registry = Zend_Registry::getInstance();
+            unset($registry[$regKey]);
+        }
         $this->basePath = dirname(__FILE__) . '/_files/modules';
         $this->helper = new Zend_View_Helper_HeadTitle();
-        Zend_Controller_Front::getInstance()->resetInstance();
     }
 
     /**
@@ -73,54 +74,44 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         unset($this->helper);
     }
 
-    public function testHelperIsHeadTitle()
+    public function testNamespaceRegisteredInPlaceholderAfterInstantiation()
     {
-        $this->assertEquals(get_class($this->helper), 'Zend_View_Helper_HeadTitle');
+        $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
+        $this->assertTrue($registry->containerExists('Zend_View_Helper_HeadTitle'));
     }
-    
-    /**
-     * @return void
-     */
-    public function testToStringASingleValue()
-    {
-        $this->helper['foo'] = 'bar';
-        $this->helper['bar'] = 'baz';
-        $this->assertEquals('bar', $this->helper['foo']);
-        $this->assertEquals('baz', $this->helper['bar']);
 
-        $this->helper->set('foo');
-        $this->assertEquals(1, count($this->helper));
-        $this->assertEquals('<title>foo</title>', $this->helper->toString());
-    }
-    
-    public function testToStringCalledFromHelperMethod()
+    public function testHeadTitleReturnsPlaceholderContainer()
     {
-        $this->helper->headTitle('my title');
-        $this->assertEquals('<title>my title</title>', $this->helper->toString());
+        $placeholder = $this->helper->headTitle();
+        $this->assertTrue($placeholder instanceof Zend_View_Helper_Placeholder_Container_Abstract);
     }
-    
-    public function testToStringPrefixPostfixSeparatorCalledFromHelperMethodWithSingleTitle()
+
+    public function testCanSetTitleViaHeadTitle()
     {
-        $this->helper->headTitle('my title', 'NAME OF SITE >> ', ' >> SITE.COM', null, 'SET');
-        $this->assertEquals('<title>NAME OF SITE >> my title >> SITE.COM</title>', $this->helper->toString());
+        $placeholder = $this->helper->headTitle('Foo Bar', 'SET');
+        $this->assertContains('Foo Bar', $placeholder->toString());
     }
-    
-    public function testToStringPrefixPostfixSeparatorCalledFromHelperMethodWithMultiTitles()
+
+    public function testCanAppendTitleViaHeadTitle()
     {
-        $this->helper->append('title one');
-        $this->helper->headTitle('title two', 'NAME OF SITE ++ ', ' ++ SITE.COM', ' >> ');
-        $this->helper->append('title three');
-        $this->assertEquals('<title>NAME OF SITE ++ title one >> title two >> title three ++ SITE.COM</title>', $this->helper->toString());
+        $placeholder = $this->helper->headTitle('Foo');
+        $placeholder = $this->helper->headTitle('Bar');
+        $this->assertContains('FooBar', $placeholder->toString());
     }
-    
-    public function testToStringPrefixPostfixSeparatorCalledWithMultipleTitles()
+
+    public function testCanSetSeparatorViaHeadTitle()
     {
-        $this->helper->append('title 1');
-        $this->helper->append('title 2');
-        $this->helper->setSeparator(' >> ');
-        $this->assertEquals('<title>title 1 >> title 2</title>', $this->helper->toString());
+        $placeholder = $this->helper->headTitle('Foo');
+        $placeholder = $this->helper->headTitle('Bar', 'APPEND', ' :: ');
+        $this->assertContains('Foo :: Bar', $placeholder->toString());
     }
-    
+
+    public function testReturnedPlaceholderToStringContainsFullTitleElement()
+    {
+        $placeholder = $this->helper->headTitle('Foo');
+        $placeholder = $this->helper->headTitle('Bar', 'APPEND', ' :: ');
+        $this->assertEquals('<title>Foo :: Bar</title>', $placeholder->toString());
+    }
 }
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.
