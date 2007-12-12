@@ -357,7 +357,6 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
         $this->assertEquals($expectedValue, $value);
     }
     
-    
     /**
      * @return void
      */
@@ -371,6 +370,19 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
                         ->setPostfix('</li></ul>');
         $value = $this->container->__toString();
         $this->assertEquals('<ul><li>foo</li><li>bar</li><li>baz</li></ul>', $value);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPrependPushesValueToTopOfContainer()
+    {
+        $this->container['foo'] = 'bar';
+        $this->container->prepend('baz');
+
+        $expected = array('baz', 'foo' => 'bar');
+        $array = $this->container->getArrayCopy();
+        $this->assertSame($expected, $array);
     }
 }
 

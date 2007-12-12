@@ -106,6 +106,19 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     }
 
     /**
+     * Prepend a value to the top of the container
+     * 
+     * @param  mixed $value 
+     * @return void
+     */
+    public function prepend($value)
+    {
+        $values = $this->getArrayCopy();
+        array_unshift($values, $value);
+        $this->exchangeArray($values);
+    }
+
+    /**
      * Retrieve container value
      *
      * If single element registered, returns that element; otherwise,
