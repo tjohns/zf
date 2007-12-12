@@ -46,6 +46,10 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
      */
     public function setUp()
     {
+        $registry = Zend_Registry::getInstance();
+        if (isset($registry[Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY])) {
+            unset($registry[Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY]);
+        }
         $this->registry = new Zend_View_Helper_Placeholder_Registry();
     }
 
@@ -159,6 +163,29 @@ class Zend_View_Helper_Placeholder_RegistryTest extends PHPUnit_Framework_TestCa
         $this->registry->setContainerClass('Zend_View_Helper_Placeholder_RegistryTest_Container');
         $container = $this->registry->createContainer('foo');
         $this->assertTrue($container instanceof Zend_View_Helper_Placeholder_RegistryTest_Container);
+    }
+
+    public function testGetRegistryReturnsRegistryInstance()
+    {
+        $registry = Zend_View_Helper_Placeholder_Registry::getRegistry();
+        $this->assertTrue($registry instanceof Zend_View_Helper_Placeholder_Registry);
+    }
+
+    public function testGetRegistrySubsequentTimesReturnsSameInstance()
+    {
+        $registry1 = Zend_View_Helper_Placeholder_Registry::getRegistry();
+        $registry2 = Zend_View_Helper_Placeholder_Registry::getRegistry();
+        $this->assertSame($registry1, $registry2);
+    }
+
+    public function testGetRegistryRegistersWithGlobalRegistry()
+    {
+        $this->assertFalse(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY));
+        $registry = Zend_View_Helper_Placeholder_Registry::getRegistry();
+        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY));
+
+        $registered = Zend_Registry::get(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY);
+        $this->assertSame($registry, $registered);
     }
 }
 

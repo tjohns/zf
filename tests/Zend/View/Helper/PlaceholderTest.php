@@ -11,6 +11,9 @@ require_once "PHPUnit/Framework/TestSuite.php";
 /** Zend_View_Helper_Placeholder */
 require_once 'Zend/View/Helper/Placeholder.php';
 
+/** Zend_View_Helper_Placeholder_Registry */
+require_once 'Zend/View/Helper/Placeholder/Registry.php';
+
 /** Zend_Registry */
 require_once 'Zend/Registry.php';
 
@@ -61,7 +64,7 @@ class Zend_View_Helper_PlaceholderTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unset($this->placeholder);
-        Zend_Registry::getInstance()->offsetUnset(Zend_View_Helper_Placeholder::REGISTRY_KEY);
+        Zend_Registry::getInstance()->offsetUnset(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY);
     }
 
     /**
@@ -69,13 +72,13 @@ class Zend_View_Helper_PlaceholderTest extends PHPUnit_Framework_TestCase
      */
     public function testConstructorCreatesRegistryOffset()
     {
-        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY));
+        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY));
     }
 
     public function testMultiplePlaceholdersUseSameRegistry()
     {
-        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY));
-        $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
+        $this->assertTrue(Zend_Registry::isRegistered(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY));
+        $registry = Zend_Registry::get(Zend_View_Helper_Placeholder_Registry::REGISTRY_KEY);
         $this->assertSame($registry, $this->placeholder->getRegistry());
 
         $placeholder = new Zend_View_Helper_Placeholder();

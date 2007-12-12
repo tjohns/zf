@@ -19,6 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Registry */
+require_once 'Zend/Registry.php';
+
 /** Zend_View_Helper_Placeholder_Container_Abstract */
 require_once 'Zend/View/Helper/Placeholder/Container/Abstract.php';
 
@@ -36,6 +39,12 @@ require_once 'Zend/View/Helper/Placeholder/Container.php';
 class Zend_View_Helper_Placeholder_Registry
 {
     /**
+     * Zend_Registry key under which placeholder registry exists
+     * @const string
+     */
+    const REGISTRY_KEY = 'Zend_View_Helper_Placeholder_Registry';
+
+    /**
      * Default container class
      * @var string
      */
@@ -46,6 +55,23 @@ class Zend_View_Helper_Placeholder_Registry
      * @var array
      */
     protected $_items = array();
+
+    /**
+     * Retrieve or create registry instnace
+     * 
+     * @return void
+     */
+    public static function getRegistry()
+    {
+        if (Zend_Registry::isRegistered(self::REGISTRY_KEY)) {
+            $registry = Zend_Registry::get(self::REGISTRY_KEY);
+        } else {
+            $registry = new self();
+            Zend_Registry::set(self::REGISTRY_KEY, $registry);
+        }
+
+        return $registry;
+    }
 
     /**
      * createContainer 
