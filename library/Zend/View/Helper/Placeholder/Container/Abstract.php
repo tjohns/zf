@@ -42,6 +42,12 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     const APPEND = 'APPEND';
 
     /**
+     * Whether or not to prepend contents to placeholder
+     * @const string
+     */
+    const PREPEND = 'PREPEND';
+
+    /**
      * What text to prefix the placeholder with when rendering
      * @var string
      */
@@ -72,7 +78,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     protected $_captureLock = false;
 
     /**
-     * What type of capture (overwrite (set), append) to use
+     * What type of capture (overwrite (set), append, prepend) to use
      * @var string
      */
     protected $_captureType;
@@ -235,7 +241,7 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     /**
      * Start capturing content to push into placeholder
      *
-     * @param  int $type How to capture content into placeholder; append or set
+     * @param  int $type How to capture content into placeholder; append, prepend, or set
      * @return void
      * @throws Zend_View_Helper_Placeholder_Exception if nested captures detected
      */
@@ -273,6 +279,16 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
                     $this[$key] = $data;
                 } else {
                     $this->exchangeArray(array($data));
+                }
+                break;
+            case self::PREPEND:
+                if (null !== $key) {
+                    $array  = array($key => $data);
+                    $values = $this->getArrayCopy();
+                    $final  = $array + $values;
+                    $this->exchangeArray($final);
+                } else {
+                    $this->prepend($data);
                 }
                 break;
             case self::APPEND:

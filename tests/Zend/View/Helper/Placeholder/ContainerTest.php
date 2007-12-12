@@ -211,6 +211,27 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
     /**
      * @return void
      */
+    public function testCapturingToPlaceholderUsingPrependPrependsContent()
+    {
+        $this->container[] = 'foo';
+        $originalCount = count($this->container);
+
+        $this->container->captureStart('PREPEND');
+        echo 'This is content intended for capture';
+        $this->container->captureEnd();
+
+        $this->assertEquals($originalCount + 1, count($this->container));
+
+        $value     = $this->container->getValue();
+        $keys      = array_keys($value);
+        $lastIndex = array_pop($keys);
+        $this->assertEquals('foo', $value[$lastIndex]);
+        $this->assertContains('This is content intended for capture', $value[$lastIndex - 1]);
+    }
+
+    /**
+     * @return void
+     */
     public function testCapturingToPlaceholderUsingSetOverwritesContent()
     {
         $this->container[] = 'foo';
