@@ -69,7 +69,7 @@ class Zend_View_Helper_Doctype
         $this->_registry = Zend_Registry::getInstance();
         if (!isset($this->_registry[__CLASS__])) {
             $this->_registry[__CLASS__] = array();
-            $this->_setDoctype($this->_defaultDoctype);
+            $this->setDoctype($this->_defaultDoctype);
             $this->_registry[__CLASS__]['doctypes'] = array(
                 self::XHTML1_STRICT       => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
                 self::XHTML1_TRANSITIONAL => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
@@ -97,7 +97,7 @@ class Zend_View_Helper_Doctype
                 case self::HTML4_STRICT:
                 case self::HTML4_LOOSE:
                 case self::HTML4_FRAMESET:
-                    $this->_setDoctype($doctype);
+                    $this->setDoctype($doctype);
                     break;
                 default:
                     if (substr($doctype, 0, 9) != '<!DOCTYPE') {
@@ -109,7 +109,7 @@ class Zend_View_Helper_Doctype
                     } else {
                         $type = self::CUSTOM;
                     }
-                    $this->_setDoctype($type);
+                    $this->setDoctype($type);
                     $this->_registry[__CLASS__]['doctypes'][$type] = $doctype;
                     break;
             }
@@ -118,9 +118,16 @@ class Zend_View_Helper_Doctype
         return $this;
     }
 
-    public function _setDoctype($doctype)
+    /**
+     * Set doctype
+     * 
+     * @param  string $doctype 
+     * @return Zend_View_Helper_Doctype
+     */
+    public function setDoctype($doctype)
     {
         $this->_registry[__CLASS__]['doctype'] = $doctype;
+        return $this;
     }
     
     /**
