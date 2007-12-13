@@ -4,11 +4,11 @@
     <sect2 id="zend.controller.actionhelper.introduction">
         <title>介绍</title>
         <para>
-			      动作助手可以向任何Zend_Controller_Action的衍生动作控制器中，即时的加入功能(runtime and/or on-demand functionality)，以使得增加公共的动作控制器功能时，尽量减少衍生动作控制器类的必要。
+           动作助手可以向任何Zend_Controller_Action的衍生动作控制器中，即时的加入功能(runtime and/or on-demand functionality)，以使得增加公共的动作控制器功能时，尽量减少衍生动作控制器类的必要。
         </para>
 
         <para>
-			      动作助手有多种使用方式。动作助手使用了一套经纪系统(brokerage system)，与<link linkend="zend.view.helpers">Zend_View_Helpers</link>中使用的，也就是<link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>的经纪系统类似。动作助手在需要调用时加载，可以在请求的时候(bootstrap)或者动作控制器创建的时候(init())实例化。要充分了解这些细节，请阅读下面的章节。
+           动作助手有多种使用方式。动作助手使用了一套经纪系统(brokerage system)，与<link linkend="zend.view.helpers">Zend_View_Helpers</link>中使用的，也就是<link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>的经纪系统类似。动作助手在需要调用时加载，可以在请求的时候(bootstrap)或者动作控制器创建的时候(init())实例化。要充分了解这些细节，请阅读下面的章节。
         </para>
     </sect2>
 
@@ -16,17 +16,17 @@
         <title>初始化助手</title>
 
         <para>
-			      根据需求以及助手的功能，可有几种不同的初始化方式。
+           根据需求以及助手的功能，可有几种不同的初始化方式。
         </para>
 
         <para>
-			      助手经纪人(broker)存储在<code>Zend_Controller_Action</code>的 <code>$_helper</code>成员中，可以使用经纪人来获取或者调用助手。以下是操作方法：
+           助手经纪人(broker)存储在<code>Zend_Controller_Action</code>的 <code>$_helper</code>成员中，可以使用经纪人来获取或者调用助手。以下是操作方法：
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-					          显式的调用<code>getHelper()</code>方法。简单的传入助手名字，就可以返回助手对象。
+                   显式的调用<code>getHelper()</code>方法。简单的传入助手名字，就可以返回助手对象。
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -37,7 +37,7 @@ $flashMessenger->addMessage('We did something in the last request');]]>
 
             <listitem>
                 <para>
-					          使用助手经纪人的<code>__get()</code>方法，就像获取经纪人的成员属性一样获取助手。
+                   使用助手经纪人的<code>__get()</code>方法，就像获取经纪人的成员属性一样获取助手。
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -48,7 +48,7 @@ $flashMessenger->addMessage('We did something in the last request');]]>
 
             <listitem>
                 <para>
-					          最后，大部分动作助手实现了<code>direct()</code>方法，它将调用助手的一个特定的，默认的方法。以<code>FlashMessenger</code>为例，它调用了方法<code>addMessage()</code>：
+                   最后，大部分动作助手实现了<code>direct()</code>方法，它将调用助手的一个特定的，默认的方法。以<code>FlashMessenger</code>为例，它调用了方法<code>addMessage()</code>：
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -62,7 +62,7 @@ $this->_helper->FlashMessenger('We did something in the last request');]]>
         </note>
 
         <para>
-			      也可以显式的实例化助手。如果你要在动作控制器之外使用助手，或者给助手经纪人传入一个助手供所有的动作使用，你可能希望直接这么做。实例化助手和实例化其他PHP类的方法一样。
+           也可以显式的实例化助手。如果你要在动作控制器之外使用助手，或者给助手经纪人传入一个助手供所有的动作使用，你可能希望直接这么做。实例化助手和实例化其他PHP类的方法一样。
         </para>
     </sect2>
 
@@ -74,7 +74,7 @@ $this->_helper->FlashMessenger('We did something in the last request');]]>
         </para>
 
         <para>
-			      使用<code>addHelper</code>来注册助手：
+           使用<code>addHelper</code>来注册助手：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -82,7 +82,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
         </programlisting>
 
         <para>
-			      实例化助手并传入经纪人有点耗费时间和资源，不过<code>addPrefix()</code>和<code>addPath()</code>两个方法能够很容易的自动完成这些工作：
+           实例化助手并传入经纪人有点耗费时间和资源，不过<code>addPrefix()</code>和<code>addPath()</code>两个方法能够很容易的自动完成这些工作：
         </para>
 
         <itemizedlist>
@@ -110,11 +110,11 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
         </itemizedlist>
 
         <para>
-			      这些方法是静态的，因而可以根据需要在控制器链中的任何位置调用动态的加载助手。
+           这些方法是静态的，因而可以根据需要在控制器链中的任何位置调用动态的加载助手。
         </para>
 
         <para>
-			      使用<code>hasHelper($name)</code>方法来判定助手经纪人中是否存在某助手，<code>$name</code>是助手的短名称（去掉前缀的）：        
+           使用<code>hasHelper($name)</code>方法来判定助手经纪人中是否存在某助手，<code>$name</code>是助手的短名称（去掉前缀的）：        
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -125,7 +125,26 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </programlisting>
 
         <para>
-			      最后，使用<code>removeHelper($name)</code>来删除助手经纪人中的某个助手，<code>$name</code>是助手的短名称。
+            从助手经纪人中获取助手有两个静态方法：<code>getExistingHelper()</code> 和 <code>getStaticHelper()</code> 。<code>getExistingHelper()</code>将获取助手仅当它以前调用过或者显性地通过助手经纪人注册过，否则就抛出一个异常。<code>getStaticHelper()</code> 的做法和<code>getExistingHelper()</code>一样，但如果还没有注册助手堆栈，它将尝试初始化助手，为获取你要配置的的助手，<code>getStaticHelper()</code>是一个好的选择。
+        </para>
+
+        <para>
+            两个方法都带一个参数，<code>$name</code>，它是助手的短名称（去掉前缀）。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// Check if 'redirector' helper is registered with the broker, and fetch:
+if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
+    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+}
+
+// Or, simply retrieve it, not worrying about whether or not it was previously
+// registered:
+$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+}]]></programlisting>
+
+        <para>
+           最后，使用<code>removeHelper($name)</code>来删除助手经纪人中的某个助手，<code>$name</code>是助手的短名称。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -140,9 +159,10 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>内建的动作助手</title>
 
         <para>
-			      Zend Framework默认包含三个动作助手：<code>FlashMessenger</code>用来处理Flash Messenger会话； <code>Redirector</code>提供另一种实现方式，帮助程序重定向到内部或者外部页面；<code>ViewRenderer</code>自动的完成在控制器内建立视图对象并渲染视图的过程。
+           Zend Framework默认包含三个动作助手：<code>FlashMessenger</code>用来处理Flash Messenger会话； <code>Redirector</code>提供另一种实现方式，帮助程序重定向到内部或者外部页面；<code>ViewRenderer</code>自动的完成在控制器内建立视图对象并渲染视图的过程。
         </para>
 
+        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />
@@ -152,7 +172,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>编写自己的助手</title>
 
         <para>
-			      动作助手继承抽象类<code>Zend_Controller_Action_Helper_Abstract</code>，该类提供了助手经纪人要求的基本接口和功能，包含下列方法：
+           动作助手继承抽象类<code>Zend_Controller_Action_Helper_Abstract</code>，该类提供了助手经纪人要求的基本接口和功能，包含下列方法：
         </para>
 
         <itemizedlist>
@@ -200,7 +220,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         </itemizedlist>
 
         <para>
-			      助手类中还可以包含一个<code>direct()</code>方法，如果定义了该方法，就可以将助手视作助手经纪人的一个方法，以便简单的、一次性的使用助手。例如<link linkend="zend.controller.actionhelpers.redirector">redirector</link> 定义<code>direct()</code> 作为<code>goto()</code>的别名,就可以这样使用：
+           助手类中还可以包含一个<code>direct()</code>方法，如果定义了该方法，就可以将助手视作助手经纪人的一个方法，以便简单的、一次性的使用助手。例如<link linkend="zend.controller.actionhelpers.redirector">redirector</link> 定义<code>direct()</code> 作为<code>goto()</code>的别名,就可以这样使用：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -209,11 +229,11 @@ $this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
         </programlisting>
 
         <para>
-			      在内部，助手经纪人的<code>__call()</code>方法先寻找名叫<code>redirector</code>的助手，然后检查该助手的<code>direct</code>方法是否定义，然后使用所提供的参数来调用该方法。
+           在内部，助手经纪人的<code>__call()</code>方法先寻找名叫<code>redirector</code>的助手，然后检查该助手的<code>direct</code>方法是否定义，然后使用所提供的参数来调用该方法。
         </para>
 
         <para>
-			      如果创建了自己的助手，可以按照前面章节所述的提供相应的访问方法。
+           如果创建了自己的助手，可以按照前面章节所述的提供相应的访问方法。
         </para>
     </sect2>
 </sect1>
