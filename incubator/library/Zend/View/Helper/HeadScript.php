@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -26,7 +25,6 @@ require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 /**
  * Helper for setting and retrieving title element for HTML head
  *
- * @todo       Add PREPEND support
  * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
  * @subpackage Helpers
@@ -233,7 +231,6 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     /**
      * Set new script item in object
      * 
-     * @todo   Support PREPEND
      * @param  int|string $index 
      * @param  string $scriptOrSourceFile 
      * @param  string $typeOrAttrs 
@@ -263,7 +260,6 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     /**
      * End capture action and store
      * 
-     * @todo   Support PREPEND
      * @return void
      */
     public function captureEnd()

@@ -25,7 +25,7 @@ require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 /**
  * Helper for setting and retrieving title element for HTML head
  *
- * @uses       Zend_View_Helper_container
+ * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
  * @subpackage Helpers
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
