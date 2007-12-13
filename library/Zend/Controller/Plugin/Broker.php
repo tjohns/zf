@@ -78,6 +78,15 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
             $this->_plugins[$stackIndex] = $plugin;
         }
 
+        $request = $this->getRequest();
+        if ($request) {
+            $this->_plugins[$stackIndex]->setRequest($request);
+        }
+        $response = $this->getResponse();
+        if ($response) {
+            $this->_plugins[$stackIndex]->setResponse($response);
+        }
+
         ksort($this->_plugins);
 
         return $this;

@@ -18,6 +18,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Request/Http.php';
+require_once 'Zend/Controller/Request/Simple.php';
 require_once 'Zend/Controller/Response/Cli.php';
 
 class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
@@ -219,6 +220,25 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $plugins = $broker->getPlugins();
         $expected = array(2 => $plugin1, 3 => $plugin2, 4 => $plugin3);
         $this->assertSame($expected, $plugins);
+    }
+
+    /**
+     * Test for ZF-2305
+     * @return void
+     */
+    public function testRegisterPluginSetsRequestAndResponse()
+    {
+        $broker   = new Zend_Controller_Plugin_Broker();
+        $request  = new Zend_Controller_Request_Simple();
+        $response = new Zend_Controller_Response_Cli();
+        $broker->setRequest($request);
+        $broker->setResponse($response);
+
+        $plugin   = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
+        $broker->registerPlugin($plugin);
+
+        $this->assertSame($request, $plugin->getRequest());
+        $this->assertSame($response, $plugin->getResponse());
     }
 }
 
