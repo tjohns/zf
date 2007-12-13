@@ -35,7 +35,7 @@
 
         <listitem><para>
                 <code>getStack()</code> allows you to retrieve the stack of
-                actions in its entierty.
+                actions in its entirety.
         </para></listitem>
 
         <listitem><para>
