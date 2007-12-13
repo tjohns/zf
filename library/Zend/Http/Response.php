@@ -21,8 +21,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Http/Exception.php';
-
 /**
  * Zend_Http_Response represents an HTTP 1.0 / 1.1 response message. It
  * includes easy access to all the response's different elemts, as well as some
@@ -153,14 +151,18 @@ class Zend_Http_Response
     public function __construct($code, $headers, $body = null, $version = '1.1', $message = null)
     {
         // Make sure the response code is valid and set it
-        if (self::responseCodeAsText($code) === null)
+        if (self::responseCodeAsText($code) === null) {
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception("{$code} is not a valid HTTP response code");
+        }
 
         $this->code = $code;
 
         // Make sure we got valid headers and set them
-        if (! is_array($headers))
+        if (! is_array($headers)) {
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception('No valid headers were passed');
+	}
 
         foreach ($headers as $name => $value) {
             if (is_int($name))
@@ -173,8 +175,10 @@ class Zend_Http_Response
         $this->body = $body;
 
         // Set the HTTP version
-        if (! preg_match('|^\d\.\d$|', $version))
+        if (! preg_match('|^\d\.\d$|', $version)) {
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception("Invalid HTTP response version: $version");
+        }
 
         $this->version = $version;
 
@@ -550,6 +554,7 @@ class Zend_Http_Response
         
         while (trim($body)) {
             if (! preg_match("/^([\da-fA-F]+)[^\r\n]*\r\n/sm", $body, $m)) {
+                require_once 'Zend/Http/Exception.php';
                 throw new Zend_Http_Exception("Error parsing body - doesn't seem to be a chunked message");
             }
 
