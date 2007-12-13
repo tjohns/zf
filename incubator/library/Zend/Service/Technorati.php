@@ -159,8 +159,8 @@ class Zend_Service_Technorati
 
         /** 
          * @see Zend_Service_Technorati_CosmosResultSet 
-		 */
-		require_once 'Zend/Service/Technorati/CosmosResultSet.php';
+         */
+        require_once 'Zend/Service/Technorati/CosmosResultSet.php';
         return new Zend_Service_Technorati_CosmosResultSet($dom);
     }
 
@@ -282,7 +282,7 @@ class Zend_Service_Technorati
         /** 
          * @see Zend_Service_Technorati_KeyInfoResult
          */
-        require_once 'Zend/Service/Technorati/KeyInfoResult.php';		
+        require_once 'Zend/Service/Technorati/KeyInfoResult.php';       
         return new Zend_Service_Technorati_KeyInfoResult($dom, $this->_apiKey);
     }
 
@@ -348,7 +348,9 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
-            throw new Zend_Service_Technorati_Exception('Options must be specified as an array');
+            require_once 'Zend/Service/Technorati/Exception.php';
+            throw new Zend_Service_Technorati_Exception(sprintf('%s#%s expects options to be an array',
+                                                        __CLASS__, __METHOD__));
         }
 
         // Validate keys in the $options array
@@ -390,6 +392,7 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception($options['limit'] . 
                         ' is not valid for the "limit" option');
         }
@@ -399,6 +402,7 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception($options['start'] . 
                         ' is not valid for the "start" option');
         }
@@ -439,7 +443,9 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
-            throw new Zend_Service_Technorati_Exception('Options must be specified as an array');
+            require_once 'Zend/Service/Technorati/Exception.php';
+            throw new Zend_Service_Technorati_Exception(sprintf('%s#%s expects options to be an array',
+                                                        __CLASS__, __METHOD__));
         }
 
         // Validate keys in the $options array
@@ -497,6 +503,7 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception("Invalid value for $name");
         }
     }
@@ -515,6 +522,7 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception($options['format'] . 
                         ' is not valid for the "format" option,' .
                         ' Zend_Service_Technorati supports only "xml"');
@@ -534,11 +542,12 @@ class Zend_Service_Technorati
         $xpath = new DOMXPath($dom);
 
         if ($xpath->query("/tapi/document/result/error")->length >= 1) {
-        	// @todo improve xpath expression
+            // @todo improve xpath expression
             $error = $xpath->query("//error/text()")->item(0)->data;
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception($error);
         }
     }
@@ -556,6 +565,7 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception(
                         'Invalid response status code (' .
                         'HTTP/' . $response->getVersion() .
@@ -578,6 +588,7 @@ class Zend_Service_Technorati
             /**
              * @see Zend_Service_Technorati_Exception
              */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception(
                         'The following parameters are invalid: ' . 
                         implode(',', $difference));

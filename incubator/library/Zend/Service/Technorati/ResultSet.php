@@ -145,6 +145,10 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
      */
     public function current()
     {
+        /**
+         * @see Zend_Service_Technorati_Exception
+         */
+        require_once 'Zend/Service/Technorati/Exception.php';
         throw new Zend_Service_Exception("Zend_Service_Technorati_ResultSet::current() should be overwritten in child classes");
     }
 
