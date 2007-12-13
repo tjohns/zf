@@ -5,11 +5,11 @@
         <title>介绍</title>
 
         <para>
-			      转向器<code>(Redirector)</code>助手允许使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>goto($action, $controller, $module, $params)</code>接口。
+	   转向器<code>(Redirector)</code>助手允许使用一个转向器对象帮助程序重定向到新的URL。与<code>_redirect()</code>方法相比，它具有多项优势。例如能够在转向器对象中预先配置整个站点的行为，或者使用与<code>Zend_Controller_Action::_forward()</code>相似的<code>goto($action, $controller, $module, $params)</code>接口。
         </para>
 
         <para>
-            转向器拥有影响重定向行为的大量方法：
+           转向器拥有影响重定向行为的大量方法：
         </para>
 
         <itemizedlist>
@@ -27,7 +27,7 @@
 
             <listitem>
                 <para>
-					<code>setGoto()</code>设置默认的URL，当没有提供参数给<code>goto()</code>方法时转向该URL。可以使用类似<code>Zend_Controller_Action::_forward()</code>的API：<code>setgoto($action, $controller = null, $module = null, array $params = array())</code>;
+                   <code>setGoto()</code>设置默认的URL，当没有提供参数给<code>goto()</code>方法时转向该URL。可以使用类似<code>Zend_Controller_Action::_forward()</code>的API：<code>setgoto($action, $controller = null, $module = null, array $params = array())</code>;
                 </para>
             </listitem>
 
@@ -57,13 +57,13 @@
         </itemizedlist>
 
         <para>
-			      此外，转向器中还有大量方法来执行实际的重定向。
+           此外，转向器中还有大量方法来执行实际的重定向。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>goto()</code>使用<code>setGoto()</code>(<code>类似_forward()的API</code>)来构建URL并执行重定向。
+                   <code>goto()</code>使用<code>setGoto()</code>(<code>类似_forward()的API</code>)来构建URL并执行重定向。
                 </para>
             </listitem>
 
@@ -81,7 +81,7 @@
         </itemizedlist>
 
         <para>
-			      最后，你可以在任何时刻使用<code>getRedirectUrl()</code>确定当前的重定向URL。
+           最后，你可以在任何时刻使用<code>getRedirectUrl()</code>确定当前的重定向URL。
         </para>
     </sect4>
 
@@ -92,7 +92,7 @@
             <title>设定选项</title>
 
             <para>
-				        这个例子改变了几个选项，包括设定重定向时使用的HTTP状态码为303，重定向时不默认退出，以及定义了默认的URL供重定向使用。
+               这个例子改变了几个选项，包括设定重定向时使用的HTTP状态码为303，重定向时不默认退出，以及定义了默认的URL供重定向使用。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -134,7 +134,7 @@ class SomeController extends Zend_Controller_Action
             <title>使用默认设定</title>
 
             <para>
-				        这个例子假定使用默认设定，也就意味着任何重定向将导致立即退出。
+               这个例子假定使用默认设定，也就意味着任何重定向将导致立即退出。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -199,7 +199,7 @@ class ForwardController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
-            <title>通过<code>gotoRout()</code>使用路由组装<code>(route assembly)</code></title>
+            <title>通过<code>gotoRoute()</code>使用路由组装<code>(route assembly)</code></title>
 
             <para>
                 下面的例子使用了<link linkend="zend.controller.router">路由器</link>的<code>assemble()</code>方法，基于传入参数的关联数组来创建URL。假定下面的路由已经注册:
@@ -214,7 +214,7 @@ $router->addRoute('blogArchive', $route);]]>
             </programlisting>
 
             <para>
-				        给定一个数组，其中年份为2006，月份为4，日期为24，id为42，据此可以组装URL<code>/blog/2006/4/24/42</code>。
+               给定一个数组，其中年份为2006，月份为4，日期为24，id为42，据此可以组装URL<code>/blog/2006/4/24/42</code>。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
