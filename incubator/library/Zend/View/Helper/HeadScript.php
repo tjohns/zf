@@ -54,17 +54,70 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * @var string
      */
     protected $_captureTypeOrAttrs = null;
+
+    /**
+     * Whether or not to format scripts using CDATA; used only if doctype 
+     * helper is not accessible
+     * @var bool
+     */
+    public $useCdata = false;
     
     /**
      * Return headScript object
      *
+     * Returns headScript helper object; optionally, allows specifying 
+     *
+     * @param  string $spec Script/url
+     * @param  string $mode Script or file
+     * @param  string $placement Append, prepend, or set
+     * @param  string|array $type Script type and/or array of script attributes
      * @return Zend_View_Helper_HeadScript
      */
-    public function headScript()
+    public function headScript($spec = null, $mode = Zend_View_Helper_HeadScript::FILE, $placement = 'APPEND', $type = 'text/javascript')
     {
+        if ((null !== $spec) && is_string($spec)) {
+            switch (strtoupper($placement)) {
+                case 'SET':
+                    $this->_setValue($spec, $type, $mode);
+                    break;
+                case 'PREPEND':
+                    $this->_prepend($spec, $type, $mode);
+                    break;
+                case 'APPEND':
+                default:
+                    $this->_offsetSet($this->nextIndex(), $spec, $type, $mode);
+                    break;
+            }
+        }
+
         return $this;
     }
    
+    /**
+     * Prepend script file to object
+     * 
+     * @param  string $sourceFile 
+     * @param  string $type 
+     * @return Zend_View_Helper_HeadScript
+     */
+    public function prependFile($sourceFile, $type = 'text/javascript')
+    {
+        return $this->_prepend($sourceFile, $type, self::FILE);
+    }
+    
+    /**
+     * Prepend script to object
+     * 
+     * @param  string $script 
+     * @param  string $type 
+     * @return Zend_View_Helper_HeadScript
+     */
+    public function prependScript($script, $type = 'text/javascript')
+    {
+        $this->_prepend($script, $type, self::SCRIPT);
+        return $this;
+    }
+
     /**
      * Append script file to object
      * 
@@ -72,9 +125,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * @param  string $type 
      * @return Zend_View_Helper_HeadScript
      */
-    public function append($sourceFile, $type = 'text/javascript')
+    public function appendFile($sourceFile, $type = 'text/javascript')
     {
-        return $this->_offsetSet($this->nextIndex(), $script, $type, self::FILE);
+        return $this->_offsetSet($this->nextIndex(), $sourceFile, $type, self::FILE);
     }
     
     /**
@@ -98,9 +151,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * @param  string $typeOrAttrs 
      * @return Zend_View_Helper_HeadScript
      */
-    public function offsetSet($index, $sourceFile, $typeOrAttrs = 'text/javascript')
+    public function offsetSetFile($index, $sourceFile, $typeOrAttrs = 'text/javascript')
     {
-        return $this->_offsetSet($index, $script, $typeOrAttrs, self::FILE);
+        return $this->_offsetSet($index, $sourceFile, $typeOrAttrs, self::FILE);
     }
     
     /**
@@ -113,7 +166,68 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      */
     public function offsetSetScript($index, $script, $typeOrAttrs = 'text/javascript')
     {
-        return $this->_offsetSet($index, $sourceFile, $typeOrAttrs, self::SCRIPT);
+        return $this->_offsetSet($index, $script, $typeOrAttrs, self::SCRIPT);
+    }
+
+    /**
+     * Create value for stack
+     * 
+     * @param  string $scriptOrSourceFile 
+     * @param  string|array $typeOrAttrs 
+     * @param  string $mode 
+     * @return string
+     */
+    protected function _createValue($scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
+    {
+        if (!in_array($mode, array(Zend_View_Helper_HeadScript::FILE, Zend_View_Helper_HeadScript::SCRIPT))) {
+            $mode = self::FILE;
+        }
+
+        $value = array(
+            'content' => $scriptOrSourceFile,
+            'mode'    => $mode
+        );
+        
+        if (is_array($typeOrAttrs)) {
+            $value = array_merge($typeOrAttrs, $value);
+        } else {
+            $value['type'] = (string) $typeOrAttrs;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Set a single script as the value of the placeholder
+     * 
+     * @param  string $scriptOrSourceFile 
+     * @param  string|array $typeOrAttrs 
+     * @param  string $mode 
+     * @return Zend_View_Helper_HeadScript
+     */
+    protected function _setValue($scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
+    {
+        $value = array($this->_createValue($scriptOrSourceFile, $typeOrAttrs, $mode));
+        $this->exchangeArray($value);
+        return $this;
+    }
+
+    /**
+     * Prepend a new value to the stack
+     * 
+     * @param  string $scriptOrSourceFile 
+     * @param  string|array $typeOrAttrs 
+     * @param  string $mode 
+     * @return Zend_View_Helper_HeadScript
+     */
+    protected function _prepend($scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
+    {
+        $value   = array($this->_createValue($scriptOrSourceFile, $typeOrAttrs, $mode));
+        $current = $this->getArrayCopy();
+
+        $final   = array_merge($value, $current);
+        $this->exchangeArray($final);
+        return $this;
     }
     
     /**
@@ -128,18 +242,8 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      */
     protected function _offsetSet($index, $scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
     {
-        $valueArray = array(
-            'content' => $scriptOrSourceFile,
-            'mode'    => $mode
-            );
-        
-        if (is_array($type)) {
-            $valueArray = array_merge($typeOrAttrs, $valueArray);
-        } else {
-            $valueArray['type'] = (string) $typeOrAttrs;
-        }
-            
-        parent::offsetSet($index, $valueArray);
+        $value = $this->_createValue($scriptOrSourceFile, $typeOrAttrs, $mode);
+        parent::offsetSet($index, $value);
         return $this;
     }
     
@@ -171,7 +275,10 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
         $this->_captureLock = false;
         switch ($this->_captureType) {
             case self::SET:
-                $this->exchangeArray(array($valueArray));
+                $this->_setValue($content, $this->_captureTypeOrAttrs, self::SCRIPT);
+                break;
+            case self::PREPEND:
+                $this->_prepend($content, $this->_captureTypeOrAttrs, self::SCRIPT);
                 break;
             case self::APPEND:
             default:
@@ -189,20 +296,28 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     {
         $indent   = ($indent != null) ? $indent : $this->_indent;
         $indent   = (is_int($indent)) ? str_repeat(' ', $indent) : $indent;
-        $useCdata = $this->view->doctype()->isXhtml() ? true : false;
+
+        if ($this->view) {
+            $useCdata = $this->view->doctype()->isXhtml() ? true : false;
+        } else {
+            $useCdata = $this->useCdata ? true : false;
+        }
+
         $output   = '';
         
         foreach ($this as $script) {
             $output .= '<script ';
             
             $content = null;
-            if (isset($script['content'])) {
+
+            $mode = $script['mode'];
+            if (self::FILE == $mode)  {
+                $script['src'] = $script['content'];
+            } elseif (isset($script['content'])) {
                 $content = $script['content'];
             }
-            unset($script['content']);
+            unset($script['content'], $script['mode']);
             
-            $mode = $script['mode'];
-            unset($script['mode']);
             
             foreach ($script as $name => $attr) {
                 $output .= $name . '="' . $attr . '" ';
