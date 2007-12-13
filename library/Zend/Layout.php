@@ -279,17 +279,8 @@ class Zend_Layout
     protected function _initVarContainer()
     {
         if (null === $this->_container) {
-            require_once 'Zend/View/Helper/Placeholder.php';
-            if (Zend_Registry::isRegistered(Zend_View_Helper_Placeholder::REGISTRY_KEY)) {
-                $registry = Zend_Registry::get(Zend_View_Helper_Placeholder::REGISTRY_KEY);
-            } else {
-                require_once 'Zend/View/Helper/Placeholder.php';
-                require_once 'Zend/View/Helper/Placeholder/Registry.php';
-                $registry = new Zend_View_Helper_Placeholder_Registry();
-                Zend_Registry::set(Zend_View_Helper_Placeholder::REGISTRY_KEY, $registry);
-            }
-
-            $this->_container = $registry->getContainer(__CLASS__);
+            require_once 'Zend/View/Helper/Placeholder/Registry.php';
+            $this->_container = Zend_View_Helper_Placeholder_Registry::getRegistry()->getContainer(__CLASS__);
         }
 
         return $this->_container;
