@@ -19,11 +19,12 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Service_Abstract */
+
+/**   
+ * @see Zend_Service_Abstract
+ */
 require_once 'Zend/Service/Abstract.php';
 
-/** Zend_Service_Exception */
-require_once 'Zend/Service/Exception.php';
 
 /**
  * Akismet REST service implementation

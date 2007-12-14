@@ -19,11 +19,12 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Service_StrikeIron_Exception */
-require_once 'Zend/Service/StrikeIron/Exception.php';
 
-/** Zend_Service_StrikeIron_Decorator */
+/**
+ * @see Zend_Service_StrikeIron_Decorator
+ */
 require_once 'Zend/Service/StrikeIron/Decorator.php';
+
 
 /**
  * @category   Zend
@@ -95,6 +96,10 @@ class Zend_Service_StrikeIron_Base
                                                             $this->_outputHeaders);
         } catch (Exception $e) {
             $message = get_class($e) . ': ' . $e->getMessage();
+            /**
+             * @see Zend_Service_StrikeIron_Exception
+             */
+            require_once 'Zend/Service/StrikeIron/Exception.php';
             throw new Zend_Service_StrikeIron_Exception($message, $e->getCode());
         }
 
@@ -136,6 +141,10 @@ class Zend_Service_StrikeIron_Base
 
             foreach ($this->_options['headers'] as $header) {
                 if (! $header instanceof SoapHeader) {
+                    /**
+                     * @see Zend_Service_StrikeIron_Exception
+                     */
+                    require_once 'Zend/Service/StrikeIron/Exception.php';
                     throw new Zend_Service_StrikeIron_Exception('Header must be instance of SoapHeader');
                 } else if ($header->name == 'LicenseInfo') {
                     $foundLicenseInfo = true;
@@ -248,6 +257,10 @@ class Zend_Service_StrikeIron_Base
             $subscriptionInfo = new Zend_Service_StrikeIron_Decorator($info, 'SubscriptionInfo');
         } else {
             $msg = 'No SubscriptionInfo header found in last output headers';
+            /**
+             * @see Zend_Service_StrikeIron_Exception
+             */
+            require_once 'Zend/Service/StrikeIron/Exception.php';
             throw new Zend_Service_StrikeIron_Exception($msg);
         }
 

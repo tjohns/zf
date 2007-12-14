@@ -20,11 +20,6 @@
 
 
 /**
- * Zend_Service_Exception
- */
-require_once 'Zend/Service/Exception.php';
-
-/**
  * Zend_Http_Client
  */
 require_once 'Zend/Http/Client.php';

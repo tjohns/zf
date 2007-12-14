@@ -27,11 +27,6 @@
  */
 require_once 'Zend/Http/Client.php';
 
-/**
- * @see Zend_Http_Client_Exception
- */
-require_once 'Zend/Http/Client/Exception.php';
-
 
 /**
  * @category   Zend
@@ -173,10 +168,22 @@ class Zend_Service_Audioscrobbler
         $response = $request->getBody();
 
         if ($response == 'No such path') {
+            /**
+             * @see Zend_Http_Client_Exception
+             */
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('Could not find: ' . $this->_client->getUri());
         } else if ($response == 'No user exists with this name.') {
+            /**
+             * @see Zend_Http_Client_Exception
+             */
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('No user exists with this name');
         } else if ($request->isError()) {
+            /**
+             * @see Zend_Http_Client_Exception
+             */
+            require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('The web service ' . $this->_client->getUri() . ' returned the following status code: ' . $response->getStatus());
         }
 

@@ -19,11 +19,12 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Loader */
+
+/**
+ * @see Zend_Loader
+ */
 require_once 'Zend/Loader.php';
 
-/** Zend_Service_StrikeIron_Exception */
-require_once 'Zend/Service/StrikeIron/Exception.php';
 
 /**
  * This class allows StrikeIron authentication credentials to be specified
@@ -74,6 +75,10 @@ class Zend_Service_StrikeIron
             Zend_Loader::loadClass($class);
         } catch (Exception $e) {
             $msg = "Service '$class' could not be loaded: " . $e->getMessage();
+            /**
+             * @see Zend_Service_StrikeIron_Exception
+             */
+            require_once 'Zend/Service/StrikeIron/Exception.php';
             throw new Zend_Service_StrikeIron_Exception($msg, $e->getCode());
         }
 
