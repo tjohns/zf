@@ -99,17 +99,17 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         try {
             $this->helper->append('foo');
             $this->fail('Non-meta value should not append');
-        } catch (Exception $e) {
+        } catch (Zend_View_Exception $e) {
         }
         try {
             $this->helper->prepend('foo');
             $this->fail('Non-meta value should not prepend');
-        } catch (Exception $e) {
+        } catch (Zend_View_Exception $e) {
         }
         try {
             $this->helper->set('foo');
             $this->fail('Non-meta value should not set');
-        } catch (Exception $e) {
+        } catch (Zend_View_Exception $e) {
         }
     }
 
@@ -130,9 +130,14 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
             $this->helper->$action('keywords', $string);
             $values = $this->helper->getArrayCopy();
             $this->assertEquals($i + 1, count($values));
-            $this->assertContains('<meta ', $values[$i]);
-            $this->assertContains($type . '="keywords"', $values[$i]);
-            $this->assertContains('content="' . $string . '"', $values[$i]);
+
+            $item   = $values[$i];
+            $this->assertObjectHasAttribute('type', $item);
+            $this->assertObjectHasAttribute('modifiers', $item);
+            $this->assertObjectHasAttribute('content', $item);
+            $this->assertObjectHasAttribute($item->type, $item);
+            $this->assertEquals('keywords', $item->{$item->type});
+            $this->assertEquals($string, $item->content);
         }
     }
 
@@ -145,10 +150,14 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
             $this->helper->$action('keywords', $string);
             $values = $this->helper->getArrayCopy();
             $this->assertEquals($i + 1, count($values));
-            $first = array_shift($values);
-            $this->assertContains('<meta ', $first);
-            $this->assertContains($type . '="keywords"', $first);
-            $this->assertContains('content="' . $string . '"', $first);
+            $item = array_shift($values);
+
+            $this->assertObjectHasAttribute('type', $item);
+            $this->assertObjectHasAttribute('modifiers', $item);
+            $this->assertObjectHasAttribute('content', $item);
+            $this->assertObjectHasAttribute($item->type, $item);
+            $this->assertEquals('keywords', $item->{$item->type});
+            $this->assertEquals($string, $item->content);
         }
     }
 
@@ -163,9 +172,14 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         $this->helper->$action('keywords', $string);
         $values = $this->helper->getArrayCopy();
         $this->assertEquals(1, count($values));
-        $this->assertContains('<meta ', $values[0]);
-        $this->assertContains($type . '="keywords"', $values[0]);
-        $this->assertContains('content="' . $string . '"', $values[0]);
+        $item = array_shift($values);
+
+        $this->assertObjectHasAttribute('type', $item);
+        $this->assertObjectHasAttribute('modifiers', $item);
+        $this->assertObjectHasAttribute('content', $item);
+        $this->assertObjectHasAttribute($item->type, $item);
+        $this->assertEquals('keywords', $item->{$item->type});
+        $this->assertEquals($string, $item->content);
     }
 
     public function testOverloadingAppendNameAppendsMetaTagToStack()
@@ -203,7 +217,7 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         try {
             $this->helper->setName('foo');
             $this->fail('Overloading should require at least two arguments');
-        } catch (Exception $e) {
+        } catch (Zend_View_Exception $e) {
         }
     }
 
@@ -212,7 +226,7 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         try {
             $this->helper->setFoo('foo');
             $this->fail('Overloading should only work for (set|prepend|append)(Name|HttpEquiv)');
-        } catch (Exception $e) {
+        } catch (Zend_View_Exception $e) {
         }
     }
 
@@ -220,10 +234,38 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
     {
         $this->helper->setName('keywords', 'foo bar', array('lang' => 'us_en', 'scheme' => 'foo', 'bogus' => 'unused'));
         $value = $this->helper->getValue();
-        $this->assertContains('lang="us_en"', $value);
-        $this->assertContains('scheme="foo"', $value);
-        $this->assertNotContains('bogus', $value);
-        $this->assertNotContains('unused', $value);
+
+        $this->assertObjectHasAttribute('modifiers', $value);
+        $modifiers = $value->modifiers;
+        $this->assertTrue(array_key_exists('lang', $modifiers));
+        $this->assertEquals('us_en', $modifiers['lang']);
+        $this->assertTrue(array_key_exists('scheme', $modifiers));
+        $this->assertEquals('foo', $modifiers['scheme']);
+    }
+
+    public function testToStringReturnsValidHtml()
+    {
+        $this->helper->setName('keywords', 'foo bar', array('lang' => 'us_en', 'scheme' => 'foo', 'bogus' => 'unused'))
+                     ->prependName('title', 'boo bah')
+                     ->appendHttpEquiv('screen', 'projection');
+        $string = $this->helper->toString();
+
+        $metas = substr_count($string, '<meta ');
+        $this->assertEquals(3, $metas);
+        $metas = substr_count($string, '/>');
+        $this->assertEquals(3, $metas);
+        $metas = substr_count($string, 'name="');
+        $this->assertEquals(2, $metas);
+        $metas = substr_count($string, 'http-equiv="');
+        $this->assertEquals(1, $metas);
+
+        $this->assertContains('http-equiv="screen" content="projection"', $string);
+        $this->assertContains('name="keywords" content="foo bar"', $string);
+        $this->assertContains('lang="us_en"', $string);
+        $this->assertContains('scheme="foo"', $string);
+        $this->assertNotContains('bogus', $string);
+        $this->assertNotContains('unused', $string);
+        $this->assertContains('name="title" content="boo bah"', $string);
     }
 }
 

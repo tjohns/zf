@@ -100,9 +100,11 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      *
      * Allows the following 'virtual' methods:
      * - appendName($keyValue, $content, $modifiers = array())
+     * - offsetGetName($index, $keyValue, $content, $modifers = array())
      * - prependName($keyValue, $content, $modifiers = array())
      * - setName($keyValue, $content, $modifiers = array())
      * - appendHttpEquiv($keyValue, $content, $modifiers = array())
+     * - offsetGetHttpEquiv($index, $keyValue, $content, $modifers = array())
      * - prependHttpEquiv($keyValue, $content, $modifiers = array())
      * - setHttpEquiv($keyValue, $content, $modifiers = array())
      * 
@@ -112,22 +114,57 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      */
     public function __call($method, $args)
     {
-        if (preg_match('/^(?P<action>(pre|ap)pend|set)(?P<type>Name|HttpEquiv)$/', $method, $matches)) {
-            if (2 > count($args)) {
+        if (preg_match('/^(?P<action>set|(pre|ap)pend|offsetSet)(?P<type>Name|HttpEquiv)$/', $method, $matches)) {
+            $action = $matches['action'];
+            $type   = $this->_normalizeType($matches['type']);
+            $argc   = count($args);
+
+            if ('offsetGet' == $action) {
+                if (0 < $argc) {
+                    $index = array_shift($args);
+                }
+            }
+
+            if (2 > $argc) {
                 require_once 'Zend/View/Exception.php';
                 throw new Zend_View_Exception('Too few arguments provided; requires key value, and content');
             }
-            if (3 > count($args)) {
+
+            if (3 > $argc) {
                 $args[] = array();
             }
-            $action = $matches['action'];
-            $type   = $this->_normalizeType($matches['type']);
-            $meta   = $this->_buildMeta($type, $args[0], $args[1], $args[2]);
-            return $this->$action($meta);
+
+            $item  = $this->createData($type, $args[0], $args[1], $args[2]);
+
+            if ('offsetGet' == $action) {
+                return $this->offsetGet($index, $item);
+            }
+
+            $this->$action($item);
+            return $this;
         }
 
         require_once 'Zend/View/Exception.php';
         throw new Zend_View_Exception(sprintf('Invalid action "%s"', $method));
+    }
+
+    /**
+     * Determine if item is valid
+     * 
+     * @param  mixed $item 
+     * @return boolean
+     */
+    protected function _isValid($item)
+    {
+        if ((!$item instanceof stdClass)
+            || !isset($item->type)
+            || !isset($item->content)
+            || !isset($item->modifiers))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -139,12 +176,30 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      */
     public function append($value)
     {
-        if (!is_string($value) || ('<meta ' != substr($value, 0, 6))) {
+        if (!$this->_isValid($value)) {
             require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception('Invalid value passed to append; must be a meta tag');
+            throw new Zend_View_Exception('Invalid value passed to append; please use appendMeta()');
         }
 
         return parent::append($value);
+    }
+
+    /**
+     * OffsetSet
+     * 
+     * @param  string|int $index
+     * @param  string $value 
+     * @return void
+     * @throws Zend_View_Exception
+     */
+    public function offsetSet($index, $value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Invalid value passed to offsetSet; please use offsetSetMeta()');
+        }
+
+        return parent::offsetSet($index, $value);
     }
 
     /**
@@ -156,9 +211,9 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      */
     public function prepend($value)
     {
-        if (!is_string($value) || ('<meta ' != substr($value, 0, 6))) {
+        if (!$this->_isValid($value)) {
             require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception('Invalid value passed to prepend; must be a meta tag');
+            throw new Zend_View_Exception('Invalid value passed to prepend; please use prependMeta()');
         }
 
         return parent::prepend($value);
@@ -173,9 +228,9 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      */
     public function set($value)
     {
-        if (!is_string($value) || ('<meta ' != substr($value, 0, 6))) {
+        if (!$this->_isValid($value)) {
             require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception('Invalid value passed to set; must be a meta tag');
+            throw new Zend_View_Exception('Invalid value passed to set; please use setMeta()');
         }
 
         return parent::set($value);
@@ -190,17 +245,17 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      * @param  array $modifiers 
      * @return string
      */
-    protected function _buildMeta($type, $typeValue, $content, array $modifiers)
+    public function itemToString(stdClass $item)
     {
-        if (!in_array($type, $this->_typeKeys)) {
+        if (!in_array($item->type, $this->_typeKeys)) {
             require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception(sprintf('Invalid type "%s" provided for meta', $type));
+            throw new Zend_View_Exception(sprintf('Invalid type "%s" provided for meta', $item->type));
         }
+        $type = $item->type;
 
         $modifiersString = '';
-        foreach ($modifiers as $key => $value) {
+        foreach ($item->modifiers as $key => $value) {
             if (!in_array($key, $this->_modifierKeys)) {
-                unset($modifiers[$key]);
                 continue;
             }
             $modifiersString .= $key . '="' . htmlentities($value) . '" ';
@@ -209,10 +264,44 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
         $meta = sprintf(
             '<meta %s="%s" content="%s" %s/>',
             $type,
-            htmlentities($typeValue),
-            htmlentities($content),
+            htmlentities($item->$type),
+            htmlentities($item->content),
             $modifiersString
         );
         return $meta;
+    }
+
+    /**
+     * Render placeholder as string
+     * 
+     * @param  string|int $indent 
+     * @return string
+     */
+    public function toString($indent = null)
+    {
+        $items = array();
+        foreach ($this as $item) {
+            $items[] = $this->itemToString($item);
+        }
+        return implode($this->getSeparator(), $items);
+    }
+
+    /**
+     * Create data item for inserting into stack
+     * 
+     * @param  string $type 
+     * @param  string $typeValue 
+     * @param  string $content 
+     * @param  array $modifiers 
+     * @return stdClass
+     */
+    public function createData($type, $typeValue, $content, array $modifiers)
+    {
+        $data            = new stdClass;
+        $data->type      = $type;
+        $data->$type     = $typeValue;
+        $data->content   = $content;
+        $data->modifiers = $modifiers;
+        return $data;
     }
 }
