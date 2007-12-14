@@ -5,7 +5,7 @@
         <title>介绍</title>
 
         <para>
-         		视图渲染(<code>ViewRenderer</code>)助手为实现下列目标设计：
+         		视图解析(<code>ViewRenderer</code>)助手为实现下列目标设计：
         </para>
 
         <itemizedlist>
@@ -29,13 +29,13 @@
 
             <listitem>
                 <para>
-					          允许开发人员为所有控制器设置默认的视图渲染选项。
+					          允许开发人员为所有控制器设置默认的视图解析选项。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-					          加入无需干预自动渲染试图脚本的功能。
+					          加入无需干预自动解析试图脚本的功能。
                 </para>
             </listitem>
 
@@ -48,7 +48,7 @@
 
         <note>
             <para>
-				        如果手动执行<code>_forward()</code>、<code>redirect</code>、或者<code>render</code>时，不会发生自动渲染。因为执行这些动作时，等于告诉<code>ViewRenderer</code>，你要自己确定输出结果。
+				        如果手动执行<code>_forward()</code>、<code>redirect</code>、或者<code>render</code>时，不会发生自动解析。因为执行这些动作时，等于告诉<code>ViewRenderer</code>，你要自己确定输出结果。
             </para>
         </note>
 
@@ -149,13 +149,13 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-					          <code>setNeverRender($flag = true)</code>可以全局的启用或禁用自动渲染，也就是对所有控制器都有效。如果设定为true，在所有控制器器内，<code>postDispatch()</code>将不会自动调用<code>render()</code>。<code>getNeverRender()</code>返回当前的设定值。
+					          <code>setNeverRender($flag = true)</code>可以全局的启用或禁用自动解析，也就是对所有控制器都有效。如果设定为true，在所有控制器器内，<code>postDispatch()</code>将不会自动调用<code>render()</code>。<code>getNeverRender()</code>返回当前的设定值。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setNoRender($flag = true)</code> 用来启用或禁用自动渲染，如果设置为true，在当前控制器内，<code>postDispatch()</code>不会调用<code>render()</code>方法。这个设定在<code>preDispatch()</code>每次执行时会被重置。<code>getNoRender()</code>返回当前的设定值。
+                    <code>setNoRender($flag = true)</code> 用来启用或禁用自动解析，如果设置为true，在当前控制器内，<code>postDispatch()</code>不会调用<code>render()</code>方法。这个设定在<code>preDispatch()</code>每次执行时会被重置。<code>getNoRender()</code>返回当前的设定值。
                 </para>
             </listitem>
 
@@ -173,13 +173,13 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-					          <code>setScriptAction($name)</code>用来指定渲染的视图脚本。<code>$name</code>是脚本的名字去掉后缀(不带控制器子目录，除非<code>noController</code>已开启)。如果没有指定，它将寻找以请求对象中的动作命名的视图脚本。<code>getScriptAction()</code>返回当前值。
+					          <code>setScriptAction($name)</code>用来指定解析的视图脚本。<code>$name</code>是脚本的名字去掉后缀(不带控制器子目录，除非<code>noController</code>已开启)。如果没有指定，它将寻找以请求对象中的动作命名的视图脚本。<code>getScriptAction()</code>返回当前值。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>setResponseSegment($name)</code>用来指定渲染到响应对象中的哪个命名片段。如果没有指定，渲染到默认片断。<code>getResponseSegment()</code>返回当前值。
+                    <code>setResponseSegment($name)</code>用来指定解析到响应对象中的哪个命名片段。如果没有指定，解析到默认片断。<code>getResponseSegment()</code>返回当前值。
                 </para>
             </listitem>
 
@@ -205,7 +205,7 @@ $this->_helper->viewRenderer('form', 'html', true);
                 </programlisting>
 
                 <note><para>
-                        <code>setRender()</code> 和 <code>direct()</code>并不会实际渲染视图脚本，而是提示<code>postDispatch()</code>和<code>postDispatch()</code>渲染视图。
+                        <code>setRender()</code> 和 <code>direct()</code>并不会实际解析视图脚本，而是提示<code>postDispatch()</code>和<code>postDispatch()</code>解析视图。
                 </para></note>
             </listitem>
         </itemizedlist>
@@ -222,7 +222,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
         </programlisting>
 
         <para>
-			      还有几个额外的方法用来定制路径规则，供确定视图基路径来增加视图对象，确定视图脚本路径查找并渲染视图脚本时使用。这些方法每个都带有下面一个或更多的占位符(placehodlers)。
+			      还有几个额外的方法用来定制路径规则，供确定视图基路径来增加视图对象，确定视图脚本路径查找并解析视图脚本时使用。这些方法每个都带有下面一个或更多的占位符(placehodlers)。
         </para>
 
         <itemizedlist>
@@ -282,17 +282,77 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
         </itemizedlist>
 
         <para>
-			      <code>ViewRenderer</code> API中的最后一项是关于实际确定视图脚本路径和渲染视图的。包括：
+            为在路径规范之上精心设计的控制，可以使用<link linkend="zend.filter.inflector">Zend_Filter_Inflector</link>。深入地，<code>视图解析器（ViewRenderer）</code>已经使用inflector来执行路径映射。为和inflector互动 － 或者设置你自己的或者修改缺省的inflector，下面的方法可以被使用：
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-					          <code>renderScript($script, $name)</code>允许渲染指定路径的脚本，可选的命名的路径片段。(<code>renderScript($script, $name)</code> allows you to render a script with a path you specify, optionally to a named path segment. )使用该方法时，<code>ViewRenderer</code>不会自动的确定脚本名称，而是直接的向视图对象的<code>render()</code>传入<code>$script</code>参数。
+                    <code>getInflector()</code> 将获取inflector。如果在<code>视图解析器</code>中不存在， 它用缺省的规则创建一个。
+                </para>
+
+                <para>
+                    缺省地，它用静态规则引用和静态目标做为后缀和模块目录；这允许不同的<code>视图解析器</code>具备动态修改inflector能力的属性。
+                </para>
+            </listitem>
+
+            <listitem><para>
+                    <code>setInflector($inflector, $reference)</code> 允许设置定制的inflector和<code>视图解析器</code>一起使用。如果<code>$reference</code> 是true，它将设置后缀和模块目录作为静态引用和目标给<code>视图解析器</code> 属性。
+            </para></listitem>
+        </itemizedlist>
+
+        <note>
+            <title>缺省查找约定（Conventions）</title>
+
+            <para>
+                <code>视图解析器</code>做了一些路径标准化使视图脚本查找更容易。缺省规则如下：
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>:module</code>: 驼峰词被短横线分开，并整个串变成小写。例如："FooBarBaz" 变成 "foo-bar-baz"。
+                    </para>
+
+                    <para>
+                        在内部，inflector 使用过滤器<code>Zend_Filter_Word_CamelCaseToDash</code> 和 <code>Zend_Filter_StringToLower</code>。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:controller</code>: 驼峰词被短横线分开；下划线转换成目录分隔符，并且整个串变小写。例如："FooBar" becomes "foo-bar"; "FooBar_Admin" 变成 "foo-bar/admin".
+                    </para>
+
+                    <para>
+                        在内部，inflector 使用过滤器<code>Zend_Filter_Word_CamelCaseToDash</code>、<code>Zend_Filter_Word_UnderscoreToSeparator</code> 和 <code>Zend_Filter_StringToLower</code>。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:action</code>: 驼峰词被短横线分开；非字母数字字符翻译成短横线，并且整个串变成小写。 例如 "fooBar" 变成 "foo-bar"； "foo-barBaz" 变成 "foo-bar-baz"。
+                    </para>
+
+                    <para>
+                        在内部，inflector 使用过滤器 <code>Zend_Filter_Word_CamelCaseToDash</code>、<code>Zend_Filter_PregReplace</code> 和 <code>Zend_Filter_StringToLower</code>。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
+
+        <para>
+			      <code>视图解析器</code> API中的最后一项是关于实际确定视图脚本路径和解析视图的。包括：
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+					          <code>renderScript($script, $name)</code>允许解析指定路径的脚本，可选的命名的路径片段。(<code>renderScript($script, $name)</code> allows you to render a script with a path you specify, optionally to a named path segment. )使用该方法时，<code>ViewRenderer</code>不会自动的确定脚本名称，而是直接的向视图对象的<code>render()</code>传入<code>$script</code>参数。
                 </para>
 
                 <note><para>
-             					    当视图已经被渲染到响应对象，将会设置<code>noRender</code>阻止相同的脚本被多次渲染。
+             					    当视图已经被解析到响应对象，将会设置<code>noRender</code>阻止相同的脚本被多次解析。
                 </para></note>
 
                 <note>
@@ -329,7 +389,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 
                 <note>
                     <para>
-						            注意使用render()的边际效应：传入的响应片段名称和noController标志在视图对象中存留。此外渲染结束后noRender会被设置。
+						            注意使用render()的边际效应：传入的响应片段名称和noController标志在视图对象中存留。此外解析结束后noRender会被设置。
                     </para>
                 </note>
 
@@ -399,7 +459,7 @@ class Foo_BarController extends Zend_Controller_Action
         <note>
             <title>命名规则：控制器和动作名中的单词定界符</title>
             <para>
-				        如果控制器或者动作名称由几个单词组成，分发器要求在URL中使用特定的路径和单词定界符分隔。<code>ViewRenderer</code>创建路径时将控制器名称中的任何路径定界符替换成实际的路径定界符('/')，任何单词定界符替换成短线('-')。对动作<code>/foo.bar/baz.bat</code>的调用将分发到<code>FooBarController.php</code>中的<code>FooBarController::bazBatAction()</code>，然后渲染<code>foo-bar/baz-bat.phtml</code>；对动作<code>/bar_baz/baz-bat</code>的调用将分发到<code>Bar/BazController.php</code>中的<code>Bar_BazController::bazBatAction()</code>，并渲染<code>bar/baz/baz-bat.phtml</code>。
+				        如果控制器或者动作名称由几个单词组成，分发器要求在URL中使用特定的路径和单词定界符分隔。<code>ViewRenderer</code>创建路径时将控制器名称中的任何路径定界符替换成实际的路径定界符('/')，任何单词定界符替换成短线('-')。对动作<code>/foo.bar/baz.bat</code>的调用将分发到<code>FooBarController.php</code>中的<code>FooBarController::bazBatAction()</code>，然后解析<code>foo-bar/baz-bat.phtml</code>；对动作<code>/bar_baz/baz-bat</code>的调用将分发到<code>Bar/BazController.php</code>中的<code>Bar_BazController::bazBatAction()</code>，并解析<code>bar/baz/baz-bat.phtml</code>。
             </para>
 
             <para>
@@ -408,10 +468,10 @@ class Foo_BarController extends Zend_Controller_Action
         </note>
 
         <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-2">
-            <title>禁用自动渲染</title>
+            <title>禁用自动解析</title>
 
             <para>
-				        对于某些动作和控制器，可能希望关闭自动渲染——例如，如果想发送其他类型的输出（XML,JSON等），或者更简单的不想发送任何东西。有两个选项：关闭所有的自动渲染(<code>setNeverRender()</code>)，或者仅仅关闭当前动作的自动渲染(<code>setNoRender()</code>)。
+				        对于某些动作和控制器，可能希望关闭自动解析——例如，如果想发送其他类型的输出（XML,JSON等），或者更简单的不想发送任何东西。有两个选项：关闭所有的自动解析(<code>setNeverRender()</code>)，或者仅仅关闭当前动作的自动解析(<code>setNoRender()</code>)。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -439,7 +499,7 @@ class Bar_BatController extends Zend_Controller_Action
 
         <note>
             <para>
-				        大多数情况下，全局的关闭自动渲染(<code>setNeverRender()</code>)没有意义，因为这样<code>ViewRenderer</code>做的唯一件事只是自动设置了视图对象。
+				        大多数情况下，全局的关闭自动解析(<code>setNeverRender()</code>)没有意义，因为这样<code>ViewRenderer</code>做的唯一件事只是自动设置了视图对象。
             </para>
         </note>
 
@@ -447,7 +507,7 @@ class Bar_BatController extends Zend_Controller_Action
             <title>选择另外的视图脚本</title>
 
             <para>
-				        有些情况下需要渲染另一个脚本而非以动作命名的脚本。例如，如果你有一个控制器包含增加和编辑两个动作，它们可能都显示相同的'form'视图，尽管拥有不同的值集合(value set)。只需要使用<code>setScriptAction()</code>或者<code>setRender()</code>简单的改变脚本的名称，或者以成员方法的形式调用助手，它将调用<code>setRender()</code>。
+				        有些情况下需要解析另一个脚本而非以动作命名的脚本。例如，如果你有一个控制器包含增加和编辑两个动作，它们可能都显示相同的'form'视图，尽管拥有不同的值集合(value set)。只需要使用<code>setScriptAction()</code>或者<code>setRender()</code>简单的改变脚本的名称，或者以成员方法的形式调用助手，它将调用<code>setRender()</code>。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -521,7 +581,7 @@ class Foo_BarController extends Zend_Controller_Action
             </para>
 
             <para>
-				        假定视图的基路径(base path)为'/opt/vendor/templates',希望通过':moduleDir/:controller/:action.:suffix'引用视图脚本；如果设定了noController标志，想在顶级而不是在子目录中渲染(':action.:suffix')。最终希望使用'tpl'作为视图脚本文件的后缀。
+				        假定视图的基路径(base path)为'/opt/vendor/templates',希望通过':moduleDir/:controller/:action.:suffix'引用视图脚本；如果设定了noController标志，想在顶级而不是在子目录中解析(':action.:suffix')。最终希望使用'tpl'作为视图脚本文件的后缀。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -542,10 +602,10 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
         </example>
 
         <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-2">
-            <title>一个动作中渲染多个视图脚本</title>
+            <title>一个动作中解析多个视图脚本</title>
 
             <para>
-				        有时可能需要在一个动作中渲染多个视图脚本。这个非常简单，多次调用<code>render()</code>就行了：
+				        有时可能需要在一个动作中解析多个视图脚本。这个非常简单，多次调用<code>render()</code>就行了：
             </para>
 
             <programlisting role="php"><![CDATA[<?php
