@@ -94,245 +94,215 @@ class Zend_View_Helper_HeadScriptTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($placeholder instanceof Zend_View_Helper_HeadScript);
     }
 
-    public function testPrependFileCreatesCorrectOrdering()
+    public function testSetPrependAppendAndOffsetSetThrowExceptionsOnInvalidItems()
     {
-        $this->helper->prependFile('foobar')
-                     ->prependFile('barbaz');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('barbaz', 'foobar');
-        $received = array();
-        foreach ($values as $value) {
-            $received[] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::FILE, $value['mode']);
-        }
-        $this->assertSame($expected, $received);
+        try {
+            $this->helper->append('foo');
+            $this->fail('Append should throw exception with invalid item');
+        } catch (Zend_View_Exception $e) { }
+        try {
+            $this->helper->offsetSet(1, 'foo');
+            $this->fail('OffsetSet should throw exception with invalid item');
+        } catch (Zend_View_Exception $e) { }
+        try {
+            $this->helper->prepend('foo');
+            $this->fail('Prepend should throw exception with invalid item');
+        } catch (Zend_View_Exception $e) { }
+        try {
+            $this->helper->set('foo');
+            $this->fail('Set should throw exception with invalid item');
+        } catch (Zend_View_Exception $e) { }
     }
 
-    public function testAppendFileCreatesCorrectOrdering()
+    protected function _inflectAction($type)
     {
-        $this->helper->appendFile('foobar')
-                     ->appendFile('barbaz');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('foobar', 'barbaz');
-        $received = array();
-        foreach ($values as $value) {
-            $received[] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::FILE, $value['mode']);
-        }
-        $this->assertSame($expected, $received);
+        return ucfirst(strtolower($type));
     }
 
-    public function testPrependScriptCreatesCorrectOrdering()
+    protected function _testOverloadAppend($type)
     {
-        $this->helper->prependScript('foobar')
-                     ->prependScript('barbaz');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('barbaz', 'foobar');
-        $received = array();
-        foreach ($values as $value) {
-            $received[] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode']);
+        $action = 'append' . $this->_inflectAction($type);
+        $string = 'foo';
+        for ($i = 0; $i < 3; ++$i) {
+            $string .= ' foo';
+            $this->helper->$action($string);
+            $values = $this->helper->getArrayCopy();
+            $this->assertEquals($i + 1, count($values));
+            if ('file' == $type) {
+                $this->assertEquals($string, $values[$i]->attributes['src']);
+            } elseif ('script' == $type) {
+                $this->assertEquals($string, $values[$i]->source);
+            }
+            $this->assertEquals('text/javascript', $values[$i]->type);
         }
-        $this->assertSame($expected, $received);
     }
 
-    public function testAppendScriptCreatesCorrectOrdering()
+    protected function _testOverloadPrepend($type)
     {
-        $this->helper->appendScript('foobar')
-                     ->appendScript('barbaz');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('foobar', 'barbaz');
-        $received = array();
-        foreach ($values as $value) {
-            $received[] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode']);
+        $action = 'prepend' . $this->_inflectAction($type);
+        $string = 'foo';
+        for ($i = 0; $i < 3; ++$i) {
+            $string .= ' foo';
+            $this->helper->$action($string);
+            $values = $this->helper->getArrayCopy();
+            $this->assertEquals($i + 1, count($values));
+            $first = array_shift($values);
+            if ('file' == $type) {
+                $this->assertEquals($string, $first->attributes['src']);
+            } elseif ('script' == $type) {
+                $this->assertEquals($string, $first->source);
+            }
+            $this->assertEquals('text/javascript', $first->type);
         }
-        $this->assertSame($expected, $received);
     }
 
-    public function testOffsetSetFileCreatesCorrectOrdering()
+    protected function _testOverloadSet($type)
     {
-        $this->helper->appendFile('foobar')
-                     ->offsetSetFile(5, 'barbaz');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array(0 => 'foobar', 5 => 'barbaz');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::FILE, $value['mode']);
+        $action = 'set' . $this->_inflectAction($type);
+        $string = 'foo';
+        for ($i = 0; $i < 3; ++$i) {
+            $this->helper->appendScript($string);
+            $string .= ' foo';
         }
-        $this->assertSame($expected, $received);
+        $this->helper->$action($string);
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        if ('file' == $type) {
+            $this->assertEquals($string, $values[0]->attributes['src']);
+        } elseif ('script' == $type) {
+            $this->assertEquals($string, $values[0]->source);
+        }
+        $this->assertEquals('text/javascript', $values[0]->type);
     }
 
-    public function testOffsetSetScriptCreatesCorrectOrdering()
+    protected function _testOverloadOffsetSet($type)
     {
-        $this->helper->appendScript('foobar')
-                     ->offsetSetScript(5, 'barbaz');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array(0 => 'foobar', 5 => 'barbaz');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode']);
+        $action = 'offsetSet' . $this->_inflectAction($type);
+        $string = 'foo';
+        $this->helper->$action(5, $string);
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        if ('file' == $type) {
+            $this->assertEquals($string, $values[5]->attributes['src']);
+        } elseif ('script' == $type) {
+            $this->assertEquals($string, $values[5]->source);
         }
-        $this->assertSame($expected, $received);
+        $this->assertEquals('text/javascript', $values[5]->type);
     }
 
-    public function testCaptureAppendsScriptByDefault()
+    public function testOverloadAppendFileAppendsScriptsToStack()
     {
-        $this->helper->appendScript('foobar');
-        $this->helper->captureStart();
-        echo 'bazbat';
-        $this->helper->captureEnd();
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('foobar', 'bazbat');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode']);
-        }
-        $this->assertSame($expected, $received);
+        $this->_testOverloadAppend('file');
     }
 
-    public function testCapturePrependsScriptWhenRequested()
+    public function testOverloadAppendScriptAppendsScriptsToStack()
     {
-        $this->helper->appendScript('foobar');
-        $this->helper->captureStart('PREPEND');
-        echo 'bazbat';
-        $this->helper->captureEnd();
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('bazbat', 'foobar');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode']);
-        }
-        $this->assertSame($expected, $received);
+        $this->_testOverloadAppend('script');
     }
 
-    public function testCaptureOverwritesValuesWhenSetRequested()
+    public function testOverloadPrependFileAppendsScriptsToStack()
     {
-        $this->helper->appendScript('foobar');
-        $this->helper->captureStart('SET');
-        echo 'bazbat';
-        $this->helper->captureEnd();
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('bazbat');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode']);
-        }
-        $this->assertSame($expected, $received);
+        $this->_testOverloadPrepend('file');
     }
 
-    public function testToStringSerializesScriptProperly()
+    public function testOverloadPrependScriptAppendsScriptsToStack()
     {
-        $this->helper->appendScript('foobar');
+        $this->_testOverloadPrepend('script');
+    }
+
+    public function testOverloadSetFileOverwritesStack()
+    {
+        $this->_testOverloadSet('file');
+    }
+
+    public function testOverloadSetScriptOverwritesStack()
+    {
+        $this->_testOverloadSet('script');
+    }
+
+    public function testOverloadOffsetSetFileWritesToSpecifiedIndex()
+    {
+        $this->_testOverloadOffsetSet('file');
+    }
+
+    public function testOverloadOffsetSetScriptWritesToSpecifiedIndex()
+    {
+        $this->_testOverloadOffsetSet('script');
+    }
+
+    public function testOverloadingThrowsExceptionWithInvalidMethod()
+    {
+        try {
+            $this->helper->fooBar('foo');
+            $this->fail('Invalid method should raise exception');
+        } catch (Zend_View_Exception $e) {
+        }
+    }
+
+    public function testOverloadingWithTooFewArgumentsRaisesException()
+    {
+        try {
+            $this->helper->setScript();
+            $this->fail('Too few arguments should raise exception');
+        } catch (Zend_View_Exception $e) {
+        }
+
+        try {
+            $this->helper->offsetSetScript(5);
+            $this->fail('Too few arguments should raise exception');
+        } catch (Zend_View_Exception $e) {
+        }
+    }
+
+    public function testHeadScriptAppropriatelySetsScriptItems()
+    {
+        $this->helper->headScript('FILE', 'foo', 'set')
+                     ->headScript('SCRIPT', 'bar', 'prepend')
+                     ->headScript('SCRIPT', 'baz', 'append');
+        $items = $this->helper->getArrayCopy();
+        for ($i = 0; $i < 3; ++$i) {
+            $item = $items[$i];
+            switch ($i) {
+                case 0:
+                    $this->assertObjectHasAttribute('source', $item);
+                    $this->assertEquals('bar', $item->source);
+                    break;
+                case 1:
+                    $this->assertObjectHasAttribute('attributes', $item);
+                    $this->assertTrue(isset($item->attributes['src']));
+                    $this->assertEquals('foo', $item->attributes['src']);
+                    break;
+                case 2:
+                    $this->assertObjectHasAttribute('source', $item);
+                    $this->assertEquals('baz', $item->source);
+                    break;
+            }
+        }
+    }
+
+    public function testToStringRendersValidHtml()
+    {
+        $this->helper->headScript('FILE', 'foo', 'set')
+                     ->headScript('SCRIPT', 'bar', 'prepend')
+                     ->headScript('SCRIPT', 'baz', 'append');
         $string = $this->helper->toString();
-        $expected = '<script type="text/javascript">foobar</script>';
-        $this->assertContains($expected, $string);
-    }
 
-    public function testToStringSerializesFileProperly()
-    {
-        $this->helper->appendFile('foobar');
-        $string = $this->helper->toString();
-        $expected = '<script type="text/javascript" src="foobar"></script>';
-        $this->assertContains($expected, $string);
-    }
+        $scripts = substr_count($string, '<script ');
+        $this->assertEquals(3, $scripts);
+        $scripts = substr_count($string, '</script>');
+        $this->assertEquals(3, $scripts);
+        $scripts = substr_count($string, 'src="');
+        $this->assertEquals(1, $scripts);
+        $scripts = substr_count($string, '><');
+        $this->assertEquals(1, $scripts);
 
-    public function testToStringSerializesScriptProperlyWhenCdataRequsted()
-    {
-        $this->helper->useCdata = true;
-        $this->helper->appendScript('foobar');
-        $string = $this->helper->toString();
-        $expected = '<script type="text/javascript">' . PHP_EOL . '//<![CDATA[' . PHP_EOL . 'foobar' . PHP_EOL . '//]]>' . PHP_EOL . '</script>';
-        $this->assertContains($expected, $string);
-    }
+        $this->assertContains('src="foo"', $string);
+        $this->assertContains('bar', $string);
+        $this->assertContains('baz', $string);
 
-    public function testHeadScriptAllowsSettingScript()
-    {
-        $this->helper->appendScript('foobar');
-        $this->helper->headScript('bazbat', 'SCRIPT', 'SET');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('bazbat');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode'], var_export($value, 1));
-        }
-        $this->assertSame($expected, $received);
-    }
-
-    public function testHeadScriptAllowsSettingFile()
-    {
-        $this->helper->appendScript('foobar');
-        $this->helper->headScript('bazbat', 'FILE', 'SET');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('bazbat');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::FILE, $value['mode'], var_export($value, 1));
-        }
-        $this->assertSame($expected, $received);
-    }
-
-    public function testHeadScriptAllowsAppendingScript()
-    {
-        $this->helper->appendScript('foobar');
-        $this->helper->headScript('bazbat', 'SCRIPT', 'APPEND');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('foobar', 'bazbat');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode'], var_export($value, 1));
-        }
-        $this->assertSame($expected, $received);
-    }
-
-    public function testHeadScriptAllowsAppendingFile()
-    {
-        $this->helper->appendFile('foobar');
-        $this->helper->headScript('bazbat', 'FILE', 'APPEND');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('foobar', 'bazbat');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::FILE, $value['mode'], var_export($value, 1));
-        }
-        $this->assertSame($expected, $received);
-    }
-
-    public function testHeadScriptAllowsPrependingScript()
-    {
-        $this->helper->prependScript('foobar');
-        $this->helper->headScript('bazbat', 'SCRIPT', 'prepend');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('bazbat', 'foobar');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::SCRIPT, $value['mode'], var_export($value, 1));
-        }
-        $this->assertSame($expected, $received);
-    }
-
-    public function testHeadScriptAllowsPrependingFile()
-    {
-        $this->helper->prependFile('foobar');
-        $this->helper->headScript('bazbat', 'FILE', 'prepend');
-        $values   = $this->helper->getArrayCopy();
-        $expected = array('bazbat', 'foobar');
-        $received = array();
-        foreach ($values as $key => $value) {
-            $received[$key] = $value['content'];
-            $this->assertEquals(Zend_View_Helper_HeadScript::FILE, $value['mode'], var_export($value, 1));
-        }
-        $this->assertSame($expected, $received);
+        $doc = new DOMDocument;
+        $dom = $doc->loadHtml($string);
+        $this->assertTrue($dom !== false);
     }
 }
 

@@ -47,11 +47,27 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      */
     protected $_regKey = 'Zend_View_Helper_HeadScript';
 
-    /**
+    /**#@+
      * Capture type and/or attributes (used for hinting during capture)
      * @var string
      */
-    protected $_captureTypeOrAttrs = null;
+    protected $_captureScriptType  = null;
+    protected $_captureScriptAttrs = null;
+    /**#@-*/
+
+    /**
+     * Optional allowed attributes for script tag
+     * @var array
+     */
+    protected $_optionalAttributes = array(
+        'charset', 'defer', 'language', 'src'
+    );
+
+    /**
+     * Required attributes for script tag
+     * @var string
+     */
+    protected $_requiredAttributes = array('type');
 
     /**
      * Whether or not to format scripts using CDATA; used only if doctype 
@@ -59,191 +75,53 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * @var bool
      */
     public $useCdata = false;
+
+    /**
+     * Constructor
+     *
+     * Set separator to PHP_EOL.
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setSeparator(PHP_EOL);
+    }
     
     /**
      * Return headScript object
      *
      * Returns headScript helper object; optionally, allows specifying 
      *
-     * @param  string $spec Script/url
      * @param  string $mode Script or file
+     * @param  string $spec Script/url
      * @param  string $placement Append, prepend, or set
-     * @param  string|array $type Script type and/or array of script attributes
+     * @param  string $type Script type and/or array of script attributes
+     * @param  array $attrs Array of script attributes
      * @return Zend_View_Helper_HeadScript
      */
-    public function headScript($spec = null, $mode = Zend_View_Helper_HeadScript::FILE, $placement = 'APPEND', $type = 'text/javascript')
+    public function headScript($mode = Zend_View_Helper_HeadScript::FILE, $spec = null, $placement = 'APPEND', array $attrs = array(), $type = 'text/javascript')
     {
         if ((null !== $spec) && is_string($spec)) {
-            switch (strtoupper($placement)) {
-                case 'SET':
-                    $this->_setValue($spec, $type, $mode);
+            $action    = ucfirst(strtolower($mode));
+            $placement = strtolower($placement);
+            switch ($placement) {
+                case 'set':
+                case 'prepend':
+                case 'append':
+                    $action = $placement . $action;
                     break;
-                case 'PREPEND':
-                    $this->_prepend($spec, $type, $mode);
-                    break;
-                case 'APPEND':
                 default:
-                    $this->_offsetSet($this->nextIndex(), $spec, $type, $mode);
+                    $action = 'append' . $action;
                     break;
             }
+            $this->$action($spec, $type, $attrs);
         }
 
         return $this;
     }
    
-    /**
-     * Prepend script file to object
-     * 
-     * @param  string $sourceFile 
-     * @param  string $type 
-     * @return Zend_View_Helper_HeadScript
-     */
-    public function prependFile($sourceFile, $type = 'text/javascript')
-    {
-        return $this->_prepend($sourceFile, $type, self::FILE);
-    }
-    
-    /**
-     * Prepend script to object
-     * 
-     * @param  string $script 
-     * @param  string $type 
-     * @return Zend_View_Helper_HeadScript
-     */
-    public function prependScript($script, $type = 'text/javascript')
-    {
-        $this->_prepend($script, $type, self::SCRIPT);
-        return $this;
-    }
-
-    /**
-     * Append script file to object
-     * 
-     * @param  string $sourceFile 
-     * @param  string $type 
-     * @return Zend_View_Helper_HeadScript
-     */
-    public function appendFile($sourceFile, $type = 'text/javascript')
-    {
-        return $this->_offsetSet($this->nextIndex(), $sourceFile, $type, self::FILE);
-    }
-    
-    /**
-     * Append script to object
-     * 
-     * @param  string $script 
-     * @param  string $type 
-     * @return Zend_View_Helper_HeadScript
-     */
-    public function appendScript($script, $type = 'text/javascript')
-    {
-        $this->_offsetSet($this->nextIndex(), $script, $type, self::SCRIPT);
-        return $this;
-    }
-    
-    /**
-     * Set script item in object
-     * 
-     * @param  string $index 
-     * @param  string $sourceFile 
-     * @param  string $typeOrAttrs 
-     * @return Zend_View_Helper_HeadScript
-     */
-    public function offsetSetFile($index, $sourceFile, $typeOrAttrs = 'text/javascript')
-    {
-        return $this->_offsetSet($index, $sourceFile, $typeOrAttrs, self::FILE);
-    }
-    
-    /**
-     * Set script item in object
-     * 
-     * @param  string $index 
-     * @param  string $script 
-     * @param  string $typeOrAttrs 
-     * @return Zend_View_Helper_HeadScript
-     */
-    public function offsetSetScript($index, $script, $typeOrAttrs = 'text/javascript')
-    {
-        return $this->_offsetSet($index, $script, $typeOrAttrs, self::SCRIPT);
-    }
-
-    /**
-     * Create value for stack
-     * 
-     * @param  string $scriptOrSourceFile 
-     * @param  string|array $typeOrAttrs 
-     * @param  string $mode 
-     * @return string
-     */
-    protected function _createValue($scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
-    {
-        if (!in_array($mode, array(Zend_View_Helper_HeadScript::FILE, Zend_View_Helper_HeadScript::SCRIPT))) {
-            $mode = self::FILE;
-        }
-
-        $value = array(
-            'content' => $scriptOrSourceFile,
-            'mode'    => $mode
-        );
-        
-        if (is_array($typeOrAttrs)) {
-            $value = array_merge($typeOrAttrs, $value);
-        } else {
-            $value['type'] = (string) $typeOrAttrs;
-        }
-
-        return $value;
-    }
-
-    /**
-     * Set a single script as the value of the placeholder
-     * 
-     * @param  string $scriptOrSourceFile 
-     * @param  string|array $typeOrAttrs 
-     * @param  string $mode 
-     * @return Zend_View_Helper_HeadScript
-     */
-    protected function _setValue($scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
-    {
-        $value = array($this->_createValue($scriptOrSourceFile, $typeOrAttrs, $mode));
-        $this->exchangeArray($value);
-        return $this;
-    }
-
-    /**
-     * Prepend a new value to the stack
-     * 
-     * @param  string $scriptOrSourceFile 
-     * @param  string|array $typeOrAttrs 
-     * @param  string $mode 
-     * @return Zend_View_Helper_HeadScript
-     */
-    protected function _prepend($scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
-    {
-        $value   = array($this->_createValue($scriptOrSourceFile, $typeOrAttrs, $mode));
-        $current = $this->getArrayCopy();
-
-        $final   = array_merge($value, $current);
-        $this->exchangeArray($final);
-        return $this;
-    }
-    
-    /**
-     * Set new script item in object
-     * 
-     * @param  int|string $index 
-     * @param  string $scriptOrSourceFile 
-     * @param  string $typeOrAttrs 
-     * @param  string $mode 
-     * @return Zend_View_Helper_HeadScript
-     */
-    protected function _offsetSet($index, $scriptOrSourceFile, $typeOrAttrs = 'text/javascript', $mode = Zend_View_Helper_HeadScript::FILE)
-    {
-        $value = $this->_createValue($scriptOrSourceFile, $typeOrAttrs, $mode);
-        parent::offsetSet($index, $value);
-        return $this;
-    }
-    
     /**
      * Start capture action
      * 
@@ -251,9 +129,11 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      * @param  string $typeOrAttrs 
      * @return void
      */
-    public function captureStart($captureType = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $typeOrAttrs = 'text/javascript')
+    public function captureStart($captureType = Zend_View_Helper_Placeholder_Container_Abstract::APPEND, $type = 'text/javascript', $attrs = array())
     {
-        $this->_captureTypeOrAttrs = $typeOrAttrs;
+        $this->_captureType        = $captureType;
+        $this->_captureScriptType  = $type;
+        $this->_captureScriptAttrs = $attrs;
         return parent::captureStart($captureType);
     }
     
@@ -264,74 +144,270 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      */
     public function captureEnd()
     {
-        $content = ob_get_clean();
-        $typeOrAttrs = $this->_captureTypeOrAttrs;
-        $this->_captureTypeOrAttrs = null;
-        
-        $this->_captureLock = false;
+        $content                   = ob_get_clean();
+        $type                      = $this->_captureScriptType;
+        $attrs                     = $this->_captureScriptAttrs;
+        $this->_captureScriptType  = null;
+        $this->_captureScriptAttrs = null;
+        $this->_captureLock        = false;
+
         switch ($this->_captureType) {
             case self::SET:
-                $this->_setValue($content, $this->_captureTypeOrAttrs, self::SCRIPT);
-                break;
             case self::PREPEND:
-                $this->_prepend($content, $this->_captureTypeOrAttrs, self::SCRIPT);
-                break;
             case self::APPEND:
+                $action = strtolower($this->_captureType) . 'Script';
+                break;
             default:
-                $this->_offsetSet($this->nextIndex(), $content, $this->_captureTypeOrAttrs, self::SCRIPT);
+                $action = 'appendScript';
                 break;
         }
+        $this->$action($content, $type, $attrs);
     }
-    
+
     /**
-     * Render as string
+     * Overload method access
+     *
+     * Allows the following method calls:
+     * - appendFile($src, $type = 'text/javascript', $attrs = array())
+     * - offsetSetFile($index, $src, $type = 'text/javascript', $attrs = array())
+     * - prependFile($src, $type = 'text/javascript', $attrs = array())
+     * - setFile($src, $type = 'text/javascript', $attrs = array())
+     * - appendScript($script, $type = 'text/javascript', $attrs = array())
+     * - offsetSetScript($index, $src, $type = 'text/javascript', $attrs = array())
+     * - prependScript($script, $type = 'text/javascript', $attrs = array())
+     * - setScript($script, $type = 'text/javascript', $attrs = array())
      * 
+     * @param  string $method 
+     * @param  array $args 
+     * @return Zend_View_Helper_HeadScript
+     * @throws Zend_View_Exception if too few arguments or invalid method
+     */
+    public function __call($method, $args)
+    {
+        if (preg_match('/^(?P<action>set|(ap|pre)pend|offsetSet)(?P<mode>File|Script)$/', $method, $matches)) {
+            if (1 > count($args)) {
+                require_once 'Zend/View/Exception.php';
+                throw new Zend_View_Exception(sprintf('Method "%s" requires at least one argument', $method));
+            }
+
+            $action  = $matches['action'];
+            $mode    = strtolower($matches['mode']);
+            $type    = 'text/javascript';
+            $attrs   = array();
+
+            if ('offsetSet' == $action) {
+                $index = array_shift($args);
+                if (1 > count($args)) {
+                    require_once 'Zend/View/Exception.php';
+                    throw new Zend_View_Exception(sprintf('Method "%s" requires at least two arguments, an index and source', $method));
+                }
+            }
+
+            $content = $args[0];
+
+            if (isset($args[1])) {
+                $type = (string) $args[1];
+            }
+            if (isset($args[2])) {
+                $attrs = (array) $args[2];
+            }
+
+            switch ($mode) {
+                case 'script':
+                    $item = $this->createData($type, $attrs, $content);
+                    if ('offsetSet' == $action) {
+                        $this->offsetSet($index, $item);
+                    } else {
+                        $this->$action($item);
+                    }
+                    break;
+                case 'file':
+                default:
+                    $attrs['src'] = $content;
+                    $item = $this->createData($type, $attrs);
+                    if ('offsetSet' == $action) {
+                        $this->offsetSet($index, $item);
+                    } else {
+                        $this->$action($item);
+                    }
+                    break;
+            }
+
+            return $this;
+        }
+
+        require_once 'Zend/View/Exception.php';
+        throw new Zend_View_Exception(sprintf('Method "%s" does not exist', $method));
+    }
+
+    /**
+     * Is the script provided valid?
+     * 
+     * @param  mixed $value 
+     * @param  string $method 
+     * @return bool
+     */
+    protected function _isValid($value)
+    {
+        if ((!$value instanceof stdClass)
+            || !isset($value->type)
+            || (!isset($value->source) && !isset($value->attributes)))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Override append
+     * 
+     * @param  string $value 
+     * @return void
+     */
+    public function append($value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Invalid argument passed to append(); please use one of the helper methods, appendScript() or appendFile()');
+        }
+
+        return parent::append($value);
+    }
+
+    /**
+     * Override prepend
+     * 
+     * @param  string $value 
+     * @return void
+     */
+    public function prepend($value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Invalid argument passed to prepend(); please use one of the helper methods, prependScript() or prependFile()');
+        }
+
+        return parent::prepend($value);
+    }
+
+    /**
+     * Override set
+     * 
+     * @param  string $value 
+     * @return void
+     */
+    public function set($value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Invalid argument passed to set(); please use one of the helper methods, setScript() or setFile()');
+        }
+
+        return parent::set($value);
+    }
+
+    /**
+     * Override offsetSet
+     * 
+     * @param  string|int $index 
+     * @param  mixed $value 
+     * @return void
+     */
+    public function offsetSet($index, $value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Invalid argument passed to offsetSet(); please use one of the helper methods, offsetSetScript() or offsetSetFile()');
+        }
+
+        $this->_isValid($value);
+        return parent::offsetSet($index, $value);
+    }
+
+    /**
+     * Create script HTML
+     * 
+     * @param  string $type 
+     * @param  array $attributes 
+     * @param  string $content 
+     * @param  string|int $indent 
+     * @return string
+     */
+    public function itemToString($item, $indent, $escapeStart, $escapeEnd)
+    {
+        $attrString = '';
+        if (!empty($item->attributes)) {
+            foreach ($item->attributes as $key => $value) {
+                if (!in_array($key, $this->_optionalAttributes)) {
+                    continue;
+                }
+                if ('defer' == $key) {
+                    $value = 'defer';
+                }
+                $attrString .= sprintf(' %s="%s"', $key, htmlspecialchars($value));
+            }
+        }
+
+        $html  = '<script type="' . htmlspecialchars($item->type) . '"' . $attrString . '>';
+        if (!empty($item->source)) {
+              $html .= PHP_EOL . $indent . $escapeStart . PHP_EOL . $indent . $item->source . PHP_EOL . $indent . $escapeEnd . PHP_EOL;
+        }
+        $html .= '</script>';
+
+        return $html;
+    }
+
+    /**
+     * Retrieve string representation
+     * 
+     * @param  string|int $indent 
      * @return string
      */
     public function toString($indent = null)
     {
-        $indent   = ($indent != null) ? $indent : $this->_indent;
-        $indent   = (is_int($indent)) ? str_repeat(' ', $indent) : $indent;
+        if (null !== $indent) {
+            if (!is_int($indent) && !is_string($indent)) {
+                $indent = $this->_indent;
+            }
+        } else {
+            $indent = $this->_indent;
+        }
 
         if ($this->view) {
             $useCdata = $this->view->doctype()->isXhtml() ? true : false;
         } else {
             $useCdata = $this->useCdata ? true : false;
         }
+        $escapeStart = ($useCdata) ? '//<![CDATA[' : '//<!--';
+        $escapeEnd   = ($useCdata) ? '//]]>'       : '//-->';
 
-        $output   = '';
-        
-        foreach ($this as $script) {
-            $output .= '<script ';
-            
-            $content = null;
+        $items = array();
+        foreach ($this as $item) {
+            if (!$this->_isValid($item)) {
+                continue;
+            }
 
-            $mode = $script['mode'];
-            if (self::FILE == $mode)  {
-                $script['src'] = $script['content'];
-            } elseif (isset($script['content'])) {
-                $content = $script['content'];
-            }
-            unset($script['content'], $script['mode']);
-            
-            
-            foreach ($script as $name => $attr) {
-                $output .= $name . '="' . $attr . '" ';
-            }
-            
-            $output = rtrim($output) . '>';
-            
-            if ($content) {
-                if ($useCdata) {
-                    $output .= PHP_EOL . $indent . '//<![CDATA[' . PHP_EOL . $indent . $content . PHP_EOL . $indent . '//]]>' . PHP_EOL . $indent;
-                } else {
-                    $output .= $content;
-                }
-            }
-            
-            $output .= '</script>' . PHP_EOL . $indent;
+            $items[] = $this->itemToString($item, $indent, $escapeStart, $escapeEnd);
         }
-        
-        return trim($output);
+
+        return implode($this->getSeparator(), $items);
+    }
+
+    /**
+     * Create data item containing all necessary components of script
+     * 
+     * @param  string $type 
+     * @param  array $attributes 
+     * @param  string $content 
+     * @return stdClass
+     */
+    public function createData($type, array $attributes, $content = null)
+    {
+        $data             = new stdClass();
+        $data->type       = $type;
+        $data->attributes = $attributes;
+        $data->source     = $content;
+        return $data;
     }
 }
