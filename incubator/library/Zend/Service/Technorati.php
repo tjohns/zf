@@ -21,11 +21,6 @@
  */
 
 
-/**
- * @see Zend_Service_Technorati_Exception
- */
-require_once 'Zend/Service/Technorati/Exception.php';
-
 /** 
  * @see Zend_Service_Technorati_Author 
  */
