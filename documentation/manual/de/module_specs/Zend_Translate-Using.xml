@@ -321,6 +321,33 @@ $german = array('message1' => 'Nachricht1',
 $translate = new Zend_Translate('array', $english, 'en');
 $translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
+
+        <para>
+            Seit Release 1.1 wird es auch unterstützt, das Array die in externen Dateien vorhanden sind zu
+            inkludieren. Es muß nur der Dateiname angegeben werden und <code>Zend_Translate</code> wird
+            diesen automatisch inkludieren und nach dem Array schauen. Das folgende Beispiel zeigt Details:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// myarray.php
+<?php
+return array(
+    'message1' => 'Nachricht1',
+    'message2' => 'Nachricht2',
+    'message3' => 'Nachricht3');
+
+// controller
+$translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Bei Dateien die kein Array zurückgeben wird das inkludieren fehlschlagen. Auch jegliche
+                Ausgabe innerhalb dieser Dateien wird ignoriert und unterdrückt.
+            </para>
+
+        </note>
+
     </sect2>
 
     <sect2 id="zend.translate.using.source.gettext">
