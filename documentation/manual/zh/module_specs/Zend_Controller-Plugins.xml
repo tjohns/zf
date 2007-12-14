@@ -200,7 +200,8 @@ $front->dispatch();
         <para>
             Zend Framework 在其标准发行包中包含错误处理插件。
         </para>
-
+        
+        <xi:include href="Zend_Controller-Plugins-ActionStack.xml" />
         <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />
     </sect2>
 </sect1>
