@@ -356,6 +356,94 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
         </itemizedlist>
 
         <para>
+            Für eine feinkörnige Kontrolle über Pfadspezifikationen kann
+            <link linkend="zend.filter.inflector">Zend_Filter_Inflector</link> verwendet werden.
+            Im Hintergrund verwendet der <code>ViewRenderer</code> einen Inflector um bereits
+            Abstimmungen am Pfad durchzuführen. Um auf dem Inflector einzuwirken, damit entweder
+            ein eigener für die Verwendung gesetzt wird, oder um den Standard Inflector zu verändern,
+            können die folgenden Methoden verwendet werden:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>getInflector()</code> empfängt den Inflector. Wenn bis dahin keiner im
+                    <code>ViewRenderer</code> existiert, wird dieser, anhand der Verwendung der
+                    Standard Regeln, erstellt.
+                </para>
+
+                <para>
+                    Standardmäßig verwendet dieser statische Referenzregeln für das Suffix und
+                    Modulverzeichnis, sowie ein statisches Ziel; das erlaubt verschiedenen
+                    <code>ViewRenderer</code> Eigenschaften den Inflector dynamisch zu ändern.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>setInflector($inflector, $reference)</code> erlaubt das Setzen eines
+                    eigenen Inflectors für die Verwendung mit dem <code>ViewRenderer</code>. Wenn
+                    <code>$reference</code> true ist, setzt dieser das Suffix und Modulverzeichnis
+                    als statische Referenz zu <code>ViewRenderer</code> Eigenschaften, genauso wie
+                    das Ziel.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <note>
+            <title>Standard Konventionen für das Eruieren</title>
+
+            <para>
+                Der <code>ViewRenderer</code> führt einige Pfad Normalisierungen durch um das Eruieren
+                von View Skripten einfacher zu machen. Die Standardregeln sind wie folgt: 
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>:module</code>: CamelCaseWörter werden durch Bindestriche getrennt,
+                        und der komplette String wird auf Kleinschreibung geändert. z.B.:
+                        "FooBarBaz" wird "foo-bar-baz".
+                    </para>
+
+                    <para>
+                        Intern verwendet der Inflector die Filter <code>Zend_Filter_Word_CamelCaseToDash</code>
+                        und <code>Zend_Filter_StringToLower</code>.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:controller</code>: CamelCaseWörter werden durch Bindestriche getrennt;
+                        Unterstriche werden in Verzeichnistrennzeichen konvertiert, und der komplette
+                        String wird auf Kleinschreibung geändert. Beispiele: "FooBar" wird "foo-bar";
+                        "FooBar_Admin" wird "foo-bar/admin".
+                    </para>
+
+                    <para>
+                        Intern verwendet der Inflector die Filter <code>Zend_Filter_Word_CamelCaseToDash</code>,
+                        <code>Zend_Filter_Word_UnderscoreToSeparator</code> und
+                        <code>Zend_Filter_StringToLower</code>.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:action</code>: CamelCaseWörter werden durch Bindestriche getrennt;
+                        nicht-anphanummerische Zeichen werden zu Bindestrichen übersetzt, und der
+                        komplette String wird auf Kleinschreibung geändert. Beispiele: "fooBar" wird
+                        "foo-bar"; "foo-barBaz" wird "foo-bar-baz".
+                    </para>
+
+                    <para>
+                        Intern verwendet der Inflector die Filter <code>Zend_Filter_Word_CamelCaseToDash</code>,
+                        <code>Zend_Filter_PregReplace</code> und <code>Zend_Filter_StringToLower</code>.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
+
+        <para>
             Die letzten Teile in der <code>ViewRenderer</code> API sind die Methoden für das aktuelle herausfinden
             von View Skript Pfaden und Rendern von Views. Diese beinhalten:
         </para>
