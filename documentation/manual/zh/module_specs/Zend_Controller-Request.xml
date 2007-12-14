@@ -77,6 +77,10 @@
                 </para>
             </note>
 
+            <para>
+                如果你希望从你通过 <code>setParam()</code> 设置的参数中获取（参数）， 使用 <code>getUserParam()</code>。
+            </para>
+
             <note>
                 <title>Apache相关</title>
                 <para>
@@ -129,6 +133,30 @@ $controller->setControllerDirectory('./application/controllers')
 $response   = $controller->dispatch();]]>
             </programlisting>
 
+        </sect3>
+                    
+        <sect3 id="zend.controller.request.http.ajax">
+            <title>删除 AJAX 请求</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> 有一个初步的方法用来检测AJAX请求：<code>isXmlHttpRequest()</code>。这个方法寻找一个带有'XMLHttpRequest' 值的HTTP请求头<code>X-Requested-With</code>；如果发现，就返回true。 
+            </para>
+
+            <para>
+                当前，这个头用下列JS库缺省地传递：
+            </para>
+
+            <itemizedlist>
+                <listitem><para>Prototype/Scriptaculous (and libraries derived
+                        from Prototype)</para></listitem>
+                <listitem><para>Yahoo! UI Library</para></listitem>
+                <listitem><para>jQuery</para></listitem>
+                <listitem><para>MochiKit</para></listitem>
+            </itemizedlist>
+
+            <para>
+                大多数 AJAX 库允许发送定制的HTTP请求头；如果你的库没有发送这个头，简单地把它作为一个请求头添加上确保<code>isXmlHttpRequest()</code> 方法工作。
+            </para>
         </sect3>
     </sect2>
 
