@@ -46,6 +46,12 @@ class Zend_Service_Technorati
     /** Base Technorati API URI */
     const URI_BASE = 'http://api.technorati.com';
     
+    /** Prevent magic numbers */
+    const PARAM_LIMIT_MIN_VALUE = 1
+    const PARAM_LIMIT_MAX_VALUE = 100
+    const PARAM_START_MIN_VALUE = 1
+    
+    
     /**
      * TODO: extract all API paths and store them into constants
      */
@@ -351,25 +357,6 @@ class Zend_Service_Technorati
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
 
-        /**
-         * @see Zend_Filter_Int
-         */
-        require_once 'Zend/Filter/Int.php';
-        $filterInt = new Zend_Filter_Int();
-
-        /**
-         * @see Zend_Validate_Between
-         */
-        require_once 'Zend/Validate/Between.php';
-        $validateBetween = new Zend_Validate_Between(1, 100, true);
-
-        /**
-         * @see Zend_Validate_GreaterThan
-         */
-        require_once 'Zend/Validate/GreaterThan.php';
-        $validateGreaterThan = new Zend_Validate_GreaterThan(0);
-
-
         // Validate url (required)
         if (empty($options['url'])) {
             throw new Zend_Service_Technorati_Exception('Cosmos query requires an "url" option');
@@ -383,7 +370,9 @@ class Zend_Service_Technorati
         }
 
         // Validate limit (optional)
-        if (isset($options['limit']) && !$validateBetween->setMin(1)->setMax(100)->isValid($options['limit'])) {
+        if (isset($options['limit']) && 
+            $options['limit'] >= self::PARAM_LIMIT_MIN_VALUE && 
+            $options['limit'] <= self::PARAM_LIMIT_MAX_VALUE) {
             /**
              * @see Zend_Service_Technorati_Exception
              */
@@ -393,7 +382,8 @@ class Zend_Service_Technorati
         }
 
         // Validate start (optional)
-        if (isset($options['start']) && !$validateGreaterThan->isValid($options['start'])) {
+        if (isset($options['start']) && 
+            !$options['start'] >= self::PARAM_START_MIN_VALUE) {
             /**
              * @see Zend_Service_Technorati_Exception
              */
@@ -413,12 +403,12 @@ class Zend_Service_Technorati
         
         // Validate claim (optional)
         if (isset($options['claim'])) {
-            $options['claim'] = $filterInt->filter($options['highlight']);
+            $options['claim'] = (int) $options['highlight'];
         }
 
         // Validate highlight (optional)
         if (isset($options['highlight'])) {
-            $options['highlight'] = $filterInt->filter($options['highlight']);
+            $options['highlight'] = (int) $options['highlight'];
         }
     }
 
