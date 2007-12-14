@@ -44,6 +44,13 @@
         <xi:include href="module_specs/Zend_TimeSync-Queries.xml" />
     </chapter>
 
+    <chapter id="zend.view">
+        <title>Zend_View</title>
+        <xi:include href="module_specs/Zend_View-Helpers-Placeholder.xml" />
+        <xi:include href="module_specs/Zend_View-Helpers-Doctype.xml" />
+        <xi:include href="module_specs/Zend_View-Helpers-HeadLink.xml" />
+    </chapter>
+
     <appendix id="appendix.copyright">
         <title>Copyright Information</title>
         <xi:include href="ref/copyrights.xml" />
