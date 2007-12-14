@@ -99,18 +99,19 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
         try {
             $this->helper->append('foo');
             $this->fail('Non-style value should not append');
-        } catch (Exception $e) {
-        }
+        } catch (Zend_View_Exception $e) { }
+        try {
+            $this->helper->offsetSet(5, 'foo');
+            $this->fail('Non-style value should not offsetSet');
+        } catch (Zend_View_Exception $e) { }
         try {
             $this->helper->prepend('foo');
             $this->fail('Non-style value should not prepend');
-        } catch (Exception $e) {
-        }
+        } catch (Zend_View_Exception $e) { }
         try {
             $this->helper->set('foo');
             $this->fail('Non-style value should not set');
-        } catch (Exception $e) {
-        }
+        } catch (Zend_View_Exception $e) { }
     }
 
     public function testOverloadAppendStyleAppendsStyleToStack()
@@ -121,9 +122,12 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
             $this->helper->appendStyle($string);
             $values = $this->helper->getArrayCopy();
             $this->assertEquals($i + 1, count($values));
-            $this->assertContains('<style type="text/css"', $values[$i]);
-            $this->assertTrue((strstr($values[$i], $string)) ? true : false, $values[$i]);
-            $this->assertContains('</style>', $values[$i]);
+            $item = $values[$i];
+
+            $this->assertTrue($item instanceof stdClass);
+            $this->assertObjectHasAttribute('content', $item);
+            $this->assertObjectHasAttribute('attributes', $item);
+            $this->assertEquals($string, $item->content);
         }
     }
 
@@ -135,10 +139,12 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
             $this->helper->prependStyle($string);
             $values = $this->helper->getArrayCopy();
             $this->assertEquals($i + 1, count($values));
-            $first = array_shift($values);
-            $this->assertContains('<style type="text/css"', $first);
-            $this->assertTrue((strstr($first, $string)) ? true : false, $first);
-            $this->assertContains('</style>', $first);
+            $item = array_shift($values);
+
+            $this->assertTrue($item instanceof stdClass);
+            $this->assertObjectHasAttribute('content', $item);
+            $this->assertObjectHasAttribute('attributes', $item);
+            $this->assertEquals($string, $item->content);
         }
     }
 
@@ -152,9 +158,12 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
         $this->helper->setStyle($string);
         $values = $this->helper->getArrayCopy();
         $this->assertEquals(1, count($values));
-        $this->assertContains('<style type="text/css"', $values[0]);
-        $this->assertTrue((strstr($values[0], $string)) ? true : false, $values[0]);
-        $this->assertContains('</style>', $values[0]);
+        $item = array_shift($values);
+
+        $this->assertTrue($item instanceof stdClass);
+        $this->assertObjectHasAttribute('content', $item);
+        $this->assertObjectHasAttribute('attributes', $item);
+        $this->assertEquals($string, $item->content);
     }
 
     public function testCanBuildStyleTagsWithAttributes()
@@ -167,12 +176,20 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
             'bogus' => 'unused'
         ));
         $value = $this->helper->getValue();
-        $this->assertContains('lang="us_en"', $value);
-        $this->assertContains('title="foo"', $value);
-        $this->assertContains('media="screen"', $value);
-        $this->assertContains('dir="rtol"', $value);
-        $this->assertNotContains('bogus', $value);
-        $this->assertNotContains('unused', $value);
+
+        $this->assertObjectHasAttribute('attributes', $value);
+        $attributes = $value->attributes;
+
+        $this->assertTrue(isset($attributes['lang']));
+        $this->assertTrue(isset($attributes['title']));
+        $this->assertTrue(isset($attributes['media']));
+        $this->assertTrue(isset($attributes['dir']));
+        $this->assertTrue(isset($attributes['bogus']));
+        $this->assertEquals('us_en', $attributes['lang']);
+        $this->assertEquals('foo', $attributes['title']);
+        $this->assertEquals('screen', $attributes['media']);
+        $this->assertEquals('rtol', $attributes['dir']);
+        $this->assertEquals('unused', $attributes['bogus']);
     }
 
     public function testCanBuildStyleTagsWithCdataEscaping()
@@ -185,7 +202,7 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
             'dir'   => 'rtol', 
             'bogus' => 'unused'
         ));
-        $value = $this->helper->getValue();
+        $value = $this->helper->toString();
         $this->assertContains('<![CDATA[', $value);
         $this->assertContains(']]>', $value);
         $this->assertNotContains('<!--', $value);
@@ -203,9 +220,32 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
                      ->headStyle($style3, 'APPEND');
         $this->assertEquals(3, count($this->helper));
         $values = $this->helper->getArrayCopy();
-        $this->assertTrue((strstr($values[0], $style2)) ? true : false);
-        $this->assertTrue((strstr($values[1], $style1)) ? true : false);
-        $this->assertTrue((strstr($values[2], $style3)) ? true : false);
+        $this->assertTrue((strstr($values[0]->content, $style2)) ? true : false);
+        $this->assertTrue((strstr($values[1]->content, $style1)) ? true : false);
+        $this->assertTrue((strstr($values[2]->content, $style3)) ? true : false);
+    }
+
+    public function testToStyleGeneratesValidHtml()
+    {
+        $style1 = 'a {}';
+        $style2 = 'body {}' . PHP_EOL . 'h1 {}';
+        $style3 = 'div {}' . PHP_EOL . 'li {}';
+
+        $this->helper->headStyle($style1, 'SET')
+                     ->headStyle($style2, 'PREPEND')
+                     ->headStyle($style3, 'APPEND');
+        $html = $this->helper->toString();
+        $doc  = new DOMDocument;
+        $dom  = $doc->loadHtml($html);
+        $this->assertTrue(($dom !== false));
+
+        $styles = substr_count($html, '<style type="text/css"');
+        $this->assertEquals(3, $styles);
+        $styles = substr_count($html, '</style>');
+        $this->assertEquals(3, $styles);
+        $this->assertContains($style3, $html);
+        $this->assertContains($style2, $html);
+        $this->assertContains($style1, $html);
     }
 }
 
