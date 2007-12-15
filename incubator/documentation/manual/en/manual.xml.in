@@ -49,6 +49,7 @@
         <xi:include href="module_specs/Zend_View-Helpers-Placeholder.xml" />
         <xi:include href="module_specs/Zend_View-Helpers-Doctype.xml" />
         <xi:include href="module_specs/Zend_View-Helpers-HeadLink.xml" />
+        <xi:include href="module_specs/Zend_View-Helpers-HeadMeta.xml" />
     </chapter>
 
     <appendix id="appendix.copyright">
