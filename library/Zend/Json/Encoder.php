@@ -69,7 +69,7 @@ class Zend_Json_Encoder
      */
     public static function encode($value, $cycleCheck = false)
     {
-        $encoder = new Zend_Json_Encoder(($cycleCheck) ? true : false);
+        $encoder = new self(($cycleCheck) ? true : false);
 
         return $encoder->_encodeValue($value);
     }

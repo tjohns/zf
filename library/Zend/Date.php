@@ -2662,7 +2662,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     throw new Zend_Date_Exception($e->getMessage());
                 }
             }
-            $time = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
+            $time = new self(0, Zend_Date::TIMESTAMP, $locale);
             $time->set($parsed['hour'],   Zend_Date::HOUR);
             $time->set($parsed['minute'], Zend_Date::MINUTE);
             $time->set($parsed['second'], Zend_Date::SECOND);
@@ -2802,7 +2802,7 @@ class Zend_Date extends Zend_Date_DateObject {
                     throw new Zend_Date_Exception($e->getMessage());
                 }
             }
-            $date = new Zend_Date(0, Zend_Date::TIMESTAMP, $locale);
+            $date = new self(0, Zend_Date::TIMESTAMP, $locale);
             $date->set($parsed['year'], Zend_Date::YEAR);
             $date->set($parsed['month'], Zend_Date::MONTH);
             $date->set($parsed['day'], Zend_Date::DAY);
@@ -4551,7 +4551,7 @@ class Zend_Date extends Zend_Date_DateObject {
         if (!isset($parsed['year'])) {
             $parsed['year'] = 1970;
         }
-        $date = new Zend_Date($locale);
+        $date = new self($locale);
         $timestamp = $date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                    $parsed['month'], $parsed['day'], $parsed['year']);
 

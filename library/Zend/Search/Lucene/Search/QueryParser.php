@@ -274,7 +274,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     public static function setDefaultEncoding($encoding)
     {
         if (self::$_instance === null) {
-            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+            self::$_instance = new self();
         }
 
         self::$_instance->_defaultEncoding = $encoding;
@@ -288,7 +288,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     public static function getDefaultEncoding()
     {
         if (self::$_instance === null) {
-            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+            self::$_instance = new self();
         }
 
         return self::$_instance->_defaultEncoding;
@@ -302,7 +302,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     public static function setDefaultOperator($operator)
     {
         if (self::$_instance === null) {
-            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+            self::$_instance = new self();
         }
 
         self::$_instance->_defaultOperator = $operator;
@@ -316,7 +316,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     public static function getDefaultOperator()
     {
         if (self::$_instance === null) {
-            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+            self::$_instance = new self();
         }
 
         return self::$_instance->_defaultOperator;
@@ -333,7 +333,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     public static function parse($strQuery, $encoding = null)
     {
         if (self::$_instance === null) {
-            self::$_instance = new Zend_Search_Lucene_Search_QueryParser();
+            self::$_instance = new self();
         }
 
         self::$_instance->_encoding     = ($encoding !== null) ? $encoding : self::$_instance->_defaultEncoding;

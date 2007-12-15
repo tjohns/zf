@@ -181,7 +181,7 @@ class Zend_Feed_Element implements ArrayAccess
             } else {
                 $node = $this->_element->ownerDocument->createElement($var);
             }
-            $node = new Zend_Feed_Element($node);
+            $node = new self($node);
             $node->setParent($this);
             return $node;
         }

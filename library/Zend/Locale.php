@@ -945,7 +945,7 @@ class Zend_Locale {
     public static function isLocale($locale, $create = false)
     {
         if (empty($locale) and ($create === true)) {
-            $locale = new Zend_Locale();
+            $locale = new self();
         }
         if ($locale instanceof Zend_Locale) {
             return $locale->toString();
@@ -954,7 +954,7 @@ class Zend_Locale {
             return false;
         }
         if (empty(self::$_auto)) {
-            $temp = new Zend_Locale($locale);
+            $temp = new self($locale);
             self::$_auto        = $temp->getDefault(null, false);
             self::$_browser     = $temp->getDefault(self::BROWSER, false);
             self::$_environment = $temp->getDefault(self::ENVIRONMENT, false);

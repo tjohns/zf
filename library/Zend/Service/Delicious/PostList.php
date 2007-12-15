@@ -113,7 +113,7 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
      */
     public function withTags(array $tags)
     {
-        $postList = new Zend_Service_Delicious_PostList($this->_service);
+        $postList = new self($this->_service);
 
         foreach ($this->_posts as $post) {
             if (count(array_diff($tags, $post->getTags())) == 0) {
@@ -143,7 +143,7 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
      */
     public function withUrl($regexp)
     {
-        $postList = new Zend_Service_Delicious_PostList($this->_service);
+        $postList = new self($this->_service);
 
         foreach ($this->_posts as $post) {
             if (preg_match($regexp, $post->getUrl())) {
