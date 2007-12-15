@@ -158,8 +158,8 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
 
         $order = array();
         foreach ($this->helper as $key => $value) {
-            if (preg_match('#href="([^"]*)"#', $value, $matches)) {
-                $order[$key] = $matches[1];
+            if (isset($value->href)) {
+                $order[$key] = $value->href;
             }
         }
         $expected = array('bar', 'foo', 'baz');
@@ -194,8 +194,8 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
 
         $order = array();
         foreach ($this->helper as $key => $value) {
-            if (preg_match('#href="([^"]*)"#', $value, $matches)) {
-                $order[$key] = $matches[1];
+            if (isset($value->href)) {
+                $order[$key] = $value->href;
             }
         }
         $expected = array('bar', 'foo', 'baz');
@@ -235,8 +235,8 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
 
         $order = array();
         foreach ($this->helper as $key => $value) {
-            if (preg_match('#href="([^"]*)"#', $value, $matches)) {
-                $order[$key] = $matches[1];
+            if (isset($value->href)) {
+                $order[$key] = $value->href;
             }
         }
         $expected = array('bar', 'foo', 'baz');

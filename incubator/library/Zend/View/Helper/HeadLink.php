@@ -22,9 +22,6 @@
 /** Zend_View_Helper_Placeholder_Container_Standalone */
 require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 
-/** Zend_View_Exception */
-require_once 'Zend/View/Exception.php';
-
 /**
  * Zend_Layout_View_Helper_HeadLink
  *
@@ -73,243 +70,295 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
     public function headLink(array $attributes = null, $placement = Zend_View_Helper_Placeholder_Container_Abstract::APPEND)
     {
         if (null !== $attributes) {
+            $item = $this->createData($attributes);
             switch ($placement) {
                 case self::SET:
-                    $this->set($attributes);
+                    $this->set($item);
                     break;
                 case self::PREPEND:
-                    $this->prepend($attributes);
+                    $this->prepend($item);
                     break;
                 case self::APPEND:
                 default:
-                    $this->append($attributes);
+                    $this->append($item);
                     break;
             }
         }
         return $this;
     }
-    
+
     /**
-     * prepend()
+     * Overload method access
      *
-     * @param  array $attributes
-     * @return Zend_Layout_ViewHelper_HeadLink
+     * Creates the following virtual methods:
+     * - appendStylesheet($href, $media, $conditionalStylesheet)
+     * - offsetSetStylesheet($index, $href, $media, $conditionalStylesheet)
+     * - prependStylesheet($href, $media, $conditionalStylesheet)
+     * - setStylesheet($href, $media, $conditionalStylesheet)
+     * - appendAlternate($href, $type, $title)
+     * - offsetSetAlternate($index, $href, $type, $title)
+     * - prependAlternate($href, $type, $title)
+     * - setAlternate($href, $type, $title)
+     * 
+     * Items that may be added in the future:
+     * - Navigation?  need to find docs on this
+     *   - public function appendStart()
+     *   - public function appendContents()
+     *   - public function appendPrev()
+     *   - public function appendNext()
+     *   - public function appendIndex()
+     *   - public function appendEnd()
+     *   - public function appendGlossary()
+     *   - public function appendAppendix()
+     *   - public function appendHelp()
+     *   - public function appendBookmark()
+     * - Other?
+     *   - public function appendCopyright()
+     *   - public function appendChapter()
+     *   - public function appendSection()
+     *   - public function appendSubsection()
+     *
+     * @param mixed $method 
+     * @param mixed $args 
+     * @return void
      */
-    public function prepend($attributes)
+    public function __call($method, $args)
     {
-        if (!is_array($attributes)) {
-            throw new Zend_View_Exception('Zend_View_Helper_HeadLink::prepend() expects an array of attributes');
+        if (preg_match('/^(?P<action>set|(ap|pre)pend|offsetSet)(?P<type>Stylesheet|Alternate)$/', $method, $matches)) {
+            $argc   = count($args);
+            $action = $matches['action'];
+            $type   = $matches['type'];
+            $index  = null;
+
+            if ('offsetSet' == $action) {
+                if (0 < $argc) {
+                    $index = array_shift($args);
+                    --$argc;
+                }
+            }
+
+            if (1 > $argc) {
+                require_once 'Zend/View/Exception.php';
+                throw new Zend_View_Exception(sprintf('%s requires at least one argument', $method));
+            }
+
+            if (is_array($args[0])) {
+                $item = $this->createData($args[0]);
+            } else {
+                $dataMethod = 'createData' . $type;
+                $item       = $this->$dataMethod($args);
+            }
+
+            if ('offsetSet' == $action) {
+                $this->offsetSet($index, $item);
+            } else {
+                $this->$action($item);
+            }
+
+            return $this;
         }
 
-        if ($link = $this->_buildLinkFromAttributesArray($attributes)) {
-            return parent::prepend($link);
-        }
-
-        throw new Zend_View_Exception('Invalid attributes passed to Zend_View_Helper_HeadLink::prepend(); unable to create link');
+        require_once 'Zend/View/Exception.php';
+        throw new Zend_View_Exception(sprintf('Method "%s" does not exist', $method));
     }
 
+    /**
+     * Check if value is valid
+     * 
+     * @param  mixed $value 
+     * @return boolean
+     */
+    protected function _isValid($value)
+    {
+        if (!$value instanceof stdClass) {
+            return false;
+        }
+
+        $vars         = get_object_vars($value);
+        $keys         = array_keys($vars);
+        $intersection = array_intersect($this->_itemKeys, $keys);
+        if (empty($intersection)) {
+            return false;
+        }
+
+        return true;
+    }
+    
     /**
      * append()
      *
-     * @param  array $attributes
-     * @return Zend_Layout_ViewHelper_HeadLink
+     * @param  array $value
+     * @return void
      */
-    public function append($attributes)
+    public function append($value)
     {
-        if (!is_array($attributes)) {
-            throw new Zend_View_Exception('Zend_View_Helper_HeadLink::append() expects an array of attributes; received: ' . var_export($attributes, 1));
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('append() expects a data token; please use one of the custom append*() methods');
         }
 
-        if ($link = $this->_buildLinkFromAttributesArray($attributes)) {
-            return parent::append($link);
-        }
-
-        throw new Zend_View_Exception('Invalid attributes passed to Zend_View_Helper_HeadLink::append(); unable to create link');
+        return parent::append($value);
     }
-    
+
     /**
      * offsetSet()
      * 
      * @param  string|int $index 
-     * @param  array $attributes 
+     * @param  array $value 
      * @return void
      */
-    public function offsetSet($index, $attributes) 
+    public function offsetSet($index, $value) 
     {
-        if (is_string($attributes) && ('<link ' != substr($attributes, 0, 6))) {
-            throw new Zend_View_Exception('Zend_View_Helper_HeadLink::offsetSet() expects fully qualified link html');
-        } elseif (is_string($attributes) && ('<link ' == substr($attributes, 0, 6))) {
-            return parent::offsetSet($index, $attributes);
-        } elseif (!is_array($attributes)) {
-            throw new Zend_View_Exception('Zend_View_Helper_HeadLink::offsetSet() expects an array of attributes');
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('offsetSet() expects a data token; please use one of the custom offsetSet*() methods');
         }
 
-        if ($link = $this->_buildLinkFromAtrributesArray($attributes)) {
-            return parent::offsetSet($index, $link);
-        }
-        
-        throw new Zend_View_Exception('No valid attributes where provided to Zend_View_Helper_HeadLink::offsetSet() to build a link with.');
+        return parent::offsetSet($index, $value);
     }
 
     /**
-     * Create a stylesheet link element
+     * prepend()
+     *
+     * @param  array $value
+     * @return Zend_Layout_ViewHelper_HeadLink
+     */
+    public function prepend($value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('prepend() expects a data token; please use one of the custom prepend*() methods');
+        }
+
+        return parent::prepend($value);
+    }
+
+    /**
+     * set()
+     *
+     * @param  array $value
+     * @return Zend_Layout_ViewHelper_HeadLink
+     */
+    public function set($value)
+    {
+        if (!$this->_isValid($value)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('set() expects a data token; please use one of the custom set*() methods');
+        }
+
+        return parent::set($value);
+    }
+
+    
+    /**
+     * Create HTML link element from data item
      * 
-     * @param  string $href 
-     * @param  string $media 
-     * @param  bool $conditionalStylesheet 
+     * @param  stdClass $item 
      * @return string
      */
-    protected function _createStylesheetLink($href, $media, $conditionalStylesheet)
+    public function itemToString(stdClass $item)
     {
-        $attributes = array(
-            'rel'   => 'stylesheet',
-            'type'  => 'text/css',
-            'href'  => $href,
-            'media' => $media
-            );
-
-        $link = $this->_buildLinkFromAttributesArray($attributes);
-
-        if ($conditionalStylesheet) {
-            $link = '<!--[if ' . $conditionalStylesheet . ']> ' . $link . '<![endif]-->';
-        }
-
-        return $link;
-    }
-    
-    /**
-     * prependStylesheet() - 
-     *
-     * @param string $href
-     * @param string $media
-     * @param string $conditionalStylesheet
-     * @return Xend_Layout_ViewHelper_HeadLink
-     */
-    public function prependStylesheet($href, $media = 'screen', $conditionalStylesheet = null)
-    {
-        parent::prepend($this->_createStylesheetLink($href, $media, $conditionalStylesheet));
-        return $this;
-    }
-
-    /**
-     * appendStylesheet() - 
-     *
-     * @param string $href
-     * @param string $media
-     * @param string $conditionalStylesheet
-     * @return Xend_Layout_ViewHelper_HeadLink
-     */
-    public function appendStylesheet($href, $media = 'screen', $conditionalStylesheet = null)
-    {
-        $this->offsetSetStylesheet($this->nextIndex(), $href, $media, $conditionalStylesheet);
-        return $this;
-    }
-    
-    /**
-     * Insert stylesheet link by index
-     * 
-     * @param  mixed $index 
-     * @param  mixed $href 
-     * @param  string $media 
-     * @param  mixed $conditionalStylesheet 
-     * @return void
-     */
-    public function offsetSetStylesheet($index, $href, $media = 'screen', $conditionalStylesheet = null)
-    {
-        $link = $this->_createStylesheetLink($href, $media, $conditionalStylesheet);
-        return parent::offsetSet($index, $link);
-    }
-
-    /**
-     * Create alternate link
-     * 
-     * @param  string $href 
-     * @param  string $type 
-     * @param  string $title 
-     * @return string
-     */
-    protected function _createAlternateLinkData($href, $type, $title)
-    {
-        $attrs = array(
-            'rel'   => 'alternate',
-            'href'  => $href,
-            'type'  => $type,
-            'title' => $title
-        );
-        return $attrs;
-    }
-
-    /**
-     * prependAlternate()
-     * 
-     * @param  string $href 
-     * @param  string $type 
-     * @param  string $title 
-     * @return Zend_View_Helper_HeadLink
-     */
-    public function prependAlternate($href, $type, $title)
-    {
-        return $this->prepend($this->_createAlternateLinkData($href, $type, $title));
-    }
-
-    /**
-     * appendAlternate()
-     *
-     * @param  string $href
-     * @param  string $type
-     * @param  string $title
-     * @return Zend_View_Helper_HeadLink
-     */
-    public function appendAlternate($href, $type, $title)
-    {
-        return $this->append($this->_createAlternateLinkData($href, $type, $title));
-    }
-    
-    // Navigation?  need to find docs on this
-    //public function appendStart()
-    //public function appendContents()
-    //public function appendPrev()
-    //public function appendNext()
-    //public function appendIndex()
-    //public function appendEnd()
-    //public function appendGlossary()
-    //public function appendAppendix()
-    //public function appendHelp()
-    //public function appendBookmark()
-    
-    // Other?
-    //public function appendCopyright()
-    //public function appendChapter()
-    //public function appendSection()
-    //public function appendSubsection()
-    
-    /**
-     * Build a link from the attributes array provided, return false if there is nothing
-     * in the link itself
-     *
-     * @param  array $attributesArray
-     * @return string|false
-     */
-    protected function _buildLinkFromAttributesArray(Array $attributes)
-    {
-        if (empty($attributes)) {
-            return false;
-        }
-        
-        $link = '<link ';
+        $attributes = (array) $item;
+        $link       = '<link ';
         
         foreach ($this->_itemKeys as $itemKey) {
             if (isset($attributes[$itemKey])) {
-                $link .= $itemKey . '="' . $attributes[$itemKey] . '" ';
+                $link .= $itemKey . '="' . htmlentities($attributes[$itemKey]) . '" ';
             }
         }
         
         $link .= '/>';
-        
+
         if ($link == '<link />') {
-            return false;
+            return '';
         }
-        
+
+        if (isset($attributes['conditionalStylesheet'])) {
+            $link = '<!--[if ' . $attributes['conditionalStylesheet'] . ']> ' . $link . '<![endif]-->';
+        }
+       
         return $link;
+    }
+
+    /**
+     * Render link elements as string
+     * 
+     * @param  string|int $index 
+     * @return string
+     */
+    public function toString($index = null)
+    {
+        $items = array();
+        foreach ($this as $item) {
+            $items[] = $this->itemToString($item);
+        }
+
+        return implode($this->getSeparator(), $items);
+    }
+
+    /**
+     * Create data item for stack
+     * 
+     * @param  array $attributes 
+     * @return stdClass
+     */
+    public function createData(array $attributes)
+    {
+        $data = (object) $attributes;
+        return $data;
+    }
+
+    /**
+     * Create item for stylesheet link item
+     * 
+     * @param  array $args 
+     * @return stdClass
+     */
+    public function createDataStylesheet(array $args)
+    {
+        $rel                   = 'stylesheet';
+        $type                  = 'text/css';
+        $media                 = 'screen';
+        $conditionalStylesheet = false;
+        $href                  = array_shift($args);
+
+        if (0 < count($args)) {
+            $media = array_shift($args);
+            $media = (string) $media;
+        }
+        if (0 < count($args)) {
+            $conditionalStylesheet = array_shift($args);
+            $conditionalStylesheet = (string) $conditionalStylesheet;
+        }
+
+        $attributes = compact('rel', 'type', 'href', 'media', 'conditionalStylesheet');
+        return $this->createData($attributes);
+    }
+
+
+    /**
+     * Create item for alternate link item
+     * 
+     * @param  array $args 
+     * @return stdClass
+     */
+    public function createDataAlternate(array $args)
+    {
+        if (3 > count($args)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception(sprintf('Alternate tags require 3 arguments; %s provided', count($args)));
+        }
+
+        $rel   = 'alternate';
+        $href  = array_shift($args);
+        $type  = array_shift($args);
+        $title = array_shift($args);
+
+        $href  = (string) $href;
+        $type  = (string) $type;
+        $title = (string) $title;
+
+        $attributes = compact('rel', 'href', 'type', 'title');
+        return $this->createData($attributes);
     }
 }
