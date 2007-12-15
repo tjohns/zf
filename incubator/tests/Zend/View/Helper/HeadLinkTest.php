@@ -242,6 +242,69 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $expected = array('bar', 'foo', 'baz');
         $this->assertSame($expected, $order);
     }
+
+    public function testOverloadingThrowsExceptionWithNoArguments()
+    {
+        try {
+            $this->helper->appendStylesheet();
+            $this->fail('Helper should expect at least one argument');
+        } catch (Zend_View_Exception $e) {}
+    }
+
+    public function testOverloadingShouldAllowSingleArrayArgument()
+    {
+        $this->helper->setStylesheet(array('href' => '/styles.css'));
+        $link = $this->helper->getValue();
+        $this->assertEquals('/styles.css', $link->href);
+    }
+
+    public function testOverloadingUsingSingleArrayArgumentWithInvalidValuesThrowsException()
+    {
+        try {
+            $this->helper->setStylesheet(array('bogus' => 'unused'));
+            $this->fail('Invalid attribute values should raise exception');
+        } catch (Zend_View_Exception $e) { }
+    }
+
+    public function testOverloadingOffsetSetWorks()
+    {
+        $this->helper->offsetSetStylesheet(100, '/styles.css');
+        $items = $this->helper->getArrayCopy();
+        $this->assertTrue(isset($items[100]));
+        $link = $items[100];
+        $this->assertEquals('/styles.css', $link->href);
+    }
+
+    public function testOverloadingThrowsExceptionWithInvalidMethod()
+    {
+        try {
+            $this->helper->bogusMethod();
+            $this->fail('Invalid method should raise exception');
+        } catch (Zend_View_Exception $e) { }
+    }
+
+    public function testStylesheetAttributesGetSet()
+    {
+        $this->helper->setStylesheet('/styles.css', 'projection', 'ie6');
+        $item = $this->helper->getValue();
+        $this->assertObjectHasAttribute('media', $item);
+        $this->assertObjectHasAttribute('conditionalStylesheet', $item);
+
+        $this->assertEquals('projection', $item->media);
+        $this->assertEquals('ie6', $item->conditionalStylesheet);
+    }
+
+    public function testSettingAlternateWithTooFewArgsRaisesException()
+    {
+        try {
+            $this->helper->setAlternate('foo');
+            $this->fail('Setting alternate with fewer than 3 args should raise exception');
+        } catch (Zend_View_Exception $e) { }
+        try {
+            $this->helper->setAlternate('foo', 'bar');
+            $this->fail('Setting alternate with fewer than 3 args should raise exception');
+        } catch (Zend_View_Exception $e) { }
+    }
 }
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.
