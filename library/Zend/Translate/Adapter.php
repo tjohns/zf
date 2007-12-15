@@ -77,13 +77,14 @@ abstract class Zend_Translate_Adapter {
                 return true;
             }
         }
-        
+
         if ($locale === null) {
             $locale = new Zend_Locale();
         }
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         }
+        $originate = $locale;
 
         $options = array_merge($this->_options, $options);
         if (is_string($data) and is_dir($data)) {
@@ -136,6 +137,9 @@ abstract class Zend_Translate_Adapter {
             if ((array_key_exists($locale, $this->_translate)) and (count($this->_translate[$locale]) > 0)) {
                 $this->setLocale($locale);
             }
+        }
+        if ((array_key_exists($originate, $this->_translate)) and (count($this->_translate[$originate]) > 0)) {
+            $this->setLocale($originate);
         }
         $this->_automatic = true;
     }
