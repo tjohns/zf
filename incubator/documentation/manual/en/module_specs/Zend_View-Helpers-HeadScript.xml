@@ -108,6 +108,15 @@ $this->headScript()->appendScript('/js/scriptaculous.js');
 $this->headScript()->prependScript('/js/prototype.js');
 ?>
 ]]></programlisting>
+
+        <para>
+            When you're finally ready to output all scripts in your layout
+            script, simply echo the helper:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<?= $this->headScript() ?>
+?>]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headscript.capture">
