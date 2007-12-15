@@ -25,9 +25,6 @@ require_once 'Zend/Loader.php';
 /** Zend_Controller_Action_HelperBroker */
 require_once 'Zend/Controller/Action/HelperBroker.php';
 
-/** Zend_Controller_Action_Helper_ViewRenderer */
-require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
-
 /** Zend_Controller_Exception */
 require_once 'Zend/Controller/Exception.php';
 
@@ -42,9 +39,6 @@ require_once 'Zend/Controller/Router/Interface.php';
 
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
-
-/** Zend_Controller_Plugin_ErrorHandler */
-require_once 'Zend/Controller/Plugin/ErrorHandler.php';
 
 /** Zend_Controller_Response_Abstract */
 require_once 'Zend/Controller/Response/Abstract.php';
@@ -821,10 +815,12 @@ class Zend_Controller_Front
     {
         if (!$this->getParam('noErrorHandler') && !$this->_plugins->hasPlugin('Zend_Controller_Plugin_ErrorHandler')) {
             // Register with stack index of 100
+            require_once 'Zend/Controller/Plugin/ErrorHandler.php';
             $this->_plugins->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(), 100);
         }
 
         if (!$this->getParam('noViewRenderer') && !Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
+            require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
             Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
         }
 
