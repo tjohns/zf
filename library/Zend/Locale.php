@@ -881,12 +881,12 @@ class Zend_Locale {
         $quest = Zend_Locale_Data::getContent($locale, 'questionstrings');
         $yes = explode(':', $quest['yes']);
         $no  = explode(':', $quest['no']);
-        $quest['yes']     = $yes[0];
-        $quest['yesabbr'] = $yes[1];
-        $quest['no']      = $no[0];
-        $quest['noabbr']  = $no[1];
-        $quest['yesexpr'] = $this->_getRegex($quest['yes']);
-        $quest['noexpr']  = $this->_getRegex($quest['no']);
+        $quest['yes']      = $yes[0];
+        $quest['yesarray'] = $yes;
+        $quest['no']       = $no[0];
+        $quest['noarray']  = $no;
+        $quest['yesexpr']  = $this->_getRegex($yes);
+        $quest['noexpr']   = $this->_getRegex($no);
 
         return $quest;
     }
@@ -903,23 +903,31 @@ class Zend_Locale {
         if (empty($input)) {
             return false;
         }
-        $regex = "^(";
-        $one = null;
-        if (strlen($input) > 2) {
-            $one = true;
-        }
-        foreach (str_split($input, 1) as $char) {
-            $regex .= "[" . strtolower($char);
-            $regex .= strtoupper($char) . "]";
-            if ($one === true) {
-                $one = false;
-                $regex .= "(";
+        $regex = "^";
+        $start = true;
+        foreach($input as $row) {
+            if ($start === false) {
+                $regex .= "|";
             }
+            $start = false;
+            $regex .= "(";
+            $one = null;
+            if (strlen($row) > 2) {
+                $one = true;
+            }
+            foreach (str_split($row, 1) as $char) {
+                $regex .= "[" . $char;
+                $regex .= strtoupper($char) . "]";
+                if ($one === true) {
+                    $one = false;
+                    $regex .= "(";
+                }
+            }
+            if ($one === false) {
+                $regex .= ")";
+            }
+            $regex .= "?)";
         }
-        if ($one === false) {
-            $regex .= ")";
-        }
-        $regex .= "?)";
         return $regex;
     }
 

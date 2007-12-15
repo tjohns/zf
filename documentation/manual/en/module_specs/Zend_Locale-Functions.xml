@@ -475,8 +475,34 @@ foreach($list as $language => $content) {
         <para>
             Frequently, programs need to solicit a "yes" or "no" response from the user. Use <code>getQuestion()</code>
             to obtain an array containing the correct word(s) or regex strings to use for prompting the user in a
-            particular $locale (defaults to the current object's locale). The array will contain six key-value pairs,
-            for "yes", "no", their abbreviations, and regex string for proper parsing as shown in the example below.
+            particular $locale (defaults to the current object's locale). The returned array will contain the
+            following informations :
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">yes and no</emphasis>: A generic string representation for yes
+                    and no responses. This will contain the first and most generic response from yesarray and
+                    noarray.
+                </para>
+
+                <para>
+                    <emphasis role="strong">yesarray and noarray</emphasis>: An array with all known yes and
+                    no responses. Several languages have more than just two responses. In general this is the
+                    full string and it's abbreviation.
+                </para>
+
+                <para>
+                    <emphasis role="strong">yesexpr and noexpr</emphasis>: An generated regex which allows you
+                    to handle user response, and search for yes or no.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            All of this informations are of course localized and depend on the set locale. See the following
+            example for the informations you can receive:
         </para>
 
         <example id="zend.locale.getquestion.example-1">
@@ -492,16 +518,33 @@ print_r($locale->getQuestion('de'));
 
 Array
 (
-    [yes]ja[/yes]
-    [no]nein[/no]
-    [yesabbr]j[/yesabbr]
-    [noabbr]n[/noabbr]
-    [yesexpr]^([yY]([eE][sS])?)|([jJ][aA]?)[/yesexpr]
-    [noexpr]^([nN]([oO]|([eE][iI][nN]))?)[/noexpr]
+    [yes] => ja
+    [no] => nein
+    [yesarray] => Array
+        (
+            [0] => ja
+            [1] => j
+        )
+
+    [noarray] => Array
+        (
+            [0] => nein
+            [1] => n
+        )
+
+    [yesexpr] => ^([jJ][aA]?)|([jJ]?)
+    [noexpr] => ^([nN]([eE][iI][nN])?)|([nN]?)
 )]]>
             </programlisting>
         </example>
 
+        <note>
+            <para>
+                Until 1.0.3 <emphasis role="strong">yesabbr</emphasis> from the underlaying locale data was also
+                avaiable. Since 1.1 this information is no longer standalone avaiable, but you will find the
+                information from it within <emphasis role="strong">yesarray</emphasis>.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.locale.getlocalelist">
