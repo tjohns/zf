@@ -247,6 +247,43 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
         $this->assertContains($style2, $html);
         $this->assertContains($style1, $html);
     }
+
+    public function testCapturingCapturesToObject()
+    {
+        $this->helper->captureStart();
+        echo 'foobar';
+        $this->helper->captureEnd();
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        $item = array_shift($values);
+        $this->assertContains('foobar', $item->content);
+    }
+
+    public function testOverloadingOffsetSetWritesToSpecifiedIndex()
+    {
+        $this->helper->offsetSetStyle(100, 'foobar');
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        $this->assertTrue(isset($values[100]));
+        $item = $values[100];
+        $this->assertContains('foobar', $item->content);
+    }
+
+    public function testInvalidMethodRaisesException()
+    {
+        try {
+            $this->helper->bogusMethod();
+            $this->fail('Invalid method should raise exception');
+        } catch (Zend_View_Exception $e) { }
+    }
+
+    public function testTooFewArgumentsRaisesException()
+    {
+        try {
+            $this->helper->appendStyle();
+            $this->fail('Too few arguments should raise exception');
+        } catch (Zend_View_Exception $e) { }
+    }
 }
 
 // Call Zend_View_Helper_HeadStyleTest::main() if this source file is executed directly.

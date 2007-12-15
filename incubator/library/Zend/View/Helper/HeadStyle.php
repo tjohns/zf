@@ -270,7 +270,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
     public function captureEnd()
     {
         $content             = ob_get_clean();
-        $attrs               = $this->_captureTypeOrAttrs;
+        $attrs               = $this->_captureAttrs;
         $this->_captureAttrs = null;
         $this->_captureLock  = false;
 

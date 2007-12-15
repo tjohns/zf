@@ -304,6 +304,17 @@ class Zend_View_Helper_HeadScriptTest extends PHPUnit_Framework_TestCase
         $dom = $doc->loadHtml($string);
         $this->assertTrue($dom !== false);
     }
+
+    public function testCapturingCapturesToObject()
+    {
+        $this->helper->captureStart();
+        echo 'foobar';
+        $this->helper->captureEnd();
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        $item = array_shift($values);
+        $this->assertContains('foobar', $item->source);
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.

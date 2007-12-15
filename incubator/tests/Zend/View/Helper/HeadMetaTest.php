@@ -102,6 +102,11 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         } catch (Zend_View_Exception $e) {
         }
         try {
+            $this->helper->offsetSet(3, 'foo');
+            $this->fail('Non-meta value should not offsetSet');
+        } catch (Zend_View_Exception $e) {
+        }
+        try {
             $this->helper->prepend('foo');
             $this->fail('Non-meta value should not prepend');
         } catch (Zend_View_Exception $e) {
@@ -266,6 +271,29 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains('bogus', $string);
         $this->assertNotContains('unused', $string);
         $this->assertContains('name="title" content="boo bah"', $string);
+    }
+
+    public function testHeadMetaHelperCreatesItemEntry()
+    {
+        $this->helper->headMeta('foo', 'keywords');
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        $item = array_shift($values);
+        $this->assertEquals('foo', $item->content);
+        $this->assertEquals('name', $item->type);
+        $this->assertEquals('keywords', $item->name);
+    }
+
+    public function testOverloadingOffsetInsertsAtOffset()
+    {
+        $this->helper->offsetSetName(100, 'keywords', 'foo');
+        $values = $this->helper->getArrayCopy();
+        $this->assertEquals(1, count($values));
+        $this->assertTrue(array_key_exists(100, $values));
+        $item = $values[100];
+        $this->assertEquals('foo', $item->content);
+        $this->assertEquals('name', $item->type);
+        $this->assertEquals('keywords', $item->name);
     }
 }
 

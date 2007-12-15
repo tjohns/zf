@@ -70,15 +70,27 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      * @param  string $content 
      * @param  string $keyValue 
      * @param  string $keyType 
-     * @param  string $placement 
      * @param  array $modifiers 
+     * @param  string $placement 
      * @return Zend_View_Helper_HeadMeta
      */
     public function headMeta($content = null, $keyValue = null, $keyType = 'name', $modifiers = array(), $placement = Zend_View_Helper_Placeholder_Container_Abstract::APPEND)
     {
-        if ((null !== $content) && (null !== $key)) {
-            $this->_buildMeta($keyType, $keyValue, $content, $modifiers);
+        if ((null !== $content) && (null !== $keyValue)) {
+            $item   = $this->createData($keyType, $keyValue, $content, $modifiers);
+            $action = strtolower($placement);
+            switch ($placement) {
+                case 'append':
+                case 'prepend':
+                case 'set':
+                    $this->$action($item);
+                    break;
+                default:
+                    $this->append($item);
+                    break;
+            }
         }
+
         return $this;
     }
 
@@ -118,10 +130,12 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             $action = $matches['action'];
             $type   = $this->_normalizeType($matches['type']);
             $argc   = count($args);
+            $index  = null;
 
-            if ('offsetGet' == $action) {
+            if ('offsetSet' == $action) {
                 if (0 < $argc) {
                     $index = array_shift($args);
+                    --$argc;
                 }
             }
 
@@ -136,8 +150,8 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
 
             $item  = $this->createData($type, $args[0], $args[1], $args[2]);
 
-            if ('offsetGet' == $action) {
-                return $this->offsetGet($index, $item);
+            if ('offsetSet' == $action) {
+                return $this->offsetSet($index, $item);
             }
 
             $this->$action($item);
