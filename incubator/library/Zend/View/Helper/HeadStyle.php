@@ -116,6 +116,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
      *
      * Allows the following method calls:
      * - appendStyle($content, $attributes = array())
+     * - offsetSetStyle($index, $content, $attributes = array())
      * - prependStyle($content, $attributes = array())
      * - setStyle($content, $attributes = array())
      * 
