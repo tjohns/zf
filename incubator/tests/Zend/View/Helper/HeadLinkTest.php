@@ -294,6 +294,33 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ie6', $item->conditionalStylesheet);
     }
 
+    public function testConditionalStylesheetNotCreatedByDefault()
+    {
+        $this->helper->setStylesheet('/styles.css');
+        $item = $this->helper->getValue();
+        $this->assertObjectHasAttribute('conditionalStylesheet', $item);
+        $this->assertFalse($item->conditionalStylesheet);
+
+        $string = $this->helper->toString();
+        $this->assertContains('/styles.css', $string);
+        $this->assertNotContains('<!--[if', $string);
+        $this->assertNotContains(']>', $string);
+        $this->assertNotContains('<![endif]-->', $string);
+    }
+
+    public function testConditionalStylesheetCreationOccursWhenRequested()
+    {
+        $this->helper->setStylesheet('/styles.css', 'screen', 'ie6');
+        $item = $this->helper->getValue();
+        $this->assertObjectHasAttribute('conditionalStylesheet', $item);
+        $this->assertEquals('ie6', $item->conditionalStylesheet);
+
+        $string = $this->helper->toString();
+        $this->assertContains('/styles.css', $string);
+        $this->assertContains('<!--[if ie6]>', $string);
+        $this->assertContains('<![endif]-->', $string);
+    }
+
     public function testSettingAlternateWithTooFewArgsRaisesException()
     {
         try {

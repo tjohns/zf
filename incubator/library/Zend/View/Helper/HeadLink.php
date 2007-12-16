@@ -273,7 +273,9 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             return '';
         }
 
-        if (isset($attributes['conditionalStylesheet'])) {
+        if (isset($attributes['conditionalStylesheet'])
+            && (false !== $attributes['conditionalStylesheet'])) 
+        {
             $link = '<!--[if ' . $attributes['conditionalStylesheet'] . ']> ' . $link . '<![endif]-->';
         }
        
