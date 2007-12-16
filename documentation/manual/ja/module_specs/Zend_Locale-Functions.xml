@@ -490,10 +490,36 @@ foreach($list as $language => $content) {
             <code>getQuestion()</code> を使用すると、
             ユーザに問い合わせるときに使用する単語あるいは正規表現文字列を含む配列を、
             特定の $locale (デフォルトは、そのオブジェクトのロケール)
-            にあわせて返します。この配列には六つの要素が含まれます。それぞれが
-            "はい"、"いいえ" とその省略形、
-            そして適切にパースするための正規表現文字列を表します。
-            以下の例を参照ください。
+            にあわせて返します。
+            返される配列の中身は次のようになります。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">yes および no</emphasis>:
+                    yes および no に対応する一般的な文字列表現です。
+                    これは、yesarray および noarray の最初の要素でもあり、もっとも一般的な内容です。
+                </para>
+
+                <para>
+                    <emphasis role="strong">yesarray および noarray</emphasis>:
+                    yes および no に対応する内容をすべて含む配列です。
+                    言語によっては単に「はい」「いいえ」以外の返答を持つものもあります。
+                    一般に、これは完全な文字列とその省略形になります。
+                </para>
+
+                <para>
+                    <emphasis role="strong">yesexpr および noexpr</emphasis>:
+                    正規表現で、ユーザの回答から yes か no かを判定できるようにします。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            これらのすべての情報は当然地域化されており、
+            設定されているロケールによって変化します。
+            以下の例で、どのような情報が取得できるのかを確認してみましょう。
         </para>
 
         <example id="zend.locale.getquestion.example-1">
@@ -509,16 +535,35 @@ print_r($locale->getQuestion('de'));
 
 Array
 (
-    [yes]ja[/yes]
-    [no]nein[/no]
-    [yesabbr]j[/yesabbr]
-    [noabbr]n[/noabbr]
-    [yesexpr]^([yY]([eE][sS])?)|([jJ][aA]?)[/yesexpr]
-    [noexpr]^([nN]([oO]|([eE][iI][nN]))?)[/noexpr]
+    [yes] => ja
+    [no] => nein
+    [yesarray] => Array
+        (
+            [0] => ja
+            [1] => j
+        )
+
+    [noarray] => Array
+        (
+            [0] => nein
+            [1] => n
+        )
+
+    [yesexpr] => ^([jJ][aA]?)|([jJ]?)
+    [noexpr] => ^([nN]([eE][iI][nN])?)|([nN]?)
 )]]>
             </programlisting>
         </example>
 
+        <note>
+            <para>
+                1.0.3 までは、<emphasis role="strong">yesabbr</emphasis>
+                もロケールデータから取得可能でした。
+                1.1 以降、この情報は単体では存在しません。しかし、同じ情報を
+                <emphasis role="strong">yesarray</emphasis>
+                から取得できます。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.locale.getlocalelist">
