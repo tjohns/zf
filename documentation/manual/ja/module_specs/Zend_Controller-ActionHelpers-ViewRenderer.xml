@@ -393,6 +393,104 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
         </itemizedlist>
 
         <para>
+            パス指定をよりきめ細かく行うには、
+            <link linkend="zend.filter.inflector">Zend_Filter_Inflector</link>
+            を使用します。実は、<code>ViewRenderer</code>
+            はパスのマッピングを行う際に既にインフレクタを使用しています。
+            インフレクタに手を入れたい (独自のインフレクタを使用したり、
+            デフォルトのインフレクタに手を加えたりしたい) 場合は、
+            以下のメソッドを使用します。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>getInflector()</code> は、インフレクタを取得します。
+                    まだ <code>ViewRenderer</code> にインフレクタが存在しない場合は、
+                    デフォルトの規則にもとづいたインフレクタを作成します。
+                </para>
+
+                <para>
+                    By default, it uses static rule references for the suffix
+                    and module directory, as well as a static target; this
+                    allows various <code>ViewRenderer</code> properties the
+                    ability to dynamically modify the inflector.
+                </para>
+            </listitem>
+
+            <listitem><para>
+                    <code>setInflector($inflector, $reference)</code> は、
+                    <code>ViewRenderer</code> で使用する独自のインフレクタを設定します。
+                    <code>$reference</code> が true の場合は、
+                    対象だけでなくサフィックスやモジュールディレクトリも
+                    <code>ViewRenderer</code> のプロパティへの静的な参照とします。
+            </para></listitem>
+        </itemizedlist>
+
+        <note>
+            <title>デフォルトの検索方式</title>
+
+            <para>
+                <code>ViewRenderer</code> は、
+                パスの正規化を行ってビュースクリプトによる検索を簡単にします。
+                デフォルトのルールは次のようなものです。
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>:module</code>:
+                        CamelCase 形式の単語がダッシュで分割され、
+                        すべて小文字になります。たとえば
+                        "FooBarBaz" は "foo-bar-baz" となります。
+                    </para>
+
+                    <para>
+                        内部的には、インフレクタはフィルタ
+                        <code>Zend_Filter_Word_CamelCaseToDash</code> および
+                        <code>Zend_Filter_StringToLower</code> を使用します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:controller</code>:
+                        CamelCase 形式の単語がダッシュで分割され、
+                        アンダースコアはディレクトリ区切り文字に変換され、
+                        すべて小文字になります。たとえば
+                        "FooBar" は "foo-bar" となり、そして "FooBar_Admin"
+                        は "foo-bar/admin" となります。
+                    </para>
+
+                    <para>
+                        内部的には、インフレクタはフィルタ
+                        <code>Zend_Filter_Word_CamelCaseToDash</code>、
+                        <code>Zend_Filter_Word_UnderscoreToSeparator</code> および
+                        <code>Zend_Filter_StringToLower</code> を使用します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <code>:action</code>:
+                        CamelCase 形式の単語がダッシュで分割され、
+                        英数字以外の文字はダッシュに変換され、
+                        すべて小文字になります。たとえば
+                        "fooBar" は "foo-bar" となり、"foo-barBaz"
+                        は "foo-bar-baz" となります。
+                    </para>
+
+                    <para>
+                        内部的には、インフレクタはフィルタ
+                        <code>Zend_Filter_Word_CamelCaseToDash</code>、
+                        <code>Zend_Filter_PregReplace</code> および
+                        <code>Zend_Filter_StringToLower</code> を使用します。
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
+
+        <para>
             <code>ViewRenderer</code> API の最後に紹介するのは、
             実際にビュースクリプトのパスを決定するメソッドと
             ビューのレンダリングを行うメソッドです。以下をご覧ください。

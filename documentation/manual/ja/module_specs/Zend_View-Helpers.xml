@@ -1,5 +1,4 @@
-<sect1 id="zend.view.helpers">
-
+<sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2003/XInclude">
     <title>ビューヘルパー</title>
 
     <para>
@@ -34,7 +33,6 @@
         オブジェクトのインスタンスは <code>Zend_View</code> インスタンスの中に残り続け、
         後で <code>$this->helperName()</code> がコールされたときには再利用されます。
     </para>
-
 
     <sect2 id="zend.view.helpers.initial">
         <title>付属のヘルパー</title>
@@ -199,6 +197,9 @@
 </form>]]>
         </programlisting>
 
+        <xi:include href="Zend_View-Helpers-Action.xml" />
+        <xi:include href="Zend_View-Helpers-Partial.xml" />
+        <xi:include href="Zend_View-Helpers-Placeholder.xml" />
     </sect2>
 
     <sect2 id="zend.view.helpers.paths">

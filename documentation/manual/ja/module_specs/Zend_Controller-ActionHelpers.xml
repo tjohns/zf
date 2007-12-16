@@ -226,6 +226,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             <code>ViewRenderer</code> です。
         </para>
 
+        <xi:include href="Zend_Controller-ActionHelpers-ActionStack.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-FlashMessenger.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-Redirector.xml" />
         <xi:include href="Zend_Controller-ActionHelpers-ViewRenderer.xml" />

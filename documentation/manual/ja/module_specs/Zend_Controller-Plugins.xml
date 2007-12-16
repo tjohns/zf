@@ -218,6 +218,7 @@ $front->dispatch();]]>
             エラー処理用のプラグインが標準で組み込まれています。
         </para>
 
+        <xi:include href="Zend_Controller-Plugins-ActionStack.xml" />
         <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />
     </sect2>
 </sect1>
