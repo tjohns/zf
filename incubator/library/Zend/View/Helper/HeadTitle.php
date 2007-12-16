@@ -64,9 +64,13 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
 
     public function toString($indent = null)
     {
-        $this->setPrefix('<title>')
-             ->setPostfix('</title>');
+        $items = array();
+        foreach ($this as $item) {
+            $items[] = htmlentities((string) $item);
+        }
 
-        return parent::toString();
+        $separator = htmlentities($this->getSeparator());
+
+        return '<title>' . implode($separator, $items) . '</title>';
     }
 }

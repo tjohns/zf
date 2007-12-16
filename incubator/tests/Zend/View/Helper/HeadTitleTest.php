@@ -120,6 +120,26 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         $placeholder = $this->helper->headTitle('Bar', 'APPEND')->setSeparator(' :: ');
         $this->assertEquals('<title>Foo :: Bar</title>', $placeholder->toString());
     }
+
+    public function testToStringEscapesEntries()
+    {
+        $this->helper->headTitle('<script type="text/javascript">alert("foo");</script>');
+        $string = $this->helper->toString();
+        $this->assertNotContains('<script', $string);
+        $this->assertNotContains('</script>', $string);
+    }
+
+    public function testToStringEscapesSeparator()
+    {
+        $this->helper->headTitle('Foo')
+                     ->headTitle('Bar')
+                     ->setSeparator(' <br /> ');
+        $string = $this->helper->toString();
+        $this->assertNotContains('<br />', $string);
+        $this->assertContains('Foo', $string);
+        $this->assertContains('Bar', $string);
+        $this->assertContains('br /', $string);
+    }
 }
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.
