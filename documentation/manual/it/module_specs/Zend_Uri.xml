@@ -13,8 +13,9 @@
         <para>
             Gli URI cominciano sempre con uno schema, seguito da ':' (due punti).
             La costruzione dei differenti tipi di schema varia sensibilmente.
-            La classe <code>Zend_Uri</code> fornisce un metodo factory che restituisce una sottoclasse di se stessa specializzata su uno schema specifico. La sotto classe è chiamata <code>Zend_Uri_&lt;scheme&gt;</code>, dove <code>&lt;scheme&gt;</code> è lo schema in caratteri minuscoli con la prima lettera maiuscola.
-            Un'eccezione alla regola è rappresentata dallo schema HTTPS che è gestito anch'esso da <code>Zend_Uri_Http</code>.
+            La classe <code>Zend_Uri</code> fornisce un metodo factory che restituisce una sottoclasse di se stessa specializzata su uno schema specifico. 
+            La sotto classe è chiamata <code>Zend_Uri_&lt;scheme&gt;</code>, dove <code>&lt;scheme&gt;</code> è lo schema in caratteri minuscoli con la prima lettera maiuscola.
+            Lo schema HTTPS rappresenta un'eccezione alla regola poiché è anch'esso gestito da <code>Zend_Uri_Http</code>.
         </para>
     </sect2>
 
@@ -40,11 +41,11 @@ $uri = Zend_Uri::factory('http');
 
         <para>
             Per creare un nuovo URI da zero è sufficiente passare solo lo schema a <code>Zend_Uri::factory()</code><footnote><para>Al momento in cui si scrive, Zend_Uri supporta solo gli schemi HTTP e HTTPS.</para></footnote> .
-            Se si fornisce uno schema non supportato, il metodo genera un'eccezione <code>Zend_Uri_Exception</code>.
+            Se si fornisce uno schema non supportato verrà generata un'eccezione <code>Zend_Uri_Exception</code>.
         </para>
         
         <para>
-            Se lo schema o l'URI fornito è supportato, <code>Zend_Uri::factory()</code> restituisce una sottoclasse di se stessa specializzata nello schema da creare.
+            Se lo schema o l'URI fornito è supportato, <code>Zend_Uri::factory()</code> restituirà una sottoclasse di se stessa specializzata nello schema da creare.
         </para>
     </sect2>
 
@@ -69,8 +70,9 @@ $uri = Zend_Uri::factory('http://www.zend.com');
         </example>
         
         <para>
-            L'URI è parsato e validato. Se l'URI non è valido verrà immediatamente generata un'eccezione <code>Zend_Uri_Exception</code>.
-            Altrimenti, <code>Zend_Uri::factory()</code> restitusce una sottoclasse di se stessa specializzata nello schema da manipolare.
+            L'URI è parsato e validato. 
+            Se l'URI non è valido verrà immediatamente generata un'eccezione <code>Zend_Uri_Exception</code>.
+            Altrimenti, <code>Zend_Uri::factory()</code> restituirà una sottoclasse di se stessa specializzata nello schema da manipolare.
         </para>
     </sect2>
 
