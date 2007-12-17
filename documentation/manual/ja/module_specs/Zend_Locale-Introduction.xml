@@ -340,6 +340,78 @@ $date = new Zend_Date('auto');]]>
 
     </sect2>
 
+    <sect2 id="zend.locale.defaultlocale">
+
+        <title>デフォルトのロケールの使用</title>
+
+        <para>
+            環境によっては、ロケールの自動検出ができないこともあります。
+            コマンドラインからのリクエストを受け取った場合や
+            リクエスト元のブラウザに言語が設定されていない場合、
+            そしてサーバ上のロケールが 'C'
+            あるいはその他のプロプライエタリなロケールだったりする場合などです。
+        </para>
+
+        <para>
+            このような場合は、<code>Zend_Locale</code>
+            は通常は例外をスローして自動検出に失敗したことを示します。
+            このような状況への対応方法は二通りあります。
+            新たなロケールを手動で設定するか、あるいはデフォルトのロケールを定義するかです。
+        </para>
+
+        <example id="zend.locale.defaultlocale.example-1">
+            <title>ロケールの例外処理</title>
+            <programlisting role="php"><![CDATA[<?php
+// 起動ファイル内で
+require_once 'Zend/Locale.php';
+
+try {
+    $locale = new Zend_Locale('auto');
+} catch (Zend_Locale_Exception $e) {
+    $locale = new Zend_Locale('de');
+}
+
+// モデル/コントローラ内で
+$date = new Zend_Date($locale);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            この方法には大きな問題点があります。<code>Zend_Locale</code>
+            を使用するすべてのクラス内で、ロケールオブジェクトを設定することになるのです。
+            複数のクラスを使用している場合など、これはとても面倒です。
+        </para>
+
+        <para>
+            Zend Framework リリース 1.1 以降では、もっとうまいやりかたが用意されています。
+            デフォルトのロケールを、静的メソッド <code>setDefault()</code> で設定できるのです。
+            もちろん、未知のロケールや不完全なロケールが指定された場合も例外をスローします。
+            <code>setDefault()</code> は、<code>Zend_Locale</code>
+            を使用するクラスのインスタンスを作成する前に最初にコールする必要があります。
+            詳細は、次の例を参照ください。
+        </para>
+
+        <example id="zend.locale.defaultlocale.example-2">
+            <title>デフォルトのロケールの設定</title>
+            <programlisting role="php"><![CDATA[<?php
+// 起動ファイル内で
+require_once 'Zend/Locale.php';
+
+Zend_Locale::setDefault('de');
+
+// モデル/コントローラ内で
+$date = new Zend_Date();]]>
+            </programlisting>
+        </example>
+
+        <para>
+            ロケールが検出できなかった場合は、自動的にロケール
+            <emphasis role="strong">de</emphasis> を使用します。
+            見つかった場合は、そのロケールを使用します。
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.locale.interoperate">
 
         <title>ZF のロケール対応のクラス</title>
