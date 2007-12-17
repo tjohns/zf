@@ -161,10 +161,29 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         </itemizedlist>
 
         <para>
-            Es gibt zwei Optionen für die Änderung der Beugung: Änderung der Beugungsregeln und des Ziels
+            Es gibt drei Optionen für die Änderung der Beugung: Änderung des Beuzungszieles und/oder des
+            View Suffix über <code>Zend_Layout</code> Zugriffsmethoden, änderung der Beugungsregeln und des Ziels
             der Beugung die mit der <code>Zend_Layout</code> Instanz gekoppelt ist, oder Erstellung einer
             eigenen Beugungsinstanz und dessen Übergabe an <code>Zend_Layout::setInflector()</code>.
-        </para>
+         </para>
+ 
+        <example id="zend.layout.advanced.inflector.accessors">
+            <title>Verwenden von Zend_Layout Zugriffsmethoden zur Änderung der Beugung</title>
+
+            <para>
+                Der standardmäßige <code>Zend_Layout</code> Beugungsmechanismus verwendet statische
+                Referenzen für das Ziel und View Skript Suffix, und besitzt Zugriffsmethoden für das setzen
+                dieser Werte.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Setzen des Beugungsziel:
+$layout->setInflectorTarget('layouts/:script.:suffix');
+
+// Setzen des Layout View Skript Suffix:
+$layout->setViewSuffix('php');
+?>]]></programlisting>
+        </example>
 
         <example id="zend.layout.advanced.inflector.directmodification">
             <title>Direkte Änderung der Zend_Layout Beugung</title>
