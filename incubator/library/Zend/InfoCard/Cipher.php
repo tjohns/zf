@@ -63,11 +63,12 @@ class Zend_InfoCard_Cipher
      * Constructor (disabled)
      * 
      * @return void
+     * @codeCoverageIgnoreStart
      */
     private function __construct() 
     { 
     }
-
+    // @codeCoverageIgnoreEnd
 	/**
 	 * Returns an instance of a cipher object supported based on the URI provided
 	 *
