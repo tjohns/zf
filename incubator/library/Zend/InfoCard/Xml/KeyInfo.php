@@ -76,11 +76,16 @@ class Zend_InfoCard_Xml_KeyInfo
 						include_once 'Zend/InfoCard/Xml/KeyInfo/XmlDSig.php';
 						return simplexml_load_string($strXmlData, 'Zend_InfoCard_Xml_KeyInfo_XmlDSig');
 					default:
+						
 						throw new Zend_InfoCard_Xml_Exception("Unknown KeyInfo Namespace provided");
+					// We are ignoring these lines, as XDebug reports each as a "non executed" line
+					// which breaks my coverage %
+					// @codeCoverageIgnoreStart
 				}
 			}
 		} 
-
+		// @codeCoverageIgnoreEnd
+		
 		include_once 'Zend/InfoCard/Xml/KeyInfo/Default.php';
 		return simplexml_load_string($strXmlData, 'Zend_InfoCard_Xml_KeyInfo_Default');
 	}

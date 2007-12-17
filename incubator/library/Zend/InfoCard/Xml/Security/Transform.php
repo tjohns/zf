@@ -102,10 +102,13 @@ class Zend_InfoCard_Xml_Security_Transform
 			Zend_Loader::loadClass($transform['class']);			
 			
 			$transformer = new $transform['class'];
-			
+
+			// We can't really test this check because it would require logic changes in the component itself
+			// @codeCoverageIgnoreStart
 			if(!($transformer instanceof Zend_InfoCard_Xml_Security_Transform_Interface)) {
 				throw new Zend_InfoCard_Xml_Security_Exception("Transforms must implement the Transform Interface");
 			}
+			// @codeCoverageIgnoreEnd
 			
 			$strXmlDocument = $transformer->transform($strXmlDocument);
 		}

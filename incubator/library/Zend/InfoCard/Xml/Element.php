@@ -72,7 +72,10 @@ abstract class Zend_InfoCard_Xml_Element
 		$dom = dom_import_simplexml($e);
 		
 		if(!($dom instanceof DOMElement)) {
+			// Zend_InfoCard_Xml_Element exntes SimpleXMLElement, so this should *never* fail
+			// @codeCoverageIgnoreStart
 			throw new Zend_InfoCard_Xml_Exception("Failed to convert between SimpleXML and DOM");
+			// @codeCoverageIgnoreEnd
 		}
 		
 		return $dom;
@@ -100,7 +103,10 @@ abstract class Zend_InfoCard_Xml_Element
 		$sxe = simplexml_import_dom($e, $classname); 
 		
 		if(!($sxe instanceof Zend_InfoCard_Xml_Element)) {
+			// Since we just checked to see if this was a subclass of Zend_infoCard_Xml_Element this shoudl never fail
+			// @codeCoverageIgnoreStart
 			throw new Zend_InfoCard_Xml_Exception("Failed to convert between DOM and SimpleXML");
+			// @codeCoverageIgnoreEnd
 		}
 		
 		return $sxe;

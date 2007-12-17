@@ -54,9 +54,12 @@ class Zend_InfoCard_Cipher_PKI_Adapter_RSA
 	 */
     public function __construct($padding = Zend_InfoCard_Cipher_PKI_Adapter_Abstract::NO_PADDING) 
     {
+    	// Can't test this..
+    	// @codeCoverageIgnoreStart
     	if(!extension_loaded('openssl')) {
     		throw new Zend_InfoCard_Cipher_Exception("Use of this PKI RSA Adapter requires the openssl extension loaded");
     	}
+    	// @codeCoverageIgnoreEnd
     	
     	$this->setPadding($padding);
     }

@@ -72,9 +72,12 @@ class Zend_InfoCard_Cipher_Symmetric_Adapter_AES256CBC
 	 */
 	public function __construct() 
     {
+    	// Can't test for this
+    	// @codeCoverageIgnoreStart
 		if(!extension_loaded('mcrypt')) {
 			throw new Zend_InfoCard_Cipher_Exception("Use of the AES256CBC Cipher requires the mcrypt extension");
 		}
+		// @codeCoveregIgnoreEnd
 	}
 	
 	/**
