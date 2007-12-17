@@ -1,10 +1,10 @@
 <?php
 // Call Zend_View_Helper_ActionTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_ActionTest::main");
 }
 
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -19,6 +19,9 @@ require_once 'Zend/Controller/Request/Http.php';
 
 /** Zend_Controller_Response_Http */
 require_once 'Zend/Controller/Response/Http.php';
+
+/** Zend_View */
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_View_Helper_Action.
