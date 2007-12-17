@@ -40,12 +40,23 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 abstract class Zend_Db_Table_TestSetup extends Zend_Db_TestSetup
 {
-
     /**
      * @var array of Zend_Db_Table_Abstract
      */
     protected $_table = array();
 
+    /**
+     * Instances of Zend_Db_Table_Abstract corresponding to views
+     *
+     * @var array
+     */
+    protected $_view = array();
+
+    /**
+     * Calls parent::setUp() and creates instances of table classes
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -56,6 +67,14 @@ abstract class Zend_Db_Table_TestSetup extends Zend_Db_TestSetup
         $this->_table['products']      = $this->_getTable('Zend_Db_Table_TableProducts');
     }
 
+    /**
+     * Returns an instance of a table class
+     *
+     * @param  string $tableClass
+     * @param  array  $options
+     * @return Zend_Db_Table_Abstract
+     * @uses   Zend_Loader::loadClass()
+     */
     protected function _getTable($tableClass, $options = array())
     {
         if (is_array($options) && !isset($options['db'])) {

@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 
 
@@ -40,6 +40,17 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_Pdo_IbmTest extends Zend_Db_Table_TestCommon
 {
+    /**
+     * Ensures that the fetchAll() method works properly with a view object
+     *
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-1269
+     */
+    public function testViewFetchAll()
+    {
+        $this->markTestIncomplete('View tests are not implemented yet');
+    }
+
     public function getDriver()
     {
         return 'Pdo_Ibm';

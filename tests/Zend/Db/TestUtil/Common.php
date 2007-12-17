@@ -60,21 +60,75 @@ abstract class Zend_Db_TestUtil_Common
      */
     protected $_sequences = array();
 
-    protected function _getSqlCreateTable($tableName)
+    /**
+     * @var array
+     */
+    protected $_tableName = array(
+        'Accounts'        => 'zfaccounts',
+        'Products'        => 'zfproducts',
+        'Bugs'            => 'zfbugs',
+        'BugsProducts'    => 'zfbugs_products',
+        'noquote'         => 'zfnoquote',
+        'noprimarykey'    => 'zfnoprimarykey',
+        'Documents'       => 'zfdocuments',
+        'AltBugsProducts' => 'zfalt_bugs_products',
+    );
+
+    /**
+     * View id -> name correlations
+     *
+     * @var array
+     */
+    protected $_viewNames = array(
+        'BugsFixed'       => 'zfviewbugsfixed'
+    );
+
+    /**
+     * Creates and populates database objects
+     *
+     * @param  Zend_Db_Adapter_Abstract $db
+     * @return void
+     */
+    public function setUp(Zend_Db_Adapter_Abstract $db)
     {
-        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName, true);
+        $this->setAdapter($db);
+
+        $this->createTable('Accounts');
+        $this->populateTable('Accounts');
+
+        $this->createTable('Products');
+        $this->populateTable('Products');
+
+        $this->createTable('Bugs');
+        $this->populateTable('Bugs');
+
+        $this->createTable('BugsProducts');
+        $this->populateTable('BugsProducts');
+
+        $this->createTable('Documents');
+        $this->populateTable('Documents');
+
+        $this->createView('BugsFixed');
     }
 
-    protected function _getSqlDropTable($tableName)
+    /**
+     * Sets the connection adapter
+     *
+     * @param  Zend_Db_Adapter_Abstract $db
+     * @return void
+     */
+    public function setAdapter(Zend_Db_Adapter_Abstract $db)
     {
-        return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
+        $this->_db = $db;
     }
 
-    public function getSqlType($type)
-    {
-        return $type;
-    }
-
+    /**
+     * Creates the identified table
+     *
+     * @param  string $tableId
+     * @param  array  $columns
+     * @return void
+     */
     public function createTable($tableId, array $columns = array())
     {
         if (!$columns) {
@@ -86,10 +140,12 @@ abstract class Zend_Db_TestUtil_Common
         if (isset($this->_tables[$tableName])) {
             return;
         }
+
         $sql = $this->_getSqlCreateTable($tableName);
         if (!$sql) {
             return;
         }
+
         $sql .= " (\n\t";
 
         $pKey = null;
@@ -113,16 +169,20 @@ abstract class Zend_Db_TestUtil_Common
 
         $sql .= implode(",\n\t", $col);
         $sql .= "\n)";
-        $result = $this->_rawQuery($sql);
-        if ($result === false) {
-            throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
-        }
+        $this->_rawQuery($sql);
         $this->_tables[$tableName] = true;
     }
 
+    /**
+     * Drops the table of the given name. If no table is named, then all tables are dropped.
+     *
+     * @param  string $tableName
+     * @throws Zend_Db_Exception
+     * @return void
+     */
     public function dropTable($tableName = null)
     {
-        if (!$tableName) {
+        if (null === $tableName) {
             foreach ($this->_tableName as $tab) {
                 $this->dropTable($tab);
             }
@@ -133,21 +193,36 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        $result = $this->_rawQuery($sql);
-        if ($result === false) {
-            throw new Zend_Db_Exception("DROP TABLE statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
+        $this->_rawQuery($sql);
+    }
+
+    /**
+     * Populates the identified table with data
+     *
+     * @param  string $tableId
+     * @throws Zend_Db_Exception
+     * @return void
+     */
+    public function populateTable($tableId)
+    {
+        $tableName = $this->getTableName($tableId);
+        $data = $this->{'_getData'.$tableId}();
+        foreach ($data as $row) {
+            $sql = 'INSERT INTO ' .  $this->_db->quoteIdentifier($tableName, true);
+            $cols = array();
+            $vals = array();
+            foreach ($row as $col => $val) {
+                $cols[] = $this->_db->quoteIdentifier($col, true);
+                if ($val instanceof Zend_Db_Expr) {
+                    $vals[] = $val->__toString();
+                } else {
+                    $vals[] = $this->_db->quote($val);
+                }
+            }
+            $sql .=        ' (' . implode(', ', $cols) . ')';
+            $sql .= ' VALUES (' . implode(', ', $vals) . ')';
+            $this->_rawQuery($sql);
         }
-        unset($this->_tables[$tableName]);
-    }
-
-    protected function _getSqlCreateSequence($sequenceName)
-    {
-        return null;
-    }
-
-    protected function _getSqlDropSequence($sequenceName)
-    {
-        return null;
     }
 
     public function createSequence($sequenceName)
@@ -160,10 +235,7 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        $result = $this->_rawQuery($sql);
-        if ($result === false) {
-            throw new Zend_Db_Exception("CREATE SEQUENCE statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
-        }
+        $this->_rawQuery($sql);
         $this->_sequences[$sequenceName] = true;
     }
 
@@ -180,11 +252,56 @@ abstract class Zend_Db_TestUtil_Common
         if (!$sql) {
             return;
         }
-        $result = $this->_rawQuery($sql);
-        if ($result === false) {
-            throw new Zend_Db_Exception("DROP SEQUENCE statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
-        }
+        $this->_rawQuery($sql);
         unset($this->_sequences[$sequenceName]);
+    }
+
+    /**
+     * Creates the identified view, if possible
+     *
+     * @param  string $viewId
+     * @throws Zend_Db_Exception
+     * @return void
+     */
+    public function createView($viewId)
+    {
+        $method = '_getSqlViewCreate' . $viewId;
+        if (!method_exists($this, $method)) {
+            /** @see Zend_Db_Exception */
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("Invalid view ID '$viewId'; method '$method' does not exist");
+        }
+        $sql = $this->$method();
+        if (null === $sql) {
+            return;
+        }
+        $this->_rawQuery($sql);
+    }
+
+    /**
+     * Drops the view of the given name, if possible. If no view is named, then all views are dropped.
+     *
+     * @param  string $viewName
+     * @return void
+     */
+    public function dropView($viewName = null)
+    {
+        if (null === $viewName) {
+            foreach ($this->_viewNames as $viewName) {
+                $this->dropView($viewName);
+            }
+            return;
+        }
+        $sql = $this->_getSqlViewDrop($viewName);
+        if (null === $sql) {
+            return;
+        }
+        $this->_rawQuery($sql);
+    }
+
+    public function getSqlType($type)
+    {
+        return $type;
     }
 
     public function getParams(array $constants = array())
@@ -204,27 +321,80 @@ abstract class Zend_Db_TestUtil_Common
         return isset($param['dbname']) ? $param['dbname'] : null;
     }
 
-    protected $_tableName = array(
-        'Accounts'      => 'zfaccounts',
-        'Products'      => 'zfproducts',
-        'Bugs'          => 'zfbugs',
-        'BugsProducts'  => 'zfbugs_products',
-        'noquote'       => 'zfnoquote',
-        'noprimarykey'  => 'zfnoprimarykey',
-        'Documents'     => 'zfdocuments',
-        'AltBugsProducts' => 'zfalt_bugs_products',
-    );
-
+    /**
+     * Returns the table name corresponding to the given $tableId
+     *
+     * @param  string $tableId
+     * @throws Zend_Db_Exception
+     * @return string
+     */
     public function getTableName($tableId)
     {
-        if (!isset($this->_tableName)) {
-            throw new Exception("Invalid table id '$tableId'");
+        if (!isset($this->_tableName[$tableId])) {
+            /** @see Zend_Db_Exception */
+            require_once 'Zend/Db/Exception.php';
+            throw new Zend_Db_Exception("No name exists for table ID '$tableId'");
         }
-        if (array_key_exists($tableId, $this->_tableName)) {
-            return $this->_tableName[$tableId];
-        } else {
-            return $tableId;
-        }
+        return $this->_tableName[$tableId];
+    }
+
+    public function tearDown()
+    {
+        $this->dropView();
+        $this->dropTable();
+        $this->dropSequence();
+        $this->_db->closeConnection();
+    }
+
+    /**
+     * Executes the query as raw $sql
+     *
+     * @param  string $sql
+     * @throws Zend_Db_Exception
+     * @return void
+     */
+    protected abstract function _rawQuery($sql);
+
+    protected function _getSqlCreateTable($tableName)
+    {
+        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName, true);
+    }
+
+    protected function _getSqlDropTable($tableName)
+    {
+        return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
+    }
+
+    protected function _getSqlCreateSequence($sequenceName)
+    {
+        return null;
+    }
+
+    protected function _getSqlDropSequence($sequenceName)
+    {
+        return null;
+    }
+
+    /**
+     * Returns the SQL needed to create a view of bugs fixed, or null if it already exists
+     *
+     * @throws Zend_Db_Exception
+     * @return string|null
+     */
+    protected function _getSqlViewCreateBugsFixed()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the SQL needed to drop a view by the name $viewName, or null if it doesn't exist
+     *
+     * @param  string $viewName
+     * @return string|null
+     */
+    protected function _getSqlViewDrop($viewName)
+    {
+        return null;
     }
 
     protected function _getColumnsBugs()
@@ -379,64 +549,5 @@ abstract class Zend_Db_TestUtil_Common
             )
         );
     }
-
-    public function populateTable($tableId)
-    {
-        $tableName = $this->getTableName($tableId);
-        $data = $this->{'_getData'.$tableId}();
-        foreach ($data as $row) {
-            $sql = 'INSERT INTO ' .  $this->_db->quoteIdentifier($tableName, true);
-            $cols = array();
-            $vals = array();
-            foreach ($row as $col => $val) {
-                $cols[] = $this->_db->quoteIdentifier($col, true);
-                if ($val instanceof Zend_Db_Expr) {
-                    $vals[] = $val->__toString();
-                } else {
-                    $vals[] = $this->_db->quote($val);
-                }
-            }
-            $sql .=        ' (' . implode(', ', $cols) . ')';
-            $sql .= ' VALUES (' . implode(', ', $vals) . ')';
-            $result = $this->_rawQuery($sql);
-            if ($result === false) {
-                throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
-            }
-        }
-    }
-
-    public function setUp(Zend_Db_Adapter_Abstract $db)
-    {
-        $this->setAdapter($db);
-
-        $this->createTable('Accounts');
-        $this->populateTable('Accounts');
-
-        $this->createTable('Products');
-        $this->populateTable('Products');
-
-        $this->createTable('Bugs');
-        $this->populateTable('Bugs');
-
-        $this->createTable('BugsProducts');
-        $this->populateTable('BugsProducts');
-
-        $this->createTable('Documents');
-        $this->populateTable('Documents');
-    }
-
-    public function setAdapter(Zend_Db_Adapter_Abstract $db)
-    {
-        $this->_db = $db;
-    }
-
-    public function tearDown()
-    {
-        $this->dropTable();
-        $this->dropSequence();
-        $this->_db->closeConnection();
-    }
-
-    protected abstract function _rawQuery($sql);
 
 }

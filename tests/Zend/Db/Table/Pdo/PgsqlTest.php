@@ -40,6 +40,19 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
 {
+    /**
+     * Calls parent::setUp() and creates an instance of Zend_Db_Table_Abstract
+     * for the "Fixed Bugs" view.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->_view['BugsFixed'] = $this->_getTable('Zend_Db_Table_TableViewBugsFixed');
+    }
+
     public function getDriver()
     {
         return 'Pdo_Pgsql';

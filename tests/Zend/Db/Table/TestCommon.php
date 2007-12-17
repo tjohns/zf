@@ -668,7 +668,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         // insert a lot of rows
         $n = 100000;
-        for ($i = 1; $i <= $n; $i++) 
+        for ($i = 1; $i <= $n; $i++)
         {
             $table->insert(array('product_name' => "product$i"));
             if ($i % 1000 == 0) {
@@ -1168,6 +1168,24 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
                 'Expecting object of type Zend_Db_Table_Exception, got '.get_class($e));
             $this->assertEquals("Argument must be of type Zend_Cache_Core, or a Registry key where a Zend_Cache_Core object is stored", $e->getMessage());
         }
+    }
+
+    /**
+     * Ensures that the fetchAll() method works properly with a view object
+     *
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-1269
+     */
+    public function testViewFetchAll()
+    {
+        $view = $this->_view['BugsFixed'];
+        $rowset = $view->fetchAll();
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got ' . get_class($rowset));
+        $this->assertEquals(1, count($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got ' . get_class($row1));
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,26 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
+/**
+ * @see Zend_Db_Table_TestCommon
+ */
 require_once 'Zend/Db/Table/TestCommon.php';
+
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
+
+/**
+ * @category   Zend
+ * @package    Zend_Db
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 class Zend_Db_Table_Pdo_OciTest extends Zend_Db_Table_TestCommon
 {
 
@@ -51,6 +66,17 @@ class Zend_Db_Table_Pdo_OciTest extends Zend_Db_Table_TestCommon
         $this->assertEquals($insertResult, $lastInsertId);
         $this->assertEquals($insertResult, $lastSequenceId);
         $this->assertEquals(5, $insertResult);
+    }
+
+    /**
+     * Ensures that the fetchAll() method works properly with a view object
+     *
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-1269
+     */
+    public function testViewFetchAll()
+    {
+        $this->markTestIncomplete('View tests are not implemented yet');
     }
 
     public function getDriver()

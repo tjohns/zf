@@ -43,12 +43,23 @@ class Zend_Db_Table_Pdo_SqliteTest extends Zend_Db_Table_TestCommon
 
     public function testTableInsertSequence()
     {
-        $this->markTestSkipped($this->getDriver().' does not support sequences.');
+        $this->markTestSkipped($this->getDriver() . ' does not support sequences.');
     }
 
     public function testDbTableSchemaSpecified()
     {
         $this->markTestSkipped($this->getDriver() . ' does not support qualified table names');
+    }
+
+    /**
+     * Ensures that the fetchAll() method works properly with a view object
+     *
+     * @return void
+     * @see    http://framework.zend.com/issues/browse/ZF-1269
+     */
+    public function testViewFetchAll()
+    {
+        $this->markTestIncomplete('View tests are not implemented yet');
     }
 
     public function getDriver()

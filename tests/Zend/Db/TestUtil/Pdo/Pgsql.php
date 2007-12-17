@@ -64,6 +64,23 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return 'public';
     }
 
+    public function getSqlType($type)
+    {
+        if ($type == 'IDENTITY') {
+            return 'SERIAL PRIMARY KEY';
+        }
+        if ($type == 'DATETIME') {
+            return 'TIMESTAMP';
+        }
+        if ($type == 'CLOB') {
+            return 'TEXT';
+        }
+        if ($type == 'BLOB') {
+            return 'TEXT';
+        }
+        return $type;
+    }
+
     /**
      * For PostgreSQL, override the Products table to use an
      * explicit sequence-based column.
@@ -85,23 +102,6 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         return $data;
     }
 
-    public function getSqlType($type)
-    {
-        if ($type == 'IDENTITY') {
-            return 'SERIAL PRIMARY KEY';
-        }
-        if ($type == 'DATETIME') {
-            return 'TIMESTAMP';
-        }
-        if ($type == 'CLOB') {
-            return 'TEXT';
-        }
-        if ($type == 'BLOB') {
-            return 'TEXT';
-        }
-        return $type;
-    }
-
     protected function _getSqlCreateTable($tableName)
     {
         $tableList = $this->_db->fetchCol('SELECT relname AS table_name FROM pg_class '
@@ -119,7 +119,7 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
             . $this->_db->quoteInto(' WHERE relkind = \'r\' AND relname = ?', $tableName)
         );
         if (in_array($tableName, $tableList)) {
-            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName) . ' CASCADE';
         }
         return null;
     }
@@ -142,6 +142,42 @@ class Zend_Db_TestUtil_Pdo_Pgsql extends Zend_Db_TestUtil_Pdo_Common
         );
         if (in_array($sequenceName, $seqList)) {
             return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName);
+        }
+        return null;
+    }
+
+    /**
+     * Returns the SQL needed to create a view of bugs fixed, or null if it already exists
+     *
+     * @throws Zend_Db_Exception
+     * @return string|null
+     */
+    protected function _getSqlViewCreateBugsFixed()
+    {
+        $viewList = $this->_db->fetchCol('SELECT relname FROM pg_class WHERE relkind = \'v\' AND '
+            . $this->_db->quoteInto('relname = ?', $this->_viewNames['BugsFixed'])
+        );
+        if (in_array($this->_viewNames['BugsFixed'], $viewList)) {
+            return null;
+        }
+        return 'CREATE VIEW zfViewBugsFixed AS SELECT * FROM '
+             . $this->_db->quoteIdentifier($this->_tableName['Bugs'])
+             . ' WHERE bug_status = \'FIXED\'';
+    }
+
+    /**
+     * Returns the SQL needed to drop a view by the name $viewName, or null if it doesn't exist
+     *
+     * @param  string $viewName
+     * @return string|null
+     */
+    protected function _getSqlViewDrop($viewName)
+    {
+        $viewList = $this->_db->fetchCol('SELECT relname FROM pg_class WHERE relkind = \'v\' AND '
+            . $this->_db->quoteInto('relname = ?', $viewName)
+        );
+        if (in_array($viewName, $viewList)) {
+            return 'DROP VIEW ' . $this->_db->quoteIdentifier($viewName);
         }
         return null;
     }

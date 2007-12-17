@@ -40,12 +40,20 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 abstract class Zend_Db_TestUtil_Pdo_Common extends Zend_Db_TestUtil_Common
 {
+    /**
+     * Executes the query as raw $sql
+     *
+     * @param  string $sql
+     * @throws Zend_Db_Exception
+     * @return void
+     */
     protected function _rawQuery($sql)
     {
         $conn = $this->_db->getConnection();
         $retval = $conn->query($sql);
         if (!$retval) {
             $e = $conn->error;
+            /** @see Zend_Db_Exception */
             require_once 'Zend/Db/Exception.php';
             throw new Zend_Db_Exception("SQL error for \"$sql\": $e");
         }

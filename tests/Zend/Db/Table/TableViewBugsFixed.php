@@ -23,9 +23,9 @@
 
 
 /**
- * @see Zend_Db_Table_TestCommon
+ * @see Zend_Db_Table_Abstract
  */
-require_once 'Zend/Db/Table/TestCommon.php';
+require_once 'Zend/Db/Table/Abstract.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -38,28 +38,9 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Table_MysqliTest extends Zend_Db_Table_TestCommon
+class Zend_Db_Table_TableViewBugsFixed extends Zend_Db_Table_Abstract
 {
+    protected $_name = 'zfviewbugsfixed';
 
-    public function testTableInsertSequence()
-    {
-        $this->markTestSkipped($this->getDriver().' does not support sequences.');
-    }
-
-    /**
-     * Ensures that the fetchAll() method works properly with a view object
-     *
-     * @return void
-     * @see    http://framework.zend.com/issues/browse/ZF-1269
-     */
-    public function testViewFetchAll()
-    {
-        $this->markTestIncomplete('View tests are not implemented yet');
-    }
-
-    public function getDriver()
-    {
-        return 'Mysqli';
-    }
-
+    protected $_primary = 'bug_id';
 }
