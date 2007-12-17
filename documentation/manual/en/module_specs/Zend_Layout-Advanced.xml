@@ -166,11 +166,31 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         </itemizedlist>
 
         <para>
-            You have two options for modifying inflection: modify the inflector
-            rules and target of the inflector associated with the
-            <code>Zend_Layout</code> instance, or create your own inflector
-            instance and pass it to <code>Zend_Layout::setInflector()</code>.
+            You have three options for modifying inflection: modify the
+            inflection target and/or view suffix via <code>Zend_Layout</code>
+            accessors, modify the inflector rules and target of the inflector
+            associated with the <code>Zend_Layout</code> instance, or create
+            your own inflector instance and pass it to
+            <code>Zend_Layout::setInflector()</code>.
         </para>
+
+        <example id="zend.layout.advanced.inflector.accessors">
+            <title>Using Zend_Layout accessors to modify the inflector</title>
+
+            <para>
+                The default <code>Zend_Layout</code> inflector uses static
+                references for the target and view script suffix, and 
+                has accessors for setting these values.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Set the inflector target:
+$layout->setInflectorTarget('layouts/:script.:suffix');
+
+// Set the layout view script suffix:
+$layout->setViewSuffix('php');
+?>]]></programlisting>
+        </example>
 
         <example id="zend.layout.advanced.inflector.directmodification">
             <title>Direct modification of Zend_Layout inflector</title>

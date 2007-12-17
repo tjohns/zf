@@ -424,6 +424,53 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($layout->getMvcSuccessfulActionOnly());
         $this->assertEquals('foobar', $layout->getContentKey());
     }
+
+    public function testGetViewSuffixRetrievesDefaultValue()
+    {
+        $layout = new Zend_Layout();
+        $this->assertEquals('phtml', $layout->getViewSuffix());
+    }
+
+    public function testViewSuffixAccessorsWork()
+    {
+        $layout = new Zend_Layout();
+        $layout->setViewSuffix('php');
+        $this->assertEquals('php', $layout->getViewSuffix());
+    }
+
+    public function testSettingViewSuffixChangesInflectorSuffix()
+    {
+        $layout = new Zend_Layout();
+        $inflector = $layout->getInflector();
+        $rules = $inflector->getRules();
+        $this->assertTrue(isset($rules['suffix']));
+        $this->assertEquals($layout->getViewSuffix(), $rules['suffix']);
+        $layout->setViewSuffix('php');
+        $this->assertEquals($layout->getViewSuffix(), $rules['suffix']);
+    }
+
+    public function testGetInflectorTargetRetrievesDefaultValue()
+    {
+        $layout = new Zend_Layout();
+        $this->assertEquals(':script.:suffix', $layout->getInflectorTarget());
+    }
+
+    public function testInflectorTargetAccessorsWork()
+    {
+        $layout = new Zend_Layout();
+        $layout->setInflectorTarget(':script-foo.:suffix');
+        $this->assertEquals(':script-foo.:suffix', $layout->getInflectorTarget());
+    }
+
+    public function testSettingInflectorTargetChangesInflectorSuffix()
+    {
+        $layout = new Zend_Layout();
+        $inflector = $layout->getInflector();
+        $target = $inflector->getTarget();
+        $this->assertEquals($layout->getInflectorTarget(), $inflector->getTarget());
+        $layout->setInflectorTarget('php');
+        $this->assertEquals($layout->getInflectorTarget(), $inflector->getTarget());
+    }
 }
 
 /**
