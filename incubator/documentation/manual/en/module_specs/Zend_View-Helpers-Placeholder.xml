@@ -229,6 +229,9 @@ foreach ($this->data as $datum): ?>
                     <link linkend="zend.view.helpers.initial.headtitle">HeadTitle</link>
             </para></listitem>
 
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.inlinescript">InlineScript</link>
+            </para></listitem>
         </itemizedlist>
     </sect4>
 </sect3>

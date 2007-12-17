@@ -73,6 +73,19 @@
             helper</link>.
     </para>
 
+    <note>
+        <title>Use InlineScript for HTML Body Scripts</title>
+
+        <para>
+            <code>HeadScript</code>'s sibling helper, <link
+                linkend="zend.view.helpers.initial.inlinescript">InlineScript</link>, 
+            should be used when you wish to include scripts inline in the HTML
+            <code>body</code>. Placing scripts at the end of your document is a
+            good practice for speeding up delivery of your page, particularly
+            when using 3rd party analytics scripts.
+        </para>
+    </note>
+
     <example id="zend.view.helpers.initial.headscript.basicusage">
         <title>HeadScript Helper Basic Usage</title>
 
