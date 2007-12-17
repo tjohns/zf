@@ -301,6 +301,73 @@ $date = new Zend_Date('auto');]]>
 
     </sect2>
 
+    <sect2 id="zend.locale.defaultlocale">
+
+        <title>Using a default Locale</title>
+
+        <para>
+            In some environments it is not possible to detect a locale automatically. You can expect this
+            behaviour when you get an request from commandline or the requesting browser has no language tag
+            set and additionally your server has the default locale 'C' set or another properitary locale.
+        </para>
+
+        <para>
+            In such cases <code>Zend_Locale</code> will normally throw an exception with a message that
+            the automatic detection of any locale was not successfull. You have two options to handle such
+            a situation. Eighter through setting a new locale per hand, or defining a default locale.
+        </para>
+
+        <example id="zend.locale.defaultlocale.example-1">
+            <title>Handling locale exceptions</title>
+            <programlisting role="php"><![CDATA[<?php
+// within the bootstrap file
+require_once 'Zend/Locale.php';
+
+try {
+    $locale = new Zend_Locale('auto');
+} catch (Zend_Locale_Exception $e) {
+    $locale = new Zend_Locale('de');
+}
+
+// within your model/controller
+$date = new Zend_Date($locale);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            But this has one big negative effect. You will have to set your locale object within
+            every class using <code>Zend_Locale</code>. This could become very unhandy if you are using
+            multiple classes.
+        </para>
+
+        <para>
+            Since Zend Framework Release 1.1 there is a much better way to handle this. You can set a
+            default locale which the static <code>setDefault()</code> method. Of course, every unknown
+            or not full qualified locale will also throw an exception. <code>setDefault()</code> should
+            be the first call before you initiate any class using <code>Zend_Locale</code>. See the
+            following example for details:
+        </para>
+
+        <example id="zend.locale.defaultlocale.example-2">
+            <title>Setting a default locale</title>
+            <programlisting role="php"><![CDATA[<?php
+// within the bootstrap file
+require_once 'Zend/Locale.php';
+
+Zend_Locale::setDefault('de');
+
+// within your model/controller
+$date = new Zend_Date();]]>
+            </programlisting>
+        </example>
+
+        <para>
+            In the case that no locale can be detected, automatically the locale
+            <emphasis role="strong">de</emphasis> will be used. Otherwise, the detected locale will be used.
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.locale.interoperate">
 
         <title>ZF Locale-Aware Classes</title>

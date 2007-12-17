@@ -108,7 +108,11 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetDefault()
     {
+        Zend_Locale::setDefault('de');
         $value = new Zend_Locale();
+        $default = $value->getDefault();
+        $this->assertTrue(array_key_exists('de', $default), 'No default locale found');
+
         $default = $value->getDefault();
         $this->assertTrue(is_array($default), 'No Default Locale found');
 

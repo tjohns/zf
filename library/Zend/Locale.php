@@ -99,6 +99,8 @@ class Zend_Locale {
     private static $_browser;
     private static $_environment;
 
+    private static $_Default;
+
     /**
      * Generates a locale object
      * If no locale is given a automatic search is done
@@ -118,7 +120,8 @@ class Zend_Locale {
             self::$_auto        = $this->getDefault(null, false);
             self::$_browser     = $this->getDefault(self::BROWSER, false);
             self::$_environment = $this->getDefault(self::ENVIRONMENT, false);
-            if (empty($locale) and empty(self::$_auto)) {
+            if (empty($locale) and empty(self::$_auto) and empty(self::$_Default)) {
+                require_once 'Zend/Locale/Exception.php';
                 throw new Zend_Locale_Exception('Autodetection of Locale has been failed!');
             }
         }
@@ -212,7 +215,37 @@ class Zend_Locale {
             }
 
         }
+
+        if (!array_key_exists(self::$_Default, $languages)) {
+            $languages[self::$_Default] = 1;
+        }
         return $languages;
+    }
+
+
+    /**
+     * Sets a new default locale
+     *
+     * @param String $locale
+     */
+    public static function setDefault($locale)
+    {
+        if (($locale == "auto") or ($locale == "root") or 
+            ($locale == "environment") or ($locale == "browser")) {
+            require_once 'Zend/Locale/Exception.php';
+            throw new Zend_Locale_Exception('Only full qualified locales can be used as default!');
+        }
+        if (array_key_exists($locale, self::$_localeData)) {
+            self::$_Default = $locale;
+            return true;
+        } else {
+            $locale = explode('_', $locale);
+            if (array_key_exists($locale[0], self::$_localeData)) {
+                self::$_Default = $locale[0];
+                return true;
+            }
+        }
+        throw new Zend_Locale_Exception("Unknown locale '$locale' can not be set as default!");
     }
 
 
@@ -1008,7 +1041,6 @@ class Zend_Locale {
     {
         // load class within method for speed
         require_once 'Zend/Locale/Data.php';
-
         Zend_Locale_Data::setCache($cache);
     }
 }
