@@ -23,7 +23,7 @@
 require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 
 /**
- * Helper for setting and retrieving title element for HTML head
+ * Helper for setting and retrieving script elements for HTML head section
  *
  * @uses       Zend_View_Helper_Placeholder_Container_Standalone
  * @package    Zend_View
@@ -92,13 +92,14 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
     /**
      * Return headScript object
      *
-     * Returns headScript helper object; optionally, allows specifying 
+     * Returns headScript helper object; optionally, allows specifying a script 
+     * or script file to include.
      *
      * @param  string $mode Script or file
      * @param  string $spec Script/url
      * @param  string $placement Append, prepend, or set
-     * @param  string $type Script type and/or array of script attributes
      * @param  array $attrs Array of script attributes
+     * @param  string $type Script type and/or array of script attributes
      * @return Zend_View_Helper_HeadScript
      */
     public function headScript($mode = Zend_View_Helper_HeadScript::FILE, $spec = null, $placement = 'APPEND', array $attrs = array(), $type = 'text/javascript')

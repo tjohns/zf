@@ -12,6 +12,7 @@ require_once 'Zend/View/Helper/HeadMetaTest.php';
 require_once 'Zend/View/Helper/HeadScriptTest.php';
 require_once 'Zend/View/Helper/HeadStyleTest.php';
 require_once 'Zend/View/Helper/HeadTitleTest.php';
+require_once 'Zend/View/Helper/InlineScriptTest.php';
 require_once 'Zend/View/Helper/Placeholder/StandaloneContainerTest.php';
 
 /**
@@ -38,6 +39,7 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_HeadScriptTest');
         $suite->addTestSuite('Zend_View_Helper_HeadStyleTest');
         $suite->addTestSuite('Zend_View_Helper_HeadTitleTest');
+        $suite->addTestSuite('Zend_View_Helper_InlineScriptTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_StandaloneContainerTest');
         
         return $suite;
