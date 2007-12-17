@@ -483,9 +483,33 @@ foreach($list as $language => $content) {
         <para>
             Oft müssen Programme eine "Ja" oder "Nein" Rückmeldung eines Benutzers erkennen. <code>getQuestion()</code>
             gibt ein Array zurück welches die richtigen Wörter oder Regex Zeichenketten enthält um einem Benutzer in einer
-            bestimmten $locale zu antworten (Standardmäßig das aktuelle Gebietsschema des Objekts). Das Array enthält
-            sechs Wertepaare, für "Ja", "Nein", deren Abkürzungen und Regex Zeichenketten für das korrekte Analysieren
-            wie im Beispiel gezeigt.
+            bestimmten $locale zu antworten (Standardmäßig das aktuelle Gebietsschema des Objekts). Das
+            zurückgegebene Array enthält die folgenden Informationen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">yes und no</emphasis>: Eine generelle Stringrepräsentation für
+                    Ja und Nein Antworten. Es enthält die erste und generellste Antwort von yesarray und noarray. 
+                </para>
+
+                <para>
+                    <emphasis role="strong">yesarray und noarray</emphasis>: Ein Array mit allen bekannten
+                    Ja und Nein Antworten. Diverse Sprachen haben mehr als nur zwei Antworten. Normalerweise
+                    ist das der komplette String und seine Abkürzung.
+                </para>
+
+                <para>
+                    <emphasis role="strong">yesexpr und noexpr</emphasis>: Ein ersteller Regex String des es
+                    erlaubt Benutzerantworten zu behandeln und nach Ja und Nein zu suchen.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Alle diese Informationen sind natürlich lokalisiert und hängen vom eingestellten gebietsschema ab.
+            Das folgende Beispiel zeigt die Informationen die empfangen werden können:
         </para>
 
         <example id="zend.locale.getquestion.example-1">
