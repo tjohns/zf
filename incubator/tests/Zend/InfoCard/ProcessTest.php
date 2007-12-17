@@ -223,6 +223,21 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
     {
         $this->markTestIncomplete();
 	}
+	
+	public function testTransforms() 
+	{
+		$trans = new Zend_InfoCard_Xml_Security_Transform();
+
+		try {
+			$trans->addTransform("foo");
+			$this->fail("Expected Exception Not Thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+		$this->assertTrue(is_array($trans->getTransformList()));
+		
+	}
 }
 
 class _Zend_InfoCard_Test_Adapter 

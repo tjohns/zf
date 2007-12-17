@@ -30,6 +30,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/InfoCard/XmlParsingTest.php';
 require_once 'Zend/InfoCard/ProcessTest.php';
 require_once 'Zend/InfoCard/AssertionTest.php';
+require_once 'Zend/InfoCard/CipherTest.php';
 
 class Zend_InfoCard_AllTests
 {
@@ -45,6 +46,7 @@ class Zend_InfoCard_AllTests
         $suite->addTestSuite('Zend_InfoCard_AssertionTest');
         $suite->addTestSuite('Zend_InfoCard_ProcessTest');
         $suite->addTestSuite('Zend_InfoCard_XmlParsingTest');
+	$suite->addTestSuite('Zend_InfoCard_CipherTest');
 
         return $suite;
     }

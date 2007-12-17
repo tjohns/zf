@@ -75,6 +75,25 @@ class Zend_InfoCard_AssertionTest extends PHPUnit_Framework_TestCase
 		$this->assertSame($assertions->getIssuedTimestamp(), 1190153823);
 		
 	}
+
+	public function testAssertionErrors() 
+	{
+		try {
+			Zend_InfoCard_Xml_Assertion::getInstance(10);
+			$this->fail("Exception Not Thrown as Expected");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+		$doc = file_get_contents(dirname(__FILE__) . '/_files/signedToken_bad_type.xml');
+		
+		try {
+			$assertions = Zend_InfoCard_Xml_Assertion::getInstance($doc);
+			$this->fail("Exception Not thrown as expected");
+		} catch(Exception $e) {
+			/* yay */
+		}
+	}
 }
 
 // Call Zend_InfoCard_AssertionTest::main() if this source file is executed directly.

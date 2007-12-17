@@ -29,6 +29,7 @@ require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/InfoCard/Xml/EncryptedData.php';
+require_once 'Zend/InfoCard/Xml/SecurityTokenReference.php';
 
 class Zend_InfoCard_XmlParsingTest extends PHPUnit_Framework_TestCase
 {
@@ -59,6 +60,25 @@ class Zend_InfoCard_XmlParsingTest extends PHPUnit_Framework_TestCase
 		$this->_xmlDocument = file_get_contents($this->tokenDocument);
 	}
 	
+	public function testEncryptedDataType() 
+	{
+			$doc = file_get_contents(dirname(__FILE__) . '/_files/encryptedtoken_bad_type.xml');
+			
+			try {
+				$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($doc);
+				$this->fail("Exception not thrown as expected");
+			} catch(Exception $e) {
+				/* yay */
+			}
+			
+			try {
+				$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance(10);
+				$this->fail("Exception not thrown as expected");
+			} catch(Exception $e) {
+				/* yay */
+			}
+			
+	}
     public function testEncryptedData() 
     {
 		$encryptedData = Zend_InfoCard_Xml_EncryptedData::getInstance($this->_xmlDocument);	
@@ -134,6 +154,83 @@ class Zend_InfoCard_XmlParsingTest extends PHPUnit_Framework_TestCase
 		$this->assertSame($sectoken->getKeyThumbprintEncodingType(), 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary');
 		$this->assertSame($sectoken->getKeyReference(false), '/OCqQ7Np25sOiA+4OsFh1R6qIeY=');
 	}
+	
+	public function testEncryptedKeyErrors() 
+	{
+		try {
+			Zend_InfoCard_Xml_EncryptedKey::getInstance(10);
+			$this->fail("Expected Exception Not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		 
+		$doc = file_get_contents(dirname(__FILE__) . "/_files/encryptedkey_bad_block.xml");
+		
+		try {
+			Zend_InfoCard_Xml_EncryptedKey::getInstance($doc);
+			$this->fail("Expected Exception not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+
+		
+		$doc = file_get_contents(dirname(__FILE__) . "/_files/encryptedkey_missing_enc_algo.xml");
+		$ek = Zend_InfoCard_Xml_EncryptedKey::getInstance($doc);
+		
+		try {
+			$ek->getEncryptionMethod();
+			$this->fail("Expected Exception not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+	}
+	
+	public function testKeyInfo() 
+	{
+		try {
+			Zend_InfoCard_Xml_KeyInfo::getInstance("<foo/>");
+			$this->fail("Expected Exception Not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+		try {
+			Zend_InfoCard_Xml_KeyInfo::getInstance(10);
+			$this->fail("Expected Exception Not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+	}
+	
+	public function testSecurityTokenReferenceErrors() 
+	{
+		try {
+			Zend_InfoCard_Xml_SecurityTokenReference::getInstance("<foo/>");
+			$this->fail("Expected Exception Not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+		try {
+			Zend_InfoCard_Xml_SecurityTokenReference::getInstance(10);
+			$this->fail("Expected Exception Not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+		
+		$doc = file_get_contents(dirname(__FILE__) . "/_files/security_token_bad_keyref.xml");
+		
+		try {
+			$si = Zend_InfoCard_Xml_SecurityTokenReference::getInstance($doc);
+			$si->getKeyReference();
+			$this->fail("Expected Exception Not thrown");
+		} catch(Exception $e) {
+			/* yay */
+		}
+	}
+	
 }
 
 // Call Zend_InfoCard_XmlParsingTest::main() if this source file is executed directly.
