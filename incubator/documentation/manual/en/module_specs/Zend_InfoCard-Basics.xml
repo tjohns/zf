@@ -67,7 +67,7 @@
         <para>
             In order to use the component as part of the <code>Zend_Auth</code>
             authentication system, you must use the provided
-            <code>Zend_InfoCard_Auth_Adapter</code> to do so (not available in
+            <code>Zend_Auth_Adapter_InfoCard</code> to do so (not available in
             the standalone <code>Zend_InfoCard</code> distribution). An example
             of its usage is shown below:
         </para>
@@ -78,7 +78,7 @@ require_once 'Zend/Auth.php';
 
 if (isset($_POST['xmlToken'])) {
 
-    $adapter = new Zend_InfoCard_Auth_Adapter($_POST['xmlToken']);
+    $adapter = new Zend_Auth_Adapter_InfoCard($_POST['xmlToken']);
     
     $adapter->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
                                  '/usr/local/Zend/apache2/conf/server.crt');
@@ -130,7 +130,7 @@ if (isset($_POST['xmlToken'])) {
 
         <para>
             In the example above, we first create an instance of the
-            <code>Zend_InfoCard_Auth_Adapter</code> and pass the XML data posted
+            <code>Zend_Auth_Adapter_InfoCard</code> and pass the XML data posted
             by the card selector into it. Once an instance has been created you
             must then provide at least one SSL certificate public/private key
             pair used by the web server which received the <code>HTTP
@@ -195,7 +195,7 @@ if (isset($_POST['xmlToken'])) {
         <para>
             In the example above we use the <code>Zend_InfoCard</code> component
             indepdently to validate the token provided by the user. As was the
-            case with the <code>Zend_InfoCard_Auth_Adapter</code>, we create an
+            case with the <code>Zend_Auth_Adapter_InfoCard</code>, we create an
             instance of <code>Zend_InfoCard</code> and then set one or more SSL
             certificate public/private key pairs used by the web server. Once
             configured we can use the <code>process()</code> method to process
@@ -209,7 +209,7 @@ if (isset($_POST['xmlToken'])) {
         <para>
             Regardless of if the <code>Zend_InfoCard</code> component is used as
             a standalone component or as part of <code>Zend_Auth</code> via the
-            <code>Zend_InfoCard_Auth_Adapter</code>, in both cases the ultimate
+            <code>Zend_Auth_Adapter_InfoCard</code>, in both cases the ultimate
             result of the processing of an information card is a
             <code>Zend_InfoCard_Claims</code> object. This object contains the
             assertions (a.k.a. claims) made by the submitting user based on the
