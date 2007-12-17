@@ -203,10 +203,6 @@ class Zend_Controller_Front
                     break;
             }
         }
-
-        if (!Zend_Controller_Action_HelperBroker::hasHelper('viewRenderer')) {
-            Zend_Controller_Action_HelperBroker::addHelper(new Zend_Controller_Action_Helper_ViewRenderer());
-        }
     }
 
     /**
