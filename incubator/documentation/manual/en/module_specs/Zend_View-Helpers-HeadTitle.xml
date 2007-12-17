@@ -52,7 +52,7 @@ $this->headTitle()->setSeparator(' / ');
         <programlisting role="php"><![CDATA[
 <!-- renders <action> / <controller> / Zend Framework -->
 <?= $this->headTitle() ?>
-?>]]></programlisting>
+]]></programlisting>
     </example>
 </sect3>
 <!--

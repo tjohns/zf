@@ -129,7 +129,7 @@ $this->headScript()->prependScript('/js/prototype.js');
 
         <programlisting role="php"><![CDATA[
 <?= $this->headScript() ?>
-?>]]></programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headscript.capture">

@@ -110,7 +110,7 @@ $this->headStyle()->prependStyle($firstStyles);
 
         <programlisting role="php"><![CDATA[
 <?= $this->headStyle() ?>
-?>]]></programlisting>
+]]></programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
