@@ -21,10 +21,10 @@
 
 // Call Zend_InfoCard_ProcessTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_InfoCard_ProcessTest::main");
 }
 
+require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
