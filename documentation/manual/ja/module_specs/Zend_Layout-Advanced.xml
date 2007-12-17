@@ -176,12 +176,32 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         </itemizedlist>
 
         <para>
-            これを変更するには二通りの手段があります。
+            これを変更するには三通りの手段があります。
+            インフレクションのターゲットやビューのサフィックスを
+            <code>Zend_Layout</code> のアクセサで変更すること、
             <code>Zend_Layout</code> のインスタンスに関連づけられている
-            インフレクタのルールを変更するか、
+            インフレクタのルールを変更すること、
             あるいは独自のインフレクタのインスタンスを作成してそれを
-            <code>Zend_Layout::setInflector()</code> で渡します。
+            <code>Zend_Layout::setInflector()</code> で渡すことです。
         </para>
+
+        <example id="zend.layout.advanced.inflector.accessors">
+            <title>Zend_Layout のアクセサでインフレクタを変更する</title>
+
+            <para>
+                デフォルトの <code>Zend_Layout</code> のインフレクタは、
+                ターゲットやビュースクリプトのサフィックスに静的な参照を用い、
+                それらの値を設定するためのアクセサを提供しています。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// インフレクタのターゲットを設定します
+$layout->setInflectorTarget('layouts/:script.:suffix');
+
+// レイアウトビュースクリプトのサフィックスを設定します
+$layout->setViewSuffix('php');
+?>]]></programlisting>
+        </example>
 
         <example id="zend.layout.advanced.inflector.directmodification">
             <title>Zend_Layout のインフレクタを直接変更する</title>
