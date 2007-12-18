@@ -21,11 +21,6 @@
 
 
 /**
- * Include needed Date classes
- */
-require_once 'Zend/Date/Exception.php';
-
-/**
  * @category   Zend
  * @package    Zend_Date
  * @subpackage Zend_Date_DateObject
@@ -94,6 +89,7 @@ abstract class Zend_Date_DateObject {
         } else if ($timestamp === null) {
             $this->_unixTimestamp = time();
         } else {
+            require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp', $timestamp);
         }
 
@@ -1020,6 +1016,7 @@ abstract class Zend_Date_DateObject {
         // throw an error on false input, but only if the new date extension is avaiable
         if (function_exists('timezone_open')) {
             if (!@timezone_open($zone)) {
+                require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception("timezone ($zone) is not a known timezone", $zone);
             }
         }

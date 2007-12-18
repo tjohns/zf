@@ -23,9 +23,6 @@
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
-/** Zend_Translate_Exception */
-require_once 'Zend/Translate/Exception.php';
-
 /** Zend_Translate_Adapter */
 require_once 'Zend/Translate/Adapter.php';
 
@@ -83,6 +80,7 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
         }
 
         if (!is_readable($filename)) {
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
         }
 
@@ -97,6 +95,7 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
                           xml_error_string(xml_get_error_code($this->_file)),
                           xml_get_current_line_number($this->_file));
             xml_parser_free($this->_file);
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception($ex);
         }
     }

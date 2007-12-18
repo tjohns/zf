@@ -23,7 +23,6 @@
 /**
  * Implement needed classes
  */
-require_once 'Zend/Measure/Exception.php';
 require_once 'Zend/Measure/Abstract.php';
 require_once 'Zend/Locale.php';
 
@@ -149,6 +148,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         }
 
         if (!$this->_Locale = Zend_Locale::isLocale($locale, true)) {
+            require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception("Language ($locale) is unknown");
         }
 
@@ -159,6 +159,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         }
 
         if (!array_key_exists($type, $this->_UNITS)) {
+            require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception("Type ($type) is unknown");
         }
         $this->setValue($value, $type, $this->_Locale);
@@ -180,6 +181,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         }
 
         if (empty($this->_UNITS[$type])) {
+            require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception('unknown type of number:' . $type);
         }
 
@@ -232,6 +234,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 try {
                     $value = Zend_Locale_Format::getInteger($value, array('locale' => $locale));
                 } catch (Exception $e) {
+                    require_once 'Zend/Measure/Exception.php';
                     throw new Zend_Measure_Exception($e->getMessage());
                 }
                 if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
@@ -341,6 +344,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     public function setType( $type )
     {
         if (empty($this->_UNITS[$type])) {
+            require_once 'Zend/Measure/Exception.php';
             throw new Zend_Measure_Exception('Unknown type of number:' . $type);
         }
 

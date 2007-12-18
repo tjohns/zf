@@ -217,7 +217,7 @@ class Zend_Locale {
         }
 
         if (!array_key_exists(self::$_Default, $languages)) {
-            $languages[self::$_Default] = 1;
+            $languages[self::$_Default] = 0.1;
         }
         return $languages;
     }
@@ -245,6 +245,7 @@ class Zend_Locale {
                 return true;
             }
         }
+        require_once 'Zend/Locale/Exception.php';
         throw new Zend_Locale_Exception("Unknown locale '$locale' can not be set as default!");
     }
 

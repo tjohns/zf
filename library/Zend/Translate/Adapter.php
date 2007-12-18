@@ -23,9 +23,6 @@
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
-/** Zend_Translate_Exception */
-require_once 'Zend/Translate/Exception.php';
-
 /**
  * @category   Zend
  * @package    Zend_Translate
@@ -199,12 +196,14 @@ abstract class Zend_Translate_Adapter {
         if ($locale instanceof Zend_Locale) {
             $locale = $locale->toString();
         } else if (!$locale = Zend_Locale::isLocale($locale)) {
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
         if (!array_key_exists($locale, $this->_translate) and empty($this->_translate[$locale])) {
             $temp = explode('_', $locale);
             if (!array_key_exists($temp[0], $this->_translate)) {
+                require_once 'Zend/Translate/Exception.php';
                 throw new Zend_Translate_Exception("Language ({$locale}) has to be added before it can be used.");
             }
             $locale = $temp[0];
@@ -314,6 +313,7 @@ abstract class Zend_Translate_Adapter {
     public function addTranslation($data, $locale, array $options = array())
     {
         if (!$locale = Zend_Locale::isLocale($locale)) {
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
