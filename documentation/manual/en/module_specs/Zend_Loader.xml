@@ -9,11 +9,11 @@
     <tip>
         <title>Zend_Loader vs. require_once()</title>
         <para>
-            The Zend_Loader methods are best used if the filename you need to
+            The <code>Zend_Loader</code> methods are best used if the filename you need to
             load is variable.  For example, if it is based on a parameter from
             user input or method argument.  If you are loading a file or a
             class whose name is constant, there is no benefit to using
-            Zend_Loader over using traditional PHP functions such as
+            <code>Zend_Loader</code> over using traditional PHP functions such as
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
     </tip>
@@ -97,12 +97,12 @@ Zend_Loader::loadClass('Container_Tree',
             <code>Zend_Loader::loadClass()</code> searches the directories in
             the order supplied.  The first matching file is loaded.  If the file
             does not exist in the specified <code>$dirs</code>, then the
-            include_path for the PHP environment is searched.
+            <code>include_path</code> for the PHP environment is searched.
         </para>
 
         <para>
             If the file is not found or the class does not exist after the load,
-            <code>Zend_Loader::loadClass()</code> throws a Zend_Exception.
+            <code>Zend_Loader::loadClass()</code> throws a <code>Zend_Exception</code>.
         </para>
 
         <para>
@@ -120,7 +120,7 @@ Zend_Loader::loadClass('Container_Tree',
         <para>
             The static method <code>Zend_Loader::isReadable($pathname)</code>
             returns <code>TRUE</code> if a file at the specified pathname exists
-            and is readable, FALSE otherwise.
+            and is readable, <code>FALSE</code> otherwise.
         </para>
 
         <example id="zend.loader.load.isreadable.example">
@@ -148,13 +148,13 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Using the Autoloader</title>
 
         <para>
-            The Zend_Loader class contains a method you can register with the
+            The <code>Zend_Loader</code> class contains a method you can register with the
             PHP SPL autoloader.  <code>Zend_Loader::autoload()</code> is the
-            callback method.  As a convenience, Zend_Loader provides the
+            callback method.  As a convenience, <code>Zend_Loader</code> provides the
             <code>registerAutoload()</code> function register its
             <code>autoload()</code> method.  If the <code>spl_autoload</code>
             extension is not present in your PHP environment, then
-            <code>registerAutoload()</code> method throws a Zend_Exception.
+            <code>registerAutoload()</code> method throws a <code>Zend_Exception</code>.
         </para>
 
         <example id="zend.loader.load.autoload.example">
@@ -173,7 +173,7 @@ Zend_Loader::registerAutoload();]]>
         </para>
 
         <para>
-            If you have extended the Zend_Loader class, you can give an
+            If you have extended the <code>Zend_Loader</code> class, you can give an
             optional argument to <code>registerAutoload()</code>, to specify
             the class from which to register an <code>autoload()</code> method.
         </para>
