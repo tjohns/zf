@@ -179,7 +179,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
         $validate = new Zend_Validate_EmailAddress();
         if (!$validate->isValid($email)) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set a valid email address into the email property");
@@ -250,7 +250,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
         $validate = new Zend_Validate_EmailAddress();
         if (!$validate->isValid($webmaster)) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set a valid email address into the webmaster property");
@@ -273,7 +273,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
         $validate = new Zend_Validate_Int();
         if (!$validate->isValid($ttl)) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set an integer value to the ttl property");
@@ -312,7 +312,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
         }
         if (!$uri instanceof Zend_Uri_Http) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception('Passed parameter is not a valid HTTP URI');
@@ -357,7 +357,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
     {
         if (count($hours) > 24) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you can not have more than 24 rows in the skipHours property");
@@ -365,7 +365,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
         foreach ($hours as $hour) {
             if ($hour < 0 || $hour > 23) {
                 /**
-                 * @see Zend_Feed_Bulder_Exception
+                 * @see Zend_Feed_Builder_Exception
                  */
                 require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("$hour has te be between 0 and 23");
@@ -387,7 +387,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
     {
         if (count($days) > 7) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you can not have more than 7 days in the skipDays property");
@@ -396,7 +396,7 @@ class Zend_Feed_Builder_Header extends ArrayObject
         foreach ($days as $day) {
             if (!in_array(strtolower($day), $valid)) {
                 /**
-                 * @see Zend_Feed_Bulder_Exception
+                 * @see Zend_Feed_Builder_Exception
                  */
                 require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("$day is not a valid day");

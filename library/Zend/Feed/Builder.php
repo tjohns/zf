@@ -218,7 +218,7 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
         foreach ($mandatories as $mandatory) {
             if (!isset($data[$mandatory])) {
                 /**
-                 * @see Zend_Feed_Bulder_Exception
+                 * @see Zend_Feed_Builder_Exception
                  */
                 require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("$mandatory key is missing");
@@ -266,7 +266,7 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
             foreach ($mandatories as $mandatory) {
                 if (!isset($data['cloud'][$mandatory])) {
                     /**
-                     * @see Zend_Feed_Bulder_Exception
+                     * @see Zend_Feed_Builder_Exception
                      */
                     require_once 'Zend/Feed/Builder/Exception.php';
                     throw new Zend_Feed_Builder_Exception("you have to define $mandatory property of your cloud");
@@ -280,7 +280,7 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
             foreach ($mandatories as $mandatory) {
                 if (!isset($data['textInput'][$mandatory])) {
                     /**
-                     * @see Zend_Feed_Bulder_Exception
+                     * @see Zend_Feed_Builder_Exception
                      */
                     require_once 'Zend/Feed/Builder/Exception.php';
                     throw new Zend_Feed_Builder_Exception("you have to define $mandatory property of your textInput");
@@ -347,7 +347,7 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
             foreach ($mandatories as $mandatory) {
                 if (!isset($row[$mandatory])) {
                     /**
-                     * @see Zend_Feed_Bulder_Exception
+                     * @see Zend_Feed_Builder_Exception
                      */
                     require_once 'Zend/Feed/Builder/Exception.php';
                     throw new Zend_Feed_Builder_Exception("$mandatory key is missing");
@@ -374,7 +374,7 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
                 foreach ($mandatories as $mandatory) {
                     if (!isset($row['source'][$mandatory])) {
                         /**
-                         * @see Zend_Feed_Bulder_Exception
+                         * @see Zend_Feed_Builder_Exception
                          */
                         require_once 'Zend/Feed/Builder/Exception.php';
                         throw new Zend_Feed_Builder_Exception("$mandatory key of source property is missing");

@@ -64,14 +64,14 @@ class Zend_Feed_Builder_Header_Itunes extends ArrayObject
         $nb = count($categories);
         if (0 === $nb) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set at least one itunes category");
         }
         if ($nb > 3) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set at most three itunes categories");
@@ -79,7 +79,7 @@ class Zend_Feed_Builder_Header_Itunes extends ArrayObject
         foreach ($categories as $i => $category) {
             if (empty($category['main'])) {
                 /**
-                 * @see Zend_Feed_Bulder_Exception
+                 * @see Zend_Feed_Builder_Exception
                  */
                 require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("you have to set the main category (category #$i)");
@@ -116,7 +116,7 @@ class Zend_Feed_Builder_Header_Itunes extends ArrayObject
             $validate = new Zend_Validate_EmailAddress();
             if (!$validate->isValid($email)) {
                 /**
-                 * @see Zend_Feed_Bulder_Exception
+                 * @see Zend_Feed_Builder_Exception
                  */
                 require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("you have to set a valid email address into the itunes owner's email property");
@@ -177,7 +177,7 @@ class Zend_Feed_Builder_Header_Itunes extends ArrayObject
         $block = strtolower($block);
         if (!in_array($block, array('yes', 'no'))) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set yes or no to the itunes block property");
@@ -198,7 +198,7 @@ class Zend_Feed_Builder_Header_Itunes extends ArrayObject
         $explicit = strtolower($explicit);
         if (!in_array($explicit, array('yes', 'no', 'clean'))) {
             /**
-             * @see Zend_Feed_Bulder_Exception
+             * @see Zend_Feed_Builder_Exception
              */
             require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to set yes, no or clean to the itunes explicit property");
