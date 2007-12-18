@@ -22,12 +22,6 @@
 
 
 /**
- * @see Zend_Feed_Builder_Exception
- */
-require_once 'Zend/Feed/Builder/Exception.php';
-
-
-/**
  * An entry of a custom build feed
  *
  * Classes implementing the Zend_Feed_Builder_Interface interface
@@ -215,6 +209,10 @@ class Zend_Feed_Builder_Entry extends ArrayObject
     public function addCategory(array $category)
     {
         if (empty($category['term'])) {
+            /**
+             * @see Zend_Feed_Bulder_Exception
+             */
+            require_once 'Zend/Feed/Builder/Exception.php';
             throw new Zend_Feed_Builder_Exception("you have to define the name of the category");
         }
 
@@ -250,6 +248,10 @@ class Zend_Feed_Builder_Entry extends ArrayObject
     {
         foreach ($enclosures as $enclosure) {
             if (empty($enclosure['url'])) {
+                /**
+                 * @see Zend_Feed_Bulder_Exception
+                 */
+                require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("you have to supply an url for your enclosure");
             }
             $type = isset($enclosure['type']) ? $enclosure['type'] : '';

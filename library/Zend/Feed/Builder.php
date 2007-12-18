@@ -26,23 +26,15 @@
  */
 require_once 'Zend/Feed/Builder/Interface.php';
 
-
 /**
  * @see Zend_Feed_Builder_Header
  */
 require_once 'Zend/Feed/Builder/Header.php';
 
-
 /**
  * @see Zend_Feed_Builder_Entry
  */
 require_once 'Zend/Feed/Builder/Entry.php';
-
-
-/**
- * @see Zend_Feed_Exception
- */
-require_once 'Zend/Feed/Exception.php';
 
 
 /**
@@ -225,6 +217,10 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
         $mandatories = array('title', 'link', 'charset');
         foreach ($mandatories as $mandatory) {
             if (!isset($data[$mandatory])) {
+                /**
+                 * @see Zend_Feed_Bulder_Exception
+                 */
+                require_once 'Zend/Feed/Builder/Exception.php';
                 throw new Zend_Feed_Builder_Exception("$mandatory key is missing");
             }
         }
@@ -269,6 +265,10 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
             $mandatories = array('domain', 'path', 'registerProcedure', 'protocol');
             foreach ($mandatories as $mandatory) {
                 if (!isset($data['cloud'][$mandatory])) {
+                    /**
+                     * @see Zend_Feed_Bulder_Exception
+                     */
+                    require_once 'Zend/Feed/Builder/Exception.php';
                     throw new Zend_Feed_Builder_Exception("you have to define $mandatory property of your cloud");
                 }
             }
@@ -279,6 +279,10 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
             $mandatories = array('title', 'description', 'name', 'link');
             foreach ($mandatories as $mandatory) {
                 if (!isset($data['textInput'][$mandatory])) {
+                    /**
+                     * @see Zend_Feed_Bulder_Exception
+                     */
+                    require_once 'Zend/Feed/Builder/Exception.php';
                     throw new Zend_Feed_Builder_Exception("you have to define $mandatory property of your textInput");
                 }
             }
@@ -342,6 +346,10 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
             $mandatories = array('title', 'link', 'description');
             foreach ($mandatories as $mandatory) {
                 if (!isset($row[$mandatory])) {
+                    /**
+                     * @see Zend_Feed_Bulder_Exception
+                     */
+                    require_once 'Zend/Feed/Builder/Exception.php';
                     throw new Zend_Feed_Builder_Exception("$mandatory key is missing");
                 }
             }
@@ -365,6 +373,10 @@ class Zend_Feed_Builder implements Zend_Feed_Builder_Interface
                 $mandatories = array('title', 'url');
                 foreach ($mandatories as $mandatory) {
                     if (!isset($row['source'][$mandatory])) {
+                        /**
+                         * @see Zend_Feed_Bulder_Exception
+                         */
+                        require_once 'Zend/Feed/Builder/Exception.php';
                         throw new Zend_Feed_Builder_Exception("$mandatory key of source property is missing");
                     }
                 }
