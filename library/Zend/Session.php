@@ -33,11 +33,6 @@ require_once 'Zend/Session/Abstract.php';
 require_once 'Zend/Session/Namespace.php';
 
 /**
- * @see Zend_Session_Exception
- */
-require_once 'Zend/Session/Exception.php';
-
-/**
  * @see Zend_Session_SaveHandler_Interface
  */
 require_once 'Zend/Session/SaveHandler/Interface.php';
@@ -203,6 +198,8 @@ class Zend_Session extends Zend_Session_Abstract
                 self::${self::$_localOptions[$userOptionName]} = $userOptionValue;
             }
             else {
+                /** @see Zend_Session_Exception */
+                require_once 'Zend/Session/Exception.php';
                 throw new Zend_Session_Exception("Unknown option: $userOptionName = $userOptionValue");
             }
         }
@@ -239,6 +236,8 @@ class Zend_Session extends Zend_Session_Abstract
     public static function regenerateId()
     {
         if (headers_sent($filename, $linenum)) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception("You must call " . __CLASS__ . '::' . __FUNCTION__ .
                 "() before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
@@ -352,16 +351,22 @@ class Zend_Session extends Zend_Session_Abstract
 
         // In strict mode, do not allow auto-starting Zend_Session, such as via "new Zend_Session_Namespace()"
         if (self::$_strict && $options === true) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('You must explicitly start the session with Zend_Session::start() when session options are set to strict.');
         }
 
         if (headers_sent($filename, $linenum)) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception("Session must be started before any output has been sent to the browser;"
                . " output started in {$filename}/{$linenum}");
         }
 
         // See http://www.php.net/manual/en/ref.session.php for explanation
         if (defined('SID')) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('session has already been started by session.auto-start or session_start()');
         }
 
@@ -369,6 +374,8 @@ class Zend_Session extends Zend_Session_Abstract
          * Hack to throw exceptions on start instead of php errors
          * @see http://framework.zend.com/issues/browse/ZF-1325
          */
+        /** @see Zend_Session_Exception */
+        require_once 'Zend/Session/Exception.php';
         set_error_handler(array('Zend_Session_Exception', 'handleSessionStartError'), E_ALL);
         session_start();
         restore_error_handler();
@@ -514,15 +521,21 @@ class Zend_Session extends Zend_Session_Abstract
     public static function setId($id)
     {
         if (defined('SID')) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('The session has already been started.  The session id must be set first.');
         }
 
         if (headers_sent($filename, $linenum)) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception("You must call ".__CLASS__.'::'.__FUNCTION__.
                 "() before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
         if (!is_string($id) || $id === '') {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception('You must provide a non-empty string as a session identifier.');
         }
 
@@ -649,6 +662,8 @@ class Zend_Session extends Zend_Session_Abstract
             Zend_Loader::loadClass($validator_name);
             $validator = new $validator_name;
             if ($validator->validate() === false) {
+                /** @see Zend_Session_Exception */
+                require_once 'Zend/Session/Exception.php';
                 throw new Zend_Session_Exception("This session is not valid according to {$validator_name}.");
             }
         }
@@ -697,11 +712,14 @@ class Zend_Session extends Zend_Session_Abstract
      * getIterator() - return an iteratable object for use in foreach and the like,
      * this completes the IteratorAggregate interface
      *
+     * @throws Zend_Session_Exception
      * @return ArrayObject
      */
     public static function getIterator()
     {
         if (parent::$_readable === false) {
+            /** @see Zend_Session_Exception */
+            require_once 'Zend/Session/Exception.php';
             throw new Zend_Session_Exception(parent::_THROW_NOT_READABLE_MSG);
         }
 
