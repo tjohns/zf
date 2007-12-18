@@ -405,6 +405,23 @@ class Zend_View_Helper_Placeholder_ContainerTest extends PHPUnit_Framework_TestC
         $array = $this->container->getArrayCopy();
         $this->assertSame($expected, $array);
     }
+
+    public function testIndentationIsHonored()
+    {
+        $this->container->setIndent(4)
+                        ->setPrefix("<ul>\n    <li>")
+                        ->setSeparator("</li>\n    <li>")
+                        ->setPostfix("</li>\n</ul>");
+        $this->container->append('foo');
+        $this->container->append('bar');
+        $this->container->append('baz');
+        $string = $this->container->toString();
+
+        $lis = substr_count($string, "\n        <li>");
+        $this->assertEquals(3, $lis);
+        $this->assertTrue((strstr($string, "    <ul>\n")) ? true : false, $string);
+        $this->assertTrue((strstr($string, "\n    </ul>")) ? true : false);
+    }
 }
 
 // Call Zend_View_Helper_Placeholder_ContainerTest::main() if this source file is executed directly.

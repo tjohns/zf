@@ -215,16 +215,12 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      * Set the indentation string for __toString() serialization,
      * optionally, if a number is passed, it will be the number of spaces
      *
-     * @param string|int $indent
-     * @return Zend_View_Helper_Placeholder_Container
+     * @param  string|int $indent
+     * @return Zend_View_Helper_Placeholder_Container_Abstract
      */
     public function setIndent($indent)
     {
-        if (is_int($indent)) {
-            $indent = str_repeat(' ', $indent);
-        }
-        
-        $this->_indent = (string) $indent;
+        $this->_indent = $this->_getWhitespace($indent);
         return $this;
     }
 
@@ -237,7 +233,22 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
     {
         return $this->_indent;
     }
-    
+
+    /**
+     * Retrieve whitespace representation of $indent
+     * 
+     * @param  int|string $indent 
+     * @return string
+     */
+    protected function _getWhitespace($indent)
+    {
+        if (is_int($indent)) {
+            $indent = str_repeat(' ', $indent);
+        }
+
+        return (string) $indent;
+    }
+   
     /**
      * Start capturing content to push into placeholder
      *
@@ -340,8 +351,9 @@ abstract class Zend_View_Helper_Placeholder_Container_Abstract extends ArrayObje
      */
     public function toString($indent = null)
     {
-        $indent = ($indent != null) ? $indent : $this->_indent;
-        $indent = (is_int($indent)) ? str_repeat(' ', $indent) : $indent;
+        $indent = ($indent !== null) 
+                ? $this->_getWhitespace($indent) 
+                : $this->getIndent();
         
         $items  = $this->getArrayCopy();
         $return = $indent 
