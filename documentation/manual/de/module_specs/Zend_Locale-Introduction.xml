@@ -122,7 +122,7 @@
 
     <sect2 id="zend.locale.representation">
 
-        <title>Wodurch werden Gebietsschemata representiert?</title>
+        <title>Wodurch werden Gebietsschemata repräsentiert?</title>
 
         <para>
             Eine Gebietsschema Zeichenkette besteht aus Informationen über die Sprache des Benutzers und die
@@ -309,6 +309,76 @@ require_once 'Zend/Date.php';
 $date = new Zend_Date('auto');]]>
             </programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.locale.defaultlocale">
+
+        <title>Verwenden eines Standard Gebietsschemas</title>
+
+        <para>
+            In einigen Umgebungen ist es nicht möglich automatisch ein Gebietsschema zu erkennen. Man kann
+            dieses Verhalten zum Beispiel sehen wenn eine Anfrage von der Kommandozeile kommt, oder der
+            anfragende Browser kein Sprachtag gesetzt hat und zusätzlich der Server das Standardgebietsschema
+            'C' gesetzt hat oder ein anderes propäritäres Gebietsschema.
+        </para>
+
+        <para>
+            In solchen Fällen wirft <code>Zend_Locale</code> normalerweise eine Ausnahme mit einer Nachricht,
+            das die automatische Erkennung des Gebietsschemas nicht erfolgreich war. Es gibt zwei Optionen
+            um diese Situation handzuhaben. Entweder durch das Setzen eines neuen Gebietsschemas per Hand, oder
+            der Definition eines Standardgebietsschemas.
+        </para>
+
+        <example id="zend.locale.defaultlocale.example-1">
+            <title>Handhabung von Ausnahmen für Gebietsschemas</title>
+            <programlisting role="php"><![CDATA[<?php
+// In der Bootstrap Datei
+require_once 'Zend/Locale.php';
+
+try {
+    $locale = new Zend_Locale('auto');
+} catch (Zend_Locale_Exception $e) {
+    $locale = new Zend_Locale('de');
+}
+
+// Im Modell/Kontroller
+$date = new Zend_Date($locale);]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Aber das hat einen großen negativen Effekt. Man muß das Gebietsschema-Objekt in jeder Klasse
+            setzen die <code>Zend_Locale</code> verwendet. Das kann sehr unhandlch sein wenn mehrere Klassen
+            verwendet werden.
+        </para>
+
+        <para>
+            Seit Zend Framework Release 1.1 gibt es einen viel besseren Weg um das handzuhaben. Man kann
+            ein Standard Gebietsschema mit der statischen <code>setDefault()</code> Methode setzen. Natürlich
+            wird jedes unbekannte oder nicht voll qualifizierte Gebietsschema eine Ausnahme werden.
+            <code>setDefault()</code> sollte der erste Aufruf sein bevor irgendeine Klasse initiiert wird
+            die <code>Zend_Locale</code> verwendet. Siehe das folgende Beispiel für Details:
+        </para>
+
+        <example id="zend.locale.defaultlocale.example-2">
+            <title>Setzen eines Standardgebietsschemas</title>
+            <programlisting role="php"><![CDATA[<?php
+// In der Bootstrap Datei
+require_once 'Zend/Locale.php';
+
+Zend_Locale::setDefault('de');
+
+// Im Modell/Kontroller
+$date = new Zend_Date();]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Im Fall das kein Gebietsschema erkannt wird, wird automatisch das Gebietsschema
+            <emphasis role="strong">de</emphasis> verwendet. Andernfalls wird das erkannte Gebietsschema
+            verwendet.
+        </para>
 
     </sect2>
 
