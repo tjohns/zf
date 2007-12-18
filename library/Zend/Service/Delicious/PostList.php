@@ -237,7 +237,8 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
      *
      * Implement ArrayAccess::offsetExists()
      *
-     * @return bool
+     * @param   int     $offset
+     * @return  bool
      */
     public function offsetExists($offset)
     {
@@ -249,8 +250,9 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
      *
      * Implement ArrayAccess::offsetGet()
      *
-     * @throws OutOfBoundsException
-     * @return Zend_Service_Delicious_SimplePost
+     * @param   int     $offset
+     * @throws  OutOfBoundsException
+     * @return  Zend_Service_Delicious_SimplePost
      */
     public function offsetGet($offset)
     {
@@ -266,7 +268,9 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
      *
      * Implement ArrayAccess::offsetSet()
      *
-     * @throws Zend_Service_Delicious_Exception
+     * @param   int     $offset
+     * @param   string  $value
+     * @throws  Zend_Service_Delicious_Exception
      */
     public function offsetSet($offset, $value)
     {
@@ -282,7 +286,8 @@ class Zend_Service_Delicious_PostList implements Countable, Iterator, ArrayAcces
      *
      * Implement ArrayAccess::offsetUnset()
      *
-     * @throws Zend_Service_Delicious_Exception
+     * @param   int     $offset
+     * @throws  Zend_Service_Delicious_Exception
      */
     public function offsetUnset($offset)
     {

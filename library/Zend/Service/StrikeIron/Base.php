@@ -17,6 +17,7 @@
  * @subpackage StrikeIron
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -55,7 +56,8 @@ class Zend_Service_StrikeIron_Base
     /**
      * Class constructor
      *
-     * @param array  $options  Key/value pair options
+     * @param  array  $options  Key/value pair options
+     * @throws Zend_Service_StrikeIron_Exception
      */
     public function __construct($options = array())
     {
@@ -80,6 +82,7 @@ class Zend_Service_StrikeIron_Base
      * @param  string  $method  Method name
      * @param  array   $params  Parameters for method
      * @return mixed            Result
+     * @throws Zend_Service_StrikeIron_Exception
      */
     public function __call($method, $params)
     {
@@ -129,6 +132,7 @@ class Zend_Service_StrikeIron_Base
      * Initialize the headers to pass to SOAPClient->__soapCall()
      *
      * @return void
+     * @throws Zend_Service_StrikeIron_Exception
      */
     protected function _initSoapHeaders()
     {
@@ -244,6 +248,7 @@ class Zend_Service_StrikeIron_Base
      * @param  boolean  $now          Force a call to getRemainingHits instead of cache?
      * @param  string   $queryMethod  Method that will cause SubscriptionInfo header to be sent
      * @return Zend_Service_StrikeIron_Decorator  Decorated subscription info
+     * @throws Zend_Service_StrikeIron_Exception
      */
     public function getSubscriptionInfo($now = false, $queryMethod = 'GetRemainingHits')
     {

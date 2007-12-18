@@ -79,6 +79,7 @@ class Zend_Service_Yahoo
      * @param  string $query   the query to be run
      * @param  array  $options an optional array of query options
      * @return Zend_Service_Yahoo_ImageResultSet the search results
+     * @throws Zend_Service_Exception
      */
     public function imageSearch($query, array $options = array())
     {
@@ -143,6 +144,7 @@ class Zend_Service_Yahoo
      * @param  string $query    The query string you want to run
      * @param  array  $options  The search options, including location
      * @return Zend_Service_Yahoo_LocalResultSet The results
+     * @throws Zend_Service_Exception
      */
     public function localSearch($query, array $options = array())
     {
@@ -197,6 +199,7 @@ class Zend_Service_Yahoo
      * @param  string $query    The query to run
      * @param  array  $options  The array of optional parameters
      * @return Zend_Service_Yahoo_NewsResultSet  The query return set
+     * @throws Zend_Service_Exception
      */
     public function newsSearch($query, array $options = array())
     {
@@ -253,6 +256,7 @@ class Zend_Service_Yahoo
      * @param  string $query    the query being run
      * @param  array  $options  any optional parameters
      * @return Zend_Service_Yahoo_WebResultSet  The return set
+     * @throws Zend_Service_Exception
      */
     public function webSearch($query, array $options = array())
     {
@@ -307,8 +311,8 @@ class Zend_Service_Yahoo
      * Validate Image Search Options
      *
      * @param  array $options
-     * @throws Zend_Service_Exception
      * @return void
+     * @throws Zend_Service_Exception
      */
     protected function _validateImageSearch(array $options)
     {
@@ -392,8 +396,8 @@ class Zend_Service_Yahoo
      * Validate Local Search Options
      *
      * @param  array $options
-     * @throws Zend_Service_Exception
      * @return void
+     * @throws Zend_Service_Exception
      */
     protected function _validateLocalSearch(array $options)
     {
@@ -479,8 +483,8 @@ class Zend_Service_Yahoo
      * Validate News Search Options
      *
      * @param  array $options
-     * @throws Zend_Service_Exception
      * @return void
+     * @throws Zend_Service_Exception
      */
     protected function _validateNewsSearch(array $options)
     {
@@ -521,8 +525,8 @@ class Zend_Service_Yahoo
      * Validate Web Search Options
      *
      * @param  array $options
-     * @throws Zend_Service_Exception
      * @return void
+     * @throws Zend_Service_Exception
      */
     protected function _validateWebSearch(array $options)
     {
@@ -584,8 +588,8 @@ class Zend_Service_Yahoo
      * Throws an exception if the chosen language is not supported
      *
      * @param  string $lang Language code
-     * @throws Zend_Service_Exception
      * @return void
+     * @throws Zend_Service_Exception
      */
     protected function _validateLanguage($lang)
     {
@@ -608,8 +612,8 @@ class Zend_Service_Yahoo
      *
      * @param  array $options      User specified options
      * @param  array $validOptions Valid options
-     * @throws Zend_Service_Exception if difference is found (e.g., unsupported query option)
      * @return void
+     * @throws Zend_Service_Exception if difference is found (e.g., unsupported query option)
      */
     protected function _compareOptions(array $options, array $validOptions)
     {
@@ -630,8 +634,8 @@ class Zend_Service_Yahoo
      * @param  string $name  Name associated with the value
      * @param  mixed  $value Value
      * @param  array  $array Array in which to check for the value
-     * @throws Zend_Service_Exception
      * @return void
+     * @throws Zend_Service_Exception
      */
     protected function _validateInArray($name, $value, array $array)
     {
@@ -649,8 +653,8 @@ class Zend_Service_Yahoo
      * Check if response is an error
      *
      * @param  DOMDocument $dom DOM Object representing the result XML
-     * @throws Zend_Service_Exception Thrown when the result from Yahoo! is an error
      * @return void
+     * @throws Zend_Service_Exception Thrown when the result from Yahoo! is an error
      */
     protected static function _checkErrors(DOMDocument $dom)
     {

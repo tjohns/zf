@@ -56,8 +56,9 @@ class Zend_Service_Delicious_SimplePost
     /**
      * Constructor
      *
-     * @param  array $post Post data
-     * @return void
+     * @param   array $post Post data
+     * @return  void
+     * @throws  Zend_Service_Delicious_Exception
      */
     public function __construct(array $post)
     {

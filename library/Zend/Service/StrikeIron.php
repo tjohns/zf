@@ -17,6 +17,7 @@
  * @subpackage StrikeIron
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -60,7 +61,8 @@ class Zend_Service_StrikeIron
      * instance.
      *
      * @param  null|string  $options  Service options
-     * @return object                 Zend_Service_StrikeIron_* instance
+     * @return object       Zend_Service_StrikeIron_* instance
+     * @throws Zend_Service_StrikeIron_Exception
      */
     public function getService($options = array())
     {
