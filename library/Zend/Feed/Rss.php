@@ -72,8 +72,8 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
     /**
      * Override Zend_Feed_Abstract to set up the $_element and $_entries aliases.
      *
-     * @throws Zend_Feed_Exception
      * @return void
+     * @throws Zend_Feed_Exception
      */
     public function __wakeup()
     {
@@ -82,6 +82,10 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
         // Find the base channel element and create an alias to it.
         $this->_element = $this->_element->getElementsByTagName('channel')->item(0);
         if (!$this->_element) {
+            /** 
+             * @see Zend_Feed_Exception
+             */
+            require_once 'Zend/Feed/Exception.php';
             throw new Zend_Feed_Exception('No root <channel> element found, cannot parse channel.');
         }
 
@@ -479,12 +483,16 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
     /**
      * Send feed to a http client with the correct header
      *
-     * @throws Zend_Feed_Exception if headers have already been sent
      * @return void
+     * @throws Zend_Feed_Exception if headers have already been sent
      */
     public function send()
     {
         if (headers_sent()) {
+            /** 
+             * @see Zend_Feed_Exception
+             */
+            require_once 'Zend/Feed/Exception.php';
             throw new Zend_Feed_Exception('Cannot send RSS because headers have already been sent.');
         }
 

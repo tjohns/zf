@@ -77,6 +77,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
      * Override Zend_Feed_Abstract to set up the $_element and $_entries aliases.
      *
      * @return void
+     * @throws Zend_Feed_Exception
      */
     public function __wakeup()
     {
@@ -88,6 +89,10 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
             // Try to find a single <entry> instead.
             $element = $this->_element->getElementsByTagName($this->_entryElementName)->item(0);
             if (!$element) {
+                /** 
+                 * @see Zend_Feed_Exception
+                 */
+                require_once 'Zend/Feed/Exception.php';
                 throw new Zend_Feed_Exception('No root <feed> or <' . $this->_entryElementName
                                               . '> element found, cannot parse feed.');
             }
@@ -365,12 +370,16 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
     /**
      * Send feed to a http client with the correct header
      *
-     * @throws Zend_Feed_Exception if headers have already been sent
      * @return void
+     * @throws Zend_Feed_Exception if headers have already been sent
      */
     public function send()
     {
         if (headers_sent()) {
+            /** 
+             * @see Zend_Feed_Exception
+             */
+            require_once 'Zend/Feed/Exception.php';
             throw new Zend_Feed_Exception('Cannot send ATOM because headers have already been sent.');
         }
 

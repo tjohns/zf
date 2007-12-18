@@ -71,6 +71,7 @@ abstract class Zend_Feed_Entry_Abstract extends Zend_Feed_Element
      * @param  string $uri
      * @param  SimpleXMLElement|DOMNode|string  $element
      * @return void
+     * @throws Zend_Feed_Exception
      */
     public function __construct($uri = null, $element = null)
     {
@@ -83,11 +84,19 @@ abstract class Zend_Feed_Entry_Abstract extends Zend_Feed_Element
                 @ini_restore('track_errors');
 
                 if (!$success) {
+                    /** 
+                     * @see Zend_Feed_Exception
+                     */
+                    require_once 'Zend/Feed/Exception.php';
                     throw new Zend_Feed_Exception("DOMDocument cannot parse XML: $php_errormsg");
                 }
 
                 $element = $doc->getElementsByTagName($this->_rootElement)->item(0);
                 if (!$element) {
+                    /** 
+                     * @see Zend_Feed_Exception
+                     */
+                    require_once 'Zend/Feed/Exception.php';
                     throw new Zend_Feed_Exception('No root <' . $this->_rootElement . '> element found, cannot parse feed.');
                 }
             } else {
