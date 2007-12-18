@@ -186,6 +186,50 @@ foreach ($this->data as $datum): ?>
 <?php echo $this->placeholder('foo')->data ?>
 ]]></programlisting>
     </example>
+
+    <sect4 id="zend.view.helpers.initial.placeholder.implementations">
+        <title>Konkrete Platzhalter Implementationen</title>
+
+        <para>
+            Zend Framework kommt mit einer Anzahl an "konkreten" Platzhalter Implementationen. Diese sind für
+            üblich verwendete Platzhalter: Doctype, Seitentitel, und verschiedene &lt;head&gt; Elemente. In allen
+            Fällen gibt der Aufruf des Platzhalters ohne Argumente das Element selbst zurück.
+        </para>
+
+        <para>
+            Die Dokumentation für jedes Element wird seperat behandelt, wie anbei beschrieben:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.doctype">Doctype</link>
+            </para></listitem>
+
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.headlink">HeadLink</link>
+            </para></listitem>
+
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.headmeta">HeadMeta</link>
+            </para></listitem>
+
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.headscript">HeadScript</link>
+            </para></listitem>
+
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.headstyle">HeadStyle</link>
+            </para></listitem>
+
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.headtitle">HeadTitle</link>
+            </para></listitem>
+
+            <listitem><para>
+                    <link linkend="zend.view.helpers.initial.inlinescript">InlineScript</link>
+            </para></listitem>
+        </itemizedlist>
+    </sect4>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:
