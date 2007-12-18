@@ -289,6 +289,29 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
             $this->fail('Too few arguments should raise exception');
         } catch (Zend_View_Exception $e) { }
     }
+
+    public function testIndentationIsHonored()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->appendStyle('
+a {
+    display: none;
+}');
+        $this->helper->appendStyle('
+h1 {
+    font-weight: bold
+}');
+        $string = $this->helper->toString();
+
+        $scripts = substr_count($string, '    <style');
+        $this->assertEquals(2, $scripts);
+        $this->assertContains('    <!--', $string);
+        $this->assertContains('    a {', $string);
+        $this->assertContains('    h1 {', $string);
+        $this->assertContains('        display', $string);
+        $this->assertContains('        font-weight', $string);
+        $this->assertContains('    }', $string);
+    }
 }
 
 // Call Zend_View_Helper_HeadStyleTest::main() if this source file is executed directly.

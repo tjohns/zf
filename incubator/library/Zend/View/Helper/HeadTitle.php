@@ -64,6 +64,10 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
 
     public function toString($indent = null)
     {
+        $indent = (null !== $indent)
+                ? $this->_getWhitespace($indent)
+                : $this->getIndent();
+
         $items = array();
         foreach ($this as $item) {
             $items[] = htmlentities((string) $item);
@@ -71,6 +75,6 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
 
         $separator = htmlentities($this->getSeparator());
 
-        return '<title>' . implode($separator, $items) . '</title>';
+        return $indent . '<title>' . implode($separator, $items) . '</title>';
     }
 }

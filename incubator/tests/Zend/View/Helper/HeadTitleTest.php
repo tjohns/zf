@@ -140,6 +140,15 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Bar', $string);
         $this->assertContains('br /', $string);
     }
+
+    public function testIndentationIsHonored()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->headTitle('foo');
+        $string = $this->helper->toString();
+
+        $this->assertContains('    <title>', $string);
+    }
 }
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.

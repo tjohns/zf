@@ -350,9 +350,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             }
         }
 
-        $html  = '<script type="' . htmlspecialchars($item->type) . '"' . $attrString . '>';
+        $html  = $indent . '<script type="' . htmlspecialchars($item->type) . '"' . $attrString . '>';
         if (!empty($item->source)) {
-              $html .= PHP_EOL . $indent . $escapeStart . PHP_EOL . $indent . $item->source . PHP_EOL . $indent . $escapeEnd . PHP_EOL;
+              $html .= PHP_EOL . $indent . $escapeStart . PHP_EOL . $indent . $indent . $item->source . PHP_EOL . $indent . $escapeEnd . PHP_EOL . $indent;
         }
         $html .= '</script>';
 
@@ -367,13 +367,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
      */
     public function toString($indent = null)
     {
-        if (null !== $indent) {
-            if (!is_int($indent) && !is_string($indent)) {
-                $indent = $this->_indent;
-            }
-        } else {
-            $indent = $this->_indent;
-        }
+        $indent = (null !== $indent)
+                ? $this->_getWhitespace($indent)
+                : $this->getIndent();
 
         if ($this->view) {
             $useCdata = $this->view->doctype()->isXhtml() ? true : false;
@@ -392,7 +388,9 @@ class Zend_View_Helper_HeadScript extends Zend_View_Helper_Placeholder_Container
             $items[] = $this->itemToString($item, $indent, $escapeStart, $escapeEnd);
         }
 
-        return implode($this->getSeparator(), $items);
+        $return = $indent . implode($this->getSeparator() . $indent, $items);
+        $return = preg_replace("/(\r\n?|\n)/", '$1' . $indent, $return);
+        return $return;
     }
 
     /**

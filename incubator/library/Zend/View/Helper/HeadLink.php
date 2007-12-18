@@ -285,17 +285,21 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
     /**
      * Render link elements as string
      * 
-     * @param  string|int $index 
+     * @param  string|int $indent
      * @return string
      */
-    public function toString($index = null)
+    public function toString($indent = null)
     {
+        $indent = (null !== $indent)
+                ? $this->_getWhitespace($indent)
+                : $this->getIndent();
+
         $items = array();
         foreach ($this as $item) {
             $items[] = $this->itemToString($item);
         }
 
-        return implode($this->getSeparator(), $items);
+        return $indent . implode($this->getSeparator() . $indent, $items);
     }
 
     /**

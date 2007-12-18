@@ -315,6 +315,24 @@ class Zend_View_Helper_HeadScriptTest extends PHPUnit_Framework_TestCase
         $item = array_shift($values);
         $this->assertContains('foobar', $item->source);
     }
+
+    public function testIndentationIsHonored()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->appendScript('
+var foo = "bar";
+document.write(foo.strlen());');
+        $this->helper->appendScript('
+var bar = "baz";
+document.write(bar.strlen());');
+        $string = $this->helper->toString();
+
+        $scripts = substr_count($string, '    <script');
+        $this->assertEquals(2, $scripts);
+        $this->assertContains('    //', $string);
+        $this->assertContains('    var', $string);
+        $this->assertContains('    document', $string);
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.

@@ -295,6 +295,17 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('name', $item->type);
         $this->assertEquals('keywords', $item->name);
     }
+
+    public function testIndentationIsHonored()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->appendName('keywords', 'foo bar');
+        $this->helper->appendName('seo', 'baz bat');
+        $string = $this->helper->toString();
+
+        $scripts = substr_count($string, '    <meta name=');
+        $this->assertEquals(2, $scripts);
+    }
 }
 
 // Call Zend_View_Helper_HeadMetaTest::main() if this source file is executed directly.

@@ -320,13 +320,9 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
      */
     public function toString($indent = null)
     {
-        if (null !== $indent) {
-            if (!is_int($indent) && !is_string($indent)) {
-                $indent = $this->_indent;
-            }
-        } else {
-            $indent = $this->_indent;
-        }
+        $indent = (null !== $indent)
+                ? $this->_getWhitespace($indent)
+                : $this->getIndent();
 
         $items = array();
         foreach ($this as $item) {
@@ -336,7 +332,9 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             $items[] = $this->itemToString($item, $indent);
         }
 
-        return implode($this->getSeparator(), $items);
+        $return = $indent . implode($this->getSeparator() . $indent, $items);
+        $return = preg_replace("/(\r\n?|\n)/", '$1' . $indent, $return);
+        return $return;
     }
 
     /**

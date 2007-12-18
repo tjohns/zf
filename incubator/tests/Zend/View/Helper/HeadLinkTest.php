@@ -332,6 +332,17 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
             $this->fail('Setting alternate with fewer than 3 args should raise exception');
         } catch (Zend_View_Exception $e) { }
     }
+
+    public function testIndentationIsHonored()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->appendStylesheet('/css/screen.css');
+        $this->helper->appendStylesheet('/css/rules.css');
+        $string = $this->helper->toString();
+
+        $scripts = substr_count($string, '    <link ');
+        $this->assertEquals(2, $scripts);
+    }
 }
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.

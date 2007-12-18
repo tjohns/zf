@@ -293,11 +293,15 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
      */
     public function toString($indent = null)
     {
+        $indent = (null !== $indent)
+                ? $this->_getWhitespace($indent)
+                : $this->getIndent();
+
         $items = array();
         foreach ($this as $item) {
             $items[] = $this->itemToString($item);
         }
-        return implode($this->getSeparator(), $items);
+        return $indent . implode($this->getSeparator() . $indent, $items);
     }
 
     /**
