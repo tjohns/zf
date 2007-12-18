@@ -61,13 +61,6 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
     protected $_captureAttrs = null;
 
     /**
-     * Whether or not to format scripts using CDATA; used only if doctype 
-     * helper is not accessible
-     * @var bool
-     */
-    public $useCdata = false;
-
-    /**
      * Constructor
      *
      * Set separator to PHP_EOL.
@@ -291,11 +284,11 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
     /**
      * Convert content and attributes into valid style tag
      * 
-     * @param  string $content 
-     * @param  array $attributes 
+     * @param  stdClass $item Item to render
+     * @param  string $indent Indentation to use 
      * @return string
      */
-    public function itemToString(stdClass $item, $indent, $escapeStart, $escapeEnd)
+    public function itemToString(stdClass $item, $indent)
     {
         $attrString = '';
         if (!empty($item->attributes)) {
@@ -313,7 +306,7 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
         }
 
         $html = '<style type="text/css"' . $attrString . '>' . PHP_EOL
-              . $indent . $escapeStart . PHP_EOL . $indent . $item->content . PHP_EOL . $indent . $escapeEnd . PHP_EOL
+              . $indent . '<!--' . PHP_EOL . $indent . $item->content . PHP_EOL . $indent . '-->' . PHP_EOL
               . '</style>';
 
         return $html;
@@ -335,20 +328,12 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
             $indent = $this->_indent;
         }
 
-        if ($this->view) {
-            $useCdata = $this->view->doctype()->isXhtml() ? true : false;
-        } else {
-            $useCdata = $this->useCdata ? true : false;
-        }
-        $escapeStart = ($useCdata) ? '<![CDATA[' : '<!--';
-        $escapeEnd   = ($useCdata) ? ']]>'       : '-->';
-
         $items = array();
         foreach ($this as $item) {
             if (!$this->_isValid($item)) {
                 continue;
             }
-            $items[] = $this->itemToString($item, $indent, $escapeStart, $escapeEnd);
+            $items[] = $this->itemToString($item, $indent);
         }
 
         return implode($this->getSeparator(), $items);
@@ -363,9 +348,14 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
      */
     public function createData($content, array $attributes)
     {
+        if (!isset($attributes['media'])) {
+            $attributes['media'] = 'screen';
+        }
+
         $data = new stdClass();
         $data->content    = $content;
         $data->attributes = $attributes;
+
         return $data;
     }
 }

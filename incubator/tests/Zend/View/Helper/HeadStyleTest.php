@@ -171,7 +171,7 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
         $this->helper->setStyle('a {}', array(
             'lang'  => 'us_en', 
             'title' => 'foo', 
-            'media' => 'screen', 
+            'media' => 'projection', 
             'dir'   => 'rtol', 
             'bogus' => 'unused'
         ));
@@ -187,14 +187,13 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($attributes['bogus']));
         $this->assertEquals('us_en', $attributes['lang']);
         $this->assertEquals('foo', $attributes['title']);
-        $this->assertEquals('screen', $attributes['media']);
+        $this->assertEquals('projection', $attributes['media']);
         $this->assertEquals('rtol', $attributes['dir']);
         $this->assertEquals('unused', $attributes['bogus']);
     }
 
-    public function testCanBuildStyleTagsWithCdataEscaping()
+    public function testRenderedStyleTagsContainHtmlEscaping()
     {
-        $this->helper->useCdata = true;
         $this->helper->setStyle('a {}', array(
             'lang'  => 'us_en', 
             'title' => 'foo', 
@@ -203,10 +202,16 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
             'bogus' => 'unused'
         ));
         $value = $this->helper->toString();
-        $this->assertContains('<![CDATA[', $value);
-        $this->assertContains(']]>', $value);
-        $this->assertNotContains('<!--', $value);
-        $this->assertNotContains('-->', $value);
+        $this->assertContains('<!--' . PHP_EOL, $value);
+        $this->assertContains(PHP_EOL . '-->', $value);
+    }
+
+    public function testRenderedStyleTagsContainsDefaultMedia()
+    {
+        $this->helper->setStyle('a {}', array(
+        ));
+        $value = $this->helper->toString();
+        $this->assertRegexp('#<style [^>]*?media="screen"#', $value, $value);
     }
 
     public function testHeadStyleProxiesProperly()
