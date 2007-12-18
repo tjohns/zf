@@ -72,7 +72,7 @@ class Zend_View_Helper_Doctype
      */
     public function __construct()
     {
-        if (!Zend_Registry::isRegistered(__CLASS__)) {
+        if (!Zend_Registry::isRegistered($this->_regKey)) {
             $this->_registry = new ArrayObject(array(
                 'doctypes' => array(
                     self::XHTML1_STRICT       => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
@@ -83,10 +83,10 @@ class Zend_View_Helper_Doctype
                     self::HTML4_FRAMESET      => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">',
                 )
             ));
-            Zend_Registry::set(__CLASS__, $this->_registry);
+            Zend_Registry::set($this->_regKey, $this->_registry);
             $this->setDoctype($this->_defaultDoctype);
         } else {
-            $this->_registry = Zend_Registry::get(__CLASS__);
+            $this->_registry = Zend_Registry::get($this->_regKey);
         }
     }
     
