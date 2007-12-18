@@ -201,6 +201,13 @@
         <xi:include href="Zend_View-Helpers-Action.xml" />
         <xi:include href="Zend_View-Helpers-Partial.xml" />
         <xi:include href="Zend_View-Helpers-Placeholder.xml" />
+        <xi:include href="Zend_View-Helpers-Doctype.xml" />
+        <xi:include href="Zend_View-Helpers-HeadLink.xml" />
+        <xi:include href="Zend_View-Helpers-HeadMeta.xml" />
+        <xi:include href="Zend_View-Helpers-HeadScript.xml" />
+        <xi:include href="Zend_View-Helpers-HeadStyle.xml" />
+        <xi:include href="Zend_View-Helpers-HeadTitle.xml" />
+        <xi:include href="Zend_View-Helpers-InlineScript.xml" />
     </sect2>
 
     <sect2 id="zend.view.helpers.paths">

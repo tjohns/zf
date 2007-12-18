@@ -44,18 +44,6 @@
         <xi:include href="module_specs/Zend_TimeSync-Queries.xml" />
     </chapter>
 
-    <chapter id="zend.view">
-        <title>Zend_View</title>
-        <xi:include href="module_specs/Zend_View-Helpers-Placeholder.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-Doctype.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-HeadLink.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-HeadMeta.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-HeadScript.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-HeadStyle.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-HeadTitle.xml" />
-        <xi:include href="module_specs/Zend_View-Helpers-InlineScript.xml" />
-    </chapter>
-
     <appendix id="appendix.copyright">
         <title>Copyright Information</title>
         <xi:include href="ref/copyrights.xml" />
