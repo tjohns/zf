@@ -17,11 +17,12 @@
  * @package    Zend_Config
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * Zend_Config
+ * @see Zend_Config
  */
 require_once 'Zend/Config.php';
 
@@ -55,6 +56,8 @@ class Zend_Config_Xml extends Zend_Config
     public function __construct($filename, $section = null, $allowModifications = false)
     {
         if (empty($filename)) {
+            /** @see Zend_Config_Exception */
+            require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Filename is not set');
         }
 
@@ -70,6 +73,8 @@ class Zend_Config_Xml extends Zend_Config
             $dataArray = array();
             foreach ($section as $sectionName) {
                 if (!isset($config->$sectionName)) {
+                    /** @see Zend_Config_Exception */
+                    require_once 'Zend/Config/Exception.php';
                     throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
                 }
                 $dataArray = array_merge($this->_processExtends($config, $sectionName), $dataArray);
@@ -77,6 +82,8 @@ class Zend_Config_Xml extends Zend_Config
             parent::__construct($dataArray, $allowModifications);
         } else {
             if (!isset($config->$section)) {
+                /** @see Zend_Config_Exception */
+                require_once 'Zend/Config/Exception.php';
                 throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
             }
             $dataArray = $this->_processExtends($config, $section);
@@ -104,6 +111,8 @@ class Zend_Config_Xml extends Zend_Config
     protected function _processExtends($element, $section, $config = array())
     {
         if (!$element->$section) {
+            /** @see Zend_Config_Exception */
+            require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception("Section '$section' cannot be found");
         }
 
@@ -122,7 +131,7 @@ class Zend_Config_Xml extends Zend_Config
 
 
     /**
-     * Returns a string or an associative and possibly multidimensional array from 
+     * Returns a string or an associative and possibly multidimensional array from
      * a SimpleXMLElement.
      *
      * @param SimpleXMLElement $xmlObject
