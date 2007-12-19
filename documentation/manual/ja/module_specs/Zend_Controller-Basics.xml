@@ -117,11 +117,38 @@
                     Controller がついたクラスをコントローラとして使用し、
                     アクションメソッドの名前は camelCasedMethods
                     形式 (最後に Action をつける) となります。たとえば
-                    <code>SomeFooController::barAction</code>
+                    <code>SomeFooController::barAction()</code>
                     のような場合、コントローラは
                     <code>somefoo</code>、アクションは <code>bar</code>
                     となります。
                 </para>
+
+                <note>
+                    <title>CamelCase 命名規約</title>
+
+                    <para>
+                        人はみな、リンクをタイプする際に大文字小文字の区別をあまり気にしないものです。
+                        Zend Framework では、パス情報をすべて小文字に正規化します。
+                        これはもちろん、
+                        コントローラ名やアクション名を決める際やリンクする場合にも影響を及ぼします。
+                    </para>
+
+                    <para>
+                        コントローラクラスやアクションメソッドの名前に
+                        CamelCase の単語を複数使用したい場合は、
+                        URL 上での単語の区切り文字として '-' あるいは
+                        '.' のいずれかを使用しなければなりません
+                        (とは言え、ここで使用する文字は変更することができます)。
+                    </para>
+
+                    <para>
+                        たとえば、アクションを
+                        <code>FooBarController::bazBatAction()</code>
+                        で定義したとすると、対応する URL は
+                        <code>/foo-bar/baz-bat</code>
+                        あるいは <code>/foo.bar/baz.bat</code> となります。
+                    </para>
+                </note>
             </listitem>
 
             <listitem>
