@@ -22,7 +22,7 @@
         </para>
 
         <example id="zend.loader.file.example">
-            <title>Exemple avec la méthode loadFile()</title>
+            <title>Exemple d'utilisation de la méthode loadFile()</title>
             <programlisting role="php"><![CDATA[<?php
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
     		</programlisting>
@@ -37,7 +37,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
         </para>
 
         <para>
-            L'argument <code>$once</code> est un booléen. Si <code>TRUE</code>, <code>Zend_Loader::loadFile()</code> utilise la fonction PHP <ulink url="http://php.net/include"><code>include_once()</code></ulink> pour charger le fichier sinon la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink> est utilisée.
+            L'argument <code>$once</code> est un booléen. Si <code>true</code>, <code>Zend_Loader::loadFile()</code> utilise la fonction PHP <ulink url="http://php.net/include"><code>include_once()</code></ulink> pour charger le fichier sinon la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink> est utilisée.
         </para>
 
     </sect2>
@@ -51,7 +51,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
         </para>
 
         <example id="zend.loader.load.class.example">
-            <title>Exemple avec la méthode loadClass()</title>
+            <title>Exemple d'utilisation de la méthode loadClass()</title>
             <programlisting role="php"><![CDATA[<?php
 Zend_Loader::loadClass('Container_Tree',
     array(
@@ -67,11 +67,11 @@ Zend_Loader::loadClass('Container_Tree',
         </para>
 
         <para>
-            Si <code>$dirs</code> est une chaîne ou un tableau, <code>Zend_Loader::loadClass()</code> va chercher dans les dossiers suivant l'ordre donné. Le premier fichier trouvé est chargé. Si le fichier n'existe pas dans les dossiers spécifiés <code>$dirs</code>, alors la recherche est effectué dans <code>include_path</code> du PHP.
+            Si <code>$dirs</code> est une chaîne ou un tableau, <code>Zend_Loader::loadClass()</code> va chercher dans les dossiers suivant l'ordre donné. Le premier fichier trouvé est chargé. Si le fichier n'existe pas dans les dossiers spécifiés <code>$dirs</code>, alors la recherche est effectuée dans <code>include_path</code> du PHP.
         </para>
 
         <para>
-            Si le fichier n'est pas trouvé ou que la classe n'existe pas après le chargement, <code>Zend_Loader::loadClass()</code> lèvera une execption <code>Zend_Exception</code>
+            Si le fichier n'est pas trouvé ou que la classe n'existe pas après le chargement, <code>Zend_Loader::loadClass()</code> lèvera une exception <code>Zend_Exception</code>
         </para>
 
         <para>
@@ -89,7 +89,7 @@ Zend_Loader::loadClass('Container_Tree',
         </para>
 
         <example id="zend.loader.load.isreadable.example">
-            <title>Exemple avec la méthode isReadable()</title>
+            <title>Exemple d'utilisation de la méthode isReadable()</title>
             <programlisting role="php"><![CDATA[<?php
 if (Zend_Loader::isReadable($filename)) {
     // puis manipulation avec $filename
@@ -108,7 +108,7 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Utiliser l'autoloader</title>
 
         <para>
-            La classe Zend_Loader contient une méthode <code>Zend_Loader::autoload()</code> que vous pouvez inscrire dans le PHP SPL autoloader. Par commodité, Zend_Loader fournit la fonction <code>registerAutoload()</code> qui enregistre automatiquement sa méthode <code>autoload()</code>. Si l'extension <code>spl_autoload</code> n'est pas présente dans l'environnement PHP, alors la méthode <code>registerAutoload()</code> lèvera une Zend_Exception.
+            La classe Zend_Loader contient une méthode <code>Zend_Loader::autoload()</code> que vous pouvez inscrire dans le PHP SPL autoloader. Par commodité, <code>Zend_Loader</code> fournit la fonction <code>registerAutoload()</code> qui enregistre automatiquement sa méthode <code>autoload()</code>. Si l'extension <code>spl_autoload</code> n'est pas présente dans l'environnement PHP, alors la méthode <code>registerAutoload()</code> lèvera une <code>Zend_Exception</code>.
         </para>
 
 
@@ -124,14 +124,7 @@ Zend_Loader::registerAutoload();]]>
         </para>
 
         <para>
-            Après enregistrement de la méthode d'autoload du Zend Framework, vous pouvez référencer une classe du Zend Framework sans devoir la charger explicitement. La méthode <code>autoload()</code> utilise automatiquement <code>Zend_Loader::loadClass()</code> quand vous référencez une classe.
-        </para>
-
-        <para>
-            Si vous avez étendu la classe Zend_Loader, vous pouvez passer un argument optionnel à <code>registerAutoload()</code>, pour spécifier la classe de laquelle vous souhaitez enregistrer la méthode <code>autoload()</code>.
-            If you have extended the Zend_Loader class, you can give an
-            optional argument to <code>registerAutoload()</code>, to specify
-            the class from which to register an <code>autoload()</code> method.
+            Si vous avez étendu la classe <code>Zend_Loader</code>, vous pouvez passer un argument optionnel à <code>registerAutoload()</code>, pour spécifier la classe de laquelle vous souhaitez enregistrer la méthode <code>autoload()</code>.
         </para>
 
         <example id="zend.loader.load.autoload.example-extended">

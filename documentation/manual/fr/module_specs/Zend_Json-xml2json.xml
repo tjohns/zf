@@ -5,7 +5,7 @@
     </para>
 
     <para>
-        <code>Zend_Json</code> inclut une fonction statique appelée <code>Zend_Json::fromXml()</code>. Cette fonction produira du JSON à partir d'une au format XML. Cette fonction prend n'importe quelle chaîne arbitraire XML comme paramètre d'entrée. Elle prend également un paramètre booléen facultatif d'entrée pour informer la logique de conversion d'ignorer ou non les attributs XML pendant le processus de conversion. Si ce paramètre facultatif d'entrée n'est pas donné, alors le comportement par défaut est d'ignorer les attributs XML. Cet appel de fonction est réalisé comme ci-dessous :
+        <code>Zend_Json</code> inclut une fonction statique appelée <code>Zend_Json::fromXml()</code>. Cette fonction produira du JSON à partir d'une entrée au format XML. Cette fonction prend n'importe quelle chaîne arbitraire XML comme paramètre d'entrée. Elle prend également un paramètre booléen facultatif d'entrée pour informer la logique de conversion d'ignorer ou non les attributs XML pendant le processus de conversion. Si ce paramètre facultatif d'entrée n'est pas donné, alors le comportement par défaut est d'ignorer les attributs XML. Cet appel de fonction est réalisé comme ceci :
     </para>
     <programlisting role="php"><![CDATA[
         // la fonction fromXml prend simplement une chaîne contenant le XML comme entrée
