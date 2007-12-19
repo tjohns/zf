@@ -274,9 +274,9 @@ class Zend_Locale {
             if ($language != '=C') {
 
                 if (strpos($language, '.') !== false) {
-                    $language = substr($language, 1, strpos($language, '.') - 1);
+                    $language = substr($language, 0, strpos($language, '.') - 1);
                 } else if (strpos($language, '@') !== false) {
-                    $language = substr($language, 1, strpos($language, '@') - 1);
+                    $language = substr($language, 0, strpos($language, '@') - 1);
                 }
                 $splitted = explode('_', $language);
                 if (array_key_exists((string) $language, self::$_localeData)) {
