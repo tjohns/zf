@@ -25,17 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-/**
- * Patch for default timezone in PHP >= 5.1.0
- */
-if (!ini_get('date.timezone')) date_default_timezone_set(@date_default_timezone_get());
-
-/**
- * @see Zend_Service_Technorati
- */
-require_once 'Zend/Service/Technorati.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
 
 /**
  * @see Zend_Service_Technorati_Author
@@ -57,30 +47,30 @@ class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
         $this->xmlAuthor = dirname(__FILE__) . '/_files/TestAuthor.xml';
     }
     
-    public function testConstructValid()
+    public function testConstruct()
     {
         $dom = new DOMDocument();
         $dom->load($this->xmlAuthor);
         
         try {
-            $weblog = new Zend_Service_Technorati_Author($dom->documentElement);
-            $this->assertType('Zend_Service_Technorati_Author', $weblog);
+            $object = new Zend_Service_Technorati_Author($dom->documentElement);
+            $this->assertType('Zend_Service_Technorati_Author', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
         }
     }
     
-    public function testConstructExceptionDomInvalid() 
+    public function testConstructThrowsExceptionWithInvalidDom() 
     {
         try {
-            $weblog = new Zend_Service_Technorati_Author('foo');
+            $object = new Zend_Service_Technorati_Author('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Exception $e) {
             $this->assertContains("DOMElement", $e->getMessage());
         }
     }
     
-    public function testSetterGetter()
+    public function testSetGet()
     {
         $dom = new DOMDocument();
         $dom->load($this->xmlAuthor);

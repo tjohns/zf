@@ -21,17 +21,6 @@
  */
 
 
-/** 
- * @see Zend_Service_Technorati_Author 
- */
-require_once 'Zend/Service/Technorati/Author.php';
-
-/**
- * @see Zend_Service_Technorati_Weblog
- */
-require_once 'Zend/Service/Technorati/Weblog.php';
-
-
 /**
  * TODO: phpdoc
  * 
@@ -325,7 +314,8 @@ class Zend_Service_Technorati
      */
     public function setApiKey($key)
     {
-        $this->_apiKey = $value;
+        $this->_apiKey = $key;
+        return $this;
     }
 
 

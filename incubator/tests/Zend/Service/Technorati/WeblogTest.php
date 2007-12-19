@@ -25,17 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-/**
- * Patch for default timezone in PHP >= 5.1.0
- */
-if (!ini_get('date.timezone')) date_default_timezone_set(@date_default_timezone_get());
-
-/**
- * @see Zend_Service_Technorati
- */
-require_once 'Zend/Service/Technorati.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
 
 /**
  * @see Zend_Service_Technorati_Weblog
@@ -58,30 +48,30 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         $this->xmlWeblogTwoAuthors  = dirname(__FILE__) . '/_files/TestWeblogTwoAuthors.xml';
     }
     
-    public function testConstructValid()
+    public function testConstruct()
     {
         $dom = new DOMDocument();
         $dom->load($this->xmlWeblog);
         
         try {
-            $weblog = new Zend_Service_Technorati_Weblog($dom->documentElement);
-            $this->assertType('Zend_Service_Technorati_Weblog', $weblog);
+            $object = new Zend_Service_Technorati_Weblog($dom->documentElement);
+            $this->assertType('Zend_Service_Technorati_Weblog', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
         }
     }
     
-    public function testConstructExceptionDomInvalid() 
+    public function testConstructThrowsExceptionWithInvalidDom() 
     {
         try {
-            $weblog = new Zend_Service_Technorati_Weblog('foo');
+            $object = new Zend_Service_Technorati_Weblog('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Exception $e) {
             $this->assertContains("DOMElement", $e->getMessage());
         }
     }
     
-    public function testSetterGetter()
+    public function testSetGet()
     {
         $dom = new DOMDocument();
         $dom->load($this->xmlWeblog);
@@ -265,7 +255,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
          */
     }
     
-    public function testWeblogTwoAuthors() 
+    public function testWeblogWithTwoAuthors() 
     {
         $dom = new DOMDocument();
         $dom->load($this->xmlWeblogTwoAuthors);

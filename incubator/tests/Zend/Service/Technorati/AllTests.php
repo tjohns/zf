@@ -22,25 +22,20 @@
  */
 
 
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+
+
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Service_Technorati_AllTests::main');
 }
 
 
-/**
- * Test helper
- */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-/**
- * @see Zend_Service_Technorati_Author
- */
-require_once 'AuthorTest.php';
-
-/**
- * @see Zend_Service_Technorati_Weblog
- */
-require_once 'WeblogTest.php';
+require 'TechnoratiTest.php';
+require 'AuthorTest.php';
+require 'WeblogTest.php';
 
 
 /**
@@ -61,9 +56,10 @@ class Zend_Service_Technorati_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Technorati');
 
+        $suite->addTestSuite('Zend_Service_Technorati_TechnoratiTest');
         $suite->addTestSuite('Zend_Service_Technorati_AuthorTest');
         $suite->addTestSuite('Zend_Service_Technorati_WeblogTest');
-        
+
         return $suite;
     }
 }
