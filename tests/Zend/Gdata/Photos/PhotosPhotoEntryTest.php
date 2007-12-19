@@ -173,6 +173,20 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
                 "100");
     }
 
+    /** 
+     * Check for the existance of exif namespaced data and verify that it contains
+     * the expected value.
+     */
+    public function testExifData()
+    {
+        $exifTags = $this->photoEntry->exifTags;
+        //var_dump($this->photoEntry);
+        $this->assertTrue($exifTags != null, "exif:tags not null");
+        $this->assertTrue($exifTags->flash != null); 
+        $this->assertEquals("true", $exifTags->flash->text); 
+        //$this->assertEquals("adfafaf", $exifTags->imageUniqueID->text); 
+    }
+
     /**
       * Check for the existence of an <gphoto:version> and verify that it contains
       * the expected value.
