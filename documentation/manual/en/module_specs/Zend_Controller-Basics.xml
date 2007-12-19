@@ -128,6 +128,33 @@
                     controller would be referred to as <code>foo</code> and
                     the action as <code>bar</code>.
                 </para>
+
+                <note>
+                    <title>CamelCasedNamingConventions</title>
+
+                    <para>
+                        Since humans are notoriously inconsistent at
+                        maintaining case sensitivity when typing links, Zend
+                        Framework actually normalizes path information to
+                        lowercase. This, of course, will affect how you name
+                        your controller and actions... or refer to them in
+                        links.
+                    </para>
+
+                    <para>
+                        If you wish to have your controller class or action
+                        method name have multiple CamelCasedWords, you will need
+                        to separate those words on the url with either a '-' or
+                        '.' (though you can configure the character used).
+                    </para>
+
+                    <para>
+                        As an example, if you were going to the action in
+                        <code>FooBarController::bazBatAction()</code>, you'd
+                        refer to it on the url as <code>/foo-bar/baz-bat</code>
+                        or <code>/foo.bar/baz.bat</code>.
+                    </para>
+                </note>
             </listitem>
 
             <listitem>
