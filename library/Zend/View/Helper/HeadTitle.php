@@ -70,10 +70,10 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
 
         $items = array();
         foreach ($this as $item) {
-            $items[] = htmlentities((string) $item);
+            $items[] = $this->_escape($item);
         }
 
-        $separator = htmlentities($this->getSeparator());
+        $separator = $this->_escape($this->getSeparator());
 
         return $indent . '<title>' . implode($separator, $items) . '</title>';
     }

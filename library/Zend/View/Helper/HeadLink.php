@@ -263,7 +263,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         
         foreach ($this->_itemKeys as $itemKey) {
             if (isset($attributes[$itemKey])) {
-                $link .= $itemKey . '="' . htmlentities($attributes[$itemKey]) . '" ';
+                $link .= $itemKey . '="' . $this->_escape($attributes[$itemKey]) . '" ';
             }
         }
         
@@ -299,7 +299,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             $items[] = $this->itemToString($item);
         }
 
-        return $indent . implode($this->getSeparator() . $indent, $items);
+        return $indent . implode($this->_escape($this->getSeparator()) . $indent, $items);
     }
 
     /**

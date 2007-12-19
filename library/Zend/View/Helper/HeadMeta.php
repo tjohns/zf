@@ -272,14 +272,14 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
             if (!in_array($key, $this->_modifierKeys)) {
                 continue;
             }
-            $modifiersString .= $key . '="' . htmlentities($value) . '" ';
+            $modifiersString .= $key . '="' . $this->_escape($value) . '" ';
         }
 
         $meta = sprintf(
             '<meta %s="%s" content="%s" %s/>',
             $type,
-            htmlentities($item->$type),
-            htmlentities($item->content),
+            $this->_escape($item->$type),
+            $this->_escape($item->content),
             $modifiersString
         );
         return $meta;
@@ -301,7 +301,7 @@ class Zend_View_Helper_HeadMeta extends Zend_View_Helper_Placeholder_Container_S
         foreach ($this as $item) {
             $items[] = $this->itemToString($item);
         }
-        return $indent . implode($this->getSeparator() . $indent, $items);
+        return $indent . implode($this->_escape($this->getSeparator()) . $indent, $items);
     }
 
     /**

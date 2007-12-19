@@ -93,4 +93,19 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone extends Zend_Vi
         $this->view = $view;
         return $this;
     }
+
+    /**
+     * Escape a string
+     * 
+     * @param  string $string 
+     * @return string
+     */
+    protected function _escape($string)
+    {
+        if ($this->view instanceof Zend_View_Interface) {
+            return $this->view->escape($string);
+        }
+
+        return htmlentities((string) $string, null, 'UTF-8');
+    }
 }
