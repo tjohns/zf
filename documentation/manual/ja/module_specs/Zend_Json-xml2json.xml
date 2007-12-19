@@ -31,7 +31,7 @@
         この関数は例外をスローします。
         変換ロジックは、XML ツリーを再帰的に走査します。
         最大で 25 段階までの再帰を行います。
-        それ以上の深さに達した場合は Zend_Json_Exception
+        それ以上の深さに達した場合は <code>Zend_Json_Exception</code>
         をスローします。Zend Framework の
         tests ディレクトリ内には XML ファイルがいくつか入っているので、
         それらを用いると xml2json の機能を確かめることができます。

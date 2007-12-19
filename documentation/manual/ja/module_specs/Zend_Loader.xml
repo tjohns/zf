@@ -9,11 +9,11 @@
     <tip>
         <title>Zend_Loader 対 require_once()</title>
         <para>
-            Zend_Loader のメソッドは、読み込みたいファイルの名前が変化する場合に便利です。
+            <code>Zend_Loader</code> のメソッドは、読み込みたいファイルの名前が変化する場合に便利です。
             たとえば、ユーザの入力やメソッドの引数などのパラメータに基づいたファイル名を使用する場合などです。
             もし読み込むファイルやクラスの名前が決まっている場合は、
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>
-            のような PHP の関数ではなくあえて Zend_Loader を使用するメリットはありません。
+            のような PHP の関数ではなくあえて <code>Zend_Loader</code> を使用するメリットはありません。
         </para>
     </tip>
 
@@ -97,12 +97,12 @@ Zend_Loader::loadClass('Container_Tree',
             <code>Zend_Loader::loadClass()</code> は指定した順にそのディレクトリを探します。
             そして最初に見つかったファイルを読み込みます。
             ディレクトリ <code>$dirs</code> にファイルがみつからない場合は、
-            PHP の include_path で指定された場所を探します。
+            PHP の <code>include_path</code> で指定された場所を探します。
         </para>
 
         <para>
             ファイルが見つからない場合、あるいは読み込んだファイルにクラスが存在しない場合は
-            <code>Zend_Loader::loadClass()</code> は Zend_Exception
+            <code>Zend_Loader::loadClass()</code> は <code>Zend_Exception</code>
             をスローします。
         </para>
 
@@ -121,7 +121,7 @@ Zend_Loader::loadClass('Container_Tree',
         <para>
             静的メソッド <code>Zend_Loader::isReadable($pathname)</code>
             は、指定した場所にファイルが存在して読み込み可能な場合に
-            <code>TRUE</code>、それ以外の場合に FALSE を返します。
+            <code>TRUE</code>、それ以外の場合に <code>FALSE</code> を返します。
         </para>
 
         <example id="zend.loader.load.isreadable.example">
@@ -150,13 +150,13 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Autoloader の使用法</title>
 
         <para>
-            Zend_Loader クラスには、PHP の SPL
+            <code>Zend_Loader</code> クラスには、PHP の SPL
             自動ローダーに登録するためのメソッドが含まれています。そのコールバックメソッドが
             <code>Zend_Loader::autoload()</code> です。利便性を考慮して、
-            Zend_Loader では <code>registerAutoload()</code> 関数を提供しています。
+            <code>Zend_Loader</code> では <code>registerAutoload()</code> 関数を提供しています。
             この関数は、<code>autoload()</code> メソッドを登録するものです。
             <code>spl_autoload</code> 拡張モジュールが使用できない環境の場合は、
-            <code>registerAutoload()</code> メソッドは Zend_Exception をスローします。
+            <code>registerAutoload()</code> メソッドは <code>Zend_Exception</code> をスローします。
         </para>
 
         <example id="zend.loader.load.autoload.example">
@@ -174,7 +174,7 @@ Zend_Loader::registerAutoload();]]>
         </para>
 
         <para>
-            Zend_Loader クラスを継承した場合は、<code>registerAutoload()</code>
+            <code>Zend_Loader</code> クラスを継承した場合は、<code>registerAutoload()</code>
             に引数を追加することができます。この引数で、どのクラスから
             <code>autoload()</code> メソッドを登録するのかを指定します。
         </para>

@@ -16,7 +16,7 @@
     </para>
 
     <para>
-        さらに Zend_Json には、任意の XML 文字列を
+        さらに <code>Zend_Json</code> には、任意の XML 文字列を
         JSON 形式に変換する機能も用意されています。
         この機能を使用すると、エンタープライズアプリケーションの
         XML データを Ajax アプリケーションで使うための JSON
