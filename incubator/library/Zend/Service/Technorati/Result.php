@@ -16,7 +16,7 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id:$
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -59,9 +59,11 @@ class Zend_Service_Technorati_Result
 
 
     /**
-     * TODO: phpdoc
+     * Constructs a new object from DOM Element.
+     * Properties are automatically fetched from XML
+     * according to array of $_fields to be read.
      *
-     * @param   DomElement $result  The ReST fragment for this object
+     * @param   DomElement $result  the ReST fragment for this object
      */
     public function __construct(DomElement $result)
     {

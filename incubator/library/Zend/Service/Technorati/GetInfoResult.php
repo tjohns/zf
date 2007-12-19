@@ -50,12 +50,9 @@ class Zend_Service_Technorati_GetInfoResult
 
 
     /**
-     * Construct a GetInfoResult object
-     * 
-     * Parses given Author and Weblogs elements from $dom.
+     * Constructs a new object object from DOM Element.
      *
-     * @param   DomElement $dom The ReST fragment for this object
-     * @return  void
+     * @param   DomElement $dom the ReST fragment for this object
      */
     public function __construct(DomDocument $dom)
     {
@@ -86,7 +83,7 @@ class Zend_Service_Technorati_GetInfoResult
 
 
     /**
-     * Return author
+     * Returns author.
      * 
      * @return  Zend_Service_Technorati_Author
      */
@@ -95,9 +92,9 @@ class Zend_Service_Technorati_GetInfoResult
     }
 
     /**
-     * Return weblogs
+     * Returns weblog collection.
      * 
-     * @return  Array of Zend_Service_Technorati_Weblog
+     * @return  array of Zend_Service_Technorati_Weblog
      */
     public function getWeblogs() {
         return $this->_weblogs;

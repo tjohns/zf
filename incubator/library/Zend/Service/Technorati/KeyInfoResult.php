@@ -75,13 +75,11 @@ class Zend_Service_Technorati_KeyInfoResult
 
 
     /**
-     * Construct a KeyInfoResult object
-     * 
+     * Constructs a new object from DOM Element.
      * Parses given Key element from $dom and sets API key string.
      *
-     * @param   DomElement $dom The ReST fragment for this Key object
-     * @param   String $apiKey  The API Key string
-     * @return  void
+     * @param   DomElement $dom the ReST fragment for this object
+     * @param   string $apiKey  the API Key string
      */
     public function __construct(DomDocument $dom, $apiKey = null)
     {
@@ -97,27 +95,27 @@ class Zend_Service_Technorati_KeyInfoResult
     
     
     /**
-     * Return API Key string
+     * Returns API Key string.
      * 
-     * @return  String  API Key string
+     * @return  string  API Key string
      */
     public function getApiKey() {
         return $this->_apiKey;
     }
     
     /**
-     * Return the number of queries sent today
+     * Returns the number of queries sent today.
      * 
-     * @return  Int     Number of queries sent today
+     * @return  int     number of queries sent today
      */
     public function getApiQueries() {
         return $this->_apiQueries;
     }
     
     /**
-     * Return Key's daily query limit
+     * Returns Key's daily query limit.
      * 
-     * @return  Int     Maximum number of available queries per day
+     * @return  int     maximum number of available queries per day
      */
     public function getMaxQueries() {
         return $this->_maxQueries;
@@ -125,9 +123,9 @@ class Zend_Service_Technorati_KeyInfoResult
     
     
     /**
-     * Set API Key string
+     * Sets API Key string.
      * 
-     * @param   String $apiKey  The API Key string
+     * @param   string $apiKey  the API Key
      * @return  void
      */
     public function setApiKey($apiKey) {
@@ -136,9 +134,9 @@ class Zend_Service_Technorati_KeyInfoResult
 
     
     /*
-     * Return the response XML document
+     * Returns the response XML document.
      *
-     * @return string   The response document converted into XML format
+     * @return string   the response document converted into XML format
      * /
     function getXML()
     {

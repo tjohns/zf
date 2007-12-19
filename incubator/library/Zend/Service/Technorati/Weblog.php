@@ -142,12 +142,9 @@ class Zend_Service_Technorati_Weblog
 
 
     /**
-     * Construct weblog object from DOM Element
-     * 
-     * Parses given weblog DOM Element and sets internal attributes.
+     * Constructs a new object from DOM Element.
      *
-     * @param   DomElement $dom The ReST fragment for this weblog object
-     * @return  void
+     * @param   DomElement $dom the ReST fragment for this object
      */
     public function __construct(DomElement $dom)
     {
@@ -209,7 +206,7 @@ class Zend_Service_Technorati_Weblog
     
     
     /**
-     * Return weblog name
+     * Returns weblog name.
      * 
      * @return  string  Weblog name
      */
@@ -219,7 +216,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return weblog URL
+     * Returns weblog URL.
      * 
      * @return  null|Zend_Uri_Http object representing weblog base URL
      */
@@ -229,9 +226,9 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return number of unique blogs linking this blog
+     * Returns number of unique blogs linking this blog.
      * 
-     * @return  integet The number of inbound blogs
+     * @return  integer the number of inbound blogs
      */
     public function getInboundBlogs() 
     {
@@ -239,9 +236,9 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return number of incoming links to this blog
+     * Returns number of incoming links to this blog.
      * 
-     * @return  integer The number of inbound links
+     * @return  integer the number of inbound links
      */
     public function getInboundLinks() 
     {
@@ -249,7 +246,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return weblog Rss URL
+     * Returns weblog Rss URL.
      * 
      * @return  null|Zend_Uri_Http object representing the URL
      *          of the RSS feed for given blog
@@ -260,7 +257,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return weblog Atom URL
+     * Returns weblog Atom URL.
      * 
      * @return  null|Zend_Uri_Http object representing the URL
      *          of the Atom feed for given blog
@@ -271,7 +268,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return UNIX timestamp of the last weblog update
+     * Returns UNIX timestamp of the last weblog update.
      * 
      * @return  integer UNIX timestamp of the last weblog update
      */
@@ -281,11 +278,11 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return weblog rank value
+     * Returns weblog rank value.
      * 
      * Note. This property has no official documentation.
      * 
-     * @return  integer Weblog rank value
+     * @return  integer weblog rank value
      */
     public function getRank() 
     {
@@ -293,22 +290,22 @@ class Zend_Service_Technorati_Weblog
     }
         
     /**
-     * Return weblog latitude coordinate
+     * Returns weblog latitude coordinate.
      * 
      * Note. This property has no official documentation.
      * 
-     * @return  float   Weblog latitude coordinate
+     * @return  float   weblog latitude coordinate
      */
     public function getLat() {
         return (float) $this->_lat;
     }
         
     /**
-     * Return weblog longitude coordinate
+     * Returns weblog longitude coordinate.
      * 
      * Note. This property has no official documentation.
      * 
-     * @return  float   Weblog longitude coordinate
+     * @return  float   weblog longitude coordinate
      */
     public function getLon() 
     {
@@ -316,7 +313,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Return true whether the author who claimed this weblog has a photo
+     * Returns whether the author who claimed this weblog has a photo.
      * 
      * Note. This property has no official documentation.
      * 
@@ -327,9 +324,9 @@ class Zend_Service_Technorati_Weblog
     {
         return (bool) $this->_hasPhoto;
     }
-    
+
     /**
-     * Return the array of weblog authors
+     * Returns the array of weblog authors.
      * 
      * @return  array of Zend_Service_Technorati_Author authors
      */
@@ -337,10 +334,10 @@ class Zend_Service_Technorati_Weblog
     {
         return (array) $this->_authors;
     }
-    
-    
+
+
     /**
-     * Set weblog name
+     * Sets weblog name.
      * 
      * @param   string $name
      * @return  Zend_Service_Technorati_Weblog $this instance
@@ -352,7 +349,7 @@ class Zend_Service_Technorati_Weblog
     }
 
     /**
-     * Set weblog URL
+     * Sets weblog URL.
      * 
      * @param   string|Zend_Uri_Http $url
      * @return  void
@@ -366,7 +363,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Set number of inbound blogs
+     * Sets number of inbound blogs.
      * 
      * @param   integer $number
      * @return  Zend_Service_Technorati_Weblog $this instance
@@ -378,7 +375,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Set number of Iinbound links
+     * Sets number of Iinbound links.
      * 
      * @param   integer $number
      * @return  Zend_Service_Technorati_Weblog $this instance
@@ -390,7 +387,7 @@ class Zend_Service_Technorati_Weblog
     }
 
     /**
-     * Set weblog Rss URL
+     * Sets weblog Rss URL.
      * 
      * @param   string|Zend_Uri_Http $url
      * @return  Zend_Service_Technorati_Weblog $this instance
@@ -404,7 +401,7 @@ class Zend_Service_Technorati_Weblog
     }
 
     /**
-     * Set weblog Atom URL
+     * Sets weblog Atom URL.
      * 
      * @param   string|Zend_Uri_Http $url
      * @return  Zend_Service_Technorati_Weblog $this instance
@@ -418,7 +415,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Set weblog Last Update timestamp
+     * Sets weblog Last Update timestamp.
      * 
      * $input variable can be one of the date time format
      * allowed by strtotime() PHP function.
@@ -447,7 +444,7 @@ class Zend_Service_Technorati_Weblog
     }
     
     /**
-     * Set weblog Rank
+     * Sets weblog Rank.
      * 
      * Note. This property has no official documentation.
      * 
@@ -461,7 +458,7 @@ class Zend_Service_Technorati_Weblog
     }
         
     /**
-     * Set weblog latitude coordinate
+     * Sets weblog latitude coordinate.
      * 
      * Note. This property has no official documentation.
      *  
@@ -475,7 +472,7 @@ class Zend_Service_Technorati_Weblog
     }
         
     /**
-     * Set weblog longitude coordinate
+     * Sets weblog longitude coordinate.
      * 
      * Note. This property has no official documentation.
      * 
@@ -489,7 +486,7 @@ class Zend_Service_Technorati_Weblog
     }
         
     /**
-     * Set hasPhoto property
+     * Sets hasPhoto property.
      * 
      * Note. This property has no official documentation.
      * 

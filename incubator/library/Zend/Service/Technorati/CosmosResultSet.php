@@ -22,14 +22,9 @@
 
 
 /** 
- * @see Zend_Service_Technorati_CosmosResult
- */
-require_once 'Zend/Service/Technorati/CosmosResult.php';
-
-/** 
  * @see Zend_Service_Technorati_ResultSet 
  */
-require_once 'Zend/Service/Technorati/ResultSet.php';               
+require_once 'Zend/Service/Technorati/ResultSet.php';
 
 
 /**
@@ -44,11 +39,10 @@ require_once 'Zend/Service/Technorati/ResultSet.php';
 class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_ResultSet
 {
     /**
-     * Parse the search response and retrieve the results for iteration
+     * Parses the search response and retrieve the results for iteration.
      *
-     * @param   DomDocument $dom    The ReST fragment for this object
-     * @param   array $options      Query options as associative array
-     * @return  void
+     * @param   DomDocument $dom    the ReST fragment for this object
+     * @param   array $options      query options as associative array
      */
     public function __construct(DomDocument $dom, $options = array())
     {
@@ -75,17 +69,17 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
 
 
     /**
-     * Implement SeekableIterator::current and
-     * overwrite Zend_Service_Technorati_ResultSet::current()
+     * Implements SeekableIterator::current and
+     * overwrites Zend_Service_Technorati_ResultSet::current()
      *
-     * @return Zend_Service_Technorati_CosmosResult Current Zend_Service_Technorati_Cosmos result
+     * @return Zend_Service_Technorati_CosmosResult current result
      */
     public function current()
     {
-    	/**
-    	 * @see Zend_Service_Technorati_CosmosResult
-    	 */
-    	require_once 'Zend/Service/Technorati/CosmosResult.php';
+        /**
+         * @see Zend_Service_Technorati_CosmosResult
+         */
+        require_once 'Zend/Service/Technorati/CosmosResult.php';
         return new Zend_Service_Technorati_CosmosResult($this->_results->item($this->_currentItem));
     }
 }

@@ -88,12 +88,9 @@ class Zend_Service_Technorati_Author
 
 
     /**
-     * Construct a Key object
-     * 
-     * Parses given Author element from from $dom.
+     * Constructs a new object from DOM Element.
      *
-     * @param   DomElement $dom The ReST fragment for this author object
-     * @return  void
+     * @param   DomElement $dom the ReST fragment for this object
      * 
      * @todo    Check which elements are optional
      */
@@ -131,7 +128,7 @@ class Zend_Service_Technorati_Author
     
 
     /**
-     * Return Author first name
+     * Returns Author first name.
      * 
      * @return  string  Author first name
      */
@@ -140,7 +137,7 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Return Author last name
+     * Returns Author last name.
      * 
      * @return  string  Author last name
      */
@@ -149,7 +146,7 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Return Technorati account username
+     * Returns Technorati account username.
      * 
      * @return  string  Technorati account username
      */
@@ -158,7 +155,7 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Return Technorati account description
+     * Returns Technorati account description.
      * 
      * @return  string  Technorati account description
      */
@@ -167,7 +164,7 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Return Technorati account biography
+     * Returns Technorati account biography.
      * 
      * @return  string  Technorati account biography
      */
@@ -176,7 +173,7 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Return Technorati account thumbnail picture
+     * Returns Technorati account thumbnail picture.
      * 
      * @return  null|Zend_Uri_Http  Technorati account thumbnail picture
      */
@@ -186,9 +183,9 @@ class Zend_Service_Technorati_Author
 
 
     /**
-     * Set author first name
+     * Sets author first name.
      * 
-     * @param   string $input   First Name input value 
+     * @param   string $input   first Name input value 
      * @return  Zend_Service_Technorati_Author  $this instance
      */
     public function setFirstName($input) {
@@ -197,9 +194,9 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Set author last name
+     * Sets author last name.
      * 
-     * @param   string $input   Last Name input value 
+     * @param   string $input   last Name input value 
      * @return  Zend_Service_Technorati_Author  $this instance
      */
     public function setLastName($input) {
@@ -208,9 +205,9 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Set Technorati account username
+     * Sets Technorati account username.
      * 
-     * @param   string $input   Username input value 
+     * @param   string $input   username input value 
      * @return  Zend_Service_Technorati_Author  $this instance
      */
     public function setUsername($input) {
@@ -219,9 +216,9 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Set Technorati account biography
+     * Sets Technorati account biography.
      * 
-     * @param   string $input   Biography input value
+     * @param   string $input   biography input value
      * @return  Zend_Service_Technorati_Author  $this instance
      */
     public function setBio($input) {
@@ -230,9 +227,9 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Set Technorati account description
+     * Sets Technorati account description.
      * 
-     * @param   string $input   Description input value
+     * @param   string $input   description input value
      * @return  Zend_Service_Technorati_Author  $this instance
      */
     public function setDescription($input) {
@@ -241,9 +238,9 @@ class Zend_Service_Technorati_Author
     }
 
     /**
-     * Set Technorati account thumbnail picture
+     * Sets Technorati account thumbnail picture.
      * 
-     * @param   string|Zend_Uri_Http $input Thumbnail Picture URI
+     * @param   string|Zend_Uri_Http $input thumbnail picture URI
      * @return  Zend_Service_Technorati_Author  $this instance
      * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
      *          (via Zend_Service_Technorati_Utils::setUriHttp)

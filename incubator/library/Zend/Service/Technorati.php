@@ -47,9 +47,9 @@ class Zend_Service_Technorati
     const URI_BASE = 'http://api.technorati.com';
     
     /** Prevent magic numbers */
-    const PARAM_LIMIT_MIN_VALUE = 1
-    const PARAM_LIMIT_MAX_VALUE = 100
-    const PARAM_START_MIN_VALUE = 1
+    const PARAM_LIMIT_MIN_VALUE = 1;
+    const PARAM_LIMIT_MAX_VALUE = 100;
+    const PARAM_START_MIN_VALUE = 1;
     
     
     /**
@@ -58,7 +58,7 @@ class Zend_Service_Technorati
     
 
     /**
-     * Your Technorati API key
+     * Technorati API key
      *
      * @var     string
      * @access  protected
@@ -75,7 +75,8 @@ class Zend_Service_Technorati
 
 
     /**
-     * Zend_Service_Technorati Constructor, setup character encoding
+     * Constructs a new Zend_Service_Technorati instance
+     * and setup character encoding.
      *
      * @param   string $apiKey  Your Technorati API key
      */
@@ -90,9 +91,8 @@ class Zend_Service_Technorati
 
 
     /**
-     * Cosmos Query
-     *
-     * Cosmos lets you see what blogs are linking to a given URL.
+     * Cosmos query lets you see what blogs are linking to a given URL.
+     * 
      * On the Technorati site, you can enter a URL in the searchbox and
      * it will return a list of blogs linking to it.
      * The API version allows more features and gives you a way
@@ -127,8 +127,8 @@ class Zend_Service_Technorati
      *      highlights the citation of the given URL within the weblog excerpt.
      *      Set this parameter to 0 to apply no special markup to the blog excerpt.
      *
-     * @param   string $url     Target URL. Prefixes http:// and www. are optional.
-     * @param   array $options  Additional parameters to refine your query
+     * @param   string $url     target URL. Prefixes http:// and www. are optional.
+     * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_CosmosResultSet Cosmos resultset
      * @link    http://technorati.com/developers/api/cosmos.html Technorati API: Cosmos Query reference
      */
@@ -172,9 +172,9 @@ class Zend_Service_Technorati
      * 
      * @todo    function :)
      *
-     * @param   string  $query      Set this to the words you are searching for.
-     *                              Separate words with '+' as usual.
-     * @param   array   $options    Additional parameters to refine your query
+     * @param   string $query   the words you are searching for.
+     *                          Separate words with '+' as usual.
+     * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_SearchResultSet Search resultset
      * @link    http://technorati.com/developers/api/search.html Technorati API: Search Query reference
      * /
@@ -189,8 +189,8 @@ class Zend_Service_Technorati
      *
      * @todo    function :)
      *
-     * @param   string  $tag        Set this to the tag term you are searching posts for.
-     * @param   array   $options    Additional parameters to refine your query
+     * @param   string $tag     the tag term you are searching posts for.
+     * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_TagResultSet Tag resultset
      * @link    http://technorati.com/developers/api/tag.html Technorati API: Tag Query reference
      * /
@@ -210,9 +210,7 @@ class Zend_Service_Technorati
      */
 
     /**
-     * GetInfo Query
-     * 
-     * The getinfo query tells you things that Technorati knows about a member.
+     * GetInfo query tells you things that Technorati knows about a member.
      * 
      * The returned info is broken up into two sections: 
      * The first part describes some information that the user wants 
@@ -221,7 +219,7 @@ class Zend_Service_Technorati
      * that the user has successfully claimed and the information 
      * that Technorati knows about these weblogs.
      *
-     * @param   String $username    Set this to the Technorati user name you are searching for.
+     * @param   string $username    the Technorati user name you are searching for
      * @return  Zend_Service_Technorati_GetInfoResult GetInfo result
      * @link    http://technorati.com/developers/api/getinfo.html Technorati API: GetInfo reference
      */
@@ -251,9 +249,7 @@ class Zend_Service_Technorati
     }
     
     /**
-     * KeyInfo Query
-     *
-     * The keyinfo query provides information on daily usage of an API key. 
+     * KeyInfo query provides information on daily usage of an API key. 
      * Key Info Queries do not count against a key's daily query limit.
      * 
      * A day is defined as 00:00-23:59 Pacific time.
@@ -289,7 +285,7 @@ class Zend_Service_Technorati
 
 
     /**
-     * Return Technorati API key
+     * Returns Technorati API key.
      *
      * @return string   Technorati API key
      */
@@ -299,7 +295,7 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Returns a reference to the REST client
+     * Returns a reference to the REST client object in use.
      *
      * If the reference hasn't being inizialized yet,
      * then a new Zend_Rest_Client instance is created.
@@ -320,25 +316,26 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Set Technorati API key
+     * Sets Technorati API key.
      *
-     * @param   string $value   Technorati API Key
+     * @param   string $key     Technorati API Key
      * @return  void
      * @link    http://technorati.com/developers/apikey.html How to get your Technorati API Key
      * @todo    Should this function validate the key?
      */
-    public function setApiKey($value)
+    public function setApiKey($key)
     {
         $this->_apiKey = $value;
     }
 
 
     /**
-     * Validate Cosmos Options
+     * Validates Cosmos query options.
      *
-     * @param   array   $options
+     * @param   array $options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      */
     protected function _validateCosmos($options)
     {
@@ -350,8 +347,9 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception(sprintf('%s#%s expects options to be an array',
-                                                        __CLASS__, __METHOD__));
+            throw new Zend_Service_Technorati_Exception(sprintf(
+                        '%s#%s expects options to be an array',
+                        __CLASS__, __METHOD__));
         }
 
         // Validate keys in the $options array
@@ -359,7 +357,8 @@ class Zend_Service_Technorati
 
         // Validate url (required)
         if (empty($options['url'])) {
-            throw new Zend_Service_Technorati_Exception('Cosmos query requires an "url" option');
+            throw new Zend_Service_Technorati_Exception(
+                        "Cosmos query requires an 'url' option");
         }
 
         // Validate type (optional)
@@ -377,8 +376,8 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception($options['limit'] . 
-                        ' is not valid for the "limit" option');
+            throw new Zend_Service_Technorati_Exception(
+                        "Invalid value '" . $options['limit'] . "' for 'limit' option");
         }
 
         // Validate start (optional)
@@ -388,8 +387,8 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception($options['start'] . 
-                        ' is not valid for the "start" option');
+            throw new Zend_Service_Technorati_Exception(
+                        "Invalid value '" . $options['start'] . "' for 'start' option");
         }
 
         // Validate current (optional)
@@ -413,11 +412,12 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Validate GetInfo Options
+     * Validate GetInfo query options.
      *
      * @param   array   $options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      */
     protected function _validateGetInfo($options)
     {
@@ -429,8 +429,9 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception(sprintf('%s#%s expects options to be an array',
-                                                        __CLASS__, __METHOD__));
+            throw new Zend_Service_Technorati_Exception(sprintf(
+                        '%s#%s expects options to be an array',
+                        __CLASS__, __METHOD__));
         }
 
         // Validate keys in the $options array
@@ -438,7 +439,8 @@ class Zend_Service_Technorati
 
         // Validate username (required)
         if (empty($options['username'])) {
-            throw new Zend_Service_Technorati_Exception('GetInfo query requires "username" option');
+            throw new Zend_Service_Technorati_Exception(
+                        "GetInfo query requires 'username' option");
         }
 
         // Validate format (optional)
@@ -446,13 +448,14 @@ class Zend_Service_Technorati
     }    
     
     /**
-     * Validate Search Options
+     * Validate Search query options.
      * 
      * TODO: phpdoc
      *
      * @param   array   $options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      * @todo    develop function
      * /
     protected function _validateSearch($options)
@@ -460,13 +463,14 @@ class Zend_Service_Technorati
     } */
 
     /**
-     * Validate Tag Options
+     * Validate Tag query options.
      * 
      * TODO: phpdoc
      *
      * @param   array   $options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      * @todo    develop function
      * /
     protected function _validateTag($options)
@@ -474,13 +478,14 @@ class Zend_Service_Technorati
     } */
 
     /**
-     * Validate that an option is in a given array
+     * Checks whether an option is in a given array.
      *
-     * @param   string $name    Option name
-     * @param   string $value   Option value
-     * @param   array $array    Array in which to check for the option
+     * @param   string $name    option name
+     * @param   string $value   option value
+     * @param   array $array    array in which to check for the option
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      */
     protected function _validateInArray($name, $value, $array)
     {
@@ -489,18 +494,19 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception("Invalid value for $name");
+            throw new Zend_Service_Technorati_Exception(
+                        "Invalid value '$value' for '$name'");
         }
     }
     
     /**
-     * Validate "format" option
-     * 
+     * Checks whether 'format' options holds a supported value. 
      * Be aware that Zend_Service_Technorati supports only XML as format value.
      * 
      * @param   array $options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception if format value != XML
+     * @access  private
      */
     private function _validateOptionFormat($options) {
         if (isset($options['format']) && $options['format'] != 'xml') {
@@ -508,19 +514,20 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception($options['format'] . 
-                        ' is not valid for the "format" option,' .
-                        ' Zend_Service_Technorati supports only "xml"');
+            throw new Zend_Service_Technorati_Exception(
+                        "Invalid value '" . $options['format'] . "' for 'format' option. " .
+                        "Zend_Service_Technorati supports only 'xml'");
         }
     }
     
     /**
-     * Check Result for errors
+     * Check XML response content for errors.
      *
-     * @param   DomDocument $dom    API response DOM document
+     * @param   DomDocument $dom    the XML response as a DOM document
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/error.html Technorati API: Error response
+     * @access  protected
      */
     protected static function _checkErrors(DomDocument $dom)
     {
@@ -538,11 +545,12 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Check ReST response for errors
+     * Check ReST response for errors.
      *
-     * @param   Zend_Http_Response  $response   ReST response
+     * @param   Zend_Http_Response $response    the ReST response
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      */
     protected static function _checkResponseErrors(Zend_Http_Response $response)
     {
@@ -551,20 +559,20 @@ class Zend_Service_Technorati
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception(
-                        'Invalid response status code (' .
-                        'HTTP/' . $response->getVersion() .
-                        $response->getStatus() . ' ' . $response->getStatus() . ')');
+            throw new Zend_Service_Technorati_Exception(sprintf(
+                        'Invalid response status code (HTTP/%s %s %s)',
+                        $response->getVersion(), $response->getStatus(), $response->getMessage()));
         }
     }
 
     /**
-     * Checks whether the user options are valid
-     *
-     * @param   array $options        User options
-     * @param   array $validOptions   Valid options
+     * Checks whether user given options are valid.
+     * 
+     * @param   array $options        user options
+     * @param   array $validOptions   valid options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
      */
     protected function _compareOptions($options, $validOptions)
     {
@@ -576,16 +584,17 @@ class Zend_Service_Technorati
             require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception(
                         'The following parameters are invalid: ' . 
-                        implode(',', $difference));
+                        implode(', ', $difference));
         }
     }
 
     /**
      * Prepare options for the request
      *
-     * @param   array $options        User options
-     * @param   array $defaultOptions Default options
+     * @param   array $options        user options
+     * @param   array $defaultOptions default options
      * @return  array Merged array of user and default/required options.
+     * @access  protected
      */
     protected function _prepareOptions($options, $defaultOptions)
     {

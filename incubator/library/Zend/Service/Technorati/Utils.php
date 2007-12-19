@@ -33,20 +33,32 @@
 class Zend_Service_Technorati_Utils
 {
     /**
-     * TODO: phpdoc
+     * Parses, validates and returns a valid Zend_Uri object
+     * from given $input.
+     * 
+     * @param   string|Zend_Uri_Http $input
+     * @return  null|Zend_Uri_Http
+     * @throws  Zend_Service_Technorati_Exception
+     * @static 
      */
-    public static function setUriHttp($input) {
+    public static function setUriHttp($input) 
+    {
+        // allow null as value
+        if ($input === null) {
+            return null;
+        }
+        
         /**
          * @see Zend_Uri
          */
         require_once 'Zend/Uri.php';
-        if ($input instanceof Zend_Uri_Http || $input === null) {
+        if ($input instanceof Zend_Uri_Http) {
             $uri = $input;
-        }
-        else {
+        } else {
             try {
                 $uri = Zend_Uri::factory((string) $input);
             }
+            // wrap exception under Zend_Service_Technorati_Exception object
             catch (Exception $e) {
                 /**
                  * @see Zend_Service_Technorati_Exception
@@ -54,6 +66,16 @@ class Zend_Service_Technorati_Utils
                 require_once 'Zend/Service/Technorati/Exception.php';  
                 throw new Zend_Service_Technorati_Exception($e);
             }
+        }
+        
+        // allow inly Zend_Uri_Http objects or child classes
+        if (!($uri instanceof Zend_Uri_Http)) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            require_once 'Zend/Service/Technorati/Exception.php';  
+            throw new Zend_Service_Technorati_Exception(
+                "Invalid URL $uri, only HTTP(S) protocols can be used");
         }
 
         /**

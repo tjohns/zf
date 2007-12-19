@@ -97,10 +97,10 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Parse the search response and retrieve the results for iteration
+     * Parses the search response and retrieves the results for iteration.
      *
-     * @param   DomDocument $dom    The ReST fragment for this object
-     * @param   array $options      Query options as associative array
+     * @param   DomDocument $dom    the ReST fragment for this object
+     * @param   array $options      query options as associative array
      */
     public function __construct(DomDocument $dom, $options = array())
     {
@@ -127,9 +127,9 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Total Number of results returned
+     * Total Number of results returned.
      *
-     * @return  int     Total number of results returned
+     * @return  int     total number of results returned
      */
     public function totalResults()
     {
@@ -138,7 +138,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Implement SeekableIterator::current
+     * Implements SeekableIterator::current.
      *
      * @return  void
      * @throws  Zend_Service_Exception
@@ -154,7 +154,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Implement SeekableIterator::key
+     * Implements SeekableIterator::key.
      *
      * @return  int
      */
@@ -165,7 +165,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Implement SeekableIterator::next
+     * Implements SeekableIterator::next.
      *
      * @return  void
      */
@@ -176,7 +176,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Implement SeekableIterator::rewind
+     * Implements SeekableIterator::rewind.
      *
      * @return  bool
      */
@@ -188,7 +188,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Implement SeekableIterator::seek
+     * Implements SeekableIterator::seek.
      *
      * @param   int     $item
      * @return  Zend_Service_Technorati_Result
@@ -207,7 +207,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
 
 
     /**
-     * Implement SeekableIterator::valid
+     * Implements SeekableIterator::valid.
      *
      * @param   int     $item
      * @return  bool
@@ -224,9 +224,9 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
     }
 
     /**
-     * Return the response XML document
+     * Returns the response XML document.
      *
-     * @return string   The response document converted into XML format
+     * @return string   the response document converted into XML format
      */
     function getXML()
     {

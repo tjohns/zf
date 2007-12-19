@@ -75,10 +75,9 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
 
 
     /**
-     * TODO: phpdoc
+     * Constructs a new object object from DOM Element.
      *
-     * @param   DomElement $result  The ReST fragment for this object
-     * @return  void
+     * @param   DomElement $dom the ReST fragment for this object
      */
     public function __construct(DomElement $result)
     {
@@ -98,10 +97,10 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
         // weblog object field
         $result = $xpath->query('./weblog', $result);
         if ($result->length == 1) {
-        	/**
-        	 * @see Zend_Service_Technorati_Weblog
-        	 */
-        	require_once 'Zend/Service/Technorati/Weblog.php';
+            /**
+             * @see Zend_Service_Technorati_Weblog
+             */
+            require_once 'Zend/Service/Technorati/Weblog.php';
             $this->weblog = new Zend_Service_Technorati_Weblog($result->item(0));
         }
 
