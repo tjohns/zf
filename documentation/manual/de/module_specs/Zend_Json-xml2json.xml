@@ -26,7 +26,7 @@
         XML Eingabeformat Fehlers oder eines Konvertierungslogik Fehlers wird diese Funktion eine Ausnahme werfen.
         Die Konvertierungslogik verwendet rekursive Techniken um den XML Baum zu durchlaufen. Sie unterstützt
         Rekursionen die bis zu 25 Levels tief sind. Über diese Tiefe hinweg wird Sie eine
-        Zend_Json_Exception werfen. Es gibt verschiedenste XML Dateien mit unterschiedlichem Grad an
+        <code>Zend_Json_Exception</code> werfen. Es gibt verschiedenste XML Dateien mit unterschiedlichem Grad an
         Komplexität die im tests Verzeichnis des Zend Frameworks vorhanden sind. Sie können verwendet werden um
         die Funktionalität des xml2json Features zu testen.
     </para>

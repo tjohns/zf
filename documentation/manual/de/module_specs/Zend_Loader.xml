@@ -9,11 +9,11 @@
     <tip>
         <title>Zend_Loader vs. require_once()</title>
         <para>
-            Die Zend_Loader Methoden werden am Besten verwendet wenn der Dateiname
+            Die <code>Zend_Loader</code> Methoden werden am Besten verwendet wenn der Dateiname
             der Verwendet wird variabel ist. Wenn er zum Beispiel auf einem Parameter
             einer Benutzereinfabe oder eines Arguments einer Methode basiert. Wenn
             eine Datei oder eine Klasse geladen werden soll deren Name konstant ist,
-            gibt es keinen Vorteil durch die Verwendung von Zend_Loader gegenüber
+            gibt es keinen Vorteil durch die Verwendung von <code>Zend_Loader</code> gegenüber
             traditionellen PHP Funktionen wie
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
@@ -101,12 +101,12 @@ Zend_Loader::loadClass('Container_Tree',
             <code>Zend_Loader::loadClass()</code> die Verzeichnisse in der
             angegebenen Reihenfolge. Die erste passende Datei wird geladen. Wenn die
             Datei in den definierten Verzeichnissen <code>$dirs</code> nicht existiert
-            wird der include_path der PHP Umgebung durchsucht.
+            wird der <code>include_path</code> der PHP Umgebung durchsucht.
         </para>
 
         <para>
             Wenn die Datei nicht gefunden wird, oder die Klasse nach dem Laden nicht
-            existiert, wirft <code>Zend_Loader::loadClass()</code> eine Zend_Exception.
+            existiert, wirft <code>Zend_Loader::loadClass()</code> eine <code>Zend_Exception</code>.
         </para>
 
         <para>
@@ -124,7 +124,7 @@ Zend_Loader::loadClass('Container_Tree',
         <para>
             Die statische Methode <code>Zend_Loader::isReadable($pathname)</code>
             gibt <code>TRUE</code> zurück wenn eine Datei im angegebenen Pfadnamen
-            existiert und lesbar ist, andernfalls FALSE.
+            existiert und lesbar ist, andernfalls <code>FALSE</code>.
         </para>
 
         <example id="zend.loader.load.isreadable.example">
@@ -152,14 +152,14 @@ if (Zend_Loader::isReadable($filename)) {
         <title>Verwenden von Autoloaders</title>
 
         <para>
-            Die Zend_Loader Klasse enthält eine Methode die im PHP SPL Autoloader
+            Die <code>Zend_Loader</code> Klasse enthält eine Methode die im PHP SPL Autoloader
             registriert werden kann. <code>Zend_Loader::autoload()</code> ist die
-            Callback Methode. Als Vereinfachung bietet Zend_Loader die
+            Callback Methode. Als Vereinfachung bietet <code>Zend_Loader</code> die
             <code>registerAutoload()</code> Funktion welche die
             <code>autoload()</code> Methode registriert. Wenn die
             <code>spl_autoload</code> Erweiterung in der PHP Umgebung nicht
             vorhanden ist wird die <code>registerAutoload()</code> Methode eine
-            Zend_Exception werfen.
+            <code>Zend_Exception</code> werfen.
         </para>
 
         <example id="zend.loader.load.autoload.example">
@@ -178,7 +178,7 @@ Zend_Loader::registerAutoload();]]>
         </para>
 
         <para>
-            Wenn die Zend_Loader Klasse erweitert wird, kann ein optionales Argument
+            Wenn die <code>Zend_Loader</code> Klasse erweitert wird, kann ein optionales Argument
             für <code>registerAutoload()</code> angegeben werden, um die Klasse zu
             definieren von welcher die <code>autoload()</code> Methode registriert
             werden soll.
