@@ -3,7 +3,7 @@
     <title>Caricare file e classi dinamicamente</title>
 
     <para>
-        La classe Zend_Loader include metodi per aiutare il caricamento di file dinamicamente. 
+        La classe Zend_Loader include metodi per aiutare il caricamento di file dinamicamente.
     </para>
 
     <tip>
