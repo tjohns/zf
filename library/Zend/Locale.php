@@ -270,9 +270,12 @@ class Zend_Locale {
 
         foreach ($languages as $locale) {
 
-            $language = substr($locale, strpos($locale, '='));
-            if ($language != '=C') {
+            if (strpos($locale, '=') !== false) {
+                $language = substr($locale, strpos($locale, '='));
+                $language = substr($language, 1);
+            }
 
+            if ($language != 'C') {
                 if (strpos($language, '.') !== false) {
                     $language = substr($language, 0, strpos($language, '.') - 1);
                 } else if (strpos($language, '@') !== false) {
