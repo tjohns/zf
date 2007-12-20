@@ -557,7 +557,7 @@ Array
             <code>getLocaleList()</code> method which will return a list of all known locales.
         </para>
 
-        <example id="zend.locale.getquestion.example-1">
+        <example id="zend.locale.getlocalelist.example-1">
             <title>getLocaleList()</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
