@@ -295,7 +295,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // Bevorzuge die Einstellu
             </orderedlist>
         </para>
 
-        <example id="zend.locale.selection.example-1">
+        <example id="zend.locale.selection.automatic.example-1">
             <title>Verwenden automatischer Gebietsschemata</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
