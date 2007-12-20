@@ -117,6 +117,30 @@
                     den Controller über <code>somefoo</code> und auf die Aktion über
                     <code>bar</code> zugegriffen.
                 </para>
+
+                <note>
+                    <title>CamelCaseNamensKonvention</title>
+
+                    <para>
+                        Da Menschen grundsätzlich inkonsistent sind im Behandeln und der Gründlichkeit beim
+                        Tippen von Links, normalisiert der Zend Framework die Pfad Informationen zur
+                        Kleinschreibung. Das beeinflut natürlich wie Kontroller und Aktionen benannt werden
+                        ... oder wie auf diese in Links referiert werden kann.
+                    </para>
+
+                    <para>
+                        Wenn es gewünscht ist das die eigene Kontrollerklasse oder Aktionsmethodenname mehrfache
+                        CamelCaseWörter enthält, dann müssen diese zu getrennten Wörtern in der URL seperiert
+                        werden, entweder mit einem '-' oder '.' (das zu verwendende Zeichen kann konfiguriert
+                        werden).
+                    </para>
+
+                    <para>
+                        Als Beispiel, wenn man zur Aktion in <code>FooBarController::bazBatAction()</code>
+                        kommen will, muß zu Ihr mit der URL as <code>/foo-bar/baz-bat</code> oder
+                        <code>/foo.bar/baz.bat</code> referiert werden.
+                    </para>
+                </note>
             </listitem>
 
             <listitem>
