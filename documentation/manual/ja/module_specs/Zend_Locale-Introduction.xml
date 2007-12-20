@@ -323,7 +323,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);   // フレームワーク�
             </orderedlist>
         </para>
 
-        <example id="zend.locale.selection.example-1">
+        <example id="zend.locale.selection.automatic.example-1">
             <title>自動ロケールの使用法</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Locale.php';
