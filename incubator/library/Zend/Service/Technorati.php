@@ -100,22 +100,25 @@ class Zend_Service_Technorati
      *      Set this number to larger than zero and you will receive
      *      the portion of Technorati's total result set ranging from start to start+limit.
      *      The default start value is 1.
-     * 'current'    => (yes|no)
+     * 'current'    => (true|false)
      *      optional - the default setting of true
      *      Technorati returns links that are currently on a weblog's homepage.
      *      Set this parameter to false if you would like to receive all links
      *      to the given URL regardless of their current placement on the source blog.
-     * 'claim'      => (int)
-     *      optional - the default setting of 0 returns no user information
+     *      Internally the value is converted in (yes|no).
+     * 'claim'      => (true|false)
+     *      optional - the default setting of FALSE returns no user information
      *      about each weblog included in the result set when available.
-     *      Set this parameter to 1 to include Technorati member data
+     *      Set this parameter to FALSE to include Technorati member data
      *      in the result set when a weblog in your result set
      *      has been successfully claimed by a member of Technorati.
-     * 'highlight'  => (int)
-     *      optional - the default setting of 1
+     *      Internally the value is converted in (int).
+     * 'highlight'  => (true|false)
+     *      optional - the default setting of TRUE
      *      highlights the citation of the given URL within the weblog excerpt.
-     *      Set this parameter to 0 to apply no special markup to the blog excerpt.
-     *
+     *      Set this parameter to FALSE to apply no special markup to the blog excerpt.
+     *      Internally the value is converted in (int).
+     * 
      * @param   string $url     target URL. Prefixes http:// and www. are optional.
      * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_CosmosResultSet Cosmos resultset
@@ -361,8 +364,8 @@ class Zend_Service_Technorati
 
         // Validate limit (optional)
         if (isset($options['limit']) && 
-            $options['limit'] >= self::PARAM_LIMIT_MIN_VALUE && 
-            $options['limit'] <= self::PARAM_LIMIT_MAX_VALUE) {
+                ($options['limit'] < self::PARAM_LIMIT_MIN_VALUE || 
+                 $options['limit'] > self::PARAM_LIMIT_MAX_VALUE)) {
             /**
              * @see Zend_Service_Technorati_Exception
              */
@@ -373,7 +376,7 @@ class Zend_Service_Technorati
 
         // Validate start (optional)
         if (isset($options['start']) && 
-            !$options['start'] >= self::PARAM_START_MIN_VALUE) {
+            $options['start'] < self::PARAM_START_MIN_VALUE) {
             /**
              * @see Zend_Service_Technorati_Exception
              */
@@ -384,7 +387,7 @@ class Zend_Service_Technorati
 
         // Validate current (optional)
         if (isset($options['current'])) {
-            $tmp = $filterInt->filter($options['current']);
+            $tmp = (int) $options['current'];
             $options['current'] = $tmp ? 'yes' : 'no';
         }
 
