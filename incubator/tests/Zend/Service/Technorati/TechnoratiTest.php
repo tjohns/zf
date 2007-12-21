@@ -37,11 +37,27 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php'
  */
 class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 {
-    const TEST_APYKEY = 'qwergvcxweqrtyhgfbfvdcsaQ';
+    const TEST_APYKEY = 'somevalidapikey';
 
     public function setUp()
     {
-        $this->_object = new Zend_Service_Technorati(self::TEST_APYKEY);
+        /**
+         * @see Zend_Http_Client_Adapter_Test
+         */
+        require_once 'Zend/Http/Client/Adapter/Test.php';
+        $adapter = new Zend_Http_Client_Adapter_Test();
+
+        /**
+         * @see Zend_Http_Client
+         */
+        require_once 'Zend/Http/Client.php';
+        $client = new Zend_Http_Client(Zend_Service_Technorati::URI_BASE, array(
+            'adapter' => $adapter
+        ));
+        
+        $this->technorati = new Zend_Service_Technorati(self::TEST_APYKEY);
+        $this->adapter = $adapter;
+        $this->technorati->getRestClient()->setHttpClient($client);
     }
 
     public function testConstruct()
@@ -56,13 +72,13 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 
     public function testApiKeyMatches()
     {
-        $object = $this->_object;
+        $object = $this->technorati;
         $this->assertEquals(self::TEST_APYKEY, $object->getApiKey());
     }
 
     public function testSetGetApiKey()
     {
-        $object = $this->_object;
+        $object = $this->technorati;
 
         $set = 'just a test';
         $get = $object->setApiKey($set)->getApiKey();
@@ -88,5 +104,42 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
      */
     public function testKeyInfo()
     {
+        $result = $this->_setResponseFromFile('TestKeyInfo.xml')->keyInfo();
+
+        $this->assertType('Zend_Service_Technorati_KeyInfoResult', $result);
+        // content is validated in Zend_Service_Technorati_KeyInfoResult tests
     }
+    
+    /**
+     * @todo
+     */
+    public function testKeyInfoThrowsExceptionWithError()
+    {
+        try {
+            $result = $this->_setResponseFromFile('TestKeyInfoError.xml')->keyInfo();
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Exception $e) {
+            // exception message must match response message
+            $this->assertContains("Invalid key.", $e->getMessage());
+        }
+    }
+    
+    /**
+     * @todo
+     */
+    private function _setResponseFromFile($file) 
+    {
+        $response = "HTTP/1.0 200 OK\r\n"
+                  . "Date: " . date(DATE_RFC1123) . "\r\n"
+                  . "Server: Apache\r\n"
+                  . "Cache-Control: max-age=60\r\n"
+                  . "Content-Type: text/xml; charset=UTF-8\r\n"
+                  . "X-Powered-By: PHP/5.2.1\r\n"
+                  . "Connection: close\r\n"
+                  . "\r\n"
+                  . file_get_contents(dirname(__FILE__) . '/_files/' . $file) ;
+
+        $this->adapter->setResponse($response);
+        return $this->technorati; // allow chain call
+     }
 }
