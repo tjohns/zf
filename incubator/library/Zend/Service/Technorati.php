@@ -209,10 +209,11 @@ class Zend_Service_Technorati
      * that Technorati knows about these weblogs.
      *
      * @param   string $username    the Technorati user name you are searching for
+     * @param   array $options      additional parameters to refine your query
      * @return  Zend_Service_Technorati_GetInfoResult GetInfo result
      * @link    http://technorati.com/developers/api/getinfo.html Technorati API: GetInfo reference
      */
-    public function getInfo($username) {
+    public function getInfo($username, $options = null) {
         static $defaultOptions = array('format' => 'xml');
 
         $options['username'] = $username;
@@ -402,7 +403,7 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Validate GetInfo query options.
+     * Validates GetInfo query options.
      *
      * @param   array   $options
      * @return  void
@@ -435,7 +436,7 @@ class Zend_Service_Technorati
 
         // Validate format (optional)
         $this->_validateOptionFormat($options);
-    }    
+    }
     
     /**
      * Validate Search query options.
@@ -573,8 +574,8 @@ class Zend_Service_Technorati
              */
             require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception(
-                        'The following parameters are invalid: ' . 
-                        implode(', ', $difference));
+                        "The following parameters are invalid: '" . 
+                        implode("', '", $difference) . "'");
         }
     }
 

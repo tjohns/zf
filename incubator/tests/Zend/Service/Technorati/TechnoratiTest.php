@@ -38,6 +38,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php'
 class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 {
     const TEST_APYKEY = 'somevalidapikey';
+    const TEST_GETINFO_USERNAME = 'weppos';
 
     public function setUp()
     {
@@ -92,16 +93,63 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @todo
-     */
     public function testGetInfo()
     {
+        $result = $this->_setResponseFromFile('TestGetInfoSuccess.xml')->getInfo(self::TEST_GETINFO_USERNAME);
+
+        $this->assertType('Zend_Service_Technorati_GetInfoResult', $result);
+        // content is validated in Zend_Service_Technorati_GetInfoResult tests
     }
 
-    /**
-     * @todo
-     */
+    public function testGetInfoThrowsExceptionWithError()
+    {
+        try {
+            $result = $this->_setResponseFromFile('TestGetInfoError.xml')->getInfo(self::TEST_GETINFO_USERNAME);
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Exception $e) {
+            // exception message must match response message
+            $this->assertContains("Username is a required field.", $e->getMessage());
+        }
+    }
+
+    public function testGetInfoThrowsExceptionWithInvalidOptionUsername()
+    {
+        // username is mandatory --> validated by PHP interpreter
+        // username must not be empty
+        try {
+            $result = $this->technorati->getInfo('');
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Exception $e) {
+            // exception message must match response message
+            $this->assertContains("'username'", $e->getMessage());
+        }
+    }
+
+    public function testGetInfoThrowsExceptionWithInvalidOptionFormat()
+    {
+        // format must be XML
+        try {
+            $result = $this->technorati->getInfo(self::TEST_GETINFO_USERNAME, 
+                                                array('format' => 'rss'));
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Exception $e) {
+            // exception message must match response message
+            $this->assertContains("'format'", $e->getMessage());
+        }
+    }
+    
+    public function testGetInfoThrowsExceptionWithUnknownOption()
+    {
+        try {
+            $result = $this->technorati->getInfo(self::TEST_GETINFO_USERNAME, 
+                                                array('foo' => 'bar'));
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Exception $e) {
+            // exception message must match response message
+            $this->assertContains("'foo'", $e->getMessage());
+        }
+    }
+    
     public function testKeyInfo()
     {
         $result = $this->_setResponseFromFile('TestKeyInfo.xml')->keyInfo();
@@ -109,10 +157,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Service_Technorati_KeyInfoResult', $result);
         // content is validated in Zend_Service_Technorati_KeyInfoResult tests
     }
-    
-    /**
-     * @todo
-     */
+
     public function testKeyInfoThrowsExceptionWithError()
     {
         try {
@@ -125,7 +170,16 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @todo
+     * Loads a response content from a test case file
+     * and sets the content to current Test Adapter.
+     * 
+     * Returns current Zend_Service_Technorati instance
+     * to let developers use the powerful chain call.
+     * 
+     * Do not execute any file validation. Please use this method carefully.
+     * 
+     * @params  string $file
+     * @return  Zend_Service_Technorati
      */
     private function _setResponseFromFile($file) 
     {
