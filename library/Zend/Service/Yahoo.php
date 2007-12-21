@@ -64,6 +64,54 @@ class Zend_Service_Yahoo
 
 
     /**
+     * Retrieve Inlink Data from siteexplorer.yahoo.com.  A basic query
+     * consists simply of a URL.  Additional options that can be
+     * specified consist of:
+     * 'results'      => int  How many results to return, max is 100
+     * 'start'        => int  The start offset for search results
+     * 'entire_site'  => bool  Data for the whole site or a single page
+     * 'omit_inlinks' => (none|domain|subdomain)  Filter inlinks from these sources
+     *
+     * @param  string $query    the query being run
+     * @param  array  $options  any optional parameters
+     * @return Zend_Service_Yahoo_ResultSet  The return set
+     * @throws Zend_Service_Exception
+     */
+    public function inlinkDataSearch($query, array $options = array())
+    {
+        static $defaultOptions = array('results'     => '50',
+                                       'start'    => 1);
+
+        $options = $this->_prepareOptions($query, $options, $defaultOptions);
+        $this->_validateInlinkDataSearch($options);
+
+        $this->_rest->getHttpClient()->resetParameters();
+        $this->_rest->setUri('http://search.yahooapis.com');
+        $response = $this->_rest->restGet('/SiteExplorerService/V1/inlinkData', $options);
+
+        if ($response->isError()) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
+                                             $response->getStatus());
+        }
+
+        $dom = new DOMDocument();
+        $dom->loadXML($response->getBody());
+
+        self::_checkErrors($dom);
+
+        /**
+         * @see Zend_Service_Yahoo_InlinkDataResultSet
+         */
+        require_once 'Zend/Service/Yahoo/InlinkDataResultSet.php';
+        return new Zend_Service_Yahoo_InlinkDataResultSet($dom);
+    }
+
+
+    /**
      * Perform a search of images.  The most basic query consists simply
      * of a plain text search, but you can also specify the type of
      * image, the format, color, etc.
@@ -239,6 +287,53 @@ class Zend_Service_Yahoo
 
 
     /**
+     * Retrieve Page Data from siteexplorer.yahoo.com.  A basic query
+     * consists simply of a URL.  Additional options that can be
+     * specified consist of:
+     * 'results'      => int  How many results to return, max is 100
+     * 'start'        => int  The start offset for search results
+     * 'domain_only'  => bool  Data for just the given domain or all sub-domains also
+     *
+     * @param  string $query    the query being run
+     * @param  array  $options  any optional parameters
+     * @return Zend_Service_Yahoo_ResultSet  The return set
+     * @throws Zend_Service_Exception
+     */
+    public function pageDataSearch($query, array $options = array())
+    {
+        static $defaultOptions = array('results'     => '50',
+                                       'start'    => 1);
+
+        $options = $this->_prepareOptions($query, $options, $defaultOptions);
+        $this->_validatePageDataSearch($options);
+
+        $this->_rest->getHttpClient()->resetParameters();
+        $this->_rest->setUri('http://search.yahooapis.com');
+        $response = $this->_rest->restGet('/SiteExplorerService/V1/pageData', $options);
+
+        if ($response->isError()) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
+                                             $response->getStatus());
+        }
+
+        $dom = new DOMDocument();
+        $dom->loadXML($response->getBody());
+
+        self::_checkErrors($dom);
+
+        /**
+         * @see Zend_Service_Yahoo_PageDataResultSet
+         */
+        require_once 'Zend/Service/Yahoo/PageDataResultSet.php';
+        return new Zend_Service_Yahoo_PageDataResultSet($dom);
+    }
+
+
+    /**
      * Perform a web content search on search.yahoo.com.  A basic query
      * consists simply of a text query.  Additional options that can be
      * specified consist of:
@@ -304,6 +399,47 @@ class Zend_Service_Yahoo
     public function getRestClient()
     {
         return $this->_rest;
+    }
+
+
+    /**
+     * Validate Inlink Data Search Options
+     *
+     * @param  array $options
+     * @return void
+     * @throws Zend_Service_Exception
+     */
+    protected function _validateInlinkDataSearch(array $options)
+    {
+        $validOptions = array('appid', 'query', 'results', 'start', 'entire_site', 'omit_inlinks');
+
+        $this->_compareOptions($options, $validOptions);
+
+        /**
+         * @see Zend_Validate_Between
+         */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 100, true);
+
+        if (isset($options['results']) && !$between->setMin(1)->setMax(100)->isValid($options['results'])) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception("Invalid value for option 'results': {$options['results']}");
+        }
+
+        if (isset($options['start']) && !$between->setMin(1)->setMax(1000)->isValid($options['start'])) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception("Invalid value for option 'start': {$options['start']}");
+        }
+
+        if (isset($options['omit_inlinks'])) {
+            $this->_validateInArray('omit_inlinks', $options['omit_inlinks'], array('none', 'domain','subdomain'));
+        }
     }
 
 
@@ -519,6 +655,45 @@ class Zend_Service_Yahoo
         $this->_validateInArray('sort', $options['sort'], array('rank', 'date'));
         $this->_validateInArray('type', $options['type'], array('all', 'any', 'phrase'));
     }
+
+
+    /**
+     * Validate Page Data Search Options
+     *
+     * @param  array $options
+     * @return void
+     * @throws Zend_Service_Exception
+     */
+    protected function _validatePageDataSearch(array $options)
+    {
+        $validOptions = array('appid', 'query', 'results', 'start', 'domain_only');
+
+        $this->_compareOptions($options, $validOptions);
+
+        /**
+         * @see Zend_Validate_Between
+         */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 100, true);
+
+        if (isset($options['results']) && !$between->setMin(1)->setMax(100)->isValid($options['results'])) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception("Invalid value for option 'results': {$options['results']}");
+        }
+
+        if (isset($options['start']) && !$between->setMin(1)->setMax(1000)->isValid($options['start'])) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception("Invalid value for option 'start': {$options['start']}");
+        }
+    }
+
+
 
 
     /**

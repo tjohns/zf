@@ -80,6 +80,38 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that inlinkDataSearch() works as expected given 'http://framework.zend.com/' as a query
+     *
+     * @return void
+     */
+    public function testInlinkDataSearchPhp()
+    {
+        $inlinkDataResultSet = $this->_yahoo->inlinkSearch('http://framework.zend.com/');
+
+        $this->assertTrue($inlinkDataResultSet instanceof Zend_Service_Yahoo_InlinkDataResultSet);
+        $this->assertTrue($inlinkDataResultSet->totalResultsAvailable > 10);
+        $this->assertEquals(50, $inlinkDataResultSet->totalResultsReturned);
+        $this->assertEquals(50, $inlinkDataResultSet->totalResults());
+        $this->assertEquals(1, $inlinkDataResultSet->firstResultPosition);
+        $this->assertEquals(0, $inlinkDataResultSet->key());
+
+        try {
+            $inlinkDataResultSet->seek(-1);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        foreach ($inlinkDataResultSet as $inlinkDataResult) {
+            $this->assertTrue($inlinkDataResult instanceof Zend_Service_Yahoo_InlinkDataResult);
+        }
+
+        $this->assertEquals(10, $inlinkDataResultSet->key());
+        $inlinkDataResultSet->seek(0);
+        $this->assertEquals(0, $inlinkDataResultSet->key());
+    }
+
+    /**
      * Ensures that imageSearch() works as expected given 'php' as a query
      *
      * @return void
@@ -181,6 +213,38 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
         foreach ($newsResultSet as $newsResult) {
             $this->assertTrue($newsResult instanceof Zend_Service_Yahoo_NewsResult);
         }
+    }
+
+    /**
+     * Ensures that pageDataSearch() works as expected given 'http://framework.zend.com/' as a query
+     *
+     * @return void
+     */
+    public function testPageDataSearchPhp()
+    {
+        $pageDataResultSet = $this->_yahoo->inlinkSearch('http://framework.zend.com/');
+
+        $this->assertTrue($pageDataResultSet instanceof Zend_Service_Yahoo_PageDataResultSet);
+        $this->assertTrue($pageDataResultSet->totalResultsAvailable > 10);
+        $this->assertEquals(50, $pageDataResultSet->totalResultsReturned);
+        $this->assertEquals(50, $pageDataResultSet->totalResults());
+        $this->assertEquals(1, $pageDataResultSet->firstResultPosition);
+        $this->assertEquals(0, $pageDataResultSet->key());
+
+        try {
+            $pageDataResultSet->seek(-1);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        foreach ($pageDataResultSet as $pageDataResult) {
+            $this->assertTrue($pageDataResult instanceof Zend_Service_Yahoo_PageDataResult);
+        }
+
+        $this->assertEquals(10, $pageDataResultSet->key());
+        $pageDataResultSet->seek(0);
+        $this->assertEquals(0, $pageDataResultSet->key());
     }
 
     /**

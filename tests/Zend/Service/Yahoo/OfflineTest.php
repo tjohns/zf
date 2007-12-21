@@ -117,6 +117,51 @@ class Zend_Service_Yahoo_OfflineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that inlinkDataSearch() throws an exception when the results option is invalid
+     *
+     * @return void
+     */
+    public function testInlinkDataSearchExceptionResultsInvalid()
+    {
+        try {
+            $this->_yahoo->inlinkDataSearch('http://framework.zend.com/', array('results' => 101));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'results'", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that inlinkDataSearch() throws an exception when the start option is invalid
+     *
+     * @return void
+     */
+    public function testInlinkDataSearchExceptionStartInvalid()
+    {
+        try {
+            $this->_yahoo->inlinkDataSearch('http://framework.zend.com/', array('start' => 1001));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'start'", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that inlinkDataSearch() throws an exception when the omit_inlinks option is invalid
+     *
+     * @return void
+     */
+    public function testInlinkDataSearchExceptionOmitLinksInvalid()
+    {
+        try {
+            $this->_yahoo->inlinkDataSearch('http://framework.zend.com/', array('omit_inlinks' => 'oops'));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'omit_inlinks'", $e->getMessage());
+        }
+    }
+
+    /**
      * Ensures that imageSearch() throws an exception when the type option is invalid
      *
      * @return void
@@ -338,6 +383,36 @@ class Zend_Service_Yahoo_OfflineTest extends PHPUnit_Framework_TestCase
             $this->fail('Expected Zend_Service_Exception not thrown');
         } catch (Zend_Service_Exception $e) {
             $this->assertContains('selected language', $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that pageDataSearch() throws an exception when the results option is invalid
+     *
+     * @return void
+     */
+    public function testPageDataSearchExceptionResultsInvalid()
+    {
+        try {
+            $this->_yahoo->pageDataSearch('http://framework.zend.com/', array('results' => 101));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'results'", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that pageDataSearch() throws an exception when the start option is invalid
+     *
+     * @return void
+     */
+    public function testPageDataSearchExceptionStartInvalid()
+    {
+        try {
+            $this->_yahoo->pageDataSearch('http://framework.zend.com/', array('start' => 1001));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'start'", $e->getMessage());
         }
     }
 
