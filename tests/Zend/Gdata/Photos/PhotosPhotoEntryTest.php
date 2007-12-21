@@ -190,7 +190,7 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($exifTags->distance != null); 
         $this->assertTrue($exifTags->make != null);
         $this->assertTrue($exifTags->model != null);
-        $this->assertTrue($exifTags->imageUniqueID != null,"imageUniqueID is null"); 
+        $this->assertTrue($exifTags->imageUniqueID != null);
         $this->assertEquals("true", $exifTags->flash->text); 
         $this->assertEquals("11.0", $exifTags->fstop->text); 
         $this->assertEquals("0.0040", $exifTags->exposure->text); 
