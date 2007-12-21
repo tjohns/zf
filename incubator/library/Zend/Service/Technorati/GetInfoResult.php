@@ -83,7 +83,7 @@ class Zend_Service_Technorati_GetInfoResult
 
 
     /**
-     * Returns author.
+     * Returns the author associated with queried username.
      * 
      * @return  Zend_Service_Technorati_Author
      */
@@ -92,7 +92,7 @@ class Zend_Service_Technorati_GetInfoResult
     }
 
     /**
-     * Returns weblog collection.
+     * Returns the collection of weblogs authored by queried username.
      * 
      * @return  array of Zend_Service_Technorati_Weblog
      */

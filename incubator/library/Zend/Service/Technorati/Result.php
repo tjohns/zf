@@ -81,7 +81,7 @@ class Zend_Service_Technorati_Result
             $query = "./$xmlName/text()";
             $node = $this->_xpath->query($query, $result);
             if ($node->length == 1) {
-            	// @todo convert to string?
+                // @todo convert to string?
                 $this->{$phpName} = $node->item(0)->data;
             }
         }

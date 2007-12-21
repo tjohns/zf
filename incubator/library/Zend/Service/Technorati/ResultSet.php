@@ -136,7 +136,6 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         return (int) $this->totalResultsReturned;
     }
 
-
     /**
      * Implements SeekableIterator::current.
      *
@@ -152,7 +151,6 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         throw new Zend_Service_Exception("Zend_Service_Technorati_ResultSet::current() should be overwritten in child classes");
     }
 
-
     /**
      * Implements SeekableIterator::key.
      *
@@ -162,7 +160,6 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
     {
         return $this->_currentItem;
     }
-
 
     /**
      * Implements SeekableIterator::next.
@@ -174,7 +171,6 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         $this->_currentItem += 1;
     }
 
-
     /**
      * Implements SeekableIterator::rewind.
      *
@@ -185,7 +181,6 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         $this->_currentItem = 0;
         return true;
     }
-
 
     /**
      * Implements SeekableIterator::seek.
@@ -204,7 +199,6 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
             throw new Zend_Service_Exception('Item not found');
         }
     }
-
 
     /**
      * Implements SeekableIterator::valid.

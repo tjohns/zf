@@ -39,39 +39,44 @@ require_once 'Zend/Service/Technorati/Result.php';
 class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Result
 {
     /**
-     * TODO: phpdoc
+     * Technorati weblog, if queried URL appears to be a valid one
      * 
-     * @var
+     * @var     Zend_Service_Technorati_Weblog
+     * @access  protected
      */
-    public $weblog;
+    protected $_weblog;
 
     /**
      * TODO: phpdoc
      * 
-     * @var
+     * @var     string
+     * @access  protected
      */
-    public $nearestPermalink;
+    protected $_nearestPermalink;
 
     /**
      * TODO: phpdoc
      * 
-     * @var
+     * @var     string
+     * @access  protected
      */
-    public $excerpt;
+    protected $_excerpt;
 
     /**
      * TODO: phpdoc
      * 
-     * @var
+     * @var     string
+     * @access  protected
      */
-    public $linkCreated;
+    protected $_linkCreated;
 
     /**
      * TODO: phpdoc
      * 
-     * @var
+     * @var     string
+     * @access  protected
      */
-    public $linkUrl;
+    protected $_linkUrl;
 
 
     /**
@@ -101,10 +106,62 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
              * @see Zend_Service_Technorati_Weblog
              */
             require_once 'Zend/Service/Technorati/Weblog.php';
-            $this->weblog = new Zend_Service_Technorati_Weblog($result->item(0));
+            $this->_weblog = new Zend_Service_Technorati_Weblog($result->item(0));
         }
 
         // filter fields
-        /** @todo Each field needs to be filtered */
+        /**
+         * @todo Each field needs to be filtered and converted
+         */
     }
+
+    /**
+     * Returns the weblog object that links queried URL.
+     * 
+     * @return  Zend_Service_Technorati_Weblog
+     */
+    public function getWeblog() {
+        return $this->_weblog;
+    }
+
+    /**
+     * Returns the nearest permalink tracked for queried URL.
+     * 
+     * @return  string
+     * @todo    filter as Zend_Uri_Http
+     */
+    public function getNearestPermalink() {
+        return $this->_nearestPermalink;
+    }
+
+    /**
+     * Returns the excerpt of the blog/page linking queried URL.
+     * 
+     * @return  string
+     */
+    public function getExcerpt() {
+        return $this->_excerpt;
+    }
+    
+    /**
+     * Returns the datetime the link was created.
+     * 
+     * @return  string
+     * @todo    filter as timestamp
+     */
+    public function getLinkCreated() {
+        return $this->_linkCreated;
+    }
+    
+    /**
+     * If queried URL is a valid blog,
+     * returns the URL of the specific link target page.
+     * 
+     * @return  string
+     * @todo    filter as Zend_Uri_Http
+     */
+    public function getLinkUrl() {
+        return $this->_linkUrl;
+    }
+    
 }
