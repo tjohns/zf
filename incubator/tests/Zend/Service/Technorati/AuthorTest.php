@@ -45,6 +45,10 @@ class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->xmlAuthor = dirname(__FILE__) . '/_files/TestAuthor.xml';
+        
+        $dom = new DOMDocument();
+        $dom->load($this->xmlAuthor);
+        $this->object = new Zend_Service_Technorati_Author($dom->documentElement);
     }
     
     public function testConstruct()
@@ -70,14 +74,32 @@ class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    public function testAuthor()
+    {
+        // check valid object
+        $this->assertNotNull($this->object);
+        $author = $this->object;
+        
+        // check first name
+        $this->assertEquals('Cesare', $author->getFirstName());
+        // check last name
+        $this->assertEquals('Lamanna', $author->getLastName());
+        // check username
+        $this->assertEquals('cesarehtml', $author->getUsername());
+        // check description
+        $this->assertEquals('', $author->getDescription());
+        // check bio
+        $this->assertEquals('', $author->getBio());
+        
+        // check thumbnailpicture
+        $this->assertEquals(Zend_Uri::factory('http://static.technorati.com/progimages/photo.jpg?uid=117217'), $author->getThumbnailPicture());
+    }
+    
     public function testSetGet()
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlAuthor);
-        $author = new Zend_Service_Technorati_Author($dom->documentElement);
-        
         // check valid object
-        $this->assertNotNull($author);
+        $this->assertNotNull($this->object);
+        $author = $this->object;
         
         /**
          * check first name
@@ -145,28 +167,5 @@ class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
         } catch(Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Invalid URI", $e->getMessage());
         }
-    }
-    
-    public function testAuthor()
-    {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlAuthor);
-        $author = new Zend_Service_Technorati_Author($dom->documentElement);
-        
-        // check valid object
-        $this->assertNotNull($author);
-        // check first name
-        $this->assertEquals('Cesare', $author->getFirstName());
-        // check last name
-        $this->assertEquals('Lamanna', $author->getLastName());
-        // check username
-        $this->assertEquals('cesarehtml', $author->getUsername());
-        // check description
-        $this->assertEquals('', $author->getDescription());
-        // check bio
-        $this->assertEquals('', $author->getBio());
-        
-        // check thumbnailpicture
-        $this->assertEquals(Zend_Uri::factory('http://static.technorati.com/progimages/photo.jpg?uid=117217'), $author->getThumbnailPicture());
     }
 }

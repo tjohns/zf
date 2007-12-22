@@ -126,10 +126,11 @@ class Zend_Service_Technorati_KeyInfoResult
      * Sets API Key string.
      * 
      * @param   string $apiKey  the API Key
-     * @return  void
+     * @return  Zend_Service_Technorati_KeyInfoResult $this instance
      */
     public function setApiKey($apiKey) {
         $this->_apiKey = $apiKey;
+        return $this;
     }
 
     

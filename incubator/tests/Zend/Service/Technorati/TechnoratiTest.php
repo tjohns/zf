@@ -214,7 +214,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 
     public function testKeyInfo()
     {
-        $result = $this->_setResponseFromFile('TestKeyInfo.xml')->keyInfo();
+        $result = $this->_setResponseFromFile('TestKeyInfoSuccess.xml')->keyInfo();
 
         $this->assertType('Zend_Service_Technorati_KeyInfoResult', $result);
         // content is validated in Zend_Service_Technorati_KeyInfoResult tests

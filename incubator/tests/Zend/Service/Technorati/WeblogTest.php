@@ -46,6 +46,10 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
     {
         $this->xmlWeblog            = dirname(__FILE__) . '/_files/TestWeblog.xml';
         $this->xmlWeblogTwoAuthors  = dirname(__FILE__) . '/_files/TestWeblogTwoAuthors.xml';
+        
+        $dom = new DOMDocument();
+        $dom->load($this->xmlWeblog);
+        $this->object = new Zend_Service_Technorati_Weblog($dom->documentElement);
     }
     
     public function testConstruct()
@@ -71,14 +75,69 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         }
     }
     
-    public function testSetGet()
+    public function testWeblog()
+    {
+        // check valid object
+        $this->assertNotNull($this->object);
+        $weblog = $this->object;
+        
+        // check name
+        $this->assertEquals('Roby Web World Italia', $weblog->getName());
+        // check URL
+        $this->assertEquals(Zend_Uri::factory('http://robyww.blogspot.com'), $weblog->getUrl());
+        // check Atom Url
+        $this->assertEquals(Zend_Uri::factory('http://robyww.blogspot.com/feeds/posts/atom'), $weblog->getAtomUrl());
+        // check RSS Url
+        $this->assertEquals(Zend_Uri::factory('http://robyww.blogspot.com/feeds/posts/rss'), $weblog->getRssUrl());
+        // check inbound blogs
+        $this->assertEquals(71, $weblog->getInboundBlogs());
+        // check inbound links
+        $this->assertEquals(103, $weblog->getInboundLinks());
+        // check last update
+        $this->assertEquals(strtotime('2007-11-11 08:47:26 GMT'), $weblog->getLastUpdate());
+        // check rank
+        $this->assertEquals(93473, $weblog->getRank());
+        // check authors
+        $var = $weblog->getAuthors();
+        $this->assertType('array', $var);
+        $this->assertEquals(1, sizeof($var));
+
+        /**
+         * @todo lat, lon, hasphoto
+         */
+    }
+
+    public function testWeblogWithTwoAuthors() 
     {
         $dom = new DOMDocument();
-        $dom->load($this->xmlWeblog);
+        $dom->load($this->xmlWeblogTwoAuthors);
         $weblog = new Zend_Service_Technorati_Weblog($dom->documentElement);
         
         // check valid object
         $this->assertNotNull($weblog);
+        
+        $authors = $weblog->getAuthors();
+        
+        // check whether $authors is an array with valid length
+        $this->assertType('array', $authors); 
+        $this->assertEquals(2, sizeof($authors));
+        
+        // check first author
+        $author = $authors[0];
+        $this->assertType('Zend_Service_Technorati_Author', $author);
+        $this->assertEquals('rfilippini', $author->getUsername());
+        
+        // check second author, be sure it's not the first one
+        $author = $authors[1];
+        $this->assertType('Zend_Service_Technorati_Author', $author);
+        $this->assertEquals('Rinzi', $author->getUsername());
+    }
+    
+    public function testSetGet()
+    {
+        // check valid object
+        $this->assertNotNull($this->object);
+        $weblog = $this->object;
         
         /**
          * check name
@@ -219,65 +278,5 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         $get = $weblog->setRank($set)->getRank();
         $this->assertType('integer', $get);
         $this->assertEquals((int) $set, $get);
-    }
-    
-    public function testWeblog()
-    {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlWeblog);
-        $weblog = new Zend_Service_Technorati_Weblog($dom->documentElement);
-        
-        // check valid object
-        $this->assertNotNull($weblog);
-        // check name
-        $this->assertEquals('Roby Web World Italia', $weblog->getName());
-        // check URL
-        $this->assertEquals(Zend_Uri::factory('http://robyww.blogspot.com'), $weblog->getUrl());
-        // check Atom Url
-        $this->assertEquals(Zend_Uri::factory('http://robyww.blogspot.com/feeds/posts/atom'), $weblog->getAtomUrl());
-        // check RSS Url
-        $this->assertEquals(Zend_Uri::factory('http://robyww.blogspot.com/feeds/posts/rss'), $weblog->getRssUrl());
-        // check inbound blogs
-        $this->assertEquals(71, $weblog->getInboundBlogs());
-        // check inbound links
-        $this->assertEquals(103, $weblog->getInboundLinks());
-        // check last update
-        $this->assertEquals(strtotime('2007-11-11 08:47:26 GMT'), $weblog->getLastUpdate());
-        // check rank
-        $this->assertEquals(93473, $weblog->getRank());
-        // check authors
-        $var = $weblog->getAuthors();
-        $this->assertType('array', $var);
-        $this->assertEquals(1, sizeof($var));
-
-        /**
-         * @todo lat, lon, hasphoto
-         */
-    }
-    
-    public function testWeblogWithTwoAuthors() 
-    {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlWeblogTwoAuthors);
-        $weblog = new Zend_Service_Technorati_Weblog($dom->documentElement);
-        
-        // check valid object
-        $this->assertNotNull($weblog);
-        
-        $authors = $weblog->getAuthors();
-        
-        // check whether $authors is an array with valid length
-        $this->assertType('array', $authors); 
-        $this->assertEquals(2, sizeof($authors));
-        
-        // check first author
-        $author = $authors[0];
-        $this->assertType('Zend_Service_Technorati_Author', $author);
-        $this->assertEquals('rfilippini', $author->getUsername());
-        
-        // check second author, be sure it's not the first one
-        $author = $authors[1];
-        $this->assertType('Zend_Service_Technorati_Author', $author);
-        $this->assertEquals('Rinzi', $author->getUsername());
     }
 }

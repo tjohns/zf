@@ -148,15 +148,15 @@ class Zend_Service_Technorati_Weblog
      */
     public function __construct(DomElement $dom)
     {
-    	$xpath = new DOMXPath($dom->ownerDocument);
+        $xpath = new DOMXPath($dom->ownerDocument);
 
         /**
          * @todo   Create accessor method
          */
 
-    	$result = $xpath->query('./name/text()', $dom);
+        $result = $xpath->query('./name/text()', $dom);
         if ($result->length == 1) $this->setName($result->item(0)->data);
-    	
+
         $result = $xpath->query('./url/text()', $dom);
         if ($result->length == 1) $this->setUrl($result->item(0)->data);
         

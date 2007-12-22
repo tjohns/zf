@@ -36,6 +36,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require 'TechnoratiTest.php';
 require 'AuthorTest.php';
 require 'WeblogTest.php';
+require 'GetInfoResultTest.php';
+require 'KeyInfoResultTest.php';
+require 'TagsResultTest.php';
 
 
 /**
@@ -59,7 +62,10 @@ class Zend_Service_Technorati_AllTests
         $suite->addTestSuite('Zend_Service_Technorati_TechnoratiTest');
         $suite->addTestSuite('Zend_Service_Technorati_AuthorTest');
         $suite->addTestSuite('Zend_Service_Technorati_WeblogTest');
-
+        $suite->addTestSuite('Zend_Service_Technorati_GetInfoResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_KeyInfoResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_TagsResultTest');
+        
         return $suite;
     }
 }

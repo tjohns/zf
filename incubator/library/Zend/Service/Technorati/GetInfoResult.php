@@ -50,9 +50,9 @@ class Zend_Service_Technorati_GetInfoResult
 
 
     /**
-     * Constructs a new object object from DOM Element.
+     * Constructs a new object object from DOM Document.
      *
-     * @param   DomElement $dom the ReST fragment for this object
+     * @param   DomDocument $dom the ReST fragment for this object
      */
     public function __construct(DomDocument $dom)
     {
