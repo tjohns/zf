@@ -36,7 +36,7 @@
 
     <p>There are no books to display.</p>
 
-<?php endif; ?>]]>
+<?php endif; ]]>
     </programlisting>
 
     <sect2 id="zend.view.scripts.escaping">
@@ -57,7 +57,7 @@ echo $this->variable;
 
 // 好的做法：
 echo $this->escape($this->variable);
-?>]]>
+]]>
         </programlisting>
 
         <para>
@@ -80,7 +80,7 @@ $view->setEscape(array($obj, 'methodName'));
 
 //最后输出你的视图
 echo $view->render(...);
-?>]]>
+]]>
         </programlisting>
 
         <para>
@@ -126,7 +126,7 @@ if ($this->books) {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
-?>]]></programlisting>
+]]></programlisting>
 
             <para>
                 下面是相关的模板文件：
@@ -149,8 +149,8 @@ if ($this->books) {
     </tr>
 
 <!-- nobooks.tpl -->
-<p>There are no books to display.</p>
-]]></programlisting>
+<p>There are no books to display.</p>]]>>
+           </programlisting>
 
         </sect3>
 
@@ -176,6 +176,24 @@ public function getEngine();
 public function setScriptPath($path);
 
 /**
+ * Set a base path to all view resources
+ * 给所有视图资源设置基本路径
+ */
+public function setBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Add an additional base path to view resources
+ * 给视图资源添加另外的基本路径
+ */
+public function addBasePath($path, $prefix = 'Zend_View');
+
+/**
+ * Retrieve the current script paths
+ * 获取当前脚本路径
+ */
+public function getScriptPaths();
+
+/**
  * Overloading methods for assigning template variables as object properties
  * 重载方法，用于将赋值给模板变量，以对象属性的形式
  */
@@ -199,11 +217,11 @@ public function clearVars();
 /**
  * Render the template named $name
  */
-public function render($name);
-]]></programlisting>
+public function render($name);]]>
+            </programlisting>
 
             <para>
-                                使用这个接口，把第三方的模板系统封装成Zend_View兼容的类是相当容易的。例如，下面是封装Smarty的示例代码：
+               使用这个接口，把第三方的模板系统封装成Zend_View兼容的类是相当容易的。例如，下面是封装Smarty的示例代码：
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -262,6 +280,40 @@ class Zend_View_Smarty implements Zend_View_Interface
         }
 
         throw new Exception('Invalid path provided');
+    }
+
+    /**
+     * Retrieve the current template directory
+     *
+     * @return string
+     */
+    public function getScriptPaths()
+    {
+        return $this->_smarty->template_dir;
+    }
+
+    /**
+     * Alias for setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function setBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
+    }
+
+    /**
+     * Alias for setScriptPath
+     *
+     * @param string $path
+     * @param string $prefix Unused
+     * @return void
+     */
+    public function addBasePath($path, $prefix = 'Zend_View')
+    {
+        return $this->setScriptPath($path);
     }
 
     /**
@@ -355,11 +407,10 @@ class Zend_View_Smarty implements Zend_View_Interface
     {
         return $this->_smarty->fetch($name);
     }
-}
-]]></programlisting>
+}]]>
+            </programlisting>
 
             <para>
-
                 在这个示例中，实例化<code>Zend_View_Smarty</code>而不是<code>Zend_View</code>，然后就像使用 <code>Zend_View</code>一样地使用它。
             </para>
 
@@ -368,8 +419,8 @@ $view = new Zend_View_Smarty();
 $view->setScriptPath('/path/to/templates');
 $view->book = 'Zend PHP 5 Certification Study Guide';
 $view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');
-]]></programlisting>
+$rendered = $view->render('bookinfo.tpl');]]>
+            </programlisting>
 
         </sect3>
     </sect2>
