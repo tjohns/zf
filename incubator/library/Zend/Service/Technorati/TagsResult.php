@@ -21,12 +21,6 @@
  */
 
 
-/** 
- * @see Zend_Service_Technorati_Result 
- */
-require_once 'Zend/Service/Technorati/Result.php';
-
-
 /**
  * TODO: phpdoc
  * 
@@ -36,7 +30,7 @@ require_once 'Zend/Service/Technorati/Result.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TagsResult extends Zend_Service_Technorati_Result
+class Zend_Service_Technorati_TagsResult
 {
     /**
      * Collection of tags
@@ -46,15 +40,6 @@ class Zend_Service_Technorati_TagsResult extends Zend_Service_Technorati_Result
      * @todo    convert to array of Tag objects
      */
     protected $_tags = array();
-
-    /**
-     * Technorati API response document
-     *
-     * @var     DomDocument
-     * @access  protected
-     * @todo    XPath and DOM elements cannot be serialized, don't cache them
-     */
-    protected $_dom;
 
     /**
      * Object for $this->_dom
@@ -73,10 +58,15 @@ class Zend_Service_Technorati_TagsResult extends Zend_Service_Technorati_Result
      */
     public function __construct(DomDocument $dom)
     {
-        $this->_dom = $dom;
         $this->_xpath = new DOMXPath($dom);
 
-        $this->_parseTags();
+        $result = $this->_xpath->query('//item');
+        foreach ($result as $item) {
+            $tag = $this->_parseTagFragment($item);
+            if ($tag !== null) {
+                $this->_tags[] = $tag;
+            }
+        }
     }
 
     /**
@@ -86,25 +76,6 @@ class Zend_Service_Technorati_TagsResult extends Zend_Service_Technorati_Result
      */
     public function getTags() {
         return $this->_tags;
-    }
-
-    /**
-     * Parses all tags from current response.
-     * 
-     * Tags are stored into the protected $_tags variable.
-     * Invalid or null tags are skipped.
-     * 
-     * @return void
-     */
-    protected function _parseTags() 
-    {
-        $result = $this->_xpath->query('//item');
-        foreach ($result as $item) {
-            $tag = $this->_parseTagFragment($item);
-            if ($tag !== null) {
-                $this->_tags[] = $tag;
-            }
-        }
     }
 
     /**

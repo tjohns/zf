@@ -106,6 +106,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
             }
         }
         
+        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
         $this->totalResultsAvailable = $this->_inboundLinks !== null ? $this->_inboundLinks : 0;
         
         /**
@@ -142,7 +143,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
      */
     public function getInboundBlogs() 
     {
-        return (int) $this->_inboundBlogs;
+        return $this->_inboundBlogs;
     }
     
     /**
@@ -152,7 +153,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
      */
     public function getInboundLinks() 
     {
-        return (int) $this->_inboundLinks;
+        return $this->_inboundLinks;
     }
 
     /**

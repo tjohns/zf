@@ -37,6 +37,7 @@ class Zend_Service_Technorati
     
     /** Query paths */
     const PATH_COSMOS           = '/cosmos';
+    const PATH_DAILYCOUNTS      = '/dailycounts';
     const PATH_TOPTAGS          = '/toptags';
     const PATH_BLOGINFO         = '/bloginfo';
     const PATH_BLOGPOSTTAGS     = '/blogposttags';
@@ -46,6 +47,8 @@ class Zend_Service_Technorati
     /** Prevent magic numbers */
     const PARAM_LIMIT_MIN_VALUE = 1;
     const PARAM_LIMIT_MAX_VALUE = 100;
+    const PARAM_DAYS_MIN_VALUE  = 1;
+    const PARAM_DAYS_MAX_VALUE  = 180;
     const PARAM_START_MIN_VALUE = 1;
 
 
@@ -198,6 +201,42 @@ class Zend_Service_Technorati
      *
      * Query options include:
      *
+     * 'days'       => (int)
+     *      optional - Used to specify the number of days in the past 
+     *      to request daily count data for. 
+     *      Can be any integer between 1 and 180, default is 180
+     * 
+     * @param   string $q       the keyword query
+     * @param   array $options  additional parameters to refine your query
+     * @return  Zend_Service_Technorati_DailyCountsResultSet
+     * @throws  Zend_Service_Technorati_Exception on failure
+     * @link    http://technorati.com/developers/api/dailycounts.html Technorati API: DailyCounts Query reference
+     */
+    public function dailyCounts($query, $options = null)
+    {
+        static $defaultOptions = array( 'days'      => 180,
+                                        'format'    => 'xml'
+                                        );
+
+        $options['q'] = $query;
+
+        $options = $this->_prepareOptions($options, $defaultOptions);
+        $this->_validateDailyCounts($options);
+        $response = $this->_makeRequest(self::PATH_DAILYCOUNTS, $options);
+        $dom = $this->_convertResponseAndCheckContent($response);
+
+        /** 
+         * @see Zend_Service_Technorati_DailyCountsResultSet
+         */
+        require_once 'Zend/Service/Technorati/DailyCountsResultSet.php';
+        return new Zend_Service_Technorati_DailyCountsResultSet($dom);
+    }
+    
+    /**
+     * TopTags provides information on top tags indexed by Technorati.
+     *
+     * Query options include:
+     *
      * 'limit'      => (int)
      *      optional - adjust the size of your result from the default value of 20
      *      to between 1 and 100 results.
@@ -229,7 +268,6 @@ class Zend_Service_Technorati
          */
         require_once 'Zend/Service/Technorati/TagsResult.php';
         return new Zend_Service_Technorati_TagsResult($dom);
-        
     }
 
     /**
@@ -259,7 +297,6 @@ class Zend_Service_Technorati
          */
         require_once 'Zend/Service/Technorati/BlogInfoResult.php';
         return new Zend_Service_Technorati_BlogInfoResult($dom);
-        
     }
     
     /**
@@ -303,7 +340,6 @@ class Zend_Service_Technorati
          */
         require_once 'Zend/Service/Technorati/TagsResult.php';
         return new Zend_Service_Technorati_TagsResult($dom);
-        
     }
     
     /**
@@ -458,12 +494,51 @@ class Zend_Service_Technorati
         
         // Validate claim (optional)
         if (isset($options['claim'])) {
-            $options['claim'] = (int) $options['highlight'];
+            $options['claim'] = (int) $options['claim'];
         }
 
         // Validate highlight (optional)
         if (isset($options['highlight'])) {
             $options['highlight'] = (int) $options['highlight'];
+        }
+    }
+    
+    /**
+     * Validates DailyCounts query options.
+     *
+     * @param   array   $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
+     */
+    protected function _validateDailyCounts(array $options)
+    {
+        static $validOptions = array('key', 'q',
+            'days', 'format');
+
+        // Validate keys in the $options array
+        $this->_compareOptions($options, $validOptions);
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+        
+        // Validate username (required)
+        if (empty($options['q'])) {
+            throw new Zend_Service_Technorati_Exception(
+                        "Empty value for 'q' option");
+        }
+
+        // Validate days (optional)
+        if (isset($options['days'])) {
+            $options['days'] = (int) $options['days'];
+            if ($options['days'] < self::PARAM_DAYS_MIN_VALUE || 
+                $options['days'] > self::PARAM_DAYS_MAX_VALUE) {
+                /**
+                 * @see Zend_Service_Technorati_Exception
+                 */
+                require_once 'Zend/Service/Technorati/Exception.php';
+                throw new Zend_Service_Technorati_Exception(
+                            "Invalid value '" . $options['days'] . "' for 'days' option");
+            }
         }
     }
     
@@ -488,7 +563,7 @@ class Zend_Service_Technorati
         // Validate username (required)
         if (empty($options['username'])) {
             throw new Zend_Service_Technorati_Exception(
-                        "GetInfo query requires 'username' option");
+                        "Empty value for 'username' option");
         }
     }
 
@@ -636,9 +711,11 @@ class Zend_Service_Technorati
      */
     protected function _validateOptionLimit(array $options) 
     {
-        if (isset($options['limit']) && 
-                ($options['limit'] < self::PARAM_LIMIT_MIN_VALUE || 
-                 $options['limit'] > self::PARAM_LIMIT_MAX_VALUE)) {
+        if (!isset($options['limit'])) return;
+        
+        $options['limit'] = (int) $options['limit'];
+        if ($options['limit'] < self::PARAM_LIMIT_MIN_VALUE || 
+            $options['limit'] > self::PARAM_LIMIT_MAX_VALUE) {
             /**
              * @see Zend_Service_Technorati_Exception
              */
@@ -659,7 +736,10 @@ class Zend_Service_Technorati
      */
     protected function _validateOptionStart(array $options) 
     {
-        if (isset($options['start']) &&  $options['start'] < self::PARAM_START_MIN_VALUE) {
+        if (!isset($options['start'])) return;
+        
+        $options['start'] = (int) $options['start'];
+        if ($options['start'] < self::PARAM_START_MIN_VALUE) {
             /**
              * @see Zend_Service_Technorati_Exception
              */

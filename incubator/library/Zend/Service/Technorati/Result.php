@@ -46,7 +46,7 @@ class Zend_Service_Technorati_Result
      * @var     DomElement
      * @access  protected
      */
-    protected $_result;
+    protected $_dom;
 
     /**
      * Object for $this->_dom
@@ -65,12 +65,11 @@ class Zend_Service_Technorati_Result
      *
      * @param   DomElement $result  the ReST fragment for this object
      */
-    public function __construct(DomElement $result)
+    public function __construct(DomElement $dom)
     {
-        $this->_xpath = new DOMXPath($result->ownerDocument);
+        $this->_xpath = new DOMXPath($dom->ownerDocument);
 
         // default fields for all search results
-        // actually empty
         $fields = array();
 
         // merge with child's object fields
@@ -79,13 +78,12 @@ class Zend_Service_Technorati_Result
         // add results to appropriate fields
         foreach($this->_fields as $phpName => $xmlName) {
             $query = "./$xmlName/text()";
-            $node = $this->_xpath->query($query, $result);
+            $node = $this->_xpath->query($query, $dom);
             if ($node->length == 1) {
-                // @todo convert to string?
-                $this->{$phpName} = $node->item(0)->data;
+                $this->{$phpName} = (string) $node->item(0)->data;
             }
         }
 
-        $this->_result = $result;
+        $this->_dom = $dom;
     }
 }

@@ -118,8 +118,8 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         // $limit = isset($options['limit']) ? $options['limit'] : 20;
 
         $this->firstResultPosition = $start;
-        $this->totalResultsAvailable = 0;   // tag name depends on query type, relayed to child classes
-        $this->totalResultsReturned = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->totalResultsAvailable = 0;  // overwrite on child class
+        $this->totalResultsReturned  = 0; // overwrite on child class
 
         // @todo Improve xpath expression
         $this->_results = $this->_xpath->query("//item");

@@ -55,24 +55,7 @@ class Zend_Service_Technorati_KeyInfoResult
      * @access  protected
      */
     protected $_maxQueries;
-
-
-    /*
-     * Technorati API response document
-     *
-     * @var     DomDocument
-     * @access  protected
-     * /
-    protected $_dom; */
-
-    /*
-     * Object for $this->_dom
-     *
-     * @var     DOMXpath
-     * @access  protected
-     * /
-    protected $_xpath; */
-
+    
 
     /**
      * Constructs a new object from DOM Element.
@@ -132,15 +115,4 @@ class Zend_Service_Technorati_KeyInfoResult
         $this->_apiKey = $apiKey;
         return $this;
     }
-
-    
-    /*
-     * Returns the response XML document.
-     *
-     * @return string   the response document converted into XML format
-     * /
-    function getXML()
-    {
-        return $this->_dom->saveXML($this->_dom);
-    } */
 }

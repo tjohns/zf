@@ -39,6 +39,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 {
     const TEST_APYKEY = 'somevalidapikey';
     const TEST_COSMOS_URL = 'http://www.simonecarletti.com/blog/';
+    const TEST_DAILYCOUNT_QUERY = 'google';
     const TEST_GETINFO_USERNAME = 'weppos';
     const TEST_BLOGINFO_URL = 'http://www.simonecarletti.com/blog/';
     const TEST_BLOGPOSTTAGS_URL = 'http://www.simonecarletti.com/blog/';
@@ -152,6 +153,48 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $this->_testOption($options, 'TestCosmosSuccess.xml', 'cosmos', array(self::TEST_COSMOS_URL));
     }
 
+    public function testDailyCounts()
+    {
+        $result = $this->_setResponseFromFile('TestDailyCountsSuccess.xml')->dailyCounts(self::TEST_DAILYCOUNT_QUERY);
+
+        $this->assertType('Zend_Service_Technorati_DailyCountsResultSet', $result);
+        $this->assertEquals(180, $result->totalResultsReturned);
+        $this->assertType('Zend_Service_Technorati_DailyCountsResult', $result->seek(0));
+        // content is validated in Zend_Service_Technorati_DailyCountsResultSet tests
+    }
+
+    public function testDailyCountsThrowsExceptionWithError()
+    {
+        try {
+            $result = $this->_setResponseFromFile('TestDailyCountsError.xml')->dailyCounts(self::TEST_DAILYCOUNT_QUERY);
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("Missing required parameter", $e->getMessage());
+        }
+    }
+
+    public function testDailyCountsThrowsExceptionWithInvalidOption()
+    {
+        $options = array(
+            array('days' => 0),
+            array('days' => '0'),
+            array('days' => 181),
+            array('days' => '181'),
+            );
+        $this->_testThrowsExceptionWithInvalidOption($options, 'TestDailyCountsSuccess.xml', 'dailyCounts', array(self::TEST_DAILYCOUNT_QUERY));
+    }
+    
+    public function testDailyCountsOption()
+    {
+        $options = array(
+            array('days' => 120),   // cast to int
+            array('days' => '120'), // cast to int
+            array('days' => 180),   // cast to int
+            array('days' => '180'), // cast to int
+            );
+        $this->_testOption($options, 'TestDailyCountsSuccess.xml', 'dailyCounts', array(self::TEST_DAILYCOUNT_QUERY));
+    }
+    
     public function testBlogInfo()
     {
         $result = $this->_setResponseFromFile('TestBlogInfoSuccess.xml')->blogInfo(self::TEST_BLOGINFO_URL);
@@ -331,6 +374,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $invalidFormatOption = array('format' => 'rss');
         // format must be XML
         $methods = array('cosmos'       => self::TEST_COSMOS_URL,
+                         'dailyCounts'  => self::TEST_DAILYCOUNT_QUERY,
                          'topTags'      => null,
                          'blogInfo'     => self::TEST_BLOGINFO_URL,
                          'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
@@ -352,6 +396,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         $invalidOption = array('foo' => 'bar');
         $methods = array('cosmos'       => self::TEST_COSMOS_URL,
+                         'dailyCounts'  => self::TEST_DAILYCOUNT_QUERY,
                          'topTags'      => null,
                          'blogInfo'     => self::TEST_BLOGINFO_URL,
                          'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,

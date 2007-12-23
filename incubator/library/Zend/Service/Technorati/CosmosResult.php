@@ -39,7 +39,7 @@ require_once 'Zend/Service/Technorati/Result.php';
 class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Result
 {
     /**
-     * Technorati weblog, if queried URL appears to be a valid one
+     * Technorati weblog object that links queried URL.
      * 
      * @var     Zend_Service_Technorati_Weblog
      * @access  protected
@@ -47,7 +47,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     protected $_weblog;
 
     /**
-     * TODO: phpdoc
+     * The nearest permalink tracked for queried URL.
      * 
      * @var     string
      * @access  protected
@@ -55,7 +55,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     protected $_nearestPermalink;
 
     /**
-     * TODO: phpdoc
+     * The excerpt of the blog/page linking queried URL.
      * 
      * @var     string
      * @access  protected
@@ -63,7 +63,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     protected $_excerpt;
 
     /**
-     * TODO: phpdoc
+     * The the datetime the link was created.
      * 
      * @var     string
      * @access  protected
@@ -71,7 +71,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     protected $_linkCreated;
 
     /**
-     * TODO: phpdoc
+     * The URL of the specific link target page
      * 
      * @var     string
      * @access  protected
@@ -84,23 +84,21 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
      *
      * @param   DomElement $dom the ReST fragment for this object
      */
-    public function __construct(DomElement $result)
+    public function __construct(DomElement $dom)
     {
-        $this->_fields = array( 'nearestPermalink'  => 'nearestpermalink',
-                                'excerpt'  => 'excerpt',
-                                'linkCreated'  => 'linkcreated',
-                                'linkUrl'  => 'linkurl',
-                                );
-        parent::__construct($result);
+        $this->_fields = array( '_nearestPermalink' => 'nearestpermalink',
+                                '_excerpt'          => 'excerpt',
+                                '_linkCreated'      => 'linkcreated',
+                                '_linkUrl'          => 'linkurl');
+        parent::__construct($dom);
 
         /**
          * @todo    Consider to use an utility method to set weblog,
          *          see Zend_Service_Yahoo_ImageResult
          */
-        $xpath = new DOMXPath($result->ownerDocument);
 
         // weblog object field
-        $result = $xpath->query('./weblog', $result);
+        $result = $this->_xpath->query('./weblog', $dom);
         if ($result->length == 1) {
             /**
              * @see Zend_Service_Technorati_Weblog
@@ -147,7 +145,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
      * Returns the datetime the link was created.
      * 
      * @return  string
-     * @todo    filter as timestamp
+     * @todo    Zend_Date
      */
     public function getLinkCreated() {
         return $this->_linkCreated;
@@ -158,7 +156,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
      * returns the URL of the specific link target page.
      * 
      * @return  string
-     * @todo    filter as Zend_Uri_Http
+     * @todo    Zend_Uri_Http
      */
     public function getLinkUrl() {
         return $this->_linkUrl;
