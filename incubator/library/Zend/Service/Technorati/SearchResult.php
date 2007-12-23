@@ -16,7 +16,7 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
+ * @version    $Id: CosmosResult.php 7243 2007-12-23 20:55:55Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -36,10 +36,10 @@ require_once 'Zend/Service/Technorati/Result.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Result
+class Zend_Service_Technorati_SearchResult extends Zend_Service_Technorati_Result
 {
     /**
-     * Technorati weblog object that links queried URL.
+     * Technorati weblog object corresponding to queried keyword.
      * 
      * @var     Zend_Service_Technorati_Weblog
      * @access  protected
@@ -47,15 +47,15 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     protected $_weblog;
 
     /**
-     * The nearest permalink tracked for queried URL.
+     * The title of the entry.
      * 
      * @var     string
      * @access  protected
      */
-    protected $_nearestPermalink;
-
+    protected $_title;
+    
     /**
-     * The excerpt of the blog/page linking queried URL.
+     * The blurb from entry with search term highlighted.
      * 
      * @var     string
      * @access  protected
@@ -63,21 +63,23 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     protected $_excerpt;
 
     /**
-     * The the datetime the link was created.
+     * The datetime the entry was created.
      * 
      * @var     string
      * @access  protected
+     * @todo    Zend_Date
      */
-    protected $_linkCreated;
+    protected $_created;
 
     /**
-     * The URL of the specific link target page
+     * The permalink of the blog entry.
      * 
      * @var     string
      * @access  protected
+     * @todo    Zend_Uri_Http
      */
-    protected $_linkUrl;
-
+    protected $_permalink;
+    
 
     /**
      * Constructs a new object object from DOM Element.
@@ -86,15 +88,15 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
      */
     public function __construct(DomElement $dom)
     {
-        $this->_fields = array( '_nearestPermalink' => 'nearestpermalink',
-                                '_excerpt'          => 'excerpt',
-                                '_linkCreated'      => 'linkcreated',
-                                '_linkUrl'          => 'linkurl');
+        $this->_fields = array( '_permalink'    => 'permalink',
+                                '_excerpt'      => 'excerpt',
+                                '_created'      => 'created',
+                                '_title'        => 'title');
         parent::__construct($dom);
 
         // weblog object field
         $this->_parseWeblog();
-        
+
         // filter fields
         /**
          * @todo Each field needs to be filtered and converted
@@ -109,45 +111,41 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     public function getWeblog() {
         return $this->_weblog;
     }
-
+    
     /**
-     * Returns the nearest permalink tracked for queried URL.
+     * Returns the title of the entry.
      * 
      * @return  string
-     * @todo    filter as Zend_Uri_Http
      */
-    public function getNearestPermalink() {
-        return $this->_nearestPermalink;
+    public function getTitle() {
+        return $this->_title;
     }
-
+    
     /**
-     * Returns the excerpt of the blog/page linking queried URL.
+     * Returns the blurb from entry with search term highlighted.
      * 
      * @return  string
      */
     public function getExcerpt() {
         return $this->_excerpt;
     }
-    
+        
     /**
-     * Returns the datetime the link was created.
+     * Returns the datetime the entry was created.
      * 
      * @return  string
-     * @todo    Zend_Date
      */
-    public function getLinkCreated() {
-        return $this->_linkCreated;
+    public function getCreated() {
+        return $this->_created;
     }
-    
+        
     /**
-     * If queried URL is a valid blog,
-     * returns the URL of the specific link target page.
+     * Returns the permalink of the blog entry.
      * 
      * @return  string
-     * @todo    Zend_Uri_Http
      */
-    public function getLinkUrl() {
-        return $this->_linkUrl;
+    public function getPermalink() {
+        return $this->_permalink;
     }
     
 }

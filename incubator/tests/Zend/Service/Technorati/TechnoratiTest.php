@@ -38,6 +38,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php'
 class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 {
     const TEST_APYKEY = 'somevalidapikey';
+    const TEST_SEARCH_QUERY = 'google';
     const TEST_COSMOS_URL = 'http://www.simonecarletti.com/blog/';
     const TEST_DAILYCOUNT_QUERY = 'google';
     const TEST_GETINFO_USERNAME = 'weppos';
@@ -104,7 +105,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testCosmosThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestCosmosError.xml')->cosmos(self::TEST_COSMOS_URL);
+            $this->_setResponseFromFile('TestCosmosError.xml')->cosmos(self::TEST_COSMOS_URL);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Invalid request: url is required", $e->getMessage());
@@ -153,6 +154,61 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $this->_testOption($options, 'TestCosmosSuccess.xml', 'cosmos', array(self::TEST_COSMOS_URL));
     }
 
+    public function testSearch()
+    {
+        $result = $this->_setResponseFromFile('TestSearchSuccess.xml')->search(self::TEST_SEARCH_QUERY);
+
+        $this->assertType('Zend_Service_Technorati_SearchResultSet', $result);
+        $this->assertEquals(2, $result->totalResultsReturned);
+        $this->assertType('Zend_Service_Technorati_SearchResult', $result->seek(0));
+        // content is validated in Zend_Service_Technorati_SearchResultSet tests
+    }
+
+    /**
+     * @see /_files/MISSING
+     *
+    public function testSearchThrowsExceptionWithError()
+    {
+        try {
+            $this->_setResponseFromFile('TestSearchError.xml')->cosmos(self::TEST_COSMOS_URL);
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("Invalid request: url is required", $e->getMessage());
+        }
+    } */
+
+    public function testSearchThrowsExceptionWithInvalidOption()
+    {
+        $options = array(
+            array('authority' => 'foo'),
+            array('limit'     => 'foo'),
+            array('limit'     => 0),
+            array('limit'     => 101),
+            array('start'     => 0),
+            // 'claim'      =>  // cast to int
+        );
+        $this->_testThrowsExceptionWithInvalidOption($options, 'TestSearchSuccess.xml', 'search', array(self::TEST_SEARCH_QUERY));
+    }
+
+    public function testSearchOption()
+    {
+        $options = array(
+            array('language'  => 'en'),    // not validated
+            array('authority' => 'n'),
+            array('authority' => 'a1'),
+            array('authority' => 'a4'),
+            array('authority' => 'a7'),
+            array('limit'     => 1),
+            array('limit'     => 50),
+            array('limit'     => 100),
+            array('start'     => 1),
+            array('start'     => 1000),
+            array('claim'     => false),   // cast to int
+            array('claim'     => 0),       // cast to int
+        );
+        $this->_testOption($options, 'TestSearchSuccess.xml', 'search', array(self::TEST_SEARCH_QUERY));
+    }
+    
     public function testDailyCounts()
     {
         $result = $this->_setResponseFromFile('TestDailyCountsSuccess.xml')->dailyCounts(self::TEST_DAILYCOUNT_QUERY);
@@ -166,7 +222,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testDailyCountsThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestDailyCountsError.xml')->dailyCounts(self::TEST_DAILYCOUNT_QUERY);
+            $this->_setResponseFromFile('TestDailyCountsError.xml')->dailyCounts(self::TEST_DAILYCOUNT_QUERY);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Missing required parameter", $e->getMessage());
@@ -206,7 +262,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testBlogInfoThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestBlogInfoError.xml')->blogInfo(self::TEST_BLOGINFO_URL);
+            $this->_setResponseFromFile('TestBlogInfoError.xml')->blogInfo(self::TEST_BLOGINFO_URL);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Invalid request: url is required", $e->getMessage());
@@ -225,7 +281,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         // emulate Technorati exception
         // when URL is not a recognized weblog
         try {
-            $result = $this->_setResponseFromFile('TestBlogInfoErrorUrlNotWeblog.xml')->blogInfo('www.simonecarletti.com');
+            $this->_setResponseFromFile('TestBlogInfoErrorUrlNotWeblog.xml')->blogInfo('www.simonecarletti.com');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Technorati weblog", $e->getMessage());
@@ -243,7 +299,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testBlogPostTagsThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestBlogPostTagsError.xml')->blogPostTags(self::TEST_BLOGPOSTTAGS_URL);
+            $this->_setResponseFromFile('TestBlogPostTagsError.xml')->blogPostTags(self::TEST_BLOGPOSTTAGS_URL);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Invalid request: url is required", $e->getMessage());
@@ -291,7 +347,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testTopTagsThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestTopTagsError.xml')->topTags();
+            $this->_setResponseFromFile('TestTopTagsError.xml')->topTags();
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Invalid key.", $e->getMessage());
@@ -332,7 +388,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testGetInfoThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestGetInfoError.xml')->getInfo(self::TEST_GETINFO_USERNAME);
+            $this->_setResponseFromFile('TestGetInfoError.xml')->getInfo(self::TEST_GETINFO_USERNAME);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Username is a required field.", $e->getMessage());
@@ -344,7 +400,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         // username is mandatory --> validated by PHP interpreter
         // username must not be empty
         try {
-            $result = $this->technorati->getInfo('');
+            $this->technorati->getInfo('');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("'username'", $e->getMessage());
@@ -362,7 +418,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testKeyInfoThrowsExceptionWithError()
     {
         try {
-            $result = $this->_setResponseFromFile('TestKeyInfoError.xml')->keyInfo();
+            $this->_setResponseFromFile('TestKeyInfoError.xml')->keyInfo();
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("Invalid key.", $e->getMessage());
@@ -374,6 +430,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $invalidFormatOption = array('format' => 'rss');
         // format must be XML
         $methods = array('cosmos'       => self::TEST_COSMOS_URL,
+                         'search'       => self::TEST_SEARCH_QUERY,
                          'dailyCounts'  => self::TEST_DAILYCOUNT_QUERY,
                          'topTags'      => null,
                          'blogInfo'     => self::TEST_BLOGINFO_URL,
@@ -384,7 +441,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         foreach ($methods as $method => $param) {
             $options = array_merge((array) $param, array($invalidFormatOption));
             try {
-                $result = call_user_func_array(array(&$technorati, $method), $options);
+                call_user_func_array(array($technorati, $method), $options);
                 $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
             } catch (Zend_Service_Technorati_Exception $e) {
                 $this->assertContains("'format'", $e->getMessage());
@@ -396,6 +453,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         $invalidOption = array('foo' => 'bar');
         $methods = array('cosmos'       => self::TEST_COSMOS_URL,
+                         'search'       => self::TEST_SEARCH_QUERY,
                          'dailyCounts'  => self::TEST_DAILYCOUNT_QUERY,
                          'topTags'      => null,
                          'blogInfo'     => self::TEST_BLOGINFO_URL,
@@ -406,7 +464,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         foreach ($methods as $method => $param) {
             $options = array_merge((array) $param, array($invalidOption));
             try {
-                $result = call_user_func_array(array(&$technorati, $method), $options);
+                call_user_func_array(array($technorati, $method), $options);
                 $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
             } catch (Zend_Service_Technorati_Exception $e) {
                 $this->assertContains("'foo'", $e->getMessage());
@@ -423,7 +481,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     private function _testThrowsExceptionWithInvalidUrl($callbackMethod)
     {
         try {
-            $result = $this->technorati->$callbackMethod('');
+            $this->technorati->$callbackMethod('');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains("'url'", $e->getMessage());
@@ -448,10 +506,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
                             array($pair);
             
             try {
-                $result = call_user_func_array(
-                            array(&$technorati, $callbackMethod),
-                            $options
-                          );
+                call_user_func_array(array($technorati, $callbackMethod), $options);
                 /**
                  * @todo    validate converted value
                  */
@@ -480,10 +535,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
                             array($pair);
             
             try {
-                $result = call_user_func_array(
-                            array(&$technorati, $callbackMethod),
-                            $options
-                          );
+                call_user_func_array(array($technorati, $callbackMethod), $options);
                 $this->fail("Expected Zend_Service_Technorati_Exception not thrown " .
                             "for option '$option' value '$value'");
             } catch (Zend_Service_Technorati_Exception $e) {

@@ -38,6 +38,7 @@ class Zend_Service_Technorati
     /** Query paths */
     const PATH_COSMOS           = '/cosmos';
     const PATH_DAILYCOUNTS      = '/dailycounts';
+    const PATH_SEARCH           = '/search';
     const PATH_TOPTAGS          = '/toptags';
     const PATH_BLOGINFO         = '/bloginfo';
     const PATH_BLOGPOSTTAGS     = '/blogposttags';
@@ -153,25 +154,69 @@ class Zend_Service_Technorati
          * @see Zend_Service_Technorati_CosmosResultSet 
          */
         require_once 'Zend/Service/Technorati/CosmosResultSet.php';
-        return new Zend_Service_Technorati_CosmosResultSet($dom);
+        return new Zend_Service_Technorati_CosmosResultSet($dom, $options);
     }
 
     /**
-     * Search Query
+     * Search lets you see what blogs contain a given search string.
      *
-     * TODO: phpdoc
+     * Query options include:
+     *
+     * 'language'   => (string)
+     *      optional - a ISO 639-1 two character language code 
+     *      to retrieve results specific to that language. 
+     *      This feature is currently beta and may not work for all languages.
+     * 'authority'  => (n|a1|a4|a7)
+     *      optional - filter results to those from blogs with at least 
+     *      the Technorati Authority specified. 
+     *      Technorati calculates a blog's authority by how many people link to it. 
+     *      Filtering by authority is a good way to refine your search results. 
+     *      There are four settings:
+     *      - n  => Any authority: All results.
+     *      - a1 => A little authority: Results from blogs with at least one link.
+     *      - a4 => Some authority: Results from blogs with a handful of links.
+     *      - a7 => A lot of authority: Results from blogs with hundreds of links.
+     * 'limit'      => (int)
+     *      optional - adjust the size of your result from the default value of 20
+     *      to between 1 and 100 results.
+     * 'start'      => (int)
+     *      optional - adjust the range of your result set.
+     *      Set this number to larger than zero and you will receive
+     *      the portion of Technorati's total result set ranging from start to start+limit.
+     *      The default start value is 1.
+     * 'claim'      => (true|false)
+     *      optional - the default setting of FALSE returns no user information
+     *      about each weblog included in the result set when available.
+     *      Set this parameter to FALSE to include Technorati member data
+     *      in the result set when a weblog in your result set
+     *      has been successfully claimed by a member of Technorati.
+     *      Internally the value is converted in (int).
      * 
-     * @todo    function :)
-     *
      * @param   string $query   the words you are searching for.
-     *                          Separate words with '+' as usual.
      * @param   array $options  additional parameters to refine your query
-     * @return  Zend_Service_Technorati_SearchResultSet Search resultset
+     * @return  Zend_Service_Technorati_SearchResultSet
      * @link    http://technorati.com/developers/api/search.html Technorati API: Search Query reference
-     * /
+     */
     public function search($query, $options = null)
     {
-    } */
+        static $defaultOptions = array( 'start'     => 1,
+                                        'limit'     => 20,
+                                        'format'    => 'xml',
+                                        'claim'     => 0);
+
+        $options['query'] = $query;
+
+        $options = $this->_prepareOptions($options, $defaultOptions);
+        $this->_validateSearch($options);
+        $response = $this->_makeRequest(self::PATH_SEARCH, $options);
+        $dom = $this->_convertResponseAndCheckContent($response);
+
+        /** 
+         * @see Zend_Service_Technorati_SearchResultSet
+         */
+        require_once 'Zend/Service/Technorati/SearchResultSet.php';
+        return new Zend_Service_Technorati_SearchResultSet($dom, $options);
+    }
 
     /**
      * Tag Query
@@ -188,13 +233,6 @@ class Zend_Service_Technorati
     public function tag($tag, $options = null)
     {
     } */
-        
-    /**
-     * TODO: missing functions
-     * 
-     * Search
-     * - http://technorati.com/developers/api/dailycounts.html
-     */
 
     /**
      * TopTags provides information on top tags indexed by Technorati.
@@ -466,7 +504,7 @@ class Zend_Service_Technorati
     protected function _validateCosmos(array $options)
     {
         static $validOptions = array('key', 'url',
-            'type', 'limit', 'start', 'current', 'format', 'claim', 'highlight');
+            'type', 'limit', 'start', 'current', 'claim', 'highlight', 'format');
 
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
@@ -478,6 +516,10 @@ class Zend_Service_Technorati
         $this->_validateOptionStart($options);
         // Validate format (optional)
         $this->_validateOptionFormat($options);
+        // Validate type (optional)
+        $this->_validateInArrayOption('type', $options, array('link', 'weblog'));
+        // Validate claim (optional)
+        $this->_validateOptionClaim($options);
         
         // Validate current (optional)
         if (isset($options['current'])) {
@@ -485,22 +527,39 @@ class Zend_Service_Technorati
             $options['current'] = $tmp ? 'yes' : 'no';
         }
 
-        // Validate type (optional)
-        if (isset($options['type'])) {
-            $this->_validateInArray('type',
-                                    $options['type'],
-                                    array('link', 'weblog'));
-        }
-        
-        // Validate claim (optional)
-        if (isset($options['claim'])) {
-            $options['claim'] = (int) $options['claim'];
-        }
-
         // Validate highlight (optional)
         if (isset($options['highlight'])) {
             $options['highlight'] = (int) $options['highlight'];
         }
+    }
+        
+    /**
+     * Validates Search query options.
+     *
+     * @param   array   $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
+     */
+    protected function _validateSearch(array $options)
+    {
+        static $validOptions = array('key', 'query',
+            'language', 'authority', 'limit', 'start', 'claim', 'format');
+
+        // Validate keys in the $options array
+        $this->_compareOptions($options, $validOptions);
+        // Validate query (required)
+        $this->_validateMandatoryOption('query', $options);
+        // Validate authority (optional)
+        $this->_validateInArrayOption('authority', $options, array('n', 'a1', 'a4', 'a7'));
+        // Validate limit (optional)
+        $this->_validateOptionLimit($options);
+        // Validate start (optional)
+        $this->_validateOptionStart($options);
+        // Validate claim (optional)
+        $this->_validateOptionClaim($options);
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
     }
     
     /**
@@ -518,14 +577,10 @@ class Zend_Service_Technorati
 
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
+        // Validate q (required)
+        $this->_validateMandatoryOption('q', $options);
         // Validate format (optional)
         $this->_validateOptionFormat($options);
-        
-        // Validate username (required)
-        if (empty($options['q'])) {
-            throw new Zend_Service_Technorati_Exception(
-                        "Empty value for 'q' option");
-        }
 
         // Validate days (optional)
         if (isset($options['days'])) {
@@ -557,14 +612,10 @@ class Zend_Service_Technorati
 
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
+        // Validate username (required)
+        $this->_validateMandatoryOption('username', $options);
         // Validate format (optional)
         $this->_validateOptionFormat($options);
-        
-        // Validate username (required)
-        if (empty($options['username'])) {
-            throw new Zend_Service_Technorati_Exception(
-                        "Empty value for 'username' option");
-        }
     }
 
     /**
@@ -640,21 +691,41 @@ class Zend_Service_Technorati
      * Checks whether an option is in a given array.
      *
      * @param   string $name    option name
-     * @param   string $value   option value
-     * @param   array $array    array in which to check for the option
+     * @param   array $options
+     * @param   array $array    array of valid options
      * @return  void
      * @throws  Zend_Service_Technorati_Exception
      * @access  protected
      */
-    protected function _validateInArray($name, $value, array $array)
+    protected function _validateInArrayOption($name, $options, array $array)
     {
-        if (!in_array($value, $array)) {
+        if (isset($options[$name]) && !in_array($options[$name], $array)) {
             /**
              * @see Zend_Service_Technorati_Exception
              */
             require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception(
-                        "Invalid value '$value' for '$name'");
+                        "Invalid value '{$options[$name]}' for '$name' option");
+        }
+    }
+    
+    /**
+     * Checks whether mandatory $name option exists and it's valid.
+     * 
+     * @param   array $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
+     */
+    protected function _validateMandatoryOption($name, $options) 
+    {
+        if (!isset($options[$name]) || !trim($options[$name])) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            require_once 'Zend/Service/Technorati/Exception.php';
+            throw new Zend_Service_Technorati_Exception(
+                        "Empty value for '$name' option");
         }
     }
     
@@ -678,6 +749,20 @@ class Zend_Service_Technorati
     }
 
     /**
+     * Checks whether 'claim' option value is valid. 
+     * 
+     * @param   array $options
+     * @return  void
+     * @access  protected
+     */
+    protected function _validateOptionClaim(array $options) 
+    {
+        if (isset($options['claim'])) {
+            $options['claim'] = (int) $options['claim'];
+        }
+    }
+    
+    /**
      * Checks whether 'format' option value is valid. 
      * Be aware that Zend_Service_Technorati supports only XML as format value.
      * 
@@ -698,7 +783,7 @@ class Zend_Service_Technorati
                         "Zend_Service_Technorati supports only 'xml'");
         }
     }
-
+    
     /**
      * Checks whether 'limit' option value is valid. 
      * Value must be an integer greater than PARAM_LIMIT_MIN_VALUE
@@ -784,9 +869,9 @@ class Zend_Service_Technorati
     {
         $xpath = new DOMXPath($dom);
 
-        if ($xpath->query("/tapi/document/result/error")->length >= 1) {
-            // @todo improve xpath expression
-            $error = $xpath->query("//error/text()")->item(0)->data;
+        $result = $xpath->query("/tapi/document/result/error");
+        if ($result->length >= 1) {
+            $error = $result->item(0)->nodeValue;
             /**
              * @see Zend_Service_Technorati_Exception
              */

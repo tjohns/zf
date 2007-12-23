@@ -68,7 +68,8 @@ class Zend_Service_Technorati_Result
     public function __construct(DomElement $dom)
     {
         $this->_xpath = new DOMXPath($dom->ownerDocument);
-
+        $this->_dom = $dom;
+        
         // default fields for all search results
         $fields = array();
 
@@ -78,12 +79,30 @@ class Zend_Service_Technorati_Result
         // add results to appropriate fields
         foreach($this->_fields as $phpName => $xmlName) {
             $query = "./$xmlName/text()";
-            $node = $this->_xpath->query($query, $dom);
+            $node = $this->_xpath->query($query, $this->_dom);
             if ($node->length == 1) {
                 $this->{$phpName} = (string) $node->item(0)->data;
             }
         }
-
-        $this->_dom = $dom;
+    }
+    
+    /**
+     * Parses weblog node and sets weblog object.
+     * 
+     * @return  void
+     */
+    protected function _parseWeblog()
+    {
+        // weblog object field
+        $result = $this->_xpath->query('./weblog', $this->_dom);
+        if ($result->length == 1) {
+            /**
+             * @see Zend_Service_Technorati_Weblog
+             */
+            require_once 'Zend/Service/Technorati/Weblog.php';
+            $this->_weblog = new Zend_Service_Technorati_Weblog($result->item(0));
+        } else {
+            $this->_weblog = null;
+        }
     }
 }
