@@ -39,6 +39,38 @@ require_once 'Zend/Service/Technorati/ResultSet.php';
 class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_ResultSet
 {
     /**
+     * Technorati weblog url, if queried URL is a valid weblog.
+     *
+     * @var     Zend_Uri_Http
+     * @access  protected
+     */
+    protected $_url;
+
+    /**
+     * Technorati weblog, if queried URL is a valid weblog.
+     *
+     * @var     Zend_Service_Technorati_Weblog
+     * @access  protected
+     */
+    protected $_weblog;
+    
+    /**
+     * Number of unique blogs linking this blog
+     *
+     * @var     integer
+     * @access  protected
+     */
+    protected $_inboundBlogs;
+
+    /**
+     * Number of incoming links to this blog
+     *
+     * @var     integer
+     * @access  protected
+     */
+    protected $_inboundLinks;
+    
+    /**
      * Parses the search response and retrieve the results for iteration.
      *
      * @param   DomDocument $dom    the ReST fragment for this object
@@ -48,18 +80,33 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     {
         parent::__construct($dom, $options);
 
-        /**
-         * @todo    Parse result tags:
-         *          url -           -> original URL
-         * x        inboundlinks    -> 
-         *          ($totalResultsAvailable)
-         *          rankingstart
-         *          inboundblogs    -> 
-         *          weblog          -> if url == a weblog
-         */
-        // @todo    Improve xpath expression
+        // @todo    Improve xpath expressions
+        
         $result = $this->_xpath->query('//result/inboundlinks/text()');
-        $this->totalResultsAvailable = $result->length == 1 ? (int) $result->item(0)->data : 0;
+        if ($result->length == 1) $this->_inboundLinks = (int) $result->item(0)->data;
+        
+        $result = $this->_xpath->query('//result/inboundblogs/text()');
+        if ($result->length == 1) $this->_inboundBlogs = (int) $result->item(0)->data;
+        
+        $result = $this->_xpath->query('//result/weblog');
+        if ($result->length == 1) {
+            $this->_weblog = new Zend_Service_Technorati_Weblog($result->item(0));
+        }
+        
+        $result = $this->_xpath->query('//result/url/text()');
+        if ($result->length == 1) {
+            try {
+                // fetched URL often doens't include schema 
+                // and this issue causes the following line to fail
+                $this->_url = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
+            } catch(Zend_Service_Technorati_Exception $e) {
+                if ($this->_weblog instanceof Zend_Service_Technorati_Weblog) {
+                    $this->_url = $this->getWeblog()->getUrl();
+                }
+            }
+        }
+        
+        $this->totalResultsAvailable = $this->_inboundLinks !== null ? $this->_inboundLinks : 0;
         
         /**
          * @todo    Dear Technorati,
