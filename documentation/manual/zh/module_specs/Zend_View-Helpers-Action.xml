@@ -1,23 +1,23 @@
 <sect3 id="zend.view.helpers.initial.action">
-    <title>¶¯×÷ÊÓÍ¼ÖúÊÖ</title>
+    <title>åŠ¨ä½œè§†å›¾åŠ©æ‰‹</title>
 
     <para>
-        <code>Action</code> ÊÓÍ¼ÖúÊÖÔÊÐíÊÓÍ¼½Å±¾ÅÉÇ²Ò»¸ö¸ø¶¨µÄ¿ØÖÆÆ÷¶¯×÷£»ÔÚÅÉÇ²Ö®ºóµÄÏìÓ¦¶ÔÏóµÄ½á¹û½«±»·µ»Ø¡£ÕâÐ©¿ÉÒÔ±»ÓÃÀ´µ±ÌØ¶¨¶¯×÷²úÉú¿ÉÖØÓÃÄÚÈÝ»ò ¡°widget-ized¡± ÄÚÈÝ¡£
+        <code>Action</code> è§†å›¾åŠ©æ‰‹å…è®¸è§†å›¾è„šæœ¬æ´¾é£ä¸€ä¸ªç»™å®šçš„æŽ§åˆ¶å™¨åŠ¨ä½œï¼›åœ¨æ´¾é£ä¹‹åŽçš„å“åº”å¯¹è±¡çš„ç»“æžœå°†è¢«è¿”å›žã€‚è¿™äº›å¯ä»¥è¢«ç”¨æ¥å½“ç‰¹å®šåŠ¨ä½œäº§ç”Ÿå¯é‡ç”¨å†…å®¹æˆ– â€œwidget-izedâ€ å†…å®¹ã€‚
     </para>
 
     <para>
-        ÔÚ <code>_forward()</code> ½á¹ûÖÐµÄ¶¯×÷»òÖØ¶¨ÏòÎÞÐ§£¬½«·µ»Ø¿Õ×Ö·û´®¡£
+        åœ¨ <code>_forward()</code> ç»“æžœä¸­çš„åŠ¨ä½œæˆ–é‡å®šå‘æ— æ•ˆï¼Œå°†è¿”å›žç©ºå­—ç¬¦ä¸²ã€‚
     </para>
 
     <para>
-        <code>Action</code>ÊÓÍ¼ÖúÊÖµÄAPIÔÚ´ó²¿·Öµ÷ÓÃ¿ØÖÆÆ÷¶¯×÷µÄMVC×é¼þÖ®ºó£º<code>action($action,$controller, $module = null, array $params = array())</code>¡£<code>$action</code> ºÍ <code>$controller</code> ÊÇ±ØÐëµÄ£»Èç¹ûÃ»ÓÐÖ¸¶¨Ä£¿é£¬È±Ê¡Ä£¿é½«±»Ê¹ÓÃ¡£
+        <code>Action</code>è§†å›¾åŠ©æ‰‹çš„APIåœ¨å¤§éƒ¨åˆ†è°ƒç”¨æŽ§åˆ¶å™¨åŠ¨ä½œçš„MVCç»„ä»¶ä¹‹åŽï¼š<code>action($action,$controller, $module = null, array $params = array())</code>ã€‚<code>$action</code> å’Œ <code>$controller</code> æ˜¯å¿…é¡»çš„ï¼›å¦‚æžœæ²¡æœ‰æŒ‡å®šæ¨¡å—ï¼Œç¼ºçœæ¨¡å—å°†è¢«ä½¿ç”¨ã€‚
     </para>
 
     <example id="zend.view.helpers.initial.action.usage">
-        <title>¶¯×÷ÊÓÍ¼ÖúÊÖµÄ»ù±¾ÓÃ·¨</title>
+        <title>åŠ¨ä½œè§†å›¾åŠ©æ‰‹çš„åŸºæœ¬ç”¨æ³•</title>
 
         <para>
-            ×÷ÎªÀý×Ó£¬<code>CommentController</code> ÎªÁË¸øµ±Ç°ÇëÇóÊä³ö×¢ÊÍÁÐ±í£¬´øÒ»¸ö¿É±»µ÷ÓÃµÄ <code>listAction()</code> ·½·¨£º
+            ä½œä¸ºä¾‹å­ï¼Œ<code>CommentController</code> ä¸ºäº†ç»™å½“å‰è¯·æ±‚è¾“å‡ºæ³¨é‡Šåˆ—è¡¨ï¼Œå¸¦ä¸€ä¸ªå¯è¢«è°ƒç”¨çš„ <code>listAction()</code> æ–¹æ³•ï¼š
         </para>
 
         <programlisting role="php"><![CDATA[

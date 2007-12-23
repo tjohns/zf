@@ -35,11 +35,11 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formButton($name, $value, $attribs):</code> 生成 &lt;input type="button" /&gt； 
+                <code>formButton($name, $value, $attribs):</code> 生成 &lt;input type="button" /&gt; 
             </para></listitem>
 
             <listitem><para>
-                <code>formCheckbox($name, $value, $attribs, $options):</code> 生成 &lt;input type="checkbox" /&gt； $options参数是一个数组，第一个值是“checked”,第二个值是"unchecked"(默认为“1”和"0")。如果$value匹配"checked"值，则这个checkbox显示为已选中。
+                <code>formCheckbox($name, $value, $attribs, $options):</code> 生成 &lt;input type="checkbox" /&gt; $options参数是一个数组，第一个值是“checked”,第二个值是"unchecked"(默认为“1”和"0")。如果$value匹配"checked"值，则这个checkbox显示为已选中。
             </para></listitem>
 
             <listitem><para>
@@ -54,7 +54,7 @@
 
             <listitem><para>
                 <code>formLabel($name, $value, $attribs):</code> 生成
-                &lt;label&gt；设置 <code>for</code> 属性给
+                &lt;label&gt;设置 <code>for</code> 属性给
                 <code>$name</code>，实际的标签字符给 <code>$value</code>。
                 
                 如果 <code>disable</code> 传递给
@@ -78,7 +78,7 @@
             </para></listitem>
 
             <listitem><para>
-                <code>formSelect($name, $value, $attribs, $options):</code> 生成&lt;select&gt;...&lt;/select&gt；其中的每个&lt;option&gt;对应于一个$option数组元素。元素的key是option的值，元素的值是option的标签。$value这个值的option默认为选中。
+                <code>formSelect($name, $value, $attribs, $options):</code> 生成&lt;select&gt;...&lt;/select&gt;其中的每个&lt;option&gt;对应于一个$option数组元素。元素的key是option的值，元素的值是option的标签。$value这个值的option默认为选中。
             </para></listitem>
 
             <listitem><para>
