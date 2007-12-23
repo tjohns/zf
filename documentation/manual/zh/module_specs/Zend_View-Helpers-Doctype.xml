@@ -1,0 +1,69 @@
+<sect3 id="zend.view.helpers.initial.doctype">
+    <title>Doctype 助手</title>
+
+    <para>
+        有效的 HTML 和 XHTML 文档应当包括在 <code>DOCTYPE</code> 声明里。除了很难记忆，这些也会影响要被解析的文档中的特定元素（例如，在 <code>&lt;script&gt;</code> 和 <code>&lt;style&gt;</code> 元素中 escaping 的CDATA）。
+    </para>
+
+    <para>
+        <code>Doctype</code> 助手允许指定下列类型之一：
+    </para>
+
+    <itemizedlist>
+        <listitem><para><code>XHTML1_STRICT</code></para></listitem>
+        <listitem><para><code>XHTML1_TRANSITIONAL</code></para></listitem>
+        <listitem><para><code>XHTML1_FRAMESET</code></para></listitem>
+        <listitem><para><code>HTML4_STRICT</code></para></listitem>
+        <listitem><para><code>HTML4_LOOSE</code></para></listitem>
+        <listitem><para><code>HTML4_FRAMESET</code></para></listitem>
+    </itemizedlist>
+
+    <para>
+        只要它符合条件，也可以指定一个定制的 doctype。
+    </para>
+
+    <para>
+        <code>Doctype</code> 助手是 <link linkend="zend.view.helpers.initial.placeholder"> 占位符助手 </link> 的一个具体的实现。
+    </para>
+
+    <example id="zend.view.helpers.initial.doctype.basicusage">
+        <title>Doctype 助手的基本用法 </title>
+
+        <para>
+            在任何时候都可以指定doctype。然而，可能最简单的用例在布局脚本的顶部同时指定和输出它：
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<?= $this->doctype('XHTML1_STRICT') ?>
+]]></programlisting>
+        
+        <para>
+            从这点展开来想，任何依赖doctype来输出的助手都是知道doctype的，并且doctype将出现在文档中。
+        </para>
+    </example>
+
+    <example id="zend.view.helpers.initial.doctype.retrieving">
+        <title>获取 Doctype</title>
+
+        <para>
+            如果需要在后面知道doctype，可以在由调用助手返回的对象中调用<code>getDoctype()</code>。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$doctype = $view->doctype()->getDoctype();
+?>]]></programlisting>
+
+        <para>
+            典型地，你需要知道doctype是否XHTML；那么，<code>isXhtml()</code>方法已经足够：
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+if ($view->doctype()->isXhtml()) {
+    // do something differently
+}
+?>]]></programlisting>
+    </example>
+</sect3>
+<!--
+vim:se ts=4 sw=4 et:
+-->
