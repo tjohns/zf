@@ -35,16 +35,18 @@ class Zend_Service_Technorati
     /** Base Technorati API URI */
     const URI_BASE = 'http://api.technorati.com';
     
+    /** Query paths */
+    const PATH_COSMOS           = '/cosmos';
+    const PATH_TOPTAGS          = '/toptags';
+    const PATH_BLOGPOSTTAGS     = '/blogposttags';
+    const PATH_GETINFO          = '/getinfo';
+    const PATH_KEYINFO          = '/keyinfo';
+        
     /** Prevent magic numbers */
     const PARAM_LIMIT_MIN_VALUE = 1;
     const PARAM_LIMIT_MAX_VALUE = 100;
     const PARAM_START_MIN_VALUE = 1;
-    
-    
-    /**
-     * TODO: extract all API paths and store them into constants
-     */
-    
+
 
     /**
      * Technorati API key
@@ -119,7 +121,7 @@ class Zend_Service_Technorati
      *      Set this parameter to FALSE to apply no special markup to the blog excerpt.
      *      Internally the value is converted in (int).
      * 
-     * @param   string $url     target URL. Prefixes http:// and www. are optional.
+     * @param   string $url     the URL you are searching for. Prefixes http:// and www. are optional.
      * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_CosmosResultSet Cosmos resultset
      * @throws  Zend_Service_Technorati_Exception on failure
@@ -140,7 +142,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateCosmos($options);
-        $response = $this->_makeRequest('/cosmos', $options);
+        $response = $this->_makeRequest(self::PATH_COSMOS, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -194,7 +196,7 @@ class Zend_Service_Technorati
      */
 
     /**
-     * TopTags query returns top tags indexed by Technorati.
+     * TopTags provides information on top tags indexed by Technorati.
      *
      * Query options include:
      *
@@ -221,7 +223,51 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateTopTags($options);
-        $response = $this->_makeRequest('/toptags', $options);
+        $response = $this->_makeRequest(self::PATH_TOPTAGS, $options);
+        $dom = $this->_convertResponseAndCheckContent($response);
+
+        /** 
+         * @see Zend_Service_Technorati_TagsResult
+         */
+        require_once 'Zend/Service/Technorati/TagsResult.php';
+        return new Zend_Service_Technorati_TagsResult($dom);
+        
+    }
+
+    /**
+     * The keyinfo query provides information on the top tags used by a specific blog.
+     *
+     * Query options include:
+     *
+     * 'limit'      => (int)
+     *      optional - adjust the size of your result from the default value of 20
+     *      to between 1 and 100 results.
+     * 'start'      => (int)
+     *      optional - adjust the range of your result set.
+     *      Set this number to larger than zero and you will receive
+     *      the portion of Technorati's total result set ranging from start to start+limit.
+     *      The default start value is 1.
+     *      Note. This property is not documented.
+     * 
+     * @param   string $url     the URL you are searching for. Prefixes http:// and www. are optional.
+     *                          The URL must be recognized by Technorati as a blog.
+     * @param   array $options  additional parameters to refine your query
+     * @return  Zend_Service_Technorati_TagsResult
+     * @throws  Zend_Service_Technorati_Exception on failure
+     * @link    http://technorati.com/developers/api/blogposttags.html Technorati API: BlogPostTags Query reference
+     */
+    public function blogPostTags($url, $options = null)
+    {
+        static $defaultOptions = array( 'start'     => 1,
+                                        'limit'     => 20,
+                                        'format'    => 'xml'
+                                        );
+
+        $options['url'] = $url;
+
+        $options = $this->_prepareOptions($options, $defaultOptions);
+        $this->_validateBlogPostTags($options);
+        $response = $this->_makeRequest(self::PATH_BLOGPOSTTAGS, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -256,7 +302,7 @@ class Zend_Service_Technorati
 
         $options = $this->_prepareOptions($options, $defaultOptions);
         $this->_validateGetInfo($options);
-        $response = $this->_makeRequest('/getinfo', $options);
+        $response = $this->_makeRequest(self::PATH_GETINFO, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -284,7 +330,7 @@ class Zend_Service_Technorati
         // you don't need to validate this request
         // because key is the only mandatory element 
         // and it's already set in #_prepareOptions
-        $response = $this->_makeRequest('/keyinfo', $options);
+        $response = $this->_makeRequest(self::PATH_KEYINFO, $options);
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
@@ -328,11 +374,15 @@ class Zend_Service_Technorati
 
     /**
      * Sets Technorati API key.
+     * 
+     * Be aware that this function doesn't validate the key.
+     * The key is validated as soon as the first API request is sent.
+     * If the key is invalid, the API request method will throw
+     * a Zend_Service_Technorati_Exception exception with Invalid Key message.
      *
      * @param   string $key     Technorati API Key
      * @return  void
      * @link    http://technorati.com/developers/apikey.html How to get your Technorati API Key
-     * @todo    Should this function validate the key?
      */
     public function setApiKey($key)
     {
@@ -356,11 +406,19 @@ class Zend_Service_Technorati
 
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
-
         // Validate url (required)
-        if (empty($options['url'])) {
-            throw new Zend_Service_Technorati_Exception(
-                        "Cosmos query requires an 'url' option");
+        $this->_validateOptionUrl($options);
+        // Validate limit (optional)
+        $this->_validateOptionLimit($options);
+        // Validate start (optional)
+        $this->_validateOptionStart($options);
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+        
+        // Validate current (optional)
+        if (isset($options['current'])) {
+            $tmp = (int) $options['current'];
+            $options['current'] = $tmp ? 'yes' : 'no';
         }
 
         // Validate type (optional)
@@ -369,20 +427,6 @@ class Zend_Service_Technorati
                                     $options['type'],
                                     array('link', 'weblog'));
         }
-
-        // Validate limit (optional)
-        $this->_validateOptionLimit($options);
-        // Validate start (optional)
-        $this->_validateOptionStart($options);
-        
-        // Validate current (optional)
-        if (isset($options['current'])) {
-            $tmp = (int) $options['current'];
-            $options['current'] = $tmp ? 'yes' : 'no';
-        }
-
-        // Validate format (optional)
-        $this->_validateOptionFormat($options);
         
         // Validate claim (optional)
         if (isset($options['claim'])) {
@@ -410,17 +454,16 @@ class Zend_Service_Technorati
 
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
-
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+        
         // Validate username (required)
         if (empty($options['username'])) {
             throw new Zend_Service_Technorati_Exception(
                         "GetInfo query requires 'username' option");
         }
-
-        // Validate format (optional)
-        $this->_validateOptionFormat($options);
     }
-    
+
     /**
      * Validates TopTags query options.
      *
@@ -436,6 +479,31 @@ class Zend_Service_Technorati
 
         // Validate keys in the $options array
         $this->_compareOptions($options, $validOptions);
+        // Validate limit (optional)
+        $this->_validateOptionLimit($options);
+        // Validate start (optional)
+        $this->_validateOptionStart($options);
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+    }
+
+    /**
+     * Validates TopTags query options.
+     *
+     * @param   array $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
+     */
+    protected function _validateBlogPostTags(array $options)
+    {
+        static $validOptions = array('key', 'url', 
+            'limit', 'start', 'format');
+
+        // Validate keys in the $options array
+        $this->_compareOptions($options, $validOptions);
+        // Validate url (required)
+        $this->_validateOptionUrl($options);
         // Validate limit (optional)
         $this->_validateOptionLimit($options);
         // Validate start (optional)
@@ -508,6 +576,30 @@ class Zend_Service_Technorati
     }
 
     /**
+     * Checks whether 'limit' option value is valid. 
+     * Value must be an integer greater than PARAM_LIMIT_MIN_VALUE
+     * and lower than PARAM_LIMIT_MAX_VALUE.
+     * 
+     * @param   array $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception if 'limit' value is invalid
+     * @access  protected
+     */
+    protected function _validateOptionLimit(array $options) 
+    {
+        if (isset($options['limit']) && 
+                ($options['limit'] < self::PARAM_LIMIT_MIN_VALUE || 
+                 $options['limit'] > self::PARAM_LIMIT_MAX_VALUE)) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            require_once 'Zend/Service/Technorati/Exception.php';
+            throw new Zend_Service_Technorati_Exception(
+                        "Invalid value '" . $options['limit'] . "' for 'limit' option");
+        }
+    }
+    
+    /**
      * Checks whether 'start' option value is valid. 
      * Value must be an integer greater than 0.
      * 
@@ -529,26 +621,20 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Checks whether 'limit' option value is valid. 
-     * Value must be an integer greater than PARAM_LIMIT_MIN_VALUE
-     * and lower than PARAM_LIMIT_MAX_VALUE.
+     * Checks whether 'url' option value exists and is valid. 
+     * 'url' must be a valid HTTP(s) URL.
      * 
      * @param   array $options
      * @return  void
-     * @throws  Zend_Service_Technorati_Exception if 'limit' value is invalid
+     * @throws  Zend_Service_Technorati_Exception if 'url' value is invalid
      * @access  protected
+     * @todo    support for Zend_Uri_Http
      */
-    protected function _validateOptionLimit(array $options) 
+    protected function _validateOptionUrl(array $options) 
     {
-        if (isset($options['limit']) && 
-                ($options['limit'] < self::PARAM_LIMIT_MIN_VALUE || 
-                 $options['limit'] > self::PARAM_LIMIT_MAX_VALUE)) {
-            /**
-             * @see Zend_Service_Technorati_Exception
-             */
-            require_once 'Zend/Service/Technorati/Exception.php';
+        if (empty($options['url'])) {
             throw new Zend_Service_Technorati_Exception(
-                        "Invalid value '" . $options['limit'] . "' for 'limit' option");
+                        "Empty value for 'url' option");
         }
     }
     

@@ -40,6 +40,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     const TEST_APYKEY = 'somevalidapikey';
     const TEST_COSMOS_URL = 'http://www.simonecarletti.com/blog/';
     const TEST_GETINFO_USERNAME = 'weppos';
+    const TEST_BLOGPOSTTAGS_URL = 'http://www.simonecarletti.com/blog/';
     
     public function setUp()
     {
@@ -112,71 +113,92 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         // url is mandatory --> validated by PHP interpreter
         // url must not be empty
-        try {
-            $result = $this->technorati->cosmos('');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Zend_Service_Technorati_Exception $e) {
-            $this->assertContains("'url'", $e->getMessage());
-        }
+        $this->_testThrowsExceptionWithInvalidUrl('blogPostTags');
     }
 
     public function testCosmosThrowsExceptionWithInvalidOption()
     {
         $options = array(
-            'type'      => 'foo',
-            'limit'     => 'foo',
-            'limit'     => 0,
-            'limit'     => 101,
-            'start'     => 0,
+            array('type'      => 'foo'),
+            array('limit'     => 'foo'),
+            array('limit'     => 0),
+            array('limit'     => 101),
+            array('start'     => 0),
             // 'current'    =>  // cast to int
             // 'claim'      =>  // cast to int
             // 'highlight'  =>  // cast to int
         );
-        
-        foreach ($options as $option => $value) {
-            try {
-                $result = $this->_setResponseFromFile('TestCosmosSuccess.xml')
-                               ->cosmos(self::TEST_COSMOS_URL, array($option => $value));
-                $this->fail("Expected Zend_Service_Technorati_Exception not thrown " .
-                            "for option '$option' value '$value'");
-            } catch (Zend_Service_Technorati_Exception $e) {
-                $this->assertContains("'$option'", $e->getMessage());
-            }
-        }
+        $this->_testThrowsExceptionWithInvalidOption($options, 'TestCosmosSuccess.xml', 'cosmos', array(self::TEST_COSMOS_URL));
     }
 
     public function testCosmosOption()
     {
         $options = array(
-            'type'      => 'link',
-            'type'      => 'weblog',
-            'limit'     => 1,
-            'limit'     => 50,
-            'limit'     => 100,
-            'start'     => 1,
-            'start'     => 1000,
-            'current'   => false,   // cast to int
-            'current'   => 0,       // cast to int
-            'claim'     => false,   // cast to int
-            'claim'     => 0,       // cast to int
-            'highlight' => false,   // cast to int
-            'highlight' => 0,       // cast to int
+            array('type'      => 'link'),
+            array('type'      => 'weblog'),
+            array('limit'     => 1),
+            array('limit'     => 50),
+            array('limit'     => 100),
+            array('start'     => 1),
+            array('start'     => 1000),
+            array('current'   => false),   // cast to int
+            array('current'   => 0),       // cast to int
+            array('claim'     => false),   // cast to int
+            array('claim'     => 0),       // cast to int
+            array('highlight' => false),   // cast to int
+            array('highlight' => 0),       // cast to int
         );
-        
-        foreach ($options as $option => $value) {
-            try {
-                $result = $this->_setResponseFromFile('TestCosmosSuccess.xml')
-                               ->cosmos(self::TEST_COSMOS_URL, array($option => $value));
-                /**
-                 * @todo    validate converted value
-                 */
-            } catch (Zend_Service_Technorati_Exception $e) {
-                $this->fail("Exception " . $e->getMessage() . " thrown" .
-                            "for option '$option' value '$value'");
-            }
+        $this->_testOption($options, 'TestCosmosSuccess.xml', 'cosmos', array(self::TEST_COSMOS_URL));
+    }
+
+    public function testBlogPostTags()
+    {
+        $result = $this->_setResponseFromFile('TestBlogPostTagsSuccess.xml')->blogPostTags(self::TEST_BLOGPOSTTAGS_URL);
+
+        $this->assertType('Zend_Service_Technorati_TagsResult', $result);
+        // content is validated in Zend_Service_Technorati_TagsResult tests
+    }
+
+    public function testBlogPostTagsThrowsExceptionWithError()
+    {
+        try {
+            $result = $this->_setResponseFromFile('TestBlogPostTagsError.xml')->blogPostTags(self::TEST_BLOGPOSTTAGS_URL);
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("Invalid request: url is required", $e->getMessage());
         }
     }
 
+    public function testBlogPostTagsThrowsExceptionWithInvalidUrl()
+    {
+        // url is mandatory --> validated by PHP interpreter
+        // url must not be empty
+        $this->_testThrowsExceptionWithInvalidUrl('blogPostTags');
+    }
+    
+    public function testBlogPostTagsThrowsExceptionWithInvalidOption()
+    {
+        $options = array(
+            array('limit'     => 'foo'),
+            array('limit'     => 0),
+            array('limit'     => 101),
+            array('start'     => 0),
+        );
+        $this->_testThrowsExceptionWithInvalidOption($options, 'TestBlogPostTagsSuccess.xml', 'blogPostTags', array(self::TEST_BLOGPOSTTAGS_URL));
+    }
+
+    public function testBlogPostTagsOption()
+    {
+        $options = array(
+            array('limit'     => 1),
+            array('limit'     => 50),
+            array('limit'     => 100),
+            array('start'     => 1),
+            array('start'     => 1000),
+        );
+        $this->_testOption($options, 'TestBlogPostTagsSuccess.xml', 'blogPostTags', array(self::TEST_BLOGPOSTTAGS_URL));
+    }
+    
     public function testTopTags()
     {
         $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')->topTags();
@@ -198,46 +220,24 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     public function testTopTagsThrowsExceptionWithInvalidOption()
     {
         $options = array(
-            'limit'     => 'foo',
-            'limit'     => 0,
-            'limit'     => 101,
-            'start'     => 0,
+            array('limit'     => 'foo'),
+            array('limit'     => 0),
+            array('limit'     => 101),
+            array('start'     => 0),
         );
-        
-        foreach ($options as $option => $value) {
-            try {
-                $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')
-                               ->topTags(array($option => $value));
-                $this->fail("Expected Zend_Service_Technorati_Exception not thrown " .
-                            "for option '$option' value '$value'");
-            } catch (Zend_Service_Technorati_Exception $e) {
-                $this->assertContains("'$option'", $e->getMessage());
-            }
-        }
+        $this->_testThrowsExceptionWithInvalidOption($options, 'TestTopTagsSuccess.xml', 'topTags');
     }
 
     public function testTopTagsOption()
     {
         $options = array(
-            'limit'     => 1,
-            'limit'     => 50,
-            'limit'     => 100,
-            'start'     => 1,
-            'start'     => 1000,
+            array('limit'     => 1),
+            array('limit'     => 50),
+            array('limit'     => 100),
+            array('start'     => 1),
+            array('start'     => 1000),
         );
-        
-        foreach ($options as $option => $value) {
-            try {
-                $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')
-                               ->topTags(array($option => $value));
-                /**
-                 * @todo    validate converted value
-                 */
-            } catch (Zend_Service_Technorati_Exception $e) {
-                $this->fail("Exception " . $e->getMessage() . " thrown" .
-                            "for option '$option' value '$value'");
-            }
-        }
+        $this->_testOption($options, 'TestTopTagsSuccess.xml', 'topTags');
     }
 
     public function testGetInfo()
@@ -292,12 +292,16 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         $invalidFormatOption = array('format' => 'rss');
         // format must be XML
-        $methods = array('cosmos' => self::TEST_COSMOS_URL,
-                         'getInfo' => self::TEST_GETINFO_USERNAME);
-
+        $methods = array('cosmos'       => self::TEST_COSMOS_URL,
+                         'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
+                         'topTags'      => null,
+                         'getInfo'      => self::TEST_GETINFO_USERNAME);
+        $technorati = $this->technorati;
+        
         foreach ($methods as $method => $param) {
+            $options = array_merge((array) $param, array($invalidFormatOption));
             try {
-                $result = $this->technorati->$method($param, $invalidFormatOption);
+                $result = call_user_func_array(array(&$technorati, $method), $options);
                 $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
             } catch (Zend_Service_Technorati_Exception $e) {
                 $this->assertContains("'format'", $e->getMessage());
@@ -307,20 +311,102 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 
     public function testAllThrowsExceptionWithUnknownOption()
     {
-        $invalidFormatOption = array('foo' => 'bar');
-        $methods = array('cosmos' => self::TEST_COSMOS_URL,
-                         'getInfo' => self::TEST_GETINFO_USERNAME);
+        $invalidOption = array('foo' => 'bar');
+        $methods = array('cosmos'       => self::TEST_COSMOS_URL,
+                         'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
+                         'topTags'      => null,
+                         'getInfo'      => self::TEST_GETINFO_USERNAME);
 
+        $technorati = $this->technorati;
         foreach ($methods as $method => $param) {
+            $options = array_merge((array) $param, array($invalidOption));
             try {
-                $result = $this->technorati->$method($param, $invalidFormatOption);
+                $result = call_user_func_array(array(&$technorati, $method), $options);
                 $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
             } catch (Zend_Service_Technorati_Exception $e) {
                 $this->assertContains("'foo'", $e->getMessage());
             }
         }
     }
-
+    
+    /**
+     * Tests whether $callbackMethod method throws an Exception
+     * with Invalid Url.
+     * 
+     * @param   string $callbackMethod
+     */
+    private function _testThrowsExceptionWithInvalidUrl($callbackMethod)
+    {
+        try {
+            $result = $this->technorati->$callbackMethod('');
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("'url'", $e->getMessage());
+        }
+    }
+    
+    /**
+     * Tests whether for each $validOptions a method call is successful.
+     * 
+     * @param   array $validOptions
+     * @param   string $xmlFile
+     * @param   string $callbackMethod
+     * @param   null|array $callbackRequiredOptions
+     */
+    private function _testOption($validOptions, $xmlFile, $callbackMethod, $callbackRequiredOptions = null)
+    {
+        $technorati = $this->_setResponseFromFile($xmlFile);
+        foreach ($validOptions as $pair) {
+            list($option, $value) = each($pair);
+            $options = is_array($callbackRequiredOptions) ? 
+                            array_merge($callbackRequiredOptions, array($pair)) :
+                            array($pair);
+            
+            try {
+                $result = call_user_func_array(
+                            array(&$technorati, $callbackMethod),
+                            $options
+                          );
+                /**
+                 * @todo    validate converted value
+                 */
+            } catch (Zend_Service_Technorati_Exception $e) {
+                $this->fail("Exception " . $e->getMessage() . " thrown " .
+                            "for option '$option' value '$value'");
+            }
+        }
+    }
+    
+    /**
+     * Tests whether for each $validOptions a method call is successful.
+     * 
+     * @param   array $invalidOptions
+     * @param   string $xmlFile
+     * @param   string $callbackMethod
+     * @param   null|array $callbackRequiredOptions
+     */
+    private function _testThrowsExceptionWithInvalidOption($invalidOptions, $xmlFile, $callbackMethod, $callbackRequiredOptions = null)
+    {
+        $technorati = $this->_setResponseFromFile($xmlFile);
+        foreach ($invalidOptions as $pair) {
+            list($option, $value) = each($pair);
+            $options = is_array($callbackRequiredOptions) ? 
+                            array_merge($callbackRequiredOptions, array($pair)) :
+                            array($pair);
+            
+            try {
+                $result = call_user_func_array(
+                            array(&$technorati, $callbackMethod),
+                            $options
+                          );
+                $this->fail("Expected Zend_Service_Technorati_Exception not thrown " .
+                            "for option '$option' value '$value'");
+            } catch (Zend_Service_Technorati_Exception $e) {
+                $this->assertContains("'$option'", $e->getMessage());
+            }
+        }
+    }
+    
     /**
      * Loads a response content from a test case file
      * and sets the content to current Test Adapter.

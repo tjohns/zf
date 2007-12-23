@@ -280,7 +280,7 @@ class Zend_Service_Technorati_Weblog
     /**
      * Returns weblog rank value.
      * 
-     * Note. This property has no official documentation.
+     * Note. This property is not documented.
      * 
      * @return  integer weblog rank value
      */
@@ -292,7 +292,7 @@ class Zend_Service_Technorati_Weblog
     /**
      * Returns weblog latitude coordinate.
      * 
-     * Note. This property has no official documentation.
+     * Note. This property is not documented.
      * 
      * @return  float   weblog latitude coordinate
      */
@@ -303,7 +303,7 @@ class Zend_Service_Technorati_Weblog
     /**
      * Returns weblog longitude coordinate.
      * 
-     * Note. This property has no official documentation.
+     * Note. This property is not documented.
      * 
      * @return  float   weblog longitude coordinate
      */
@@ -315,7 +315,7 @@ class Zend_Service_Technorati_Weblog
     /**
      * Returns whether the author who claimed this weblog has a photo.
      * 
-     * Note. This property has no official documentation.
+     * Note. This property is not documented.
      * 
      * @return  bool    TRUE if the author who claimed this weblog has a photo,
      *                  FALSE otherwise.
