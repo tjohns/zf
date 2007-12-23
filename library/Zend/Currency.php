@@ -225,8 +225,6 @@ class Zend_Currency
         if (empty($locale) && !empty($currency) && (Zend_Locale::isLocale($currency))) {
             $locale   = $currency;
             $currency = null;
-        } else if (empty($locale)) {
-            $locale = $this->_locale;
         }
 
         if ($locale instanceof Zend_Locale) {
@@ -346,12 +344,11 @@ class Zend_Currency
         $regionList = array();
         if ($currency === null) {
             $currency = $this->_options['currency'];
-            
         }
 
         if (empty($currency)) {
             require_once 'Zend/Currency/Exception.php';
-            throw new Zend_Currency("No currency defined");
+            throw new Zend_Currency_Exception("No currency defined");
         }
         foreach($data as $region => $currencyShortName) {
             if ($currencyShortName == $currency) {
@@ -373,14 +370,10 @@ class Zend_Currency
      */
     public function getCurrencyList($region = null)
     {
-        if ($region === null) {
+        if (empty($region)) {
             if (strlen($this->_locale) > 4) {
                 $region = substr($this->_locale, strpos($this->_locale, '_')+1 );
             }
-        }
-        if (empty($region)) {
-            require_once 'Zend/Currency/Exception.php';
-            throw new Zend_Currency_Exception("No region defined");
         }
         return Zend_Locale_Data::getContent('', 'currencyforregion', $region);
     }
@@ -479,7 +472,7 @@ class Zend_Currency
                     case 'position' :
                         if (($value !== self::STANDARD) and ($value !== self::RIGHT) and ($value !== self::LEFT)) {
                             require_once 'Zend/Currency/Exception.php';
-                            throw new Zend_Currency_Exception("Unknown position '" . $position . "'");
+                            throw new Zend_Currency_Exception("Unknown position '" . $value . "'");
                         }
                         if ($value === self::STANDARD) {
                             $options['position'] = $this->_updateFormat();
@@ -494,14 +487,10 @@ class Zend_Currency
                         }
                         break;
                     case 'display' :
-                        if (!is_numeric($value)) {
-                           
-                        }
                         if (is_numeric($value) and ($value !== self::NO_SYMBOL) and ($value !== self::USE_SYMBOL) and
                             ($value !== self::USE_SHORTNAME) and ($value !== self::USE_NAME)) {
                             require_once 'Zend/Currency/Exception.php';
-                            throw new Zend_Currency_Exception("Unknown display '$display'");
-                            Zend_Locale_Data::setCache($value);
+                            throw new Zend_Currency_Exception("Unknown display '$value'");
                         }
                         break;
                     case 'precision' :
