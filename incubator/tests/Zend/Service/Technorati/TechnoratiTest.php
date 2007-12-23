@@ -38,8 +38,8 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php'
 class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
 {
     const TEST_APYKEY = 'somevalidapikey';
-    const TEST_GETINFO_USERNAME = 'weppos';
     const TEST_COSMOS_URL = 'http://www.simonecarletti.com/blog/';
+    const TEST_GETINFO_USERNAME = 'weppos';
     
     public function setUp()
     {
@@ -68,7 +68,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             $object = new Zend_Service_Technorati(self::TEST_APYKEY);
             $this->assertType('Zend_Service_Technorati', $object);
         } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
+            $this->fail("Exception " . $e->getMessage() . " thrown");
         }
     }
 
@@ -104,7 +104,6 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             $result = $this->_setResponseFromFile('TestCosmosError.xml')->cosmos(self::TEST_COSMOS_URL);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
-            // exception message must match response message
             $this->assertContains("Invalid request: url is required", $e->getMessage());
         }
     }
@@ -117,7 +116,6 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             $result = $this->technorati->cosmos('');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
-            // exception message must match response message
             $this->assertContains("'url'", $e->getMessage());
         }
     }
@@ -142,7 +140,6 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
                 $this->fail("Expected Zend_Service_Technorati_Exception not thrown " .
                             "for option '$option' value '$value'");
             } catch (Zend_Service_Technorati_Exception $e) {
-                // exception message must match response message
                 $this->assertContains("'$option'", $e->getMessage());
             }
         }
@@ -174,7 +171,70 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
                  * @todo    validate converted value
                  */
             } catch (Zend_Service_Technorati_Exception $e) {
-                $this->fail("Exception" . $e->getMessage() . " thrown" .
+                $this->fail("Exception " . $e->getMessage() . " thrown" .
+                            "for option '$option' value '$value'");
+            }
+        }
+    }
+
+    public function testTopTags()
+    {
+        $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')->topTags();
+
+        $this->assertType('Zend_Service_Technorati_TagsResult', $result);
+        // content is validated in Zend_Service_Technorati_TagsResult tests
+    }
+
+    public function testTopTagsThrowsExceptionWithError()
+    {
+        try {
+            $result = $this->_setResponseFromFile('TestTopTagsError.xml')->topTags();
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("Invalid key.", $e->getMessage());
+        }
+    }
+
+    public function testTopTagsThrowsExceptionWithInvalidOption()
+    {
+        $options = array(
+            'limit'     => 'foo',
+            'limit'     => 0,
+            'limit'     => 101,
+            'start'     => 0,
+        );
+        
+        foreach ($options as $option => $value) {
+            try {
+                $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')
+                               ->topTags(array($option => $value));
+                $this->fail("Expected Zend_Service_Technorati_Exception not thrown " .
+                            "for option '$option' value '$value'");
+            } catch (Zend_Service_Technorati_Exception $e) {
+                $this->assertContains("'$option'", $e->getMessage());
+            }
+        }
+    }
+
+    public function testTopTagsOption()
+    {
+        $options = array(
+            'limit'     => 1,
+            'limit'     => 50,
+            'limit'     => 100,
+            'start'     => 1,
+            'start'     => 1000,
+        );
+        
+        foreach ($options as $option => $value) {
+            try {
+                $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')
+                               ->topTags(array($option => $value));
+                /**
+                 * @todo    validate converted value
+                 */
+            } catch (Zend_Service_Technorati_Exception $e) {
+                $this->fail("Exception " . $e->getMessage() . " thrown" .
                             "for option '$option' value '$value'");
             }
         }
@@ -194,7 +254,6 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             $result = $this->_setResponseFromFile('TestGetInfoError.xml')->getInfo(self::TEST_GETINFO_USERNAME);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
-            // exception message must match response message
             $this->assertContains("Username is a required field.", $e->getMessage());
         }
     }
@@ -207,7 +266,6 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             $result = $this->technorati->getInfo('');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
-            // exception message must match response message
             $this->assertContains("'username'", $e->getMessage());
         }
     }
@@ -226,7 +284,6 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             $result = $this->_setResponseFromFile('TestKeyInfoError.xml')->keyInfo();
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
-            // exception message must match response message
             $this->assertContains("Invalid key.", $e->getMessage());
         }
     }
