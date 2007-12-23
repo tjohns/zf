@@ -239,7 +239,7 @@ class Zend_Currency
             $country = substr($locale, strpos($locale, '_')+1 );
         } else {
             require_once 'Zend/Currency/Exception.php';
-            throw new Zend_Currency_Exception("No region found within the locle '$locale'");
+            throw new Zend_Currency_Exception("No region found within the locale '$locale'");
         }
 
         //get the available currencies for this country
