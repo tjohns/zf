@@ -115,7 +115,45 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
          *          I have to decide a few standard $vars to describe keys, queries and options.
          */
     }
-
+    
+    
+    /**
+     * Returns the weblog URL.
+     * 
+     * @return  Zend_Uri_Http
+     */
+    public function getUrl() {
+        return $this->_url;
+    }
+    
+    /**
+     * Returns the weblog.
+     * 
+     * @return  Zend_Service_Technorati_Weblog
+     */
+    public function getWeblog() {
+        return $this->_weblog;
+    }
+    
+    /**
+     * Returns number of unique blogs linking this blog.
+     * 
+     * @return  integer the number of inbound blogs
+     */
+    public function getInboundBlogs() 
+    {
+        return (int) $this->_inboundBlogs;
+    }
+    
+    /**
+     * Returns number of incoming links to this blog.
+     * 
+     * @return  integer the number of inbound links
+     */
+    public function getInboundLinks() 
+    {
+        return (int) $this->_inboundLinks;
+    }
 
     /**
      * Implements SeekableIterator::current and
