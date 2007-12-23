@@ -38,6 +38,7 @@ class Zend_Service_Technorati
     /** Query paths */
     const PATH_COSMOS           = '/cosmos';
     const PATH_TOPTAGS          = '/toptags';
+    const PATH_BLOGINFO         = '/bloginfo';
     const PATH_BLOGPOSTTAGS     = '/blogposttags';
     const PATH_GETINFO          = '/getinfo';
     const PATH_KEYINFO          = '/keyinfo';
@@ -190,9 +191,6 @@ class Zend_Service_Technorati
      * 
      * Search
      * - http://technorati.com/developers/api/dailycounts.html
-     * Blog information
-     * - http://technorati.com/developers/api/bloginfo.html
-     * - http://technorati.com/developers/api/blogposttags.html
      */
 
     /**
@@ -235,7 +233,37 @@ class Zend_Service_Technorati
     }
 
     /**
-     * The keyinfo query provides information on the top tags used by a specific blog.
+     * BlogInfo provides information on what blog, if any, is associated with a given URL.
+     *
+     * @param   string $url     the URL you are searching for. Prefixes http:// and www. are optional.
+     *                          The URL must be recognized by Technorati as a blog.
+     * @param   array $options  additional parameters to refine your query
+     * @return  Zend_Service_Technorati_BlogInfoResult
+     * @throws  Zend_Service_Technorati_Exception on failure
+     * @link    http://technorati.com/developers/api/bloginfo.html Technorati API: BlogInfo Query reference
+     */
+    public function blogInfo($url, $options = null)
+    {
+        static $defaultOptions = array( 'format'    => 'xml'
+                                        );
+
+        $options['url'] = $url;
+
+        $options = $this->_prepareOptions($options, $defaultOptions);
+        $this->_validateBlogInfo($options);
+        $response = $this->_makeRequest(self::PATH_BLOGINFO, $options);
+        $dom = $this->_convertResponseAndCheckContent($response);
+
+        /** 
+         * @see Zend_Service_Technorati_BlogInfoResult
+         */
+        require_once 'Zend/Service/Technorati/BlogInfoResult.php';
+        return new Zend_Service_Technorati_BlogInfoResult($dom);
+        
+    }
+    
+    /**
+     * BlogPostTags provides information on the top tags used by a specific blog.
      *
      * Query options include:
      *
@@ -486,7 +514,28 @@ class Zend_Service_Technorati
         // Validate format (optional)
         $this->_validateOptionFormat($options);
     }
+    
+    /**
+     * Validates BlogInfo query options.
+     *
+     * @param   array   $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
+     */
+    protected function _validateBlogInfo(array $options)
+    {
+        static $validOptions = array('key', 'url',
+            'format');
 
+        // Validate keys in the $options array
+        $this->_compareOptions($options, $validOptions);
+        // Validate url (required)
+        $this->_validateOptionUrl($options);
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+    }
+    
     /**
      * Validates TopTags query options.
      *
@@ -633,6 +682,10 @@ class Zend_Service_Technorati
     protected function _validateOptionUrl(array $options) 
     {
         if (empty($options['url'])) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            require_once 'Zend/Service/Technorati/Exception.php';
             throw new Zend_Service_Technorati_Exception(
                         "Empty value for 'url' option");
         }

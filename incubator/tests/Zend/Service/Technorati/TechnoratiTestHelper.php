@@ -36,3 +36,26 @@ if (!ini_get('date.timezone')) date_default_timezone_set(@date_default_timezone_
  * @see Zend_Service_Technorati
  */
 require_once 'Zend/Service/Technorati.php';
+
+
+/**
+ * @category   Zend
+ * @package    Zend_Service_Technorati
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Service_Technorati_TechnoratiTestHelper
+{
+    public static function getTestFilePath($file) 
+    {
+        return dirname(__FILE__) . '/_files/' . $file;
+    }
+    
+    public static function getTestFileContentAsDom($file) 
+    {
+        $dom = new DOMDocument();
+        $dom->load(self::getTestFilePath($file));
+        return $dom;
+    }
+}

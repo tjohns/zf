@@ -50,15 +50,17 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
 
         /**
          * @todo    Parse result tags:
-         *          url ->
-         * x        inboundlinks ($totalResultsAvailable)
+         *          url -           -> original URL
+         * x        inboundlinks    -> 
+         *          ($totalResultsAvailable)
          *          rankingstart
-         *          inboundblogs    -> url == a weblog
-         *          weblog          -> url == a weblog
+         *          inboundblogs    -> 
+         *          weblog          -> if url == a weblog
          */
         // @todo    Improve xpath expression
-        $this->totalResultsAvailable = (int) $this->_xpath->query("//result/inboundlinks/text()")->item(0)->data;
-
+        $result = $this->_xpath->query('//result/inboundlinks/text()');
+        $this->totalResultsAvailable = $result->length == 1 ? (int) $result->item(0)->data : 0;
+        
         /**
          * @todo    Dear Technorati,
          *          why don't you decide to clean your api with a few standard tags.

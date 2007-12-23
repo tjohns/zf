@@ -40,6 +40,7 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     const TEST_APYKEY = 'somevalidapikey';
     const TEST_COSMOS_URL = 'http://www.simonecarletti.com/blog/';
     const TEST_GETINFO_USERNAME = 'weppos';
+    const TEST_BLOGINFO_URL = 'http://www.simonecarletti.com/blog/';
     const TEST_BLOGPOSTTAGS_URL = 'http://www.simonecarletti.com/blog/';
     
     public function setUp()
@@ -151,6 +152,43 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $this->_testOption($options, 'TestCosmosSuccess.xml', 'cosmos', array(self::TEST_COSMOS_URL));
     }
 
+    public function testBlogInfo()
+    {
+        $result = $this->_setResponseFromFile('TestBlogInfoSuccess.xml')->blogInfo(self::TEST_BLOGINFO_URL);
+
+        $this->assertType('Zend_Service_Technorati_BlogInfoResult', $result);
+        // content is validated in Zend_Service_Technorati_BlogInfoResult tests
+    }
+
+    public function testBlogInfoThrowsExceptionWithError()
+    {
+        try {
+            $result = $this->_setResponseFromFile('TestBlogInfoError.xml')->blogInfo(self::TEST_BLOGINFO_URL);
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("Invalid request: url is required", $e->getMessage());
+        }
+    }
+    
+    public function testBlogInfoThrowsExceptionWithInvalidUrl()
+    {
+        // url is mandatory --> validated by PHP interpreter
+        // url must not be empty
+        $this->_testThrowsExceptionWithInvalidUrl('blogInfo');
+    }
+    
+    public function testBlogInfoThrowsExceptionWithUrlNotWeblog()
+    {
+        // emulate Technorati exception
+        // when URL is not a recognized weblog
+        try {
+            $result = $this->_setResponseFromFile('TestBlogInfoErrorUrlNotWeblog.xml')->blogInfo('www.simonecarletti.com');
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains("Technorati weblog", $e->getMessage());
+        }
+    }
+    
     public function testBlogPostTags()
     {
         $result = $this->_setResponseFromFile('TestBlogPostTagsSuccess.xml')->blogPostTags(self::TEST_BLOGPOSTTAGS_URL);
@@ -293,8 +331,9 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $invalidFormatOption = array('format' => 'rss');
         // format must be XML
         $methods = array('cosmos'       => self::TEST_COSMOS_URL,
-                         'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
                          'topTags'      => null,
+                         'blogInfo'     => self::TEST_BLOGINFO_URL,
+                         'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
                          'getInfo'      => self::TEST_GETINFO_USERNAME);
         $technorati = $this->technorati;
         
@@ -313,8 +352,9 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         $invalidOption = array('foo' => 'bar');
         $methods = array('cosmos'       => self::TEST_COSMOS_URL,
-                         'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
                          'topTags'      => null,
+                         'blogInfo'     => self::TEST_BLOGINFO_URL,
+                         'blogPostTags' => self::TEST_BLOGPOSTTAGS_URL,
                          'getInfo'      => self::TEST_GETINFO_USERNAME);
 
         $technorati = $this->technorati;
