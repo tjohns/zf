@@ -179,7 +179,14 @@ class Zend_Gdata_Photos_AlbumEntry extends Zend_Gdata_Entry
      * @var Zend_Gdata_Media_MediaGroup
      */
     protected $_mediaGroup = null;
-    
+   
+    /**
+     * georss:where element
+     *
+     * @var Zend_Gdata_Geo_Extension_GeoRssWhere
+     */
+    protected $_geoRssWhere = null;
+ 
     /**
      * Create a new instance.
      * 
