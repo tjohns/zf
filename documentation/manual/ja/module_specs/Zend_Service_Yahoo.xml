@@ -102,6 +102,48 @@ foreach ($results as $result) {
             </programlisting>
         </example>
     </sect2>
+    <sect2 id="zend.service.yahoo.inlinkdatasearch">
+        <title>Yahoo! Site Explorer Inbound Links の検索</title>
+        <para>
+            Yahoo! Site Explorer Inbound Links を検索するのは簡単です。
+            単に <code>inlinkDataSearch()</code>
+            メソッドを下の例のように使用すればいいのです。詳細は
+            <ulink url="http://developer.yahoo.com/search/siteexplorer/V1/inlinkData.html">Yahoo!
+            Site Explorer Inbound Links ドキュメント</ulink> を参照ください。
+        </para>
+        <example id="zend.service.yahoo.inlinkdatasearch.example-1">
+            <title>Yahoo! Site Explorer Inbound Links の検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->inlinkDataSearch('http://framework.zend.com/');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}]]>
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.service.yahoo.pagedatasearch">
+        <title>Yahoo! Site Explorer の PageData の検索</title>
+        <para>
+            Yahoo! Site Explorer Inbound の PageDate を検索するのは簡単です。
+            単に <code>pageDataSearch()</code>
+            メソッドを下の例のように使用すればいいのです。詳細は
+            <ulink url="http://developer.yahoo.com/search/siteexplorer/V1/pageData.html">Yahoo!
+            Site Explorer PageData ドキュメント</ulink> を参照ください。
+        </para>
+        <example id="zend.service.yahoo.pagedatasearch.example-1">
+            <title>Yahoo! Site Explorer の PageData の検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->pageDataSearch('http://framework.zend.com/');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}]]>
+            </programlisting>
+        </example>
+    </sect2>
     <sect2 id="zend.service.yahoo.classes">
         <title>Zend_Service_Yahoo クラス群</title>
         <para>
@@ -117,11 +159,15 @@ foreach ($results as $result) {
                 <listitem><para><link linkend="zend.service.yahoo.classes.imageresultset"><code>Zend_Service_Yahoo_ImageResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.localresultset"><code>Zend_Service_Yahoo_LocalResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.newsresultset"><code>Zend_Service_Yahoo_NewsResultSet</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.inlinkdataresultset"><code>Zend_Service_Yahoo_InlinkDataResultSet</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.pagedataresultset"><code>Zend_Service_Yahoo_PageDataResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.result"><code>Zend_Service_Yahoo_Result</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.webresult"><code>Zend_Service_Yahoo_WebResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.imageresult"><code>Zend_Service_Yahoo_ImageResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.localresult"><code>Zend_Service_Yahoo_LocalResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.newsresult"><code>Zend_Service_Yahoo_NewsResult</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.inlinkdataresult"><code>Zend_Service_Yahoo_InlinkDataResult</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.pagedataresult"><code>Zend_Service_Yahoo_PageDataResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.image"><code>Zend_Service_Yahoo_Image</code></link></para></listitem>
             </itemizedlist>
         </para>
@@ -265,6 +311,40 @@ foreach ($results as $result) {
             <note>
                 <para>
                     <code>Zend_Service_Yahoo_NewsResultSet</code> は
+                    <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
+                    を継承しています。
+                </para>
+            </note>
+            <para>
+                <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
+            </para>
+        </sect3>
+        <sect3 id="zend.service.yahoo.classes.inlinkdataresultset">
+            <title>Zend_Service_Yahoo_InlinkDataResultSet</title>
+            <para>
+                <code>Zend_Service_Yahoo_InlinkDataResultSet</code> は、
+                Yahoo! Inbound Link Search の結果セットを表します。
+            </para>
+            <note>
+                <para>
+                    <code>Zend_Service_Yahoo_InlinkDataResultSet</code> は
+                    <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
+                    を継承しています。
+                </para>
+            </note>
+            <para>
+                <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
+            </para>
+        </sect3>
+        <sect3 id="zend.service.yahoo.classes.pagedataresultset">
+            <title>Zend_Service_Yahoo_PageDataResultSet</title>
+            <para>
+                <code>Zend_Service_Yahoo_PageDataResultSet</code> は、
+                Yahoo! PageData Search の結果セットを表します。
+            </para>
+            <note>
+                <para>
+                    <code>Zend_Service_Yahoo_PageDataResultSet</code> は
                     <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
                     を継承しています。
                 </para>
@@ -561,6 +641,26 @@ foreach ($results as $result) {
                     <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
                 </para>
             </sect4>
+         </sect3>
+         <sect3 id="zend.service.yahoo.classes.inlinkdataresult">
+            <title>Zend_Service_Yahoo_InlinkDataResult</title>
+            <para>
+                Inbound Link Search の結果の各項目は
+                <code>Zend_Service_Yahoo_InlinkDatabResult</code> オブジェクトで返されます。
+            </para>
+            <para>
+                <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
+            </para>
+         </sect3>
+         <sect3 id="zend.service.yahoo.classes.pagedataresult">
+            <title>Zend_Service_Yahoo_PageDataResult</title>
+            <para>
+                Page Data Search の結果の各項目は
+                <code>Zend_Service_Yahoo_PageDatabResult</code> オブジェクトで返されます。
+            </para>
+            <para>
+                <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
+            </para>
          </sect3>
          <sect3 id="zend.service.yahoo.classes.image">
             <title>Zend_Service_Yahoo_Image</title>
