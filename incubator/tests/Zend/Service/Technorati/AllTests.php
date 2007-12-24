@@ -40,6 +40,7 @@ require 'BlogInfoResultTest.php';
 require 'GetInfoResultTest.php';
 require 'KeyInfoResultTest.php';
 require 'TagsResultTest.php';
+require 'TagsResultSetTest.php';
 
 
 /**
@@ -67,6 +68,7 @@ class Zend_Service_Technorati_AllTests
         $suite->addTestSuite('Zend_Service_Technorati_GetInfoResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_KeyInfoResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_TagsResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_TagsResultSetTest');
         
         return $suite;
     }

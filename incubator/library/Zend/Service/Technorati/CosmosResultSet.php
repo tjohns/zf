@@ -100,7 +100,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
                 // and this issue causes the following line to fail
                 $this->_url = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
             } catch(Zend_Service_Technorati_Exception $e) {
-                if ($this->_weblog instanceof Zend_Service_Technorati_Weblog) {
+                if ($this->getWeblog() instanceof Zend_Service_Technorati_Weblog) {
                     $this->_url = $this->getWeblog()->getUrl();
                 }
             }

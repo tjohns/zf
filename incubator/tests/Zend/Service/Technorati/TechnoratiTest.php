@@ -363,8 +363,8 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         $result = $this->_setResponseFromFile('TestBlogPostTagsSuccess.xml')->blogPostTags(self::TEST_PARAM_BLOGPOSTTAGS);
 
-        $this->assertType('Zend_Service_Technorati_TagsResult', $result);
-        // content is validated in Zend_Service_Technorati_TagsResult tests
+        $this->assertType('Zend_Service_Technorati_TagsResultSet', $result);
+        // content is validated in Zend_Service_Technorati_TagsResultSet tests
     }
 
     public function testBlogPostTagsThrowsExceptionWithError()
@@ -411,8 +411,8 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
     {
         $result = $this->_setResponseFromFile('TestTopTagsSuccess.xml')->topTags();
 
-        $this->assertType('Zend_Service_Technorati_TagsResult', $result);
-        // content is validated in Zend_Service_Technorati_TagsResult tests
+        $this->assertType('Zend_Service_Technorati_TagsResultSet', $result);
+        // content is validated in Zend_Service_Technorati_TagsResultSet tests
     }
 
     public function testTopTagsThrowsExceptionWithError()

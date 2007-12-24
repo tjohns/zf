@@ -58,4 +58,11 @@ class Zend_Service_Technorati_TechnoratiTestHelper
         $dom->load(self::getTestFilePath($file));
         return $dom;
     }
+        
+    public static function getTestFileElementsAsDom($file, $exp = '//item') 
+    {
+        $dom = self::getTestFileContentAsDom($file);
+        $xpath = new DOMXPath($dom);
+        return $xpath->query($exp);
+    }
 }

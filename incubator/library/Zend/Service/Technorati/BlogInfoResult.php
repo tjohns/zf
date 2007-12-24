@@ -105,7 +105,9 @@ class Zend_Service_Technorati_BlogInfoResult
                 // and this issue causes the following line to fail
                 $this->_url = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
             } catch(Zend_Service_Technorati_Exception $e) {
-                $this->_url = $this->getWeblog()->getUrl();
+                if ($this->getWeblog() instanceof Zend_Service_Technorati_Weblog) {
+                    $this->_url = $this->getWeblog()->getUrl();
+                }
             }
         }
         

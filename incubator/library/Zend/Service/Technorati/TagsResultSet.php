@@ -16,15 +16,15 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
+ * @version    $Id: TagsResult.php 7243 2007-12-23 20:55:55Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
 /** 
- * @see Zend_Service_Technorati_Result 
+ * @see Zend_Service_Technorati_ResultSet 
  */
-require_once 'Zend/Service/Technorati/Result.php';
+require_once 'Zend/Service/Technorati/ResultSet.php';
 
 
 /**
@@ -36,56 +36,33 @@ require_once 'Zend/Service/Technorati/Result.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TagsResult extends Zend_Service_Technorati_Result
+class Zend_Service_Technorati_TagsResultSet extends Zend_Service_Technorati_ResultSet
 {
-    /**
-     * Name of the tag.
-     * 
-     * @var     string
-     * @access  protected
-     */
-    protected $_tag;
-    
-    /**
-     * Number of posts containing this tag.
-     * 
-     * @var     int
-     * @access  protected
-     */
-    protected $_posts;
-    
-
     /**
      * Constructs a new object object from DOM Document.
      *
-     * @param   DomElement $dom the ReST fragment for this object
+     * @param   DomDocument $dom the ReST fragment for this object
      */
-    public function __construct(DomElement $dom)
+    public function __construct(DomDocument $dom, $options = array())
     {
-        $this->_fields = array( '_tag'   => 'tag',
-                                '_posts' => 'posts');
-        parent::__construct($dom);
+        parent::__construct($dom, $options);
         
-        // filter fields
-        $this->_tag   = (string) $this->_tag;
-        $this->_posts = (int) $this->_posts;
+        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->totalResultsAvailable = $this->totalResultsReturned;
     }
 
     /**
-     * Returns the tag name.
-     * 
-     * @return  string
+     * Implements SeekableIterator::current and
+     * overwrites Zend_Service_Technorati_ResultSet::current()
+     *
+     * @return Zend_Service_Technorati_TagsResult current result
      */
-    public function getTag() {
-        return $this->_tag;
-    }
-    
-    /**
-     * Returns the number of posts.
-     * 
-     * @return  int
-     */
-    public function getPosts() {
-        return $this->_posts;
+    public function current()
+    {
+        /**
+         * @see Zend_Service_Technorati_TagsResult
+         */
+        require_once 'Zend/Service/Technorati/TagsResult.php';
+        return new Zend_Service_Technorati_TagsResult($this->_results->item($this->_currentItem));
     }
 }

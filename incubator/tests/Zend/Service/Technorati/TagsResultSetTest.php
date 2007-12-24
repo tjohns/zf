@@ -17,7 +17,7 @@
  * @package    Zend_Service_Technorati
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
+ * @version    $Id: BlogInfoResultTest.php 7239 2007-12-23 17:05:46Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -28,9 +28,9 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
 
 /**
- * @see Zend_Service_Technorati_TagsResult
+ * @see Zend_Service_Technorati_TagsResultSet
  */
-require_once 'Zend/Service/Technorati/TagsResult.php';
+require_once 'Zend/Service/Technorati/TagsResultSet.php';
 
 
 /**
@@ -40,18 +40,19 @@ require_once 'Zend/Service/Technorati/TagsResult.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TagsResultTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_TagsResultSetTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->domElements = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementsAsDom('TestTagsResultSet.xml');
+        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestTagsResultSet.xml');
+        $this->object = new Zend_Service_Technorati_TagsResultSet($this->dom);
     }
 
     public function testConstruct()
     {
         try {
-            $object = new Zend_Service_Technorati_TagsResult($this->domElements->item(0));
-            $this->assertType('Zend_Service_Technorati_TagsResult', $object);
+            $object = new Zend_Service_Technorati_TagsResultSet($this->dom);
+            $this->assertType('Zend_Service_Technorati_TagsResultSet', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
         }
@@ -60,28 +61,23 @@ class Zend_Service_Technorati_TagsResultTest extends PHPUnit_Framework_TestCase
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         try {
-            $object = new Zend_Service_Technorati_TagsResult('foo');
+            $object = new Zend_Service_Technorati_TagsResultSet('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Exception $e) {
-            $this->assertContains("DOMElement", $e->getMessage());
+            $this->assertContains("DOMDocument", $e->getMessage());
         }
     }
 
-    public function testTagsResult()
+    public function testTagsResultSet()
     {
-        $object = new Zend_Service_Technorati_TagsResult($this->domElements->item(2));
-        
-        // check properties
-        $this->assertType('string', $object->getTag());
-        $this->assertEquals('Weblog', $object->getTag());
-        $this->assertType('integer', $object->getPosts());
-        $this->assertEquals(8336350, $object->getPosts());
-    }
-    
-    public function testTagsResultSpecialEncoding()
-    {
-        $object = new Zend_Service_Technorati_TagsResult($this->domElements->item(0));
-        $this->assertEquals('練習用', $object->getTag());
-        $this->assertEquals(19655999, $object->getPosts());
+        // check valid object
+        $this->assertNotNull($this->object);
+        $object = $this->object;
+
+        // check counts
+        $this->assertEquals(3, $object->totalResultsReturned);
+        $this->assertType('integer', $object->totalResultsReturned);
+        $this->assertEquals(3, $object->totalResultsAvailable);
+        $this->assertType('integer', $object->totalResultsAvailable);
     }
 }

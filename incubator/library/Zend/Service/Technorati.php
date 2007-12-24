@@ -334,10 +334,10 @@ class Zend_Service_Technorati
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
-         * @see Zend_Service_Technorati_TagsResult
+         * @see Zend_Service_Technorati_TagsResultSet
          */
-        require_once 'Zend/Service/Technorati/TagsResult.php';
-        return new Zend_Service_Technorati_TagsResult($dom);
+        require_once 'Zend/Service/Technorati/TagsResultSet.php';
+        return new Zend_Service_Technorati_TagsResultSet($dom);
     }
 
     /**
@@ -406,10 +406,10 @@ class Zend_Service_Technorati
         $dom = $this->_convertResponseAndCheckContent($response);
 
         /** 
-         * @see Zend_Service_Technorati_TagsResult
+         * @see Zend_Service_Technorati_TagsResultSet
          */
-        require_once 'Zend/Service/Technorati/TagsResult.php';
-        return new Zend_Service_Technorati_TagsResult($dom);
+        require_once 'Zend/Service/Technorati/TagsResultSet.php';
+        return new Zend_Service_Technorati_TagsResultSet($dom);
     }
     
     /**
