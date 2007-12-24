@@ -3,11 +3,11 @@
     <title>视图脚本</title>
 
     <para>
-        一旦你的Controller已经完成了变量赋值和调用render()，Zend_View就会调用视图脚本并在Zend_View的实例内部执行。因此，在你的视图脚本内，$this是指向Zend_View的实例的。
+        Controller完成变量赋值和调用render()之后，Zend_View就会调用视图脚本并在Zend_View的实例内部执行。因此，在你的视图脚本内，$this指向Zend_View的实例。
     </para>
 
     <para>
-        从控制器传递到视图的变量以对象属性的形式来调用。如果控制器有一个变量"something" ，那么视图代码中就要用$this->something来调用。这样的作法可以让你分清哪些是来自Zend_View实例的变量，哪些是视图自身的变量。
+        从控制器传递到视图的变量以Zend_View实例属性的形式来调用。例如，控制器有一个变量"something" ，那么视图代码中就要用$this->something来调用。这样的作法可以让你分清哪些是来自Zend_View实例的变量，哪些是视图自身的变量。
     </para>
 
     <para>
@@ -44,7 +44,7 @@
         <title>转义输出（Escaping Output）</title>
 
         <para>
-            View脚本的最重要的工作之一是保证输出的内容是合适的，比如需要避免跨站攻击漏洞。除非你已经使用一个函数，类方法或协助器（helper）来转义内容，你需要在输出时对变量进行转义。
+            View脚本的最重要的工作之一是保证输出的内容是合适的，比如需要避免跨站攻击漏洞(XSS)。除非你已经使用一个函数、类方法或助手类（helper）来转义内容，你需要在输出时对变量进行转义。
         </para>
 
         <para>
@@ -94,8 +94,7 @@ echo $view->render(...);
         <title>使用模板系统</title>
 
         <para>
-
-            许多开发者觉得尽管PHP本身就是一个强大的模板系统，但对模板设计师来说，使用PHP标签过于复杂。Zend_View提供了两套机制来同时满足这两种要求，一种是直接通过通过视图脚本，另一种是实现Zend_View_Interface接口。
+            尽管许多开发者觉得PHP本身就是一个强大的模板系统，但对模板设计师来说，使用PHP标签过于复杂。Zend_View提供了两套机制来同时满足这两种要求，一种是直接通过通过视图脚本，另一种是实现Zend_View_Interface接口。
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -211,11 +210,13 @@ public function assign($spec, $value = null);
 
 /**
  * Unset all assigned template variables
+ * 消除所有已赋值的变量
  */
 public function clearVars();
 
 /**
  * Render the template named $name
+ * 输出参数$name指定的某个模板
  */
 public function render($name);]]>
             </programlisting>
@@ -257,7 +258,7 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Return the template engine object
+     * Return the template engine object	 
      *
      * @return Smarty
      */
