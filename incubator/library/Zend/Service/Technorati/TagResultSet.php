@@ -16,25 +16,15 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: CosmosResultSet.php 7241 2007-12-23 17:24:32Z weppos $
+ * @version    $Id: CosmosResultSet.php 7243 2007-12-23 20:55:55Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
 /** 
- * @see Zend_Date
- */
-require_once 'Zend/Date.php';
-
-/** 
  * @see Zend_Service_Technorati_ResultSet 
  */
 require_once 'Zend/Service/Technorati/ResultSet.php';
-
-/**
- * @see Zend_Service_Technorati_Utils
- */
-require_once 'Zend/Service/Technorati/Utils.php';
 
 
 /**
@@ -46,23 +36,23 @@ require_once 'Zend/Service/Technorati/Utils.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technorati_ResultSet
+class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_ResultSet
 {
     /**
-     * Technorati search URL for given query.
+     * Number of posts that match the tag.
      *
-     * @var     Zend_Uri_Http
+     * @var     int
      * @access  protected
      */
-    protected $_searchUrl;
-
+    protected $_postsMatched;
+    
     /**
-     * Number of days for which counts provided.
-     * 
-     * @var     Zend_Service_Technorati_Weblog
+     * Number of blogs that match the tag.
+     *
+     * @var     int
      * @access  protected
      */
-    protected $_days;
+    protected $_blogsMatched;
     
     /**
      * Parses the search response and retrieve the results for iteration.
@@ -73,56 +63,57 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
     public function __construct(DomDocument $dom, $options = array())
     {
         parent::__construct($dom, $options);
-        
-        // default locale prevent Zend_Date to fail
-        // when script is executed via shell
-        // Zend_Locale::setDefault('en');
-        
-        // @todo    Improve xpath expressions
 
-        $result = $this->_xpath->query('//result/days/text()');
-        if ($result->length == 1) $this->_days = (int) $result->item(0)->data;
+        // @todo    Improve xpath expressions
         
-        $result = $this->_xpath->query('//result/searchurl/text()');
-        if ($result->length == 1) {
-            $this->_searchUrl = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
-        }
+        $result = $this->_xpath->query('//result/postsmatched/text()');
+        if ($result->length == 1) $this->_postsMatched = (int) $result->item(0)->data;
         
-        $this->totalResultsReturned = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");
-        $this->totalResultsAvailable = $this->_days !== null ? $this->_days : 0;
+        $result = $this->_xpath->query('//result/blogsmatched/text()');
+        if ($result->length == 1) $this->_blogsMatched = (int) $result->item(0)->data;
+        
+        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->totalResultsAvailable = $this->_postsMatched !== null ? $this->_postsMatched : 0;
+        
+        /**
+         * @todo    Dear Technorati,
+         *          why don't you decide to clean your api with a few standard tags.
+         *          Don't use <rankingstart> here and <start> somewhere else.
+         *          I have to decide a few standard $vars to describe keys, queries and options.
+         */
     }
     
     
     /**
-     * Returns the search URL for given query.
-     * 
-     * @return  Zend_Uri_Http
-     */
-    public function getSearchUrl() {
-        return $this->_searchUrl;
-    }
-    
-    /**
-     * Returns the number of days for which counts provided.
+     * Returns the number of posts that match the tag.
      * 
      * @return  int
      */
-    public function getDays() {
-        return $this->_days;
+    public function getPostsMatched() {
+        return $this->_postsMatched;
+    }
+    
+    /**
+     * Returns the number of blogs that match the tag.
+     * 
+     * @return  int
+     */
+    public function getBlogsMatched() {
+        return $this->_postsMatched;
     }
 
     /**
      * Implements SeekableIterator::current and
      * overwrites Zend_Service_Technorati_ResultSet::current()
      *
-     * @return Zend_Service_Technorati_DailyCountsResult current result
+     * @return Zend_Service_Technorati_TagResult current result
      */
     public function current()
     {
         /**
-         * @see Zend_Service_Technorati_DailyCountsResult
+         * @see Zend_Service_Technorati_TagResult
          */
-        require_once 'Zend/Service/Technorati/DailyCountsResult.php';
-        return new Zend_Service_Technorati_DailyCountsResult($this->_results->item($this->_currentItem));
+        require_once 'Zend/Service/Technorati/TagResult.php';
+        return new Zend_Service_Technorati_TagResult($this->_results->item($this->_currentItem));
     }
 }

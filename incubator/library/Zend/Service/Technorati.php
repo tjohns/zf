@@ -37,8 +37,9 @@ class Zend_Service_Technorati
     
     /** Query paths */
     const PATH_COSMOS           = '/cosmos';
-    const PATH_DAILYCOUNTS      = '/dailycounts';
     const PATH_SEARCH           = '/search';
+    const PATH_TAG              = '/tag';
+    const PATH_DAILYCOUNTS      = '/dailycounts';
     const PATH_TOPTAGS          = '/toptags';
     const PATH_BLOGINFO         = '/bloginfo';
     const PATH_BLOGPOSTTAGS     = '/blogposttags';
@@ -219,20 +220,51 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Tag Query
+     * Tag allows you to get a list of posts with the given tag associated with it.
+     *
+     * Query options include:
      * 
-     * TODO: phpdoc
-     *
-     * @todo    function :)
-     *
+     * 'limit'          => (int)
+     *      optional - adjust the size of your result from the default value of 20
+     *      to between 1 and 100 results.
+     * 'start'          => (int)
+     *      optional - adjust the range of your result set.
+     *      Set this number to larger than zero and you will receive
+     *      the portion of Technorati's total result set ranging from start to start+limit.
+     *      The default start value is 1.
+     * 'excerptsize'    => (int)
+     *      optional - number of word characters to include in the post excerpts. 
+     *      By default 100 word characters are returned.
+     * 'topexcerptsize' => (int)
+     *      optional - number of word characters to include in the first post excerpt. 
+     *      By default 150 word characters are returned.
+     * 
      * @param   string $tag     the tag term you are searching posts for.
      * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_TagResultSet Tag resultset
      * @link    http://technorati.com/developers/api/tag.html Technorati API: Tag Query reference
-     * /
+     */
     public function tag($tag, $options = null)
     {
-    } */
+        static $defaultOptions = array( 'start'          => 1,
+                                        'limit'          => 20,
+                                        'format'         => 'xml',
+                                        'excerptsize'    => 100,
+                                        'topexcerptsize' => 150);
+
+        $options['tag'] = $tag;
+
+        $options = $this->_prepareOptions($options, $defaultOptions);
+        $this->_validateTag($options);
+        $response = $this->_makeRequest(self::PATH_TAG, $options);
+        $dom = $this->_convertResponseAndCheckContent($response);
+
+        /** 
+         * @see Zend_Service_Technorati_TagResultSet
+         */
+        require_once 'Zend/Service/Technorati/TagResultSet.php';
+        return new Zend_Service_Technorati_TagResultSet($dom, $options);
+    }
 
     /**
      * TopTags provides information on top tags indexed by Technorati.
@@ -520,17 +552,14 @@ class Zend_Service_Technorati
         $this->_validateInArrayOption('type', $options, array('link', 'weblog'));
         // Validate claim (optional)
         $this->_validateOptionClaim($options);
-        
+        // Validate highlight (optional)
+        $this->_validateIntegerOption('highlight', $options);
         // Validate current (optional)
         if (isset($options['current'])) {
             $tmp = (int) $options['current'];
             $options['current'] = $tmp ? 'yes' : 'no';
         }
 
-        // Validate highlight (optional)
-        if (isset($options['highlight'])) {
-            $options['highlight'] = (int) $options['highlight'];
-        }
     }
         
     /**
@@ -561,6 +590,36 @@ class Zend_Service_Technorati
         // Validate format (optional)
         $this->_validateOptionFormat($options);
     }
+        
+    /**
+     * Validates Tag query options.
+     *
+     * @param   array   $options
+     * @return  void
+     * @throws  Zend_Service_Technorati_Exception
+     * @access  protected
+     */
+    protected function _validateTag(array $options)
+    {
+        static $validOptions = array('key', 'tag',
+            'limit', 'start', 'excerptsize', 'topexcerptsize', 'format');
+
+        // Validate keys in the $options array
+        $this->_compareOptions($options, $validOptions);
+        // Validate query (required)
+        $this->_validateMandatoryOption('tag', $options);
+        // Validate limit (optional)
+        $this->_validateOptionLimit($options);
+        // Validate start (optional)
+        $this->_validateOptionStart($options);
+        // Validate excerptsize (optional)
+        $this->_validateIntegerOption('excerptsize', $options);
+        // Validate excerptsize (optional)
+        $this->_validateIntegerOption('topexcerptsize', $options);
+        // Validate format (optional)
+        $this->_validateOptionFormat($options);
+    }
+
     
     /**
      * Validates DailyCounts query options.
@@ -581,7 +640,6 @@ class Zend_Service_Technorati
         $this->_validateMandatoryOption('q', $options);
         // Validate format (optional)
         $this->_validateOptionFormat($options);
-
         // Validate days (optional)
         if (isset($options['days'])) {
             $options['days'] = (int) $options['days'];
@@ -730,6 +788,20 @@ class Zend_Service_Technorati
     }
     
     /**
+     * Checks whether $name option is a valid integer and casts it.
+     * 
+     * @param   array $options
+     * @return  void
+     * @access  protected
+     */
+    protected function _validateIntegerOption($name, $options) 
+    {
+        if (isset($options[$name])) {
+            $options[$name] = (int) $options[$name];
+        }
+    }
+    
+    /**
      * Makes and HTTP GET request to given $path with $options.
      * HTTP Response is first validated, then returned.
      * 
@@ -757,9 +829,7 @@ class Zend_Service_Technorati
      */
     protected function _validateOptionClaim(array $options) 
     {
-        if (isset($options['claim'])) {
-            $options['claim'] = (int) $options['claim'];
-        }
+        $this->_validateIntegerOption('claim', $options);
     }
     
     /**
@@ -846,14 +916,7 @@ class Zend_Service_Technorati
      */
     protected function _validateOptionUrl(array $options) 
     {
-        if (empty($options['url'])) {
-            /**
-             * @see Zend_Service_Technorati_Exception
-             */
-            require_once 'Zend/Service/Technorati/Exception.php';
-            throw new Zend_Service_Technorati_Exception(
-                        "Empty value for 'url' option");
-        }
+        $this->_validateMandatoryOption('url', $options);
     }
     
     /**

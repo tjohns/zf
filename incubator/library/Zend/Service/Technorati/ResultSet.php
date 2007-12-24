@@ -112,14 +112,23 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         // to display start and limit.
         // The value is printed out in XML using many different tag names,
         // too hard to get it from XML
+        
+        // Additionally, the following tags should be always available
+        // according to API documentation but... this is not the truth!
+        // - querytime
+        // - limit
+        // - start (sometimes rankingstart)
+        
+        // query tag is only available for some requests, the same for url. 
+        // For now ignore them.
 
         // @todo Use constants
         $start = isset($options['start']) ? $options['start'] : 1;
-        // $limit = isset($options['limit']) ? $options['limit'] : 20;
+        //$limit = isset($options['limit']) ? $options['limit'] : 20;
 
         $this->firstResultPosition = $start;
         $this->totalResultsAvailable = 0;  // overwrite on child class
-        $this->totalResultsReturned  = 0; // overwrite on child class
+        $this->totalResultsReturned  = 0;  // overwrite on child class
 
         // @todo Improve xpath expression
         $this->_results = $this->_xpath->query("//item");

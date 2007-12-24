@@ -139,7 +139,7 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
      * Implements SeekableIterator::current and
      * overwrites Zend_Service_Technorati_ResultSet::current()
      *
-     * @return Zend_Service_Technorati_CosmosResult current result
+     * @return Zend_Service_Technorati_SearchResult current result
      */
     public function current()
     {
