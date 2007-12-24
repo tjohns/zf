@@ -629,6 +629,73 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
         $this->assertSame( self::SERVER, $server );
         $this->assertSame( 2.0, $version );
 
+        // Test HTML based discovery (OpenID 1.1) (single quotes)
+        $storage->delDiscoveryInfo(self::ID);
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                           "<html><head>\n" .
+                           "<link rel='openid.server' href='" . self::SERVER . "'>\n" .
+                           "<link rel='openid.delegate' href='" . self::REAL_ID . "'>\n" .
+                           "</head><body</body></html>\n");
+        $id = self::ID;
+        $this->assertTrue( $consumer->discovery($id, $server, $version) );
+        $this->assertSame( self::REAL_ID, $id );
+        $this->assertSame( self::SERVER, $server );
+        $this->assertSame( 1.1, $version );
+
+        // Test HTML based discovery (OpenID 1.1) (single quotes)
+        $storage->delDiscoveryInfo(self::ID);
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                           "<html><head>\n" .
+                           "<link href='" . self::SERVER . "' rel='openid.server'>\n" .
+                           "<link href='" . self::REAL_ID . "' rel='openid.delegate'>\n" .
+                           "</head><body</body></html>\n");
+        $id = self::ID;
+        $this->assertTrue( $consumer->discovery($id, $server, $version) );
+        $this->assertSame( self::REAL_ID, $id );
+        $this->assertSame( self::SERVER, $server );
+        $this->assertSame( 1.1, $version );
+
+        // Test HTML based discovery (OpenID 2.0) (single quotes)
+        $storage->delDiscoveryInfo(self::ID);
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                           "<html><head>\n" .
+                           "<link rel='openid2.provider' href='" . self::SERVER . "'>\n" .
+                           "<link rel='openid2.local_id' href='" . self::REAL_ID . "'>\n" .
+                           "</head><body</body></html>\n");
+        $id = self::ID;
+        $this->assertTrue( $consumer->discovery($id, $server, $version) );
+        $this->assertSame( self::REAL_ID, $id );
+        $this->assertSame( self::SERVER, $server );
+        $this->assertSame( 2.0, $version );
+
+        // Test HTML based discovery (OpenID 2.0) (single quotes)
+        $storage->delDiscoveryInfo(self::ID);
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                           "<html><head>\n" .
+                           "<link href='" . self::SERVER . "' rel='openid2.provider'>\n" .
+                           "<link href='" . self::REAL_ID . "' rel='openid2.local_id'>\n" .
+                           "</head><body</body></html>\n");
+        $id = self::ID;
+        $this->assertTrue( $consumer->discovery($id, $server, $version) );
+        $this->assertSame( self::REAL_ID, $id );
+        $this->assertSame( self::SERVER, $server );
+        $this->assertSame( 2.0, $version );
+
+        // Test HTML based discovery (OpenID 1.1 and 2.0) (single quotes)
+        $storage->delDiscoveryInfo(self::ID);
+        $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
+                           "<html><head>\n" .
+                           "<link rel='openid2.provider' href='" . self::SERVER . "'>\n" .
+                           "<link rel='openid2.local_id' href='" . self::REAL_ID . "'>\n" .
+                           "<link rel='openid.server' href='" . self::SERVER . "'>\n" .
+                           "<link rel='openid.delegate' href='" . self::REAL_ID . "'>\n" .
+                           "</head><body</body></html>\n");
+        $id = self::ID;
+        $this->assertTrue( $consumer->discovery($id, $server, $version) );
+        $this->assertSame( self::REAL_ID, $id );
+        $this->assertSame( self::SERVER, $server );
+        $this->assertSame( 2.0, $version );
+
         // Wrong HTML
         $storage->delDiscoveryInfo(self::ID);
         $test->setResponse("HTTP/1.1 200 OK\r\n\r\n" .
