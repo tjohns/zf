@@ -2,7 +2,7 @@
     <title>控制器脚本</title>
 
     <para>
-        控制器是你实例化和配置 Zend_View的地方。你可以分配变量给view，并让view显示输出。
+        控制器是你实例化和配置Zend_View的地方。你可以分配变量给view，并让view使用某个特定的模板来输出。
     </para>
 
     <sect2 id="zend.view.controllers.assign">
@@ -21,7 +21,7 @@ $view->c = "Sea";]]>
         </programlisting>
 
         <para>
-           然而这样比较麻烦，那么可以将它们放进一个数组或对象中去。assign()方法允许你通过数组或对象进行赋值。下面这个例子和上例（一次一个赋值）的结果是一样的：
+           然而这样比较麻烦，那么你可以将它们放进一个数组或对象中去。assign()方法允许你通过数组或对象进行赋值。下面这个例子和上例（一次一个赋值）的结果是一样的：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -62,7 +62,7 @@ $view->assign('c', "Sea");]]>
         <title>调用视图脚本并打印输出</title>
 
         <para>
-            完成所有变量赋值后，Controller通知Zend_View通过render()调用一段特定的视图代码。注意，这个方法将会返回处理后的视图，而不是直接输出，所以你要用print或echo来打印输出。
+            完成所有变量赋值后，Controller通知Zend_View通过render()调用一段特定的视图代码。注意，这个方法将只返回处理后的视图，而不直接输出，所以你要用print或echo来打印输出。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -80,11 +80,11 @@ echo $view->render('someView.php');]]>
         <title>视图脚本的路径</title>
 
         <para>
-        默认地， Zend_View希望你的View脚本和Controller脚本在同一目录下。例如你的Controller文件在 “/path/to/app/controllers”目录下，并调用$view->render('someView.php')，则 Zend_View会查找"/path/to/app/controllers/someVire.php"文件。
+        默认地， Zend_View希望你的View脚本和Controller脚本在同一目录下。比如说，如果你的Controller文件在 “/path/to/app/controllers”目录下，并调用$view->render('someView.php')，则Zend_View会查找"/path/to/app/controllers/someVire.php"文件。
         </para>
 
         <para>
-            显然，你的View代码很可能放在其它地方，那么需要告诉 Zend_View去哪里找，使用 setScriptPath()方法。
+            显然，你的View代码很可能放在其它地方，那么需要告诉 Zend_View去哪里找，可使用 setScriptPath()方法。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -97,7 +97,7 @@ $view->setScriptPath('/path/to/app/views');]]>
         </para>
 
         <para>
-            事实上，你可以通过addScriptPath()增加路径。Zend_View会到最近增加的路径目录下找View脚本。这个方法允许你改变默认的外观，这样你可以定制和使用自己的皮肤或主题。
+            事实上，你可以通过addScriptPath()增加路径。Zend_View会到最近增加的路径目录下找View脚本。这样你可以改变默认的外观，通过定制和使用自己的皮肤或主题。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -105,10 +105,9 @@ $view = new Zend_View();
 $view->addScriptPath('/path/to/app/views');
 $view->addScriptPath('/path/to/custom/');
 
-// now when you call $view->render('booklist.php'), Zend_View will
-// look first for "/path/to/custom/booklist.php", then for
-// "/path/to/app/views/booklist.php", and finally in the current
-// directory for "booklist.php".]]>
+// 现在如果你调用 $view->render('booklist.php'), Zend_View 将
+// 首先查找 "/path/to/custom/booklist.php", 找不到再找
+// "/path/to/app/views/booklist.php", 如果还找不到，最后查找当前目录下//的"booklist.php".]]>
         </programlisting>
 
     </sect2>
