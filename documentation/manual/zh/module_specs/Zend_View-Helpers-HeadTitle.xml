@@ -1,0 +1,45 @@
+<sect3 id="zend.view.helpers.initial.headtitle">
+    <title>HeadTitle ׺˖ </title>
+
+    <para>
+        HTML <code>&lt;title&gt;</code> Ԫ̘ԃ4͡¹©±덢¸�τµµ¡£<code>HeadTitle</code> ׺˖Պѭԃ³͐󊺳ɺʹ洢±덢¹©Ӕº󾣎�䴶¡£
+    </para>
+
+    <para>
+        <code>HeadTitle</code> ׺˖ˇ <link linkend="zend.view.helpers.initial.placeholder"> ռλ·� </link> µŒ»¸�抵Ж¡£ ̼¸²¸Š<code>toString()</code> ·½·¨4ȷ±£ʺ³Ǡ<code>&lt;title&gt;</code> Ԫ̘£¬²¢ͭ¼Ԓ»¸�ode>headTitle()</code> ·½·¨4¿팙²¢ɝӗµى闃ºͱ덢Ԫ̘µľۺϡ£Ň¸�¨µ signature ˇ <code>headTitle($title, $setType = 'APPEND')</code>£¬ȱʡµيȗ·¼ӵ½¶ҕ»£¨¾ۺϱ덢Ԫ̘£©µŖµ£¬µ«ţҲ¿ʒՖ¸¶¨ 'PREPEND' ( ·ƕ»¶¥ ) »𞦓ET' ( טд¶ҕ» )¡£
+    </para>
+
+    <example id="zend.view.helpers.initial.headtitle.basicusage">
+        <title>HeadTitle ׺˖»�·¨ </title>
+
+        <para>
+            ţ¿ʒՔۈκϊ±º󖸶¨һ¸�Ⲫǩ¡£һ°㶄ԃ·¨¿ʒՈĄ䕚Ӧԃ³͐򶅃¿һ¸�π´ʨ׃±덢¶Σºվµ㡢¿ٖǆ�¯طº·±՚µŗ˔´¡£
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php 
+// setting the controller and action name as title segments:
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$this->headTitle($request->getActionName())
+     ->headTitle($request->getControllerName());
+
+// setting the site in the title; possibly in the layout script:
+$this->headTitle('Zend Framework');
+
+// setting a separator string for segments:
+$this->headTitle()->setSeparator(' / ');
+?>
+]]></programlisting>
+
+        <para>
+            µ±׼±¸ºĔڲ¼¾ֽű¾o½㏶±덢£¬¼򵥵֠echo ׺˖£º
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<!-- renders <action> / <controller> / Zend Framework -->
+<?= $this->headTitle() ?>
+]]></programlisting>
+    </example>
+</sect3>
+<!--
+vim:se ts=4 sw=4 et:
+-->
