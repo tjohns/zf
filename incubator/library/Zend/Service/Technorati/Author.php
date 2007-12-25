@@ -91,16 +91,10 @@ class Zend_Service_Technorati_Author
      * Constructs a new object from DOM Element.
      *
      * @param   DomElement $dom the ReST fragment for this object
-     * 
-     * @todo    Check which elements are optional
      */
     public function __construct(DomElement $dom)
     {
         $xpath = new DOMXPath($dom->ownerDocument);
-
-        /**
-         * @todo   Create accessor method
-         */
 
         $result = $xpath->query('./firstname/text()', $dom);
         if ($result->length == 1) $this->setFirstName($result->item(0)->data);
@@ -116,11 +110,6 @@ class Zend_Service_Technorati_Author
         
         $result = $xpath->query('./bio/text()', $dom);
         if ($result->length == 1) $this->setBio($result->item(0)->data);
-
-
-        /* 
-         * The following elements need more attention 
-         */
 
         $result = $xpath->query('./thumbnailpicture/text()', $dom);
         if ($result->length == 1) $this->setThumbnailPicture($result->item(0)->data);

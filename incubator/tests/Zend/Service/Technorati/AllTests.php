@@ -39,6 +39,14 @@ require 'WeblogTest.php';
 require 'BlogInfoResultTest.php';
 require 'GetInfoResultTest.php';
 require 'KeyInfoResultTest.php';
+require 'CosmosResultTest.php';
+require 'CosmosResultSetTest.php';
+require 'DailyCountsResultTest.php';
+require 'DailyCountsResultSetTest.php';
+require 'SearchResultTest.php';
+require 'SearchResultSetTest.php';
+require 'TagResultTest.php';
+require 'TagResultSetTest.php';
 require 'TagsResultTest.php';
 require 'TagsResultSetTest.php';
 
@@ -67,6 +75,14 @@ class Zend_Service_Technorati_AllTests
         $suite->addTestSuite('Zend_Service_Technorati_BlogInfoResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_GetInfoResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_KeyInfoResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_CosmosResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_CosmosResultSetTest');
+        $suite->addTestSuite('Zend_Service_Technorati_DailyCountsResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_DailyCountsResultSetTest');
+        $suite->addTestSuite('Zend_Service_Technorati_SearchResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_SearchResultSetTest');
+        $suite->addTestSuite('Zend_Service_Technorati_TagResultTest');
+        $suite->addTestSuite('Zend_Service_Technorati_TagResultSetTest');
         $suite->addTestSuite('Zend_Service_Technorati_TagsResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_TagsResultSetTest');
         

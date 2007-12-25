@@ -129,8 +129,8 @@ class Zend_Service_Technorati
      * 
      * @param   string $url     the URL you are searching for. Prefixes http:// and www. are optional.
      * @param   array $options  additional parameters to refine your query
-     * @return  Zend_Service_Technorati_CosmosResultSet Cosmos resultset
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @return  Zend_Service_Technorati_CosmosResultSet
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/cosmos.html Technorati API: Cosmos Query reference
      */
     public function cosmos($url, $options = null)
@@ -196,6 +196,7 @@ class Zend_Service_Technorati
      * @param   string $query   the words you are searching for.
      * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_SearchResultSet
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/search.html Technorati API: Search Query reference
      */
     public function search($query, $options = null)
@@ -220,7 +221,7 @@ class Zend_Service_Technorati
     }
 
     /**
-     * Tag allows you to get a list of posts with the given tag associated with it.
+     * Tag lets you see what posts are associated with a given tag.
      *
      * Query options include:
      * 
@@ -241,8 +242,9 @@ class Zend_Service_Technorati
      * 
      * @param   string $tag     the tag term you are searching posts for.
      * @param   array $options  additional parameters to refine your query
-     * @return  Zend_Service_Technorati_TagResultSet Tag resultset
-     * @link    http://technorati.com/developers/api/tag.html Technorati API: Tag Query reference
+     * @return  Zend_Service_Technorati_TagResultSet
+     * @throws  Zend_Service_Technorati_Exception
+     *  @link    http://technorati.com/developers/api/tag.html Technorati API: Tag Query reference
      */
     public function tag($tag, $options = null)
     {
@@ -267,7 +269,7 @@ class Zend_Service_Technorati
     }
 
     /**
-     * TopTags provides information on top tags indexed by Technorati.
+     * TopTags provides daily counts of posts containing the queried keyword.
      *
      * Query options include:
      *
@@ -279,7 +281,7 @@ class Zend_Service_Technorati
      * @param   string $q       the keyword query
      * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_DailyCountsResultSet
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/dailycounts.html Technorati API: DailyCounts Query reference
      */
     public function dailyCounts($query, $options = null)
@@ -317,8 +319,8 @@ class Zend_Service_Technorati
      *      The default start value is 1.
      * 
      * @param   array $options  additional parameters to refine your query
-     * @return  Zend_Service_Technorati_TagsResult
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @return  Zend_Service_Technorati_TagsResultSet
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/toptags.html Technorati API: TopTags Query reference
      */
     public function topTags($options = null)
@@ -347,7 +349,7 @@ class Zend_Service_Technorati
      *                          The URL must be recognized by Technorati as a blog.
      * @param   array $options  additional parameters to refine your query
      * @return  Zend_Service_Technorati_BlogInfoResult
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/bloginfo.html Technorati API: BlogInfo Query reference
      */
     public function blogInfo($url, $options = null)
@@ -387,8 +389,8 @@ class Zend_Service_Technorati
      * @param   string $url     the URL you are searching for. Prefixes http:// and www. are optional.
      *                          The URL must be recognized by Technorati as a blog.
      * @param   array $options  additional parameters to refine your query
-     * @return  Zend_Service_Technorati_TagsResult
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @return  Zend_Service_Technorati_TagsResultSet
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/blogposttags.html Technorati API: BlogPostTags Query reference
      */
     public function blogPostTags($url, $options = null)
@@ -424,8 +426,8 @@ class Zend_Service_Technorati
      *
      * @param   string $username    the Technorati user name you are searching for
      * @param   array $options      additional parameters to refine your query
-     * @return  Zend_Service_Technorati_GetInfoResult GetInfo result
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @return  Zend_Service_Technorati_GetInfoResult
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://technorati.com/developers/api/getinfo.html Technorati API: GetInfo reference
      */
     public function getInfo($username, $options = null) 
@@ -452,8 +454,8 @@ class Zend_Service_Technorati
      * 
      * A day is defined as 00:00-23:59 Pacific time.
      * 
-     * @return  Zend_Service_Technorati_KeyInfoResult KeyInfo result
-     * @throws  Zend_Service_Technorati_Exception on failure
+     * @return  Zend_Service_Technorati_KeyInfoResult
+     * @throws  Zend_Service_Technorati_Exception
      * @link    http://developers.technorati.com/wiki/KeyInfo Technorati API: Key Info reference
      */
     public function keyInfo()

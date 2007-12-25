@@ -39,36 +39,12 @@ require_once 'Zend/Service/Technorati/ResultSet.php';
 class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_ResultSet
 {
     /**
-     * Technorati weblog url, if queried URL is a valid weblog.
+     * Number of query results.
      *
-     * @var     Zend_Uri_Http
+     * @var     int
      * @access  protected
      */
-    protected $_url;
-
-    /**
-     * Technorati weblog, if queried URL is a valid weblog.
-     *
-     * @var     Zend_Service_Technorati_Weblog
-     * @access  protected
-     */
-    protected $_weblog;
-    
-    /**
-     * Number of unique blogs linking this blog
-     *
-     * @var     integer
-     * @access  protected
-     */
-    protected $_inboundBlogs;
-
-    /**
-     * Number of incoming links to this blog
-     *
-     * @var     integer
-     * @access  protected
-     */
-    protected $_inboundLinks;
+    protected $_queryCount;
     
     /**
      * Parses the search response and retrieve the results for iteration.
@@ -86,53 +62,7 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
         if ($result->length == 1) $this->_queryCount = (int) $result->item(0)->data;
         
         $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        $this->totalResultsAvailable = $this->_queryCount !== null ? $this->_queryCount : 0;
-        
-        /**
-         * @todo    Dear Technorati,
-         *          why don't you decide to clean your api with a few standard tags.
-         *          Don't use <rankingstart> here and <start> somewhere else.
-         *          I have to decide a few standard $vars to describe keys, queries and options.
-         */
-    }
-    
-    
-    /**
-     * Returns the weblog URL.
-     * 
-     * @return  Zend_Uri_Http
-     */
-    public function getUrl() {
-        return $this->_url;
-    }
-    
-    /**
-     * Returns the weblog.
-     * 
-     * @return  Zend_Service_Technorati_Weblog
-     */
-    public function getWeblog() {
-        return $this->_weblog;
-    }
-    
-    /**
-     * Returns number of unique blogs linking this blog.
-     * 
-     * @return  integer the number of inbound blogs
-     */
-    public function getInboundBlogs() 
-    {
-        return $this->_inboundBlogs;
-    }
-    
-    /**
-     * Returns number of incoming links to this blog.
-     * 
-     * @return  integer the number of inbound links
-     */
-    public function getInboundLinks() 
-    {
-        return $this->_inboundLinks;
+        $this->totalResultsAvailable = (int) $this->_queryCount;
     }
 
     /**

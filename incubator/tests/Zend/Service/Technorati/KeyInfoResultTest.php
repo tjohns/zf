@@ -46,20 +46,14 @@ class Zend_Service_Technorati_KeyInfoResultTest extends PHPUnit_Framework_TestCa
 
     public function setUp()
     {
-        $this->xmlKeyInfoResult = dirname(__FILE__) . '/_files/TestKeyInfoResult.xml';
-        
-        $dom = new DOMDocument();
-        $dom->load($this->xmlKeyInfoResult);
-        $this->object = new Zend_Service_Technorati_KeyInfoResult($dom, self::TEST_API_KEY);
+        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestKeyInfoResult.xml');
+        $this->object = new Zend_Service_Technorati_KeyInfoResult($this->dom, self::TEST_API_KEY);
     }
 
     public function testConstruct()
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlKeyInfoResult);
-
         try {
-            $object = new Zend_Service_Technorati_KeyInfoResult($dom, self::TEST_API_KEY);
+            $object = new Zend_Service_Technorati_KeyInfoResult($this->dom, self::TEST_API_KEY);
             $this->assertType('Zend_Service_Technorati_KeyInfoResult', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
@@ -92,10 +86,7 @@ class Zend_Service_Technorati_KeyInfoResultTest extends PHPUnit_Framework_TestCa
 
     public function testApiKeyIsNullByDefault()
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlKeyInfoResult);
-
-        $object = new Zend_Service_Technorati_KeyInfoResult($dom);
+        $object = new Zend_Service_Technorati_KeyInfoResult($this->dom);
         $this->assertEquals(null, $object->getApiKey());
     }
 

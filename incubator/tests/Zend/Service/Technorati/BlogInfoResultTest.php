@@ -44,15 +44,14 @@ class Zend_Service_Technorati_BlogInfoResultTest extends PHPUnit_Framework_TestC
 {
     public function setUp()
     {
-        $dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestBlogInfoResult.xml');
-        $this->object = new Zend_Service_Technorati_BlogInfoResult($dom);
+        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestBlogInfoResult.xml');
+        $this->object = new Zend_Service_Technorati_BlogInfoResult($this->dom);
     }
 
     public function testConstruct()
     {
-        $dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestBlogInfoResult.xml');
         try {
-            $object = new Zend_Service_Technorati_BlogInfoResult($dom);
+            $object = new Zend_Service_Technorati_BlogInfoResult($this->dom);
             $this->assertType('Zend_Service_Technorati_BlogInfoResult', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");

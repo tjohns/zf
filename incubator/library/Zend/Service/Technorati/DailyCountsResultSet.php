@@ -88,8 +88,8 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
             $this->_searchUrl = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
         }
         
-        $this->totalResultsReturned = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");
-        $this->totalResultsAvailable = $this->_days !== null ? $this->_days : 0;
+        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");
+        $this->totalResultsAvailable = (int) $this->getDays();
     }
     
     

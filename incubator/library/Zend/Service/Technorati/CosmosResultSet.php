@@ -90,6 +90,10 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
         
         $result = $this->_xpath->query('//result/weblog');
         if ($result->length == 1) {
+            /**
+             * @see Zend_Service_Technorati_Weblog
+             */
+            require_once 'Zend/Service/Technorati/Weblog.php';
             $this->_weblog = new Zend_Service_Technorati_Weblog($result->item(0));
         }
         
@@ -107,14 +111,16 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
         }
         
         $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        $this->totalResultsAvailable = $this->_inboundLinks !== null ? $this->_inboundLinks : 0;
         
-        /**
-         * @todo    Dear Technorati,
-         *          why don't you decide to clean your api with a few standard tags.
-         *          Don't use <rankingstart> here and <start> somewhere else.
-         *          I have to decide a few standard $vars to describe keys, queries and options.
-         */
+        // total number of results depends on query type
+        // for now check only getInboundLinks() and getInboundBlogs() value
+        if ((int) $this->getInboundLinks() > 0) {
+            $this->totalResultsAvailable = $this->getInboundLinks();
+        } elseif ((int) $this->getInboundBlogs() > 0) {
+            $this->totalResultsAvailable = $this->getInboundBlogs();
+        } else {
+            $this->totalResultsAvailable = 0;
+        }
     }
     
     

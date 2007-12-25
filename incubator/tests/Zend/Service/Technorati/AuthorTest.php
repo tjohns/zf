@@ -44,20 +44,13 @@ class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->xmlAuthor = dirname(__FILE__) . '/_files/TestAuthor.xml';
-        
-        $dom = new DOMDocument();
-        $dom->load($this->xmlAuthor);
-        $this->object = new Zend_Service_Technorati_Author($dom->documentElement);
+        $this->domElement = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementAsDom('TestAuthor.xml', '//author');
     }
     
     public function testConstruct()
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlAuthor);
-        
         try {
-            $object = new Zend_Service_Technorati_Author($dom->documentElement);
+            $object = new Zend_Service_Technorati_Author($this->domElement);
             $this->assertType('Zend_Service_Technorati_Author', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
@@ -76,79 +69,62 @@ class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
     
     public function testAuthor()
     {
-        // check valid object
-        $this->assertNotNull($this->object);
-        $author = $this->object;
+        $author = new Zend_Service_Technorati_Author($this->domElement);
         
-        // check first name
+        $this->assertType('string', $author->getFirstName());
         $this->assertEquals('Cesare', $author->getFirstName());
-        // check last name
-        $this->assertEquals('Lamanna', $author->getLastName());
-        // check username
-        $this->assertEquals('cesarehtml', $author->getUsername());
-        // check description
-        $this->assertEquals('', $author->getDescription());
-        // check bio
-        $this->assertEquals('', $author->getBio());
         
-        // check thumbnailpicture
+        $this->assertType('string', $author->getLastName());
+        $this->assertEquals('Lamanna', $author->getLastName());
+        
+        $this->assertType('string', $author->getUsername());
+        $this->assertEquals('cesarehtml', $author->getUsername());
+
+        $this->assertType('string', $author->getDescription());
+        $this->assertEquals('This is a description.', $author->getDescription());
+        
+        $this->assertType('string', $author->getFirstName());
+        $this->assertEquals('This is a bio.', $author->getBio());
+        
+        $this->assertType('Zend_Uri_Http', $author->getThumbnailPicture());
         $this->assertEquals(Zend_Uri::factory('http://static.technorati.com/progimages/photo.jpg?uid=117217'), $author->getThumbnailPicture());
     }
     
     public function testSetGet()
     {
-        // check valid object
-        $this->assertNotNull($this->object);
-        $author = $this->object;
+        $author = new Zend_Service_Technorati_Author($this->domElement);
         
-        /**
-         * check first name
-         */
-        
+        // check first name
         $set = 'first';
         $get = $author->setFirstName($set)->getFirstName();
         $this->assertType('string', $get);
         $this->assertEquals($set, $get);
         
-        /**
-         * check last name
-         */
-        
+        // check last name
         $set = 'last';
         $get = $author->setLastName($set)->getLastName();
         $this->assertType('string', $get);
         $this->assertEquals($set, $get);
         
-        /**
-         * check username
-         */
-        
+        // check username
         $set = 'user';
         $get = $author->setUsername($set)->getUsername();
         $this->assertType('string', $get);
         $this->assertEquals($set, $get);
         
-        /**
-         * check description
-         */
-        
+        // check description
         $set = 'desc';
         $get = $author->setUsername($set)->getUsername();
         $this->assertType('string', $get);
         $this->assertEquals($set, $get);
                 
-        /**
-         * check bio
-         */
-        
+        // check bio
         $set = 'biography';
         $get = $author->setBio($set)->getBio();
         $this->assertType('string', $get);
         $this->assertEquals($set, $get);
         
-        /**
-         * check thubmnail picture
-         */
+        // check thubmnail picture
         
         $set = Zend_Uri::factory('http://www.simonecarletti.com/');
         $get = $author->setThumbnailPicture($set)->getThumbnailPicture();

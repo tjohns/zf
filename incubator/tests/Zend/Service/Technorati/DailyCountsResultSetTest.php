@@ -28,9 +28,9 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
 
 /**
- * @see Zend_Service_Technorati_TagsResultSet
+ * @see Zend_Service_Technorati_DailyCountsResultSet
  */
-require_once 'Zend/Service/Technorati/TagsResultSet.php';
+require_once 'Zend/Service/Technorati/DailyCountsResultSet.php';
 
 
 /**
@@ -40,19 +40,19 @@ require_once 'Zend/Service/Technorati/TagsResultSet.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TagsResultSetTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_DailyCountsResultSetTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestTagsResultSet.xml');
-        $this->object = new Zend_Service_Technorati_TagsResultSet($this->dom);
+        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestDailyCountsResultSet.xml');
+        $this->object = new Zend_Service_Technorati_DailyCountsResultSet($this->dom);
     }
 
     public function testConstruct()
     {
         try {
-            $object = new Zend_Service_Technorati_TagsResultSet($this->dom);
-            $this->assertType('Zend_Service_Technorati_TagsResultSet', $object);
+            $object = new Zend_Service_Technorati_DailyCountsResultSet($this->dom);
+            $this->assertType('Zend_Service_Technorati_DailyCountsResultSet', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
         }
@@ -61,14 +61,14 @@ class Zend_Service_Technorati_TagsResultSetTest extends PHPUnit_Framework_TestCa
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
         try {
-            $object = new Zend_Service_Technorati_TagsResultSet('foo');
+            $object = new Zend_Service_Technorati_DailyCountsResultSet('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Exception $e) {
             $this->assertContains("DOMDocument", $e->getMessage());
         }
     }
 
-    public function testTagsResultSet()
+    public function testDailyCountsResultSet()
     {
         // check valid object
         $this->assertNotNull($this->object);
@@ -76,8 +76,12 @@ class Zend_Service_Technorati_TagsResultSetTest extends PHPUnit_Framework_TestCa
 
         // check counts
         $this->assertType('integer', $object->totalResultsReturned);
-        $this->assertEquals(3, $object->totalResultsReturned);
+        $this->assertEquals(5, $object->totalResultsReturned);
         $this->assertType('integer', $object->totalResultsAvailable);
-        $this->assertEquals(3, $object->totalResultsAvailable);
+        $this->assertEquals(5, $object->totalResultsAvailable);
+        
+        // check properties
+        $this->assertType('Zend_Uri_Http', $object->getSearchUrl());
+        $this->assertEquals(Zend_Uri::factory('http://technorati.com/search/google'), $object->getSearchUrl());
     }
 }

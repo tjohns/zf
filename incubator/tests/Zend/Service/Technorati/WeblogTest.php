@@ -44,21 +44,13 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->xmlWeblog            = dirname(__FILE__) . '/_files/TestWeblog.xml';
-        $this->xmlWeblogTwoAuthors  = dirname(__FILE__) . '/_files/TestWeblogTwoAuthors.xml';
-        
-        $dom = new DOMDocument();
-        $dom->load($this->xmlWeblog);
-        $this->object = new Zend_Service_Technorati_Weblog($dom->documentElement);
+        $this->domElement = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementAsDom('TestWeblog.xml', '//weblog');
     }
     
     public function testConstruct()
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlWeblog);
-        
         try {
-            $object = new Zend_Service_Technorati_Weblog($dom->documentElement);
+            $object = new Zend_Service_Technorati_Weblog($this->domElement);
             $this->assertType('Zend_Service_Technorati_Weblog', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");
@@ -77,10 +69,8 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
     
     public function testWeblog()
     {
-        // check valid object
-        $this->assertNotNull($this->object);
-        $weblog = $this->object;
-        
+        $weblog = new Zend_Service_Technorati_Weblog($this->domElement);
+                
         // check name
         $this->assertEquals('Roby Web World Italia', $weblog->getName());
         // check URL
@@ -109,12 +99,8 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
 
     public function testWeblogWithTwoAuthors() 
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlWeblogTwoAuthors);
-        $weblog = new Zend_Service_Technorati_Weblog($dom->documentElement);
-        
-        // check valid object
-        $this->assertNotNull($weblog);
+        $domElement = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementAsDom('TestWeblogTwoAuthors.xml', '//weblog');
+        $weblog = new Zend_Service_Technorati_Weblog($domElement);
         
         $authors = $weblog->getAuthors();
         
@@ -135,22 +121,15 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
     
     public function testSetGet()
     {
-        // check valid object
-        $this->assertNotNull($this->object);
-        $weblog = $this->object;
+        $weblog = new Zend_Service_Technorati_Weblog($this->domElement);
         
-        /**
-         * check name
-         */
-        
+        // check name
         $set = 'foo';
         $get = $weblog->setName($set)->getName();
         $this->assertType('string', $get);
         $this->assertEquals($set, $get);
         
-        /**
-         * check URL
-         */
+        // check URL
         
         $set = Zend_Uri::factory('http://www.simonecarletti.com/');
         $get = $weblog->setUrl($set)->getUrl();
@@ -170,9 +149,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
             $this->assertContains("Invalid URI", $e->getMessage());
         }
         
-        /**
-         * check Atom URL
-         */
+        // check Atom URL
         
         $set = Zend_Uri::factory('http://www.simonecarletti.com/');
         $get = $weblog->setAtomUrl($set)->getAtomUrl();
@@ -192,9 +169,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
             $this->assertContains("Invalid URI", $e->getMessage());
         }
         
-        /**
-         * check RSS Url
-         */
+        // check RSS Url
         
         $set = Zend_Uri::factory('http://www.simonecarletti.com/');
         $get = $weblog->setRssUrl($set)->getRssUrl();
@@ -214,9 +189,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
             $this->assertContains("Invalid URI", $e->getMessage());
         }
         
-        /**
-         * check inbound blogs
-         */
+        // check inbound blogs
         
         $set = rand();
         $get = $weblog->setInboundBlogs($set)->getInboundBlogs();
@@ -228,9 +201,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         $this->assertType('integer', $get);
         $this->assertEquals((int) $set, $get);
         
-        /**
-         * check inbound links
-         */
+        // check inbound links
         
         $set = rand();
         $get = $weblog->setInboundLinks($set)->getInboundLinks();
@@ -242,9 +213,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         $this->assertType('integer', $get);
         $this->assertEquals((int) $set, $get);
         
-        /**
-         * last update
-         */
+        // last update
         
         $set = '2007-11-11 08:47:26 GMT';
         $get = $weblog->setLastUpdate($set)->getLastUpdate();
@@ -265,9 +234,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
             $this->assertContains("not a valid datetime", $e->getMessage());
         }
         
-        /**
-         * check rank
-         */
+        // check rank
         
         $set = rand();
         $get = $weblog->setRank($set)->getRank();

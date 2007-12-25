@@ -48,7 +48,7 @@ class Zend_Service_Technorati_TagsResultSet extends Zend_Service_Technorati_Resu
         parent::__construct($dom, $options);
         
         $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        $this->totalResultsAvailable = $this->totalResultsReturned;
+        $this->totalResultsAvailable = (int) $this->totalResultsReturned;
     }
 
     /**

@@ -44,20 +44,14 @@ class Zend_Service_Technorati_GetInfoResultTest extends PHPUnit_Framework_TestCa
 {
     public function setUp()
     {
-        $this->xmlGetInfoResult = dirname(__FILE__) . '/_files/TestGetInfoResult.xml';
-        
-        $dom = new DOMDocument();
-        $dom->load($this->xmlGetInfoResult);
-        $this->object = new Zend_Service_Technorati_GetInfoResult($dom);
+        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestGetInfoResult.xml');
+        $this->object = new Zend_Service_Technorati_GetInfoResult($this->dom);
     }
 
     public function testConstruct()
     {
-        $dom = new DOMDocument();
-        $dom->load($this->xmlGetInfoResult);
-
         try {
-            $object = new Zend_Service_Technorati_GetInfoResult($dom);
+            $object = new Zend_Service_Technorati_GetInfoResult($this->dom);
             $this->assertType('Zend_Service_Technorati_GetInfoResult', $object);
         } catch (Exception $e) {
             $this->fail("Exception" . $e->getMessage() . " thrown");

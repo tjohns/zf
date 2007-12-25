@@ -150,10 +150,6 @@ class Zend_Service_Technorati_Weblog
     {
         $xpath = new DOMXPath($dom->ownerDocument);
 
-        /**
-         * @todo   Create accessor method
-         */
-
         $result = $xpath->query('./name/text()', $dom);
         if ($result->length == 1) $this->setName($result->item(0)->data);
 
@@ -169,7 +165,7 @@ class Zend_Service_Technorati_Weblog
         $result = $xpath->query('./lastupdate/text()', $dom);
         if ($result->length == 1) $this->setLastUpdate($result->item(0)->data);
 
-        /* The following elements needs more attention */
+        /* The following elements need more attention */
 
         $result = $xpath->query('./rssurl/text()', $dom);
         if ($result->length == 1) $this->setRssUrl($result->item(0)->data);
@@ -196,7 +192,7 @@ class Zend_Service_Technorati_Weblog
 
         $result = $xpath->query('./lat/text()', $dom);
         if ($result->length == 1) $this->setLat($result->item(0)->data);
-        
+
         $result = $xpath->query('./lon/text()', $dom);
         if ($result->length == 1) $this->setLon($result->item(0)->data);
 
@@ -423,7 +419,7 @@ class Zend_Service_Technorati_Weblog
      * @param   string $input   A string representing the last update date time
      *                          in a valid date time format
      * @return  Zend_Service_Technorati_Weblog $this instance
-     * @todo    Add support for $datetime timestamp value
+     * @todo    Zend_Date
      */
     public function setLastUpdate($datetime) 
     {

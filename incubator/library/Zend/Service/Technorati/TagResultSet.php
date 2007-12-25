@@ -73,14 +73,8 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
         if ($result->length == 1) $this->_blogsMatched = (int) $result->item(0)->data;
         
         $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        $this->totalResultsAvailable = $this->_postsMatched !== null ? $this->_postsMatched : 0;
-        
-        /**
-         * @todo    Dear Technorati,
-         *          why don't you decide to clean your api with a few standard tags.
-         *          Don't use <rankingstart> here and <start> somewhere else.
-         *          I have to decide a few standard $vars to describe keys, queries and options.
-         */
+        /** @todo Validate the following assertion */
+        $this->totalResultsAvailable = (int) $this->getPostsMatched();
     }
     
     
@@ -99,7 +93,7 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
      * @return  int
      */
     public function getBlogsMatched() {
-        return $this->_postsMatched;
+        return $this->_blogsMatched;
     }
 
     /**

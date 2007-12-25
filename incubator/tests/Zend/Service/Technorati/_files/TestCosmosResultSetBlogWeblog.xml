@@ -2,10 +2,10 @@
 <!-- 
 
     Successful response returned for a Cosmos request
-    http://api.technorati.com/cosmos?key=VALID_API_KEY&url=www.simonecarletti.com&type=weblog
+    http://api.technorati.com/cosmos?key=VALID_API_KEY&url=www.simonecarletti.com/blog&type=weblog
     
     The request has the following properties:
-     * url is site (not a blog)
+     * url is blog
      * type is weblog
     
 -->
@@ -14,11 +14,7 @@
 <tapi version="1.0">
     <document>
         <result>
-            <url>www.simonecarletti.com</url>
-            <inboundlinks/>
-            <rankingstart>1</rankingstart>
-        </result>
-        <item>
+            <url>http://www.simonecarletti.com/blog</url>
             <weblog>
                 <name>Simone Carletti's Blog</name>
                 <url>http://www.simonecarletti.com/blog</url>
@@ -26,9 +22,12 @@
                 <inboundblogs>85</inboundblogs>
                 <inboundlinks>112</inboundlinks>
                 <lastupdate>2007-11-12 20:51:52 GMT</lastupdate>
+                <rank>81766</rank>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
-        </item>
+            <inboundblogs>85</inboundblogs>
+            <inboundlinks/>
+            <rankingstart>1</rankingstart>
+        </result>
         <item>
             <weblog>
                 <name> Gioxx’s Wall</name>
@@ -37,7 +36,7 @@
                 <inboundlinks>774</inboundlinks>
                 <lastupdate>2007-11-12 17:01:29 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -48,7 +47,7 @@
                 <inboundlinks>1</inboundlinks>
                 <lastupdate>1970-01-01 00:00:00 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -58,7 +57,7 @@
                 <inboundlinks>8</inboundlinks>
                 <lastupdate>2007-11-12 21:35:14 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -69,7 +68,7 @@
                 <inboundlinks>84</inboundlinks>
                 <lastupdate>2007-11-10 08:57:22 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -80,7 +79,7 @@
                 <inboundlinks>84</inboundlinks>
                 <lastupdate>2007-11-10 08:57:22 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -91,7 +90,7 @@
                 <inboundlinks>4</inboundlinks>
                 <lastupdate>2007-11-07 17:54:16 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -103,7 +102,7 @@
                 <inboundlinks>49</inboundlinks>
                 <lastupdate>2007-11-10 19:27:05 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -115,7 +114,7 @@
                 <inboundlinks>0</inboundlinks>
                 <lastupdate>2007-11-06 16:58:08 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -126,7 +125,7 @@
                 <inboundlinks>1</inboundlinks>
                 <lastupdate>2007-11-12 17:38:55 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -137,7 +136,7 @@
                 <inboundlinks>84</inboundlinks>
                 <lastupdate>2007-11-10 08:57:22 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -147,7 +146,7 @@
                 <inboundlinks>8</inboundlinks>
                 <lastupdate>2007-11-12 21:35:14 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -157,7 +156,7 @@
                 <inboundlinks>354</inboundlinks>
                 <lastupdate>2007-11-12 18:42:17 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -168,7 +167,7 @@
                 <inboundlinks>2</inboundlinks>
                 <lastupdate>2007-11-12 15:24:46 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -179,7 +178,7 @@
                 <inboundlinks>0</inboundlinks>
                 <lastupdate>2007-11-02 14:11:04 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -190,7 +189,7 @@
                 <inboundlinks>321</inboundlinks>
                 <lastupdate>2007-11-05 02:40:19 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -201,7 +200,7 @@
                 <inboundlinks>103</inboundlinks>
                 <lastupdate>2007-11-11 08:47:26 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -213,18 +212,7 @@
                 <inboundlinks>39</inboundlinks>
                 <lastupdate>2007-11-12 18:48:28 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
-        </item>
-        <item>
-            <weblog>
-                <name>Simone Carletti's Blog</name>
-                <url>http://www.simonecarletti.com/blog</url>
-                <atomurl>http://www.simonecarletti.com/blog/index.xml</atomurl>
-                <inboundblogs>85</inboundblogs>
-                <inboundlinks>112</inboundlinks>
-                <lastupdate>2007-11-12 20:51:52 GMT</lastupdate>
-            </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
         <item>
             <weblog>
@@ -236,7 +224,29 @@
                 <inboundlinks>39</inboundlinks>
                 <lastupdate>2007-11-12 18:48:28 GMT</lastupdate>
             </weblog>
-            <linkurl>www.simonecarletti.com</linkurl>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
+        </item>
+        <item>
+            <weblog>
+                <name>980km | Smart Web Marketing</name>
+                <url>http://www.980km.com</url>
+                <rssurl>http://feeds.980km.com/980kmSmartWebMarketing</rssurl>
+                <inboundblogs>137</inboundblogs>
+                <inboundlinks>327</inboundlinks>
+                <lastupdate>2007-11-11 21:08:33 GMT</lastupdate>
+            </weblog>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
+        </item>
+        <item>
+            <weblog>
+                <name> Allora vendi PageRank! E Matt Cutts lo conferma su Search Engine Journal | 980km</name>
+                <url>http://www.980km.com/google/allora-vendi-pagerank-e-matt-cutts-lo-conferma-su-search-engine-journal.html</url>
+                <rssurl>http://feeds.980km.com/980kmSmartWebMarketing</rssurl>
+                <inboundblogs>0</inboundblogs>
+                <inboundlinks>0</inboundlinks>
+                <lastupdate>2007-10-31 13:06:51 GMT</lastupdate>
+            </weblog>
+            <linkurl>www.simonecarletti.com/blog</linkurl>
         </item>
     </document>
 </tapi>
