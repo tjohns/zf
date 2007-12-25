@@ -100,7 +100,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
         if ($parameter !== null) {
             $this->_similarity = $parameter;
         } else {
-            $this->_similarity = 0.5;
+            $this->_similarity = Zend_Search_Lucene_Search_Query_Fuzzy::DEFAULT_MIN_SIMILARITY;
         }
     }
 
@@ -113,12 +113,12 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
      */
     public function getQuery($encoding)
     {
-        if ($this->_fuzzyQuery) {
-            throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is not supported yet.');
-        }
-
         if (strpos($this->_term, '?') !== false || strpos($this->_term, '*') !== false) {
-            $pattern = '';
+	        if ($this->_fuzzyQuery) {
+	            throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is not supported for terms with wildcards.');
+	        }
+
+        	$pattern = '';
 
             $subPatterns = explode('*', $this->_term);
 
@@ -164,14 +164,26 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
             return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
 
-        if (count($tokens) == 1) {
-            $term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
+        if (count($tokens) == 1  && !$this->_fuzzyQuery) {
+        	$term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
             $query = new Zend_Search_Lucene_Search_Query_Term($term);
             $query->setBoost($this->_boost);
 
             return $query;
         }
 
+        if (count($tokens) == 1  && $this->_fuzzyQuery) {
+            $term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
+            $query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, $this->_similarity);
+            $query->setBoost($this->_boost);
+
+            return $query;
+        }
+
+        if ($this->_fuzzyQuery) {
+            throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is supported only for non-multiple word terms');
+        }
+        
         //It's not empty or one term query
         $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 

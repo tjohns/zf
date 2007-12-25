@@ -41,6 +41,9 @@ require_once 'Zend/Search/Lucene/Search/Query/Wildcard.php';
 /** Zend_Search_Lucene_Search_Query_Range */
 require_once 'Zend/Search/Lucene/Search/Query/Range.php';
 
+/** Zend_Search_Lucene_Search_Query_Fuzzy */
+require_once 'Zend/Search/Lucene/Search/Query/Fuzzy.php';
+
 /** Zend_Search_Lucene_Search_Query_Empty */
 require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
 

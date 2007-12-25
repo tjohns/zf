@@ -388,7 +388,7 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
     {
         // It's used only for query visualisation, so we don't care about characters escaping
         return (($this->_term->field === null)? '' : $this->_term->field . ':')
-             . $this->_pattern->text . '~'
+             . $this->_term->text . '~'
              . (($this->_minimumSimilarity != self::DEFAULT_MIN_SIMILARITY)? $this->_minimumSimilarity : '');
     }
 }
