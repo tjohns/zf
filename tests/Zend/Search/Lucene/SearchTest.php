@@ -34,8 +34,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                          'te*t',
                          '?Ma*',
                          // 'te?t~20^0.8',
-                         //'roam~',
-                         //'roam~0.8',
+                         'test~',
+                         'test~0.4',
                          '"jakarta apache"~10',
                          'contents:[business TO by]',
                          '{wish TO zzz}',
@@ -72,6 +72,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                                  '(contents:test contents:text)',
                                  '(contents:amazon contents:email)',
                                  // ....
+                                 '(contents:test contents:text)',
+                                 '(contents:latest contents:left contents:list contents:meet contents:must contents:next contents:post contents:sect contents:task contents:test contents:tested contents:text contents:that contents:tort)',
                                  '((path:"jakarta apache"~10) (modified:"jakarta apache"~10) (contents:"jakarta apache"~10))',
                                  '(contents:business contents:but contents:buy contents:buying contents:by)',
                                  '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
@@ -104,7 +106,7 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
         foreach ($queries as $id => $queryString) {
             $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
-
+            
             $this->assertTrue($query instanceof Zend_Search_Lucene_Search_Query);
 
             $this->assertEquals($query->rewrite($index)->__toString(), $rewritedQueries[$id]);
