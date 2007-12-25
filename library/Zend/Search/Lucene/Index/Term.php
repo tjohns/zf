@@ -74,6 +74,7 @@ class Zend_Search_Lucene_Index_Term
     /**
      * Get term prefix
      *
+     * @param string $str
      * @param integer $length
      * @return string
      */
@@ -103,6 +104,40 @@ class Zend_Search_Lucene_Index_Term
         }
 
         return substr($str, 0, $prefixBytes);
+    }
+
+    /**
+     * Get UTF-8 string length
+     *
+     * @param string $str
+     * @return string
+     */
+    public static function getLength($str)
+    {
+        $bytes = 0;
+        $chars = 0;
+        while ($bytes < strlen($str)) {
+            $charBytes = 1;
+            if ((ord($str[$bytes]) & 0xC0) == 0xC0) {
+                $charBytes++;
+                if (ord($str[$bytes]) & 0x20 ) {
+                    $charBytes++;
+                    if (ord($str[$bytes]) & 0x10 ) {
+                        $charBytes++;
+                    }
+                }
+            }
+
+            if ($bytes + $charBytes > strlen($str)) {
+                // wrong character
+                break;
+            }
+
+            $chars++;
+            $bytes += $charBytes;
+        }
+
+        return $chars;
     }
 }
 
