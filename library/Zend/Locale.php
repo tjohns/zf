@@ -827,7 +827,7 @@ class Zend_Locale {
                 break;
             case 'characters' :
                 $list = Zend_Locale_Data::getContent($locale, 'characters');
-                return $list[0];
+                return $list['characters'];
                 break;
             default :
                 return array('language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
@@ -941,33 +941,33 @@ class Zend_Locale {
      */
     private function _getRegex($input)
     {
-        if (empty($input)) {
-            return false;
-        }
-        $regex = "^";
-        $start = true;
-        foreach($input as $row) {
-            if ($start === false) {
-                $regex .= "|";
-            }
-            $start = false;
-            $regex .= "(";
-            $one = null;
-            if (strlen($row) > 2) {
-                $one = true;
-            }
-            foreach (str_split($row, 1) as $char) {
-                $regex .= "[" . $char;
-                $regex .= strtoupper($char) . "]";
-                if ($one === true) {
-                    $one = false;
-                    $regex .= "(";
+        $regex = "";
+        if (is_array($input)) {
+            $regex = "^";
+            $start = true;
+            foreach($input as $row) {
+                if ($start === false) {
+                    $regex .= "|";
                 }
+                $start = false;
+                $regex .= "(";
+                $one = null;
+                if (strlen($row) > 2) {
+                    $one = true;
+                }
+                foreach (str_split($row, 1) as $char) {
+                    $regex .= "[" . $char;
+                    $regex .= strtoupper($char) . "]";
+                    if ($one === true) {
+                        $one = false;
+                        $regex .= "(";
+                    }
+                }
+                if ($one === false) {
+                    $regex .= ")";
+                }
+                $regex .= "?)";
             }
-            if ($one === false) {
-                $regex .= ")";
-            }
-            $regex .= "?)";
         }
         return $regex;
     }

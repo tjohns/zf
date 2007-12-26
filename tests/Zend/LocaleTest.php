@@ -72,6 +72,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $locale = new Zend_Locale('auto');
         $this->assertTrue(new Zend_Locale($locale) instanceof Zend_Locale,'Zend_Locale Object not returned');
+
     }
 
 
@@ -409,7 +410,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('DE', $value->getTranslation('de', 'language_detail', 'en')));
         $this->assertFalse($value->getTranslation('xxx', 'language_detail'));
 
-        $this->assertEquals('[a-z]', $value->getTranslation(null, 'characters', 'en'));
+        $this->assertEquals("[a-z]", $value->getTranslation(null, 'characters', 'en'));
 
         $this->assertTrue(in_array('014', $value->getTranslation('002', 'territory_detail', 'auto')));
         $this->assertTrue(in_array('014', $value->getTranslation('002', 'territory_detail', 'browser')));
@@ -487,8 +488,14 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(in_array('currency', $value->getTranslationList('xxx')));
         $this->assertTrue(in_array('currency', $value->getTranslationList()));
 
-        $this->assertTrue(in_array('[a-z]', $value->getTranslationList('characters')));
-        $this->assertTrue(in_array('[a-z]', $value->getTranslationList('characters', 'en')));
+        $char = $value->getTranslationList('characters');
+        $this->assertEquals("[a ä b-o ö p-s ß t u ü v-z]", $char['characters']);
+        $this->assertEquals("[á à ă â å ä ā æ ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ö ø ō œ ß ú ù ŭ û ü ū ÿ]", $char['auxiliary']);
+        $this->assertEquals("[\\$ £ ¥ ₤ ₧ € a-z]", $char['currencySymbol']);
+        $char = $value->getTranslationList('characters', 'en');
+        $this->assertEquals("[a-z]", $char['characters']);
+        $this->assertEquals("[á à ă â å ä ā æ ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ö ø ō œ ß ú ù ŭ û ü ū ÿ]", $char['auxiliary']);
+        $this->assertEquals("[a-z]", $char['currencySymbol']);
 
         $this->assertTrue(in_array('CZ', $value->getTranslationList('language_detail', 'auto')));
         $this->assertTrue(in_array('CZ', $value->getTranslationList('language_detail', 'browser')));
@@ -588,5 +595,33 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testGetLocaleList()
     {
         $this->assertTrue(is_array(Zend_Locale::getLocaleList()));
+    }
+
+
+    /**
+     * test setDefault
+     * expected true
+     */
+    public function testsetDefault()
+    {
+        try {
+            Zend_Locale::setDefault('auto');
+            $this->fail("Exception expected");
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertContains("full qualified locale", $e->getMessage());
+        }
+        try {
+            Zend_Locale::setDefault('de_XX');
+            $locale = new Zend_Locale();
+            $this->assertTrue($locale instanceof Zend_Locale); // should defer to 'de' or any other standard locale
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail("No exception expected"); // de_XX should automatically degrade to 'de'
+        }
+        try {
+            Zend_Locale::setDefault('xy_ZZ');
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertContains("Unknown locale", $e->getMessage());
+        }
     }
 }
