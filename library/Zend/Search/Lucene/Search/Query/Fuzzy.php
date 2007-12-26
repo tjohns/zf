@@ -367,18 +367,8 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
     {
         $words = array();
 
-        $matchExpression = '/^' . str_replace(array('\\?', '\\*'), array('.', '.*') , preg_quote($this->_pattern->text, '/')) . '$/';
-        if (@preg_match('/\pL/u', 'a') == 1) {
-            // PCRE unicode support is turned on
-            // add Unicode modifier to the match expression
-            $matchExpression .= 'u';
-        }
-
-        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($doc->getFieldUtf8Value('body'), 'UTF-8');
-        foreach ($tokens as $token) {
-            if (preg_match($matchExpression, $token->getTermText()) === 1) {
-                $words[] = $token->getTermText();
-            }
+        foreach ($this->_matches as $term) {
+            $words[] = $term->text;
         }
 
         $doc->highlight($words, $this->_getHighlightColor($colorIndex));
