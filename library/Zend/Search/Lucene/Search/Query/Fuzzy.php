@@ -36,8 +36,15 @@ require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
  */
 class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Query
 {
-	/** Default minimum similarity*/
+	/** Default minimum similarity */
 	const DEFAULT_MIN_SIMILARITY = 0.5;
+	
+	/**
+	 * Maximum number of matched terms.
+	 * Apache Lucene defines this limitation as boolean query maximum number of clauses:
+	 * org.apache.lucene.search.BooleanQuery.getMaxClauseCount()
+	 */
+	const MAX_CLAUSE_COUNT = 1024;
 	
 	/**
 	 * Array of precalculated max distances
@@ -92,6 +99,14 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
     private $_scores = null;
 
     /**
+     * Array of the term keys.
+     * Used to sort terms in alphabetical order if terms have the same socres
+     * 
+     * @var array
+     */
+    private $_termKeys = null;
+    
+    /**
      * Zend_Search_Lucene_Search_Query_Wildcard constructor.
      *
      * @param Zend_Search_Lucene_Index_Term $pattern
@@ -112,20 +127,6 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
     	$this->_term              = $term;
         $this->_minimumSimilarity = $minimumSimilarity;
         $this->_prefixLength      = $prefixLength;
-    }
-
-    /**
-     * Calculate distance between words
-     *
-     * @param string $word1
-     * @param string $word2
-     * @return integer
-     */
-    private static function _distance($word1, $word2)
-    {
-        // 
-
-        return $word;
     }
 
     /**
@@ -150,8 +151,9 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
      */
     public function rewrite(Zend_Search_Lucene_Interface $index)
     {
-        $this->_matches = array();
-        $this->_scores  = array();
+        $this->_matches  = array();
+        $this->_scores   = array();
+        $this->_termKeys = array();
 
         if ($this->_term->field === null) {
             // Search through all fields
@@ -207,8 +209,9 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                     }
                     
                     if ($similarity > $this->_minimumSimilarity) {
-                        $this->_matches[] = $index->currentTerm();
-                        $this->_scores[]  = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
+                        $this->_matches[]  = $index->currentTerm();
+                        $this->_termKeys[] = $index->currentTerm()->key();
+                        $this->_scores[]   = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
                     }
 
                     $index->nextTerm();
@@ -237,8 +240,9 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                     }
                     
                     if ($similarity > $this->_minimumSimilarity) {
-                        $this->_matches[] = $index->currentTerm();
-                        $this->_scores[]  = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
+                        $this->_matches[]  = $index->currentTerm();
+                        $this->_termKeys[] = $index->currentTerm()->key();
+                        $this->_scores[]   = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
                     }
 
                     $index->nextTerm();
@@ -253,10 +257,23 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
         } else if (count($this->_matches) == 1) {
             return new Zend_Search_Lucene_Search_Query_Term(reset($this->_matches));
         } else {
-            $rewrittenQuery = new Zend_Search_Lucene_Search_Query_MultiTerm();
+            $rewrittenQuery = new Zend_Search_Lucene_Search_Query_Boolean();
+            
+            array_multisort($this->_scores,   SORT_DESC, SORT_NUMERIC,
+                            $this->_termKeys, SORT_ASC,  SORT_STRING,
+                            $this->_matches);
 
-            foreach ($this->_matches as $matchedTerm) {
-                $rewrittenQuery->addTerm($matchedTerm);
+            $termCount = 0;
+            foreach ($this->_matches as $id => $matchedTerm) {
+            	$subquery = new Zend_Search_Lucene_Search_Query_Term($matchedTerm);
+            	$subquery->setBoost($this->_scores[$id]);
+            	
+                $rewrittenQuery->addSubquery($subquery);
+                
+                $termCount++;
+                if ($termCount >= self::MAX_CLAUSE_COUNT) {
+                	break;
+                }
             }
 
             return $rewrittenQuery;
@@ -273,18 +290,6 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
     {
         throw new Zend_Search_Lucene_Exception('Wildcard query should not be directly used for search. Use $query->rewrite($index)');
     }
-
-
-    /**
-     * Returns query pattern
-     *
-     * @return Zend_Search_Lucene_Index_Term
-     */
-    public function getPattern()
-    {
-        return $this->_pattern;
-    }
-
 
     /**
      * Return query terms
@@ -389,7 +394,7 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
         // It's used only for query visualisation, so we don't care about characters escaping
         return (($this->_term->field === null)? '' : $this->_term->field . ':')
              . $this->_term->text . '~'
-             . (($this->_minimumSimilarity != self::DEFAULT_MIN_SIMILARITY)? $this->_minimumSimilarity : '');
+             . (($this->_minimumSimilarity != self::DEFAULT_MIN_SIMILARITY)? round($this->_minimumSimilarity, 4) : '');
     }
 }
 

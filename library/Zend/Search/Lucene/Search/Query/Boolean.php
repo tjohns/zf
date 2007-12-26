@@ -785,7 +785,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $query .= '(' . $subquery->__toString() . ')';
 
             if ($subquery->getBoost() != 1) {
-                $query .= '^' . $subquery->getBoost();
+                $query .= '^' . round($subquery->getBoost(), 4);
             }
         }
 
