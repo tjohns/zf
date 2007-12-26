@@ -8,90 +8,60 @@
         данные из хранилища в ассоциативный массив для конструктора
         <code>Zend_Config</code>. Пользовательские скрипты могут также
         передавать массивы непосредственно конструктору <code>Zend_Config</code>
-        без использования класса адаптера, так как это может быть наиболее
-        подходящим решением в определенных ситуациях.
-<!--
-        Configuration data are made accessible to the <code>Zend_Config</code>
-        constructor through an associative array, which may be multidimensional,
-        in order to support organizing the data from general to specific.
-        Concrete adapter classes function to adapt configuration data from
-        storage to produce the associative array for the <code>Zend_Config</code>
-        constructor. User scripts may provide such arrays directly to the
-        <code>Zend_Config</code> constructor, without using an adapter class,
-        since it may be appropriate to do so in certain situations.
--->
+        без использования класса адаптера, т.к. это может быть наиболее
+        подходящим решением в некоторых ситуациях.
     </para>
+    
+    <para>
+        Каждое значение массива конфигурационных значений становится свойством
+        объекта <code>Zend_Config</code>. Ключ массива используется как имя
+        свойства. Если значение само является массивом, то соответствующее
+        свойство создается как объект <code>Zend_Config</code>, который
+        заполняется данными этого массива. Это производится рекурсивно, т.о.,
+        иерархия конфигурационных данных может иметь любой уровень вложенности.
+    </para>
+
     <para>
         <code>Zend_Config</code> реализует интерфейсы <code>Countable</code>
         и <code>Iterator</code> для того, чтобы обеспечить простой доступ
-        к конфигурационным данным. Поэтому применительно к объектам
-        <code>Zend_Config</code> можно использовать функцию
+        к конфигурационным данным. Поэтому к объектам
+        <code>Zend_Config</code> можно применять функцию
         <ulink url="http://php.net/count"><code>count()</code></ulink> и
         такие конструкции языка PHP, как
         <ulink url="http://php.net/foreach"><code>foreach</code></ulink>.
-<!--
-        <code>Zend_Config</code> implements the <code>Countable</code> and
-        <code>Iterator</code> interfaces in order to facilitate simple access
-        to configuration data. Thus, one may use the
-        <ulink url="http://php.net/count"><code>count()</code></ulink> function
-        and PHP constructs such as
-        <ulink url="http://php.net/foreach"><code>foreach</code></ulink>
-        upon <code>Zend_Config</code> objects.
--->
     </para>
     <para>
         По умолчанию через <code>Zend_Config</code> конфигурационные данные
         доступны только для чтения, и операция присваивания (например,
         <code><![CDATA[$config->database->host = 'example.com']]></code>)
-        вызовет исключение. Это поведение, принятое по умолчанию,
-        может быть отменено при вызове конструктора и тогда
+        вызовет исключение. Тем не менее, это поведение
+        может быть отменено при вызове конструктора, и тогда
         можно будет изменять конфигурационные данные.
-<!--
-        By default, configuration data made available through
-        <code>Zend_Config</code> are read-only, and an assignment (e.g.,
-        <code><![CDATA[$config->database->host = 'example.com']]></code>)
-        results in a thrown exception. This default behavior may be overridden
-        through the constructor, however, to allow modification of data values.
--->
+        Если модификации разрешены, то также <code>Zend_Config</code>
+        поддерживает уничтожение значений
+        (т.е. <code><![CDATA[unset($config->database->host);]]></code>).
         <note>
             <para>
                 Важно не путать изменение данных в памяти с сохранением
-                конфигурационных данных на физическом носителе данных. Инструменты
-                для создания и изменения конфигурационных данных для различных
-                носителей данных не входят в сферу назначений <code>Zend_Config</code>.
-                Для этих целей доступны продукты сторонних разработчиков
-                с открытым исходным кодом к различным носителям информации.
-<!--
-                It is important not to confuse such in-memory modifications with
-                saving configuration data out to specific storage media. Tools for
-                creating and modifying configuration data for various storage media
-                are out of scope with respect to <code>Zend_Config</code>. Third
-                party open source solutions are readily available for the purpose
-                of creating and modifying configuration data for various storage media.
--->
+                конфигурационных данных на физическом носителе данных. Создание
+                и изменение конфигурационных данных на различных
+                носителях данных не входит в сферу назначений <code>Zend_Config</code>.
+                Для создания и изменения конфигурационных данных на различных
+                носителях информации можно использовать
+                сторонние разработки с открытым исходным кодом.
             </para>
         </note>
     </para>
     <para>
         Классы адаптеров наследуют от класса <code>Zend_Config</code>,
         и, следовательно, имеют тот же функционал.
-<!--
-        Adapter classes inherit from the <code>Zend_Config</code> class since
-        they utilize its functionality.
--->
     </para>
     <para>
-        Семейство классов <code>Zend_Config</code> дает возможность
+        Семейство классов <code>Zend_Config</code> позволяет
         организовывать конфигурационные данные, разбивая их на разделы.
-        В объекты адаптеров <code>Zend_Config</code> может быть загружен
+        В объекты адаптеров <code>Zend_Config</code> можно загружать
         один определенный раздел, несколько разделов или все разделы
-        данных (если не указан ни один раздел).
-<!--
-        The <code>Zend_Config</code> family of classes enables configuration
-        data to be organized into sections. <code>Zend_Config</code> adapter
-        objects may be loaded with a single specified section, multiple
-        specified sections, or all sections (if none are specified).
--->
+        данных (если не указан раздел).
     </para>
     <para>
         Классы адаптеров <code>Zend_Config</code> поддерживают единую модель
@@ -103,18 +73,15 @@
         раздел может наследовать от родительского раздела, который в свою очередь
         наследует от другого и т.д., но множественное наследование (т.е. раздел
         C наследует напрямую от разделов A и B) не поддерживается.
-<!--
-        <code>Zend_Config</code> adapter classes support a single inheritance
-        model that enables configuration data to be inherited from one section
-        of configuration data into another. This is provided in order to reduce
-        or eliminate the need for duplicating configuration data for different
-        purposes. An inheriting section may also override the values that it
-        inherits through its parent section. Like PHP class inheritance, a
-        section may inherit from a parent section, which may inherit from a
-        grandparent section, and so on, but multiple inheritance (i.e.,
-        section C inheriting directly from parent sections A and B) is not
-        supported.
--->
+    </para>
+    <para>
+        Если вы имеете два объекта <code>Zend_Config</code>, то можете объединить
+        их в один, используя функцию <code>merge()</code>. Например, имея
+        <code>$config</code> и <code>$localConfig</code> вы можете объединить
+        данные из <code>$localConfig</code> с данными из <code>$config</code>,
+        используя <code>$config->merge($localConfig);</code>. Элементы
+        из <code>$localConfig</code> при совпадении имен заменят собой элементы
+        <code>$config</code>.
     </para>
 </sect1>
 <!--

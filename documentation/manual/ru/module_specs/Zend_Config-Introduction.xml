@@ -11,48 +11,30 @@
         данных, хранящихся в текстовых файлах:
         <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
         и <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
-<!--
-        <code>Zend_Config</code> is designed to simplify access to and use of
-        configuration data within applications. It provides a nested object
-        property based user interface for accessing such configuration data
-        within application code. The configuration data may come from a variety
-        of media supporting hierarchical data storage. Currently
-        <code>Zend_Config</code> provides adapters for configuration data that
-        are stored in text files with
-        <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
-        and <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
--->
     </para>
     <example id="zend.config.introduction.example.using">
-        <title>Использование Zend_Config без адаптеров<!--Using Zend_Config Per Se--></title>
+        <title>Использование Zend_Config без адаптеров</title>
         <para>
-            Обычно предполагается, что используется один из классов адаптеров
+            Обычно предполагается, что используется один из классов адаптеров, например,
             <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
             или <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
             Но если конфигурационные данные доступны в виде массива PHP,
             то можно просто передавать эти данные конструктору <code>Zend_Config</code>,
             чтобы использовать преимущества простого объектно-ориентированного
             интерфейса.
-<!--
-            Normally it is expected that users would use one of the adapter
-            classes such as
-            <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link>
-            or <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>,
-            but if configuration data are available in a PHP array, one may simply
-            pass the data to the <code>Zend_Config</code> constructor in order
-            to utilize a simple object-oriented interface:
--->
         </para>
         <programlisting role="php"><![CDATA[<?php
 // Массив конфигурационных данных
 $configArray = array(
-    'webhost' => 'www.example.com',
+    'webhost'  => 'www.example.com',
     'database' => array(
-        'type'     => 'pdo_mysql',
-        'host'     => 'db.example.com',
-        'username' => 'dbuser',
-        'password' => 'secret',
-        'name'     => 'dbname'
+        'adapter' => 'pdo_mysql',
+        'params'  => array(
+            'host'     => 'db.example.com',
+            'username' => 'dbuser',
+            'password' => 'secret',
+            'dbname'   => 'mydatabase'
+        )
     )
 );
 
@@ -64,22 +46,59 @@ $config = new Zend_Config($configArray);
 echo $config->webhost;
 
 // Использование конфигурационных данных для соединения с базой данных
-$myApplicationObject->databaseConnect($config->database->type,
-                                      $config->database->host,
-                                      $config->database->username,
-                                      $config->database->password,
-                                      $config->database->name);]]></programlisting>
+$db = Zend_Db::factory($config->database->adapter,
+                       $config->database->params->toArray());
+$db = Zend_Db::factory($config->database->adapter,
+                       $config->database->params->toArray());
+
+// Альтернативный способ - просто передавайте объект Zend_Config.
+// Фабрика Zend_Db знает, как его интерпретировать.
+$db = Zend_Db::factory($config->database);]]>
+        </programlisting>
     </example>
     <para>
         Как показано в предыдущем примере, в <code>Zend_Config</code> для
         доступа к конфигурационным данным, переданным его конструктору,
         используется синтаксис вложенных свойств объектов.
-<!--
-        As illustrated in the example above, <code>Zend_Config</code> provides
-        nested object property syntax to access configuration data passed to
-        its constructor.
--->
     </para>
+    <para>
+        Кроме объектно-ориентированного доступа к значениям данных,
+        <code>Zend_Config</code> также предоставляет метод <code>get()</code>,
+        который будет возвращать значение по умолчанию, если элемент
+        данных не существует. Например:
+    </para>
+    <programlisting role="php"><![CDATA[<?php
+$host = $config->database->get('host', 'localhost');]]>
+    </programlisting>
+    <example id="zend.config.introduction.example.file.php">
+        <title>Использование Zend_Config с конфигурационным файлом PHP<!--Using Zend_Config with a PHP Configuration File--></title>
+        <para>
+            Часто требуется использовать конфигурационный файл,
+            основанный на "чистом" PHP. Следующий код показывает, как просто
+            этого достичь.
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+// config.php
+return array(
+    'webhost'  => 'www.example.com',
+    'database' => array(
+        'adapter' => 'pdo_mysql',
+        'params'  => array(
+            'host'     => 'db.example.com',
+            'username' => 'dbuser',
+            'password' => 'secret',
+            'dbname'   => 'mydatabase'
+        )
+    )
+);]]></programlisting>
+        <programlisting role="php"><![CDATA[<?php
+// Использование конфигурации
+require_once 'Zend/Config.php';
+$config = new Zend_Config(require 'config.php');
+
+// Вывод элемента конфигурационных данных (результатом будет 'www.example.com')
+echo $config->webhost;]]></programlisting>
+    </example>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
