@@ -493,7 +493,7 @@ class Zend_Locale {
      * 'language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
      * 'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
      * 'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail'
-     * 'language_detail', 'characters'
+     * 'language_detail', 'characters', 'month_complete'
      * For detailed information about the types look into the documentation
      *
      * @param  string         $type    OPTIONAL Type of information to return
@@ -557,6 +557,15 @@ class Zend_Locale {
                 break;
             case 'month_narrow' :
                 return Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'narrow'));
+                break;
+            case 'month_complete' :
+                $month['format']['abbreviated'] = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
+                $month['format']['narrow']      = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'narrow'));
+                $month['format']['wide']        = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
+                $month['standalone']['abbreviated'] = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'abbreviated'));
+                $month['standalone']['narrow']  = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'narrow'));
+                $month['standalone']['wide']    = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'wide'));
+                return $month;
                 break;
             case 'day' :
                 return Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
