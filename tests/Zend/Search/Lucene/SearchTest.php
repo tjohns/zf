@@ -72,8 +72,8 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                                  '(contents:test contents:text)',
                                  '(contents:amazon contents:email)',
                                  // ....
-                                 '(contents:test contents:text)',
-                                 '(contents:latest contents:left contents:list contents:meet contents:must contents:next contents:post contents:sect contents:task contents:test contents:tested contents:text contents:that contents:tort)',
+                                 '((contents:test) (contents:text)^0.5)',
+                                 '((contents:test) (contents:text)^0.5833 (contents:latest)^0.1667 (contents:left)^0.1667 (contents:list)^0.1667 (contents:meet)^0.1667 (contents:must)^0.1667 (contents:next)^0.1667 (contents:post)^0.1667 (contents:sect)^0.1667 (contents:task)^0.1667 (contents:tested)^0.1667 (contents:that)^0.1667 (contents:tort)^0.1667)',
                                  '((path:"jakarta apache"~10) (modified:"jakarta apache"~10) (contents:"jakarta apache"~10))',
                                  '(contents:business contents:but contents:buy contents:buying contents:by)',
                                  '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
