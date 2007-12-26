@@ -260,6 +260,30 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testFuzzyQuery()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_files');
+
+        $hits = $index->find('tesd~0.4');
+
+        $this->assertEquals(count($hits), 9);
+        $expectedResultset = array(array(2, 0.037139, 'IndexSource/contributing.patches.html'),
+                                   array(0, 0.008735, 'IndexSource/contributing.documentation.html'),
+                                   array(7, 0.002449, 'IndexSource/contributing.bugs.html'),
+                                   array(1, 0.000483, 'IndexSource/contributing.wishlist.html'),
+                                   array(3, 0.000483, 'IndexSource/about-pear.html'),
+                                   array(9, 0.000483, 'IndexSource/core.html'),
+                                   array(5, 0.000414, 'IndexSource/authors.html'),
+                                   array(8, 0.000414, 'IndexSource/contributing.html'),
+                                   array(4, 0.000345, 'IndexSource/copyright.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
     public function testInclusiveRangeQuery()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_indexSample/_files');
