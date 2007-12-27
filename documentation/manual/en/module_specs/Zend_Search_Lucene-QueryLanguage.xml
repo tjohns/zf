@@ -90,7 +90,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
-        <title>Starting in 1.1, Wildcards<footnote><para>Wildcard queries  support is available with SVN and latest snapshot versions and 
+        <title>Starting in 1.5, Wildcards<footnote><para>Wildcard queries  support is available with SVN and latest snapshot versions and 
                doesn't included into current release.</para>></footnote></title>
         <para>
             Lucene supports single and multiple character wildcard searches within single terms (but not within phrase queries).
@@ -133,17 +133,17 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             Lucene supports modifying query terms to provide a wide range of searching options.
         </para>
         <para>
-            Zend_Search_Lucene currently supports the "~" modifier only for phrases.
+            "~" modifier can be used to specify proximity search for phrases or fuzzy search for individual terms.
             <footnote>
                 <para>
-                    The "~" modifier for terms is used for fuzzy search, but fuzzy search queries are not currently supported.
+                    Fuzzy search is availably only starting ZF 1.5
                 </para>
             </footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>Starting in 1.1, Range Searches<footnote><para>Range queries support is available with SVN and latest snapshot versions and 
+        <title>Starting in 1.5, Range Searches<footnote><para>Range queries support is available with SVN and latest snapshot versions and 
                doesn't included into current release.</para>></footnote></title>
         <para>
             Range queries allow the developer or user to match documents whose field(s) values are between the lower and upper bound specified by the range query.
@@ -163,6 +163,27 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             If field is not specified then Zend_Search_Lucene searches for specified interval through all fields by default.
             <programlisting role="querystring"><![CDATA[{Aida TO Carmen}]]>
             </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.query-language.fuzzy">
+        <title>Starting in 1.5, Fuzzy Searches<footnote><para>Fuzzy queries support is available with SVN and latest snapshot versions and 
+               doesn't included into current release.</para>></footnote></title>
+        <para>
+            Zend_Search_Lucene as well as Java Lucene supports fuzzy searches based on the Levenshtein Distance, or Edit Distance algorithm. 
+            To do a fuzzy search use the tilde, "~", symbol at the end of a Single word Term. For example to search for a term similar 
+            in spelling to "roam" use the fuzzy search:
+
+            <programlisting role="querystring"><![CDATA[roam~]]></programlisting>
+
+            This search will find terms like foam and roams.
+
+            Additional (optional) parameter can specify the required similarity. The value is between 0 and 1, with a value closer to 1 only terms 
+            with a higher similarity will be matched. For example:
+
+            <programlisting role="querystring"><![CDATA[roam~0.8]]></programlisting>
+
+            The default that is used if the parameter is not given is 0.5.
         </para>
     </sect2>
 

@@ -333,7 +333,7 @@ $hits  = $index->find($query);]]>
 
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>Wildcard Query</title>
+        <title>Starting in 1.5, Wildcard Query</title>
         <para>
             Wildcard queries can be used to search for documents containing strings matching specified patterns.
         </para>
@@ -368,6 +368,60 @@ $hits  = $index->find($query);]]>
             <programlisting role="php"><![CDATA[<?php
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.queries.fuzzy">
+        <title>Starting in 1.5, Fuzzy Query</title>
+        <para>
+            Fuzzy queries can be used to search for documents containing strings matching terms similar to specified term.
+        </para>
+
+        <para>
+            Query string:
+            <programlisting role="querystring"><![CDATA[field1:test~]]></programlisting>
+            This query matches documents containing 'test' 'text' 'best' words and others.
+        </para>
+
+        <para>or</para>
+
+        <para>
+            Query construction by API:
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Optional similarity can be specified after "~" sign.
+        </para>
+
+        <para>
+            Query string:
+            <programlisting role="querystring"><![CDATA[field1:test~0.4]]></programlisting>
+        </para>
+
+        <para>or</para>
+
+        <para>
+            Query construction by API:
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, 0.4);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+
+        <para>
+            The term field is optional. Zend_Search_Lucene searches through all fields on each document if a field is not specified:
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term);
 $hits  = $index->find($query);]]>
             </programlisting>
         </para>
@@ -553,7 +607,7 @@ $hits2 = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.range">
-        <title>Range Query</title>
+        <title>Starting in 1.5, Range Query</title>
         <para>
             <link linkend="zend.search.lucene.query-language.range">Range queries</link> are intended for searching terms within specified interval.
         </para>
