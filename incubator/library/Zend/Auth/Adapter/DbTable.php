@@ -313,11 +313,12 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
         }
 
         $credentialExpression = new Zend_Db_Expr(
+            '(CASE WHEN ' . 
             $this->_zendDb->quoteInto(
                 $this->_zendDb->quoteIdentifier($this->_credentialColumn)
                 . ' = ' . $this->_credentialTreatment, $this->_credential
                 )
-            . ' AS zend_auth_credential_match'
+            . ' THEN 1 ELSE 0 END) AS zend_auth_credential_match'
             );
 
         // get select
