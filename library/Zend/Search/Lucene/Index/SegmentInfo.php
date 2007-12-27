@@ -228,7 +228,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
                     }
                 }
             }
-        } catch(Zend_Search_Exception $e) {
+        } catch(Zend_Search_Lucene_Exception $e) {
             if (strpos($e->getMessage(), 'compound file doesn\'t contain') !== false ) {
                 $this->_deleted = null;
             } else {
