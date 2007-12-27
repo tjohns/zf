@@ -233,6 +233,28 @@ class Zend_Locale_Data
 
 
     /**
+     * Find the details for supplemental calendar datas
+     *
+     * @param  String $locale Locale for Detaildata
+     * @return String         Key for Detaildata
+     */
+    private static function _calendarDetail($locale)
+    {
+        $ret = "001";
+        foreach (self::$_list as $key => $value) {
+            if (strpos($locale, '_') !== false) {
+                $locale = substr($locale, strpos($locale, '_') + 1);
+            }
+            if (strpos($key, $locale) !== false) {
+                $ret = $key;
+                break;
+            }
+        }
+        self::$_list = array();
+        return $ret;
+    }
+
+    /**
      * Read the LDML file, get a single path defined value
      *
      * @param  string $locale
@@ -399,9 +421,11 @@ class Zend_Locale_Data
                              . $value[2] . '\']/month[@type=\'' . $value[3] . '\']', 'type');
                 break;
 
-            case 'defdayformat':
+            case 'defaultday':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/days/dayContext[@type=\'format\']/default', 'type', 'default');
+                             . $value . '\']/days/default', 'choice', 'context');
+                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
+                             . $value . '\']/days/dayContext[@type=\'format\']/default', 'choice', 'default');
                 break;
 
             case 'daylist':
@@ -419,21 +443,19 @@ class Zend_Locale_Data
                 break;
 
             case 'week':
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/week/minDays', 'count', 'mindays');
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/week/firstDay', 'day', 'firstday');
-                break;
+                self::_getFile('supplementalData', '/supplementalData/weekData/minDays', 'territories');
+                $minDays = self::_calendarDetail($locale);
+                self::_getFile('supplementalData', '/supplementalData/weekData/firstDay', 'territories');
+                $firstDay = self::_calendarDetail($locale);
+                self::_getFile('supplementalData', '/supplementalData/weekData/weekendStart', 'territories');
+                $weekStart = self::_calendarDetail($locale);
+                self::_getFile('supplementalData', '/supplementalData/weekData/weekendEnd', 'territories');
+                $weekEnd = self::_calendarDetail($locale);
 
-            case 'weekend':
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/week/weekendStart', 'day', 'startday');
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/week/weekendStart', 'time', 'starttime');
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/week/weekendEnd', 'day', 'endday');
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/week/weekendEnd', 'time', 'endtime');
+                self::_getFile('supplementalData', "/supplementalData/weekData/minDays[@territories='" . $minDays . "']", 'count', 'minDays');
+                self::_getFile('supplementalData', "/supplementalData/weekData/firstDay[@territories='" . $firstDay . "']", 'day', 'firstDay');
+                self::_getFile('supplementalData', "/supplementalData/weekData/weekendStart[@territories='" . $weekStart . "']", 'day', 'weekendStart');
+                self::_getFile('supplementalData', "/supplementalData/weekData/weekendEnd[@territories='" . $weekEnd . "']", 'day', 'weekendEnd');
                 break;
 
             case 'daytime':
@@ -443,24 +465,27 @@ class Zend_Locale_Data
                              . $value . '\']/pm', '', 'pm');
                 break;
 
-            case 'erashortlist':
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value . '\']/eras/eraAbbr/era', 'type');
-                break;
-
-            case 'erashort':
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value[0] . '\']/eras/eraAbbr/era[@type=\'' . $value[1] . '\']', 'type');
-                break;
-
             case 'eralist':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
                              . $value . '\']/eras/eraNames/era', 'type');
+                $names = self::$_list;
+                self::$_list = array();
+                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
+                             . $value . '\']/eras/eraAbbr/era', 'type');
+                $abbr = self::$_list;
+                self::$_list = array();
+                $narrow = self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
+                                       . $value . '\']/eras/eraNarrow/era', 'type');
+                $narrow = self::$_list;
+                self::$_list = array();
+                self::$_list['names']  = $names;
+                self::$_list['abbr']   = $abbr;
+                self::$_list['narrow'] = $narrow;
                 break;
 
             case 'era':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
-                             . $value[0] . '\']/eras/eraNames/era[@type=\'' . $value[1] . '\']', 'type');
+                             . $value[0] . '\']/eras/era' . $value[1] . '/era[@type=\'' . $value[2] . '\']', 'type');
                 break;
 
             case 'defdateformat':

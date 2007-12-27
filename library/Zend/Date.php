@@ -1018,20 +1018,20 @@ class Zend_Date extends Zend_Date_DateObject {
             case Zend_Date::ERA :
                 $year = $this->date('Y', $this->getUnixTimestamp(), false);
                 if ($year < 0) {
-                    $era = Zend_Locale_Data::getContent($locale, 'erashort', array('gregorian', '0'));
+                    $era = Zend_Locale_Data::getContent($locale, 'era', array('gregorian', 'Abbr', '0'));
                     return $era['0'];
                 }
-                $era = Zend_Locale_Data::getContent($locale, 'erashort', array('gregorian', '1'));
+                $era = Zend_Locale_Data::getContent($locale, 'era', array('gregorian', 'Abbr', '1'));
                 return $era['1'];
                 break;
 
             case Zend_Date::ERA_NAME :
                 $year = $this->date('Y', $this->getUnixTimestamp(), false);
                 if ($year < 0) {
-                    $era = Zend_Locale_Data::getContent($locale, 'era', array('gregorian', '0'));
+                    $era = Zend_Locale_Data::getContent($locale, 'era', array('gregorian', 'Names', '0'));
                     return $era['0'];
                 }
-                $era = Zend_Locale_Data::getContent($locale, 'era', array('gregorian', '1'));
+                $era = Zend_Locale_Data::getContent($locale, 'era', array('gregorian', 'Names', '1'));
                 if (!isset($era['1'])) {
                     return false;
                 }
