@@ -1,15 +1,15 @@
 <sect3 id="zend.view.helpers.initial.placeholder">
-    <title> 占位符（Placeholder）助手 </title>
+    <title> 占位符助手（Placeholder Helper） </title>
 
     <para>
-        <code>Placeholder</code> 视图助手用来在视图脚本和视图实例之间持久内容。它也提供一些有用的功能如：聚合内容、抓取视图脚本内容以后来用和添加pre-和post-文本到内容 （可以为聚合内容定制分隔符）。
+        <code>Placeholder</code> 视图助手用来在视图脚本和视图实例之间持久化内容。它也提供一些有用的功能如：聚合内容、抓取视图脚本内容以后来用和添加前置（pre-）和后置（post-）文本到内容 （还可以为聚合内容定制分隔符等）。
     </para>
 
     <example id="zend.view.helpers.initial.placeholder.usage">
         <title> 占位符的基本用法 </title>
 
         <para>
-            占位符的基本用法是持久视图数据。每个<code>Placeholder</code>助手的启用都需要一个占位符名称，助手接着返回一个占位符容器对象，你可以用来处理或者简单地输出。
+            占位符的基本用法是将视图中的数据持久化。每个<code>Placeholder</code>助手的启用都需要一个占位符名称，助手接着返回一个占位符容器对象，你可以用来处理或者简单地输出。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -26,11 +26,11 @@
         <title> 用占位符来聚合内容 </title>
 
         <para>
-            通过占位符来聚合内容有时候很有用。例如视图脚本可拥有一个变量数组，这个数组是用来获取消息然后显示，视图脚本可以决定这些（内容）如何解析。
+            通过占位符来聚合内容有时候很有用。例如视图脚本可拥有一个变量数组来存放数据，而视图脚本可以决定这些数据如何显示出来。
         </para>
 
         <para>
-            <code>Placeholder</code> 视图助手使用从 <code>ArrayObject</code> 扩展的容器，为处理数组提供了丰富的功能。另外，它为格式化存储在容器里的内容提供了众多的方法：
+            <code>Placeholder</code> 视图助手使用继承自 <code>ArrayObject</code> 的容器，为处理数组提供了丰富的功能。另外，它为格式化存储在容器里的内容提供了众多的方法：
         </para>
 
         <itemizedlist>
@@ -43,7 +43,7 @@
             </para></listitem>
 
             <listitem><para>
-                    <code>setSeparator($prefix)</code> 用分隔聚合内容来设置文本。任何时候使用 <code>getSeparator()</code> 来确定当前的设置是什么。
+                    <code>setSeparator($prefix)</code> 设置用来分隔聚合内容的分隔符。任何时候使用 <code>getSeparator()</code> 来确定当前的设置是什么。
             </para></listitem>
 
             <listitem><para>
@@ -67,12 +67,12 @@ $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
 
 <?php 
     echo $this->placeholder('foo'); 
-    // outputs as unordered list with pretty indentation
+	//输出一个带有漂亮缩进的HTML无序列表
 ?>
 ]]></programlisting>
 
         <para>
-            因为 <code>Placeholder</code> 容器对象从 <code>ArrayObject</code> 扩展而来，所以你可以很容易地给特定的键赋内容值，而不是简单地把它压进容器。键可以通过对象属性或数组键来访问。
+            因为 <code>Placeholder</code> 容器对象从 <code>ArrayObject</code> 继承而来，所以你可以很容易地给特定的键赋值，而不是简单地把它压进容器。键可以作为对象属性或数组键来访问。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -90,7 +90,7 @@ echo $foo['bar'];
         <title> 使用占位符（Placeholders）来抓取内容 </title>
 
         <para>
-            偶尔地在视图脚本（最容易的模板）为占位符放些内容，<code>Placeholder</code> 视图助手允许你抓取任意的内容，在以后用下列的 API 来解析：
+            有时你可能会在视图脚本（最容易的模板）为占位符放些内容，<code>Placeholder</code> 视图助手允许你抓取任意的内容，在以后用下列的 API 来解析并输出（本功能类似于缓冲输出－－Haohappy注）：
         </para>
 
         <itemizedlist>
@@ -108,7 +108,7 @@ echo $foo['bar'];
                 </para>
 
                 <para>
-                    <code>captureStart()</code> 锁住抓取直到 <code>captureEnd()</code> 被调用，不能嵌套抓取在同一个占位符容器里，这样做会引起一个异常。
+                    <code>captureStart()</code> 锁住抓取直到 <code>captureEnd()</code> 被调用，不能在同一个占位符容器里嵌套抓取，这样做会引起一个异常。
                 </para>
             </listitem>
 
@@ -148,11 +148,11 @@ foreach ($this->data as $datum): ?>
         <title> 具体占位符实现 </title>
 
         <para>
-            Zend Framework 带有无数的占位符的具体实现。这些是通常使用的占位符：doctype、page title、和各种各样的 &lt;head&gt; 元素。对所有情况，不带参数调用占位符将返回元素自己。
+            Zend Framework 自带有若干个具体实现的占位符，包括常用的占位符：doctype、page title、以及各种 &lt;head&gt; 元素。对所有情况，不带参数调用占位符将返回元素自己。
         </para>
 
         <para>
-            每个元素的文档分别列表如下：
+            每个元素的文档，请查看如下链接：
         </para>
 
         <itemizedlist>
