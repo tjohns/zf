@@ -44,8 +44,9 @@ abstract class Zend_Translate_Adapter {
      * @var array
      */
     protected $_options = array(
-        'clear' => false, // clear previous loaded translation data
-        'scan'  => null   // where to find the locale
+        'clear'  => false, // clear previous loaded translation data
+        'scan'   => null,  // where to find the locale
+        'locale' => null   // actual set locale/language 
     );
 
     /**
@@ -181,7 +182,7 @@ abstract class Zend_Translate_Adapter {
      */
     public function getLocale()
     {
-        return $this->_locale;
+        return $this->_options['locale'];
     }
 
 
@@ -209,7 +210,7 @@ abstract class Zend_Translate_Adapter {
             $locale = $temp[0];
         }
 
-        $this->_locale = $locale;
+        $this->_options['locale'] = $locale;
         if ($locale == "auto") {
             $this->_automatic = true;
         } else {
@@ -246,7 +247,7 @@ abstract class Zend_Translate_Adapter {
     public function getMessageIds($locale = null)
     {
         if (empty($locale) or !$this->isAvaiable($locale)) {
-            $locale = $this->_locale;
+            $locale = $this->_options['locale'];
         }
         return array_keys($this->_translate[$locale]);
     }
@@ -266,7 +267,7 @@ abstract class Zend_Translate_Adapter {
             return $this->_translate;
         }
         if (empty($locale) or !$this->isAvaiable($locale)) {
-            $locale = $this->_locale;
+            $locale = $this->_options['locale'];
         }
         return $this->_translate[$locale];
     }
@@ -328,7 +329,7 @@ abstract class Zend_Translate_Adapter {
             arsort($browser);
             foreach($browser as $language => $quality) {
                 if (array_key_exists($language, $this->_translate)) {
-                    $this->_locale = $language;
+                    $this->_options['locale'] = $language;
                     break;
                 }
             }
@@ -353,7 +354,7 @@ abstract class Zend_Translate_Adapter {
     public function translate($messageId, $locale = null)
     {
         if ($locale === null) {
-            $locale = $this->_locale;
+            $locale = $this->_options['locale'];
         } else {
             if (!$locale = Zend_Locale::isLocale($locale)) {
                 // language does not exist, return original string
@@ -415,7 +416,7 @@ abstract class Zend_Translate_Adapter {
             $original = false;
         }
         if ($locale === null) {
-            $locale = $this->_locale;
+            $locale = $this->_options['locale'];
         } else {
             if (!$locale = Zend_Locale::isLocale($locale)) {
                 // language does not exist, return original string
