@@ -112,7 +112,7 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
     }
 
     /**
-     * Implements Zend_Service_Technorati_ResultSet#current.
+     * Implements Zend_Service_Technorati_ResultSet::current().
      *
      * @return Zend_Service_Technorati_DailyCountsResult current result
      */

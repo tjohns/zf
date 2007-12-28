@@ -163,7 +163,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     }
 
     /**
-     * Implements Zend_Service_Technorati_ResultSet#current.
+     * Implements Zend_Service_Technorati_ResultSet::current().
      *
      * @return Zend_Service_Technorati_CosmosResult current result
      */

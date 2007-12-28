@@ -158,7 +158,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
     }
 
     /**
-     * Implements SeekableIterator#current.
+     * Implements SeekableIterator::current().
      *
      * @return  void
      * @throws  Zend_Service_Exception
@@ -167,7 +167,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
     // abstract public function current();
 
     /**
-     * Implements SeekableIterator#key.
+     * Implements SeekableIterator::key().
      *
      * @return  int
      */
@@ -177,7 +177,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
     }
 
     /**
-     * Implements SeekableIterator#next.
+     * Implements SeekableIterator::next().
      *
      * @return  void
      */
@@ -187,7 +187,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
     }
 
     /**
-     * Implements SeekableIterator#rewind.
+     * Implements SeekableIterator::rewind().
      *
      * @return  bool
      */
@@ -198,7 +198,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
     }
     
     /**
-     * Implement SeekableIterator#seek.
+     * Implement SeekableIterator::seek().
      *
      * @param   int $index
      * @return  void
@@ -215,7 +215,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
     }
 
     /**
-     * Implement SeekableIterator#valid.
+     * Implement SeekableIterator::valid().
      *
      * @return boolean
      */

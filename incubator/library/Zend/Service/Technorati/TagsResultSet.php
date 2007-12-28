@@ -52,7 +52,7 @@ class Zend_Service_Technorati_TagsResultSet extends Zend_Service_Technorati_Resu
     }
 
     /**
-     * Implements Zend_Service_Technorati_ResultSet#current.
+     * Implements Zend_Service_Technorati_ResultSet::current().
      *
      * @return Zend_Service_Technorati_TagsResult current result
      */

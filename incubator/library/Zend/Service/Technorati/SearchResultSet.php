@@ -66,7 +66,7 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
     }
 
     /**
-     * Implements Zend_Service_Technorati_ResultSet#current.
+     * Implements Zend_Service_Technorati_ResultSet::current().
      *
      * @return Zend_Service_Technorati_SearchResult current result
      */
