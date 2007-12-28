@@ -169,7 +169,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator
      * Implement SeekableIterator::seek()
      *
      * @param  int $index
-     * @return Zend_Service_Yahoo_Result
+     * @return void
      * @throws OutOfBoundsException
      */
     public function seek($index)
