@@ -50,12 +50,12 @@ abstract class Zend_Build_TestBase extends PHPUnit_Framework_TestCase
     public function __construct()
     {
         $this->_filesPath = dirname(__FILE__) . '/_files';
-        $this->_test_project_root = $this->_filesPath . DIRECTORY_SEPARATOR . "TestProject";
+        $this->_test_project_root = $this->_filesPath . DIRECTORY_SEPARATOR . "TestProject" . DIRECTORY_SEPARATOR;
     }
     
     protected function _cdToTestProject()
     {
-        chdir($this->_filesPath . DIRECTORY_SEPARATOR . "TestProject");
+        chdir($this->_test_project_root);
     }
     
     protected function _getGoldenOutput($filename)

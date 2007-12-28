@@ -29,11 +29,16 @@ require_once 'Zend/Build/Manifest.php';
 
 class Zend_Build_ManifestTest extends Zend_Build_TestBase
 {
-    const ACTION_TYPE        = 'action';
-    const RESOURCE_TYPE      = 'resource';
-    const TASK_TYPE          = 'task';
+    const ACTION_TYPE               = 'action';
+    const RESOURCE_TYPE             = 'resource';
+    const TASK_TYPE                 = 'task';
     
-    protected $_manifest;
+    const INTERNAL_ACTION_MF        = 'lib/Zend/Build/Action/TestIntAction-ZFManifest.xml';
+    const INTERNAL_RESOURCE_MF      = 'lib/Zend/Build/Resource/TestIntResource-ZFManifest.xml';
+    const EXTERNAL_ACTION_MF        = 'lib/Extra/Build/Action/TestExtAction-ZFManifest.xml';
+    const EXTERNAL_RESOURCE_MF      = 'lib/Extra/Build/Resource/TestExtResource-ZFManifest.xml';
+    
+    private $_manifest = null;
     
     /**
      * Set up test configuration
@@ -53,37 +58,56 @@ class Zend_Build_ManifestTest extends Zend_Build_TestBase
     
     public function teardown()
     {
-        unset($_manifest);
+        unset($this->_manifest);
+    }
+    
+    public function testActionResourceSeparateNamespaces()
+    {
+        print(getcwd());
+        $this->_manifest->init(array(self::INTERNAL_ACTION_MF, self::INTERNAL_RESOURCE_MF));
+        $internalActionContext = $this->_manifest->getContext(self::ACTION_TYPE, 'internal-test');
+        $internalActionContextAlias = $this->_manifest->getContext(self::ACTION_TYPE, 'it');
+        $internalResourceContext = $this->_manifest->getContext(self::RESOURCE_TYPE, 'internal-test');
+        $internalResourceContextAlias = $this->_manifest->getContext(self::RESOURCE_TYPE, 'it');
+        $this->assertNotNull($internalActionContext);
+        $this->assertNotNull($internalActionContextAlias);
+        $this->assertNotNull($internalResourceContext);
+        $this->assertNotNull($internalResourceContextAlias);
+        $this->assertSame($internalActionContext, $internalActionContextAlias);
+        $this->assertSame($internalResourceContext, $internalResourceContextAlias);
+        $this->assertNotSame($internalActionContext, $internalResourceContext);
+        $this->assertNotSame($internalActionContextAlias, $internalResourceContextAlias);
+        $this->assertNotSame($internalActionContext, $internalResourceContextAlias);
+        $this->assertNotSame($internalActionContextAlias, $internalResourceContext);
     }
 
     public function testGetInternalActionContext()
     {
-        $this->_testContext('internal-test', 'it');
+        $this->_testContext(self::ACTION_TYPE, 'internal-test', 'it');
     }
     
     public function testGetInternalResourceContext()
     {
-        
+        $this->_testContext(self::RESOURCE_TYPE, 'internal-test', 'it');
     }
     
     public function testGetExternalActionContext()
     {
-        
+        $this->_testContext(self::ACTION_TYPE, 'external-test', 'et');
     }
     
     public function testGetExternalResourceContext()
     {
-        
+        $this->_testContext(self::RESOURCE_TYPE, 'external-test', 'et');
     }
     
-    private function _testContext($contextName, $contextAlias)
+    private function _testContext($contextType, $contextName, $contextAlias)
     {
-        $_manifestArray = $this->_manifest->toArray();
-        $this->assertArrayHasKey(self::ACTION_TYPE, $_manifestArray);
-        $contextName = 'internal-test';
-        $contextAlias = 'it';
-        $this->assertArrayHasKey($contextName, $_manifestArray[self::ACTION_TYPE]);
-        $this->assertArrayHasKey($contextAlias, $_manifestArray[self::ACTION_TYPE]);
-        $this->assertSame($_manifestArray[self::ACTION_TYPE][$contextName], $_manifestArray[self::ACTION_TYPE][$contextAlias]);
+        // Look through all dirs in the include path
+        $this->_manifest->init();
+        $this->assertNotNull($this->_manifest->getContext($contextType, $contextName));
+        $this->assertNotNull($this->_manifest->getContext($contextType, $contextAlias));
+        $this->assertSame($this->_manifest->getContext($contextType, $contextName),
+                          $this->_manifest->getContext($contextType, $contextAlias));
     }
 }

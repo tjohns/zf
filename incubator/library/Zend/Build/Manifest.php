@@ -29,26 +29,18 @@ class Zend_Build_Manifest
     const CONSOLE_CONTEXT_CONFIG_NAME  = 'context';
     
     private static $_instance = null;
-    private $_manifestArray = array(); 
+    
+    /**
+     * var Serves as a simple index in to the config array for this manifest instance.
+     */
+    private $_configIndex = array();
+    private $_configArray = array(); 
     
     private function __construct()
     {
-        // First get a list of all the manifest files on the include path
-        $foundFiles = array();
-        $includeDirs = explode(PATH_SEPARATOR, get_include_path());
-        foreach($includeDirs as $dir)
-        {
-            $foundFiles = array_merge($foundFiles, $this->_recursiveSearch(self::MANIFEST_FILE_PATTERN, $dir));
-        }
-        
-        // Now load all the manifest files
-        foreach($foundFiles as $file)
-        {
-            $this->_loadManifestFile($file);
-        }
     }
     
-    private function __clone() {}   
+    private function __clone() {}  
     
     public function getInstance()
     {
@@ -59,6 +51,29 @@ class Zend_Build_Manifest
         return self::$_instance;
     }
     
+    public function init(array $files = null)
+    {
+        // If files isn't specified, look for all valid ZFManifest files on the include path.
+        if (!isset($files)) {
+            $files = array();
+            $includeDirs = explode(PATH_SEPARATOR, get_include_path());
+            foreach ($includeDirs as $dir) {
+                $files = array_merge($files, $this->_recursiveSearch(self::MANIFEST_FILE_PATTERN, $dir));
+            }
+        }
+        
+        // Now load all the manifest files
+        foreach ($files as $file)
+        {
+            try {
+                $this->_loadManifestFile($file);
+            } catch(Zend_Build_Manifest_NameConflictException $e) {
+                // Oftentimes include paths can overlap, so this should issue a warning and continue.
+                continue;
+            }
+        }
+    }
+
     private function _recursiveSearch($pattern, $dir)
     {
         $contents = scandir($dir);
@@ -86,14 +101,22 @@ class Zend_Build_Manifest
     {
         // Figure out which config class to use and load it
         $extension = substr(strrchr($file, "."), 1);
+        
+        if(strtolower($extension) != 'xml') {
+            require_once 'Zend/Build/Exception.php';
+            throw new Zend_Build_Exception("Currently XML is the only config format supported for manifest files." .
+                                           "Extension '$extension' is invalid.");
+        }
+        
         $configClass = self::ZEND_CONFIG_PACKAGE . ucfirst(strtolower($extension));
+        
         try {
             require_once 'Zend/Loader.php';
             Zend_Loader::loadClass($configClass, explode(PATH_SEPARATOR, get_include_path()));
         }
         catch(Zend_Exception $e)
         {
-            // Problem with loading the class
+            // Problem with loading the config class
             require_once 'Zend/Build/Exception.php';
             throw new Zend_Build_Exception("Config class '$configClass' could not be found.");
         }
@@ -108,45 +131,69 @@ class Zend_Build_Manifest
                 $consoleContext = $value;
             }
             
-            if(!isset($consoleContext->name))
+            // Check that 'name' is set first
+            $name = $consoleContext->name;
+            if(!isset($name))
             {
-                // Problem with loading the class
                 require_once 'Zend/Build/Exception.php';
                 throw new Zend_Build_Exception("Console context in '$file' does not have required 'name' attribute.");
             }
             
-            $name = $consoleContext->name;
-            $alias = $consoleContext->alias;
-            // Create separate sections so that different kinds of contexts can live in different namespaces
+            // Create separate sections in the index so that different kinds of contexts can live in different namespaces
+            // and still be efficiently accessed.
+            
             $type = $consoleContext->type;
-            
-            // Create it under indexes for 'name' and 'shortname' after testing them
-            if(isset($manifestArray[$type]) && isset($manifestArray[$type][$name])) {
-                // Problem with loading the class
-                require_once 'Zend/Build/Exception.php';
-                throw new Zend_Build_Exception("Manifest already contains a context with name '$name' and type '$type'.");
+            //Index it under key for 'name' after testing it to see if we've already added it
+            if (isset($this->_configIndex[$type])) {
+                if (isset($this->_configIndex[$type][$name])) {
+                    // Problem with loading the class
+                    require_once 'Zend/Build/Manifest/NameConflictException.php';
+                    throw new Zend_Build_Manifest_NameConflictException(
+                        "Manifest already contains a context with name '$name' and type '$type'."
+                    );
+                } else {
+                    // Do nothing. Type already maps to an array in the index.
+                }
             } else {
-                $manifestArray[$type][$name] = $consoleContext;
+                // Need to create an array for type to map to.
+                $this->_configIndex[$type] = array();
             }
             
-            if(isset($alias) && isset($manifestArray[$type]) && isset($manifestArray[$type][$alias])) {
-                // Problem with loading the class
-                require_once 'Zend/Build/Exception.php';
-                throw new Zend_Build_Exception("Manifest already contains a console context with alias '$alias'");
-            } else {
-                $manifestArray[$type][$alias] = $consoleContext->toArray();
+            $this->_configArray[] = $consoleContext;
+            $this->_configIndex[$type][$name] = $consoleContext;
+            
+            $alias = $consoleContext->alias;
+            
+            // Also index it under 'alias' for instant access
+            if(isset($alias)) {
+                if (isset($this->_configIndex[$type]) && isset($this->_configIndex[$type][$alias])) {
+                    require_once 'Zend/Build/Exception.php';
+                    throw new Zend_Build_Exception("Manifest already contains a console context with alias '$alias'");
+                } else {
+                    // Type must map to an array after handling the name above.
+                    $this->_configIndex[$type][$alias] = $consoleContext;
+                }
             }
+        }
+    }
+    
+    public function getContext($type, $name)
+    {
+        if (array_key_exists($type, $this->_configIndex) && array_key_exists($name, $this->_configIndex[$type])) {
+            return $this->_configIndex[$type][$name];
+        } else {
+            return null;
         }
     }
     
     public function toConfig($allowModifications = true)
     {
         require_once('Zend/Config.php');
-        return new Zend_Config(_manifestArray, $allowModifications);
+        return new Zend_Config($this->toArray(), $allowModifications);
     }
     
     public function toArray()
-    {
-        return array($this->_manifestArray);
+    {   
+        return $this->_configArray;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <configdata>
-    <context type = 'resource' name = 'build' alias = 'b' class='Zend_Build_Resource_Build'>
+    <context type = 'resource' name = 'internal-test' alias = 'it' class='Zend_Build_Resource_Build'>
         <attribute getopt='apple|a'>
             <usage>
                 This is how you use apple with test.
