@@ -167,6 +167,17 @@ class Zend_Pdf_Page
     private $_saveCount = 0;
 
     /**
+     * Safe Graphics State semafore
+     * 
+     * If it's false, than we can't be sure Graphics State is restored withing 
+     * context of previous contents stream (ex. drawing coordinate system may be rotated).
+     * We should encompass existing content with save/restore GS operators
+     * 
+     * @var boolean 
+     */
+    private $_safeGS;
+
+    /**
      * Current font
      *
      * @var Zend_Pdf_Resource_Font
@@ -229,6 +240,8 @@ class Zend_Pdf_Page
             $this->_pageDictionary = $param1;
             $this->_objFactory     = $param2;
             $this->_attached       = true;
+            $this->_safeGS         = false;
+
             return;
 
         } else if ($param1 instanceof Zend_Pdf_Page && $param2 === null && $param3 === null) {
@@ -236,8 +249,9 @@ class Zend_Pdf_Page
             // Let already existing content and resources to be shared between pages
             // We don't give existing content modification functionality, so we don't need "deep copy"
             $this->_objFactory = $param1->_objFactory;
-            $this->_attached = &$param1->_attached;
-
+            $this->_attached   = &$param1->_attached;
+            $this->_safeGS     = false;
+            
             $this->_pageDictionary = $this->_objFactory->newObject(new Zend_Pdf_Element_Dictionary());
 
             foreach ($param1->_pageDictionary->getKeys() as $key) {
@@ -265,7 +279,8 @@ class Zend_Pdf_Page
                    ($param2 === null || $param2 instanceof Zend_Pdf_ElementFactory_Interface) &&
                    $param3 === null) {
             $this->_objFactory = ($param2 !== null)? $param2 : Zend_Pdf_ElementFactory::createFactory(1);
-            $this->_attached = false;
+            $this->_attached   = false;
+            $this->_safeGS     = true; /** New page created. That's users App responsibility to track GS changes */
 
             switch (strtolower($param1)) {
                 case 'a4':
@@ -303,6 +318,7 @@ class Zend_Pdf_Page
                    ($param3 === null || $param3 instanceof Zend_Pdf_ElementFactory_Interface)) {
             $this->_objFactory = ($param3 !== null)? $param3 : Zend_Pdf_ElementFactory::createFactory(1);
             $this->_attached = false;
+            $this->_safeGS     = true; /** New page created. That's users App responsibility to track GS changes */
             $pageWidth  = $param1;
             $pageHeight = $param2;
 
@@ -435,6 +451,27 @@ class Zend_Pdf_Page
             $this->_pageDictionary->Contents->touch();
         }
 
+        if ((!$this->_safeGS)  &&  (count($this->_pageDictionary->Contents->items) != 0)) {
+        	/**
+        	 * Page already has some content which is not treated as safe.
+        	 * 
+        	 * Add save/restore GS operators
+        	 */
+            $this->_addProcSet('PDF');
+        	
+        	$newContentsArray = new Zend_Pdf_Element_Array();
+        	$newContentsArray->items[] = $this->_objFactory->newStreamObject(" q\n");
+        	foreach ($this->_pageDictionary->Contents->items as $contentStream) {
+        		$newContentsArray->items[] = $contentStream;
+        	}
+            $newContentsArray->items[] = $this->_objFactory->newStreamObject(" Q\n");
+
+        	$this->_pageDictionary->touch();
+        	$this->_pageDictionary->Contents = $newContentsArray;
+        	
+        	$this->_safeGS = true;
+        }
+        
         $this->_pageDictionary->Contents->items[] =
                 $this->_objFactory->newStreamObject($this->_contents);
 
