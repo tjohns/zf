@@ -25,17 +25,22 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '../../../TestHelper.php';
 
 /**
  * Patch for default timezone in PHP >= 5.1.0
  */
-if (!ini_get('date.timezone')) date_default_timezone_set(@date_default_timezone_get());
+if (!ini_get('date.timezone')) {
+    date_default_timezone_set(@date_default_timezone_get());
+}
 
 /**
  * @see Zend_Service_Technorati
  */
 require_once 'Zend/Service/Technorati.php';
+
+
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
 /**
@@ -47,36 +52,36 @@ require_once 'Zend/Service/Technorati.php';
  */
 class Zend_Service_Technorati_TechnoratiTestHelper
 {
-    public static function getTestFilePath($file) 
+    public static function getTestFilePath($file)
     {
         return dirname(__FILE__) . '/_files/' . $file;
     }
-    
-    public static function getTestFileContentAsDom($file) 
+
+    public static function getTestFileContentAsDom($file)
     {
         $dom = new DOMDocument();
         $dom->load(self::getTestFilePath($file));
         return $dom;
     }
-        
-    public static function getTestFileElementsAsDom($file, $exp = '//item') 
+
+    public static function getTestFileElementsAsDom($file, $exp = '//item')
     {
         $dom = self::getTestFileContentAsDom($file);
         $xpath = new DOMXPath($dom);
         return $xpath->query($exp);
     }
-            
-    public static function getTestFileElementAsDom($file, $exp = '//item', $item = 0) 
+
+    public static function getTestFileElementAsDom($file, $exp = '//item', $item = 0)
     {
         $dom = self::getTestFileContentAsDom($file);
         $xpath = new DOMXPath($dom);
         $domElements = $xpath->query($exp);
         return $domElements->item($item);
     }
-    
-    public static function skipInvalidArgumentTypeTests() 
+
+    public static function skipInvalidArgumentTypeTests()
     {
-        // PHP < 5.2.0 returns a fatal error 
+        // PHP < 5.2.0 returns a fatal error
         // instead of a catchable Exception (ZF-2334)
         return version_compare(phpversion(), "5.2.0", "<");
     }
