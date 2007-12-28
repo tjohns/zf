@@ -23,9 +23,6 @@
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
-/** Zend_Translate_Exception */
-require_once 'Zend/Translate/Exception.php';
-
 /** Zend_Translate_Adapter */
 require_once 'Zend/Translate/Adapter.php';
 
@@ -70,23 +67,36 @@ class Zend_Translate_Adapter_Csv extends Zend_Translate_Adapter {
 
         $this->_file = @fopen($filename, 'rb');
         if (!$this->_file) {
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('Error opening translation file \'' . $filename . '\'.');
         }
 
         while(!feof($this->_file)) {
             $content = fgets($this->_file);
             $content = explode($options['separator'], $content);
-            for ($x = 0; $x < count($content); ++$x) {
-                if (isset($content[$x+1]) and (empty($content[$x+1]))) {
-                    $content[$x] .= $options['separator'];
-                    $length = 1;
-                    if (isset($content[$x+2])) {
-                        $content[$x] .= $content[$x+2];
-                        $length = 2;
-                    }
-                    array_splice($content, $x + 1, $length);
-                }
+
+            while ((count($content) > 1) and ($content[1] == "")) {
+                $value = array_shift($content);
+                array_shift($content);
+                $value2 = array_shift($content);
+                array_unshift($content, $value . $options['separator'] . $value2);
             }
+
+            $origin = array_shift($content);
+            while (count($content) > 1) {
+                $value2 = array_pop($content);
+                $value  = array_pop($content);
+
+                if ($value == "") {
+                    $value = $options['separator'];
+                }
+                if ($value2 == "") {
+                    $value2 = $options['separator'];
+                }
+                array_push($content, $value . $value2);
+            }
+            array_unshift($content, $origin);
+
             // # marks a comment in the translation source
             if ((!is_array($content) and (substr(trim($content), 0, 1) == "#")) or
                  (is_array($content) and (substr(trim($content[0]), 0, 1) == "#"))) {

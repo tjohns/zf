@@ -32,6 +32,23 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg3' => 'Message 3 (en)',
                                                          ));
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+
+        try {
+            $adapter = new Zend_Translate_Adapter_Array('hastofail');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
+
+        $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/array.php');
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+
+        try {
+            $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.csv');
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            // success
+        }
     }
 
     public function testToString()
@@ -114,7 +131,7 @@ class Zend_Translate_ArrayTest extends PHPUnit_Framework_TestCase
                                                           'msg3' => 'Message 3 (en)',
                                                          ), 'en');
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null), $adapter->getOptions());
+        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null, 'locale' => 'en'), $adapter->getOptions());
         $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }

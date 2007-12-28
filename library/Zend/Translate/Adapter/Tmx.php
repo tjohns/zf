@@ -23,9 +23,6 @@
 /** Zend_Locale */
 require_once 'Zend/Locale.php';
 
-/** Zend_Translate_Exception */
-require_once 'Zend/Translate/Exception.php';
-
 /** Zend_Translate_Adapter */
 require_once 'Zend/Translate/Adapter.php';
 
@@ -83,6 +80,7 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
         }
 
         if (!is_readable($filename)) {
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
         }
 
@@ -93,18 +91,12 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
         xml_set_character_data_handler($this->_file, "_contentElement");
 
         if (!xml_parse($this->_file, file_get_contents($filename))) {
-            throw new Zend_Translate_Exception(sprintf('XML error: %s at line %d',
-                      xml_error_string(xml_get_error_code($this->_file)),
-                      xml_get_current_line_number($this->_file)));
+            $ex = sprintf('XML error: %s at line %d',
+                          xml_error_string(xml_get_error_code($this->_file)),
+                          xml_get_current_line_number($this->_file));
             xml_parser_free($this->_file);
-        }
-
-        if ($this->_defined !== true) {
-            foreach ($this->_translate as $key => $value) {
-                if (!in_array($key, $this->_languages)) {
-                    $this->_languages[$key] = $key;
-                }
-            }
+            require_once 'Zend/Translate/Exception.php';
+            throw new Zend_Translate_Exception($ex);
         }
     }
 
@@ -128,9 +120,6 @@ class Zend_Translate_Adapter_Tmx extends Zend_Translate_Adapter {
                         $this->_tuv = $attrib['xml:lang'];
                         if (!array_key_exists($this->_tuv, $this->_translate)) {
                             $this->_translate[$this->_tuv] = array();
-                        }
-                        if (!array_key_exists($this->_tuv, $this->_languages) and ($this->_defined === true)) {
-                            $this->_languages[$this->_tuv] = $this->_tuv;
                         }
                     }
                     break;

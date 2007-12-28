@@ -335,7 +335,7 @@ class Zend_Http_CookieJar
      */
     public static function fromResponse(Zend_Http_Response $response, $ref_uri)
     {
-        $jar = new Zend_Http_CookieJar();
+        $jar = new self();
         $jar->addCookiesFromResponse($response, $ref_uri);
         return $jar;
     }

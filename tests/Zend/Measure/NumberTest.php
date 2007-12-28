@@ -249,12 +249,12 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testConvertTo()
     {
         $value = new Zend_Measure_Number('III',Zend_Measure_Number::ROMAN, 'en');
-        $this->assertEquals(3, $value->convertTo(Zend_Measure_Number::DECIMAL));
+        $this->assertEquals('3 ⑽', $value->convertTo(Zend_Measure_Number::DECIMAL));
 
         $value = new Zend_Measure_Number('XXV',Zend_Measure_Number::ROMAN, 'en');
-        $this->assertEquals(25, $value->convertTo(Zend_Measure_Number::DECIMAL));
+        $this->assertEquals('25 ⑽', $value->convertTo(Zend_Measure_Number::DECIMAL));
 
         $value = new Zend_Measure_Number('_X',Zend_Measure_Number::ROMAN, 'en');
-        $this->assertEquals(10000, $value->convertTo(Zend_Measure_Number::DECIMAL));
+        $this->assertEquals('10000 ⑽', $value->convertTo(Zend_Measure_Number::DECIMAL));
     }
 }

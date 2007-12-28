@@ -244,7 +244,7 @@ class Zend_Mime_Message
         require_once 'Zend/Mime/Decode.php';
         $parts = Zend_Mime_Decode::splitMessageStruct($message, $boundary, $EOL);
 
-        $res = new Zend_Mime_Message();
+        $res = new self();
         foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
             $newPart = new Zend_Mime_Part($part);
