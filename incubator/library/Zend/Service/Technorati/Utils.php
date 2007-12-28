@@ -64,7 +64,7 @@ class Zend_Service_Technorati_Utils
                  * @see Zend_Service_Technorati_Exception
                  */
                 require_once 'Zend/Service/Technorati/Exception.php';  
-                throw new Zend_Service_Technorati_Exception($e);
+                throw new Zend_Service_Technorati_Exception($e->getMessage());
             }
         }
         
