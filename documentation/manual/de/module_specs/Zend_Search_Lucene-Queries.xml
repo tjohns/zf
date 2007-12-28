@@ -343,7 +343,7 @@ $hits  = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>Wildcard Abfragen</title>
+        <title>Beginnend mit 1.5, Wildcard Abfragen</title>
         <para>
             Wildcard Abfragen können dazu verwendet werden um nach Dokumenten zu suchen die Strings enthalten
             welche den spezifizierten Patterns entsprechen. 
@@ -379,6 +379,61 @@ $hits  = $index->find($query);]]>
             <programlisting role="php"><![CDATA[<?php
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.queries.fuzzy">
+        <title>Beginnend mit 1.5, Fuzzy Abfragen</title>
+        <para>
+            Fuzzy Abfragen können verwendet werden um nach Dokumenten zu Suchen die Strings enthalten welche
+            Ausdrücken entsprechen die den spezifizierten Ausdrücken ähnlich sind.
+        </para>
+
+        <para>
+            Abfrage String:
+            <programlisting role="querystring"><![CDATA[field1:test~]]></programlisting>
+            Diese Abfrage trifft Dokumente die die Wörter 'test' 'text' 'best' und andere enthalten.
+        </para>
+
+        <para>oder</para>
+
+        <para>
+            Abfrageerstellung durch die API:
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Optional kann die Ähnlichkeit nach dem "~" Zeichen spezifiziert werden.
+        </para>
+
+        <para>
+            Abfrage String:
+            <programlisting role="querystring"><![CDATA[field1:test~0.4]]></programlisting>
+        </para>
+
+        <para>oder</para>
+
+        <para>
+            Abfrageerstellung durch die API:
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, 0.4);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Das term Feld ist optional. Zend_Search_Lucene durchsucht alle Felder in jedem Dokument ob ein
+            Feld nicht spezifiziert ist:
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term);
 $hits  = $index->find($query);]]>
             </programlisting>
         </para>
