@@ -60,6 +60,11 @@ class Zend_Service_Technorati_BlogInfoResultTest extends PHPUnit_Framework_TestC
 
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
+        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
+            return;
+        }
+        
         try {
             $object = new Zend_Service_Technorati_BlogInfoResult('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');

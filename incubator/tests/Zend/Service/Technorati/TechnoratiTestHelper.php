@@ -73,4 +73,11 @@ class Zend_Service_Technorati_TechnoratiTestHelper
         $domElements = $xpath->query($exp);
         return $domElements->item($item);
     }
+    
+    public static function skipInvalidArgumentTypeTests() 
+    {
+        // PHP < 5.2.0 returns a fatal error 
+        // instead of a catchable Exception (ZF-2334)
+        return version_compare(phpversion(), "5.2.0", "<");
+    }
 }

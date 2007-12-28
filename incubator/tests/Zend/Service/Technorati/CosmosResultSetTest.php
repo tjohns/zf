@@ -59,6 +59,11 @@ class Zend_Service_Technorati_CosmosResultSetTest extends PHPUnit_Framework_Test
 
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
+        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
+            return;
+        }
+        
         try {
             $object = new Zend_Service_Technorati_CosmosResultSet('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');

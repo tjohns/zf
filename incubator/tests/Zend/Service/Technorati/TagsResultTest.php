@@ -17,7 +17,7 @@
  * @package    Zend_Service_Technorati
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
+ * @version    $Id: TagsResultTest.php 7253 2007-12-24 13:34:35Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -59,6 +59,11 @@ class Zend_Service_Technorati_TagsResultTest extends PHPUnit_Framework_TestCase
 
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
+        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
+            return;
+        }
+        
         try {
             $object = new Zend_Service_Technorati_TagsResult('foo');
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
