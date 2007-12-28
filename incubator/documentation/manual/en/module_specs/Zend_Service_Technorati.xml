@@ -153,7 +153,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->search('PHP');
 
 // $result is an instance of Zend_Service_Technorati_SearchResult
-$result = $resultSet->seek(1);
+$resultSet->seek(1);
+$result = $resultSet->current();
 ]]>
             </programlisting>
         </example>
@@ -290,8 +291,8 @@ require_once 'Zend/Service/Technorati.php';
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->cosmos('http://devzone.zend.com/');
 
-echo "<p>Reading " . $resultSet->totalResultsReturned .
-     " of " . $resultSet->totalResultsAvailable . " available results</p>";
+echo "<p>Reading " . $resultSet->totalResults() .
+     " of " . $resultSet->totalResultsAvailable() . " available results</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getWeblog()->getName() . "</li>";
@@ -319,8 +320,8 @@ require_once 'Zend/Service/Technorati.php';
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->search('zend framework');
 
-echo "<p>Reading " . $resultSet->totalResultsReturned .
-     " of " . $resultSet->totalResultsAvailable . " available results</p>";
+echo "<p>Reading " . $resultSet->totalResults() .
+     " of " . $resultSet->totalResultsAvailable() . " available results</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getWeblog()->getName() . "</li>";
@@ -348,8 +349,8 @@ require_once 'Zend/Service/Technorati.php';
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->tag('php');
 
-echo "<p>Reading " . $resultSet->totalResultsReturned .
-     " of " . $resultSet->totalResultsAvailable . " available results</p>";
+echo "<p>Reading " . $resultSet->totalResults() .
+     " of " . $resultSet->totalResultsAvailable() . " available results</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getWeblog()->getName() . "</li>";
@@ -403,8 +404,8 @@ require_once 'Zend/Service/Technorati.php';
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->topTags();
 
-echo "<p>Reading " . $resultSet->totalResultsReturned .
-     " of " . $resultSet->totalResultsAvailable . " available results</p>";
+echo "<p>Reading " . $resultSet->totalResults() .
+     " of " . $resultSet->totalResultsAvailable() . " available results</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getTag() . "</li>";
@@ -456,8 +457,8 @@ require_once 'Zend/Service/Technorati.php';
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->blogPostTags('http://devzone.zend.com/');
 
-echo "<p>Reading " . $resultSet->totalResultsReturned .
-     " of " . $resultSet->totalResultsAvailable . " available results</p>";
+echo "<p>Reading " . $resultSet->totalResults() .
+     " of " . $resultSet->totalResultsAvailable() . " available results</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getTag() . "</li>";
