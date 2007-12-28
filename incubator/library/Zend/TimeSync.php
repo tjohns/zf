@@ -150,39 +150,16 @@ class Zend_TimeSync implements IteratorAggregate
     }
 
     /**
-     * Sets the value for a given option
-     *
-     * This will replace any currently defined options.
-     *
-     * @param   integer|string $key - The option's identifier
-     * @param   integer|string $key - The option's value
-     * @throws  Zend_TimeSync_Exception
-     */
-    public function setOption($key, $value)
-    {
-        if ((bool) preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $key)) {
-            Zend_TimeSync::$options[$key] = $value;
-        } else {
-            throw new Zend_TimeSync_Exception("Invalid offset key: '$key'");
-        }
-    }
-
-    /**
      * Sets the value for the given options
      *
      * This will replace any currently defined options.
      *
      * @param   array $options - An array of options to be set
-     * @throws  Zend_TimeSync_Exception
      */
-    public function setOptions(Array $options)
+    public static function setOptions(array $options)
     {
-        if (!is_array($options)) {
-            throw new Zend_TimeSync_Exception("'$options' is expected to be an array, '" . gettype($options) . "' given");
-        }
-
         foreach ($options as $key => $value) {
-            $this->setOption($key, $value);
+            Zend_TimeSync::$options[$key] = $value;
         }
     }
 
@@ -192,7 +169,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @param   string|integer $alias - The alias from the timeserver to set as current
      * @throws  Zend_TimeSync_Exception
      */
-    public function setCurrent($alias)
+    public function setServer($alias)
     {
     	if (array_key_exists($alias, $this->_timeservers)) {
             $this->_current = $this->_timeservers[$alias];
@@ -208,9 +185,13 @@ class Zend_TimeSync implements IteratorAggregate
      * @return  mixed
      * @throws  Zend_TimeSync_Exception
      */
-    public function getOption($key)
+    public static function getOptions($key = null)
     {
-    	if (array_key_exists($key, Zend_TimeSync::$options)) {
+        if ($key == null) {
+            return Zend_TimeSync::$options;
+        }
+
+        if (array_key_exists($key, Zend_TimeSync::$options)) {
             return Zend_TimeSync::$options[$key];
         } else {
             throw new Zend_TimeSync_Exception("'$key' does not point to valid option");
@@ -219,32 +200,25 @@ class Zend_TimeSync implements IteratorAggregate
 
     /**
      * Return a specified timeserver by alias
+     * If no alias is given it will return the current timeserver
      *
      * @param   string|integer $alias - The alias from the timeserver to return
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
-    public function get($alias)
+    public function getServer($alias = null)
     {
-    	if (array_key_exists($alias, $this->_timeservers)) {
+        if ($alias === null) {
+            if (isset($this->_current) && $this->_current !== false) {
+                return $this->_current;
+            } else {
+                throw new Zend_TimeSync_Exception('there is no timeserver set');
+            }
+        }
+        if (array_key_exists($alias, $this->_timeservers)) {
             return $this->_timeservers[$alias];
         } else {
             throw new Zend_TimeSync_Exception("'$alias' does not point to valid timeserver");
-        }
-    }
-
-    /**
-     * Returns the timeserver that is currently set
-     *
-     * @return object
-     * @throws Zend_TimeSync_Exception
-     */
-    public function getCurrent()
-    {
-        if (isset($this->_current) && $this->_current !== false) {
-            return $this->_current;
-        } else {
-            throw new Zend_TimeSync_Exception('there is no timeserver set');
         }
     }
 
@@ -255,7 +229,7 @@ class Zend_TimeSync implements IteratorAggregate
      */
     public function getInfo()
     {
-        return $this->getCurrent()->getInfo();
+        return $this->getServer()->getInfo();
     }
 
     /**
