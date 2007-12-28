@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_TagResultSet
@@ -40,36 +40,21 @@ require_once 'Zend/Service/Technorati/TagResultSet.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TagResultSetTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_TagResultSetTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestTagResultSet.xml');
+        $this->dom = self::getTestFileContentAsDom('TestTagResultSet.xml');
     }
-
+    
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_TagResultSet($this->dom);
-            $this->assertType('Zend_Service_Technorati_TagResultSet', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_TagResultSet', array($this->dom));
     }
-
+    
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-        
-        try {
-            $object = new Zend_Service_Technorati_TagResultSet('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMDocument", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_TagResultSet', 'DOMDocument');
     }
 
     public function testTagResultSet()
@@ -77,15 +62,23 @@ class Zend_Service_Technorati_TagResultSetTest extends PHPUnit_Framework_TestCas
         $object = new Zend_Service_Technorati_TagResultSet($this->dom);
 
         // check counts
-        $this->assertType('integer', $object->totalResultsReturned);
-        $this->assertEquals(3, $object->totalResultsReturned);
-        $this->assertType('integer', $object->totalResultsAvailable);
-        $this->assertEquals(268877, $object->totalResultsAvailable);
+        $this->assertType('integer', $object->totalResults());
+        $this->assertEquals(3, $object->totalResults());
+        $this->assertType('integer', $object->totalResultsAvailable());
+        $this->assertEquals(268877, $object->totalResultsAvailable());
         
         // check properties
         $this->assertType('integer', $object->getPostsMatched());
         $this->assertEquals(268877, $object->getPostsMatched());
         $this->assertType('integer', $object->getBlogsMatched());
         $this->assertEquals(1812, $object->getBlogsMatched());
+    }
+    
+    public function testTagResultSetItemsInstanceOfResult() 
+    {
+        $this->_testResultSetItemsInstanceOfResult(
+                    'Zend_Service_Technorati_TagResultSet', 
+                    array($this->dom), 
+                    'Zend_Service_Technorati_TagResult');
     }
 }

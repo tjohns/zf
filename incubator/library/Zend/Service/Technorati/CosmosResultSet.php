@@ -110,16 +110,16 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
             }
         }
         
-        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
         
         // total number of results depends on query type
         // for now check only getInboundLinks() and getInboundBlogs() value
         if ((int) $this->getInboundLinks() > 0) {
-            $this->totalResultsAvailable = $this->getInboundLinks();
+            $this->_totalResultsAvailable = $this->getInboundLinks();
         } elseif ((int) $this->getInboundBlogs() > 0) {
-            $this->totalResultsAvailable = $this->getInboundBlogs();
+            $this->_totalResultsAvailable = $this->getInboundBlogs();
         } else {
-            $this->totalResultsAvailable = 0;
+            $this->_totalResultsAvailable = 0;
         }
     }
     
@@ -163,8 +163,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     }
 
     /**
-     * Implements SeekableIterator::current and
-     * overwrites Zend_Service_Technorati_ResultSet::current()
+     * Implements Zend_Service_Technorati_ResultSet#current.
      *
      * @return Zend_Service_Technorati_CosmosResult current result
      */
@@ -174,6 +173,6 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
          * @see Zend_Service_Technorati_CosmosResult
          */
         require_once 'Zend/Service/Technorati/CosmosResult.php';
-        return new Zend_Service_Technorati_CosmosResult($this->_results->item($this->_currentItem));
+        return new Zend_Service_Technorati_CosmosResult($this->_results->item($this->_currentIndex));
     }
 }

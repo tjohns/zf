@@ -61,13 +61,12 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
         $result = $this->_xpath->query('//result/querycount/text()');
         if ($result->length == 1) $this->_queryCount = (int) $result->item(0)->data;
         
-        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        $this->totalResultsAvailable = (int) $this->_queryCount;
+        $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->_totalResultsAvailable = (int) $this->_queryCount;
     }
 
     /**
-     * Implements SeekableIterator::current and
-     * overwrites Zend_Service_Technorati_ResultSet::current()
+     * Implements Zend_Service_Technorati_ResultSet#current.
      *
      * @return Zend_Service_Technorati_SearchResult current result
      */
@@ -77,6 +76,6 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
          * @see Zend_Service_Technorati_SearchResult
          */
         require_once 'Zend/Service/Technorati/SearchResult.php';
-        return new Zend_Service_Technorati_SearchResult($this->_results->item($this->_currentItem));
+        return new Zend_Service_Technorati_SearchResult($this->_results->item($this->_currentIndex));
     }
 }

@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_TagsResult
@@ -40,36 +40,21 @@ require_once 'Zend/Service/Technorati/TagsResult.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TagsResultTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_TagsResultTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->domElements = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementsAsDom('TestTagsResultSet.xml');
+        $this->domElements = self::getTestFileElementsAsDom('TestTagsResultSet.xml');
     }
-
+    
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_TagsResult($this->domElements->item(0));
-            $this->assertType('Zend_Service_Technorati_TagsResult', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_TagsResult', array($this->domElements->item(0)));
     }
-
+    
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-        
-        try {
-            $object = new Zend_Service_Technorati_TagsResult('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMElement", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_TagsResult', 'DOMElement');
     }
 
     public function testTagsResult()

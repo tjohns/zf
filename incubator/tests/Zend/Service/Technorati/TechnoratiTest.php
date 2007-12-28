@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 
 /**
@@ -35,9 +35,9 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php'
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_TechnoratiTest extends Zend_Service_Technorati_TestCase
 {
-    const TEST_APYKEY = 'somevalidapikey';
+    const TEST_APY_KEY = 'somevalidapikey';
     const TEST_PARAM_COSMOS = 'http://www.simonecarletti.com/blog/';
     const TEST_PARAM_SEARCH = 'google';
     const TEST_PARAM_TAG = 'google';
@@ -62,25 +62,20 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
             'adapter' => $adapter
         ));
         
-        $this->technorati = new Zend_Service_Technorati(self::TEST_APYKEY);
+        $this->technorati = new Zend_Service_Technorati(self::TEST_APY_KEY);
         $this->adapter = $adapter;
         $this->technorati->getRestClient()->setHttpClient($client);
     }
-
+    
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati(self::TEST_APYKEY);
-            $this->assertType('Zend_Service_Technorati', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception " . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati', array(self::TEST_APY_KEY));
     }
 
     public function testApiKeyMatches()
     {
         $object = $this->technorati;
-        $this->assertEquals(self::TEST_APYKEY, $object->getApiKey());
+        $this->assertEquals(self::TEST_APY_KEY, $object->getApiKey());
     }
 
     public function testSetGetApiKey()
@@ -97,8 +92,9 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $result = $this->_setResponseFromFile('TestCosmosSuccess.xml')->cosmos(self::TEST_PARAM_COSMOS);
 
         $this->assertType('Zend_Service_Technorati_CosmosResultSet', $result);
-        $this->assertEquals(2, $result->totalResultsReturned);
-        $this->assertType('Zend_Service_Technorati_CosmosResult', $result->seek(0));
+        $this->assertEquals(2, $result->totalResults());
+        $result->seek(0);
+        $this->assertType('Zend_Service_Technorati_CosmosResult', $result->current());
         // content is validated in Zend_Service_Technorati_CosmosResultSet tests
         // $this->assertEquals(2, count($result)); // TODO: failed?
     }
@@ -160,8 +156,9 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $result = $this->_setResponseFromFile('TestSearchSuccess.xml')->search(self::TEST_PARAM_SEARCH);
 
         $this->assertType('Zend_Service_Technorati_SearchResultSet', $result);
-        $this->assertEquals(2, $result->totalResultsReturned);
-        $this->assertType('Zend_Service_Technorati_SearchResult', $result->seek(0));
+        $this->assertEquals(2, $result->totalResults());
+        $result->seek(0);
+        $this->assertType('Zend_Service_Technorati_SearchResult', $result->current());
         // content is validated in Zend_Service_Technorati_SearchResultSet tests
     }
 
@@ -222,8 +219,9 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $result = $this->_setResponseFromFile('TestTagSuccess.xml')->tag(self::TEST_PARAM_TAG);
 
         $this->assertType('Zend_Service_Technorati_TagResultSet', $result);
-        $this->assertEquals(2, $result->totalResultsReturned);
-        $this->assertType('Zend_Service_Technorati_TagResult', $result->seek(0));
+        $this->assertEquals(2, $result->totalResults());
+        $result->seek(0);
+        $this->assertType('Zend_Service_Technorati_TagResult', $result->current());
         // content is validated in Zend_Service_Technorati_TagResultSet tests
     }
 
@@ -278,8 +276,9 @@ class Zend_Service_Technorati_TechnoratiTest extends PHPUnit_Framework_TestCase
         $result = $this->_setResponseFromFile('TestDailyCountsSuccess.xml')->dailyCounts(self::TEST_PARAM_DAILYCOUNT);
 
         $this->assertType('Zend_Service_Technorati_DailyCountsResultSet', $result);
-        $this->assertEquals(180, $result->totalResultsReturned);
-        $this->assertType('Zend_Service_Technorati_DailyCountsResult', $result->seek(0));
+        $this->assertEquals(180, $result->totalResults());
+        $result->seek(0);
+        $this->assertType('Zend_Service_Technorati_DailyCountsResult', $result->current());
         // content is validated in Zend_Service_Technorati_DailyCountsResultSet tests
     }
 

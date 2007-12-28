@@ -17,7 +17,7 @@
  * @package    Zend_Service_Technorati
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
+ * @version    $Id: TechnoratiTestHelper.php 7286 2007-12-28 16:16:43Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -50,8 +50,44 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_TechnoratiTestHelper
+class Zend_Service_Technorati_TestCase extends PHPUnit_Framework_TestCase
 {
+    protected function _testConstruct($className, $args)
+    {
+        $reflection = new ReflectionClass($className);
+        try {
+            $object = $reflection->newInstanceArgs($args);
+            $this->assertType($className, $object);
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->fail("Exception " . $e->getMessage() . " thrown");
+        }
+    }
+    
+    protected function _testConstructThrowsExceptionWithInvalidDom($className, $match)
+    {
+        if (self::skipInvalidArgumentTypeTests()) {
+            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
+            return;
+        }
+        
+        $reflection = new ReflectionClass($className);
+        try {
+            $object = $reflection->newInstanceArgs(array('foo'));
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Exception $e) {
+            $this->assertContains($match, $e->getMessage());
+        }
+    }
+    
+    protected function _testResultSetItemsInstanceOfResult($resultSetClassName, $args, $resultClassName)
+    {
+        $reflection = new ReflectionClass($resultSetClassName);
+        $resultset = $reflection->newInstanceArgs($args);
+        foreach ($resultset as $result) {
+            $this->assertType($resultClassName, $result);
+        }
+    }
+    
     public static function getTestFilePath($file)
     {
         return dirname(__FILE__) . '/_files/' . $file;

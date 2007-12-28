@@ -72,9 +72,9 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
         $result = $this->_xpath->query('//result/blogsmatched/text()');
         if ($result->length == 1) $this->_blogsMatched = (int) $result->item(0)->data;
         
-        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
         /** @todo Validate the following assertion */
-        $this->totalResultsAvailable = (int) $this->getPostsMatched();
+        $this->_totalResultsAvailable = (int) $this->getPostsMatched();
     }
     
     
@@ -97,8 +97,7 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
     }
 
     /**
-     * Implements SeekableIterator::current and
-     * overwrites Zend_Service_Technorati_ResultSet::current()
+     * Implements Zend_Service_Technorati_ResultSet#current.
      *
      * @return Zend_Service_Technorati_TagResult current result
      */
@@ -108,6 +107,6 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
          * @see Zend_Service_Technorati_TagResult
          */
         require_once 'Zend/Service/Technorati/TagResult.php';
-        return new Zend_Service_Technorati_TagResult($this->_results->item($this->_currentItem));
+        return new Zend_Service_Technorati_TagResult($this->_results->item($this->_currentIndex));
     }
 }

@@ -44,7 +44,7 @@ require_once 'Zend/Service/Technorati/Utils.php';
 class Zend_Service_Technorati_Weblog
 {
     /**
-     * Blog name as written in the feed
+     * Blog name as written in the feed.
      *
      * @var     string
      * @access  protected
@@ -52,7 +52,7 @@ class Zend_Service_Technorati_Weblog
     protected $_name;
 
     /**
-     * Base blog URL
+     * Base blog URL.
      *
      * @var     Zend_Uri_Http
      * @access  protected
@@ -60,7 +60,7 @@ class Zend_Service_Technorati_Weblog
     protected $_url;
 
     /**
-     * RSS feed URL, if any
+     * RSS feed URL, if any.
      *
      * @var     null|Zend_Uri_Http
      * @access  protected
@@ -68,7 +68,7 @@ class Zend_Service_Technorati_Weblog
     protected $_rssUrl;
 
     /**
-     * Atom feed URL, if any
+     * Atom feed URL, if any.
      *
      * @var     null|Zend_Uri_Http
      * @access  protected
@@ -76,7 +76,7 @@ class Zend_Service_Technorati_Weblog
     protected $_atomUrl;
 
     /**
-     * Number of unique blogs linking this blog
+     * Number of unique blogs linking this blog.
      *
      * @var     integer
      * @access  protected
@@ -84,7 +84,7 @@ class Zend_Service_Technorati_Weblog
     protected $_inboundBlogs;
 
     /**
-     * Number of incoming links to this blog
+     * Number of incoming links to this blog.
      *
      * @var     integer
      * @access  protected
@@ -92,7 +92,7 @@ class Zend_Service_Technorati_Weblog
     protected $_inboundLinks;
 
     /**
-     * Last blog update UNIX timestamp
+     * Last blog update UNIX timestamp.
      *
      * @var     integer
      * @access  protected
@@ -100,7 +100,9 @@ class Zend_Service_Technorati_Weblog
     protected $_lastUpdate;
 
     /**
-     * Technorati rank value for this weblog
+     * Technorati rank value for this weblog.
+     * 
+     * Note. This property has no official documentation.
      *
      * @var     integer
      * @access  protected
@@ -108,7 +110,9 @@ class Zend_Service_Technorati_Weblog
     protected $_rank;
     
     /**
-     * Blog latitude coordinate
+     * Blog latitude coordinate.
+     * 
+     * Note. This property has no official documentation.
      *
      * @var     float
      * @access  protected
@@ -116,7 +120,9 @@ class Zend_Service_Technorati_Weblog
     protected $_lat;
 
     /**
-     * Blog longitude coordinate
+     * Blog longitude coordinate.
+     * 
+     * Note. This property has no official documentation.
      *
      * @var     float
      * @access  protected
@@ -124,7 +130,9 @@ class Zend_Service_Technorati_Weblog
     protected $_lon;
 
     /**
-     * Whether the author who claimed this weblog has a photo
+     * Whether the author who claimed this weblog has a photo.
+     * 
+     * Note. This property has no official documentation.
      *
      * @var     bool
      * @access  protected
@@ -208,7 +216,7 @@ class Zend_Service_Technorati_Weblog
      */
     public function getName() 
     {
-        return (string) $this->_name;
+        return $this->_name;
     }
     
     /**
@@ -228,7 +236,7 @@ class Zend_Service_Technorati_Weblog
      */
     public function getInboundBlogs() 
     {
-        return (int) $this->_inboundBlogs;
+        return $this->_inboundBlogs;
     }
     
     /**
@@ -238,7 +246,7 @@ class Zend_Service_Technorati_Weblog
      */
     public function getInboundLinks() 
     {
-        return (int) $this->_inboundLinks;
+        return $this->_inboundLinks;
     }
     
     /**
@@ -282,7 +290,7 @@ class Zend_Service_Technorati_Weblog
      */
     public function getRank() 
     {
-        return (int) $this->_rank;
+        return $this->_rank;
     }
         
     /**
@@ -293,7 +301,7 @@ class Zend_Service_Technorati_Weblog
      * @return  float   weblog latitude coordinate
      */
     public function getLat() {
-        return (float) $this->_lat;
+        return $this->_lat;
     }
         
     /**
@@ -305,7 +313,7 @@ class Zend_Service_Technorati_Weblog
      */
     public function getLon() 
     {
-        return (float) $this->_lon;
+        return $this->_lon;
     }
     
     /**
@@ -442,8 +450,6 @@ class Zend_Service_Technorati_Weblog
     /**
      * Sets weblog Rank.
      * 
-     * Note. This property has no official documentation.
-     * 
      * @param   integer $rank
      * @return  Zend_Service_Technorati_Weblog $this instance
      */
@@ -456,8 +462,6 @@ class Zend_Service_Technorati_Weblog
     /**
      * Sets weblog latitude coordinate.
      * 
-     * Note. This property has no official documentation.
-     *  
      * @param   float $coordinate
      * @return  Zend_Service_Technorati_Weblog $this instance
      */
@@ -470,8 +474,6 @@ class Zend_Service_Technorati_Weblog
     /**
      * Sets weblog longitude coordinate.
      * 
-     * Note. This property has no official documentation.
-     * 
      * @param   float $coordinate
      * @return  Zend_Service_Technorati_Weblog $this instance
      */
@@ -483,8 +485,6 @@ class Zend_Service_Technorati_Weblog
         
     /**
      * Sets hasPhoto property.
-     * 
-     * Note. This property has no official documentation.
      * 
      * @param   bool $hasPhoto
      * @return  Zend_Service_Technorati_Weblog $this instance

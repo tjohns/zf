@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_SearchResultSet
@@ -40,49 +40,39 @@ require_once 'Zend/Service/Technorati/SearchResultSet.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_SearchResultSetTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_SearchResultSetTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestSearchResultSet.xml');
-        $this->object = new Zend_Service_Technorati_SearchResultSet($this->dom);
+        $this->dom = self::getTestFileContentAsDom('TestSearchResultSet.xml');
     }
-
+    
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_SearchResultSet($this->dom);
-            $this->assertType('Zend_Service_Technorati_SearchResultSet', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_SearchResultSet', array($this->dom));
     }
-
+    
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-        
-        try {
-            $object = new Zend_Service_Technorati_SearchResultSet('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMDocument", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_SearchResultSet', 'DOMDocument');
     }
 
     public function testSearchResultSet()
     {
-        // check valid object
-        $this->assertNotNull($this->object);
-        $object = $this->object;
+        $object = new Zend_Service_Technorati_SearchResultSet($this->dom);
 
         // check counts
-        $this->assertType('integer', $object->totalResultsReturned);
-        $this->assertEquals(3, $object->totalResultsReturned);
-        $this->assertType('integer', $object->totalResultsAvailable);
-        $this->assertEquals(4298362, $object->totalResultsAvailable);
+        $this->assertType('integer', $object->totalResults());
+        $this->assertEquals(3, $object->totalResults());
+        $this->assertType('integer', $object->totalResultsAvailable());
+        $this->assertEquals(4298362, $object->totalResultsAvailable());
+    }
+    
+    public function testSearchResultSetItemsInstanceOfResult() 
+    {
+        $this->_testResultSetItemsInstanceOfResult(
+                    'Zend_Service_Technorati_SearchResultSet', 
+                    array($this->dom), 
+                    'Zend_Service_Technorati_SearchResult');
     }
 }

@@ -35,30 +35,33 @@ require_once 'Zend/Service/Technorati/Result.php';
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @todo       Standardize with Zend_Service_Yahoo and Zend_Service_Flickr
+ * @abstract 
  */
-class Zend_Service_Technorati_ResultSet implements SeekableIterator
+abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
 {
     /**
      * The total number of results available
      *
-     * @var int
+     * @var     int
+     * @access  protected
      */
-    public $totalResultsAvailable;
+    protected $_totalResultsAvailable;
 
     /**
      * The number of results in this result set
      *
-     * @var int
+     * @var     int
+     * @access  protected
      */
-    public $totalResultsReturned;
+    protected $_totalResultsReturned;
 
     /**
      * The offset in the total result set of this search set
      *
-     * @var int
+     * @var     int
+     * @todo
      */
-    public $firstResultPosition;
+    // public $firstResultPosition;
 
 
     /**
@@ -93,7 +96,7 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
      * @var     int
      * @access  protected
      */
-    protected $_currentItem = 0;
+    protected $_currentIndex = 0;
 
 
     /**
@@ -123,107 +126,102 @@ class Zend_Service_Technorati_ResultSet implements SeekableIterator
         // For now ignore them.
 
         // @todo Use constants
-        $start = isset($options['start']) ? $options['start'] : 1;
+        //$start = isset($options['start']) ? $options['start'] : 1;
         //$limit = isset($options['limit']) ? $options['limit'] : 20;
 
-        $this->firstResultPosition = $start;
-        $this->totalResultsAvailable = 0;  // overwrite on child class
-        $this->totalResultsReturned  = 0;  // overwrite on child class
-
+        //$this->_firstResultPosition = $start;
+        
         // @todo Improve xpath expression
         $this->_results = $this->_xpath->query("//item");
     }
 
 
     /**
-     * Total Number of results returned.
+     * Number of results returned.
      *
      * @return  int     total number of results returned
      */
     public function totalResults()
     {
-        return (int) $this->totalResultsReturned;
+        return (int) $this->_totalResultsReturned;
+    }
+
+
+    /**
+     * Number of available results.
+     *
+     * @return  int     total number of available results
+     */
+    public function totalResultsAvailable()
+    {
+        return (int) $this->_totalResultsAvailable;
     }
 
     /**
-     * Implements SeekableIterator::current.
+     * Implements SeekableIterator#current.
      *
      * @return  void
      * @throws  Zend_Service_Exception
+     * @abstract 
      */
-    public function current()
-    {
-        /**
-         * @see Zend_Service_Technorati_Exception
-         */
-        require_once 'Zend/Service/Technorati/Exception.php';
-        throw new Zend_Service_Exception("Zend_Service_Technorati_ResultSet::current() should be overwritten in child classes");
-    }
+    // abstract public function current();
 
     /**
-     * Implements SeekableIterator::key.
+     * Implements SeekableIterator#key.
      *
      * @return  int
      */
     public function key()
     {
-        return $this->_currentItem;
+        return $this->_currentIndex;
     }
 
     /**
-     * Implements SeekableIterator::next.
+     * Implements SeekableIterator#next.
      *
      * @return  void
      */
     public function next()
     {
-        $this->_currentItem += 1;
+        $this->_currentIndex += 1;
     }
 
     /**
-     * Implements SeekableIterator::rewind.
+     * Implements SeekableIterator#rewind.
      *
      * @return  bool
      */
     public function rewind()
     {
-        $this->_currentItem = 0;
+        $this->_currentIndex = 0;
         return true;
     }
-
+    
     /**
-     * Implements SeekableIterator::seek.
+     * Implement SeekableIterator#seek.
      *
-     * @param   int     $item
-     * @return  Zend_Service_Technorati_Result
-     * @throws  Zend_Service_Exception
+     * @param   int $index
+     * @return  void
+     * @throws  OutOfBoundsException
      */
-    public function seek($item)
+    public function seek($index)
     {
-        if ($this->valid($item)) {
-            $this->_currentItem = $item;
-            return $this->current();
+        $indexInt = (int) $index;
+        if ($indexInt >= 0 && $indexInt < $this->_results->length) {
+            $this->_currentIndex = $indexInt;
         } else {
-            // @todo Should be an OutOfBoundsException but that was only added in PHP 5.1
-            throw new Zend_Service_Exception('Item not found');
+            throw new OutOfBoundsException("Illegal index '$index'");
         }
     }
 
     /**
-     * Implements SeekableIterator::valid.
+     * Implement SeekableIterator#valid.
      *
-     * @param   int     $item
-     * @return  bool
+     * @return boolean
      */
-    public function valid($item = null)
+    public function valid()
     {
-        if (null === $item && $this->_currentItem < $this->_results->length) {
-            return true;
-        } elseif (null !== $item && $item <= $this->_results->length) {
-            return true;
-        } else {
-            return false;
-        }
+        return null !== $this->_results && $this->_currentIndex < $this->_results->length;
     }
 
     /**

@@ -84,9 +84,11 @@ class Zend_Service_Technorati_Utils
         return $uri;
     }
     
+    /*
     public static function xpathQueryAndSet() {}
     
     public static function xpathQueryAndSetIf() {}
     
     public static function xpathQueryAndSetUnless() {}
+    */
 }

@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_GetInfoResult
@@ -40,44 +40,26 @@ require_once 'Zend/Service/Technorati/GetInfoResult.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_GetInfoResultTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_GetInfoResultTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->dom = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileContentAsDom('TestGetInfoResult.xml');
-        $this->object = new Zend_Service_Technorati_GetInfoResult($this->dom);
+        $this->dom = self::getTestFileContentAsDom('TestGetInfoResult.xml');
     }
-
+    
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_GetInfoResult($this->dom);
-            $this->assertType('Zend_Service_Technorati_GetInfoResult', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_GetInfoResult', array($this->dom));
     }
-
+    
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-        
-        try {
-            $object = new Zend_Service_Technorati_GetInfoResult('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMDocument", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_GetInfoResult', 'DOMDocument');
     }
 
     public function testGetInfoResult()
     {
-        // check valid object
-        $this->assertNotNull($this->object);
-        $object = $this->object;
+        $object = new Zend_Service_Technorati_GetInfoResult($this->dom);
 
         // check author
         $author = $object->getAuthor();

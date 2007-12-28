@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_CosmosResult
@@ -40,41 +40,26 @@ require_once 'Zend/Service/Technorati/CosmosResult.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_CosmosResultTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_CosmosResultTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->domElements = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementsAsDom('TestCosmosResultSet.xml');
+        $this->domElements = self::getTestFileElementsAsDom('TestCosmosResultSet.xml');
     }
-
+    
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_CosmosResult($this->domElements->item(0));
-            $this->assertType('Zend_Service_Technorati_CosmosResult', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_CosmosResult', array($this->domElements->item(0)));
     }
-
+    
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-        
-        try {
-            $object = new Zend_Service_Technorati_CosmosResult('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMElement", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_CosmosResult', 'DOMElement');
     }
-
+ 
     public function testSearchResultSiteLink()
     {
-        $domElements = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementsAsDom('TestCosmosResultSetSiteLink.xml');
+        $domElements = self::getTestFileElementsAsDom('TestCosmosResultSetSiteLink.xml');
         $object = new Zend_Service_Technorati_CosmosResult($domElements->item(0));
         
         $this->assertType('Zend_Service_Technorati_Weblog', $object->getWeblog());
@@ -103,7 +88,7 @@ class Zend_Service_Technorati_CosmosResultTest extends PHPUnit_Framework_TestCas
 
     public function testSearchResultSiteLinkNearestPermalinkIsNull()
     {
-        $domElements = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementsAsDom('TestCosmosResultSetSiteLink.xml');
+        $domElements = self::getTestFileElementsAsDom('TestCosmosResultSetSiteLink.xml');
         $object = new Zend_Service_Technorati_CosmosResult($domElements->item(2));
         $this->assertContains('Controrete', $object->getWeblog()->getName());
         $this->assertEquals(null, $object->getNearestPermalink());
@@ -111,7 +96,7 @@ class Zend_Service_Technorati_CosmosResultTest extends PHPUnit_Framework_TestCas
     
     public function testSearchResultSiteWeblog()
     {
-        $domElements = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementsAsDom('TestCosmosResultSetSiteWeblog.xml');
+        $domElements = self::getTestFileElementsAsDom('TestCosmosResultSetSiteWeblog.xml');
         $object = new Zend_Service_Technorati_CosmosResult($domElements->item(0));
         
         $this->assertType('Zend_Service_Technorati_Weblog', $object->getWeblog());

@@ -29,8 +29,9 @@
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @abstract 
  */
-class Zend_Service_Technorati_Result
+abstract class Zend_Service_Technorati_Result
 {
     /**
      * An associative array of 'fieldName' => 'xmlfieldtag'

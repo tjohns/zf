@@ -88,8 +88,8 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
             $this->_searchUrl = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
         }
         
-        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");
-        $this->totalResultsAvailable = (int) $this->getDays();
+        $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");
+        $this->_totalResultsAvailable = (int) $this->getDays();
     }
     
     
@@ -112,8 +112,7 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
     }
 
     /**
-     * Implements SeekableIterator::current and
-     * overwrites Zend_Service_Technorati_ResultSet::current()
+     * Implements Zend_Service_Technorati_ResultSet#current.
      *
      * @return Zend_Service_Technorati_DailyCountsResult current result
      */
@@ -123,6 +122,6 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
          * @see Zend_Service_Technorati_DailyCountsResult
          */
         require_once 'Zend/Service/Technorati/DailyCountsResult.php';
-        return new Zend_Service_Technorati_DailyCountsResult($this->_results->item($this->_currentItem));
+        return new Zend_Service_Technorati_DailyCountsResult($this->_results->item($this->_currentIndex));
     }
 }

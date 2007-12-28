@@ -47,13 +47,12 @@ class Zend_Service_Technorati_TagsResultSet extends Zend_Service_Technorati_Resu
     {
         parent::__construct($dom, $options);
         
-        $this->totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        $this->totalResultsAvailable = (int) $this->totalResultsReturned;
+        $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
+        $this->_totalResultsAvailable = (int) $this->_totalResultsReturned;
     }
 
     /**
-     * Implements SeekableIterator::current and
-     * overwrites Zend_Service_Technorati_ResultSet::current()
+     * Implements Zend_Service_Technorati_ResultSet#current.
      *
      * @return Zend_Service_Technorati_TagsResult current result
      */
@@ -63,6 +62,6 @@ class Zend_Service_Technorati_TagsResultSet extends Zend_Service_Technorati_Resu
          * @see Zend_Service_Technorati_TagsResult
          */
         require_once 'Zend/Service/Technorati/TagsResult.php';
-        return new Zend_Service_Technorati_TagsResult($this->_results->item($this->_currentItem));
+        return new Zend_Service_Technorati_TagsResult($this->_results->item($this->_currentIndex));
     }
 }

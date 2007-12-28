@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_Weblog
@@ -40,36 +40,21 @@ require_once 'Zend/Service/Technorati/Weblog.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_WeblogTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->domElement = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementAsDom('TestWeblog.xml', '//weblog');
+        $this->domElement = self::getTestFileElementAsDom('TestWeblog.xml', '//weblog');
     }
     
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_Weblog($this->domElement);
-            $this->assertType('Zend_Service_Technorati_Weblog', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_Weblog', array($this->domElement));
     }
     
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-        
-        try {
-            $object = new Zend_Service_Technorati_Weblog('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMElement", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_Weblog', 'DOMElement');
     }
     
     public function testWeblog()
@@ -96,7 +81,9 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         $var = $weblog->getAuthors();
         $this->assertType('array', $var);
         $this->assertEquals(1, sizeof($var));
-
+        // check photo
+        $this->assertEquals(false, $weblog->hasPhoto());
+        
         /**
          * @todo lat, lon, hasphoto
          */
@@ -104,7 +91,7 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
 
     public function testWeblogWithTwoAuthors() 
     {
-        $domElement = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementAsDom('TestWeblogTwoAuthors.xml', '//weblog');
+        $domElement = self::getTestFileElementAsDom('TestWeblogTwoAuthors.xml', '//weblog');
         $weblog = new Zend_Service_Technorati_Weblog($domElement);
         
         $authors = $weblog->getAuthors();
@@ -250,5 +237,41 @@ class Zend_Service_Technorati_WeblogTest extends PHPUnit_Framework_TestCase
         $get = $weblog->setRank($set)->getRank();
         $this->assertType('integer', $get);
         $this->assertEquals((int) $set, $get);
+        
+        // check hasPhoto
+        
+        $set = false;
+        $get = $weblog->setHasPhoto($set)->hasPhoto();
+        $this->assertType('boolean', $get);
+        $this->assertEquals($set, $get);
+        
+        $set = 0;
+        $get = $weblog->setHasPhoto($set)->hasPhoto();
+        $this->assertType('boolean', $get);
+        $this->assertEquals((bool) $set, $get);
+        
+        // check lat
+        
+        $set = 1.3;
+        $get = $weblog->setLat($set)->getLat();
+        $this->assertType('float', $get);
+        $this->assertEquals($set, $get);
+        
+        $set = '1.3';
+        $get = $weblog->setLat($set)->getLat();
+        $this->assertType('float', $get);
+        $this->assertEquals((float) $set, $get);
+        
+        // check lon
+        
+        $set = 1.3;
+        $get = $weblog->setLon($set)->getLon();
+        $this->assertType('float', $get);
+        $this->assertEquals($set, $get);
+        
+        $set = '1.3';
+        $get = $weblog->setLon($set)->getLon();
+        $this->assertType('float', $get);
+        $this->assertEquals((float) $set, $get);
     }
 }

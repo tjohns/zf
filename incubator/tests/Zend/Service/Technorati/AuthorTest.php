@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TechnoratiTestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR .'TestCase.php';
 
 /**
  * @see Zend_Service_Technorati_Author
@@ -40,36 +40,21 @@ require_once 'Zend/Service/Technorati/Author.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Technorati_AuthorTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Technorati_AuthorTest extends Zend_Service_Technorati_TestCase
 {
     public function setUp()
     {
-        $this->domElement = Zend_Service_Technorati_TechnoratiTestHelper::getTestFileElementAsDom('TestAuthor.xml', '//author');
+        $this->domElement = self::getTestFileElementAsDom('TestAuthor.xml', '//author');
     }
     
     public function testConstruct()
     {
-        try {
-            $object = new Zend_Service_Technorati_Author($this->domElement);
-            $this->assertType('Zend_Service_Technorati_Author', $object);
-        } catch (Exception $e) {
-            $this->fail("Exception" . $e->getMessage() . " thrown");
-        }
+        $this->_testConstruct('Zend_Service_Technorati_Author', array($this->domElement));
     }
     
     public function testConstructThrowsExceptionWithInvalidDom() 
     {
-        if (Zend_Service_Technorati_TechnoratiTestHelper::skipInvalidArgumentTypeTests()) {
-            $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
-            return;
-        }
-
-        try {
-            $object = new Zend_Service_Technorati_Author('foo');
-            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
-        } catch (Exception $e) {
-            $this->assertContains("DOMElement", $e->getMessage());
-        }
+        $this->_testConstructThrowsExceptionWithInvalidDom('Zend_Service_Technorati_Author', 'DOMElement');
     }
     
     public function testAuthor()
