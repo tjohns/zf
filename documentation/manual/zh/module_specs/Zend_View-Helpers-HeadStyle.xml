@@ -33,11 +33,11 @@
     </para>
 
     <para>
-        <code>HeadStyle</code>  也允许抓取风格声明，如果想用程序生成声明然后放到一边，这很有用。这个用法将在下面的例子给出。
+        <code>HeadStyle</code>  也允许抓取样式声明，如果想用程序生成声明，然后在任何地方自由使用，这很有用。这个用法将在下面的例子给出。
     </para>
 
     <para>
-        最后，你也可以用 <code>headStyle()</code>方法 来快速地添加声明元素，它的署名（signature）是 <code>headStyle($content$placement = 'APPEND', $attributes = array())</code> 。<code>$placement</code> 是 'APPEND'、 'PREPEND' 或 'SET'。
+        最后，你也可以用 <code>headStyle()</code>方法 来快速地添加声明元素，它的用法： <code>headStyle($content$placement = 'APPEND', $attributes = array())</code> 。<code>$placement</code> 是 'APPEND'、 'PREPEND' 或 'SET'。
     </para>
 
     <para>
@@ -52,7 +52,7 @@
         <title>HeadStyle 助手的基本用法 </title>
 
         <para>
-            在任何时候都可以指定一个新的风格标签：
+            在任何时候都可以指定一个新的样式标签：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -62,7 +62,7 @@ $this->headStyle()->appendStyle($styles);
 ]]></programlisting>
 
         <para>
-            对 CSS 来说，顺序非常重要，因为层叠的顺序，你需要确保声明按特定的顺序加载。广泛使用append、 prepend 和 offsetSet 指令来帮助完成任务：
+            对 CSS 来说，顺序非常重要，因为层叠的顺序(the order of the cascade)，你需要确保样式表中的声明按特定的顺序加载。使用append、 prepend 和 offsetSet 指令可帮助你达到目的：
          </para>
 
         <programlisting role="php"><![CDATA[
@@ -80,7 +80,7 @@ $this->headStyle()->prependStyle($firstStyles);
 ]]></programlisting>
 
         <para>
-            当准备好在布局脚本里输出所有风格声明，简单地 echo 助手：        
+            当准备好在布局脚本里输出所有样式声明，简单地 echo 助手：        
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -89,10 +89,10 @@ $this->headStyle()->prependStyle($firstStyles);
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
-        <title> 用 HeadStyle 助手抓取风格声明 </title>
+        <title> 用 HeadStyle 助手抓取样式声明 </title>
 
         <para>
-            有时候需要用程序生成 CSS 风格声明。当你可以使用 string concatenation、heredocs 和 like， 通常通过创建脚本和在PHP标签里做手脚会更容易些。<code>HeadStyle</code> 可以做这个，把它抓取到堆栈：
+            有时候需要用程序生成 CSS 样式声明。当你可以使用字符串串联，heredoc等等， 通常通过创建脚本和在PHP标签里做手脚会更容易些。<code>HeadStyle</code> 可以做这个，把它抓取到堆栈：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -109,7 +109,7 @@ body {
 
         <itemizedlist>
             <listitem><para>
-                    风格声明将追加到堆栈。如果需要替换或者加到堆栈顶部，那么需要分别把 'SET' 或 'PREPEND' 作为第一个参数传递给 <code>captureStart()</code> 。
+                    样式声明将追加到堆栈。如果需要替换或者加到堆栈顶部，那么需要分别把 'SET' 或 'PREPEND' 作为第一个参数传递给 <code>captureStart()</code> 。
             </para></listitem>
 
             <listitem><para>
