@@ -101,7 +101,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
-        <title>1.1 以降でサポートするワイルドカード
+        <title>1.5 以降でサポートするワイルドカード
           <footnote><para>ワイルドカードクエリのサポートは
           SVN 版か最新のスナップショットで提供されます。
           現在のリリース版には存在しません。</para>></footnote>
@@ -152,17 +152,18 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             Lucene は、クエリの単語を修飾して幅広い検索オプションを指定することをサポートしています。
         </para>
         <para>
-            Zend_Search_Lucene では、現在は "~" 修正子をフレーズについてのみサポートしています。
+            "~" 修正子を使用すると、
+            フレーズに対する近接検索や個別の単語に対するあいまい検索が可能となります。
             <footnote>
                 <para>
-                    "~" 修正子はあいまい検索に使用します。しかし、あいまい検索のクエリはまだサポートされていません。
+                    あいまい検索は、ZF 1.5 以降でのみ使用可能となります。
                 </para>
             </footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>1.1 以降でサポートする範囲検索
+        <title>1.5 以降でサポートする範囲検索
           <footnote><para>範囲指定クエリのサポートは
           SVN 版か最新のスナップショットで提供されます。
           現在のリリース版には存在しません。</para>></footnote>
@@ -192,6 +193,34 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             はすべてのフィールドに対して範囲検索を行います。
             <programlisting role="querystring"><![CDATA[{Aida TO Carmen}]]>
             </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.query-language.fuzzy">
+        <title>1.5 以降でサポートするあいまい検索
+          <footnote><para>あいまい検索クエリのサポートは
+          SVN 版か最新のスナップショットで提供されます。
+          現在のリリース版には存在しません。</para>></footnote>
+        </title>
+        <para>
+            Zend_Search_Lucene は、Java Lucene と同様にあいまい検索をサポートします。
+            これは、レーベンシュタイン距離のアルゴリズムにもとづくものです。
+            あいまい検索を行うには、チルダ記号 "~" を単語の最後に指定します。
+            たとえば、"roam" と似たスペルの単語を探すには、次のようなあいまい検索を使用します。
+
+            <programlisting role="querystring"><![CDATA[roam~]]></programlisting>
+
+            この検索は、foam あるいは roams といった単語にマッチします。
+
+            (オプションの) 追加のパラメータによって、
+            あいまい検索の程度を指定することができます。
+            このパラメータの値は 0 から 1 までの間となり、
+            1 に近づくほど、類似点が多い単語にのみマッチするようになります。
+            たとえば次のように使用します。
+
+            <programlisting role="querystring"><![CDATA[roam~0.8]]></programlisting>
+
+            このパラメータを省略した場合のデフォルトは 0.5 です。
         </para>
     </sect2>
 

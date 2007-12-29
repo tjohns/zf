@@ -340,7 +340,7 @@ $hits  = $index->find($query);]]>
 
 
     <sect2 id="zend.search.lucene.queries.wildcard">
-        <title>ワイルドカードクエリ</title>
+        <title>1.5 以降でサポートするワイルドカードクエリ</title>
         <para>
             ワイルドカードクエリは、指定したパターンに一致する複数の単語を探すためのものです。
         </para>
@@ -376,6 +376,62 @@ $hits  = $index->find($query);]]>
             <programlisting role="php"><![CDATA[<?php
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.queries.fuzzy">
+        <title>1.5 以降でサポートするあいまいクエリ</title>
+        <para>
+            あいまいクエリは、指定した単語に似た単語を含むドキュメントを探すためのものです。
+        </para>
+
+        <para>
+            文字列によるクエリ
+            <programlisting role="querystring"><![CDATA[field1:test~]]></programlisting>
+            このクエリは、'test' 'text' 'best' といった単語を含むドキュメントにマッチします。
+        </para>
+
+        <para>or</para>
+
+        <para>
+            API で作成するクエリ
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+        <para>
+            オプションの類似度は、"~" 記号の後に指定します。
+        </para>
+
+        <para>
+            文字列によるクエリ
+            <programlisting role="querystring"><![CDATA[field1:test~0.4]]></programlisting>
+        </para>
+
+        <para>or</para>
+
+        <para>
+            API で作成するクエリ
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test', 'field1');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, 0.4);
+$hits  = $index->find($query);]]>
+            </programlisting>
+        </para>
+
+
+        <para>
+            単語のフィールドはオプションです。
+            このフィールドを省略した場合、Zend_Search_Lucene
+            は各ドキュメントのすべてのフィールドを検索します。
+            <programlisting role="php"><![CDATA[<?php
+$term = new Zend_Search_Lucene_Index_Term('test');
+$query = new Zend_Search_Lucene_Search_Query_Fuzzy($term);
 $hits  = $index->find($query);]]>
             </programlisting>
         </para>
@@ -574,7 +630,7 @@ $hits2 = $index->find($query);]]>
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.range">
-        <title>範囲クエリ</title>
+        <title>1.5 以降でサポートする範囲クエリ</title>
         <para>
             <link linkend="zend.search.lucene.query-language.range">範囲クエリ</link>
             は、指定した範囲にある単語を探すためのものです。
