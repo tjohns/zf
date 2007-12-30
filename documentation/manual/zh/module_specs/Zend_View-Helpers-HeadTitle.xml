@@ -18,20 +18,23 @@
 
         <programlisting role="php"><![CDATA[<?php 
 // setting the controller and action name as title segments:
+//把控制器和动作的名称设置为标题的一部分
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())
      ->headTitle($request->getControllerName());
 
 // setting the site in the title; possibly in the layout script:
+//添加标题内容，这种写法常用于布局脚本中
 $this->headTitle('Zend Framework');
 
 // setting a separator string for segments:
+//为标题的各部分设置分隔符
 $this->headTitle()->setSeparator(' / ');
 ?>
 ]]></programlisting>
 
         <para>
-            当准备好在布局脚本里解析标题，简单地 echo 助手：
+            在布局脚本中准备好标题后，使用echo即可输出：
         </para>
 
         <programlisting role="php"><![CDATA[
