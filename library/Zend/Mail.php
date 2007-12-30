@@ -16,36 +16,32 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
 
 
 /**
- * Zend_Mail_Exception
- */
-require_once 'Zend/Mail/Exception.php';
-
-/**
- * Zend_Mail_Transport_Abstract
+ * @see Zend_Mail_Transport_Abstract
  */
 require_once 'Zend/Mail/Transport/Abstract.php';
 
 /**
- * Zend_Mime
+ * @see Zend_Mime
  */
 require_once 'Zend/Mime.php';
 
 /**
- * Zend_Mail_Transport_Abstract
+ * @see Zend_Mail_Transport_Abstract
  */
 require_once 'Zend/Mail/Transport/Abstract.php';
 
 /**
- * Zend_Mime_Message
+ * @see Zend_Mime_Message
  */
 require_once 'Zend/Mime/Message.php';
 
 /**
- * Zend_Mime_Part
+ * @see Zend_Mime_Part
  */
 require_once 'Zend/Mime/Part.php';
 
@@ -195,6 +191,10 @@ class Zend_Mail extends Zend_Mime_Message
             Zend_Mime::MULTIPART_RELATED,
         );
         if (!in_array($type, $allowed)) {
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Invalid content type "' . $type . '"');
         }
 
@@ -516,6 +516,10 @@ class Zend_Mail extends Zend_Mime_Message
             $this->_from = $email;
             $this->_storeHeader('From', $this->_encodeHeader('"'.$name.'"').' <'.$email.'>', true);
         } else {
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('From Header set twice');
         }
         return $this;
@@ -545,6 +549,10 @@ class Zend_Mail extends Zend_Mime_Message
             $this->_returnPath = $email;
             $this->_storeHeader('Return-Path', $email, false);
         } else {
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Return-Path Header set twice');
         }
         return $this;
@@ -569,8 +577,9 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Sets the subject of the message
      *
-     * @param  string    $subject
-     * @return Zend_Mail Provides fluent interface
+     * @param   string    $subject
+     * @return  Zend_Mail Provides fluent interface
+     * @throws  Zend_Mail_Exception
      */
     public function setSubject($subject)
     {
@@ -579,6 +588,10 @@ class Zend_Mail extends Zend_Mime_Message
             $this->_subject = $this->_encodeHeader($subject);
             $this->_storeHeader('Subject', $this->_subject);
         } else {
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Subject set twice');
         }
         return $this;
@@ -606,6 +619,10 @@ class Zend_Mail extends Zend_Mime_Message
     public function addHeader($name, $value, $append = false)
     {
         if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path'))) {
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Cannot set standard header from addHeader()');
         }
 

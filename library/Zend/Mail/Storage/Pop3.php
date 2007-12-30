@@ -11,35 +11,36 @@
  * a copy of the Zend Framework license and are unable to obtain it
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
- *
+ * 
+ * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Storage
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
 
 
 /**
- * Zend_Mail_Storage_Abstract
+ * @see Zend_Mail_Storage_Abstract
  */
 require_once 'Zend/Mail/Storage/Abstract.php';
 
 /**
- * Zend_Mail_Protocol_Pop3
+ * @see Zend_Mail_Protocol_Pop3
  */
 require_once 'Zend/Mail/Protocol/Pop3.php';
 
 /**
- * Zend_Mail_Message
+ * @see Zend_Mail_Message
  */
 require_once 'Zend/Mail/Message.php';
 
-/**
- * Zend_Mail_Storage_Exception
- */
-require_once 'Zend/Mail/Storage/Exception.php';
 
 /**
+ * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Storage
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -102,11 +103,16 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      * @param  int               $topLines include this many lines with header (after an empty line)
      * @return string raw header
      * @throws Zend_Mail_Protocol_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getRawHeader($id, $part = null, $topLines = 0)
     {
         if ($part !== null) {
             // TODO: implement
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
             throw new Zend_Mail_Storage_Exception('not implemented');
         }
 
@@ -120,11 +126,16 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
      * @param  null|array|string $part path to part or null for messsage content
      * @return string raw content
      * @throws Zend_Mail_Protocol_Exception
+     * @throws Zend_Mail_Storage_Exception
      */
     public function getRawContent($id, $part = null)
     {
         if ($part !== null) {
             // TODO: implement
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
             throw new Zend_Mail_Storage_Exception('not implemented');
         }
 
@@ -163,6 +174,10 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
         }
 
         if (!isset($params->user)) {
+            /**
+             * @see Zend_Mail_Storage_Exception
+             */
+            require_once 'Zend/Mail/Storage/Exception.php';
             throw new Zend_Mail_Storage_Exception('need at least user in params');
         }
 
@@ -257,6 +272,10 @@ class Zend_Mail_Storage_Pop3 extends Zend_Mail_Storage_Abstract
             }
         }
 
+        /**
+         * @see Zend_Mail_Storage_Exception
+         */
+        require_once 'Zend/Mail/Storage/Exception.php';
         throw new Zend_Mail_Storage_Exception('unique id not found');
     }
 

@@ -16,11 +16,12 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
 
 
 /**
- * Zend_Exception
+ * @see Zend_Exception
  */
 require_once 'Zend/Exception.php';
 

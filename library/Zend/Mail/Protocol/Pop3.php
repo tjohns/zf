@@ -11,20 +11,20 @@
  * a copy of the Zend Framework license and are unable to obtain it
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
- *
+ * 
+ * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
-
-/**
- * Zend_Mail_Protocol_Exception
- */
-require_once 'Zend/Mail/Protocol/Exception.php';
 
 
 /**
+ * @category   Zend
  * @package    Zend_Mail
+ * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -95,6 +95,10 @@ class Zend_Mail_Protocol_Pop3
 
         $this->_socket = @fsockopen($host, $port);
         if (!$this->_socket) {
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
             throw new Zend_Mail_Protocol_Exception('cannot connect to host');
         }
 
@@ -112,6 +116,10 @@ class Zend_Mail_Protocol_Pop3
             $this->request('STLS');
             $result = stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if (!$result) {
+                /**
+                 * @see Zend_Mail_Protocol_Exception
+                 */
+                require_once 'Zend/Mail/Protocol/Exception.php';
                 throw new Zend_Mail_Protocol_Exception('cannot enable TLS');
             }
         }
@@ -131,6 +139,10 @@ class Zend_Mail_Protocol_Pop3
     {
         $result = @fputs($this->_socket, $request . "\r\n");
         if (!$result) {
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
             throw new Zend_Mail_Protocol_Exception('send failed - connection closed?');
         }
     }
@@ -147,6 +159,10 @@ class Zend_Mail_Protocol_Pop3
     {
         $result = @fgets($this->_socket);
         if (!is_string($result)) {
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
             throw new Zend_Mail_Protocol_Exception('read failed - connection closed?');
         }
 
@@ -159,6 +175,10 @@ class Zend_Mail_Protocol_Pop3
         }
 
         if ($status != '+OK') {
+            /**
+             * @see Zend_Mail_Protocol_Exception
+             */
+            require_once 'Zend/Mail/Protocol/Exception.php';
             throw new Zend_Mail_Protocol_Exception('last request failed');
         }
 
@@ -351,6 +371,10 @@ class Zend_Mail_Protocol_Pop3
             if ($fallback) {
                 return $this->retrieve($msgno);
             } else {
+                /**
+                 * @see Zend_Mail_Protocol_Exception
+                 */
+                require_once 'Zend/Mail/Protocol/Exception.php';
                 throw new Zend_Mail_Protocol_Exception('top not supported and no fallback wanted');
             }
         }

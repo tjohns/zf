@@ -12,23 +12,22 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id:$
  */
 
-
-/**
- * Zend_Mail_Exception
- */
-require_once 'Zend/Mail/Exception.php';
 
 /**
  * Zend_Mail_Part
  */
 require_once 'Zend/Mail/Part.php';
 
+
 /**
+ * @category   Zend
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -57,6 +56,10 @@ class Zend_Mail_Message extends Zend_Mail_Part
             if (!is_resource($params['file'])) {
                 $params['raw'] = @file_get_contents($params['file']);
                 if ($params['raw'] === false) {
+                    /**
+                     * @see Zend_Mail_Exception
+                     */
+                    require_once 'Zend/Mail/Exception.php';
                     throw new Zend_Mail_Exception('could not open file');
                 }
             } else {
