@@ -1,0 +1,27 @@
+<sect1 id="zend.mail.multiple-emails">
+    <title>Invio multiplo di e-mail da una singola connessione SMTP</title>
+    <para>
+        Per impostazione predefinita <code>Zend_Mail</code> stabilisce una connessione SMTP per ogni e-mail inviata.
+        Per inviare più e-mail attraverso una singola connessione SMTP è possibile gestire autonomamente la connessione con il metodo <code>connect()</code>.
+        Se il transport ha già stabilito una connessione prima della chiamata al metodo <code>send()</code>, verrà automaticamente utilizzata la connessione attiva che, al termine, non verrà chiusa: 
+    </para>
+    <example id="zend.mail.multiple-emails.example-1">
+        <title>Invio multiplo di e-mail da una connessione SMTP</title>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+// crea il messaggio...
+require_once 'Zend/Mail/Transport/Smtp.php';
+$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
+Zend_Mail::setDefaultTransport($tr);
+$tr->connect();
+for ($i = 0; $i < 5; $i++) {
+$mail->send();
+}
+$tr->disconnect();]]>
+        </programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
