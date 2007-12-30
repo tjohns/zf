@@ -1,19 +1,19 @@
 <sect3 id="zend.view.helpers.initial.headtitle">
-    <title>HeadTitle ׺˖ </title>
+    <title>HeadTitle 助手 </title>
 
     <para>
-        HTML <code>&lt;title&gt;</code> Ԫ̘ԃ4͡¹©±덢¸�τµµ¡£<code>HeadTitle</code> ׺˖Պѭԃ³͐󊺳ɺʹ洢±덢¹©Ӕº󾣎�䴶¡£
+        HTML <code>&lt;title&gt;</code> 元素用来提供标题给HTML文档。<code>HeadTitle</code> 助手允许用程序生成和存储标题供以后解析和输出。
     </para>
 
     <para>
-        <code>HeadTitle</code> ׺˖ˇ <link linkend="zend.view.helpers.initial.placeholder"> ռλ·� </link> µŒ»¸�抵Ж¡£ ̼¸²¸Š<code>toString()</code> ·½·¨4ȷ±£ʺ³Ǡ<code>&lt;title&gt;</code> Ԫ̘£¬²¢ͭ¼Ԓ»¸�ode>headTitle()</code> ·½·¨4¿팙²¢ɝӗµى闃ºͱ덢Ԫ̘µľۺϡ£Ň¸�¨µ signature ˇ <code>headTitle($title, $setType = 'APPEND')</code>£¬ȱʡµيȗ·¼ӵ½¶ҕ»£¨¾ۺϱ덢Ԫ̘£©µŖµ£¬µ«ţҲ¿ʒՖ¸¶¨ 'PREPEND' ( ·ƕ»¶¥ ) »𞦓ET' ( טд¶ҕ» )¡£
+        <code>HeadTitle</code> 助手是 <link linkend="zend.view.helpers.initial.placeholder"> 占位符助手 </link> 的一个具体实现。 它覆盖 <code>toString()</code> 方法来确保生成 <code>&lt;title&gt;</code> 元素，并添加一个 <code>headTitle()</code> 方法来快速并容易地设置和标题元素的聚合。那个方法的 signature 是 <code>headTitle($title, $setType = 'APPEND')</code>，缺省地是追加到堆栈（聚合标题元素）的值，但你也可以指定 'PREPEND' ( 放栈顶 ) 或 'SET' ( 重写堆栈 )。
     </para>
 
     <example id="zend.view.helpers.initial.headtitle.basicusage">
-        <title>HeadTitle ׺˖»�·¨ </title>
+        <title>HeadTitle 助手基本用法 </title>
 
         <para>
-            ţ¿ʒՔۈκϊ±º󖸶¨һ¸�Ⲫǩ¡£һ°㶄ԃ·¨¿ʒՈĄ䕚Ӧԃ³͐򶅃¿һ¸�π´ʨ׃±덢¶Σºվµ㡢¿ٖǆ�¯طº·±՚µŗ˔´¡£
+            你可以在任何时候指定一个标题标签。一般的用法可以让你在应用程序的每一个层次来设置标题段：站点、控制器、动作和潜在的资源。
         </para>
 
         <programlisting role="php"><![CDATA[<?php 
@@ -31,7 +31,7 @@ $this->headTitle()->setSeparator(' / ');
 ]]></programlisting>
 
         <para>
-            µ±׼±¸ºĔڲ¼¾ֽű¾o½㏶±덢£¬¼򵥵֠echo ׺˖£º
+            当准备好在布局脚本里解析标题，简单地 echo 助手：
         </para>
 
         <programlisting role="php"><![CDATA[
