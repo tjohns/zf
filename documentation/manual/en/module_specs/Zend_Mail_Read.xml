@@ -297,8 +297,8 @@ echo "Content:\n";
 echo $part->getContent();]]>
         </programlisting>
 
-        <para>Zend_Mail_Part also implements RecursiveIterator, which makes it easy to scan through all parts. And
-        for easy output it also implements the magic method __toString(), which returns the content.</para>
+        <para><code>Zend_Mail_Part</code> also implements <code>RecursiveIterator</code>, which makes it easy to scan through all parts. And
+        for easy output it also implements the magic method <code>__toString()</code>, which returns the content.</para>
 
         <programlisting role="php"><![CDATA[<?php
 // output first text/plain part
@@ -324,7 +324,7 @@ if (!$foundPart) {
     <sect2 id="zend.mail.read-flags">
         <title>Checking for flags</title>
 
-        <para>Maildir and IMAP support storing flags. The class Zend_Mail_Storage has constants for all known
+        <para>Maildir and IMAP support storing flags. The class <code>Zend_Mail_Storage</code> has constants for all known
         maildir and IMAP system flags, named <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code>. To check
         for flags <code>Zend_Mail_Message</code> has a method called <code>hasFlag()</code>. With
         <code>getFlags()</code> you'll get all set flags.</para>
@@ -390,11 +390,11 @@ if (!$message->hasFlag('$SpamTested')) {
         <para>
             All storages, except Pop3, support folders, also called mailboxes. The interface implemented by all storages
             supporting folders is called <code>Zend_Mail_Storage_Folder_Interface</code>. Also all of these classes have an
-            additional optional parameter called folder, which is the folder selected after login, in the constructor.
+            additional optional parameter called <code>folder</code>, which is the folder selected after login, in the constructor.
         </para>
         <para>
             For the local storages you need to use separate classes called <code>Zend_Mail_Storage_Folder_Mbox</code> or
-            <code>Zend_Mail_Storage_Folder_Maildir</code>. Both need one parameter called dirname with the name of the base dir.
+            <code>Zend_Mail_Storage_Folder_Maildir</code>. Both need one parameter called <code>dirname</code> with the name of the base dir.
             The format for maildir is as defined in maildir++ (with a dot as default delimiter), Mbox is a directory
             hierarchy with Mbox files. If you don't have a Mbox file called INBOX in your Mbox base dir you need to set
             an other folder in the constructor.

@@ -34,7 +34,7 @@ $at->filename    = 'test.gif';
 $mail->send();]]>
     </programlisting>
     <para>
-        An alternative is to create an instance of Zend_Mime_Part and add it with <code>addAttachment()</code>:
+        An alternative is to create an instance of <code>Zend_Mime_Part</code> and add it with <code>addAttachment()</code>:
     </para>
     <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
