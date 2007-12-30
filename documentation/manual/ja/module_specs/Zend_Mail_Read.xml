@@ -326,9 +326,9 @@ echo "Content:\n";
 echo $part->getContent();]]>
         </programlisting>
 
-        <para>Zend_Mail_Part は RecursiveIterator も実装しています。
+        <para><code>Zend_Mail_Part</code> は <code>RecursiveIterator</code> も実装しています。
         つまり、すべてのパートを順にスキャンすることも簡単にできます。また、
-        結果を簡単に出力できるよう、マジックメソッド __toString()
+        結果を簡単に出力できるよう、マジックメソッド <code>__toString()</code>
         を実装しています。このメソッドは、パートの中身を返します。</para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -356,7 +356,7 @@ if (!$foundPart) {
         <title>フラグのチェック</title>
 
         <para>Maildir および IMAP はフラグの保存をサポートしています。
-        Zend_Mail_Storage クラスには、maildir や IMAP
+        <code>Zend_Mail_Storage</code> クラスには、maildir や IMAP
         で使用するすべてのフラグに対応する定数が定義されています。これは
         <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code> という名前です。
         フラグをチェックするには、<code>Zend_Mail_Message</code>
@@ -428,12 +428,12 @@ if (!$message->hasFlag('$SpamTested')) {
             フォルダをサポートするために実装しているインターフェイスが
             <code>Zend_Mail_Storage_Folder_Interface</code> です。
             これらすべてのクラスでは、コンストラクタで追加のオプションパラメータ
-            folder を指定できます。これは、ログイン後に使用するフォルダを指定するものです。
+            <code>folder</code> を指定できます。これは、ログイン後に使用するフォルダを指定するものです。
         </para>
         <para>
             ローカルの保存形式では、<code>Zend_Mail_Storage_Folder_Mbox</code>
             あるいは <code>Zend_Mail_Storage_Folder_Maildir</code>
-            のいずれかのクラスを使用します。どちらもパラメータ dirname
+            のいずれかのクラスを使用します。どちらもパラメータ <code>dirname</code>
             が必須で、これは基底ディレクトリの名前となります。
             maildir のフォーマットは maildir++ で定義されているもの
             (デフォルトの区切り文字はドットです)、一方 Mbox

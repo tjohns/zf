@@ -36,7 +36,7 @@ $at->filename    = 'test.gif';
 $mail->send();]]>
     </programlisting>
     <para>
-        もうひとつの方法は、Zend_Mime_Part のインスタンスを作成して
+        もうひとつの方法は、<code>Zend_Mime_Part</code> のインスタンスを作成して
         それを <code>addAttachment()</code> で追加するものです。
     </para>
     <programlisting role="php"><![CDATA[<?php
