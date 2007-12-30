@@ -1,9 +1,9 @@
 <sect1 id="zend.loader.load">
 
-    <title>Caricare file e classi dinamicamente</title>
+    <title>Caricamento dinamico di file e classi</title>
 
     <para>
-        La classe Zend_Loader include metodi per aiutare il caricamento di file dinamicamente.
+        La classe Zend_Loader include metodi per aiutare il caricamento dinamico di file.
     </para>
 
     <tip>
@@ -18,14 +18,14 @@
 
     <sect2 id="zend.loader.load.file">
 
-        <title>Caricare file</title>
+        <title>Caricamento di file</title>
 
         <para>
             Il metodo statico <code>Zend_Loader::loadFile()</code> carica un file PHP.
             Il file caricato può contenere qualsiasi codice PHP.
             Questo metodo è un wrapper per la funzione PHP
             <ulink url="http://php.net/include"><code>include()</code></ulink>.
-            Questo metodo genera un'eccezione <code>Zend_Exception</code> in caso di errore ad esempio se il file specificato non esiste.
+            Genera un'eccezione <code>Zend_Exception</code> in caso di errore ad esempio se il file specificato non esiste.
         </para>
 
         <example id="zend.loader.load.file.example">
@@ -43,9 +43,9 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
         </para>
 
         <para>
-            Il parametro <code>$dirs</code> specifica le directory nelle quali cercare il file.
+            Il parametro <code>$dirs</code> specifica le cartelle nelle quali cercare il file.
             Se <code>NULL</code>, la ricerca è eseguita solo nei percorsi contenuti in <code>include_path</code>.
-            Se una stringa o un array, la ricerca è eseguita nella directory o nelle directory specificate, quindi in <code>include_path</code>.
+            Se una stringa o un array, la ricerca è eseguita nella cartella o nelle cartelle specificate, quindi in <code>include_path</code>.
         </para>
 
         <para>
@@ -60,7 +60,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
 
     <sect2 id="zend.loader.load.class">
 
-        <title>Loading Classes</title>
+        <title>Caricamento di classi</title>
 
         <para>
             Il metodo statico <code>Zend_Loader::loadClass($class, $dirs)</code> carica un file PHP ed esegue un controllo sull'esistenza della classe.
@@ -79,12 +79,12 @@ Zend_Loader::loadClass('Container_Tree',
         </example>
 
         <para>
-            La stringa che specifica la classe è convertita in un percorso relativo sostituendo i separatori di directory ai caratteri di underscore ("_") ed appendendo l'estensione '.php'.
+            La stringa che specifica la classe è convertita in un percorso relativo sostituendo i separatori di cartella ai caratteri di underscore ("_") ed appendendo l'estensione '.php'.
             Nell'esempio precedente 'Container_Tree' diventa 'Container/Tree.php'.
         </para>
 
         <para>
-            Se <code>$dirs</code> è una stringa o un array, <code>Zend_Loader::loadClass()</code> esegue la ricerca nelle directory nell'ordine indicato.
+            Se <code>$dirs</code> è una stringa o un array, <code>Zend_Loader::loadClass()</code> esegue la ricerca nelle cartelle nell'ordine indicato.
             Il primo file trovato viene caricato.
             Se il file non esiste in <code>$dirs</code> allora la ricerca è eseguita in <code>include_path</code>.
         </para>
@@ -101,7 +101,7 @@ Zend_Loader::loadClass('Container_Tree',
 
     <sect2 id="zend.loader.load.isreadable">
 
-        <title>Verificare se un file è leggibile</title>
+        <title>Verifica del permesso di lettura di un file</title>
 
         <para>
             Il metodo statico <code>Zend_Loader::isReadable($pathname)</code> restituisce <code>TRUE</code> se il file al percorso specificato esiste ed è leggibile, altrimenti <code>FALSE</code>.
@@ -111,7 +111,7 @@ Zend_Loader::loadClass('Container_Tree',
             <title>Esempio del metodo isReadable()</title>
             <programlisting role="php"><![CDATA[<?php
 if (Zend_Loader::isReadable($filename)) {
-    // do something with $filename
+    // fai qualcosa con $filename
 }]]>
             </programlisting>
         </example>
@@ -121,7 +121,7 @@ if (Zend_Loader::isReadable($filename)) {
             Può contenere l'indicazione di un percorso.
             Questo metodo è un wrapper per la funzione PHP 
             <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
-            La funzione PHP non esegue la ricerca nelle directory indicate da <code>include_path</code>,
+            La funzione PHP non esegue la ricerca nelle cartelle indicate da <code>include_path</code>,
             contrariamente a <code>Zend_Loader::isReadable()</code>.
         </para>
 
@@ -129,10 +129,10 @@ if (Zend_Loader::isReadable($filename)) {
 
     <sect2 id="zend.loader.load.autoload">
 
-        <title>Utilizzare l'autoloader</title>
+        <title>Utilizzo dell'autoloader</title>
 
         <para>
-            La classe <code>Zend_Loader</code> contiene un metodo che è possibile registrare nel PHP SPL autoloader.
+            La classe <code>Zend_Loader</code> contiene un metodo che è possibile registrare nella libreria PHP SPL autoloader.
             <code>Zend_Loader::autoload()</code> è il metodo di callback.
             Per comodità, <code>Zend_Loader</code> fornisce la funzione <code>registerAutoload()</code> per registrare automaticamente il proprio metodo <code>autoload()</code>.
             Se l'estensione <code>spl_autoload</code> non è presente nell'ambiente PHP, il metodo <code>registerAutoload()</code> genera un'eccezione <code>Zend_Exception</code>.
