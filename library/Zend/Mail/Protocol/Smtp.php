@@ -18,7 +18,7 @@
  * @subpackage Protocol
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 
 
@@ -141,7 +141,7 @@ class Zend_Mail_Protocol_Smtp extends Zend_Mail_Protocol_Abstract
                      * @see Zend_Mail_Protocol_Exception
                      */
                     require_once 'Zend/Mail/Protocol/Exception.php';
-                    throw new Zend_Mail_Protocol_Exception($ssl . ' is unsupported SSL type');
+                    throw new Zend_Mail_Protocol_Exception($config['ssl'] . ' is unsupported SSL type');
                     break;
             }
         }
