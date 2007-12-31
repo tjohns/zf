@@ -44,6 +44,11 @@ require 'TagResultSetTest.php';
 require 'TagsResultTest.php';
 require 'TagsResultSetTest.php';
 
+/**
+ * @see Zend_Service_Technorati_UtilsTest
+ */
+require_once 'Zend/Service/Technorati/UtilsTest.php';
+
 
 /**
  * @category   Zend
@@ -79,7 +84,8 @@ class Zend_Service_Technorati_AllTests
         $suite->addTestSuite('Zend_Service_Technorati_TagResultSetTest');
         $suite->addTestSuite('Zend_Service_Technorati_TagsResultTest');
         $suite->addTestSuite('Zend_Service_Technorati_TagsResultSetTest');
-        
+        $suite->addTestSuite('Zend_Service_Technorati_UtilsTest');
+
         return $suite;
     }
 }

@@ -38,7 +38,7 @@ if (!ini_get('date.timezone')) {
     date_default_timezone_set(@date_default_timezone_get());
 }
 
-// filter the file out of PHPUnit code coverage reportÉ
+// filter the file out of PHPUnit code coverage report
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 
@@ -61,14 +61,14 @@ class Zend_Service_Technorati_TestCase extends PHPUnit_Framework_TestCase
             $this->fail("Exception " . $e->getMessage() . " thrown");
         }
     }
-    
+
     protected function _testConstructThrowsExceptionWithInvalidDom($className, $match)
     {
         if (self::skipInvalidArgumentTypeTests()) {
             $this->markTestIncomplete('Failure to meet type hint results in fatal error in PHP < 5.2.0');
             return;
         }
-        
+
         $reflection = new ReflectionClass($className);
         try {
             $object = $reflection->newInstanceArgs(array('foo'));
@@ -77,7 +77,7 @@ class Zend_Service_Technorati_TestCase extends PHPUnit_Framework_TestCase
             $this->assertContains($match, $e->getMessage());
         }
     }
-    
+
     protected function _testResultSetItemsInstanceOfResult($resultSetClassName, $args, $resultClassName)
     {
         $reflection = new ReflectionClass($resultSetClassName);
@@ -86,7 +86,7 @@ class Zend_Service_Technorati_TestCase extends PHPUnit_Framework_TestCase
             $this->assertType($resultClassName, $result);
         }
     }
-    
+
     public static function getTestFilePath($file)
     {
         return dirname(__FILE__) . '/_files/' . $file;

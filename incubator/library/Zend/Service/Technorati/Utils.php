@@ -23,7 +23,7 @@
 
 /**
  * TODO: phpdoc
- * 
+ *
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Technorati
@@ -35,19 +35,19 @@ class Zend_Service_Technorati_Utils
     /**
      * Parses, validates and returns a valid Zend_Uri object
      * from given $input.
-     * 
+     *
      * @param   string|Zend_Uri_Http $input
      * @return  null|Zend_Uri_Http
      * @throws  Zend_Service_Technorati_Exception
-     * @static 
+     * @static
      */
-    public static function setUriHttp($input) 
+    public static function setUriHttp($input)
     {
         // allow null as value
         if ($input === null) {
             return null;
         }
-        
+
         /**
          * @see Zend_Uri
          */
@@ -63,19 +63,9 @@ class Zend_Service_Technorati_Utils
                 /**
                  * @see Zend_Service_Technorati_Exception
                  */
-                require_once 'Zend/Service/Technorati/Exception.php';  
+                require_once 'Zend/Service/Technorati/Exception.php';
                 throw new Zend_Service_Technorati_Exception($e->getMessage());
             }
-        }
-        
-        // allow inly Zend_Uri_Http objects or child classes
-        if (!($uri instanceof Zend_Uri_Http)) {
-            /**
-             * @see Zend_Service_Technorati_Exception
-             */
-            require_once 'Zend/Service/Technorati/Exception.php';  
-            throw new Zend_Service_Technorati_Exception(
-                "Invalid URL $uri, only HTTP(S) protocols can be used");
         }
 
         /**
@@ -83,12 +73,16 @@ class Zend_Service_Technorati_Utils
          */
         return $uri;
     }
-    
-    /*
-    public static function xpathQueryAndSet() {}
-    
-    public static function xpathQueryAndSetIf() {}
-    
-    public static function xpathQueryAndSetUnless() {}
-    */
+
+    /**
+     * @todo public static function xpathQueryAndSet() {}
+     */
+
+    /**
+     * @todo public static function xpathQueryAndSetIf() {}
+     */
+
+    /**
+     * @todo public static function xpathQueryAndSetUnless() {}
+     */
 }
