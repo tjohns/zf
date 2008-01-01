@@ -16,8 +16,8 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -28,7 +28,12 @@ require_once 'Zend/Service/Technorati/Result.php';
 
 
 /**
- * TODO: phpdoc
+ * This is the most essential result set. 
+ * The scope of this class is to be extended by a query-specific child result set class, 
+ * and it should never be used to initialize a standalone object. 
+ * 
+ * Each of the specific result sets represents a collection of query-specific
+ * Zend_Service_Technorati_Result objects.
  * 
  * @category   Zend
  * @package    Zend_Service

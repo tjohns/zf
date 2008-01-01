@@ -16,13 +16,15 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * TODO: phpdoc
+ * Represents a single Technorati Search query result object. 
+ * It is never returned as a standalone object, 
+ * but it always belongs to a valid Zend_Service_Technorati_SearchResultSet object.
  * 
  * @category   Zend
  * @package    Zend_Service

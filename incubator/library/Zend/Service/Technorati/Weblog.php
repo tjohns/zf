@@ -16,8 +16,8 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -33,7 +33,7 @@ require_once 'Zend/Service/Technorati/Utils.php';
 
 
 /**
- * TODO: phpdoc
+ * Represents a Weblog object successful recognized by Technorati.
  * 
  * @category   Zend
  * @package    Zend_Service

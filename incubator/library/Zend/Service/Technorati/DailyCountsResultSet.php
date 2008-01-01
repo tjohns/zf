@@ -16,8 +16,8 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: CosmosResultSet.php 7241 2007-12-23 17:24:32Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: CosmosResultSet.php 7241 2007-12-23 17:24:32Z weppos $
  */
 
 
@@ -38,7 +38,7 @@ require_once 'Zend/Service/Technorati/Utils.php';
 
 
 /**
- * TODO: phpdoc
+ * Represents a Technorati Tag query result set.
  * 
  * @category   Zend
  * @package    Zend_Service

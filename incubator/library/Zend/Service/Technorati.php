@@ -16,13 +16,17 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
 /**
- * TODO: phpdoc
+ * Zend_Service_Technorati provides an easy, intuitive and object-oriented interface 
+ * for using the Technorati API. 
+ * 
+ * It provides access to all available Technorati API queries 
+ * and returns the original XML response as a friendly PHP object.
  * 
  * @category   Zend
  * @package    Zend_Service

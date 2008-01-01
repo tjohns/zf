@@ -16,8 +16,8 @@
  * @package    Zend_Service
  * @subpackage Technorati
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: TagsResult.php 7229 2007-12-22 22:46:28Z weppos $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: TagsResult.php 7229 2007-12-22 22:46:28Z weppos $
  */
 
 
@@ -28,7 +28,9 @@ require_once 'Zend/Service/Technorati/Result.php';
 
 
 /**
- * TODO: phpdoc
+ * Represents a single Technorati DailyCounts query result object. 
+ * It is never returned as a standalone object, 
+ * but it always belongs to a valid Zend_Service_Technorati_DailyCountsResultSet object.
  * 
  * @category   Zend
  * @package    Zend_Service
