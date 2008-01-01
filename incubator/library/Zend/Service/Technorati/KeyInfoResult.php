@@ -70,10 +70,9 @@ class Zend_Service_Technorati_KeyInfoResult
         // $this->_dom   = $dom;
         // $this->_xpath = new DOMXPath($dom);
         $xpath = new DOMXPath($dom);
-        
-        /** @todo improve xpath expression */
-        $this->_apiQueries   = (int) $xpath->query('//apiqueries/text()')->item(0)->data;
-        $this->_maxQueries   = (int) $xpath->query('//maxqueries/text()')->item(0)->data;
+
+        $this->_apiQueries   = (int) $xpath->query('/tapi/document/result/apiqueries/text()')->item(0)->data;
+        $this->_maxQueries   = (int) $xpath->query('/tapi/document/result/maxqueries/text()')->item(0)->data;
         $this->setApiKey($apiKey);
     }
     

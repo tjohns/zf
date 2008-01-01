@@ -45,7 +45,7 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
      * @access  protected
      */
     protected $_queryCount;
-    
+
     /**
      * Parses the search response and retrieve the results for iteration.
      *
@@ -56,9 +56,7 @@ class Zend_Service_Technorati_SearchResultSet extends Zend_Service_Technorati_Re
     {
         parent::__construct($dom, $options);
 
-        // @todo    Improve xpath expressions
-        
-        $result = $this->_xpath->query('//result/querycount/text()');
+        $result = $this->_xpath->query('/tapi/document/result/querycount/text()');
         if ($result->length == 1) $this->_queryCount = (int) $result->item(0)->data;
         
         $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");

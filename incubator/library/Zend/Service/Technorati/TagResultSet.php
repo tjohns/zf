@@ -45,7 +45,7 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
      * @access  protected
      */
     protected $_postsMatched;
-    
+
     /**
      * Number of blogs that match the tag.
      *
@@ -53,7 +53,7 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
      * @access  protected
      */
     protected $_blogsMatched;
-    
+
     /**
      * Parses the search response and retrieve the results for iteration.
      *
@@ -64,20 +64,18 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
     {
         parent::__construct($dom, $options);
 
-        // @todo    Improve xpath expressions
-        
-        $result = $this->_xpath->query('//result/postsmatched/text()');
+        $result = $this->_xpath->query('/tapi/document/result/postsmatched/text()');
         if ($result->length == 1) $this->_postsMatched = (int) $result->item(0)->data;
-        
-        $result = $this->_xpath->query('//result/blogsmatched/text()');
+
+        $result = $this->_xpath->query('/tapi/document/result/blogsmatched/text()');
         if ($result->length == 1) $this->_blogsMatched = (int) $result->item(0)->data;
-        
+
         $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
         /** @todo Validate the following assertion */
         $this->_totalResultsAvailable = (int) $this->getPostsMatched();
     }
-    
-    
+
+
     /**
      * Returns the number of posts that match the tag.
      * 
@@ -86,7 +84,7 @@ class Zend_Service_Technorati_TagResultSet extends Zend_Service_Technorati_Resul
     public function getPostsMatched() {
         return $this->_postsMatched;
     }
-    
+
     /**
      * Returns the number of blogs that match the tag.
      * 

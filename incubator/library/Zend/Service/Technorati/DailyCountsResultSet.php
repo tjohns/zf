@@ -63,7 +63,7 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
      * @access  protected
      */
     protected $_days;
-    
+
     /**
      * Parses the search response and retrieve the results for iteration.
      *
@@ -77,22 +77,20 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
         // default locale prevent Zend_Date to fail
         // when script is executed via shell
         // Zend_Locale::setDefault('en');
-        
-        // @todo    Improve xpath expressions
 
-        $result = $this->_xpath->query('//result/days/text()');
+        $result = $this->_xpath->query('/tapi/document/result/days/text()');
         if ($result->length == 1) $this->_days = (int) $result->item(0)->data;
-        
-        $result = $this->_xpath->query('//result/searchurl/text()');
+
+        $result = $this->_xpath->query('/tapi/document/result/searchurl/text()');
         if ($result->length == 1) {
             $this->_searchUrl = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
         }
-        
+
         $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");
         $this->_totalResultsAvailable = (int) $this->getDays();
     }
-    
-    
+
+
     /**
      * Returns the search URL for given query.
      * 
@@ -101,7 +99,7 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
     public function getSearchUrl() {
         return $this->_searchUrl;
     }
-    
+
     /**
      * Returns the number of days for which counts provided.
      * 

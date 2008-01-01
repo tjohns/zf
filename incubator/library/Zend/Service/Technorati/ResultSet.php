@@ -130,13 +130,10 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
         // query tag is only available for some requests, the same for url. 
         // For now ignore them.
 
-        // @todo Use constants
         //$start = isset($options['start']) ? $options['start'] : 1;
         //$limit = isset($options['limit']) ? $options['limit'] : 20;
-
         //$this->_firstResultPosition = $start;
-        
-        // @todo Improve xpath expression
+
         $this->_results = $this->_xpath->query("//item");
     }
 

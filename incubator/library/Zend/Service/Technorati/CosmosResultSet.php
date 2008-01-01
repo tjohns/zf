@@ -53,7 +53,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
      * @access  protected
      */
     protected $_weblog;
-    
+
     /**
      * Number of unique blogs linking this blog
      *
@@ -69,7 +69,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
      * @access  protected
      */
     protected $_inboundLinks;
-    
+
     /**
      * Parses the search response and retrieve the results for iteration.
      *
@@ -80,15 +80,13 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     {
         parent::__construct($dom, $options);
 
-        // @todo    Improve xpath expressions
-        
-        $result = $this->_xpath->query('//result/inboundlinks/text()');
+        $result = $this->_xpath->query('/tapi/document/result/inboundlinks/text()');
         if ($result->length == 1) $this->_inboundLinks = (int) $result->item(0)->data;
-        
-        $result = $this->_xpath->query('//result/inboundblogs/text()');
+
+        $result = $this->_xpath->query('/tapi/document/result/inboundblogs/text()');
         if ($result->length == 1) $this->_inboundBlogs = (int) $result->item(0)->data;
-        
-        $result = $this->_xpath->query('//result/weblog');
+
+        $result = $this->_xpath->query('/tapi/document/result/weblog');
         if ($result->length == 1) {
             /**
              * @see Zend_Service_Technorati_Weblog
@@ -96,8 +94,8 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
             require_once 'Zend/Service/Technorati/Weblog.php';
             $this->_weblog = new Zend_Service_Technorati_Weblog($result->item(0));
         }
-        
-        $result = $this->_xpath->query('//result/url/text()');
+
+        $result = $this->_xpath->query('/tapi/document/result/url/text()');
         if ($result->length == 1) {
             try {
                 // fetched URL often doens't include schema 
@@ -109,9 +107,9 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
                 }
             }
         }
-        
+
         $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/item)");
-        
+
         // total number of results depends on query type
         // for now check only getInboundLinks() and getInboundBlogs() value
         if ((int) $this->getInboundLinks() > 0) {
@@ -122,8 +120,8 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
             $this->_totalResultsAvailable = 0;
         }
     }
-    
-    
+
+
     /**
      * Returns the weblog URL.
      * 
@@ -132,7 +130,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     public function getUrl() {
         return $this->_url;
     }
-    
+
     /**
      * Returns the weblog.
      * 
@@ -141,7 +139,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     public function getWeblog() {
         return $this->_weblog;
     }
-    
+
     /**
      * Returns number of unique blogs linking this blog.
      * 
@@ -151,7 +149,7 @@ class Zend_Service_Technorati_CosmosResultSet extends Zend_Service_Technorati_Re
     {
         return $this->_inboundBlogs;
     }
-    
+
     /**
      * Returns number of incoming links to this blog.
      * 
