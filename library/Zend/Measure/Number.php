@@ -319,7 +319,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $newvalue = "";
             $romanval = array_values( array_reverse(self::$_ROMAN) );
             $romankey = array_keys( array_reverse(self::$_ROMAN) );
-            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) != 0) {
+            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) >= 1) {
 
                 while ($value >= $romanval[$i]) {
                     $value    -= $romanval[$i];
