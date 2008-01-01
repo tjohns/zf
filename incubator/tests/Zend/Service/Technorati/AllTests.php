@@ -28,6 +28,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 
 require 'TechnoratiTest.php';
+require 'ResultSetTest.php';
 require 'AuthorTest.php';
 require 'WeblogTest.php';
 require 'BlogInfoResultTest.php';
@@ -69,6 +70,7 @@ class Zend_Service_Technorati_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Technorati');
 
         $suite->addTestSuite('Zend_Service_Technorati_TechnoratiTest');
+        $suite->addTestSuite('Zend_Service_Technorati_ResultSetTest');
         $suite->addTestSuite('Zend_Service_Technorati_AuthorTest');
         $suite->addTestSuite('Zend_Service_Technorati_WeblogTest');
         $suite->addTestSuite('Zend_Service_Technorati_BlogInfoResultTest');
