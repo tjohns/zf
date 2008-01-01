@@ -83,10 +83,9 @@ class Zend_Service_Technorati_WeblogTest extends Zend_Service_Technorati_TestCas
         $this->assertEquals(1, sizeof($var));
         // check photo
         $this->assertEquals(false, $weblog->hasPhoto());
-        
-        /**
-         * @todo lat, lon, hasphoto
-         */
+        // check lat and lon
+        $this->assertNull($weblog->getLat());
+        $this->assertNull($weblog->getLon());
     }
 
     public function testWeblogWithTwoAuthors() 

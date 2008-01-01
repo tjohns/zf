@@ -96,7 +96,6 @@ class Zend_Service_Technorati_TechnoratiTest extends Zend_Service_Technorati_Tes
         $result->seek(0);
         $this->assertType('Zend_Service_Technorati_CosmosResult', $result->current());
         // content is validated in Zend_Service_Technorati_CosmosResultSet tests
-        // $this->assertEquals(2, count($result)); // TODO: failed?
     }
 
     public function testCosmosThrowsExceptionWithError()
@@ -574,9 +573,6 @@ class Zend_Service_Technorati_TechnoratiTest extends Zend_Service_Technorati_Tes
             
             try {
                 call_user_func_array(array($technorati, $callbackMethod), $options);
-                /**
-                 * @todo    validate converted value
-                 */
             } catch (Zend_Service_Technorati_Exception $e) {
                 $this->fail("Exception " . $e->getMessage() . " thrown " .
                             "for option '$option' value '$value'");
