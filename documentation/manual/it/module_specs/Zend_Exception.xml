@@ -1,6 +1,6 @@
 <sect1 id="zend.exception.using">
 
-    <title>Utilizzare le eccezioni</title>
+    <title>Utilizzo delle eccezioni</title>
 
     <para>
         Tutte le eccezioni lanciate dalle classi del Framework Zend dovrebbero appartenere ad un'eccezione che deriva dalla classe base Zend_Exception.
