@@ -629,7 +629,7 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.dailycountsresultset">
             <title>Zend_Service_Technorati_DailyCountsResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_DailyCountsResultSet</code> represents a Technorati Tag query result set.
+                <code>Zend_Service_Technorati_DailyCountsResultSet</code> represents a Technorati DailyCounts query result set.
             </para>
             <note>
                 <para>
@@ -642,8 +642,7 @@ foreach ($resultSet as $result) {
         <sect3 id="zend.service.technorati.classes.tagsresultset">
             <title>Zend_Service_Technorati_TagsResultSet</title>
             <para>
-                <code>Zend_Service_Technorati_TagsResultSet</code> represents a Technorati TopTags or BlogPostTags
-                queries result set.
+                <code>Zend_Service_Technorati_TagsResultSet</code> represents a Technorati TopTags or BlogPostTags queries result set.
             </para>
             <note>
                 <para>
