@@ -47,7 +47,7 @@ class Zend_Service_Technorati_UtilsTest extends Zend_Service_Technorati_TestCase
      */
     public function testSetUriHttpInputNullReturnsNull()
     {
-        $this->assertNull(Zend_Service_Technorati_Utils::setUriHttp(null));
+        $this->assertNull(Zend_Service_Technorati_Utils::normalizeUriHttp(null));
     }
 
     /**
@@ -58,10 +58,44 @@ class Zend_Service_Technorati_UtilsTest extends Zend_Service_Technorati_TestCase
         $scheme             = 'ftp';
         $inputInvalidScheme = "$scheme://example.com";
         try {
-            Zend_Service_Technorati_Utils::setUriHttp($inputInvalidScheme);
+            Zend_Service_Technorati_Utils::normalizeUriHttp($inputInvalidScheme);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch (Zend_Service_Technorati_Exception $e) {
             $this->assertContains($scheme, $e->getMessage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetDateInputNullReturnsNull()
+    {
+        $this->assertNull(Zend_Service_Technorati_Utils::normalizeDate(null));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetDateInputDateInstanceReturnsInstance()
+    {
+        $date   = new Zend_Date('2007-11-11 08:47:26 GMT');
+        $result = Zend_Service_Technorati_Utils::normalizeDate($date);
+        
+        $this->assertType('Zend_Date', $result);
+        $this->assertEquals($date, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetDateInputInvalidThrowsException()
+    {
+        $inputInvalid = "2007foo";
+        try {
+            Zend_Service_Technorati_Utils::normalizeDate($inputInvalid);
+            $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
+        } catch (Zend_Service_Technorati_Exception $e) {
+            $this->assertContains($inputInvalid, $e->getMessage());
         }
     }
 }

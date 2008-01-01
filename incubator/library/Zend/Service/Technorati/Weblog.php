@@ -94,7 +94,7 @@ class Zend_Service_Technorati_Weblog
     /**
      * Last blog update UNIX timestamp.
      *
-     * @var     integer
+     * @var     null|Zend_Date
      * @access  protected
      */
     protected $_lastUpdate;
@@ -358,11 +358,11 @@ class Zend_Service_Technorati_Weblog
      * @param   string|Zend_Uri_Http $url
      * @return  void
      * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
-     *          (via Zend_Service_Technorati_Utils::setUriHttp)
+     *          (via Zend_Service_Technorati_Utils::normalizeUriHttp)
      */
     public function setUrl($url) 
     {
-        $this->_url = Zend_Service_Technorati_Utils::setUriHttp($url);
+        $this->_url = Zend_Service_Technorati_Utils::normalizeUriHttp($url);
         return $this;
     }
     
@@ -396,11 +396,11 @@ class Zend_Service_Technorati_Weblog
      * @param   string|Zend_Uri_Http $url
      * @return  Zend_Service_Technorati_Weblog $this instance
      * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
-     *          (via Zend_Service_Technorati_Utils::setUriHttp)
+     *          (via Zend_Service_Technorati_Utils::normalizeUriHttp)
      */
     public function setRssUrl($url) 
     {
-        $this->_rssUrl = Zend_Service_Technorati_Utils::setUriHttp($url);
+        $this->_rssUrl = Zend_Service_Technorati_Utils::normalizeUriHttp($url);
         return $this;
     }
 
@@ -410,40 +410,28 @@ class Zend_Service_Technorati_Weblog
      * @param   string|Zend_Uri_Http $url
      * @return  Zend_Service_Technorati_Weblog $this instance
      * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
-     *          (via Zend_Service_Technorati_Utils::setUriHttp)
+     *          (via Zend_Service_Technorati_Utils::normalizeUriHttp)
      */
     public function setAtomUrl($url) 
     {
-        $this->_atomUrl = Zend_Service_Technorati_Utils::setUriHttp($url);
+        $this->_atomUrl = Zend_Service_Technorati_Utils::normalizeUriHttp($url);
         return $this;
     }
     
     /**
      * Sets weblog Last Update timestamp.
      * 
-     * $input variable can be one of the date time format
-     * allowed by strtotime() PHP function.
+     * $datetime can be any value supported by 
+     * Zend_Service_Technorati_Utils::normalizeDate().
      * 
-     * @param   string $input   A string representing the last update date time
+     * @param   mixed $datetime A string representing the last update date time
      *                          in a valid date time format
      * @return  Zend_Service_Technorati_Weblog $this instance
-     * @todo    Zend_Date
+     * @throws  Zend_Service_Technorati_Exception
      */
     public function setLastUpdate($datetime) 
     {
-        $timestamp = @strtotime($datetime);
-        $errorValue = version_compare(PHP_VERSION, "5.1.0", "<") === 1 ?
-                      -1 : false;
-        
-        if ($timestamp === $errorValue) {
-            /**
-             * @see Zend_Service_Technorati_Exception
-             */
-            require_once 'Zend/Service/Technorati/Exception.php';  
-            throw new Zend_Service_Technorati_Exception($datetime . "is not a valid datetime value");
-        }
-        
-        $this->_lastUpdate = strtotime($datetime);
+        $this->_lastUpdate = Zend_Service_Technorati_Utils::normalizeDate($datetime);
         return $this;
     }
     

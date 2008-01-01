@@ -74,7 +74,7 @@ class Zend_Service_Technorati_WeblogTest extends Zend_Service_Technorati_TestCas
         // check inbound links
         $this->assertEquals(103, $weblog->getInboundLinks());
         // check last update
-        $this->assertEquals(strtotime('2007-11-11 08:47:26 GMT'), $weblog->getLastUpdate());
+        $this->assertEquals(new Zend_Date('2007-11-11 08:47:26 GMT'), $weblog->getLastUpdate());
         // check rank
         $this->assertEquals(93473, $weblog->getRank());
         // check authors
@@ -208,8 +208,8 @@ class Zend_Service_Technorati_WeblogTest extends Zend_Service_Technorati_TestCas
         
         $set = '2007-11-11 08:47:26 GMT';
         $get = $weblog->setLastUpdate($set)->getLastUpdate();
-        $this->assertType('integer', $get);
-        $this->assertEquals(strtotime($set), $get);
+        $this->assertType('Zend_Date', $get);
+        $this->assertEquals(new Zend_Date($set), $get);
         
         /* not supported
         $set = time();
@@ -217,12 +217,12 @@ class Zend_Service_Technorati_WeblogTest extends Zend_Service_Technorati_TestCas
         $this->assertType('integer', $get);
         $this->assertEquals($set, $get); */
         
-        $set = '2007PZN';
+        $set = '200ty';
         try {
             $weblog->setLastUpdate($set);
             $this->fail('Expected Zend_Service_Technorati_Exception not thrown');
         } catch(Zend_Service_Technorati_Exception $e) {
-            $this->assertContains("not a valid datetime", $e->getMessage());
+            $this->assertContains("valid Date/Time", $e->getMessage());
         }
         
         // check rank

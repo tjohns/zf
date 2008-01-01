@@ -51,7 +51,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     /**
      * The nearest permalink tracked for queried URL.
      * 
-     * @var     string
+     * @var     Zend_Uri_Http
      * @access  protected
      */
     protected $_nearestPermalink;
@@ -67,7 +67,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     /**
      * The the datetime the link was created.
      * 
-     * @var     string
+     * @var     Zend_Date
      * @access  protected
      */
     protected $_linkCreated;
@@ -75,7 +75,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     /**
      * The URL of the specific link target page
      * 
-     * @var     string
+     * @var     Zend_Uri_Http
      * @access  protected
      */
     protected $_linkUrl;
@@ -98,9 +98,9 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
         $this->_parseWeblog();
         
         // filter fields
-        /**
-         * @todo Each field needs to be filtered and converted
-         */
+        $this->_nearestPermalink = Zend_Service_Technorati_Utils::normalizeUriHttp($this->_nearestPermalink);
+        $this->_linkUrl = Zend_Service_Technorati_Utils::normalizeUriHttp($this->_linkUrl);
+        $this->_linkCreated = Zend_Service_Technorati_Utils::normalizeDate($this->_linkCreated);
     }
 
     /**
@@ -115,8 +115,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     /**
      * Returns the nearest permalink tracked for queried URL.
      * 
-     * @return  string
-     * @todo    filter as Zend_Uri_Http
+     * @return  Zend_Uri_Http
      */
     public function getNearestPermalink() {
         return $this->_nearestPermalink;
@@ -134,8 +133,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
     /**
      * Returns the datetime the link was created.
      * 
-     * @return  string
-     * @todo    Zend_Date
+     * @return  Zend_Date
      */
     public function getLinkCreated() {
         return $this->_linkCreated;
@@ -145,8 +143,7 @@ class Zend_Service_Technorati_CosmosResult extends Zend_Service_Technorati_Resul
      * If queried URL is a valid blog,
      * returns the URL of the specific link target page.
      * 
-     * @return  string
-     * @todo    Zend_Uri_Http
+     * @return  Zend_Uri_Http
      */
     public function getLinkUrl() {
         return $this->_linkUrl;

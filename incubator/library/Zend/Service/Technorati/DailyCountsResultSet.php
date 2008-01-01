@@ -83,7 +83,7 @@ class Zend_Service_Technorati_DailyCountsResultSet extends Zend_Service_Technora
 
         $result = $this->_xpath->query('/tapi/document/result/searchurl/text()');
         if ($result->length == 1) {
-            $this->_searchUrl = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
+            $this->_searchUrl = Zend_Service_Technorati_Utils::normalizeUriHttp($result->item(0)->data);
         }
 
         $this->_totalResultsReturned  = (int) $this->_xpath->evaluate("count(/tapi/document/items/item)");

@@ -41,7 +41,7 @@ class Zend_Service_Technorati_Utils
      * @throws  Zend_Service_Technorati_Exception
      * @static
      */
-    public static function setUriHttp($input)
+    public static function normalizeUriHttp($input)
     {
         // allow null as value
         if ($input === null) {
@@ -68,12 +68,44 @@ class Zend_Service_Technorati_Utils
             }
         }
 
-        /**
-         * @todo Should this method return a value or set the value?
-         */
         return $uri;
     }
+    /**
+     * Parses, validates and returns a valid Zend_Date object
+     * from given $input.
+     * 
+     * $input can be either a string, an integer or a Zend_Date object.
+     * If $input is string or int, it will be provided to Zend_Date as it is.
+     * If $input is a Zend_Date object, the object instance will be returned. 
+     *
+     * @param   mixed|Zend_Date $input
+     * @return  null|Zend_Date
+     * @throws  Zend_Service_Technorati_Exception
+     * @static
+     */
+    public static function normalizeDate($input)
+    {
+        /**
+         * @see Zend_Date
+         */
+        require_once 'Zend/Date.php';
+        
+        // allow null as value and return valid Zend_Date objects
+        if (($input === null) || ($input instanceof Zend_Date)) {
+            return $input;
+        }
+        
+        if (!Zend_Date::isDate($input)) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            require_once 'Zend/Service/Technorati/Exception.php';
+            throw new Zend_Service_Technorati_Exception("'$input' is not a valid Date/Time");
+        }
 
+        return new Zend_Date($input);
+    }
+    
     /**
      * @todo public static function xpathQueryAndSet() {}
      */

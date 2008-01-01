@@ -103,7 +103,7 @@ class Zend_Service_Technorati_BlogInfoResult
             try {
                 // fetched URL often doens't include schema 
                 // and this issue causes the following line to fail
-                $this->_url = Zend_Service_Technorati_Utils::setUriHttp($result->item(0)->data);
+                $this->_url = Zend_Service_Technorati_Utils::normalizeUriHttp($result->item(0)->data);
             } catch(Zend_Service_Technorati_Exception $e) {
                 if ($this->getWeblog() instanceof Zend_Service_Technorati_Weblog) {
                     $this->_url = $this->getWeblog()->getUrl();

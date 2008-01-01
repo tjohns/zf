@@ -232,10 +232,10 @@ class Zend_Service_Technorati_Author
      * @param   string|Zend_Uri_Http $input thumbnail picture URI
      * @return  Zend_Service_Technorati_Author  $this instance
      * @throws  Zend_Service_Technorati_Exception if $input is an invalid URI
-     *          (via Zend_Service_Technorati_Utils::setUriHttp)
+     *          (via Zend_Service_Technorati_Utils::normalizeUriHttp)
      */
     public function setThumbnailPicture($input) {
-        $this->_thumbnailPicture = Zend_Service_Technorati_Utils::setUriHttp($input);
+        $this->_thumbnailPicture = Zend_Service_Technorati_Utils::normalizeUriHttp($input);
         return $this;
     }
 

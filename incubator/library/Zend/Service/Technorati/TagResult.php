@@ -67,9 +67,8 @@ class Zend_Service_Technorati_TagResult extends Zend_Service_Technorati_Result
     /**
      * The datetime the entry was created.
      * 
-     * @var     string
+     * @var     Zend_Date
      * @access  protected
-     * @todo    Zend_Date
      */
     protected $_created;
     
@@ -78,18 +77,16 @@ class Zend_Service_Technorati_TagResult extends Zend_Service_Technorati_Result
      * Called 'postupdate' in original XML response,
      * it has been renamed to provide more coherence.
      * 
-     * @var     string
+     * @var     Zend_Date
      * @access  protected
-     * @todo    Zend_Date
      */
     protected $_updated;
     
     /**
      * The permalink of the blog entry.
      * 
-     * @var     string
+     * @var     Zend_Uri_Http
      * @access  protected
-     * @todo    Zend_Uri_Http
      */
     protected $_permalink;
     
@@ -112,9 +109,9 @@ class Zend_Service_Technorati_TagResult extends Zend_Service_Technorati_Result
         $this->_parseWeblog();
 
         // filter fields
-        /**
-         * @todo Each field needs to be filtered and converted
-         */
+        $this->_permalink = Zend_Service_Technorati_Utils::normalizeUriHttp($this->_permalink);
+        $this->_created = Zend_Service_Technorati_Utils::normalizeDate($this->_created);
+        $this->_updated = Zend_Service_Technorati_Utils::normalizeDate($this->_updated);
     }
 
     /**
@@ -147,7 +144,7 @@ class Zend_Service_Technorati_TagResult extends Zend_Service_Technorati_Result
     /**
      * Returns the datetime the entry was created.
      * 
-     * @return  string
+     * @return  Zend_Date
      */
     public function getCreated() {
         return $this->_created;
@@ -156,7 +153,7 @@ class Zend_Service_Technorati_TagResult extends Zend_Service_Technorati_Result
     /**
      * Returns the datetime the entry was updated.
      * 
-     * @return  string
+     * @return  Zend_Date
      */
     public function getUpdated() {
         return $this->_updated;
@@ -165,7 +162,7 @@ class Zend_Service_Technorati_TagResult extends Zend_Service_Technorati_Result
     /**
      * Returns the permalink of the blog entry.
      * 
-     * @return  string
+     * @return  Zend_Uri_Http
      */
     public function getPermalink() {
         return $this->_permalink;
