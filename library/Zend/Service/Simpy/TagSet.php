@@ -64,12 +64,11 @@ class Zend_Service_Simpy_TagSet implements IteratorAggregate
     /**
      * Returns an iterator for the tag set
      *
-     * @return IteratorIterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {
-        $array = new ArrayObject($this->_tags);
-        return $array->getIterator();
+        return new ArrayIterator($this->_links);
     }
 
     /**

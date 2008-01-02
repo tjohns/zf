@@ -64,12 +64,11 @@ class Zend_Service_Simpy_LinkSet implements IteratorAggregate
     /**
      * Returns an iterator for the link set
      *
-     * @return IteratorIterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {
-        $array = new ArrayObject($this->_links);
-        return $array->getIterator();
+        return new ArrayIterator($this->_links);
     }
 
     /**

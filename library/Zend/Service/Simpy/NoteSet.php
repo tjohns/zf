@@ -64,12 +64,11 @@ class Zend_Service_Simpy_NoteSet implements IteratorAggregate
     /**
      * Returns an iterator for the note set
      *
-     * @return IteratorIterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {
-        $array = new ArrayObject($this->_notes);
-        return $array->getIterator();
+        return new ArrayIterator($this->_links);
     }
 
     /**

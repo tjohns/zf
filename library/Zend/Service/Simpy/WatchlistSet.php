@@ -63,12 +63,11 @@ class Zend_Service_Simpy_WatchlistSet implements IteratorAggregate
     /**
      * Returns an iterator for the watchlist set
      *
-     * @return IteratorIterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {
-        $array = new ArrayObject($this->_watchlists);
-        return $array->getIterator();
+        return new ArrayIterator($this->_links);
     }
 
     /**
