@@ -2,35 +2,22 @@
     <title>Redirector</title>
 
     <sect4 id="zend.controller.actionhelper.redirector.introduction">
-        <title>Введение<!--Introduction--></title>
+        <title>Введение</title>
 
         <para>
             Помощник <code>Redirector</code> позволяет использовать объект
-            redirector для удовлетворения нужд приложения в перенаправлении на
-            новые URL. Он дает многие преимущества по сравнению с методом
+            Redirector для удовлетворения нужд в перенаправлении на
+            новые URL. Он имеет многие преимущества по сравнению с методом
             <code>_redirect()</code>, такие, как возможность предварительной
-            конфигурации поведения на стороне сайта в объекте redirector или
+            конфигурации поведения на стороне сайта в объекте Redirector или
             использование встроенного интерфейса
             <code>goto($action, $controller, $module, $params)</code>, подобного
             интерфейсу <code>Zend_Controller_Action::_forward()</code>.
-<!--
-            The <code>Redirector</code> helper allows you to use a redirector
-            object to fufill your application's needs for redirecting to a new
-            URL. It provides numerous benefits over the
-            <code>_redirect()</code> method, such as being able to preconfigure
-            sitewide behavior into the redirector object or using the built in
-            <code>goto($action, $controller, $module, $params)</code> interface
-            similar to that of <code>Zend_Controller_Action::_forward()</code>.
--->
         </para>
 
         <para>
             <code>Redirector</code> имеет набор методов, которые могут
-            использоваться для воздействия на поведение при перенаправлении:
-<!--
-            The <code>Redirector</code> has a number of methods that can be used
-            to affect the behaviour at redirect:
--->
+            использоваться для управления поведением при перенаправлении:
         </para>
 
         <itemizedlist>
@@ -38,10 +25,6 @@
                 <para>
                     <code>setCode()</code> может использоваться для установки
                     кода ответа HTTP, используемого при перенаправлении.
-<!--
-                    <code>setCode()</code> can be used to set the HTTP response
-                    code to use during the redirect.
--->
                 </para>
             </listitem>
 
@@ -50,30 +33,18 @@
                     <code>setExit()</code> может использоваться для установки
                     принудительного вызова <code>exit()</code> после
                     перенаправления. По умолчанию он установлен в true.
-<!--
-                    <code>setExit()</code> can be used to force an
-                    <code>exit()</code> following a redirect. By default this is
-                    true.
--->
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>setGoto()</code> может использоваться для установки
-                    URL, используемого по умолчанию (когда  методу
-                    <code>goto()</code> не был передан URL). Использует
+                    URL, используемого по умолчанию, если методу
+                    <code>goto()</code> не был передан URL. Использует
                     интерфейс
                     <code>Zend_Controller_Action::_forward()</code>:
                     setgoto($action, $controller = null, $module = null, array
                     $params = array());
-<!--
-                    <code>setGoto()</code> can be used to set a default URL to
-                    use if none is passed to <code>goto()</code>. Uses the API
-                    of <code>Zend_Controller_Action::_forward()</code>:
-                    setgoto($action, $controller = null, $module = null, array
-                    $params = array());
--->
                 </para>
             </listitem>
 
@@ -81,29 +52,17 @@
                 <para>
                     <code>setGotoRoute()</code> может использоваться для
                     установки URL, основываясь на зарегистрированном маршруте.
-                    Передавайте массив пар ключ/значение и имя маршрута, из них
-                    будет собран URL в соответствии с типом и определением
-                    маршрута.
-<!--
-                    <code>setGotoRoute()</code> can be used to set a URL
-                    based on a registered route. Pass in an array of key/value
-                    pairs and a route name, and it will assemble the URL
-                    according to the route type and definition.
--->
+                    Ему должен передаваться массив пар ключ/значение и имя
+                    маршрута, из них будет собран URL в соответствии с типом и
+                    определением маршрута.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>setGotoUrl()</code> может использоваться для установки
-                    URL, используемого по умолчанию (когда методу
-                    <code>gotoUrl()</code> не был передан URL). Принимает только
-                    одну строку URL.
-<!--
-                    <code>setGotoUrl()</code> can be used to set a default URL to
-                    use if none is passed to <code>gotoUrl()</code>. Accepts a
-                    single URL string.
--->
+                    URL, используемого по умолчанию, если методу
+                    <code>gotoUrl()</code> не был передан URL. Принимает единственную строку URL в качестве аргумента.
                 </para>
             </listitem>
 
@@ -114,48 +73,28 @@
                     заданного через методы <code>setGotoUrl()</code>,
                     <code>gotoUrl()</code>, или
                     <code>gotoUrlAndExit()</code>.
-<!--
-                    <code>setPrependBase()</code> can be used to prepend the
-                    request object's base URL to a URL specified with
-                    <code>setGotoUrl()</code>, <code>gotoUrl()</code>, or
-                    <code>gotoUrlAndExit()</code>.
--->
                 </para>
             </listitem>
             
             <listitem>
                 <para>
                     <code>setUseAbsoluteUri()</code> может использоваться для
-                    принуждения <code>Redirector</code>-а использовать
+                    принуждения <code>Redirector</code>-а применять
                     абсолютные URI при произведении перенаправления. Когда эта
                     опция установлена, то используются значения
                     <code>$_SERVER['HTTP_HOST']</code>,
                     <code>$_SERVER['SERVER_PORT']</code> и
                     <code>$_SERVER['HTTPS']</code> для формирования полного URI
-                    к URL, определенному одним из методов перенаправления. Эта
+                    из URL, определенного одним из методов перенаправления. Эта
                     опция по умолчанию отключена, но может быть включена по
                     умолчанию в последующих релизах.
-<!--
-                    <code>setUseAbsoluteUri()</code> can be used to force the
-                    <code>Redirector</code> to use absolute URIs when
-                    redirecting. When this option is set, it uses the value of
-                    <code>$_SERVER['HTTP_HOST']</code>,
-                    <code>$_SERVER['SERVER_PORT']</code>, and
-                    <code>$_SERVER['HTTPS']</code> to form a full URI to the URL
-                    specified by one of the redirect methods. This option is off
-                    by default, but may be enabled by default in later releases.
--->
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            Кроме того, в Redirector есть различные методы, выполняющие текущие
+            Кроме этого, в Redirector есть различные методы, выполняющие текущие
             перенаправления:
-<!--
-            Additionally, there are a variety of methods in the redirector for
-            performing the actual redirects:
--->
         </para>
 
         <itemizedlist>
@@ -163,38 +102,22 @@
                 <para>
                     <code>goto()</code> использует <code>setGoto()</code>
                     (интерфейс, подобный <code>_forward()</code>) для построения
-                    URL или произведения перенаправления.
-<!--
-                    <code>goto()</code> uses <code>setGoto()</code>
-                    (<code>_forward()-like API</code>) to build a URL and
-                    perform a redirect.
--->
+                    URL и перенаправления на него.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>gotoRoute()</code> использует
-                    <code>setGotoRoute()</code> для построения URL и
-                    произведения перенаправления.
-<!--
-                    <code>gotoRoute()</code> uses <code>setGotoRoute()</code>
-                    (<code>route-assembly</code>) to build a URL and
-                    perform a redirect.
--->
+                    <code>setGotoRoute()</code> (сборка маршрута) для построения
+                    URL и перенаправления на него.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>gotoUrl()</code> использует <code>setGotoUrl()</code>
-                    (строка URL) для построения URL и произведения
-                    перенаправления.
-<!--
-                    <code>gotoUrl()</code> uses <code>setGotoUrl()</code>
-                    (<code>URL string</code>) to build a URL and
-                    perform a redirect.
--->
+                    (строка URL) для построения URL и перенаправления на него.
                 </para>
             </listitem>
         </itemizedlist>
@@ -202,30 +125,20 @@
         <para>
             Наконец, можно в любое время получить текущий URL для
             перенаправления, используя <code>getRedirectUrl()</code>.
-<!--
-            Finally, you can determine the current redirect URL at any time
-            using <code>getRedirectUrl()</code>.
--->
         </para>
     </sect4>
 
     <sect4 id="zend.controller.actionhelper.redirector.basicusage">
-        <title>Базовые примеры использования<!--Basic Usage Examples--></title>
+        <title>Базовые примеры использования</title>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-1">
-            <title>Опции настройки<!--Setting Options--></title>
+            <title>Опции настройки</title>
 
             <para>
                 В этом примере переопределяются несколько опций, включая
-                настройку код HTTP статуса, используемого при перенаправлении
-                ('303'), и определение URL, используемого по умолчанию при
+                код статуса HTTP, используемого при перенаправлении
+                ('303'), и определение URL, используемое по умолчанию при
                 перенаправлении.
-<!--
-                This example overrides several options, including setting the
-                HTTP status code to use in the redirect ('303'), not defaulting
-                to exit on redirect, and defining a default URL to use when
-                redirecting.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -255,7 +168,7 @@ class SomeController extends Zend_Controller_Action
         /* делаем что-то */
 
         // Перенаправление на ранее зарегистрированный URL и
-        // завершение выполнения:
+        // принудительное завершение исполнения скрипта:
         $this->_redirector->redirectAndExit();
         return; // никогда не будет достигнуто
     }
@@ -265,17 +178,12 @@ class SomeController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-2">
-            <title>Использование по умолчанию<!--Using Defaults--></title>
+            <title>Использование по умолчанию</title>
 
             <para>
                 Этот пример предполагает, что используются значения по
                 умолчанию, это означает, что после любых перенаправлений будет
                 производиться выход <code>exit()</code>.
-<!--
-                This example assumes that the defaults are used, which means
-                that any redirect will result in an immediate
-                <code>exit()</code>.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -308,7 +216,7 @@ class AlternativeController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
-            <title>Использование интерфейса _forward() для goto()<!--Using goto()'s _forward() API--></title>
+            <title>Использование интерфейса _forward() для goto()</title>
 
             <para>
                 Метод <code>goto()</code> копирует интерфейс метода
@@ -318,14 +226,6 @@ class AlternativeController extends Zend_Controller_Action
                 <code>:module/:controller/:action/*</code> маршрутизатора по
                 умолчанию. Затем он производит перенаправление вместо добавления
                 действия в цепочку.
-<!--
-                <code>goto()</code>'s API mimics that of
-                <code>Zend_Controller_Action::_forward()</code>. The primary
-                difference is that it builds a URL from the parameters passed,
-                and using the default <code>:module/:controller/:action/*</code>
-                format of the default router. It then redirects instead of
-                chaining the action.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -357,20 +257,14 @@ class ForwardController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
-            <title>Использование маршрута с gotoRoute()<!--Using route assembly with gotoRout()--></title>
+            <title>Использование маршрута с gotoRoute()</title>
 
             <para>
                 Следующий пример использует метод <code>assemble()</code>
                 <link linkend="zend.controller.router">маршрута</link> для
                 создания URL, основанного на переданном ассоциативном массиве
-                параметров. Этот пример предполагает, что были зарегистрирован
+                параметров. Этот пример предполагает, что был зарегистрирован
                 следующий маршрут:
-<!--
-                The following example uses the <link linkend="zend.controller.router">router's</link>
-                <code>assemble()</code> method to create a URL based on an
-                associative array of parameters passed. It assumes the following
-                route has been registered:
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -385,11 +279,6 @@ $router->addRoute('blogArchive', $route);]]>
                 При заданном массиве, в котором year (год), month (месяц), и day
                 (день) установлены в 2006, 4 и 24 соответственно, будет построен
                 URL <code>/blog/2006/4/24/42</code>.
-<!--
-                Given an array with year set to 2006, month to 4, day to 24, and
-                id to 42, it would then build the URL
-                <code>/blog/2006/4/24/42</code>.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
