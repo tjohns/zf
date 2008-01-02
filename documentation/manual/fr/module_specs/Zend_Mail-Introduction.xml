@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.mail.introduction">
+<sect1 id="zend.mail.introduction">
 
     <title>Introduction</title>
 
@@ -29,7 +29,7 @@ $mail->send();]]>
             </programlisting>
 
         </example>
-    
+
         <note>
             <title>Définitions minimales</title>
             <para>
@@ -46,7 +46,7 @@ $mail->send();]]>
         </para>
 
         <para>
-            Vous pouvez aussi utiliser la plupart des méthodes de l'objet Zend_Mail via une interface fluide. Une interface est dite fluide quand chaque méthode retourne la référence à l'objet appelé, ainsi vous pouvez appeler aussitôt une autre méthode.
+            Vous pouvez aussi utiliser la plupart des méthodes de l'objet <code>Zend_Mail</code> via une interface fluide. Une interface est dite fluide quand chaque méthode retourne la référence à l'objet appelé, ainsi vous pouvez appeler aussitôt une autre méthode.
         </para>
 
         <programlisting role="php"><![CDATA[<?php

@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.mail.read">
+<sect1 id="zend.mail.read">
     <title>Lire des emails</title>
 
     <para>
@@ -282,7 +282,7 @@ echo $part->getContent();]]>
     	</programlisting>
 
         <para>
-            Zend_Mail_Part implémente aussi RecursiveIterator, qui rend facile le scan de toutes les parties. Et pour un affichage facile, il implémente de plus la méthode magique __toString() qui retourne le contenu.
+            <code>Zend_Mail_Part</code> implémente aussi <code>RecursiveIterator</code>, qui rend facile le scan de toutes les parties. Et pour un affichage facile, il implémente de plus la méthode magique <code>__toString()</code> qui retourne le contenu.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -309,7 +309,7 @@ if (!$foundPart) {
     <sect2 id="zend.mail.read-flags">
         <title>Vérifier les drapeaux</title>
 
-        <para>Maildir et IMAP supporte l'enregistrement de drapeaux. La classe Zend_Mail_Storage possède des constantes pour tous les drapeaux maildir et IMAP connus, nommés <code>Zend_Mail_Storage::FLAG_&lt;nomdudrapeau&gt;</code>. Pour vérifier les drapeaux <code>Zend_Mail_Message</code> possède une méthode <code>hasFlag()</code>. Avec <code>getFlags()</code> vous récupérez tous les drapeaux existants.</para>
+        <para>Maildir et IMAP supporte l'enregistrement de drapeaux. La classe <code>Zend_Mail_Storage</code> possède des constantes pour tous les drapeaux maildir et IMAP connus, nommés <code>Zend_Mail_Storage::FLAG_&lt;nomdudrapeau&gt;</code>. Pour vérifier les drapeaux <code>Zend_Mail_Message</code> possède une méthode <code>hasFlag()</code>. Avec <code>getFlags()</code> vous récupérez tous les drapeaux existants.</para>
 
         <programlisting role="php"><![CDATA[<?php
 // trouvé les messages non lus
@@ -369,10 +369,10 @@ if (!$message->hasFlag('$SpamTeste')) {
         <title>Utiliser les dossiers</title>
 
         <para>
-            Tous les stockages, excepté Pop3, supportent les dossiers, également appelés boîtes aux lettres. L'interface implémentée par tous les stockages supportant les dossiers s'appelle <code>Zend_Mail_Storage_Folder_Interface</code>. En outre toutes ces classes ont un paramètre facultatif additionnel appelé 'folder', qui est le dossier choisi après ouverture, dans le constructeur.
+            Tous les stockages, excepté Pop3, supportent les dossiers, également appelés boîtes aux lettres. L'interface implémentée par tous les stockages supportant les dossiers s'appelle <code>Zend_Mail_Storage_Folder_Interface</code>. En outre toutes ces classes ont un paramètre facultatif additionnel appelé <code>folder</code>, qui est le dossier choisi après ouverture, dans le constructeur.
         </para>
         <para>
-            Pour les stockages locaux vous devez employer les classes séparées appelées <code>Zend_Mail_Storage_Folder_Mbox</code> ou <code>Zend_Mail_Storage_Folder_Maildir</code>. Tous les deux ont besoin d'un paramètre nommé 'dirname' avec le nom du dossier de base. Le format pour le maildir est comme définie dans maildir++ (avec un point comme délimiteur par défaut), Mbox est une hiérarchie de dossiers avec des fichiers Mbox. Si vous n'avez pas un dossier de Mbox appelé INBOX dans votre dossier de base Mbox vous devez placer un autre dossier dans le constructeur.
+            Pour les stockages locaux vous devez employer les classes séparées appelées <code>Zend_Mail_Storage_Folder_Mbox</code> ou <code>Zend_Mail_Storage_Folder_Maildir</code>. Tous les deux ont besoin d'un paramètre nommé <code>dirname</code> avec le nom du dossier de base. Le format pour le maildir est comme définie dans maildir++ (avec un point comme délimiteur par défaut), Mbox est une hiérarchie de dossiers avec des fichiers Mbox. Si vous n'avez pas un dossier de Mbox appelé INBOX dans votre dossier de base Mbox vous devez placer un autre dossier dans le constructeur.
         </para>
         <para>
             <code>Zend_Mail_Storage_Imap</code> supporte déjà des dossiers par défaut. Exemples pour ouvrir ces stockages :
