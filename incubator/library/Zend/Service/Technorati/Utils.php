@@ -68,6 +68,16 @@ class Zend_Service_Technorati_Utils
             }
         }
 
+        // allow inly Zend_Uri_Http objects or child classes
+        if (!($uri instanceof Zend_Uri_Http)) {
+            /**
+             * @see Zend_Service_Technorati_Exception
+             */
+            require_once 'Zend/Service/Technorati/Exception.php'; 
+            throw new Zend_Service_Technorati_Exception(
+                "Invalid URL $uri, only HTTP(S) protocols can be used");
+        }
+        
         return $uri;
     }
     /**

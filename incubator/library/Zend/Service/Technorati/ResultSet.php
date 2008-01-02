@@ -231,7 +231,7 @@ abstract class Zend_Service_Technorati_ResultSet implements SeekableIterator
      *
      * @return string   the response document converted into XML format
      */
-    function getXML()
+    function getXml()
     {
         return $this->_dom->saveXML($this->_dom);
     }

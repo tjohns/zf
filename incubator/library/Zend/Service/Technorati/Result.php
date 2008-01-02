@@ -108,4 +108,14 @@ abstract class Zend_Service_Technorati_Result
             $this->_weblog = null;
         }
     }
+
+    /**
+     * Returns the XML fragment for this object.
+     *
+     * @return string   XML fragment converted into XML format
+     */
+    function getXml()
+    {
+        return $this->_dom->saveXML($this->_dom);
+    }
 }
