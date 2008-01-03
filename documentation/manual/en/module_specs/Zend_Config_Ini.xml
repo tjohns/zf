@@ -45,19 +45,19 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $config);]]>
         </para>
         <programlisting role="ini"><![CDATA[; Production site configuration data
 [production]
-webhost           = www.example.com
-database.type     = pdo_mysql
-database.host     = db.example.com
-database.username = dbuser
-database.password = secret
-database.name     = dbname
+webhost                  = www.example.com
+database.adapter         = pdo_mysql
+database.params.host     = db.example.com
+database.params.username = dbuser
+database.params.password = secret
+database.params.dbname   = dbname
 
 ; Staging site configuration data inherits from production and
 ; overrides values as necessary
 [staging : production]
-database.host     = dev.example.com
-database.username = devuser
-database.password = devsecret]]>
+database.params.host     = dev.example.com
+database.params.username = devuser
+database.params.password = devsecret]]>
         </programlisting>
         <para>
             Next, assume that the application developer needs the staging configuration data from the INI file. It is a
@@ -68,8 +68,8 @@ require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
-echo $config->database->host; // prints "dev.example.com"
-echo $config->database->name; // prints "dbname"]]>
+echo $config->database->params->host;   // prints "dev.example.com"
+echo $config->database->params->dbname; // prints "dbname"]]>
         </programlisting>
     </example>
     <note>
