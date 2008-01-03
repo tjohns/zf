@@ -4,40 +4,27 @@
     <para>
         <code>Zend_Controller_Plugins_ErrorHandler</code> представляет собой
         плагин для обработки исключений, брошенных вашим приложением, включая
-        те, которые были вызваны отсутствием запрошенного контроллера или
+        те, которые вызваны отсутствием запрошенного контроллера или
         действия. Он является альтернативой способам, перечисленным в <link
         linkend="zend.controller.exceptions">разделе об исключениях MVC</link>.
-<!--
-        <code>Zend_Controller_Plugins_ErrorHandler</code> provides a drop-in
-        plugin for handling exceptions thrown by your application, including
-        those resulting from missing controllers or actions; it is an
-        alternative to the methods listed in the <link
-            linkend="zend.controller.exceptions">MVC Exceptions section</link>.
--->
     </para>
 
     <para>
         Основные назначения этого плагина:
-<!--
-        The primary targets of the plugin are:
--->
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                Перехват исключений, вызваных отсутствием контроллера или метода
-                действия
-<!--Intercept exceptions raised due to missing controllers or
-                action methods-->
-</para>
+                Перехват исключений, вызванных отсутствием контроллера или
+                метода действия
+            </para>
         </listitem>
 
         <listitem>
             <para>
                 Перехват исключений, брошенных в контроллерах действий
-<!--Intercept exceptions raised within action controllers-->
-</para>
+            </para>
         </listitem>
     </itemizedlist>
 
@@ -46,11 +33,6 @@
         HTTP-ошибок типа 404 (отсутствует страница) и 500
         (внутренняя ошибка). Он не предназначен для отлова исключений,
         сгенерированных в других плагинах или в процессе маршрутизации.
-<!--
-        In other words, the ErrorHandler plugin is designed to handle HTTP
-        404-type errors (page missing) and 500-type errors (internal error). It
-        is not intended to catch exceptions raised in other plugins or routing.
--->
     </para>
 
     <para>
@@ -59,12 +41,6 @@
         <code>ErrorController::errorAction()</code> в модуле по умолчанию. Вы
         можете установить альтернативные значения для перехода, используя
         набор методов-аксессоров, доступных в плагине:
-<!--
-        By default, <code>Zend_Controller_Plugins_ErrorHandler</code> will
-        forward to <code>ErrorController::errorAction()</code> in the default
-        module. You may set alternate values for these by using the various
-        accessors available to the plugin:
--->
     </para>
 
     <itemizedlist>
@@ -72,10 +48,6 @@
             <para>
                 <code>setErrorHandlerModule()</code> устанавливает модуль, на
                 который производится переход.
-<!--
-                <code>setErrorHandlerModule()</code> sets the controller module
-                to use.
--->
             </para>
         </listitem>
 
@@ -83,10 +55,6 @@
             <para>
                 <code>setErrorHandlerController()</code> устанавливает
                 контроллер, на который производится переход.
-<!--
-                <code>setErrorHandlerController()</code> sets the controller
-                to use.
--->
             </para>
         </listitem>
 
@@ -94,35 +62,22 @@
             <para>
                 <code>setErrorHandlerAction()</code> устанавливает действие,
                 на которое производится переход.
-<!--
-                <code>setErrorHandlerAction()</code> sets the controller action
-                to use.
--->
             </para>
         </listitem>
 
         <listitem>
             <para>
                 <code>setErrorHandler()</code> принимает ассоциативный массив,
-                который может сожержать любые из ключей 'module', 'controller'
-                или 'action', с которыми он установит соответствующие значения.
-<!--
-                <code>setErrorHandler()</code> takes an associative array, which
-                may contain any of the keys 'module', 'controller', or 'action',
-                with which it will set the appropriate values.
--->
+                который может содержать любые из ключей 'module', 'controller'
+                или 'action'.
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Кроме этого, вы можете опционально передавать конструктору
+        Кроме этого, вы можете опционально передать конструктору
         ассоциативный массив, который будет в свою очередь передан
         <code>setErrorHandler()</code>.
-<!--
-        Additionally, you may pass an optional associative array to the
-        constructor, which will then proxy to <code>setErrorHandler()</code>.
--->
     </para>
 
     <para>
@@ -130,15 +85,8 @@
         перехватчик <code>postDispatch()</code> и проверяет, есть ли
         зарегистрированые исключения в
         <link linkend="zend.controller.response">объекте ответа</link>.
-        Если есть, то производится попытка перехода на зарегистрированное в
-        качестве обработчика ошибок действие.
-<!--
-        <code>Zend_Controller_Plugin_ErrorHandler</code> registers a
-        <code>postDispatch()</code> hook and checks for exceptions registered in
-        <link linkend="zend.controller.response">the response object</link>. If
-        any are found, it attempts to forward to the registered error handler
-        action.
--->
+        Если есть, то производится попытка перехода на действие,
+        зарегистрированное в качестве обработчика ошибок.
     </para>
 
     <para>
@@ -146,15 +94,10 @@
         то плагин скажет фронт-контроллеру, чтобы тот бросил исключения, и
         повторно бросит последнее исключение, зарегистрированное в объекте
         ответа.
-<!--
-        If an exception occurs dispatching the error handler, the plugin will
-        tell the front controller to throw exceptions, and rethrow the last
-        exception registered with the response object.
--->
     </para>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.fourohfour">
-        <title>Использование ErrorHandler в качестве обработчика ошибки 404<!--Using the ErrorHandler as a 404 Handler--></title>
+        <title>Использование ErrorHandler в качестве обработчика ошибки 404</title>
 
         <para>
             Поскольку плагин захватывает не только ошибки приложения, но и
@@ -162,24 +105,12 @@
             контроллера и/или метода действия, то он может использоваться в
             качестве обработчика ошибки 404. В этом случае нужно, чтобы
             ваш контроллер ошибок проверял тип исключения.
-<!--
-            Since the ErrorHandler plugin captures not only application errors,
-            but also errors in the controller chain arising from missing
-            controller classes and/or action methods, it can be used as a 404
-            handler. To do so, you will need to have your error controller check
-            the exception type.
--->
         </para>
 
         <para>
             Перехваченные исключения журналируются в объекте, зарегистрированном
             в запросе. Для его получения используйте метод
             <code>Zend_Controller_Action::_getParam('error_handler')</code>:
-<!--
-            Exceptions captured are logged in an object registered in the
-            request. To retrieve it, use
-            <code>Zend_Controller_Action::_getParam('error_handler')</code>:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -196,10 +127,6 @@ class ErrorController extends Zend_Controller_Action
             Имея объект ошибки, вы можете получить тип ошибки через
             <code>$errors->type</code>. Тип ошибки может быть одним из
             следующих:
-<!--
-            Once you have the error object, you can get the type via
-            <code>$errors->type</code>. It will be one of the following:
--->
         </para>
 
         <itemizedlist>
@@ -207,10 +134,6 @@ class ErrorController extends Zend_Controller_Action
                 <para>
                     <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>,
                     означает, что контроллер не был найден.
-<!--
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>,
-                    indicating the controller was not found.
--->
                 </para>
             </listitem>
 
@@ -218,10 +141,6 @@ class ErrorController extends Zend_Controller_Action
                 <para>
                     <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>,
                     означает, что запрошенное действие не было найдено.
-<!--
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>,
-                    indicating the requested action was not found.
--->
                 </para>
             </listitem>
 
@@ -229,21 +148,13 @@ class ErrorController extends Zend_Controller_Action
                 <para>
                     <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>,
                     обозначает другие исключения.
-<!--
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>,
-                    indicating other exceptions.
--->
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
             Вы можете производить проверку на первые два типа и в случае
-            положительного результата указывать страницу 404:
-<!--
-            You can then test for either of the first two types, and, if so,
-            indicate a 404 page:
--->
+            положительного ответа указывать страницу 404:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -272,13 +183,8 @@ class ErrorController extends Zend_Controller_Action
 
         <para>
             Вы можете извлекать исключение, которое инициировало вызов
-            обрабочика ошибок, через свойство <code>exception</code> объекта
+            обработчика ошибок, через свойство <code>exception</code> объекта
             <code>error_handler</code>:
-<!--
-            Finally, you can retrieve the exception that triggered the error
-            handler by grabbing the <code>exception</code> property of the
-            <code>error_handler</code> object:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -312,7 +218,7 @@ public function errorAction()
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.buffer">
-        <title>Управление сгенерированным ранее выводом<!--Handling Previously Rendered Output--></title>
+        <title>Управление сгенерированным ранее выводом</title>
 
         <para>
             Если в процессе обработки запроса вызывается несколько действий,
@@ -321,24 +227,13 @@ public function errorAction()
             в себе сохраненные данные для вывода. Это может привести к тому, что
             выведется смесь из ожидаемого содержимого и содержимого
             ошибки.
-<!--
-            If you dispatch multiple actions in a request, or if your action
-            makes multiple calls to <code>render()</code>, its possible that the
-            response object already has content stored within it. This can lead
-            to rendering a mixture of expected content and error content.
--->
         </para>
 
         <para>
-            Если вы хотите, чтобы сообщения об ошибках выводились на этих
-            страницах, то не нужно ничего менять. Если же не хотите выводить
-            такое содержимое, то должны очистить тело ответа до того, как
-            производить рендеринг каких-либо видов:
-<!--
-            If you wish to render errors inline in such pages, no changes will
-            be necessary. If you do not wish to render such content, you should
-            clear the response body prior to rendering any views:
--->
+            Если вы хотите, чтобы сообщения об ошибках выводились на этих же
+            страницах, то нет необходимости что-либо менять. В противном случае
+            следует очистить тело ответа до того, как производить рендеринг
+            каких-либо видов:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -347,10 +242,10 @@ $this->getResponse()->clearBody();]]>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
-        <title>Примеры использования плагина<!--Plugin Usage Examples--></title>
+        <title>Примеры использования плагина</title>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
-            <title>Стандартное использование<!--Standard usage--></title>
+            <title>Стандартное использование</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
@@ -361,13 +256,13 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
-            <title>Установка другого обработчика ошибок<!--Setting a different error handler--></title>
+            <title>Установка другого обработчика ошибок</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
 
 $front = Zend_Controller_Front::getInstance();
-$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array
+$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'module'     => 'mystuff',
     'controller' => 'static',
     'action'     => 'error'
@@ -376,7 +271,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
-            <title>Использование аксессоров<!--Using accessors--></title>
+            <title>Использование аксессоров</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Plugin/ErrorHandler.php';
@@ -393,15 +288,11 @@ $front->registerPlugin($plugin);]]>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.controllerexamples">
-        <title>Пример контроллера ошибок<!--Error Controller Example--></title>
+        <title>Пример контроллера ошибок</title>
 
         <para>
             Для того, чтобы использовать плагин ErrorHandler, нужен контроллер
-            ошибок. Ниже приведен простой пример такого контроллера.
-<!--
-            In order to use the Error Handler plugin, you need an error
-            controller. Below is a simple example.
--->
+            ошибок. Ниже приводится простой пример такого контроллера.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
