@@ -38,18 +38,22 @@
     <production>
         <webhost>www.example.com</webhost>
         <database>
-            <type>pdo_mysql</type>
-            <host>db.example.com</host>
-            <username>dbuser</username>
-            <password>secret</password>
-            <name>dbname</name>
+            <adapter>pdo_mysql</adapter>
+            <params>
+                <host>db.example.com</host>
+                <username>dbuser</username>
+                <password>secret</password>
+                <dbname>dbname</dbname>
+            </params>
         </database>
     </production>
     <staging extends="production">
         <database>
-            <host>dev.example.com</host>
-            <username>devuser</username>
-            <password>devsecret</password>
+            <params>
+                <host>dev.example.com</host>
+                <username>devuser</username>
+                <password>devsecret</password>
+            </params>
         </database>
     </staging>
 </configdata>]]>
@@ -63,8 +67,8 @@ require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
-echo $config->database->host; // "dev.example.com" と出力します
-echo $config->database->name; // "dbname" と出力します]]>
+echo $config->database->params->host;   // "dev.example.com" と出力します
+echo $config->database->params->dbname; // "dbname" と出力します]]>
         </programlisting>
     </example>
 </sect1>
