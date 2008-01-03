@@ -21,7 +21,7 @@
             最初の引数に検索パラメータ、
             オプションで二番目の引数に検索オプションの配列を指定します。
             指定できるオプションの詳細については
-            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
+            <ulink url="http://developer.yahoo.com/search/web/V1/webSearch.html">Yahoo! Web Search
             ドキュメント</ulink> を参照ください。<code>webSearch()</code> メソッドは
             <code>Zend_Service_Yahoo_WebResultSet</code> オブジェクトを返します。
         </para>
@@ -46,7 +46,7 @@ foreach ($results as $result) {
             と同様、最初の引数に検索パラメータ、
             オプションで二番目の引数に検索オプションの配列を指定します。
             指定できるオプションの詳細については
-            <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
+            <ulink url="http://developer.yahoo.com/search/image/V1/imageSearch.html">Yahoo! Image Search
             ドキュメント</ulink> を参照ください。
         </para>
         <example id="zend.service.yahoo.imagesearch.example-1">
@@ -67,7 +67,7 @@ foreach ($results as $result) {
             <code>localSearch()</code> メソッドを使用すると、
             Yahoo! で local businesses and services を検索できます。
             詳細は
-            <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search
+            <ulink url="http://developer.yahoo.com/search/local/V1/localSearch.html">Yahoo! Local Search
             ドキュメント</ulink> を参照ください。
         </para>
         <example id="zend.service.yahoo.localsearch.example-1">
@@ -87,7 +87,7 @@ foreach ($results as $result) {
         <para>
             Yahoo! News を検索するのは簡単です。単に <code>newsSearch()</code>
             メソッドを下の例のように使用すればよいのです。詳細は
-            <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
+            <ulink url="http://developer.yahoo.com/search/news/V1/newsSearch.html">Yahoo! News Search
             ドキュメント</ulink> を参照ください。
         </para>
         <example id="zend.service.yahoo.newssearch.example-1">
