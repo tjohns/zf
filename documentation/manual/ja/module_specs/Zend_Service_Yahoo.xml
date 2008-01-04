@@ -61,6 +61,27 @@ foreach ($results as $result) {
             </programlisting>
         </example>
     </sect2>
+    <sect2 id="zend.service.yahoo.videosearch">
+        <title>Yahoo! を使用した動画の検索</title>
+        <para>
+            <code>Zend_Service_Yahoo</code> の <code>videoSearch()</code>
+            メソッドを使用すると、Yahoo で動画を検索できます。
+            詳細は
+            <ulink url="http://developer.yahoo.com/search/video/V1/videoSearch.html">Yahoo! Video Search
+            ドキュメント</ulink> を参照ください。
+        </para>
+        <example id="zend.service.yahoo.videosearch.example-1">
+            <title>Yahoo! を使用した動画の検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->videoSearch('PHP');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}]]>
+            </programlisting>
+        </example>
+    </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
         <title>Yahoo! を使用した Local Businesses and Services の検索</title>
         <para>
@@ -157,6 +178,7 @@ foreach ($results as $result) {
                 <listitem><para><link linkend="zend.service.yahoo.classes.resultset"><code>Zend_Service_Yahoo_ResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.webresultset"><code>Zend_Service_Yahoo_WebResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.imageresultset"><code>Zend_Service_Yahoo_ImageResultSet</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.videoresultset"><code>Zend_Service_Yahoo_VideoResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.localresultset"><code>Zend_Service_Yahoo_LocalResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.newsresultset"><code>Zend_Service_Yahoo_NewsResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.inlinkdataresultset"><code>Zend_Service_Yahoo_InlinkDataResultSet</code></link></para></listitem>
@@ -164,6 +186,7 @@ foreach ($results as $result) {
                 <listitem><para><link linkend="zend.service.yahoo.classes.result"><code>Zend_Service_Yahoo_Result</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.webresult"><code>Zend_Service_Yahoo_WebResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.imageresult"><code>Zend_Service_Yahoo_ImageResult</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.videoresult"><code>Zend_Service_Yahoo_VideoResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.localresult"><code>Zend_Service_Yahoo_LocalResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.newsresult"><code>Zend_Service_Yahoo_NewsResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.inlinkdataresult"><code>Zend_Service_Yahoo_InlinkDataResult</code></link></para></listitem>
@@ -258,6 +281,23 @@ foreach ($results as $result) {
             <note>
                 <para>
                     <code>Zend_Service_Yahoo_ImageResultSet</code> は
+                    <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
+                    を継承しています。
+                </para>
+            </note>
+            <para>
+                <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
+            </para>
+        </sect3>
+        <sect3 id="zend.service.yahoo.classes.videoresultset">
+            <title>Zend_Service_Yahoo_VideoResultSet</title>
+            <para>
+                <code>Zend_Service_Yahoo_VideoResultSet</code> は、Yahoo! Video Search
+                の結果セットを表します。
+            </para>
+            <note>
+                <para>
+                    <code>Zend_Service_Yahoo_VideoResultSet</code> は
                     <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
                     を継承しています。
                 </para>
@@ -494,6 +534,83 @@ foreach ($results as $result) {
                                 <entry>Width</entry>
                                 <entry>int</entry>
                                 <entry>画像の幅</entry>
+                            </row>
+                            <row>
+                                <entry>Thumbnail</entry>
+                                <entry><link linkend="zend.service.yahoo.classes.image">Zend_Service_Yahoo_Image</link></entry>
+                                <entry>画像のサムネイル</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">クラス一覧に戻る</link>
+                </para>
+            </sect4>
+         </sect3>
+         <sect3 id="zend.service.yahoo.classes.videoresult">
+            <title>Zend_Service_Yahoo_VideoResult</title>
+            <para>
+                Video Search の結果は<code>Zend_Service_Yahoo_VideoResult</code>
+                オブジェクトとして返されます。
+            </para>
+            <sect4 id="zend.service.yahoo.classes.videoresult.properties">
+                <title>プロパティ</title>
+                <table id="zend.service.yahoo.classes.videoresult.properties.table-1">
+                    <title>Zend_Service_Yahoo_VideoResult のプロパティ</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>名前</entry>
+                                <entry>型</entry>
+                                <entry>説明</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>Summary</entry>
+                                <entry>string</entry>
+                                <entry>結果の概要</entry>
+                            </row>
+                            <row>
+                                <entry>RefererUrl</entry>
+                                <entry>string</entry>
+                                <entry>動画を含むページの URL</entry>
+                            </row>
+                            <row>
+                                <entry>FileSize</entry>
+                                <entry>int</entry>
+                                <entry>動画のサイズを表すバイト数</entry>
+                            </row>
+                            <row>
+                                <entry>FileFormat</entry>
+                                <entry>string</entry>
+                                <entry>動画のフォーマット (avi, flash, mpeg, msmedia, quicktime, realmedia, など)</entry>
+                            </row>
+                            <row>
+                                <entry>Height</entry>
+                                <entry>int</entry>
+                                <entry>動画の高さを表すピクセル数</entry>
+                            </row>
+                            <row>
+                                <entry>Width</entry>
+                                <entry>int</entry>
+                                <entry>動画の幅を表すピクセル数</entry>
+                            </row>
+                            <row>
+                                <entry>Duration</entry>
+                                <entry>int</entry>
+                                <entry>動画の長さを表す秒数</entry>
+                            </row>
+                            <row>
+                                <entry>Channels</entry>
+                                <entry>int</entry>
+                                <entry>動画の音声チャネル数</entry>
+                            </row>
+                            <row>
+                                <entry>Streaming</entry>
+                                <entry>boolean</entry>
+                                <entry>ストリーミング形式かどうか</entry>
                             </row>
                             <row>
                                 <entry>Thumbnail</entry>
