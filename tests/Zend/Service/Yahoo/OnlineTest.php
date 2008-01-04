@@ -248,6 +248,53 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that videoSearch() works as expected given 'php' as a query
+     *
+     * @return void
+     */
+    public function testVideoSearchPhp()
+    {
+        $videoResultSet = $this->_yahoo->videoSearch('php');
+
+        $this->assertTrue($videoResultSet instanceof Zend_Service_Yahoo_VideoResultSet);
+        $this->assertTrue($videoResultSet->totalResultsAvailable > 10);
+        $this->assertEquals(10, $videoResultSet->totalResultsReturned);
+        $this->assertEquals(10, $videoResultSet->totalResults());
+        $this->assertEquals(1, $videoResultSet->firstResultPosition);
+        $this->assertEquals(0, $videoResultSet->key());
+
+        try {
+            $videoResultSet->seek(-1);
+            $this->fail('Expected OutOfBoundsException not thrown');
+        } catch (OutOfBoundsException $e) {
+            $this->assertContains('Illegal index', $e->getMessage());
+        }
+
+        foreach ($videoResultSet as $videoResult) {
+            $this->assertTrue($videoResult instanceof Zend_Service_Yahoo_VideoResult);
+        }
+
+        $this->assertEquals(10, $videoResultSet->key());
+        $videoResultSet->seek(0);
+        $this->assertEquals(0, $videoResultSet->key());
+    }
+
+    /**
+     * Ensures that videoSearch() throws an exception when the adult_ok option is invalid
+     *
+     * @return void
+     */
+    public function testVideoSearchExceptionAdultOkInvalid()
+    {
+        try {
+            $this->_yahoo->videoSearch('php', array('adult_ok' => -1));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("error occurred sending 'adult_ok' request", $e->getMessage());
+        }
+    }
+
+    /**
      * Ensures that webSearch() works as expected when searching for 'php'
      *
      * @return void

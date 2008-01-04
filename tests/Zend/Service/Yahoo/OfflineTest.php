@@ -417,6 +417,66 @@ class Zend_Service_Yahoo_OfflineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that videoSearch() throws an exception when the type option is invalid
+     *
+     * @return void
+     */
+    public function testVideoSearchExceptionTypeInvalid()
+    {
+        try {
+            $this->_yahoo->videoSearch('php', array('type' => 'oops'));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'type'", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that videoSearch() throws an exception when the results option is invalid
+     *
+     * @return void
+     */
+    public function testVideoSearchExceptionResultsInvalid()
+    {
+        try {
+            $this->_yahoo->videoSearch('php', array('results' => 500));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'results'", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that videoSearch() throws an exception when the start option is invalid
+     *
+     * @return void
+     */
+    public function testVideoSearchExceptionStartInvalid()
+    {
+        try {
+            $this->_yahoo->videoSearch('php', array('start' => 1001));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'start'", $e->getMessage());
+        }
+    }
+
+    /**
+     * Ensures that videoSearch() throws an exception when the format option is invalid
+     *
+     * @return void
+     */
+    public function testVideoSearchExceptionFormatInvalid()
+    {
+        try {
+            $this->_yahoo->videoSearch('php', array('format' => 'oops'));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains("option 'format'", $e->getMessage());
+        }
+    }
+
+    /**
      * Ensures that webSearch() throws an exception when the results option is invalid
      *
      * @return void

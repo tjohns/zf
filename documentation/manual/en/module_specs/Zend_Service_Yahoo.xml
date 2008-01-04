@@ -53,6 +53,26 @@ foreach ($results as $result) {
             </programlisting>
         </example>
     </sect2>
+    <sect2 id="zend.service.yahoo.videosearch">
+        <title>Finding videos with Yahoo!</title>
+        <para>
+            You can search for videos with Yahoo using <code>Zend_Service_Yahoo</code>'s <code>videoSearch()</code>
+            method. For full details and an option list, please visit the
+            <ulink url="http://developer.yahoo.com/search/video/V1/videoSearch.html">Yahoo! Video Search
+            Documentation</ulink>.
+        </para>
+        <example id="zend.service.yahoo.videosearch.example-1">
+            <title>Finding videos with Yahoo!</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->videoSearch('PHP');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}]]>
+            </programlisting>
+        </example>
+    </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
         <title>Finding Local Businesses and Services with Yahoo!</title>
         <para>
@@ -144,6 +164,7 @@ foreach ($results as $result) {
                 <listitem><para><link linkend="zend.service.yahoo.classes.resultset"><code>Zend_Service_Yahoo_ResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.webresultset"><code>Zend_Service_Yahoo_WebResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.imageresultset"><code>Zend_Service_Yahoo_ImageResultSet</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.videoresultset"><code>Zend_Service_Yahoo_VideoResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.localresultset"><code>Zend_Service_Yahoo_LocalResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.newsresultset"><code>Zend_Service_Yahoo_NewsResultSet</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.inlinkdataresultset"><code>Zend_Service_Yahoo_InlinkDataResultSet</code></link></para></listitem>
@@ -151,6 +172,7 @@ foreach ($results as $result) {
                 <listitem><para><link linkend="zend.service.yahoo.classes.result"><code>Zend_Service_Yahoo_Result</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.webresult"><code>Zend_Service_Yahoo_WebResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.imageresult"><code>Zend_Service_Yahoo_ImageResult</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.yahoo.classes.videoresult"><code>Zend_Service_Yahoo_VideoResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.localresult"><code>Zend_Service_Yahoo_LocalResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.newsresult"><code>Zend_Service_Yahoo_NewsResult</code></link></para></listitem>
                 <listitem><para><link linkend="zend.service.yahoo.classes.inlinkdataresult"><code>Zend_Service_Yahoo_InlinkDataResult</code></link></para></listitem>
@@ -240,6 +262,20 @@ foreach ($results as $result) {
             <note>
                 <para>
                     <code>Zend_Service_Yahoo_ImageResultSet</code> extends <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
+                </para>
+            </note>
+            <para>
+                <link linkend="zend.service.yahoo.classes">Back to Class List</link>
+            </para>
+        </sect3>
+        <sect3 id="zend.service.yahoo.classes.videoresultset">
+            <title>Zend_Service_Yahoo_VideoResultSet</title>
+            <para>
+                <code>Zend_Service_Yahoo_VideoResultSet</code> represents a Yahoo! Video Search result set.
+            </para>
+            <note>
+                <para>
+                    <code>Zend_Service_Yahoo_VideoResultSet</code> extends <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
                 </para>
             </note>
             <para>
@@ -460,6 +496,82 @@ foreach ($results as $result) {
                                 <entry>Width</entry>
                                 <entry>int</entry>
                                 <entry>The width of the image</entry>
+                            </row>
+                            <row>
+                                <entry>Thumbnail</entry>
+                                <entry><link linkend="zend.service.yahoo.classes.image">Zend_Service_Yahoo_Image</link></entry>
+                                <entry>Image thumbnail</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Back to Class List</link>
+                </para>
+            </sect4>
+         </sect3>
+         <sect3 id="zend.service.yahoo.classes.videoresult">
+            <title>Zend_Service_Yahoo_VideoResult</title>
+            <para>
+                Each Video Search result is returned as a <code>Zend_Service_Yahoo_VideoResult</code> object.
+            </para>
+            <sect4 id="zend.service.yahoo.classes.videoresult.properties">
+                <title>Properties</title>
+                <table id="zend.service.yahoo.classes.videoresult.properties.table-1">
+                    <title>Zend_Service_Yahoo_VideoResult Properties</title>
+                    <tgroup cols="3">
+                        <thead>
+                            <row>
+                                <entry>Name</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry>Summary</entry>
+                                <entry>string</entry>
+                                <entry>Result summary</entry>
+                            </row>
+                            <row>
+                                <entry>RefererUrl</entry>
+                                <entry>string</entry>
+                                <entry>The URL of the page which contains the video</entry>
+                            </row>
+                            <row>
+                                <entry>FileSize</entry>
+                                <entry>int</entry>
+                                <entry>The size of the video file in bytes</entry>
+                            </row>
+                            <row>
+                                <entry>FileFormat</entry>
+                                <entry>string</entry>
+                                <entry>The format of the video (avi, flash, mpeg, msmedia, quicktime, realmedia, etc.)</entry>
+                            </row>
+                            <row>
+                                <entry>Height</entry>
+                                <entry>int</entry>
+                                <entry>The height of the video in pixels</entry>
+                            </row>
+                            <row>
+                                <entry>Width</entry>
+                                <entry>int</entry>
+                                <entry>The width of the video in pixels</entry>
+                            </row>
+                            <row>
+                                <entry>Duration</entry>
+                                <entry>int</entry>
+                                <entry>The length of the video in seconds</entry>
+                            </row>
+                            <row>
+                                <entry>Channels</entry>
+                                <entry>int</entry>
+                                <entry>Number of audio channels in the video</entry>
+                            </row>
+                            <row>
+                                <entry>Streaming</entry>
+                                <entry>boolean</entry>
+                                <entry>Whether the video is streaming or not</entry>
                             </row>
                             <row>
                                 <entry>Thumbnail</entry>

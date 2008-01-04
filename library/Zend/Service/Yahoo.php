@@ -334,6 +334,60 @@ class Zend_Service_Yahoo
 
 
     /**
+     * Perform a search of videos.  The most basic query consists simply
+     * of a plain text search, but you can also specify the format of
+     * video.
+     *
+     * The specific options are:
+     * 'type'       => (all|any|phrase)  How to parse the query terms
+     * 'results'    => int  How many results to return, max is 50
+     * 'start'      => int  The start offset for search results
+     * 'format'     => (any|avi|flash|mpeg|msmedia|quicktime|realmedia)  The type of videos to search for
+     * 'adult_ok'   => bool  Flag to allow 'adult' videos.
+     *
+     * @param  string $query   the query to be run
+     * @param  array  $options an optional array of query options
+     * @return Zend_Service_Yahoo_VideoResultSet the search results
+     * @throws Zend_Service_Exception
+     */
+    public function videoSearch($query, array $options = array())
+    {
+        static $defaultOptions = array('type'       => 'all',
+                                       'results'    => 10,
+                                       'start'      => 1,
+                                       'format'     => 'any');
+
+        $options = $this->_prepareOptions($query, $options, $defaultOptions);
+
+        $this->_validateVideoSearch($options);
+
+        $this->_rest->getHttpClient()->resetParameters();
+        $this->_rest->setUri('http://search.yahooapis.com');
+        $response = $this->_rest->restGet('/VideoSearchService/V1/videoSearch', $options);
+
+        if ($response->isError()) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
+                                             $response->getStatus());
+        }
+
+        $dom = new DOMDocument();
+        $dom->loadXML($response->getBody());
+
+        self::_checkErrors($dom);
+
+        /**
+         * @see Zend_Service_YahooVideoResultSet
+         */
+        require_once 'Zend/Service/Yahoo/VideoResultSet.php';
+        return new Zend_Service_Yahoo_VideoResultSet($dom);
+    }
+
+
+    /**
      * Perform a web content search on search.yahoo.com.  A basic query
      * consists simply of a text query.  Additional options that can be
      * specified consist of:
@@ -438,7 +492,7 @@ class Zend_Service_Yahoo
         }
 
         if (isset($options['omit_inlinks'])) {
-            $this->_validateInArray('omit_inlinks', $options['omit_inlinks'], array('none', 'domain','subdomain'));
+            $this->_validateInArray('omit_inlinks', $options['omit_inlinks'], array('none', 'domain', 'subdomain'));
         }
     }
 
@@ -694,6 +748,49 @@ class Zend_Service_Yahoo
     }
 
 
+    /**
+     * Validate Video Search Options
+     *
+     * @param  array $options
+     * @return void
+     * @throws Zend_Service_Exception
+     */
+    protected function _validateVideoSearch(array $options)
+    {
+        $validOptions = array('appid', 'query', 'type', 'results', 'start', 'format', 'adult_ok');
+
+        $this->_compareOptions($options, $validOptions);
+
+        if (isset($options['type'])) {
+            $this->_validateInArray('type', $options['type'], array('all', 'any', 'phrase'));
+        }
+
+        /**
+         * @see Zend_Validate_Between
+         */
+        require_once 'Zend/Validate/Between.php';
+        $between = new Zend_Validate_Between(1, 50, true);
+
+        if (isset($options['results']) && !$between->setMin(1)->setMax(50)->isValid($options['results'])) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception("Invalid value for option 'results': {$options['results']}");
+        }
+
+        if (isset($options['start']) && !$between->setMin(1)->setMax(1000)->isValid($options['start'])) {
+            /**
+             * @see Zend_Service_Exception
+             */
+            require_once 'Zend/Service/Exception.php';
+            throw new Zend_Service_Exception("Invalid value for option 'start': {$options['start']}");
+        }
+
+        if (isset($options['format'])) {
+            $this->_validateInArray('format', $options['format'], array('any', 'avi', 'flash', 'mpeg', 'msmedia', 'quicktime', 'realmedia'));
+        }
+    }
 
 
     /**
