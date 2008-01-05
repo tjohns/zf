@@ -2,12 +2,7 @@
     <title>L'aide de vue HeadLink</title>
 
     <para>
-        The HTML <code>&lt;link&gt;</code> element is increasingly used for
-        linking a variety of resources for your site: stylesheets, feeds,
-        favicons, trackbacks, and more. The <code>HeadTitle</code> helper
-        provides a simple interface for creating and aggregating these elements
-        for later retrieval and output in your layout script.
-        L'élément HTML<code>&lt;link&gt;</code> est de plus en plus employé pour lier différents types de ressources à votre site : feuilles de styles, syndication, icônes, trackbacks et d'autres. L'aide <code>HeadTitle</code> fournit une interface simple pour créer et agréger ces éléments pour la récupération postérieure et le rendement dans votre script d'affichage.
+        L'élément HTML <code>&lt;link&gt;</code> est de plus en plus employé pour lier différents types de ressources à votre site : feuilles de styles, syndication, icônes, trackbacks et d'autres. L'aide <code>HeadTitle</code> fournit une interface simple pour créer et agréger ces éléments pour la récupération postérieure et le rendement dans votre script d'affichage.
     </para>
 
     <para>
