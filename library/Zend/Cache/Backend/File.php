@@ -65,6 +65,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * - Type of read control (only if read control is enabled). Available values are :
      *   'md5' for a md5 hash control (best but slowest)
      *   'crc32' for a crc32 hash control (lightly less safe but faster, better choice)
+     *   'adler32' for an adler32 hash control (excellent choice too, faster than crc32)
      *   'strlen' for a length only test (fastest)
      *
      * =====> (int) hashed_directory_level :
@@ -511,6 +512,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             return sprintf('% 32d', crc32($data));
         case 'strlen':
             return sprintf('% 32d', strlen($data));
+        case 'adler32':
+            return sprintf('%32s', hash('adler32', $data));
         default:
             Zend_Cache::throwException("Incorrect hash function : $controlType");
         }
