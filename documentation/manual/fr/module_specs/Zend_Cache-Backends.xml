@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.cache.backends">
+<sect1 id="zend.cache.backends">
     <title>Les backends Zend_Cache</title>
 
     <sect2 id="zend.cache.backends.file">
@@ -50,7 +50,7 @@
                           <entry><code>string</code></entry>
                           <entry><code>'crc32'</code></entry>
                           <entry>
-                            Type de contrôle de lecture (seulement si le contrôle de lecture est activé). Les valeurs disponibles sont : 'md5' (meilleur mais plus lent), 'crc32' (un peu moins sécurisé, mais plus rapide, c'est un meilleur choix), 'strlen' pour un test de longueur uniquement (le plus rapide).
+                            Type de contrôle de lecture (seulement si le contrôle de lecture est activé). Les valeurs disponibles sont : 'md5' (meilleur mais plus lent), 'crc32' (un peu moins sécurisé, mais plus rapide, c'est un meilleur choix), 'adler32' (nouveau choix, plus rapide que crc32),'strlen' pour un test de longueur uniquement (le plus rapide).
                         </entry>
                       </row>
                       <row>
