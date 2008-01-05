@@ -4,7 +4,7 @@
     <sect2 id="zend.controller.actionhelper.introduction">
         <title>Introduction</title>
         <para>
-            Les aides d'action permettent aux développeurs d'injecter, en cours d'éxécution et/ou à la demande, des fonctionnalités dans tout contrôleurs d'action qui étend <code>Zend_Controller_Action</code>. Le but des aides d'action est de minimiser la nécessité d'étendre le contrôleur d'action abstrait en y injectant des fonctionnalités communes de contrôleur d'action.
+            Les aides d'action permettent aux développeurs d'injecter, en cours d'exécution et/ou à la demande, des fonctionnalités dans tout contrôleurs d'action qui étend <code>Zend_Controller_Action</code>. Le but des aides d'action est de minimiser la nécessité d'étendre le contrôleur d'action abstrait en y injectant des fonctionnalités communes de contrôleur d'action.
         </para>
 
         <para>

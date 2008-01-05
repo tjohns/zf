@@ -27,7 +27,7 @@
             </para>
 
             <para>
-                Pour désactiver <code>ErrorHandler</code>, éxécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
+                Pour désactiver <code>ErrorHandler</code>, exécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -36,7 +36,7 @@ $front->setParam('noErrorHandler', true);]]>
     		</programlisting>
 
             <para>
-                Pour désactiver <code>ViewRenderer</code>, éxécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
+                Pour désactiver <code>ViewRenderer</code>, exécutez l'action suivante à n'importe quel point précédent l'appel à <code>dispatch()</code> :
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -217,7 +217,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code> vous permet d'inscrire un <link linkend="zend.controller.plugins">objet plugin</link>. En réglant le paramètre facultatif <code>$stackIndex</code>, vous pouvez contrôler l'ordre dans lequel les plugins seront éxécutés.
+                    <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code> vous permet d'inscrire un <link linkend="zend.controller.plugins">objet plugin</link>. En réglant le paramètre facultatif <code>$stackIndex</code>, vous pouvez contrôler l'ordre dans lequel les plugins seront exécutés.
                 </para>
             </listitem>
 

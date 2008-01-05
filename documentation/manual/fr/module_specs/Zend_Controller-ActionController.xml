@@ -121,7 +121,7 @@ class FooController extends Zend_Controller_Action
         <title>Détournement Pre- et Post-Dispatch (Hook)</title>
 
         <para>
-            <code>Zend_Controller_Action</code> spécifie deux méthodes qui peuvent être appelées juste avant et juste après une action, <code>preDispatch()</code> et <code>postDispatch()</code>. Celles-ci peuvent être pratiques dans plusieurs cas : vérifier l'authentification et les ACL avant d'éxécuter une action (en appelant <code>_forward()</code> dans <code>preDispatch()</code>, l'action sera évité), par exemple, ou en plaçant du contenu généré dans une partie du modèle de site (<code>postDispatch()</code>).
+            <code>Zend_Controller_Action</code> spécifie deux méthodes qui peuvent être appelées juste avant et juste après une action, <code>preDispatch()</code> et <code>postDispatch()</code>. Celles-ci peuvent être pratiques dans plusieurs cas : vérifier l'authentification et les ACL avant d'exécuter une action (en appelant <code>_forward()</code> dans <code>preDispatch()</code>, l'action sera évité), par exemple, ou en plaçant du contenu généré dans une partie du modèle de site (<code>postDispatch()</code>).
         </para>
     </sect2>
 
@@ -286,13 +286,13 @@ class MonController extends Zend_Controller_Action
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>_forward($action, $controller = null, $module = null, array $params = null)</code> : exécute une autre action. Si appelé dans <code>preDispatch()</code>, la requête courant est évité en faveur de la nouvelle. Sinon, après que l'action courante ait été éxécuté, l'action demandé dans <code>_forward()</code> sera éxécuté.
+                    <code>_forward($action, $controller = null, $module = null, array $params = null)</code> : exécute une autre action. Si appelé dans <code>preDispatch()</code>, la requête courant est évité en faveur de la nouvelle. Sinon, après que l'action courante ait été exécuté, l'action demandé dans <code>_forward()</code> sera exécuté.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>_redirect($url, array $options = array())</code> : redirige vers une autre page. Cette méthode prend un URL et un jeu d'options optionel. Par défaut, il éxécute une redirection de type HTTP 302.
+                    <code>_redirect($url, array $options = array())</code> : redirige vers une autre page. Cette méthode prend un URL et un jeu d'options optionel. Par défaut, il exécute une redirection de type HTTP 302.
                 </para>
 
                 <para>
@@ -353,7 +353,7 @@ class MonController extends Zend_Controller_Action
             </para>
 
             <para>
-                Par défaut, cette méthode lève une <code>Zend_Controller_Action_Exception</code> indiquant que l'action requêtée n'a pas été trouvée dans le contrôleur. Vous pouvez surcharger cette fonctionnalité si vous souhaitez éxécuter d'autres opérations.
+                Par défaut, cette méthode lève une <code>Zend_Controller_Action_Exception</code> indiquant que l'action requêtée n'a pas été trouvée dans le contrôleur. Vous pouvez surcharger cette fonctionnalité si vous souhaitez exécuter d'autres opérations.
             </para>
 
             <para>

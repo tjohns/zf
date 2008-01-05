@@ -341,7 +341,7 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Exécute le gabarit et retourne l'affichage
      *
-     * @param string $name Le gabarit à éxécuter
+     * @param string $name Le gabarit à exécuter
      * @return string L'affichage
      */
     public function render($name)

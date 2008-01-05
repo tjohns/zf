@@ -13,7 +13,7 @@
         </para>
 
         <para>
-            Le plugin <code>ErrorHandler</code> est éxécuté pendant <code>postDispatch()</code> vérifiant la présence d'exceptions, et redirigeant vers le contrôleur de gestion d'erreur spécifié. Vous pouvez le désactiver en réglant le paramètre <code>noErrorHandler</code> du contrôleur frontal :
+            Le plugin <code>ErrorHandler</code> est exécuté pendant <code>postDispatch()</code> vérifiant la présence d'exceptions, et redirigeant vers le contrôleur de gestion d'erreur spécifié. Vous pouvez le désactiver en réglant le paramètre <code>noErrorHandler</code> du contrôleur frontal :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -86,7 +86,7 @@ public function preDispatch()
             </listitem>
             <listitem>
                 <para>
-                    Si vous appelez <code>render()</code> avec des arguments, et que vous ne réalisez pas ensuite d'éxécution de code ou effectuez le rendu de scripts de vues multiples, vous pouvez changer ces appels par <code>$this-&gt;_helper-&gt;viewRenderer()</code>.
+                    Si vous appelez <code>render()</code> avec des arguments, et que vous ne réalisez pas ensuite d'exécution de code ou effectuez le rendu de scripts de vues multiples, vous pouvez changer ces appels par <code>$this-&gt;_helper-&gt;viewRenderer()</code>.
                 </para>
             </listitem>
         </itemizedlist>

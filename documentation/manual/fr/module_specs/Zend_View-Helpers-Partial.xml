@@ -72,7 +72,7 @@
         <title>Utiliser PartialLoop pour effectuer le rendu d'éléments itératifs</title>
 
         <para>
-            Typiquement, vous voudrez employer des partials dans une boucle, pour rendre le même fragment de contenu plusieurs fois ; de cette façon vous pouvez mettre de grands blocs de contenu répété ou de logique complexe d'affichage dans un endroit unique. Toutefois ceci a un impact d'éxécution, car l'aide Partial doit être appelée une fois par itération.
+            Typiquement, vous voudrez employer des partials dans une boucle, pour rendre le même fragment de contenu plusieurs fois ; de cette façon vous pouvez mettre de grands blocs de contenu répété ou de logique complexe d'affichage dans un endroit unique. Toutefois ceci a un impact d'exécution, car l'aide Partial doit être appelée une fois par itération.
         </para>
 
         <para>
