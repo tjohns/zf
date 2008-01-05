@@ -56,6 +56,7 @@
                           <entry>
                             Type of read control (only if read control is enabled). Available values are :
                             'md5' (best but slowest), 'crc32' (lightly less safe but faster, better choice),
+                            'adler32' (new choice, faster than crc32),
                             'strlen' for a length only test (fastest).
                         </entry>
                       </row>
