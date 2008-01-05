@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.config.adapters.xml">
+<sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
         <code>Zend_Config_Xml</code> permet aux développeurs de stocker des données de configuration dans un format simple XML et de les lire grâce à une syntaxe de propriétés d'objets imbriqués. Le nom de l'élément racine du fichier XML n'a pas d'importance et peut être nommé arbitrairement. Le premier niveau des éléments XML correspond aux sections des données de configuration. Le format XML supporte l'organisation hiérarchique par l'emboîtement des éléments XML à l'intérieur des éléments de niveau section. Le contenu d'un élément XML de niveau le plus bas correspond aux données de configuration. L'héritage des sections est supportée par un attribut spécial de XML nommé <code>extends</code>, et la valeur de cet attribut correspond à la section de laquelle des données doivent être héritées.
@@ -19,18 +19,22 @@
     <production>
         <webhost>www.example.com</webhost>
         <database>
-            <type>pdo_mysql</type>
-            <host>db.example.com</host>
-            <username>dbuser</username>
-            <password>secret</password>
-            <name>dbname</name>
+            <adapter>pdo_mysql</adapter>
+            <params>
+                <host>db.example.com</host>
+                <username>dbuser</username>
+                <password>secret</password>
+                <dbname>dbname</dbname>
+            </params>
         </database>
     </production>
     <test extends="production">
         <database>
-            <host>dev.example.com</host>
-            <username>devuser</username>
-            <password>devsecret</password>
+            <params>
+                <host>dev.example.com</host>
+                <username>devuser</username>
+                <password>devsecret</password>
+            </params>
         </database>
     </test>
 </configdata>]]>
@@ -43,8 +47,8 @@ require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config_Xml('/chemin/vers/config.xml', 'test');
 
-echo $config->database->host; // affiche "dev.example.com"
-echo $config->database->name; // affiche "dbname"]]>
+echo $config->database->params->host;   // affiche "dev.example.com"
+echo $config->database->params->dbname; // affiche "dbname"]]>
 	    </programlisting>
     </example>
 </sect1>
