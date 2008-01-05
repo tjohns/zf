@@ -148,6 +148,7 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
                 $old_tags = array();
             }
             $old_tags[$id] = $id;
+            output_cache_remove_key($tagid);
             $result2 = output_cache_put($tagid, $old_tags);
         }
 
