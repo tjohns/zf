@@ -29,24 +29,38 @@ abstract class Zend_Cache
 {
 
     /**
-     * Available frontends
+     * Standard frontends
      *
-     * @var array $availableFrontends array of frontend name (string)
+     * @var array
+     */
+    public static $standardFrontends = array('Core', 'Output', 'Class', 'File', 'Function', 'Page');
+    
+    /**
+     * Standard backends
+     *
+     * @var array
+     */
+    public static $standardBackends = array('File', 'Sqlite', 'Memcached', 'Apc', 'ZendPlatform');
+    
+    /**
+     * Only for backward compatibily (will be removed in 1.2.0)
+     *
+     * @var array
      */
     public static $availableFrontends = array('Core', 'Output', 'Class', 'File', 'Function', 'Page');
-
+    
     /**
-     * Available backends
+     * Only for backward compatibily (will be removed in 1.2.0)
      *
-     * @var array $availableBackends array of backends name (string)
+     * @var array
      */
     public static $availableBackends = array('File', 'Sqlite', 'Memcached', 'Apc', 'ZendPlatform');
-
+     
     /**
      * Consts for clean() method
      */
     const CLEANING_MODE_ALL              = 'all';
-    const CLEANING_MODE_OLD                 = 'old';
+    const CLEANING_MODE_OLD              = 'old';
     const CLEANING_MODE_MATCHING_TAG     = 'matchingTag';
     const CLEANING_MODE_NOT_MATCHING_TAG = 'notMatchingTag';
 
@@ -65,23 +79,38 @@ abstract class Zend_Cache
         $frontend = self::_normalizeName($frontend);
         $backend  = self::_normalizeName($backend);
 
-        if (!in_array($frontend, self::$availableFrontends)) {
-            self::throwException("Incorrect frontend ($frontend)");
+        // working on the frontend
+        if (in_array($frontend, self::$availableFrontends)) {
+            // we use a standard frontend
+            // For perfs reasons, with frontend == 'Core', we can interact with the Core itself
+            $frontendClass = 'Zend_Cache_' . ($frontend != 'Core' ? 'Frontend_' : '') . $frontend;
+            // For perfs reasons, we do not use the Zend_Loader::loadClass() method
+            // (security controls are explicit)
+            require_once str_replace('_', DIRECTORY_SEPARATOR, $frontendClass) . '.php';
+        } else {
+            // we use a custom frontend
+            $frontendClass = 'Zend_Cache_Frontend_' . $frontend;
+            // To avoid security problems in this case, we use Zend_Loader to load the custom class
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($frontendClass);
         }
-        if (!in_array($backend, Zend_Cache::$availableBackends)) {
-            self::throwException("Incorrect backend ($backend)");
+        
+        // working on the backend
+        if (in_array($backend, Zend_Cache::$availableBackends)) {
+            // we use a standard backend
+            $backendClass = 'Zend_Cache_Backend_' . $backend;
+            // For perfs reasons, we do not use the Zend_Loader::loadClass() method
+            // (security controls are explicit)
+            require_once str_replace('_', DIRECTORY_SEPARATOR, $backendClass) . '.php';
+        } else {
+            // we use a custom backend
+            $backendClass = 'Zend_Cache_Backend_' . $backend;
+            // To avoid security problems in this case, we use Zend_Loader to load the custom class
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($backendClass);
         }
-
-        // For perfs reasons, with frontend == 'Core', we can interact with the Core itself
-        $frontendClass = 'Zend_Cache_' . ($frontend != 'Core' ? 'Frontend_' : '') . $frontend;
-
-        $backendClass = 'Zend_Cache_Backend_' . $backend;
-
-        // For perfs reasons, we do not use the Zend_Loader::loadClass() method
-        // (security controls are explicit)
-        require_once str_replace('_', DIRECTORY_SEPARATOR, $frontendClass) . '.php';
-        require_once str_replace('_', DIRECTORY_SEPARATOR, $backendClass) . '.php';
-
+        
+        // Making objects
         $frontendObject = new $frontendClass($frontendOptions);
         $backendObject = new $backendClass($backendOptions);
         $frontendObject->setBackend($backendObject);

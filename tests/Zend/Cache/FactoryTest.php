@@ -28,17 +28,7 @@ class Zend_Cache_FactoryTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
     }
-    
-    public function testAvailableFrontends()
-    {
-        $this->assertType('array', Zend_Cache::$availableFrontends);
-    }
-    
-    public function testAvailableBackends()
-    {
-        $this->assertType('array', Zend_Cache::$availableBackends);
-    }
-    
+       
     public function testFactoryCorrectCall()
     {
         $generated_frontend = Zend_Cache::factory('Core', 'File');
@@ -61,20 +51,20 @@ class Zend_Cache_FactoryTest extends PHPUnit_Framework_TestCase
     {
         try {
             Zend_Cache::factory('badFrontend', 'File');
-        } catch (Zend_Cache_Exception $e) {
+        } catch (Zend_Exception $e) {
             return;
         }
-        $this->fail('Zend_Cache_Exception was expected but not thrown');
+        $this->fail('Zend_Exception was expected but not thrown');
     }
     
     public function testBadBackend()
     {
         try {
             Zend_Cache::factory('Output', 'badBackend');
-        } catch (Zend_Cache_Exception $e) {
+        } catch (Zend_Exception $e) {
             return;
         }
-        $this->fail('Zend_Cache_Exception was expected but not thrown');    
+        $this->fail('Zend_Exception was expected but not thrown');    
     }
 
 }
