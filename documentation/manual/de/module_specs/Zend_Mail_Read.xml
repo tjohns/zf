@@ -308,8 +308,8 @@ echo "Inhalt:\n";
 echo $part->getContent();]]>
         </programlisting>
 
-        <para>Zend_Mail_Part implementiert auch den RecursiveIterator, welcher es sehr einfach macht alle Teile
-        zu durchsuchen. Und für die einfache Ausgabe wurde auch die magische Methode __toString() implementiert,
+        <para><code>Zend_Mail_Part</code> implementiert auch den <code>RecursiveIterator</code>, welcher es sehr einfach macht alle Teile
+        zu durchsuchen. Und für die einfache Ausgabe wurde auch die magische Methode <code>__toString()</code> implementiert,
         welche den Inhalt zurückgibt.</para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -336,7 +336,7 @@ if (!$foundPart) {
     <sect2 id="zend.mail.read-flags">
         <title>Auf Flags prüfen</title>
 
-        <para>Maildir und IMAP unterstützen das Speichern von Flags. Die Klasse Zend_Mail_Storage hat Konstanten für
+        <para>Maildir und IMAP unterstützen das Speichern von Flags. Die Klasse <code>Zend_Mail_Storage</code> hat Konstanten für
         alle bekannten maildir und IMAP System Flags, welche <code>Zend_Mail_Storage::FLAG_&lt;flagname&gt;</code>
         heißen. Um auf Flags zu prüfen hat <code>Zend_Mail_Message</code> eine Methode die <code>hasFlag()</code>
         heißt. Mit <code>getFlags()</code> erhält man alle gesetzten Flags.</para>
@@ -403,12 +403,12 @@ if (!$message->hasFlag('$SpamTested')) {
             Alle Speicher, ausser Pop3, unterstützen Ordner, welche Mailboxen genannt werden. Das Interface das von
             allen Speichern implementiert wurde und Ordner unterstützt heißt
             <code>Zend_Mail_Storage_Folder_Interface</code>. Alle diese Klassen besitzen auch einen zusätzlichen
-            optionalen Parameter welcher folder heißt, was der ausgewählt Ordner nach dem Login, im Konstruktor ist.
+            optionalen Parameter welcher <code>folder</code> heißt, was der ausgewählt Ordner nach dem Login, im Konstruktor ist.
         </para>
         <para>
             Für den lokalen Speicher müssen die eigenen Klassen <code>Zend_Mail_Storage_Folder_Mbox</code> oder
             <code>Zend_Mail_Storage_Folder_Maildir</code> genannt verwendet werden. Beide benötigen einen Parameter
-            der dirname heißt mit dem Namen des Basisverzeichnisses. Das Format für Maildir ist wie in Maildir++
+            der <code>dirname</code> heißt mit dem Namen des Basisverzeichnisses. Das Format für Maildir ist wie in Maildir++
             definiert (mit einem Punkt als Standardbegrenzer), Mbox ist eine Verzeichnisstruktur mit Mbox Dateien.
             Wenn im Mbox Basisverzeichnis keine Mbox Datei vorhanden ist die INBOX heißt, muß ein anderer Ordner
             im Konstruktor gesetzt werden.

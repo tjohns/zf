@@ -16,7 +16,7 @@
             <code>Zend_Service_Yahoo</code> ermöglicht es im Web mit Yahoo! zu Suchen mit Hilfe der Methode
             <code>webSearch()</code>, welche einen String als Abfrage Parameter akzeptiert und als optionalen
             zweiten Parameter ein Array mit Such Optionen. Für vollständige Details und eine Liste der Optionen
-            bitte in die <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Such Dokumentation</ulink> sehen.
+            bitte in die <ulink url="http://developer.yahoo.com/search/web/V1/webSearch.html">Yahoo! Web Such Dokumentation</ulink> sehen.
             Die <code>webSearch()</code> Methode gibt ein <code>Zend_Service_Yahoo_WebResultSet</code> Objekt zurück.
         </para>
         <example id="zend.service.yahoo.websearch.example-1">
@@ -37,7 +37,7 @@ foreach ($results as $result) {
             Man kann mit Yahoo nach Bildern suchen indem man <code>Zend_Service_Yahoo</code>'s <code>imageSearch()</code> Methode
             benutzt. Diese Methode akzeptiert einen String als Abfrage Parameter und optional ein Array mit
             Such-Optionenwie für die <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> Methode</link>
-            Für vollständige Details und eine Liste der Optionen bitte in die <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Bild Such Dokumentation</ulink> sehen.
+            Für vollständige Details und eine Liste der Optionen bitte in die <ulink url="http://developer.yahoo.com/search/image/V1/imageSearch.html">Yahoo! Bild Such Dokumentation</ulink> sehen.
         </para>
         <example id="zend.service.yahoo.imagesearch.example-1">
             <title>Finden von Bildern mit Yahoo!</title>
@@ -56,7 +56,7 @@ foreach ($results as $result) {
         <para>
             Man kann mit Yahoo! nach lokalen Geschäften und Services suchen, indem man die <code>localSearch()</code> Methode
             benutzt.
-            Für vollständige Details bitte in die <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Lokal Suche Documentation</ulink> sehen
+            Für vollständige Details bitte in die <ulink url="http://developer.yahoo.com/search/local/V1/localSearch.html">Yahoo! Lokal Suche Documentation</ulink> sehen
         </para>
         <example id="zend.service.yahoo.localsearch.example-1">
             <title>Finden von lokalen Geschäften und Services mit Yahoo!</title>
@@ -75,7 +75,7 @@ foreach ($results as $result) {
         <para>
             Suchen mit Yahoo! News ist einfach; nur die <code>newsSearch()</code> Methode, wie im
             nachfolgenden Beispiel gezeigt, benutzen.
-            Für vollständige Details bitte in die <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Suche Dokumenation</ulink> sehen
+            Für vollständige Details bitte in die <ulink url="http://developer.yahoo.com/search/news/V1/newsSearch.html">Yahoo! News Suche Dokumenation</ulink> sehen
         </para>
         <example id="zend.service.yahoo.newssearch.example-1">
             <title>Suchen in Yahoo! News</title>

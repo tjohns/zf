@@ -57,7 +57,7 @@ $mail->send();]]>
         </para>
 
         <para>
-            Die meisten Methoden des Zend_Mail Objekts können mit dem bequemen Flüssigen Interface verwendet werden.
+            Die meisten Methoden des <code>Zend_Mail</code> Objekts können mit dem bequemen Flüssigen Interface verwendet werden.
             Ein flüssiges Interface bedeutet das jede Methode eine Referenz zu dem Objekt zurückgibt auf das es
             aufgerufen wurde, so das sofort ein erneuter Aufruf einer anderen Methode stattfinden kann.
         </para>

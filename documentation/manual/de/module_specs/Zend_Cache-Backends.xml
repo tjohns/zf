@@ -56,8 +56,9 @@
                           <entry>
                             Typ der Schreibkontrolle (nur wenn read_control eingeschaltet ist).
                             Mögliche Werte sind :
-                            'md5' (bestes, aber am Langsamsten), 'crc32' (etwas weniger sicher, aber schneller, beste
-                            Wahl), 'strlen' um nur die Länge zu testen (schnellstes).
+                            'md5' (bestes, aber am Langsamsten), 'crc32' (etwas weniger sicher, aber schneller,
+                            beste Wahl), 'adler32' (neue Wahl, schneller als crc32), 'strlen' um nur die Länge
+                            zu testen (schnellstes).
                         </entry>
                       </row>
                       <row>
