@@ -742,8 +742,8 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         }
 
         $format = Zend_Locale_Format::setOptions(array('locale' => 'de', 'number_format' => Zend_Locale_Format::STANDARD));
-        $test   = Zend_Locale_Data::getContent('de', 'decimalnumberformat');
-        $this->assertEquals($test['default'], $format['number_format']);
+        $test   = Zend_Locale_Data::getContent('de', 'decimalnumber');
+        $this->assertEquals($test, $format['number_format']);
 
         try {
             $this->assertFalse(Zend_Locale_Format::setOptions(array('number_format' => array('x' => 'x'))));

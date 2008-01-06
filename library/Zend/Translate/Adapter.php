@@ -246,7 +246,7 @@ abstract class Zend_Translate_Adapter {
      */
     public function getMessageIds($locale = null)
     {
-        if (empty($locale) or !$this->isAvaiable($locale)) {
+        if (empty($locale) or !$this->isAvailable($locale)) {
             $locale = $this->_options['locale'];
         }
         return array_keys($this->_translate[$locale]);
@@ -266,7 +266,7 @@ abstract class Zend_Translate_Adapter {
         if ($locale == 'all') {
             return $this->_translate;
         }
-        if (empty($locale) or !$this->isAvaiable($locale)) {
+        if (empty($locale) or !$this->isAvailable($locale)) {
             $locale = $this->_options['locale'];
         }
         return $this->_translate[$locale];

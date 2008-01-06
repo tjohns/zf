@@ -99,7 +99,7 @@ class Zend_Locale {
     private static $_browser;
     private static $_environment;
 
-    private static $_Default;
+    private static $_Default = "en";
 
     /**
      * Generates a locale object
@@ -490,17 +490,22 @@ class Zend_Locale {
      * Returns localized informations as array, supported are several
      * types of informations.
      * Supported types are:
-     * 'language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
-     * 'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
-     * 'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail'
-     * 'language_detail', 'characters', 'month_complete'
+     * 'language', 'script', 'territory', 'variant', 'key', 'type', 'calendar', 'collation',
+     * 'currency', 'layout', 'characters', 'delimiters', 'measurement', 'months', 'month',
+     * 'days', 'day', 'week', 'quarters', 'quarter', 'eras', 'era', 'date', 'time', 'datetime',
+     * 'field', 'relative', 'symbols', 'currency', 'currencysymbol', 'question',
+     * 'currencyfraction', 'currencyrounding', 'currencytoregion', 'regiontocurrency',
+     * 'regiontoterritory', 'territorytoregion', 'scripttolanguage', 'languagetoscript',
+     * 'territorytolanguage', 'languagetoterritory', 'timezonetowindows', 'timezonetowindows',
+     * 'territorytotimezone', 'timezonetoterritory', 'citytotimezone', 'timezonetocity'
      * For detailed information about the types look into the documentation
      *
-     * @param  string         $type    OPTIONAL Type of information to return
+     * @param  string         $path    OPTIONAL Type of information to return
      * @param  string|locale  $locale  OPTIONAL Locale|Language for which this informations should be returned
+     * @param  string         $value   OPTIONAL Value for detail list
      * @return array                   Array with the wished information in the given language
      */
-    public function getTranslationList($type = null, $locale = null)
+    public function getTranslationList($path = null, $locale = null, $value = null)
     {
         // load class within method for speed
         require_once 'Zend/Locale/Data.php';
@@ -521,117 +526,15 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        switch (strtolower($type)) {
-            case 'language' :
-                return Zend_Locale_Data::getContent($locale, 'languagelist');
-                break;
-            case 'script' :
-                return Zend_Locale_Data::getContent($locale, 'scriptlist');
-                break;
-            case 'country' :
-                $list = Zend_Locale_Data::getContent($locale, 'territorylist');
-                foreach ($list as $key => $entry) {
-                    if (is_numeric($key)) {
-                        unset($list[$key]);
-                    }
-                }
-                return $list;
-                break;
-            case 'territory' :
-                $list = Zend_Locale_Data::getContent($locale, 'territorylist');
-                foreach ($list as $key => $entry) {
-                    if (!is_numeric($key)) {
-                        unset($list[$key]);
-                    }
-                }
-                return $list;
-                break;
-            case 'calendar' :
-                return Zend_Locale_Data::getContent($locale, 'type', 'calendar');
-                break;
-            case 'month' :
-                return Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
-                break;
-            case 'month_short' :
-                return Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
-                break;
-            case 'month_narrow' :
-                return Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'narrow'));
-                break;
-            case 'month_complete' :
-                $month['format']['abbreviated'] = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'abbreviated'));
-                $month['format']['narrow']      = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'narrow'));
-                $month['format']['wide']        = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'format', 'wide'));
-                $month['standalone']['abbreviated'] = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'abbreviated'));
-                $month['standalone']['narrow']  = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'narrow'));
-                $month['standalone']['wide']    = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'stand-alone', 'wide'));
-                return $month;
-                break;
-            case 'day' :
-                return Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'wide'));
-                break;
-            case 'day_short' :
-                return Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'format', 'abbreviated'));
-                break;
-            case 'day_narrow' :
-                return Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'stand-alone', 'narrow'));
-                break;
-            case 'dateformat' :
-                $result = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
-                $result = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $result['default'], 'narrow'));
-                $list['default'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'full', 'narrow'));
-                $list['full'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'long', 'narrow'));
-                $list['long'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'medium', 'narrow'));
-                $list['medium'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', 'short', 'narrow'));
-                $list['short'] = $result['pattern'];
-                return $list;
-                break;
-            case 'timeformat' :
-                $result = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
-                $result = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $result['default'], 'narrow'));
-                $list['default'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'full', 'narrow'));
-                $list['full'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'long', 'narrow'));
-                $list['long'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'medium', 'narrow'));
-                $list['medium'] = $result['pattern'];
-                $result = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', 'short', 'narrow'));
-                $list['short'] = $result['pattern'];
-                return $list;
-                break;
-            case 'timezone' :
-                return Zend_Locale_Data::getContent($locale, 'timezones');
-                break;
-            case 'currency' :
-                return Zend_Locale_Data::getContent($locale, 'currencynames');
-                break;
-            case 'currency_sign' :
-                return Zend_Locale_Data::getContent($locale, 'currencysymbols');
-                break;
-            case 'currency_detail' :
-                return Zend_Locale_Data::getContent($locale, 'currencyforregionlist');
-                break;
-            case 'territory_detail' :
-                return Zend_Locale_Data::getContent($locale, 'regionforterritorylist');
-                break;
-            case 'language_detail' :
-                return Zend_Locale_Data::getContent($locale, 'territoryforlanguagelist');
-                break;
-            case 'characters' :
-                return Zend_Locale_Data::getContent($locale, 'characters');
-                break;
-            default :
-                return array('language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
-                             'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
-                             'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail',
-                             'language_detail', 'characters');
+        try {
+            $result = Zend_Locale_Data::getList($locale, $path, $value);
+        } catch(Zend_Locale_Exception $e) {
+            return false;
         }
-        return false;
+        if (empty($result)) {
+            return false;
+        }
+        return $result;
     }
 
 
@@ -667,7 +570,7 @@ class Zend_Locale {
      */
     public function getCountryTranslationList($locale = null)
     {
-        return $this->getTranslationList('country', $locale);
+        return $this->getTranslationList('territory', $locale, 2);
     }
 
 
@@ -680,7 +583,7 @@ class Zend_Locale {
      */
     public function getTerritoryTranslationList($locale = null)
     {
-        return $this->getTranslationList('territory', $locale);
+        return $this->getTranslationList('territory', $locale, 1);
     }
 
 
@@ -688,17 +591,22 @@ class Zend_Locale {
      * Returns a localized information string, supported are several types of informations.
      *
      * Supported types are:
-     * 'language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
-     * 'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
-     * 'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail', 'language_detail', 'characters'
+     * 'language', 'script', 'country', 'territory', 'variant', 'key', 'datechars', 'defaultcalendar',
+     * 'monthcontext', 'defaultmonth', 'month', 'daycontext', 'defaultday', 'quarter', 'am', 'pm', 'era',
+     * 'defaultdate', 'date', 'defaulttime', 'time', 'datetime', 'field', 'relative', 'decimalnumber',
+     * 'scientificnumber', 'percentnumber', 'currencynumber', 'currency', 'currencysymbol', 'question',
+     * 'currencyfraction', 'currencyrounding', 'currencytoregion', 'regiontocurrency', 'regiontoterritory',
+     * 'territorytoregion', 'scripttolanguage', 'languagetoscript', 'territorytolanguage',
+     * 'languagetoterritory', 'timezonetowindows', 'windowstotimezone', 'territorytotimezone',
+     * 'timezonetoterritory', 'citytotimezone', 'timezonetocity'
      * For detailed information about the types look into the documentation
      *
-     * @param  string         $what    Name to get detailed information about
-     * @param  string         $type    OPTIONAL Type of information to return
+     * @param  string         $value   Name to get detailed information about
+     * @param  string         $path    OPTIONAL Type of information to return
      * @param  string|locale  $locale  OPTIONAL Locale|Language for which this informations should be returned
      * @return string|array            Array with the wished information in the given language
      */
-    public function getTranslation($what, $type = null, $locale = null)
+    public function getTranslation($value = null, $path = null, $locale = null)
     {
         // load class within method for speed
         require_once 'Zend/Locale/Data.php';
@@ -719,145 +627,28 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        switch (strtolower($type)) {
-            case 'language' :
-                $list = Zend_Locale_Data::getContent($locale, 'language', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'script' :
-                $list = Zend_Locale_Data::getContent($locale, 'script', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'country' :
-                $list = Zend_Locale_Data::getContent($locale, 'territory', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'territory' :
-                $list = Zend_Locale_Data::getContent($locale, 'territory', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'calendar' :
-                $list = Zend_Locale_Data::getContent($locale, 'type', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'month' :
-                $list = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'wide', $what));
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'month_short' :
-                $list = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'abbreviated', $what));
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'month_narrow' :
-                $list = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'stand-alone', 'narrow', $what));
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'day' :
-                $list = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'wide', $what));
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'day_short' :
-                $list = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'abbreviated', $what));
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'day_narrow' :
-                $list = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'stand-alone', 'narrow', $what));
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'dateformat' :
-                $list = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $what, 'narrow'));
-                if (isset($list['pattern'])) {
-                    return $list['pattern'];
-                }
-                break;
-            case 'timeformat' :
-                $list = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $what, 'narrow'));
-                if (isset($list['pattern'])) {
-                    return $list['pattern'];
-                }
-                break;
-            case 'timezone' :
-                $list = Zend_Locale_Data::getContent($locale, 'timezone', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'currency' :
-                $list = Zend_Locale_Data::getContent($locale, 'currencyname', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'currency_sign' :
-                $list = Zend_Locale_Data::getContent($locale, 'currencysymbol', $what);
-                if (isset($list[$what])) {
-                    return $list[$what];
-                }
-                break;
-            case 'currency_detail' :
-                $list = Zend_Locale_Data::getContent($locale, 'currencyforregion', $what);
-                if (!empty($list)) {
-                    return $list;
-                }
-                break;
-            case 'territory_detail' :
-                $list = Zend_Locale_Data::getContent($locale, 'regionforterritory', $what);
-                if (isset($list[$what])) {
-                    return explode(' ', $list[$what]);
-                }
-                break;
-            case 'language_detail' :
-                $list = Zend_Locale_Data::getContent($locale, 'territoryforlanguage', $what);
-                if (isset($list[$what])) {
-                    return explode(' ', $list[$what]);
-                }
-                break;
-            case 'characters' :
-                $list = Zend_Locale_Data::getContent($locale, 'characters');
-                return $list['characters'];
-                break;
-            default :
-                return array('language', 'script', 'country', 'territory', 'calendar', 'month', 'month_short',
-                             'month_narrow', 'day', 'day_short', 'day_narrow', 'dateformat', 'timeformat',
-                             'timezone', 'currency', 'currency_sign', 'currency_detail', 'territory_detail',
-                             'language_detail', 'characters');
+        try {
+            $result = Zend_Locale_Data::getContent($locale, $path, $value);
+        } catch(Zend_Locale_Exception $e) {
+            return false;
         }
-        return false;
+        if (empty($result)) {
+            return false;
+        }
+        return $result;
     }
 
 
     /**
      * Returns the localized language name
      *
-     * @param   string  $what    Name to get detailed information about
+     * @param   string  $value   Name to get detailed information about
      * @param   string  $locale  OPTIONAL locale for language translation
      * @return  array
      */
-    public function getLanguageTranslation($what, $locale = null)
+    public function getLanguageTranslation($value, $locale = null)
     {
-        return $this->getTranslation($what, 'language', $locale);
+        return $this->getTranslation($value, 'language', $locale);
     }
 
 
@@ -868,9 +659,9 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for script translation
      * @return  array
      */
-    public function getScriptTranslation($what, $locale = null)
+    public function getScriptTranslation($value, $locale = null)
     {
-        return $this->getTranslation($what, 'script', $locale);
+        return $this->getTranslation($value, 'script', $locale);
     }
 
 
@@ -881,9 +672,9 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for country translation
      * @return  array
      */
-    public function getCountryTranslation($what, $locale = null)
+    public function getCountryTranslation($value, $locale = null)
     {
-        return $this->getTranslation($what, 'country', $locale);
+        return $this->getTranslation($value, 'country', $locale);
     }
 
 
@@ -895,9 +686,9 @@ class Zend_Locale {
      * @param   string  $locale  OPTIONAL locale for territory translation
      * @return  array
      */
-    public function getTerritoryTranslation($what, $locale = null)
+    public function getTerritoryTranslation($value, $locale = null)
     {
-        return $this->getTranslation($what, 'territory', $locale);
+        return $this->getTranslation($value, 'territory', $locale);
     }
 
 
@@ -928,7 +719,7 @@ class Zend_Locale {
         if (is_array($locale)) {
             $locale = key($locale);
         }
-        $quest = Zend_Locale_Data::getContent($locale, 'questionstrings');
+        $quest = Zend_Locale_Data::getContent($locale, 'question');
         $yes = explode(':', $quest['yes']);
         $no  = explode(':', $quest['no']);
         $quest['yes']      = $yes[0];
