@@ -321,18 +321,14 @@ class Zend_Locale_Format
      */
     public static function toNumber($value, array $options = array())
     {
-//print "\ntoNumber";
-//print "\n--------";
         // load class within method for speed
         require_once 'Zend/Locale/Math.php';
 
         $value = Zend_Locale_Math::normalize($value);
-//print "\nValue :'".$value."'";
         $options = array_merge(self::$_Options, self::checkOptions($options));
         if ($options['locale'] instanceof Zend_Locale) {
             $options['locale'] = $options['locale']->toString();
         }
-//print "\nLocale:'".$options['locale']."'";
         
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getList($options['locale'], 'symbols');
@@ -349,7 +345,6 @@ class Zend_Locale_Format
                     $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
                 }
             }
-//print "\nRenew";
         } else {
             // seperate negative format pattern when avaiable
             if (iconv_strpos($format, ';') !== false) {
@@ -359,12 +354,10 @@ class Zend_Locale_Format
                     $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
                 }
             }
-//print "\nPattern";
             
             if (strpos($format, '.')) {
                 if (is_numeric($options['precision'])) {
                     $value = Zend_Locale_Math::round($value, $options['precision']);
-//print "\nSet Pr:'".$value."'";
                 } else {
                     if (substr($format, strpos($format, '.') + 1, 3) == '###') {
                         $options['precision'] = null;
@@ -378,14 +371,9 @@ class Zend_Locale_Format
             } else {
                 $value = Zend_Locale_Math::round($value, 0);
                 $options['precision'] = 0;
-//print "\nRound :'".$value."'";
             }
             $value = Zend_Locale_Math::normalize($value);
-//print "\nNorm  :'".$value."'";
         }
-//print "\nFormat:'".$format."'";
-//print "\nValue :'".$value."'";
-//print "\nPrec  :'".$options['precision']."'";
 
         // get number parts
         if (strlen($value) != strlen(Zend_Locale_Math::round($value, 0))) {
@@ -402,7 +390,7 @@ class Zend_Locale_Format
                 $precstr = str_pad("0", ($options['precision']), "0");
             }
         }
-//print "\nPrecst:'".$precstr."'";
+
         if ($options['precision'] === null) {
             if (isset($precstr)) {
                 $options['precision'] = iconv_strlen($precstr);
@@ -417,21 +405,17 @@ class Zend_Locale_Format
         } else {
             $number = $value;
         }
-//print "\nInt   :'".$number."'";
+
         $prec   = call_user_func(Zend_Locale_Math::$sub, $value, $number, $options['precision']);
-//print "\nPrec1 :'".$prec."'";
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
-//print "\nPrec2 :'".$prec."'";
         if (($prec == 0) and ($options['precision'] > 0)) {
             $prec = "0.0";
         }
-//print "\nPrec3 :'".$prec."'";
         if (($options['precision'] + 2) > iconv_strlen($prec)) {
             $prec = str_pad((string) $prec, $options['precision'] + 2, "0", STR_PAD_RIGHT);
         }
-//print "\nPrec4 :'".$prec."'";
         if (iconv_strpos($number, '-') !== false) {
             $number = iconv_substr($number, 1);
         }
@@ -443,14 +427,12 @@ class Zend_Locale_Format
         if (($value < 0) && (strpos($format, '.'))) {
             $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
         }
-//print "\nRest  :'".$rest."'";
         if ($options['precision'] == '0') {
             $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         } else {
             $format = iconv_substr($format, 0, $point) . $symbols['decimal']
                                . iconv_substr($prec, 2) . iconv_substr($format, iconv_strrpos($format, '#') + 2 + strlen($prec) - 2);
         }
-//print "\nFormat:'".$format."'";
         if (($value < 0) and ($rest != '0') and ($rest != '#')) {
             $format .= $rest;
         }
@@ -458,7 +440,6 @@ class Zend_Locale_Format
         if ($group == 0) {
             // no seperation
             $format = $number . iconv_substr($format, $point);
-
         } else if ($group == $group2) {
             // only 1 seperation
             $seperation = ($point - $group);
@@ -469,7 +450,6 @@ class Zend_Locale_Format
                 }
             }
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
-
         } else {
 
             // 2 seperations
@@ -477,7 +457,7 @@ class Zend_Locale_Format
                 $seperation = ($point - $group);
                 $number = iconv_substr($number, 0, iconv_strlen($number) - $seperation) . $symbols['group']
                         . iconv_substr($number, iconv_strlen($number) - $seperation);
-
+                        
                 if ((iconv_strlen($number) - 1) > ($point - $group + 1)) {
                     $seperation2 = ($group - $group2 - 1);
 
@@ -489,9 +469,7 @@ class Zend_Locale_Format
 
             }
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
-
         }
-//print "\nForm2 :'".$format."'";
         // set negative sign
         if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
             if (iconv_strpos($format, '-') === false) {
@@ -500,7 +478,6 @@ class Zend_Locale_Format
                 $format = str_replace('-', $symbols['minus'], $format);
             }
         }
-//print "\nForm3 :'".$format."'";
         return (string) $format;
     }
 
