@@ -222,7 +222,7 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
      */
     public function testPageDataSearchPhp()
     {
-        $pageDataResultSet = $this->_yahoo->inlinkSearch('http://framework.zend.com/');
+        $pageDataResultSet = $this->_yahoo->inlinkDataSearch('http://framework.zend.com/');
 
         $this->assertTrue($pageDataResultSet instanceof Zend_Service_Yahoo_PageDataResultSet);
         $this->assertTrue($pageDataResultSet->totalResultsAvailable > 10);
