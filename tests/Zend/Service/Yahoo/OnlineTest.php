@@ -86,7 +86,7 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
      */
     public function testInlinkDataSearchPhp()
     {
-        $inlinkDataResultSet = $this->_yahoo->inlinkSearch('http://framework.zend.com/');
+        $inlinkDataResultSet = $this->_yahoo->inlinkDataSearch('http://framework.zend.com/');
 
         $this->assertTrue($inlinkDataResultSet instanceof Zend_Service_Yahoo_InlinkDataResultSet);
         $this->assertTrue($inlinkDataResultSet->totalResultsAvailable > 10);
