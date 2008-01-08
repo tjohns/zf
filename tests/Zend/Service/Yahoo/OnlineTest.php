@@ -106,7 +106,7 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($inlinkDataResult instanceof Zend_Service_Yahoo_InlinkDataResult);
         }
 
-        $this->assertEquals(10, $inlinkDataResultSet->key());
+        $this->assertEquals(50, $inlinkDataResultSet->key());
         $inlinkDataResultSet->seek(0);
         $this->assertEquals(0, $inlinkDataResultSet->key());
     }
@@ -222,7 +222,7 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
      */
     public function testPageDataSearchPhp()
     {
-        $pageDataResultSet = $this->_yahoo->inlinkDataSearch('http://framework.zend.com/');
+        $pageDataResultSet = $this->_yahoo->pageDataSearch('http://framework.zend.com/');
 
         $this->assertTrue($pageDataResultSet instanceof Zend_Service_Yahoo_PageDataResultSet);
         $this->assertTrue($pageDataResultSet->totalResultsAvailable > 10);
@@ -242,7 +242,7 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($pageDataResult instanceof Zend_Service_Yahoo_PageDataResult);
         }
 
-        $this->assertEquals(10, $pageDataResultSet->key());
+        $this->assertEquals(50, $pageDataResultSet->key());
         $pageDataResultSet->seek(0);
         $this->assertEquals(0, $pageDataResultSet->key());
     }
@@ -277,21 +277,6 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, $videoResultSet->key());
         $videoResultSet->seek(0);
         $this->assertEquals(0, $videoResultSet->key());
-    }
-
-    /**
-     * Ensures that videoSearch() throws an exception when the adult_ok option is invalid
-     *
-     * @return void
-     */
-    public function testVideoSearchExceptionAdultOkInvalid()
-    {
-        try {
-            $this->_yahoo->videoSearch('php', array('adult_ok' => -1));
-            $this->fail('Expected Zend_Service_Exception not thrown');
-        } catch (Zend_Service_Exception $e) {
-            $this->assertContains("error occurred sending 'adult_ok' request", $e->getMessage());
-        }
     }
 
     /**
