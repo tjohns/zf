@@ -301,6 +301,21 @@ class Zend_Service_Yahoo_OnlineTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that webSearch() throws an exception when the adult_ok option is invalid
+     *
+     * @return void
+     */
+    public function testWebSearchExceptionAdultOkInvalid()
+    {
+        try {
+            $this->_yahoo->webSearch('php', array('adult_ok' => 'oops'));
+            $this->fail('Expected Zend_Service_Exception not thrown');
+        } catch (Zend_Service_Exception $e) {
+            $this->assertContains('error occurred sending request', $e->getMessage());
+        }
+    }
+
+    /**
      * Ensures that webSearch() throws an exception when the similar_ok option is invalid
      *
      * @return void
