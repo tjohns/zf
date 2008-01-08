@@ -9,13 +9,11 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Translate/ArrayTest.php';
 require_once 'Zend/Translate/CsvTest.php';
 require_once 'Zend/Translate/GettextTest.php';
-require_once 'Zend/Translate/IniTest.php';
 require_once 'Zend/Translate/QtTest.php';
 require_once 'Zend/Translate/TbxTest.php';
 require_once 'Zend/Translate/TmxTest.php';
 require_once 'Zend/Translate/XliffTest.php';
 require_once 'Zend/Translate/XmlTmTest.php';
-require_once 'Zend/Translate/YamlTest.php';
 
 class Zend_Translate_AllTests
 {
@@ -31,13 +29,11 @@ class Zend_Translate_AllTests
         $suite->addTestSuite('Zend_Translate_ArrayTest');
         $suite->addTestSuite('Zend_Translate_CsvTest');
         $suite->addTestSuite('Zend_Translate_GettextTest');
-        $suite->addTestSuite('Zend_Translate_IniTest');
         $suite->addTestSuite('Zend_Translate_QtTest');
         $suite->addTestSuite('Zend_Translate_TbxTest');
         $suite->addTestSuite('Zend_Translate_TmxTest');
         $suite->addTestSuite('Zend_Translate_XliffTest');
         $suite->addTestSuite('Zend_Translate_XmlTmTest');
-        $suite->addTestSuite('Zend_Translate_YamlTest');
 
         return $suite;
     }
