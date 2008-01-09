@@ -9,11 +9,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Http/CookieJar.php';
 
 /**
- * Zend_Http_Cookie unit tests
+ * Zend_Http_CookieJar unit tests
  * 
  * @category   Zend
  * @package    Zend_Http
@@ -358,6 +363,28 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
 
     	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
     	$this->assertType('string', $cookies, '$cookies is expected to be a string');
+    }
+    
+	/**
+     * Test we get a proper exception when an invalid URI is passed
+     */
+    public function testExceptGetMatchingCookiesInvalidUri() 
+    {
+        $jar = new Zend_Http_CookieJar();
+    	        
+    	try {
+    	    $cookies = $jar->getMatchingCookies('invalid.com', true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
+    		$this->fail('Expected getMatchingCookies to throw exception, invalid URI string passed');
+    	} catch (Zend_Exception $e) {
+    		// We are ok!
+    	}
+    	
+    	try {
+    		$cookies = $jar->getMatchingCookies(new stdClass(), true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
+    		$this->fail('Expected getCookie to throw exception, invalid URI object passed');
+    	} catch (Zend_Exception $e) {
+    		// We are ok!
+    	}
     }
     
     /**

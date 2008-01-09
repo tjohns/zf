@@ -5,6 +5,8 @@
  * @package    Zend_Http
  * @subpackage UnitTests
  * @version    $Id$
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
@@ -22,11 +24,14 @@ require_once 'Zend/Http/Response.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
-
 /**
+ * Zend_Http_Response unit tests
+ * 
  * @category   Zend
  * @package    Zend_Http
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 {

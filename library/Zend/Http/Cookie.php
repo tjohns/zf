@@ -20,6 +20,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Uri/Http.php';
+
 /**
  * Zend_Http_Cookie is a class describing an HTTP cookie and all it's parameters.
  *
@@ -95,14 +97,20 @@ class Zend_Http_Cookie
      */
     public function __construct($name, $value, $domain, $expires = null, $path = null, $secure = false)
     {
-        if (preg_match("/[=,; \t\r\n\013\014]/", $name))
+        if (preg_match("/[=,; \t\r\n\013\014]/", $name)) {
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception("Cookie name cannot contain these characters: =,; \\t\\r\\n\\013\\014 ({$name})");
+        }
 
-        if (! $this->name = (string) $name)
+        if (! $this->name = (string) $name) {
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception('Cookies must have a name');
+        }
 
-        if (! $this->domain = (string) $domain)
+        if (! $this->domain = (string) $domain) {
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception('Cookies must have a domain');
+        }
 
         $this->value = (string) $value;
         $this->expires = ($expires === null ? null : (int) $expires);
@@ -209,12 +217,14 @@ class Zend_Http_Cookie
     public function match($uri, $matchSessionCookies = true, $now = null)
     {
         if (is_string ($uri)) {
-            $uri = Zend_Uri::factory($uri);
+            $uri = Zend_Uri_Http::factory($uri);
         }
 
         // Make sure we have a valid Zend_Uri_Http object
-        if (! ($uri->valid() && ($uri->getScheme() == 'http' || $uri->getScheme() =='https')))
+        if (! ($uri->valid() && ($uri->getScheme() == 'http' || $uri->getScheme() =='https'))) {
+            require_once 'Zend/Http/Exception.php';    
             throw new Zend_Http_Exception('Passed URI is not a valid HTTP or HTTPS URI');
+        }
 
         // Check that the cookie is secure (if required) and not expired
         if ($this->secure && $uri->getScheme() != 'https') return false;
@@ -255,16 +265,16 @@ class Zend_Http_Cookie
     {
         // Set default values
         if (is_string($ref_uri)) {
-            $ref_uri = Zend_Uri::factory($ref_uri);
+            $ref_uri = Zend_Uri_Http::factory($ref_uri);
         }
 
-        $name = '';
-        $value = '';
+        $name    = '';
+        $value   = '';
+        $domain  = '';
+        $path    = '';
         $expires = null;
-        $domain = '';
-        $path = '';
-        $secure = false;
-        $parts = explode(';', $cookieStr);
+        $secure  = false;
+        $parts   = explode(';', $cookieStr);
 
         // If first part does not include '=', fail
         if (strpos($parts[0], '=') === false) return false;
