@@ -90,20 +90,21 @@ class Zend_InfoCard_Xml_Assertion_SAML
 						$serverName = $this->_getServerName();
 						$serverPort = $this->_getServerPort();
 						
-						$self_aliases[] = "https://{$serverName}/";
-						$self_aliases[] = "https://{{$serverName}:{$serverPort}/";
+						$self_aliases[] = $serverName;
+						$self_aliases[] = "{{$serverName}:{$serverPort}";
 						
 						$found = false;
-				                      
 						if(is_array($conditionValue)) {
 							foreach($conditionValue as $audience) {
+								
+								list(,,$audience) = explode('/', $audience); 
 								if(in_array($audience, $self_aliases)) {
 									$found = true;
 									break;
 								}
 							}
 						}
-						
+
 						if(!$found) {
 							return array($condition, 'Could not find self in allowed audience list');
 						}
