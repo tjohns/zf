@@ -9,6 +9,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // error_reporting(E_ALL);
 
+require_once 'Zend/Form/FormTest.php';
 require_once 'Zend/Form/ElementTest.php';
 
 class Zend_Form_AllTests
@@ -22,6 +23,7 @@ class Zend_Form_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Form');
 
+        $suite->addTestSuite('Zend_Form_FormTest');
         $suite->addTestSuite('Zend_Form_ElementTest');
 
         return $suite;
