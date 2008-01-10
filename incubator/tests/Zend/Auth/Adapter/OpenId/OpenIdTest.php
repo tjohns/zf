@@ -417,4 +417,51 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $sreg_data = $sreg->getProperties();
         $this->assertSame("test", $sreg_data['nickname']);
     }
+
+    function testSetCheckImmediate() {
+        $expiresIn = time() + 600;
+        $storage = new Zend_OpenId_Consumer_Storage_File();
+        $storage->delDiscoveryInfo(self::ID);
+        $storage->addDiscoveryInfo(self::ID, self::REAL_ID, self::SERVER, 1.1, $expiresIn);
+        $storage->delAssociation(self::SERVER);
+        $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
+
+        $response = new Zend_OpenId_ResponseHelper(true);
+        
+        $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
+
+        $adapter = new Zend_Auth_Adapter_OpenId(self::ID);
+        $adapter->setCheckImmediate(true);
+        $this->assertSame($adapter, $adapter->setResponse($response));
+        $ret = $adapter->authenticate();
+        $this->assertTrue(is_null($ret));
+        $headers = $response->getHeaders();
+        $this->assertSame( '', $response->getBody() );
+        $this->assertTrue( is_array($headers) );
+        $this->assertSame( 1, count($headers) );
+        $this->assertTrue( is_array($headers[0]) );
+        $this->assertSame( 3, count($headers[0]) );
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $this->assertSame( true, $headers[0]['replace'] );
+        $url = $headers[0]['value'];
+        $url = parse_url($url);
+        $this->assertSame( "http", $url['scheme'] );
+        $this->assertSame( "www.myopenid.com", $url['host'] );
+        $this->assertSame( "/", $url['path'] );
+        $q = explode("&", $url['query']);
+        $query = array();
+        foreach($q as $var) {
+            if (list($key, $val) = explode("=", $var, 2)) {
+                $query[$key] = $val;
+            }
+        }
+        $this->assertTrue( is_array($query) );
+        $this->assertSame( 6, count($query) );
+        $this->assertSame( 'checkid_immediate', $query['openid.mode'] );
+        $this->assertSame( 'http%3A%2F%2Freal_id.myopenid.com%2F', $query['openid.identity'] );
+        $this->assertSame( 'http%3A%2F%2Fid.myopenid.com%2F', $query['openid.claimed_id'] );
+        $this->assertSame( self::HANDLE, $query['openid.assoc_handle'] );
+        $this->assertSame( 'http%3A%2F%2Fwww.zf-test.com%2Ftest.php', $query['openid.return_to'] );
+        $this->assertSame( 'http%3A%2F%2Fwww.zf-test.com', $query['openid.trust_root'] );
+    }
 }

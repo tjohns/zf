@@ -88,6 +88,14 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
     private $_response = null;
 
     /**
+     * Enables or disables interaction with user during authentication on
+     * OpenID provider.
+     *
+     * @var bool
+     */
+    private $_check_immediate = false;
+
+    /**
      * Constructor
      *
      * @param  string $id the identity value
@@ -186,6 +194,19 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
     }
 
     /**
+     * Enables or disables interaction with user during authentication on
+     * OpenID provider.
+     *
+     * @param  bool $check_immediate
+     * @return Zend_Auth_Adapter_OpenId
+     */
+    public function setCheckImmediate($check_immediate)
+    {
+        $this->_check_immediate = $check_immediate;
+        return $this;
+    }
+
+    /**
      * Authenticates the given OpenId identity.
      * Defined by Zend_Auth_Adapter_Interface.
      *
@@ -198,15 +219,28 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
         if (!empty($id)) {
             $consumer = new Zend_OpenId_Consumer($this->_storage);
             /* login() is never returns on success */
-            if (!$consumer->login($id,
-                    $this->_returnTo,
-                    $this->_root,
-                    $this->_extensions,
-                    $this->_response)) {
-                return new Zend_Auth_Result(
-                    Zend_Auth_Result::FAILURE,
-                    $id,
-                    array("Authentication failed"));
+            if (!$this->_check_immediate) {
+                if (!$consumer->login($id,
+                        $this->_returnTo,
+                        $this->_root,
+                        $this->_extensions,
+                        $this->_response)) {
+                    return new Zend_Auth_Result(
+                        Zend_Auth_Result::FAILURE,
+                        $id,
+                        array("Authentication failed"));
+                }
+            } else {
+                if (!$consumer->check($id,
+                        $this->_returnTo,
+                        $this->_root,
+                        $this->_extensions,
+                        $this->_response)) {
+                    return new Zend_Auth_Result(
+                        Zend_Auth_Result::FAILURE,
+                        $id,
+                        array("Authentication failed"));
+                }
             }
         } else {
             $params = (isset($_SERVER['REQUEST_METHOD']) &&
