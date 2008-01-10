@@ -7,11 +7,11 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Translate/ArrayTest.php';
-require_once 'Zend/Translate/GettextTest.php';
 require_once 'Zend/Translate/CsvTest.php';
+require_once 'Zend/Translate/GettextTest.php';
+require_once 'Zend/Translate/QtTest.php';
 require_once 'Zend/Translate/TbxTest.php';
 require_once 'Zend/Translate/TmxTest.php';
-require_once 'Zend/Translate/QtTest.php';
 require_once 'Zend/Translate/XliffTest.php';
 require_once 'Zend/Translate/XmlTmTest.php';
 
@@ -27,11 +27,11 @@ class Zend_Translate_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Translate');
 
         $suite->addTestSuite('Zend_Translate_ArrayTest');
-        $suite->addTestSuite('Zend_Translate_GettextTest');
         $suite->addTestSuite('Zend_Translate_CsvTest');
+        $suite->addTestSuite('Zend_Translate_GettextTest');
+        $suite->addTestSuite('Zend_Translate_QtTest');
         $suite->addTestSuite('Zend_Translate_TbxTest');
         $suite->addTestSuite('Zend_Translate_TmxTest');
-        $suite->addTestSuite('Zend_Translate_QtTest');
         $suite->addTestSuite('Zend_Translate_XliffTest');
         $suite->addTestSuite('Zend_Translate_XmlTmTest');
 
