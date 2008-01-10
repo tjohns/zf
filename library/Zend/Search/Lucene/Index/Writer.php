@@ -481,35 +481,6 @@ class Zend_Search_Lucene_Index_Writer
 	        $newSegmentFile->seek($numOfSegmentsOffset);
 	        $newSegmentFile->writeInt($segmentsCount);  // Update segments count
 	        $newSegmentFile->close();
-	
-	        // Clean-up directory
-	        foreach ($this->_directory->fileList() as $file) {
-	            if ($file == 'deletable' ||
-	                $file == 'segments'  ||
-	                isset(self::$_indexExtensions[substr($file, strlen($file)-4)]) ||
-	                preg_match('/^segments_[a-zA-Z0-9]+$/i', $file) /* matches 'segments_xxx' file names */ ||
-	                preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
-	                    // check, that file is not used by current index generation
-	                    if ($file == Zend_Search_Lucene::getSegmentFileName($generation) ||
-	                        isset($segments[substr($file, 0, strlen($file)-4)]) ||
-	                        isset($segments[substr($file, 0, strpos($file, '.f'))]) ||
-	                        substr($file, strlen($file)-4) == '.del') {
-	                        continue;
-	                    }
-	
-	                    try {
-	                        $this->_directory->deleteFile($file);
-	                    } catch (Zend_Search_Lucene_Exception $e) {
-	                        if (strpos($e->getMessage(), 'Can\'t delete file') === 0) {
-	                            // File is under processing
-	                            // Stop clean-up process
-	                            break;
-	                        } else {
-	                            throw $e;
-	                        }
-	                    }
-	                }
-	        }
         } catch (Exception $e) {
         	/** Restore previous index generation */
         	$generation--;
@@ -526,7 +497,130 @@ class Zend_Search_Lucene_Index_Writer
 
         // Write generation (second copy)
         $genFile->writeLong($generation);
+
+
+        /**
+         * Clean-up directory
+         * 
+         * Clean-up procedure is based on file opening order:
+         * 1. segments file (segments_xxx files)
+         * 2. individual segments (.cfs files or other per segment files) (in order of segments numbers)
+         * 
+         * Once opened file is not closed until index object destruction.
+         * 
+         * 
+         * We try to delete files in the same order it gives the following behavior on Windows and Unix systems:
+         * 
+         * Windows:
+         * If file is opened by another process, file deleting fails. That's a signal to stop clean-up process
+         * 
+         * Unix:
+         * If file is opened by another process, deleting passes, but opened file is still available while it's not
+         * closed.
+         */
+        $filesToDelete = array();
+        $filesTypes    = array();
+        $filesNumbers  = array();
         
+        // list of .del files of currently used segments
+        // each segment can have several generations of .del files
+        // only last should not be deleted
+        $delFiles = array();
+        
+        foreach ($this->_directory->fileList() as $file) {
+            if ($file == 'deletable') {
+                // 'deletable' file
+                $filesToDelete[] = $file;
+                $filesTypes[]    = 0; // delete this file first, since it's not used starting from Lucene v2.1
+                $filesNumbers[]  = 0;
+            } else if ($file == 'segments') {
+                // 'segments' file
+
+                $filesToDelete[] = $file;
+                $filesTypes[]    = 1; // second file to be deleted "zero" version of segments file (Lucene pre-2.1)
+                $filesNumbers[]  = 0;
+            } else if (preg_match('/^segments_[a-zA-Z0-9]+$/i', $file)) {
+                // 'segments_xxx' file
+                // Check if it's not a just created generation file
+                if ($file != Zend_Search_Lucene::getSegmentFileName($generation)) {
+                    $filesToDelete[] = $file;
+                    $filesTypes[]    = 2; // first group of files for deletions
+                    $filesNumbers[]  = (int)base_convert(substr($file, 9), 36, 10); // ordered by segment generation numbers 
+                }
+            } else if (preg_match('/(^_([a-zA-Z0-9]+))\.f\d+$/i', $file, $matches)) {
+                // one of per segment files ('<segment_name>.f<decimal_number>')
+                // Check if it's not one of the segments in the current segments set
+                if (!isset($segments[$matches[1]])) {
+                    $filesToDelete[] = $file;
+                    $filesTypes[]    = 3; // second group of files for deletions
+                    $filesNumbers[]  = (int)base_convert($matches[2], 36, 10); // order by segment number 
+                }
+            } else if (preg_match('/(^_([a-zA-Z0-9]+))(_([a-zA-Z0-9]+))\.del$/i', $file, $matches)) {
+                // one of per segment files ('<segment_name>_<del_generation>.del' where <segment_name> is '_<segment_number>')
+                // Check if it's not one of the segments in the current segments set
+                if (!isset($segments[$matches[1]])) {
+                    $filesToDelete[] = $file;
+                    $filesTypes[]    = 3; // second group of files for deletions
+                    $filesNumbers[]  = (int)base_convert($matches[2], 36, 10); // order by segment number 
+                } else {
+                	$segmentNumber = (int)base_convert($matches[2], 36, 10);
+                	$delGeneration = (int)base_convert($matches[4], 36, 10);
+                	if (!isset($delFiles[$segmentNumber])) {
+                		$delFiles[$segmentNumber] = array();
+                	}
+                	$delFiles[$segmentNumber][$delGeneration] = $file;
+                }
+            } else if (isset(self::$_indexExtensions[substr($file, strlen($file)-4)])) {
+                // one of per segment files ('<segment_name>.<ext>')
+                // Check if it's not one of the segments in the current segments set
+                if (!isset($segments[substr($file, 0, strlen($file)-4)])) {
+                    $filesToDelete[] = $file;
+                    $filesTypes[]    = 3; // second group of files for deletions
+                    $filesNumbers[]  = (int)base_convert(substr($file, 1 /* skip '_' */, strlen($file)-5), 36, 10); // order by segment number 
+                }
+            }
+        }
+
+        $maxGenNumber = 0;
+        // process .del files of currently used segments
+        foreach ($delFiles as $segmentNumber => $segmentDelFiles) {
+        	ksort($delFiles[$segmentNumber], SORT_NUMERIC);
+        	array_pop($delFiles[$segmentNumber]); // remove last delete file generation from candidates for deleting
+        	
+        	end($delFiles[$segmentNumber]);
+        	$lastGenNumber = key($delFiles[$segmentNumber]);
+        	if ($lastGenNumber > $maxGenNumber) {
+        		$maxGenNumber = $lastGenNumber; 
+        	}
+        }
+        foreach ($delFiles as $segmentNumber => $segmentDelFiles) {
+        	foreach ($segmentDelFiles as $delGeneration => $file) {
+                    $filesToDelete[] = $file;
+                    $filesTypes[]    = 4; // third group of files for deletions
+                    $filesNumbers[]  = $segmentNumber*$maxGenNumber + $delGeneration; // order by <segment_number>,<del_generation> pair 
+        	}
+        }
+        
+        // Reorder files for deleting
+        array_multisort($filesTypes,    SORT_ASC, SORT_NUMERIC,
+                        $filesNumbers,  SORT_ASC, SORT_NUMERIC,
+                        $filesToDelete, SORT_ASC, SORT_STRING);
+        
+        foreach ($filesToDelete as $file) {
+            try {
+                $this->_directory->deleteFile($file);
+            } catch (Zend_Search_Lucene_Exception $e) {
+                if (strpos($e->getMessage(), 'Can\'t delete file') === 0) {
+                    // File is under processing
+                    // Stop clean-up process
+                    break;
+                } else {
+                    throw $e;
+                }
+            }
+        }
+        
+
         // Release index write lock
         Zend_Search_Lucene::releaseWriteLock($this->_directory, $lock);
 
