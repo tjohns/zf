@@ -13,21 +13,21 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Controller
+ * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
- * Zend_Form_Element 
+ * Zend_Form
  * 
  * @category   Aend
  * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id:$
  */
-class Zend_Form_Abstract implements Iterator
+class Zend_Form implements Iterator
 {
     /**
      * Form elements
