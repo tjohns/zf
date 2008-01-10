@@ -29,6 +29,12 @@
  */
 class Zend_Form implements Iterator
 {
+    /**
+     * Form metadata and attributes
+     * @var array
+     */
+    protected $_attribs = array();
+
     public function __construct($options = null)
     {
     }
@@ -43,11 +49,11 @@ class Zend_Form implements Iterator
 
  
     // Loaders 
-    public function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader, $type)
+    public function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader, $type = null)
     {
     }
 
-    public function getPluginLoader($type)
+    public function getPluginLoader($type = null)
     {
     }
 
@@ -57,32 +63,100 @@ class Zend_Form implements Iterator
 
 
     // Form metadata:
-    public function addAttrib($key, $value)
+    
+    /**
+     * Set form attribute
+     * 
+     * @param  string $key 
+     * @param  mixed $value 
+     * @return Zend_Form
+     */
+    public function setAttrib($key, $value)
     {
+        $key = (string) $key;
+        $this->_attribs[$key] = $value;
+        return $this;
     }
 
+    /**
+     * Add multiple form attributes at once
+     * 
+     * @param  array $attribs 
+     * @return Zend_Form
+     */
     public function addAttribs(array $attribs)
     {
+        foreach ($attribs as $key => $value) {
+            $this->setAttrib($key, $value);
+        }
+        return $this;
     }
 
+    /**
+     * Set multiple form attributes at once
+     *
+     * Overwrites any previously set attributes.
+     * 
+     * @param  array $attribs 
+     * @return Zend_Form
+     */
     public function setAttribs(array $attribs)
     {
+        $this->clearAttribs();
+        return $this->addAttribs($attribs);
     }
 
+    /**
+     * Retrieve a single form attribute
+     * 
+     * @param  string $key 
+     * @return mixed
+     */
     public function getAttrib($key)
     {
+        $key = (string) $key;
+        if (!isset($this->_attribs[$key])) {
+            return null;
+        }
+
+        return $this->_attribs[$key];
     }
 
+    /**
+     * Retrieve all form attributes/metadata
+     * 
+     * @return array
+     */
     public function getAttribs()
     {
+        return $this->_attribs;
     }
 
+    /**
+     * Remove attribute
+     * 
+     * @param  string $key 
+     * @return bool
+     */
     public function removeAttrib($key)
     {
+        if (isset($this->_attribs[$key])) {
+            unset($this->_attribs[$key]);
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Clear all form attributes
+     * 
+     * @return Zend_Form
+     */
     public function clearAttribs()
     {
+        $this->_attribs = array();
+        return $this;
     }
 
  

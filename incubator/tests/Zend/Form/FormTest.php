@@ -10,7 +10,9 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 // error_reporting(E_ALL);
 
 require_once 'Zend/Form.php';
+
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Loader/PluginLoader.php';
 
 class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 {
@@ -24,6 +26,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         Zend_Controller_Action_HelperBroker::resetHelpers();
+        $this->form = new Zend_Form();
     }
 
     public function tearDown()
@@ -43,28 +46,111 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     // Attribs:
+
+    public function testAttribsArrayInitiallyEmpty()
+    {
+        $attribs = $this->form->getAttribs();
+        $this->assertTrue(is_array($attribs));
+        $this->assertTrue(empty($attribs));
+    }
+
+    public function testRetrievingUndefinedAttribReturnsNull()
+    {
+        $this->assertNull($this->form->getAttrib('foo'));
+    }
     
     public function testCanAddAndRetrieveSingleAttribs()
     {
-        $this->markTestIncomplete();
+        $this->testRetrievingUndefinedAttribReturnsNull();
+        $this->form->setAttrib('foo', 'bar');
+        $this->assertEquals('bar', $this->form->getAttrib('foo'));
     }
 
     public function testCanAddAndRetrieveMultipleAttribs()
     {
-        $this->markTestIncomplete();
+        $this->form->setAttrib('foo', 'bar');
+        $this->assertEquals('bar', $this->form->getAttrib('foo'));
+        $this->form->addAttribs(array(
+            'bar' => 'baz',
+            'baz' => 'bat',
+            'bat' => 'foo'
+        ));
+        $test = $this->form->getAttribs();
+        $attribs = array(
+            'foo' => 'bar',
+            'bar' => 'baz',
+            'baz' => 'bat',
+            'bat' => 'foo'
+        );
+        $this->assertSame($attribs, $test);
     }
 
     public function testSetAttribsOverwritesExistingAttribs()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleAttribs();
+        $array = array('bogus' => 'value', 'not' => 'real');
+        $this->form->setAttribs($array);
+        $this->assertSame($array, $this->form->getAttribs());
     }
 
     public function testCanRemoveSingleAttrib()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveSingleAttribs();
+        $this->assertTrue($this->form->removeAttrib('foo'));
+        $this->assertNull($this->form->getAttrib('foo'));
+    }
+
+    public function testRemoveAttribReturnsFalseIfAttribDoesNotExist()
+    {
+        $this->assertFalse($this->form->removeAttrib('foo'));
     }
 
     public function testCanClearAllAttribs()
+    {
+        $this->testCanAddAndRetrieveMultipleAttribs();
+        $this->form->clearAttribs();
+        $attribs = $this->form->getAttribs();
+        $this->assertTrue(is_array($attribs));
+        $this->assertTrue(empty($attribs));
+    }
+
+    // Plugin loaders
+
+    public function testGetPluginLoaderRetrievesDecoratorPluginLoader()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testCanSetCustomDecoratorPluginLoader()
+    {
+        $this->markTestIncomplete();
+        $loader = new Zend_Loader_PluginLoader();
+        $this->form->setPluginLoader($loader, 'decorator');
+        $test = $this->form->getPluginLoader('decorator');
+        $this->assertSame($loader, $test);
+    }
+
+    public function testCanAddDecoratorPluginLoaderPrefixPath()
+    {
+        $this->markTestIncomplete();
+        $loader = $this->form->getPluginLoader('decorator');
+        $this->form->addPrefixPath('Zend_Form', 'Zend/Form/', 'decorator');
+        $paths = $loader->getPaths('Zend_Form');
+        $this->assertTrue(is_array($paths));
+        $this->assertContains('Form', $paths[0]);
+    }
+
+    public function testAddDecoratorPluginLoaderPrefixPathUpdatesElementDecoratorLoaders()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testAddPrefixPathWithNoLoaderDesignationUpdatesDecoratorPluginLoader()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testAddPrefixPathWithNoLoaderDesignationUpdatesAllElementLoaders()
     {
         $this->markTestIncomplete();
     }
