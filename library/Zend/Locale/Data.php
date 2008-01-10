@@ -304,7 +304,7 @@ class Zend_Locale_Data
                 $val = implode('_' , $value);
             }
             $val = urlencode($val);
-            $id = strtr('Zend_Locale_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
+            $id = strtr('Zend_LocaleL_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
             if ($result = self::$_cache->load($id)) {
                 return unserialize($result);
             }
@@ -776,7 +776,7 @@ class Zend_Locale_Data
                 $val = implode('_' , $value);
             }
             $val = urlencode($val);
-            $id = strtr('Zend_Locale_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
+            $id = strtr('Zend_LocaleC_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
             if ($result = self::$_cache->load($id)) {
                 return unserialize($result);
             }
