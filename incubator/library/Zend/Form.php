@@ -25,380 +25,298 @@
  * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 class Zend_Form implements Iterator
 {
-    /**
-     * Form elements
-     * @var array
-     */
-    protected $_elements = array();
-
-    /**
-     * Current elements with errors
-     * @var array
-     */
-    protected $_errors = array();
-
-    /**
-     * Constructor
-     * 
-     * @param  array $elements 
-     * @return void
-     */
-    public function __construct(array $elements = array())
+    public function __construct($options = null)
     {
-        $this->setElements($elements);
     }
 
-    /**
-     * Set all elements at once
-     * 
-     * @param  array $elements 
-     * @return Zend_Form_Abstract
-     */
-    public function setElements(array $elements)
+    public function setOptions(array $options)
     {
-        foreach ($elements as $name => $element) {
-            $this->addElement($name, $element);
-        }
-
-        return $this;
     }
 
-    /**
-     * Add a single named element
-     *
-     * @param  string $name Element name
-     * @param  
-     */
+    public function setConfig(Zend_Config $config)
+    {
+    }
+
+ 
+    // Loaders 
+    public function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader, $type)
+    {
+    }
+
+    public function getPluginLoader($type)
+    {
+    }
+
+    public function addPrefixPath($prefix, $path, $type = null) 
+    {
+    }
+
+
+    // Form metadata:
+    public function addAttrib($key, $value)
+    {
+    }
+
+    public function addAttribs(array $attribs)
+    {
+    }
+
+    public function setAttribs(array $attribs)
+    {
+    }
+
+    public function getAttrib($key)
+    {
+    }
+
+    public function getAttribs()
+    {
+    }
+
+    public function removeAttrib($key)
+    {
+    }
+
+    public function clearAttribs()
+    {
+    }
+
+ 
+    // Element interaction: 
     public function addElement($element, $name = null)
     {
-        if (is_string($element)) {
-            // would need a helper registry to load the element
-            // if (null === $name): throw an exception
-            // $element = new $class($name)
-        }
-
-        if (!$element instanceof Zend_Form_Element) {
-            require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception('Invalid element type provided');
-        }
-
-        if (null === $name) {
-            $name = $element->getName();
-        }
-
-        $this->_elements[$name] = $element;
-        return $this;
     }
 
-    /**
-     * Get form element
-     *
-     * @param  string $name Name of element
-     * @return Zend_Form_Element|false
-     */
+    public function addElements(array $elements)
+    {
+    }
+
+    public function setElements(array $elements)
+    {
+    }
+
     public function getElement($name)
     {
-        $name = (string) $name;
-        if (isset($this->_elements[$name])) {
-            return $this->_elements[$name];
-        }
-
-        return false;
     }
 
-    /**
-     * Get all form elements
-     *
-     * @todo return in element order
-     * @return array
-     */
     public function getElements()
     {
-        return $this->_elements;
     }
 
-    /**
-     * Remove a form element
-     *
-     * @param  string $name Element name to remove
-     * @return bool
-     */
     public function removeElement($name)
     {
-        $name = (string) $name;
-        if (isset($this->_elements[$name])) {
-            unset($this->_elements[$name]);
-            return true;
-        }
-
-        return false;
     }
 
-    /**
-     * Iterator: current item
-     * 
-     * @return Zend_Form_Element
-     */
-    public function current()
+    public function setDefaults(array $defaults)
     {
-        return current($this->_elements);
     }
 
-    /**
-     * Iterator: key
-     * 
-     * @return string
-     */
-    public function key()
+    public function setDefault($name, $value)
     {
-        return key($this->_elements);
     }
 
-    /**
-     * Iterator: next
-     * 
-     * @return mixed
-     */
-    public function next()
+    public function getValue($name)
     {
-        return next($this->_elements);
     }
 
-    /**
-     * Iterator: rewind
-     * 
-     * @return mixed
-     */
-    public function rewind()
+    public function getValues()
     {
-        return reset($this->_elements);
     }
 
-    /**
-     * Iterator: valid
-     * 
-     * @return mixed
-     */
-    public function valid()
+    public function getUnfilteredValue($name)
     {
-        return current($this->_elements);
     }
 
+    public function getUnfilteredValues()
+    {
+    }
+
+    public function __get($name)
+    {
+    }
+
+ 
+    // Element groups: 
+    public function addGroup(Zend_Form $form, $name, $order = null)
+    {
+    }
+
+    public function addGroups(array $groups)
+    {
+    }
+
+    public function setGroups(array $groups)
+    {
+    }
+
+    public function getGroup($name)
+    {
+    }
+
+    public function getGroups()
+    {
+    }
+
+    public function removeGroup($name)
+    {
+    }
+
+    public function clearGroups()
+    {
+    }
+
+
+    // Display groups:
+    public function addDisplayGroup(array $elements, $name, $order = null)
+    {
+    }
+
+    public function addDisplayGroups(array $groups)
+    {
+    }
+
+    public function setDisplayGroups(array $groups)
+    {
+    }
+
+    public function getDisplayGroup($name)
+    {
+    }
+
+    public function getDisplayGroups()
+    {
+    }
+
+    public function removeDisplayGroup($name)
+    {
+    }
+
+    public function clearDisplayGroups()
+    {
+    }
+
+     
+    // Processing 
+
     /**
-     * Populate elements with values
+     * Populate form
      *
-     * @param  array $values Key/value pairs
-     * @return Zend_Form_Abstract
+     * Proxies to {@link setDefaults()}
+     * 
+     * @param  array $values 
+     * @return Zend_Form
      */
     public function populate(array $values)
     {
-        foreach ($values as $name => $value) {
-            if (isset($this->_elements[$name])) {
-                $this->_elements[$name]->setValue($value);
-            }
-        }
-
-        return $this;
     }
 
-    /**
-     * Divide a form into sections
-     *
-     * @todo   Unimplemented
-     * @param  string $label
-     * @param  array $elements
-     * @param  string $page
-     * @return Zend_Form_Abstract
-     */
-    public function addSection($label, array $elements, $page = null)
+    public function isValid(array $data)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() is currently unimplemented', E_USER_NOTICE);
-        return $this;
     }
 
-    /**
-     * Retrieve a form section
-     * 
-     * @todo   Unimplemented
-     * @param  string $label 
-     * @return void
-     */
-    public function getSection($label)
+    public function isValidPartial(array $data)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() is currently unimplemented', E_USER_NOTICE);
-        return $this;
     }
 
-    /**
-     * Divide a form into pages
-     *
-     * @todo   Unimplemented
-     * @param  string $label
-     * @param  array  $elements
-     * @return Zend_Form_Abstract
-     */
-    public function addPage($label, array $elements)
+    public function processAjax($request)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() is currently unimplemented', E_USER_NOTICE);
-        return $this;
     }
 
-    /**
-     * Retrieve a form page
-     * 
-     * @todo   Unimplemented
-     * @param  string $label 
-     * @return void
-     */
-    public function getPage($label)
+    public function persistData()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() is currently unimplemented', E_USER_NOTICE);
-        return $this;
     }
 
-    /**
-     * Set view
-     *
-     * @param  Zend_View_Interface
-     * @return Zend_Form_Abstract
-     */
+    public function getErrors($name = null)
+    {
+    }
+
+    public function getMessages($name = null)
+    {
+    }
+
+ 
+    // Rendering 
     public function setView(Zend_View_Interface $view)
     {
-        $this->_view = $view;
-        return $this;
     }
 
-    /**
-     * Get view
-     *
-     * @return Zend_View_Interface
-     */
     public function getView()
     {
-        return $this->_view;
     }
 
-    /**
-     * Validate form
-     */
-    public function isValid($spec = null, $value = null)
+    public function addDecorator($decorator, $options = array())
     {
-        if (null === $spec) {
-            $spec = $this->getValues();
-        } elseif (is_string($spec)) {
-            $element = $this->getElement($spec);
-            if (!$element) {
-                require_once 'Zend/Form/Exception.php';
-                throw new Zend_Form_Exception(sprintf('Cannot validate element "%s" as it does not exist', $spec));
-            }
-
-            return $element->isValid($value);
-        } elseif (!is_array($spec)) {
-            require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception(sprintf('isValid() expects a key/value pair or array of key/value pairs; received type %s', gettype($spec)));
-        }
-
-        $this->_errors = array();
-        foreach ($this as $name => $element) {
-            $value = (isset($spec[$name])) ? $spec[$name] : null;
-            if (!$element->isValid($spec[$name])) {
-                $this->_errors[$name] = $element;
-            }
-        }
-
-        return (empty($this->_errors));
     }
 
-    /**
-     * Get filtered element values as array
-     *
-     * @return array
-     */
-    public function getValues()
+    public function addDecorators(array $decorator)
     {
-        $values = array();
-        foreach ($this as $name => $element) {
-            $values[$name] = $element->getValue();
-        }
-
-        return $values;
     }
 
-    /**
-     * Get raw element values as array
-     *
-     * @return array
-     */
-    public function getRawValues()
+    public function setDecorators(array $decorator)
     {
-        $values = array();
-        foreach ($this as $name => $element) {
-            $values[$name] = $element->getRawValue();
-        }
-
-        return $values;
     }
 
-    /**
-     * Get all current element errors
-     *
-     * @return array
-     */
-    public function getErrors()
+    public function getDecorator($name)
     {
-        return $this->_errors;
     }
 
-    /**
-     * Set default values
-     *
-     * @param  array $defaults
-     * @return Zend_Form_Abstract
-     */
-    public function setDefaults(array $defaults)
+    public function getDecorators()
     {
-        foreach ($defaults as $key => $value) {
-            if (isset($this[$key])) {
-                $this[$key]->setValue($value);
-            }
-        }
-
-        return $this;
     }
 
-    /**
-     * Render
-     *
-     * @todo   Order elements according to internal order
-     * @param  Zend_View_Interface
-     * @return string
-     */
+    public function removeDecorator($name)
+    {
+    }
+
+    public function clearDecorators()
+    {
+    }
+
     public function render(Zend_View_Interface $view = null)
     {
-        if (null !== $view) {
-            $this->setView($view);
-        } elseif ((null === $view) && (null === ($view = $this->getView()))) {
-            require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception('No view object present to render');
-        }
-
-        $form = '';
-        foreach ($this as $element) {
-            $form .= $element->render($view);
-        }
-
-        return $form;
     }
 
-    /**
-     * __toString
-     */
     public function __toString()
     {
-        return $this->render();
+    }
+
+ 
+    // Localization: 
+    public function setTranslator(Zend_Translate_Adapter $translator)
+    {
+    }
+
+    public function getTranslator()
+    {
+    }
+
+ 
+    // For iteration, countable: 
+    public function current()
+    {
+    }
+
+    public function key()
+    {
+    }
+
+    public function next()
+    {
+    }
+
+    public function rewind()
+    {
+    }
+
+    public function valid()
+    {
+    }
+
+    public function count()
+    {
     }
 }
