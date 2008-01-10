@@ -34,9 +34,4 @@ require_once 'Zend/Form/Element/Xhtml.php';
  */
 class Zend_Form_Element_Text extends Zend_Form_Element_Xhtml
 {
-    /**
-     * Use formText view helper by default
-     * @var string
-     */
-    protected $_viewHelper = 'formText';
 }

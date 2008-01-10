@@ -12,6 +12,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Form.php';
 
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Form/Element.php';
 require_once 'Zend/Loader/PluginLoader.php';
 
 class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
@@ -116,14 +117,19 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     // Plugin loaders
 
-    public function testGetPluginLoaderRetrievesDecoratorPluginLoader()
+    public function testGetPluginLoaderRetrievesDefaultDecoratorPluginLoader()
     {
-        $this->markTestIncomplete();
+        $loader = $this->form->getPluginLoader('decorator');
+        $this->assertTrue($loader instanceof Zend_Loader_PluginLoader);
+        $paths = $loader->getPaths('Zend_Form_Decorator');
+        $this->assertTrue(is_array($paths), var_export($loader, 1));
+        $this->assertTrue(0 < count($paths));
+        $this->assertContains('Form', $paths[0]);
+        $this->assertContains('Decorator', $paths[0]);
     }
 
     public function testCanSetCustomDecoratorPluginLoader()
     {
-        $this->markTestIncomplete();
         $loader = new Zend_Loader_PluginLoader();
         $this->form->setPluginLoader($loader, 'decorator');
         $test = $this->form->getPluginLoader('decorator');
@@ -132,12 +138,11 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddDecoratorPluginLoaderPrefixPath()
     {
-        $this->markTestIncomplete();
         $loader = $this->form->getPluginLoader('decorator');
-        $this->form->addPrefixPath('Zend_Form', 'Zend/Form/', 'decorator');
-        $paths = $loader->getPaths('Zend_Form');
+        $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'decorator');
+        $paths = $loader->getPaths('Zend_Foo');
         $this->assertTrue(is_array($paths));
-        $this->assertContains('Form', $paths[0]);
+        $this->assertContains('Foo', $paths[0]);
     }
 
     public function testAddDecoratorPluginLoaderPrefixPathUpdatesElementDecoratorLoaders()
@@ -145,12 +150,52 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
-    public function testAddPrefixPathWithNoLoaderDesignationUpdatesDecoratorPluginLoader()
+    public function testGetPluginLoaderRetrievesDefaultElementPluginLoader()
     {
-        $this->markTestIncomplete();
+        $loader = $this->form->getPluginLoader('element');
+        $this->assertTrue($loader instanceof Zend_Loader_PluginLoader);
+        $paths = $loader->getPaths('Zend_Form_Element');
+        $this->assertTrue(is_array($paths), var_export($loader, 1));
+        $this->assertTrue(0 < count($paths));
+        $this->assertContains('Form', $paths[0]);
+        $this->assertContains('Element', $paths[0]);
     }
 
-    public function testAddPrefixPathWithNoLoaderDesignationUpdatesAllElementLoaders()
+    public function testCanSetCustomDecoratorElementLoader()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        $this->form->setPluginLoader($loader, 'element');
+        $test = $this->form->getPluginLoader('element');
+        $this->assertSame($loader, $test);
+    }
+
+    public function testCanAddElementPluginLoaderPrefixPath()
+    {
+        $loader = $this->form->getPluginLoader('element');
+        $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'element');
+        $paths = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertContains('Foo', $paths[0]);
+    }
+
+    public function testAddAllPluginLoaderPrefixPathsSimultaneously()
+    {
+        $decoratorLoader = new Zend_Loader_PluginLoader();
+        $elementLoader   = new Zend_Loader_PluginLoader();
+        $this->form->setPluginLoader($decoratorLoader, 'decorator')
+                   ->setPluginLoader($elementLoader, 'element')
+                   ->addPrefixPath('Zend', 'Zend/');
+
+        $paths = $decoratorLoader->getPaths('Zend_Decorator');
+        $this->assertTrue(is_array($paths), var_export($paths, 1));
+        $this->assertContains('Decorator', $paths[0]);
+
+        $paths = $elementLoader->getPaths('Zend_Element');
+        $this->assertTrue(is_array($paths), var_export($paths, 1));
+        $this->assertContains('Element', $paths[0]);
+    }
+
+    public function testAddingGlobalPrefixPathUpdatesAllElementPluginLoaders()
     {
         $this->markTestIncomplete();
     }
@@ -159,12 +204,55 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddAndRetrieveSingleElements()
     {
-        $this->markTestIncomplete();
+        $element = new Zend_Form_Element('foo');
+        $this->form->addElement($element);
+        $this->assertSame($element, $this->form->getElement('foo'));
+    }
+
+    public function testGetElementReturnsNullForUnregisteredElement()
+    {
+        $this->assertNull($this->form->getElement('foo'));
+    }
+
+    public function testCanAddAndRetrieveSingleElementsByStringType()
+    {
+        $this->form->addElement('text', 'foo');
+        $element = $this->form->getElement('foo');
+        $this->assertTrue($element instanceof Zend_Form_Element);
+        $this->assertTrue($element instanceof Zend_Form_Element_Text);
+        $this->assertEquals('foo', $element->getName());
+    }
+
+    public function testAddElementAsStringElementThrowsExceptionWhenNoNameProvided()
+    {
+        try {
+            $this->form->addElement('text');
+            $this->fail('Should not be able to specify string element type without name');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('must have', $e->getMessage());
+        }
     }
 
     public function testCanAddAndRetrieveMultipleElements()
     {
-        $this->markTestIncomplete();
+        $this->form->addElements(array(
+            'foo' => 'text',
+            array('text', 'bar'),
+            array('text', 'baz', array('foo' => 'bar')),
+            new Zend_Form_Element_Text('bat'),
+        ));
+        $elements = $this->form->getElements();
+        $names = array('foo', 'bar', 'baz', 'bat');
+        $this->assertEquals($names, array_keys($elements));
+        $foo = $elements['foo'];
+        $this->assertTrue($foo instanceof Zend_Form_Element_Text);
+        $bar = $elements['bar'];
+        $this->assertTrue($bar instanceof Zend_Form_Element_Text);
+        $baz = $elements['baz'];
+        $this->assertTrue($baz instanceof Zend_Form_Element_Text);
+        $this->assertEquals('bar', $baz->foo);
+        $bat = $elements['bat'];
+        $this->assertTrue($bat instanceof Zend_Form_Element_Text);
     }
 
     public function testSetElementsOverwritesExistingElements()
