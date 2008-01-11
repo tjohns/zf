@@ -94,7 +94,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
      * Call a remote REST web service URI and return the Zend_Http_Response object
      *
      * @param  string $path            The path to append to the URI
-     * @throws Zend_Rest_Client_Exception
+     * @throws Zend_Rest_Exception
      * @return void
      */
     final private function _prepareRest($path)
@@ -117,7 +117,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
          * Get the HTTP client and configure it for the endpoint URI.  Do this each time
          * because the Zend_Http_Client instance is shared among all Zend_Service_Abstract subclasses.
          */
-        self::getHttpClient()->setUri($this->_uri);
+        self::getHttpClient()->resetParameters()->setUri($this->_uri);
     }
 
     /**
