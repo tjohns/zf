@@ -13,6 +13,7 @@ require_once 'Zend/Form.php';
 
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form/Element.php';
+require_once 'Zend/Form/SubForm.php';
 require_once 'Zend/Loader/PluginLoader.php';
 
 class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
@@ -372,86 +373,86 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     // Element groups
 
-    public function testCanAddAndRetrieveSingleGroups()
+    public function testCanAddAndRetrieveSingleSubForm()
     {
-        $subForm = new Zend_Form;
+        $subForm = new Zend_Form_SubForm;
         $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
-        $this->form->addGroup($subForm, 'page1');
-        $test = $this->form->getGroup('page1');
+        $this->form->addSubForm($subForm, 'page1');
+        $test = $this->form->getSubForm('page1');
         $this->assertSame($subForm, $test);
     }
 
-    public function testGetGroupReturnsNullForUnregisteredGroup()
+    public function testGetSubFormReturnsNullForUnregisteredSubForm()
     {
-        $this->assertNull($this->form->getGroup('foo'));
+        $this->assertNull($this->form->getSubForm('foo'));
     }
 
-    public function testCanAddAndRetrieveMultipleGroups()
+    public function testCanAddAndRetrieveMultipleSubForms()
     {
-        $page1 = new Zend_Form();
-        $page2 = new Zend_Form();
-        $page3 = new Zend_Form();
-        $this->form->addGroups(array(
+        $page1 = new Zend_Form_SubForm();
+        $page2 = new Zend_Form_SubForm();
+        $page3 = new Zend_Form_SubForm();
+        $this->form->addSubForms(array(
             'page1' => $page1,
             array($page2, 'page2'),
             array($page3, 'page3', 3)
         ));
-        $groups = $this->form->getGroups();
+        $subforms = $this->form->getSubForms();
         $keys = array('page1', 'page2', 'page3');
-        $this->assertEquals($keys, array_keys($groups));
-        $this->assertSame($page1, $groups['page1']);
-        $this->assertSame($page2, $groups['page2']);
-        $this->assertSame($page3, $groups['page3']);
+        $this->assertEquals($keys, array_keys($subforms));
+        $this->assertSame($page1, $subforms['page1']);
+        $this->assertSame($page2, $subforms['page2']);
+        $this->assertSame($page3, $subforms['page3']);
     }
 
-    public function testSetGroupsOverwritesExistingGroups()
+    public function testSetSubFormsOverwritesExistingSubForms()
     {
-        $this->testCanAddAndRetrieveMultipleGroups();
-        $foo = new Zend_Form();
-        $this->form->setGroups(array('foo' => $foo));
-        $groups = $this->form->getGroups();
+        $this->testCanAddAndRetrieveMultipleSubForms();
+        $foo = new Zend_Form_SubForm();
+        $this->form->setSubForms(array('foo' => $foo));
+        $subforms = $this->form->getSubForms();
         $keys = array('foo');
-        $this->assertEquals($keys, array_keys($groups));
-        $this->assertSame($foo, $groups['foo']);
+        $this->assertEquals($keys, array_keys($subforms));
+        $this->assertSame($foo, $subforms['foo']);
     }
 
-    public function testCanRemoveSingleGroup()
+    public function testCanRemoveSingleSubForm()
     {
-        $this->testCanAddAndRetrieveMultipleGroups();
-        $this->assertTrue($this->form->removeGroup('page2'));
-        $this->assertNull($this->form->getGroup('page2'));
+        $this->testCanAddAndRetrieveMultipleSubForms();
+        $this->assertTrue($this->form->removeSubForm('page2'));
+        $this->assertNull($this->form->getSubForm('page2'));
     }
 
-    public function testRemoveGroupReturnsFalseForNonexistantGroup()
+    public function testRemoveSubFormReturnsFalseForNonexistantSubForm()
     {
-        $this->assertFalse($this->form->removeGroup('foo'));
+        $this->assertFalse($this->form->removeSubForm('foo'));
     }
 
-    public function testCanClearAllGroups()
+    public function testCanClearAllSubForms()
     {
         $this->markTestIncomplete();
-        $this->testCanAddAndRetrieveMultipleGroups();
-        $this->form->clearGroups();
-        $groups = $this->form->getGroups();
-        $this->assertTrue(is_array($groups));
-        $this->assertTrue(empty($groups));
+        $this->testCanAddAndRetrieveMultipleSubForms();
+        $this->form->clearSubForms();
+        $subforms = $this->form->getSubForms();
+        $this->assertTrue(is_array($subforms));
+        $this->assertTrue(empty($subforms));
     }
 
-    public function testOverloadingGroups()
+    public function testOverloadingSubForms()
     {
-        $foo = new Zend_Form;
-        $this->form->addGroup($foo, 'foo');
+        $foo = new Zend_Form_SubForm;
+        $this->form->addSubForm($foo, 'foo');
         $this->assertTrue(isset($this->form->foo));
-        $group = $this->form->foo;
-        $this->assertSame($foo, $group);
+        $subform = $this->form->foo;
+        $this->assertSame($foo, $subform);
         unset($this->form->foo);
         $this->assertFalse(isset($this->form->foo));
 
-        $bar = new Zend_Form();
+        $bar = new Zend_Form_SubForm();
         $this->form->bar = $bar;
         $this->assertTrue(isset($this->form->bar));
-        $group = $this->form->bar;
-        $this->assertSame($bar, $group);
+        $subform = $this->form->bar;
+        $this->assertSame($bar, $subform);
     }
 
     // Display groups
@@ -461,10 +462,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->testCanAddAndRetrieveMultipleElements();
         $this->form->addDisplayGroup(array('bar', 'bat'), 'barbat');
         $group = $this->form->getDisplayGroup('barbat');
-        $this->assertTrue(is_array($group));
-        $this->assertEquals(2, count($group));
+        $this->assertTrue($group instanceof Zend_Form_DisplayGroup);
+        $elements = $group->getElements();
         $expected = array('bar' => $this->form->bar, 'bat' => $this->form->bat);
-        $this->assertEquals($expected, $group);
+        $this->assertEquals($expected, $elements);
     }
 
     public function testCanAddAndRetrieveMultipleDisplayGroups()
@@ -479,7 +480,11 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
             'barbat' => array('bar' => $this->form->bar, 'bat' => $this->form->bat),
             'foobaz' => array('baz' => $this->form->baz, 'foo' => $this->form->foo),
         );
-        $this->assertEquals($expected, $groups);
+        foreach ($groups as $group) {
+            $this->assertTrue($group instanceof Zend_Form_DisplayGroup);
+        }
+        $this->assertEquals($expected['barbat'], $groups['barbat']->getElements());
+        $this->assertEquals($expected['foobaz'], $groups['foobaz']->getElements());
     }
 
     public function testSetDisplayGroupsOverwritesExistingDisplayGroups()
@@ -487,10 +492,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->testCanAddAndRetrieveMultipleDisplayGroups();
         $this->form->setDisplayGroups(array('foobar' => array('bar', 'foo')));
         $groups = $this->form->getDisplayGroups();
-        $expected = array(
-            'foobar' => array('bar' => $this->form->bar, 'foo' => $this->form->foo),
-        );
-        $this->assertEquals($expected, $groups);
+        $expected = array('bar' => $this->form->bar, 'foo' => $this->form->foo);
+        $this->assertEquals(1, count($groups));
+        $this->assertTrue(isset($groups['foobar']));
+        $this->assertEquals($expected, $groups['foobar']->getElements());
     }
 
     public function testCanRemoveSingleDisplayGroup()
@@ -521,7 +526,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->form->foobar));
         $group = $this->form->foobar;
         $expected = array('foo' => $this->form->foo, 'bar' => $this->form->bar);
-        $this->assertEquals($expected, $group);
+        $this->assertEquals($expected, $group->getElements());
         unset($this->form->foobar);
         $this->assertFalse(isset($this->form->foobar));
 
@@ -529,22 +534,54 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->form->barbaz));
         $group = $this->form->barbaz;
         $expected = array('bar' => $this->form->bar, 'baz' => $this->form->baz);
-        $this->assertSame($expected, $group);
+        $this->assertSame($expected, $group->getElements());
     }
 
     // Processing
 
     public function testPopulateProxiesToSetDefaults()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $values = array(
+            'foo' => 'foovalue',
+            'bar' => 'barvalue',
+            'baz' => 'bazvalue',
+            'bat' => 'batvalue'
+        );
+        $this->form->populate($values);
+        $test     = $this->form->getValues();
+        $elements = $this->form->getElements();
+        foreach (array_keys($values) as $name) {
+            $this->assertEquals($values[$name], $test[$name]);
+        }
     }
 
-    public function testCanValidateFullForm()
+    public function testCanValidateFullFormContainingOnlyElements()
     {
         $this->markTestIncomplete();
     }
 
-    public function testCanValidatePartialForm()
+    public function testCanValidatePartialFormContainingOnlyElements()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testCanValidateFullFormContainingGroups()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testCanValidatePartialFormContainingGroups()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testValidatingFormWithDisplayGroupsDoesSameAsWithout()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testValidatePartialFormWithDisplayGroupsDoesSameAsWithout()
     {
         $this->markTestIncomplete();
     }
@@ -570,6 +607,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
     
     public function testCanRetrieveErrorMessagesFromAllElementsAfterFailedValidation()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testErrorCodesRetrievedFromGroupAreInArray()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testErrorMessagesRetrievedFromGroupAreInArray()
     {
         $this->markTestIncomplete();
     }
@@ -621,6 +668,26 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     public function testRenderReturnsMarkupRepresentingAllElements()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testRenderReturnsMarkupContainingGroups()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testRenderDoesNotEmitMultipleFormTags()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testRenderReturnsMarkupWithGroupedElementsWhenDisplayGroupPresent()
+    {
+        $this->markTestIncomplete();
+    }
+
+    public function testRenderDoesNotRepeateElementsInDisplayGroups()
     {
         $this->markTestIncomplete();
     }

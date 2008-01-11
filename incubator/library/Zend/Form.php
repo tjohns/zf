@@ -21,7 +21,7 @@
 /**
  * Zend_Form
  * 
- * @category   Aend
+ * @category   Zend
  * @package    Zend_Form
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -55,16 +55,16 @@ class Zend_Form implements Iterator
     protected $_elements = array();
 
     /**
-     * Element groups/subforms
-     * @var array
-     */
-    protected $_groups = array();
-
-    /**
      * Plugin loaders
      * @var array
      */
     protected $_loaders = array();
+
+    /**
+     * Sub forms
+     * @var array
+     */
+    protected $_subForms = array();
 
     public function __construct($options = null)
     {
@@ -527,29 +527,29 @@ class Zend_Form implements Iterator
      * @param  int $order 
      * @return Zend_Form
      */
-    public function addGroup(Zend_Form $form, $name, $order = null)
+    public function addSubForm(Zend_Form $form, $name, $order = null)
     {
         $name = (string) $name;
-        $this->_groups[$name] = $form;
+        $this->_subForms[$name] = $form;
         return $this;
     }
 
     /**
-     * Add multiple form groups/subforms at once
+     * Add multiple form subForms/subforms at once
      * 
-     * @param  array $groups 
+     * @param  array $subForms 
      * @return Zend_Form
      */
-    public function addGroups(array $groups)
+    public function addSubForms(array $subForms)
     {
-        foreach ($groups as $key => $spec) {
+        foreach ($subForms as $key => $spec) {
             $name = null;
             if (!is_numeric($key)) {
                 $name = $key;
             }
 
             if ($spec instanceof Zend_Form) {
-                $this->addGroup($spec, $name);
+                $this->addSubForm($spec, $name);
                 continue;
             }
 
@@ -560,13 +560,13 @@ class Zend_Form implements Iterator
                     case 0: 
                         continue;
                     case (1 <= $argc):
-                        $group = array_shift($spec);
+                        $subForm = array_shift($spec);
                     case (2 <= $argc):
                         $name  = array_shift($spec);
                     case (3 <= $argc):
                         $order = array_shift($spec);
                     default:
-                        $this->addGroup($group, $name, $order);
+                        $this->addSubForm($subForm, $name, $order);
                 }
             }
         }
@@ -574,53 +574,53 @@ class Zend_Form implements Iterator
     }
 
     /**
-     * Set multiple form groups/subforms (overwrites)
+     * Set multiple form subForms/subforms (overwrites)
      * 
-     * @param  array $groups 
+     * @param  array $subForms 
      * @return Zend_Form
      */
-    public function setGroups(array $groups)
+    public function setSubForms(array $subForms)
     {
-        $this->clearGroups();
-        return $this->addGroups($groups);
+        $this->clearSubForms();
+        return $this->addSubForms($subForms);
     }
 
     /**
-     * Retrieve a form group/subform
+     * Retrieve a form subForm/subform
      * 
      * @param  string $name 
      * @return Zend_Form|null
      */
-    public function getGroup($name)
+    public function getSubForm($name)
     {
         $name = (string) $name;
-        if (isset($this->_groups[$name])) {
-            return $this->_groups[$name];
+        if (isset($this->_subForms[$name])) {
+            return $this->_subForms[$name];
         }
         return null;
     }
 
     /**
-     * Retrieve all form groups/subforms
+     * Retrieve all form subForms/subforms
      * 
      * @return array
      */
-    public function getGroups()
+    public function getSubForms()
     {
-        return $this->_groups;
+        return $this->_subForms;
     }
 
     /**
-     * Remove form group/subform
+     * Remove form subForm/subform
      * 
      * @param  string $name 
      * @return boolean
      */
-    public function removeGroup($name)
+    public function removeSubForm($name)
     {
         $name = (string) $name;
-        if (isset($this->_groups[$name])) {
-            unset($this->_groups[$name]);
+        if (isset($this->_subForms[$name])) {
+            unset($this->_subForms[$name]);
             return true;
         }
 
@@ -628,13 +628,13 @@ class Zend_Form implements Iterator
     }
 
     /**
-     * Remove all form groups/subforms
+     * Remove all form subForms/subforms
      * 
      * @return Zend_Form
      */
-    public function clearGroups()
+    public function clearSubForms()
     {
-        $this->_groups = array();
+        $this->_subForms = array();
         return $this;
     }
 
@@ -652,12 +652,12 @@ class Zend_Form implements Iterator
      * @return Zend_Form
      * @throws Zend_Form_Exception if no valid elements provided
      */
-    public function addDisplayGroup(array $elements, $name, $order = null)
+    public function addDisplayGroup(array $elements, $name, $options = null)
     {
         $group = array();
         foreach ($elements as $element) {
             if (isset($this->_elements[$element])) {
-                $group[$element] = $this->getElement($element);
+                $group[] = $this->getElement($element);
             }
         }
         if (empty($group)) {
@@ -666,7 +666,22 @@ class Zend_Form implements Iterator
         }
 
         $name = (string) $name;
-        $this->_displayGroups[$name] = $group;
+
+        if (is_array($options)) {
+            $options['elements'] = $group;
+        } elseif ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+            $options['elements'] = $group;
+        } else {
+            $options = array('elements' => $group);
+        }
+
+        require_once 'Zend/Form/DisplayGroup.php';
+        $this->_displayGroups[$name] = new Zend_Form_DisplayGroup(
+            $name, 
+            $this->getPluginLoader(self::DECORATOR), 
+            $options
+        );
         return $this;
     }
 
@@ -789,6 +804,7 @@ class Zend_Form implements Iterator
      */
     public function populate(array $values)
     {
+        return $this->setDefaults($values);
     }
 
     public function isValid(array $data)
@@ -881,8 +897,8 @@ class Zend_Form implements Iterator
     {
         if (isset($this->_elements[$name])) {
             return $this->_elements[$name];
-        } elseif (isset($this->_groups[$name])) {
-            return $this->_groups[$name];
+        } elseif (isset($this->_subForms[$name])) {
+            return $this->_subForms[$name];
         } elseif (isset($this->_displayGroups[$name])) {
             return $this->_displayGroups[$name];
         }
@@ -904,7 +920,7 @@ class Zend_Form implements Iterator
             $this->addElement($value, $name);
             return;
         } elseif ($value instanceof Zend_Form) {
-            $this->addGroup($value, $name);
+            $this->addSubForm($value, $name);
             return;
         } elseif (is_array($value)) {
             $this->addDisplayGroup($value, $name);
@@ -929,7 +945,7 @@ class Zend_Form implements Iterator
     public function __isset($name)
     {
         if (isset($this->_elements[$name])
-            || isset($this->_groups[$name])
+            || isset($this->_subForms[$name])
             || isset($this->_displayGroups[$name]))
         {
             return true;
@@ -948,8 +964,8 @@ class Zend_Form implements Iterator
     {
         if (isset($this->_elements[$name])) {
             unset($this->_elements[$name]);
-        } elseif (isset($this->_groups[$name])) {
-            unset($this->_groups[$name]);
+        } elseif (isset($this->_subForms[$name])) {
+            unset($this->_subForms[$name]);
         } elseif (isset($this->_displayGroups[$name])) {
             unset($this->_displayGroups[$name]);
         }
