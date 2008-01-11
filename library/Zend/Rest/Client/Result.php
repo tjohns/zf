@@ -30,7 +30,7 @@ class Zend_Rest_Client_Result implements IteratorAggregate {
     /**
      * @var SimpleXMLElement
      */
-    private $_sxml;
+    protected $_sxml;
 
     /**
      * Constructor
