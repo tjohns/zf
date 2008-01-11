@@ -62,7 +62,7 @@ class Zend_View_Helper_Url {
         
         if ($encode) {
             foreach ($urlOptions as $key => $option) {
-	        $urlOptions[$key] = urlencode($option);
+                $urlOptions[$key] = ($option !== null) ? urlencode($option) : $option;
             }
         }
 
