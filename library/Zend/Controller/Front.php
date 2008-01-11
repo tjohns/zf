@@ -491,7 +491,7 @@ class Zend_Controller_Front
      *
      * Instantiates a Zend_Controller_Router_Rewrite object if no router currently set.
      *
-     * @return null|Zend_Controller_Router_Interface
+     * @return Zend_Controller_Router_Interface
      */
     public function getRouter()
     {
