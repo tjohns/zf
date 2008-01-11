@@ -365,27 +365,67 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddAndRetrieveSingleGroups()
     {
-        $this->markTestIncomplete();
+        $subForm = new Zend_Form;
+        $subForm->addElements(array('foo' => 'text', 'bar' => 'text'));
+        $this->form->addGroup($subForm, 'page1');
+        $test = $this->form->getGroup('page1');
+        $this->assertSame($subForm, $test);
+    }
+
+    public function testGetGroupReturnsNullForUnregisteredGroup()
+    {
+        $this->assertNull($this->form->getGroup('foo'));
     }
 
     public function testCanAddAndRetrieveMultipleGroups()
     {
-        $this->markTestIncomplete();
+        $page1 = new Zend_Form();
+        $page2 = new Zend_Form();
+        $page3 = new Zend_Form();
+        $this->form->addGroups(array(
+            'page1' => $page1,
+            array($page2, 'page2'),
+            array($page3, 'page3', 3)
+        ));
+        $groups = $this->form->getGroups();
+        $keys = array('page1', 'page2', 'page3');
+        $this->assertEquals($keys, array_keys($groups));
+        $this->assertSame($page1, $groups['page1']);
+        $this->assertSame($page2, $groups['page2']);
+        $this->assertSame($page3, $groups['page3']);
     }
 
     public function testSetGroupsOverwritesExistingGroups()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleGroups();
+        $foo = new Zend_Form();
+        $this->form->setGroups(array('foo' => $foo));
+        $groups = $this->form->getGroups();
+        $keys = array('foo');
+        $this->assertEquals($keys, array_keys($groups));
+        $this->assertSame($foo, $groups['foo']);
     }
 
     public function testCanRemoveSingleGroup()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleGroups();
+        $this->assertTrue($this->form->removeGroup('page2'));
+        $this->assertNull($this->form->getGroup('page2'));
+    }
+
+    public function testRemoveGroupReturnsFalseForNonexistantGroup()
+    {
+        $this->assertFalse($this->form->removeGroup('foo'));
     }
 
     public function testCanClearAllGroups()
     {
         $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleGroups();
+        $this->form->clearGroups();
+        $groups = $this->form->getGroups();
+        $this->assertTrue(is_array($groups));
+        $this->assertTrue(empty($groups));
     }
 
     // Display groups

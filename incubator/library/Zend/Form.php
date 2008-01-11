@@ -49,6 +49,12 @@ class Zend_Form implements Iterator
     protected $_elements = array();
 
     /**
+     * Element groups/subforms
+     * @var array
+     */
+    protected $_groups = array();
+
+    /**
      * Plugin loaders
      * @var array
      */
@@ -521,32 +527,124 @@ class Zend_Form implements Iterator
 
  
     // Element groups: 
+
+    /**
+     * Add a form group/subform
+     * 
+     * @param  Zend_Form $form 
+     * @param  string $name 
+     * @param  int $order 
+     * @return Zend_Form
+     */
     public function addGroup(Zend_Form $form, $name, $order = null)
     {
+        $name = (string) $name;
+        $this->_groups[$name] = $form;
+        return $this;
     }
 
+    /**
+     * Add multiple form groups/subforms at once
+     * 
+     * @param  array $groups 
+     * @return Zend_Form
+     */
     public function addGroups(array $groups)
     {
+        foreach ($groups as $key => $spec) {
+            $name = null;
+            if (!is_numeric($key)) {
+                $name = $key;
+            }
+
+            if ($spec instanceof Zend_Form) {
+                $this->addGroup($spec, $name);
+                continue;
+            }
+
+            if (is_array($spec)) {
+                $argc  = count($spec);
+                $order = null;
+                switch ($argc) {
+                    case 0: 
+                        continue;
+                    case (1 <= $argc):
+                        $group = array_shift($spec);
+                    case (2 <= $argc):
+                        $name  = array_shift($spec);
+                    case (3 <= $argc):
+                        $order = array_shift($spec);
+                    default:
+                        $this->addGroup($group, $name, $order);
+                }
+            }
+        }
+        return $this;
     }
 
+    /**
+     * Set multiple form groups/subforms (overwrites)
+     * 
+     * @param  array $groups 
+     * @return Zend_Form
+     */
     public function setGroups(array $groups)
     {
+        $this->clearGroups();
+        return $this->addGroups($groups);
     }
 
+    /**
+     * Retrieve a form group/subform
+     * 
+     * @param  string $name 
+     * @return Zend_Form|null
+     */
     public function getGroup($name)
     {
+        $name = (string) $name;
+        if (isset($this->_groups[$name])) {
+            return $this->_groups[$name];
+        }
+        return null;
     }
 
+    /**
+     * Retrieve all form groups/subforms
+     * 
+     * @return array
+     */
     public function getGroups()
     {
+        return $this->_groups;
     }
 
+    /**
+     * Remove form group/subform
+     * 
+     * @param  string $name 
+     * @return boolean
+     */
     public function removeGroup($name)
     {
+        $name = (string) $name;
+        if (isset($this->_groups[$name])) {
+            unset($this->_groups[$name]);
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Remove all form groups/subforms
+     * 
+     * @return Zend_Form
+     */
     public function clearGroups()
     {
+        $this->_groups = array();
+        return $this;
     }
 
 
