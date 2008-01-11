@@ -458,27 +458,78 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testCanAddAndRetrieveSingleDisplayGroups()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->addDisplayGroup(array('bar', 'bat'), 'barbat');
+        $group = $this->form->getDisplayGroup('barbat');
+        $this->assertTrue(is_array($group));
+        $this->assertEquals(2, count($group));
+        $expected = array('bar' => $this->form->bar, 'bat' => $this->form->bat);
+        $this->assertEquals($expected, $group);
     }
 
     public function testCanAddAndRetrieveMultipleDisplayGroups()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->addDisplayGroups(array(
+            array(array('bar', 'bat'), 'barbat'),
+            'foobaz' => array('baz', 'foo')
+        ));
+        $groups = $this->form->getDisplayGroups();
+        $expected = array(
+            'barbat' => array('bar' => $this->form->bar, 'bat' => $this->form->bat),
+            'foobaz' => array('baz' => $this->form->baz, 'foo' => $this->form->foo),
+        );
+        $this->assertEquals($expected, $groups);
     }
 
     public function testSetDisplayGroupsOverwritesExistingDisplayGroups()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleDisplayGroups();
+        $this->form->setDisplayGroups(array('foobar' => array('bar', 'foo')));
+        $groups = $this->form->getDisplayGroups();
+        $expected = array(
+            'foobar' => array('bar' => $this->form->bar, 'foo' => $this->form->foo),
+        );
+        $this->assertEquals($expected, $groups);
     }
 
     public function testCanRemoveSingleDisplayGroup()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleDisplayGroups();
+        $this->assertTrue($this->form->removeDisplayGroup('barbat'));
+        $this->assertNull($this->form->getDisplayGroup('barbat'));
+    }
+
+    public function testRemoveDisplayGroupReturnsFalseForNonexistantGroup()
+    {
+        $this->assertFalse($this->form->removeDisplayGroup('bogus'));
     }
 
     public function testCanClearAllDisplayGroups()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleDisplayGroups();
+        $this->form->clearDisplayGroups();
+        $groups = $this->form->getDisplayGroups();
+        $this->assertTrue(is_array($groups));
+        $this->assertTrue(empty($groups));
+    }
+
+    public function testOverloadingDisplayGroups()
+    {
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->addDisplayGroup(array('foo', 'bar'), 'foobar');
+        $this->assertTrue(isset($this->form->foobar));
+        $group = $this->form->foobar;
+        $expected = array('foo' => $this->form->foo, 'bar' => $this->form->bar);
+        $this->assertEquals($expected, $group);
+        unset($this->form->foobar);
+        $this->assertFalse(isset($this->form->foobar));
+
+        $this->form->barbaz = array('bar', 'baz');
+        $this->assertTrue(isset($this->form->barbaz));
+        $group = $this->form->barbaz;
+        $expected = array('bar' => $this->form->bar, 'baz' => $this->form->baz);
+        $this->assertSame($expected, $group);
     }
 
     // Processing

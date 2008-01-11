@@ -43,6 +43,12 @@ class Zend_Form implements Iterator
     protected $_attribs = array();
 
     /**
+     * Groups of elements grouped for display purposes
+     * @var array
+     */
+    protected $_displayGroups = array();
+
+    /**
      * Form elements
      * @var array
      */
@@ -634,32 +640,140 @@ class Zend_Form implements Iterator
 
 
     // Display groups:
+
+    /**
+     * Add a display group
+     *
+     * Groups named elements for display purposes.
+     * 
+     * @param  array $elements 
+     * @param  string $name 
+     * @param  int $order 
+     * @return Zend_Form
+     * @throws Zend_Form_Exception if no valid elements provided
+     */
     public function addDisplayGroup(array $elements, $name, $order = null)
     {
+        $group = array();
+        foreach ($elements as $element) {
+            if (isset($this->_elements[$element])) {
+                $group[$element] = $this->getElement($element);
+            }
+        }
+        if (empty($group)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('No valid elements specified for display group');
+        }
+
+        $name = (string) $name;
+        $this->_displayGroups[$name] = $group;
+        return $this;
     }
 
+    /**
+     * Add multiple display groups at once
+     * 
+     * @param  array $groups 
+     * @return Zend_Form
+     * @throws Zend_Form_Exception for invalid groupings
+     */
     public function addDisplayGroups(array $groups)
     {
+        foreach ($groups as $key => $spec) {
+            $name = null;
+            if (!is_numeric($key)) {
+                $name = $key;
+            }
+
+            if (!is_array($spec) || empty($spec)) {
+                require_once 'Zend/Form/Exception.php';
+                throw new Zend_Form_Exception('Invalid grouping provided to addDisplayGroups()');
+            }
+
+            if (is_array($spec[0])) {
+                $argc  = count($spec);
+                $order = null;
+                switch ($argc) {
+                    case (1 <= $argc):
+                        $elements = array_shift($spec);
+                    case (2 <= $argc):
+                        $name     = array_shift($spec);
+                    case (3 <= $argc):
+                        $order    = array_shift($spec);
+                    default:
+                        $this->addDisplayGroup($elements, $name, $order);
+                }
+            } else {
+                $this->addDisplayGroup($spec, $name);
+            }
+        }
+        return $this;
     }
 
+    /**
+     * Add multiple display groups (overwrites)
+     * 
+     * @param  array $groups 
+     * @return Zend_Form
+     */
     public function setDisplayGroups(array $groups)
     {
+        return $this->clearDisplayGroups()
+                    ->addDisplayGroups($groups);
     }
 
+    /**
+     * Return a display group
+     * 
+     * @param  string $name 
+     * @return array|null
+     */
     public function getDisplayGroup($name)
     {
+        $name = (string) $name;
+        if (isset($this->_displayGroups[$name])) {
+            return $this->_displayGroups[$name];
+        }
+
+        return null;
     }
 
+    /**
+     * Return all display groups
+     * 
+     * @return array
+     */
     public function getDisplayGroups()
     {
+        return $this->_displayGroups;
     }
 
+    /**
+     * Remove a display group by name
+     * 
+     * @param  string $name 
+     * @return boolean
+     */
     public function removeDisplayGroup($name)
     {
+        $name = (string) $name;
+        if (isset($this->_displayGroups[$name])) {
+            unset($this->_displayGroups[$name]);
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Remove all display groups
+     * 
+     * @return Zend_Form
+     */
     public function clearDisplayGroups()
     {
+        $this->_displayGroups = array();
+        return $this;
     }
 
      
@@ -769,6 +883,8 @@ class Zend_Form implements Iterator
             return $this->_elements[$name];
         } elseif (isset($this->_groups[$name])) {
             return $this->_groups[$name];
+        } elseif (isset($this->_displayGroups[$name])) {
+            return $this->_displayGroups[$name];
         }
 
         return null;
@@ -790,6 +906,9 @@ class Zend_Form implements Iterator
         } elseif ($value instanceof Zend_Form) {
             $this->addGroup($value, $name);
             return;
+        } elseif (is_array($value)) {
+            $this->addDisplayGroup($value, $name);
+            return;
         }
 
         require_once 'Zend/Form/Exception.php';
@@ -810,7 +929,8 @@ class Zend_Form implements Iterator
     public function __isset($name)
     {
         if (isset($this->_elements[$name])
-            || isset($this->_groups[$name]))
+            || isset($this->_groups[$name])
+            || isset($this->_displayGroups[$name]))
         {
             return true;
         }
@@ -830,6 +950,8 @@ class Zend_Form implements Iterator
             unset($this->_elements[$name]);
         } elseif (isset($this->_groups[$name])) {
             unset($this->_groups[$name]);
+        } elseif (isset($this->_displayGroups[$name])) {
+            unset($this->_displayGroups[$name]);
         }
     }
  
