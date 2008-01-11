@@ -274,9 +274,9 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
 
         $orderby = stristr($sql, 'ORDER BY');
         if ($orderby !== false) {
-            $sort = (stripos($orderby, 'desc') !== false) ? 'desc' : 'asc';
+            $sort = (stripos($orderby, ' desc') !== false) ? 'desc' : 'asc';
             $order = str_ireplace('ORDER BY', '', $orderby);
-            $order = trim(preg_replace('/ASC|DESC/i', '', $order));
+            $order = trim(preg_replace('/ ASC| DESC/i', '', $order));
         }
 
         $sql = preg_replace('/^SELECT\s/i', 'SELECT TOP ' . ($count+$offset) . ' ', $sql);
