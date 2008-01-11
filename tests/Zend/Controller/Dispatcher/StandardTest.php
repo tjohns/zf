@@ -394,6 +394,9 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_dispatcher->isValidModule('default'));
         $this->assertTrue($this->_dispatcher->isValidModule('admin'));
         $this->assertFalse($this->_dispatcher->isValidModule('bogus'));
+        $this->assertFalse($this->_dispatcher->isValidModule(null));
+        $this->assertFalse($this->_dispatcher->isValidModule($this));
+        $this->assertFalse($this->_dispatcher->isValidModule(array()));
     }
 
     public function testSanelyDiscardOutputBufferOnException()
