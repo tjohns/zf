@@ -163,6 +163,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         // this is usually " but in MySQL is `
         $d = $this->_adapter->quoteIdentifier('a');
         $d = $d[0];
+
         // get the value used as an escaped delimited id quote,
         // e.g. \" or "" or \`
         $de = $this->_adapter->quoteIdentifier($d);
@@ -173,6 +174,7 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         // this should be '
         $q = $this->_adapter->quote('a');
         $q = $q[0];
+
         // get the value used as an escaped quote,
         // e.g. \' or ''
         $qe = $this->_adapter->quote($q);
@@ -184,7 +186,9 @@ abstract class Zend_Db_Statement implements Zend_Db_Statement_Interface
         // remove "foo\"bar"
         $sql = preg_replace("/$d($de|[^$d])*$d/", '', $sql);
         // remove 'foo\'bar'
-        $sql = preg_replace("/$q($qe|[^$q])*$q/", '', $sql);
+        if (!empty($q)) {
+            $sql = preg_replace("/$q($qe|[^$q])*$q/", '', $sql);
+        }
 
         return $sql;
     }
