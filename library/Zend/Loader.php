@@ -222,8 +222,8 @@ class Zend_Loader
     /**
      * Register {@link autoload()} with spl_autoload()
      *
-     * @param string OPTIONAL $class
-     * @param boolean OPTIONAL $enabled
+     * @param string $class (optional)
+     * @param boolean $enabled (optional)
      * @return void
      * @throws Zend_Exception if spl_autoload() is not found
      * or if the specified class does not have an autoload() method.

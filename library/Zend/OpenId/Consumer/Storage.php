@@ -125,7 +125,7 @@ abstract class Zend_OpenId_Consumer_Storage
     /**
      * Removes data from the uniqueness database that is older then given date
      *
-     * @param string date of expired data
+     * @param string $date Date of expired data
      */
     abstract public function purgeNonces($date=null);
 }
