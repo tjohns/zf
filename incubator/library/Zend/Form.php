@@ -313,12 +313,55 @@ class Zend_Form implements Iterator
         return $this;
     }
 
+    /**
+     * Add multiple elements at once
+     * 
+     * @param  array $elements 
+     * @return Zend_Form
+     */
     public function addElements(array $elements)
     {
+        foreach ($elements as $key => $spec) {
+            $name = null;
+            if (!is_numeric($key)) {
+                $name = $key;
+            }
+
+            if (is_string($spec) || ($spec instanceof Zend_Form_Element)) {
+                $this->addElement($spec, $name);
+                continue;
+            }
+
+            if (is_array($spec)) {
+                $argc = count($spec);
+                $options = array();
+                switch ($argc) {
+                    case 0:
+                        continue;
+                    case (1 <= $argc):
+                        $type = array_shift($spec);
+                    case (2 <= $argc):
+                        $name = array_shift($spec);
+                    case (3 <= $argc):
+                        $options = array_shift($spec);
+                    default:
+                        $this->addElement($type, $name, $options);
+                }
+            }
+        }
+        return $this;
     }
 
+    /**
+     * Set form elements (overwrites existing elements)
+     * 
+     * @param  array $elements 
+     * @return Zend_Form
+     */
     public function setElements(array $elements)
     {
+        $this->clearElements();
+        return $this->addElements($elements);
     }
 
     /**
@@ -345,36 +388,135 @@ class Zend_Form implements Iterator
         return $this->_elements;
     }
 
+    /**
+     * Remove element
+     * 
+     * @param  string $name 
+     * @return boolean
+     */
     public function removeElement($name)
     {
+        $name = (string) $name;
+        if (isset($this->_elements[$name])) {
+            unset($this->_elements[$name]);
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Remove all form elements
+     * 
+     * @return Zend_Form
+     */
+    public function clearElements()
+    {
+        $this->_elements = array();
+        return $this;
+    }
+
+    /**
+     * Set default values for elements
+     * 
+     * @param  array $defaults 
+     * @return Zend_Form
+     */
     public function setDefaults(array $defaults)
     {
+        foreach ($defaults as $key => $value) {
+            $this->setDefault($key, $value);
+        }
+        return $this;
     }
 
+    /**
+     * Set default value for an element
+     * 
+     * @param  string $name 
+     * @param  mixed $value 
+     * @return Zend_Form
+     */
     public function setDefault($name, $value)
     {
+        $name = (string) $name;
+        if ($element = $this->getElement($name)) {
+            $element->setValue($value);
+        }
+        return $this;
     }
 
+    /**
+     * Retrieve value for single element
+     * 
+     * @param  string $name 
+     * @return mixed
+     */
     public function getValue($name)
     {
+        if ($element = $this->getElement($name)) {
+            return $element->getValue();
+        }
+        return null;
     }
 
+    /**
+     * Retrieve all form element values
+     * 
+     * @return array
+     */
     public function getValues()
     {
+        $values = array();
+        foreach ($this->getElements() as $key => $element) {
+            $values[$key] = $element->getValue();
+        }
+
+        return $values;
     }
 
+    /**
+     * Get unfiltered element value
+     * 
+     * @param  string $name 
+     * @return mixed
+     */
     public function getUnfilteredValue($name)
     {
+        if ($element = $this->getElement($name)) {
+            return $element->getUnfilteredValue();
+        }
+        return null;
     }
 
+    /**
+     * Retrive all unfiltered element values
+     * 
+     * @return array
+     */
     public function getUnfilteredValues()
     {
+        $values = array();
+        foreach ($this->getElements() as $key => $element) {
+            $values[$key] = $element->getUnfilteredValue();
+        }
+
+        return $values;
     }
 
+    /**
+     * Overloading: read-only access to elements as properties
+     * 
+     * @param  string $name 
+     * @return Zend_Form_Element|null
+     */
     public function __get($name)
     {
+        if (isset($this->_elements[$name])) {
+            return $this->_elements[$name];
+        }
+
+        return null;
     }
 
  

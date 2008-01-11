@@ -133,7 +133,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @return void
      * @throws Zend_Form_Exception if no element name after initialization
      */
-    public function __construct($spec)
+    public function __construct($spec, $options = null)
     {
         if (is_string($spec)) {
             $this->setName($spec);
@@ -155,6 +155,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
              ->addDecorator('Label')
              ->addDecorator('Errors')
              ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'form element'));
+
+        if (is_array($options)) {
+            $this->setOptions($options);
+        } elseif ($options instanceof Zend_Config) {
+            $this->setConfig($options);
+        }
     }
 
     /**
@@ -168,7 +174,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
+                // Setter exists; use it
                 $this->$method($value);
+            } else {
+                // Assume it's metadata
+                $this->setAttrib($key, $value);
             }
         }
         return $this;

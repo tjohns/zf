@@ -250,54 +250,115 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($bar instanceof Zend_Form_Element_Text);
         $baz = $elements['baz'];
         $this->assertTrue($baz instanceof Zend_Form_Element_Text);
-        $this->assertEquals('bar', $baz->foo);
+        $this->assertEquals('bar', $baz->foo, var_export($baz->getAttribs(), 1));
         $bat = $elements['bat'];
         $this->assertTrue($bat instanceof Zend_Form_Element_Text);
     }
 
     public function testSetElementsOverwritesExistingElements()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->setElements(array(
+            'bogus' => 'text'
+        ));
+        $elements = $this->form->getElements();
+        $names = array('bogus');
+        $this->assertEquals($names, array_keys($elements));
     }
 
     public function testCanRemoveSingleElement()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->assertTrue($this->form->removeElement('bar'));
+        $this->assertNull($this->form->getElement('bar'));
+    }
+
+    public function testRemoveElementReturnsFalseWhenElementNotRegistered()
+    {
+        $this->assertFalse($this->form->removeElement('bogus'));
     }
 
     public function testCanClearAllElements()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $this->form->clearElements();
+        $elements = $this->form->getElements();
+        $this->assertTrue(is_array($elements));
+        $this->assertTrue(empty($elements));
     }
 
     public function testCanSetElementDefaultValues()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $values = array(
+            'foo' => 'foovalue',
+            'bar' => 'barvalue',
+            'baz' => 'bazvalue',
+            'bat' => 'batvalue'
+        );
+        $this->form->setDefaults($values);
+        $elements = $this->form->getElements();
+        foreach (array_keys($values) as $name) {
+            $this->assertEquals($name . 'value', $elements[$name]->getValue(), var_export($elements[$name], 1));
+        }
     }
 
     public function testCanRetrieveSingleElementValue()
     {
-        $this->markTestIncomplete();
+        $this->form->addElement('text', 'foo', array('value' => 'foovalue'));
+        $this->assertEquals('foovalue', $this->form->getValue('foo'));
     }
 
     public function testCanRetrieveAllElementValues()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddAndRetrieveMultipleElements();
+        $values = array(
+            'foo' => 'foovalue',
+            'bar' => 'barvalue',
+            'baz' => 'bazvalue',
+            'bat' => 'batvalue'
+        );
+        $this->form->setDefaults($values);
+        $test     = $this->form->getValues();
+        $elements = $this->form->getElements();
+        foreach (array_keys($values) as $name) {
+            $this->assertEquals($values[$name], $test[$name]);
+        }
     }
 
     public function testCanRetrieveSingleUnfilteredElementValue()
     {
-        $this->markTestIncomplete();
+        $foo = new Zend_Form_Element_Text('foo');
+        $foo->addFilter('StringToUpper')
+            ->setValue('foovalue');
+        $this->form->addElement($foo);
+        $this->assertEquals('FOOVALUE', $this->form->getValue('foo'));
+        $this->assertEquals('foovalue', $this->form->getUnfilteredValue('foo'));
     }
 
     public function testCanRetrieveAllUnfilteredElementValues()
     {
-        $this->markTestIncomplete();
+        $foo = new Zend_Form_Element_Text('foo');
+        $foo->addFilter('StringToUpper')
+            ->setValue('foovalue');
+        $bar = new Zend_Form_Element_Text('bar');
+        $bar->addFilter('StringToUpper')
+            ->setValue('barvalue');
+        $this->form->addElements(array($foo, $bar));
+        $values     = $this->form->getValues();
+        $unfiltered = $this->form->getUnfilteredValues();
+        foreach (array('foo', 'bar') as $key) {
+            $value = $key . 'value';
+            $this->assertEquals(strtoupper($value), $values[$key]);
+            $this->assertEquals($value, $unfiltered[$key]);
+        }
     }
 
     public function testOverloadingRetrievesElements()
     {
-        $this->markTestIncomplete();
+        $this->form->addElement('text', 'foo');
+        $element = $this->form->foo;
+        $this->assertTrue($element instanceof Zend_Form_Element);
     }
 
     // Element groups
