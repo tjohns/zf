@@ -510,21 +510,6 @@ class Zend_Form implements Iterator
         return $values;
     }
 
-    /**
-     * Overloading: read-only access to elements as properties
-     * 
-     * @param  string $name 
-     * @return Zend_Form_Element|null
-     */
-    public function __get($name)
-    {
-        if (isset($this->_elements[$name])) {
-            return $this->_elements[$name];
-        }
-
-        return null;
-    }
-
  
     // Element groups: 
 
@@ -772,6 +757,81 @@ class Zend_Form implements Iterator
     {
     }
 
+    /**
+     * Overloading: access to elements, form groups, and display groups
+     * 
+     * @param  string $name 
+     * @return Zend_Form_Element|Zend_Form|null
+     */
+    public function __get($name)
+    {
+        if (isset($this->_elements[$name])) {
+            return $this->_elements[$name];
+        } elseif (isset($this->_groups[$name])) {
+            return $this->_groups[$name];
+        }
+
+        return null;
+    }
+
+    /**
+     * Overloading: access to elements, form groups, and display groups
+     * 
+     * @param  string $name 
+     * @param  Zend_Form_Element|Zend_Form $value 
+     * @return void
+     * @throws Zend_Form_Exception for invalid $value
+     */
+    public function __set($name, $value)
+    {
+        if ($value instanceof Zend_Form_Element) {
+            $this->addElement($value, $name);
+            return;
+        } elseif ($value instanceof Zend_Form) {
+            $this->addGroup($value, $name);
+            return;
+        }
+
+        require_once 'Zend/Form/Exception.php';
+        if (is_object($value)) {
+            $type = get_class($value);
+        } else {
+            $type = gettype($value);
+        }
+        throw new Zend_Form_Exception('Only form elements and groups may be overloaded; variable of type "' . $type . '" provided');
+    }
+
+    /**
+     * Overloading: access to elements, form groups, and display groups
+     * 
+     * @param  string $name 
+     * @return boolean
+     */
+    public function __isset($name)
+    {
+        if (isset($this->_elements[$name])
+            || isset($this->_groups[$name]))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Overloading: access to elements, form groups, and display groups
+     * 
+     * @param  string $name 
+     * @return void
+     */
+    public function __unset($name)
+    {
+        if (isset($this->_elements[$name])) {
+            unset($this->_elements[$name]);
+        } elseif (isset($this->_groups[$name])) {
+            unset($this->_groups[$name]);
+        }
+    }
  
     // For iteration, countable: 
     public function current()

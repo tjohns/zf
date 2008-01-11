@@ -354,11 +354,20 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testOverloadingRetrievesElements()
+    public function testOverloadingElements()
     {
         $this->form->addElement('text', 'foo');
+        $this->assertTrue(isset($this->form->foo));
         $element = $this->form->foo;
         $this->assertTrue($element instanceof Zend_Form_Element);
+        unset($this->form->foo);
+        $this->assertFalse(isset($this->form->foo));
+
+        $bar = new Zend_Form_Element_Text('bar');
+        $this->form->bar = $bar;
+        $this->assertTrue(isset($this->form->bar));
+        $element = $this->form->bar;
+        $this->assertSame($bar, $element);
     }
 
     // Element groups
@@ -426,6 +435,23 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $groups = $this->form->getGroups();
         $this->assertTrue(is_array($groups));
         $this->assertTrue(empty($groups));
+    }
+
+    public function testOverloadingGroups()
+    {
+        $foo = new Zend_Form;
+        $this->form->addGroup($foo, 'foo');
+        $this->assertTrue(isset($this->form->foo));
+        $group = $this->form->foo;
+        $this->assertSame($foo, $group);
+        unset($this->form->foo);
+        $this->assertFalse(isset($this->form->foo));
+
+        $bar = new Zend_Form();
+        $this->form->bar = $bar;
+        $this->assertTrue(isset($this->form->bar));
+        $group = $this->form->bar;
+        $this->assertSame($bar, $group);
     }
 
     // Display groups
