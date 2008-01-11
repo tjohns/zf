@@ -621,7 +621,8 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
-    // Rendering
+    // View object
+    
     public function testGetViewRetrievesFromViewRendererByDefault()
     {
         $this->markTestIncomplete();
@@ -637,30 +638,85 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
-    public function testCanAddAndRetrieveSingleDecorators()
+    // Decorators
+
+    public function testViewHelperDecoratorRegisteredByDefault()
     {
-        $this->markTestIncomplete();
+        $decorator = $this->form->getDecorator('viewHelper');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
-    public function testCanAddAndRetrieveMultipleDecorators()
+    public function testCanAddSingleDecoratorAsString()
     {
-        $this->markTestIncomplete();
+        $this->form->clearDecorators();
+        $this->assertFalse($this->form->getDecorator('viewHelper'));
+
+        $this->form->addDecorator('viewHelper');
+        $decorator = $this->form->getDecorator('viewHelper');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
-    public function testSetDecoratorsOverwritesExistingDecorators()
+    public function testCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
     {
-        $this->markTestIncomplete();
+        $decorator = $this->form->getDecorator('Zend_Form_Decorator_ViewHelper');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
-    public function testCanRemoveSingleDecorator()
+    public function testCanAddSingleDecoratorAsDecoratorObject()
     {
-        $this->markTestIncomplete();
+        $this->form->clearDecorators();
+        $this->assertFalse($this->form->getDecorator('viewHelper'));
+
+        $decorator = new Zend_Form_Decorator_ViewHelper;
+        $this->form->addDecorator($decorator);
+        $test = $this->form->getDecorator('Zend_Form_Decorator_ViewHelper');
+        $this->assertSame($decorator, $test);
+    }
+
+    public function testCanRetrieveSingleDecoratorRegisteredAsDecoratorObjectUsingShortName()
+    {
+        $this->form->clearDecorators();
+        $this->assertFalse($this->form->getDecorator('viewHelper'));
+
+        $decorator = new Zend_Form_Decorator_ViewHelper;
+        $this->form->addDecorator($decorator);
+        $test = $this->form->getDecorator('viewHelper');
+        $this->assertSame($decorator, $test);
+    }
+
+    public function testCanAddMultipleDecorators()
+    {
+        $this->form->clearDecorators();
+        $this->assertFalse($this->form->getDecorator('viewHelper'));
+
+        $testDecorator = new Zend_Form_Decorator_Fieldset;
+        $this->form->addDecorators(array(
+            'ViewHelper',
+            $testDecorator
+        ));
+
+        $viewHelper = $this->form->getDecorator('viewHelper');
+        $this->assertTrue($viewHelper instanceof Zend_Form_Decorator_ViewHelper);
+        $decorator = $this->form->getDecorator('fieldset');
+        $this->assertSame($testDecorator, $decorator);
+    }
+
+    public function testCanRemoveDecorator()
+    {
+        $this->testViewHelperDecoratorRegisteredByDefault();
+        $this->form->removeDecorator('viewHelper');
+        $this->assertFalse($this->form->getDecorator('viewHelper'));
     }
 
     public function testCanClearAllDecorators()
     {
-        $this->markTestIncomplete();
+        $this->testCanAddMultipleDecorators();
+        $this->form->clearDecorators();
+        $this->assertFalse($this->form->getDecorator('viewHelper'));
+        $this->assertFalse($this->form->getDecorator('fieldset'));
     }
+
+    // Rendering
 
     public function testRenderReturnsMarkup()
     {

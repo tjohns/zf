@@ -43,6 +43,12 @@ class Zend_Form implements Iterator
     protected $_attribs = array();
 
     /**
+     * Decorators for rendering
+     * @var array
+     */
+    protected $_decorators = array();
+
+    /**
      * Groups of elements grouped for display purposes
      * @var array
      */
@@ -68,6 +74,7 @@ class Zend_Form implements Iterator
 
     public function __construct($options = null)
     {
+        $this->addDecorator('viewHelper');
     }
 
     public function setOptions(array $options)
@@ -841,32 +848,142 @@ class Zend_Form implements Iterator
     {
     }
 
-    public function addDecorator($decorator, $options = array())
+    /**
+     * Add a decorator for rendering the element
+     * 
+     * @param  string|Zend_Form_Decorator_Interface $decorator 
+     * @param  array|Zend_Config $options Options with which to initialize decorator
+     * @return Zend_Form_Element
+     */
+    public function addDecorator($decorator, $options = null)
     {
+        if ($decorator instanceof Zend_Form_Decorator_Interface) {
+            $name = get_class($decorator);
+        } elseif (is_string($decorator)) {
+            $name = $this->getPluginLoader(self::DECORATOR)->load($decorator);
+            if (null === $options) {
+                $decorator = new $name;
+            } else {
+                $r = new ReflectionClass($name);
+                $decorator = $r->newInstance($options);
+            }
+        } else {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Invalid decorator provided to addDecorator; must be string or Zend_Form_Decorator_Interface');
+        }
+
+        $this->_decorators[$name] = $decorator;
+
+        return $this;
     }
 
-    public function addDecorators(array $decorator)
+    /**
+     * Add many decorators at once
+     * 
+     * @param  array $decorators 
+     * @return Zend_Form_Element
+     */
+    public function addDecorators(array $decorators)
     {
+        foreach ($decorators as $decoratorInfo) {
+            if (is_string($decoratorInfo)) {
+                $this->addDecorator($decoratorInfo);
+            } elseif ($decoratorInfo instanceof Zend_Form_Decorator_Interface) {
+                $this->addDecorator($decoratorInfo);
+            } elseif (is_array($decoratorInfo)) {
+                $argc    = count($decoratorInfo);
+                $options = array();
+                switch (true) {
+                    case (0 == $argc):
+                        break;
+                    case (1 >= $argc):
+                        $decorator  = array_shift($decoratorInfo);
+                    case (2 >= $argc):
+                        $options = array_shift($decoratorInfo);
+                    default:
+                        $this->addDecorator($decorator, $options);
+                        break;
+                }
+            } else {
+                require_once 'Zend/Form/Exception.php';
+                throw new Zend_Form_Exception('Invalid decorator passed to addDecorators()');
+            }
+        }
+
+        return $this;
     }
 
-    public function setDecorators(array $decorator)
+    /**
+     * Overwrite all decorators
+     * 
+     * @param  array $decorators 
+     * @return Zend_Form_Element
+     */
+    public function setDecorators(array $decorators)
     {
+        $this->clearDecorators();
+        return $this->addDecorators($decorators);
     }
 
+    /**
+     * Retrieve a registered decorator
+     * 
+     * @param  string $name 
+     * @return false|Zend_Form_Decorator_Abstract
+     */
     public function getDecorator($name)
     {
+        if (!isset($this->_decorators[$name])) {
+            $decorators = array_keys($this->_decorators);
+            $len = strlen($name);
+            foreach ($decorators as $decorator) {
+                if (0 === substr_compare($decorator, $name, -$len, $len, true)) {
+                    return $this->_decorators[$decorator];
+                }
+            }
+            return false;
+        }
+
+        return $this->_decorators[$name];
     }
 
+    /**
+     * Retrieve all decorators
+     * 
+     * @return array
+     */
     public function getDecorators()
     {
+        return $this->_decorators;
     }
 
+    /**
+     * Remove a single decorator
+     * 
+     * @param  string $name 
+     * @return bool
+     */
     public function removeDecorator($name)
     {
+        $decorator = $this->getDecorator($name);
+        if ($decorator) {
+            $name = get_class($decorator);
+            unset($this->_decorators[$name]);
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Clear all decorators
+     * 
+     * @return Zend_Form_Element
+     */
     public function clearDecorators()
     {
+        $this->_decorators = array();
+        return $this;
     }
 
     public function render(Zend_View_Interface $view = null)
