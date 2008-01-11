@@ -391,4 +391,24 @@ class Zend_Controller_Router_Route_RegexTest extends PHPUnit_Framework_TestCase
 
     }
     
+    public function testAssembleZF2301() 
+    {
+        $route = new Zend_Controller_Router_Route_Regex(
+            "itemlist(?:/(\d+))?",
+            array('page' => 1), // Defaults
+            array(1 => 'page'), // Parameter map
+            'itemlist/%d'
+        );
+        
+        $values = $route->match('/itemlist/2');
+        
+        $this->assertEquals(array('page' => 2), $values);
+
+        $url = $route->assemble();
+        $this->assertEquals('itemlist/2', $url);
+        
+        $url = $route->assemble(array('page' => 2));
+        $this->assertEquals('itemlist/2', $url);
+    }
+    
 }
