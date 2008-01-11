@@ -52,7 +52,7 @@ class Zend_View_Helper_FormLabel extends Zend_View_Helper_FormElement
         } else {
             // enabled; display label
             $xhtml = '<label'
-                   . ' for="' . $this->view->escape($name) . '"'
+                   . ' for="' . $this->view->escape($id) . '"'
                    . $this->_htmlAttribs($attribs)
                    . '>' . $this->view->escape($value) . '</label>';
         }
