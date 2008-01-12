@@ -586,14 +586,36 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         )));
     }
 
-    public function testValidationTakesRequiredFlagsIntoAccount()
+    public function testValidationTakesElementRequiredFlagsIntoAccount()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+
+        $this->assertTrue($this->form->isValid(array()));
+
+        $this->form->getElement('foo')->setRequired(true);
+        $this->assertTrue($this->form->isValid(array(
+            'foo' => 'abc',
+            'baz' => 'abc123'
+        )));
+        $this->assertFalse($this->form->isValid(array(
+            'baz' => 'abc123'
+        )));
     }
 
     public function testCanValidatePartialFormContainingOnlyElements()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $this->form->getElement('foo')->setRequired(true);
+        $this->form->getElement('bar')->setRequired(true);
+        $this->form->getElement('baz')->setRequired(true);
+        $this->assertTrue($this->form->isValidPartial(array(
+            'foo' => 'abc',
+            'baz' => 'abc123'
+        )));
+        $this->assertFalse($this->form->isValidPartial(array(
+            'foo' => '123',
+            'baz' => 'abc-123'
+        )));
     }
 
     public function testCanValidateFullFormContainingGroups()

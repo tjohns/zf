@@ -88,6 +88,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_name;
 
     /**
+     * Required flag
+     * @var bool
+     */
+    protected $_required = false;
+
+    /**
      * @var Zend_Translate_Adapter
      */
     protected $_translator;
@@ -301,6 +307,28 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getLabel()
     {
         return $this->_label;
+    }
+
+    /**
+     * Set required flag
+     * 
+     * @param  bool $flag 
+     * @return Zend_Form_Element
+     */
+    public function setRequired($flag)
+    {
+        $this->_required = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get required flag
+     * 
+     * @return bool
+     */
+    public function getRequired()
+    {
+        return $this->_required;
     }
 
     /**

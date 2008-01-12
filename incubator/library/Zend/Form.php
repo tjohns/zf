@@ -843,7 +843,9 @@ class Zend_Form implements Iterator
         $valid = true;
         foreach ($this->getElements() as $key => $element) {
             if (!isset($data[$key])) {
-                $valid = $valid && $element->isValid(null, $data);
+                if ($element->getRequired()) {
+                    $valid = $valid && $element->isValid(null, $data);
+                }
             } else {
                 $valid = $valid && $element->isValid($data[$key], $data);
             }
@@ -851,8 +853,23 @@ class Zend_Form implements Iterator
         return $valid;
     }
 
+    /**
+     * Validate a partial form
+     *
+     * Does not check for required flags.
+     * 
+     * @param  array $data 
+     * @return boolean
+     */
     public function isValidPartial(array $data)
     {
+        $valid = true;
+        foreach ($data as $key => $value) {
+            if (isset($this->_elements[$key])) {
+                $valid = $valid && $this->getElement($key)->isValid($value, $data);
+            }
+        }
+        return $valid;
     }
 
     public function processAjax($request)

@@ -143,6 +143,18 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('FooBar', $this->element->getLabel());
     }
 
+    public function testRequiredFlagFalseByDefault()
+    {
+        $this->assertFalse($this->element->getRequired());
+    }
+
+    public function testRequiredAcccessorsWork()
+    {
+        $this->assertFalse($this->element->getRequired());
+        $this->element->setRequired(true);
+        $this->assertTrue($this->element->getRequired());
+    }
+
     public function testGetTypeReturnsCurrentElementClass()
     {
         $this->assertEquals('Zend_Form_Element', $this->element->getType());
