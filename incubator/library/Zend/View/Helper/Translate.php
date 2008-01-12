@@ -21,11 +21,31 @@
  */
 
 require_once 'Zend/Locale.php';
+require_once 'Zend/Translate.php';
+require_once 'Zend/Translate/Adapter.php';
 
 class Zend_View_Helper_Translate
 {
 
     protected $translate = null;
+
+    /**
+     * Constructor for manually handling
+     *
+     * @param Zend_Translate|Zend_Translate_Adapter $translate
+     */
+    public function __construct($translate = null)
+    {
+        if (!empty($translate)) {
+            $this->setTranslate($translate);
+        } else {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Translate')) {
+                $this->translate = Zend_Registry::get('Zend_Translate');
+            }
+        }
+        return $this;
+    }
 
     /**
      * Translate a message
@@ -35,27 +55,37 @@ class Zend_View_Helper_Translate
      * Example 2: translate('%1\$s + %2\$s', array($value1, $value2), $locale); 
      *
      * @param string           $messageid
-     * @param int|string|array $options
      * @return string  Translated message
      */
-    public function translate($messageid, $options = null)
+    public function translate($messageid = null)
     {
-        if ($translate === null) {
+        if ($this->translate === null) {
             require_once 'Zend/Registry.php';
             if (!Zend_Registry::isRegistered('Zend_Translate')) {
-                return $this;
+                if (empty($messageid)) {
+                    return $this;
+                } else {
+                    return $messageid;
+                }
             } else {
-                $translate = Zend_Registry::get('Zend_Translate');
+                $this->translate = Zend_Registry::get('Zend_Translate');
             }
         }
 
         $options = func_get_args();
-        $count   = func_num_args();
+        array_shift($options);
+
+        $count   = count($options);
         $locale  = null;
-        if ($options[$count - 1] instanceof Zend_Locale) {
-            $locale = array_pop($options);
+        if ($count > 0) {
+            if (Zend_Locale::isLocale($options[$count - 1])) {
+                $locale = array_pop($options);
+            }
         }
-        $message = $translate->translate($messageid, $locale);
+        if ((count($options) == 1) and (is_array($options[0]))) {
+            $options = $options[0];
+        }
+        $message = $this->translate->translate($messageid, $locale);
         return vsprintf($message, $options);
     }
 
@@ -69,10 +99,10 @@ class Zend_View_Helper_Translate
     {
         if (($translate instanceof Zend_Translate_Adapter) or
             ($translate instanceof Zend_Translate)) {
-            $this->$trans = $translate;
+            $this->translate = $translate;
         } else {
-            require_once 'Zend/View/Helper/Exception.php';
-            throw new Zend_View_Helper_Exception("You must set an instance of Zend_Translate or Zend_Translate_Adapter");
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception("You must set an instance of Zend_Translate or Zend_Translate_Adapter");
         }
         return $this;
     }
@@ -85,7 +115,25 @@ class Zend_View_Helper_Translate
      */
     public function setLocale($locale = null)
     {
-        $this->$translate->setLocale($locale);
+        if ($this->translate === null) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception("You must set an instance of Zend_Translate or Zend_Translate_Adapter");
+        }
+        $this->translate->setLocale($locale);
         return $this;
+    }
+
+    /**
+     * Returns the set locale for translations
+     *
+     * @return string|Zend_Locale
+     */
+    public function getLocale()
+    {
+        if ($this->translate === null) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception("You must set an instance of Zend_Translate or Zend_Translate_Adapter");
+        }
+        return $this->translate->getLocale();
     }
 }
