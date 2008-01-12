@@ -30,7 +30,7 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 require_once 'Zend/Db/Adapter/Exception.php';
 
 /**
- * Class for connecting to ODBC System databases and performing common operations.
+ * Class for connecting to MSSQL Databases with ODBC and performing common operations.
  *
  * @category   Zend
  * @package    Zend_Db
@@ -264,7 +264,7 @@ class Zend_Db_Adapter_Pdo_Odbc extends Zend_Db_Adapter_Pdo_Abstract
         if ($orderby !== false) {
             $sort = (stripos($orderby, ' desc') !== false) ? 'desc' : 'asc';
             $order = str_ireplace('ORDER BY', '', $orderby);
-            $order = trim(preg_replace('/ ASC| DESC/i', '', $order));
+            $order = trim(preg_replace('/\bASC\b|\bDESC\b/i', '', $order));
         }
 
         $sql = preg_replace('/^SELECT\s/i', 'SELECT TOP ' . ($count+$offset) . ' ', $sql);
