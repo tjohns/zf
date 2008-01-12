@@ -563,7 +563,6 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testGetViewReturnsViewRendererViewInstanceIfViewRendererActive()
     {
-        require_once 'Zend/Controller/Action/HelperBroker.php';
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
         $viewRenderer->initView();
         $view = $viewRenderer->view;

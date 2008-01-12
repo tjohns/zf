@@ -556,7 +556,37 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function setupElements()
+    {
+        $foo = new Zend_Form_Element_Text('foo');
+        $foo->addValidator('NotEmpty')
+            ->addValidator('Alpha');
+        $bar = new Zend_Form_Element_Text('bar');
+        $bar->addValidator('NotEmpty')
+            ->addValidator('Digits');
+        $baz = new Zend_Form_Element_Text('baz');
+        $bar->addValidator('NotEmpty')
+            ->addValidator('Alnum');
+        $this->form->addElements(array($foo, $bar, $baz));
+        $this->elementValues = array(
+            'foo' => 'fooBarBAZ',
+            'bar' => '123456789',
+            'baz' => 'foo123BAR',
+        );
+    }
+
     public function testCanValidateFullFormContainingOnlyElements()
+    {
+        $this->setupElements();
+        $this->assertTrue($this->form->isValid($this->elementValues));
+        $this->assertFalse($this->form->isValid(array(
+            'foo' => '12345',
+            'bar' => 'abc',
+            'baz' => 'abc-123'
+        )));
+    }
+
+    public function testValidationTakesRequiredFlagsIntoAccount()
     {
         $this->markTestIncomplete();
     }
@@ -622,20 +652,36 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     // View object
+
+    public function getView()
+    {
+        $view = new Zend_View();
+        $libPath = dirname(__FILE__) . '/../../../library';
+        $view->addHelperPath($libPath . '/Zend/View/Helper');
+        return $view;
+    }
     
     public function testGetViewRetrievesFromViewRendererByDefault()
     {
-        $this->markTestIncomplete();
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $viewRenderer->initView();
+        $view = $viewRenderer->view;
+        $test = $this->form->getView();
+        $this->assertSame($view, $test);
     }
 
     public function testGetViewReturnsNullWhenNoViewRegisteredWithViewRenderer()
     {
-        $this->markTestIncomplete();
+        $this->assertNull($this->form->getView());
     }
 
-    public function testCanSetViewWithCustomViewObject()
+    public function testCanSetView()
     {
-        $this->markTestIncomplete();
+        $view = new Zend_View();
+        $this->assertNull($this->form->getView());
+        $this->form->setView($view);
+        $received = $this->form->getView();
+        $this->assertSame($view, $received);
     }
 
     // Decorators
@@ -757,12 +803,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testTranslatorIsNullByDefault()
     {
-        $this->markTestIncomplete();
+        $this->assertNull($this->form->getTranslator());
     }
 
     public function testCanSetTranslator()
     {
-        $this->markTestIncomplete();
+        require_once 'Zend/Translate/Adapter/Array.php';
+        $translator = new Zend_Translate_Adapter_Array(array());
+        $this->form->setTranslator($translator);
+        $received = $this->form->getTranslator($translator);
+        $this->assertSame($translator, $received);
     }
 
     // Iteration

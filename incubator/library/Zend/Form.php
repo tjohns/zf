@@ -72,9 +72,27 @@ class Zend_Form implements Iterator
      */
     protected $_subForms = array();
 
+    /**
+     * @var Zend_Translate
+     */
+    protected $_translator;
+
+    /**
+     * @var Zend_View_Interface
+     */
+    protected $_view;
+
+    /**
+     * Constructor
+     *
+     * Registers form view helper as decorator
+     * 
+     * @param mixed $options 
+     * @return void
+     */
     public function __construct($options = null)
     {
-        $this->addDecorator('viewHelper');
+        $this->addDecorator('viewHelper', array('helper' => 'form'));
     }
 
     public function setOptions(array $options)
@@ -814,8 +832,23 @@ class Zend_Form implements Iterator
         return $this->setDefaults($values);
     }
 
+    /**
+     * Validate the form
+     * 
+     * @param  array $data 
+     * @return boolean
+     */
     public function isValid(array $data)
     {
+        $valid = true;
+        foreach ($this->getElements() as $key => $element) {
+            if (!isset($data[$key])) {
+                $valid = $valid && $element->isValid(null, $data);
+            } else {
+                $valid = $valid && $element->isValid($data[$key], $data);
+            }
+        }
+        return $valid;
     }
 
     public function isValidPartial(array $data)
@@ -840,12 +873,35 @@ class Zend_Form implements Iterator
 
  
     // Rendering 
+
+    /**
+     * Set view object
+     * 
+     * @param  Zend_View_Interface $view 
+     * @return Zend_Form
+     */
     public function setView(Zend_View_Interface $view)
     {
+        $this->_view = $view;
+        return $this;
     }
 
+    /**
+     * Retrieve view object
+     *
+     * If none registered, attempts to pull from ViewRenderer.
+     * 
+     * @return Zend_View_Interface|null
+     */
     public function getView()
     {
+        if (null === $this->_view) {
+            require_once 'Zend/Controller/Action/HelperBroker.php';
+            $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+            $this->_view = $viewRenderer->view;
+        }
+
+        return $this->_view;
     }
 
     /**
@@ -996,12 +1052,27 @@ class Zend_Form implements Iterator
 
  
     // Localization: 
+
+    /**
+     * Set translator object
+     * 
+     * @param  Zend_Translate_Adapter $translator 
+     * @return Zend_Form
+     */
     public function setTranslator(Zend_Translate_Adapter $translator)
     {
+        $this->_translator = $translator;
+        return $this;
     }
 
+    /**
+     * Retrieve translator object
+     * 
+     * @return Zend_Translate_Adapter
+     */
     public function getTranslator()
     {
+        return $this->_translator;
     }
 
     /**
