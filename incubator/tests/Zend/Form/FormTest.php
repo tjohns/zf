@@ -823,7 +823,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($keys, array_keys($codes));
     }
 
-    public function testErrorCodesFromSubFormReturnedInSeparateArray()
+    public function testCanRetrieveErrorMessagesFromSingleElementAfterFailedValidation()
     {
         $this->testCanValidateFullFormContainingOnlyElements();
         $codes    = $this->form->getMessages();
@@ -833,9 +833,44 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($foo->getMessages(), $messages);
     }
 
+    public function testErrorCodesFromSubFormReturnedInSeparateArray()
+    {
+        $this->testFullDataArrayUsedToValidateSubFormByDefault();
+        $codes    = $this->form->getErrors();
+        $this->assertTrue(array_key_exists('sub', $codes));
+        $this->assertTrue(is_array($codes['sub']));
+        $keys     = array('subfoo', 'subbar', 'subbaz');
+        $this->assertEquals($keys, array_keys($codes['sub']));
+    }
+
+    public function testCanRetrieveErrorCodesFromSingleSubFormAfterFailedValidation()
+    {
+        $this->testFullDataArrayUsedToValidateSubFormByDefault();
+        $codes    = $this->form->getErrors('sub');
+        $this->assertTrue(is_array($codes));
+        $this->assertFalse(empty($codes));
+        $keys     = array('subfoo', 'subbar', 'subbaz');
+        $this->assertEquals($keys, array_keys($codes));
+    }
+
     public function testErrorMessagesFromSubFormReturnedInSeparateArray()
     {
-        $this->markTestIncomplete();
+        $this->testFullDataArrayUsedToValidateSubFormByDefault();
+        $codes    = $this->form->getMessages();
+        $this->assertTrue(array_key_exists('sub', $codes));
+        $this->assertTrue(is_array($codes['sub']));
+        $keys     = array('subfoo', 'subbar', 'subbaz');
+        $this->assertEquals($keys, array_keys($codes['sub']));
+    }
+
+    public function testCanRetrieveErrorMessagesFromSingleSubFormAfterFailedValidation()
+    {
+        $this->testFullDataArrayUsedToValidateSubFormByDefault();
+        $codes    = $this->form->getMessages('sub');
+        $this->assertTrue(is_array($codes));
+        $this->assertFalse(empty($codes));
+        $keys     = array('subfoo', 'subbar', 'subbaz');
+        $this->assertEquals($keys, array_keys($codes));
     }
 
     // View object

@@ -907,9 +907,14 @@ class Zend_Form implements Iterator
         $errors = array();
         if ((null !== $name) && isset($this->_elements[$name])) {
             $errors = $this->getElement($name)->getErrors();
+        } elseif ((null !== $name) && isset($this->_subForms[$name])) {
+            $errors = $this->getSubForm($name)->getErrors();
         } else {
             foreach ($this->_elements as $key => $element) {
                 $errors[$key] = $element->getErrors();
+            }
+            foreach ($this->getSubForms() as $key => $subForm) {
+                $errors[$key] = $subForm->getErrors();
             }
         }
         return $errors;
@@ -926,9 +931,14 @@ class Zend_Form implements Iterator
         $messages = array();
         if ((null !== $name) && isset($this->_elements[$name])) {
             $messages = $this->getElement($name)->getMessages();
+        } elseif ((null !== $name) && isset($this->_subForms[$name])) {
+            $messages = $this->getSubForm($name)->getMessages();
         } else {
             foreach ($this->_elements as $key => $element) {
                 $messages[$key] = $element->getMessages();
+            }
+            foreach ($this->getSubForms() as $key => $subForm) {
+                $messages[$key] = $subForm->getMessages();
             }
         }
         return $messages;
