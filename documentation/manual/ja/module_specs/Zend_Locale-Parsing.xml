@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7357 -->
 <sect1 id="zend.locale.parsing">
 
     <title>正規化および地域化</title>
@@ -492,7 +493,7 @@ print "\n地域化したもの: " . $arabicScript;]]>
             <programlisting role="php"><![CDATA[<?php
 function getScriptCode($scriptName, $locale)
 {
-    $scripts2names = Zend_Locale_Data::getContent($locale, 'scriptlist');
+    $scripts2names = Zend_Locale_Data::getList($locale, 'script');
     $names2scripts = array_flip($scripts2names);
     return $names2scripts[$scriptName];
 }
