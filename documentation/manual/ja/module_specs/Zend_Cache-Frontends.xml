@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7414 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -95,6 +96,16 @@
                                 x (1 より大きな整数) を指定すると、
                                 x 回のキャッシュ書き込みについて 1 回の頻度で
                                 ランダムに自動クリーニングを行います。
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>ignore_user_abort</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                true を指定すると、save() メソッド内で PHP の
+                                ignore_user_abort フラグを設定し、
+                                キャッシュが破壊されることを防ぎます。
                               </entry>
                           </row>
                       </tbody>
