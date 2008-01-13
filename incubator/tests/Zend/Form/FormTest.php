@@ -618,24 +618,168 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         )));
     }
 
-    public function testCanValidateFullFormContainingGroups()
+    public function setupSubForm()
     {
-        $this->markTestIncomplete();
+        $subForm = new Zend_Form_SubForm();
+        $foo = new Zend_Form_Element_Text('subfoo');
+        $foo->addValidators(array('NotEmpty', 'Alpha'))->setRequired(true);
+        $bar = new Zend_Form_Element_Text('subbar');
+        $bar->addValidators(array('NotEmpty', 'Digits'));
+        $baz = new Zend_Form_Element_Text('subbaz');
+        $baz->addValidators(array('NotEmpty', 'Alnum'))->setRequired(true);
+        $subForm->addElements(array($foo, $bar, $baz));
+        $this->form->addSubForm($subForm, 'sub');
     }
 
-    public function testCanValidatePartialFormContainingGroups()
+    public function testFullDataArrayUsedToValidateSubFormByDefault()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $this->setupSubForm();
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'subfoo' => 'abcdef',
+            'subbar' => '123456',
+            'subbaz' => '123abc',
+        );
+        $this->assertTrue($this->form->isValid($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'subfoo' => '123',
+            'subbar' => 'abc',
+            'subbaz' => '123-abc',
+        );
+        $this->assertFalse($this->form->isValid($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'subfoo' => 'abc',
+            'subbaz' => '123abc',
+        );
+        $this->assertTrue($this->form->isValid($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'subbar' => '123',
+            'subbaz' => '123abc',
+        );
+        $this->assertFalse($this->form->isValid($data));
+    }
+
+    public function testDataKeyWithSameNameAsSubFormIsUsedForValidatingSubForm()
+    {
+        $this->setupElements();
+        $this->setupSubForm();
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'sub'    => array(
+                'subfoo' => 'abcdef',
+                'subbar' => '123456',
+                'subbaz' => '123abc',
+            ),
+        );
+        $this->assertTrue($this->form->isValid($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'sub'    => array(
+                'subfoo' => '123',
+                'subbar' => 'abc',
+                'subbaz' => '123-abc',
+            )
+        );
+        $this->assertFalse($this->form->isValid($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'sub'    => array(
+                'subfoo' => 'abc',
+                'subbaz' => '123abc',
+            )
+        );
+        $this->assertTrue($this->form->isValid($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'sub'    => array(
+                'subbar' => '123',
+                'subbaz' => '123abc',
+            )
+        );
+        $this->assertFalse($this->form->isValid($data));
+    }
+
+    public function testCanValidatePartialFormContainingSubForms()
+    {
+        $this->setupElements();
+        $this->setupSubForm();
+
+        $data = array(
+            'subfoo' => 'abcdef',
+            'subbar' => '123456',
+        );
+        $this->assertTrue($this->form->isValidPartial($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'baz'    => '123abc',
+            'sub'    => array(
+                'subbar' => '123',
+            )
+        );
+        $this->assertTrue($this->form->isValidPartial($data));
+
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'sub'    => array(
+                'subfoo' => '123',
+            )
+        );
+        $this->assertFalse($this->form->isValidPartial($data));
     }
 
     public function testValidatingFormWithDisplayGroupsDoesSameAsWithout()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz');
+        $this->assertTrue($this->form->isValid($this->elementValues));
+        $this->assertFalse($this->form->isValid(array(
+            'foo' => '123',
+            'bar' => 'abc',
+            'baz' => 'abc-123'
+        )));
     }
 
     public function testValidatePartialFormWithDisplayGroupsDoesSameAsWithout()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz');
+        $this->assertTrue($this->form->isValid(array(
+            'foo' => 'abc',
+            'baz' => 'abc123'
+        )));
+        $this->assertFalse($this->form->isValid(array(
+            'foo' => '123',
+            'baz' => 'abc-123'
+        )));
     }
 
     public function testProcessAjaxReturnsJson()
@@ -655,20 +799,41 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     
     public function testCanRetrieveErrorCodesFromAllElementsAfterFailedValidation()
     {
-        $this->markTestIncomplete();
+        $this->testCanValidateFullFormContainingOnlyElements();
+        $codes = $this->form->getErrors();
+        $keys = array('foo', 'bar', 'baz');
+        $this->assertEquals($keys, array_keys($codes));
+    }
+
+    public function testCanRetrieveErrorCodesFromSingleElementAfterFailedValidation()
+    {
+        $this->testCanValidateFullFormContainingOnlyElements();
+        $codes  = $this->form->getErrors();
+        $keys   = array('foo', 'bar', 'baz');
+        $errors = $this->form->getErrors('foo');
+        $foo    = $this->form->foo;
+        $this->assertEquals($foo->getErrors(), $errors);
     }
     
     public function testCanRetrieveErrorMessagesFromAllElementsAfterFailedValidation()
     {
-        $this->markTestIncomplete();
+        $this->testCanValidateFullFormContainingOnlyElements();
+        $codes = $this->form->getMessages();
+        $keys = array('foo', 'bar', 'baz');
+        $this->assertEquals($keys, array_keys($codes));
     }
 
-    public function testErrorCodesRetrievedFromGroupAreInArray()
+    public function testErrorCodesFromSubFormReturnedInSeparateArray()
     {
-        $this->markTestIncomplete();
+        $this->testCanValidateFullFormContainingOnlyElements();
+        $codes    = $this->form->getMessages();
+        $keys     = array('foo', 'bar', 'baz');
+        $messages = $this->form->getMessages('foo');
+        $foo      = $this->form->foo;
+        $this->assertEquals($foo->getMessages(), $messages);
     }
 
-    public function testErrorMessagesRetrievedFromGroupAreInArray()
+    public function testErrorMessagesFromSubFormReturnedInSeparateArray()
     {
         $this->markTestIncomplete();
     }

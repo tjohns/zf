@@ -850,6 +850,13 @@ class Zend_Form implements Iterator
                 $valid = $valid && $element->isValid($data[$key], $data);
             }
         }
+        foreach ($this->getSubForms() as $key => $form) {
+            if (isset($data[$key])) {
+                $valid = $valid && $form->isValid($data[$key]);
+            } else {
+                $valid = $valid && $form->isValid($data);
+            }
+        }
         return $valid;
     }
 
@@ -864,9 +871,18 @@ class Zend_Form implements Iterator
     public function isValidPartial(array $data)
     {
         $valid = true;
+        $validatedSubForms = array();
         foreach ($data as $key => $value) {
             if (isset($this->_elements[$key])) {
                 $valid = $valid && $this->getElement($key)->isValid($value, $data);
+            } elseif (isset($this->_subForms[$key])) {
+                $valid = $valid && $this->getSubForm($key)->isValidPartial($data[$key]);
+                $validatedSubForms[] = $key;
+            } 
+        }
+        foreach ($this->getSubForms() as $key => $subForm) {
+            if (!in_array($key, $validatedSubForms)) {
+                $valid = $valid && $subForm->isValidPartial($data);
             }
         }
         return $valid;
@@ -880,12 +896,42 @@ class Zend_Form implements Iterator
     {
     }
 
+    /**
+     * Get error codes for all elements failing validation
+     * 
+     * @param  string $name 
+     * @return array
+     */
     public function getErrors($name = null)
     {
+        $errors = array();
+        if ((null !== $name) && isset($this->_elements[$name])) {
+            $errors = $this->getElement($name)->getErrors();
+        } else {
+            foreach ($this->_elements as $key => $element) {
+                $errors[$key] = $element->getErrors();
+            }
+        }
+        return $errors;
     }
 
+    /**
+     * Retrieve error messages from elements failing validations
+     * 
+     * @param  string $name 
+     * @return array
+     */
     public function getMessages($name = null)
     {
+        $messages = array();
+        if ((null !== $name) && isset($this->_elements[$name])) {
+            $messages = $this->getElement($name)->getMessages();
+        } else {
+            foreach ($this->_elements as $key => $element) {
+                $messages[$key] = $element->getMessages();
+            }
+        }
+        return $messages;
     }
 
  
