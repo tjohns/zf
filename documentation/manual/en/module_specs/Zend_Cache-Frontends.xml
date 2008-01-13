@@ -89,6 +89,15 @@
                                 and x &gt; 1 means automatic random cleaning 1 times in x write operations.
                               </entry>
                           </row>
+                          <row>
+                              <entry><code>ignore_user_abort</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                if set to true, the core will set the ignore_user_abort PHP flag inside the
+                                save() method to avoid cache corruptions in some cases
+                              </entry>
+                          </row>
                       </tbody>
                   </tgroup>
               </table>
