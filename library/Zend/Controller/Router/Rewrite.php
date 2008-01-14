@@ -80,7 +80,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Add route to the route chain
      *
-     * @param string Name of the route
+     * @param string $name Name of the route
      * @param Zend_Controller_Router_Route_Interface Route
      */
     public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {
@@ -90,7 +90,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Add routes to the route chain
      *
-     * @param array Array of routes with names as keys and routes as values
+     * @param array $routes Array of routes with names as keys and routes as values
      */
     public function addRoutes($routes) {
         foreach ($routes as $name => $route) {
@@ -117,8 +117,8 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
      * $router = new Zend_Controller_Router_Rewrite();
      * $router->addConfig($config, 'routes');
      *
-     * @param Zend_Config Configuration object
-     * @param string Name of the config section containing route's definitions
+     * @param Zend_Config $config Configuration object
+     * @param string $section Name of the config section containing route's definitions
      * @throws Zend_Controller_Router_Exception
      */
     public function addConfig(Zend_Config $config, $section)
@@ -139,7 +139,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Remove a route from the route chain
      *
-     * @param string Name of the route
+     * @param string $name Name of the route
      * @throws Zend_Controller_Router_Exception
      */
     public function removeRoute($name) {
@@ -152,7 +152,6 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Remove all standard default routes
      *
-     * @param string Name of the route
      * @param Zend_Controller_Router_Route_Interface Route
      */
     public function removeDefaultRoutes() {
@@ -162,7 +161,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Check if named route exists
      *
-     * @param string Name of the route
+     * @param string $name Name of the route
      * @return boolean
      */
     public function hasRoute($name)
@@ -173,7 +172,7 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Retrieve a named route
      *
-     * @param string Name of the route
+     * @param string $name Name of the route
      * @throws Zend_Controller_Router_Exception
      * @return Zend_Controller_Router_Route_Interface Route object
      */

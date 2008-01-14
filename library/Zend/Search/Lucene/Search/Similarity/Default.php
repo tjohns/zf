@@ -38,7 +38,7 @@ class Zend_Search_Lucene_Search_Similarity_Default extends Zend_Search_Lucene_Se
      * Implemented as '1/sqrt(numTerms)'.
      *
      * @param string $fieldName
-     * @param integer numTerms
+     * @param integer $numTerms
      * @return float
      */
     public function lengthNorm($fieldName, $numTerms)

@@ -40,6 +40,8 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
 
     /**
      * Instantiates route based on passed Zend_Config structure
+     *
+     * @param Zend_Config $config Configuration object
      */
     public static function getInstance(Zend_Config $config)
     {
@@ -61,7 +63,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
      * Matches a user submitted path with a previously defined route.
      * Assigns and returns an array of defaults on a successful match.
      *
-     * @param string Path used to match against this routing map
+     * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
     public function match($path)
@@ -97,9 +99,9 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
      * indexed numerically then every associative key will be stripped. Vice versa if reversed
      * is set to true.
      *
-     * @param array Indexed or associative array of values to map
-     * @param boolean False means translation of index to association. True means reverse.
-     * @param boolean Should wrong type of keys be preserved or stripped.
+     * @param array $values Indexed or associative array of values to map
+     * @param boolean $reversed False means translation of index to association. True means reverse.
+     * @param boolean $preserve Should wrong type of keys be preserved or stripped.
      * @return array An array of mapped values
      */
     protected function _getMappedValues($values, $reversed = false, $preserve = false)
@@ -134,7 +136,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
     /**
      * Assembles a URL path defined by this route
      *
-     * @param array An array of name (or index) and value pairs used as parameters
+     * @param array $data An array of name (or index) and value pairs used as parameters
      * @return string Route path with user submitted parameters
      */
     public function assemble($data = array())
@@ -164,7 +166,7 @@ class Zend_Controller_Router_Route_Regex implements Zend_Controller_Router_Route
     /**
      * Return a single parameter of route's defaults
      *
-     * @param name Array key of the parameter
+     * @param string $name Array key of the parameter
      * @return string Previously set default
      */
     public function getDefault($name) {

@@ -52,6 +52,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
     /**
      * Instantiates route based on passed Zend_Config structure
+     *
+     * @param Zend_Config $config Configuration object
      */
     public static function getInstance(Zend_Config $config)
     {
@@ -65,9 +67,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      * to a corresponding atomic parts. These parts are assigned
      * a position which is later used for matching and preparing values.
      *
-     * @param string Map used to match with later submitted URL path
-     * @param array Defaults for map variables with keys as variable names
-     * @param array Regular expression requirements for variables (keys as variable names)
+     * @param string $route Map used to match with later submitted URL path
+     * @param array $defaults Defaults for map variables with keys as variable names
+     * @param array $reqs Regular expression requirements for variables (keys as variable names)
      */
     public function __construct($route, $defaults = array(), $reqs = array())
     {
@@ -118,7 +120,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
      * Matches a user submitted path with parts defined by a map. Assigns and
      * returns an array of variables on a successful match.
      *
-     * @param string Path used to match against this routing map
+     * @param string $path Path used to match against this routing map
      * @return array|false An array of assigned values or a false on a mismatch
      */
     public function match($path)
@@ -268,7 +270,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     /**
      * Return a single parameter of route's defaults
      *
-     * @param name Array key of the parameter
+     * @param string $name Array key of the parameter
      * @return string Previously set default
      */
     public function getDefault($name) {

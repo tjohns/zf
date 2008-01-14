@@ -716,7 +716,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * plain, HTTP-specified header name. Ex.: Ask for 'Accept' to get the
      * Accept header, 'Accept-Encoding' to get the Accept-Encoding header.
      *
-     * @param string HTTP header name
+     * @param string $header HTTP header name
      * @return string|false HTTP header value, or false if not found
      * @throws Zend_Controller_Request_Exception
      */

@@ -91,8 +91,8 @@ class Zend_XmlRpc_Request
     /**
      * Create a new XML-RPC request
      *
-     * @param string method (optional)
-     * @param array params  (optional)
+     * @param string $method (optional)
+     * @param array $params  (optional)
      */
     public function __construct($method = null, $params = null)
     {

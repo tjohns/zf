@@ -84,9 +84,9 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     /**
      * Constructor
      *
-     * @param array Defaults for map variables with keys as variable names
-     * @param Zend_Controller_Dispatcher_Interface Dispatcher object
-     * @param Zend_Controller_Request_Abstract Request object
+     * @param array $defaults Defaults for map variables with keys as variable names
+     * @param Zend_Controller_Dispatcher_Interface $dispatcher Dispatcher object
+     * @param Zend_Controller_Request_Abstract $request Request object
      */
     public function __construct(array $defaults = array(),
                 Zend_Controller_Dispatcher_Interface $dispatcher = null,
@@ -135,7 +135,7 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
      * setControllerName(), and setActionName() accessors to set those values.
      * Always returns the values as an array.
      *
-     * @param string Path used to match against this routing map
+     * @param string $path Path used to match against this routing map
      * @return array An array of assigned values or a false on a mismatch
      */
     public function match($path)
@@ -180,7 +180,8 @@ class Zend_Controller_Router_Route_Module implements Zend_Controller_Router_Rout
     /**
      * Assembles user submitted parameters forming a URL path defined by this route
      *
-     * @param array An array of variable and value pairs used as parameters
+     * @param array $data An array of variable and value pairs used as parameters
+     * @param bool $reset Weither to reset the current params
      * @return string Route path with user submitted parameters
      */
     public function assemble($data = array(), $reset = false)

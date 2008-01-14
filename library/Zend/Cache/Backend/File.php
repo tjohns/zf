@@ -300,7 +300,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *                     ($tags can be an array of strings or a single string)
      *
      * @param string $mode clean mode
-     * @param tags array $tags array of tags
+     * @param array $tags array of tags
      * @return boolean true if no problem
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
@@ -387,7 +387,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *
      * @param string $dir directory to clean
      * @param string $mode clean mode
-     * @param tags array $tags array of tags
+     * @param array $tags array of tags
      * @return boolean true if no problem
      */
     private function _clean($dir, $mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
@@ -565,7 +565,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * Transform a cache id into a file name and return it
      *
      * @param string $id cache id
-     * @param int expire timestamp
+     * @param int $expire Expiration timestamp
      * @return string file name
      */
     private function _idToFileName($id, $expire)
@@ -642,7 +642,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * (if it fails (no cache files or several cache files for this id, the method returns null)
      *
      * @param string $id cache id
-     * @param int expire timestamp
+     * @param int $expire Expiration timestamp
      * @return string file name (with path)
      */
     private function _file($id, $expire = null)

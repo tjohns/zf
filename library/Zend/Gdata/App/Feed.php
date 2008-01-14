@@ -190,7 +190,7 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
     }
 
     /**
-     * @param array The array of Zend_Gdata_App_Entry elements
+     * @param array $value The array of Zend_Gdata_App_Entry elements
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setEntry($value)

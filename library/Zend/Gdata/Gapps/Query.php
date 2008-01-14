@@ -72,7 +72,7 @@ abstract class Zend_Gdata_Gapps_Query extends Zend_Gdata_Query
      * constructed prior to using any methods which interact with the Google 
      * Apps provisioning service.
      * 
-     * @param value The domain to be used for this session.
+     * @param string $value The domain to be used for this session.
      */
     public function setDomain($value)
     {
