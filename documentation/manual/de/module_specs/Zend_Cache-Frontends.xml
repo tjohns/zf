@@ -93,6 +93,15 @@
                                 x Schreiboperationen.
                               </entry>
                           </row>
+                          <row>
+                              <entry><code>ignore_user_abort</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                Auf true gesetzt, wird der Kern das PHP Flag ignore_user_abort innerhalb der
+                                save() Methode setzen um Cache Korruption in einigen fällen zuverhindern
+                              </entry>
+                          </row>
                       </tbody>
                   </tgroup>
               </table>
