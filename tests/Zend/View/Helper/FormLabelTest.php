@@ -78,6 +78,13 @@ class Zend_View_Helper_FormLabelTest extends PHPUnit_Framework_TestCase
         $label = $this->helper->formLabel('foo', 'bar', array('class' => 'baz'));
         $this->assertEquals('<label for="foo" class="baz">bar</label>', $label);
     }
+
+    public function testNameAndIdForZF2154()
+    {
+        $label = $this->helper->formLabel('name', 'value', array('id' => 'id'));
+        $this->assertEquals('<label for="id">value</label>', $label);
+    }
+    
 }
 
 // Call Zend_View_Helper_FormLabelTest::main() if this source file is executed directly.
