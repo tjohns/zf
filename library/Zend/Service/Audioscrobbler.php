@@ -170,22 +170,22 @@ class Zend_Service_Audioscrobbler
             $adapter->setResponse($this->_testingResponse);
         }
 
-        $request  = $this->_client->request();
-        $response = $request->getBody();
+        $response     = $this->_client->request();
+        $responseBody = $response->getBody();
 
-        if ($response == 'No such path') {
+        if (preg_match('/No such path/', $responseBody)) {
             /**
              * @see Zend_Http_Client_Exception
              */
             require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('Could not find: ' . $this->_client->getUri());
-        } else if ($response == 'No user exists with this name.') {
+        } elseif (preg_match('/No user exists with this name/', $responseBody)) {
             /**
              * @see Zend_Http_Client_Exception
              */
             require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('No user exists with this name');
-        } else if ($request->isError()) {
+        } elseif (!$response->isSuccessful()) {
             /**
              * @see Zend_Http_Client_Exception
              */
@@ -195,7 +195,7 @@ class Zend_Service_Audioscrobbler
 
         set_error_handler(array($this, '_errorHandler'));
 
-        if (!$simpleXmlElementResponse = simplexml_load_string($response)) {
+        if (!$simpleXmlElementResponse = simplexml_load_string($responseBody)) {
             restore_error_handler();
             /**
              * @see Zend_Service_Exception
@@ -203,7 +203,7 @@ class Zend_Service_Audioscrobbler
             require_once 'Zend/Service/Exception.php';
             $exception = new Zend_Service_Exception('Response failed to load with SimpleXML');
             $exception->error    = $this->_error;
-            $exception->response = $response;
+            $exception->response = $responseBody;
             throw $exception;
         }
 

@@ -30,17 +30,12 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '../../../TestHelper.php';
 
 /**
- * PHPUnit_Framework_TestSuite
+ * @see Zend_Service_Audioscrobbler_AudioscrobblerTest
  */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-/**
- * PHPUnit_TextUI_TestRunner
- */
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once 'Zend/Service/Audioscrobbler/AudioscrobblerTest.php';
 
 /**
  * @see Zend_Service_Audioscrobbler_ProfileTest
@@ -91,6 +86,7 @@ class Zend_Service_Audioscrobbler_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Audioscrobbler');
 
+        $suite->addTestSuite('Zend_Service_Audioscrobbler_AudioscrobblerTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_ProfileTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_ArtistTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_AlbumDataTest');
