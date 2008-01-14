@@ -45,8 +45,8 @@ class Zend_View_Helper_UrlTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-	$front = Zend_Controller_Front::getInstance();
-	$front->getRouter()->addDefaultRoutes();
+        $this->front = Zend_Controller_Front::getInstance();
+        $this->front->getRouter()->addDefaultRoutes();
 
         $this->view = new Zend_View();
         $this->helper = new Zend_View_Helper_Url();
@@ -73,6 +73,30 @@ class Zend_View_Helper_UrlTest extends PHPUnit_Framework_TestCase
         $url = $this->helper->url(array('controller' => 'My Controller'), null, false, false);
         $this->assertEquals('/My Controller', $url);
     }
+    
+    public function testEncodeWithSingleParamReset() 
+    {    
+        $router = $this->front->getRouter();
+        $router->removeDefaultRoutes();
+        $router->removeRoute('default');
+        
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        $router->addRoute('ctrl-act', $route);
+        
+        $req = new Zend_Controller_Request_Http('http://framework.zend.com/news/view/id/3');
+        $router->route($req);
+        
+        $this->assertEquals(3, count($req->getParams()));
+        
+        $url = $this->helper->url(array('controller' => null), 'ctrl-act');
+        $this->assertSame('/index/view/id/3', $url);
+        
+        $url = $this->helper->url(array('action' => null), 'ctrl-act');
+        $this->assertSame('/news/index/id/3', $url);
+
+        $url = $this->helper->url(array('action' => null, 'id' => null), 'ctrl-act');
+        $this->assertSame('/news', $url);
+    }    
     
 }
 

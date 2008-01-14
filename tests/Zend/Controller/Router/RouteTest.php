@@ -420,6 +420,9 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
         
         $values = $route->match('news/view/id/3');
 
+        $url = $route->assemble(array('controller' => null));
+        $this->assertSame('index/view/id/3', $url);
+        
         $url = $route->assemble(array('action' => null));
         $this->assertSame('news/index/id/3', $url);
 
