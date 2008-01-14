@@ -63,5 +63,5 @@ define('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE', false);
 /**
  * PHPUnit Code Coverage / Test Report
  */
-define('TESTS_GENERATE_REPORT', true);
-define('TESTS_GENERATE_REPORT_TARGET', '/tmp/phpunit');
+define('TESTS_GENERATE_REPORT', false);
+define('TESTS_GENERATE_REPORT_TARGET', '/path/to/target');
