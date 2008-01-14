@@ -54,6 +54,12 @@ class Zend_Form_DisplayGroup
     protected $_name;
 
     /**
+     * Group order
+     * @var int
+     */
+    protected $_order;
+
+    /**
      * @var Zend_Translate
      */
     protected $_translator;
@@ -129,6 +135,28 @@ class Zend_Form_DisplayGroup
     public function getName()
     {
         return $this->_name;
+    }
+
+    /**
+     * Set group order
+     * 
+     * @param  int $order 
+     * @return Zend_Form_Element
+     */
+    public function setOrder($order)
+    {
+        $this->_order = (int) $order;
+        return $this;
+    }
+
+    /**
+     * Retrieve group order
+     * 
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->_order;
     }
 
     // Elements

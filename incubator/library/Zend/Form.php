@@ -27,7 +27,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-class Zend_Form implements Iterator
+class Zend_Form implements Iterator, Countable
 {
     /**#@+
      * Plugin loader type constants
@@ -65,6 +65,18 @@ class Zend_Form implements Iterator
      * @var array
      */
     protected $_loaders = array();
+
+    /**
+     * Order in which to display and iterate elements
+     * @var array
+     */
+    protected $_order = array();
+
+    /**
+     * Whether internal order has been updated or not
+     * @var bool
+     */
+    protected $_orderUpdated = false;
 
     /**
      * Sub forms
@@ -341,11 +353,15 @@ class Zend_Form implements Iterator
             }
             $class = $this->getPluginLoader(self::ELEMENT)->load($element);
             $this->_elements[$name] = new $class($name, $options);
+            $this->_order[$name] = $this->_elements[$name]->getOrder();
+            $this->_orderUpdated = true;
         } elseif ($element instanceof Zend_Form_Element) {
             if (null === $name) {
                 $name = $element->getName();
             }
             $this->_elements[$name] = $element;
+            $this->_order[$name] = $this->_elements[$name]->getOrder();
+            $this->_orderUpdated = true;
         }
         return $this;
     }
@@ -554,8 +570,10 @@ class Zend_Form implements Iterator
      */
     public function addSubForm(Zend_Form $form, $name, $order = null)
     {
-        $name = (string) $name;
+        $name                   = (string) $name;
         $this->_subForms[$name] = $form;
+        $this->_order[$name]    = $order;
+        $this->_orderUpdated    = true;
         return $this;
     }
 
@@ -670,6 +688,8 @@ class Zend_Form implements Iterator
      * Add a display group
      *
      * Groups named elements for display purposes.
+     *
+     * If a referenced element does not yet exist in the form, it is omitted.
      * 
      * @param  array $elements 
      * @param  string $name 
@@ -682,7 +702,11 @@ class Zend_Form implements Iterator
         $group = array();
         foreach ($elements as $element) {
             if (isset($this->_elements[$element])) {
-                $group[] = $this->getElement($element);
+                $add = $this->getElement($element);
+                if (null !== $add) {
+                    unset($this->_order[$element]);
+                    $group[] = $add;
+                }
             }
         }
         if (empty($group)) {
@@ -707,6 +731,9 @@ class Zend_Form implements Iterator
             $this->getPluginLoader(self::DECORATOR), 
             $options
         );
+
+        $this->_order[$name] = $this->_displayGroups[$name]->getOrder();
+        $this->_orderUpdated = true;
         return $this;
     }
 
@@ -1232,28 +1259,111 @@ class Zend_Form implements Iterator
         }
     }
  
-    // For iteration, countable: 
+    // Interfaces: Iterator, Countable
+
+    /**
+     * Current element/subform/display group
+     * 
+     * @return Zend_Form_Element|Zend_Form_DisplayGroup|Zend_Form
+     */
     public function current()
     {
+        $this->_sort();
+        current($this->_order);
+        $key = key($this->_order);
+
+        if (isset($this->_elements[$key])) {
+            return $this->getElement($key);
+        } elseif (isset($this->_subForms[$key])) {
+            return $this->getSubForm($key);
+        } elseif (isset($this->_displayGroups[$key])) {
+            return $this->getDisplayGroup($key);
+        } else {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Corruption detected in form; invalid key found in internal iterator');
+        }
     }
 
+    /**
+     * Current element/subform/display group name
+     * 
+     * @return string
+     */
     public function key()
     {
+        $this->_sort();
+        return key($this->_order);
     }
 
+    /**
+     * Move pointer to next element/subform/display group
+     * 
+     * @return void
+     */
     public function next()
     {
+        $this->_sort();
+        next($this->_order);
     }
 
+    /**
+     * Move pointer to beginning of element/subform/display group loop
+     * 
+     * @return void
+     */
     public function rewind()
     {
+        $this->_sort();
+        reset($this->_order);
     }
 
+    /**
+     * Determine if current element/subform/display group is valid
+     * 
+     * @return bool
+     */
     public function valid()
     {
+        $this->_sort();
+        return (current($this->_order) !== false);
     }
 
+    /**
+     * Count of elements/subforms that are iterable
+     * 
+     * @return int
+     */
     public function count()
     {
+        return count($this->_order);
+    }
+
+    /**
+     * Sort items according to their order
+     * 
+     * @return void
+     */
+    protected function _sort()
+    {
+        if ($this->_orderUpdated) {
+            $items = array();
+            $index = 0;
+            foreach ($this->_order as $key => $order) {
+                if (null === $order) {
+                    if (array_search($index, $this->_order, true)) {
+                        ++$index;
+                    }
+                    $items[$index] = $key;
+                    ++$index;
+                } else {
+                    $items[$order] = $key;
+                }
+            }
+
+            $items = array_flip($items);
+            asort($items);
+            $this->_order = $items;
+            $this->_orderUpdated = false;
+        }
     }
 }

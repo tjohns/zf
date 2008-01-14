@@ -13,6 +13,7 @@ require_once 'Zend/Form.php';
 
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form/Element.php';
+require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Form/SubForm.php';
 require_once 'Zend/Loader/PluginLoader.php';
 
@@ -147,6 +148,22 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     public function testAddDecoratorPluginLoaderPrefixPathUpdatesElementDecoratorLoaders()
+    {
+        $this->setupElements();
+        $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'decorator');
+        $loader = $this->form->foo->getPluginLoader('decorator');
+        $paths  = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $found = false;
+        foreach ($paths as $path) {
+            if (strstr($path, 'Foo')) {
+                $found = true;
+            }
+        }
+        $this->assertTrue($found);
+    }
+
+    public function testUpdatedDecoratorPluginLoaderPrefixPathUsedForNewElements()
     {
         $this->markTestIncomplete();
     }
@@ -1038,9 +1055,79 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     // Iteration
+    
     public function testFormObjectIsIterableAndIteratesElements()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $expected = array('foo', 'bar', 'baz');
+        $received = array();
+        foreach ($this->form as $key => $value) {
+            $received[] = $key;
+        }
+        $this->assertSame($expected, $received);
+    }
+
+    public function testFormObjectIsIterableAndIteratesElementsInExpectedOrder()
+    {
+        $this->setupElements();
+        $this->form->addElement('text', 'checkorder', array('order' => 2));
+        $expected = array('foo', 'bar', 'checkorder', 'baz');
+        $received = array();
+        foreach ($this->form as $key => $value) {
+            $received[] = $key;
+            $this->assertTrue($value instanceof Zend_Form_Element);
+        }
+        $this->assertSame($expected, $received);
+    }
+
+    public function testFormObjectIteratesElementsAndSubforms()
+    {
+        $this->setupElements();
+        $this->setupSubForm();
+        $expected = array('foo', 'bar', 'baz', 'sub');
+        $received = array();
+        foreach ($this->form as $key => $value) {
+            $received[] = $key;
+            $this->assertTrue(($value instanceof Zend_Form_Element)
+                              or ($value instanceof Zend_Form_SubForm));
+        }
+        $this->assertSame($expected, $received);
+    }
+
+    public function testFormObjectIteratesDisplayGroupsButSkipsDisplayGroupElements()
+    {
+        $this->setupElements();
+        $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz');
+        $expected = array('bar', 'foobaz');
+        $received = array();
+        foreach ($this->form as $key => $value) {
+            $received[] = $key;
+            $this->assertTrue(($value instanceof Zend_Form_Element)
+                              or ($value instanceof Zend_Form_DisplayGroup));
+        }
+        $this->assertSame($expected, $received);
+    }
+
+    // Countable
+
+    public function testCanCountFormObject()
+    {
+        $this->setupElements();
+        $this->assertEquals(3, count($this->form));
+    }
+
+    public function testCountingFormObjectCountsSubForms()
+    {
+        $this->setupElements();
+        $this->setupSubForm();
+        $this->assertEquals(4, count($this->form));
+    }
+
+    public function testCountingFormCountsDisplayGroupsButOmitsElementsInDisplayGroups()
+    {
+        $this->testCountingFormObjectCountsSubForms();
+        $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz');
+        $this->assertEquals(3, count($this->form));
     }
 }
 

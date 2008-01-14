@@ -50,6 +50,19 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->loader, $this->group->getPluginLoader());
     }
 
+    public function testOrderNullByDefault()
+    {
+        $this->assertNull($this->group->getOrder());
+    }
+
+    public function testCanSetOrder()
+    {
+        $this->testOrderNullByDefault();
+        $this->group->setOrder(50);
+        $this->assertEquals(50, $this->group->getOrder());
+    }
+
+
     // Elements
 
     public function testCanAddElements()

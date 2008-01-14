@@ -88,6 +88,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_name;
 
     /**
+     * Order of element
+     * @var int
+     */
+    protected $_order;
+
+    /**
      * Required flag
      * @var bool
      */
@@ -307,6 +313,28 @@ class Zend_Form_Element implements Zend_Validate_Interface
     public function getLabel()
     {
         return $this->_label;
+    }
+
+    /**
+     * Set element order
+     * 
+     * @param  int $order 
+     * @return Zend_Form_Element
+     */
+    public function setOrder($order)
+    {
+        $this->_order = (int) $order;
+        return $this;
+    }
+
+    /**
+     * Retrieve element order
+     * 
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->_order;
     }
 
     /**

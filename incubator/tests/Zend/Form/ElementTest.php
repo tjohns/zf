@@ -143,6 +143,18 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('FooBar', $this->element->getLabel());
     }
 
+    public function testOrderNullByDefault()
+    {
+        $this->assertNull($this->element->getOrder());
+    }
+
+    public function testCanSetOrder()
+    {
+        $this->testOrderNullByDefault();
+        $this->element->setOrder(50);
+        $this->assertEquals(50, $this->element->getOrder());
+    }
+
     public function testRequiredFlagFalseByDefault()
     {
         $this->assertFalse($this->element->getRequired());
