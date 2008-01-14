@@ -31,7 +31,6 @@ class Zend_Build_ManifestTest extends Zend_Build_TestBase
 {
     const ACTION_TYPE               = 'action';
     const RESOURCE_TYPE             = 'resource';
-    const TASK_TYPE                 = 'task';
     
     const INTERNAL_ACTION_MF        = 'lib/Zend/Build/Action/TestIntAction-ZFManifest.xml';
     const INTERNAL_RESOURCE_MF      = 'lib/Zend/Build/Resource/TestIntResource-ZFManifest.xml';

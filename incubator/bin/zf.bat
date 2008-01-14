@@ -16,10 +16,12 @@ REM Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
 REM http://framework.zend.com/license/new-bsd     New BSD License
 
 BREAK=ON
-set PHPBIN="php.exe"
+set PHP_BIN="php.exe"
 
 REM %~dp0 is name of current script dir under NT
-set ZF_SCRIPT=%~dp0zf.php
+set SCRIPT_DIR=%~dp0
+
+set ZF_SCRIPT=%SCRIPT_DIR%zf.php
 
 REM Insert the name of this script as the first argument
-"%PHPBIN%" -d safe_mode=Off -f "%ZF_SCRIPT%" %0 %*
+"%PHP_BIN%" -d safe_mode=Off -f "%ZF_SCRIPT%" %0 %*
