@@ -96,7 +96,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
         <title>
-            Beginnend mit 1.1, Wildcards
+            Beginnend mit 1.5., Wildcards
             <footnote>
                 <para>
                     Die Unterstützung für Wildcard Abfragen ist im SVN und den spätesten Snapshot Versionen
@@ -149,18 +149,18 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             Suchoptionen.
         </para>
         <para>
-            Zend_Search_Lucene unterstützt den "~" Modifikator aktuell nur für Phrasen
+            Der "~" Modifikator kann für verwendet werden um eine annähernde Suche auf Phrasen oder Fuzzy Suchen
+            für individuelle Ausdrücke durchzuführen.
             <footnote>
                 <para>
-                    Der "~" Modifikator für Ausdrücke wird für Fuzzy Suche verwendet, aber die Fuzzy Suche
-                    wird für Abfragen aktuell nicht unterstützt.
+                    Die Fuzzy Suche ist beginnend mit ZF 1.5 vorhanden.
                 </para>
             </footnote>
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.query-language.range">
-        <title>Beginnend mit 1.1, Bereichs Suchen
+        <title>Beginnend mit 1.5, Bereichs Suchen
             <footnote>
                 <para>
                     Die Unterstützung für Bereichsabfragen ist im SVN und den letzten Snapshot Versionen
@@ -193,6 +193,30 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
             Intervallen in allen Feldern.
             <programlisting role="querystring"><![CDATA[{Aida TO Carmen}]]>
             </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.query-language.fuzzy">
+        <title>Beginnend mit 1.5, Fuzzy Suchen
+            <footnote>
+                <para>
+                    Die Unterstützung für Fuzzy Suchen ist im SVN und den aktuellsten Snapshot Versionen anhalten
+                    aber nicht im aktuellen Release.
+                </para>
+            </footnote>
+        </title>
+        <para>
+            Zend_Search_Lucene unterstützt, genauso wie Java Lucene, die Fuzzy Suche basierend auf der
+            Levenshtein Distanz oder dem Edit Algorithmus. Um eine Fuzzy Suche durchzuführen muß das Tilde
+            Symbol "~", am Ende eines einzelnen Wortbegriffs verwendet werden. Um zum Beispiel nach einem
+            Begriff zu suchen der in der Aussprache ähnlich zu "Raum" ist kann die folgende Fuzzy Suche
+            verwendet werden:
+            <programlisting role="querystring"><![CDATA[roam~]]></programlisting>
+            Diese Suche wird Begriffe wie "Baum" und "Saum" finden. Zusätzliche (optionale) Parameter können
+            die benötigte Ähnlichkeit spezifizieren. Der Wert muß zwischen 0 und 1 sein. Mit einem Wert näher
+            bei 1 werden nur Begriffe mit einer höheren Warscheinlichkeit gefunden. Zum Beispiel:
+            <programlisting role="querystring"><![CDATA[roam~0.8]]></programlisting>
+            Der verwendete Standardwert wenn der Parameter nicht angegeben wurde ist 0.5.
         </para>
     </sect2>
 
