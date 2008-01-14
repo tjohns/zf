@@ -18,14 +18,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: MysqlTest.php 5097 2007-06-04 16:06:43Z darby $
  */
 
 
 /**
- * @see Zend_Db_Table_Abstract
+ * @see Zend_Db_Table_Select_TestCommon
  */
-require_once 'Zend/Db/Table/Abstract.php';
+require_once 'Zend/Db/Table/Select/TestCommon.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -38,25 +38,12 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Table_TableBugsProducts extends Zend_Db_Table_Abstract
+class Zend_Db_Table_Select_Pdo_MysqlTest extends Zend_Db_Table_Select_TestCommon
 {
-    protected $_name = 'zfbugs_products';
 
-    protected $_referenceMap    = array(
-        'Bug' => array(
-            'columns'           => array('bug_id'),
-            'refTableClass'     => 'Zend_Db_Table_TableBugs',
-            'refColumns'        => array('bug_id'),
-            'onDelete'          => -1, // Deliberate false value
-            'onUpdate'          => -1 // Deliberate false value
-        ),
-        'Product' => array(
-            'columns'           => array('product_id'),
-            'refTableClass'     => 'Zend_Db_Table_TableProducts',
-            'refColumns'        => array('product_id'),
-            'onDelete'          => self::CASCADE,
-            'onUpdate'          => self::CASCADE
-        )
-    );
+    public function getDriver()
+    {
+        return 'Pdo_Mysql';
+    }
 
 }

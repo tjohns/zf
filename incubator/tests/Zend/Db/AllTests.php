@@ -151,6 +151,7 @@ class Zend_Db_AllTests
             Zend_Loader::loadClass("Zend_Db_Statement_{$driver}Test");
             Zend_Loader::loadClass("Zend_Db_Select_{$driver}Test");
             Zend_Loader::loadClass("Zend_Db_Table_{$driver}Test");
+            Zend_Loader::loadClass("Zend_Db_Table_Select_{$driver}Test");
             Zend_Loader::loadClass("Zend_Db_Table_Rowset_{$driver}Test");
             Zend_Loader::loadClass("Zend_Db_Table_Row_{$driver}Test");
             Zend_Loader::loadClass("Zend_Db_Table_Relationships_{$driver}Test");
@@ -163,6 +164,7 @@ class Zend_Db_AllTests
             $suite->addTestSuite("Zend_Db_Statement_{$driver}Test");
             $suite->addTestSuite("Zend_Db_Select_{$driver}Test");
             $suite->addTestSuite("Zend_Db_Table_{$driver}Test");
+            $suite->addTestSuite("Zend_Db_Table_Select_{$driver}Test");
             $suite->addTestSuite("Zend_Db_Table_Rowset_{$driver}Test");
             $suite->addTestSuite("Zend_Db_Table_Row_{$driver}Test");
             $suite->addTestSuite("Zend_Db_Table_Relationships_{$driver}Test");

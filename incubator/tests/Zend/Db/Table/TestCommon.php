@@ -532,6 +532,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     {
         $table = $this->_table['bugs'];
         $row = array (
+            'bug_id'          => null,
             'bug_description' => 'New bug',
             'bug_status'      => 'NEW',
             'created_on'      => '2007-04-02',
@@ -820,6 +821,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertType('Zend_Db_Table_Row_Abstract', $row,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
         $this->assertTrue(isset($row->bug_description));
+        $this->assertEquals($row, $table->fetchNew());
     }
 
     public function testTableCreateRowWithData()
@@ -862,6 +864,33 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, $row->$bug_id);
     }
 
+    public function testTableFetchRowWhereArray()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+
+        $table = $this->_table['bugs'];
+        $row = $table->fetchRow(array("$bug_id = ?" => 2));
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row->$bug_id);
+    }
+
+    public function testTableFetchRowWhereSelect()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->where("$bug_id = ?", 2);
+
+        $row = $table->fetchRow($select);
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row->$bug_id);
+    }
+
     public function testTableFetchRowOrderAsc()
     {
         $bug_id = $this->_db->quoteIdentifier('bug_id', true);
@@ -875,6 +904,22 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, $row->$bug_id);
     }
 
+    public function testTableFetchRowOrderSelectAsc()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->where("$bug_id > ?", 1)
+            ->order("bug_id ASC");
+
+        $row = $table->fetchRow($select);
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row->$bug_id);
+    }
+
     public function testTableFetchRowOrderDesc()
     {
         $bug_id = $this->_db->quoteIdentifier('bug_id', true);
@@ -882,6 +927,22 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $table = $this->_table['bugs'];
 
         $row = $table->fetchRow(null, "bug_id DESC");
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(4, $row->$bug_id);
+    }
+
+    public function testTableFetchRowOrderSelectDesc()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->where("$bug_id > ?", 1)
+            ->order("bug_id DESC");
+
+        $row = $table->fetchRow($select);
         $this->assertType('Zend_Db_Table_Row_Abstract', $row,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row));
         $bug_id = $this->_db->foldCase('bug_id');
@@ -928,10 +989,46 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(2, $row1->$bug_id);
     }
 
+    public function testTableFetchAllWhereSelect()
+    {
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->where("$bug_id = ?", 2);
+
+        $rowset = $table->fetchAll($select);
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
+        $this->assertEquals(1, count($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row1->$bug_id);
+    }
+
     public function testTableFetchAllOrder()
     {
         $table = $this->_table['bugs'];
         $rowset = $table->fetchAll(null, 'bug_id DESC');
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
+        $this->assertEquals(4, count($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(4, $row1->$bug_id);
+    }
+
+    public function testTableFetchAllOrderSelect()
+    {
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->order('bug_id DESC');
+
+        $rowset = $table->fetchAll($select);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
         $this->assertEquals(4, count($rowset));
@@ -963,6 +1060,24 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     {
         $table = $this->_table['bugs'];
         $rowset = $table->fetchAll(null, 'bug_id ASC', 2, 1);
+        $this->assertType('Zend_Db_Table_Rowset', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset, got '.get_class($rowset));
+        $this->assertEquals(2, count($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row', $row1,
+            'Expecting object of type Zend_Db_Table_Row, got '.get_class($row1));
+        $bug_id = $this->_db->foldCase('bug_id');
+        $this->assertEquals(2, $row1->$bug_id);
+    }
+
+    public function testTableFetchAllLimitSelect()
+    {
+        $table = $this->_table['bugs'];
+        $select = $table->select()
+            ->order('bug_id ASC')
+            ->limit(2, 1);
+        
+        $rowset = $table->fetchAll($select);
         $this->assertType('Zend_Db_Table_Rowset', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset, got '.get_class($rowset));
         $this->assertEquals(2, count($rowset));
@@ -1007,6 +1122,25 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         Zend_Registry::set('registered_metadata_cache', $cache);
         Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
         $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
+    }
+
+    public function testTableSetDefaultMetadataCacheRegistryWriteAccess()
+    {
+        $cache = $this->_getCache(false);
+        Zend_Registry::set('registered_metadata_cache', $cache);
+        Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
+
+        try {
+            $bugsTable = $this->_getTable('Zend_Db_Table_TableBugsCustom');
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e);
+            $this->assertEquals('Failed saving metadata to metadataCache', $e->getMessage());
+        }
+
+        // Reset so that data can be saved again
+        $cache = $this->_getCache();
+        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
     }
 
     public function testTableLoadsCustomRowClass()
@@ -1170,12 +1304,52 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
 
+    public function testTableCascadeUpdate()
+    {
+        $table = $this->_table['products'];
+        $row1 = $table->find(1)->current();
+        $rows1 = $row1->findManyToManyRowset('Zend_Db_Table_TableBugs', 'Zend_Db_Table_TableBugsProducts');
+
+        $product_id = $this->_db->foldCase('product_id');
+        $row1->$product_id = 999999;
+        $row1->save();
+        $rows2 = $row1->findManyToManyRowset('Zend_Db_Table_TableBugs', 'Zend_Db_Table_TableBugsProducts');
+
+        $this->assertEquals(999999, $row1->$product_id);
+        $this->assertEquals(count($rows1), count($rows2));
+
+        // Test for 'false' value in cascade config
+        $bug_id = $this->_db->foldCase('bug_id');
+        $row2 = $rows2->current();
+        $row2->$bug_id = 999999;
+        $row2->save();
+    }
+
+    public function testTableCascadeDelete()
+    {
+        $table = $this->_table['products'];
+        $row1 = $table->find(2)->current();
+        $row1->delete();
+
+        // Test for 'false' value in cascade config
+        $table = $this->_table['bugs'];
+        $row2 = $table->find(1)->current();
+        $row2->delete();
+
+        $table = $this->_table['bugs_products'];
+        $select = $table->select()
+            ->where('product_id = ?', 2);
+
+        $rows = $table->fetchAll($select);
+        $this->assertEquals(0, count($rows));
+    }
+
     /**
      * Returns a clean Zend_Cache_Core with File backend
      *
      * @return Zend_Cache_Core
      */
-    protected function _getCache()
+    protected function _getCache($writeAccess = true)
     {
         /**
          * @see Zend_Cache
@@ -1186,8 +1360,14 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             'automatic_serialization' => true
         );
 
+        if ($writeAccess) {
+            $folder = '_files';
+        } else {
+            $folder = '_nofiles';
+        }
+
         $backendOptions  = array(
-            'cache_dir'                 => dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files',
+            'cache_dir'                 => dirname(__FILE__) . DIRECTORY_SEPARATOR . $folder,
             'file_name_prefix'          => 'Zend_Db_Table_TestCommon'
         );
 

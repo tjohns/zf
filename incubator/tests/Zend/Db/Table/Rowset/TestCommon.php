@@ -115,8 +115,7 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
 
         // iterate through the rowset, because that's the only way
         // to force it to instantiate the individual Rows
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $row->$bug_description = 'foo';
         }
 
@@ -129,6 +128,36 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals('foo', $a[0][$bug_description]);
     }
 
+    public function testTableRowsetGetConnected()
+    {
+        $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
+
+        $rows = $table->find(1);
+
+        $this->assertTrue($rows->isConnected());
+    }
+
+    public function testTableRowsetGetTable()
+    {
+        $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
+
+        $rows = $table->find(1);
+        $rows->setTable($table);
+
+        $this->assertEquals($table, $rows->getTable());
+    }
+
+    public function testTableRowsetGetTableClass()
+    {
+        $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
+
+        $rows = $table->find(1);
+        $this->assertEquals(get_class($table), $rows->getTableClass());
+    }
+
     public function testTableSerializeRowset()
     {
         $table = $this->_table['bugs'];
@@ -138,6 +167,8 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
         $serRows = serialize($rows);
 
         $rowsNew = unserialize($serRows);
+
+        $this->assertFalse($rowsNew->isConnected());
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowsNew,
             'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowsNew));
 

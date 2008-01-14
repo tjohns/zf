@@ -163,7 +163,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
             if ($column) {
                 if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
                     require_once 'Zend/Db/Table/Exception.php';
-                    throw new Zend_Db_Table_Exception("Select query cannot join with another table");
+                    throw new Zend_Db_Table_Select_Exception("Select query cannot join with another table");
                 }
             }
         }

@@ -169,6 +169,16 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     }
 
     /**
+     * Return the connected state of the rowset.
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return $this->_connected;
+    }
+
+    /**
      * Returns the table object, or null if this is disconnected rowset
      *
      * @return Zend_Db_Table_Abstract
@@ -192,7 +202,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
         $this->_connected = false;
         // @todo This works only if we have iterated through
         // the result set once to instantiate the rows.
-        foreach ($this->_rows as $row) {
+        foreach ($this as $row) {
             $connected = $row->setTable($table);
             if ($connected == true) {
                 $this->_connected = true;
@@ -299,17 +309,6 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     public function count()
     {
         return $this->_count;
-    }
-
-    /**
-     * Returns true if and only if count($this) > 0.
-     *
-     * @return bool
-     * @deprecated since 0.9.3; use count() instead
-     */
-    public function exists()
-    {
-        return $this->_count > 0;
     }
 
     /**
