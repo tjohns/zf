@@ -1,4 +1,4 @@
-﻿<sect1 id="zend.cache.frontends">
+<sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
     <sect2 id="zend.cache.frontends.core">
@@ -64,6 +64,13 @@
                               <entry><code>int</code></entry>
                               <entry><code>0</code></entry>
                               <entry>Active / désactive le nettoyage automatique (garbage collector): 0 signifie aucun nettoyage automatique de cache, 1 signifie un nettoyage systèmatique du cache et x &gt; 1 signifie le nettoyage aléatoire 1 fois toute les x écritures.</entry>
+                          </row>
+                          <row>
+                              <entry><code>ignore_user_abort</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>Si réglé à <code>true</code>, le cache active un drapeau "ignore_user_abort" dans la méthode <code>save()</code> pour prévenir de la corruption du cache dans certains cas.
+                              </entry>
                           </row>
                       </tbody>
                   </tgroup>
