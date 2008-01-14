@@ -27,7 +27,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-class Zend_Form_DisplayGroup
+class Zend_Form_DisplayGroup implements Iterator,Countable
 {
     /**
      * Display group decorators
@@ -36,10 +36,22 @@ class Zend_Form_DisplayGroup
     protected $_decorators = array();
 
     /**
+     * Element order
+     * @var array
+     */
+    protected $_elementOrder = array();
+
+    /**
      * Elements
      * @var array
      */
     protected $_elements = array();
+
+    /**
+     * Whether or not a new element has been added to the group
+     * @var bool
+     */
+    protected $_groupUpdated = false;
 
     /**
      * Plugin loader for decorators
@@ -170,6 +182,7 @@ class Zend_Form_DisplayGroup
     public function addElement(Zend_Form_Element $element)
     {
         $this->_elements[$element->getName()] = $element;
+        $this->_groupUpdated = true;
         return $this;
     }
 
@@ -240,6 +253,7 @@ class Zend_Form_DisplayGroup
         $name = (string) $name;
         if (isset($this->_elements[$name])) {
             unset($this->_elements[$name]);
+            $this->_groupUpdated = true;
             return true;
         }
 
@@ -254,6 +268,7 @@ class Zend_Form_DisplayGroup
     public function clearElements()
     {
         $this->_elements = array();
+        $this->_groupUpdated = true;
         return $this;
     }
 
@@ -469,5 +484,108 @@ class Zend_Form_DisplayGroup
     public function getTranslator()
     {
         return $this->_translator;
+    }
+
+    // Interfaces: Iterator, Countable
+
+    /**
+     * Current element
+     * 
+     * @return Zend_Form_Element
+     */
+    public function current()
+    {
+        $this->_sort();
+        current($this->_elementOrder);
+        $key = key($this->_elementOrder);
+        return $this->getElement($key);
+    }
+
+    /**
+     * Current element
+     * 
+     * @return string
+     */
+    public function key()
+    {
+        $this->_sort();
+        return key($this->_elementOrder);
+    }
+
+    /**
+     * Move pointer to next element
+     * 
+     * @return void
+     */
+    public function next()
+    {
+        $this->_sort();
+        next($this->_elementOrder);
+    }
+
+    /**
+     * Move pointer to beginning of element loop
+     * 
+     * @return void
+     */
+    public function rewind()
+    {
+        $this->_sort();
+        reset($this->_elementOrder);
+    }
+
+    /**
+     * Determine if current element/subform/display group is valid
+     * 
+     * @return bool
+     */
+    public function valid()
+    {
+        $this->_sort();
+        return (current($this->_elementOrder) !== false);
+    }
+
+    /**
+     * Count of elements/subforms that are iterable
+     * 
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->_elements);
+    }
+
+    /**
+     * Sort items according to their order
+     * 
+     * @return void
+     */
+    protected function _sort()
+    {
+        if ($this->_groupUpdated || !is_array($this->_elementOrder)) {
+            $elementOrder = array();
+            foreach ($this->_elements as $key => $element) {
+                $elementOrder[$key] = $element->getOrder();
+            }
+
+            $items = array();
+            $index = 0;
+            foreach ($elementOrder as $key => $order) {
+                if (null === $order) {
+                    if (array_search($index, $elementOrder, true)) {
+                        ++$index;
+                    }
+                    $items[$index] = $key;
+                    ++$index;
+                } else {
+                    $items[$order] = $key;
+                }
+            }
+
+            $items = array_flip($items);
+            asort($items);
+            $this->_elementOrder = $items;
+            $this->_groupUpdated = false;
+        }
     }
 }

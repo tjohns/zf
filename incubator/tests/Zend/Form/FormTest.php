@@ -147,25 +147,46 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Foo', $paths[0]);
     }
 
-    public function testAddDecoratorPluginLoaderPrefixPathUpdatesElementDecoratorLoaders()
+    public function testUpdatedDecoratorPrefixPathUsedForNewElements()
     {
-        $this->setupElements();
+        $loader = $this->form->getPluginLoader('decorator');
         $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'decorator');
-        $loader = $this->form->foo->getPluginLoader('decorator');
+        $foo = new Zend_Form_Element_Text('foo');
+        $this->form->addElement($foo);
+        $loader = $foo->getPluginLoader('decorator');
         $paths  = $loader->getPaths('Zend_Foo');
         $this->assertTrue(is_array($paths));
-        $found = false;
-        foreach ($paths as $path) {
-            if (strstr($path, 'Foo')) {
-                $found = true;
-            }
-        }
-        $this->assertTrue($found);
+        $this->assertContains('Foo', $paths[0]);
+
+        $this->form->addElement('text', 'bar');
+        $bar = $this->form->bar;
+        $loader = $bar->getPluginLoader('decorator');
+        $paths  = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertContains('Foo', $paths[0]);
     }
 
-    public function testUpdatedDecoratorPluginLoaderPrefixPathUsedForNewElements()
+    public function testUpdatedDecoratorPrefixPathUsedForNewDisplayGroups()
     {
-        $this->markTestIncomplete();
+        $loader = $this->form->getPluginLoader('decorator');
+        $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'decorator');
+        $this->setupElements();
+        $foo    = $this->form->foo;
+        $loader = $foo->getPluginLoader('decorator');
+        $paths  = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertContains('Foo', $paths[0]);
+    }
+
+    public function testUpdatedPrefixPathUsedForNewSubForms()
+    {
+        $loader = $this->form->getPluginLoader('decorator');
+        $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'decorator');
+        $this->setupSubForm();
+        $loader = $this->form->sub->getPluginLoader('decorator');
+        $paths  = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertContains('Foo', $paths[0]);
     }
 
     public function testGetPluginLoaderRetrievesDefaultElementPluginLoader()
@@ -211,11 +232,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $paths = $elementLoader->getPaths('Zend_Element');
         $this->assertTrue(is_array($paths), var_export($paths, 1));
         $this->assertContains('Element', $paths[0]);
-    }
-
-    public function testAddingGlobalPrefixPathUpdatesAllElementPluginLoaders()
-    {
-        $this->markTestIncomplete();
     }
 
     // Elements:
@@ -447,7 +463,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testCanClearAllSubForms()
     {
-        $this->markTestIncomplete();
         $this->testCanAddAndRetrieveMultipleSubForms();
         $this->form->clearSubForms();
         $subforms = $this->form->getSubForms();
@@ -582,7 +597,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $bar->addValidator('NotEmpty')
             ->addValidator('Digits');
         $baz = new Zend_Form_Element_Text('baz');
-        $bar->addValidator('NotEmpty')
+        $baz->addValidator('NotEmpty')
             ->addValidator('Alnum');
         $this->form->addElements(array($foo, $bar, $baz));
         $this->elementValues = array(
@@ -799,14 +814,37 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         )));
     }
 
-    public function testProcessAjaxReturnsJson()
+    public function testProcessAjaxReturnsJsonTrueForValidForm()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $return = $this->form->processAjax($this->elementValues);
+        $this->assertTrue(Zend_Json::decode($return));
     }
 
-    public function testProcessAjaxCanProcessPartialForm()
+    public function testProcessAjaxReturnsJsonTrueForValidPartialForm()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $data = array('foo' => 'abcdef', 'baz' => 'abc123');
+        $return = $this->form->processAjax($data);
+        $this->assertTrue(Zend_Json::decode($return));
+    }
+
+    public function testProcessAjaxReturnsJsonWithAllErrorMessagesForInvalidForm()
+    {
+        $this->setupElements();
+        $data = array('foo' => '123456', 'bar' => 'abcdef', 'baz' => 'abc-123');
+        $return = Zend_Json::decode($this->form->processAjax($data));
+        $this->assertTrue(is_array($return));
+        $this->assertEquals(array_keys($data), array_keys($return));
+    }
+
+    public function testProcessAjaxReturnsJsonWithAllErrorMessagesForInvalidPartialForm()
+    {
+        $this->setupElements();
+        $data = array('baz' => 'abc-123');
+        $return = Zend_Json::decode($this->form->processAjax($data));
+        $this->assertTrue(is_array($return));
+        $this->assertEquals(array_keys($data), array_keys($return), var_export($return, 1));
     }
 
     public function testPersistDataStoresDataInSession()
@@ -1067,7 +1105,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $received);
     }
 
-    public function testFormObjectIsIterableAndIteratesElementsInExpectedOrder()
+    public function testFormObjectIteratesElementsInExpectedOrder()
     {
         $this->setupElements();
         $this->form->addElement('text', 'checkorder', array('order' => 2));

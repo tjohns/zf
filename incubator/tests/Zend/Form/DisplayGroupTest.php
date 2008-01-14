@@ -227,6 +227,49 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $received = $this->group->getTranslator($translator);
         $this->assertSame($translator, $received);
     }
+
+    // Iteration
+
+    public function setupIteratorElements()
+    {
+        $foo = new Zend_Form_Element('foo');
+        $bar = new Zend_Form_Element('bar');
+        $baz = new Zend_Form_Element('baz');
+        $this->group->addElements(array($foo, $bar, $baz));
+    }
+    
+    public function testDisplayGroupIsIterableAndIteratesElements()
+    {
+        $this->setupIteratorElements();
+        $expected = array('foo', 'bar', 'baz');
+        $received = array();
+        foreach ($this->group as $key => $element) {
+            $received[] = $key;
+            $this->assertTrue($element instanceof Zend_Form_Element);
+        }
+        $this->assertSame($expected, $received);
+    }
+
+    public function testDisplayGroupIteratesElementsInExpectedOrder()
+    {
+        $this->setupIteratorElements();
+        $test = new Zend_Form_Element('checkorder', array('order' => 1));
+        $this->group->addElement($test);
+        $expected = array('foo', 'checkorder', 'bar', 'baz');
+        $received = array();
+        foreach ($this->group as $key => $element) {
+            $received[] = $key;
+        }
+        $this->assertSame($expected, $received);
+    }
+
+    // Countable
+
+    public function testCanCountDisplayGroup()
+    {
+        $this->setupIteratorElements();
+        $this->assertEquals(3, count($this->group));
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_DisplayGroupTest::main') {

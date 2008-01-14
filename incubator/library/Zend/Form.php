@@ -217,9 +217,6 @@ class Zend_Form implements Iterator, Countable
                     $loader       = $this->getPluginLoader($type);
                     $loader->addPrefixPath($pluginPrefix, $pluginPath);
                 }
-                foreach ($this->getElements() as $element) {
-                    $element->addPrefixPath($prefix, $path);
-                }
                 return $this;
             default:
                 require_once 'Zend/Form/Exception.php';
@@ -363,6 +360,12 @@ class Zend_Form implements Iterator, Countable
             $this->_order[$name] = $this->_elements[$name]->getOrder();
             $this->_orderUpdated = true;
         }
+        $decoratorPaths = $this->getPluginLoader('decorator')->getPaths();
+        foreach ($decoratorPaths as $prefix => $paths) {
+            foreach ($paths as $path) {
+                $this->_elements[$name]->addPrefixPath($prefix, $path, 'decorator');
+            }
+        }
         return $this;
     }
 
@@ -452,6 +455,16 @@ class Zend_Form implements Iterator, Countable
         $name = (string) $name;
         if (isset($this->_elements[$name])) {
             unset($this->_elements[$name]);
+            if (isset($this->_order[$name])) {
+                unset($this->_order[$name]);
+                $this->_orderUpdated = true;
+            } else {
+                foreach ($this->_displayGroups as $group) {
+                    if (null !== $group->getElement($name)) {
+                        $group->removeElement($name);
+                    }
+                }
+            }
             return true;
         }
 
@@ -465,7 +478,13 @@ class Zend_Form implements Iterator, Countable
      */
     public function clearElements()
     {
-        $this->_elements = array();
+        foreach (array_keys($this->_elements) as $key) {
+            if (isset($this->_order[$key])) {
+                unset($this->_order[$key]);
+            }
+        }
+        $this->_elements     = array();
+        $this->_orderUpdated = true;
         return $this;
     }
 
@@ -571,6 +590,14 @@ class Zend_Form implements Iterator, Countable
     public function addSubForm(Zend_Form $form, $name, $order = null)
     {
         $name                   = (string) $name;
+        foreach ($this->_loaders as $type => $loader) {
+            $loaderPaths = $loader->getPaths();
+            foreach ($loaderPaths as $prefix => $paths) {
+                foreach ($paths as $path) {
+                    $form->addPrefixPath($prefix, $path, $type);
+                }
+            }
+        }
         $this->_subForms[$name] = $form;
         $this->_order[$name]    = $order;
         $this->_orderUpdated    = true;
@@ -664,6 +691,10 @@ class Zend_Form implements Iterator, Countable
         $name = (string) $name;
         if (isset($this->_subForms[$name])) {
             unset($this->_subForms[$name]);
+            if (isset($this->_order[$name])) {
+                unset($this->_order[$name]);
+                $this->_orderUpdated = true;
+            }
             return true;
         }
 
@@ -677,7 +708,13 @@ class Zend_Form implements Iterator, Countable
      */
     public function clearSubForms()
     {
-        $this->_subForms = array();
+        foreach (array_keys($this->_subForms) as $key) {
+            if (isset($this->_order[$key])) {
+                unset($this->_order[$key]);
+            }
+        }
+        $this->_subForms     = array();
+        $this->_orderUpdated = true;
         return $this;
     }
 
@@ -825,7 +862,18 @@ class Zend_Form implements Iterator, Countable
     {
         $name = (string) $name;
         if (isset($this->_displayGroups[$name])) {
+            foreach ($this->_displayGroups[$name] as $key => $element) {
+                if (isset($this->_elements[$key])) {
+                    $this->_order[$key]  = $element->getOrder();
+                    $this->_orderUpdated = true;
+                }
+            }
             unset($this->_displayGroups[$name]);
+
+            if (isset($this->_order[$name])) {
+                unset($this->_order[$name]);
+                $this->_orderUpdated = true;
+            }
             return true;
         }
 
@@ -839,7 +887,19 @@ class Zend_Form implements Iterator, Countable
      */
     public function clearDisplayGroups()
     {
+        foreach ($this->_displayGroups as $key => $group) {
+            if (isset($this->_order[$key])) {
+                unset($this->_order[$key]);
+            }
+            foreach ($group as $name => $element) {
+                if (isset($this->_elements[$name])) {
+                    $this->_order[$name] = $element->getOrder();
+                }
+                $this->_order[$name] = $element->getOrder();
+            }
+        }
         $this->_displayGroups = array();
+        $this->_orderUpdated  = true;
         return $this;
     }
 
@@ -915,8 +975,24 @@ class Zend_Form implements Iterator, Countable
         return $valid;
     }
 
-    public function processAjax($request)
+    /**
+     * Process submitted AJAX data
+     *
+     * Checks if provided $data is valid, via {@link isValidPartial()}. If so, 
+     * it returns JSON-encoded boolean true. If not, it returns JSON-encoded 
+     * error messages (as returned by {@link getMessages()}).
+     * 
+     * @param  array $data 
+     * @return string JSON-encoded boolean true or error messages
+     */
+    public function processAjax(array $data)
     {
+        require_once 'Zend/Json.php';
+        if ($this->isValidPartial($data)) {
+            return Zend_Json::encode(true);
+        }
+        $messages = $this->getMessages();
+        return Zend_Json::encode($messages);
     }
 
     public function persistData()
@@ -961,11 +1037,17 @@ class Zend_Form implements Iterator, Countable
         } elseif ((null !== $name) && isset($this->_subForms[$name])) {
             $messages = $this->getSubForm($name)->getMessages();
         } else {
-            foreach ($this->_elements as $key => $element) {
-                $messages[$key] = $element->getMessages();
+            foreach ($this->getElements() as $element) {
+                $eMessages = $element->getMessages();
+                if (!empty($eMessages)) {
+                    $messages[$element->getName()] = $eMessages;
+                }
             }
             foreach ($this->getSubForms() as $key => $subForm) {
-                $messages[$key] = $subForm->getMessages();
+                $fMessages = $subForm->getMessages();
+                if (!empty($fMessages)) {
+                    $messages[$name] = $fMessages;
+                }
             }
         }
         return $messages;
