@@ -220,7 +220,7 @@ class Zend_Controller_Plugin_ActionStack extends Zend_Controller_Plugin_Abstract
         if (empty($stack)) {
             return;
         }
-        $next = $this->popStack($stack);
+        $next = $this->popStack();
         if (!$next) {
             return;
         }

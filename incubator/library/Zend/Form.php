@@ -36,6 +36,15 @@ class Zend_Form implements Iterator, Countable
     const ELEMENT = 'ELEMENT';
     /**#@-*/
 
+    /**#@+
+     * Method type constants
+     */
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_GET    = 'GET';
+    const METHOD_POST   = 'POST';
+    const METHOD_PUT    = 'PUT';
+    /**#@-*/
+
     /**
      * Form metadata and attributes
      * @var array
@@ -47,6 +56,18 @@ class Zend_Form implements Iterator, Countable
      * @var array
      */
     protected $_decorators = array();
+
+    /**
+     * Default decorator
+     * @var string
+     */
+    protected $_defaultDecorator = 'form';
+
+    /**
+     * Default decorator options
+     * @var array
+     */
+    protected $_defaultDecoratorOptions = array();
 
     /**
      * Groups of elements grouped for display purposes
@@ -65,6 +86,12 @@ class Zend_Form implements Iterator, Countable
      * @var array
      */
     protected $_loaders = array();
+
+    /**
+     * Allowed form methods
+     * @var array
+     */
+    protected $_methods = array('DELETE', 'GET', 'POST', 'PUT');
 
     /**
      * Order in which to display and iterate elements
@@ -104,7 +131,16 @@ class Zend_Form implements Iterator, Countable
      */
     public function __construct($options = null)
     {
-        $this->addDecorator('viewHelper', array('helper' => 'form'));
+        if (is_array($options)) {
+            $this->setOptions($options);
+        } elseif ($options instanceof Zend_Config) {
+            $this->setConfig($options);
+        }
+
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator($this->_defaultDecorator, $this->_defaultDecoratorOptions);
+        }
     }
 
     public function setOptions(array $options)
@@ -322,6 +358,88 @@ class Zend_Form implements Iterator, Countable
         return $this;
     }
 
+    /**
+     * Set form action
+     * 
+     * @param  string $action 
+     * @return Zend_Form
+     */
+    public function setAction($action)
+    {
+        return $this->setAttrib('action', (string) $action);
+    }
+
+    /**
+     * Get form action
+     *
+     * Sets default to '#' if not set.
+     * 
+     * @return string
+     */
+    public function getAction()
+    {
+        $action = $this->getAttrib('action');
+        if (null === $action) {
+            $action = '#';
+            $this->setAction($action);
+        }
+        return $action;
+    }
+
+    /**
+     * Set form method
+     *
+     * Only values in {@link $_methods()} allowed
+     * 
+     * @param  string $method 
+     * @return Zend_Form
+     * @throws Zend_Form_Exception
+     */
+    public function setMethod($method)
+    {
+        $method = strtoupper($method);
+        if (!in_array($method, $this->_methods)) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception(sprintf('"%" is an invalid form method', $method));
+        }
+        $this->setAttrib('method', $method);
+        return $this;
+    }
+
+    /**
+     * Retrieve form method
+     * 
+     * @return string
+     */
+    public function getMethod()
+    {
+        if (null === ($method = $this->getAttrib('method'))) {
+            $method = self::METHOD_POST;
+            $this->setAttrib('method', $method);
+        }
+        return $method;
+    }
+
+    /**
+     * Set form name
+     * 
+     * @param  string $name 
+     * @return Zend_Form
+     */
+    public function setName($name)
+    {
+        return $this->setAttrib('name', (string) $name);
+    }
+
+    /**
+     * Get name attribute
+     * 
+     * @return null|string
+     */
+    public function getName()
+    {
+        return $this->getAttrib('name');
+    }
  
     // Element interaction: 
 
@@ -1224,8 +1342,24 @@ class Zend_Form implements Iterator, Countable
         return $this;
     }
 
+    /**
+     * Render form
+     * 
+     * @param  Zend_View_Interface $view 
+     * @return string
+     */
     public function render(Zend_View_Interface $view = null)
     {
+        if (null !== $view) {
+            $this->setView($view);
+        }
+
+        $content = '';
+        foreach ($this->getDecorators() as $decorator) {
+            $decorator->setElement($this);
+            $content = $decorator->render($content);
+        }
+        return $content;
     }
 
     public function __toString()

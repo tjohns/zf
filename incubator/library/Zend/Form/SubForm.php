@@ -32,4 +32,9 @@ require_once 'Zend/Form.php';
  */
 class Zend_Form_SubForm extends Zend_Form
 {
+    /**
+     * Default decorator options; set helper to 'fieldset'
+     * @var string
+     */
+    protected $_defaultDecoratorOptions = array('helper' => 'fieldset');
 }
