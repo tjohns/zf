@@ -25,11 +25,6 @@
 require_once 'Zend/Http/Client.php';
 
 /**
- * Zend_Http_Client_Exception
- */
-require_once 'Zend/Http/Client/Exception.php';
-
-/**
  * Zend_Version
  */
 require_once 'Zend/Version.php';
