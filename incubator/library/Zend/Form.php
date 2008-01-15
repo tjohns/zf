@@ -1146,17 +1146,17 @@ class Zend_Form implements Iterator, Countable
         foreach ($this->getElements() as $key => $element) {
             if (!isset($data[$key])) {
                 if ($element->getRequired()) {
-                    $valid = $valid && $element->isValid(null, $data);
+                    $valid = $element->isValid(null, $data) && $valid;
                 }
             } else {
-                $valid = $valid && $element->isValid($data[$key], $data);
+                $valid = $element->isValid($data[$key], $data) && $valid;
             }
         }
         foreach ($this->getSubForms() as $key => $form) {
             if (isset($data[$key])) {
-                $valid = $valid && $form->isValid($data[$key]);
+                $valid = $form->isValid($data[$key]) && $valid;
             } else {
-                $valid = $valid && $form->isValid($data);
+                $valid = $form->isValid($data) && $valid;
             }
         }
         return $valid;
@@ -1176,15 +1176,15 @@ class Zend_Form implements Iterator, Countable
         $validatedSubForms = array();
         foreach ($data as $key => $value) {
             if (isset($this->_elements[$key])) {
-                $valid = $valid && $this->getElement($key)->isValid($value, $data);
+                $valid = $this->getElement($key)->isValid($value, $data) && $valid;
             } elseif (isset($this->_subForms[$key])) {
-                $valid = $valid && $this->getSubForm($key)->isValidPartial($data[$key]);
+                $valid = $this->getSubForm($key)->isValidPartial($data[$key]) && $valid;
                 $validatedSubForms[] = $key;
             } 
         }
         foreach ($this->getSubForms() as $key => $subForm) {
             if (!in_array($key, $validatedSubForms)) {
-                $valid = $valid && $subForm->isValidPartial($data);
+                $valid = $subForm->isValidPartial($data) && $valid;
             }
         }
         return $valid;
@@ -1246,25 +1246,30 @@ class Zend_Form implements Iterator, Countable
      */
     public function getMessages($name = null)
     {
-        $messages = array();
         if ((null !== $name) && isset($this->_elements[$name])) {
-            $messages = $this->getElement($name)->getMessages();
-        } elseif ((null !== $name) && isset($this->_subForms[$name])) {
-            $messages = $this->getSubForm($name)->getMessages();
-        } else {
-            foreach ($this->getElements() as $element) {
-                $eMessages = $element->getMessages();
-                if (!empty($eMessages)) {
-                    $messages[$element->getName()] = $eMessages;
-                }
-            }
-            foreach ($this->getSubForms() as $key => $subForm) {
-                $fMessages = $subForm->getMessages();
-                if (!empty($fMessages)) {
-                    $messages[$name] = $fMessages;
-                }
+            return $this->getElement($name)->getMessages();
+        } 
+
+        if ((null !== $name) && isset($this->_subForms[$name])) {
+            return $this->getSubForm($name)->getMessages();
+        } 
+
+        $messages = array();
+
+        foreach ($this->getElements() as $name => $element) {
+            $eMessages = $element->getMessages();
+            if (!empty($eMessages)) {
+                $messages[$name] = $eMessages;
             }
         }
+
+        foreach ($this->getSubForms() as $key => $subForm) {
+            $fMessages = $subForm->getMessages();
+            if (!empty($fMessages)) {
+                $messages[$key] = $fMessages;
+            }
+        }
+
         return $messages;
     }
 

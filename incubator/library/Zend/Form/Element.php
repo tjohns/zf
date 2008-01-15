@@ -805,7 +805,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         $this->_messages = array();
         $this->_errors   = array();
         $result          = true;
-        foreach ($this->_validators as $validator) {
+        foreach ($this->getValidators() as $validator) {
             if ($validator->isValid($value, $context)) {
                 continue;
             }

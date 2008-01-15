@@ -899,11 +899,21 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     {
         $this->setupElements();
         $this->assertTrue($this->form->isValid($this->elementValues));
-        $this->assertFalse($this->form->isValid(array(
+        $values = array(
             'foo' => '12345',
             'bar' => 'abc',
             'baz' => 'abc-123'
-        )));
+        );
+        $this->assertFalse($this->form->isValid($values));
+
+        $validator = $this->form->foo->getValidator('alpha');
+        $this->assertEquals('12345', $validator->value);
+
+        $validator = $this->form->bar->getValidator('digits');
+        $this->assertEquals('abc', $validator->value);
+
+        $validator = $this->form->baz->getValidator('alnum');
+        $this->assertEquals('abc-123', $validator->value);
     }
 
     public function testValidationTakesElementRequiredFlagsIntoAccount()
@@ -1119,7 +1129,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     public function testProcessAjaxReturnsJsonWithAllErrorMessagesForInvalidForm()
     {
-        $this->markTestSkipped('Skipping until Zend_Validate messages fixed');
         $this->setupElements();
         $data = array('foo' => '123456', 'bar' => 'abcdef', 'baz' => 'abc-123');
         $return = Zend_Json::decode($this->form->processAjax($data));
@@ -1161,7 +1170,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     
     public function testCanRetrieveErrorMessagesFromAllElementsAfterFailedValidation()
     {
-        $this->markTestSkipped('Skipping until Zend_Validate messages fixed');
         $this->testCanValidateFullFormContainingOnlyElements();
         $codes = $this->form->getMessages();
         $keys = array('foo', 'bar', 'baz');
@@ -1201,6 +1209,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testErrorMessagesFromSubFormReturnedInSeparateArray()
     {
         $this->testFullDataArrayUsedToValidateSubFormByDefault();
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'subfoo' => '123',
+            'subbar' => 'abc',
+            'subbaz' => '123-abc',
+        );
+        $this->assertFalse($this->form->isValid($data));
+
         $codes    = $this->form->getMessages();
         $this->assertTrue(array_key_exists('sub', $codes));
         $this->assertTrue(is_array($codes['sub']));
@@ -1211,6 +1229,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testCanRetrieveErrorMessagesFromSingleSubFormAfterFailedValidation()
     {
         $this->testFullDataArrayUsedToValidateSubFormByDefault();
+        $data = array(
+            'foo'    => 'abcdef',
+            'bar'    => '123456',
+            'baz'    => '123abc',
+            'subfoo' => '123',
+            'subbar' => 'abc',
+            'subbaz' => '123-abc',
+        );
+
+        $this->assertFalse($this->form->isValid($data));
         $codes    = $this->form->getMessages('sub');
         $this->assertTrue(is_array($codes));
         $this->assertFalse(empty($codes));

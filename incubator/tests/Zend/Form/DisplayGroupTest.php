@@ -311,7 +311,6 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $options['view']         = true;
         $options['translator']   = true;
         $options['attrib']       = true;
-        $options['elements']     = true;
         $this->group->setOptions($options);
     }
 
