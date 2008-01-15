@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Ldap
+ * @package    Zend_Auth
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -23,15 +23,13 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Ldap_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Auth_Adapter_Ldap_AllTests::main');
 }
 
-require_once 'Zend/Ldap/ConnectTest.php';
-require_once 'Zend/Ldap/BindTest.php';
-require_once 'Zend/Ldap/CanonTest.php';
+require_once 'Zend/Auth/Adapter/Ldap/AuthTest.php';
 
 /**
  * @category   Zend
@@ -40,7 +38,7 @@ require_once 'Zend/Ldap/CanonTest.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Ldap_AllTests
+class Zend_Auth_Adapter_Ldap_AllTests
 {
     public static function main()
     {
@@ -49,12 +47,11 @@ class Zend_Ldap_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Ldap');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth_Adapter_Ldap');
 
 		if (defined('TESTS_ZEND_LDAP_ENABLED') && TESTS_ZEND_LDAP_ENABLED) {
-	        $suite->addTestSuite('Zend_Ldap_ConnectTest');
-   	    	$suite->addTestSuite('Zend_Ldap_BindTest');
-    	    $suite->addTestSuite('Zend_Ldap_CanonTest');
+
+    	    $suite->addTestSuite('Zend_Auth_Adapter_Ldap_AuthTest');
 		}
 
         return $suite;
@@ -62,6 +59,6 @@ class Zend_Ldap_AllTests
 }
 
 echo __LINE__ . "\n";
-if (PHPUnit_MAIN_METHOD == 'Zend_Ldap_AllTests::main') {
-    Zend_Ldap_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Auth_Adapter_Ldap_AllTests::main') {
+    Zend_Auth_Adapter_Ldap_AllTests::main();
 }

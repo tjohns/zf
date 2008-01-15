@@ -61,6 +61,31 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_ODBC_DATABASE', null);
 define('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE', false);
 
 /**
+ * Zend_Ldap and Zend_Auth_Adapter_Ldap
+ */
+define('TESTS_ZEND_LDAP_ENABLED', true);
+
+/* These largely map to the options described in the Zend_Ldap and
+ * Zend_Auth_Adapter_Ldap documentation.
+ * [pls change these values in SVN to match the primary test env if necessary]
+ */
+define('TESTS_ZEND_LDAP_HOST', 's0.foo.net');
+//define('TESTS_ZEND_LDAP_PORT', 389);
+//define('TESTS_ZEND_LDAP_USE_SSL', false);
+define('TESTS_ZEND_LDAP_USERNAME', 'CN=user1,DC=foo,DC=net');
+define('TESTS_ZEND_LDAP_PRINCIPAL_NAME', 'user1@foo.net');
+define('TESTS_ZEND_LDAP_PASSWORD', 'pass1');
+define('TESTS_ZEND_LDAP_BIND_REQUIRES_DN', true);
+define('TESTS_ZEND_LDAP_BASE_DN', 'OU=Sales,DC=foo,DC=net');
+//define('TESTS_ZEND_LDAP_ACCOUNT_FILTER_FORMAT', '(&(objectClass=posixAccount)(uid=%s))');
+define('TESTS_ZEND_LDAP_ACCOUNT_DOMAIN_NAME', 'foo.net');
+define('TESTS_ZEND_LDAP_ACCOUNT_DOMAIN_NAME_SHORT', 'FOO');
+/* Must be creds for account other than the default above
+ */
+define('TESTS_ZEND_LDAP_ALT_USERNAME', 'abaker');
+define('TESTS_ZEND_LDAP_ALT_PASSWORD', 'pass');
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);

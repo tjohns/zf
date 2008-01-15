@@ -160,7 +160,7 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
 
             if (!is_array($options)) {
                 require_once 'Zend/Auth/Adapter/Exception.php';
-                throw new Zend_Auth_Adapter_Exception("Not an array: $name");
+                throw new Zend_Auth_Adapter_Exception('Adapter options array not in array');
             }
 
             try {

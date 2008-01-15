@@ -423,6 +423,8 @@ class Zend_Ldap
          * web server.
          */
         $url = $useSsl ? "ldaps://$host" : "ldap://$host";
+		if ($port)
+			$url .= ":$port";
 
         /* Because ldap_connect doesn't really try to connect, any connect error
          * will actually occur during the ldap_bind call. Therefore, we save the
@@ -432,7 +434,7 @@ class Zend_Ldap
 
         $this->disconnect();
 
-        $resource = $port ? @ldap_connect($url, $port) : @ldap_connect($url);
+        $resource = @ldap_connect($url);
         if (is_resource($resource) === true) {
             if (@ldap_set_option($resource, LDAP_OPT_PROTOCOL_VERSION, 3) &&
                         @ldap_set_option($resource, LDAP_OPT_REFERRALS, 0)) {
