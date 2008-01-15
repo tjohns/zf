@@ -38,5 +38,5 @@ class Zend_Form_Element_Select extends Zend_Form_Element_Multi
      * Use formSelect view helper by default
      * @var string
      */
-    protected $_viewHelper = 'formSelect';
+    protected $_defaultHelper = 'formSelect';
 }

@@ -1413,7 +1413,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $html = $this->html = $this->form->render();
         $this->assertRegexp('/<fieldset/', $html);
         $this->assertContains('</fieldset>', $html);
-        $this->assertRegexp('#<legend for="foobaz">Display Group</legend>#', $html, $html);
+        $this->assertRegexp('#<legend>Display Group</legend>#', $html, $html);
         $dom = new DOMDocument();
         $dom->loadHTML($html);
         $fieldsets = $dom->getElementsByTagName('fieldset');

@@ -58,13 +58,83 @@ class Zend_View_Helper_FormErrors extends Zend_View_Helper_FormElement
      */
     public function formErrors($errors, array $options = null)
     {
-        $attribs = $this->_htmlAttribs($options);
-        $start   = sprintf($this->_htmlElementStart, $attribs);
+        $start = $this->getElementStart();
+        if (strstr($start, '%s')) {
+            $attribs = $this->_htmlAttribs($options);
+            $start   = sprintf($start, $attribs);
+        }
 
         $html  = $start
-               . implode($this->_htmlElementSeparator, (array) $errors)
-               . $this->_htmlElementEnd;
+               . implode($this->getElementSeparator(), (array) $errors)
+               . $this->getElementEnd();
 
         return $html;
     }
+
+    /**
+     * Set end string for displaying errors
+     * 
+     * @param  string $string 
+     * @return Zend_View_Helper_FormErrors
+     */
+    public function setElementEnd($string)
+    {
+        $this->_htmlElementEnd = (string) $string;
+        return $this;
+    }
+
+    /**
+     * Retrieve end string for displaying errors
+     * 
+     * @return string
+     */
+    public function getElementEnd()
+    {
+        return $this->_htmlElementEnd;
+    }
+
+    /**
+     * Set separator string for displaying errors
+     * 
+     * @param  string $string 
+     * @return Zend_View_Helper_FormErrors
+     */
+    public function setElementSeparator($string)
+    {
+        $this->_htmlElementSeparator = (string) $string;
+        return $this;
+    }
+
+    /**
+     * Retrieve separator string for displaying errors
+     * 
+     * @return string
+     */
+    public function getElementSeparator()
+    {
+        return $this->_htmlElementSeparator;
+    }
+
+    /**
+     * Set start string for displaying errors
+     * 
+     * @param  string $string 
+     * @return Zend_View_Helper_FormErrors
+     */
+    public function setElementStart($string)
+    {
+        $this->_htmlElementStart = (string) $string;
+        return $this;
+    }
+
+    /**
+     * Retrieve start string for displaying errors
+     * 
+     * @return string
+     */
+    public function getElementStart()
+    {
+        return $this->_htmlElementStart;
+    }
+
 }

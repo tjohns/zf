@@ -38,7 +38,7 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      * Array of options for multi-item
      * @var array
      */
-    protected $_options = array();
+    protected $_multiOptions = array();
 
     /**
      * Separator to use between options; defaults to '<br />'.
@@ -73,21 +73,35 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      *
      * @return array
      */
-    public function getOptions()
+    public function getMultiOptions()
     {
-        return $this->_options;
+        return $this->_multiOptions;
     }
 
     /**
-     * Set all options at once
+     * Add many options at once
+     * 
+     * @param  array $options 
+     * @return Zend_Form_Element_Multi
+     */
+    public function addMultiOptions(array $options)
+    {
+        foreach ($options as $option) {
+            $this->addMultiOption($option);
+        }
+        return $this;
+    }
+
+    /**
+     * Set all options at once (overwrites)
      *
      * @param  array $options
      * @return Zend_Form_Element_Multi
      */
-    public function setOptions(array $options)
+    public function setMultiOptions(array $options)
     {
-        $this->_options = $options;
-        return $this;
+        $this->clearMultiOptions();
+        return $this->addMultiOptions($options);
     }
 
     /**
@@ -96,9 +110,15 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      * @param  mixed $option 
      * @return Zend_Form_Element_Multi
      */
-    public function addOption($option)
+    public function addMultiOption($option)
     {
-        $this->_options[] = $option;
+        $this->_multiOptions[] = $option;
+        $decorator = $this->getDecorator('viewHelper');
+        if ($decorator) {
+            $options = $decorator->getOptions();
+            $options['options'] = $this->getMultiOptions();
+            $decorator->setOptions($options);
+        }
         return $this;
     }
 
@@ -107,9 +127,9 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      * 
      * @return Zend_Form_Element_Multi
      */
-    public function clearOptions()
+    public function clearMultiOptions()
     {
-        $this->_options = array();
+        $this->_multiOptions = array();
         return $this;
     }
 }

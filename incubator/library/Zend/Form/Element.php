@@ -52,6 +52,12 @@ class Zend_Form_Element implements Zend_Validate_Interface
     protected $_decorators = array();
 
     /**
+     * Default view helper to use
+     * @var string
+     */
+    protected $_defaultHelper = 'formText';
+
+    /**
      * Validation errors
      * @var array
      */
@@ -163,7 +169,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         /**
          * Register ViewHelper decorator by default
          */
-        $this->addDecorator('ViewHelper', array('helper' => 'formText'))
+        $this->addDecorator('ViewHelper', array('helper' => $this->_defaultHelper))
              ->addDecorator('Label')
              ->addDecorator('Errors')
              ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'form element'));

@@ -38,5 +38,5 @@ class Zend_Form_Element_Checkbox extends Zend_Form_Element_Xhtml
      * Use formCheckbox view helper by default
      * @var string
      */
-    protected $_viewHelper = 'formCheckbox';
+    protected $_defaultHelper = 'formCheckbox';
 }

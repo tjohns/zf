@@ -38,5 +38,5 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
      * Use formSubmit view helper by default
      * @var string
      */
-    protected $_viewHelper = 'formSubmit';
+    protected $_defaultHelper = 'formSubmit';
 }

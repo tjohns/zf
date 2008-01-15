@@ -65,7 +65,7 @@ class Zend_View_Helper_Fieldset extends Zend_View_Helper_FormElement
 
         $legend = '';
         if (isset($attribs['legend'])) {
-            $legend = '<legend for="' . $this->view->escape($id) . '">' 
+            $legend = '<legend>' 
                     . $this->view->escape($attribs['legend']) 
                     . '</legend>' . PHP_EOL;
             unset($attribs['legend']);

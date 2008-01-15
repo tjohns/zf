@@ -6,6 +6,9 @@ require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Zend/View/Helper/FieldsetTest.php';
+require_once 'Zend/View/Helper/FormTest.php';
+require_once 'Zend/View/Helper/FormErrorsTest.php';
 require_once 'Zend/View/Helper/JsonTest.php';
 
 /**
@@ -26,6 +29,9 @@ class Zend_View_Helper_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_View_Helper');
 
+        $suite->addTestSuite('Zend_View_Helper_FieldsetTest');
+        $suite->addTestSuite('Zend_View_Helper_FormTest');
+        $suite->addTestSuite('Zend_View_Helper_FormErrorsTest');
         $suite->addTestSuite('Zend_View_Helper_JsonTest');
         
         return $suite;
