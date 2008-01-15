@@ -130,6 +130,24 @@ class Zend_Locale_Math
         }
         return (string) $value;
     }
+
+    /**
+     * Localizes an input from standard english notation
+     * Fixes a problem of BCMath with setLocale which is PHP related
+     *
+     * @param   integer  $value  Value to normalize
+     * @return  string           Normalized string without BCMath problems
+     */
+    public static function localize($value)
+    {
+        $value = (string) $value;
+        $convert = localeconv();
+        $value = str_replace(".", $convert['decimal_point'], $value);
+        if (!empty($convert['negative_sign']) and (strpos($value, "-"))) {
+            $value = str_replace("-", $convert['negative_sign'], $value);
+        }
+        return (string) $value;
+    }
 }
 
 if ((defined('TESTS_ZEND_LOCALE_BCMATH_ENABLED') && !TESTS_ZEND_LOCALE_BCMATH_ENABLED)

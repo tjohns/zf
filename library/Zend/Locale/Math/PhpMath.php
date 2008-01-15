@@ -70,6 +70,9 @@ class Zend_Locale_Math_PhpMath extends Zend_Locale_Math
         if (empty($op1)) {
             $op1 = 0;
         }
+        self::localize($op1);
+        self::localize($op2);
+        
         $result = $op1 - $op2;
         if (($result === INF) or ((string) ($result + $op2) != (string) $op1)) {
             require_once 'Zend/Locale/Math/Exception.php';

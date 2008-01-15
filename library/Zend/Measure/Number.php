@@ -306,11 +306,19 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     {
         if ($this->_UNITS[$type][0] <= 16) {
             $newvalue = "";
-            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) >= 1) {
+            $count = 200;
+            while (call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) <> 0) {
                 $target = call_user_func(Zend_Locale_Math::$mod, $value, $this->_UNITS[$type][0]);
                 $target = strtoupper( dechex($target) );
                 $newvalue = $target . $newvalue;
                 $value = call_user_func(Zend_Locale_Math::$div, $value, $this->_UNITS[$type][0], 0);
+                if (($value == 1) and ($newvalue == 1)) {
+                    break;
+                }
+                --$count;
+                if ($count == 0) {
+                    break;
+                }
             }
         }
 
@@ -319,13 +327,18 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $newvalue = "";
             $romanval = array_values( array_reverse(self::$_ROMAN) );
             $romankey = array_keys( array_reverse(self::$_ROMAN) );
-            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) != 0) {
+            $count = 200;
+            while(call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) > 0) {
 
                 while ($value >= $romanval[$i]) {
                     $value    -= $romanval[$i];
                     $newvalue .= $romankey[$i];
                 }
                 $i++;
+                --$count;
+                if ($count == 0) {
+                    break;
+                }
 
             }
 
