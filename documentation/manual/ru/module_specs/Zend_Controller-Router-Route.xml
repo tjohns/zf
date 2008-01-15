@@ -7,28 +7,14 @@
         определения маршрутов. Каждый маршрут состоит в основном из карты URL
         (статических и динамических частей (переменных)), и может быть
         инициализирован со значениями по умолчанию и требованиями к переменным.
-<!--
-        <code>Zend_Controller_Router_Route</code> is the standard framework
-        route. It combines ease of use with flexible route definition.  Each
-        route consists primarily of URL mapping (of static and dynamic parts
-        (variables)) and may be initialized with defaults as well as with
-        variable requirements.
--->
     </para>
     
     <para>
-        Давай представим себе некое приложение, в котором нужно предоставить
+        Давай представим себе некое приложение, в котором нужно разместить
         несколько информационных страниц об авторах. Мы хотим иметь возможность
         набрать в своем броузере <code>http://domain.com/author/martel</code>,
         для просмотра информации о парне "martel". Маршрут для обеспечения такой
         функциональности может выглядеть следующим образом:
-<!--
-        Let's imagine our fictional application will need some informational
-        page about the content authors. We want to be able to point our web
-        browsers to <code>http://domain.com/author/martel</code> to see the
-        information about this "martel" guy. And the route for such
-        functionality could look like:
--->
     </para>
     
     <programlisting role="php"><![CDATA[<?php
@@ -51,18 +37,10 @@ $router->addRoute('user', $route);]]>
         <code>author</code>. Динамические части, называемые переменными,
         помечаются знаком двоеточия в начале имени переменной:
         <code>:username</code>.
-<!--
-        The first parameter in the <code>Zend_Controller_Router_Route</code>
-        constructor is a route definition that will be matched to a URL.  Route
-        definitions consist of static and dynamic parts separated by the slash
-        ('/') character.  Static parts are just simple text:
-        <code>author</code>.  Dynamic parts, called variables, are marked by
-        prepending a colon to the variable name: <code>:username</code>.
--->
     </para>
 
     <note>
-        <title>Использование символов<!--Character usage--></title>
+        <title>Использование символов></title>
         <para>
             Текущая реализация позволяет использовать любые (за исключением
             косой черты) символы в идентификаторе переменной,
@@ -70,13 +48,6 @@ $router->addRoute('user', $route);]]>
             допустимые для переменных в php. Есть вероятность, что в
             будущем реализация изменится, и это может вызвать скрытые ошибки в
             вашем коде.
-<!--
-            The current implementation allows you to use any character (except a
-            slash) as a variable identifier, but it is strongly recommended that
-            one uses only characters that are valid for PHP variable
-            identifiers. Future implementations may alter this behaviour, which
-            could result in hidden bugs in your code.
--->
         </para>
     </note>
 
@@ -88,14 +59,6 @@ $router->addRoute('user', $route);]]>
         контроллере <code>ProfileController</code>.
         Переменные, возвращаемые в этом примере, могут быть представленые в виде
         следующего массива пар ключ/значение:
-<!--
-        This example route should be matched when you point your browser to
-        <code>http://domain.com/author/martel</code>, in which case all its
-        variables will be injected to the <code>Zend_Controller_Request</code>
-        object and will be accessible in your <code>ProfileController</code>.
-        Variables returned by this example may be represented as an array of
-        the following key and value pairs:
--->
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -113,14 +76,6 @@ $values = array(
         основываясь на этих значениях. Вы сможете получать эти переменные через
         методы <code>Zend_Controller_Action::_getParam()</code> или
         <code>Zend_Controller_Request::getParam()</code>.
-<!--
-        Later on, <code>Zend_Controller_Dispatcher_Standard</code> should invoke
-        the <code>userinfoAction()</code> method of your
-        <code>ProfileController</code> class (in the default module) based on
-        these values. There you will be able to access all variables by means of
-        the <code>Zend_Controller_Action::_getParam()</code> or
-        <code>Zend_Controller_Request::getParam()</code> methods:
--->
     </para>
     
     <programlisting role="php"><![CDATA[<?php
@@ -139,12 +94,6 @@ public function userinfoAction()
         параметров, как в маршруте Module, используемом по умолчанию
         (пары переменная => значение, определенные в URI). Следующий маршрут
         приближенно воспроизводит поведение маршрута Module:
-<!--
-        Route definition can contain one more special character - a wildcard
-        - represented by '*' symbol. It is used to gather parameters similarly
-        to the default Module route (var => value pairs defined in the URI).  The
-        following route more-or-less mimics the Module route behavior:
--->
     </para>
     
     <programlisting role="php"><![CDATA[<?php
@@ -156,7 +105,7 @@ $router->addRoute('default', $route);]]>
     </programlisting>
         
     <sect4 id="zend.controller.router.routes.standard.variable-defaults">
-        <title>Значения переменных по умолчанию<!--Variable defaults--></title>
+        <title>Значения переменных по умолчанию</title>
 
         <para>
             Любая переменная в маршруте может иметь значение по умолчанию, для
@@ -164,12 +113,6 @@ $router->addRoute('default', $route);]]>
             <code>Zend_Controller_Router_Route</code>. Этот параметр является
             массивом с ключами, представляющими имена переменных, и со
             значениями в качестве значений переменных по умолчанию:
-<!--
-            Every variable in the route can have a default and this is what the
-            second parameter of the <code>Zend_Controller_Router_Route</code>
-            constructor is used for. This parameter is an array with keys
-            representing variable names and with values as desired defaults:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -185,12 +128,6 @@ $router->addRoute('archive', $route);]]>
             <code>http://domain.com/archive/2005</code> и
             <code>http://example.com/archive</code>. В последнем случае
             переменная year будет иметь начальное значение по умолчанию 2006.
-<!--
-            The above route will match URLs like
-            <code>http://domain.com/archive/2005</code> and
-            <code>http://example.com/archive</code>. In the latter case the
-            variable year will have an initial default value of 2006.
--->
         </para>
 
         <para>
@@ -202,15 +139,6 @@ $router->addRoute('archive', $route);]]>
             Для того, чтобы сделать этот пример более полезным, нужно
             передать действительные контроллер и действие в качестве значений по
             умолчанию:
-<!--
-            This example will result in injecting a year variable to the request
-            object.  Since no routing information is present (no controller and
-            action parameters are defined), the application will be dispatched
-            to the default controller and action method (which are both defined
-            in <code>Zend_Controller_Dispatcher_Abstract</code>).  To make it
-            more usable, you have to provide a valid controller and a valid
-            action as the route's defaults:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -228,29 +156,18 @@ $router->addRoute('archive', $route);]]>
         <para>
             В результате будет вызван метод <code>showAction()</code> класса
             <code>ArchiveController</code>.
-<!--
-            This route will then result in dispatching to the method
-            <code>showAction()</code> of the class
-            <code>ArchiveController</code>.
--->
         </para>
 
     </sect4>
 
     <sect4 id="zend.controller.router.routes.standard.variable-requirements">
-        <title>Требования к переменным<!--Variable requirements--></title>
+        <title>Требования к переменным</title>
 
         <para>
             Можно передать конструктору
             <code>Zend_Controller_Router_Route</code> третий параметр, в котором
             установлены требования к переменным. Они определяются как части
             регулярных выражений:
-<!--
-            One can add a third parameter to the
-            <code>Zend_Controller_Router_Route</code> constructor where variable
-            requirements may be set. These are defined as parts of a regular
-            expression:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -274,13 +191,6 @@ $router->addRoute('archive', $route);]]>
             <code>http://example.com/archive/test</code> не будет
             соответствовать этому маршруту, вместо этого будет произведен
             переход к следующему маршруту в цепочке.
-<!--
-            With a route defined like above, the router will match it only when
-            the year variable will contain numeric data, eg.
-            <code>http://domain.com/archive/2345</code>. A URL like
-            <code>http://example.com/archive/test</code> will not be matched and
-            control will be passed to the next route in the chain instead.
--->
         </para>
     </sect4>
 </sect3>        

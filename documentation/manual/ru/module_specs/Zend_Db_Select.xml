@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Обзор<!--Overview of the Select Object--></title>
+        <title>Обзор</title>
 
         <para>
             Объект Zend_Db_Select представляет SQL-оператор <code>SELECT</code>.
@@ -13,134 +13,97 @@
             структуры данных, и класс формирует корректный синтаксис SQL.
             После того, как построен запрос, можно выполнять его так же, как
             если бы он был написан в виде строки.
-<!--
-            The Zend_Db_Select object represents a SQL <code>SELECT</code>
-            query statement.  The class has methods for adding individual
-            parts to the query.  You can specify some parts of the query using
-            PHP methods and data structures, and the class forms the correct
-            SQL syntax for you.
-            After you build a query, you can execute the query as if you had
-            written it as a string.
--->
         </para>
 
         <para>
             В число достоинств Zend_Db_Select входит:
-<!--
-            The value offered by Zend_Db_Select includes:
--->
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    Объектно-ориентированные методы для построения SQL-запросов по частям;
-<!--
-                    Object-oriented methods for specifying SQL queries
-                    in a piece-by-piece manner;
--->
+                    Объектно-ориентированные методы для "покусочного" построения
+                    SQL-запросов;
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Не зависящая от типа БД абстакция некоторых частей
+                    Не зависящая от типа БД абстракция некоторых частей
                     SQL-запроса;
-<!--
-                    Database-independent abstraction of some parts
-                    of the SQL query;
--->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Автоматическое заключение в кавычки идентификаторов
-                    метаданных в большинстве случаев для поддержки
+                    Автоматическое в большинстве случаев заключение в кавычки
+                    идентификаторов метаданных для поддержки
                     идентификаторов, содержащих зарезервированные SQL слова и
                     спецсимволы;
-<!--
-                    Automatic quoting of metadata identifiers in most cases,
-                    to support identifiers containing SQL reserved words
-                    and special characters;
--->
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Заключение в кавычки идентификаторов и значений для снижения
                     угрозы атак с использованием SQL-инъекций.
-<!--
-                    Quoting identifiers and values, to help reduce
-                    risk of SQL injection attacks.
--->
                 </para>
             </listitem>
         </itemizedlist>
+
+        <para>
+            Использование Zend_Db_Select не обязательно. Для очень простых
+            запросов SELECT обычно проще указать SQL-запрос целиком в виде
+            строки и выполнить его, используя такие методы адаптера, как
+            <code>query()</code> или <code>fetchAll()</code>. Использование
+            Zend_Db_Select полезно, если нужно собрать запрос SELECT в процессе
+            или основываясь на условной логике.
+        </para>
 
     </sect2>
 
     <sect2 id="zend.db.select.creating">
 
-        <title>Создание объекта Select<!--Creating a Select Object--></title>
+        <title>Создание объекта Select</title>
 
         <para>
             Вы можете создавать экземпляр объекта Zend_Db_Select, используя
             метод <code>select()</code> объекта Zend_Db_Adapter_Abstract.
-<!--
-            You can create an instance of a Zend_Db_Select object
-            using the <code>select()</code> method of a
-            Zend_Db_Adapter_Abstract object.
--->
         </para>
 
         <example id="zend.db.select.creating.example-db">
-            <title>Пример использования метода select() адаптера БД<!--Example of the database adapter's select() method--></title>
+            <title>Пример использования метода select() адаптера БД</title>
             <programlisting role="php"><![CDATA[<?php
 
 $db = Zend_Db::factory( ...опции... );
-$select = $db->select();
-
-?>]]></programlisting>
+$select = $db->select();]]></programlisting>
         </example>
 
         <para>
             Другой способ состоит в создании объекта Zend_Db_Select через
             конструктор, при этом в качестве аргумента указывается адаптер БД.
-<!--
-            Another way to create a Zend_Db_Select object is with its
-            constructor, specifying the database adapter as an argument.
--->
         </para>
 
         <example id="zend.db.select.creating.example-new">
-            <title>Пример создания нового объекта Select<!--Example of creating a new Select object--></title>
+            <title>Пример создания нового объекта Select</title>
             <programlisting role="php"><![CDATA[<?php
 
 $db = Zend_Db::factory( ...опции... );
-$select = new Zend_Db_Select($db);
-
-?>]]></programlisting>
+$select = new Zend_Db_Select($db);]]></programlisting>
         </example>
 
     </sect2>
 
     <sect2 id="zend.db.select.building">
 
-        <title>Построение запросов Select<!--Building Select queries--></title>
+        <title>Построение запросов Select</title>
 
         <para>
             При построении запроса вы можете добавлять по одному его
             предложения. Предложение - это часть SQL-оператора, не
             представляющая собой законченный оператор; например, предложение
-            WHERE. Для каждого предложения есть отдельный метод Zend_Db_Select.
-<!--
-            When building the query, you can add clauses of the query
-            one by one.  There is a separate method to add each clause
-            to the Zend_Db_Select object.
--->
+            WHERE. Для каждого предложения есть свой метод Zend_Db_Select.
         </para>
 
         <example id="zend.db.select.building.example">
-            <title>Пример использования методов для добавления предложений<!--Example of the using methods to add clauses--></title>
+            <title>Пример использования методов для добавления предложений</title>
             <programlisting role="php"><![CDATA[<?php
 
 // Создание объекта Zend_Db_Select
@@ -153,9 +116,7 @@ $select->from( ...определение таблицы и столбцов... )
 $select->where( ...определение критериев поиска... )
 
 // Добавление предложения ORDER BY
-$select->order( ...определение критериев сортировки... );
-
-?>]]></programlisting>
+$select->order( ...определение критериев сортировки... );]]></programlisting>
         </example>
 
         <para>
@@ -164,59 +125,39 @@ $select->order( ...определение критериев сортировк�
             Fluent interface означает, что каждый метод возвращает ссылку на
             тот объект, в котором он был вызван, поэтому вы можете вызывать
             другой метод непосредственно за ним.
-<!--
-            You also can use most methods of the Zend_Db_Select object with a
-            convenient fluent interface.  A fluent interface means that each
-            method returns a reference to the object on which it was called,
-            so you can immediately call another method.
--->
         </para>
 
         <example id="zend.db.select.building.example-fluent">
-            <title>Пример использования fluent interface<!--Example of the using the fluent interface--></title>
+            <title>Пример использования fluent interface</title>
             <programlisting role="php"><![CDATA[<?php
 
 $select = $db->select()
     ->from( ...определение таблицы и столбцов... )
     ->where( ...определение критериев поиска... )
-    ->order( ...определение критериев сортировки... );
-
-?>]]></programlisting>
+    ->order( ...определение критериев сортировки... );]]></programlisting>
         </example>
 
         <para>
-            Этот пример демонстрирует применение fluent interface, но во
-            всех случаях вы можете использовать стандартный подход. Часто
-            необходимо использовать стандартный подход - например, когда
+            Этот пример демонстрирует применение fluent interface, но в любом
+            случае вы можете использовать стандартный подход. Часто
+            бывает необходимо использовать стандартный подход - например, когда
             нужно выполнить некоторую логику до добавления предложения в запрос.
-<!--
-            The examples in this section show usage of the fluent interface,
-            but you can use the non-fluent interface in all cases.
-            It is often necessary to use the non-fluent interface, for example,
-            if your application needs to perform some logic before adding a
-            clause to a query.
--->
         </para>
 
         <sect3 id="zend.db.select.building.from">
 
-            <title>Добавление предложения FROM<!--Adding a FROM clause--></title>
+            <title>Добавление предложения FROM</title>
 
             <para>
                 Указывайте таблицу для запроса, используя метод
                 <code>from()</code>. Вы можете задавать имя таблицы в виде
-                обычной строки, Zend_Db_Select добавит идентификатор, заключив в
-                кавычки имя таблицы, поэтому вы можете использовать спецсимволы.
-<!--
-                Specify the table for this query using the <code>from()</code>
-                method.  You can specify the table name as a simple string.
-                Zend_Db_Select applies identifier quoting around the table name,
-                so you can use special characters.
--->
+                простой строки, Zend_Db_Select добавит идентификатор, заключив в
+                кавычки имя таблицы, поэтому вы можете использовать специальные
+                символы.
             </para>
 
             <example id="zend.db.select.building.from.example">
-                <title>Пример использования метода from()<!--Example of the from() method--></title>
+                <title>Пример использования метода from()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -224,9 +165,7 @@ $select = $db->select()
 //   FROM "products"
 
 $select = $db->select()
-    ->from( 'products' );
-
-?>]]></programlisting>
+    ->from( 'products' );]]></programlisting>
             </example>
 
             <para>
@@ -239,19 +178,10 @@ $select = $db->select()
                 уникальные корреляционные имена, основанные на именах таблиц,
                 для всех таблиц, для которых не были заданы корреляционные
                 имена.
-<!--
-                You can also specify the correlation name (sometimes called the
-                "table alias") for a table.  Instead of a simple string, use an
-                associative array mapping the correlation name to the table
-                name.  In other clauses of the SQL query, use this correlation
-                name.  If your query joins more than one table, Zend_Db_Select
-                generates unique correlation names based on the table names,
-                for any tables for which you don't specify the correlation name.
--->
             </para>
 
             <example id="zend.db.select.building.from.example-cname">
-                <title>Пример задания корреляционного имени таблицы<!--Example of specifying a table correlation name--></title>
+                <title>Пример задания корреляционного имени таблицы</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -259,9 +189,7 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from( array('p' => 'products') );
-
-?>]]></programlisting>
+    ->from( array('p' => 'products') );]]></programlisting>
             </example>
 
             <para>
@@ -269,16 +197,10 @@ $select = $db->select()
                 можете задавать имя таблицы в виде
                 "<code>имяСхемы.имяТаблицы</code>". Zend_Db_Select заключит в
                 кавычки все части по отдельности.
-<!--
-                Some RDBMS brands support a leading schema specifier for a
-                table.  You can specify the table name as
-                "<code>schemaName.tableName</code>".
-                Zend_Db_Select quotes each part individually.
--->
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
-                <title>Пример задания имени схемы<!--Example of specifying a schema name--></title>
+                <title>Пример задания имени схемы</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -288,26 +210,23 @@ $select = $db->select()
 $select = $db->select()
     ->from( 'myschema.products' );
 
-?>]]></programlisting>
+// или
+
+$select = $db->select()
+    ->from('products', '*', 'myschema');]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.columns">
 
-            <title>Добавление колонок<!--Adding Columns--></title>
+            <title>Добавление колонок</title>
 
             <para>
                 Во втором аргументе метода <code>from()</code> вы можете
                 задавать столбцы для выборки из соответствующей таблицы. Если вы
                 не укажете столбцы для выборки, то по умолчанию будет подставлен
                 метасимвол "<code>*</code>", означающий "все столбцы".
-<!--
-                In the second argument of the <code>from()</code> method,
-                you can specify the columns to select from the respective
-                table.  If you specify no columns, the default is
-                "<code>*</code>", the SQL wildcard for "all columns".
--->
             </para>
 
             <para>
@@ -315,13 +234,14 @@ $select = $db->select()
                 в ассоциативном массиве псевдонимов столбцов и их имен. Если в
                 запросе нужен только один столбец, и к нему не нужен псевдоним,
                 то можно передать строку с его именем вместо массива.
-<!--
-                You can list the columns in a simple array of strings,
-                or as an associative mapping of column alias to column name.
-                If you only have one column to query, and you don't need to
-                specify a column alias, you can list it as a plain string
-                instead of an array.
--->
+            </para>
+
+            <para>
+                Если вы передали пустой массив в качестве аргумента для
+                столбцов, то ни один столбец из соответствующей таблицы не будет
+                включен в результат выборки. См.
+                <link linkend="zend.db.select.building.join.example-no-columns">пример
+                кода</link> в разделе про метод <code>join()</code>.
             </para>
 
             <para>
@@ -331,19 +251,10 @@ $select = $db->select()
                 корреляционное имя для столбца, то используется корреляционное
                 имя таблицы, указанной в текущем вызове метода
                 <code>from()</code>.
-<!--
-                You can specify the column name as
-                "<code>correlationName.columnName</code>".
-                Zend_Db_Select quotes each part individually.
-                If you don't specify a correlation name for a
-                column, it uses the correlation name for the
-                table named in the current <code>from()</code>
-                method.
--->
             </para>
 
             <example id="zend.db.select.building.columns.example">
-                <title>Пример определения столбцов<!--Examples of specifying columns--></title>
+                <title>Пример указания столбцов</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -368,16 +279,14 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('prodno' => 'product_id', 'product_name'));
-
-?>]]></programlisting>
+        array('prodno' => 'product_id', 'product_name'));]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.columns-expr">
 
-            <title>Добавление столбцов выражений<!--Adding Expression Columns--></title>
+            <title>Добавление столбцов выражений</title>
 
             <para>
                 Столбцы в SQL-запросах иногда представляют собой выражения, а не
@@ -385,31 +294,16 @@ $select = $db->select()
                 корреляционные имена и заключаться в кавычки. Если строка,
                 обозначающая столбец запроса, содержит скобки, то Zend_Db_Select
                 распознает ее как выражение.
-<!--
-                Columns in SQL queries are sometimes expressions, not simply
-                column names from a table.  Expressions should not have
-                correlation names or quoting applied.
-                If your column string contains parentheses, Zend_Db_Select
-                recognizes it as an expression.
--->
             </para>
 
             <para>
                 Вы можете также явно создавать объект типа Zend_Db_Expr для
                 того, чтобы предотвратить ошибочное распознавание строки как
-                имени столбца. Zend_Db_Expr - минимальный класс, содержащий
+                имени столбца. Zend_Db_Expr - мини-класс, содержащий
                 только строку. Zend_Db_Select распознает объекты типа
                 Zend_Db_Expr и преобразует их обратно в строку, но без таких
                 действий, как заключение в кавычки и добавление корелляционных
                 имен.
-<!--
-                You also can create an object of type Zend_Db_Expr explicitly,
-                to prevent a string from being treated as a column name.
-                Zend_Db_Expr is a minimal class that contains a single string.
-                Zend_Db_Select recognizes objects of type Zend_Db_Expr and
-                converts them back to string, but does not apply any
-                alterations, such as quoting or correlation names.
--->
             </para>
 
             <note>
@@ -419,17 +313,11 @@ $select = $db->select()
                     выражение по скобкам и оперирует строкой как выражением,
                     пропуская такие действия, как заключение в кавычки и
                     добавление корреляционных имен.
-<!--
-                    Using Zend_Db_Expr for column names is not necessary if your
-                    column expression contains parentheses; Zend_Db_Select
-                    recognizes parentheses and treats the string as an expression,
-                    skipping quoting and correlation names.
--->
                 </para>
             </note>
 
             <example id="zend.db.select.building.columns-expr.example">
-                <title>Пример указания столбцов, содержащих выражения<!--Examples of specifying columns containing expressions--></title>
+                <title>Пример указания столбцов, содержащих выражения</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -455,9 +343,7 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));
-
-?>]]></programlisting>
+        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));]]></programlisting>
             </example>
 
             <para>
@@ -465,31 +351,16 @@ $select = $db->select()
                 добавления корреляционных имен или заключения идентификаторов в
                 кавычки. Если эти изменения необходимы для исключения
                 неоднозначности, то вы должны произвести их в строке вручную.
-<!--
-                In the cases above, Zend_Db_Select does not alter the
-                string to apply correlation names or identifier quoting.
-                If those changes are necessary to resolve ambiguity,
-                you must make the changes manually in the string.
--->
             </para>
 
             <para>
                 Если имена столбцов являются ключевыми словами SQL или содержат
-                спецсимволы, то следует использовать метод адаптера
+                специальные символы, то следует использовать метод адаптера
                 <code>quoteIdentifier()</code> и включать результат в строку.
                 Метод <code>quoteIdentifier()</code> использует заключение в
                 кавычки для ограничения идентификатора, тем самым обозначается,
                 что это идентификатор таблицы или столбца, а не другая часть
                 синтаксиса SQL.
-<!--
-                If your column names are SQL keywords or contain special
-                characters, you should use the Adapter's
-                <code>quoteIdentifier()</code> method and interpolate the
-                result into the string.  The <code>quoteIdentifier()</code>
-                method uses SQL quoting to delimit the identifier, which
-                makes it clear that it is an identifier for a table or
-                a column, and not any other part of SQL syntax.
--->
             </para>
 
             <para>
@@ -501,20 +372,10 @@ $select = $db->select()
                 использует соответствующие символы кавычек, основываясь на типе
                 адаптера. <code>quoteIdentifier()</code> также экранирует
                 символы кавычек в самом идентификаторе.
-<!--
-                Your code is more database-independent if you use the
-                <code>quoteIdentifier()</code> method instead of typing
-                quotes literally in your string, because some RDBMS brands use
-                nonstandard symbols for quoting identifiers.
-                The <code>quoteIdentifier()</code> method is designed to use
-                the appropriate quoting symbols based on the adapter type.
-                The <code>quoteIdentifier()</code> method also escapes any quote
-                characters that appear within the identifier name itself.
--->
             </para>
 
             <example id="zend.db.select.building.columns-quoteid.example">
-                <title>Пример заключения в кавычки столбцов в выражении<!--Examples of quoting columns in an expression--></title>
+                <title>Пример заключения в кавычки столбцов в выражении</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строится следующий запрос, при этом имя столбца "from" в выражении
@@ -524,16 +385,14 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'),
-        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));
-
-?>]]></programlisting>
+        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.join">
 
-            <title>Добавление в запрос другой таблицы через JOIN<!--Adding Another Table to the Query with JOIN--></title>
+            <title>Добавление в запрос другой таблицы c помощью JOIN</title>
 
             <para>
                 Многие полезные запросы используют <code>JOIN</code> для
@@ -543,18 +402,10 @@ $select = $db->select()
                 использование <code>from()</code> за тем исключением, что в
                 большинстве случаев вам нужно будет также указать условие
                 объединения.
-<!--
-                Many useful queries involve using a <code>JOIN</code>
-                to combine rows from multiple tables.  You can add
-                tables to a Zend_Db_Select query using the
-                <code>join()</code> method.  Using this method is
-                similar to the <code>from()</code> method, except
-                you can also specify a join condition in most cases.
--->
             </para>
 
             <example id="zend.db.select.building.join.example">
-                <title>Пример использования метода join()<!--Example of the join() method--></title>
+                <title>Пример использования метода join()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -566,9 +417,7 @@ $select = $db->select()
     ->from(array('p' => 'products'),
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id');
-
-?>]]></programlisting>
+        'p.product_id = l.product_id');]]></programlisting>
             </example>
 
             <para>
@@ -577,13 +426,6 @@ $select = $db->select()
                 при выполнении которого строки в одной таблице объединяются со
                 сроками в другой таблице. Вы можете использовать корреляционные
                 имена в этом выражении.
-<!--
-                The second argument to <code>join()</code> is a string
-                that is the join condition.  This is an expression that
-                declares the criteria by which rows in one table match
-                rows in the the other table.  You can use correlation
-                names in this expression.
--->
             </para>
 
             <note>
@@ -593,12 +435,6 @@ $select = $db->select()
                     заключить в кавычки имена столбцов, то используйте
                     <code>quoteIdentifier()</code> при формировании строки
                     условия объединения.
-<!--
-                    No quoting is applied to the expression you specify
-                    for the join condition; if you have column names that need
-                    to be quoted, you must use <code>quoteIdentifier()</code>
-                    as you form the string for the join condition.
--->
                 </para>
             </note>
 
@@ -609,32 +445,18 @@ $select = $db->select()
                 поддерживаются корреляционные имена, выражения и Zend_Db_Expr -
                 так же, как и в случае массива столбцов для метода
                 <code>from()</code>.
-<!--
-                The third argument to <code>join()</code> is an array
-                of column names, like that used in the <code>from()</code>
-                method.  It defaults to "<code>*</code>", supports correlation
-                names, expressions, and Zend_Db_Expr in the same way as the
-                array of column names in the <code>from()</code> method.
--->
             </para>
 
             <para>
                 Если из таблицы не нужно выбирать столбцы, то используйте пустой
                 массив вместо перечисления столбцов. Это работает и для метода
                 <code>from()</code>, но обычно требуется извлечь часть столбцов
-                из основной таблицы в запросе, при этом могут не требоваться
-                столбцы из присоединяемой таблицы.
-<!--
-                To select no columns from a table, use an empty array for
-                the list of columns.  This usage works in the
-                <code>from()</code> method too, but typically you want
-                some columns from the primary table in your queries,
-                whereas you might want no columns from a joined table.
--->
+                из основной таблицы в запросе, при этом может не требоваться
+                получение столбцов из присоединяемой таблицы.
             </para>
 
             <example id="zend.db.select.building.join.example-no-columns">
-                <title>Пример извлечения без столбцов<!--Examples of specifying no columns--></title>
+                <title>Пример извлечения без столбцов</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -647,16 +469,10 @@ $select = $db->select()
         array('product_id', 'product_name'))
     ->join(array('l' => 'line_items'),
         'p.product_id = l.product_id',
-        array() ); // пустой список столбцов
-
-?>]]></programlisting>
+        array() ); // пустой список столбцов]]></programlisting>
                 <para>
                     Обратите внимание на пустой <code>array()</code> в примере
                     выше вместо списка столбцов из присоединяемой таблицы.
-<!--
-                    Note the empty <code>array()</code> in the above example
-                    in place of a list of columns from the joined table.
--->
                 </para>
             </example>
 
@@ -664,11 +480,6 @@ $select = $db->select()
                 SQL имеет несколько типов объединений. Ниже приведен список
                 методов для поддержки различных типов объединений в
                 Zend_Db_Select.
-<!--
-                SQL has several types of joins.
-                See the list below for the methods to support
-                different join types in Zend_Db_Select.
--->
             </para>
 
             <itemizedlist>
@@ -677,11 +488,6 @@ $select = $db->select()
                         <command>INNER JOIN</command>, методы
                         <code>join(table, join, [columns])</code>
                         и <code>joinInner(table, join, [columns])</code>.
-<!--
-                        <command>INNER JOIN</command> with the
-                        <code>join(table, join, [columns])</code>
-                        or <code>joinInner(table, join, [columns])</code> methods.
--->
                     </para>
                     <para>
                         Возможно, наиболее часто используемый тип объединения.
@@ -690,55 +496,28 @@ $select = $db->select()
                         себя только те строки, которые удовлетворяют условию
                         объединения. Результат может быть пустым, если ни одна
                         строка не удовлетворяет этому условию.
-<!--
-                        This may be the most common type of join.  Rows from
-                        each table are compared using the join condition you
-                        specify.  The result set includes only the rows that
-                        satisfy the join condition.  The result set can be
-                        empty if no rows satisfy this condition.
--->
                     </para>
                     <para>
                         Все СУРБД поддерживают этот тип объединения.
-<!--
-                        All RDBMS brands support this join type.
--->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <command>LEFT JOIN</command>, метод <code>joinLeft(table, condition, [columns])</code>.
-<!--
-                        <command>LEFT JOIN</command> with the
-                        <code>joinLeft(table, condition, [columns])</code> method.
--->
                     </para>
                     <para>
                         В результат входят все строки из таблицы слева и все
                         соответствующие строки из таблицы справа. Если нет
                         соответствующих строк из таблицы справа, то
                         соответствующие столбцы в результате заполняются NULL.
-<!--
-                        All rows from the left operand table are included,
-                        matching rows from the right operand table included,
-                        and the columns from the right operand table are filled
-                        with NULLs if no row exists matching the left table.
--->
                     </para>
                     <para>
                         Все СУРБД поддерживают этот тип объединения.
-<!--
-                        All RDBMS brands support this join type.
--->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <command>RIGHT JOIN</command>, метод <code>joinRight(table, condition, [columns])</code>.
-<!--
-                        <command>RIGHT JOIN</command> with the
-                        <code>joinRight(table, condition, [columns])</code> method.
--->
                     </para>
                     <para>
                         Правое внешнее объединение дополняет левое внешнее
@@ -746,34 +525,18 @@ $select = $db->select()
                         справа и все соответствующие строки из таблицы слева.
                         Если нет соответствующих строк из таблицы слева, то
                         соответствующие столбцы в результате заполняются NULL.
-<!--
-                        Right outer join is the complement of left outer join.
-                        All rows from the right operand table are included,
-                        matching rows from the left operand table included,
-                        and the columns from the left operand table are filled
-                        with NULLs if no row exists matching the right table.
--->
                     </para>
                     <para>
                         Некоторые СУРБД не поддерживают этот тип объединения,
                         но, как правило, любое правое объединение может быть
                         заменено на левое посредством изменения порядка таблиц
                         на обратный.
-<!--
-                        Some RDBMS brands don't support this join type, but
-                        in general any right join can be represented as a left
-                        join by reversing the order of the tables.
--->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <command>FULL JOIN</command>, метод
                         <code>joinFull(table, condition, [columns])</code>.
-<!--
-                        <command>FULL JOIN</command> with the
-                        <code>joinFull(table, condition, [columns])</code> method.
--->
                     </para>
                     <para>
                         Полное внешнее объединение является как бы комбинацией
@@ -782,30 +545,15 @@ $select = $db->select()
                         в одну строку результата, если соответствуют условию
                         объединения, иначе объединяются с NULL вместо значений
                         столбцов из другой таблицы.
-<!--
-                        A full outer join is like combining a left outer join
-                        and a right outer join.  All rows from both tables are
-                        included, paired with each other on the same row of the
-                        result set if they satisfy the join condition, and
-                        otherwise paired with NULLs in place of columns from the
-                        other table.
--->
                     </para>
                     <para>
                         Некоторые СУРБД не поддерживают этот тип объединения.
-<!--
-                        Some RDBMS brands don't support this join type.
--->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <command>CROSS JOIN</command>, метод
                         <code>joinCross(table, [columns])</code>.
-<!--
-                        <command>CROSS JOIN</command> with the
-                        <code>joinCross(table, [columns])</code> method.
--->
                     </para>
                     <para>
                         Перекрестное объединение является декартовым
@@ -816,61 +564,30 @@ $select = $db->select()
                         фильтровать результат, используя условие в предложении
                         WHERE, в этом случае перекрестное объединение подобно
                         старому синтаксису объединений в SQL-89.
-<!--
-                        A cross join is a Cartesian product.
-                        Every row in the first table is matched to every
-                        row in the second table.  Therefore the number of
-                        rows in the result set is equal to the product of
-                        the number of rows in each table.  You can filter
-                        the result set using conditions in a WHERE clause;
-                        in this way a cross join is similar to the old SQL-89
-                        join syntax.
--->
                     </para>
                     <para>
                         Метод <code>joinCross()</code> не имеет параметров для
                         определения условий объединения. Некоторые СУРБД не
                         поддерживают этот тип объединения.
-<!--
-                        The <code>joinCross()</code> method has no parameter
-                        to specify the join condition.
-                        Some RDBMS brands don't support this join type.
--->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         <command>NATURAL JOIN</command>, метод
                         <code>joinNatural(table, [columns])</code>.
-<!--
-                        <command>NATURAL JOIN</command> with the
-                        <code>joinNatural(table, [columns])</code> method.
--->
                     </para>
                     <para>
-                        Естетственное объединение сравнивает столбцы, имеющие
+                        Естественное объединение сравнивает столбцы, имеющие
                         одинаковые имена в обоих таблицах. Проверка производится
                         на равенство; проверка на неравенство не является
-                        естетственным объединением.
-                        Этим API поддерживаются только внутренние естетственные
-                        объединения, даже если SQL поддерживает внешние
-                        естетственные объединения.
-<!--
-                        A natural join compares any column(s) that appear with
-                        the same name in both tables.  The comparison is
-                        equality of all the column(s); comparing the columns
-                        using inequality is not a natural join.
-                        Only natural inner joins are supported by this API,
-                        even though SQL permits natural outer joins as well.
--->
+                        естественным объединением.
+                        Данным API поддерживаются только внутренние
+                        естественные объединения, даже если SQL поддерживает
+                        внешние естественные объединения.
                     </para>
                     <para>
                         Метод <code>joinNatural()</code> не имеет параметров для
                         определения условий объединения.
-<!--
-                        The <code>joinNatural()</code> method has no parameter
-                        to specify the join condition.
--->
                     </para>
                 </listitem>
             </itemizedlist>
@@ -879,23 +596,17 @@ $select = $db->select()
 
         <sect3 id="zend.db.select.building.where">
 
-            <title>Добавление предложения WHERE<!--Adding a WHERE Clause--></title>
+            <title>Добавление предложения WHERE</title>
 
             <para>
                 Вы можете задавать условия для ограничения строк в результате
                 выборки, используя метод <code>where()</code>. Первым аргументом
                 этого метода является SQL-выражение, которое используется в
                 предложении <code>WHERE</code> в данном запросе.
-<!--
-                You can specify criteria for restricting rows of the result set
-                using the <code>where()</code> method.  The first argument of
-                this method is a SQL expression, and this expression is used
-                in a SQL <code>WHERE</code> clause in the query.
--->
             </para>
 
             <example id="zend.db.select.building.where.example">
-                <title>Пример использования метода where()<!--Example of the where() method--></title>
+                <title>Пример использования метода where()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строится запрос:
@@ -907,9 +618,7 @@ $select = $db->select()
     ->from(
         'products',
         array('product_id', 'product_name', 'price'))
-    ->where('price > 100.00');
-
-?>]]></programlisting>
+    ->where('price > 100.00');]]></programlisting>
             </example>
 
             <note>
@@ -920,13 +629,6 @@ $select = $db->select()
                     были заключены в кавычки, то используйте метод
                     <code>quoteIdentifier()</code> при формировании строки
                     условия.
-<!--
-                    No quoting is applied to expressions given to the
-                    <code>where()</code> or <code>orWhere()</code> methods.
-                    If you have column names that need to be quoted, you must use
-                    <code>quoteIdentifier()</code> as you form the string for the
-                    condition.
--->
                 </para>
             </note>
 
@@ -935,12 +637,6 @@ $select = $db->select()
                 опциональным. Это значение подставляется в выражение.
                 Zend_Db_Select заключает это значение в кавычки и подставляет
                 вместо знака вопроса ("<code>?</code>") в выражении.
-<!--
-                The second argument to the <code>where()</code> method is
-                optional.  It is a value to substitute into the expression.
-                Zend_Db_Select quotes the value and substitutes it for a
-                question-mark ("<code>?</code>") symbol in the expression.
--->
             </para>
 
             <para>
@@ -948,16 +644,10 @@ $select = $db->select()
                 подставляется несколько значений, то нужно сформировать строку
                 вручную, вставляя переменные и заключая их в кавычки
                 самостоятельно.
-<!--
-                This method accepts only one parameter.
-                If you have an expression into which you need to substitute
-                multiple variables, you must format the string manually,
-                interpolating variables and performing quoting yourself.
--->
             </para>
 
             <example id="zend.db.select.building.where.example-param">
-                <title>Пример параметра в методе where()<!--Example of a parameter in the where() method--></title>
+                <title>Пример параметра в методе where()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -971,25 +661,18 @@ $select = $db->select()
     ->from(
         'products',
         array('product_id', 'product_name', 'price'))
-    ->where('price > ?', $minimumPrice);
-
-?>]]></programlisting>
+    ->where('price > ?', $minimumPrice);]]></programlisting>
             </example>
 
             <para>
                 Вы можете вызывать метод <code>where()</code> несколько раз на
-                одном и том же объекте Zend_Db_Select. Результрирующий запрос
+                одном и том же объекте Zend_Db_Select. Результирующий запрос
                 объединяет в себе все термы с добавлением <code>AND</code>
                 между ними.
-<!--
-                You can invoke the <code>where()</code> method multiple times
-                on the same Zend_Db_Select object.  The resulting query combines
-                the multiple terms together using <code>AND</code> between them.
--->
             </para>
 
             <example id="zend.db.select.building.where.example-and">
-                <title>Пример нескольких вызовов метода where()<!--Example of multiple where() methods--></title>
+                <title>Пример нескольких вызовов метода where()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1005,9 +688,7 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where('price > ?', $minimumPrice)
-    ->where('price < ?', $maximumPrice);
-
-?>]]></programlisting>
+    ->where('price < ?', $maximumPrice);]]></programlisting>
             </example>
 
             <para>
@@ -1017,17 +698,10 @@ $select = $db->select()
                 <code>where()</code>, за тем исключением, что определенный в
                 этом вызове терм добавляется вместе с <code>OR</code> вместо
                 <code>AND</code>.
-<!--
-                If you need to combine terms together using <code>OR</code>,
-                use the <code>orWhere()</code> method.  This method is used
-                in the same way as the <code>where()</code> method, except
-                that the term specified is preceded by <code>OR</code>,
-                instead of <code>AND</code>.
--->
             </para>
 
             <example id="zend.db.select.building.where.example-or">
-                <title>Пример использования метода orWhere()<!--Example of the orWhere() method--></title>
+                <title>Пример использования метода orWhere()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1043,28 +717,19 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where('price < ?', $minimumPrice)
-    ->orWhere('price > ?', $maximumPrice);
-
-?>]]></programlisting>
+    ->orWhere('price > ?', $maximumPrice);]]></programlisting>
             </example>
 
             <para>
                 Zend_Db_Select автоматически заключает в скобки все выражения,
                 которые вы добавляете через методы <code>where()</code> или
                 <code>orWhere()</code>. Это позволяет быть уверенным в том, что
-                приоритет булевых операторов не вызовет другой результат вместо
-                ожидаемого.
-<!--
-                Zend_Db_Select automatically puts parentheses around each
-                expression you specify using the <code>where()</code> or
-                <code>orWhere()</code> methods.  This helps to ensure that
-                Boolean operator precedence does not cause unexpected
-                results.
--->
+                приоритет булевых операторов не приведет к другому результату
+                вместо ожидаемого.
             </para>
 
             <example id="zend.db.select.building.where.example-parens">
-                <title>Пример заключения булевых выражений в скобки<!--Example of parenthesizing Boolean expressions--></title>
+                <title>Пример заключения булевых выражений в скобки</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1081,9 +746,7 @@ $select = $db->select()
     ->from('products',
         array('product_id', 'product_name', 'price'))
     ->where("price < $minimumPrice OR price > $maximumPrice")
-    ->where('product_name = ?', $prod);
-
-?>]]></programlisting>
+    ->where('product_name = ?', $prod);]]></programlisting>
             </example>
 
             <para>
@@ -1093,33 +756,19 @@ $select = $db->select()
                 Таким образом, результатом является то, что каждое выражение,
                 добавленное в успешных вызовах <code>where()</code> более
                 связанно, чем <code>AND</code>, объединяющее эти выражения.
-<!--
-                In the example above, the results would be quite different
-                without the parentheses, because <code>AND</code> has higher
-                precedence than <code>OR</code>.  Zend_Db_Select applies the
-                parentheses so the effect is that each expression in successive
-                calls to the <code>where()</code> bind more tightly than the
-                <code>AND</code> that combines the expressions.
--->
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.group">
 
-            <title>Добавление предложения GROUP BY<!--Adding a GROUP BY Clause--></title>
+            <title>Добавление предложения GROUP BY</title>
 
             <para>
-                В SQL выражение <code>GROUP BY</code> позволяет ограничить
+                В языке SQL выражение <code>GROUP BY</code> позволяет ограничить
                 количество строк в результатах запроса до одной стоки на каждое
                 уникальное значение в столбцах, перечисленных в предложении
                 <code>GROUP BY</code>.
-<!--
-                In SQL, the <code>GROUP BY</code> clause allows you
-                to reduce the rows of a query result set to one row per
-                unique value found in the column(s) named in the
-                <code>GROUP BY</code> clause.
--->
             </para>
 
             <para>
@@ -1127,17 +776,10 @@ $select = $db->select()
                 определения групп строк, через метод <code>group()</code>.
                 Аргументом этого метода является столбец или массив столбцов для
                 подстановки в предложение <code>GROUP BY</code>.
-<!--
-                In Zend_Db_Select, you can specify the column(s) to use
-                for calculating the groups of rows using the
-                <code>group()</code> method.  The argument to this
-                method is a column or an array of columns to use in
-                the <code>GROUP BY</code> clause.
--->
             </para>
 
             <example id="zend.db.select.building.group.example">
-                <title>Пример использования метода group()<!--Example of the group() method--></title>
+                <title>Пример использования метода group()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1152,9 +794,7 @@ $select = $db->select()
     ->join(array('l' => 'line_items'),
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
-    ->group('p.product_id');
-
-?>]]></programlisting>
+    ->group('p.product_id');]]></programlisting>
             </example>
 
             <para>
@@ -1163,19 +803,13 @@ $select = $db->select()
                 столбцы заключаются в кавычки в качестве идентификаторов, если
                 строка не содержит скобок или является объектом типа
                 Zend_Db_Expr.
-<!--
-                Like the columns array in the <code>from()</code> method, you
-                can use correlation names in the column name strings, and the
-                column is quoted as an identifier unless the string contains
-                parentheses or is an object of type Zend_Db_Expr.
--->
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.having">
 
-            <title>Добавление предложения HAVING<!--Adding a HAVING Clause--></title>
+            <title>Добавление предложения HAVING</title>
 
             <para>
                 В SQL предложение <code>HAVING</code> применяет условие
@@ -1184,15 +818,6 @@ $select = $db->select()
                 Но эти предложения не являются идентичными, поскольку условия
                 <code>WHERE</code> применяются до группировки, в то время как
                 условия <code>HAVING</code> применяется после группировки.
-<!--
-                In SQL, the <code>HAVING</code> clause applies a restriction
-                condition on groups of rows.  This is similar to how a
-                <code>WHERE</code> clause applies a restriction condition on rows.
-                But the two clauses are different because <code>WHERE</code>
-                conditions are applied before groups are defined, whereas
-                <code>HAVING</code> conditions are applied after groups are
-                defined.
--->
             </para>
 
             <para>
@@ -1207,22 +832,10 @@ $select = $db->select()
                 <code>AND</code> или через булевый оператор
                 <code>OR</code>, если вы используете метод
                 <code>orHaving()</code>.
-<!--
-                In Zend_Db_Select, you can specify conditions for restricting
-                groups using the <code>having()</code> method.  Its usage is
-                similar to that of the <code>where()</code> method.
-                The first argument is a string containing a SQL expression.
-                The optional second argument is a value that is used to replace
-                a positional parameter placeholder in the SQL expression.
-                Expressions given in multiple invocations of the
-                <code>having()</code> method are combined using the Boolean
-                <code>AND</code> operator, or the <code>OR</code> operator if
-                you use the <code>orHaving()</code> method.
--->
             </para>
 
             <example id="zend.db.select.building.having.example">
-                <title>Пример использования метода having()<!--Example of the having() method--></title>
+                <title>Пример использования метода having()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1239,9 +852,7 @@ $select = $db->select()
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
     ->group('p.product_id')
-    ->having('line_items_per_product > 10');
-
-?>]]></programlisting>
+    ->having('line_items_per_product > 10');]]></programlisting>
             </example>
 
             <note>
@@ -1252,13 +863,6 @@ $select = $db->select()
                     которые требуется заключить в кавычки, то используйте
                     <code>quoteIdentifier()</code> при формировании строки
                     условия.
-<!--
-                    No quoting is applied to expressions given to the
-                    <code>having()</code> or <code>orHaving()</code> methods.
-                    If you have column names that need to be quoted, you must use
-                    <code>quoteIdentifier()</code> as you form the string for the
-                    condition.
--->
                 </para>
             </note>
 
@@ -1266,11 +870,11 @@ $select = $db->select()
 
         <sect3 id="zend.db.select.building.order">
 
-            <title>Добавление предложения ORDER BY<!--Adding an ORDER BY Clause--></title>
+            <title>Добавление предложения ORDER BY</title>
 
             <para>
                 В SQL предложение <code>ORDER BY</code> задает один или более
-                столбцов (или выражения) по которым сортируется результат
+                столбцов (или выражений), по которым сортируется результат
                 запроса. Если перечислено несколько столбцов, то вторичные
                 столбцы используются для принятия решения в ситуации "ничьи":
                 если первичные столбцы содержат идентичные значения, то порядок
@@ -1279,34 +883,16 @@ $select = $db->select()
                 также производить для данного столбца сортировку от больших
                 значений к меньшим, указав ключевое слово <code>DESC</code>
                 после этого столбца.
-<!--
-                In SQL, the <code>ORDER BY</code> clause specifies one or more
-                columns or expressions by which the result set of a query is
-                sorted.  If multiple columns are listed, the secondary columns
-                are used to resolve ties; the sort order is determined by the
-                secondary columns if the preceding columns contain identical
-                values.  The default sorting is from least value to greatest
-                value.  You can also sort by greatest value to least value for
-                a given column in the list by specifying the keyword
-                <code>DESC</code> after that column.
--->
             </para>
 
             <para>
                 В Zend_Db_Select вы можете использовать метод
                 <code>order()</code> для определения столбца или массива
-                столбцов, по которым производится стортировка. Каждый элемент
+                столбцов, по которым производится сортировка. Каждый элемент
                 массива является строкой с именем столбца, опционально строка
                 может содержать ключевое слово <code>ASC</code> или
                 <code>DESC</code> после имени столбца и отделенное от него
                 пробелом.
-<!--
-                In Zend_Db_Select, you can use the <code>order()</code> method
-                to specify a column or an array of columns by which to sort.
-                Each element of the array is a string naming a column.
-                optionally with the <code>ASC</code> <code>DESC</code> keyword
-                following it, separated by a space.
--->
             </para>
 
             <para>
@@ -1314,16 +900,10 @@ $select = $db->select()
                 <code>group()</code>, имена столбцов заключаются в кавычки в
                 качестве идентификаторов, если они не содержат скобки и не
                 являются объектами Zend_Db_Expr.
-<!--
-                Like in the <code>from()</code> and <code>group()</code>
-                methods, column names are quoted as identifiers, unless they
-                contain contain parentheses or are an object of type
-                Zend_Db_Expr.
--->
             </para>
 
             <example id="zend.db.select.building.order.example">
-                <title>Пример использования метода order()<!--Example of the order() method--></title>
+                <title>Пример использования метода order()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1340,35 +920,23 @@ $select = $db->select()
         'p.product_id = l.product_id',
         array('line_items_per_product' => 'COUNT(*)'))
     ->group('p.product_id')
-    ->order(array('line_items_per_product DESC', 'product_id'));
-
-?>]]></programlisting>
+    ->order(array('line_items_per_product DESC', 'product_id'));]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.limit">
 
-            <title>Добавление предложения LIMIT<!--Adding a LIMIT Clause--></title>
+            <title>Добавление предложения LIMIT</title>
 
             <para>
                 Некоторые СУРБД расширяют язык SQL предложением, известным как
-                <code>LIMIT</code>. Это предложение ограничивает количество
-                строк в результате запроса до заданного вами количества.
-                Вы можете также задать количество пропускаемых до начала вывода
-                строк. Эта возможность облегчает выборку подмножества строк
-                результата - например, для постраничного вывода результатов
-                запроса.
-<!--
-                Some RDBMS brands extend SQL with a query clause known as the
-                <code>LIMIT</code> clause.  This clause reduces the number of
-                rows in the result set to at most a number you specify.
-                You can also specify to skip a number of rows before starting
-                to output.
-                This feature makes it easy to take a subset of a result set,
-                for example when displaying query results on progressive pages
-                of output.
--->
+                предложение <code>LIMIT</code>. Это предложение ограничивает
+                количество строк в результате запроса до заданного вами
+                количества. Вы можете также задать количество пропускаемых до
+                начала вывода строк. Эта возможность облегчает выборку
+                подмножества строк результата - например, для постраничного
+                вывода результатов запроса.
             </para>
 
             <para>
@@ -1377,16 +945,10 @@ $select = $db->select()
                 количества пропускаемых строк. Первым аргументом этого метода
                 является желаемое количество строк в результате запроса. Вторым
                 аргументом - количество пропускаемых строк
-<!--
-                In Zend_Db_Select, you can use the <code>limit()</code> method
-                to specify the count of rows and the number of rows to skip.
-                The first argument to this method is the desired count of rows.
-                The second argument is the number of rows to skip.
--->
             </para>
 
             <example id="zend.db.select.building.limit.example">
-                <title>Пример использования метода limit()<!--Example of the limit() method--></title>
+                <title>Пример использования метода limit()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1396,9 +958,7 @@ $select = $db->select()
 
 $select = $db->select()
     ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limit(10, 20);
-
-?>]]></programlisting>
+    ->limit(10, 20);]]></programlisting>
             </example>
 
             <note>
@@ -1408,12 +968,6 @@ $select = $db->select()
                     аналогичной функциональности. Каждый класс
                     Zend_Db_Adapter_Abstract включает в себя метод для генерации
                     SQL, присущего данной СУРБД.
-<!--
-                    The <code>LIMIT</code> syntax is not supported by all RDBMS
-                    brands.  Some RDBMS require different syntax to support
-                    similar functionality.  Each Zend_Db_Adapter_Abstract class
-                    includes a method to produce SQL appropriate for that RDBMS.
--->
                 </para>
             </note>
 
@@ -1421,15 +975,11 @@ $select = $db->select()
 
         <sect3 id="zend.db.select.building.distinct">
 
-            <title>Добавление модификатора DISTINCT<!--Adding the DISTINCT Query Modifier--></title>
+            <title>Добавление модификатора DISTINCT</title>
 
             <para>
                 Метод <code>distinct()</code> дает возможность добавлять
                 ключевое слово <code>DISTINCT</code> в ваш запрос.
-<!--
-                The <code>distinct()</code> method enables you to add the
-                <code>DISTINCT</code> keyword to your SQL query.
--->
             </para>
 
             <example id="zend.db.select.building.distinct.example">
@@ -1442,28 +992,22 @@ $select = $db->select()
 
 $select = $db->select()
     ->distinct()
-    ->from(array('p' => 'products'), 'product_name');
-
-?>]]></programlisting>
+    ->from(array('p' => 'products'), 'product_name');]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.building.for-update">
 
-            <title>Добавление модификатора FOR UPDATE<!--Adding the FOR UPDATE Query Modifier--></title>
+            <title>Добавление модификатора FOR UPDATE</title>
 
             <para>
                 Метод <code>forUpdate()</code> дает возможность добавлять
                 модификатор <code>FOR UPDATE</code> в ваш запрос.
-<!--
-                The <code>forUpdate()</code> method enables you to add the
-                <code>FOR UPDATE</code> modifier to your SQL query.
--->
             </para>
 
             <example id="zend.db.select.building.for-update.example">
-                <title>Пример использования метода forUpdate()<!--Example of forUpdate() method--></title>
+                <title>Пример использования метода forUpdate()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1472,9 +1016,7 @@ $select = $db->select()
 
 $select = $db->select()
     ->forUpdate()
-    ->from(array('p' => 'products'));
-
-?>]]></programlisting>
+    ->from(array('p' => 'products'));]]></programlisting>
             </example>
 
         </sect3>
@@ -1483,109 +1025,79 @@ $select = $db->select()
 
     <sect2 id="zend.db.select.execute">
 
-        <title>Выполнение запросов Select<!--Executing Select Queries--></title>
+        <title>Произведение запросов на выборку</title>
 
         <para>
-            Этот раздел объясняет, как выполнять запрос, представленный объектом
-            Zend_Db_Select.
-<!--
-            This section describes how to execute the query represented by a
-            Zend_Db_Select object.
--->
+            Этот раздел объясняет, как производить запрос, представленный
+            объектом Zend_Db_Select.
         </para>
 
         <sect3 id="zend.db.select.execute.query-adapter">
 
-            <title>Выполнение запросов из адаптера БД<!--Executing Select Queries from the Db Adapter--></title>
+            <title>Произведение запросов на выборку из адаптера БД</title>
 
             <para>
-                Вы можете выполнять запрос, представленный объектом
+                Вы можете производить запрос, представленный объектом
                 Zend_Db_Select, посредством передачи его в качестве первого
                 аргумента методу <code>query()</code> объекта
                 Zend_Db_Adapter_Abstract. Используйте объекты Zend_Db_Select
                 вместо строк запроса.
-<!--
-                You can execute the query represented by the Zend_Db_Select
-                object by passing it as the first argument to the
-                <code>query()</code> method of a Zend_Db_Adapter_Abstract
-                object.  Use the Zend_Db_Select objects instead of a string
-                query.
--->
             </para>
 
             <para>
                 Метод <code>query()</code> возвращает объект Zend_Db_Statement
                 или PDOStatement, в зависимости от типа адаптера.
-<!--
-                The <code>query()</code> method returns an object of type
-                Zend_Db_Statement or PDOStatement, depending on the adapter type.
--->
             </para>
 
             <example id="zend.db.select.execute.query-adapter.example">
-                <title>Пример использования метода query() адаптера БД<!--Example using the Db adapter's query() method--></title>
+                <title>Пример использования метода query() адаптера БД</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $select = $db->select()
   ->from('products');
 
 $stmt = $db->query($select);
-$result = $stmt->fetchAll();
-
-?>]]></programlisting>
+$result = $stmt->fetchAll();]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.execute.query-select">
 
-            <title>Выполнение запросов через объект<!--Executing Select Queries from the Object--></title>
+            <title>Произведение запросов на выборку через объект Select</title>
 
             <para>
-                Вместо метода <code>query()</code> объекта адаптера вы можете
+                Вместо метода <code>query()</code> объекта адаптера можно
                 использовать метод <code>query()</code> объекта Zend_Db_Select.
                 Оба метода возвращают объект типа Zend_Db_Statement или
                 PDOStatement, в зависимости от типа адаптера.
-<!--
-                As an alternative to using the <code>query()</code> method
-                of the adapter object, you can use the <code>query()</code>
-                method of the Zend_Db_Select object.
-                Both methods return an object of type Zend_Db_Statement or
-                PDOStatement, depending on the adapter type.
--->
             </para>
 
             <example id="zend.db.select.execute.query-select.example">
-                <title>Пример использования метода query() объекта Select<!--Example using the Select object's query method--></title>
+                <title>Пример использования метода query() объекта Select</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $select = $db->select()
     ->from('products');
 
 $stmt = $select->query();
-$result = $stmt->fetchAll();
-
-?>]]></programlisting>
+$result = $stmt->fetchAll();]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.execute.tostring">
 
-            <title>Преобразование объекта Select в SQL-строку<!--Converting a Select Object to a SQL String--></title>
+            <title>Преобразование объекта Select в SQL-строку</title>
 
             <para>
-                Если нужно получить доступ к представлению SQL-запроса в
-                виде строки, то используйте метод <code>__toString()</code>.
-<!--
-                If you need access to a string representation of the SQL
-                query corresponding to the Zend_Db_Select object, use
-                the <code>__toString()</code> method.
--->
+                Если нужно получить доступ к строковому представлению
+                SQL-запроса, соответствующего данному объекту Zend_Db_Select, то
+                используйте метод <code>__toString()</code>.
             </para>
 
             <example id="zend.db.select.execute.tostring.example">
-                <title>Пример использования метода __toString()<!--Example of the __toString() method--></title>
+                <title>Пример использования метода __toString()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $select = $db->select()
@@ -1595,9 +1107,7 @@ $sql = $select->__toString();
 echo "$sql\n";
 
 // Выводом будет строка:
-//   SELECT * FROM "products"
-
-?>]]></programlisting>
+//   SELECT * FROM "products"]]></programlisting>
             </example>
 
         </sect3>
@@ -1606,22 +1116,17 @@ echo "$sql\n";
 
     <sect2 id="zend.db.select.other">
 
-        <title>Другие методы<!--Other methods--></title>
+        <title>Другие методы</title>
 
         <para>
             Этот раздел описывает другие методы класса Zend_Db_Select, которые
             не были охвачены ранее: <code>getPart()</code> и
             <code>reset()</code>.
-<!--
-            This section describes other methods of the Zend_Db_Select class
-            that are not covered above:  <code>getPart()</code> and
-            <code>reset()</code>.
--->
         </para>
 
         <sect3 id="zend.db.select.other.get-part">
 
-            <title>Получение частей объекта Select<!--Retrieving Parts of the Select Object--></title>
+            <title>Получение частей объекта Select</title>
 
             <para>
                 Метод <code>getPart()</code> возвращает представление
@@ -1630,15 +1135,6 @@ echo "$sql\n";
                 предложения <code>WHERE</code>, массива столбцов, перечисленных
                 для получения выборки по ним, значений количества и смещения для
                 предложения <code>LIMIT</code>.
-<!--
-                The <code>getPart()</code> method returns a representation
-                of one part of your SQL query.  For example, you can use this
-                method to return the array of expressions for the
-                <code>WHERE</code> clause, or the array of columns
-                (or column expressions) that are in the <code>SELECT</code>
-                list, or the values of the count and offset for the
-                <code>LIMIT</code> clause.
--->
             </para>
 
             <para>
@@ -1646,12 +1142,6 @@ echo "$sql\n";
                 запроса SQL. Возвращаемое значение является внутренним
                 представлением в объекте, обычно это массив, содержащий значения
                 и выражения. Каждая часть запроса имеет различную структуру.
-<!--
-                The return value is not a string containing a fragment of SQL
-                syntax.  The return value is an internal representation, which
-                is typically an array structure containing values and
-                expressions.  Each part of the query has a different structure.
--->
             </para>
 
             <para>
@@ -1660,14 +1150,6 @@ echo "$sql\n";
                 вернуть. Например, строка <code>'from'</code> соответствует той
                 части запроса, которая хранит информацию о таблицах в
                 предложении <code>FROM</code>, включая присоединяемые таблицы.
-<!--
-                The single argument to the <code>getPart()</code> method is
-                a string that identifies which part of the Select query to
-                return.  For example, the string <code>'from'</code>
-                identifies the part of the Select object that stores
-                information about the tables in the <code>FROM</code> clause,
-                including joined tables.
--->
             </para>
 
             <para>
@@ -1682,12 +1164,12 @@ echo "$sql\n";
             </para>
 
             <table id="zend.db.select.other.get-part.table">
-                <title>Константы, используемые методами getPart() и reset()<!--Constants used by getPart() and reset()--></title>
+                <title>Константы, используемые методами getPart() и reset()</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
-                            <entry>Константа<!--Constant--></entry>
-                            <entry>Строковое значение<!--String value--></entry>
+                            <entry>Константа</entry>
+                            <entry>Строковое значение</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -1736,7 +1218,7 @@ echo "$sql\n";
             </table>
 
             <example id="zend.db.select.other.get-part.example">
-                <title>Пример использования метода getPart()<!--Example of the getPart() method--></title>
+                <title>Пример использования метода getPart()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $select = $db->select()
@@ -1751,26 +1233,19 @@ $orderData = $select->getPart( Zend_Db_Select::ORDER );
 
 // Возвращаемое значение может быть массивом, а не строкой
 // Каждая часть имет свою структуру
-print_r( $orderData );
-
-?>]]></programlisting>
+print_r( $orderData );]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.select.other.reset">
 
-            <title>Сброс частей запроса в объекте Select<!--Resetting Parts of the Select Object--></title>
+            <title>Сброс частей запроса в объекте Select</title>
 
             <para>
                 Через метод <code>reset()</code> вы можете очистить
                 определенную часть SQL-запроса или все части запроса, если
                 опустить аргумент.
-<!--
-                The <code>reset()</code> method enables you to clear one
-                specified part of the SQL query, or else clear all parts of
-                the SQL query if you omit the argument.
--->
             </para>
 
             <para>
@@ -1779,12 +1254,6 @@ print_r( $orderData );
                 которые используются для метода <code>getPart()</code>. Та часть
                 запроса, которую вы указали, сбрасывается в состояние по
                 умолчанию.
-<!--
-                The single argument is optional.  You can specify the part
-                of the query to clear, using the same strings you used in
-                the argument to the <code>getPart()</code> method.
-                The part of the query you specify is reset to a default state.
--->
             </para>
 
             <para>
@@ -1792,16 +1261,10 @@ print_r( $orderData );
                 сбрасывает все части запроса в состояние по умолчанию. Это
                 делает объект Zend_Db_Select эквивалентным новому объекту - так
                 же, как если бы вы его только что инстанцировали его.
-<!--
-                If you omit the parameter, <code>reset()</code> changes all
-                parts of the query to their default state.  This makes the
-                Zend_Db_Select object equivalent to a new object, as though you
-                had just instantiated it.
--->
             </para>
 
             <example id="zend.db.select.other.reset.example">
-                <title>Пример использования метода reset()<!--Example of the reset() method--></title>
+                <title>Пример использования метода reset()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 // Строит запрос:
@@ -1826,9 +1289,7 @@ $select->reset( Zend_Db_Select::ORDER );
 $select->order('product_id');
 
 // Очищаем все части запроса
-$select->reset();
-
-?>]]></programlisting>
+$select->reset();]]></programlisting>
             </example>
 
         </sect3>

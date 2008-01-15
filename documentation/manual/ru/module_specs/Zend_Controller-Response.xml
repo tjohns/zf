@@ -1,28 +1,18 @@
 <sect1 id="zend.controller.response">
-    <title>Объект ответа<!--The Response Object--></title>
+    <title>Объект ответа</title>
 
     <sect2 id="zend.controller.response.usage">
-        <title>Использование<!--Usage--></title>
+        <title>Использование</title>
 
         <para>
-		    Объект ответа представляет собой логическое продолжение
-            <link linkend="zend.controller.request">объекта запроса</link>. Его
+		    Объект ответа представляет собой логическое продолжение к
+            <link linkend="zend.controller.request">объекту запроса</link>. Его
             назначение — сбор содержимого ответа и/или его заголовков, таким
             образом, они могут возвращаться как одно целое. Кроме этого,
             фронт-контроллер будет передавать любые пойманные исключения объекту
             ответа, позволяя разработчику должным образом обрабатывать
             исключения. Эта возможность может быть отключена установкой
             <code>Zend_Controller_Front::throwExceptions(true)</code>: 
-<!--
-            The response object is the logical counterpart to the <link
-                linkend="zend.controller.request">request object</link>. Its
-            purpose is to collate content and/or headers so that they may be
-            returned en masse. Additionally, the front controller will pass any
-            caught exceptions to the response object, allowing the developer to
-            gracefully handle exceptions. This functionality may be overridden
-            by setting
-            <code>Zend_Controller_Front::throwExceptions(true)</code>:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -32,10 +22,6 @@ $front->throwExceptions(true);]]>
         <para>
             Для отправки выходных данных, включая заголовки, используйте
             метод <code>sendResponse()</code>.
-<!--
-            To send the response output, including headers, use
-            <code>sendResponse()</code>.
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -52,14 +38,6 @@ $response->sendResponse();]]>
                 это поведение посредством установки флага
                 <code>returnResponse</code> методом
                 <code>Zend_Controller_Front::returnResponse(true)</code>:
-<!--
-                By default, the front controller calls <code>sendResponse()</code>
-                when it has finished dispatching the request; typically you will
-                never need to call it. However, if you wish to manipulate the
-                response or use it in testing, you can override this
-                behaviour by setting the <code>returnResponse</code> flag with
-                <code>Zend_Controller_Front::returnResponse(true)</code>:
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -76,11 +54,6 @@ $response->sendResponse();]]>
             Разработчики должны использовать объект ответа в своих контроллерах
             действий. Вместо прямого вывода данных и отправки заголовков
             помещайте их в объект ответа:
-<!--
-            Developers should make use of the response object in their action
-            controllers. Instead of directly rendering output and sending
-            headers, push them to the response object:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -95,10 +68,6 @@ $this->getResponse()
             Этим достигается то, что все заголовки будут отправлены
             одновременно, непосредственно до того, как будет отображено
             содержимое ответа.
-<!--
-            By doing this, all headers get sent at once, just prior to
-            displaying the content.
--->
         </para>
 
         <note>
@@ -110,13 +79,6 @@ $this->getResponse()
                 скрипта вида в объект ответа, поскольку
                 <code>Zend_Controller_Action::render()</code> делает это по
                 умолчанию.
-<!--
-                If using the action controller <link
-                    linkend="zend.controller.action.viewintegration">view
-                    integration</link>, you do not need to set the rendered view
-                script content in the response object, as
-                <code>Zend_Controller_Action::render()</code> does this by default.
--->
             </para>
         </note>
 
@@ -128,25 +90,12 @@ $this->getResponse()
             перенаправление на страницу ошибки, журналируют сообщения
             исключений, должным образом оформляют сообщения исключений
             для среды разработки и т.д.
-<!--
-            Should an exception occur in an application, check the response object's
-            <code>isException()</code> flag, and retrieve the exception using
-            <code>getException()</code>. Additionally, one may create custom
-            response objects that redirect to error pages, log exception messages,
-            do pretty formatting of exception messages (for development
-            environments), etc.
--->
         </para>
 
         <para>
             Вы можете извлекать объект ответа после вызова метода dispatch()
             фронт-контроллера или указать фронт-контроллеру, чтобы он возвращал
             объект ответа вместо его вывода.
-<!--
-            You may retrieve the response object following the front controller
-            dispatch(), or request the front controller to return the response
-            object instead of rendering output.
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -173,11 +122,6 @@ $response->sendResponse();]]>
             или включением через метод <code>throwExceptions()</code>
             возможности генерации исключений фронт-контроллером, как показано
             ниже:
-<!--
-            By default, exception messages are not displayed. This behaviour may be
-            overridden by calling <code>renderExceptions()</code>, or enabling the
-            front controller to throwExceptions(), as shown above:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -197,17 +141,12 @@ $front->dispatch();]]>
     </sect2>
 
     <sect2 id="zend.controller.response.headers">
-        <title>Управление заголовками<!--Manipulating Headers--></title>
+        <title>Управление заголовками</title>
 
         <para>
             Как было замечено ранее, одной из обязанностей объекта ответа
             является сбор и отправка заголовков ответа HTTP. Для этого есть
             различные методы:
-<!--
-            As stated previously, one aspect of the response object's duties is
-            to collect and emit HTTP response headers.  A variety of methods
-            exist for this:
--->
         </para>
 
         <itemizedlist>
@@ -220,14 +159,6 @@ $front->dispatch();]]>
                     исключений может быть отменена посредством установки
                     свойства <code>headersSentThrowsException</code> в
                     <code>false</code>.
-<!--
-                    <code>canSendHeaders()</code> is used to determine if
-                    headers have already been sent. It takes an optional flag
-                    indicating whether or not to throw an exception if headers
-                    have already been sent. This can be overridden by setting
-                    the property <code>headersSentThrowsException</code> to
-                    <code>false</code>.
--->
                 </para>
             </listitem>
 
@@ -239,13 +170,6 @@ $front->dispatch();]]>
                     именем заголовки. Но установкой
                     <code>$replace</code> в <code>true</code> можно произвести
                     принудительную замену заголовка.
-<!--
-                    <code>setHeader($name, $value, $replace = false)</code> is
-                    used to set an individual header. By default, it does not
-                    replace existing headers of the same name in the object;
-                    however, setting <code>$replace</code> to true will force it
-                    to do so.
--->
                 </para>
 
                 <para>
@@ -253,12 +177,6 @@ $front->dispatch();]]>
                     <code>canSendHeaders()</code> для проверки того, можно ли
                     выполнить данную операцию, и прверяет, было ли брошено
                     исключение.
-<!--
-                    Before setting the header, it checks with
-                    <code>canSendHeaders()</code> to see if this operation is
-                    allowed at this point, and requests that an exception be
-                    thrown.
--->
                 </para>
             </listitem>
 
@@ -268,22 +186,12 @@ $front->dispatch();]]>
                     HTTP-заголовок &quot;Location&quot; для перенаправления.
                     Если был передан код статуса HTTP, то он будет
                     использоваться при перенаправлении.
-<!--
-                    <code>setRedirect($url, $code = 302)</code> sets an HTTP
-                    Location header for a redirect. If an HTTP status code has
-                    been provided, it will use that status code.
--->
                 </para>
 
                 <para>
                     Внутри себя он вызывает <code>setHeader()</code> со
                     флагом <code>$replace</code> для обеспечения гарантии того,
                     что отправляется только один такой заголовок.
-<!--
-                    Internally, it calls <code>setHeader()</code> with the
-                    <code>$replace</code> flag on to ensure only one such header
-                    is ever sent.
--->
                 </para>
             </listitem>
 
@@ -292,11 +200,6 @@ $front->dispatch();]]>
                     <code>getHeaders()</code> возвращает массив всех заголовков.
                     Каждый элемент массива является массивом со ключами 'name' и
                     'value'.
-<!--
-                    <code>getHeaders()</code> returns an array of all headers.
-                    Each array element is an array with the keys 'name' and
-                    'value'.
--->
                 </para>
             </listitem>
 
@@ -304,9 +207,6 @@ $front->dispatch();]]>
                 <para>
                     <code>clearHeaders()</code> удаляет все зарегистрированные
                     ранее заголовки.
-<!--
-                    <code>clearHeaders()</code> clears all registered headers.
--->
                 </para>
             </listitem>
 
@@ -315,10 +215,6 @@ $front->dispatch();]]>
                     <code>setRawHeader()</code> может использоваться для
                     установки заголовков, которые не являются парами
                     ключ/значение, например, заголовок статуса HTTP.
-<!--
-                    <code>setRawHeader()</code> can be used to set headers that
-                    are not key/value pairs, such as an HTTP status header.
--->
                 </para>
             </listitem>
 
@@ -327,10 +223,6 @@ $front->dispatch();]]>
                     <code>getRawHeaders()</code> возвращает все
                     зарегистрированные через <code>setRawHeader()</code>
                     заголовки.
-<!--
-                    <code>getRawHeaders()</code> returns any registered raw
-                    headers.
--->
                 </para>
             </listitem>
 
@@ -339,10 +231,6 @@ $front->dispatch();]]>
                     <code>clearRawHeaders()</code> удаляет все
                     зарегистрированные через <code>setRawHeader()</code>
                     заголовки.
-<!--
-                    <code>clearRawHeaders()</code> clears any registered raw
-                    headers.
--->
                 </para>
             </listitem>
 
@@ -351,30 +239,20 @@ $front->dispatch();]]>
                     <code>clearAllHeaders()</code> удаляет как обычные
                     заголовки из пар ключ/значение, так и
                     &quot;необработанные&quot; (raw).
-<!--
-                    <code>clearAllHeaders()</code> clears both regular key/value
-                    headers as well as raw headers.
--->
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            Кроме вышеперечисленных методов, есть аксессоры для установки и
+            Кроме перечисленных выше методов, есть аксессоры для установки и
             получения кода ответа для текущего запроса,
             <code>setHttpResponseCode()</code> и
             <code>getHttpResponseCode()</code>.
-<!--
-            In addition to the above methods, there are accessors for setting
-            and retrieving the HTTP response code for the current request,
-            <code>setHttpResponseCode()</code> and
-            <code>getHttpResponseCode()</code>.
--->
         </para>
     </sect2>
 
     <sect2 id="zend.controller.response.namedsegments">
-        <title>Именованные сегменты<!--Named Segments--></title>
+        <title>Именованные сегменты</title>
 
         <para>
             Объект ответа поддерживает именованные сегменты. Это позволяет
@@ -383,14 +261,6 @@ $front->dispatch();]]>
             Внутри содержимое тела ответа сохраняется в массиве, и могут
             использоваться различные методы-аксессоры для указания размещения и
             имен в этом массиве.
-<!--
-            The response object has support for "named segments". This allows
-            you to segregate body content into different segments and order
-            those segments so output is returned in a specific order.
-            Internally, body content is saved as an array, and the various
-            accessor methods can be used to indicate placement and names within
-            that array.
--->
         </para>
 
         <para>
@@ -399,12 +269,6 @@ $front->dispatch();]]>
             объект ответа, затем метод действия должен добавить тело
             страницы, а перехватчик <code>postDispatch()</code> добавляет низ
             страницы:
-<!--
-            As an example, you could use a <code>preDispatch()</code> hook to
-            add a header to the response object, then have the action controller
-            add body content, and a <code>postDispatch()</code> hook add a
-            footer:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -444,11 +308,6 @@ class MyController extends Zend_Controller_Action
             В примере выше вызов <code>/my/foo</code> приведет к тому, что
             конечное содержимое тела объекта ответа будет иметь следующую
             структуру:
-<!--
-            In the above example, a call to <code>/my/foo</code> will cause the
-            final body content of the response object to have the following
-            structure:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -460,20 +319,13 @@ array(
         </programlisting>
 
         <para>
-            Рендеринг производится в том же порядке, в котором элементы
+            Рендеринг производится в том порядке, в котором элементы
             представлены в массиве.
-<!--
-            When this is rendered, it will render in the order in which elements
-            are arranged in the array.
--->
         </para>
 
         <para>
             Для управления именованными сегментами могут использоваться
             различные методы:
-<!--
-            A variety of methods can be used to manipulate the named segments:
--->
         </para>
 
         <itemizedlist>
@@ -489,18 +341,6 @@ array(
                     содержимого тела. Если методу <code>appendBody()</code> не
                     было передано имя сегмента, то содержимое будет добавлено в
                     конец сегмента с именем 'default'.
-<!--
-                    <code>setBody()</code> and <code>appendBody()</code> both
-                    allow you to pass a second value, <code>$name</code>,
-                    indicating a named segment. In each case, if you provide
-                    this, it will overwrite that specific named segment or
-                    create it if it does not exist (appending to the array by
-                    default). If no named segment is passed to
-                    <code>setBody()</code>, it resets the entire body content
-                    array. If no named segment is passed to appendBody(), the
-                    content is appended to the value in the 'default' name
-                    segment.
--->
                 </para>
             </listitem>
 
@@ -510,12 +350,6 @@ array(
                     сегмент с именем <code>$name</code> и помещать его в начало
                     массива. Если сегмент уже существует, то он будет удален до
                     операции добавления (т.е. перезаписан).
-<!--
-                    <code>prepend($name, $content)</code> will create a segment
-                    named <code>$name</code> and place it at the beginning of
-                    the array. If the segment exists already, it will be removed
-                    prior to the operation (i.e., overwritten and replaced).
--->
                 </para>
             </listitem>
 
@@ -525,12 +359,6 @@ array(
                     с именем <code>$name</code> и помещать его в конец массива.
                     Если сегмент уже существует, то он будет удален до операции
                     добавления.
-<!--
-                    <code>append($name, $content)</code> will create a segment
-                    named <code>$name</code> and place it at the end of
-                    the array. If the segment exists already, it will be removed
-                    prior to the operation (i.e., overwritten and replaced).
--->
                 </para>
             </listitem>
 
@@ -543,16 +371,6 @@ array(
                     (основываясь на значениии <code>$before</code>) в массиве.
                     Если сегмент уже существует, то он будет удален до операции
                     добавления.
-<!--
-                    <code>insert($name, $content, $parent = null, $before =
-                        false)</code> will create a segment named
-                    <code>$name</code>. If provided with a <code>$parent</code>
-                    segment, the new segment will be placed either before or
-                    after that segment (based on the value of
-                    <code>$before</code>) in the array. If the segment exists
-                    already, it will be removed prior to the operation (i.e.,
-                    overwritten and replaced).
--->
                 </para>
             </listitem>
 
@@ -561,11 +379,6 @@ array(
                     <code>clearBody($name = null)</code> удалит один
                     сегмент, если был передано его имя <code>$name</code>,
                     иначе будет удален весь массив.
-<!--
-                    <code>clearBody($name = null)</code> will remove a single
-                    named segment if a <code>$name</code> is provided (and the
-                    entire array otherwise).
--->
                 </para>
             </listitem>
 
@@ -577,38 +390,22 @@ array(
                     строка, сформированная посредством объединения всех
                     сегментов в порядке следования. Если <code>$spec</code>
                     равен true, то он вернет массив содержимого тела.
-<!--
-                    <code>getBody($spec = false)</code> can be used to retrieve a single
-                    array segment if <code>$spec</code> is the name of a named
-                    segment. If <code>$spec</code> is false, it returns a string
-                    formed by concatenating all named segments in order. If
-                    <code>$spec</code> is true, it returns the body content
-                    array.
--->
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.controller.response.exceptions">
-        <title>Проверка на исключения в объекте ответа<!--Testing for Exceptions in the Response Object--></title>
+        <title>Проверка на исключения в объекте ответа</title>
 
         <para>
-            Как было сказано ранее, по умолчанию исключения, пойманные во время
+            Как было отмечено ранее, по умолчанию исключения, пойманные во время
             диспетчеризации, регистрируются в объекте ответа. Исключения
             регистрируются в стеке, что позволяет вам хранить все брошенные
             исключения - исключения приложения, диспетчера, плагинов и т.д.
             Если нужно производить проверку на определенные исключения или
             журналировать их, то используйте следующее API объекта ответа для
             исключений:
-<!--
-            As mentioned earlier, by default, exceptions caught during dispatch
-            are registered with the response object. Exceptions are registered
-            in a stack, which allows you to keep all exceptions thrown -
-            application exceptions, dispatch exceptions, plugin exceptions, etc.
-            Should you wish to check for particular exceptions or to log
-            exceptions, you'll want to use the response object's exception API:
--->
         </para>
 
         <itemizedlist>
@@ -616,10 +413,6 @@ array(
                 <para>
                     <code>setException(Exception $e)</code> позволяет
                     произвести регистрацию исключения.
-<!--
-                    <code>setException(Exception $e)</code> allows you to
-                    register an exception.
--->
                 </para>
             </listitem>
 
@@ -627,10 +420,6 @@ array(
                 <para>
                     <code>isException()</code> позволяет определить, было ли
                     зарегистрировано какое-либо исключение.
-<!--
-                    <code>isException()</code> will tell you if an exception has
-                    been registered.
--->
                 </para>
             </listitem>
 
@@ -638,10 +427,6 @@ array(
                 <para>
                     <code>getException(Exception $e)</code> возвращает весь стек
                     исключений.
-<!--
-                    <code>getException(Exception $e)</code> returns the entire
-                    exception stack.
--->
                 </para>
             </listitem>
 
@@ -649,11 +434,6 @@ array(
                 <para>
                     <code>hasExceptionOfType($type)</code> позволяет определить
                     наличие в стеке исключения определенного класса.
-<!--
-                    <code>hasExceptionOfType($type)</code> allows you to
-                    determine if an exception of a particular class is in the
-                    stack.
--->
                 </para>
             </listitem>
 
@@ -662,11 +442,6 @@ array(
                     <code>hasExceptionOfMessage($message)</code> позволяет
                     определить наличие в стеке исключения с заданным
                     сообщением.
-<!--
-                    <code>hasExceptionOfMessage($message)</code> allows you to
-                    determine if an exception with a specific message is in the
-                    stack.
--->
                 </para>
             </listitem>
 
@@ -674,11 +449,6 @@ array(
                 <para>
                     <code>hasExceptionOfCode($code)</code> позволяет определить
                     наличие в стеке исключения с определенным кодом.
-<!--
-                    <code>hasExceptionOfCode($code)</code> allows you to
-                    determine if an exception with a specific code is in the
-                    stack.
--->
                 </para>
             </listitem>
 
@@ -688,12 +458,6 @@ array(
                     исключения определенного класса из стека.
                     Возвращает false, если не был найдено ни одно
                     исключение, иначе - массив исключений.
-<!--
-                    <code>getExceptionByType($type)</code> allows you to
-                    retrieve all exceptions of a specific class from the stack.
-                    It will return false if none are found, and an array of
-                    exceptions otherwise.
--->
                 </para>
             </listitem>
 
@@ -703,12 +467,6 @@ array(
                     извлекать все исключения с заданным сообщением из стека.
                     Возвращает false, если не был найдено ни одно
                     исключение, иначе - массив исключений.
-<!--
-                    <code>getExceptionByMessage($message)</code> allows you to
-                    retrieve all exceptions with a specific message from the stack.
-                    It will return false if none are found, and an array of
-                    exceptions otherwise.
--->
                 </para>
             </listitem>
 
@@ -718,12 +476,6 @@ array(
                     все исключения с определенным кодом из стека.
                     Возвращает false, если не был найдено ни одно
                     исключение, иначе - массив исключений.
-<!--
-                    <code>getExceptionByCode($code)</code> allows you to
-                    retrieve all exceptions with a specific code from the stack.
-                    It will return false if none are found, and an array of
-                    exceptions otherwise.
--->
                 </para>
             </listitem>
 
@@ -732,30 +484,19 @@ array(
                     <code>renderExceptions($flag)</code> позволяет установить
                     флаг, указывающий, должны или нет отправляться исключения
                     вместе с ответом.
-<!--
-                    <code>renderExceptions($flag)</code> allows you to set a
-                    flag indicating whether or not exceptions should be emitted
-                    when the response is sent.
--->
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>
 
     <sect2 id="zend.controller.response.subclassing">
-        <title>Создание подклассов объекта ответа<!--Subclassing the Response Object--></title>
+        <title>Создание подклассов объекта ответа</title>
 
         <para>
             Назначением объекта ответа является сбор заголовков и содержимого из
-            различных действий и плагинов и возврат их клиенту. Кроме этого, он
+            различных действий и плагинов, и возврат их клиенту. Кроме этого, он
             собирает все возникающие ошибки (исключения) для того, чтобы
             обрабатывать их, возвращать или прятать от конечного пользователя.
-<!--
-            The purpose of the response object is to collect headers and content
-            from the various actions and plugins and return them to the client;
-            secondarily, it also collects any errors (exceptions) that occur in
-            order to process them, return them, or hide them from the end user.
--->
         </para>
 
         <para>
@@ -763,27 +504,15 @@ array(
             <code>Zend_Controller_Response_Abstract</code>, все создаваемые
             вами подклассы должны наследовать от него или одного из его
             потомков. Доступные методы были перечислены в предыдущих разделах.
-<!--
-            The base response class is
-            <code>Zend_Controller_Response_Abstract</code>, and any subclass you
-            create should extend that class or one of its derivatives. The
-            various methods available have been listed in the previous sections.
--->
         </para>
 
         <para>
-            Цели, преследуюмые при создании подклассов объекта ответа, включают
-            в себя изменение способа вывода, основыванного на
+            Цели, преследуемые при создании подклассов объекта ответа, включают
+            в себя изменение способа вывода, основанное на
             окружении запроса (например, не отправлять заголовки для запросов
             CLI или PHP-GTK), добавление функционала для возвращения конечного
             вида, основанного на содержимом, сохраненном в именованном сегменте,
             и т.д.
-<!--
-            Reasons to subclass the response object include modifying how output
-            is returned based on the request environment (e.g., not sending
-            headers for CLI or PHP-GTK requests), adding functionality to return
-            a final view based on content stored in named segments, etc.
--->
         </para>
     </sect2>
 </sect1>

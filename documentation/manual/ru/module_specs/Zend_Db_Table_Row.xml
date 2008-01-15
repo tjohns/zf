@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.table.row.introduction">
 
-        <title>Введение<!--Introduction--></title>
+        <title>Введение</title>
 
         <para>
             Zend_Db_Table_Row является классом, содержащим отдельную строку
@@ -12,143 +12,107 @@
             таблицы, результат возвращается в виде набора объектов
             Zend_Db_Table_Row. Вы можете также использовать этот объект для
             создания новых строк и их добавления в таблицу БД.
-<!--
-            Zend_Db_Table_Row is a class that contains an individual row
-            of a Zend_Db_Table object.  When you run a query against a
-            Table class, the result is returned in a set of Zend_Db_Table_Row
-            objects.  You can also use this object to create new rows and
-            add them to the database table.
--->
         </para>
 
         <para>
             Zend_Db_Table_Row является реализацией паттерна
             <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">Row Data Gateway</ulink>.
-<!--
-            Zend_Db_Table_Row is an implementation of the
-            <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">Row Data Gateway</ulink>
-            pattern.
--->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.row.read">
 
-        <title>Извлечение строки<!--Fetching a Row--></title>
+        <title>Извлечение строки</title>
 
         <para>
             Zend_Db_Table_Abstract предоставляет методы <code>find()</code> и
             <code>fetchAll()</code>, которые возвращают объект типа
             Zend_Db_Table_Rowset, и метод <code>fetchRow()</code>, который
             возвращает объект типа Zend_Db_Table_Row.
-<!--
-            Zend_Db_Table_Abstract provides methods <code>find()</code> and
-            <code>fetchAll()</code>, which each return an object of type
-            Zend_Db_Table_Rowset, and the method <code>fetchRow()</code>,
-            which returns an object of type Zend_Db_Table_Row.
--->
         </para>
 
         <example id="zend.db.table.row.read.example">
-            <title>Пример извлечения строки<!--Example of fetching a row--></title>
+            <title>Пример извлечения строки</title>
             <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
-$row = $bugs->fetchRow('bug_id = 1');
-
-?>]]></programlisting>
+$row = $bugs->fetchRow('bug_id = 1');]]></programlisting>
             </example>
 
         <para>
             Объект Zend_Db_Table_Rowset содержит коллекцию объектов
             Zend_Db_Table_Row. См. <xref linkend="zend.db.table.rowset" />.
-<!--
-            A Zend_Db_Table_Rowset object contains a collection of
-            Zend_Db_Table_Row objects.
-            See <xref linkend="zend.db.table.rowset" />.
--->
         </para>
 
         <example id="zend.db.table.row.read.example-rowset">
-            <title>Пример получения строки из набора строк<!--Example of reading a row in a rowset--></title>
+            <title>Пример получения строки из набора строк</title>
             <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
 $rowset = $bugs->fetchAll("bug_status = 'NEW'");
-$row = $rowset->current();
+$row = $rowset->current();]]></programlisting>
+        </example>
 
-?>]]></programlisting>
-            </example>
-
+        <note>
+            <para>
+                Значения и идентификаторы в SQL-выражении не заключаются в
+                кавычки автоматически. Если имеются значения или идентификаторы,
+                которые требуют заключения в кавычки, то вы должны произвести
+                его сами. Используйте методы <code>quote()</code>,
+                <code>quoteInto()</code> и <code>quoteIdentifier()</code>
+                адаптера БД.
+            </para>
+        </note>
+        
         <sect3 id="zend.db.table.row.read.get">
-            <title>Чтение значения столбца из строки<!--Reading column values from a row--></title>
+            <title>Чтение значений столбцов из строки</title>
 
             <para>
-                Zend_Db_Table_Row_Abstract предоставляет методы доступа
-                (аксессоры), поэтому можно ссылаться на столбцы в строке как на
+                Zend_Db_Table_Row_Abstract предоставляет методы-аксессоры, таким
+                образом, можно ссылаться на столбцы в строке как на
                 свойства объекта.
-<!--
-                Zend_Db_Table_Row_Abstract provides accessor methods so
-                you can reference columns in the row as object properties.
--->
             </para>
 
             <example id="zend.db.table.row.read.get.example">
-                <title>Пример чтения столбца в строке<!--Example of reading a column in a row--></title>
+                <title>Пример чтения столбца в строке</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
 $row = $bugs->fetchRow('bug_id = 1');
 
 // Вывод значения столбца bug_description
-echo $row->bug_description;
-
-?>]]></programlisting>
+echo $row->bug_description;]]></programlisting>
             </example>
 
             <note>
                 <para>
-                    Более ранние версии Zend_Db_Table_Row сравнивали
-                    аксессоры столбцов и имена столбцов в БД с преобразованием
-                    строк, называемым <emphasis>инфлекцией</emphasis>.
-<!--
-                    Earlier versions of Zend_Db_Table_Row mapped these column
-                    accessors to the database column names using a string
-                    transformation called <emphasis>inflection</emphasis>.
--->
+                    Более ранние версии Zend_Db_Table_Row сопоставляли
+                    аксессоры столбцов и имена столбцов в БД с использованием
+                    преобразования строк, называемым
+                    <emphasis>инфлекцией</emphasis>.
                 </para>
                 <para>
-                    Теперь Zend_Db_Table_Row не реализует инфлекцию. Написание
-                    аксессоров столбцов должно в точности соответствовать именам
-                    столбцов, так, как они представлены в БД.
-<!--
-                    Current usage of Zend_Db_Table_Row does not implement
-                    inflection.  The column accessor you use must match the
-                    spelling of the column name as it appears in your database.
--->
+                    Zend_Db_Table_Row в его текущей реализации не использует
+                    инфлекцию. Написание аксессоров столбцов должно в точности
+                    соответствовать именам столбцов, так, как они представлены в
+                    БД.
                 </para>
             </note>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.read.to-array">
-            <title>Получение данных строки в виде массива<!--Retrieving Row Data as an Array--></title>
+            <title>Получение данных строки в виде массива</title>
 
             <para>
                 Вы можете получить доступ к данным строки, используя метод
                 <code>toArray()</code> объекта строки. Метод возвращает
                 ассоциативный массив имен столбцов и их значений.
-<!--
-                You can access the row's data as an array using the
-                <code>toArray()</code> method of the Row object.
-                This returns an associative array of the colum names
-                to the column values.
--->
             </para>
 
             <example id="zend.db.table.row.read.to-array.example">
-                <title>Пример использования метода toArray()<!--Example of using the toArray() method--></title>
+                <title>Пример использования метода toArray()</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
@@ -161,9 +125,7 @@ $rowArray = $row->toArray();
 foreach ($rowArray as $column => $value) {
     echo "Column: $column\n";
     echo "Value:  $value\n";
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <para>
@@ -172,29 +134,18 @@ foreach ($rowArray as $column => $value) {
                 значения в этом массиве так же, как и в любом другом массиве, но
                 не можете сохранять измененные значения непосредственно из этого
                 массива в БД.
-<!--
-                The array returned from <code>toArray()</code> is not updateable.
-                You can modify values in the array as you can with any array, but
-                you cannot save changes to this array to the database directly.
--->
             </para>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.read.relationships">
-            <title>Извлечение данных из связанных таблиц<!--Fetching data from related tables--></title>
+            <title>Извлечение данных из связанных таблиц</title>
 
             <para>
                 Класс Zend_Db_Table_Row_Abstract предоставляет методы для
                 извлечения строк и наборов строк из связанных таблиц.
                 Cм. <xref linkend="zend.db.table.relationships" /> для более
                 подробной информации о связях между таблицами.
-<!--
-                The Zend_Db_Table_Row_Abstract class provides methods
-                for fetching rows and rowsets from related tables.
-                See <xref linkend="zend.db.table.relationships" />
-                for more information on table relationships.
--->
             </para>
         </sect3>
 
@@ -202,35 +153,26 @@ foreach ($rowArray as $column => $value) {
 
     <sect2 id="zend.db.table.row.write">
 
-        <title>Редактирование строк в БД<!--Writing rows to the database--></title>
+        <title>Редактирование строк в БД</title>
 
         <sect3 id="zend.db.table.row.write.set">
-            <title>Изменение значений столбцов в строке<!--Changing column values in a row--></title>
+            <title>Изменение значений столбцов в строке</title>
 
             <para>
                 Используя аксессоры столбцов, вы можете устанавливать значения
                 отдельных столбцов по аналогии с чтением, т.е. так же, как если
                 бы они были свойствами объекта.
-<!--
-                You can set individual columns using column accessors,
-                similarly to reading columns as object properties.
--->
             </para>
 
             <para>
-                Это изменяет значение столбца строки в вашем приложении, но
-                это изменение еще не фиксируется в БД. Вы можете выполнить
+                Использование аксессоров столбцов для установки значений
+                изменяет значения столбцов в данном объекте строки, но
+                эти изменения еще не фиксируются в БД. Вы можете произвести
                 фиксацию через метод <code>save()</code>.
-<!--
-                This changes the column value of the row as it exists
-                in your application, but it does not commit the change
-                to the database yet.  You can do that with the
-                <code>save()</code> method.
--->
             </para>
 
             <example id="zend.db.table.row.write.set.example">
-                <title>Пример изменения значения столбца в строке<!--Example of changing a column in a row--></title>
+                <title>Пример изменения значения столбца в строке</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
@@ -239,34 +181,14 @@ $row = $bugs->fetchRow('bug_id = 1');
 // Изменение значения одного или более столбцов
 $row->bug_status = 'FIXED';
 
-// Обновление строки в БД с использованием новых значений
-$row->save();
-
-?>]]></programlisting>
+// Обновление строки в БД с новыми значениями
+$row->save();]]></programlisting>
             </example>
-
-            <note>
-                <para>
-                    В настоящее время Zend_Db_Table_Row_Abstract бросает
-                    исключение, если вы пытаетесь установить значение столбца
-                    первичного ключа. Это поведение планируется изменить в
-                    версии 1.0. Класс строки должен позволять устанавливать
-                    значения столбцов первичного ключа для поддержки
-                    последовательностей и естетственных первичных ключей.
-<!--
-                    Currently Zend_Db_Table_Row_Abstract throws an exception
-                    if you try to set the value of the primary key column(s)
-                    in the row.  This is intended to change in Zend Framework
-                    1.0.  The Row class should permit the primary key columns
-                    to be set, to support sequences and natural primary keys.
--->
-                </para>
-            </note>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.write.insert">
-            <title>Вставка новой строки<!--Inserting a new row--></title>
+            <title>Вставка новой строки</title>
 
             <para>
                 Вы можете создавать новые строки для определенной таблицы с
@@ -274,17 +196,10 @@ $row->save();
                 работать с полями этой строки через объектно-ориентированный
                 интерфейс, но строка не сохраняется в БД до тех пор, пока вы не
                 вызовете метод <code>save()</code>.
-<!--
-                You can create a new row for a given table with the
-                <code>createRow()</code> method of the table class.
-                You can access fields of this row with the object-oriented
-                interface, but the row is not stored in the database
-                until you call the <code>save()</code> method.
--->
             </para>
 
             <example id="zend.db.table.row.write.insert.example">
-                <title>Пример создания новой строки таблицы<!--Example of creating a new row for a table--></title>
+                <title>Пример создания новой строки таблицы</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
@@ -295,26 +210,20 @@ $newRow->bug_description = '...description...';
 $newRow->bug_status = 'NEW';
 
 // Вставка новой строки в БД
-$newRow->save();
-
-?>]]></programlisting>
+$newRow->save();]]></programlisting>
             </example>
 
             <para>
-                Опциональный аргумент метода является ассоциативным массивом, через который вы можете заполнить поля новой строки.
-<!--
-                The optional argument to the createRow() method is
-                an associative array, with which you can populate
-                fields of the new row.
--->
+                Опциональный аргумент метода является ассоциативным массивом,
+                через который вы можете заполнить поля новой строки.
             </para>
 
             <example id="zend.db.table.row.write.insert.example2">
-                <title>Пример заполнения новой строки для таблицы<!--Example of populating a new row for a table--></title>
+                <title>Пример заполнения новой строки для таблицы</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $data = array(
-    'bug_description' => '...описание...',
+    'bug_description' => '...description...',
     'bug_status'      => 'NEW'
 );
 
@@ -322,32 +231,23 @@ $bugs = new Bugs();
 $newRow = $bugs->createRow($data);
 
 // вставка новой строки в БД
-$newRow->save();
-
-?>]]></programlisting>
+$newRow->save();]]></programlisting>
             </example>
 
             <note>
                 <para>
-                    В более ранних версиях Zend_Db_Table метод
+                    В более ранних релизах Zend_Db_Table метод
                     <code>createRow()</code> назывался <code>fetchNew()</code>.
                     Мы рекомендуем использовать новое имя метода,
                     несмотря на то, что старое имя метода по-прежнему работает
                     в целях обеспечения обратной совместимости.
-<!--
-                    The <code>createRow()</code> method was called
-                    <code>fetchNew()</code> in earlier releases of
-                    Zend_Db_Table.  You are encouraged to use the new method
-                    name, even though the old name continues to work for the
-                    sake of backward compatibility.
--->
                 </para>
             </note>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.write.set-from-array">
-            <title>Изменение значений в нескольких столбцах<!--Changing values in multiple columns--></title>
+            <title>Изменение значений в нескольких столбцах</title>
 
             <para>
                 Zend_Db_Table_Row_Abstract предоставляет метод
@@ -356,19 +256,11 @@ $newRow->save();
                 определив ассоциативный массив имен столбцов и их значений.
                 Этот метод может быть удобным как при создании новых строк, так
                 и при обновлении существующих.
-<!--
-                Zend_Db_Table_Row_Abstract provides the
-                <code>setFromArray()</code> method to enable you to set several
-                columns at once, specified in an associative array
-                mapping column names to values.
-                You may find this method convenient for setting values
-                both for new rows and for rows you need to update.
--->
             </para>
 
             <example id="zend.db.table.row.write.set-from-array.example">
                 <title>Пример использования метода setFromArray() для установки
-                значений в новой строке<!--Example of using setFromArray() to set values in a new Row--></title>
+                значений в новой строке</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
@@ -384,47 +276,34 @@ $data = array(
 $newRow->setFromArray($data);
 
 // Добавление новой строки в БД
-$newRow->save();
-
-?>]]></programlisting>
+$newRow->save();]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.write.delete">
-            <title>Удаление строки<!--Deleting a row--></title>
+            <title>Удаление строки</title>
 
             <para>
-                Вы можете вызывать метод <code>delete()</code> объекта строки.
-                Этот метод удаляет из таблицы строки, соответствующие первичному
-                ключу в объекте строки.
-<!--
-                You can call the <code>delete()</code> method on a Row
-                object.  This deletes rows in the database matching the
-                primary key in the Row object.
--->
+                Вы можете использовать метод <code>delete()</code> объекта
+                строки. Этот метод удаляет из таблицы строки, соответствующие
+                первичному ключу в объекте строки.
             </para>
 
             <example id="zend.db.table.row.write.delete.example">
-                <title>Пример удаления строки<!--Example of deleting a row--></title>
+                <title>Пример удаления строки</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
 $row = $bugs->fetchRow('bug_id = 1');
 
 // Удаление строки
-$row->delete();
-
-?>]]></programlisting>
+$row->delete();]]></programlisting>
             </example>
 
             <para>
                 Вы не должны вызывать <code>save()</code> для фиксации удаления,
                 оно сразу же выполняется в БД.
-<!--
-                You do not have to call <code>save()</code> to apply
-                the delete; it is executed against the database immediately.
--->
             </para>
 
         </sect3>
@@ -433,7 +312,7 @@ $row->delete();
 
     <sect2 id="zend.db.table.row.serialize">
 
-        <title>Сериализация и десериализация строк<!--Serializing and unserializing rows--></title>
+        <title>Сериализация и десериализация строк</title>
 
         <para>
             Часто бывает удобным сохранять содержимое строки БД для последующего
@@ -441,31 +320,19 @@ $row->delete();
             действие по преобразованию объекта в форму, удобную для хранения в
             автономном хранилище (например, в файле). Объекты типа
             Zend_Db_Table_Row_Abstract доступны для сериализации.
-<!--
-            It is often convenient to save the contents of a database row
-            to be used later.  <emphasis>Serialization</emphasis> is the
-            name for the operation to convert an object into a form that is
-            easy to save in offline storage (for example, a file).
-            Objects of type Zend_Db_Table_Row_Abstract are serializable.
--->
         </para>
 
         <sect3 id="zend.db.table.row.serialize.serializing">
-            <title>Сериализация строки<!--Serializing a Row--></title>
+            <title>Сериализация объекта строки</title>
 
             <para>
                 Просто используйте функцию PHP <code>serialize()</code> для
                 получения строки, содержащей представление объекта Row в виде
                 последовательности байт.
-<!--
-                Simply use PHP's <code>serialize()</code> function to
-                create a string containing a byte-stream representation
-                of the Row object argument.
--->
             </para>
 
             <example id="zend.db.table.row.serialize.serializing.example">
-                <title>Пример сериализации строки<!--Example of serializing a row--></title>
+                <title>Пример сериализации объекта строки</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $bugs = new Bugs();
@@ -474,57 +341,40 @@ $row = $bugs->fetchRow('bug_id = 1');
 // Преобразование объекта в сериализованную форму
 $serializedRow = serialize($row);
 
-// Теперь вы можете записать $serializedRow в файл и т.д.
-
-?>]]></programlisting>
+// Теперь вы можете записать $serializedRow в файл и т.д.]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.serialize.unserializing">
-            <title>Десериализация строки<!--Unserializing Row Data--></title>
+            <title>Десериализация данных строки</title>
 
             <para>
                 Используйте функцию <code>unserialize()</code> для
                 восстановления из строки, содержащей представление объекта в
-                виде последовательности байт.
-<!--
-                Use PHP's <code>unserialize()</code> function to
-                restore a string containing a byte-stream representation
-                of an object.  The function returns the original object.
--->
+                виде последовательности байт. Эта функция возвращает исходный объект.
             </para>
 
             <para>
                 Внимание: объект строки возвращается
                 <emphasis>без соединения</emphasis>. Вы можете читать объект Row
-                и его свойства, но вы не можете изменять значения в строке или
+                и его свойства, но не можете изменять значения в строке или
                 выполнять другие методы, требующие соединения с БД (например,
                 запросы к связанным таблицам).
-<!--
-                Note that the Row object returned is in a
-                <emphasis>disconnected</emphasis> state.
-                You can read the Row object and its properties, but you
-                cannot change values in the Row or execute other methods
-                that require a database connection (for example, queries
-                against related tables).
--->
             </para>
 
             <example id="zend.db.table.row.serialize.unserializing.example">
-                <title>Пример десериализации сериализованной строки<!--Example of unserializing a serialized row--></title>
+                <title>Пример десериализации объекта строки</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $rowClone = unserialize($serializedRow);
 
 // Теперь вы можете использовать свойства объекта, но только для чтения
-echo $rowClone->bug_description;
-
-?>]]></programlisting>
+echo $rowClone->bug_description;]]></programlisting>
             </example>
 
             <note>
-                <title>Почему объекты строки десериализуются в состояние без соединения?<!--Why do Rows unserialize in a disconnected state?--></title>
+                <title>Почему объекты строки десериализуются в состояние без соединения?</title>
                 <para>
                     Сериализованный объект является строкой, которая доступна
                     для чтения всем, кто ею обладает.
@@ -539,26 +389,13 @@ echo $rowClone->bug_description;
                     Тот, кто прочитает сериализованный объект, не должен иметь
                     возможности использовать его в получении
                     несанкционированного доступа к БД.
-<!--
-                    A serialized object is a string that is readable to
-                    anyone who possesses it.
-                    It could be a security risk to store parameters such
-                    as database account and password in plain, unencrypted
-                    text in the serialized string.
-                    You would not want to store such data to a text file that
-                    is not protected, or send it in an email or other medium
-                    that is easily read by potential attackers.
-                    The reader of the serialized object should not be able
-                    to use it to gain access to your database without
-                    knowing valid credentials.
--->
                 </para>
             </note>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.serialize.set-table">
-            <title>Восстановление соединения для строки<!--Reactivating a Row as Live Data--></title>
+            <title>Восстановление соединения для объекта строки</title>
 
             <para>
                 Вы можете восстановить соединение для строки, используя метод
@@ -566,22 +403,12 @@ echo $rowClone->bug_description;
                 типа Zend_Db_Table_Abstract, который создается вами. Создание
                 объекта таблицы требует действующего соединения с БД, поэтому
                 при переустановке таблицы объект строки получает доступ к БД.
-                После этого вы можете изменять значения в объекте строки и
+                После этого можно изменять значения в объекте строки и
                 сохранять изменения в БД.
-<!--
-                You can reactivate a disconnected Row, using the
-                <code>setTable()</code> method.  The argument to this
-                method is a valid object of type Zend_Db_Table_Abstract,
-                which you create.  Creating a Table object requires a
-                live connection to the database, so by reassociating
-                the Table with the Row, the Row gains access to
-                the database.  Subsequently, you can change values in
-                the Row object and save the changes to the database.
--->
             </para>
 
             <example id="zend.db.table.row.serialize.set-table.example">
-                <title>Пример восстановления соединения для строки<!--Example of reactivating a row--></title>
+                <title>Пример восстановления соединения для строки</title>
                 <programlisting role="php"><![CDATA[<?php
 
 $rowClone = unserialize($serializedRow);
@@ -593,9 +420,7 @@ $rowClone->setTable($bugs);
 
 // Теперь вы можете производить изменения в строке и сохранять их
 $rowClone->bug_status = 'FIXED';
-$rowClone->save();
-
-?>]]></programlisting>
+$rowClone->save();]]></programlisting>
             </example>
 
         </sect3>
@@ -604,30 +429,26 @@ $rowClone->save();
 
     <sect2 id="zend.db.table.row.extending">
 
-        <title>Расширение класса строки<!--Extending the Row class--></title>
+        <title>Расширение класса строки</title>
 
         <para>
-            Вы можете использовать альтернативный класс для экземпляров строк
-            путем расширения класса Zend_Db_Table_Row_Abstract. Указывайте новый
-            класс набора строк через имя в защищенном члене
-            <code>$_rowClass</code> класса таблицы или в массиве,
-            передаваемом в качестве аргуемента конструктору объекта таблицы.
-<!--
-            You can use an alternative concrete class for instances of Row
-            by extending Zend_Db_Table_Row_Abstract.  Specify the custom
-            Row class by name either in the <code>$_rowClass</code>
-            protected member of a Table class, or in the array argument of the
-            constructor of a Table object.
--->
+            Zend_Db_Table_Row является используемым по умолчанию классом,
+            наследующим от Zend_Db_Table_Row_Abstract. Вы можете определить свой
+            собственный класс для экземпляров строк путем наследования от
+            Zend_Db_Table_Row_Abstract. Для того, чтобы этот класс использовался
+            для хранения результатов запросов к таблице, укажите его имя в
+            защищенном свойстве <code>$_rowClass</code> класса таблицы или в
+            массиве, передаваемом в качестве аргумента конструктору объекта
+            таблицы.
         </para>
 
         <example id="zend.db.table.row.extending.example">
-            <title>Указание своего класса строки в качестве используемого<!--Specifying a custom Row class--></title>
+            <title>Указание своего класса строки</title>
             <programlisting role="php"><![CDATA[<?php
 
 class MyRow extends Zend_Db_Table_Row_Abstract
 {
-    // ...
+    // ...кастомизация
 }
 
 // Укажите свой класс строки в качестве используемого по умолчанию
@@ -640,13 +461,11 @@ class Products extends Zend_Db_Table_Abstract
 
 // Или укажите свой класс строки для использования
 // в конкретном экземпляре класса таблицы
-$bugs = new Bugs(array('rowClass' => 'MyRow'));
-
-?>]]></programlisting>
+$bugs = new Bugs(array('rowClass' => 'MyRow'));]]></programlisting>
         </example>
 
         <sect3 id="zend.db.table.row.extending.overriding">
-            <title>Определение собственной логики для добавления, обновления и удаления в Zend_Db_Table_Row<!--Defining Custom Logic for Insert, Update, and Delete in Zend_Db_Table_Row--></title>
+            <title>Определение собственной логики для добавления, обновления и удаления в Zend_Db_Table_Row</title>
 
             <para>
                 Класс строки вызывает защищенные методы <code>_insert()</code>,
@@ -655,76 +474,40 @@ $bugs = new Bugs(array('rowClass' => 'MyRow'));
                 <code>UPDATE</code> и <code>DELETE</code>. Вы можете добавлять
                 собственную логику в эти методы в созданном вами подклассе
                 строки.
-<!--
-                The Row class calls protected methods <code>_insert()</code>,
-                <code>_update()</code>, and <code>_delete()</code> before
-                performing the corresponding operations <code>INSERT</code>,
-                <code>UPDATE</code>, and <code>DELETE</code>.  You can add
-                logic to these methods in your custom Row subclass.
--->
             </para>
 
             <para>
-                Если вам нужно выполнение собственной логики в определенной
+                Если нужно выполнение собственной логики в определенной
                 таблице, и эта логика должна выполняться для каждой операции в
                 этой таблице, то разумным решением может быть реализация
-                собственной логики внутри методов <code>insert()</code>,
+                собственной логики в методах <code>insert()</code>,
                 <code>update()</code> и <code>delete()</code> вашего класса
                 таблицы. Тем не менее, иногда может быть необходимым выполнять
                 собственную логику в классе строки.
-<!--
-                If you need to do custom logic in a specific table, and
-                the custom logic must occur for every operation on that table,
-                it may make more sense to implement your custom code belongs
-                in the <code>insert()</code>, <code>update()</code> and
-                <code>delete()</code> methods of your Table class.
-                However, sometimes is may be necessary to do custom logic
-                in the Row class.
--->
             </para>
 
             <para>
                 Ниже приведены примеры некоторых случаев, в которых имеет смысл
                 реализовать свою логику в классе строки вместо класса
                 таблицы:
-<!--
-                Below are some example cases where it might make sense to
-                implement custom logic in a Row class instead of in the
-                Table class:
--->
             </para>
 
             <example id="zend.db.table.row.extending.overriding-example1">
-                <title>Пример собственной логики в классе строки<!--Example of custom logic in a Row class--></title>
+                <title>Пример собственной логики в классе строки</title>
 
                 <para>
                     Собственная логика может применяться не во всех случаях
                     операций над определенной таблицей. Вы можете реализовать
                     свою логику в классе строки и создавать экземпляр класса
                     таблицы с указанием этого класса строки в качестве
-                    используемого. Иначе в объекте таблицы используется класс
+                    используемого. Иначе в таблице используется класс
                     строки по умолчанию.
-<!--
-                    The custom logic may not apply in all cases
-                    of operations on the respective Table.
-                    You can provide custom logic on demand
-                    by implementing it in a Row class and creating
-                    an instance of the Table class with that custom
-                    Row class specified.
-                    Otherwise, the Table uses the default Row class.
--->
                 </para>
 
                 <para>
                     Вам нужно, чтобы операции над данными в этой таблице
                     журналировались через объект Zend_Log, но только если в
                     конфигурации приложения включено это поведение.
-<!--
-                    You need data operations on this table to record
-                    the operation to a Zend_Log object, but only if
-                    the application configuration has enabled this
-                    behavior.
--->
                 </para>
                 <programlisting role="php"><![CDATA[<?php
 
@@ -743,36 +526,23 @@ if ($loggingEnabled) {
     $bugs = new Bugs(array('rowClass' => 'MyLoggingRow'));
 } else {
     $bugs = new Bugs();
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
             <example id="zend.db.table.row.extending.overriding-example2">
-                <title>Пример класса строки, журналирующего добавляемые данные для множества таблиц<!--Example of a Row class that logs insert data for multiple tables--></title>
+                <title>Пример класса строки, журналирующего добавляемые данные для нескольких таблиц</title>
 
                 <para>
-                    Собственная логика может быть общей для множества таблиц.
-                    Вместо реализации одной и той же логики в каждом из классов
-                    таблиц вы можете реализовать код для каждого действия в
+                    Собственная логика может быть общей для нескольких таблиц.
+                    Вместо реализации одной и той же логики в каждом классе
+                    таблицы вы можете реализовать код этих действий в
                     классе строки и использовать этот класс строки во
                     всех ваших классах таблиц.
-<!--
-                    The custom logic may be common to multiple tables.
-                    Instead of implementing the same custom logic in
-                    every one of your Table classes, you can implement
-                    the code for such actions in the definition of a Row
-                    class, and use this Row in each of your Table
-                    classes.
--->
                 </para>
 
                 <para>
                     В этом примере журналирующий код одинаков для всех классов
                     таблиц.
-<!--
-                    In this example, the logging code is identical in all table classes.
--->
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -796,36 +566,24 @@ class Products extends Zend_Db_Table_Abstract
 {
     protected $_name = 'products';
     protected $_rowClass = 'MyLoggingRow';
-}
-
-?>]]></programlisting>
+}]]></programlisting>
             </example>
 
         </sect3>
 
         <sect3 id="zend.db.table.row.extending.inflection">
-            <title>Определение инфлекции в Zend_Db_Table_Row<!--Define Inflection in Zend_Db_Table_Row--></title>
+            <title>Определение инфлекции в Zend_Db_Table_Row</title>
 
             <para>
                 Некоторые разработчики предпочитают, чтобы имя класса таблицы
-                сопоставлялось с именем таблицы в СУРБД с применением
-                преобразования, называемой <emphasis>инфлекцией</emphasis>.
-<!--
-                Some people prefer that the table class name match a table
-                name in the RDBMS by using a string transformation called
-                <emphasis>inflection</emphasis>.
--->
+                соответствовало имени таблицы в СУРБД с применением
+                преобразования, называемого <emphasis>инфлекцией</emphasis>.
             </para>
 
             <para>
                 Классы Zend_Db по умолчанию не производят
                 <emphasis>инфлекцию</emphasis>. Причины такого решения приведены
                 в <xref linkend="zend.db.table.extending.inflection" />.
-<!--
-                Zend_Db classes do not implement inflection by default.
-                See <xref linkend="zend.db.table.extending.inflection" />
-                for an explanation of this policy.
--->
             </para>
 
             <para>
@@ -834,29 +592,17 @@ class Products extends Zend_Db_Table_Abstract
                 <code>_transformColumn()</code> в своем классе строки и
                 использовать этот класс при произведении запросов через ваш
                 класс таблицы.
-<!--
-                If you prefer to use inflection, then you must implement
-                the transformation yourself, by overriding the
-                <code>_transformColumn()</code> method in a custom Row class,
-                and using that custom Row class when you perform queries
-                against your Table class.
--->
             </para>
 
             <example id="zend.db.table.row.extending.inflection.example">
-                <title>Пример определения инфлекционного преобразования<!--Example of defining an inflection transformation--></title>
+                <title>Пример определения инфлекционного преобразования</title>
 
                 <para>
-                    Это позволяет использовать в аксессорах преобразованную
-                    версию имени столбца. Класс строки использует метод
+                    Это позволяет использовать в аксессорах преобразованный
+                    вариант имени столбца. Класс строки использует метод
                     <code>_transformColumn()</code> для преобразования имени,
-                    используемого в качестве "родного" в таблице БД.
-<!--
-                    This allows you to use a inflected version of the column
-                    name in the accessors.  The Row class uses the
-                    <code>_transformColumn()</code> method to change the name
-                    you use to the native column name in the database table.
--->
+                    которое используется в качестве "родного" имени столбца в
+                    таблице БД.
                 </para>
 
                 <programlisting role="php"><![CDATA[<?php
@@ -881,20 +627,13 @@ $row = $bugs->createRow();
 
 // Используются имена столбцов в формате CamelCase, преобразующая функция
 // изменяет их представление на "родное"
-$row->bugDescription = 'New description';
-
-?>]]></programlisting>
+$row->bugDescription = 'New description';]]></programlisting>
             </example>
 
             <para>
-                Вы отвественны за написание функций для выполнения
-                инфлекционного преобразования. Zend Framework не предоставляет
-                таких функций.
-<!--
-                You are responsible for writing the functions to
-                perform inflection transformation.
-                Zend Framework does not provide such a function.
--->
+                Реализация функций для произведения инфлекционного
+                преобразования возлагается на разработчика. Zend Framework не
+                предоставляет для этих целей готовых функций.
             </para>
 
         </sect3>

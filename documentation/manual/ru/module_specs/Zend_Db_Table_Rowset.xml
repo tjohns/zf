@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.table.rowset.introduction">
 
-        <title>Введение<!--Introduction--></title>
+        <title>Введение</title>
 
         <para>
             Когда вы производите запрос через класс таблицы, используя методы
@@ -15,40 +15,28 @@
             <code>Zend_Db_Table_Row_Abstract</code>. Вы можете
             производить итерацию по набору строк и работать с отдельными
             объектами строк, считывая или изменяя данные в строках.
-<!--
-            When you run a query against a Table class using the <code>find()</code> or <code>fetchAll()</code>
-            methods, the result is returned in an object of type <code>Zend_Db_Table_Rowset_Abstract</code>. A Rowset
-            contains a collection of objects descending from <code>Zend_Db_Table_Row_Abstract</code>. You can iterate
-            through the Rowset and access individual Row objects, reading or modifying data in the Rows.
--->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.fetch">
 
-        <title>Получение набора строк<!--Fetching a Rowset--></title>
+        <title>Получение набора строк</title>
 
         <para>
             <code>Zend_Db_Table_Abstract</code> предоставляет методы
             <code>find()</code> и <code>fetchAll()</code>, оба они возвращают
             объект типа <code>Zend_Db_Table_Rowset_Abstract</code>.
-<!--
-            <code>Zend_Db_Table_Abstract</code> provides methods <code>find()</code> and <code>fetchAll()</code>, each
-            of which returns an object of type <code>Zend_Db_Table_Rowset_Abstract</code>.
--->
         </para>
 
         <example id="zend.db.table.rowset.fetch.example">
 
-            <title>Пример извлечения набора строк<!--Example of fetching a rowset--></title>
+            <title>Пример извлечения набора строк</title>
 
             <programlisting role="php"><![CDATA[<?php
 
 $bugs   = new Bugs();
-$rowset = $bugs->fetchAll("bug_status = 'NEW'");
-
-?>]]></programlisting>
+$rowset = $bugs->fetchAll("bug_status = 'NEW'");]]></programlisting>
 
         </example>
 
@@ -56,16 +44,12 @@ $rowset = $bugs->fetchAll("bug_status = 'NEW'");
 
     <sect2 id="zend.db.table.rowset.rows">
 
-        <title>Получение строк из набора<!--Retrieving Rows from a Rowset--></title>
+        <title>Получение строк из набора</title>
 
         <para>
-            Обычно набор строк сам по себе представляет меньший интерес, чем
+            Обычно сам по себе набор строк представляет меньший интерес, чем
             строки, содержащиеся в нем. Этот раздел показывает, как получать
             строки из набора строк.
-<!--
-            The Rowset itself is usually less interesting than the Rows that it contains. This section illustrates how
-            to get the Rows that comprise the Rowset.
--->
         </para>
 
         <para>
@@ -76,17 +60,11 @@ $rowset = $bugs->fetchAll("bug_status = 'NEW'");
             реализует инерфейс <code>Countable</code>, то вы можете использовать
             <code>count()</code> для определения количества строк в наборе
             строк.
-<!--
-            A legitimate query returns zero rows when no rows in the database match the query conditions. Therefore, a
-            Rowset object might contain zero Row objects. Since <code>Zend_Db_Table_Rowset_Abstract</code> implements
-            the <code>Countable</code> interface, you can use <code>count()</code> to determine the number of Rows in
-            the Rowset.
--->
         </para>
 
         <example id="zend.db.table.rowset.rows.example.counting">
 
-            <title>Подсчет количества строк в наборе строк<!--Counting the Rows in a Rowset--></title>
+            <title>Подсчет количества строк в наборе строк</title>
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -98,49 +76,37 @@ if ($rowCount > 0) {
     echo "found $rowCount rows";
 } else {
     echo 'no rows matched the query';
-}
-
-?>]]></programlisting>
+}]]></programlisting>
 
         </example>
 
         <example id="zend.db.table.rowset.rows.example.current">
 
-            <title>Чтение одной строки из набора строк<!--Reading a Single Row from a Rowset--></title>
+            <title>Чтение одной строки из набора строк</title>
 
             <para>
                 Наиболее простой способ получения доступа к строке из набора
                 состоит в использовании метода <code>current()</code>. Этот
                 способ особенно подходит для тех случаев, когда набор строк
                 содержит только одну строку.
-<!--
-                The simplest way to access a Row from a Rowset is to use the <code>current()</code> method. This is
-                particularly appropriate when the Rowset contains exactly one Row.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
-$row    = $rowset->current();
-
-?>]]></programlisting>
+$row    = $rowset->current();]]></programlisting>
 
         </example>
 
         <para>
             Если набор строк содержит нулевое количество строк, то
             <code>current()</code> вернет значение <code>null</code>.
-<!--
-            If the Rowset contains zero rows, <code>current()</code> returns
-            PHP's <code>null</code> value.
--->
         </para>
 
         <example id="zend.db.table.rowset.iterate.example">
 
-            <title>>Итерация по набору строк<!--Iterating through a Rowset--></title>
+            <title>>Итерация по набору строк</title>
 
             <para>
                 Объекты, наследующие от
@@ -151,12 +117,6 @@ $row    = $rowset->current();
                 образом, является объектом
                 <code>Zend_Db_Table_Row_Abstract</code>, который соответствует
                 одной записи в таблице.
-<!--
-                Objects descending from <code>Zend_Db_Table_Rowset_Abstract</code> implement the <code>Iterator</code>
-                interface, which means you can loop through them using the <code>foreach</code> construct. Each value
-                you retrieve this way is a <code>Zend_Db_Table_Row_Abstract</code> object that corresponds to one
-                record from the table.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -179,9 +139,7 @@ foreach ($rowset as $row) {
 
     // сохранение изменений в БД
     $row->save();
-}
-
-?>]]></programlisting>
+}]]></programlisting>
 
         </example>
 
@@ -189,17 +147,13 @@ foreach ($rowset as $row) {
             После того, как получен отдельный объект строки, вы можете
             работать с ним, используя методы, описанные в
             <xref linkend="zend.db.table.row" />
-<!--
-            After you have access to an individual Row object, you can manipulate the Row using methods described in
-            <xref linkend="zend.db.table.row" />.
--->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.to-array">
 
-        <title>Получение набора строк в виде массива<!--Retrieving a Rowset as an Array--></title>
+        <title>Получение набора строк в виде массива</title>
 
         <para>
             Вы можете работать во всеми данными в наборе строк как с массивом,
@@ -207,16 +161,11 @@ foreach ($rowset as $row) {
             возвращает массив, содержащий по одной записи на строку. Каждая
             запись является ассоциативным массивом, в котором ключи
             соответствуют именам столбцов, а элементы - значениям этих столбцов.
-<!--
-            You can access all the data in the Rowset as an array using the <code>toArray()</code> method of the Rowset
-            object. This returns an array containing one entry per Row. Each entry is an associative array having keys
-            that correspond to column names and elements that correspond to the respective column values.
--->
         </para>
 
         <example id="zend.db.table.rowset.to-array.example">
 
-            <title>Использование toArray()<!--Using toArray()--></title>
+            <title>Использование toArray()</title>
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -233,51 +182,37 @@ foreach ($rowsetArray as $rowArray) {
     }
     ++$rowCount;
     echo "\n";
-}
-
-?>]]></programlisting>
+}]]></programlisting>
         </example>
 
         <para>
             Массив, возвращаемый методом <code>toArray()</code> не может
             использоваться для обновления данных в БД. Вы можете изменять
             значения в этом массиве так же, как и в любом другом массиве, но
-            эти изменения не передаются БД.
-<!--
-            The array returned from <code>toArray()</code> is not updateable. That is, you can modify values in the
-            array as you can with any array, but changes to the array data are not propagated to the database.
--->
+            эти изменения не сохраняются в БД.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.serialize">
 
-        <title>Сериализация и десериализация наборов строк<!--Serializing and Unserializing a Rowset--></title>
+        <title>Сериализация и десериализация наборов строк</title>
 
         <para>
             Объекты типа Zend_Db_Table_Rowset_Abstract доступны для
             сериализации. Сериализация производится так же, как и для отдельных
             объектов строк - вы можете сериализовать объект набора строк и
             восстановить его позднее.
-<!--
-            Objects of type <code>Zend_Db_Table_Rowset_Abstract</code> are serializable. In a similar fashion to
-            serializing an individual Row object, you can serialize a Rowset and unserialize it later.
--->
         </para>
 
         <example id="zend.db.table.rowset.serialize.example.serialize">
 
-            <title>Сериализация набора строк<!--Serializing a Rowset--></title>
+            <title>Сериализация набора строк</title>
 
             <para>
-                Используйте обычную функцию PHP <code>serialize()</code> для
+                Используйте PHP-функцию <code>serialize()</code> для
                 получения строки, содержащей представление объекта набора строк
                 в виде последовательности байт.
-<!--
-                Simply use PHP's <code>serialize()</code> function to create a string containing a byte-stream
-                representation of the Rowset object argument.
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -285,11 +220,10 @@ foreach ($rowsetArray as $rowArray) {
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll();
 
-// Convert object to serialized form
 // Преобразование объекта в сериализованную форму
 $serializedRowset = serialize($rowset);
 
-// Now you can write $serializedRowset to a file, etc.
+// Теперь вы можете записать $serializedRowset в файл и т.п.
 
 ?>]]></programlisting>
 
@@ -297,17 +231,13 @@ $serializedRowset = serialize($rowset);
 
         <example id="zend.db.table.rowset.serialize.example.unserialize">
 
-            <title>Десериализация набора строк<!--Unserializing a Serialized Rowset--></title>
+            <title>Десериализация набора строк</title>
 
             <para>
                 Используйте функцию <code>unserialize()</code> для
                 восстановления из строки, содержащей представление объекта в
                 виде последовательности байт. Эта функция возвращает исходный
                 объект.
-<!--
-                Use PHP's <code>unserialize()</code> function to restore a string containing a byte-stream
-                representation of an object.  The function returns the original object.
--->
             </para>
 
             <para>
@@ -317,12 +247,6 @@ $serializedRowset = serialize($rowset);
                 изменять значения в строках или выполнять другие методы,
                 требующие соединения с БД (например, запросы к связанным
                 таблицам).
-<!--
-                Note that the Rowset object returned is in a <emphasis>disconnected</emphasis> state. You can iterate
-                through the Rowset and read the Row objects and their properties, but you cannot change values in the
-                Rows or execute other methods that require a database connection (for example, queries against related
-                tables).
--->
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -338,7 +262,7 @@ echo $row->bug_description;
         </example>
 
         <note>
-            <title>Почему объекты наборов строк десериализируются без соединения с БД?<!--Why do Rowsets unserialize in a disconnected state?--></title>
+            <title>Почему объекты наборов строк десериализируются без соединения с БД?</title>
             <para>
                 Сериализованный объект является строкой, которая доступна
                 для чтения всем, кто ею обладает.
@@ -353,13 +277,6 @@ echo $row->bug_description;
                 Тот, кто прочитает сериализованный объект, не должен иметь
                 возможности использовать его для получения
                 несанкционированного доступа к БД.
-<!--
-                A serialized object is a string that is readable to anyone who possesses it. It could be a security
-                risk to store parameters such as database account and password in plain, unencrypted text in the
-                serialized string. You would not want to store such data to a text file that is not protected, or send
-                it in an email or other medium that is easily read by potential attackers. The reader of the serialized
-                object should not be able to use it to gain access to your database without knowing valid credentials.
--->
             </para>
         </note>
 
@@ -372,18 +289,11 @@ echo $row->bug_description;
             доступ к БД. После этого вы сможете изменять значения объектов
             строк, содержащихся в объекте набора строк и сохранять изменения
             в БД.
-<!--
-            You can reactivate a disconnected Rowset using the <code>setTable()</code> method.  The argument to this
-            method is a valid object of type <code>Zend_Db_Table_Abstract</code>, which you create.  Creating a Table
-            object requires a live connection to the database, so by reassociating the Table with the Rowset, the
-            Rowset gains access to the database.  Subsequently, you can change values in the Row objects contained in
-            the Rowset and save the changes to the database.
--->
         </para>
 
         <example id="zend.db.table.rowset.serialize.example.set-table">
 
-            <title>Пример восстановления соединения для набора строк<!--Reactivating a Rowset as Live Data--></title>
+            <title>Пример восстановления соединения для набора строк</title>
 
             <programlisting role="php"><![CDATA[<?php
 
@@ -399,9 +309,7 @@ $row = $rowset->current();
 
 // Теперь можно производить изменения в строке и сохранять их
 $row->bug_status = 'FIXED';
-$row->save();
-
-?>]]></programlisting>
+$row->save();]]></programlisting>
 
         </example>
 
@@ -409,50 +317,29 @@ $row->save();
             Восстановление соединения для набора строк через метод
             <code>setTable()</code> делает то же самое для всех объектов
             строк, содержащихся в этом наборе строк.
-<!--
-            Reactivating a Rowset with <code>setTable()</code> also reactivates all the Row objects contained in that
-            Rowset.
--->
-        </para>
-
-        <para>
-            Это действует только для одного объекта набора строк, но не для
-            других наборов строк или объектов строк, содержащихся в них, даже
-            если эти объекты связаны с одними и теми же строками в БД.
-<!--
-            This reactivates only the one specific Rowset object, not any other Rowset objects, or the Rows contained
-            in them, even if those Rows correspond to the same database rows in a Rowset you have activated.
--->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.extending">
 
-        <title>Расширение класса набора строк<!--Extending the Rowset class--></title>
+        <title>Расширение класса набора строк</title>
 
         <para>
             Вы можете использовать альтернативный класс для наборов
             строк путем расширения класса Zend_Db_Table_Rowset_Abstract.
-            Указывайте новый класс набора строк через имя в защищенном члене
+            Указывайте новый класс набора строк через имя в защищенном свойстве
             <code>$_rowsetClass</code> класса таблицы или в массиве,
-            передаваемом в качестве аргуемента конструктору объекта таблицы.
-<!--
-            You can use an alternative concrete class for instances of Rowsets
-            by extending Zend_Db_Table_Rowset_Abstract.  Specify the custom
-            Rowset class by name either in the <code>$_rowsetClass</code>
-            protected member of a Table class, or in the array argument of the
-            constructor of a Table object.
--->
+            передаваемом в качестве аргумента конструктору объекта таблицы.
         </para>
 
         <example id="zend.db.table.rowset.extending.example">
-            <title>Указание своего класса набора строк в качестве используемого<!--Specifying a custom Rowset class--></title>
+            <title>Указание своего класса набора строк</title>
             <programlisting role="php"><![CDATA[<?php
 
 class MyRowset extends Zend_Db_Table_Rowset_Abstract
 {
-    // ...
+    // ...кастомизация
 }
 
 // Укажите свой класс набора строк в качестве используемого по умолчанию
@@ -465,9 +352,7 @@ class Products extends Zend_Db_Table_Abstract
 
 // Или укажите свой класс набора строк для использования
 // в конкретном экземпляре класса таблицы
-$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
-
-?>]]></programlisting>
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));]]></programlisting>
         </example>
 
         <para>
@@ -476,17 +361,10 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
             логику в набор строк, специфический для данной таблицы.
             Например, новый метод может вычислять агрегированное значение для
             всех строк в наборе.
-<!--
-            Typically, the standard Zend_Db_Rowset concrete class is
-            sufficient for most usage.  However, you might find it useful
-            to add new logic to a Rowset, specific to a given Table.
-            For example, a new method could calculate an aggregate
-            over all the Rows in the Rowset.
--->
         </para>
 
         <example id="zend.db.table.rowset.extending.example-aggregate">
-            <title>Пример класса набора строк с новым методом<!--Example of Rowset class with a new method--></title>
+            <title>Пример класса набора строк с новым методом</title>
             <programlisting role="php"><![CDATA[<?php
 
 class MyBugsRowset extends Zend_Db_Table_Rowset_Abstract
@@ -512,9 +390,7 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_rowsetClass = 'MyBugsRowset';
-}
-
-?>]]></programlisting>
+}]]></programlisting>
         </example>
 
     </sect2>

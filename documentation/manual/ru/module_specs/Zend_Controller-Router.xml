@@ -1,7 +1,7 @@
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2003/XInclude">
-    <title>Стандартный маршрутизатор: Zend_Controller_Router_Rewrite<!--The Standard Router: Zend_Controller_Router_Rewrite--></title>
+    <title>Стандартный маршрутизатор: Zend_Controller_Router_Rewrite</title>
     <sect2 id="zend.controller.router.introduction">
-        <title>Введение<!--Introduction--></title>
+        <title>Введение</title>
         <para>
             <code>Zend_Controller_Router_Rewrite</code> является стандартным
             маршрутизатором Zend Framework. Маршрутизация - это процесс принятия
@@ -15,36 +15,16 @@
             <code>Zend_Controller_Dispatcher_Standard</code>. Маршрутизация
             производится только один раз – когда вначале
             получен запрос и до того, как первый контроллер будет запущен.
-<!--
-            <code>Zend_Controller_Router_Rewrite</code> is the standard
-            framework router. Routing is the process of taking a URI endpoint
-            (that part of the URI which comes after the base URL) and
-            decomposing it into parameters to determine which module,
-            controller, and action of that controller should receive the
-            request. This values of the module, controller, action and other
-            parameters are packaged into a
-            <code>Zend_Controller_Request_Http</code> object which is then
-            processed by <code>Zend_Controller_Dispatcher_Standard</code>.
-            Routing occurs only once: when the request is initially received and
-            before the first controller is dispatched.
--->
         </para>
 
         <para>
             <code>Zend_Controller_Router_Rewrite</code> спроектирован для
             того, чтобы обеспечить функциональность, подобную mod_rewrite,
-            с испобзованием чистого php. Он отчасти основан на маршрутизации,
+            с использованием чистого php. Он отчасти основан на маршрутизации,
             используемой в Ruby on Rails и не требует каких-либо предварительных
             знаний о перезаписи URL веб-сервером. Он спроектирован для работы с
             единственным правилом mod_rewrite, пример которого приведен
             ниже:
-<!--
-            <code>Zend_Controller_Router_Rewrite</code> is designed to allow for
-            mod_rewrite-like functionality using pure php structures. It is very
-            loosely based on Ruby on Rails routing and does not require any
-            prior knowledge of webserver URL rewriting. It is designed to work
-            with a single Apache mod_rewrite rule (one of):
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -54,9 +34,6 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
 
         <para>
             или:
-<!--
-            or:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -71,11 +48,6 @@ RewriteRule ^(.*)$ index.php/$1 ]]>
             <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
             был установлен как расширение Isapi со следующими правилами
             перезаписи: 
-<!--
-            The rewrite router can also be used with the IIS webserver if <ulink
-                url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> has been
-            installed as an Isapi extension with the following rewrite rule:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -91,22 +63,12 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
                 <code>Zend_Controller_Request_Http</code> попытается
                 использовать <code>$_SERVER['HTTP_X_REWRITE_URL']</code>,
                 значение которого устанавливается расширением Isapi_Rewrite.  
-<!--
-                When using IIS, <code>$_SERVER['REQUEST_URI']</code> will either
-                not exist, or be set as an empty string. In this case,
-                <code>Zend_Controller_Request_Http</code> will attempt to use
-                the <code>$_SERVER['HTTP_X_REWRITE_URL']</code> value set by the
-                Isapi_Rewrite extension.
--->
             </para>
         </note>
 
         <para>
             Если используется Lighttpd, то корректным будет следующее
             правило перезаписи:
-<!--
-            If using Lighttpd, the following rewrite rule is valid:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -115,21 +77,16 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
     </sect2>
 
     <sect2 id="zend.controller.router.usage">
-        <title>Использование маршрутизатора<!--Using a router--></title>
+        <title>Использование маршрутизатора</title>
 
         <para>
             Для того, чтобы правильно использовать маршрутизатор, вы должны
             инстанцировать его, добавить пользовательские маршруты, и внедрить
             его во фронт-контроллер. Следующий код иллюстрирует эту процедуру:
-<!--
-            To properly use the rewrite router you have to instantiate it, add
-            some user defined routes and inject it into the controller.  The
-            following code illustrates the procedure:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-/* Create a router */
+/* Создание маршрутизатора */
 
 $router = $ctrl->getRouter(); // по умолчанию возвращает rewrite router
 $router->addRoute(
@@ -140,7 +97,7 @@ $router->addRoute(
     </sect2>
 
     <sect2 id="zend.controller.router.basic">
-        <title>Базовые операции Rewrite Router<!--Basic Rewrite Router operation--></title>
+        <title>Базовые операции Rewrite Router</title>
 
         <para>
             Сущностью RewriteRouter (перезаписывающий маршрутизатор) является
@@ -148,12 +105,6 @@ $router->addRoute(
             посредством вызовом метода <code>addRoute()</code> и передачей ему
             экземпляра класса, реализующего
             <code>Zend_Controller_Router_Route</code>. Например:
-<!--
-            The heart of the RewriteRouter is the definition of user defined
-            routes. Routes are added by calling the addRoute method of
-            RewriteRouter and passing in a new instance of a class implementing
-            <code>Zend_Controller_Router_Route_Interface</code>. Eg.:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -163,10 +114,6 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
         <para>
             Rewrite Router поставляется вместе с четырьмя базовыми типами
             маршрутов (один из которых является специальным):
-<!--
-            Rewrite Router comes with four basic types of routes (one of which
-            is special): 
--->
         </para>
 
         <itemizedlist mark="opencircle">
@@ -192,13 +139,6 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             использоваться один раз и, возможно, как наиболее общий маршрут
             (например, в качестве используемого по умолчанию). Каждый маршрут
             будет в подробностях описан ниже.
-<!--
-            Routes may be used numerous times to create a chain or user defined
-            application routing schema. You may use any number of routes in any
-            configuration, with the exception of the Module route, which should
-            rather be used once and probably as the most generic route (i.e., as a
-            default). Each route will be described in greater detail later on.
--->
         </para>
 
         <para>
@@ -206,21 +146,12 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             маршрута. Он используется в качестве идентификатора для получения
             маршрутов из маршрутизатора (например, в целях генерации URL).
             Вторым параметром является сам маршрут.
-<!--
-            The first parameter to addRoute is the name of the route. It is used
-            as a handle for getting the routes out of the router (e.g., for URL
-            generation purposes). The second parameter being the route itself.
--->
         </para>
 
         <note>
             <para>
                 Наиболее часто имя маршрута используется через хелпер
                 Zend_View для URL:
-<!--
-                The most common use of the route name is through the means of
-                Zend_View url helper:
--->
             </para>
                 
             <programlisting role="php"><![CDATA[
@@ -228,11 +159,8 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </programlisting>
 
             <para>
-               В результате значением аттрибута href будет
+               В результате значением атрибута href будет
                <code>user/martel</code>.
-<!--
-                Which would result in the href: <code>user/martel</code>.
--->
             </para>
         </note>
 
@@ -240,48 +168,29 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             Маршрутизация - простой процесс итерации по всем предоставленным
             маршрутам и сопоставления их определений с текущим URI запроса.
             Когда найдено соответствие, то из объекта маршрута возвращаются
-            значения переменных и добавлются в объект
+            значения переменных и добавляются в объект
             <code>Zend_Controller_Request</code> для дальнейшего использования в
             диспетчере и пользовательских контроллерах. Если соответствие не
             найдено, то проверяется следующий маршрут в цепочке.
-<!--
-            Routing is a simple process of iterating through all provided routes
-            and matching its definitions to current request URI. When a positive
-            match is found, variable values are returned from the Route instance
-            and are injected into the <code>Zend_Controller_Request</code>
-            object for later use in the dispatcher as well as in user created
-            controllers. On a negative match result, the next route in the chain
-            is checked.
--->
         </para>
             
         <note>
-            <title>Обратный порядок сопоставления<!--Reverse matching--></title>
+            <title>Обратный порядок сопоставления</title>
             <para>
                 Маршруты сопоставляются в обратном порядке, поэтому
                 удостоверьтесь, что наиболее общие маршруты определены
                 первыми.
-<!--
-                Routes are matched in reverse order so make sure your most
-                generic routes are defined first.
--->
             </para>
         </note>
 
         <note>
-            <title>Возвращаемые значения<!--Returned values--></title>
+            <title>Возвращаемые значения</title>
             <para>
                 Значения, возвращаемые при маршрутизации, получаются из
                 параметров URL или определенных пользователем значений по
                 умолчанию. Эти переменные позднее могут быть позднее получены
                 через методы <code>Zend_Controller_Request::getParam()</code>
                 и <code>Zend_Controller_Action::_getParam()</code>
-<!--
-                Values returned from routing come from URL parameters or user
-                defined route defaults. These variables are later accessible
-                through the <code>Zend_Controller_Request::getParam()</code> or
-                <code>Zend_Controller_Action::_getParam()</code> methods.
--->
             </para>
         </note>
 
@@ -290,34 +199,21 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             маршрутах - 'module', 'controller' and 'action'. Эти специальные
             переменные используются диспетчером Zend_Controller_Dispatcher для
             нахождения контроллера и действия, которым передается управление.
-<!--
-            There are three special variables which can be used in your routes
-            - 'module', 'controller' and 'action'. These special variables are
-            used by Zend_Controller_Dispatcher to find a controller and action
-            to dispatch to.
--->
         </para>
 
         <note>
-            <title>Специальные переменные<!--Special variables--></title>
+            <title>Специальные переменные</title>
             <para>
                 Имена этих переменных могут быть другими, если вы измените их
                 через методы <code>setControllerKey</code> и
                 <code>setActionKey</code>.
-<!--
-                The names of these special variables may be different if you
-                choose to alter the defaults in
-                <code>Zend_Controller_Request_Http</code> by means of the
-                <code>setControllerKey</code> and <code>setActionKey</code>
-                methods.
--->
             </para>
         </note>
 
     </sect2>
     
     <sect2 id="zend.controller.router.default-routes">
-        <title>Маршруты по умолчанию<!--Default routes--></title>
+        <title>Маршруты по умолчанию</title>
 
         <para>
             <code>Zend_Controller_Router_Rewrite</code> изначально
@@ -329,22 +225,10 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             Этот маршрут будет также соответствовать любым дополнительным
             параметрам, по умолчанию добавляемым в конец URI -
             <code>контроллер/действие/переменная1/значение1/переменная2/значение2</code>.
-<!--
-            Zend_Controller_Router_Rewrite comes preconfigured with a default
-            route, which will match URIs in the shape of
-            <code>controller/action</code>.  Additionally, a module name may be
-            specified as the first path element, allowing URIs of the form
-            <code>module/controller/action</code>.  Finally, it will also match
-            any additional parameters appended to the URI by default -
-            <code>controller/action/var1/value1/var2/value2</code>.
--->
         </para>
 
         <para>
             Некоторые примеры того, чему будут соответствовать такие маршруты:
-<!--
-            Some examples of how such routes are matched:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -391,12 +275,6 @@ http://example/blog/archive/list/sort/alpha/date/desc
             <code>Zend_Controller_Router_Route_Module</code>, сохраненный в
             RewriteRouter под именем (индексом) 'default'. Он создается
             приблизительно следующим образом:
-<!--
-            The default route is simply a
-            <code>Zend_Controller_Router_Route_Module</code> object stored under
-            the name (index) of 'default' in RewriteRouter. It's created
-            more-or-less like below:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -410,12 +288,6 @@ $this->addRoute('default', $compat);]]>
             собственного маршрута по умолчанию (т.е. сохранения его под именем
             'default') или полностью удалить его через метод
             <code>removeDefaultRoutes()</code>:
-<!--
-            If you do not want this particular default route in your routing
-            schema, you may override it by creating your own 'default' route
-            (i.e., storing it under the name of 'default') or removing it
-            altogether by using <code>removeDefaultRoutes()</code>:
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -426,7 +298,7 @@ $router->removeDefaultRoutes();]]>
     </sect2>
 
     <sect2 id="zend.controller.router.rewritebase">
-        <title>Базовый URL и поддиректории<!--Base URL and subdirectories--></title>
+        <title>Базовый URL и поддиректории</title>
 
         <para>
             RewriteRouter может использоваться в поддиректориях (например,
@@ -435,14 +307,6 @@ $router->removeDefaultRoutes();]]>
             должен автоматически определяться в объекте
             <code>Zend_Controller_Request_Http</code> и соответствующим образом
             использоваться.
-<!--
-            The rewrite router can be used in subdirectories (e.g.,
-            <code>http://domain.com/~user/application-root/</code>>) in which
-            case the base URL of the application
-            (<code>/~user/application-root</code>) should be automatically
-            detected by <code>Zend_Controller_Request_Http</code> and used
-            accordingly.
--->
         </para>
 
         <para>
@@ -450,13 +314,6 @@ $router->removeDefaultRoutes();]]>
             переопределить его через метод <code>setBaseUrl()</code> объекта
             <code>Zend_Controller_Request_Http</code> (см.
             <xref linkend="zend.controller.request.http.baseurl" />):
-<!--
-            Should the base URL be detected incorrectly you can override it with
-            your own base path by using
-            <code>Zend_Controller_Request_Http</code> and calling the
-            <code>setBaseUrl()</code> method (see <xref
-                linkend="zend.controller.request.http.baseurl" />):
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -466,14 +323,14 @@ $request->setBaseUrl('/~user/application-root/');]]>
     </sect2>
 
     <sect2 id="zend.controller.router.routes">
-        <title>Типы маршрутов<!--Route Types--></title>
+        <title>Типы маршрутов</title>
         <xi:include href="Zend_Controller-Router-Route.xml" />
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
     </sect2>
     
     <sect2 id="zend.controller.router.add-config">
-        <title>Использование Zend_Config вместе с RewriteRouter<!--Using Zend_Config with the RewriteRouter--></title>
+        <title>Использование Zend_Config вместе с RewriteRouter</title>
 
         <para>
             Иногда может быть более удобным обновлять конфигурационный файл
@@ -481,20 +338,10 @@ $request->setBaseUrl('/~user/application-root/');]]>
             <code>addConfig()</code>. В сущности, вы создаете конфигурацию,
             совместимую с Zend_Config, считываете ее в своем коде и
             передаете RewriteRouter.
-<!--
-            Sometimes it is more convenient to update a configuration file with
-            new routes than to change the code. This is possible via the
-            <code>addConfig()</code> method. Basically, you create a
-            Zend_Config-compatible configuration, and in your code read it in
-            and pass it to the RewriteRouter.
--->
         </para>
 
         <para>
             В качестве примера рассмотрим следующий INI-файл:
-<!--
-            As an example, consider the following INI file:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -521,10 +368,6 @@ routes.archive.map.1 = "year"
         <para>
             Этот INI-файл может быть затем прочитан в объект
             <code>Zend_Config</code> как показано ниже: 
-<!--
-            The above INI file can then be read into a <code>Zend_Config</code>
-            object as follows:
--->
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -541,33 +384,18 @@ $router->addConfig($config, 'routes');]]>
             'news'. Каждый маршрут требует, как минимум, запись 'route' и
             одну или более записей 'defaults'; опционально может быть одна
             или более записей 'reqs' (сокращение от 'required'). Все это
-            соответствет трем аргументам, передаваемым объекту
+            соответствует трем аргументам, передаваемым объекту
             <code>Zend_Controller_Router_Route_Interface</code>.
             Опция с ключом 'type' может использоваться для определения класса,
             используемого для данного маршрут;, по умолчанию используется
             класс <code>Zend_Controller_Router_Route</code>. В примере выше
             для маршрута 'news' должен использоваться класс
             <code>Zend_Controller_Router_Route_Static</code>.    
-<!--
-            In the above example, we tell the router to use the 'routes' section
-            of the INI file to use for its routes. Each first-level key under
-            that section will be used to define a route name; the above example
-            defines the routes 'archive' and 'news'. Each route then requires,
-            at minimum, a 'route' entry and one or more 'defaults' entries;
-            optionally one or more 'reqs' (short for 'required') may be
-            provided. All told, these correspond to the three arguments provided
-            to a <code>Zend_Controller_Router_Route_Interface</code> object. An
-            option key, 'type', can be used to specify the route class type to
-            use for that particular route; by default, it uses
-            <code>Zend_Controller_Router_Route</code>. In the example above, the
-            'news' route is defined to use
-            <code>Zend_Controller_Router_Route_Static</code>.
--->
         </para>
     </sect2>
 
     <sect2 id="zend.controller.router.subclassing">
-        <title>Создание подклассов маршрутизатора<!--Subclassing the Router--></title>
+        <title>Создание подклассов маршрутизатора</title>
 
         <para>
             Стандартный RewriteRouter создан с тем, чтобы предоставлять полный
@@ -575,12 +403,6 @@ $router->addConfig($config, 'routes');]]>
             понадобиться. Как правило, вам нужно будет только создать новый тип
             маршрута для того, чтобы получить новый или измененный функционал
             сверх уже существующих типов маршрутов.
-<!--
-            The standard rewrite router should provide most functionality you
-            may need; most often, you will only need to create a new route type
-            in order to provide new or modified functionality over the provided
-            routes.
--->
         </para>
 
         <para>
@@ -589,13 +411,6 @@ $router->addConfig($config, 'routes');]]>
             <code>Zend_Controller_Router_Interface</code> дает минимальную
             информацию, необходимую для создания маршрута и содержит всего один
             метод.
-<!--
-            That said, you may at some point find yourself wanting to use a
-            different routing paradigm.  The interface
-            <code>Zend_Controller_Router_Interface</code> provides the minimal
-            information required to create a router, and consists of a single
-            method.
--->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -613,20 +428,11 @@ interface Zend_Controller_Router_Interface
         <para>
             Маршрутизация производится только один раз - когда в систему
             поступил первый запрос. Назначение маршрутизатора состоит в
-            определениии контроллера, действия и опциональных параметров,
+            определении контроллера, действия и опциональных параметров,
             основываясь на переменных запроса, и установке их в запросе. Затем
             объект запроса передается диспетчеру. Если не найден соответствующий
-            маршрут, то маршрутизатор должен ничего не делать с объектом
+            маршрут, то маршрутизатор не должен ничего делать с объектом
             запроса.
-<!--
-            Routing only occurs once: when the request is first received into
-            the system.  The purpose of the router is to determine the
-            controller, action, and optional parameters based on the request
-            environment, and then set them in the request.  The request object
-            is then passed to the dispatcher.  If it is not possible to map a
-            route to a dispatch token, the router should do nothing to the
-            request object.
--->
         </para>
     </sect2>
 </sect1>

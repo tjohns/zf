@@ -19,7 +19,8 @@
 
         <para>
             Включение профилировщика производится либо передачей директивы
-            конструктору при создании адаптера, либо последующим обращением к адаптеру для включения.
+            конструктору при создании адаптера, либо последующим обращением к
+            адаптеру для включения.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -30,7 +31,8 @@ $params = array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-    'profiler' => true  // включение профилировщика; для отключения устанавливайте в false (значение по умолчанию)
+    'profiler' => true  // включение профилировщика;
+                        // для отключения устанавливайте в false (значение по умолчанию)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -38,7 +40,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 // отключение профилировщика:
 $db->getProfiler()->setEnabled(false);
 
-// включение профилировцика:
+// включение профилировщика:
 $db->getProfiler()->setEnabled(true);]]>
         </programlisting>
 
@@ -93,7 +95,10 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
         </para>
 
         <para>
-            И наконец, аргумент может быть объектом типа <code>Zend_Config</code>, содержащим свойства, аналогичные ключам массива, описанного выше. К примеру, файл "config.ini" может содержать следующие данные:
+            И наконец, аргумент может быть объектом типа
+            <code>Zend_Config</code>, содержащим свойства, аналогичные ключам
+            массива, описанного выше. К примеру, файл "config.ini" может
+            содержать следующие данные:
             <programlisting role="ini"><![CDATA[
 [main]
 db.profiler.class   = "MyProject_Db_Profiler"
@@ -108,7 +113,8 @@ $params['profiler'] = $config->db->profiler;
 $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             </programlisting>
 
-            Свойство '<code>instance</code>' может быть использовано следующим образом:
+            Свойство '<code>instance</code>' может быть использовано следующим
+            образом:
             <programlisting role="php"><![CDATA[
 $profiler = new MyProject_Db_Profiler();
 $profiler->setEnabled(true);
@@ -255,7 +261,8 @@ echo "Longest query: \n" . $longestQuery . "\n";]]>
         <title>Расширенное использование профилировщика</title>
 
         <para>
-            Кроме исследования запросов, профилировщик также позволяет фильтровать запросы, для которых
+            Кроме исследования запросов, профилировщик также позволяет
+            фильтровать запросы, для которых
             создаются профили. Следующие методы работают на экземпляре
             <code>Zend_Db_Profiler</code>:
         </para>

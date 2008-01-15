@@ -5,14 +5,8 @@
         Во всех примерах выше использовались динамические маршруты - маршруты,
         содержащие шаблоны для сравнения. Но часто определенный маршрут должен
         быть неизменным, и применение регулярных выражений по отношению к нему
-        было бы лишним. Решением данной ситуации является использование
+        было бы излишеством. Решением в данной ситуации является использование
         статических маршрутов:
-<!--
-        The examples above all use dynamic routes - routes that contain
-        patterns to match against. Sometimes, however, a particular route is
-        set in stone, and firing up the regular expression engine would be
-        an overkill. The answer to this situation is to use static routes:
--->
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -27,10 +21,6 @@ $router->addRoute('login', $route);]]>
         Этот маршрут будет соответствовать URL
         <code>http://domain.com/login</code> и приводит к вызову
         <code>AuthController::loginAction()</code>.
-<!--
-        Above route will match a URL of <code>http://domain.com/login</code>,
-        and dispatch to <code>AuthController::loginAction()</code>.
--->
     </para>
     
 </sect3>
