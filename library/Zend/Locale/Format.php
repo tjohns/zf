@@ -288,7 +288,7 @@ class Zend_Locale_Format
         if ($symbols['minus'] != "-")
             $found = strtr($found,$symbols['minus'],'-');
         $found = str_replace($symbols['group'],'', $found);
-            
+
         // Do precision
         if (strpos($found, $symbols['decimal']) !== false) {
             if ($symbols['decimal'] != '.') {
@@ -304,7 +304,7 @@ class Zend_Locale_Format
                 $found = substr($found, 0, strlen($found) - strlen($pre) + $options['precision']);
             }
         }
-        
+
         return $found;
     }
 
@@ -329,7 +329,7 @@ class Zend_Locale_Format
         if ($options['locale'] instanceof Zend_Locale) {
             $options['locale'] = $options['locale']->toString();
         }
-        
+
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getList($options['locale'], 'symbols');
         iconv_set_encoding('internal_encoding', 'UTF-8');
@@ -354,7 +354,7 @@ class Zend_Locale_Format
                     $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
                 }
             }
-            
+
             if (strpos($format, '.')) {
                 if (is_numeric($options['precision'])) {
                     $value = Zend_Locale_Math::round($value, $options['precision']);
@@ -457,7 +457,7 @@ class Zend_Locale_Format
                 $seperation = ($point - $group);
                 $number = iconv_substr($number, 0, iconv_strlen($number) - $seperation) . $symbols['group']
                         . iconv_substr($number, iconv_strlen($number) - $seperation);
-                        
+
                 if ((iconv_strlen($number) - 1) > ($point - $group + 1)) {
                     $seperation2 = ($group - $group2 - 1);
 
