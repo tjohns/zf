@@ -147,6 +147,18 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<li>And \'some\' &quot;final&quot; test</li>', $list);
     } 
 
+    public function testListEscapeSwitchedOffForZF2283()
+    {
+        $items = array('one <b>small</b> test');
+
+        $list = $this->helper->htmlList($items, false, false, false);
+
+        $this->assertContains('<ul>', $list);
+        $this->assertContains('</ul>', $list);
+        
+        $this->assertContains('<li>one <b>small</b> test</li>', $list);
+    } 
+
 }
 
 // Call Zend_View_Helper_HtmlListTest::main() if this source file is executed directly.
