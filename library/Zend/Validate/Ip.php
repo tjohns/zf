@@ -59,7 +59,7 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (!ip2long($valueString)) {
+        if (ip2long($valueString) === false) {
             $this->_error();
             return false;
         }

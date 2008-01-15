@@ -69,7 +69,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     {
         $valuesExpected = array(
             array(Zend_Validate_Hostname::ALLOW_IP, true, array('1.2.3.4', '10.0.0.1', '255.255.255.255')),
-            array(Zend_Validate_Hostname::ALLOW_IP, false, array('0.0.0.0', '0.0.0.256')),
+            array(Zend_Validate_Hostname::ALLOW_IP, false, array('1.2.3.4.5', '0.0.0.256')),
             array(Zend_Validate_Hostname::ALLOW_DNS, true, array('example.com', 'example.museum', 'd.hatena.ne.jp')),
             array(Zend_Validate_Hostname::ALLOW_DNS, false, array('localhost', 'localhost.localdomain', '1.2.3.4', 'domain.invalid')),
             array(Zend_Validate_Hostname::ALLOW_LOCAL, true, array('localhost', 'localhost.localdomain', 'example.com')),

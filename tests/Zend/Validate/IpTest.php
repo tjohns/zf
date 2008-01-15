@@ -67,17 +67,19 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
-        $valuesExpected = array(
-            array(true, array('1.2.3.4', '10.0.0.1', '255.255.255.255')),
-            array(false, array('0.0.0.256', '1.2.3.4.5', '0.0.0.0'))
-            );
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $this->_validator->isValid($input));
-            }
-        }
+        $this->assertTrue($this->_validator->isValid('1.2.3.4'));
+        $this->assertTrue($this->_validator->isValid('10.0.0.1'));
+        $this->assertTrue($this->_validator->isValid('255.255.255.255'));
+        
+        $this->assertFalse($this->_validator->isValid('0.0.0.256'));
+        $this->assertFalse($this->_validator->isValid('1.2.3.4.5'));
     }
 
+    public function testZeroIpForZF2420()
+    {
+        $this->assertTrue($this->_validator->isValid('0.0.0.0'));
+    }
+    
     /**
      * Ensures that getMessages() returns expected default value
      *
