@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Validate_StringLength
  */
 require_once 'Zend/Validate/StringLength.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -68,18 +67,19 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
      */
     public function testSetMessage()
     {
-        $this->assertFalse($this->_validator->isValid('abcdefghij'));
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->_validator->isValid($inputInvalid));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("'abcdefghij' is greater than 8 characters long", $messages[0]);
+        $this->assertEquals("'$inputInvalid' is greater than 8 characters long", current($messages));
 
         $this->_validator->setMessage(
-            "Your value is too long",
+            'Your value is too long',
             Zend_Validate_StringLength::TOO_LONG
         );
 
         $this->assertFalse($this->_validator->isValid('abcdefghij'));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too long", $messages[0]);
+        $this->assertEquals('Your value is too long', current($messages));
     }
 
     /**
@@ -93,14 +93,14 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     public function testSetMessageDefaultKey()
     {
         $this->_validator->setMessage(
-            "Your value is too short"
+            'Your value is too short'
         );
 
         $this->assertFalse($this->_validator->isValid('abc'));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too short", $messages[0]);
+        $this->assertEquals('Your value is too short', current($messages));
         $errors = $this->_validator->getErrors();
-        $this->assertEquals(Zend_Validate_StringLength::TOO_SHORT, $errors[0]);
+        $this->assertEquals(Zend_Validate_StringLength::TOO_SHORT, current($errors));
     }
 
     /**
@@ -116,9 +116,10 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
             Zend_Validate_StringLength::TOO_LONG
         );
 
-        $this->assertFalse($this->_validator->isValid('abcdefghij'));
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->_validator->isValid($inputInvalid));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value 'abcdefghij' is too long", $messages[0]);
+        $this->assertEquals("Your value '$inputInvalid' is too long", current($messages));
     }
 
     /**
@@ -132,13 +133,14 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     public function testSetMessageWithOtherParam()
     {
         $this->_validator->setMessage(
-            "Your value is too long, it should be no longer than %max%",
+            'Your value is too long, it should be no longer than %max%',
             Zend_Validate_StringLength::TOO_LONG
         );
 
-        $this->assertFalse($this->_validator->isValid('abcdefghij'));
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->_validator->isValid($inputInvalid));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too long, it should be no longer than 8", $messages[0]);
+        $this->assertEquals('Your value is too long, it should be no longer than 8', current($messages));
     }
 
     /**
@@ -151,13 +153,14 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     public function testSetMessageWithUnknownParam()
     {
         $this->_validator->setMessage(
-            "Your value is too long, and btw, %shazam%!",
+            'Your value is too long, and btw, %shazam%!',
             Zend_Validate_StringLength::TOO_LONG
         );
 
-        $this->assertFalse($this->_validator->isValid('abcdefghij'));
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->_validator->isValid($inputInvalid));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too long, and btw, %shazam%!", $messages[0]);
+        $this->assertEquals('Your value is too long, and btw, %shazam%!', current($messages));
     }
 
     /**
@@ -168,16 +171,17 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
      */
     public function testSetMessageExceptionInvalidKey()
     {
+        $keyInvalid = 'invalidKey';
         try {
             $this->_validator->setMessage(
-                "Your value is too long",
-                'invalidKey'
+                'Your value is too long',
+                $keyInvalid
             );
             $this->fail('Expected to catch Zend_Validate_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Validate_Exception', $e,
-                'Expected exception of type Zend_Validate_Exception, got '.get_class($e));
-            $this->assertEquals("No message template exists for key 'invalidKey'", $e->getMessage());
+                'Expected exception of type Zend_Validate_Exception, got ' . get_class($e));
+            $this->assertEquals("No message template exists for key '$keyInvalid'", $e->getMessage());
         }
     }
 
@@ -192,18 +196,18 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     {
         $this->_validator->setMessages(
             array(
-                Zend_Validate_StringLength::TOO_LONG  => "Your value is too long",
-                Zend_Validate_StringLength::TOO_SHORT => "Your value is too short"
+                Zend_Validate_StringLength::TOO_LONG  => 'Your value is too long',
+                Zend_Validate_StringLength::TOO_SHORT => 'Your value is too short'
             )
         );
 
         $this->assertFalse($this->_validator->isValid('abcdefghij'));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too long", $messages[0]);
+        $this->assertEquals('Your value is too long', current($messages));
 
         $this->assertFalse($this->_validator->isValid('abc'));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too short", $messages[0]);
+        $this->assertEquals('Your value is too short', current($messages));
     }
 
     /**
@@ -217,15 +221,17 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     public function testGetProperty()
     {
         $this->_validator->setMessage(
-            "Your value is too long",
+            'Your value is too long',
             Zend_Validate_StringLength::TOO_LONG
         );
 
-        $this->assertFalse($this->_validator->isValid('abcdefghij'));
-        $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too long", $messages[0]);
+        $inputInvalid = 'abcdefghij';
 
-        $this->assertEquals('abcdefghij', $this->_validator->value);
+        $this->assertFalse($this->_validator->isValid($inputInvalid));
+        $messages = $this->_validator->getMessages();
+        $this->assertEquals('Your value is too long', current($messages));
+
+        $this->assertEquals($inputInvalid, $this->_validator->value);
         $this->assertEquals(8, $this->_validator->max);
         $this->assertEquals(4, $this->_validator->min);
     }
@@ -239,20 +245,20 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
     public function testGetPropertyException()
     {
         $this->_validator->setMessage(
-            "Your value is too long",
+            'Your value is too long',
             Zend_Validate_StringLength::TOO_LONG
         );
 
         $this->assertFalse($this->_validator->isValid('abcdefghij'));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("Your value is too long", $messages[0]);
+        $this->assertEquals('Your value is too long', current($messages));
 
         try {
             $property = $this->_validator->unknownProperty;
             $this->fail('Expected to catch Zend_Validate_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Validate_Exception', $e,
-                'Expected exception of type Zend_Validate_Exception, got '.get_class($e));
+                'Expected exception of type Zend_Validate_Exception, got ' . get_class($e));
             $this->assertEquals("No property exists by the name 'unknownProperty'", $e->getMessage());
         }
     }
@@ -265,13 +271,14 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
      */
     public function testGetErrors()
     {
-        $this->assertFalse($this->_validator->isValid('abcdefghij'));
+        $inputInvalid = 'abcdefghij';
+        $this->assertFalse($this->_validator->isValid($inputInvalid));
 
         $messages = $this->_validator->getMessages();
-        $this->assertEquals("'abcdefghij' is greater than 8 characters long", $messages[0]);
+        $this->assertEquals("'$inputInvalid' is greater than 8 characters long", current($messages));
 
         $errors = $this->_validator->getErrors();
-        $this->assertEquals(Zend_Validate_StringLength::TOO_LONG, $errors[0]);
+        $this->assertEquals(Zend_Validate_StringLength::TOO_LONG, current($errors));
     }
 
     /**
@@ -293,7 +300,7 @@ class Zend_Validate_MessageTest extends PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->_validator->isValid('abc'));
         $messages = $this->_validator->getMessages();
-        $this->assertEquals('variables: %notvar% 4 8 ', $messages[0]);
+        $this->assertEquals('variables: %notvar% 4 8 ', current($messages));
     }
 
 }

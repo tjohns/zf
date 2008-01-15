@@ -50,9 +50,10 @@ class Zend_Validate implements Zend_Validate_Interface
     protected $_messages = array();
 
     /**
-     * Array of validation failure messages
+     * Array of validation failure message codes
      *
      * @var array
+     * @deprecated Since 1.5.0
      */
     protected $_errors = array();
 
@@ -68,7 +69,10 @@ class Zend_Validate implements Zend_Validate_Interface
      */
     public function addValidator(Zend_Validate_Interface $validator, $breakChainOnFailure = false)
     {
-        $this->_validators[] = array('instance' => $validator, 'breakChainOnFailure' => $breakChainOnFailure);
+        $this->_validators[] = array(
+            'instance' => $validator,
+            'breakChainOnFailure' => (boolean) $breakChainOnFailure
+            );
         return $this;
     }
 
@@ -91,8 +95,9 @@ class Zend_Validate implements Zend_Validate_Interface
                 continue;
             }
             $result = false;
-            $this->_messages = array_merge($this->_messages, $validator->getMessages());
-            $this->_errors   = array_merge($this->_errors,   $validator->getErrors());
+            $messages = $validator->getMessages();
+            $this->_messages = array_merge($this->_messages, $messages);
+            $this->_errors   = array_merge($this->_errors,   array_keys($messages));
             if ($element['breakChainOnFailure']) {
                 break;
             }
@@ -115,9 +120,10 @@ class Zend_Validate implements Zend_Validate_Interface
     /**
      * Defined by Zend_Validate_Interface
      *
-     * Returns array of validation failure messages
+     * Returns array of validation failure message codes
      *
      * @return array
+     * @deprecated Since 1.5.0
      */
     public function getErrors()
     {
@@ -125,10 +131,10 @@ class Zend_Validate implements Zend_Validate_Interface
     }
 
     /**
-     * @param mixed    $value
-     * @param string   $classBaseName
-     * @param array    $args          OPTIONAL
-     * @param mixed    $namespaces    OPTIONAL
+     * @param  mixed    $value
+     * @param  string   $classBaseName
+     * @param  array    $args          OPTIONAL
+     * @param  mixed    $namespaces    OPTIONAL
      * @return boolean
      * @throws Zend_Validate_Exception
      */

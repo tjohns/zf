@@ -20,10 +20,12 @@
  * @version    $Id$
  */
 
+
 /**
  * @see Zend_Validate_Interface
  */
 require_once 'Zend/Validate/Interface.php';
+
 
 /**
  * @category   Zend
@@ -33,8 +35,9 @@ require_once 'Zend/Validate/Interface.php';
  */
 abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
 {
-
     /**
+     * The value to be validated
+     *
      * @var mixed
      */
     protected $_value;
@@ -54,72 +57,23 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     protected $_messageTemplates = array();
 
     /**
+     * Array of validation failure messages
+     *
      * @var array
      */
     protected $_messages = array();
 
     /**
+     * Array of validation failure message codes
+     *
      * @var array
+     * @deprecated Since 1.5.0
      */
     protected $_errors = array();
 
     /**
-     * @param string $messageKey
-     * @param string $value
-     * @return string
-     */
-    protected function _createMessage($messageKey, $value)
-    {
-        if (!isset($this->_messageTemplates[$messageKey])) {
-            return null;
-        }
-
-        $message = $this->_messageTemplates[$messageKey];
-        $message = str_replace("%value%", (string) $value, $message);
-        foreach ($this->_messageVariables as $ident => $property) {
-            $message = str_replace("%$ident%", $this->$property, $message);
-        }
-        return $message;
-    }
-
-    /**
-     * @param string $messageKey OPTIONAL
-     * @param string $value      OPTIONAL
-     * @return void
-     */
-    protected function _error($messageKey = null, $value = null)
-    {
-        if ($messageKey === null) {
-            $keys = array_keys($this->_messageTemplates);
-            $messageKey = current($keys);
-        }
-        if ($value === null) {
-            $value = $this->_value;
-        }
-        $this->_errors[]   = $messageKey;
-        $this->_messages[] = $this->_createMessage($messageKey, $value);
-    }
-
-    /**
-     * @param mixed $value
-     * @return void
-     */
-    protected function _setValue($value)
-    {
-        $this->_value    = $value;
-        $this->_errors   = array();
-        $this->_messages = array();
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->_errors;
-    }
-
-    /**
+     * Returns array of validation failure messages
+     *
      * @return array
      */
     public function getMessages()
@@ -128,6 +82,8 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
+     * Returns an array of the names of variables that are used in constructing validation failure messages
+     *
      * @return array
      */
     public function getMessageVariables()
@@ -136,9 +92,11 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
-     * @param string $messageString
-     * @param string $messageKey    OPTIONAL
-     * @return Zend_Validate_Abstract
+     * Sets the validation failure message template for a particular key
+     *
+     * @param  string $messageString
+     * @param  string $messageKey     OPTIONAL
+     * @return Zend_Validate_Abstract Provides a fluent interface
      * @throws Zend_Validate_Exception
      */
     public function setMessage($messageString, $messageKey = null)
@@ -156,7 +114,10 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
-     * @param array $messages
+     * Sets validation failure message templates given as an array, where the array keys are the message keys,
+     * and the array values are the message template strings.
+     *
+     * @param  array $messages
      * @return Zend_Validate_Abstract
      */
     public function setMessages(array $messages)
@@ -168,7 +129,10 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
-     * @param string $property
+     * Magic function returns the value of the requested property, if and only if it is the value or a
+     * message variable.
+     *
+     * @param  string $property
      * @return mixed
      * @throws Zend_Validate_Exception
      */
@@ -187,4 +151,68 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         throw new Zend_Validate_Exception("No property exists by the name '$property'");
     }
 
+    /**
+     * Constructs and returns a validation failure message with the given message key and value.
+     *
+     * Returns null if and only if $messageKey does not correspond to an existing template.
+     *
+     * @param  string $messageKey
+     * @param  string $value
+     * @return string
+     */
+    protected function _createMessage($messageKey, $value)
+    {
+        if (!isset($this->_messageTemplates[$messageKey])) {
+            return null;
+        }
+
+        $message = $this->_messageTemplates[$messageKey];
+        $message = str_replace('%value%', (string) $value, $message);
+        foreach ($this->_messageVariables as $ident => $property) {
+            $message = str_replace("%$ident%", $this->$property, $message);
+        }
+        return $message;
+    }
+
+    /**
+     * @param  string $messageKey OPTIONAL
+     * @param  string $value      OPTIONAL
+     * @return void
+     */
+    protected function _error($messageKey = null, $value = null)
+    {
+        if ($messageKey === null) {
+            $keys = array_keys($this->_messageTemplates);
+            $messageKey = current($keys);
+        }
+        if ($value === null) {
+            $value = $this->_value;
+        }
+        $this->_errors[]              = $messageKey;
+        $this->_messages[$messageKey] = $this->_createMessage($messageKey, $value);
+    }
+
+    /**
+     * Sets the value to be validated and clears the messages and errors arrays
+     *
+     * @param  mixed $value
+     * @return void
+     */
+    protected function _setValue($value)
+    {
+        $this->_value    = $value;
+        $this->_messages = array();
+        $this->_errors   = array();
+    }
+
+    /**
+     * Returns array of validation failure message codes
+     *
+     * @return array
+     * @deprecated Since 1.5.0
+     */
+    public function getErrors()
+    {
+        return $this->_errors;
+    }
 }

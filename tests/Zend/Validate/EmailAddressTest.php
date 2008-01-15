@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Validate_EmailAddress
  */
 require_once 'Zend/Validate/EmailAddress.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -120,8 +119,8 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->_validator->isValid('@example.com'));
         $messages = $this->_validator->getMessages();
-        $this->assertTrue(isset($messages[0]));
-        $this->assertContains('local-part@hostname', $messages[0]);
+        $this->assertEquals(1, count($messages));
+        $this->assertContains('local-part@hostname', current($messages));
     }
 
     /**
@@ -135,17 +134,16 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
 
         $messages = $this->_validator->getMessages();
 
-        $this->assertTrue(isset($messages[0]));
-        $this->assertContains('Some User', $messages[0]);
-        $this->assertContains('dot-atom', $messages[0]);
+        $this->assertEquals(3, count($messages));
 
-        $this->assertTrue(isset($messages[1]));
-        $this->assertContains('Some User', $messages[1]);
-        $this->assertContains('quoted-string', $messages[1]);
+        $this->assertContains('Some User', current($messages));
+        $this->assertContains('dot-atom', current($messages));
 
-        $this->assertTrue(isset($messages[2]));
-        $this->assertContains('Some User', $messages[2]);
-        $this->assertContains('not a valid local part', $messages[2]);
+        $this->assertContains('Some User', next($messages));
+        $this->assertContains('quoted-string', current($messages));
+
+        $this->assertContains('Some User', next($messages));
+        $this->assertContains('not a valid local part', current($messages));
     }
 
     /**
@@ -172,8 +170,8 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->_validator->isValid('username@ example . com'));
         $messages = $this->_validator->getMessages();
-        $this->assertTrue(isset($messages[0]));
-        $this->assertContains('not a valid hostname', $messages[0]);
+        $this->assertThat(count($messages), $this->greaterThanOrEqual(1));
+        $this->assertContains('not a valid hostname', current($messages));
     }
 
     /**
@@ -207,12 +205,10 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->_validator->isValid('User Name <username@example.com>'));
         $messages = $this->_validator->getMessages();
-        $this->assertTrue(isset($messages[0]));
-        $this->assertContains('not a valid hostname', $messages[0]);
-        $this->assertTrue(isset($messages[1]));
-        $this->assertContains('cannot extract TLD part', $messages[1]);
-        $this->assertTrue(isset($messages[2]));
-        $this->assertContains('does not appear to be a valid local network name', $messages[2]);
+        $this->assertThat(count($messages), $this->greaterThanOrEqual(3));
+        $this->assertContains('not a valid hostname', current($messages));
+        $this->assertContains('cannot extract TLD part', next($messages));
+        $this->assertContains('does not appear to be a valid local network name', next($messages));
     }
 
     /**

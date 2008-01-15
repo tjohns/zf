@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Filter_Alpha
  */
 require_once 'Zend/Filter/Alpha.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**

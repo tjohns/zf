@@ -30,98 +30,72 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-
-/**
- * PHPUnit_Framework_TestSuite
- */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-
-/**
- * PHPUnit_TextUI_TestRunner
- */
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Validate_AlnumTest
  */
 require_once 'Zend/Validate/AlnumTest.php';
 
-
 /**
  * @see Zend_Validate_AlphaTest
  */
 require_once 'Zend/Validate/AlphaTest.php';
-
 
 /**
  * @see Zend_Validate_BetweenTest
  */
 require_once 'Zend/Validate/BetweenTest.php';
 
-
 /**
  * @see Zend_Validate_CcnumTest
  */
 require_once 'Zend/Validate/CcnumTest.php';
-
 
 /**
  * @see Zend_Validate_DateTest
  */
 require_once 'Zend/Validate/DateTest.php';
 
-
 /**
  * @see Zend_Validate_DigitsTest
  */
 require_once 'Zend/Validate/DigitsTest.php';
-
 
 /**
  * @see Zend_Validate_FloatTest
  */
 require_once 'Zend/Validate/FloatTest.php';
 
-
 /**
  * @see Zend_Validate_EmailAddressTest
  */
 require_once 'Zend/Validate/EmailAddressTest.php';
-
 
 /**
  * @see Zend_Validate_GreaterThanTest
  */
 require_once 'Zend/Validate/GreaterThanTest.php';
 
-
 /**
  * @see Zend_Validate_HexTest
  */
 require_once 'Zend/Validate/HexTest.php';
-
 
 /**
  * @see Zend_Validate_HostnameTest
  */
 require_once 'Zend/Validate/HostnameTest.php';
 
-
 /**
  * @see Zend_Validate_InArrayTest
  */
 require_once 'Zend/Validate/InArrayTest.php';
 
-
 /**
  * @see Zend_Validate_IntTest
  */
 require_once 'Zend/Validate/IntTest.php';
-
 
 /**
  * @see Zend_Validate_IpTest
@@ -133,24 +107,20 @@ require_once 'Zend/Validate/IpTest.php';
  */
 require_once 'Zend/Validate/NotEmptyTest.php';
 
-
 /**
  * @see Zend_Validate_LessThanTest
  */
 require_once 'Zend/Validate/LessThanTest.php';
-
 
 /**
  * @see Zend_Validate_RegexTest
  */
 require_once 'Zend/Validate/RegexTest.php';
 
-
 /**
  * @see Zend_Validate_StringLengthTest
  */
 require_once 'Zend/Validate/StringLengthTest.php';
-
 
 /**
  * @see Zend_Validate_MessageTest

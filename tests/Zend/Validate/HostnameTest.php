@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Validate_Hostname
  */
 require_once 'Zend/Validate/Hostname.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -129,12 +128,12 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
 
     /**
      * Ensure the IDN check works as expected
-     * 
+     *
      */
     public function testIDN()
     {
         $validator = new Zend_Validate_Hostname();
-        
+
         // Check IDN matching
         $valuesExpected = array(
             array(true, array('bürger.de', 'hãllo.de', 'hållo.se')),
@@ -146,7 +145,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
-        
+
         // Check no IDN matching
         $validator->setValidateIdn(false);
         $valuesExpected = array(
@@ -157,7 +156,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
-        
+
         // Check setting no IDN matching via constructor
         unset($validator);
         $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
@@ -170,7 +169,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             }
         }
     }
-    
+
     /**
      * Ensure the TLD check works as expected
      *
@@ -178,7 +177,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     public function testTLD()
     {
         $validator = new Zend_Validate_Hostname();
-        
+
         // Check TLD matching
         $valuesExpected = array(
             array(true, array('domain.co.uk', 'domain.uk.com', 'domain.tl', 'domain.zw')),
@@ -189,7 +188,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
-        
+
         // Check no TLD matching
         $validator->setValidateTld(false);
         $valuesExpected = array(
@@ -200,7 +199,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
-        
+
         // Check setting no TLD matching via constructor
         unset($validator);
         $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);
@@ -212,7 +211,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
-    }    
+    }
 
     /**
      * Ensures that getAllow() returns expected default value

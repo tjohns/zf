@@ -1,21 +1,58 @@
 <?php
+
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Filter
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ */
+
+
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.
-if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
-    define("PHPUnit_MAIN_METHOD", "Zend_Filter_InflectorTest::main");
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Filter_InflectorTest::main');
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
+/**
+ * @see Zend_Filter_Inflector
+ */
 require_once 'Zend/Filter/Inflector.php';
-require_once 'Zend/Filter/PregReplace.php';
+
+/**
+ * @see Zend_Config
+ */
 require_once 'Zend/Config.php';
+
 
 /**
  * Test class for Zend_Filter_Inflector.
+ *
+ * @category   Zend
+ * @package    Zend_Filter
+ * @subpackage UnitTests
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase 
+class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -24,9 +61,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        require_once "PHPUnit/TextUI/TestRunner.php";
-
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_Filter_InflectorTest");
+        $suite  = new PHPUnit_Framework_TestSuite('Zend_Filter_InflectorTest');
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
@@ -215,7 +250,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($rules['controller']));
         $this->assertEquals('phtml', $rules['suffix']);
     }
-    
+
     public function testGetRule()
     {
         $this->inflector->setFilterRule(':controller', array('Alpha', 'StringToLower'));
@@ -237,7 +272,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         ));
         $this->assertEquals('Foo-Bar/baz-Bat.phtml', $filtered);
     }
-    
+
     public function testTargetReplacementIdentiferAccessorsWork()
     {
         $this->assertEquals(':', $this->inflector->getTargetReplacementIdentifier());
@@ -248,7 +283,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
     public function testTargetReplacementIdentiferWorksWhenInflected()
     {
         $this->inflector = new Zend_Filter_Inflector(
-            '?=##controller/?=##action.?=##suffix', 
+            '?=##controller/?=##action.?=##suffix',
             array(
                  ':controller' => array('Word_CamelCaseToDash'),
                  ':action'     => array('Word_CamelCaseToDash'),
@@ -265,7 +300,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('Foo-Bar/baz-Bat.phtml', $filtered);
     }
-    
+
     public function testThrowTargetExceptionsAccessorsWork()
     {
         $this->assertEquals(':', $this->inflector->getTargetReplacementIdentifier());
@@ -279,11 +314,11 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $this->inflector->setThrowTargetExceptionsOn(false);
         $this->assertFalse($this->inflector->isThrowTargetExceptionsOn());
     }
-    
+
     public function testTargetExceptionThrownWhenTargetSourceNotSatisfied()
     {
         $this->inflector = new Zend_Filter_Inflector(
-            '?=##controller/?=##action.?=##suffix', 
+            '?=##controller/?=##action.?=##suffix',
             array(
                  ':controller' => array('Word_CamelCaseToDash'),
                  ':action'     => array('Word_CamelCaseToDash'),
@@ -300,7 +335,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof Zend_Filter_Exception);
         }
     }
-    
+
     public function testTargetExceptionNotThrownOnIdentifierNotFollowedByCharacter()
     {
         $this->inflector = new Zend_Filter_Inflector(
@@ -313,7 +348,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
             true,
             ':'
             );
-            
+
         try {
             $filtered = $this->inflector->filter(array('controller' => 'FooBar', 'action' => 'MooToo'));
             $this->assertEquals($filtered, 'e:\path\to\foo-bar\Moo-Too.phtml');
@@ -352,7 +387,7 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
         $options = $this->getOptions();
         return new Zend_Config($options);
     }
-    
+
     protected function _testOptions($inflector)
     {
         $options = $this->getOptions();
@@ -397,6 +432,6 @@ class Zend_Filter_InflectorTest extends PHPUnit_Framework_TestCase
 }
 
 // Call Zend_Filter_InflectorTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_Filter_InflectorTest::main") {
+if (PHPUnit_MAIN_METHOD == 'Zend_Filter_InflectorTest::main') {
     Zend_Filter_InflectorTest::main();
 }

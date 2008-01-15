@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Validate_Date
  */
 require_once 'Zend/Validate/Date.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -84,7 +83,7 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
                                 "'$input' expected to be " . ($result ? '' : 'in') . 'valid');
         }
     }
-    
+
     /**
      * Ensures that characters trailing an otherwise valid date cause the input to be invalid
      *
@@ -112,7 +111,7 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_validator->isValid($dateValid));
         $this->assertFalse($this->_validator->isValid($charactersLeading . $dateValid));
     }
-    
+
     /**
      * Ensures that getMessages() returns expected default value
      *

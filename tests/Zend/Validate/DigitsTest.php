@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Validate_Digits
  */
 require_once 'Zend/Validate/Digits.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -61,11 +60,11 @@ class Zend_Validate_DigitsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the validator follows expected behavior
+     * Ensures that the validator follows expected behavior for basic input values
      *
      * @return void
      */
-    public function testBasic()
+    public function testExpectedResultsWithBasicInputValues()
     {
         $valuesExpected = array(
             'abc123'  => false,
@@ -84,12 +83,66 @@ class Zend_Validate_DigitsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that getMessages() returns expected default value
+     * Ensures that getMessages() returns expected initial value
      *
      * @return void
      */
-    public function testGetMessages()
+    public function testMessagesEmptyInitially()
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testEmptyStringValueResultsInProperValidationFailureMessages()
+    {
+        $this->assertFalse($this->_validator->isValid(''));
+        $messages = $this->_validator->getMessages();
+        $arrayExpected = array(
+            Zend_Validate_Digits::STRING_EMPTY => '\'\' is an empty string'
+            );
+        $this->assertThat($messages, $this->identicalTo($arrayExpected));
+    }
+
+    /**
+     * @return void
+     * @deprecated Since 1.5.0
+     */
+    public function testEmptyStringValueResultsInProperValidationFailureErrors()
+    {
+        $this->assertFalse($this->_validator->isValid(''));
+        $errors = $this->_validator->getErrors();
+        $arrayExpected = array(
+            Zend_Validate_Digits::STRING_EMPTY
+            );
+        $this->assertThat($errors, $this->identicalTo($arrayExpected));
+    }
+
+    /**
+     * @return void
+     */
+    public function testInvalidValueResultsInProperValidationFailureMessages()
+    {
+        $this->assertFalse($this->_validator->isValid('#'));
+        $messages = $this->_validator->getMessages();
+        $arrayExpected = array(
+            Zend_Validate_Digits::NOT_DIGITS => '\'#\' contains not only digit characters'
+            );
+        $this->assertThat($messages, $this->identicalTo($arrayExpected));
+    }
+
+    /**
+     * @return void
+     * @deprecated Since 1.5.0
+     */
+    public function testInvalidValueResultsInProperValidationFailureErrors()
+    {
+        $this->assertFalse($this->_validator->isValid('#'));
+        $errors = $this->_validator->getErrors();
+        $arrayExpected = array(
+            Zend_Validate_Digits::NOT_DIGITS
+            );
+        $this->assertThat($errors, $this->identicalTo($arrayExpected));
     }
 }

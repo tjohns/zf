@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,12 +18,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
 
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * @see Zend_Validate
@@ -33,6 +36,7 @@ require_once 'Zend/Validate.php';
  * @see Zend_Validate_Abstract
  */
 require_once 'Zend/Validate/Abstract.php';
+
 
 /**
  * @category   Zend
@@ -95,8 +99,7 @@ class Zend_ValidateTest extends PHPUnit_Framework_TestCase
     {
         $this->_validator->addValidator(new Zend_ValidateTest_False());
         $this->assertFalse($this->_validator->isValid(null));
-        $this->assertEquals(array('validation failed'), $this->_validator->getMessages());
-        $this->assertEquals(array('error'), $this->_validator->getErrors());
+        $this->assertEquals(array('error' => 'validation failed'), $this->_validator->getMessages());
     }
 
     /**
@@ -109,8 +112,7 @@ class Zend_ValidateTest extends PHPUnit_Framework_TestCase
         $this->_validator->addValidator(new Zend_ValidateTest_False(), true)
                          ->addValidator(new Zend_ValidateTest_False());
         $this->assertFalse($this->_validator->isValid(null));
-        $this->assertEquals(array('validation failed'), $this->_validator->getMessages());
-        $this->assertEquals(array('error'), $this->_validator->getErrors());
+        $this->assertEquals(array('error' => 'validation failed'), $this->_validator->getMessages());
     }
 
     /**
@@ -158,14 +160,10 @@ class Zend_ValidateTest extends PHPUnit_Framework_TestCase
  */
 class Zend_ValidateTest_True extends Zend_Validate_Abstract
 {
-    protected $_messages = array();
-    protected $_errors = array();
-
     public function isValid($value)
     {
         return true;
     }
-
 }
 
 
@@ -174,19 +172,9 @@ class Zend_ValidateTest_True extends Zend_Validate_Abstract
  */
 class Zend_ValidateTest_False extends Zend_Validate_Abstract
 {
-    protected $_messages = array();
-    protected $_errors = array();
-
     public function isValid($value)
     {
-        $this->_messages = array('validation failed');
-        $this->_errors = array('error');
+        $this->_messages = array('error' => 'validation failed');
         return false;
     }
-
-    public function getMessages()
-    {
-        return $this->_messages;
-    }
-
 }

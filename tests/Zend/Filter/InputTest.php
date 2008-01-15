@@ -18,14 +18,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 4412 2007-04-06 21:17:32Z zendbot $
+ * @version    $Id$
  */
 
 
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Filter_Input
@@ -205,7 +205,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('month'), array_keys($messages));
         $this->assertType('array', $messages['month']);
-        $this->assertEquals("'6abc ' contains not only digit characters", $messages['month'][0]);
+        $this->assertEquals("'6abc ' contains not only digit characters", current($messages['month']));
 
         $errors = $input->getErrors();
         $this->assertType('array', $errors);
@@ -265,7 +265,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertEquals(array('month2'), array_keys($messages));
-        $this->assertEquals("'13' is not between '1' and '12', inclusively", $messages['month2'][0]);
+        $this->assertEquals("'13' is not between '1' and '12', inclusively", current($messages['month2']));
     }
 
     public function testValidatorChain()
@@ -295,9 +295,9 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages['field2']);
         $this->assertType('array', $messages['field3']);
         $this->assertEquals("'abc123' contains not only digit characters",
-            $messages['field2'][0]);
+            current($messages['field2']));
         $this->assertEquals("'150' is not between '1' and '100', inclusively",
-            $messages['field3'][0]);
+            current($messages['field3']));
     }
 
     public function testValidatorInvalidFieldInMultipleRules()
@@ -329,9 +329,9 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages['field2a']);
         $this->assertType('array', $messages['field2b']);
         $this->assertEquals("'abc123' contains not only digit characters",
-            $messages['field2a'][0]);
+            current($messages['field2a']));
         $this->assertEquals("'abc123' is not between '1' and '100', inclusively",
-            $messages['field2b'][0]);
+            current($messages['field2b']));
     }
 
     public function testValidatorWildcardRule()
@@ -376,7 +376,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('field2'), array_keys($messages));
         $this->assertEquals("'123' has not only alphabetic characters",
-            $messages['field2'][0]);
+            current($messages['field2']));
     }
 
     public function testValidatorMultiField()
@@ -417,7 +417,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('rule2'), array_keys($messages));
         $this->assertEquals("Not all strings in the argument are equal",
-            $messages['rule2'][0]);
+            current($messages['rule2']));
     }
 
     public function testValidatorBreakChain()
@@ -426,9 +426,15 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field1' => '150',
             'field2' => '150'
         );
+
         Zend_Loader::loadClass('Zend_Validate_Between');
+
         $btw1 = new Zend_Validate_Between(1, 100);
+
         $btw2 = new Zend_Validate_Between(1, 125);
+        $messageUserDefined = 'Something other than the default message';
+        $btw2->setMessage($messageUserDefined, Zend_Validate_Between::NOT_BETWEEN);
+
         $validators = array(
             'field1' => array($btw1, $btw2),
             'field2' => array($btw1, $btw2, Zend_Filter_Input::BREAK_CHAIN => true)
@@ -443,14 +449,16 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertEquals(array('field1', 'field2'), array_keys($messages));
-        $this->assertEquals(2, count($messages['field1']), 'Expected rule for field1 to break 2 validators');
-        $this->assertEquals(1, count($messages['field2']), 'Expected rule for field2 to break 1 validator');
-        $this->assertEquals("'150' is not between '1' and '100', inclusively",
-            $messages['field1'][0]);
-        $this->assertEquals("'150' is not between '1' and '125', inclusively",
-            $messages['field1'][1]);
-        $this->assertEquals("'150' is not between '1' and '100', inclusively",
-            $messages['field2'][0]);
+        $this->assertEquals(
+            $messageUserDefined,
+            current($messages['field1']),
+            'Expected message to break 2 validators, the message of the latter overwriting that of the former'
+            );
+        $this->assertEquals(
+            "'150' is not between '1' and '100', inclusively",
+            current($messages['field2']),
+            'Expected rule for field2 to break the validation chain at the first validator'
+            );
     }
 
     public function testValidatorAllowEmpty()
@@ -481,7 +489,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertEquals(array('field1'), array_keys($messages));
-        $this->assertEquals("'' is an empty string", $messages['field1'][0]);
+        $this->assertEquals("'' is an empty string", current($messages['field1']));
     }
 
     public function testValidatorAllowEmptyNoValidatorChain()
@@ -560,12 +568,12 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('field1Rule'), array_keys($messages));
         $this->assertType('array', $messages['field1Rule']);
-        $this->assertEquals("You cannot give an empty value for field 'field1', according to rule 'field1Rule'", $messages['field1Rule'][0]);
+        $this->assertEquals("You cannot give an empty value for field 'field1', according to rule 'field1Rule'", current($messages['field1Rule']));
     }
 
     public function testValidatorDefault()
     {
-        $validators = array(  
+        $validators = array(
             'field1'   => array('presence' => 'required', 'allowEmpty' => false),
             'field2'   => array('presence' => 'optional', 'allowEmpty' => false),
             'field3'   => array('presence' => 'required', 'allowEmpty' => true),
@@ -576,7 +584,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field8'   => array('presence' => 'optional', 'allowEmpty' => true, 'default' => 'field8default'),
         );
         $data = array();
-        $input = new Zend_Filter_Input(null, $validators, $data); 
+        $input = new Zend_Filter_Input(null, $validators, $data);
 
         $this->assertTrue($input->hasMissing(), 'Expected hasMissing() to return true');
         $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
@@ -600,7 +608,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
 
     public function testValidatorDefaultDoesNotOverwriteData()
     {
-        $validators = array(  
+        $validators = array(
             'field1'   => array('presence' => 'required', 'allowEmpty' => false, 'default' => 'abcd'),
             'field2'   => array('presence' => 'optional', 'allowEmpty' => false, 'default' => 'abcd'),
             'field3'   => array('presence' => 'required', 'allowEmpty' => true, 'default' => 'abcd'),
@@ -612,7 +620,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field3' => 'ABCD',
             'field4' => 'ABCD'
         );
-        $input = new Zend_Filter_Input(null, $validators, $data); 
+        $input = new Zend_Filter_Input(null, $validators, $data);
 
         $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
         $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
@@ -627,12 +635,12 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
 
     public function testValidatorNotAllowEmpty()
     {
-        $filters = array(  
+        $filters = array(
             'field1'   => 'Digits',
             'field2'   => 'Alnum'
         );
-         
-        $validators = array(  
+
+        $validators = array(
             'field1'   => array('Digits'),
             'field2'   => array('Alnum'),
             'field3'   => array('Alnum', 'presence' => 'required')
@@ -641,7 +649,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
             'field1' => 'asd1', // Valid data
             'field2' => '$'     // Invalid data
         );
-        $input = new Zend_Filter_Input($filters, $validators, $data); 
+        $input = new Zend_Filter_Input($filters, $validators, $data);
 
         $this->assertTrue($input->hasMissing(), 'Expected hasMissing() to return true');
         $this->assertTrue($input->hasInvalid(), 'Expected hasInvalid() to return true');
@@ -652,7 +660,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('field2', 'field3'), array_keys($messages));
         $this->assertType('array', $messages['field2']);
-        $this->assertEquals("'' is an empty string", $messages['field2'][0]);
+        $this->assertEquals("'' is an empty string", current($messages['field2']));
     }
 
     public function testValidatorMessagesSingle()
@@ -676,7 +684,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('month'), array_keys($messages));
         $this->assertEquals(1, count($messages['month']));
-        $this->assertEquals($digitsMesg, $messages['month'][0]);
+        $this->assertEquals($digitsMesg, current($messages['month']));
     }
 
     public function testValidatorMessagesMultiple()
@@ -735,8 +743,10 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $messages);
         $this->assertEquals(array('month'), array_keys($messages));
         $this->assertEquals(2, count($messages['month']));
-        $this->assertEquals("'13abc' contains not only digit characters", $messages['month'][0]);
-        // $this->assertEquals($betweenMesg, $messages['month'][1]);
+        $this->assertEquals("'13abc' contains not only digit characters", current($messages['month']));
+        /**
+         * @todo $this->assertEquals($betweenMesg, next($messages['month']));
+         */
     }
 
     public function testValidatorMessagesSingleWithKeys()
@@ -1041,7 +1051,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertThat($messages, $this->arrayHasKey('field1'));
-        $this->assertEquals("'abc' contains not only digit characters", $messages['field1'][0]);
+        $this->assertEquals("'abc' contains not only digit characters", current($messages['field1']));
     }
 
     public function testNamespaceExceptionClassNotFound()
@@ -1168,7 +1178,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('field1'), array_keys($messages));
         $this->assertEquals(1, count($messages['field1']), 'Expected rule for field1 to break 1 validator');
         $this->assertEquals("'150' is not between '1' and '100', inclusively",
-            $messages['field1'][0]);
+            current($messages['field1']));
     }
 
     public function testOptionEscapeFilter()
@@ -1224,7 +1234,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $messages = $input->getMessages();
         $this->assertType('array', $messages);
         $this->assertThat($messages, $this->arrayHasKey('field1'));
-        $this->assertEquals("'abc' contains not only digit characters", $messages['field1'][0]);
+        $this->assertEquals("'abc' contains not only digit characters", current($messages['field1']));
     }
 
     public function testOptionPresence()

@@ -30,50 +30,32 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
-
-
-/**
- * PHPUnit_Framework_TestSuite
- */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-
-/**
- * PHPUnit_TextUI_TestRunner
- */
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Filter_AlnumTest
  */
 require_once 'Zend/Filter/AlnumTest.php';
 
-
 /**
  * @see Zend_Filter_AlphaTest
  */
 require_once 'Zend/Filter/AlphaTest.php';
-
 
 /**
  * @see Zend_Filter_BaseNameTest
  */
 require_once 'Zend/Filter/BaseNameTest.php';
 
-
 /**
  * @see Zend_Filter_DigitsTest
  */
 require_once 'Zend/Filter/DigitsTest.php';
 
-
 /**
  * @see Zend_Filter_DirTest
  */
 require_once 'Zend/Filter/DirTest.php';
-
 
 /**
  * @see Zend_Filter_HtmlEntitiesTest
@@ -100,7 +82,6 @@ require_once 'Zend/Filter/PregReplaceTest.php';
  */
 require_once 'Zend/Filter/RealPathTest.php';
 
-
 /**
  * @see Zend_Filter_StringToLowerTest
  */
@@ -111,24 +92,20 @@ require_once 'Zend/Filter/StringToLowerTest.php';
  */
 require_once 'Zend/Filter/StringToUpperTest.php';
 
-
 /**
  * @see Zend_Filter_StringTrimTest
  */
 require_once 'Zend/Filter/StringTrimTest.php';
-
 
 /**
  * @see Zend_Filter_StripTagsTest
  */
 require_once 'Zend/Filter/StripTagsTest.php';
 
-
 /**
  * @see Zend_Filter_InputTest
  */
 require_once 'Zend/Filter/InputTest.php';
-
 
 /**
  * Word filter tests

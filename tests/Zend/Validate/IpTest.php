@@ -23,15 +23,14 @@
 
 
 /**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+/**
  * @see Zend_Validate_Ip
  */
 require_once 'Zend/Validate/Ip.php';
-
-
-/**
- * PHPUnit_Framework_TestCase
- */
-require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -70,7 +69,7 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_validator->isValid('1.2.3.4'));
         $this->assertTrue($this->_validator->isValid('10.0.0.1'));
         $this->assertTrue($this->_validator->isValid('255.255.255.255'));
-        
+
         $this->assertFalse($this->_validator->isValid('0.0.0.256'));
         $this->assertFalse($this->_validator->isValid('1.2.3.4.5'));
     }
@@ -79,7 +78,7 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->_validator->isValid('0.0.0.0'));
     }
-    
+
     /**
      * Ensures that getMessages() returns expected default value
      *
