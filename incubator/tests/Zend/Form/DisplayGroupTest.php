@@ -11,7 +11,9 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Form/DisplayGroup.php';
 
+require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Form/Decorator/Fieldset.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Loader/PluginLoader.php';
@@ -41,6 +43,14 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+    }
+
+    public function getView()
+    {
+        $view = new Zend_View();
+        $libPath = dirname(__FILE__) . '/../../../library';
+        $view->addHelperPath($libPath . '/Zend/View/Helper');
+        return $view;
     }
 
     // General
@@ -123,16 +133,18 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     // Decorators
 
-    public function testFieldsetDecoratorRegisteredByDefault()
+    public function testFormDecoratorRegisteredByDefault()
     {
-        $decorator = $this->group->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->group->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['helper']);
     }
 
     public function testCanAddSingleDecoratorAsString()
     {
         $this->group->clearDecorators();
-        $this->assertFalse($this->group->getDecorator('fieldset'));
+        $this->assertFalse($this->group->getDecorator('form'));
 
         $this->group->addDecorator('viewHelper');
         $decorator = $this->group->getDecorator('viewHelper');
@@ -141,14 +153,14 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
     {
-        $decorator = $this->group->getDecorator('Zend_Form_Decorator_Fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->group->getDecorator('Zend_Form_Decorator_Form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
     }
 
     public function testCanAddSingleDecoratorAsDecoratorObject()
     {
         $this->group->clearDecorators();
-        $this->assertFalse($this->group->getDecorator('Fieldset'));
+        $this->assertFalse($this->group->getDecorator('form'));
 
         $decorator = new Zend_Form_Decorator_ViewHelper;
         $this->group->addDecorator($decorator);
@@ -159,7 +171,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testCanRetrieveSingleDecoratorRegisteredAsDecoratorObjectUsingShortName()
     {
         $this->group->clearDecorators();
-        $this->assertFalse($this->group->getDecorator('Fieldset'));
+        $this->assertFalse($this->group->getDecorator('form'));
 
         $decorator = new Zend_Form_Decorator_Fieldset;
         $this->group->addDecorator($decorator);
@@ -170,7 +182,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testCanAddMultipleDecorators()
     {
         $this->group->clearDecorators();
-        $this->assertFalse($this->group->getDecorator('Fieldset'));
+        $this->assertFalse($this->group->getDecorator('form'));
 
         $testDecorator = new Zend_Form_Decorator_HtmlTag;
         $this->group->addDecorators(array(
@@ -186,7 +198,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanRemoveDecorator()
     {
-        $this->testFieldsetDecoratorRegisteredByDefault();
+        $this->testFormDecoratorRegisteredByDefault();
         $this->group->removeDecorator('fieldset');
         $this->assertFalse($this->group->getDecorator('fieldset'));
     }
@@ -201,15 +213,12 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testRenderingRendersAllElementsWithinFieldsetByDefault()
     {
-        $view = new Zend_View();
         $foo  = new Zend_Form_Element_Text('foo');
-        $foo->setView($view);
         $bar  = new Zend_Form_Element_Text('bar');
-        $bar->setView($view);
 
         $this->group->addElements(array($foo, $bar));
-        $html = $this->group->render();
-        $this->assertRegexp('#^<fieldset.*?</fieldset>$#s', $html);
+        $html = $this->group->render($this->getView());
+        $this->assertRegexp('#^<fieldset.*?</fieldset>$#s', $html, $html);
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);
@@ -270,6 +279,113 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->setupIteratorElements();
         $this->assertEquals(3, count($this->group));
     }
+
+    // Configuration
+
+    public function getOptions()
+    {
+        $options = array(
+            'name'   => 'foo',
+            'legend' => 'Display Group',
+            'order'  => 20,
+            'class'  => 'foobar'
+        );
+        return $options;
+    }
+
+    public function testCanSetObjectStateViaSetOptions()
+    {
+        $this->group->setOptions($this->getOptions());
+        $this->assertEquals('foo', $this->group->getName());
+        $this->assertEquals('Display Group', $this->group->getLegend());
+        $this->assertEquals(20, $this->group->getOrder());
+        $this->assertEquals('foobar', $this->group->getAttrib('class'));
+    }
+
+    public function testSetOptionsOmitsAccessorsRequiringObjectsOrMultipleParams()
+    {
+        $options = $this->getOptions();
+        $options['config']       = new Zend_Config($options);
+        $options['options']      = $options;
+        $options['pluginLoader'] = true;
+        $options['view']         = true;
+        $options['translator']   = true;
+        $options['attrib']       = true;
+        $options['elements']     = true;
+        $this->group->setOptions($options);
+    }
+
+    public function testSetOptionsSetsArrayOfStringDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array('label', 'fieldset');
+        $this->group->setOptions($options);
+        $this->assertFalse($this->group->getDecorator('group'));
+
+        $decorator = $this->group->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $decorator = $this->group->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+    }
+
+    public function testSetOptionsSetsArrayOfArrayDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array(
+            array('label', array('id' => 'mylabel')),
+            array('fieldset', array('id' => 'fieldset')),
+        );
+        $this->group->setOptions($options);
+        $this->assertFalse($this->group->getDecorator('group'));
+
+        $decorator = $this->group->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $options = $decorator->getOptions();
+        $this->assertEquals('mylabel', $options['id']);
+
+        $decorator = $this->group->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['id']);
+    }
+
+    public function testSetOptionsSetsArrayOfAssocArrayDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array(
+            array(
+                'options'   => array('id' => 'mylabel'),
+                'decorator' => 'label', 
+            ),
+            array(
+                'options'   => array('id' => 'fieldset'),
+                'decorator' => 'fieldset', 
+            ),
+        );
+        $this->group->setOptions($options);
+        $this->assertFalse($this->group->getDecorator('group'));
+
+        $decorator = $this->group->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $options = $decorator->getOptions();
+        $this->assertEquals('mylabel', $options['id']);
+
+        $decorator = $this->group->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['id']);
+    }
+
+    public function testCanSetObjectStateViaSetConfig()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $this->group->setConfig($config);
+        $this->assertEquals('foo', $this->group->getName());
+        $this->assertEquals('Display Group', $this->group->getLegend());
+        $this->assertEquals(20, $this->group->getOrder());
+        $this->assertEquals('foobar', $this->group->getAttrib('class'));
+    }
+
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_DisplayGroupTest::main') {

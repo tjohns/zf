@@ -11,6 +11,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Form.php';
 
+require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form/Decorator/Fieldset.php';
 require_once 'Zend/Form/Element.php';
@@ -39,14 +40,261 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     // Configuration
 
-    public function testSetOptionsSetsObjectState()
+    public function getOptions()
     {
-        $this->markTestIncomplete();
+        $options = array(
+            'name'   => 'foo',
+            'class'  => 'someform',
+            'action' => '/foo/bar',
+            'method' => 'put',
+        );
+        return $options;
+    }
+
+    public function testCanSetObjectStateViaSetOptions()
+    {
+        $options = $this->getOptions();
+        $this->form->setOptions($options);
+        $this->assertEquals('foo', $this->form->getName());
+        $this->assertEquals('someform', $this->form->getAttrib('class'));
+        $this->assertEquals('/foo/bar', $this->form->getAction());
+        $this->assertEquals('PUT', $this->form->getMethod());
+    }
+
+    public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
+    {
+        $options = $this->getOptions();
+        $options['config']  = new Zend_Config($options);
+        $options['options'] = $options;
+        $this->form->setOptions($options);
+    }
+
+    public function testSetOptionsSkipsSettingAccessorsRequiringObjectsWhenNonObjectPassed()
+    {
+        $options = $this->getOptions();
+        $options['pluginLoader'] = true;
+        $options['subForms']     = true;
+        $options['view']         = true;
+        $options['translator']   = true;
+        $options['default']      = true;
+        $options['attrib']       = true;
+        $this->form->setOptions($options);
+    }
+
+    public function getElementOptions()
+    {
+        $elements = array(
+            'foo' => 'text',
+            array('text', 'bar', array('class' => 'foobar')),
+            array(
+                'options' => array('class' => 'barbaz'),
+                'type'    => 'text', 
+                'name'    => 'baz', 
+            ),
+            'bat' => array(
+                'options' => array('class' => 'bazbat'),
+                'type'    => 'text',
+            ),
+        );
+        return $elements;
+    }
+
+    public function testSetOptionsSetsElements()
+    {
+        $options = $this->getOptions();
+        $options['elements'] = $this->getElementOptions();
+        $this->form->setOptions($options);
+
+        $this->assertTrue(isset($this->form->foo));
+        $this->assertTrue($this->form->foo instanceof Zend_Form_Element_Text);
+
+        $this->assertTrue(isset($this->form->bar));
+        $this->assertTrue($this->form->bar instanceof Zend_Form_Element_Text);
+        $this->assertEquals('foobar', $this->form->bar->class);
+
+        $this->assertTrue(isset($this->form->baz));
+        $this->assertTrue($this->form->baz instanceof Zend_Form_Element_Text);
+        $this->assertEquals('barbaz', $this->form->baz->class);
+
+        $this->assertTrue(isset($this->form->bat));
+        $this->assertTrue($this->form->bat instanceof Zend_Form_Element_Text);
+        $this->assertEquals('bazbat', $this->form->bat->class);
+    }
+
+    public function testSetOptionsSetsDefaultValues()
+    {
+        $options = $this->getOptions();
+        $options['defaults'] = array(
+            'bar' => 'barvalue',
+            'bat' => 'batvalue',
+        );
+        $options['elements'] = $this->getElementOptions();
+        $this->form->setOptions($options);
+
+        $this->assertEquals('barvalue', $this->form->bar->getValue());
+        $this->assertEquals('batvalue', $this->form->bat->getValue());
+    }
+
+    public function testSetOptionsSetsArrayOfStringDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array('label', 'fieldset');
+        $this->form->setOptions($options);
+        $this->assertFalse($this->form->getDecorator('form'));
+
+        $decorator = $this->form->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $decorator = $this->form->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+    }
+
+    public function testSetOptionsSetsArrayOfArrayDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array(
+            array('label', array('id' => 'mylabel')),
+            array('fieldset', array('id' => 'fieldset')),
+        );
+        $this->form->setOptions($options);
+        $this->assertFalse($this->form->getDecorator('form'));
+
+        $decorator = $this->form->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $options = $decorator->getOptions();
+        $this->assertEquals('mylabel', $options['id']);
+
+        $decorator = $this->form->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['id']);
+    }
+
+    public function testSetOptionsSetsArrayOfAssocArrayDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array(
+            array(
+                'options'   => array('id' => 'mylabel'),
+                'decorator' => 'label', 
+            ),
+            array(
+                'options'   => array('id' => 'fieldset'),
+                'decorator' => 'fieldset', 
+            ),
+        );
+        $this->form->setOptions($options);
+        $this->assertFalse($this->form->getDecorator('form'));
+
+        $decorator = $this->form->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $options = $decorator->getOptions();
+        $this->assertEquals('mylabel', $options['id']);
+
+        $decorator = $this->form->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['id']);
+    }
+
+    public function testSetOptionsSetsGlobalPrefixPaths()
+    {
+        $options = $this->getOptions();
+        $options['prefixPath'] = array(
+            'prefix' => 'Zend_Foo',
+            'path'   => 'Zend/Foo/'
+        );
+        $this->form->setOptions($options);
+
+        foreach (array('element', 'decorator') as $type) {
+            $loader = $this->form->getPluginLoader($type);
+            $paths = $loader->getPaths('Zend_Foo_' . ucfirst($type));
+            $this->assertTrue(is_array($paths), "Failed for type $type: " . var_export($paths, 1));
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+        }
+    }
+
+    public function testSetOptionsSetsIndividualPrefixPathsFromKeyedArrays()
+    {
+        $options = $this->getOptions();
+        $options['prefixPath'] = array(
+            'element' => array('prefix' => 'Zend_Foo', 'path' => 'Zend/Foo/')
+        );
+        $this->form->setOptions($options);
+
+        $loader = $this->form->getPluginLoader('element');
+        $paths = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertFalse(empty($paths));
+        $this->assertContains('Foo', $paths[0]);
+    }
+
+    public function testSetOptionsSetsIndividualPrefixPathsFromUnKeyedArrays()
+    {
+        $options = $this->getOptions();
+        $options['prefixPath'] = array(
+            array('type' => 'decorator', 'prefix' => 'Zend_Foo', 'path' => 'Zend/Foo/')
+        );
+        $this->form->setOptions($options);
+
+        $loader = $this->form->getPluginLoader('decorator');
+        $paths = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertFalse(empty($paths));
+        $this->assertContains('Foo', $paths[0]);
+    }
+
+    public function testSetOptionsSetsDisplayGroups()
+    {
+        $options = $this->getOptions();
+        $options['displayGroups'] = array(
+            'barbat' => array(array('bar', 'bat'), array('order' => 20)),
+            array(array('foo', 'baz'), 'foobaz', array('order' => 10)),
+            array(
+                'name'     => 'ghiabc',
+                'elements' => array('ghi', 'abc'),
+                'options'  => array('order' => 15),
+            ),
+        );
+        $options['elements'] = array(
+            'foo' => 'text',
+            'bar' => 'text',
+            'baz' => 'text',
+            'bat' => 'text',
+            'abc' => 'text',
+            'ghi' => 'text',
+            'jkl' => 'text',
+            'mno' => 'text',
+        );
+        $this->form->setOptions($options);
+
+        $this->assertTrue(isset($this->form->barbat));
+        $elements = $this->form->barbat->getElements();
+        $expected = array('bar', 'bat');
+        $this->assertEquals($expected, array_keys($elements));
+        $this->assertEquals(20, $this->form->barbat->getOrder());
+
+        $this->assertTrue(isset($this->form->foobaz));
+        $elements = $this->form->foobaz->getElements();
+        $expected = array('foo', 'baz');
+        $this->assertEquals($expected, array_keys($elements));
+        $this->assertEquals(10, $this->form->foobaz->getOrder());
+
+        $this->assertTrue(isset($this->form->ghiabc));
+        $elements = $this->form->ghiabc->getElements();
+        $expected = array('ghi', 'abc');
+        $this->assertEquals($expected, array_keys($elements));
+        $this->assertEquals(15, $this->form->ghiabc->getOrder());
     }
 
     public function testSetConfigSetsObjectState()
     {
-        $this->markTestIncomplete();
+        $config = new Zend_Config($this->getOptions());
+        $this->form->setConfig($config);
+        $this->assertEquals('foo', $this->form->getName());
+        $this->assertEquals('someform', $this->form->getAttrib('class'));
+        $this->assertEquals('/foo/bar', $this->form->getAction());
+        $this->assertEquals('PUT', $this->form->getMethod());
     }
 
     // Attribs:
@@ -1083,17 +1331,22 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
     // Rendering
 
-    public function testRenderReturnsMarkup()
+    public function checkMarkup($html)
     {
-        $this->setupElements();
-        $this->form->setView($this->getView());
-        $html = $this->form->render();
         $this->assertFalse(empty($html));
         $this->assertContains('<form', $html);
         $this->assertRegexp('/<form[^>]+action="' . $this->form->getAction() . '"/', $html);
         $this->assertRegexp('/<form[^>]+method="' . $this->form->getMethod() . '"/', $html);
         $this->assertRegexp('#<form[^>]+enctype="application/x-www-form-urlencoded"#', $html);
         $this->assertContains('</form>', $html);
+    }
+
+    public function testRenderReturnsMarkup()
+    {
+        $this->setupElements();
+        $this->form->setView($this->getView());
+        $html = $this->form->render();
+        $this->checkMarkup($html);
     }
 
     public function testRenderReturnsMarkupRepresentingAllElements()
@@ -1129,7 +1382,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->setupElements();
         $this->form->addDisplayGroup(array('foo', 'baz'), 'foobaz', array('legend' => 'Display Group'));
         $this->form->setView($this->getView());
-        $html = $this->form->render();
+        $html = $this->html = $this->form->render();
         $this->assertRegexp('/<fieldset/', $html);
         $this->assertContains('</fieldset>', $html);
         $this->assertRegexp('#<legend for="foobaz">Display Group</legend>#', $html, $html);
@@ -1154,18 +1407,28 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
                 case 1:
                     $this->assertEquals('baz', $nameNode->nodeValue);
                     break;
+                default:
+                    $this->fail('There should only be two input nodes in this display group');
             }
         }
     }
 
     public function testRenderDoesNotRepeatElementsInDisplayGroups()
     {
-        $this->markTestIncomplete();
+        $this->testRenderReturnsMarkupContainingDisplayGroups();
+        if (!preg_match_all('#<input[^>]+name="foo"#', $this->html, $matches)) {
+            $this->fail("Should find foo element in rendered form");
+        }
+        $this->assertEquals(1, count($matches));
+        $this->assertEquals(1, count($matches[0]));
     }
 
     public function testToStringProxiesToRender()
     {
-        $this->markTestIncomplete();
+        $this->setupElements();
+        $this->form->setView($this->getView());
+        $html = $this->form->__toString();
+        $this->checkMarkup($html);
     }
 
     // Localization

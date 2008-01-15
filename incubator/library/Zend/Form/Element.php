@@ -183,8 +183,24 @@ class Zend_Form_Element implements Zend_Validate_Interface
      */
     public function setOptions(array $options)
     {
+        if (isset($options['prefixPath'])) {
+            $this->addPrefixPaths($options['prefixPath']);
+            unset($options['prefixPath']);
+        }
+
         foreach ($options as $key => $value) {
+            if (in_array($key, array('options', 'config'))) {
+                continue;
+            }
+
             $method = 'set' . ucfirst($key);
+
+            if (in_array($method, array('setTranslator', 'setPluginLoader', 'setView'))) {
+                if (!is_object($value)) {
+                    continue;
+                }
+            }
+
             if (method_exists($this, $method)) {
                 // Setter exists; use it
                 $this->$method($value);
@@ -585,6 +601,36 @@ class Zend_Form_Element implements Zend_Validate_Interface
         }
     }
 
+    /**
+     * Add many prefix paths at once
+     * 
+     * @param  array $spec 
+     * @return Zend_Form_Element
+     */
+    public function addPrefixPaths(array $spec)
+    {
+        if (isset($spec['prefix']) && isset($spec['path'])) {
+            return $this->addPrefixPath($spec['prefix'], $spec['path']);
+        } 
+        foreach ($spec as $type => $paths) {
+            if (is_numeric($type) && is_array($paths)) {
+                $type = null;
+                if (isset($paths['prefix']) && isset($paths['path'])) {
+                    if (isset($paths['type'])) {
+                        $type = $paths['type'];
+                    }
+                    $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
+                }
+            } elseif (!is_numeric($type)) {
+                if (!isset($paths['prefix']) || !isset($paths['path'])) {
+                    continue;
+                }
+                $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
+            }
+        }
+        return $this;
+    }
+
     // Validation
 
     /**
@@ -608,7 +654,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 $validator = new $name;
             } else {
                 $r = new ReflectionClass($name);
-                $validator = $r->newInstanceArgs($options);
+                if ($r->hasMethod('__construct')) {
+                    $validator = $r->newInstanceArgs($options);
+                } else {
+                    $validator = $r->newInstance();
+                }
             }
         } else {
             require_once 'Zend/Form/Exception.php';
@@ -638,18 +688,29 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 $argc                = count($validatorInfo);
                 $breakChainOnFailure = false;
                 $options             = array();
-                switch (true) {
-                    case (0 == $argc):
-                        break;
-                    case (1 >= $argc):
-                        $validator  = array_shift($validatorInfo);
-                    case (2 >= $argc):
-                        $breakChainOnFailure = array_shift($validatorInfo);
-                    case (3 >= $argc):
-                        $options = array_shift($validatorInfo);
-                    default:
-                        $this->addValidator($validator, $breakChainOnFailure, $options);
-                        break;
+                if (isset($validatorInfo['validator'])) {
+                    $validator = $validatorInfo['validator'];
+                    if (isset($validatorInfo['breakChainOnFailure'])) {
+                        $breakChainOnFailure = $validatorInfo['breakChainOnFailure'];
+                    }
+                    if (isset($validatorInfo['options'])) {
+                        $options = $validatorInfo['options'];
+                    }
+                    $this->addValidator($validator, $breakChainOnFailure, $options);
+                } else {
+                    switch (true) {
+                        case (0 == $argc):
+                            break;
+                        case (1 <= $argc):
+                            $validator  = array_shift($validatorInfo);
+                        case (2 <= $argc):
+                            $breakChainOnFailure = array_shift($validatorInfo);
+                        case (3 <= $argc):
+                            $options = array_shift($validatorInfo);
+                        default:
+                            $this->addValidator($validator, $breakChainOnFailure, $options);
+                            break;
+                    }
                 }
             } else {
                 require_once 'Zend/Form/Exception.php';
@@ -799,7 +860,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
                 $filter = new $name;
             } else {
                 $r = new ReflectionClass($name);
-                $filter = $r->newInstanceArgs($options);
+                if ($r->hasMethod('__construct')) {
+                    $filter = $r->newInstanceArgs($options);
+                } else {
+                    $filter = $r->newInstance();
+                }
             }
         } else {
             require_once 'Zend/Form/Exception.php';
@@ -827,16 +892,24 @@ class Zend_Form_Element implements Zend_Validate_Interface
             } elseif (is_array($filterInfo)) {
                 $argc                = count($filterInfo);
                 $options             = array();
-                switch (true) {
-                    case (0 == $argc):
-                        break;
-                    case (1 >= $argc):
-                        $filter  = array_shift($filterInfo);
-                    case (2 >= $argc):
-                        $options = array_shift($filterInfo);
-                    default:
-                        $this->addFilter($filter, $options);
-                        break;
+                if (isset($filterInfo['filter'])) {
+                    $filter = $filterInfo['filter'];
+                    if (isset($filterInfo['options'])) {
+                        $options = $filterInfo['options'];
+                    }
+                    $this->addFilter($filter, $options);
+                } else {
+                    switch (true) {
+                        case (0 == $argc):
+                            break;
+                        case (1 <= $argc):
+                            $filter  = array_shift($filterInfo);
+                        case (2 <= $argc):
+                            $options = array_shift($filterInfo);
+                        default:
+                            $this->addFilter($filter, $options);
+                            break;
+                    }
                 }
             } else {
                 require_once 'Zend/Form/Exception.php';
@@ -996,16 +1069,24 @@ class Zend_Form_Element implements Zend_Validate_Interface
             } elseif (is_array($decoratorInfo)) {
                 $argc    = count($decoratorInfo);
                 $options = array();
-                switch (true) {
-                    case (0 == $argc):
-                        break;
-                    case (1 >= $argc):
-                        $decorator  = array_shift($decoratorInfo);
-                    case (2 >= $argc):
-                        $options = array_shift($decoratorInfo);
-                    default:
-                        $this->addDecorator($decorator, $options);
-                        break;
+                if (isset($decoratorInfo['decorator'])) {
+                    $decorator = $decoratorInfo['decorator'];
+                    if (isset($decoratorInfo['options'])) {
+                        $options = $decoratorInfo['options'];
+                    }
+                    $this->addDecorator($decorator, $options);
+                } else {
+                    switch (true) {
+                        case (0 == $argc):
+                            break;
+                        case (1 <= $argc):
+                            $decorator  = array_shift($decoratorInfo);
+                        case (2 <= $argc):
+                            $options = array_shift($decoratorInfo);
+                        default:
+                            $this->addDecorator($decorator, $options);
+                            break;
+                    }
                 }
             } else {
                 require_once 'Zend/Form/Exception.php';

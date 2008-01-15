@@ -143,12 +143,53 @@ class Zend_Form implements Iterator, Countable
         }
     }
 
+    /**
+     * Set form state from options array
+     * 
+     * @param  array $options 
+     * @return Zend_Form
+     */
     public function setOptions(array $options)
     {
+        if (isset($options['prefixPath'])) {
+            $this->addPrefixPaths($options['prefixPath']);
+            unset($options['prefixPath']);
+        }
+
+        if (isset($options['elements'])) {
+            $this->setElements($options['elements']);
+            unset($options['elements']);
+        }
+
+        $forbidden = array(
+            'Options', 'Config', 'PluginLoader', 'SubForms', 'View', 'Translator',
+            'Attrib', 'Default',
+        );
+        foreach ($options as $key => $value) {
+            $normalized = ucfirst($key);
+            if (in_array($normalized, $forbidden)) {
+                continue;
+            }
+
+            $method = 'set' . $normalized;
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            } else {
+                $this->setAttrib($key, $value);
+            }
+        }
+        return $this;
     }
 
+    /**
+     * Set form state from config object
+     * 
+     * @param  Zend_Config $config 
+     * @return Zend_Form
+     */
     public function setConfig(Zend_Config $config)
     {
+        return $this->setOptions($config->toArray());
     }
 
  
@@ -260,6 +301,35 @@ class Zend_Form implements Iterator, Countable
         }
     }
 
+    /**
+     * Add many prefix paths at once
+     * 
+     * @param  array $spec 
+     * @return Zend_Form_Element
+     */
+    public function addPrefixPaths(array $spec)
+    {
+        if (isset($spec['prefix']) && isset($spec['path'])) {
+            return $this->addPrefixPath($spec['prefix'], $spec['path']);
+        } 
+        foreach ($spec as $type => $paths) {
+            if (is_numeric($type) && is_array($paths)) {
+                $type = null;
+                if (isset($paths['prefix']) && isset($paths['path'])) {
+                    if (isset($paths['type'])) {
+                        $type = $paths['type'];
+                    }
+                    $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
+                }
+            } elseif (!is_numeric($type)) {
+                if (!isset($paths['prefix']) || !isset($paths['path'])) {
+                    continue;
+                }
+                $this->addPrefixPath($paths['prefix'], $paths['path'], $type);
+            }
+        }
+        return $this;
+    }
 
     // Form metadata:
     
@@ -509,17 +579,28 @@ class Zend_Form implements Iterator, Countable
             if (is_array($spec)) {
                 $argc = count($spec);
                 $options = array();
-                switch ($argc) {
-                    case 0:
-                        continue;
-                    case (1 <= $argc):
-                        $type = array_shift($spec);
-                    case (2 <= $argc):
-                        $name = array_shift($spec);
-                    case (3 <= $argc):
-                        $options = array_shift($spec);
-                    default:
-                        $this->addElement($type, $name, $options);
+                if (isset($spec['type'])) {
+                    $type = $spec['type'];
+                    if (isset($spec['name'])) {
+                        $name = $spec['name'];
+                    }
+                    if (isset($spec['options'])) {
+                        $options = $spec['options'];
+                    }
+                    $this->addElement($type, $name, $options);
+                } else {
+                    switch ($argc) {
+                        case 0:
+                            continue;
+                        case (1 <= $argc):
+                            $type = array_shift($spec);
+                        case (2 <= $argc):
+                            $name = array_shift($spec);
+                        case (3 <= $argc):
+                            $options = array_shift($spec);
+                        default:
+                            $this->addElement($type, $name, $options);
+                    }
                 }
             }
         }
@@ -897,7 +978,6 @@ class Zend_Form implements Iterator, Countable
      * 
      * @param  array $groups 
      * @return Zend_Form
-     * @throws Zend_Form_Exception for invalid groupings
      */
     public function addDisplayGroups(array $groups)
     {
@@ -908,25 +988,42 @@ class Zend_Form implements Iterator, Countable
             }
 
             if (!is_array($spec) || empty($spec)) {
-                require_once 'Zend/Form/Exception.php';
-                throw new Zend_Form_Exception('Invalid grouping provided to addDisplayGroups()');
+                continue;
             }
 
-            if (is_array($spec[0])) {
-                $argc  = count($spec);
-                $order = null;
+            $argc    = count($spec);
+            $options = array();
+
+            if (isset($spec['elements'])) {
+                $elements = $spec['elements'];
+                if (isset($spec['name'])) {
+                    $name = $spec['name'];
+                }
+                if (isset($spec['options'])) {
+                    $options = $spec['options'];
+                }
+                $this->addDisplayGroup($elements, $name, $options);
+            } else {
                 switch ($argc) {
                     case (1 <= $argc):
                         $elements = array_shift($spec);
+                        if (!is_array($elements) && (null !== $name)) {
+                            $elements = array_merge((array) $elements, $spec);
+                            $this->addDisplayGroup($elements, $name);
+                            break;
+                        }
                     case (2 <= $argc):
-                        $name     = array_shift($spec);
+                        if (null !== $name) {
+                            $options = array_shift($spec);
+                            $this->addDisplayGroup($elements, $name, $options);
+                            break;
+                        }
+                        $name = array_shift($spec);
                     case (3 <= $argc):
-                        $order    = array_shift($spec);
+                        $options = array_shift($spec);
                     default:
-                        $this->addDisplayGroup($elements, $name, $order);
+                        $this->addDisplayGroup($elements, $name, $options);
                 }
-            } else {
-                $this->addDisplayGroup($spec, $name);
             }
         }
         return $this;
@@ -1249,16 +1346,24 @@ class Zend_Form implements Iterator, Countable
             } elseif (is_array($decoratorInfo)) {
                 $argc    = count($decoratorInfo);
                 $options = array();
-                switch (true) {
-                    case (0 == $argc):
-                        break;
-                    case (1 >= $argc):
-                        $decorator  = array_shift($decoratorInfo);
-                    case (2 >= $argc):
-                        $options = array_shift($decoratorInfo);
-                    default:
-                        $this->addDecorator($decorator, $options);
-                        break;
+                if (isset($decoratorInfo['decorator'])) {
+                    $decorator = $decoratorInfo['decorator'];
+                    if (isset($decoratorInfo['options'])) {
+                        $options = $decoratorInfo['options'];
+                    }
+                    $this->addDecorator($decorator, $options);
+                } else {
+                    switch (true) {
+                        case (0 == $argc):
+                            break;
+                        case (1 <= $argc):
+                            $decorator  = array_shift($decoratorInfo);
+                        case (2 <= $argc):
+                            $options = array_shift($decoratorInfo);
+                        default:
+                            $this->addDecorator($decorator, $options);
+                            break;
+                    }
                 }
             } else {
                 require_once 'Zend/Form/Exception.php';
@@ -1362,8 +1467,16 @@ class Zend_Form implements Iterator, Countable
         return $content;
     }
 
+    /**
+     * Serialize as string
+     *
+     * Proxies to {@link render()}.
+     * 
+     * @return string
+     */
     public function __toString()
     {
+        return $this->render();
     }
 
  

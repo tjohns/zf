@@ -746,6 +746,273 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
     }
+
+    public function getOptions()
+    {
+        $options = array(
+            'name'     => 'changed',
+            'value'    => 'foo',
+            'label'    => 'bar',
+            'order'    => 50,
+            'required' => false,
+            'foo'      => 'bar',
+            'baz'      => 'bat'
+        );
+        return $options;
+    }
+
+    public function testCanSetObjectStateViaSetOptions()
+    {
+        $options = $this->getOptions();
+        $this->element->setOptions($options);
+        $this->assertEquals('changed', $this->element->getName());
+        $this->assertEquals('foo', $this->element->getValue());
+        $this->assertEquals('bar', $this->element->getLabel());
+        $this->assertEquals(50, $this->element->getOrder());
+        $this->assertFalse($this->element->getRequired());
+        $this->assertEquals('bar', $this->element->foo);
+        $this->assertEquals('bat', $this->element->baz);
+    }
+
+    public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
+    {
+        $options = $this->getOptions();
+        $options['config']  = new Zend_Config($options);
+        $options['options'] = $options;
+        $this->element->setOptions($options);
+    }
+
+    public function testSetOptionsSkipsSettingAccessorsRequiringObjectsWhenNoObjectPresent()
+    {
+        $options = $this->getOptions();
+        $options['translator'] = true;
+        $options['pluginLoader'] = true;
+        $options['view'] = true;
+        $this->element->setOptions($options);
+    }
+
+    public function testSetOptionsSetsArrayOfStringValidators()
+    {
+        $options = $this->getOptions();
+        $options['validators'] = array(
+            'notEmpty',
+            'digits'
+        );
+        $this->element->setOptions($options);
+        $validator = $this->element->getValidator('notEmpty');
+        $this->assertTrue($validator instanceof Zend_Validate_NotEmpty);
+        $validator = $this->element->getValidator('digits');
+        $this->assertTrue($validator instanceof Zend_Validate_Digits);
+    }
+
+    public function testSetOptionsSetsArrayOfArrayValidators()
+    {
+        $options = $this->getOptions();
+        $options['validators'] = array(
+            array('notEmpty', true, array('bar')),
+            array('digits', true, array('bar')),
+        );
+        $this->element->setOptions($options);
+        $validator = $this->element->getValidator('notEmpty');
+        $this->assertTrue($validator instanceof Zend_Validate_NotEmpty);
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+        $validator = $this->element->getValidator('digits');
+        $this->assertTrue($validator instanceof Zend_Validate_Digits);
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+    }
+
+    public function testSetOptionsSetsArrayOfAssociativeArrayValidators()
+    {
+        $options = $this->getOptions();
+        $options['validators'] = array(
+            array(
+                'options'             => array('bar'),
+                'breakChainOnFailure' => true, 
+                'validator'           => 'notEmpty', 
+            ),
+            array(
+                'options'             => array('bar'),
+                'validator'           => 'digits', 
+                'breakChainOnFailure' => true, 
+            ),
+        );
+        $this->element->setOptions($options);
+        $validator = $this->element->getValidator('notEmpty');
+        $this->assertTrue($validator instanceof Zend_Validate_NotEmpty);
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+        $validator = $this->element->getValidator('digits');
+        $this->assertTrue($validator instanceof Zend_Validate_Digits);
+        $this->assertTrue($validator->zfBreakChainOnFailure);
+    }
+
+    public function testSetOptionsSetsArrayOfStringFilters()
+    {
+        $options = $this->getOptions();
+        $options['filters'] = array('StringToUpper', 'Alpha');
+        $this->element->setOptions($options);
+        $filter = $this->element->getFilter('StringToUpper');
+        $this->assertTrue($filter instanceof Zend_Filter_StringToUpper);
+        $filter = $this->element->getFilter('Alpha');
+        $this->assertTrue($filter instanceof Zend_Filter_Alpha);
+    }
+
+    public function testSetOptionsSetsArrayOfArrayFilters()
+    {
+        $options = $this->getOptions();
+        $options['filters'] = array(
+            array('StringToUpper', array('bar' => 'baz')),
+            array('Alpha', array('foo')),
+        );
+        $this->element->setOptions($options);
+        $filter = $this->element->getFilter('StringToUpper');
+        $this->assertTrue($filter instanceof Zend_Filter_StringToUpper);
+        $filter = $this->element->getFilter('Alpha');
+        $this->assertTrue($filter instanceof Zend_Filter_Alpha);
+    }
+
+    public function testSetOptionsSetsArrayOfAssociativeArrayFilters()
+    {
+        $options = $this->getOptions();
+        $options['filters'] = array(
+            array(
+                'options' => array('baz'),
+                'filter'  => 'StringToUpper'
+            ),
+            array(
+                'options' => array('foo'),
+                'filter'  => 'Alpha', 
+            ),
+        );
+        $this->element->setOptions($options);
+        $filter = $this->element->getFilter('StringToUpper');
+        $this->assertTrue($filter instanceof Zend_Filter_StringToUpper);
+        $filter = $this->element->getFilter('Alpha');
+        $this->assertTrue($filter instanceof Zend_Filter_Alpha);
+    }
+
+    public function testSetOptionsSetsArrayOfStringDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array('label', 'fieldset');
+        $this->element->setOptions($options);
+        $this->assertFalse($this->element->getDecorator('viewHelper'));
+        $this->assertFalse($this->element->getDecorator('errors'));
+        $decorator = $this->element->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $decorator = $this->element->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+    }
+
+    public function testSetOptionsSetsArrayOfArrayDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array(
+            array('label', array('id' => 'mylabel')),
+            array('fieldset', array('id' => 'fieldset')),
+        );
+        $this->element->setOptions($options);
+        $this->assertFalse($this->element->getDecorator('viewHelper'));
+        $this->assertFalse($this->element->getDecorator('errors'));
+
+        $decorator = $this->element->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $options = $decorator->getOptions();
+        $this->assertEquals('mylabel', $options['id']);
+
+        $decorator = $this->element->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['id']);
+    }
+
+    public function testSetOptionsSetsArrayOfAssocArrayDecorators()
+    {
+        $options = $this->getOptions();
+        $options['decorators'] = array(
+            array(
+                'options'   => array('id' => 'mylabel'),
+                'decorator' => 'label', 
+            ),
+            array(
+                'options'   => array('id' => 'fieldset'),
+                'decorator' => 'fieldset', 
+            ),
+        );
+        $this->element->setOptions($options);
+        $this->assertFalse($this->element->getDecorator('viewHelper'));
+        $this->assertFalse($this->element->getDecorator('errors'));
+
+        $decorator = $this->element->getDecorator('label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+        $options = $decorator->getOptions();
+        $this->assertEquals('mylabel', $options['id']);
+
+        $decorator = $this->element->getDecorator('fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $options = $decorator->getOptions();
+        $this->assertEquals('fieldset', $options['id']);
+    }
+
+    public function testSetOptionsSetsGlobalPrefixPaths()
+    {
+        $options = $this->getOptions();
+        $options['prefixPath'] = array(
+            'prefix' => 'Zend_Foo',
+            'path'   => 'Zend/Foo/'
+        );
+        $this->element->setOptions($options);
+
+        foreach (array('validate', 'filter', 'decorator') as $type) {
+            $loader = $this->element->getPluginLoader($type);
+            $paths = $loader->getPaths('Zend_Foo_' . ucfirst($type));
+            $this->assertTrue(is_array($paths), "Failed for type $type: " . var_export($paths, 1));
+            $this->assertFalse(empty($paths));
+            $this->assertContains('Foo', $paths[0]);
+        }
+    }
+
+    public function testSetOptionsSetsIndividualPrefixPathsFromKeyedArrays()
+    {
+        $options = $this->getOptions();
+        $options['prefixPath'] = array(
+            'filter' => array('prefix' => 'Zend_Foo', 'path' => 'Zend/Foo/')
+        );
+        $this->element->setOptions($options);
+
+        $loader = $this->element->getPluginLoader('filter');
+        $paths = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertFalse(empty($paths));
+        $this->assertContains('Foo', $paths[0]);
+    }
+
+    public function testSetOptionsSetsIndividualPrefixPathsFromUnKeyedArrays()
+    {
+        $options = $this->getOptions();
+        $options['prefixPath'] = array(
+            array('type' => 'decorator', 'prefix' => 'Zend_Foo', 'path' => 'Zend/Foo/')
+        );
+        $this->element->setOptions($options);
+
+        $loader = $this->element->getPluginLoader('decorator');
+        $paths = $loader->getPaths('Zend_Foo');
+        $this->assertTrue(is_array($paths));
+        $this->assertFalse(empty($paths));
+        $this->assertContains('Foo', $paths[0]);
+    }
+
+    public function testCanSetObjectStateViaSetConfig()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $this->element->setConfig($config);
+        $this->assertEquals('changed', $this->element->getName());
+        $this->assertEquals('foo', $this->element->getValue());
+        $this->assertEquals('bar', $this->element->getLabel());
+        $this->assertEquals(50, $this->element->getOrder());
+        $this->assertFalse($this->element->getRequired());
+        $this->assertEquals('bar', $this->element->foo);
+        $this->assertEquals('bat', $this->element->baz);
+    }
 }
 
 class Zend_Form_ElementTest_Decorator extends Zend_Form_Decorator_Abstract

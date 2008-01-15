@@ -121,10 +121,22 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
      */
     public function setOptions(array $options)
     {
+        $forbidden = array(
+            'Options', 'Config', 'PluginLoader', 'View',
+            'Translator', 'Attrib'
+        );
         foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $normalized = ucfirst($key);
+
+            if (in_array($normalized, $forbidden)) {
+                continue;
+            }
+
+            $method = 'set' . $normalized;
             if (method_exists($this, $method)) {
                 $this->$method($value);
+            } else {
+                $this->setAttrib($key, $value);
             }
         }
         return $this;
@@ -473,16 +485,24 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
             } elseif (is_array($decoratorInfo)) {
                 $argc    = count($decoratorInfo);
                 $options = array();
-                switch (true) {
-                    case (0 == $argc):
-                        break;
-                    case (1 >= $argc):
-                        $decorator  = array_shift($decoratorInfo);
-                    case (2 >= $argc):
-                        $options = array_shift($decoratorInfo);
-                    default:
-                        $this->addDecorator($decorator, $options);
-                        break;
+                if (isset($decoratorInfo['decorator'])) {
+                    $decorator = $decoratorInfo['decorator'];
+                    if (isset($decoratorInfo['options'])) {
+                        $options = $decoratorInfo['options'];
+                    }
+                    $this->addDecorator($decorator, $options);
+                } else {
+                    switch (true) {
+                        case (0 == $argc):
+                            break;
+                        case (1 <= $argc):
+                            $decorator  = array_shift($decoratorInfo);
+                        case (2 <= $argc):
+                            $options = array_shift($decoratorInfo);
+                        default:
+                            $this->addDecorator($decorator, $options);
+                            break;
+                    }
                 }
             } else {
                 require_once 'Zend/Form/Exception.php';
@@ -517,6 +537,9 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
             $decorators = array_keys($this->_decorators);
             $len = strlen($name);
             foreach ($decorators as $decorator) {
+                if ($len > strlen($decorator)) {
+                    continue;
+                }
                 if (0 === substr_compare($decorator, $name, -$len, $len, true)) {
                     return $this->_decorators[$decorator];
                 }
