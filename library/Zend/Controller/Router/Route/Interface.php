@@ -19,10 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/** Zend_Controller_Router_Exception */
-require_once 'Zend/Controller/Router/Exception.php';
-
+/** Zend_Config */
+require_once 'Zend/Config.php';
 
 /**
  * @package    Zend_Controller
