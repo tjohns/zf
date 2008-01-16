@@ -23,16 +23,6 @@
 /** Zend_Controller_Router_Interface */
 require_once 'Zend/Controller/Router/Interface.php';
 
-/** Zend_Controller_Front */
-require_once 'Zend/Controller/Front.php';
-
-/** Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Request_Http */
-require_once 'Zend/Controller/Request/Http.php';
-
-
 /**
  * Simple first implementation of a router, to be replaced
  * with rules-based URI processor.
@@ -159,8 +149,8 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
             return $this->_frontController;
         }
 
-        // Grab singleton instance, if class has been loaded
-        if (class_exists('Zend_Controller_Front')) {
+        if (class_exists('Zend_Controller_Front', false)) {
+            require_once 'Zend/Controller/Front.php';
             $this->_frontController = Zend_Controller_Front::getInstance();
             return $this->_frontController;
         }

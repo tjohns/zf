@@ -22,9 +22,6 @@
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Controller_Front */
-require_once 'Zend/Controller/Front.php';
-
 /**
  * @package    Zend_Controller
  * @subpackage Router
