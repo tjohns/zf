@@ -250,7 +250,7 @@ foreach ($playlistListFeed as $playlistEntry) {
 ]]></programlisting>
         </sect3>
 
-        <sect3 id="zend.gdata.youtube.playlists.user">
+        <sect3 id="zend.gdata.youtube.playlists.special">
             <title>Eine spezielle PlayListe erhalten</title>
 
             <para>

@@ -776,7 +776,7 @@ $translate->addTranslation("\my_de.mo","de");
             ソースを探すディレクトリを指定するのです。
         </para>
 
-        <example id="zend.translate.using.languages.automatic.example">
+        <example id="zend.translate.using.languages.directory.example">
             <title>ディレクトリを指定してソースを探す</title>
             <programlisting role="php"><![CDATA[
 // 以下のようなディレクトリ構造があることを想定しています

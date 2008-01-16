@@ -86,7 +86,7 @@ echo $foo['bar'];
 ]]></programlisting>
     </example>
 
-    <example id="zend.view.helpers.initial.placeholder.aggregation">
+    <example id="zend.view.helpers.initial.placeholder.capture">
         <title> 使用占位符（Placeholders）来抓取内容 </title>
 
         <para>

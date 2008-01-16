@@ -565,7 +565,7 @@ $query->setUser("sample.user");]]>
             </programlisting>
         </sect3>
 
-        <sect3 id="zend.gdata.photos.comment_retrieval">
+        <sect3 id="zend.gdata.photos.tag_retrieval">
             <title>Ein Tag erhalten</title>
             <para>
                 Der Service unterstützt den Erhalt von Tags von einem Feed eines anderen Typs. Durch das
@@ -761,7 +761,7 @@ $query->setUser("sample.user");]]>
             </programlisting>
         </sect3>
     
-        <sect3 id="zend.gdata.photos.comment_deletion">
+        <sect3 id="zend.gdata.photos.tag_deletion">
             <title>Deleting A Tag</title>
             <para>The service supports deleting a tag for an authenticated user:</para>
             <programlisting role="php"><![CDATA[<?php

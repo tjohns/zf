@@ -47,7 +47,7 @@ class FooController extends Zend_Controller_Action
 
     </example>
 
-    <example id="zend.controller.actionhelpers.actionstack.simple">
+    <example id="zend.controller.actionhelpers.actionstack.simple2">
         <title>Eine Aufgabe hinzufügen durch Verwendung eines Anfrage Objektes</title>
 
         <para>

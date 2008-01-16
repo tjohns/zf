@@ -119,7 +119,7 @@ echo $foo['bar'];
 ]]></programlisting>
     </example>
 
-    <example id="zend.view.helpers.initial.placeholder.aggregation">
+    <example id="zend.view.helpers.initial.placeholder.capture">
         <title>プレースホルダによるコンテンツのキャプチャ</title>
 
         <para>

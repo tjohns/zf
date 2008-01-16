@@ -585,7 +585,7 @@ $query->setUser("sample.user");]]>
             </programlisting>
         </sect3>
     
-        <sect3 id="zend.gdata.photos.comment_retrieval">
+        <sect3 id="zend.gdata.photos.tag_retrieval">
             <title>タグの取得</title>
             <para>
                 このサービスには、さまざまな形式のフィードからのタグの取得をサポートしています。
@@ -781,7 +781,7 @@ $query->setUser("sample.user");]]>
             </programlisting>
         </sect3>
     
-        <sect3 id="zend.gdata.photos.comment_deletion">
+        <sect3 id="zend.gdata.photos.tag_deletion">
             <title>タグの削除</title>
             <para>このサービスは、認証済みユーザのタグの削除をサポートしています。</para>
             <programlisting role="php"><![CDATA[<?php

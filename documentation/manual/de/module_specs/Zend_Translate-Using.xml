@@ -746,7 +746,7 @@ $translate->addTranslation("\my_de.mo","de");
             gescannt werden soll.
         </para>
 
-        <example id="zend.translate.using.languages.automatic.example">
+        <example id="zend.translate.using.languages.directory.example">
             <title>Scannen nach Quellen in einer Verzeichnisstruktur</title>
             <programlisting role="php"><![CDATA[
 // Angenommen wir haben die folgende Struktur
