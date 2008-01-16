@@ -44,6 +44,7 @@
     <li>Sujet : vues partielles</li>
 </ul>
 ]]></programlisting>
+    </example>
 
         <note>
             <title>Qu'est qu'un modèle ?</title>
@@ -66,7 +67,6 @@
                 </para></listitem>
             </itemizedlist>
         </note>
-    </example>
 
     <example id="zend.view.helpers.initial.partial.partialloop">
         <title>Utiliser PartialLoop pour effectuer le rendu d'éléments itératifs</title>
