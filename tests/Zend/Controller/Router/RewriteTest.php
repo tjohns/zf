@@ -295,9 +295,30 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
             $this->assertType('Zend_Controller_Router_Exception', $e);
             return true;
         }
+    }
+
+    public function testAddConfigWithoutSection()
+    {
+        require_once 'Zend/Config/Ini.php';
+        $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'routes.ini';
+        $config = new Zend_Config_Ini($file, 'testing');
         
-        $this->fail();
+        $this->_router->addConfig($config->routes);
         
+        $this->assertType('Zend_Controller_Router_Route_Static', $this->_router->getRoute('news'));
+        $this->assertType('Zend_Controller_Router_Route', $this->_router->getRoute('archive'));
+    }
+    
+    public function testAddConfigWithRootNode()
+    {
+        require_once 'Zend/Config/Ini.php';
+        $file = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'routes-root.ini';
+        $config = new Zend_Config_Ini($file, 'routes');
+        
+        $this->_router->addConfig($config);
+        
+        $this->assertType('Zend_Controller_Router_Route_Static', $this->_router->getRoute('news'));
+        $this->assertType('Zend_Controller_Router_Route', $this->_router->getRoute('archive'));
     }
     
     public function testRemoveDefaultRoutes()
