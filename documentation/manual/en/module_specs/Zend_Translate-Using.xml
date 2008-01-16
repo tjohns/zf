@@ -743,7 +743,7 @@ $translate->addTranslation("\my_de.mo","de");
             You must give a directory which has to be scanned instead a file.
         </para>
 
-        <example id="zend.translate.using.languages.automatic.example">
+        <example id="zend.translate.using.languages.directory.example">
             <title>Scanning a directory structure for sources</title>
             <programlisting role="php"><![CDATA[
 // expect we have the following structure

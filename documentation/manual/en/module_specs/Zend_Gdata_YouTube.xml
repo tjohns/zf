@@ -256,7 +256,7 @@ foreach ($playlistListFeed as $playlistEntry) {
 ]]></programlisting>
         </sect3>
 
-        <sect3 id="zend.gdata.youtube.playlists.user">
+        <sect3 id="zend.gdata.youtube.playlists.special">
             <title>Retrieving a specific playlist</title>
         
             <para>

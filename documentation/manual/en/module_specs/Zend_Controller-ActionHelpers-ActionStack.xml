@@ -49,7 +49,7 @@ class FooController extends Zend_Controller_Action
 
     </example>
 
-    <example id="zend.controller.actionhelpers.actionstack.simple">
+    <example id="zend.controller.actionhelpers.actionstack.simple2">
         <title>Adding a task using a request object</title>
 
         <para>
