@@ -470,7 +470,7 @@ class Zend_Form implements Iterator, Countable
         $method = strtoupper($method);
         if (!in_array($method, $this->_methods)) {
             require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception(sprintf('"%" is an invalid form method', $method));
+            throw new Zend_Form_Exception(sprintf('"%s" is an invalid form method', $method));
         }
         $this->setAttrib('method', $method);
         return $this;
