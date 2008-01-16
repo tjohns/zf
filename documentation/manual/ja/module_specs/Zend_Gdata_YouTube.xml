@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7460 -->
 <sect1 id="zend.gdata.youtube">
     <title>YouTube data API の使用法</title>
     
@@ -255,7 +256,7 @@ foreach ($playlistListFeed as $playlistEntry) {
 ]]></programlisting>
         </sect3>
 
-        <sect3 id="zend.gdata.youtube.playlists.user">
+        <sect3 id="zend.gdata.youtube.playlists.special">
             <title>指定したプレイリストの取得</title>
         
             <para>
