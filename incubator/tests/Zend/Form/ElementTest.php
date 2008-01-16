@@ -183,6 +183,11 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bat', $this->element->getAttrib('baz'));
     }
 
+    public function testGetUndefinedAttribShouldReturnNull()
+    {
+        $this->assertNull($this->element->getAttrib('bogus'));
+    }
+
     public function testSetAttribThrowsExceptionsForKeysWithLeadingUnderscores()
     {
         try {
@@ -288,6 +293,27 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertSame($loader, $test);
     }
 
+    public function testPassingInvalidTypeToSetPluginLoaderThrowsException()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        try {
+            $this->element->setPluginLoader($loader, 'foo');
+            $this->fail('Invalid loader type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid type', $e->getMessage());
+        }
+    }
+
+    public function testPassingInvalidTypeToGetPluginLoaderThrowsException()
+    {
+        try {
+            $this->element->getPluginLoader('foo');
+            $this->fail('Invalid loader type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid type', $e->getMessage());
+        }
+    }
+
     public function testCanSetCustomFilterPluginLoader()
     {
         $loader = new Zend_Loader_PluginLoader();
@@ -302,6 +328,16 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->element->setPluginLoader($loader, 'decorator');
         $test = $this->element->getPluginLoader('decorator');
         $this->assertSame($loader, $test);
+    }
+
+    public function testPassingInvalidLoaderTypeToAddPrefixPathThrowsException()
+    {
+        try {
+            $this->element->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'foo');
+            $this->fail('Invalid loader type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid type', $e->getMessage());
+        }
     }
 
     public function testCanAddValidatorPluginLoaderPrefixPath()
@@ -384,6 +420,16 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Decorator', $paths[0]);
     }
 
+    public function testPassingInvalidValidatorToAddValidatorThrowsException()
+    {
+        try {
+            $this->element->addValidator(123);
+            $this->fail('Invalid validator should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid validator', $e->getMessage());
+        }
+    }
+
     public function testCanAddSingleValidatorAsString()
     {
         $this->assertFalse($this->element->getValidator('digits'));
@@ -437,6 +483,11 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($digits instanceof Zend_Validate_Digits);
         $alnum  = $this->element->getValidator('alnum');
         $this->assertTrue($alnum instanceof Zend_Validate_Alnum);
+    }
+
+    public function testRemovingUnregisteredValidatorReturnsFalse()
+    {
+        $this->assertFalse($this->element->removeValidator('bogus'));
     }
 
     public function testCanRemoveValidator()
@@ -507,6 +558,16 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(0 < count($messages));
     }
 
+    public function testAddingInvalidFilterTypeThrowsException()
+    {
+        try {
+            $this->element->addFilter(123);
+            $this->fail('Invalid filter type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid filter', $e->getMessage());
+        }
+    }
+
     public function testCanAddSingleFilterAsString()
     {
         $this->assertFalse($this->element->getFilter('digits'));
@@ -555,6 +616,11 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($digits instanceof Zend_Filter_Digits);
         $alnum  = $this->element->getFilter('alnum');
         $this->assertTrue($alnum instanceof Zend_Filter_Alnum);
+    }
+
+    public function testRemovingUnregisteredFilterReturnsFalse()
+    {
+        $this->assertFalse($this->element->removeFilter('bogus'));
     }
 
     public function testCanRemoveFilter()
@@ -607,6 +673,16 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     {
         $decorator = $this->element->getDecorator('viewHelper');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
+    }
+
+    public function testAddingInvalidDecoratorThrowsException()
+    {
+        try {
+            $this->element->addDecorator(123);
+            $this->fail('Invalid decorator type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid decorator', $e->getMessage());
+        }
     }
 
     public function testCanAddSingleDecoratorAsString()
@@ -664,6 +740,11 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertSame($testDecorator, $decorator);
     }
 
+    public function testRemovingUnregisteredDecoratorReturnsFalse()
+    {
+        $this->assertFalse($this->element->removeDecorator('bogus'));
+    }
+
     public function testCanRemoveDecorator()
     {
         $this->testViewHelperDecoratorRegisteredByDefault();
@@ -682,9 +763,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testRenderElementReturnsMarkup()
     {
-        $this->element->setView($this->getView());
         $this->element->setName('foo');
-        $html = $this->element->render();
+        $html = $this->element->render($this->getView());
         $this->assertTrue(is_string($html));
         $this->assertFalse(empty($html));
         $this->assertContains('<input', $html);
@@ -893,14 +973,14 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsSetsArrayOfStringDecorators()
     {
         $options = $this->getOptions();
-        $options['decorators'] = array('label', 'fieldset');
+        $options['decorators'] = array('label', 'form');
         $this->element->setOptions($options);
         $this->assertFalse($this->element->getDecorator('viewHelper'));
         $this->assertFalse($this->element->getDecorator('errors'));
         $decorator = $this->element->getDecorator('label');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
-        $decorator = $this->element->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->element->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
     }
 
     public function testSetOptionsSetsArrayOfArrayDecorators()
@@ -908,7 +988,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $options = $this->getOptions();
         $options['decorators'] = array(
             array('label', array('id' => 'mylabel')),
-            array('fieldset', array('id' => 'fieldset')),
+            array('form', array('id' => 'form')),
         );
         $this->element->setOptions($options);
         $this->assertFalse($this->element->getDecorator('viewHelper'));
@@ -919,10 +999,10 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertEquals('mylabel', $options['id']);
 
-        $decorator = $this->element->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->element->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
         $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['id']);
+        $this->assertEquals('form', $options['id']);
     }
 
     public function testSetOptionsSetsArrayOfAssocArrayDecorators()
@@ -934,8 +1014,8 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
                 'decorator' => 'label', 
             ),
             array(
-                'options'   => array('id' => 'fieldset'),
-                'decorator' => 'fieldset', 
+                'options'   => array('id' => 'form'),
+                'decorator' => 'form', 
             ),
         );
         $this->element->setOptions($options);
@@ -947,10 +1027,10 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertEquals('mylabel', $options['id']);
 
-        $decorator = $this->element->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->element->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
         $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['id']);
+        $this->assertEquals('form', $options['id']);
     }
 
     public function testSetOptionsSetsGlobalPrefixPaths()
@@ -1012,6 +1092,19 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->element->getRequired());
         $this->assertEquals('bar', $this->element->foo);
         $this->assertEquals('bat', $this->element->baz);
+    }
+
+    public function testPassingConfigObjectToConstructorSetsObjectState()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $element = new Zend_Form_Element($config);
+        $this->assertEquals('changed', $element->getName());
+        $this->assertEquals('foo', $element->getValue());
+        $this->assertEquals('bar', $element->getLabel());
+        $this->assertEquals(50, $element->getOrder());
+        $this->assertFalse($element->getRequired());
+        $this->assertEquals('bar', $element->foo);
+        $this->assertEquals('bat', $element->baz);
     }
 }
 

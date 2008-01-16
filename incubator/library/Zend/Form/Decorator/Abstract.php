@@ -157,7 +157,7 @@ abstract class Zend_Form_Decorator_Abstract implements Zend_Form_Decorator_Inter
             switch ($options['placement']) {
                 case self::APPEND:
                 case self::PREPEND:
-                    $placement = $options['placement'];
+                    $placement = $this->_placement = $options['placement'];
                     break;
                 default:
                     break;
@@ -179,7 +179,7 @@ abstract class Zend_Form_Decorator_Abstract implements Zend_Form_Decorator_Inter
         $separator = $this->_separator;
         $options   = $this->getOptions();
         if (isset($options['separator'])) {
-            $separator = (string) $options['separator'];
+            $separator = $this->_separator = (string) $options['separator'];
             unset($options['separator']);
             $this->setOptions($options);
         }

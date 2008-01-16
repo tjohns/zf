@@ -13,7 +13,7 @@ require_once 'Zend/Form.php';
 
 require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
-require_once 'Zend/Form/Decorator/Fieldset.php';
+require_once 'Zend/Form/Decorator/Form.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Form/SubForm.php';
@@ -59,6 +59,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('someform', $this->form->getAttrib('class'));
         $this->assertEquals('/foo/bar', $this->form->getAction());
         $this->assertEquals('PUT', $this->form->getMethod());
+    }
+
+    public function testCanSetObjectStateByPassingOptionsToConstructor()
+    {
+        $options = $this->getOptions();
+        $form = new Zend_Form($options);
+        $this->assertEquals('foo', $form->getName());
+        $this->assertEquals('someform', $form->getAttrib('class'));
+        $this->assertEquals('/foo/bar', $form->getAction());
+        $this->assertEquals('PUT', $form->getMethod());
     }
 
     public function testSetOptionsSkipsCallsToSetOptionsAndSetConfig()
@@ -138,14 +148,14 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsSetsArrayOfStringDecorators()
     {
         $options = $this->getOptions();
-        $options['decorators'] = array('label', 'fieldset');
+        $options['decorators'] = array('label', 'errors');
         $this->form->setOptions($options);
         $this->assertFalse($this->form->getDecorator('form'));
 
         $decorator = $this->form->getDecorator('label');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
-        $decorator = $this->form->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->form->getDecorator('errors');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Errors);
     }
 
     public function testSetOptionsSetsArrayOfArrayDecorators()
@@ -153,7 +163,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $options = $this->getOptions();
         $options['decorators'] = array(
             array('label', array('id' => 'mylabel')),
-            array('fieldset', array('id' => 'fieldset')),
+            array('errors', array('id' => 'errors')),
         );
         $this->form->setOptions($options);
         $this->assertFalse($this->form->getDecorator('form'));
@@ -163,10 +173,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertEquals('mylabel', $options['id']);
 
-        $decorator = $this->form->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->form->getDecorator('errors');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Errors);
         $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['id']);
+        $this->assertEquals('errors', $options['id']);
     }
 
     public function testSetOptionsSetsArrayOfAssocArrayDecorators()
@@ -178,8 +188,8 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
                 'decorator' => 'label', 
             ),
             array(
-                'options'   => array('id' => 'fieldset'),
-                'decorator' => 'fieldset', 
+                'options'   => array('id' => 'errors'),
+                'decorator' => 'errors', 
             ),
         );
         $this->form->setOptions($options);
@@ -190,10 +200,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertEquals('mylabel', $options['id']);
 
-        $decorator = $this->form->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->form->getDecorator('errors');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Errors);
         $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['id']);
+        $this->assertEquals('errors', $options['id']);
     }
 
     public function testSetOptionsSetsGlobalPrefixPaths()
@@ -296,6 +306,17 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/foo/bar', $this->form->getAction());
         $this->assertEquals('PUT', $this->form->getMethod());
     }
+
+    public function testCanSetObjectStateByPassingConfigObjectToConstructor()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $form = new Zend_Form($config);
+        $this->assertEquals('foo', $form->getName());
+        $this->assertEquals('someform', $form->getAttrib('class'));
+        $this->assertEquals('/foo/bar', $form->getAction());
+        $this->assertEquals('PUT', $form->getMethod());
+    }
+
 
     // Attribs:
 
@@ -418,12 +439,43 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Decorator', $paths[0]);
     }
 
+    public function testPassingInvalidTypeToSetPluginLoaderThrowsException()
+    {
+        $loader = new Zend_Loader_PluginLoader();
+        try {
+            $this->form->setPluginLoader($loader, 'foo');
+            $this->fail('Invalid plugin loader type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid type', $e->getMessage());
+        }
+    }
+
+    public function testPassingInvalidTypeToGetPluginLoaderThrowsException()
+    {
+        try {
+            $this->form->getPluginLoader('foo');
+            $this->fail('Invalid plugin loader type should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid type', $e->getMessage());
+        }
+    }
+
     public function testCanSetCustomDecoratorPluginLoader()
     {
         $loader = new Zend_Loader_PluginLoader();
         $this->form->setPluginLoader($loader, 'decorator');
         $test = $this->form->getPluginLoader('decorator');
         $this->assertSame($loader, $test);
+    }
+
+    public function testPassingInvalidTypeToAddPrefixPathThrowsException()
+    {
+        try {
+            $this->form->addPrefixPath('Zend_Foo', 'Zend/Foo/', 'foo');
+            $this->fail('Passing invalid loader type to addPrefixPath() should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid type', $e->getMessage());
+        }
     }
 
     public function testCanAddDecoratorPluginLoaderPrefixPath()
@@ -609,6 +661,11 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($elements));
     }
 
+    public function testGetValueReturnsNullForUndefinedElements()
+    {
+        $this->assertNull($this->form->getValue('foo'));
+    }
+
     public function testCanSetElementDefaultValues()
     {
         $this->testCanAddAndRetrieveMultipleElements();
@@ -690,6 +747,29 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->form->bar));
         $element = $this->form->bar;
         $this->assertSame($bar, $element);
+    }
+
+    public function testOverloadingGetReturnsNullForUndefinedFormItems()
+    {
+        $this->assertNull($this->form->bogus);
+    }
+
+    public function testOverloadingSetThrowsExceptionForInvalidTypes()
+    {
+        try {
+            $this->form->foo = true;
+            $this->fail('Overloading should not allow scalars');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Only form elements and groups may be overloaded', $e->getMessage());
+        }
+
+        try {
+            $this->form->foo = new Zend_Config(array());
+            $this->fail('Overloading should not allow arbitrary object types');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Only form elements and groups may be overloaded', $e->getMessage());
+            $this->assertContains('Zend_Config', $e->getMessage());
+        }
     }
 
     // Element groups
@@ -786,6 +866,16 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $elements = $group->getElements();
         $expected = array('bar' => $this->form->bar, 'bat' => $this->form->bat);
         $this->assertEquals($expected, $elements);
+    }
+
+    public function testDisplayGroupsMustContainAtLeastOneElement()
+    {
+        try {
+            $this->form->addDisplayGroup(array(), 'foo');
+            $this->fail('Empty display group should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('No valid elements', $e->getMessage());
+        }
     }
 
     public function testCanAddAndRetrieveMultipleDisplayGroups()
@@ -1330,7 +1420,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->form->clearDecorators();
         $this->assertFalse($this->form->getDecorator('viewHelper'));
 
-        $testDecorator = new Zend_Form_Decorator_Fieldset;
+        $testDecorator = new Zend_Form_Decorator_Errors;
         $this->form->addDecorators(array(
             'ViewHelper',
             $testDecorator
@@ -1338,8 +1428,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         $viewHelper = $this->form->getDecorator('viewHelper');
         $this->assertTrue($viewHelper instanceof Zend_Form_Decorator_ViewHelper);
-        $decorator = $this->form->getDecorator('fieldset');
+        $decorator = $this->form->getDecorator('errors');
         $this->assertSame($testDecorator, $decorator);
+    }
+
+    public function testRemoveDecoratorReturnsFalseForUnregisteredDecorators()
+    {
+        $this->assertFalse($this->form->removeDecorator('foobar'));
     }
 
     public function testCanRemoveDecorator()
@@ -1372,8 +1467,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testRenderReturnsMarkup()
     {
         $this->setupElements();
-        $this->form->setView($this->getView());
-        $html = $this->form->render();
+        $html = $this->form->render($this->getView());
         $this->checkMarkup($html);
     }
 

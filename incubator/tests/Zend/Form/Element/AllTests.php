@@ -29,7 +29,7 @@ class Zend_Form_Element_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Form');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Form_Element');
 
         $suite->addTestSuite('Zend_Form_Element_ButtonTest');
         $suite->addTestSuite('Zend_Form_Element_CheckboxTest');

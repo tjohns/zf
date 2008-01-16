@@ -9,6 +9,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // error_reporting(E_ALL);
 
+require_once 'Zend/Form/Decorator/AllTests.php';
 require_once 'Zend/Form/DisplayGroupTest.php';
 require_once 'Zend/Form/ElementTest.php';
 require_once 'Zend/Form/Element/AllTests.php';
@@ -25,6 +26,7 @@ class Zend_Form_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Form');
 
+        $suite->addTest(Zend_Form_Decorator_AllTests::suite());
         $suite->addTestSuite('Zend_Form_DisplayGroupTest');
         $suite->addTestSuite('Zend_Form_ElementTest');
         $suite->addTest(Zend_Form_Element_AllTests::suite());

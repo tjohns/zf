@@ -13,7 +13,6 @@ require_once 'Zend/Form/DisplayGroup.php';
 
 require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
-require_once 'Zend/Form/Decorator/Fieldset.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Loader/PluginLoader.php';
@@ -74,6 +73,17 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
 
     // Elements
+
+    public function testPassingInvalidElementsToAddElementsThrowsException()
+    {
+        $elements = array('foo' => true);
+        try {
+            $this->group->addElements($elements);
+            $this->fail('Invalid elements should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('must be Zend_Form_Elements only', $e->getMessage());
+        }
+    }
 
     public function testCanAddElements()
     {
@@ -141,6 +151,16 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('fieldset', $options['helper']);
     }
 
+    public function testAddingInvalidDecoratorThrowsException()
+    {
+        try {
+            $this->group->addDecorator(123);
+            $this->fail('Invalid decorator should raise exception');
+        } catch (Zend_Form_Exception $e) {
+            $this->assertContains('Invalid decorator', $e->getMessage());
+        }
+    }
+
     public function testCanAddSingleDecoratorAsString()
     {
         $this->group->clearDecorators();
@@ -173,9 +193,9 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->group->clearDecorators();
         $this->assertFalse($this->group->getDecorator('form'));
 
-        $decorator = new Zend_Form_Decorator_Fieldset;
+        $decorator = new Zend_Form_Decorator_Form;
         $this->group->addDecorator($decorator);
-        $test = $this->group->getDecorator('fieldset');
+        $test = $this->group->getDecorator('form');
         $this->assertSame($decorator, $test);
     }
 
@@ -199,8 +219,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testCanRemoveDecorator()
     {
         $this->testFormDecoratorRegisteredByDefault();
-        $this->group->removeDecorator('fieldset');
-        $this->assertFalse($this->group->getDecorator('fieldset'));
+        $this->group->removeDecorator('form');
+        $this->assertFalse($this->group->getDecorator('form'));
     }
 
     public function testCanClearAllDecorators()
@@ -218,6 +238,20 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
         $this->group->addElements(array($foo, $bar));
         $html = $this->group->render($this->getView());
+        $this->assertRegexp('#^<fieldset.*?</fieldset>$#s', $html, $html);
+        $this->assertContains('<input', $html);
+        $this->assertContains('"foo"', $html);
+        $this->assertContains('"bar"', $html);
+    }
+
+    public function testToStringProxiesToRender()
+    {
+        $foo  = new Zend_Form_Element_Text('foo');
+        $bar  = new Zend_Form_Element_Text('bar');
+
+        $this->group->addElements(array($foo, $bar))
+                    ->setView($this->getView());
+        $html = $this->group->__toString();
         $this->assertRegexp('#^<fieldset.*?</fieldset>$#s', $html, $html);
         $this->assertContains('<input', $html);
         $this->assertContains('"foo"', $html);
@@ -317,14 +351,14 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testSetOptionsSetsArrayOfStringDecorators()
     {
         $options = $this->getOptions();
-        $options['decorators'] = array('label', 'fieldset');
+        $options['decorators'] = array('label', 'form');
         $this->group->setOptions($options);
         $this->assertFalse($this->group->getDecorator('group'));
 
         $decorator = $this->group->getDecorator('label');
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
-        $decorator = $this->group->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->group->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
     }
 
     public function testSetOptionsSetsArrayOfArrayDecorators()
@@ -332,7 +366,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $options = $this->getOptions();
         $options['decorators'] = array(
             array('label', array('id' => 'mylabel')),
-            array('fieldset', array('id' => 'fieldset')),
+            array('form', array('id' => 'form')),
         );
         $this->group->setOptions($options);
         $this->assertFalse($this->group->getDecorator('group'));
@@ -342,10 +376,10 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertEquals('mylabel', $options['id']);
 
-        $decorator = $this->group->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->group->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
         $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['id']);
+        $this->assertEquals('form', $options['id']);
     }
 
     public function testSetOptionsSetsArrayOfAssocArrayDecorators()
@@ -357,8 +391,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
                 'decorator' => 'label', 
             ),
             array(
-                'options'   => array('id' => 'fieldset'),
-                'decorator' => 'fieldset', 
+                'options'   => array('id' => 'form'),
+                'decorator' => 'form', 
             ),
         );
         $this->group->setOptions($options);
@@ -369,10 +403,10 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertEquals('mylabel', $options['id']);
 
-        $decorator = $this->group->getDecorator('fieldset');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
+        $decorator = $this->group->getDecorator('form');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
         $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['id']);
+        $this->assertEquals('form', $options['id']);
     }
 
     public function testCanSetObjectStateViaSetConfig()
@@ -385,6 +419,56 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foobar', $this->group->getAttrib('class'));
     }
 
+    public function testPassingConfigObjectToConstructorSetsObjectState()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $group  = new Zend_Form_DisplayGroup('foo', $this->loader, $config);
+        $this->assertEquals('foo', $group->getName());
+        $this->assertEquals('Display Group', $group->getLegend());
+        $this->assertEquals(20, $group->getOrder());
+        $this->assertEquals('foobar', $group->getAttrib('class'));
+    }
+
+    public function testGetAttribReturnsNullForUndefinedAttribs()
+    {
+        $this->assertNull($this->group->getAttrib('bogus'));
+    }
+
+    public function testCanAddMultipleAttribsSimultaneously()
+    {
+        $attribs = array(
+            'foo' => 'fooval',
+            'bar' => 'barval',
+            'baz' => 'bazval'
+        );
+        $this->group->addAttribs($attribs);
+        $this->assertEquals($attribs, $this->group->getAttribs());
+    }
+
+    public function testSetAttribsOverwritesPreviouslySetAttribs()
+    {
+        $this->testCanAddMultipleAttribsSimultaneously();
+        $attribs = array(
+            'foo' => 'valfoo',
+            'bat' => 'batval'
+        );
+        $this->group->setAttribs($attribs);
+        $this->assertEquals($attribs, $this->group->getAttribs());
+    }
+
+    public function testCanRemoveSingleAttrib()
+    {
+        $this->testCanAddMultipleAttribsSimultaneously();
+        $this->group->removeAttrib('bar');
+        $this->assertNull($this->group->getAttrib('bar'));
+    }
+
+    public function testCanClearAllAttribs()
+    {
+        $this->testCanAddMultipleAttribsSimultaneously();
+        $this->group->clearAttribs();
+        $this->assertEquals(array(), $this->group->getAttribs());
+    }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Form_DisplayGroupTest::main') {
