@@ -52,6 +52,7 @@
 </ul>
 ]]></programlisting>
 
+    </example>
         <note>
             <title>What is a model?</title>
 
@@ -83,7 +84,6 @@
                 </para></listitem>
             </itemizedlist>
         </note>
-    </example>
 
     <example id="zend.view.helpers.initial.partial.partialloop">
         <title>Using PartialLoop to Render Iterable Models</title>

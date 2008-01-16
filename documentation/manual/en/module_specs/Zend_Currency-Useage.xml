@@ -25,6 +25,8 @@ require_once 'Zend/Currency.php';
 $currency = new Zend_Currency();]]>
         </programlisting>
 
+
+    </example>
         <note>
             <para>
                 Be aware, that if your system has no default locale, or if the locale of your system can not be
@@ -32,8 +34,6 @@ $currency = new Zend_Currency();]]>
                 behaviour you should set the locale you manually.
             </para>
         </note>
-
-    </example>
 
     <para>
         Of course, depending on your needs, several parameters can be given at creation. Each of this parameters
@@ -150,7 +150,7 @@ echo $currency->toCurrency(1000);
 // prints '$ 1.000,00'
 echo $currency->toCurrency(1000, array('format' => 'de_AT'));
 
-// prints '$ ١٬٠٠٠٫٠٠'
+// prints '$ 佟佻贍贍贍佾贍贍'
 echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
             </programlisting>
 
@@ -451,7 +451,7 @@ echo $currency->getSymbol();
 // prints 'EUR'
 echo $currency->getShortName('EUR');
 
-// prints 'Österreichische Schilling'
+// prints '脰sterreichische Schilling'
 echo $currency->getName('ATS', 'de_AT');
 
 // returns an array with all regions where USD is used
