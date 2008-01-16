@@ -94,14 +94,14 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
     public function testCanSetMultiOptions()
     {
         $this->testMultiOptionsEmptyByDefault();
-        $this->element->addMultiOption('foo');
-        $this->assertEquals(array('foo'), $this->element->getMultiOptions());
-        $this->element->setMultiOptions(array('bar', 'baz'));
-        $this->assertEquals(array('bar', 'baz'), $this->element->getMultiOptions());
-        $this->element->addMultiOptions(array('bat', 'foo'));
-        $this->assertEquals(array('bar', 'baz', 'bat', 'foo'), $this->element->getMultiOptions());
-        $this->element->addMultiOption('test');
-        $this->assertEquals(array('bar', 'baz', 'bat', 'foo', 'test'), $this->element->getMultiOptions());
+        $this->element->addMultiOption('foo', 'foovalue');
+        $this->assertEquals('foovalue', $this->element->getMultiOption('foo'));
+        $this->element->setMultiOptions(array('bar' => 'barvalue', 'baz' => 'bazvalue'));
+        $this->assertEquals(array('bar' => 'barvalue', 'baz' => 'bazvalue'), $this->element->getMultiOptions());
+        $this->element->addMultiOptions(array('bat' => 'batvalue', 'foo' => 'foovalue'));
+        $this->assertEquals(array('bar' => 'barvalue', 'baz' => 'bazvalue', 'bat' => 'batvalue', 'foo' => 'foovalue'), $this->element->getMultiOptions());
+        $this->element->addMultiOption('test', 'testvalue');
+        $this->assertEquals(array('bar' => 'barvalue', 'baz' => 'bazvalue', 'bat' => 'batvalue', 'foo' => 'foovalue', 'test' => 'testvalue'), $this->element->getMultiOptions());
     }
 
     public function testSettingMultiOptionsUpdatesViewHelperDecoratorByDefault()
@@ -111,6 +111,15 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $options = $decorator->getOptions();
         $this->assertTrue(isset($options['options']));
         $this->assertEquals($this->element->getMultiOptions(), $options['options']);
+    }
+
+    public function testCanRemoveMultiOption()
+    {
+        $this->testMultiOptionsEmptyByDefault();
+        $this->element->addMultiOption('foo', 'foovalue');
+        $this->assertEquals('foovalue', $this->element->getMultiOption('foo'));
+        $this->element->removeMultiOption('foo');
+        $this->assertNull($this->element->getMultiOption('foo'));
     }
 }
 

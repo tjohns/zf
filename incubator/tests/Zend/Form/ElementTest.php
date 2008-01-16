@@ -526,6 +526,12 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testIsValidPopulatesElementValue()
+    {
+        $this->testCanValidateElement();
+        $this->assertEquals('matthew@zend.com', $this->element->getValue());
+    }
+
     public function testErrorsPopulatedFollowingFailedIsValidCheck()
     {
         require_once 'Zend/Validate/NotEmpty.php';
