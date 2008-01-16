@@ -129,6 +129,28 @@ class Zend_Pdf_Cmap_TrimmedTable extends Zend_Pdf_Cmap
     }
 
 
+    /**
+     * Returns an array containing the glyphs numbers that have entries in this character map.
+     * Keys are Unicode character codes (integers)
+     * 
+     * This functionality is partially covered by glyphNumbersForCharacters(getCoveredCharacters())
+     * call, but this method do it in more effective way (prepare complete list instead of searching 
+     * glyph for each character code).
+     *
+     * @internal
+     * @return array Array representing <Unicode character code> => <glyph number> pairs.
+     */
+    public function getCoveredCharactersGlyphs()
+    {
+    	$glyphNumbers = array();
+        for ($code = $this->_startCode; $code <= $this->_endCode; $code++) {
+            $glyphNumbers[$code] = $this->_glyphIndexArray[$code - $this->_startCode];
+        }
+
+        return $glyphNumbers;
+    }
+
+
   /* Object Lifecycle */
 
     /**

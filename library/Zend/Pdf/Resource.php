@@ -74,7 +74,6 @@ abstract class Zend_Pdf_Resource
      */
     public function __construct($resource)
     {
-        $this->_processedFacories = array();
         $this->_objectFactory     = Zend_Pdf_ElementFactory::createFactory(1);
         if ($resource instanceof Zend_Pdf_Element) {
             $this->_resource      = $this->_objectFactory->newObject($resource);
@@ -87,6 +86,7 @@ abstract class Zend_Pdf_Resource
      * Get resource.
      * Used to reference resource in an internal PDF data structures (resource dictionaries)
      *
+     * @internal
      * @return Zend_Pdf_Element_Object
      */
     public function getResource()
@@ -97,6 +97,7 @@ abstract class Zend_Pdf_Resource
     /**
      * Get factory.
      *
+     * @internal
      * @return Zend_Pdf_ElementFactory_Interface
      */
     public function getFactory()

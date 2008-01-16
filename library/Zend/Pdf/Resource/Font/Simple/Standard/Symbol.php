@@ -18,8 +18,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Pdf_Resource_Font_Standard */
-require_once 'Zend/Pdf/Resource/Font/Standard.php';
+/** Zend_Pdf_Resource_Font_Simple_Standard */
+require_once 'Zend/Pdf/Resource/Font/Simple/Standard.php';
 
 
 /**
@@ -40,7 +40,7 @@ require_once 'Zend/Pdf/Resource/Font/Standard.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Resource_Font_Standard_Symbol extends Zend_Pdf_Resource_Font_Standard
+class Zend_Pdf_Resource_Font_Simple_Standard_Symbol extends Zend_Pdf_Resource_Font_Simple_Standard
 {
   /**** Instance Variables ****/
 
@@ -188,8 +188,6 @@ class Zend_Pdf_Resource_Font_Standard_Symbol extends Zend_Pdf_Resource_Font_Stan
 
         /* Object properties */
 
-        $this->_fontType = Zend_Pdf_Font::TYPE_STANDARD;
-
         /* The font names are stored internally as Unicode UTF-16BE-encoded
          * strings. Since this information is static, save unnecessary trips
          * through iconv() and just use pre-encoded hexidecimal strings.
@@ -290,7 +288,6 @@ class Zend_Pdf_Resource_Font_Standard_Symbol extends Zend_Pdf_Resource_Font_Stan
             0xb4 => 0x02ae,   0xb5 => 0x0180,   0xb6 => 0x0180,   0xb7 => 0x0180,
             0xb8 => 0x0180,   0xb9 => 0x0180,   0xba => 0x0180,   0xbb => 0x01ee,
             0xbc => 0x01ee,   0xbd => 0x01ee,   0xbe => 0x0316);
-        $this->_glyphMaxIndex = 190;
 
         /* The cmap table is similarly synthesized.
          */
@@ -343,7 +340,7 @@ class Zend_Pdf_Resource_Font_Standard_Symbol extends Zend_Pdf_Resource_Font_Stan
           0xf8f6 =>   0xb5, 0xf8f7 =>   0xb6, 0xf8f8 =>   0xb7, 0xf8f9 =>   0xb8,
           0xf8fa =>   0xb9, 0xf8fb =>   0xba, 0xf8fc =>   0xbb, 0xf8fd =>   0xbc,
           0xf8fe =>   0xbd, 0xf8ff =>   0xbe);
-        $this->cmap = Zend_Pdf_Cmap::cmapWithTypeData(
+        $this->_cmap = Zend_Pdf_Cmap::cmapWithTypeData(
           Zend_Pdf_Cmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
 
 
@@ -359,6 +356,7 @@ class Zend_Pdf_Resource_Font_Standard_Symbol extends Zend_Pdf_Resource_Font_Stan
          * override with WinAnsi like the other built-in fonts or else it will
          * not work as expected.
          */
+        $this->_resource->Encoding = null;
     }
 
 

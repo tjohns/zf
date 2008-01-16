@@ -259,6 +259,48 @@ class Zend_Pdf_Cmap_SegmentToDelta extends Zend_Pdf_Cmap
         return $characterCodes;
     }
 
+    
+    /**
+     * Returns an array containing the glyphs numbers that have entries in this character map.
+     * Keys are Unicode character codes (integers)
+     * 
+     * This functionality is partially covered by glyphNumbersForCharacters(getCoveredCharacters())
+     * call, but this method do it in more effective way (prepare complete list instead of searching 
+     * glyph for each character code).
+     *
+     * @internal
+     * @return array Array representing <Unicode character code> => <glyph number> pairs.
+     */
+    public function getCoveredCharactersGlyphs()
+    {
+        $glyphNumbers = array();
+        
+        for ($segmentNum = 1; $segmentNum <= $this->_segmentCount; $segmentNum++) {
+        	if ($this->_segmentTableIdRangeOffsets[$segmentNum] == 0) {
+        		$delta = $this->_segmentTableIdDeltas[$segmentNum];
+
+                for ($code =  $this->_segmentTableStartCodes[$segmentNum];
+                     $code <= $this->_segmentTableEndCodes[$segmentNum];
+                     $code++) {
+                    $glyphNumbers[$code] = ($code + $delta) % 65536;
+                }
+        	} else {
+        		$code       = $this->_segmentTableStartCodes[$segmentNum];
+        		$glyphIndex = $this->_segmentTableIdRangeOffsets[$segmentNum] - ($this->_segmentCount - $segmentNum) - 1;
+
+        		while ($code <= $this->_segmentTableEndCodes[$segmentNum]) {
+                    $glyphNumbers[$code] = $this->_glyphIndexArray[$glyphIndex];
+
+                    $code++;
+                    $glyphIndex++;
+        		}
+            }
+        }
+        
+        return $glyphNumbers;
+    }
+
+
 
   /* Object Lifecycle */
 

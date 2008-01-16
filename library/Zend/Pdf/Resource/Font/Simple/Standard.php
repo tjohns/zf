@@ -18,8 +18,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Pdf_Resource_Font */
-require_once 'Zend/Pdf/Resource/Font.php';
+/** Zend_Pdf_Resource_Font_Simple */
+require_once 'Zend/Pdf/Resource/Font/Simple.php';
 
 
 /**
@@ -32,20 +32,20 @@ require_once 'Zend/Pdf/Resource/Font.php';
  *
  * The standard fonts and the corresponding subclasses that manage them:
  * <ul>
- *  <li>Courier - {@link Zend_Pdf_Resource_Font_Standard_Courier}
- *  <li>Courier-Bold - {@link Zend_Pdf_Resource_Font_Standard_CourierBold}
- *  <li>Courier-Oblique - {@link Zend_Pdf_Resource_Font_Standard_CourierOblique}
- *  <li>Courier-BoldOblique - {@link Zend_Pdf_Resource_Font_Standard_CourierBoldOblique}
- *  <li>Helvetica - {@link Zend_Pdf_Resource_Font_Standard_Helvetica}
- *  <li>Helvetica-Bold - {@link Zend_Pdf_Resource_Font_Standard_HelveticaBold}
- *  <li>Helvetica-Oblique - {@link Zend_Pdf_Resource_Font_Standard_HelveticaOblique}
- *  <li>Helvetica-BoldOblique - {@link Zend_Pdf_Resource_Font_Standard_HelveticaBoldOblique}
- *  <li>Symbol - {@link Zend_Pdf_Resource_Font_Standard_Symbol}
- *  <li>Times - {@link Zend_Pdf_Resource_Font_Standard_Times}
- *  <li>Times-Bold - {@link Zend_Pdf_Resource_Font_Standard_TimesBold}
- *  <li>Times-Italic - {@link Zend_Pdf_Resource_Font_Standard_TimesItalic}
- *  <li>Times-BoldItalic - {@link Zend_Pdf_Resource_Font_Standard_TimesBoldItalic}
- *  <li>ZapfDingbats - {@link Zend_Pdf_Resource_Font_Standard_ZapfDingbats}
+ *  <li>Courier - {@link Zend_Pdf_Resource_Font_Simple_Standard_Courier}
+ *  <li>Courier-Bold - {@link Zend_Pdf_Resource_Font_Simple_Standard_CourierBold}
+ *  <li>Courier-Oblique - {@link Zend_Pdf_Resource_Font_Simple_Standard_CourierOblique}
+ *  <li>Courier-BoldOblique - {@link Zend_Pdf_Resource_Font_Simple_Standard_CourierBoldOblique}
+ *  <li>Helvetica - {@link Zend_Pdf_Resource_Font_Simple_Standard_Helvetica}
+ *  <li>Helvetica-Bold - {@link Zend_Pdf_Resource_Font_Simple_Standard_HelveticaBold}
+ *  <li>Helvetica-Oblique - {@link Zend_Pdf_Resource_Font_Simple_Standard_HelveticaOblique}
+ *  <li>Helvetica-BoldOblique - {@link Zend_Pdf_Resource_Font_Simple_Standard_HelveticaBoldOblique}
+ *  <li>Symbol - {@link Zend_Pdf_Resource_Font_Simple_Standard_Symbol}
+ *  <li>Times - {@link Zend_Pdf_Resource_Font_Simple_Standard_Times}
+ *  <li>Times-Bold - {@link Zend_Pdf_Resource_Font_Simple_Standard_TimesBold}
+ *  <li>Times-Italic - {@link Zend_Pdf_Resource_Font_Simple_Standard_TimesItalic}
+ *  <li>Times-BoldItalic - {@link Zend_Pdf_Resource_Font_Simple_Standard_TimesBoldItalic}
+ *  <li>ZapfDingbats - {@link Zend_Pdf_Resource_Font_Simple_Standard_ZapfDingbats}
  * </ul>
  *
  * Font objects should be normally be obtained from the factory methods
@@ -56,7 +56,7 @@ require_once 'Zend/Pdf/Resource/Font.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Pdf_Resource_Font_Standard extends Zend_Pdf_Resource_Font
+abstract class Zend_Pdf_Resource_Font_Simple_Standard extends Zend_Pdf_Resource_Font_Simple
 {
   /**** Public Interface ****/
 
@@ -68,7 +68,9 @@ abstract class Zend_Pdf_Resource_Font_Standard extends Zend_Pdf_Resource_Font
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->_fontType = Zend_Pdf_Font::TYPE_STANDARD;
+
+    	parent::__construct();
         $this->_resource->Subtype  = new Zend_Pdf_Element_Name('Type1');
     }
 

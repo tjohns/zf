@@ -18,57 +18,70 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Pdf_Resource_Font_OpenType */
-require_once 'Zend/Pdf/Resource/Font/OpenType.php';
+/** Zend_Pdf_Font */
+require_once 'Zend/Pdf/Font.php';
+
+/** Zend_Pdf_Resource_Font */
+require_once 'Zend/Pdf/Resource/Font.php';
+
+/** Zend_Pdf_FileParser_Font_OpenType */
+require_once 'Zend/Pdf/FileParser/Font/OpenType.php';
 
 
 /**
- * TrueType fonts implementation
+ * FontDescriptor implementation
  *
- * Font objects should be normally be obtained from the factory methods
- * {@link Zend_Pdf_Font::fontWithName} and {@link Zend_Pdf_Font::fontWithPath}.
+ * A font descriptor specifies metrics and other attributes of a simple font or a 
+ * CIDFont as a whole, as distinct from the metrics of individual glyphs. These font
+ * metrics provide information that enables a viewer application to synthesize a
+ * substitute font or select a similar font when the font program is unavailable. The
+ * font descriptor may also be used to embed the font program in the PDF file.
  *
  * @package    Zend_Pdf
  * @subpackage Fonts
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_OpenType
+class Zend_Pdf_Resource_Font_FontDescriptor
 {
-  /**** Public Interface ****/
-
-
-  /* Object Lifecycle */
-
     /**
      * Object constructor
-     *
-     * @param Zend_Pdf_FileParser_Font_OpenType_TrueType $fontParser Font parser
-     *   object containing parsed TrueType file.
-     * @param integer $embeddingOptions Options for font embedding.
      * @throws Zend_Pdf_Exception
      */
-    public function __construct(Zend_Pdf_FileParser_Font_OpenType_TrueType $fontParser, $embeddingOptions)
+	public function __construct()
+	{
+		throw new Zend_Pdf_Exception('Zend_Pdf_Resource_Font_FontDescriptor is not intended to be instantiated');
+	} 
+	
+    /**
+     * Object constructor
+     * 
+     * The $embeddingOptions parameter allows you to set certain flags related
+     * to font embedding. You may combine options by OR-ing them together. See
+     * the EMBED_ constants defined in {@link Zend_Pdf_Font} for the list of
+     * available options and their descriptions.
+     *
+     * Note that it is not requried that fonts be embedded within the PDF file
+     * to use them. If the recipient of the PDF has the font installed on their
+     * computer, they will see the correct fonts in the document. If they don't,
+     * the PDF viewer will substitute or synthesize a replacement.
+     * 
+     * 
+     * @param Zend_Pdf_Resource_Font $font Font
+     * @param Zend_Pdf_FileParser_Font_OpenType $fontParser Font parser object containing parsed TrueType file.
+     * @param integer $embeddingOptions Options for font embedding.
+     * @return Zend_Pdf_Element_Dictionary
+     * @throws Zend_Pdf_Exception
+     */
+    static public function factory(Zend_Pdf_Resource_Font $font, Zend_Pdf_FileParser_Font_OpenType $fontParser, $embeddingOptions)
     {
-        parent::__construct($fontParser, $embeddingOptions);
-
-
-        /* Object properties */
-
-        $this->_fontType = Zend_Pdf_Font::TYPE_TRUETYPE;
-
-
-        /* Resource dictionary */
-
-        $this->_resource->Subtype  = new Zend_Pdf_Element_Name('TrueType');
-
         /* The font descriptor object contains the rest of the font metrics and
          * the information about the embedded font program (if applicible).
          */
         $fontDescriptor = new Zend_Pdf_Element_Dictionary();
 
-        $fontDescriptor->Type = new Zend_Pdf_Element_Name('FontDescriptor');
-        $fontDescriptor->FontName = $this->_resource->BaseFont;
+        $fontDescriptor->Type     = new Zend_Pdf_Element_Name('FontDescriptor');
+        $fontDescriptor->FontName = new Zend_Pdf_Element_Name($font->getResource()->BaseFont->value);
 
         /* The font flags value is a bitfield that describes the stylistic
          * attributes of the font. We will set as many of the bits as can be
@@ -96,24 +109,26 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
         // bits 17-19: AllCap, SmallCap, ForceBold; not available
         $fontDescriptor->Flags = new Zend_Pdf_Element_Numeric($flags);
 
-        $fontBBox = array(new Zend_Pdf_Element_Numeric($this->_toEmSpace($fontParser->xMin)),
-                          new Zend_Pdf_Element_Numeric($this->_toEmSpace($fontParser->yMin)),
-                          new Zend_Pdf_Element_Numeric($this->_toEmSpace($fontParser->xMax)),
-                          new Zend_Pdf_Element_Numeric($this->_toEmSpace($fontParser->yMax)));
-        $fontDescriptor->FontBBox = new Zend_Pdf_Element_Array($fontBBox);
+        $fontBBox = array(new Zend_Pdf_Element_Numeric($font->toEmSpace($fontParser->xMin)),
+                          new Zend_Pdf_Element_Numeric($font->toEmSpace($fontParser->yMin)),
+                          new Zend_Pdf_Element_Numeric($font->toEmSpace($fontParser->xMax)),
+                          new Zend_Pdf_Element_Numeric($font->toEmSpace($fontParser->yMax)));
+        $fontDescriptor->FontBBox     = new Zend_Pdf_Element_Array($fontBBox);
 
-        $fontDescriptor->ItalicAngle = new Zend_Pdf_Element_Numeric($fontParser->italicAngle);
+        $fontDescriptor->ItalicAngle  = new Zend_Pdf_Element_Numeric($fontParser->italicAngle);
 
-        $fontDescriptor->Ascent = new Zend_Pdf_Element_Numeric($this->_toEmSpace($fontParser->ascent));
-        $fontDescriptor->Descent = new Zend_Pdf_Element_Numeric($this->_toEmSpace($fontParser->descent));
+        $fontDescriptor->Ascent       = new Zend_Pdf_Element_Numeric($font->toEmSpace($fontParser->ascent));
+        $fontDescriptor->Descent      = new Zend_Pdf_Element_Numeric($font->toEmSpace($fontParser->descent));
 
-        $fontDescriptor->CapHeight = new Zend_Pdf_Element_Numeric($fontParser->capitalHeight);
+        $fontDescriptor->CapHeight    = new Zend_Pdf_Element_Numeric($fontParser->capitalHeight);
         /**
          * The vertical stem width is not yet extracted from the OpenType font
          * file. For now, record zero which is interpreted as 'unknown'.
          * @todo Calculate value for StemV.
          */
-        $fontDescriptor->StemV = new Zend_Pdf_Element_Numeric(0);
+        $fontDescriptor->StemV        = new Zend_Pdf_Element_Numeric(0);
+        
+        $fontDescriptor->MissingWidth = new Zend_Pdf_Element_Numeric($fontParser->glyphWidths[0]);
 
         /* Set up font embedding. This is where the actual font program itself
          * is embedded within the PDF document.
@@ -128,7 +143,7 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
          *
          * First, the developer might specifically request not to embed the font.
          */
-        if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_DONT_EMBED)) {
+        if (!($embeddingOptions & Zend_Pdf_Font::EMBED_DONT_EMBED)) {
 
             /* Second, the font author may have set copyright bits that prohibit
              * the font program from being embedded. Yes this is controversial,
@@ -143,7 +158,7 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
                 /* This exception may be suppressed if the developer decides that
                  * it's not a big deal that the font program can't be embedded.
                  */
-                if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION)) {
+                if (!($embeddingOptions & Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION)) {
                     $message = 'This font cannot be embedded in the PDF document. If you would like to use '
                              . 'it anyway, you must pass Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION '
                              . 'in the $options parameter of the font constructor.';
@@ -161,23 +176,24 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
                  * model is in place.
                  */
                 $fontFile = $fontParser->getDataSource()->readAllBytes();
-                $fontFileObject = $this->_objectFactory->newStreamObject($fontFile);
+                $fontFileObject = $font->getFactory()->newStreamObject($fontFile);
                 $fontFileObject->dictionary->Length1 = new Zend_Pdf_Element_Numeric(strlen($fontFile));
-                if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_DONT_COMPRESS)) {
+                if (!($embeddingOptions & Zend_Pdf_Font::EMBED_DONT_COMPRESS)) {
                     /* Compress the font file using Flate. This generally cuts file
                      * sizes by about half!
                      */
-                    $filter = new Zend_Pdf_Element_Array(array(new Zend_Pdf_Element_Name('FlateDecode')));
-                    $fontFileObject->dictionary->Filter = $filter;
+                    $fontFileObject->dictionary->Filter = new Zend_Pdf_Element_Name('FlateDecode');
                 }
-                $fontDescriptor->FontFile2 = $fontFileObject;
+                if ($fontParser instanceof Zend_Pdf_FileParser_Font_OpenType_Type1 /* not implemented now */) {
+                    $fontDescriptor->FontFile  = $fontFileObject;
+                } else if ($fontParser instanceof Zend_Pdf_FileParser_Font_OpenType_TrueType) {
+                	$fontDescriptor->FontFile2 = $fontFileObject;
+                } else {
+                	$fontDescriptor->FontFile3 = $fontFileObject;
+                }
             }
         }
 
-        $fontDescriptorObject = $this->_objectFactory->newObject($fontDescriptor);
-        $this->_resource->FontDescriptor = $fontDescriptorObject;
-
-        $this->_resource->Encoding = new Zend_Pdf_Element_Name('WinAnsiEncoding');
+        return $fontDescriptor;
     }
-
 }

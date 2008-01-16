@@ -119,6 +119,7 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
         $this->_parseNameTable();
         $this->_parsePostTable();
         $this->_parseHheaTable();
+        $this->_parseMaxpTable();
         $this->_parseOs2Table();
         $this->_parseHmtxTable();
         $this->_parseCmapTable();
@@ -450,6 +451,32 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
 
 
     /**
+     * Parses the OpenType hhea (Horizontal Header) table.
+     *
+     * The hhea table contains information used for horizontal layout. It also
+     * contains some vertical layout information for Apple systems. The vertical
+     * layout information for the PDF file is usually taken from the OS/2 table.
+     *
+     * @throws Zend_Pdf_Exception
+     */
+    protected function _parseMaxpTable()
+    {
+        $this->_jumpToTable('maxp');
+
+        /* We don't care about table version.
+         */
+        $this->_readTableVersion(0, 1);
+
+        /* The number of glyphs in the font.
+         */
+        $this->numGlyphs = $this->readUInt(2);
+        $this->_debugLog('number of glyphs: %d', $this->numGlyphs);
+        
+        // Skip other maxp table entries (if presented with table version 1.0)...
+    }
+
+
+    /**
      * Parses the OpenType OS/2 (OS/2 and Windows Metrics) table.
      *
      * The OS/2 table contains additional metrics data that is required to use
@@ -712,6 +739,11 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
         for ($i = 0; $i < $this->numberHMetrics; $i++) {
             $glyphWidths[$i] = $this->readUInt(2);
             $this->skipBytes(2);
+        }
+        /* Populate last value for the rest of array
+         */
+        while (count($glyphWidths) < $this->numGlyphs) {
+            $glyphWidths[] = end($glyphWidths);
         }
         $this->glyphWidths = $glyphWidths;
 

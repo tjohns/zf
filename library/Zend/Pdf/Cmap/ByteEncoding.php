@@ -114,6 +114,22 @@ class Zend_Pdf_Cmap_ByteEncoding extends Zend_Pdf_Cmap
         return array_keys($this->_glyphIndexArray);
     }
 
+    /**
+     * Returns an array containing the glyphs numbers that have entries in this character map.
+     * Keys are Unicode character codes (integers)
+     * 
+     * This functionality is partially covered by glyphNumbersForCharacters(getCoveredCharacters())
+     * call, but this method do it in more effective way (prepare complete list instead of searching 
+     * glyph for each character code).
+     *
+     * @internal
+     * @return array Array representing <Unicode character code> => <glyph number> pairs.
+     */
+    public function getCoveredCharactersGlyphs()
+    {
+    	return $this->_glyphIndexArray;
+    }
+
 
   /* Object Lifecycle */
 

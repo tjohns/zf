@@ -18,12 +18,12 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Pdf_Resource_Font_Standard */
-require_once 'Zend/Pdf/Resource/Font/Standard.php';
+/** Zend_Pdf_Resource_Font_Simple_Standard */
+require_once 'Zend/Pdf/Resource/Font/Simple/Standard.php';
 
 
 /**
- * Implementation for the standard PDF font Courier-BoldOblique.
+ * Implementation for the standard PDF font Courier.
  *
  * This class was generated automatically using the font information and metric
  * data contained in the Adobe Font Metric (AFM) files, available here:
@@ -40,7 +40,7 @@ require_once 'Zend/Pdf/Resource/Font/Standard.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Resource_Font_Standard_CourierBoldOblique extends Zend_Pdf_Resource_Font_Standard
+class Zend_Pdf_Resource_Font_Simple_Standard_Courier extends Zend_Pdf_Resource_Font_Simple_Standard
 {
   /**** Public Interface ****/
 
@@ -57,8 +57,6 @@ class Zend_Pdf_Resource_Font_Standard_CourierBoldOblique extends Zend_Pdf_Resour
 
         /* Object properties */
 
-        $this->_fontType = Zend_Pdf_Font::TYPE_STANDARD;
-
         /* The font names are stored internally as Unicode UTF-16BE-encoded
          * strings. Since this information is static, save unnecessary trips
          * through iconv() and just use pre-encoded hexidecimal strings.
@@ -68,33 +66,31 @@ class Zend_Pdf_Resource_Font_Standard_CourierBoldOblique extends Zend_Pdf_Resour
           . "\x74\x00\x20\x00\x28\x00\x63\x00\x29\x00\x20\x00\x31\x00\x39\x00"
           . "\x38\x00\x39\x00\x2c\x00\x20\x00\x31\x00\x39\x00\x39\x00\x30\x00"
           . "\x2c\x00\x20\x00\x31\x00\x39\x00\x39\x00\x31\x00\x2c\x00\x20\x00"
-          . "\x31\x00\x39\x00\x39\x00\x33\x00\x2c\x00\x20\x00\x31\x00\x39\x00"
-          . "\x39\x00\x37\x00\x20\x00\x41\x00\x64\x00\x6f\x00\x62\x00\x65\x00"
-          . "\x20\x00\x53\x00\x79\x00\x73\x00\x74\x00\x65\x00\x6d\x00\x73\x00"
-          . "\x20\x00\x49\x00\x6e\x00\x63\x00\x6f\x00\x72\x00\x70\x00\x6f\x00"
-          . "\x72\x00\x61\x00\x74\x00\x65\x00\x64\x00\x2e\x00\x20\x00\x20\x00"
-          . "\x41\x00\x6c\x00\x6c\x00\x20\x00\x52\x00\x69\x00\x67\x00\x68\x00"
-          . "\x74\x00\x73\x00\x20\x00\x52\x00\x65\x00\x73\x00\x65\x00\x72\x00"
-          . "\x76\x00\x65\x00\x64\x00\x2e";
+          . "\x31\x00\x39\x00\x39\x00\x32\x00\x2c\x00\x20\x00\x31\x00\x39\x00"
+          . "\x39\x00\x33\x00\x2c\x00\x20\x00\x31\x00\x39\x00\x39\x00\x37\x00"
+          . "\x20\x00\x41\x00\x64\x00\x6f\x00\x62\x00\x65\x00\x20\x00\x53\x00"
+          . "\x79\x00\x73\x00\x74\x00\x65\x00\x6d\x00\x73\x00\x20\x00\x49\x00"
+          . "\x6e\x00\x63\x00\x6f\x00\x72\x00\x70\x00\x6f\x00\x72\x00\x61\x00"
+          . "\x74\x00\x65\x00\x64\x00\x2e\x00\x20\x00\x20\x00\x41\x00\x6c\x00"
+          . "\x6c\x00\x20\x00\x52\x00\x69\x00\x67\x00\x68\x00\x74\x00\x73\x00"
+          . "\x20\x00\x52\x00\x65\x00\x73\x00\x65\x00\x72\x00\x76\x00\x65\x00"
+          . "\x64\x00\x2e";
         $this->_fontNames[Zend_Pdf_Font::NAME_FAMILY]['en'] =
           "\x00\x43\x00\x6f\x00\x75\x00\x72\x00\x69\x00\x65\x00\x72";
         $this->_fontNames[Zend_Pdf_Font::NAME_STYLE]['en'] =
-          "\x00\x42\x00\x6f\x00\x6c\x00\x64";
+          "\x00\x4d\x00\x65\x00\x64\x00\x69\x00\x75\x00\x6d";
         $this->_fontNames[Zend_Pdf_Font::NAME_ID]['en'] =
-          "\x00\x34\x00\x33\x00\x30\x00\x34\x00\x39";
+          "\x00\x34\x00\x33\x00\x30\x00\x35\x00\x30";
         $this->_fontNames[Zend_Pdf_Font::NAME_FULL]['en'] =
-          "\x00\x43\x00\x6f\x00\x75\x00\x72\x00\x69\x00\x65\x00\x72\x00\x2d\x00"
-          . "\x42\x00\x6f\x00\x6c\x00\x64\x00\x4f\x00\x62\x00\x6c\x00\x69\x00"
-          . "\x71\x00\x75\x00\x65\x00\x20\x00\x42\x00\x6f\x00\x6c\x00\x64";
+          "\x00\x43\x00\x6f\x00\x75\x00\x72\x00\x69\x00\x65\x00\x72\x00\x20\x00"
+          . "\x4d\x00\x65\x00\x64\x00\x69\x00\x75\x00\x6d";
         $this->_fontNames[Zend_Pdf_Font::NAME_VERSION]['en'] =
           "\x00\x30\x00\x30\x00\x33\x00\x2e\x00\x30\x00\x30\x00\x30";
         $this->_fontNames[Zend_Pdf_Font::NAME_POSTSCRIPT]['en'] =
-          "\x00\x43\x00\x6f\x00\x75\x00\x72\x00\x69\x00\x65\x00\x72\x00\x2d\x00"
-          . "\x42\x00\x6f\x00\x6c\x00\x64\x00\x4f\x00\x62\x00\x6c\x00\x69\x00"
-          . "\x71\x00\x75\x00\x65";
+          "\x00\x43\x00\x6f\x00\x75\x00\x72\x00\x69\x00\x65\x00\x72";
 
-        $this->_isBold = true;
-        $this->_isItalic = true;
+        $this->_isBold = false;
+        $this->_isItalic = false;
         $this->_isMonospaced = true;
 
         $this->_underlinePosition = -100;
@@ -194,7 +190,6 @@ class Zend_Pdf_Resource_Font_Standard_CourierBoldOblique extends Zend_Pdf_Resour
           0x0134 => 0x0258, 0x0135 => 0x0258, 0x0136 => 0x0258, 0x0137 => 0x0258,
           0x0138 => 0x0258, 0x0139 => 0x0258, 0x013a => 0x0258, 0x013b => 0x0258,
         );
-        $this->_glyphMaxIndex = 315;
 
         /* The cmap table is similarly synthesized.
          */
@@ -278,7 +273,7 @@ class Zend_Pdf_Resource_Font_Standard_CourierBoldOblique extends Zend_Pdf_Resour
             0xac => 0x0131,   0xf6 => 0x0132,   0xfc => 0x0133, 0x2260 => 0x0134,
           0x0123 => 0x0135,   0xf0 => 0x0136, 0x017e => 0x0137, 0x0146 => 0x0138,
             0xb9 => 0x0139, 0x012b => 0x013a, 0x20ac => 0x013b);
-        $this->cmap = Zend_Pdf_Cmap::cmapWithTypeData(
+        $this->_cmap = Zend_Pdf_Cmap::cmapWithTypeData(
           Zend_Pdf_Cmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
 
 
@@ -288,9 +283,7 @@ class Zend_Pdf_Resource_Font_Standard_CourierBoldOblique extends Zend_Pdf_Resour
          * viewers already have all of the metrics data. We only need to provide
          * the font name and encoding method.
          */
-        $this->_resource->BaseFont = new Zend_Pdf_Element_Name('Courier-BoldOblique');
-
-        $this->_resource->Encoding = new Zend_Pdf_Element_Name('WinAnsiEncoding');
+        $this->_resource->BaseFont = new Zend_Pdf_Element_Name('Courier');
     }
 
 }

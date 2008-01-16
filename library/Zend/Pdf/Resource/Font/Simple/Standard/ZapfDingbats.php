@@ -18,8 +18,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Pdf_Resource_Font_Standard */
-require_once 'Zend/Pdf/Resource/Font/Standard.php';
+/** Zend_Pdf_Resource_Font_Simple_Standard */
+require_once 'Zend/Pdf/Resource/Font/Simple/Standard.php';
 
 
 /**
@@ -40,7 +40,7 @@ require_once 'Zend/Pdf/Resource/Font/Standard.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Resource_Font_Standard_ZapfDingbats extends Zend_Pdf_Resource_Font_Standard
+class Zend_Pdf_Resource_Font_Simple_Standard_ZapfDingbats extends Zend_Pdf_Resource_Font_Simple_Standard
 {
   /**** Instance Variables ****/
 
@@ -195,8 +195,6 @@ class Zend_Pdf_Resource_Font_Standard_ZapfDingbats extends Zend_Pdf_Resource_Fon
 
         /* Object properties */
 
-        $this->_fontType = Zend_Pdf_Font::TYPE_STANDARD;
-
         /* The font names are stored internally as Unicode UTF-16BE-encoded
          * strings. Since this information is static, save unnecessary trips
          * through iconv() and just use pre-encoded hexidecimal strings.
@@ -313,7 +311,6 @@ class Zend_Pdf_Resource_Font_Standard_ZapfDingbats extends Zend_Pdf_Resource_Fon
             0xc0 => 0x0303,   0xc1 => 0x0361,   0xc2 => 0x0303,   0xc3 => 0x0378,
             0xc4 => 0x03c7,   0xc5 => 0x0378,   0xc6 => 0x033f,   0xc7 => 0x0369,
             0xc8 => 0x039f,   0xc9 => 0x03ca,   0xca => 0x0396);
-        $this->_glyphMaxIndex = 202;
 
         /* The cmap table is similarly synthesized.
          */
@@ -369,7 +366,7 @@ class Zend_Pdf_Resource_Font_Standard_ZapfDingbats extends Zend_Pdf_Resource_Fon
           0x27b5 =>   0xc1, 0x27b6 =>   0xc2, 0x27b7 =>   0xc3, 0x27b8 =>   0xc4,
           0x27b9 =>   0xc5, 0x27ba =>   0xc6, 0x27bb =>   0xc7, 0x27bc =>   0xc8,
           0x27bd =>   0xc9, 0x27be =>   0xca);
-        $this->cmap = Zend_Pdf_Cmap::cmapWithTypeData(
+        $this->_cmap = Zend_Pdf_Cmap::cmapWithTypeData(
           Zend_Pdf_Cmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
 
 
@@ -385,6 +382,7 @@ class Zend_Pdf_Resource_Font_Standard_ZapfDingbats extends Zend_Pdf_Resource_Fon
          * override with WinAnsi like the other built-in fonts or else it will
          * not work as expected.
          */
+        $this->_resource->Encoding = null;
     }
 
 
