@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7477 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>データベースのテーブルを用いた認証</title>
@@ -146,7 +147,7 @@ $result = $authAdapter->authenticate();]]>
 echo $result->getIdentity() . "\n\n";
 
 // 結果の行を表示します
-print_r($identity);
+print_r($authAdapter->getResultRowObject());
 
 /* 出力結果
 my_username
