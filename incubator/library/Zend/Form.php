@@ -595,9 +595,15 @@ class Zend_Form implements Iterator, Countable
                         case (1 <= $argc):
                             $type = array_shift($spec);
                         case (2 <= $argc):
-                            $name = array_shift($spec);
+                            if (null === $name) {
+                                $name = array_shift($spec);
+                            } else {
+                                $options = array_shift($spec);
+                            }
                         case (3 <= $argc):
-                            $options = array_shift($spec);
+                            if (empty($options)) {
+                                $options = array_shift($spec);
+                            }
                         default:
                             $this->addElement($type, $name, $options);
                     }

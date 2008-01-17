@@ -105,6 +105,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
                 'options' => array('class' => 'bazbat'),
                 'type'    => 'text',
             ),
+            'lol' => array(
+                'text',
+                array('class' => 'lolcat'),
+            )
         );
         return $elements;
     }
@@ -129,6 +133,10 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->form->bat));
         $this->assertTrue($this->form->bat instanceof Zend_Form_Element_Text);
         $this->assertEquals('bazbat', $this->form->bat->class);
+
+        $this->assertTrue(isset($this->form->lol));
+        $this->assertTrue($this->form->lol instanceof Zend_Form_Element_Text);
+        $this->assertEquals('lolcat', $this->form->lol->class);
     }
 
     public function testSetOptionsSetsDefaultValues()
