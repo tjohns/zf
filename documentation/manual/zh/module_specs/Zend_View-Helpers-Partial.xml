@@ -45,6 +45,7 @@
 </ul>
 ]]></programlisting>
 
+    </example>
         <note>
             <title> 什么是模型（model）? </title>
 
@@ -66,7 +67,7 @@
                 </para></listitem>
             </itemizedlist>
         </note>
-    </example>
+
 
     <example id="zend.view.helpers.initial.partial.partialloop">
         <title> 使用 PartialLoop 来解析可迭代的（Iterable）的模型 </title>
