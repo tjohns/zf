@@ -126,14 +126,16 @@ $result = $authAdapter->authenticate();]]>
             </para>
 
             <para>
-                In addition to the availability of the <code>getIdentity()</code> method upon the authentication result object, <code>Zend_Auth_Adapter_DbTable</code> also supports retrieving the table row upon authentication success:
+                In addition to the availability of the <code>getIdentity()</code> method upon the authentication result
+                object, <code>Zend_Auth_Adapter_DbTable</code> also supports retrieving the table row upon
+                authentication success:
 
                 <programlisting role="php"><![CDATA[<?php
 // Print the identity
 echo $result->getIdentity() . "\n\n";
 
 // Print the result row
-print_r($identity);
+print_r($authAdapter->getResultRowObject());
 
 /* Output:
 my_username
@@ -161,7 +163,11 @@ Array
         <title>Advanced Use: Persisting a DbTable Result Object</title>
 
         <para>
-            By default, <code>Zend_Auth_Adapter_DbTable</code> returns the identity supplied back to the auth object upon successful authentication. Another use case scenario, where developers want to store to the persistent storage mechanism of <code>Zend_Auth</code> an identity object containing other useful information, is solved by using the <code>getResultRowObject()</code> method to return a <code>stdClass</code> object. The following code snippet illustrates its use:
+            By default, <code>Zend_Auth_Adapter_DbTable</code> returns the identity supplied back to the auth object
+            upon successful authentication. Another use case scenario, where developers want to store to the persistent
+            storage mechanism of <code>Zend_Auth</code> an identity object containing other useful information, is
+            solved by using the <code>getResultRowObject()</code> method to return a <code>stdClass</code> object. The
+            following code snippet illustrates its use:
 
             <programlisting role="php"><![CDATA[<?php
 // authenticate with Zend_Auth_Adapter_DbTable
