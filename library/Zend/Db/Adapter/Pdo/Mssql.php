@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -17,17 +18,15 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
+
 /**
- * Zend_Db_Adapter_Pdo_Abstract
+ * @see Zend_Db_Adapter_Pdo_Abstract
  */
 require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 
-/**
- * Zend_Db_Adapter_Exception
- */
-require_once 'Zend/Db/Adapter/Exception.php';
 
 /**
  * Class for connecting to Microsoft SQL Server databases and performing common operations.
@@ -90,7 +89,11 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         unset($dsn['driver_options']);
 
         if (isset($dsn['port'])) {
-            $dsn['host'] .= ',' . $dsn['port'];
+            $seperator = ':';
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $seperator = ',';
+            }
+            $dsn['host'] .= $seperator . $dsn['port'];
             unset($dsn['port']);
         }
 
@@ -254,25 +257,30 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      * @param string $sql
      * @param integer $count
      * @param integer $offset OPTIONAL
+     * @throws Zend_Db_Adapter_Exception
      * @return string
      */
      public function limit($sql, $count, $offset = 0)
      {
         $count = intval($count);
         if ($count <= 0) {
+            /** @see Zend_Db_Adapter_Exception */
+            require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception("LIMIT argument count=$count is not valid");
         }
 
         $offset = intval($offset);
         if ($offset < 0) {
+            /** @see Zend_Db_Adapter_Exception */
+            require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception("LIMIT argument offset=$offset is not valid");
         }
 
         $orderby = stristr($sql, 'ORDER BY');
         if ($orderby !== false) {
-            $sort = (stripos($orderby, 'desc') !== false) ? 'desc' : 'asc';
+            $sort = (stripos($orderby, ' desc') !== false) ? 'desc' : 'asc';
             $order = str_ireplace('ORDER BY', '', $orderby);
-            $order = trim(preg_replace('/ASC|DESC/i', '', $order));
+            $order = trim(preg_replace('/\bASC\b|\bDESC\b/i', '', $order));
         }
 
         $sql = preg_replace('/^SELECT\s/i', 'SELECT TOP ' . ($count+$offset) . ' ', $sql);
