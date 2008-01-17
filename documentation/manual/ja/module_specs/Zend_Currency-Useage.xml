@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7463 -->
 <sect1 id="zend.currency.useage">
 
     <title>通貨の操作方法</title>
@@ -28,6 +29,8 @@ require_once 'Zend/Currency.php';
 $currency = new Zend_Currency();]]>
         </programlisting>
 
+
+    </example>
         <note>
             <para>
                 システムでデフォルトのロケールが設定されていないかったり
@@ -36,8 +39,6 @@ $currency = new Zend_Currency();]]>
                 このような場合は、ロケールを明示的に指定する必要があります。
             </para>
         </note>
-
-    </example>
 
     <para>
         もちろん、必要に応じてパラメータを指定してインスタンスを作成することもできます。

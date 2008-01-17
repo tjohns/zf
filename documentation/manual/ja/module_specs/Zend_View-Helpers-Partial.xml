@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7463 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partial ヘルパー</title>
 
@@ -53,6 +54,7 @@
 </ul>
 ]]></programlisting>
 
+    </example>
         <note>
             <title>モデルは何?</title>
 
@@ -84,7 +86,6 @@
                 </para></listitem>
             </itemizedlist>
         </note>
-    </example>
 
     <example id="zend.view.helpers.initial.partial.partialloop">
         <title>PartialLoop による反復処理可能なモデルのレンダリング</title>
