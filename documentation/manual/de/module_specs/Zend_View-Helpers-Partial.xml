@@ -50,41 +50,42 @@
 </ul>
 ]]></programlisting>
 
-        <note>
-            <title>Was ist ein Modell?</title>
-
-            <para>
-                Ein Modell das mit dem <code>Partial</code> View Helfer verwendet wird kann eines der
-                folgenden sein:
-            </para>
-
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        <emphasis>Array</emphasis>. Wenn ein Array übergeben wird, sollte es assoziativ sein,
-                        und seine Schlüssel/Werte Paare werden der View mit dem Schlüssel als View Variable
-                        zugeordnet.
-                    </para>
-                </listitem>
-
-                <listitem>
-                    <para>
-                        <emphasis>Objekt das die toArray() Methode implementiert</emphasis>. Wenn ein Objekt
-                        übergeben wird das eine <code>toArray()</code> Methode besitzt, wird das Ergebnis von
-                        <code>toArray()</code> dem View Objekt als View Variablen zugeordnet.
-                    </para>
-                </listitem>
-
-                <listitem>
-                    <para>
-                        <emphasis>Standard Objekt</emphasis>. Jedes andere Objekt wird die Ergebnisse von
-                        <code>object_get_vars()</code> (essentiell alle öffentlichen Eigenschaften des
-                        Objektes) dem View Objekt zuordnen.
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </note>
     </example>
+
+    <note>
+        <title>Was ist ein Modell?</title>
+
+        <para>
+            Ein Modell das mit dem <code>Partial</code> View Helfer verwendet wird kann eines der
+            folgenden sein:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis>Array</emphasis>. Wenn ein Array übergeben wird, sollte es assoziativ sein,
+                    und seine Schlüssel/Werte Paare werden der View mit dem Schlüssel als View Variable
+                    zugeordnet.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Objekt das die toArray() Methode implementiert</emphasis>. Wenn ein Objekt
+                    übergeben wird das eine <code>toArray()</code> Methode besitzt, wird das Ergebnis von
+                    <code>toArray()</code> dem View Objekt als View Variablen zugeordnet.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>Standard Objekt</emphasis>. Jedes andere Objekt wird die Ergebnisse von
+                    <code>object_get_vars()</code> (essentiell alle öffentlichen Eigenschaften des
+                    Objektes) dem View Objekt zuordnen.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </note>
 
     <example id="zend.view.helpers.initial.partial.partialloop">
         <title>Verwendung von PartialLoop um iterierbare Modelle darzustellen</title>

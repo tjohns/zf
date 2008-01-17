@@ -31,16 +31,16 @@ require_once 'Zend/Currency.php';
 $currency = new Zend_Currency();]]>
         </programlisting>
 
-        <note>
-            <para>
-                Es ist zu beachten, das wenn das eigene System kein standardmäßiges Gebietsschema hat, oder das
-                Gebietsschema des eigenen Systems nicht automatisch eruiert werden kann, wird
-                <code>Zend_Currency</code> eine Ausnahme werfen. Wenn dieses Verhalten auftritt sollte das
-                Gebietsschema per Hand gesezt werden.
-            </para>
-        </note>
-
     </example>
+
+    <note>
+        <para>
+            Es ist zu beachten, das wenn das eigene System kein standardmäßiges Gebietsschema hat, oder das
+            Gebietsschema des eigenen Systems nicht automatisch eruiert werden kann, wird
+            <code>Zend_Currency</code> eine Ausnahme werfen. Wenn dieses Verhalten auftritt sollte das
+            Gebietsschema per Hand gesezt werden.
+        </para>
+    </note>
 
     <para>
         Natürlich können, abhängig von den eigenen Bedürfnissen, verschiedene Parameter bei der Erstellung
