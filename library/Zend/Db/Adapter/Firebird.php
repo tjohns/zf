@@ -336,7 +336,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         // Suppress connection warnings here.
         // Throw an exception instead.
         @$this->_connection = ibase_connect(
-                                $this->_config['host'] . ':' . $this->_config['dbname'],
+                                $this->_config['host'] . ($port?'/'.$port:'') . ':' . $this->_config['dbname'],
                                 $this->_config['username'],
                                 $this->_config['password'],
                                 $this->_config['charset'],
