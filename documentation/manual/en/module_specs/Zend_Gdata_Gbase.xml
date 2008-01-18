@@ -3,8 +3,16 @@
     <para>
         The Google Base data API is designed to enable developers to do two things:
         <itemizedlist>
-            <listitem>Query Google Base data to create applications and mashups.</listitem>
-            <listitem>Input and manage Google Base items programmatically.</listitem>
+            <listitem>
+                <para>
+                    Query Google Base data to create applications and mashups.
+                </para>
+                </listitem>
+            <listitem>
+                <para>
+                    Input and manage Google Base items programmatically.
+                </para>
+            </listitem>
         </itemizedlist>
     </para>
     <para>
@@ -30,12 +38,16 @@
             </para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>ClientAuth</firstterm>
-                    provides direct username/password authentication to the base servers. Since this scheme requires that users provide your application with their password, this authentication is only recommended when other authentication schemes are insufficient.
+                    <para>
+                        <firstterm>ClientAuth</firstterm>
+                        provides direct username/password authentication to the base servers. Since this scheme requires that users provide your application with their password, this authentication is only recommended when other authentication schemes are insufficient.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>AuthSub</firstterm>
-                    allows authentication to the base servers via a Google proxy server. This provides the same level of convenience as ClientAuth but without the security risk, making this an ideal choice for web-based applications.
+                    <para>
+                        <firstterm>AuthSub</firstterm>
+                        allows authentication to the base servers via a Google proxy server. This provides the same level of convenience as ClientAuth but without the security risk, making this an ideal choice for web-based applications.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>

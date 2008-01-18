@@ -91,7 +91,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
 
     <sect2 id="zend.search.lucene.query-language.wildcard">
         <title>Starting in 1.5, Wildcards<footnote><para>Wildcard queries  support is available with SVN and latest snapshot versions and 
-               doesn't included into current release.</para>></footnote></title>
+               doesn't included into current release.</para></footnote></title>
         <para>
             Lucene supports single and multiple character wildcard searches within single terms (but not within phrase queries).
         </para>
@@ -144,7 +144,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
 
     <sect2 id="zend.search.lucene.query-language.range">
         <title>Starting in 1.5, Range Searches<footnote><para>Range queries support is available with SVN and latest snapshot versions and 
-               doesn't included into current release.</para>></footnote></title>
+               doesn't included into current release.</para></footnote></title>
         <para>
             Range queries allow the developer or user to match documents whose field(s) values are between the lower and upper bound specified by the range query.
             Range Queries can be inclusive or exclusive of the upper and lower bounds. Sorting is performed lexicographically.
@@ -168,7 +168,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
 
     <sect2 id="zend.search.lucene.query-language.fuzzy">
         <title>Starting in 1.5, Fuzzy Searches<footnote><para>Fuzzy queries support is available with SVN and latest snapshot versions and 
-               doesn't included into current release.</para>></footnote></title>
+               doesn't included into current release.</para></footnote></title>
         <para>
             Zend_Search_Lucene as well as Java Lucene supports fuzzy searches based on the Levenshtein Distance, or Edit Distance algorithm. 
             To do a fuzzy search use the tilde, "~", symbol at the end of a Single word Term. For example to search for a term similar 
