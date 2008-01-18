@@ -348,18 +348,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
 
         <itemizedlist>
             <listitem>
-                ein Set von Methoden um End-Benutzer GUI Interfaces zu erstellen die dem Benutzer erlauben sich
-                zu registrieren, und Ihre vertrauten Seiten und Profile zu managen. 
+                <para>
+                    ein Set von Methoden um End-Benutzer GUI Interfaces zu erstellen die dem Benutzer erlauben sich
+                    zu registrieren, und Ihre vertrauten Seiten und Profile zu managen. 
+                </para>
             </listitem>
             <listitem>´
-                einen Abstraktions Speicher Layer um Informationen über Benutzer, Ihre Seiten und Profile zu
-                speichern. Es werden auch Assoziationen zwischen Providern und OpenID-aktivierten Seiten
-                gespeichert. Dieser Layer ist ähnlich dem von <code>Zend_OpenId_Consumer</code>. Er verwendet
-                standardmäßg auch den Dateispeicher kann aber mit anderen Implementationen abgeleitet werden.
+                <para>
+                    einen Abstraktions Speicher Layer um Informationen über Benutzer, Ihre Seiten und Profile zu
+                    speichern. Es werden auch Assoziationen zwischen Providern und OpenID-aktivierten Seiten
+                    gespeichert. Dieser Layer ist ähnlich dem von <code>Zend_OpenId_Consumer</code>. Er verwendet
+                    standardmäßg auch den Dateispeicher kann aber mit anderen Implementationen abgeleitet werden.
+                </para>
             </listitem>
             <listitem>
-                einen Abtraktions Benutzer-Assoziierungs Layer der Web-Browser von End-Benutzern mit eingeloggten
-                Identitäten verknüpfen kann. 
+                <para>
+                    einen Abtraktions Benutzer-Assoziierungs Layer der Web-Browser von End-Benutzern mit eingeloggten
+                    Identitäten verknüpfen kann. 
+                </para>
             </listitem>
         </itemizedlist>
 

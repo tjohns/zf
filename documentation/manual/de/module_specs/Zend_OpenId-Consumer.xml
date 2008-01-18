@@ -13,15 +13,21 @@
 
         <orderedlist>
             <listitem>
-                Zeige das OpenID Authentifikations Formular.
+                <para>
+                    Zeige das OpenID Authentifikations Formular.
+                </para>
             </listitem>
 
             <listitem>
-                Akzeptiere die OpenID Identität und übergib Sie an den OpenID Provider.
+                <para>
+                    Akzeptiere die OpenID Identität und übergib Sie an den OpenID Provider.
+                </para>
             </listitem>
 
             <listitem>
-                Überprüfe die Antwort des OpenID Providers.
+                <para>
+                    Überprüfe die Antwort des OpenID Providers.
+                </para>
             </listitem>
         </orderedlist>
 
@@ -443,46 +449,64 @@ $consumer = new Zend_OpenId_Consumer($storage);]]>
 
         <itemizedlist>
             <listitem>
-                <emphasis>nickname</emphasis>
-                 - ein UTF-8 String den der End-Benutzer als Spitzname verwenden will.
+                <para>
+                    <emphasis>nickname</emphasis>
+                     - ein UTF-8 String den der End-Benutzer als Spitzname verwenden will.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>email</emphasis>
-                - die Email Adresse des End-Benutzers wie in Sektion 3.4.1 von RFC2822 spezifiziert.
+                <para>
+                    <emphasis>email</emphasis>
+                    - die Email Adresse des End-Benutzers wie in Sektion 3.4.1 von RFC2822 spezifiziert.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>fullname</emphasis>
-                - eine UTF-8 String Repräsentation des kompletten Namens des End-Benutzers.
+                <para>
+                    <emphasis>fullname</emphasis>
+                    - eine UTF-8 String Repräsentation des kompletten Namens des End-Benutzers.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>dob</emphasis>
-                - das Geburtsdatum des End-Benutzers als YYYY-MM-DD. Jeder Wert dessen Repräsentation weniger
-                als die speifizierte Anzahl an Ziffern verwendet sollte mit Nullen aufgefüllt werden. Die Länge
-                dieses Wertes muß immer 10 sein. Wenn der End-Benutzer irgendeinen Teil dieser Komponente nicht
-                angeben will, dann muß dieser auf Null gesetzt werden. Wenn ein Benutzer zum Beispiel angeben
-                will das sein Geburtsdatum um 1980 war, aber nicht den Monat oder Tag, dann sollte der
-                zurückgegebene Wert "1980-00-00" sein.
+                <para>
+                    <emphasis>dob</emphasis>
+                    - das Geburtsdatum des End-Benutzers als YYYY-MM-DD. Jeder Wert dessen Repräsentation weniger
+                    als die speifizierte Anzahl an Ziffern verwendet sollte mit Nullen aufgefüllt werden. Die Länge
+                    dieses Wertes muß immer 10 sein. Wenn der End-Benutzer irgendeinen Teil dieser Komponente nicht
+                    angeben will, dann muß dieser auf Null gesetzt werden. Wenn ein Benutzer zum Beispiel angeben
+                    will das sein Geburtsdatum um 1980 war, aber nicht den Monat oder Tag, dann sollte der
+                    zurückgegebene Wert "1980-00-00" sein.
+                </para>
             </listitem>
             <listitem>
+                <para>
                 <emphasis>gender</emphasis>
                 - das Geschlecht des End-Benutzers, "M" für männlich, "F" für weiblich.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>postcode</emphasis>
-                - UTF-8 String der dem Postleitzahl System des Landes des End-Benutzers entsprechen sollte.
+                <para>
+                    <emphasis>postcode</emphasis>
+                    - UTF-8 String der dem Postleitzahl System des Landes des End-Benutzers entsprechen sollte.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>country</emphasis>
-                - das Land des Wohnsitzes des End-Benutzers wie spezifiziert in ISO3166.
+                <para>
+                    <emphasis>country</emphasis>
+                    - das Land des Wohnsitzes des End-Benutzers wie spezifiziert in ISO3166.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>language</emphasis>
-                - die bevorzugte Sprache des End-Benutzers wie spezifiziert in ISO639.
+                <para>
+                    <emphasis>language</emphasis>
+                    - die bevorzugte Sprache des End-Benutzers wie spezifiziert in ISO639.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>timezone</emphasis>
-                - ASCII String von der Zeitzonen Datenbank. Zum Beispiel, "Europe/Paris" oder
-                "America/Los_Angeles".
+                <para>
+                    <emphasis>timezone</emphasis>
+                    - ASCII String von der Zeitzonen Datenbank. Zum Beispiel, "Europe/Paris" oder
+                    "America/Los_Angeles".
+                </para>
             </listitem>
         </itemizedlist>
 

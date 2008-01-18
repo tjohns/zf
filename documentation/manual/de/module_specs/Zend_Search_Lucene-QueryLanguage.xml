@@ -170,7 +170,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         </title>
 
         <para>
-            Bereichsabfragen erlauben es Entwicklern passende Dokumente zu finden dessen Werte der Feld(er) zwischen
+            Bereichsabfragen erlauben es Entwicklern passende Dokumente zu finden deren Werte der Felder zwischen
             der unteren und oberen Grenze sind die durch die Bereichsabfrage spezifiziert wurden.
             Bereichsabfragen können inklusive oder exklusive der oberen und unteren Grenze sein. Sortierungen
             werden lexikalisch durchgeführt.

@@ -3,8 +3,16 @@
     <para>
         Die Google Base Daten API wurde entwickelt um Entwicklern zwei Dinge zu gestatten:
         <itemizedlist>
-            <listitem>Google Base Daten abzufragen um Anwendungen und Mashups zu erstellen.</listitem>
-            <listitem>Google Base Elemente einzugeben und programtechnisch handzuhaben.</listitem>
+            <listitem>
+                <para>
+                    Google Base Daten abzufragen um Anwendungen und Mashups zu erstellen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Google Base Elemente einzugeben und programtechnisch handzuhaben.
+                </para>
+            </listitem>
         </itemizedlist>
     </para>
     <para>
@@ -43,17 +51,21 @@
             </para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>ClientAuth</firstterm>
-                    bietet dirakte Benutzername/Passwort Authentifizierung zu den Base Servern. Da es dieses
-                    Schema notwendig macht das Benutzer die Anwendung mit Ihrem Passwort versorgen, ist diese
-                    Authentifizierung nur dann notwendig wenn andere Authentifizierung Schemata unzureichend
-                    sind.
+                    <para>
+                        <firstterm>ClientAuth</firstterm>
+                        bietet dirakte Benutzername/Passwort Authentifizierung zu den Base Servern. Da es dieses
+                        Schema notwendig macht das Benutzer die Anwendung mit Ihrem Passwort versorgen, ist diese
+                        Authentifizierung nur dann notwendig wenn andere Authentifizierung Schemata unzureichend
+                        sind.
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>AuthSub</firstterm>
-                    erlaubt die Authentifizierung zu den Base Servern über einen Google Proxy Server. Das
-                    bietet das gleiche Level an Bequemlichkeit wie ClientAuth, aber ohne die Sicherheitsrisiken
-                    was es zu einer idealen Wahl für Web-basierte Anwendungen macht.
+                    <para>
+                        <firstterm>AuthSub</firstterm>
+                        erlaubt die Authentifizierung zu den Base Servern über einen Google Proxy Server. Das
+                        bietet das gleiche Level an Bequemlichkeit wie ClientAuth, aber ohne die Sicherheitsrisiken
+                        was es zu einer idealen Wahl für Web-basierte Anwendungen macht.
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
