@@ -1,6 +1,6 @@
 <sect1 id="zend.auth.adapter.dbtable">
 
-    <title>Authentifizieren mit einer Datenbank Tabele</title>
+    <title>Authentifizieren mit einer Datenbank Tabelle</title>
 
     <sect2 id="zend.auth.adapter.dbtable.introduction">
 
@@ -97,17 +97,18 @@ $dbAdapter->query($sqlInsert);]]>
             </para>
 
             <para>
-                With the database connection and table data available, an instance of
-                <code>Zend_Auth_Adapter_DbTable</code> may be created. Configuration option values may be passed to the
-                constructor or deferred as parameters to setter methods after instantiation:
+                Mit der Datenbankverbindung und den vorhandenen Tabellendaten, kann eine Instanz von
+                <code>Zend_Auth_Adapter_DbTable</code> erstellt werden. Die Werte der Konfigurationsoptionen
+                können dem Konstruktor übergeben werden, oder als Parameter der setzenden Methoden nach der
+                Instanziierung:
 
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Auth/Adapter/DbTable.php';
 
-// Configure the instance with constructor parameters...
+// Die Instanz mit Konstruktor Parametern konfiurieren...
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'password');
 
-// ...or configure the instance with setter methods
+// ...oder die Instanz mit den setzenden Methoden konfigurieren
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $authAdapter->setTableName('users')
             ->setIdentityColumn('username')
