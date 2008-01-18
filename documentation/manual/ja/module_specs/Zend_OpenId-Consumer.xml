@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7480 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer の基本</title>
     <para>
@@ -14,15 +15,21 @@
 
         <orderedlist>
             <listitem>
-                OpenID 認証フォームを表示する。
+                <para>
+                    OpenID 認証フォームを表示する。
+                </para>
             </listitem>
 
             <listitem>
-                OpenID の識別子を受け取り、それを OpenID プロバイダに渡す。
+                <para>
+                    OpenID の識別子を受け取り、それを OpenID プロバイダに渡す。
+                </para>
             </listitem>
 
             <listitem>
-                OpenID プロバイダからの応答を検証する。
+                <para>
+                    OpenID プロバイダからの応答を検証する。
+                </para>
             </listitem>
         </orderedlist>
 
@@ -472,49 +479,67 @@ $consumer = new Zend_OpenId_Consumer($storage);]]>
 
         <itemizedlist>
             <listitem>
-                <emphasis>nickname</emphasis>
-                 - ユーザがニックネームとして使用している UTF-8 文字列。
+                <para>
+                    <emphasis>nickname</emphasis>
+                     - ユーザがニックネームとして使用している UTF-8 文字列。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>email</emphasis>
-                - エンドユーザのメールアドレス。RFC2822 のセクション 3.4.1
-                の形式。
+                <para>
+                    <emphasis>email</emphasis>
+                    - エンドユーザのメールアドレス。RFC2822 のセクション 3.4.1
+                    の形式。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>fullname</emphasis>
-                - エンドユーザのフルネームを表す UTF-8 文字列。
+                <para>
+                    <emphasis>fullname</emphasis>
+                    - エンドユーザのフルネームを表す UTF-8 文字列。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>dob</emphasis>
-                - エンドユーザの誕生日を YYYY-MM-DD 形式で表したもの。
-                指定されている桁数より少ない場合は、ゼロ埋めされます。
-                この値は常に 10 文字となります。
-                エンドユーザがこの情報の公開を希望しない場合は、
-                その部分の値をゼロに設定する必要があります。
-                たとえば、1980 年生まれであることは公開するが
-                月や日は公開したくないというエンドユーザの場合、
-                返される値は "1980-00-00" となります。
+                <para>
+                    <emphasis>dob</emphasis>
+                    - エンドユーザの誕生日を YYYY-MM-DD 形式で表したもの。
+                    指定されている桁数より少ない場合は、ゼロ埋めされます。
+                    この値は常に 10 文字となります。
+                    エンドユーザがこの情報の公開を希望しない場合は、
+                    その部分の値をゼロに設定する必要があります。
+                    たとえば、1980 年生まれであることは公開するが
+                    月や日は公開したくないというエンドユーザの場合、
+                    返される値は "1980-00-00" となります。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>gender</emphasis>
-                - エンドユーザの姓。"M" が男性で "F" が女性。
+                <para>
+                    <emphasis>gender</emphasis>
+                    - エンドユーザの姓。"M" が男性で "F" が女性。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>postcode</emphasis>
-                - エンドユーザの国の郵便システムに対応した UTF-8 文字列。
+                <para>
+                    <emphasis>postcode</emphasis>
+                    - エンドユーザの国の郵便システムに対応した UTF-8 文字列。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>country</emphasis>
-                - エンドユーザの居住地 (国) を ISO3166 形式で表したもの。
+                <para>
+                    <emphasis>country</emphasis>
+                    - エンドユーザの居住地 (国) を ISO3166 形式で表したもの。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>language</emphasis>
-                - エンドユーザの使用言語を ISO639 形式で表したもの。
+                <para>
+                    <emphasis>language</emphasis>
+                    - エンドユーザの使用言語を ISO639 形式で表したもの。
+                </para>
             </listitem>
             <listitem>
-                <emphasis>timezone</emphasis>
-                - TimeZone データベースの ASCII 文字列。
-                "Europe/Paris" あるいは "America/Los_Angeles" など。
+                <para>
+                    <emphasis>timezone</emphasis>
+                    - TimeZone データベースの ASCII 文字列。
+                    "Europe/Paris" あるいは "America/Los_Angeles" など。
+                </para>
             </listitem>
         </itemizedlist>
 

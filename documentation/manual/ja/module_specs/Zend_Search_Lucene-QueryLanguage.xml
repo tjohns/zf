@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7481 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>クエリ言語</title>
 
@@ -104,7 +105,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         <title>1.5 以降でサポートするワイルドカード
           <footnote><para>ワイルドカードクエリのサポートは
           SVN 版か最新のスナップショットで提供されます。
-          現在のリリース版には存在しません。</para>></footnote>
+          現在のリリース版には存在しません。</para></footnote>
         </title>
         <para>
             Lucene は、単一の文字あるいは複数の文字を表すワイルドカードをサポートしています
@@ -166,7 +167,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         <title>1.5 以降でサポートする範囲検索
           <footnote><para>範囲指定クエリのサポートは
           SVN 版か最新のスナップショットで提供されます。
-          現在のリリース版には存在しません。</para>></footnote>
+          現在のリリース版には存在しません。</para></footnote>
         </title>
 
         <para>
@@ -200,7 +201,7 @@ Zend_Search_Lucene::setDefaultSearchField('contents');]]>
         <title>1.5 以降でサポートするあいまい検索
           <footnote><para>あいまい検索クエリのサポートは
           SVN 版か最新のスナップショットで提供されます。
-          現在のリリース版には存在しません。</para>></footnote>
+          現在のリリース版には存在しません。</para></footnote>
         </title>
         <para>
             Zend_Search_Lucene は、Java Lucene と同様にあいまい検索をサポートします。

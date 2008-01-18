@@ -1,10 +1,19 @@
+<!-- EN-Revision: 7481 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base の使用法</title>
     <para>
         Google Base データ API は、開発者が以下のことを行えるように設計されています。
         <itemizedlist>
-            <listitem>Google Base のデータに対して問い合わせを行うアプリケーションやマッシュアップを作成する</listitem>
-            <listitem>Google Base のアイテムをプログラム上で登録したり管理したりする</listitem>
+            <listitem>
+                <para>
+                    Google Base のデータに対して問い合わせを行うアプリケーションやマッシュアップを作成する
+                </para>
+                </listitem>
+            <listitem>
+                <para>
+                    Google Base のアイテムをプログラム上で登録したり管理したりする
+                </para>
+            </listitem>
         </itemizedlist>
     </para>
     <para>
@@ -47,16 +56,20 @@
             </para>
             <itemizedlist>
                 <listitem>
-                    <firstterm>ClientAuth</firstterm>
-                    は、ユーザ名/パスワードによる認証を Base サーバに対して直接行います。
-                    この方式では、アプリケーションが直接パスワードを扱う必要があります。
-                    したがって、この認証方式を使うのは、他の方式が使えない場合のみにしましょう。
+                    <para>
+                        <firstterm>ClientAuth</firstterm>
+                        は、ユーザ名/パスワードによる認証を Base サーバに対して直接行います。
+                        この方式では、アプリケーションが直接パスワードを扱う必要があります。
+                        したがって、この認証方式を使うのは、他の方式が使えない場合のみにしましょう。
+                    </para>
                 </listitem>
                 <listitem>
-                    <firstterm>AuthSub</firstterm>
-                    は、Google プロキシサーバを経由した認証を行います。
-                    ClientAuth と同じくらい簡単に使用でき、セキュリティのリスクもありません。
-                    ウェブベースのアプリケーションでは、これが最も望ましい方式です。
+                    <para>
+                        <firstterm>AuthSub</firstterm>
+                        は、Google プロキシサーバを経由した認証を行います。
+                        ClientAuth と同じくらい簡単に使用でき、セキュリティのリスクもありません。
+                        ウェブベースのアプリケーションでは、これが最も望ましい方式です。
+                    </para>
                 </listitem>
             </itemizedlist>
             <para>
