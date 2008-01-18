@@ -442,7 +442,7 @@ class Zend_Form implements Iterator, Countable
     /**
      * Get form action
      *
-     * Sets default to '#' if not set.
+     * Sets default to '' if not set.
      * 
      * @return string
      */
@@ -450,7 +450,7 @@ class Zend_Form implements Iterator, Countable
     {
         $action = $this->getAttrib('action');
         if (null === $action) {
-            $action = '#';
+            $action = '';
             $this->setAction($action);
         }
         return $action;

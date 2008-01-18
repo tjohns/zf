@@ -395,14 +395,14 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(empty($attribs));
     }
 
-    public function testActionDefaultsToHashSymbol()
+    public function testActionDefaultsToEmptyString()
     {
-        $this->assertEquals('#', $this->form->getAction());
+        $this->assertSame('', $this->form->getAction());
     }
 
     public function testCanSetAction()
     {
-        $this->testActionDefaultsToHashSymbol();
+        $this->testActionDefaultsToEmptyString();
         $this->form->setAction('/foo/bar');
         $this->assertEquals('/foo/bar', $this->form->getAction());
     }
