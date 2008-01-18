@@ -24,12 +24,11 @@
  * Include Resource files
  */
 require_once 'Zend/Build/Resource/Interface.php';
-require_once 'Zend/Build/Resource/Abstract.php';
 
 /**
  * Include Task files
  */
-require_once 'Zend/Build/Task/Abstract.php';
+require_once 'Zend/Build/Action/Abstract.php';
 
 /**
  * @category   Zend
@@ -37,7 +36,7 @@ require_once 'Zend/Build/Task/Abstract.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Build_Task_Create extends Zend_Build_Task_Abstract implements Zend_Console_Context_Interface
+class Zend_Build_Action_Create extends Zend_Build_Action_Abstract
 {
     const NAME = 'create';
     const SHORT_USAGE = 'short usage';

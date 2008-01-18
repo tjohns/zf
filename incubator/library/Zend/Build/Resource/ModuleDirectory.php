@@ -32,5 +32,4 @@ require_once 'Zend/Build/Resource/Directory.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Resource_ModuleDirectory extends Zend_Build_Resource_Directory
-{
-}
+{}

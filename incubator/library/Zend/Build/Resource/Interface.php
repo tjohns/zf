@@ -26,7 +26,7 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Build_Resource_Interface
+interface Zend_Build_Resource_Interface extends Zend_Build_Configurable
 {
     /**
      * Returns true if an instance of this resource has been updated since it was created with CLI, false otherwise.

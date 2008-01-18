@@ -34,20 +34,26 @@ class Zend_Build_Factory
     const DEFAULT_PROFILE_PATH         = './';
     const DEFAULT_PROFILE_NAME         = 'zf-project.xml';
     
+    /**
+     * Returns the correct project object for the specified project profile
+     * 
+     * @param string $profileFilePath
+     * @param string $profileFileName
+     */
     public static function makeProject($profileFilePath = self::DEFAULT_PROFILE_PATH, $profileFileName = self::DEFAULT_PROFILE_NAME)
     {
         $xml = file_get_contents($profileFilePath . $profileFileName);
         return Zend_Build_XmlConvertor::xmlToResource($xml); 
     }
 
-	/**
-	 * Returns the correct Zend_Build_Action to execute given the command line string
-	 * 
-	 * @param arracy $argv
-	 */
-	public static function makeAction($name)
-	{	
-		$actionClasses = self::loadMFClasses(self::MF_ACTION_SECTION_NAME, $name);
+    /**
+     * Returns the correct action as specified by the manifest files
+     * 
+     * @param string $name
+     */
+    public static function makeAction($name)
+    {	
+        $actionClasses = self::loadMFClasses(self::MF_ACTION_SECTION_NAME, $name);
         if (empty($actionClasses)) {
             require_once 'Zend/Build/Exception.php';
             throw new Zend_Build_Exception(
@@ -64,10 +70,15 @@ class Zend_Build_Factory
         }
 
         return $action;
-	}
+    }
 
-	public static function makeResource($name)
-	{
+    /**
+     * Returns the correct resource as specified by the manifest files
+     * 
+     * @param string $name
+     */
+    public static function makeResource($name)
+    {
         $resourceClasses = self::loadMFClasses(self::MF_RESOURCE_SECTION_NAME, $name);
         if (empty($resourceClasses)) {
             require_once 'Zend/Build/Exception.php';
@@ -84,32 +95,32 @@ class Zend_Build_Factory
             );
         }
 
-		return $resource;
-	}
+        return $resource;
+    }
 	
-	private static function _instantiateClass($className)
-	{
-	   try
-	   {
-	       $object = new $className();
-	   } catch (Exception $e) {
-	       return false;
-	   }
+    private static function _instantiateClass($className)
+    {
+        try
+        {
+            $object = new $className();
+        } catch (Exception $e) {
+            return false;
+        }
 	   
-	   return $object;
-	}
+        return $object;
+    }
 
-	private static function loadAllMFClasses($sectionName)
+    private static function loadAllMFClasses($sectionName)
     {
         return getClassNames($sectionName, '.*', self::REGEX_MATCH);
     }
     
-	/**
-	 * Loads all classes referred to in the section specified by $sectionName and returns
-	 * the class names of all loaded classes.
-	 * 
-	 * @return array Class names of the loaded classes. Empty array if no classes loaded.
-	 */
+    /**
+     * Loads all classes referred to in the section specified by $sectionName and returns
+     * the class names of all loaded classes.
+     * 
+     * @return array Class names of the loaded classes. Empty array if no classes loaded.
+     */
 	public static function loadMFClasses($sectionName, $testStr, $testType = self::EXACT_MATCH)
 	{
         $loadedClasses = array();
