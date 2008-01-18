@@ -75,7 +75,7 @@
             </listitem>
             <listitem>
                 <para>
-                    <link url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</link>
+                    <ulink url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</ulink>
                     is a popular Internet provider of
                     "push-button publishing" and syndication.
                 </para>

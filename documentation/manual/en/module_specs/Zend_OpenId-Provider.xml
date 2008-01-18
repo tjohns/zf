@@ -4,7 +4,7 @@
         The <code>Zend_OpenId_Provider</code> is used to implement OpenID
         servers. This chapter provides very basic examples demonstrating how to
         build a working server. However, for implementation of a production OpenID
-        server (like <ulink href="www.myopenid.com">www.myopenid.com</ulink>) you
+        server (like <ulink url="http://www.myopenid.com">www.myopenid.com</ulink>) you
         may be required to deal with more complex issues.
     </para>
 

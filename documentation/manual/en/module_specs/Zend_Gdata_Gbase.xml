@@ -19,7 +19,7 @@
         There are two item feeds: snippets feed and customer items feeds. The snippets feed contains all Google Base data and is available to anyone to query against without a need for authentication. The customer items feed is a customer-specific subset of data and only a customer/owner can access this feed to insert, update, or delete their own data. Queries are constructed the same way against both types of feeds.
     </para>
     <para>
-        See <link url="http://code.google.com/apis/base/">http://code.google.com/apis/base</link>
+        See <ulink url="http://code.google.com/apis/base/">http://code.google.com/apis/base</ulink>
         for more information about the Google Base API.
     </para>
     <sect2 id="zend.gdata.gbase.connect">
@@ -54,7 +54,7 @@
                 The <code>Zend_Gdata</code>
                 library provides support for all three authentication schemes. The rest of this chapter will assume that you are familiar the authentication schemes available and how to create an appropriate authenticated connection. For more information, please see section <xref linkend="zend.gdata.introduction.authentication" />.
                 or the
-                <link url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</link>.
+                <ulink url="http://code.google.com/apis/gdata/auth.html">Authentication Overview in the Google Data API Developer's Guide</ulink>.
             </para>
         </sect3>
         <sect3 id="zend.gdata.gbase.connect.service">
@@ -212,7 +212,7 @@ $query->setMaxResults('5');
 $feed = $service->getGbaseItemFeed($query);]]>
                 </programlisting>
                 <para>
-                    A full list of these paremeters is available at the <link url="http://code.google.com/apis/base/items-feed.html#QueParameters">Query parameters section</link> of the Customer Items Feed documentation.
+                    A full list of these paremeters is available at the <ulink url="http://code.google.com/apis/base/items-feed.html#QueParameters">Query parameters section</ulink> of the Customer Items Feed documentation.
                 </para>
             </sect4>
             <sect4 id="zend.gdata.gbase.retrieve.query.snippets">
@@ -230,7 +230,7 @@ $query->setMaxResults('5');
 $feed = $service->getGbaseSnippetFeed($query);]]>
                 </programlisting>
                 <para>
-                    A full list of these paremeters is available at the <link url="http://code.google.com/apis/base/snippets-feed.html#Parameters">Query parameters section</link> of the Snippets Feed documentation.
+                    A full list of these paremeters is available at the <ulink url="http://code.google.com/apis/base/snippets-feed.html#Parameters">Query parameters section</ulink> of the Snippets Feed documentation.
                 </para>
             </sect4>
         </sect3>
