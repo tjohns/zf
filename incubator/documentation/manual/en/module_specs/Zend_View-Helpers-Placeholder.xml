@@ -113,7 +113,7 @@ echo $foo['bar'];
 ]]></programlisting>
     </example>
 
-    <example id="zend.view.helpers.initial.placeholder.aggregation">
+    <example id="zend.view.helpers.initial.capture.aggregation">
         <title>Using Placeholders to Capture Content</title>
 
         <para>

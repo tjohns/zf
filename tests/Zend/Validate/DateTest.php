@@ -121,4 +121,43 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
     }
+
+    /**
+     * Ensures that the validator can handle different manual dateformats
+     *
+     * @see    http://framework.zend.com/issues/browse/ZF-2003
+     * @return void
+     */
+    public function testUseManualFormat()
+    {
+        $this->assertTrue($this->_validator->setFormat('dd.MM.YYYY')->isValid('10.01.2008'));
+        $this->assertTrue($this->_validator->setFormat('MMM yyyy')->isValid('Jan 2010'));
+        $this->assertFalse($this->_validator->setFormat('dd/MM/yyyy')->isValid('2008/10/22'));
+        $this->assertTrue($this->_validator->setFormat('s')->isValid(0));
+    }
+
+    /**
+     * Ensures that the validator can handle different dateformats from locale
+     *
+     * @see    http://framework.zend.com/issues/browse/ZF-2003
+     * @return void
+     */
+    public function testUseLocaleFormat()
+    {
+        $valuesExpected = array(
+            '10.01.2008' => true,
+            '32.02.2008' => false,
+            '20 April 2008' => true,
+            '1 Jul 2008' => true,
+            '2008/20/03' => false,
+            '99/99/2000' => false,
+            0            => false,
+            999999999999 => false,
+            'Jan 1 2007' => false
+            );
+        foreach ($valuesExpected as $input => $result) {
+            $this->assertEquals($result, $this->_validator->setLocale('de_AT')->isValid($input),
+                                "'$input' expected to be " . ($result ? '' : 'in') . 'valid');
+        }
+    }
 }

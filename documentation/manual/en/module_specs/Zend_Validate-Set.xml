@@ -43,8 +43,11 @@
     <sect2 id="zend.validate.set.date">
         <title>Date</title>
         <para>
-            Returns <code>true</code> if and only if <code>$value</code> is a valid date of the format
-            <code>YYYY-MM-DD</code>.
+            Returns <code>true</code> if <code>$value</code> is a valid date of the format <code>YYYY-MM-DD</code>.
+            If the optional <code>locale</code> option is set then the date will be validated according to the
+            set locale. And if the optional <code>format</code> option is set this format is used for the
+            validation. For details about the optional parameters see
+            <link linkend="zend.date.others.comparison.table">Zend_Date::isDate()</link>.
         </para>
     </sect2>
 
