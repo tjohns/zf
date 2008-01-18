@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7481 -->
+<!-- EN-Revision: 7499 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base の使用法</title>
     <para>
@@ -26,7 +26,7 @@
     </para>
     <para>
         Google Base API についての詳細は
-        <link url="http://code.google.com/apis/base/">http://code.google.com/apis/base</link>
+        <ulink url="http://code.google.com/apis/base/">http://code.google.com/apis/base</ulink>
         を参照ください。
     </para>
     <sect2 id="zend.gdata.gbase.connect">
@@ -78,8 +78,8 @@
                 そして認証済み接続の作成方法を知っていることを前提として説明を進めます。
                 詳細な情報は、<xref linkend="zend.gdata.introduction.authentication" />
                 あるいは
-                <link url="http://code.google.com/apis/gdata/auth.html">Google Data API Developer's Guide
-                の Authentication Overview</link>
+                <ulink url="http://code.google.com/apis/gdata/auth.html">Google Data API Developer's Guide
+                の Authentication Overview</ulink>
                 を参照ください。
             </para>
         </sect3>
@@ -253,8 +253,8 @@ $feed = $service->getGbaseItemFeed($query);]]>
                 </programlisting>
                 <para>
                     使用できるパラメータの一覧は、Customer Items フィードのドキュメントにある
-                    <link url="http://code.google.com/apis/base/items-feed.html#QueParameters">
-                    クエリパラメータのセクション</link> を参照ください。
+                    <ulink url="http://code.google.com/apis/base/items-feed.html#QueParameters">
+                    クエリパラメータのセクション</ulink> を参照ください。
                 </para>
             </sect4>
             <sect4 id="zend.gdata.gbase.retrieve.query.snippets">
@@ -275,8 +275,8 @@ $feed = $service->getGbaseSnippetFeed($query);]]>
                 </programlisting>
                 <para>
                     使用できるパラメータの一覧は、Snippets フィードのドキュメントにある
-                    <link url="http://code.google.com/apis/base/snippets-feed.html#Parameters">
-                    クエリパラメータのセクション</link> を参照ください。
+                    <ulink url="http://code.google.com/apis/base/snippets-feed.html#Parameters">
+                    クエリパラメータのセクション</ulink> を参照ください。
                 </para>
             </sect4>
         </sect3>

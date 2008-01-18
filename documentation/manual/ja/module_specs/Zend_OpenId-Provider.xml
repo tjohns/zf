@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7480 -->
+<!-- EN-Revision: 7499 -->
 <sect1 id="zend.openid.provider">
     <title>Zend_OpenId_Provider</title>
     <para>
@@ -6,7 +6,7 @@
         は、OpenID サーバを実装するために使用するものです。
         本章では、とりあえず動作するサーバを作成するための初歩的な例を説明します。
         しかし、実際に運用する OpenID サーバ
-        (<ulink href="www.myopenid.com">www.myopenid.com</ulink> などのようなもの)
+        (<ulink url="http://www.myopenid.com">www.myopenid.com</ulink> などのようなもの)
         を実装するには、より複雑な問題に対応する必要があります。
     </para>
 

@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7499 -->
 <sect1 id="zend.gdata.introduction">
     <title>Gdata について</title>
     <para>
@@ -74,7 +75,7 @@
             </listitem>
             <listitem>
                 <para>
-                    <link url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</link>
+                    <ulink url="http://code.google.com/apis/blogger/developers_guide_php.html">Google Blogger</ulink>
                     は、人気のあるインターネットプロバイダです。
                     "ボタンひとつで簡単に" 記事を配信することができます。
                 </para>
