@@ -87,11 +87,11 @@ class Zend_Db_Adapter_Pdo_Firebird extends Zend_Db_Adapter_Pdo_Abstract
             ';Password='.$this->_config['password'].
             ';Database='.$this->_config['dbname'].
             ';DataSource='.$this->_config['host'].
-            ($this->_config['port'] ? ';Port='.$this->_config['port']:'').
-            ($this->_config['port'] ? ';Charset='.$this->_config['charset']:'').
-            ($this->_config['port'] ? ';buffers='.$this->_config['buffers']:'').
-            ($this->_config['port'] ? ';dialect='.$this->_config['dialect']:'').
-            ($this->_config['port'] ? ';role='.$this->_config['role']:''); 
+            (array_key_exists('port', $this->_config) ? ';Port='.$this->_config['port']:'').
+            (array_key_exists('charset', $this->_config) ? ';Charset='.$this->_config['charset']:'').
+            (array_key_exists('buffers', $this->_config) ? ';buffers='.$this->_config['buffers']:'').
+            (array_key_exists('dialect', $this->_config) ? ';dialect='.$this->_config['dialect']:'').
+            (array_key_exists('role', $this->_config) ? ';role='.$this->_config['role']:''); 
 
         return $this->_pdoType . ':' . $dsn;
     }

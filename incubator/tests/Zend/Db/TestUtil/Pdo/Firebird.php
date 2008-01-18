@@ -38,7 +38,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
+class Zend_Db_TestUtil_Pdo_Firebird extends Zend_Db_TestUtil_Pdo_Common
 {
 
     public function setUp(Zend_Db_Adapter_Abstract $db)
@@ -98,7 +98,7 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
     {
         $data = parent::_getDataBugs();
         foreach ($data as &$row) {
-            $row['bug_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('GEN_ID(zfbugs_seq, 1)');
+            $row['bug_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('GEN_ID(zfbugs_seq, 1)'));
             $row['created_on'] = new Zend_Db_Expr($this->_db->quoteInto('DATE ?', $row['created_on']));
             $row['updated_on'] = new Zend_Db_Expr($this->_db->quoteInto('DATE ?', $row['updated_on']));
         }
