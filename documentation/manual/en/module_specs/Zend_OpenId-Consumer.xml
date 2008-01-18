@@ -14,15 +14,21 @@
 
         <orderedlist>
             <listitem>
-                Show OpenID authentication form.
+                <para>
+                    Show OpenID authentication form.
+                </para>
             </listitem>
 
             <listitem>
-                Accept OpenID identity and pass it to the OpenID provider.
+                <para>
+                    Accept OpenID identity and pass it to the OpenID provider.
+                </para>
             </listitem>
 
             <listitem>
-                Verify response from the OpenID provider.
+                <para>
+                    Verify response from the OpenID provider.
+                </para>
             </listitem>
         </orderedlist>
 
@@ -458,49 +464,67 @@ $consumer = new Zend_OpenId_Consumer($storage);]]>
 
         <itemizedlist>
             <listitem>
-                <emphasis>nickname</emphasis>
-                 - any UTF-8 string that the end user wants to use as a nickname.
+                <para>
+                    <emphasis>nickname</emphasis>
+                    - any UTF-8 string that the end user wants to use as a nickname.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>email</emphasis>
-                - the email address of the end user as specified in section 3.4.1
-                of RFC2822.
+                <para>
+                    <emphasis>email</emphasis>
+                    - the email address of the end user as specified in section 3.4.1
+                    of RFC2822.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>fullname</emphasis>
-                - a UTF-8 string representation of the end user's full name.
+                <para>
+                    <emphasis>fullname</emphasis>
+                    - a UTF-8 string representation of the end user's full name.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>dob</emphasis>
-                - the end user's date of birth as YYYY-MM-DD. Any values whose
-                representation uses fewer than the specified number of digits
-                should be zero-padded. The length of this value must always be
-                10. If the end user does not want to reveal any particular
-                component of this value, it must be set to zero. For instance,
-                if a end user wants to specify that his date of birth is in 1980,
-                but not the month or day, the value returned shall be "1980-00-00".
+                <para>
+                    <emphasis>dob</emphasis>
+                    - the end user's date of birth as YYYY-MM-DD. Any values whose
+                    representation uses fewer than the specified number of digits
+                    should be zero-padded. The length of this value must always be
+                    10. If the end user does not want to reveal any particular
+                    component of this value, it must be set to zero. For instance,
+                    if a end user wants to specify that his date of birth is in 1980,
+                    but not the month or day, the value returned shall be "1980-00-00".
+                </para>
             </listitem>
             <listitem>
-                <emphasis>gender</emphasis>
-                - the end user's gender, "M" for male, "F" for female.
+                <para>
+                    <emphasis>gender</emphasis>
+                    - the end user's gender, "M" for male, "F" for female.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>postcode</emphasis>
-                - UTF-8 string that should conform to the end user's country's
-                postal system.
+                <para>
+                    <emphasis>postcode</emphasis>
+                    - UTF-8 string that should conform to the end user's country's
+                    postal system.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>country</emphasis>
-                - the End User's country of residence as specified by ISO3166.
+                <para>
+                    <emphasis>country</emphasis>
+                    - the End User's country of residence as specified by ISO3166.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>language</emphasis>
-                - end User's preferred language as specified by ISO639.
+                <para>
+                    <emphasis>language</emphasis>
+                    - end User's preferred language as specified by ISO639.
+                </para>
             </listitem>
             <listitem>
-                <emphasis>timezone</emphasis>
-                - ASCII string from TimeZone database. For example,
-                "Europe/Paris" or "America/Los_Angeles".
+                <para>
+                    <emphasis>timezone</emphasis>
+                    - ASCII string from TimeZone database. For example,
+                    "Europe/Paris" or "America/Los_Angeles".
+                </para>
             </listitem>
         </itemizedlist>
 

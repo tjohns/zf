@@ -44,47 +44,67 @@
 
         <orderedlist>
             <listitem>
-                Authentication is initiated by the end-user, who passes their
-                OpenID identifier to the OpenID consumer through a User-Agent.
+                <para>
+                    Authentication is initiated by the end-user, who passes their
+                    OpenID identifier to the OpenID consumer through a User-Agent.
+                </para>
             </listitem>
             <listitem>
-                The OpenID consumer performs normalization of the user-supplied
-                identifier, and discovery on it. As result, it gets the following:
-                a claimed identifier, OpenID provider URL and an OpenID protocol
-                version.
+                <para>
+                    The OpenID consumer performs normalization of the user-supplied
+                    identifier, and discovery on it. As result, it gets the following:
+                    a claimed identifier, OpenID provider URL and an OpenID protocol
+                    version.
+                </para>
             </listitem>
             <listitem>
-                The OpenID client establishes an optional association with the
-                server using Diffie-Hellman keys. As a result, both parties get
-                a common "shared secret" that is used for signing and verification
-                of the following (subsequent) messages.
+                <para>
+                    The OpenID client establishes an optional association with the
+                    server using Diffie-Hellman keys. As a result, both parties get
+                    a common "shared secret" that is used for signing and verification
+                    of the following (subsequent) messages.
+                </para>
             </listitem>
             <listitem>
-                The OpenID consumer redirects the User-Agent to the OpenID
-                provider's URL with an OpenID authentication request.
+                <para>
+                    The OpenID consumer redirects the User-Agent to the OpenID
+                    provider's URL with an OpenID authentication request.
+                </para>
             </listitem>
             <listitem>
-                The OpenID Provider checks if the user-Agent is already
-                authenticated and offers to do so if needed.
+                <para>
+                    The OpenID Provider checks if the user-Agent is already
+                    authenticated and offers to do so if needed.
+                </para>
             </listitem>
             <listitem>
-                The end user enters the required password.
+                <para>
+                    The end user enters the required password.
+                </para>
             </listitem>
             <listitem>
-                The OpenID Provider checks if it is allowed to pass the user
-                identity to the given consumer, and asks the user if needed.
+                <para>
+                    The OpenID Provider checks if it is allowed to pass the user
+                    identity to the given consumer, and asks the user if needed.
+                </para>
             </listitem>
             <listitem>
-                The end user allows or disallows passing his identity.
+                <para>
+                    The end user allows or disallows passing his identity.
+                </para>
             </listitem>
             <listitem>
-                The OpenID Provider redirects the User-Agent back to the OpenID
-                consumer with an "authentication approved" or "failed" request.
+                <para>
+                    The OpenID Provider redirects the User-Agent back to the OpenID
+                    consumer with an "authentication approved" or "failed" request.
+                </para>
             </listitem>
             <listitem>
-                The OpenID consumer verifies the information received from the
-                provider by using the "shared secret" it got on step 3 or by
-                sending additional direct request to the OpenID provider.
+                <para>
+                    The OpenID consumer verifies the information received from the
+                    provider by using the "shared secret" it got on step 3 or by
+                    sending additional direct request to the OpenID provider.
+                </para>
             </listitem>
         </orderedlist>
     </sect2>
@@ -116,16 +136,24 @@
 
         <itemizedlist>
             <listitem>
-                OpenID Authentication protocol version 1.1
+                <para>
+                    OpenID Authentication protocol version 1.1
+                </para>
             </listitem>
             <listitem>
-                OpenID Authentication protocol version 2.0 draft 11
+                <para>
+                    OpenID Authentication protocol version 2.0 draft 11
+                </para>
             </listitem>
             <listitem>
-                OpenID Simple Registration Extension version 1.0
+                <para>
+                    OpenID Simple Registration Extension version 1.0
+                </para>
             </listitem>
             <listitem>
-                OpenID Simple Registration Extension version 1.1 draft 1
+                <para>
+                    OpenID Simple Registration Extension version 1.1 draft 1
+                </para>
             </listitem>
         </itemizedlist>
     </sect2>

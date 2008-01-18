@@ -363,20 +363,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
 
         <itemizedlist>
             <listitem>
-                a set of methods to build end-user's GUI interface that allows
-                users to register, manage their trusted sites and profiles.
+                <para>
+                    a set of methods to build end-user's GUI interface that allows
+                    users to register, manage their trusted sites and profiles.
+                </para>
             </listitem>
             <listitem>
-                an abstraction storage layer to store information about users,
-                their sites and profiles. It also stores associations between
-                provider and OpenID-enabled sites. This layer is very similar
-                to the <code>Zend_OpenId_Consumer</code>'s one. It also uses
-                file storage by default but may be substituted with another
-                implementation.
+                <para>
+                    an abstraction storage layer to store information about users,
+                    their sites and profiles. It also stores associations between
+                    provider and OpenID-enabled sites. This layer is very similar
+                    to the <code>Zend_OpenId_Consumer</code>'s one. It also uses
+                    file storage by default but may be substituted with another
+                    implementation.
+                </para>
             </listitem>
             <listitem>
-                an abstraction user-association layer that may associate
-                end-user's web browser with logged-in identity
+                <para>
+                    an abstraction user-association layer that may associate
+                    end-user's web browser with logged-in identity
+                </para>
             </listitem>
         </itemizedlist>
 
