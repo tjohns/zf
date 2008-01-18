@@ -98,6 +98,10 @@ class Zend_Form_Decorator_Form extends Zend_Form_Decorator_Abstract
             }
         }
 
+        if (isset($this->_options['method'])) {
+            $this->_options['method'] = strtolower($this->_options['method']);
+        }
+
         return $this->_options;
     }
 

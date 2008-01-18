@@ -62,6 +62,13 @@ class Zend_View_Helper_FormTest extends PHPUnit_Framework_TestCase
         $this->assertContains('</form>', $html);
         $this->assertContains('foobar', $html);
     }
+
+    public function testFormHelperOmitsIdAndNamePropertiesIfBlank()
+    {
+        $html = $this->helper->form('', 'foobar');
+        $this->assertNotRegexp('/id="/', $html);
+        $this->assertNotRegexp('/name="/', $html);
+    }
 }
 
 // Call Zend_View_Helper_FormTest::main() if this source file is executed directly.

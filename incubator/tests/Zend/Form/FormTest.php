@@ -1467,7 +1467,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(empty($html));
         $this->assertContains('<form', $html);
         $this->assertRegexp('/<form[^>]+action="' . $this->form->getAction() . '"/', $html);
-        $this->assertRegexp('/<form[^>]+method="' . $this->form->getMethod() . '"/', $html);
+        $this->assertRegexp('/<form[^>]+method="' . $this->form->getMethod() . '"/i', $html);
         $this->assertRegexp('#<form[^>]+enctype="application/x-www-form-urlencoded"#', $html);
         $this->assertContains('</form>', $html);
     }
