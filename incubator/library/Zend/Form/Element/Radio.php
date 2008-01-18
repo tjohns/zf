@@ -38,5 +38,5 @@ class Zend_Form_Element_Radio extends Zend_Form_Element_Multi
      * Use formRadio view helper by default
      * @var string
      */
-    protected $_viewHelper = 'formRadio';
+    protected $_defaultHelper = 'formRadio';
 }
