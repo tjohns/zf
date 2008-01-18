@@ -49,6 +49,14 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
     {
     }
 
+    public function getView()
+    {
+        require_once 'Zend/View.php';
+        $view = new Zend_View();
+        $view->addHelperPath(dirname(__FILE__) . '/../../../../library/Zend/View/Helper/');
+        return $view;
+    }
+
     public function testMultiselectElementInstanceOfMultiElement()
     {
         $this->assertTrue($this->element instanceof Zend_Form_Element_Multi);
@@ -104,15 +112,6 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('bar' => 'barvalue', 'baz' => 'bazvalue', 'bat' => 'batvalue', 'foo' => 'foovalue', 'test' => 'testvalue'), $this->element->getMultiOptions());
     }
 
-    public function testSettingMultiOptionsUpdatesViewHelperDecoratorByDefault()
-    {
-        $this->testCanSetMultiOptions();
-        $decorator = $this->element->getDecorator('viewHelper');
-        $options = $decorator->getOptions();
-        $this->assertTrue(isset($options['options']));
-        $this->assertEquals($this->element->getMultiOptions(), $options['options']);
-    }
-
     public function testCanRemoveMultiOption()
     {
         $this->testMultiOptionsEmptyByDefault();
@@ -120,6 +119,19 @@ class Zend_Form_Element_MultiselectTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foovalue', $this->element->getMultiOption('foo'));
         $this->element->removeMultiOption('foo');
         $this->assertNull($this->element->getMultiOption('foo'));
+    }
+
+    public function testOptionsAreRenderedInFinalMarkup()
+    {
+        $options = array(
+            'foovalue' => 'Foo',
+            'barvalue' => 'Bar'
+        );
+        $this->element->addMultiOptions($options);
+        $html = $this->element->render($this->getView());
+        foreach ($options as $value => $label) {
+            $this->assertRegexp('/<option.*value="' . $value . '"[^>]*>' . $label . '/s', $html, $html);
+        }
     }
 }
 

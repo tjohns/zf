@@ -16,6 +16,8 @@ require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Form/Decorator/Abstract.php';
 require_once 'Zend/Loader/PluginLoader.php';
 require_once 'Zend/Translate/Adapter/Array.php';
+require_once 'Zend/Validate/NotEmpty.php';
+require_once 'Zend/Validate/EmailAddress.php';
 require_once 'Zend/View.php';
 
 class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
@@ -515,8 +517,6 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testCanValidateElement()
     {
-        require_once 'Zend/Validate/NotEmpty.php';
-        require_once 'Zend/Validate/EmailAddress.php';
         $this->element->addValidator(new Zend_Validate_NotEmpty())
                       ->addValidator(new Zend_Validate_EmailAddress());
         try {
@@ -534,8 +534,6 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testErrorsPopulatedFollowingFailedIsValidCheck()
     {
-        require_once 'Zend/Validate/NotEmpty.php';
-        require_once 'Zend/Validate/EmailAddress.php';
         $this->element->addValidator(new Zend_Validate_NotEmpty())
                       ->addValidator(new Zend_Validate_EmailAddress());
 

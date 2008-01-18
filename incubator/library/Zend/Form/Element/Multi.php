@@ -38,7 +38,7 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      * Array of options for multi-item
      * @var array
      */
-    protected $_multiOptions = array();
+    public $options = array();
 
     /**
      * Separator to use between options; defaults to '<br />'.
@@ -69,6 +69,20 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Retrieve options array
+     * 
+     * @return array
+     */
+    protected function _getMultiOptions()
+    {
+        if (null === $this->options || !is_array($this->options)) {
+            $this->options = array();
+        }
+
+        return $this->options;
+    }
+
+    /**
      * Add an option
      * 
      * @param  mixed $option 
@@ -76,14 +90,9 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      */
     public function addMultiOption($option, $value)
     {
-        $option = (string) $option;
-        $this->_multiOptions[$option] = $value;
-        $decorator = $this->getDecorator('viewHelper');
-        if ($decorator) {
-            $options = $decorator->getOptions();
-            $options['options'] = $this->getMultiOptions();
-            $decorator->setOptions($options);
-        }
+        $option  = (string) $option;
+        $this->_getMultiOptions();
+        $this->options[$option] = $value;
         return $this;
     }
 
@@ -121,9 +130,10 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      */
     public function getMultiOption($option)
     {
-        $option = (string) $option;
-        if (isset($this->_multiOptions[$option])) {
-            return $this->_multiOptions[$option];
+        $option  = (string) $option;
+        $this->_getMultiOptions();
+        if (isset($this->options[$option])) {
+            return $this->options[$option];
         }
 
         return null;
@@ -136,7 +146,7 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      */
     public function getMultiOptions()
     {
-        return $this->_multiOptions;
+        return $this->_getMultiOptions();
     }
 
     /**
@@ -147,17 +157,10 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      */
     public function removeMultiOption($option)
     {
-        $option = (string) $option;
-        if (isset($this->_multiOptions[$option])) {
-            unset($this->_multiOptions[$option]);
-
-            $decorator = $this->getDecorator('viewHelper');
-            if ($decorator) {
-                $options = $decorator->getOptions();
-                $options['options'] = $this->getMultiOptions();
-                $decorator->setOptions($options);
-            }
-
+        $option  = (string) $option;
+        $this->_getMultiOptions();
+        if (isset($this->options[$option])) {
+            unset($this->options[$option]);
             return true;
         }
 
@@ -171,13 +174,7 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
      */
     public function clearMultiOptions()
     {
-        $this->_multiOptions = array();
-        $decorator = $this->getDecorator('viewHelper');
-        if ($decorator) {
-            $options = $decorator->getOptions();
-            $options['options'] = array();
-            $decorator->setOptions($options);
-        }
+        $this->options = array();
         return $this;
     }
 }

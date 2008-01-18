@@ -44,13 +44,13 @@ $form->setAction('/resource/process')
 
         <para>
             You can set additional HTML attributes for the
-            <code>&lt;form&gt;</code> tag by simply setting properties of the
-            form. For instance, if you wish to set the id, set the "id"
-            property:
+            <code>&lt;form&gt;</code> tag by using the setAttrib() or
+            setAttribs() methods.  For instance, if you wish to set the id, set
+            the "id" property:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$form->id = "login"
+$form->setAttrib('id', 'login');
 ?>]]></programlisting>
     </sect2>
 
