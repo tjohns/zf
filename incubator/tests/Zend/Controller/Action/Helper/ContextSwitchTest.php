@@ -358,6 +358,27 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->assertEquals('application/json', $value);
     }
 
+    public function testInitContextUsesPassedFormatWhenNoContextParamNotPresent()
+    {
+        $this->request->setActionName('foo');
+        $this->helper->initContext('xml');
+
+        $this->assertEquals('xml.phtml', $this->viewRenderer->getViewSuffix());
+
+        $headers = $this->response->getHeaders();
+
+        $found = false;
+        foreach ($headers as $header) {
+            if ('Content-Type' == $header['name']) {
+                $found = true;
+                $value = $header['value'];
+            }
+        }
+        $this->assertTrue($found);
+        $this->assertEquals('text/xml', $value);
+    }
+
+
     public function testInitContextDisablesLayoutByDefault()
     {
         $this->request->setParam('format', 'xml')

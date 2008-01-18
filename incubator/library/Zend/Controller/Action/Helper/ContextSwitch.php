@@ -136,7 +136,11 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
 
         // Return if no context parameter provided
         if (!$context = $request->getParam($this->getContextParam())) {
-            return;
+            if ($format === null) {
+                return;
+            }
+            $context = $format;
+            $format  = null;
         }
 
         // Check if context allowed by action controller
