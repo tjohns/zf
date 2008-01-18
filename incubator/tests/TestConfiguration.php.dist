@@ -50,10 +50,10 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_ODBC_DATABASE', null);
  * the native Firebird adapter, but the other properties are shared between the
  * two Firebird-related Zend_Db adapters.
  */
-define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_ENABLED',  true);
+define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_ENABLED',  false);
 define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_HOSTNAME', '127.0.0.1');
 define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_USERNAME', 'sysdba');
-define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_PASSWORD', 'masterkey');
+define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_PASSWORD', null);
 define('TESTS_ZEND_DB_ADAPTER_FIREBIRD_DATABASE', 'TEST');
 
 /**
