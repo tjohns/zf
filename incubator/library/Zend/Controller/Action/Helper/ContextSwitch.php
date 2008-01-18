@@ -45,7 +45,9 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
             'header' => array( 
                 'type'    => 'Content-Type', 
                 'content' => 'application/json' 
-            ) 
+            ),
+            'initCallback' => 'initJsonContext',
+            'postCallback' => 'postJsonContext',
         ), 
         'xml'  => array( 
             'suffix' => 'xml.phtml', 
@@ -55,6 +57,12 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
             ) 
         ), 
     ); 
+
+    /**
+     * JSON auto-serialization flag
+     * @var bool
+     */
+    protected $_autoJsonSerialization = true;
 
     /**
      * Controller property key to utilize for context switching
@@ -166,7 +174,62 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
             }
         }
 
+        if (null !== ($callback = $this->getInitCallback($context))) {
+            if (is_string($callback) && method_exists($this, $callback)) {
+                $this->$callback();
+            } elseif (is_string($callback) && function_exists($callback)) {
+                $callback();
+            } elseif (is_array($callback)) {
+                call_user_func($callback);
+            } else {
+                require_once 'Zend/Controller/Action/Exception.php';
+                throw new Zend_Controller_Action_Exception(sprintf('Invalid context callback registered for context "%s"', $context));
+            }
+        }
+
         $this->_currentContext = $context;
+    }
+
+    /**
+     * JSON context extra initialization
+     *
+     * Turns off viewRenderer auto-rendering
+     * 
+     * @return void
+     */
+    public function initJsonContext()
+    {
+        if (!$this->getAutoJsonSerialization()) {
+            return;
+        }
+
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $view = $viewRenderer->view;
+        if ($view instanceof Zend_View_Interface) {
+            $viewRenderer->setNoRender(true);
+        }
+    }
+
+    /**
+     * Should JSON contexts auto-serialize?
+     * 
+     * @param  bool $flag 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setAutoJsonSerialization($flag)
+    {
+        $this->_autoJsonSerialization = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Get JSON context auto-serialization flag
+     * 
+     * @return bool
+     */
+    public function getAutoJsonSerialization()
+    {
+        return $this->_autoJsonSerialization;
     }
  
     /**
@@ -260,7 +323,93 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
 
         return $this->_contexts[$type]['header'];
     }
+
+    /**
+     * Set callback to call on context initialization
+     * 
+     * @param  string $type 
+     * @param  string|array $callback 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setInitCallback($type, $callback)
+    {
+        if (!isset($this->_contexts[$type])) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot set initialization callback; invalid context type "%s"', $type));
+        }
+
+        if (!is_string($callback) && !is_array($callback)) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception('Invalid callback provided to setInitCallback()');
+        }
+
+        $this->_contexts[$type]['initCallback'] = $callback;
+        return $this;
+    }
+
+    /**
+     * Retrieve context initialization callback
+     * 
+     * @param  string $type Context type
+     * @return string|array|null
+     */
+    public function getInitCallback($type)
+    {
+        if (!isset($this->_contexts[$type])) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot set callback; invalid context type "%s"', $type));
+        }
+
+        if (isset($this->_contexts[$type]['initCallback'])) {
+            return $this->_contexts[$type]['initCallback'];
+        }
+
+        return null;
+    }
  
+    /**
+     * Set callback to call on postDispatch
+     * 
+     * @param  string $type 
+     * @param  string|array $callback 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setPostCallback($type, $callback)
+    {
+        if (!isset($this->_contexts[$type])) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot set postDispatch callback; invalid context type "%s"', $type));
+        }
+
+        if (!is_string($callback) && !is_array($callback)) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception('Invalid callback provided to setPostCallback()');
+        }
+
+        $this->_contexts[$type]['postCallback'] = $callback;
+        return $this;
+    }
+
+    /**
+     * Retrieve context postDispatch callback
+     * 
+     * @param  string $type Context type
+     * @return string|array|null
+     */
+    public function getPostCallback($type)
+    {
+        if (!isset($this->_contexts[$type])) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot set callback; invalid context type "%s"', $type));
+        }
+
+        if (isset($this->_contexts[$type]['postCallback'])) {
+            return $this->_contexts[$type]['postCallback'];
+        }
+
+        return null;
+    }
+
     /**
      * Set name of parameter to use when determining context format
      *
@@ -407,6 +556,54 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     public function getCurrentContext()
     {
         return $this->_currentContext;
+    }
+
+    /**
+     * Post dispatch processing
+     *
+     * Execute postDispatch callback for current context, if available
+     * 
+     * @return void
+     */
+    public function postDispatch()
+    {
+        $context = $this->getCurrentContext();
+        if (null !== $context) {
+            if (null !== ($callback = $this->getPostCallback($context))) {
+                if (is_string($callback) && method_exists($this, $callback)) {
+                    $this->$callback();
+                } elseif (is_string($callback) && function_exists($callback)) {
+                    $callback();
+                } elseif (is_array($callback)) {
+                    call_user_func($callback);
+                } else {
+                    require_once 'Zend/Controller/Action/Exception.php';
+                    throw new Zend_Controller_Action_Exception(sprintf('Invalid postDispatch context callback registered for context "%s"', $context));
+                }
+            }
+        }
+    }
+
+    /**
+     * JSON post processing
+     *
+     * JSON serialize view variables to response body
+     * 
+     * @return void
+     */
+    public function postJsonContext()
+    {
+        if (!$this->getAutoJsonSerialization()) {
+            return;
+        }
+
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $view = $viewRenderer->view;
+        if ($view instanceof Zend_View_Interface) {
+            require_once 'Zend/Json.php';
+            $vars = Zend_Json::encode($view->getVars());
+            $this->getResponse()->setBody($vars);
+        }
     }
 
     /**

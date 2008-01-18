@@ -15,7 +15,9 @@ require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Response/Cli.php';
+require_once 'Zend/Json.php';
 require_once 'Zend/Layout.php';
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_Controller_Action_Helper_ContextSwitch.
@@ -54,11 +56,19 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->layout = Zend_Layout::startMvc();
 
         $this->helper = new Zend_Controller_Action_Helper_ContextSwitch();
+        Zend_Controller_Action_HelperBroker::addHelper($this->helper);
 
         $this->request = new Zend_Controller_Request_Http();
         $this->response = new Zend_Controller_Response_Cli();
 
-        $this->front->setRequest($this->request)->setResponse($this->response);
+        $this->front->setRequest($this->request)
+                    ->setResponse($this->response)
+                    ->addControllerDirectory(dirname(__FILE__));
+
+        $this->view = new Zend_View();
+        $this->view->addHelperPath(dirname(__FILE__) . '/../../../../../library/Zend/View/Helper/');
+        $this->viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+        $this->viewRenderer->setView($this->view);
 
         $this->controller = new Zend_Controller_Action_Helper_ContextSwitchTestController(
             $this->request,
@@ -66,9 +76,6 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
             array()
         );
         $this->helper->setActionController($this->controller);
-
-        $this->viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-        $this->viewRenderer->initView();
     }
 
     /**
@@ -413,6 +420,59 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->helper->initContext();
         $this->assertEquals('json', $this->helper->getCurrentContext());
     }
+
+    public function testJsonContextShouldEncodeViewVariablesByDefaultAndNotRequireRenderingView()
+    {
+        $this->request->setParam('format', 'json')
+                      ->setActionName('bar')
+                      ->setDispatched(true);
+        $this->controller->dispatch('barAction');
+
+        $headers = $this->response->getHeaders();
+        $found   = false;
+        foreach ($headers as $header) {
+            if ($header['name'] == 'Content-Type') {
+                if ($header['value'] == 'application/json') {
+                    $found = true;
+                }
+                break;
+            }
+        }
+        $this->assertTrue($found, 'JSON content type header not found');
+
+        $body = $this->response->getBody();
+        $result = Zend_Json::decode($body);
+        $this->assertTrue(is_array($result), var_export($body, 1));
+        $this->assertTrue(isset($result['foo']));
+        $this->assertTrue(isset($result['bar']));
+        $this->assertEquals('bar', $result['foo']);
+        $this->assertEquals('baz', $result['bar']);
+    }
+
+    public function testAutoJsonSerializationMayBeDisabled()
+    {
+        $this->request->setParam('format', 'json')
+                      ->setActionName('bar')
+                      ->setDispatched(true);
+        $this->helper->setAutoJsonSerialization(false);
+        $this->controller->dispatch('barAction');
+
+
+        $headers = $this->response->getHeaders();
+        $found   = false;
+        foreach ($headers as $header) {
+            if ($header['name'] == 'Content-Type') {
+                if ($header['value'] == 'application/json') {
+                    $found = true;
+                }
+                break;
+            }
+        }
+        $this->assertTrue($found, 'JSON content type header not found');
+
+        $body = $this->response->getBody();
+        $this->assertTrue(empty($body), $body);
+    }
 }
 
 class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Controller_Action
@@ -423,6 +483,18 @@ class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Con
         'baz' => array(),               // no contexts
         'all' => true,                  // all contexts
     );
+
+    public function postDispatch()
+    {
+        $this->_helper->viewRenderer->setNoRender();
+    }
+
+    public function barAction()
+    {
+        $this->_helper->contextSwitch->initContext();
+        $this->view->foo = 'bar';
+        $this->view->bar = 'baz';
+    }
 }
 
 class Zend_Controller_Action_Helper_ContextSwitchTest_LayoutOverride extends Zend_Layout
