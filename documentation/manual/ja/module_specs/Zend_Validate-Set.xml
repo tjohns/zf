@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7498 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2003/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -45,7 +46,12 @@
         <title>Date</title>
         <para>
             <code>$value</code> が <code>YYYY-MM-DD</code> 形式の日付である場合にのみ
-            <code>true</code> を返します。
+            <code>true</code> を返します。オプションの <code>locale</code>
+            を設定すると、そのロケールに応じた検証を行います。
+            オプションの <code>format</code> を設定すると、
+            そのフォーマットを使用して検証を行います。オプションパラメータの詳細は
+            <link linkend="zend.date.others.comparison.table">Zend_Date::isDate()</link>
+            を参照ください。
         </para>
     </sect2>
 
