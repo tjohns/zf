@@ -22,13 +22,15 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../.././../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Action_Helper_AllTests::main');
 }
 
-require_once 'Zend/Controller/Action/Helper/AllTests.php';
+require_once 'Zend/Controller/Action/Helper/AjaxContextTest.php';
+require_once 'Zend/Controller/Action/Helper/ContextSwitchTest.php';
+require_once 'Zend/Controller/Action/Helper/JsonTest.php';
 
 /**
  * @category   Zend
@@ -37,7 +39,7 @@ require_once 'Zend/Controller/Action/Helper/AllTests.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Controller_AllTests
+class Zend_Controller_Action_Helper_AllTests
 {
     public static function main()
     {
@@ -48,12 +50,14 @@ class Zend_Controller_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
-        $suite->addTest(Zend_Controller_Action_Helper_AllTests::suite());
+        $suite->addTestSuite('Zend_Controller_Action_Helper_ContextSwitchTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_AjaxContextTest');
+        $suite->addTestSuite('Zend_Controller_Action_Helper_JsonTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Controller_AllTests::main') {
-    Zend_Controller_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Controller_Action_Helper_AllTests::main') {
+    Zend_Controller_Action_Helper_AllTests::main();
 }
