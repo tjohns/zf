@@ -161,12 +161,12 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests that the security filter catches directory injections.
+     * Tests that the security filter catches illegal characters.
      */
     public function testLoaderClassIllegalFilename()
     {
         try {
-            Zend_Loader::loadClass('/path/to/danger');
+            Zend_Loader::loadClass('/path/:to/@danger');
             $this->fail('Zend_Exception was expected but never thrown.');
         } catch (Zend_Exception $e) {
             $this->assertRegExp('/security(.*)filename/i', $e->getMessage());
