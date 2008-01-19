@@ -353,7 +353,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $this->_transResource = null;	
 	
         if (is_resource($this->_connection)) {
-            ibase_rollback($this->_connection);
+            //ibase_rollback($this->_connection);
             ibase_close($this->_connection);
         }
         $this->_connection = null;
