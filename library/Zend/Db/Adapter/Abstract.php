@@ -273,6 +273,16 @@ abstract class Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Returns the configuration variables in this adapter.
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->_config;
+    }
+
+    /**
      * Set the adapter's profiler object.
      *
      * The argument may be a boolean, an associative array, an instance of
