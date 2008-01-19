@@ -24,7 +24,7 @@
         auf dem selben Weg erstellt. 
     </para>
     <para>
-        Siehe <link url="http://code.google.com/apis/base/">http://code.google.com/apis/base</link> für
+        Siehe <ulink url="http://code.google.com/apis/base/">http://code.google.com/apis/base</ulink> für
         weitere Informationen über die Google Base API.
     </para>
     <sect2 id="zend.gdata.gbase.connect">
@@ -73,8 +73,8 @@
                 Schemata. Im Rest dieses Kapitels wird angenommen das man mit den Authentifizierungs Schemata
                 umgehen kann und wie eine notwendige Authentifizierte Verbindung erstellt wird. Für weitere
                 Informationen kann in das Kapitel <xref linkend="zend.gdata.introduction.authentication" />
-                oder die <link url="http://code.google.com/apis/gdata/auth.html">Übersicht der Authentifizierung
-                im Entwickler Guide der Google Data API</link>
+                oder die <ulink url="http://code.google.com/apis/gdata/auth.html">Übersicht der Authentifizierung
+                im Entwickler Guide der Google Data API</ulink>
                 gesehen werden.
             </para>
         </sect3>
@@ -249,7 +249,7 @@ $feed = $service->getGbaseItemFeed($query);]]>
                 </programlisting>
                 <para>
                     Eine komplette Liste dieser Parameter ist im
-                    <link url="http://code.google.com/apis/base/items-feed.html#QueParameters">Abfrage Parameter Kapitel</link>
+                    <ulink url="http://code.google.com/apis/base/items-feed.html#QueParameters">Abfrage Parameter Kapitel</ulink>
                     der Benutzerdefinierten Feed Elemente Dokumentation vorhanden.
                 </para>
             </sect4>
@@ -270,7 +270,7 @@ $feed = $service->getGbaseSnippetFeed($query);]]>
                 </programlisting>
                 <para>
                     Eine komplette Liste dieser Parameter ist im
-                    <link url="http://code.google.com/apis/base/items-feed.html#QueParameters">Abfrage Parameter Kapitel</link>
+                    <ulink url="http://code.google.com/apis/base/items-feed.html#QueParameters">Abfrage Parameter Kapitel</ulink>
                     der Feed Fetzen Dokumentation vorhanden.
                 </para>
             </sect4>

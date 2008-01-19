@@ -3,7 +3,7 @@
     <para>
         <code>Zend_OpenId_Provider</code> wird verwendet um OpenID Server zu implementieren. Dieses Kapitel
         bietet sehr grundsätzliche Beispiele für die Implementation eines produktiven OpenID Servers
-        (wie <ulink href="www.myopenid.com">www.myopenid.com</ulink>) aber es kann notwendig sein mit viel
+        (wie <ulink url="http://www.myopenid.com">www.myopenid.com</ulink>) aber es kann notwendig sein mit viel
         komplexeren Problemen umzugehen.
     </para>
 

@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Plugins</title>
 
     <sect2 id="zend.controller.plugins.introduction">

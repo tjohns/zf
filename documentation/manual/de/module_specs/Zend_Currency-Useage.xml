@@ -146,7 +146,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
             <code>toCurrency(array $options)</code> akzeptiert ein Array mit Optionen welche gesetzt werden
             können um temporär ein Format oder eine Darstellung einer Währung zu setzen. Für Details darüber,
             welche Optionen gesetzt werden können, siehe
-            <link linkend="zend.currency.useage.setFormat">Ändern des Formats einer Währung</link>.
+            <link linkend="zend.currency.useage.setformat">Ändern des Formats einer Währung</link>.
         </para>
 
         <example id="zend.currency.useage.tocurrency.example">

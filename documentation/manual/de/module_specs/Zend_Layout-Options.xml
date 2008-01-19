@@ -39,7 +39,7 @@
                 <emphasis>mvcSuccessfulActionOnly</emphasis>: Wenn MVC verwendet wird, dann wird das Layout
                 nicht dargestellt wenn eine Aktion eine Ausnahme wirft und dieses Flag true ist (das wird
                 verwendet um zu verhindern das das Layout doppelt dargestellt wird wen das
-                <link linkend="zend.controller.plugins.errorhandler">ErrorHandler Plugin</link> verwendet wird.
+                <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler Plugin</link> verwendet wird.
                 Standardmäßig ist dieses Flag true. Zugriffsmethoden sind 
                 <code>setMvcSuccessfulActionOnly()</code> und <code>getMvcSuccessfulActionOnly()</code>.
             </para>

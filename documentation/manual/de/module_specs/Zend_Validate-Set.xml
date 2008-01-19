@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Standard Prüfklassen</title>
 
@@ -47,7 +47,11 @@
         <title>Date</title>
         <para>
             Gibt nur dann <code>true</code> zurück wenn <code>$value</code> ein gültiges Datum im Format
-            <code>YYYY-MM-DD</code> ist.
+            <code>YYYY-MM-DD</code> ist. Wenn die optionale <code>locale</code> Option gesetzt ist, dann wird
+            das Datum entsprechend dem gesetzten Gebietsschemas geprüft. Und wenn die optionale
+            <code>format</code> Option gesetzt wird, dann wird dieses Format für die Prüfung herangezogen.
+            Für Details über die optionalen Parametern siehe
+            <link linkend="zend.date.others.comparison.table">Zend_Date::isDate()</link>.
         </para>
     </sect2>
 
