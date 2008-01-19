@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7203 -->
 <sect1 id="zend.controller.basics">
     <title>Zend_Controller の基本</title>
 
@@ -82,7 +83,7 @@
                     <code>Zend_Controller_Router_Rewrite</code>
                     は、任意のパスにマッチさせることもできます。
                     詳細は <link
-                        linkend="zend.controller.providedsubclasses.rewriterouter">
+                        linkend="zend.controller.router">
                     ルータのドキュメント</link>
                     を参照ください。
                 </para>
