@@ -124,6 +124,8 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
             '57ec469f390eec00'
         );
 
+        self::$_rtm->setThrottleTime(1);
+
         if (self::$_token !== null) {
             self::$_rtm->setToken(self::$_token);
         }
@@ -328,7 +330,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testCheckToken()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $local = self::$_token;
         $remote = self::$_rtm->checkToken($local->getToken());
@@ -369,7 +371,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testGetContactList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $contactList = self::$_rtm->getContactList();
 
@@ -381,7 +383,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testAddContact()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $before = self::$_rtm->getContactList();
         $contact = $before->getContactByUsername(self::$_testUser);
@@ -425,7 +427,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testDeleteContact()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $before = self::$_rtm->getContactList();
         $contact = $before->getContactByUsername(self::$_testUser);
@@ -452,7 +454,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testGetGroupList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $groupList = self::$_rtm->getGroupList();
 
@@ -464,7 +466,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testAddGroup()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $before = self::$_rtm->getGroupList();
         $group = $before->getGroupByName(self::$_testGroup);
@@ -508,7 +510,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testAddContactToGroup()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $group = $this->_getGroup();
         $contact = $this->_getContact();
@@ -532,7 +534,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testRemoveContactFromGroup()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $group = $this->_getGroup();
         $contact = $this->_getContact();
@@ -559,7 +561,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testDeleteGroup()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $group = $this->_getGroup();
 
@@ -573,7 +575,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testAddList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $before = self::$_rtm->getListList();
         $list = $before->getListByName(self::$_testList);
@@ -647,7 +649,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testSetDefaultList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $list = $this->_getList();
 
@@ -664,7 +666,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testGetListList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $listList = self::$_rtm->getListList();
 
@@ -676,7 +678,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testDeleteList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $list = $this->_getList();
 
@@ -690,7 +692,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testRenameList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $listName = 'new list';
 
@@ -715,7 +717,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testArchiveList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $list = $this->_getList();
 
@@ -738,7 +740,7 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
 
     public function testUnarchiveList()
     {
-        //$this->markTestSkipped('Skipping');
+        $this->markTestSkipped();
 
         $list = $this->_getList();
 
@@ -759,9 +761,6 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($list->isArchived(), 'List was not unarchived');
     }
 
-    /**
-     * @todo Start making tests pass here
-     */
     public function testAddTask()
     {
         $this->markTestIncomplete();
@@ -783,6 +782,9 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testAddTaskTags()
     {
         $this->markTestIncomplete();
@@ -820,31 +822,112 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testDeleteTask()
-    {
-        $this->markTestIncomplete();
-    }
-
     public function testGetTaskList()
     {
-        $this->markTestIncomplete();
+        $this->markTestSkipped();
+
+        $taskList = self::$_rtm->getTaskList();
+
+        $this->assertTrue(
+            $taskList instanceof Zend_Service_RememberTheMilk_TaskSeriesList,
+            'Task list is not an instance'
+        );
     }
 
     public function testMoveTaskPriority()
     {
-        $this->markTestIncomplete();
+        $series = $this->_getTaskSeries();
+        $task = reset($series->getTaskList());
+
+        self::$_rtm->setTaskPriority(
+            $series->getListId(),
+            $series->getId(),
+            $task->getId(),
+            2
+        );
+
+        $task = $this->_getTask();
+
+        $this->assertEquals(
+            $task->getPriority(),
+            2,
+            'Task priority was not set'
+        );
+
+        self::$_rtm->moveTaskPriority(
+            $series->getListId(),
+            $series->getId(),
+            $task->getId(),
+            Zend_Service_RememberTheMilk::PRIORITY_UP
+        );
+
+        $task = $this->_getTask();
+
+        $this->assertEquals(
+            $task->getPriority(),
+            1,
+            'Task priority was not moved'
+        );
     }
 
     public function testMoveTask()
     {
         $this->markTestIncomplete();
+
+        $lists = self::$_rtm->getListList();
+
+        $from = $lists->getListByName(self::$_testList);
+        $to = $lists->getListByName('Inbox');
+        $series = $this->_getTaskSeries();
+        $task = reset($series->getTaskList());
+
+        self::$_rtm->moveTask(
+            $from->getId(),
+            $to->getId(),
+            $series->getId(),
+            $task->getId()
+        );
+
+        $tasks = self::$_rtm->getTaskList($to->getId());
+
+        $this->assertNotNull(
+            $tasks->getSeriesById($series->getId()),
+            'Task was not moved'
+        );
+
+        self::$_rtm->moveTask(
+            $to->getId(),
+            $from->getId(),
+            $series->getId(),
+            $task->getId()
+        );
     }
 
     public function testPostponeTask()
     {
         $this->markTestIncomplete();
+
+        $series = $this->_getTaskSeries();
+        $task = reset($series->getTaskList());
+
+        self::$_rtm->postponeTask(
+            $series->getListId(),
+            $series->getId(),
+            $task->getId()
+        );
+
+        $task = $this->_getTask();
+        $date = new Zend_Date();
+
+        $this->assertTrue(
+            $date->equals($task->getDueDate()),
+            'Task was not postponed'
+        );
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testRemoveTaskTags()
     {
         $this->markTestIncomplete();
@@ -853,6 +936,22 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
     public function testSetTaskDueDate()
     {
         $this->markTestIncomplete();
+
+        $series = $this->_getTaskSeries();
+        $task = reset($series->getTaskList());
+        $date = new Zend_Date();
+
+        self::$_rtm->setTaskDueDate(
+            $series->getListId(),
+            $series->getId(),
+            $task->getId(),
+            $date->toString()
+        );
+
+        $this->assertTrue(
+            $date->equals($this->_getTask()->getDueDate()),
+            'Task due date was not set'
+        );
     }
 
     public function testSetTaskEstimate()
@@ -860,11 +959,17 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete();
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testSetTaskLocation()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testSetTaskName()
     {
         $this->markTestIncomplete();
@@ -873,18 +978,46 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
     public function testSetTaskPriority()
     {
         $this->markTestIncomplete();
+
+        $series = $this->_getTaskSeries();
+        $task = reset($series->getTaskList());
+
+        $priority = $task->getPriority() ? 'N' : '1';
+        self::$_rtm->setTaskPriority(
+            $series->getListId(),
+            $seties->getId(),
+            $task->getId(),
+            $priority
+        );
+
+        $task = reset($this->_getTaskSeries()->getTaskList());
+
+        $this->assertEquals(
+            $task->getPriority(),
+            $priority,
+            'Priority was not changed'
+        );
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testSetTaskRecurrence()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testSetTaskTags()
     {
         $this->markTestIncomplete();
     }
 
+    /**
+     * @todo Determine if this is specific to task or task series
+     */
     public function testSetTaskUrl()
     {
         $this->markTestIncomplete();
@@ -1011,9 +1144,25 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @todo Stop making tests pass here
-     */
+    public function testDeleteTask()
+    {
+        $this->markTestIncomplete();
+
+        $series = $this->_getTaskSeries();
+        $task = reset($series->getTaskList());
+
+        $task = self::$_rtm->deleteTask(
+            $series->getListId(),
+            $series->getId(),
+            $task->getId()
+        );
+
+        $this->assertNotEquals(
+            $task->getDeletedDate(),
+            '',
+            'Task was not deleted'
+        );
+    }
 
     public function testGetMethods()
     {
@@ -1113,24 +1262,27 @@ class Zend_Service_RememberTheMilkTest extends PHPUnit_Framework_TestCase
         /**
          * @todo Cast both to DOMDocument instances
          */
+        $actual = new DOMDocument();
+        $actual->loadXML($method->getResponse());
+        $expected = new DOMDocument();
+        $expected->loadXML('A testing method which checks if the caller is logged in.');
         $this->assertEquals(
-            'A testing method which checks if the caller is logged in.',
-            $method->getDescription(),
+            $actual,
+            $expected,
             'Descriptions do not match'
         );
 
-        /**
-         * @todo Cast both to DOMDocument instances
-         */
+        $actual = new DOMDocument();
+        $actual->loadXML($method->getResponse());
+        $expected = new DOMDocument();
+        $expected->loadXML('<user id="987654321"><username>bob<username></user>');
         $this->assertEquals(
-            preg_replace('/\s+/', ' ', $method->getResponse()),
-            '<user id="987654321"><username>bob<username></user>',
+            $actual,
+            $expected,
             'Responses do not match'
         );
 
-        $args = $method->getArguments();
-
-        $arg = $method->getArgumentByName('api_key');
+        $arg = $method->getArguments()->getArgumentByName('api_key');
 
         $this->assertFalse(
             $arg->isOptional(),

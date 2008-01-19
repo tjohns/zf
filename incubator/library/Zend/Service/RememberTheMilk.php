@@ -27,9 +27,14 @@
 require 'Zend/Service/Exception.php';
 
 /**
-  * @see Zend_Date
-  */
+ * @see Zend_Date
+ */
 require 'Zend/Date.php';
+
+/**
+ * @see Zend_Json
+ */
+require 'Zend/Json.php';
 
 /**
  * @see Zend_Service_RememberTheMilk_Argument
@@ -356,7 +361,7 @@ class Zend_Service_RememberTheMilk
             if ($body === null) {
                 throw new Zend_Service_Exception('Service appears to be unavailable');
             }
-            $body = json_decode($body);
+            $body = Zend_Json::decode($body, Zend_Json::TYPE_OBJECT);
             $body = $body->rsp;
             if ($body->stat == 'fail') {
                 throw new Zend_Service_Exception(
@@ -864,7 +869,8 @@ class Zend_Service_RememberTheMilk
      * specified, all tasks are returned.
      *
      * @param int $list If specified, returned tasks will be restricted to
-     *                  those contained in the list
+     *                  those contained in the list with the specified
+     *                  identifier
      * @param string $filter If specified, returned tasks will be restricted
      *                       to those matching the specified criteria
      * @param string $lastSync An ISO 8601 formatted time value. If speciifed,
@@ -893,7 +899,7 @@ class Zend_Service_RememberTheMilk
         }
 
         $response = $this->_request($request);
-        return new Zend_Service_RememberTheMilk_TaskSeriesList($response);
+        return new Zend_Service_RememberTheMilk_TaskSeriesList($response->tasks);
     }
 
     /**

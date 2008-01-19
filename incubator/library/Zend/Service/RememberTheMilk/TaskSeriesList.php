@@ -57,15 +57,31 @@ class Zend_Service_RememberTheMilk_TaskSeriesList implements IteratorAggregate
         $this->_seriesById = array();
         $this->_seriesByName = array();
 
-        foreach ($data as $series) {
-            $series = new Zend_Service_RememberTheMilk_TaskSeries($series);
+        if (isset($data->list->id)) {
+            $this->_addSeries($data);
+        } else {
+            foreach ($data as $series) {
+                $this->_addSeries($series);
+            }
+        }
+    }
+
+    /**
+     * Creates a new task series instance and adds it to internal lists.
+     *
+     * @param stdClass $data Object containing parsed JSON data
+     */
+    private function _addSeries($data)
+    {
+        if (isset($data->taskseries)) {
+            $series = new Zend_Service_RememberTheMilk_TaskSeries($data);
             $this->_seriesById[$series->getId()] = $series;
             $this->_seriesByName[$series->getName()] = $series;
         }
     }
 
     /**
-     * Implementation of IteratorAggregate::getIterator()
+     * Implementation of IteratorAggregate::getIterator().
      *
      * @return ArrayIterator
      */
@@ -75,7 +91,7 @@ class Zend_Service_RememberTheMilk_TaskSeriesList implements IteratorAggregate
     }
 
     /**
-     * Implementation of IteratorAggregate::getLength()
+     * Implementation of IteratorAggregate::getLength().
      *
      * @return int
      */
