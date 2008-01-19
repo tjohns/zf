@@ -62,6 +62,16 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
         return $type;
     }
 
+    protected function _getColumnsDocuments()
+    {
+        return array(
+            'doc_id'       => 'INTEGER NOT NULL',
+            'doc_clob'     => 'VARBINARY(8192)',
+            'doc_blob'     => 'VARCHAR(8192)',
+            'PRIMARY KEY'  => 'doc_id'
+            );
+    }
+
     protected function _getColumnsBugs()
     {
         return array(
