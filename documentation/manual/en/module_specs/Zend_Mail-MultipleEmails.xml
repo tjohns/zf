@@ -34,7 +34,7 @@ for ($i = 0; $i &lt; 5; $i++) {
   you can manipulate the connection between each delivery by accessing the
   transport's protocol object.</para>
 
-  <example id="zend.mail.multiple-emails.example-1">
+  <example id="zend.mail.multiple-emails.example-2">
     <title>Manually controlling the transport connection</title>
 
     <programlisting role="php">&lt;?php
