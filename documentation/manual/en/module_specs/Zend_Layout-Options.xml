@@ -36,7 +36,7 @@
                 <emphasis>mvcSuccessfulActionOnly</emphasis>: when using the
                 MVC, if an action throws an exception and this flag is true, the
                 layout will not be rendered (this is to prevent double-rendering
-                of the layout when the <link linkend="zend.controller.plugins.errorhandler">ErrorHandler
+                of the layout when the <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler
                 plugin</link> is in use). By default, the flat is true.
                 Accessors are <code>setMvcSuccessfulActionOnly()</code> and
                 <code>getMvcSuccessfulActionOnly()</code>.
