@@ -1,4 +1,4 @@
-<sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>标准校验类</title>
 
@@ -37,7 +37,7 @@
     <sect2 id="zend.validate.set.date">
         <title>日期</title>
         <para>
-            当且仅当<code>$value</code>是一个格式为<code>YYYY-MM-DD</code>的有效日期，返回<code>true</code> 。
+            当<code>$value</code>是一个格式为<code>YYYY-MM-DD</code>的有效日期，返回<code>true</code> 。如果<code>locale</code> 选项被设置那么日期将根据locale来校验，如果<code>format</code> 选项被设置成这个格式用来校验。关于选项参数的细节参见<link linkend="zend.date.others.comparison.table">Zend_Date::isDate()</link>。
         </para>
     </sect2>
 

@@ -1,4 +1,4 @@
-<sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2003/XInclude">
+<sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>标准路由器：Zend_Controller_Router_Rewrite</title>
     <sect2 id="zend.controller.router.introduction">
         <title>简介</title>
