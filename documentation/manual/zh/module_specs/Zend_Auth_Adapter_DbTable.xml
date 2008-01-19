@@ -102,12 +102,13 @@ $result = $authAdapter->authenticate();]]>
 
             <para>
                除了基于认证结果对象的 <code>getIdentity()</code> 方法的可用性之外，<code>Zend_Auth_Adapter_DbTable</code>也支持从认证成功的表中读取一行数据：
+
                 <programlisting role="php"><![CDATA[<?php
 // 输出身份
 echo $result->getIdentity() . "\n\n";
 
 // 输出结果行
-print_r($identity);
+print_r($authAdapter->getResultRowObject());
 
 /* Output:
 my_username
@@ -133,7 +134,8 @@ Array
         <title>高级使用：持久一个 DbTable 结果对象</title>
 
         <para>
-            缺省地，基于成功的认证<code>Zend_Auth_Adapter_DbTable</code> 返回提供给auth对象的身份。其他用例情景，开发者想给<code>Zend_Auth</code> 的持久存储机制存储一个包括其他有用信息的身份对象，已经通过使用<code>getResultRowObject()</code> 方法返回一个<code>stdClass</code>对象解决了。下面的代码片段举例说明它的用法：
+            缺省地，基于成功的认证<code>Zend_Auth_Adapter_DbTable</code> 返回提供给auth对象的身份。对于其他用例情景，如开发者想给<code>Zend_Auth</code> 的持久存储机制存储一个包括其他有用信息的身份对象，已经通过使用<code>getResultRowObject()</code> 方法返回一个<code>stdClass</code>对象解决了。下面的代码片段举例说明它的用法：
+            
             <programlisting role="php"><![CDATA[<?php
 // authenticate with Zend_Auth_Adapter_DbTable
 $result = $this->_auth->authenticate($adapter);
