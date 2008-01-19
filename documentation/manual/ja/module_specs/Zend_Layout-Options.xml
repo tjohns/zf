@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7504 -->
 <sect1 id="zend.layout.options">
     <title>Zend_Layout の設定オプション</title>
 
@@ -42,7 +43,7 @@
                 MVC とともに使用します。このフラグを true にすると、
                 アクションが例外をスローした際にレイアウトをレンダリングしません
                 (これにより、
-                <link linkend="zend.controller.plugins.errorhandler">ErrorHandler
+                <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler
                 プラグイン</link> を使用している際の二重レンダリング問題を回避します)。
                 デフォルトでは、このフラグは true です。
                 アクセサは <code>setMvcSuccessfulActionOnly()</code> と

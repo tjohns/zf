@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7469 -->
+<!-- EN-Revision: 7504 -->
 <sect1 id="zend.currency.useage">
 
     <title>通貨の操作方法</title>
@@ -151,7 +151,7 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
             <code>toCurrency()</code> にはオプションで配列を指定することができます。
             この配列では、一時的なフォーマットや通貨表現を設定します。
             使用できるオプションについての詳細は
-            <link linkend="zend.currency.useage.setFormat">通貨の表示形式の変更</link>
+            <link linkend="zend.currency.useage.setformat">通貨の表示形式の変更</link>
             を参照ください。
         </para>
 

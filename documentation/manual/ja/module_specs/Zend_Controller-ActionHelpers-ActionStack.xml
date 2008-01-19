@@ -1,9 +1,10 @@
+<!-- EN-Revision: 7504 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
     <para>
         <code>ActionStack</code> ヘルパーは、リクエストをフロントコントローラの
-        <link linkend="zend.controller.plugins.actionstack">ActionStack</link>
+        <link linkend="zend.controller.plugins.standard.actionstack">ActionStack</link>
         プラグインに格納します。これにより、
         リクエストの実行時にアクションのキューを作成しやすくなります。
         このヘルパーは、アクションを追加する際に
