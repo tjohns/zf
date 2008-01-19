@@ -66,8 +66,8 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
     {
         return array(
             'doc_id'       => 'INTEGER NOT NULL',
-            'doc_clob'     => 'VARBINARY(8192)',
-            'doc_blob'     => 'VARCHAR(8192)',
+            'doc_clob'     => 'VARBINARY(8000)',
+            'doc_blob'     => 'VARCHAR(8000)',
             'PRIMARY KEY'  => 'doc_id'
             );
     }
