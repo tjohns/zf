@@ -1,27 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.mail.multiple-emails">
-    <title>Sending Multiple Mails per SMTP Connection</title>
-    <para>
-        By default, an SMTP connection is established for every e-mail that is sent. If you want to send
-        multiple e-mails through one SMTP connection, you can handle the <code>connect()</code> yourself. If the
-        transport has already established a connection before <code>send()</code> is called, it will be used
-        and will not be closed:
-    </para>
-    <example id="zend.mail.multiple-emails.example-1">
-        <title>Sending Multiple Mails per SMTP Connection</title>
-        <programlisting role="php"><![CDATA[<?php
+  <title>Sending Multiple Mails per SMTP Connection</title>
+
+  <para>By default a single SMTP transport creates a single connection and
+  re-uses it for the lifetime of the script execution. You may send multiple
+  e-mails through this SMTP connection. A RSET command is issued before each
+  delivery to ensure the correct SMTP handshake is followed.</para>
+
+  <para><example id="zend.mail.multiple-emails.example-1">
+      <title>Sending Multiple Mails per SMTP Connection</title>
+
+      <programlisting role="php">&lt;?php
+
+// Load classes
 require_once 'Zend/Mail.php';
-$mail = new Zend_Mail();
-// build message...
+
+// Create transport
 require_once 'Zend/Mail/Transport/Smtp.php';
-$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
-Zend_Mail::setDefaultTransport($tr);
-$tr->connect();
-for ($i = 0; $i < 5; $i++) {
-$mail->send();
+$transport = new Zend_Mail_Transport_Smtp('localhost');
+
+// Loop through messages
+for ($i = 0; $i &lt; 5; $i++) {
+    $mail = new Zend_Mail();
+    $mail-&gt;addTo('studio@peptolab.com', 'Test');
+    $mail-&gt;setFrom('studio@peptolab.com', 'Test');
+    $mail-&gt;setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail-&gt;setBodyText('...Your message here...');
+    $mail-&gt;send($transport);
+}        </programlisting>
+    </example>If you wish to have a separate connection for each mail
+  delivery, you will need to create and destroy your transport before and
+  after each <function>send()</function> method is called. Or alternatively,
+  you can manipulate the connection between each delivery by accessing the
+  transport's protocol object.</para>
+
+  <example id="zend.mail.multiple-emails.example-1">
+    <title>Manually controlling the transport connection</title>
+
+    <programlisting role="php">&lt;?php
+
+// Load classes
+require_once 'Zend/Mail.php';
+
+// Create transport
+require_once 'Zend/Mail/Transport/Smtp.php';
+$transport = new Zend_Mail_Transport_Smtp();
+
+require_once 'Zend/Mail/Protocol/Smtp.php';
+$protocol = new Zend_Mail_Protocol_Smtp('localhost');
+$protocol-&gt;connect();
+$protocol-&gt;helo('localhost');
+
+$transport-&gt;setConnection($protocol);
+
+// Loop through messages
+for ($i = 0; $i &lt; 5; $i++) {
+    $mail = new Zend_Mail();
+    $mail-&gt;addTo('studio@peptolab.com', 'Test');
+    $mail-&gt;setFrom('studio@peptolab.com', 'Test');
+    $mail-&gt;setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail-&gt;setBodyText('...Your message here...');
+
+    // Manually control the connection
+    $protocol-&gt;rset();
+    $mail-&gt;send($transport);
 }
-$tr->disconnect();]]>
-        </programlisting>
-    </example>
+
+$protocol-&gt;quit();
+$protocol-&gt;disconnect();</programlisting>
+  </example>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
