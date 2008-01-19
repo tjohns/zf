@@ -19,7 +19,7 @@
         </para></listitem>
 
         <listitem><para>
-                <emphasis>mvcSuccessfulActionOnly</emphasis>: 当使用MVC，当动作抛出一个异常并且这个标志为true，布局将不被解析（这是为了防止当<link linkend="zend.controller.plugins.errorhandler">ErrorHandler plugin</link> 在使用时，布局被双重解析）。缺省地，这个标记是true。访问器是<code>setMvcSuccessfulActionOnly()</code> 和 <code>getMvcSuccessfulActionOnly()</code>。
+                <emphasis>mvcSuccessfulActionOnly</emphasis>: 当使用MVC，当动作抛出一个异常并且这个标志为true，布局将不被解析（这是为了防止当<link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler plugin</link> 在使用时，布局被双重解析）。缺省地，这个标记是true。访问器是<code>setMvcSuccessfulActionOnly()</code> 和 <code>getMvcSuccessfulActionOnly()</code>。
         </para></listitem>
 
         <listitem><para>
