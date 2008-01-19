@@ -37,34 +37,27 @@ require_once 'Zend/Controller/Front.php';
 class Zend_View_Helper_Json
 {
     /**
-     * Suppress exit functionality (used in tests)
-     * @var bool
-     */
-    public $suppressExit = false;
-
-    /**
-     * Encode data as JSON an set response header
+     * Encode data as JSON, disable layouts, and set response header
      *
-     * If $exitNow is true, 
+     * If $keepLayouts is true, does not disable layouts.
      * 
      * @param  mixed $data 
-     * @param  bool $exitNow 
+     * @param  bool $keepLayouts
      * @return string|void
      */
-    public function json($data, $exitNow = true)
+    public function json($data, $keepLayouts = false)
     {
         $data = Zend_Json::encode($data);
-        $response = Zend_Controller_Front::getInstance()->getResponse();
-        $response->setHeader('Content-Type', 'application/json');
-        if ($exitNow) {
-            $response->setBody($data);
-            if (!$this->suppressExit) {
-                $response->sendResponse();
-                exit;
+        if (!$keepLayouts) {
+            require_once 'Zend/Layout.php';
+            $layout = Zend_Layout::getMvcInstance();
+            if ($layout instanceof Zend_Layout) {
+                $layout->disableLayout();
             }
-            return;
         }
 
+        $response = Zend_Controller_Front::getInstance()->getResponse();
+        $response->setHeader('Content-Type', 'application/json');
         return $data;
     }
 }

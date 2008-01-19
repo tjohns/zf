@@ -1,5 +1,5 @@
 <?php
-// Call Zend_JsonTest::main() if this source file is executed directly.
+// Call Zend_View_Helper_JsonTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_JsonTest::main");
 }
@@ -12,6 +12,7 @@ require_once 'Zend/View/Helper/Json.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Response/Http.php';
 require_once 'Zend/Json.php';
+require_once 'Zend/Layout.php';
 
 /**
  * Test class for Zend_View_Helper_Json
@@ -39,6 +40,8 @@ class Zend_View_Helper_JsonTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        Zend_View_Helper_JsonTest_Layout::$_mvcInstance = null;
+
         $this->response = new Zend_Controller_Response_Http();
         $this->response->headersSentThrowsException = false;
 
@@ -47,8 +50,6 @@ class Zend_View_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $front->setResponse($this->response);
 
         $this->helper = new Zend_View_Helper_Json();
-        $this->helper->suppressExit = true;
-        ob_start();
     }
 
     /**
@@ -59,7 +60,6 @@ class Zend_View_Helper_JsonTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        ob_end_clean();
     }
 
     public function verifyJsonHeader()
@@ -84,36 +84,36 @@ class Zend_View_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $this->verifyJsonHeader();
     }
 
-    public function testJsonHelperSetsResponseBodyAsJsonEncodedText()
+    public function testJsonHelperReturnsJsonEncodedString()
     {
-        $this->helper->json(array('foobar'));
-        $data = $this->response->getBody();
-
-        $this->assertTrue(is_string($data));
-        $this->assertContains('foobar', $data);
-        $this->assertEquals(array('foobar'), Zend_Json::decode($data));
-    }
-
-    public function testJsonHelperReturnsJsonEncodedTextIfNotExitNow()
-    {
-        $data = $this->helper->json(array('foobar'), false);
+        $data = $this->helper->json(array('foobar'));
         $this->assertTrue(is_string($data));
         $this->assertEquals(array('foobar'), Zend_Json::decode($data));
     }
 
-    public function testJsonHelperSetsResponseHeaderIfNotExitNow()
+    public function testJsonHelperDisablesLayoutsByDefault()
     {
-        $data = $this->helper->json(array('foobar'), false);
-        $this->verifyJsonHeader();
+        $layout = Zend_Layout::startMvc();
+        $this->assertTrue($layout->isEnabled());
+        $this->testJsonHelperReturnsJsonEncodedString();
+        $this->assertFalse($layout->isEnabled());
     }
 
-    public function testJsonHelperDoesNotSetResponseBodyIfNotExitNow()
+    public function testJsonHelperDoesNotDisableLayoutsWhenKeepLayoutFlagTrue()
     {
-        $data = $this->helper->json(array('foobar'), false);
-        $respBody = $this->response->getBody();
-        $this->assertNotContains($data, $respBody);
-        $this->assertTrue(empty($respBody));
+        $layout = Zend_Layout::startMvc();
+        $this->assertTrue($layout->isEnabled());
+        $data = $this->helper->json(array('foobar'), true);
+        $this->assertTrue($layout->isEnabled());
     }
+}
+
+/**
+ * Zend_Layout subclass to allow resetting MVC instance
+ */
+class Zend_View_Helper_JsonTest_Layout extends Zend_Layout
+{
+    public static $_mvcInstance;
 }
 
 // Call Zend_View_Helper_JsonTest::main() if this source file is executed directly.
