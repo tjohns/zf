@@ -258,7 +258,7 @@ abstract class Zend_Db_Table_Row_Abstract
      * @return boolean
      * @throws Zend_Db_Table_Row_Exception
      */
-    public function setTable(Zend_Db_Table_Abstract $table)
+    public function setTable(Zend_Db_Table_Abstract $table = null)
     {
         if ($table == null) {
             $this->_table = null;
@@ -301,6 +301,16 @@ abstract class Zend_Db_Table_Row_Abstract
     public function getTableClass()
     {
         return $this->_tableClass;
+    }
+
+    /**
+     * Test the connected status of the row.
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return $this->_connected;
     }
 
     /**
@@ -608,6 +618,11 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     protected function _getPrimaryKey($useDirty = true)
     {
+        if (!is_array($this->_primary)) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception("The primary key must be set as an array");
+        }
+
         $primary = array_flip($this->_primary);
         if ($useDirty) {
             $array = array_intersect_key($this->_data, $primary);
@@ -921,9 +936,9 @@ abstract class Zend_Db_Table_Row_Abstract
         }
         $joinCond = implode(' AND ', $joinCond);
 
-        $select->from(array('i' => $interName), array())
-               ->from(array('m' => $matchName), '*')
-               ->where($joinCond);
+        $select->from(array('i' => $interName))
+               ->joinInner(array('m' => $matchName), $joinCond)
+               ->setIntegrityCheck(false);
 
         $callerMap = $this->_prepareReference($intersectionTable, $this->_getTable(), $callerRefRule);
 
@@ -937,6 +952,7 @@ abstract class Zend_Db_Table_Row_Abstract
             $type = $matchInfo[Zend_Db_Table_Abstract::METADATA][$matchColumnName]['DATA_TYPE'];
             $select->where($db->quoteInto("$interCol = ?", $value, $type));
         }
+
         $stmt = $select->query();
 
         $config = array(

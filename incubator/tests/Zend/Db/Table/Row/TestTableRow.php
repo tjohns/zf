@@ -23,13 +23,11 @@
 
 
 /**
- * @see Zend_Db_Table_Abstract
+ * @see Zend_Db_Table_Row_Abstract
  */
-require_once 'Zend/Db/Table/Abstract.php';
-
+require_once 'Zend/Db/Table/Row/Abstract.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
-
 
 /**
  * @category   Zend
@@ -38,30 +36,37 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Table_TableBugs extends Zend_Db_Table_Abstract
+class Zend_Db_Table_Row_TestTableRow extends Zend_Db_Table_Row_Abstract
 {
+    protected $_tableClass = 'Zend_Db_Table_TableBugs';
 
-    protected $_name = 'zfbugs';
-    protected $_primary = 'bug_id'; // Deliberate non-array value
+    public function setInvalidColumn()
+    {
+        $this->_transformColumn(array('bug_id'));
+    }
 
-    protected $_dependentTables = array('Zend_Db_Table_TableBugsProducts');
+    public function setTableToFail()
+    {
+        $this->_tableClass = 'foo';
+    }
 
-    protected $_referenceMap    = array(
-        'Reporter' => array(
-            'columns'           => array('reported_by'),
-            'refTableClass'     => 'Zend_Db_Table_TableAccounts',
-            'refColumns'        => array('account_name')
-        ),
-        'Engineer' => array(
-            'columns'           => array('assigned_to'),
-            'refTableClass'     => 'Zend_Db_Table_TableAccounts',
-            'refColumns'        => array('account_name')
-        ),
-        'Verifier' => array(
-            'columns'           => array('verified_by'),
-            'refTableClass'     => 'Zend_Db_Table_TableAccounts',
-            'refColumns'        => array('account_name')
-        )
-    );
+    public function setTableColsToFail()
+    {
+        $this->_data = array();
+    }
 
+    public function setPrimaryKeyToFail1()
+    {
+        $this->_primary = 'foo';
+    }
+
+    public function setPrimaryKeyToFail2()
+    {
+        $this->_primary = array();
+    }
+
+    protected function _postUpdate()
+    {
+        $this->bug_id = 0;
+    }
 }

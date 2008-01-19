@@ -40,11 +40,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Table_TableBugsProducts extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'zfbugs_products';
+    protected $_name    = 'zfbugs_products';
 
     protected $_referenceMap    = array(
         'Bug' => array(
-            'columns'           => array('bug_id'),
+            'columns'           => 'bug_id', // Deliberate non-array value
             'refTableClass'     => 'Zend_Db_Table_TableBugs',
             'refColumns'        => array('bug_id'),
             'onDelete'          => -1, // Deliberate false value

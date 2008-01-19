@@ -25,7 +25,7 @@
 /**
  * @see Zend_Db_Table_Select_TestCommon
  */
-require_once 'Zend/Db/Table/Select/TestCommon.php';
+require_once 'Zend/Db/Select/TestCommon.php';
 
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
@@ -38,7 +38,7 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Db_Table_Select_StaticTest extends Zend_Db_Table_Select_TestCommon
+class Zend_Db_Table_Select_StaticTest extends Zend_Db_Select_TestCommon
 {
     /**
      * Test basic use of the Zend_Db_Select class.
@@ -172,6 +172,15 @@ class Zend_Db_Table_Select_StaticTest extends Zend_Db_Table_Select_TestCommon
         $select = $this->_selectFromQualified();
         $sql = preg_replace('/\\s+/', ' ', $select->__toString());
         $this->assertEquals('SELECT "zfproducts".* FROM "dummy"."zfproducts"', $sql);
+    }
+
+    public function testSelectFromForUpdate()
+    {
+        $select = $this->_db->select()
+            ->from("zfproducts")
+            ->forUpdate();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" FOR UPDATE', $sql);
     }
 
     /**

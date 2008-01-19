@@ -89,6 +89,20 @@ class Zend_Db_Select
     );
 
     /**
+     * The initial values for the $_parts array.
+     *
+     * @var array
+     */
+    protected static $_joinTypes = array(
+        self::INNER_JOIN,
+        self::LEFT_JOIN,
+        self::RIGHT_JOIN,
+        self::FULL_JOIN,
+        self::CROSS_JOIN,
+        self::NATURAL_JOIN,
+    );
+
+    /**
      * The component parts of a SELECT statement.
      * Initialized to the $_partsInit array in the constructor.
      *
@@ -125,9 +139,6 @@ class Zend_Db_Select
         $sql = 'SELECT';
         if ($this->_parts[self::DISTINCT]) {
             $sql .= ' DISTINCT';
-        }
-        if ($this->_parts[self::FOR_UPDATE]) {
-            $sql .= ' FOR UPDATE';
         }
         $sql .= "\n\t";
 
@@ -244,6 +255,10 @@ class Zend_Db_Select
             $sql = trim($this->_adapter->limit($sql, $count, $offset));
         }
 
+        if ($this->_parts[self::FOR_UPDATE]) {
+            $sql .= "\n\tFOR UPDATE";
+        }
+
         return $sql;
     }
 
@@ -318,8 +333,7 @@ class Zend_Db_Select
      */
     protected function _join($type, $name, $cond, $cols, $schema = null)
     {
-        $joinTypes = array(self::INNER_JOIN, self::LEFT_JOIN, self::RIGHT_JOIN, self::FULL_JOIN, self::CROSS_JOIN, self::NATURAL_JOIN);
-        if (!in_array($type, $joinTypes)) {
+        if (!in_array($type, self::$_joinTypes)) {
             /**
              * @see Zend_Db_Select_Exception
              */

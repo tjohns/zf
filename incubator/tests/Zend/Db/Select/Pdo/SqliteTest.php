@@ -36,6 +36,11 @@ class Zend_Db_Select_Pdo_SqliteTest extends Zend_Db_Select_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support qualified table names');
     }
 
+    public function testSelectFromForUpdate()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support FOR UPDATE');
+    }
+
     public function testSelectJoinRight()
     {
         $this->markTestSkipped($this->getDriver() . ' does not support RIGHT OUTER JOIN');

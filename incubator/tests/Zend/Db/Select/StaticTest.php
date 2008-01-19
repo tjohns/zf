@@ -174,6 +174,15 @@ class Zend_Db_Select_StaticTest extends Zend_Db_Select_TestCommon
         $this->assertEquals('SELECT "zfproducts".* FROM "dummy"."zfproducts"', $sql);
     }
 
+    public function testSelectFromForUpdate()
+    {
+        $select = $this->_db->select()
+            ->from("zfproducts")
+            ->forUpdate();
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" FOR UPDATE', $sql);
+    }
+
     /**
      * Test adding a JOIN to a Zend_Db_Select object.
      */

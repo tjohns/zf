@@ -46,6 +46,28 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 {
 
+    public function testTableConstructor()
+    {
+        $bugs = $this->_table['bugs'];
+        $info = $bugs->info();
+
+        $config = array('db'              => $this->_db,
+                        'schema'          => $info['schema'],
+                        'name'            => $info['name'],
+                        'primary'         => $info['primary'],
+                        'cols'            => $info['cols'],
+                        'metadata'        => $info['metadata'],
+                        'metadataCache'   => null,
+                        'rowClass'        => $info['rowClass'],
+                        'rowsetClass'     => $info['rowsetClass'],
+                        'referenceMap'    => $info['referenceMap'],
+                        'dependentTables' => $info['dependentTables'],
+                        'sequence'        => $info['sequence'],
+                        'unknownKey'      => 'testValue');
+
+        $table = new Zend_Db_Table_TableBugs($config);
+    }
+
     public function testTableInfo()
     {
         $bugs = $this->_table['bugs'];
@@ -551,6 +573,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     {
         $schemaName = $this->_util->getSchema();
         $tableName = 'zfbugs';
+        $identifier = join('.', array_filter(array($schemaName, $tableName)));
         $table = $this->_getTable('Zend_Db_Table_TableSpecial',
             array('name' => $tableName, 'schema' => $schemaName)
         );
@@ -571,7 +594,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->_db->getProfiler()->setEnabled($profilerEnabled);
 
         $qp = $this->_db->getProfiler()->getLastQueryProfile();
-        $tableSpec = $this->_db->quoteIdentifier($schemaName.'.'.$tableName, true);
+        $tableSpec = $this->_db->quoteIdentifier($identifier, true);
         $this->assertContains("INSERT INTO $tableSpec ", $qp->getQuery());
     }
 
@@ -665,7 +688,6 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         // measure current memory usage
         $mem1 = memory_get_usage();
-        echo "memory #1: $mem1\n";
 
         // insert a lot of rows
         $n = 100000;
@@ -679,7 +701,6 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         // measure new memory usage
         $mem2 = memory_get_usage();
-        echo "memory #2: $mem2\n";
 
         // compare new memory usage to original
         $mem_delta = $mem2-$mem1;
@@ -720,6 +741,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $bug_status      = $this->_db->foldCase('bug_status');
         $schemaName = $this->_util->getSchema();
         $tableName = 'zfbugs';
+        $identifier = join('.', array_filter(array($schemaName, $tableName)));
         $table = $this->_getTable('Zend_Db_Table_TableSpecial',
             array('name' => $tableName, 'schema' => $schemaName)
         );
@@ -736,7 +758,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         $this->assertEquals(1, $result);
         $qp = $this->_db->getProfiler()->getLastQueryProfile();
-        $tableSpec = $this->_db->quoteIdentifier($schemaName.'.'.$tableName, true);
+        $tableSpec = $this->_db->quoteIdentifier($identifier, true);
         $this->assertContains("UPDATE $tableSpec ", $qp->getQuery());
     }
 
@@ -785,6 +807,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $bug_id = $this->_db->quoteIdentifier('bug_id', true);
         $schemaName = $this->_util->getSchema();
         $tableName = 'zfbugs';
+        $identifier = join('.', array_filter(array($schemaName, $tableName)));
         $table = $this->_getTable('Zend_Db_Table_TableSpecial',
             array('name' => $tableName, 'schema' => $schemaName)
         );
@@ -795,7 +818,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->_db->getProfiler()->setEnabled($profilerEnabled);
 
         $qp = $this->_db->getProfiler()->getLastQueryProfile();
-        $tableSpec = $this->_db->quoteIdentifier($schemaName.'.'.$tableName, true);
+        $tableSpec = $this->_db->quoteIdentifier($identifier, true);
         $this->assertContains("DELETE FROM $tableSpec ", $qp->getQuery());
     }
 
@@ -1098,51 +1121,6 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals(0, count($rowset));
     }
 
-    /**
-     * Ensures that Zend_Db_Table_Abstract::setDefaultMetadataCache() performs as expected
-     *
-     * @return void
-     */
-    public function testTableSetDefaultMetadataCache()
-    {
-        $cache = $this->_getCache();
-
-        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
-
-        $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
-
-        Zend_Db_Table_Abstract::setDefaultMetadataCache();
-
-        $this->assertNull(Zend_Db_Table_Abstract::getDefaultMetadataCache());
-    }
-
-    public function testTableSetDefaultMetadataCacheRegistry()
-    {
-        $cache = $this->_getCache();
-        Zend_Registry::set('registered_metadata_cache', $cache);
-        Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
-        $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
-    }
-
-    public function testTableSetDefaultMetadataCacheRegistryWriteAccess()
-    {
-        $cache = $this->_getCache(false);
-        Zend_Registry::set('registered_metadata_cache', $cache);
-        Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
-
-        try {
-            $bugsTable = $this->_getTable('Zend_Db_Table_TableBugsCustom');
-            $this->fail('Expected to catch Zend_Db_Table_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Table_Exception', $e);
-            $this->assertEquals('Failed saving metadata to metadataCache', $e->getMessage());
-        }
-
-        // Reset so that data can be saved again
-        $cache = $this->_getCache();
-        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
-    }
-
     public function testTableLoadsCustomRowClass()
     {
         if (class_exists('Zend_Db_Table_Row_TestMyRow')) {
@@ -1174,6 +1152,32 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             'Expected TestMyRowset class to be loaded (#3)');
     }
 
+    /**
+     * Ensures that Zend_Db_Table_Abstract::setDefaultMetadataCache() performs as expected
+     *
+     * @return void
+     */
+    public function testTableSetDefaultMetadataCache()
+    {
+        $cache = $this->_getCache();
+
+        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
+
+        $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
+
+        Zend_Db_Table_Abstract::setDefaultMetadataCache();
+
+        $this->assertNull(Zend_Db_Table_Abstract::getDefaultMetadataCache());
+    }
+
+    public function testTableSetDefaultMetadataCacheRegistry()
+    {
+        $cache = $this->_getCache();
+        Zend_Registry::set('registered_metadata_cache', $cache);
+        Zend_Db_Table_Abstract::setDefaultMetadataCache('registered_metadata_cache');
+        $this->assertSame($cache, Zend_Db_Table_Abstract::getDefaultMetadataCache());
+    }
+
     public function testTableMetadataCacheRegistry()
     {
         $cache = $this->_getCache();
@@ -1186,6 +1190,22 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         );
 
         $this->assertSame($cache, $tableBugsCustom1->getMetadataCache());
+    }
+
+    public function testTableSetDefaultMetadataCacheWriteAccess()
+    {
+        $cache = $this->_getCacheNowrite();
+        Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
+
+        try {
+            $bugsTable = $this->_getTable('Zend_Db_Table_TableBugs');
+            $this->fail('Expected to catch Zend_Db_Table_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e);
+            $this->assertEquals('Failed saving metadata to metadataCache', $e->getMessage());
+        }
+
+        Zend_Db_Table_Abstract::setDefaultMetadataCache(null);
     }
 
     /**
@@ -1349,31 +1369,62 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
      *
      * @return Zend_Cache_Core
      */
-    protected function _getCache($writeAccess = true)
+    protected function _getCache()
     {
         /**
          * @see Zend_Cache
          */
         require_once 'Zend/Cache.php';
 
+        $folder = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files';
+
         $frontendOptions = array(
             'automatic_serialization' => true
         );
 
-        if ($writeAccess) {
-            $folder = '_files';
-        } else {
-            $folder = '_nofiles';
-        }
-
         $backendOptions  = array(
-            'cache_dir'                 => dirname(__FILE__) . DIRECTORY_SEPARATOR . $folder,
+            'cache_dir'                 => $folder,
             'file_name_prefix'          => 'Zend_Db_Table_TestCommon'
         );
 
         $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
         $cacheFrontend->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+        return $cacheFrontend;
+    }
+
+    /**
+     * Returns a clean Zend_Cache_Core with File backend
+     *
+     * @return Zend_Cache_Core
+     */
+    protected function _getCacheNowrite()
+    {
+        /**
+         * @see Zend_Cache
+         */
+        require_once 'Zend/Cache.php';
+
+        $folder = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_nofiles';
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777);
+        }
+
+        $frontendOptions = array(
+            'automatic_serialization' => true
+        );
+
+        $backendOptions  = array(
+            'cache_dir'                 => $folder,
+            'file_name_prefix'          => 'Zend_Db_Table_TestCommon'
+        );
+
+        $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+        $cacheFrontend->clean(Zend_Cache::CLEANING_MODE_ALL);
+        
+        rmdir($folder);
 
         return $cacheFrontend;
     }

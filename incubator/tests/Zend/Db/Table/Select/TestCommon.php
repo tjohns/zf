@@ -81,33 +81,6 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
     /**
      * Test adding a FOR UPDATE clause to a Zend_Db_Select object.
      */
-    protected function _selectForUpdateModifier()
-    {
-        $product_id = $this->_db->quoteIdentifier('product_id');
-
-        $select = $this->_getSelectTable('products')->select()
-            ->forUpdate(true)
-            ->where("$product_id = 2");
-        return $select;
-    }
-
-    /**
-     * Test adding the FOR UPDATE query modifier to a Zend_Db_Select object.
-     *
-     */
-    public function testSelectForUpdateModifier()
-    {
-        try {
-            $select = $this->_selectForUpdateModifier();
-            $this->fail('Expected to catch Zend_Db_Table_Select_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Db_Table_Select_Exception', $e);
-        }
-    }
-
-    /**
-     * Test adding a FOR UPDATE clause to a Zend_Db_Select object.
-     */
     protected function _selectForReadOnly($fields)
     {
         $table = $this->_getSelectTable('products');
@@ -152,7 +125,7 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
     public function testSelectForJoinZendDbTable()
     {
         try {
-            $select = $this->_selectForJoinZendDbTable()->__toString();
+            $select = $this->_selectForJoinZendDbTable();
             $query = $select->__toString();
             $this->fail('Expected to catch Zend_Db_Table_Select_Exception');
         } catch (Zend_Exception $e) {

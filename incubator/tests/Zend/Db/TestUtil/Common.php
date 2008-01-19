@@ -206,7 +206,12 @@ abstract class Zend_Db_TestUtil_Common
     public function getSchema()
     {
         $param = $this->getParams();
-        return isset($param['dbname']) ? $param['dbname'] : null;
+
+        if (isset($param['dbname']) && strpos($param['dbname'], ':') === false) {
+            return $param['dbname'];
+        }
+        
+        return null;
     }
 
     protected $_tableName = array(

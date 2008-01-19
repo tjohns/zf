@@ -246,6 +246,20 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * Test support for FOR UPDATE
+     * e.g. from('schema.table').
+     */
+    public function testSelectFromForUpdate()
+    {
+        $select = $this->_db->select()
+            ->from("zfproducts")
+            ->forUpdate();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(3, count($result));
+    }
+
+    /**
      * Test adding a JOIN to a Zend_Db_Select object.
      */
     protected function _selectJoin()

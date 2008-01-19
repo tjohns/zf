@@ -64,6 +64,26 @@ class Zend_Db_Table_Pdo_PgsqlTest extends Zend_Db_Table_TestCommon
         $this->assertEquals(5, $lastInsertId);
     }
 
+    public function testTableInsertPkNull()
+    {
+        $table = $this->_table['bugs'];
+        $row = array (
+            'bug_id'          => null,
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy'
+        );
+        $insertResult = $table->insert($row);
+        $lastInsertId = $this->_db->lastInsertId('zfbugs', 'bug_id');
+        $lastSequenceId = $this->_db->lastSequenceId('zfbugs_bug_id_seq');
+        $this->assertEquals($insertResult, $lastInsertId);
+        $this->assertEquals($insertResult, $lastSequenceId);
+        $this->assertEquals(5, $lastInsertId);
+    }
+
     public function testTableInsertSequence()
     {
         $table = $this->_getTable('Zend_Db_Table_TableProducts',

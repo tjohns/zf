@@ -49,8 +49,13 @@ class Zend_Db_Statement_Pdo_MysqlTest extends Zend_Db_Statement_Pdo_TestCommon
      */
     public function testZF2059()
     {
-        $sql = "SELECT bug_id FROM zfbugs WHERE bug_status != ':0\''";
+        $sql = "SELECT bug_id FROM zfbugs WHERE bug_status != ':0'";
         $results = $this->_db->fetchAll($sql);
+        $this->assertEquals(4, count($results));
+
+        $select = $this->_db->select()->from('zfbugs', 'bug_id')
+                                      ->where('bug_status != ?', ':0');
+        $results = $this->_db->fetchAll($select);
         $this->assertEquals(4, count($results));
     }
 

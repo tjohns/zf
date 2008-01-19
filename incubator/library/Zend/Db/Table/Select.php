@@ -53,6 +53,13 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     protected $_info;
 
     /**
+     * Table integrity override.
+     *
+     * @var array
+     */
+    protected $_integrityCheck = true;
+
+    /**
      * Class constructor
      *
      * @param Zend_Db_Table_Abstract $adapter
@@ -64,7 +71,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     }
 
     /**
-     * Sets the primary table name and retrieves the table schema
+     * Sets the primary table name and retrieves the table schema.
      *
      * @param Zend_Db_Table_Abstract $adapter
      * @return Zend_Db_Select This Zend_Db_Select object.
@@ -73,6 +80,21 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     {
         $this->_adapter = $table->getAdapter();
         $this->_info    = $table->info();
+        return $this;
+    }
+
+    /**
+     * Sets the integrity check flag.
+     *
+     * Setting this flag to false skips the checks for table joins, allowing
+     * 'hybrid' table rows to be created.
+     *
+     * @param Zend_Db_Table_Abstract $adapter
+     * @return Zend_Db_Select This Zend_Db_Select object.
+     */
+    public function setIntegrityCheck($flag = true)
+    {
+        $this->_integrityCheck = $flag;
         return $this;
     }
 
@@ -156,29 +178,20 @@ class Zend_Db_Table_Select extends Zend_Db_Select
 
         $from = $this->getPart(Zend_Db_Table_Select::FROM);
 
-        foreach ($fields as $columnEntry) {
-            list($table, $column) = $columnEntry;
-            
-            // Check each column to ensure it only references the primary table
-            if ($column) {
-                if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
-                    require_once 'Zend/Db/Table/Exception.php';
-                    throw new Zend_Db_Table_Select_Exception("Select query cannot join with another table");
+        if ($this->_integrityCheck !== false) {
+            foreach ($fields as $columnEntry) {
+                list($table, $column) = $columnEntry;
+                
+                // Check each column to ensure it only references the primary table
+                if ($column) {
+                    if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
+                        require_once 'Zend/Db/Table/Select/Exception.php';
+                        throw new Zend_Db_Table_Select_Exception("Select query cannot join with another table");
+                    }
                 }
             }
         }
 
         return parent::__toString();
-    }
-
-    /**
-     * Disables the query SELECT FOR UPDATE.
-     *
-     * @return Zend_Db_Table_Select_Exception.
-     */
-    public function forUpdate($flag = true)
-    {
-        require_once 'Zend/Db/Table/Select/Exception.php';
-        throw new Zend_Db_Table_Select_Exception("SELECT FOR UPDATE is not supported");
     }
 }

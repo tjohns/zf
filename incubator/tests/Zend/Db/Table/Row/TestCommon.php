@@ -42,6 +42,41 @@ require_once 'Zend/Db/Table/Row.php';
 abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
 {
 
+    protected function _testTableRow()
+    {
+        $table = $this->_table['bugs'];
+
+        $bug_id          = $this->_db->foldCase('bug_id');
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status      = $this->_db->foldCase('bug_status');
+        $created_on      = $this->_db->foldCase('created_on');
+        $updated_on      = $this->_db->foldCase('updated_on');
+        $reported_by     = $this->_db->foldCase('reported_by');
+        $assigned_to     = $this->_db->foldCase('assigned_to');
+        $verified_by     = $this->_db->foldCase('verified_by');
+
+        $data = array(
+            $bug_id          => '1',
+            $bug_description => 'System needs electricity to run',
+            $bug_status      => 'NEW',
+            $created_on      => '2007-04-01',
+            $updated_on      => '2007-04-01',
+            $reported_by     => 'goofy',
+            $assigned_to     => 'mmouse',
+            $verified_by     => 'dduck'
+        );
+
+        $config = array(
+            'table'  => $table,
+            'stored' => true,
+            'readOnly' => false,
+            'data'   => $data,
+        );
+
+        Zend_Loader::loadClass('Zend_Db_Table_Row_TestTableRow');
+        return new Zend_Db_Table_Row_TestTableRow($config);
+    }
+
     public function testTableFindRow()
     {
         $table = $this->_table['bugs'];
@@ -49,20 +84,21 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $rowset = $table->find(1);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
-        $this->assertTrue($rowset->exists());
         $this->assertEquals(1, count($rowset));
     }
 
     public function testTableRowConstructor()
     {
         $table = $this->_table['bugs'];
-
-        $row1 = new Zend_Db_Table_Row(
-            array(
+        
+        $config = array(
                 'db'    => $this->_db,
-                'table' => $table
-            )
-        );
+                'table' => $table,
+                'data'  => array(),
+                'readOnly' => true
+            );
+
+        $row1 = new Zend_Db_Table_Row($config);
 
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
@@ -75,6 +111,32 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
                 'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
             $this->assertEquals("Specified column \"bug_description\" is not in the row", $e->getMessage());
         }
+
+        $config['data'] = 'Invalid';
+
+        try {
+            $row1 = new Zend_Db_Table_Row($config);
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Row_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
+            $this->assertEquals("Data must be an array", $e->getMessage());
+        }
+    }
+
+    public function testTableRowReadOnly()
+    {
+        $table = $this->_table['bugs'];
+
+        $row1 = new Zend_Db_Table_Row(
+            array(
+                'db'    => $this->_db,
+                'table' => $table,
+                'readOnly' => true
+            )
+        );
+
+        $this->assertTrue($row1->isReadOnly());
     }
 
     public function testTableRowToArray()
@@ -102,6 +164,22 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             'verified_by',
         );
         $this->assertEquals($cols, array_keys($a));
+    }
+
+    public function testTableRowSelect()
+    {
+        $table = $this->_table['bugs'];
+
+        $rowset = $table->find(1);
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
+
+        $select = $row1->select();
+        $this->assertType('Zend_Db_Table_Select', $select,
+            'Expecting object of type Zend_Db_Table_Select, got '.get_class($select));
     }
 
     public function testTableRowMagicGet()
@@ -249,6 +327,86 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
     }
+    
+    public function testTableRowSaveInvalidTable()
+    {
+        $table = $this->_table['bugs'];
+        
+        $row = $this->_testTableRow();
+
+        try {
+            $row->setTableColsToFail($table);
+            $row->setTable($table);
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for incorrect parent table');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('The specified Table does not have the same columns as the Row', $e->getMessage());
+        }
+
+        $row = $this->_testTableRow();
+
+        try {
+            $row->setPrimaryKeyToFail1($table);
+            $row->setTable($table);
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for incorrect parent table');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('The specified Table \'Zend_Db_Table_TableBugs\' does not have the same primary key as the Row', $e->getMessage());
+        }
+    }
+
+    public function testTableRowSaveUpdateInvalidInfo()
+    {
+        $table = $this->_table['bugs'];
+        
+        $row = $this->_testTableRow();
+
+        $bug_status      = $this->_db->foldCase('bug_status');
+        $row->$bug_status = 'VALID';
+
+        try {
+            $row->setTable($table);
+            $row->setPrimaryKeyToFail1();
+            $row->save();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for incorrect parent table');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('The primary key must be set as an array', $e->getMessage());
+        }
+
+        try {
+            $row->setTable($table);
+            $row->setPrimaryKeyToFail2();
+            $row->save();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for incorrect parent table');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('The specified Table \'Zend_Db_Table_TableBugs\' does not have the same primary key as the Row', $e->getMessage());
+        }
+    }
+
+    public function testTableRowSaveUpdateRefresh()
+    {
+        $table = $this->_table['bugs'];
+
+        $bug_status = $this->_db->foldCase('bug_status');
+        
+        $row = $this->_testTableRow();
+        $row->$bug_status = 'VALID';
+
+        try {
+            $row->save();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for missing parent');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Row_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('Cannot refresh row as parent is missing', $e->getMessage());
+        }
+    }
 
     public function testTableRowSetTable()
     {
@@ -262,6 +420,9 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
             'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
 
+        $row1->setTable(null);
+        $this->assertFalse($row1->isConnected());
+
         try {
             $row1->setTable($table2);
             $this->fail('Expected to catch Zend_Db_Table_Exception for incorrect parent table');
@@ -269,6 +430,23 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertType('Zend_Db_Table_Exception', $e,
                 'Expecting object of type Zend_Db_Table_Exception got '.get_class($e));
             $this->assertEquals('The specified Table is of class Zend_Db_Table_TableProducts, expecting class to be instance of Zend_Db_Table_TableBugs', $e->getMessage());
+        }
+    }
+
+    public function testTableRowSetInvalidTable()
+    {
+        $table = $this->_table['bugs'];
+        
+        $row = $this->_testTableRow();
+
+        try {
+            $row->setTableToFail();
+            $row->setTable($table);
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for incorrect parent table');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('The specified Table is of class Zend_Db_Table_TableBugs, expecting class to be instance of foo', $e->getMessage());
         }
     }
 
@@ -485,6 +663,66 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->assertEquals('The specified Table is of class Zend_Db_Table_TableProducts, expecting class to be instance of Zend_Db_Table_TableBugs', $e->getMessage());
         }
         $this->assertFalse($connected);
+    }
+
+    public function testTableRowSetReadOnly()
+    {
+        $table = $this->_table['bugs'];
+        $bug_status = $this->_db->foldCase('bug_status');
+
+        $rowset = $table->find(1);
+        $row1 = $rowset->current();
+
+        $row1->setReadOnly(true);
+        $this->assertTrue($row1->isReadOnly());
+
+        $data = array(
+            'bug_description' => 'New Description',
+            'bug_status'      => 'INVALID'
+        );
+
+        $row2 = $table->createRow($data);
+        $row2->setReadOnly(true);
+        try {
+            $row2->save();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Row_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
+            $this->assertEquals('This row has been marked read-only', $e->getMessage());
+        }
+
+        $row2->setReadOnly(false);
+        $row2->save();
+
+        $row2->$bug_status = 'VALID';
+        $row2->setReadOnly(true);
+
+        try {
+            $row2->save();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Row_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
+            $this->assertEquals('This row has been marked read-only', $e->getMessage());
+        }
+
+        $row2->setReadOnly(false);
+        $row2->save();
+    }
+
+    public function testTableRowInvalidTransformColumn()
+    {
+        $row = $this->_testTableRow();
+
+        try {
+            $row->setInvalidColumn();
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception for invalid column type');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception got '.get_class($e));
+            $this->assertEquals('Specified column is not a string', $e->getMessage());
+        }
     }
 
 }
