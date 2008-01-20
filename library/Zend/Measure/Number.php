@@ -237,9 +237,8 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                     require_once 'Zend/Measure/Exception.php';
                     throw new Zend_Measure_Exception($e->getMessage());
                 }
-                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
-                    $value = call_user_func(Zend_Locale_Math::$sqrt, call_user_func(Zend_Locale_Math::$pow, $value, 2));
-                }
+                preg_match('/[0123456789]+/', $value, $ergebnis);
+                $value = $ergebnis[0];
                 break;
         }
 
