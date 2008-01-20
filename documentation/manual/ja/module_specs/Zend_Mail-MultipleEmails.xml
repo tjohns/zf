@@ -1,4 +1,4 @@
-<!-- EN-Revision: 7509 -->
+<!-- EN-Revision: 7525 -->
 <sect1 id="zend.mail.multiple-emails">
   <title>SMTP 接続による複数のメールの送信</title>
 
