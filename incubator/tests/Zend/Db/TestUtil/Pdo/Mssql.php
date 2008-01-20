@@ -88,9 +88,10 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlCreateTable($tableName)
     {
-        $tableList = $this->_db->fetchAll(
-            $this->_db->quoteInto('exec sp_tables @table_name = ?', $tableName)
-        );
+        $sql = "exec sp_tables @table_name = " . $this->_db->quoteIdentifier($tableName, true);
+        $stmt = $this->_db->query($sql);
+        $tableList = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
         if (count($tableList) > 0 && $tableName == $tableList[0]['TABLE_NAME']) {
             return null;
         }
@@ -99,9 +100,10 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlDropTable($tableName)
     {
-        $tableList = $this->_db->fetchAll(
-            $this->_db->quoteInto('exec sp_tables @table_name = ?', $tableName)
-        );
+        $sql = "exec sp_tables @table_name = " . $this->_db->quoteIdentifier($tableName, true);
+        $stmt = $this->_db->query($sql);
+        $tableList = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+
         if (count($tableList) > 0 && $tableName == $tableList[0]['TABLE_NAME']) {
             return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
         }
