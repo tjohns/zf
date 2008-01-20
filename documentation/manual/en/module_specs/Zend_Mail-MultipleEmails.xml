@@ -21,13 +21,13 @@ require_once 'Zend/Mail/Transport/Smtp.php';
 $transport = new Zend_Mail_Transport_Smtp('localhost');
 
 // Loop through messages
-for ($i = 0; $i &lt; 5; $i++) {
+for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
-    $mail-&gt;addTo('studio@peptolab.com', 'Test');
-    $mail-&gt;setFrom('studio@peptolab.com', 'Test');
-    $mail-&gt;setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
-    $mail-&gt;setBodyText('...Your message here...');
-    $mail-&gt;send($transport);
+    $mail->addTo('studio@peptolab.com', 'Test');
+    $mail->setFrom('studio@peptolab.com', 'Test');
+    $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail->setBodyText('...Your message here...');
+    $mail->send($transport);
 }]]>
         </programlisting>
 
@@ -56,26 +56,26 @@ $transport = new Zend_Mail_Transport_Smtp();
 
 require_once 'Zend/Mail/Protocol/Smtp.php';
 $protocol = new Zend_Mail_Protocol_Smtp('localhost');
-$protocol-&gt;connect();
-$protocol-&gt;helo('localhost');
+$protocol->connect();
+$protocol->helo('localhost');
 
 $transport-&gt;setConnection($protocol);
 
 // Loop through messages
-for ($i = 0; $i &lt; 5; $i++) {
+for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
-    $mail-&gt;addTo('studio@peptolab.com', 'Test');
-    $mail-&gt;setFrom('studio@peptolab.com', 'Test');
-    $mail-&gt;setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
-    $mail-&gt;setBodyText('...Your message here...');
+    $mail->addTo('studio@peptolab.com', 'Test');
+    $mail->setFrom('studio@peptolab.com', 'Test');
+    $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail->setBodyText('...Your message here...');
 
     // Manually control the connection
-    $protocol-&gt;rset();
-    $mail-&gt;send($transport);
+    $protocol->rset();
+    $mail->send($transport);
 }
 
-$protocol-&gt;quit();
-$protocol-&gt;disconnect();]]>
+$protocol->quit();
+$protocol->disconnect();]]>
         </programlisting>
 
     </example>
