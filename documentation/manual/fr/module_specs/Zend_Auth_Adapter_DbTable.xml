@@ -114,7 +114,7 @@ $result = $authAdapter->authenticate();]]>
 echo $result->getIdentity() . "\n\n";
 
 // Affiche la ligne de résultat
-print_r($identity);
+print_r($authAdapter->getResultRowObject());
 
 /* Affiche:
 my_username
