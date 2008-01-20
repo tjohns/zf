@@ -46,7 +46,7 @@ if ($validator->isValid($email)) {
     </para>
 
     <para>
-        Email地址中的主机名部分依靠<link linkend="zend.validate.set.hostname"><code>Zend_Validate_Hostname</code></link>来校验。尽管你希望IP地址和本地主机名也被接受，但缺省地只有像<code>domain.com</code>格式的DNS主机名被接受。
+        Email地址中的主机名部分依靠<link linkend="zend.validate.set.hostnames"><code>Zend_Validate_Hostname</code></link>来校验。尽管你希望IP地址和本地主机名也被接受，但缺省地只有像<code>domain.com</code>格式的DNS主机名被接受。
         当然如果你想如愿，需要实例化<code>Zend_Validate_EmailAddress</code>并传递一个参数来指明哪种主机名你想接受。更多的细节包含在<code>Zend_Validate_Hostname</code>中。
         下面的例子显示如何同时接受DNS和本地主机名：
         <programlisting role="php"><![CDATA[<?php
