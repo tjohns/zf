@@ -1,17 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.mail.multiple-emails">
-  <title>Sending Multiple Mails per SMTP Connection</title>
+    <title>Sending Multiple Mails per SMTP Connection</title>
 
-  <para>By default a single SMTP transport creates a single connection and
-  re-uses it for the lifetime of the script execution. You may send multiple
-  e-mails through this SMTP connection. A RSET command is issued before each
-  delivery to ensure the correct SMTP handshake is followed.</para>
+    <para>
+        By default a single SMTP transport creates a single connection and
+        re-uses it for the lifetime of the script execution. You may send multiple
+        e-mails through this SMTP connection. A RSET command is issued before each
+        delivery to ensure the correct SMTP handshake is followed.
+    </para>
 
-  <para><example id="zend.mail.multiple-emails.example-1">
-      <title>Sending Multiple Mails per SMTP Connection</title>
+    <example id="zend.mail.multiple-emails.example-1">
 
-      <programlisting role="php">&lt;?php
+        <title>Sending Multiple Mails per SMTP Connection</title>
 
+        <programlisting role="php"><![CDATA[<?php
 // Load classes
 require_once 'Zend/Mail.php';
 
@@ -27,17 +28,24 @@ for ($i = 0; $i &lt; 5; $i++) {
     $mail-&gt;setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
     $mail-&gt;setBodyText('...Your message here...');
     $mail-&gt;send($transport);
-}        </programlisting>
-    </example>If you wish to have a separate connection for each mail
-  delivery, you will need to create and destroy your transport before and
-  after each <function>send()</function> method is called. Or alternatively,
-  you can manipulate the connection between each delivery by accessing the
-  transport's protocol object.</para>
+}]]>
+        </programlisting>
 
-  <example id="zend.mail.multiple-emails.example-2">
-    <title>Manually controlling the transport connection</title>
+    </example>
+    
+    <para>
+        If you wish to have a separate connection for each mail
+        delivery, you will need to create and destroy your transport before and
+        after each <function>send()</function> method is called. Or alternatively,
+        you can manipulate the connection between each delivery by accessing the
+        transport's protocol object.
+    </para>
 
-    <programlisting role="php">&lt;?php
+    <example id="zend.mail.multiple-emails.example-2">
+
+        <title>Manually controlling the transport connection</title>
+
+        <programlisting role="php"><![CDATA[<?php
 
 // Load classes
 require_once 'Zend/Mail.php';
@@ -67,8 +75,11 @@ for ($i = 0; $i &lt; 5; $i++) {
 }
 
 $protocol-&gt;quit();
-$protocol-&gt;disconnect();</programlisting>
-  </example>
+$protocol-&gt;disconnect();]]>
+        </programlisting>
+
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
