@@ -303,6 +303,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
      */
     private function fromDecimal($value, $type)
     {
+        $tempvalue = $value;
         if ($this->_UNITS[$type][0] <= 16) {
             $newvalue = "";
             $count = 200;
@@ -316,7 +317,8 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 }
                 --$count;
                 if ($count == 0) {
-                    break;
+                    require_once 'Zend/Measure/Exception.php';
+                    throw new Zend_Measure_Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
                 }
             }
         }
@@ -327,17 +329,22 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $romanval = array_values( array_reverse(self::$_ROMAN) );
             $romankey = array_keys( array_reverse(self::$_ROMAN) );
             $count = 200;
-            while(call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) > 0) {
+            while(call_user_func(Zend_Locale_Math::$comp, $value, 0, 25) <> 0) {
 
                 while ($value >= $romanval[$i]) {
                     $value    -= $romanval[$i];
                     $newvalue .= $romankey[$i];
+
+                    if ($value < 1) {
+                       break; 
+                    }
+                    --$count;
+                    if ($count == 0) {
+                        require_once 'Zend/Measure/Exception.php';
+                        throw new Zend_Measure_Exception("Your value '$tempvalue' cannot be processed because it extends 200 digits");
+                    }
                 }
                 $i++;
-                --$count;
-                if ($count == 0) {
-                    break;
-                }
 
             }
 
