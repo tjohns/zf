@@ -35,4 +35,37 @@ require_once 'Zend/Controller/Action/Helper/AutoComplete/Abstract.php';
  */
 class Zend_Controller_Action_Helper_AutoCompleteDojo extends Zend_Controller_Action_Helper_AutoComplete_Abstract
 {
+    /**
+     * Validate data for autocompletion
+     * 
+     * @param  mixed $data 
+     * @return bool
+     */
+    public function validateData($data)
+    {
+        if (is_array($data)) {
+            $count = count($data);
+            if (array_keys($data) == range(0, $count - 1)) {
+                foreach ($data as $item) {
+                    if (!is_scalar($item)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Prepare data for autocompletion
+     * 
+     * @param  mixed $data 
+     * @param  bool $keepLayouts 
+     * @return string
+     */
+    public function prepareAutoCompletion($data, $keepLayouts = false)
+    {
+        return $this->encodeJson($data, $keepLayouts);
+    }
 }

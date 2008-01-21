@@ -55,6 +55,7 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
         $this->front->resetInstance();
         $this->front->setRequest($this->request)->setResponse($this->response);
 
+        $this->viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
         $this->layout = Zend_Layout::startMvc();
     }
 
@@ -70,37 +71,158 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
 
     public function testConcreteImplementationsDeriveFromAutoCompleteBaseClass()
     {
-        $this->markTestIncomplete();
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $this->assertTrue($dojo instanceof Zend_Controller_Action_Helper_AutoComplete_Abstract);
+
+        $scriptaculous = new Zend_Controller_Action_Helper_AutoCompleteScriptaculous();
+        $this->assertTrue($scriptaculous instanceof Zend_Controller_Action_Helper_AutoComplete_Abstract);
     }
 
     public function testEncodeJsonProxiesToJsonActionHelper()
     {
-        $this->markTestIncomplete();
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $dojo->encodeJson($data);
+        $this->assertSame($data, Zend_Json::decode($encoded));
+        $this->assertFalse($this->layout->isEnabled());
+        $headers = $this->response->getHeaders();
+        $found = false;
+        foreach ($headers as $header) {
+            if ('Content-Type' == $header['name']) {
+                if ('application/json' == $header['value']) {
+                    $found = true;
+                }
+                break;
+            }
+        }
+        $this->assertTrue($found, "JSON content-type header not found");
     }
 
     public function testDojoHelperThrowsExceptionOnInvalidDataFormat()
     {
-        $this->markTestIncomplete();
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $data = array('foo' => 'bar', 'baz');
+        try {
+            $encoded = $dojo->encodeJson($data);
+            $this->fail('Associative arrays should be considered invalid');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('Invalid data', $e->getMessage());
+        }
+
+        $data = new stdClass;
+        $data->foo = 'bar';
+        $data->bar = 'baz';
+        try {
+            $encoded = $dojo->encodeJson($data);
+            $this->fail('Objects should be considered invalid');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('Invalid data', $e->getMessage());
+        }
+
+        $data = 'foo';
+        try {
+            $encoded = $dojo->encodeJson($data);
+            $this->fail('Strings should be considered invalid');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('Invalid data', $e->getMessage());
+        }
     }
 
     public function testDojoHelperEncodesToJson()
     {
-        $this->markTestIncomplete();
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $dojo->direct($data, false);
+        $this->assertSame($data, Zend_Json::decode($encoded));
+    }
+
+    public function testDojoHelperSendsResponseByDefault()
+    {
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $dojo->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $dojo->direct($data);
+        $this->assertSame($data, Zend_Json::decode($encoded));
+        $body = $this->response->getBody();
+        $this->assertSame($encoded, $body);
+    }
+
+    public function testDojoHelperDisablesLayoutsAndViewRendererByDefault()
+    {
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $dojo->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $dojo->direct($data);
+        $this->assertFalse($this->layout->isEnabled());
+        $this->assertTrue($this->viewRenderer->getNoRender());
+    }
+
+    public function testDojoHelperCanEnableLayoutsAndViewRenderer()
+    {
+        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
+        $dojo->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $dojo->direct($data, false, true);
+        $this->assertTrue($this->layout->isEnabled());
+        $this->assertFalse($this->viewRenderer->getNoRender());
     }
 
     public function testScriptaculousHelperThrowsExceptionOnInvalidDataFormat()
     {
-        $this->markTestIncomplete();
+        $scriptaculous = new Zend_Controller_Action_Helper_AutoCompleteScriptaculous();
+
+        $data = new stdClass;
+        $data->foo = 'bar';
+        $data->bar = 'baz';
+        try {
+            $encoded = $scriptaculous->encodeJson($data);
+            $this->fail('Objects should be considered invalid');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('Invalid data', $e->getMessage());
+        }
     }
 
     public function testScriptaculousHelperCreatesHtmlMarkup()
     {
-        $this->markTestIncomplete();
+        $scriptaculous = new Zend_Controller_Action_Helper_AutoCompleteScriptaculous();
+        $scriptaculous->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $formatted = $scriptaculous->direct($data);
+        $this->assertContains('<ul>', $formatted);
+        foreach ($data as $value) {
+            $this->assertContains('<li>' . $value . '</li>', $formatted);
+        }
+        $this->assertContains('</ul>', $formatted);
     }
 
-    public function testPassingTrueSendParameterToDirectSendsResponse()
+    public function testScriptaculousHelperSendsResponseByDefault()
     {
-        $this->markTestIncomplete();
+        $scriptaculous = new Zend_Controller_Action_Helper_AutoCompleteScriptaculous();
+        $scriptaculous->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $scriptaculous->direct($data);
+        $body = $this->response->getBody();
+        $this->assertSame($encoded, $body);
+    }
+
+    public function testScriptaculousHelperDisablesLayoutsAndViewRendererByDefault()
+    {
+        $scriptaculous = new Zend_Controller_Action_Helper_AutoCompleteScriptaculous();
+        $scriptaculous->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $scriptaculous->direct($data);
+        $this->assertFalse($this->layout->isEnabled());
+        $this->assertTrue($this->viewRenderer->getNoRender());
+    }
+
+    public function testScriptaculousHelperCanEnableLayoutsAndViewRenderer()
+    {
+        $scriptaculous = new Zend_Controller_Action_Helper_AutoCompleteScriptaculous();
+        $scriptaculous->suppressExit = true;
+        $data = array('foo', 'bar', 'baz');
+        $encoded = $scriptaculous->direct($data, false, true);
+        $this->assertTrue($this->layout->isEnabled());
+        $this->assertFalse($this->viewRenderer->getNoRender());
     }
 }
 
