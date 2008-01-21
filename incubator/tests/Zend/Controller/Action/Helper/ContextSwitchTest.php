@@ -51,7 +51,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
 
         $this->front = Zend_Controller_Front::getInstance();
         $this->front->resetInstance();
-        $this->front->addModuleDirectory(dirname(__FILE__) . '/../../_files');
+        $this->front->addModuleDirectory(dirname(__FILE__) . '/../../_files/modules');
 
         $this->layout = Zend_Layout::startMvc();
 
@@ -75,6 +75,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
             $this->response,
             array()
         );
+        $this->controller->setupContexts();
         $this->helper->setActionController($this->controller);
     }
 
@@ -97,7 +98,21 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
     public function testSetSuffixModifiesContextSuffix()
     {
         $this->helper->setSuffix('xml', 'foobar');
-        $this->assertEquals('foobar', $this->helper->getSuffix('xml'));
+        $this->assertContains('foobar', $this->helper->getSuffix('xml'));
+    }
+
+    public function testSetSuffixPrependsToViewRendererSuffixByDefault()
+    {
+        $this->helper->setSuffix('xml', 'foobar');
+        $expected = 'foobar.' . $this->viewRenderer->getViewSuffix();
+        $this->assertContains($expected, $this->helper->getSuffix('xml'));
+    }
+
+    public function testCanSetSuffixWithoutViewRendererSuffix()
+    {
+        $this->helper->setSuffix('xml', 'foobar', false);
+        $expected = 'foobar';
+        $this->assertContains($expected, $this->helper->getSuffix('xml'));
     }
 
     public function testSuffixAccessorsThrowExceptionOnInvalidContextType()
@@ -117,43 +132,262 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         }
     }
 
-    public function testSetHeaderModifiesContextHeader()
+    public function testCanAddAdditionalHeadersPerContext()
     {
-        $this->helper->setHeader('xml', 'X-Custom-Header', 'application/x-xml');
-        $header = $this->helper->getHeader('xml');
-        $this->assertTrue(is_array($header));
-        $this->assertTrue(isset($header['type']));
-        $this->assertTrue(isset($header['content']));
-        $this->assertEquals('X-Custom-Header', $header['type']);
-        $this->assertEquals('application/x-xml', $header['content']);
+        $this->helper->addHeader('xml', 'X-Foo', 'Bar');
+        $headers = $this->helper->getHeaders('xml');
+        $this->assertTrue(isset($headers['Content-Type']));
+        $this->assertEquals('text/xml', $headers['Content-Type']);
+        $this->assertTrue(isset($headers['X-Foo']));
+        $this->assertEquals('Bar', $headers['X-Foo']);
     }
 
-    public function testSetHeaderWithoutHeaderArgumentDisablesHeader()
+    public function testCanAddMultipleHeadersPerContextSimultaneously()
     {
-        $this->helper->setHeader('xml');
-        $header = $this->helper->getHeader('xml');
-        $this->assertNull($header);
+        $this->helper->addHeaders('xml', array(
+            'X-Foo' => 'Bar',
+            'X-Bar' => 'Baz'
+        ));
+        $headers = $this->helper->getHeaders('xml');
+        $this->assertTrue(isset($headers['Content-Type']));
+        $this->assertEquals('text/xml', $headers['Content-Type']);
+        $this->assertTrue(isset($headers['X-Foo']));
+        $this->assertEquals('Bar', $headers['X-Foo']);
+        $this->assertTrue(isset($headers['X-Bar']));
+        $this->assertEquals('Baz', $headers['X-Bar']);
+    }
 
-        $this->helper->setHeader('json', 'Content-Type');
-        $header = $this->helper->getHeader('json');
-        $this->assertNull($header);
+    public function testAddHeaderThrowsExceptionWhenReferencingExistingHeader()
+    {
+        try {
+            $this->helper->addHeader('xml', 'Content-Type', 'application/xml');
+            $this->fail('addHeader() should raise exception for existing headers');
+        } catch (Zend_Controller_Exception $e) {
+            $this->assertContains('already exists', $e->getMessage());
+        }
+    }
+
+    public function testSetHeaderOverwritesHeaderExistingHeader()
+    {
+        $this->helper->setHeader('xml', 'Content-Type', 'application/foo-xml');
+        $this->assertEquals('application/foo-xml', $this->helper->getHeader('xml', 'Content-Type'));
+    }
+
+    public function testSetHeadersOverwritesHeaders()
+    {
+        $headers = array(
+            'X-Foo' => 'Bar',
+            'X-Bar' => 'Baz'
+        );
+        $this->helper->setHeaders('xml', $headers);
+        $this->assertEquals($headers, $this->helper->getHeaders('xml'));
+    }
+
+    public function testCanRemoveSingleHeaders()
+    {
+        $this->helper->addHeader('xml', 'X-Foo', 'Bar');
+        $this->assertEquals('Bar', $this->helper->getHeader('xml', 'X-Foo'));
+        $this->helper->removeHeader('xml', 'X-Foo');
+        $this->assertNull($this->helper->getHeader('xml', 'X-Foo'));
+    }
+
+    public function testCanClearAllHeaders()
+    {
+        $this->helper->addHeader('xml', 'X-Foo', 'Bar');
+        $expected = array('Content-Type' => 'text/xml', 'X-Foo' => 'Bar');
+        $this->assertEquals($expected, $this->helper->getHeaders('xml'));
+        $this->helper->clearHeaders('xml');
+        $this->assertEquals(array(), $this->helper->getHeaders('xml'));
     }
 
     public function testHeaderAccessorsThrowExceptionOnInvalidContextType()
     {
         try {
-            $this->helper->setHeader('foobar', 'foobar', 'baz');
-            $this->fail('setHeader() should throw exception with invalid context type');
+            $this->helper->addHeader('foobar', 'foobar', 'baz');
+            $this->fail('addHeader() should throw exception with invalid context type');
         } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Cannot set header', $e->getMessage());
+            $this->assertContains('does not exist', $e->getMessage());
         }
 
         try {
-            $this->helper->getHeader('foobar');
+            $this->helper->setHeader('foobar', 'foobar', 'baz');
+            $this->fail('setHeader() should throw exception with invalid context type');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+
+        try {
+            $this->helper->getHeader('foobar', 'Content-Type');
             $this->fail('getHeader() should throw exception with invalid context type');
         } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Cannot retrieve header', $e->getMessage());
+            $this->assertContains('does not exist', $e->getMessage());
         }
+
+        try {
+            $this->helper->getHeaders('foobar');
+            $this->fail('getHeaders() should throw exception with invalid context type');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+
+        try {
+            $this->helper->addHeaders('foobar', array('X-Foo' => 'Bar'));
+            $this->fail('addHeaders() should throw exception with invalid context type');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+
+        try {
+            $this->helper->setHeaders('foobar', array('X-Foo' => 'Bar'));
+            $this->fail('setHeaders() should throw exception with invalid context type');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+
+        try {
+            $this->helper->removeHeader('foobar', 'X-Foo');
+            $this->fail('removeHeader() should throw exception with invalid context type');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+
+        try {
+            $this->helper->clearHeaders('foobar');
+            $this->fail('clearHeaders() should throw exception with invalid context type');
+        } catch (Zend_Controller_Action_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+    }
+
+    public function testCanSetCallbackByContextAndTrigger()
+    {
+        $this->helper->setCallback('xml', 'init', 'htmlentities');
+        $this->assertEquals('htmlentities', $this->helper->getCallback('xml', 'init'));
+
+        $this->helper->setCallback('xml', 'post', array('Zend_Controller_Action_Helper_ContextSwitchTest', 'main'));
+        $this->assertSame(array('Zend_Controller_Action_Helper_ContextSwitchTest', 'main'), $this->helper->getCallback('xml', 'post'));
+    }
+
+    public function testCanSetAllCallbacksByContext()
+    {
+        $callbacks = array(
+            'init' => 'htmlentities',
+            'post' => array('Zend_Loader', 'registerAutoload')
+        );
+        $this->helper->setCallbacks('xml', $callbacks);
+        $returned = $this->helper->getCallbacks('xml');
+        $this->assertSame(array_values($callbacks), array_values($returned));
+    }
+
+    public function testCanRemoveCallbackByContextAndTrigger()
+    {
+        $this->testCanSetCallbackByContextAndTrigger();
+        $this->helper->removeCallback('xml', 'init');
+        $this->assertNull($this->helper->getCallback('xml', 'init'));
+    }
+
+    public function testCanClearAllCallbacksByContext()
+    {
+        $this->testCanSetCallbackByContextAndTrigger();
+        $this->helper->clearCallbacks('xml');
+        $this->assertSame(array(), $this->helper->getCallbacks('xml'));
+    }
+
+    public function testCanAddContext()
+    {
+        $this->helper->addContext('foobar', array(
+            'suffix'  => 'foo.bar',
+            'headers' => array('Content-Type' => 'application/x-foobar', 'X-Foo' => 'Bar'),
+        ));
+        $context = $this->helper->getContext('foobar');
+        $this->assertNotNull($context);
+        $this->assertTrue(is_array($context));
+        $this->assertTrue(isset($context['suffix']));
+        $this->assertTrue(isset($context['headers']));
+        $this->assertTrue(isset($context['callbacks']));
+
+        $this->assertContains('foo.bar', $context['suffix']);
+        $this->assertEquals('application/x-foobar', $context['headers']['Content-Type']);
+        $this->assertEquals('Bar', $context['headers']['X-Foo']);
+    }
+
+    public function testAddContextThrowsExceptionIfContextAlreadyExists()
+    {
+        try {
+            $this->helper->addContext('xml', array());
+            $this->fail('Shold not be able to add context if already exists');
+        } catch (Zend_Controller_Exception $e) {
+            $this->assertContains('exists', $e->getMessage());
+        }
+    }
+
+    public function testSetContextOverwritesExistingContext()
+    {
+        $this->helper->setContext('xml', array());
+        $this->assertNull($this->helper->getHeader('xml', 'Content-Type'));
+        $this->assertEquals($this->viewRenderer->getViewSuffix(), $this->helper->getSuffix('xml'));
+    }
+
+    public function testCanAddMultipleContextsAtOnce()
+    {
+        $this->helper->addContexts(array(
+            'foobar' => array(
+                'suffix'  => 'foo.bar',
+                'headers' => array('Content-Type' => 'application/x-foobar', 'X-Foo' => 'Bar'),
+            ),
+            'barbaz' => array(
+                'suffix'  => 'bar.baz',
+                'headers' => array('Content-Type' => 'application/x-barbaz', 'X-Bar' => 'Baz'),
+            )
+        ));
+        $this->assertTrue($this->helper->hasContext('foobar'));
+        $this->assertTrue($this->helper->hasContext('barbaz'));
+    }
+
+    public function testCanOverwriteManyContextsAtOnce()
+    {
+        $this->helper->setContexts(array(
+            'xml'    => array(
+                'suffix'    => array('suffix' => 'xml', 'prependViewRendererSuffix' => false),
+                'headers'   => array('Content-Type' => 'application/xml'),
+                'callbacks' => array('TRIGGER_INIT' => 'foobar')
+            ),
+            'foobar' => array(
+                'suffix'  => 'foo.bar',
+                'headers' => array('Content-Type' => 'application/x-foobar', 'X-Foo' => 'Bar'),
+            ),
+            'barbaz' => array(
+                'suffix'  => 'bar.baz',
+                'headers' => array('Content-Type' => 'application/x-barbaz', 'X-Bar' => 'Baz'),
+            )
+        ));
+        $this->assertTrue($this->helper->hasContext('xml'));
+        $this->assertFalse($this->helper->hasContext('json'));
+        $this->assertTrue($this->helper->hasContext('foobar'));
+        $this->assertTrue($this->helper->hasContext('barbaz'));
+        $this->assertEquals('xml', $this->helper->getSuffix('xml'));
+        $this->assertNotEquals('foo.bar', $this->helper->getSuffix('foobar'));
+        $this->assertContains('foo.bar', $this->helper->getSuffix('foobar'));
+        $this->assertNotEquals('bar.baz', $this->helper->getSuffix('barbaz'));
+        $this->assertContains('bar.baz', $this->helper->getSuffix('barbaz'));
+    }
+
+    public function testCanRemoveSingleContext()
+    {
+        $this->assertTrue($this->helper->hasContext('xml'));
+        $this->helper->removeContext('xml');
+        $this->assertFalse($this->helper->hasContext('xml'));
+    }
+
+    public function testCanClearAllContexts()
+    {
+        $this->assertTrue($this->helper->hasContext('xml'));
+        $this->assertTrue($this->helper->hasContext('json'));
+        $contexts = $this->helper->getContexts();
+        $this->helper->clearContexts();
+        $received = $this->helper->getContexts();
+        $this->assertNotEquals($contexts, $received);
+        $this->assertTrue(empty($received));
     }
 
     public function testDefaultContextParam()
@@ -201,49 +435,6 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->assertTrue($this->helper->getAutoDisableLayout());
     }
 
-    public function testCanAddContexts()
-    {
-        $this->helper->addContext('foobar', 'foobar.phtml', 'X-FooBar', 'FooBar');
-        $this->assertEquals('foobar.phtml', $this->helper->getSuffix('foobar'));
-        $header = $this->helper->getHeader('foobar');
-        $this->assertTrue(is_array($header));
-        $this->assertTrue(isset($header['type']));
-        $this->assertTrue(isset($header['content']));
-
-        $this->assertEquals('X-FooBar', $header['type']);
-        $this->assertEquals('FooBar',   $header['content']);
-    }
-
-    public function testAddContextThrowsExceptionIfContextAlreadyExists()
-    {
-        try {
-            $this->helper->addContext('xml', 'xml', 'Content-Type', 'application/xml');
-            $this->fail('addContext() should raise exception if context already exists');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('already exists', $e->getMessage());
-        }
-    }
-
-    public function testSetContextOverwritesExistingContext()
-    {
-        $this->helper->setContext('xml', 'foobar.phtml', 'X-FooBar', 'FooBar');
-        $this->assertEquals('foobar.phtml', $this->helper->getSuffix('xml'));
-        $header = $this->helper->getHeader('xml');
-        $this->assertTrue(is_array($header));
-        $this->assertTrue(isset($header['type']));
-        $this->assertTrue(isset($header['content']));
-
-        $this->assertEquals('X-FooBar', $header['type']);
-        $this->assertEquals('FooBar',   $header['content']);
-    }
-
-    public function testCanRemoveContexts()
-    {
-        $this->helper->removeContext('xml');
-        $contexts = $this->helper->getContexts();
-        $this->assertFalse(isset($contexts['xml']));
-    }
-
     public function checkNothingIsDone()
     {
         $this->assertEquals('phtml', $this->viewRenderer->getViewSuffix());
@@ -260,12 +451,17 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->checkNothingIsDone();
     }
 
-    public function testInitContextDoesNothingIfControllerContextsIsInvalid()
+    public function testInitContextThrowsExceptionIfControllerContextsIsInvalid()
     {
         $this->controller->contexts = 'foo';
         $this->request->setParam('format', 'xml')
                       ->setActionName('foo');
-        $this->helper->initContext();
+        try {
+            $this->helper->initContext();
+            $this->fail('Invalid contexts array should cause failure');
+        } catch (Zend_Controller_Exception $e) {
+            $this->assertContains('Invalid', $e->getMessage());
+        }
         $this->checkNothingIsDone();
     }
 
@@ -295,12 +491,14 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->request->setParam('format', 'json')
                       ->setActionName('all');
         $this->helper->initContext();
-        $this->assertEquals('json.phtml', $this->viewRenderer->getViewSuffix());
+        $this->assertEquals('json', $this->helper->getCurrentContext());
+        $this->assertContains('json', $this->viewRenderer->getViewSuffix());
 
         $this->request->setParam('format', 'xml')
                       ->setActionName('all');
         $this->helper->initContext();
-        $this->assertEquals('xml.phtml', $this->viewRenderer->getViewSuffix());
+        $this->assertEquals('xml', $this->helper->getCurrentContext());
+        $this->assertContains('xml', $this->viewRenderer->getViewSuffix());
     }
 
     public function testInitContextDoesNothingIfActionDoesNotHaveContextAndPassedFormatInvalid()
@@ -316,7 +514,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->request->setParam('format', 'xml')
                       ->setActionName('foo');
         $this->helper->initContext();
-        $this->assertEquals($this->helper->getSuffix('xml'), $this->viewRenderer->getViewSuffix());
+        $this->assertContains('xml', $this->viewRenderer->getViewSuffix());
     }
 
     public function testInitContextSetsAppropriateResponseHeader()
@@ -343,7 +541,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
                       ->setActionName('foo');
         $this->helper->initContext('json');
 
-        $this->assertEquals('json.phtml', $this->viewRenderer->getViewSuffix());
+        $this->assertContains('json', $this->viewRenderer->getViewSuffix());
 
         $headers = $this->response->getHeaders();
 
@@ -363,7 +561,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->request->setActionName('foo');
         $this->helper->initContext('xml');
 
-        $this->assertEquals('xml.phtml', $this->viewRenderer->getViewSuffix());
+        $this->assertContains('xml', $this->viewRenderer->getViewSuffix());
 
         $headers = $this->response->getHeaders();
 
@@ -377,7 +575,6 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->assertTrue($found);
         $this->assertEquals('text/xml', $value);
     }
-
 
     public function testInitContextDisablesLayoutByDefault()
     {
@@ -494,16 +691,107 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $body = $this->response->getBody();
         $this->assertTrue(empty($body), $body);
     }
+
+    public function testCanAddOneOrMoreActionContexts()
+    {
+        $this->assertFalse($this->helper->hasActionContext('foo', 'json'));
+        $this->helper->addActionContext('foo', 'json');
+        $this->assertTrue($this->helper->hasActionContext('foo', 'json'));
+
+        $this->assertFalse($this->helper->hasActionContext('baz', 'xml'));
+        $this->assertFalse($this->helper->hasActionContext('baz', 'json'), var_export($this->controller->contexts, 1));
+        $this->helper->addActionContext('baz', array('xml', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('baz', 'xml'));
+        $this->assertTrue($this->helper->hasActionContext('baz', 'json'));
+    }
+
+    public function testCanOverwriteAnActionContext()
+    {
+        $this->assertTrue($this->helper->hasActionContext('foo', 'xml'));
+        $this->helper->setActionContext('foo', 'json');
+        $this->assertFalse($this->helper->hasActionContext('foo', 'xml'));
+        $this->assertTrue($this->helper->hasActionContext('foo', 'json'));
+        $this->helper->setActionContext('foo', array('xml', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('foo', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('foo', 'xml'));
+    }
+
+    public function testCanAddContextsForMultipleActions()
+    {
+        $this->assertFalse($this->helper->hasActionContext('foo', 'json'));
+        $this->assertFalse($this->helper->hasActionContext('baz', 'json'));
+        $this->assertFalse($this->helper->hasActionContext('baz', 'xml'));
+        $this->helper->addActionContexts(array(
+            'foo' => 'json',
+            'baz' => array('json', 'xml'),
+        ));
+        $this->assertTrue($this->helper->hasActionContext('foo', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('baz', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('baz', 'xml'));
+    }
+
+    public function testCanOverwriteContextsForMultipleActions()
+    {
+        $this->assertTrue($this->helper->hasActionContext('foo', 'xml'));
+        $this->assertTrue($this->helper->hasActionContext('bar', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('bar', 'xml'));
+        $this->helper->setActionContexts(array(
+            'foo' => 'json',
+            'bar' => 'xml'
+        ));
+        $this->assertFalse($this->helper->hasActionContext('foo', 'xml'));
+        $this->assertTrue($this->helper->hasActionContext('foo', 'json'));
+        $this->assertFalse($this->helper->hasActionContext('bar', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('bar', 'xml'));
+    }
+
+    public function testCanRemoveOneOrMoreActionContexts()
+    {
+        $this->assertTrue($this->helper->hasActionContext('bar', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('bar', 'xml'));
+        $this->helper->removeActionContext('bar', 'xml');
+        $this->assertTrue($this->helper->hasActionContext('bar', 'json'));
+        $this->assertFalse($this->helper->hasActionContext('bar', 'xml'));
+    }
+
+    public function testCanClearAllContextsForASingleAction()
+    {
+        $this->assertTrue($this->helper->hasActionContext('bar', 'json'));
+        $this->assertTrue($this->helper->hasActionContext('bar', 'xml'));
+        $this->helper->clearActionContexts('bar');
+        $this->assertFalse($this->helper->hasActionContext('bar', 'json'));
+        $this->assertFalse($this->helper->hasActionContext('bar', 'xml'));
+    }
+
+    public function testCanClearAllActionContexts()
+    {
+        $this->helper->clearActionContexts();
+        $contexts = $this->helper->getActionContexts();
+        $this->assertTrue(empty($contexts));
+    }
 }
 
 class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Controller_Action
 {
+    public $contextSwitch;
+
+    /*
     public $contexts = array(
         'foo' => array('xml'),          // only XML context
         'bar' => array('xml', 'json'),  // only XML and JSON contexts
         'baz' => array(),               // no contexts
         'all' => true,                  // all contexts
     );
+     */
+
+    public function setupContexts()
+    {
+        $this->_helper->contextSwitch()->setActionContexts(array(
+            'foo' => 'xml',
+            'bar' => array('xml', 'json'),
+            'all' => true
+        ));
+    }
 
     public function postDispatch()
     {

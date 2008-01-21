@@ -50,7 +50,8 @@ class Zend_Controller_Action_Helper_AjaxContext extends Zend_Controller_Action_H
      */
     public function __construct()
     {
-        $this->addContext('html', 'ajax.phtml');
+        parent::__construct();
+        $this->addContext('html', array('suffix' => 'ajax'));
     }
 
     /**

@@ -35,28 +35,19 @@ require_once 'Zend/Controller/Action/Helper/Abstract.php';
  */
 class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action_Helper_Abstract
 {
+    /**#@+
+     * Trigger type constants
+     * @const string
+     */
+    const TRIGGER_INIT = 'TRIGGER_INIT';
+    const TRIGGER_POST = 'TRIGGER_POST';
+    /**#@-*/
+
     /**
-     * Initially supported contexts
+     * Supported contexts
      * @var array
      */
-    protected $_contexts = array( 
-        'json' => array( 
-            'suffix' => 'json.phtml', 
-            'header' => array( 
-                'type'    => 'Content-Type', 
-                'content' => 'application/json' 
-            ),
-            'initCallback' => 'initJsonContext',
-            'postCallback' => 'postJsonContext',
-        ), 
-        'xml'  => array( 
-            'suffix' => 'xml.phtml', 
-            'header' => array( 
-                'type'    => 'Content-Type', 
-                'content' => 'text/xml' 
-            ) 
-        ), 
-    ); 
+    protected $_contexts = array();
 
     /**
      * JSON auto-serialization flag
@@ -100,6 +91,32 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     protected $_viewRenderer;
 
     /**
+     * Constructor
+     * 
+     * @param  array|Zend_Config $options 
+     * @return void
+     */
+    public function __construct($options = null)
+    {
+        if (empty($this->_contexts)) {
+            $this->addContexts(array(
+                'json' => array(
+                    'suffix'    => 'json',
+                    'headers'   => array('Content-Type' => 'application/json'),
+                    'callbacks' => array(
+                        'init' => 'initJsonContext',
+                        'post' => 'postJsonContext'
+                    )
+                ),
+                'xml'  => array(
+                    'suffix'    => 'xml',
+                    'headers'   => array('Content-Type' => 'text/xml'),
+                )
+            ));
+        }
+    }
+
+    /**
      * Strategy pattern: return object
      * 
      * @return Zend_Controller_Action_Helper_ContextSwitch
@@ -119,18 +136,11 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
         $controller = $this->getActionController();
         $request    = $this->getRequest();
         $action     = $request->getActionName();
-        $contextKey = $this->_contextKey;
 
         // Return if no context switching enabled, or no context switching 
         // enabled for this action
-        if (!isset($controller->$contextKey)) {
-            return;
-        }
-        $contexts = $controller->$contextKey;
-
-        if (!is_array($contexts) 
-            || !isset($contexts[$action]))
-        {
+        $contexts = $this->getActionContexts($action);
+        if (empty($contexts)) {
             return;
         }
 
@@ -144,31 +154,33 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
         }
 
         // Check if context allowed by action controller
-        if (!in_array($context, (array) $contexts[$action])) {
+        if (!$this->hasActionContext($action, $context)) {
             return;
         }
 
         // Return if invalid context parameter provided and no format or invalid 
         // format provided
-        if (!isset($this->_contexts[$context]) 
-            && (empty($format) || (!isset($this->_contexts[$format]))))
-        {
-            return;
+        if (!$this->hasContext($context)) {
+            if (empty($format) || !$this->hasContext($format)) {
+
+                return;
+            }
         }
 
         // Use provided format if passed
-        if (!empty($format) && isset($this->_contexts[$format])) {
+        if (!empty($format) && $this->hasContext($format)) {
             $context = $format;
         }
 
         $suffix = $this->getSuffix($context);
-        if (!empty($suffix)) {
-            $this->_getViewRenderer()->setViewSuffix($suffix);
-        }
+        $this->_getViewRenderer()->setViewSuffix($suffix);
 
-        $header = $this->getHeader($context);
-        if (!empty($header)) {
-            $this->getResponse()->setHeader($header['type'], $header['content']);
+        $headers = $this->getHeaders($context);
+        if (!empty($headers)) {
+            $response = $this->getResponse();
+            foreach ($headers as $header => $content) {
+                $response->setHeader($header, $content);
+            }
         }
 
         if ($this->getAutoDisableLayout()) {
@@ -178,7 +190,7 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
             }
         }
 
-        if (null !== ($callback = $this->getInitCallback($context))) {
+        if (null !== ($callback = $this->getCallback($context, self::TRIGGER_INIT))) {
             if (is_string($callback) && method_exists($this, $callback)) {
                 $this->$callback();
             } elseif (is_string($callback) && function_exists($callback)) {
@@ -244,9 +256,10 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
      *
      * @param  string $type   Context type for which to set suffix
      * @param  string $suffix Suffix to use
+     * @param  bool $prependViewRendererSuffix Whether or not to prepend the new suffix to the viewrenderer suffix
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */ 
-    public function setSuffix($type, $suffix)
+    public function setSuffix($type, $suffix, $prependViewRendererSuffix = true)
     {
         if (!isset($this->_contexts[$type])) {
             require_once 'Zend/Controller/Action/Exception.php';
@@ -254,10 +267,31 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
         }
 
         if (empty($suffix)) {
-            $suffix = null;
+            $suffix = '';
         }
 
-        $this->_contexts[$type]['suffix'] = (string) $suffix;
+        if (is_array($suffix)) {
+            if (isset($suffix['prependViewRendererSuffix'])) {
+                $prependViewRendererSuffix = $suffix['prependViewRendererSuffix'];
+            }
+            if (isset($suffix['suffix'])) {
+                $suffix = $suffix['suffix'];
+            } else {
+                $suffix = '';
+            }
+        }
+
+        $suffix = (string) $suffix;
+
+        if ($prependViewRendererSuffix) {
+            if (empty($suffix)) {
+                $suffix = $this->_getViewRenderer()->getViewSuffix();
+            } else {
+                $suffix .= '.' . $this->_getViewRenderer()->getViewSuffix();
+            }
+        }
+
+        $this->_contexts[$type]['suffix'] = $suffix;
         return $this;
     }
 
@@ -276,6 +310,69 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
 
         return $this->_contexts[$type]['suffix'];
     }
+
+    /**
+     * Does the given context exist?
+     * 
+     * @param  string $context 
+     * @param  bool $throwException 
+     * @return bool
+     * @throws Zend_Controller_Action_Exception if context does not exist and throwException is true
+     */
+    public function hasContext($context, $throwException = false)
+    {
+        if (is_string($context)) {
+            if (isset($this->_contexts[$context])) {
+                return true;
+            }
+        } elseif (is_array($context)) {
+            $error = false;
+            foreach ($context as $test) {
+                if (!isset($this->_contexts[$test])) {
+                    $error = (string) $test;
+                    break;
+                }
+            }
+            if (false === $error) {
+                return true;
+            }
+            $context = $error;
+        } elseif (true === $context) {
+            return true;
+        }
+
+        if ($throwException) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf('Context "%s" does not exist', $context));
+        }
+
+        return false;
+    }
+
+    /**
+     * Add header to context
+     * 
+     * @param  string $context 
+     * @param  string $header 
+     * @param  string $content 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function addHeader($context, $header, $content)
+    {
+        $context = (string) $context;
+        $this->hasContext($context, true);
+
+        $header  = (string) $header;
+        $content = (string) $content;
+
+        if (isset($this->_contexts[$context]['headers'][$header])) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot add "%s" header to context "%s": already exists', $header, $context));
+        }
+
+        $this->_contexts[$context]['headers'][$header] = $content;
+        return $this;
+    }
  
     /**
      * Customize response header to use when switching context
@@ -288,20 +385,45 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
      * @param  string $content Header content
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */ 
-    public function setHeader($type, $header = null, $content = '')
+    public function setHeader($context, $header, $content)
     {
-        if (!isset($this->_contexts[$type])) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot set header; invalid context type "%s"', $type));
+        $this->hasContext($context, true);
+        $context = (string) $context;
+        $header  = (string) $header;
+        $content = (string) $content;
+
+        $this->_contexts[$context]['headers'][$header] = $content;
+        return $this;
+    }
+
+    /**
+     * Add multiple headers at once for a given context
+     * 
+     * @param  string $context 
+     * @param  array $headers 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function addHeaders($context, array $headers)
+    {
+        foreach ($headers as $header => $content) {
+            $this->addHeader($context, $header, $content);
         }
 
-        if (empty($header) || empty($content)) {
-            $this->_contexts[$type]['header'] = null;
-        } else {
-            $this->_contexts[$type]['header'] = array(
-                'type'    => $header,
-                'content' => $content,
-            );
+        return $this;
+    }
+
+    /**
+     * Set multiple headers at once for a given context
+     * 
+     * @param  string $context 
+     * @param  array $headers 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setHeaders($context, array $headers)
+    {
+        $this->clearHeaders($context);
+        foreach ($headers as $header => $content) {
+            $this->setHeader($context, $header, $content);
         }
 
         return $this;
@@ -310,108 +432,202 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     /**
      * Retrieve context header
      *
-     * Returns a context header for the given type. Header is an array, with 
-     * the following keys:
-     * - 'type' is the header type/key
-     * - 'content' is the header content
+     * Returns the value of a given header for a given context type
      * 
-     * @param  string $type 
+     * @param  string $context
+     * @param  string $header
+     * @return string|null
+     */
+    public function getHeader($context, $header)
+    {
+        $this->hasContext($context, true);
+        $context = (string) $context;
+        $header  = (string) $header;
+        if (isset($this->_contexts[$context]['headers'][$header])) {
+            return $this->_contexts[$context]['headers'][$header];
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieve context headers
+     *
+     * Returns all headers for a context as key/value pairs
+     * 
+     * @param  string $context
      * @return array
      */
-    public function getHeader($type)
+    public function getHeaders($context)
     {
-        if (!isset($this->_contexts[$type])) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot retrieve header; invalid context type "%s"', $type));
-        }
-
-        return $this->_contexts[$type]['header'];
+        $this->hasContext($context, true);
+        $context = (string) $context;
+        return $this->_contexts[$context]['headers'];
     }
 
     /**
-     * Set callback to call on context initialization
+     * Remove a single header from a context
      * 
-     * @param  string $type 
-     * @param  string|array $callback 
+     * @param  string $context 
+     * @param  string $header 
+     * @return bool
+     */
+    public function removeHeader($context, $header)
+    {
+        $this->hasContext($context, true);
+        $context = (string) $context;
+        $header  = (string) $header;
+        if (isset($this->_contexts[$context]['headers'][$header])) {
+            unset($this->_contexts[$context]['headers'][$header]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Clear all headers for a given context
+     * 
+     * @param  string $context 
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */
-    public function setInitCallback($type, $callback)
+    public function clearHeaders($context)
     {
-        if (!isset($this->_contexts[$type])) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot set initialization callback; invalid context type "%s"', $type));
-        }
-
-        if (!is_string($callback) && !is_array($callback)) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception('Invalid callback provided to setInitCallback()');
-        }
-
-        $this->_contexts[$type]['initCallback'] = $callback;
+        $this->hasContext($context, true);
+        $context = (string) $context;
+        $this->_contexts[$context]['headers'] = array();
         return $this;
     }
 
     /**
-     * Retrieve context initialization callback
+     * Validate trigger and return in normalized form
      * 
-     * @param  string $type Context type
-     * @return string|array|null
+     * @param  string $trigger 
+     * @return string
      */
-    public function getInitCallback($type)
+    protected function _validateTrigger($trigger)
     {
-        if (!isset($this->_contexts[$type])) {
+        $trigger = strtoupper($trigger);
+        if ('TRIGGER_' !== substr($trigger, 0, 8)) {
+            $trigger = 'TRIGGER_' . $trigger;
+        }
+
+        if (!in_array($trigger, array(self::TRIGGER_INIT, self::TRIGGER_POST))) {
             require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot set callback; invalid context type "%s"', $type));
+            throw new Zend_Controller_Action_Exception(sprintf('Invalid trigger "%s"', $trigger));
         }
 
-        if (isset($this->_contexts[$type]['initCallback'])) {
-            return $this->_contexts[$type]['initCallback'];
-        }
-
-        return null;
+        return $trigger;
     }
- 
+
     /**
-     * Set callback to call on postDispatch
+     * Set a callback for a given context and trigger
      * 
-     * @param  string $type 
+     * @param  string $context 
+     * @param  string $trigger 
      * @param  string|array $callback 
      * @return Zend_Controller_Action_Helper_ContextSwitch
+     * @throws Zend_Controller_Action_Exception
      */
-    public function setPostCallback($type, $callback)
+    public function setCallback($context, $trigger, $callback)
     {
-        if (!isset($this->_contexts[$type])) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot set postDispatch callback; invalid context type "%s"', $type));
+        $this->hasContext($context, true);
+        $trigger = $this->_validateTrigger($trigger);
+
+        if (!is_string($callback)) {
+            if (!is_array($callback) || (2 != count($callback))) {
+                require_once 'Zend/Controller/Action/Exception.php';
+                throw new Zend_Controller_Action_Exception('Invalid callback specified');
+            }
         }
 
-        if (!is_string($callback) && !is_array($callback)) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception('Invalid callback provided to setPostCallback()');
-        }
-
-        $this->_contexts[$type]['postCallback'] = $callback;
+        $this->_contexts[$context]['callbacks'][$trigger] = $callback;
         return $this;
     }
 
     /**
-     * Retrieve context postDispatch callback
+     * Set callbacks for a given context
+     *
+     * Callbacks should be in trigger/callback pairs.
      * 
-     * @param  string $type Context type
-     * @return string|array|null
+     * @param  string $context 
+     * @param  array $callbacks 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
      */
-    public function getPostCallback($type)
+    public function setCallbacks($context, array $callbacks)
     {
-        if (!isset($this->_contexts[$type])) {
-            require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot set callback; invalid context type "%s"', $type));
+        $this->hasContext($context, true);
+        $context = (string) $context;
+        if (!isset($this->_contexts[$context]['callbacks'])) {
+            $this->_contexts[$context]['callbacks'] = array();
         }
 
-        if (isset($this->_contexts[$type]['postCallback'])) {
-            return $this->_contexts[$type]['postCallback'];
+        foreach ($callbacks as $trigger => $callback) {
+            $this->setCallback($context, $trigger, $callback);
+        }
+        return $this;
+    }
+
+    /**
+     * Get a single callback for a given context and trigger
+     * 
+     * @param  string $context 
+     * @param  string $trigger 
+     * @return string|array|null
+     */
+    public function getCallback($context, $trigger)
+    {
+        $this->hasContext($context, true);
+        $trigger = $this->_validateTrigger($trigger);
+        if (isset($this->_contexts[$context]['callbacks'][$trigger])) {
+            return $this->_contexts[$context]['callbacks'][$trigger];
         }
 
         return null;
+    }
+
+    /**
+     * Get all callbacks for a given context
+     * 
+     * @param  string $context 
+     * @return array
+     */
+    public function getCallbacks($context)
+    {
+        $this->hasContext($context, true);
+        return $this->_contexts[$context]['callbacks'];
+    }
+
+    /**
+     * Clear a callback for a given context and trigger
+     * 
+     * @param  string $context 
+     * @param  string $trigger 
+     * @return bool
+     */
+    public function removeCallback($context, $trigger)
+    {
+        $this->hasContext($context, true);
+        $trigger = $this->_validateTrigger($trigger);
+        if (isset($this->_contexts[$context]['callbacks'][$trigger])) {
+            unset($this->_contexts[$context]['callbacks'][$trigger]);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Clear all callbacks for a given context
+     * 
+     * @param  string $context 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function clearCallbacks($context)
+    {
+        $this->hasContext($context, true);
+        $this->_contexts[$context]['callbacks'] = array();
+        return $this;
     }
 
     /**
@@ -488,42 +704,80 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     /**
      * Add new context
      *
-     * @param  string $type Context type
-     * @param  string $suffix View suffix to use with context
-     * @param  string $headerName HTTP header to set for context
-     * @param  string $headerContent Content for context HTTP header
+     * @param  string $context Context type
+     * @param  array $spec Context specification
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */ 
-    public function addContext($type, $suffix = null, $headerName = null, $headerContent = null)
+    public function addContext($context, array $spec)
     {
-        $type = (string) $type;
-        if (isset($this->_contexts[$type])) {
+        if ($this->hasContext($context)) {
             require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot add context "%s"; already exists', $type));
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot add context "%s"; already exists', $context));
         }
+        $context = (string) $context;
 
-        $this->_contexts[$type] = array();
-        $this->setSuffix($type, $suffix);
-        $this->setHeader($type, $headerName, $headerContent);
+        $this->_contexts[$context] = array();
+
+        $this->setSuffix($context,    (isset($spec['suffix'])    ? $spec['suffix']    : ''))
+             ->setHeaders($context,   (isset($spec['headers'])   ? $spec['headers']   : array()))
+             ->setCallbacks($context, (isset($spec['callbacks']) ? $spec['callbacks'] : array()));
         return $this;
     }
 
     /**
      * Overwrite existing context
      *
-     * @param  string $type Context type
-     * @param  string $suffix View suffix to use with context
-     * @param  string $headerName HTTP header to set for context
-     * @param  string $headerContent Content for context HTTP header
+     * @param  string $context Context type
+     * @param  array $spec Context specification
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */ 
-    public function setContext($type, $suffix = null, $headerName = null, $headerContent = null)
+    public function setContext($context, array $spec)
     {
-        $type = (string) $type;
-        $this->_contexts[$type] = array();
-        $this->setSuffix($type, $suffix);
-        $this->setHeader($type, $headerName, $headerContent);
+        $this->removeContext($context);
+        return $this->addContext($context, $spec);
+    }
+
+    /**
+     * Add multiple contexts
+     * 
+     * @param  array $contexts 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function addContexts(array $contexts)
+    {
+        foreach ($contexts as $context => $spec) {
+            $this->addContext($context, $spec);
+        }
         return $this;
+    }
+
+    /**
+     * Set multiple contexts, after first removing all
+     * 
+     * @param  array $contexts 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setContexts(array $contexts)
+    {
+        $this->clearContexts();
+        foreach ($contexts as $context => $spec) {
+            $this->addContext($context, $spec);
+        }
+        return $this;
+    }
+
+    /**
+     * Retrieve context specification
+     * 
+     * @param  string $context 
+     * @return array|null
+     */
+    public function getContext($context)
+    {
+        if ($this->hasContext($context)) {
+            return $this->_contexts[(string) $context];
+        }
+        return null;
     }
 
     /**
@@ -539,16 +793,26 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     /**
      * Remove a context
      * 
-     * @param  string $type 
+     * @param  string $context 
+     * @return bool
+     */
+    public function removeContext($context)
+    {
+        if ($this->hasContext($context)) {
+            unset($this->_contexts[(string) $context]);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Remove all contexts
+     * 
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */
-    public function removeContext($type)
+    public function clearContexts()
     {
-        $type = (string) $type;
-        if (isset($this->_contexts[$type])) {
-            unset($this->_contexts[$type]);
-        }
-
+        $this->_contexts = array();
         return $this;
     }
 
@@ -573,7 +837,7 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     {
         $context = $this->getCurrentContext();
         if (null !== $context) {
-            if (null !== ($callback = $this->getPostCallback($context))) {
+            if (null !== ($callback = $this->getCallback($context, self::TRIGGER_POST))) {
                 if (is_string($callback) && method_exists($this, $callback)) {
                     $this->$callback();
                 } elseif (is_string($callback) && function_exists($callback)) {
@@ -608,6 +872,249 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
             $vars = Zend_Json::encode($view->getVars());
             $this->getResponse()->setBody($vars);
         }
+    }
+
+    /**
+     * Add one or more contexts to an action
+     * 
+     * @param  string $action 
+     * @param  string|array $context 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function addActionContext($action, $context)
+    {
+        $this->hasContext($context, true);
+        $controller = $this->getActionController();
+        if (null === $controller) {
+            return;
+        }
+        $action     = (string) $action;
+        $contextKey = $this->_contextKey;
+
+        if (!isset($controller->$contextKey)) {
+            $controller->$contextKey = array();
+        }
+
+        if (true === $context) {
+            $contexts = $this->getContexts();
+            $controller->{$contextKey}[$action] = array_keys($contexts);
+            return $this;
+        }
+
+        $context = (array) $context;
+        if (!isset($controller->{$contextKey}[$action])) {
+            $controller->{$contextKey}[$action] = $context;
+        } else {
+            $controller->{$contextKey}[$action] = array_merge(
+                $controller->{$contextKey}[$action], 
+                $context
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set a context as available for a given controller action
+     * 
+     * @param  string $action 
+     * @param  string|array $context 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setActionContext($action, $context)
+    {
+        $this->hasContext($context, true);
+        $controller = $this->getActionController();
+        if (null === $controller) {
+            return;
+        }
+        $action     = (string) $action;
+        $contextKey = $this->_contextKey;
+
+        if (!isset($controller->$contextKey)) {
+            $controller->$contextKey = array();
+        }
+
+        if (true === $context) {
+            $contexts = $this->getContexts();
+            $controller->{$contextKey}[$action] = array_keys($contexts);
+        } else {
+            $controller->{$contextKey}[$action] = (array) $context;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add multiple action/context pairs at once
+     * 
+     * @param  array $contexts 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function addActionContexts(array $contexts)
+    {
+        foreach ($contexts as $action => $context) {
+            $this->addActionContext($action, $context);
+        }
+        return $this;
+    }
+
+    /**
+     * Overwrite and set multiple action contexts at once
+     * 
+     * @param  array $contexts 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setActionContexts(array $contexts)
+    {
+        foreach ($contexts as $action => $context) {
+            $this->setActionContext($action, $context);
+        }
+        return $this;
+    }
+
+    /**
+     * Does a particular controller action have the given context(s)?
+     * 
+     * @param  string $action 
+     * @param  string|array $context 
+     * @return true
+     */
+    public function hasActionContext($action, $context)
+    {
+        $this->hasContext($context, true);
+        $controller = $this->getActionController();
+        if (null === $controller) {
+            return false;
+        }
+        $action     = (string) $action;
+        $contextKey = $this->_contextKey;
+
+        if (!isset($controller->{$contextKey})) {
+            return false;
+        }
+
+        $allContexts = $controller->{$contextKey};
+
+        if (!is_array($allContexts)) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception("Invalid contexts found for controller");
+        }
+
+        if (!isset($allContexts[$action])) {
+            return false;
+        }
+
+        if (true === $allContexts[$action]) {
+            return true;
+        }
+
+        $contexts = $allContexts[$action];
+
+        if (!is_array($contexts)) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception(sprintf("Invalid contexts found for action '%s'", $action));
+        }
+
+        if (is_string($context) && in_array($context, $contexts)) {
+            return true;
+        } elseif (is_array($context)) {
+            $found = true;
+            foreach ($context as $test) {
+                if (!in_array($test, $contexts)) {
+                    $found = false;
+                    break;
+                }
+            }
+            return $found;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get contexts for a given action or all actions in the controller
+     * 
+     * @param  string $action 
+     * @return array
+     */
+    public function getActionContexts($action = null)
+    {
+        $controller = $this->getActionController();
+        if (null === $controller) {
+            return array();
+        }
+        $action     = (string) $action;
+        $contextKey = $this->_contextKey;
+
+        if (!isset($controller->$contextKey)) {
+            return array();
+        }
+
+        if (null !== $action) {
+            if (isset($controller->{$contextKey}[$action])) {
+                return $controller->{$contextKey}[$action];
+            } else {
+                return array();
+            }
+        }
+
+        return $controller->$contextKey;
+    }
+
+    /**
+     * Remove one or more contexts for a given controller action
+     * 
+     * @param  string $action 
+     * @param  string|array $context 
+     * @return bool
+     */
+    public function removeActionContext($action, $context)
+    {
+        if ($this->hasActionContext($action, $context)) {
+            $controller     = $this->getActionController();
+            $contextKey     = $this->_contextKey;
+            $action         = (string) $action;
+            $contexts       = $controller->$contextKey;
+            $actionContexts = $contexts[$action];
+            $contexts       = (array) $context;
+            foreach ($contexts as $context) {
+                $index = array_search($context, $actionContexts);
+                if (false !== $index) {
+                    unset($controller->{$contextKey}[$action][$index]);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Clear all contexts for a given controller action or all actions
+     * 
+     * @param  string $action 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function clearActionContexts($action = null)
+    {
+        $controller = $this->getActionController();
+        $contextKey = $this->_contextKey;
+
+        if (!isset($controller->$contextKey) || empty($controller->$contextKey)) {
+            return $this;
+        }
+
+        if (null === $action) {
+            $controller->$contextKey = array();
+            return $this;
+        }
+
+        $action = (string) $action;
+        if (isset($controller->{$contextKey}[$action])) {
+            unset($controller->{$contextKey}[$action]);
+        }
+
+        return $this;
     }
 
     /**
