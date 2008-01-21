@@ -14,27 +14,33 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Console_Context
+ * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-class Zend_Console_Context_Action
-{   
-    public function init(array $argv = array(), $verbosity = 0);
-    
-    public function getAction()
+/**
+ * @category   Zend
+ * @package    Zend_Build
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+/**
+ * Include the console files we need
+ */
+require_once 'Zend/Console/Exception.php';
+require_once 'Zend/Console/ErrorCodes.php';
+
+/**
+ * Include the build files we need
+ */
+require_once 'Zend/Build/Factory.php';
+
+class Zend_Console_Context
+{
+    public static configure(Zend_Build_Configurable $configurable)
     {
-        require_once 'Zend/Build/Action.php';
-    }
-    
-    public function getUsage()
-    {
-        
-    }
-    
-    public function getOptions()
-    {
-    
+        $configurable->
     }
 }

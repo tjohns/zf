@@ -14,37 +14,45 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Build_Task
+ * @package    Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: Interface.php 3412 2007-02-14 22:22:35Z darby $
  */
 
 /**
- * Include Resource files
- */
-require_once 'Zend/Build/Resource/Interface.php';
-require_once 'Zend/Build/Resource/Abstract.php';
-
-/**
- * Include the Console files
- */
-require_once 'Zend_Console_Context_Interface';
-
-/**
- * Include Task files
- */
-require_once 'Zend/Build/Task/Abstract.php';
-
-/**
  * @category   Zend
- * @package    Zend_Build_Task
+ * @package    Zend_Build_Resource
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Build_Command_Create extends Zend_Build_Task_Abstract implements Zend_Console_Context_Interface
+abstract class Zend_Build_AbstractConfigurable implements Zend_Build_Configurable
 {
-    public function configure(Zend_Config $config);
-    public function validate(Project $projectProfile, array $resources);
-    public function execute(Project $projectProfile, array $resources);
+    protected $_config = null;
+
+    /**
+     * @see Zend_Build_Configurable::getConfig()
+     */
+    public function getConfig()
+    {
+        return $this->_config;
+    }
+    
+    /**
+     * @see Zend_Build_Configurable::getConfig()
+     */
+    public function setConfig(Zend_Config $config)
+    {
+        $this->_config = $config;
+    }
+    
+    /**
+     * @see Zend_Build_Configurable::getConfigurable()
+     */
+    public function getConfigurable(Zend_Config $config))
+    {
+        $configurable = new $config->class;
+        $configurable->setConfig($config);
+        return $resource.configure();
+    }
 }

@@ -74,6 +74,27 @@ class Zend_Build_Manifest
         }
     }
 
+
+    public function getContext($type, $name)
+    {
+        if (array_key_exists($type, $this->_configIndex) && array_key_exists($name, $this->_configIndex[$type])) {
+            return $this->_configIndex[$type][$name];
+        } else {
+            return null;
+        }
+    }
+    
+    public function toConfig($allowModifications = true)
+    {
+        require_once('Zend/Config.php');
+        return new Zend_Config($this->toArray(), $allowModifications);
+    }
+    
+    public function toArray()
+    {   
+        return $this->_configArray;
+    }
+    
     private function _recursiveSearch($pattern, $dir)
     {
         $contents = scandir($dir);
@@ -175,25 +196,5 @@ class Zend_Build_Manifest
                 }
             }
         }
-    }
-    
-    public function getContext($type, $name)
-    {
-        if (array_key_exists($type, $this->_configIndex) && array_key_exists($name, $this->_configIndex[$type])) {
-            return $this->_configIndex[$type][$name];
-        } else {
-            return null;
-        }
-    }
-    
-    public function toConfig($allowModifications = true)
-    {
-        require_once('Zend/Config.php');
-        return new Zend_Config($this->toArray(), $allowModifications);
-    }
-    
-    public function toArray()
-    {   
-        return $this->_configArray;
     }
 }

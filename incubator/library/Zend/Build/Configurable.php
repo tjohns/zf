@@ -22,16 +22,17 @@
 interface Zend_Build_Configurable 
 { 
     /**
-     * Add configuration object
-     *
-     * Add a configuration object to the component. Optionally you can specify
-     * a configuration section in which the basic configuration object resides.
-     *
-     * @param Zend_Config $config  Configuration object
-     * @param string      $section Section of the configuration (optionally)
+     * Configure the component with Config object set previously
      */ 
-    public function configure(Zend_Config $config, $section = null); 
+    public function configure(); 
  
+    /**
+     * Set the Config object on this object
+     *
+     * @param Zend_Config $config Configuration object
+     */
+    public function setConfig(Zend_Config $config);
+    
     /**
      * Get configuration object
      *
@@ -40,11 +41,10 @@ interface Zend_Build_Configurable
     public function getConfig(); 
  
     /**
-     * Instanciate component from configuration object
+     * Instantiate component from configuration object
      *
      * @param Zend_Config $config  Configuration object
-     * @param string      $section Section of the configuration (optionally)
      * @return object     Instance of the configured component
      */ 
-    public static function getConfigurable(Zend_Config $config, $section = null); 
+    public static function getConfigurable(); 
 } 

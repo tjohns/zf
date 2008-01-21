@@ -26,11 +26,15 @@
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Build_Resource_Abstract implements Zend_Build_Resource_Interface
+abstract class Zend_Build_Resource_Abstract
+    extends Zend_Build_AbstractConfigurable
+    implements Zend_Build_Resource_Interface
 {
     public $name;
     protected $_parent;
     protected $_children;
+    protected $_config;
+    
     public function __construct ($name, array $children = array())
     {
         $this->name = $name;
@@ -145,6 +149,32 @@ abstract class Zend_Build_Resource_Abstract implements Zend_Build_Resource_Inter
     public function getType ()
     {
         get_class($this);
+    }
+    
+    /**
+     * @see Zend_Build_Configurable::getConfig()
+     */
+    public function getConfig()
+    {
+        return $this->_config;
+    }
+    
+    /**
+     * @see Zend_Build_Configurable::getConfig()
+     */
+    public function setConfig(Zend_Config $config, $section = null)
+    {
+        
+    }
+    
+    /**
+     * @see Zend_Build_Configurable::getConfigurable()
+     */
+    public function getConfigurable(public function setConfig(Zend_Config $config, $section = null);)
+    {
+        $resource = new $config->class;
+        $resource->setConfig($config, $section);
+        return $resource.configure();
     }
     
     protected function readChecksum ()

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -14,33 +13,18 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Console_Context
+ * @package    Zend_Build
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-class Zend_Console_Context_Action
+/*
+ * This class allows variables to be bound and evaluated in file templates.
+ */
+class Zend_Build_FileTemplate
 {
-    private $_resource = null;
-
-    public function init(array $argv = array(), $verbosity = 0)
+    public function render($filename)
     {
-        // Translate the arguments in to Zend_Config here
-        
-    }
-    
-    public function getResource()
-    {
-        require_once 'Zend/Build/Resource.php';
-    }
-    
-    public function getUsage()
-    {
-        
-    }
-    
-    public function getOptions()
-    {
-        
+        return eval(file_get_contents($filename));
     }
 }

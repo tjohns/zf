@@ -46,6 +46,9 @@ class Zend_Console implements Zend_Console_Context_Interface
 {
 	const ERR_PATH_SEPARATOR = ': ';
 	
+	const MF_ACTION_TYPE                = 'action';
+    const MF_RESOURCE_TYPE              = 'resource';
+	
 	protected $_native_exec = null;
 	protected $_php_exec = null;
 	protected $_verbosity;
@@ -76,10 +79,15 @@ class Zend_Console implements Zend_Console_Context_Interface
             $this->printHelp();
             return null;
         }
+        
         try
         {
-            $command = Zend_Console_Factory::makeTask($argv);
-            $command->init($argv, $this->_verbosity);
+            $actionName = array_shift($argv);
+            $context = Zend_Build_Manifest::getInstance()->getContext(self::MF_ACTION_TYPE, $actionName);
+            $config = $this->_parseParams($context, $argv);
+            $action = new $context->class;
+            $action.setConfig($config);
+            $action.configure(); 
         } catch (Zend_Console_Exception $e) {
             throw $e->prependUsage($this->getUsage());
         }
@@ -139,4 +147,18 @@ class Zend_Console implements Zend_Console_Context_Interface
 	{
         print("HELPPPPPP!\n");
 	}
+	
+	private function _parseParams($context, $argv)
+	{
+	   $opts = new Zend_Console_Getopt();
+	   $aliases = array();
+	   foreach($context->attribute as $attribute)
+	   {
+	       // Key should be the rule string, value is the long usage
+	       $opts->addRules(array($attribute->getopt, $attribute->usage));
+	   }
+	   $opts->addArguments($argv);
+	   return $opts->parse();
+	}
+	
 }

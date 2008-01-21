@@ -37,16 +37,8 @@ require_once 'Zend/Build/Action/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Build_Action_Create extends Zend_Build_Action_Abstract
-{
-    const NAME = 'create';
-    const SHORT_USAGE = 'short usage';
-    const LONG_USAGE = 'long usage';
-    
-    public function init ($argv)
-    {
-        $_resources[] = Zend_Build_Factory::makeResource($argv);
-        $_name = NAME;
-        $_short_usage = SHORT_USAGE;
-        $_long_usage = LONG_USAGE;
-    }
+{   
+    public function configure(Zend_Config $config);
+    public function validate(Project $projectProfile, array $resources);
+    public function execute(Project $projectProfile, array $resources);
 }

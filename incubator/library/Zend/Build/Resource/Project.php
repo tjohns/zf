@@ -31,4 +31,10 @@ require_once 'Zend/Build/Resource/Directory.php';
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Build_Resource_Project extends Zend_Build_Resource_Directory {}
+class Zend_Build_Resource_Project extends Zend_Build_Resource_Directory
+{
+    public function configure(Zend_Config $config, $section = null)
+    {
+           
+    }
+}
