@@ -37,7 +37,7 @@
     <sect2 id="zend.validate.set.date">
         <title>Date</title>
         <para>
-            Retourne <code>true</code> si et seulement si <code>$value</code> est une date valide au format <code>YYYY-MM-DD</code>.
+            Retourne <code>true</code> si <code>$value</code> est une date valide au format <code>YYYY-MM-DD</code>. Si l'option <code>locale</code> est fournie alors la date sera validé suivant le paramètre local. Enfin si l'option <code>format</code> est fournie ce format est utilisé pour la validation. Pour plus de détails concernant les paramètres optionels, referez vous à <link linkend="zend.date.others.comparison.table">Zend_Date::isDate()</link>.
         </para>
     </sect2>
 
