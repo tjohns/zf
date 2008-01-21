@@ -29,9 +29,12 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Ldap_AllTests::main');
 }
 
-require_once 'Zend/Ldap/ConnectTest.php';
-require_once 'Zend/Ldap/BindTest.php';
-require_once 'Zend/Ldap/CanonTest.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+/**
+ * @see Zend_Ldap_OfflineTest
+ */
+require_once 'Zend/Ldap/OfflineTest.php';
 
 /**
  * @category   Zend
@@ -51,17 +54,45 @@ class Zend_Ldap_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Ldap');
 
-		if (defined('TESTS_ZEND_LDAP_ENABLED') && TESTS_ZEND_LDAP_ENABLED) {
-	        $suite->addTestSuite('Zend_Ldap_ConnectTest');
-   	    	$suite->addTestSuite('Zend_Ldap_BindTest');
-    	    $suite->addTestSuite('Zend_Ldap_CanonTest');
-		}
+        $suite->addTestSuite('Zend_Ldap_OfflineTest');
+
+        if (defined('TESTS_ZEND_LDAP_ONLINE_ENABLED')
+            && constant('TESTS_ZEND_LDAP_ONLINE_ENABLED')) {
+            /**
+             * @see Zend_Ldap_ConnectTest
+             */
+            require_once 'Zend/Ldap/ConnectTest.php';
+            $suite->addTestSuite('Zend_Ldap_ConnectTest');
+            /**
+             * @see Zend_Ldap_BindTest
+             */
+            require_once 'Zend/Ldap/BindTest.php';
+            $suite->addTestSuite('Zend_Ldap_BindTest');
+            /**
+             * @see Zend_Ldap_CanonTest
+             */
+            require_once 'Zend/Ldap/CanonTest.php';
+            $suite->addTestSuite('Zend_Ldap_CanonTest');
+        } else {
+            $suite->addTest(new Zend_Ldap_SkipOnlineTests());
+        }
 
         return $suite;
     }
 }
 
-echo __LINE__ . "\n";
+class Zend_Ldap_SkipOnlineTests extends PHPUnit_Framework_TestCase
+{
+    public function setUp()
+    {
+        $this->markTestSkipped('Zend_Ldap online tests not enabled in TestConfiguration.php');
+    }
+
+    public function testNothing()
+    {
+    }
+}
+
 if (PHPUnit_MAIN_METHOD == 'Zend_Ldap_AllTests::main') {
     Zend_Ldap_AllTests::main();
 }

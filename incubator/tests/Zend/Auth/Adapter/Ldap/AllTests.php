@@ -29,7 +29,12 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Auth_Adapter_Ldap_AllTests::main');
 }
 
-require_once 'Zend/Auth/Adapter/Ldap/AuthTest.php';
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+
+/**
+ * @see Zend_Auth_Adapter_Ldap_OfflineTest
+ */
+require_once 'Zend/Auth/Adapter/Ldap/OfflineTest.php';
 
 /**
  * @category   Zend
@@ -49,16 +54,35 @@ class Zend_Auth_Adapter_Ldap_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Auth_Adapter_Ldap');
 
-		if (defined('TESTS_ZEND_LDAP_ENABLED') && TESTS_ZEND_LDAP_ENABLED) {
+        $suite->addTestSuite('Zend_Auth_Adapter_Ldap_OfflineTest');
 
-    	    $suite->addTestSuite('Zend_Auth_Adapter_Ldap_AuthTest');
-		}
+        if (defined('TESTS_ZEND_AUTH_ADAPTER_LDAP_ONLINE_ENABLED')
+            && constant('TESTS_ZEND_AUTH_ADAPTER_LDAP_ONLINE_ENABLED')) {
+            /**
+             * @see Zend_Auth_Adapter_Ldap_OnlineTest
+             */
+            require_once 'Zend/Auth/Adapter/Ldap/OnlineTest.php';
+            $suite->addTestSuite('Zend_Auth_Adapter_Ldap_OnlineTest');
+        } else {
+            $suite->addTest(new Zend_Auth_Adapter_Ldap_SkipOnlineTests());
+        }
 
         return $suite;
     }
 }
 
-echo __LINE__ . "\n";
-if (PHPUnit_MAIN_METHOD == 'Zend_Auth_Adapter_Ldap_AllTests::main') {
+class Zend_Auth_Adapter_Ldap_SkipOnlineTests extends PHPUnit_Framework_TestCase
+{
+    public function setUp()
+    {
+        $this->markTestSkipped('Zend_Auth_Adapter_Ldap online tests not enabled in TestConfiguration.php');
+    }
+
+    public function testNothing()
+    {
+    }
+}
+
+if (PHPUnit_MAIN_METHOD === 'Zend_Auth_Adapter_Ldap_AllTests::main') {
     Zend_Auth_Adapter_Ldap_AllTests::main();
 }

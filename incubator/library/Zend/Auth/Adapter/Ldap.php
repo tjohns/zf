@@ -24,6 +24,7 @@
  * @see Zend_Auth_Adapter_Interface
  */
 require_once 'Zend/Auth/Adapter/Interface.php';
+
 /**
  * @see Zend_Log
  */
@@ -72,41 +73,61 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     protected $_logger = null;
 
     /**
-     * @param array $options An array of arrays of Zend_Ldap options
-     * @param string $username The username of the account being authenticated
-     * @param string $password The password of the account being authenticated
-     * @throws Zend_Auth_Adapter_Exception
+     * @param  array  $options  An array of arrays of Zend_Ldap options
+     * @param  string $username The username of the account being authenticated
+     * @param  string $password The password of the account being authenticated
+     * @return void
      */
-    public function __construct($options, $username = null, $password = null)
+    public function __construct(array $options = array(), $username = null, $password = null)
     {
-        if (!is_array($options)) {
-            require_once 'Zend/Auth/Adapter/Exception.php';
-            throw new Zend_Auth_Adapter_Exception('First parameter must be options array');
-        }
-        if ($username !== null)
-            $this->setUsername($username);
-        if ($password !== null)
-            $this->setPassword($password);
         $this->_options = $options;
+        if ($username !== null) {
+            $this->setUsername($username);
+        }
+        if ($password !== null) {
+            $this->setPassword($password);
+        }
     }
 
     /**
-     * @param string $username The username for binding
+     * Returns the username of the account being authenticated, or
+     * NULL if none is set.
+     *
+     * @return string|null
+     */
+    public function getUsername()
+    {
+        return $this->_username;
+    }
+
+    /**
+     * @param  string $username The username for binding
      * @return Zend_Auth_Adapter_Ldap Provides a fluent interface
      */
     public function setUsername($username)
     {
-        $this->_username = $username;
+        $this->_username = (string) $username;
         return $this;
     }
 
     /**
-     * @param string $password The password of the account being authenticated
+     * Returns the password of the account being authenticated, or
+     * NULL if none is set.
+     *
+     * @return string|null
+     */
+    public function getPassword()
+    {
+        return $this->_password;
+    }
+
+    /**
+     * @param  string $password The password of the account being authenticated
      * @return Zend_Auth_Adapter_Ldap Provides a fluent interface
      */
     public function setPassword($password)
     {
-        $this->_password = $password;
+        $this->_password = (string) $password;
         return $this;
     }
 
@@ -116,6 +137,9 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     public function getLdap()
     {
         if ($this->_ldap === null) {
+            /**
+             * @see Zend_Ldap
+             */
             require_once 'Zend/Ldap.php';
             $this->_ldap = new Zend_Ldap();
         }
