@@ -51,11 +51,11 @@ class Zend_Gdata_Spreadsheets_Extension_Custom extends Zend_Gdata_Extension
      */
     public function __construct($column = null, $value = null)
     {
-        parent::__construct();
-        $this->_text = $value;
         foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
+        parent::__construct();
+        $this->_text = $value;
         $this->_rootElement = $column;
     }
 

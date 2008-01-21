@@ -82,7 +82,8 @@ class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
      * Given a DOMNode representing an attribute, tries to map the data into
      * instance members.  If no mapping is defined, the name and value are 
      * stored in an array.
-     *
+     * TODO: convert the 'value' to an int
+     * 
      * @param DOMNode $attribute The DOMNode attribute needed to be handled
      */
     protected function takeAttributeFromDOM($attribute)
@@ -99,7 +100,7 @@ class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
     /**
      * Get the value for this element's Value attribute.
      *
-     * @return var The 1-based position in the playlist
+     * @return int The 1-based position in the playlist
      */
     public function getValue()
     {
@@ -121,6 +122,8 @@ class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
     /**
      * Magic toString method allows using this directly via echo
      * Works best in PHP >= 4.2.0
+     *
+     * @return string
      */
     public function __toString()
     {
