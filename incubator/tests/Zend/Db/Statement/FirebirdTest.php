@@ -25,7 +25,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 class Zend_Db_Statement_FirebirdTest extends Zend_Db_Statement_TestCommon
 {
-
     public function getDriver()
     {
         return 'Firebird';

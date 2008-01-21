@@ -26,16 +26,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Select_Pdo_FirebirdTest extends Zend_Db_Table_Select_TestCommon
 {
 
-    public function testSelectFromQualified()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
-    }
-
-    public function testSelectJoinQualified()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
-    }
-
     public function getDriver()
     {
         return 'Pdo_Firebird';

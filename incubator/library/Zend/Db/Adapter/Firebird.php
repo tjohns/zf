@@ -54,13 +54,17 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
 {
 
 
+    protected $_autoQuoteIdentifiers = true;
+    
+    protected $_caseFolding = Zend_Db::CASE_UPPER;
+
     /**
      * The transaction resource.
      *
      * @var transaction
      */
     protected $_transResource;
-	
+
     /**
      * Return the status of current transaction.
      * @return bool
@@ -69,8 +73,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
     public function inTransaction()
 	{
 		return is_resource($this->_transResource);
-	}	
-	
+	}
+
     /**
      * Keys are UPPERCASE SQL datatypes or the constants
      * Zend_Db::INT_TYPE, Zend_Db::BIGINT_TYPE, or Zend_Db::FLOAT_TYPE.
@@ -90,12 +94,12 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         'INTEGER'            => Zend_Db::INT_TYPE,
         'SMALLINT'           => Zend_Db::INT_TYPE,
         'BIGINT'             => Zend_Db::BIGINT_TYPE,
-        'INT64'              => Zend_Db::BIGINT_TYPE,        
+        'INT64'              => Zend_Db::BIGINT_TYPE,
         'DECIMAL'            => Zend_Db::FLOAT_TYPE,
         'DOUBLE'             => Zend_Db::FLOAT_TYPE,
         'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
-        'NUMERIC'            => Zend_Db::FLOAT_TYPE,        
-        'FLOAT'              => Zend_Db::FLOAT_TYPE        
+        'NUMERIC'            => Zend_Db::FLOAT_TYPE,
+        'FLOAT'              => Zend_Db::FLOAT_TYPE
     );
 
     /**
@@ -143,8 +147,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $sql = 'SELECT GEN_ID('.$this->quoteIdentifier($sequenceName, true).', 1) FROM RDB$DATABASE';
         $value = $this->fetchOne($sql);
         return $value;
-    }    
-    
+    }
+
     /**
      * Returns the symbol the adapter uses for delimiting identifiers.
      *
@@ -163,6 +167,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
     public function listTables()
     {
         $data = $this->fetchCol('SELECT RDB$RELATION_NAME FROM RDB$RELATIONS WHERE RDB$SYSTEM_FLAG = 0');
+        foreach($data as &$v)
+            $v = trim($v);
         return $data;
     }
 
@@ -195,39 +201,39 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
      * @return array
      */
     public function describeTable($tableName, $schemaName = null)
-    {   
+    {
         $fieldMaps = array(
-            'TEXT'      => 'CHAR', 
-            'VARYING'   => 'VARCHAR', 
-            'SHORT'     => 'SMALLINT', 
-            'LONG'      => 'INTEGER', 
-            'D_FLOAT'   => 'DOUBLE', 
-            'INT64'     => 'BIGINT', 
-            'TYPE_DATE' => 'DATE', 
+            'TEXT'      => 'CHAR',
+            'VARYING'   => 'VARCHAR',
+            'SHORT'     => 'SMALLINT',
+            'LONG'      => 'INTEGER',
+            'D_FLOAT'   => 'DOUBLE',
+            'INT64'     => 'BIGINT',
+            'TYPE_DATE' => 'DATE',
             'TYPE_TIME' => 'TIME',
             'NUMERIC'   => 'NUMERIC',
             'DATE'      => 'DATE',
             'BLOB'      => 'BLOB'
-        );   
-        
+        );
+
         // @todo : build query without subselects
-        $sql = 'select 
+        $sql = 'select
                     RF.RDB$RELATION_NAME, \'\', RF.RDB$FIELD_NAME, T.RDB$TYPE_NAME,
-                    RF.RDB$DEFAULT_VALUE, RF.RDB$NULL_FLAG, RF.RDB$FIELD_POSITION, 
-                    F.RDB$CHARACTER_LENGTH, F.RDB$FIELD_SCALE, F.RDB$FIELD_PRECISION, 
+                    RF.RDB$DEFAULT_VALUE, RF.RDB$NULL_FLAG, RF.RDB$FIELD_POSITION,
+                    F.RDB$CHARACTER_LENGTH, F.RDB$FIELD_SCALE, F.RDB$FIELD_PRECISION,
                     IXS.RDB$FIELD_POSITION, IXS.RDB$FIELD_POSITION
                 from RDB$RELATION_FIELDS RF
                 left join RDB$RELATION_CONSTRAINTS RC
                     on (RF.RDB$RELATION_NAME = RC.RDB$RELATION_NAME and RC.RDB$CONSTRAINT_TYPE = \'PRIMARY KEY\')
                 left join RDB$INDEX_SEGMENTS IXS
                     on (IXS.RDB$FIELD_NAME = RF.RDB$FIELD_NAME and RC.RDB$INDEX_NAME = IXS.RDB$INDEX_NAME)
-                inner join RDB$FIELDS F on (RF.RDB$FIELD_SOURCE = F.RDB$FIELD_NAME) 
-                inner join RDB$TYPES T on (T.RDB$TYPE = F.RDB$FIELD_TYPE and T.RDB$FIELD_NAME = \'RDB$FIELD_TYPE\')     
+                inner join RDB$FIELDS F on (RF.RDB$FIELD_SOURCE = F.RDB$FIELD_NAME)
+                inner join RDB$TYPES T on (T.RDB$TYPE = F.RDB$FIELD_TYPE and T.RDB$FIELD_NAME = \'RDB$FIELD_TYPE\')
                 where ' . $this->quoteInto('(UPPER(RF.RDB$RELATION_NAME) = UPPER(?)) ', $tableName) . '
                 order by RF.RDB$FIELD_POSITION';
-        
-        $stmt = $this->query($sql); 
-        
+
+        $stmt = $this->query($sql);
+
         /**
          * Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
          */
@@ -257,33 +263,33 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
                  */
                 $identity = false;
             }
-            
+
             //Mapping Numerics thats stored as INTEGER or INT64 internally in db
             if ($row[$data_scale] < 0){
                 if ($row[$data_type] == 'SHORT') $row[$data_precision] = 4;
                 if ($row[$data_type] == 'LONG' ) $row[$data_precision] = 9;
-                if ($row[$data_type] == 'INT64') $row[$data_precision] = 18;            
+                if ($row[$data_type] == 'INT64') $row[$data_precision] = 18;
                 $row[$data_type] = 'NUMERIC';
-                $row[$data_scale] = -$row[$data_scale];                
+                $row[$data_scale] = -$row[$data_scale];
             }
-            
-            $row[$data_type] = trim($row[$data_type]);            
+
+            $row[$data_type] = trim($row[$data_type]);
             $row[$data_type] = ($fieldMaps[$row[$data_type]]) ? $fieldMaps[$row[$data_type]] : $row[$data_type];
-            
+
             $desc[$this->foldCase(trim($row[$column_name]))] = array(
                 'SCHEMA_NAME'      => '',
                 'TABLE_NAME'       => $this->foldCase(trim($row[$table_name])),
                 'COLUMN_NAME'      => $this->foldCase(trim($row[$column_name])),
-                'COLUMN_POSITION'  => $row[$column_id],
+                'COLUMN_POSITION'  => $row[$column_id] +1,
                 'DATA_TYPE'        => $row[$data_type],
                 'DEFAULT'          => $row[$data_default],
                 'NULLABLE'         => (bool) ($row[$nullable] != '1'),
                 'LENGTH'           => $row[$data_length],
-                'SCALE'            => $row[$data_scale],
-                'PRECISION'        => $row[$data_precision],
+                'SCALE'            => ($row[$data_scale] == 0 ? null : $row[$data_scale]),
+                'PRECISION'        => ($row[$data_precision] == 0 ? null : $row[$data_precision]),
                 'UNSIGNED'         => false,
                 'PRIMARY'          => $primary,
-                'PRIMARY_POSITION' => $primaryPosition,
+                'PRIMARY_POSITION' => ($primary ? $primaryPosition+1 : null),
                 'IDENTITY'         => $identity
             );
         }
@@ -299,8 +305,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
     public function getConnection()
     {
         return (is_resource($this->_transResource) ? $this->_transResource : parent::getConnection());
-    }	
-	
+    }
+
     /**
      * Creates a connection to the database.
      *
@@ -328,7 +334,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
                                 $this->_config['charset'],
                                 $this->_config['buffers'],
                                 $this->_config['dialect'],
-                                $this->_config['role']                           
+                                $this->_config['role']
                               );
 
         if ($this->_connection === false || ibase_errcode()) {
@@ -339,7 +345,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             throw new Zend_Db_Adapter_Firebird_Exception(ibase_errmsg());
         }
     }
-    
+
     /**
      * Force the connection to close.
      *
@@ -350,8 +356,8 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         if (is_resource($this->_transResource)) {
             ibase_rollback($this->_transResource);
         }
-        $this->_transResource = null;	
-	
+        $this->_transResource = null;
+
         if (is_resource($this->_connection)) {
             //ibase_rollback($this->_connection);
             ibase_close($this->_connection);
@@ -420,7 +426,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
 		if (is_resource($this->_transResource)){
 			return;
 		}
-			
+
         $this->_transResource = ibase_trans(IBASE_DEFAULT, $this->_connection);
     }
 
@@ -430,7 +436,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
      * @return void
      */
     protected function _commit()
-    {	
+    {
         if (!ibase_commit(is_resource($this->_transResource) ? $this->_transResource : $this->_connection)) {
             /**
              * @see Zend_Db_Adapter_Firebird_Exception
@@ -455,7 +461,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             require_once 'Zend/Db/Adapter/Firebird/Exception.php';
             throw new Zend_Db_Adapter_Firebird_Exception(ibase_errmsg());
         }
-		$this->_transResource = null;		
+		$this->_transResource = null;
     }
 
     /**
@@ -520,7 +526,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         }
 
         $sql = substr_replace($sql, "select first $count skip $offset ", stripos($sql, 'select'), 6);
-        
+
         /* compatible with FB2
         $sql .= " rows $count";
         if ($offset > 0) {
@@ -546,7 +552,7 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
                 return false;
         }
     }
-    
+
         /**
      * Quote a table identifier and alias.
      *

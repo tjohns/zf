@@ -26,11 +26,6 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Row_Pdo_FirebirdTest extends Zend_Db_Table_Row_TestCommon
 {
 
-    public function testTableRowSaveInsert()
-    {
-        $this->markTestSkipped($this->getDriver() . ' does not support auto-increment keys.');
-    }
-
     public function getDriver()
     {
         return 'Pdo_Firebird';

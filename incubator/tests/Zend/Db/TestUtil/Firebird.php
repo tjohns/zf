@@ -44,7 +44,9 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
     {
         $this->_db = $db;
         $this->createSequence('zfbugs_seq');
+        $this->_rawQuery('SET GENERATOR zfbugs_seq TO 4');
         $this->createSequence('zfproducts_seq');
+        $this->_rawQuery('SET GENERATOR zfproducts_seq TO 3');
         parent::setUp($db);
     }
 
@@ -158,8 +160,6 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
 
     protected function _rawQuery($sql)
     {
-        //$s = file_get_contents('Y:\log.txt');
-		//file_put_contents('Y:\log.txt', $s . "\r\r\r\r\r" . $sql);
         $conn = $this->_db->getConnection();		
         try {
 		  ibase_query($conn, $sql);

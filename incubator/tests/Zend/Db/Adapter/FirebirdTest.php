@@ -51,16 +51,35 @@ class Zend_Db_Adapter_FirebirdTest extends Zend_Db_Adapter_TestCommon
     );
 
 	
+    public function testAdapterDescribeTablePrimaryAuto()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not support auto-increment');
+    }    
+    
     public function testAdapterInsert()
     {
-		$this->markTestIncomplete($this->getDriver() . ' TODO');
-    }	
-	
-    public function testAdapterInsertSequence()
+        $row = array (
+            'product_id'   => new Zend_Db_Expr('GEN_ID("zfproducts_seq", 1)'),
+            'product_name' => 'Solaris',
+        );
+        $rowsAffected = $this->_db->insert('zfproducts', $row);
+        $this->assertEquals(1, $rowsAffected);
+        $lastInsertId = $this->_db->lastInsertId('zfproducts', null); // implies 'zfproducts_seq'
+        $lastSequenceId = $this->_db->lastSequenceId('zfproducts_seq');
+        $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
+        $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
+    }		
+
+    public function testAdapterTransactionCommit()
     {
-		$this->markTestIncomplete($this->getDriver() . ' TODO');
+        $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
     }
-	
+
+    public function testAdapterTransactionRollback()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
+    }
+    
     /**
      * test that quote() escapes a single-quote
      * character in a string.

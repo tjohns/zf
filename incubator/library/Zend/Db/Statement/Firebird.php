@@ -46,7 +46,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      * @var firebird_stmt_prepared
      */
     protected $_stmt_prepared;
-    
+
     /**
      * The firebird_stmt_result resource.
      *
@@ -81,8 +81,8 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
     public function _prepare($sql)
     {
         $firebird = $this->_adapter->getConnection();
-        
-        $this->_stmt_prepared = @ibase_prepare($firebird, $sql);        
+
+        $this->_stmt_prepared = @ibase_prepare($firebird, $sql);
 
         if ($this->_stmt_prepared === false || ibase_errcode()) {
             /**
@@ -120,7 +120,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             ibase_free_result($this->_stmt_result);
             $this->_stmt_result = null;
         }
-        
+
         if ($this->_stmt_prepared) {
             $r = ibase_free_query($this->_stmt_prepared);
             $this->_stmt_prepared = null;
@@ -216,8 +216,8 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
           // execute the statement
           $retval = ibase_execute($this->_stmt_prepared);
         $this->_stmt_result = $retval;
-        
-        
+
+
         // statements that have no result set do not return metadata
         if (is_resource($this->_stmt_result)) {
 
@@ -225,9 +225,9 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             $this->_keys = array();
             $coln = ibase_num_fields($this->_stmt_result);
             for ($i = 0; $i < $coln; $i++) {
-                $col_info = ibase_field_info($this->_stmt_result, $i);             
+                $col_info = ibase_field_info($this->_stmt_result, $i);
                 $this->_keys[] = $this->_adapter->foldCase($col_info['name']);
-            }            
+            }
 
             // set up a binding space for result variables
             $this->_values = array_fill(0, count($this->_keys), null);
@@ -239,9 +239,9 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             foreach ($this->_values as $i => &$f) {
                 $refs[$i] = &$f;
             }
-        }        
-        
-        
+        }
+
+
         if ($retval === false) {
             /**
              * @see Zend_Db_Statement_Firebird_Exception
@@ -263,10 +263,10 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function fetch($style = null, $cursor = null, $offset = null)
     {
-    
+
         if (!$this->_stmt_result) {
             return false;
-        }        
+        }
 
         if ($style === null) {
             $style = $this->_fetchMode;
@@ -285,7 +285,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
                 $values = array_values($row);
                 foreach ($values as $val) {
                   $row[] = $val;
-                }            
+                }
                 break;
             case Zend_Db::FETCH_OBJ:
                 $row = ibase_fetch_object($this->_stmt_result, IBASE_TEXT);
@@ -295,7 +295,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
                 $values = array_values($row);
                 foreach ($values as $val) {
                   $row[] = $val;
-                }            
+                }
 
                 if ($row !== false) {
                     return $this->_fetchBound($row);
@@ -307,10 +307,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
                  */
                 require_once 'Zend/Db/Statement/Firebird/Exception.php';
                 throw new Zend_Db_Statement_Firebird_Exception(
-                    array(
-                        'code'    => 'HYC00',
-                        'message' => "Invalid fetch mode '$style' specified"
-                    )
+                    "Invalid fetch mode '$style' specified"
                 );
                 break;
         }
@@ -322,7 +319,18 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             require_once 'Zend/Db/Statement/Firebird/Exception.php';
             throw new Zend_Db_Statement_Firebird_Exception($error);
         }
-
+/*
+        switch ($this->_adapter->caseFolding) {
+            case Zend_Db::CASE_LOWER:
+                $r = array_change_key_case($row, CASE_LOWER);
+                break;
+            case Zend_Db::CASE_UPPER:
+                $r = array_change_key_case($row, CASE_UPPER);
+                break;
+            case default:
+                $r = $row;
+                break;
+        }*/
         return $row;
     }
 
