@@ -48,6 +48,85 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
         parent::setUp($db);
     }
 
+    protected function _getDataProducts()
+    {
+        return array(
+            array('product_id' => 1, 'product_name' => 'Windows'),
+            array('product_id' => 2, 'product_name' => 'Linux'),
+            array('product_id' => 3, 'product_name' => 'OS X'),
+        );
+    }	
+	
+    protected function _getColumnsBugs()
+    {
+        return array(
+            'bug_id'          => 'IDENTITY',
+            'bug_description' => 'VARCHAR(100)',
+            'bug_status'      => 'VARCHAR(20)',
+            'created_on'      => 'TIMESTAMP',
+            'updated_on'      => 'TIMESTAMP',
+            'reported_by'     => 'VARCHAR(100)',
+            'assigned_to'     => 'VARCHAR(100)',
+            'verified_by'     => 'VARCHAR(100)'
+        );
+    }	
+	
+    protected function _getDataBugs()
+    {
+        return array(
+            array(
+				'bug_id'		  => 1,
+                'bug_description' => 'System needs electricity to run',
+                'bug_status'      => 'NEW',
+                'created_on'      => '2007-04-01',
+                'updated_on'      => '2007-04-01',
+                'reported_by'     => 'goofy',
+                'assigned_to'     => 'mmouse',
+                'verified_by'     => 'dduck'
+            ),
+            array(
+				'bug_id'		  => 2,			
+                'bug_description' => 'Implement Do What I Mean function',
+                'bug_status'      => 'VERIFIED',
+                'created_on'      => '2007-04-02',
+                'updated_on'      => '2007-04-02',
+                'reported_by'     => 'goofy',
+                'assigned_to'     => 'mmouse',
+                'verified_by'     => 'dduck'
+            ),
+            array(
+				'bug_id'		  => 3,			
+                'bug_description' => 'Where are my keys?',
+                'bug_status'      => 'FIXED',
+                'created_on'      => '2007-04-03',
+                'updated_on'      => '2007-04-03',
+                'reported_by'     => 'dduck',
+                'assigned_to'     => 'mmouse',
+                'verified_by'     => 'dduck'
+            ),
+            array(
+				'bug_id'		  => 4,			
+                'bug_description' => 'Bug no product',
+                'bug_status'      => 'INCOMPLETE',
+                'created_on'      => '2007-04-04',
+                'updated_on'      => '2007-04-04',
+                'reported_by'     => 'mmouse',
+                'assigned_to'     => 'goofy',
+                'verified_by'     => 'dduck'
+            )
+        );
+    }	
+	
+    protected function _getColumnsDocuments()
+    {
+        return array(
+            'doc_id'       => 'INTEGER NOT NULL',
+            'doc_clob'     => 'BLOB',
+            'doc_blob'     => 'BLOB',
+            'PRIMARY KEY'  => 'doc_id'
+            );
+    }
+	
     public function getParams(array $constants = array())
     {
         $constants = array(
@@ -66,20 +145,31 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
         }
         return $type;
     }
-
-    protected function _getSqlCreateTable($tableName)
+	
+    protected function _getSqlCreateSequence($sequenceName)
     {
-        return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
+        return "CREATE GENERATOR \"$sequenceName\"";
     }
 
-    protected function _getSqlDropTable($tableName)
+    protected function _getSqlDropSequence($sequenceName)
     {
-        return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
-    }
+        return "DROP GENERATOR \"$sequenceName\"";
+    }	
 
     protected function _rawQuery($sql)
     {
-        $this->markTestSkipped('TODO');
+        //$s = file_get_contents('Y:\log.txt');
+		//file_put_contents('Y:\log.txt', $s . "\r\r\r\r\r" . $sql);
+        $conn = $this->_db->getConnection();		
+        try {
+		  ibase_query($conn, $sql);
+		  ibase_commit($conn);
+		} catch (Exception $e) {
+            $e = ibase_errmsg();
+            require_once 'Zend/Db/Exception.php';
+			if (!stripos(' '.$sql, 'drop'))
+				throw new Zend_Db_Exception("SQL parse error for \"$sql\": ".$e);
+        }
     }
     
 }

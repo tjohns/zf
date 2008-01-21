@@ -82,7 +82,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
     {
         $firebird = $this->_adapter->getConnection();
         
-        $this->_stmt_prepared = ibase_prepare($firebird, $sql);        
+        $this->_stmt_prepared = @ibase_prepare($firebird, $sql);        
 
         if ($this->_stmt_prepared === false || ibase_errcode()) {
             /**
@@ -208,7 +208,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
         // send $params as input parameters to the statement
         if ($params) {
             array_unshift($params, $this->_stmt_prepared);
-            $retval = call_user_func_array(
+            $retval = @call_user_func_array(
                 'ibase_execute',
                 $params
             );

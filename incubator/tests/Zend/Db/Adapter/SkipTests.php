@@ -61,6 +61,14 @@ class Zend_Db_Adapter_Skip_OracleTest extends Zend_Db_Adapter_Skip_CommonTest
     }
 }
 
+class Zend_Db_Adapter_Skip_FirebirdTest extends Zend_Db_Adapter_Skip_CommonTest
+{
+    public function getDriver()
+    {
+        return 'Firebird';
+    }
+}
+
 class Zend_Db_Adapter_Skip_MysqliTest extends Zend_Db_Adapter_Skip_CommonTest
 {
     public function getDriver()
@@ -90,6 +98,14 @@ class Zend_Db_Adapter_Skip_Pdo_OciTest extends Zend_Db_Adapter_Skip_CommonTest
     public function getDriver()
     {
         return 'Pdo_Oci';
+    }
+}
+
+class Zend_Db_Adapter_Skip_Pdo_FirebirdTest extends Zend_Db_Adapter_Skip_CommonTest
+{
+    public function getDriver()
+    {
+        return 'Pdo_Firebird';
     }
 }
 
