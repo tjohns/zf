@@ -683,7 +683,7 @@ $rows = $table-&gt;find(array(1234, 5678), array('ABC', 'DEF'));</programlisting
     $rows = $table-&gt;fetchAll($table-&gt;select()-&gt;where('bug_status = ?', 'NEW')
                                              -&gt;order('bug_id ASC')
                                              -&gt;limit(10, 0));
-    
+
     // Fetching a single row
     $row = $table-&gt;fetchRow('bug_status = "NEW"', 'bug_id ASC');
     $row = $table-&gt;fetchRow($table-&gt;select()-&gt;where('bug_status = ?', 'NEW')
@@ -938,7 +938,7 @@ $table = new Bugs();
 $select  = $table-&gt;select()-&gt;where('bug_status = ?', 'NEW')
                            -&gt;order('bug_id');
 
-$row = $table-&gt;fetchRow($where, $order);</programlisting>
+$row = $table-&gt;fetchRow($where);</programlisting>
     </example>
 
     <para>This method returns an object of type Zend_Db_Table_Row_Abstract. If
