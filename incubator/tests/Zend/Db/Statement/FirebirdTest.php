@@ -25,6 +25,66 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 class Zend_Db_Statement_FirebirdTest extends Zend_Db_Statement_TestCommon
 {
+    public function testStatementColumnCountForDelete()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }
+
+    public function testStatementExecuteWithParams()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }
+    
+    public function testStatementSetFetchModeBoth()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }        
+    
+    public function testStatementFetchAllStyleBoth()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }   
+    
+    public function testStatementBindParamByName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }   
+
+    public function testStatementBindValueByName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }      
+    
+    public function testStatementBindColumnByPositionAndName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }      
+    
+    public function testStatementBindColumnByName()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }     
+    
+    public function testStatementGetColumnMeta()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }    
+    
+    public function testStatementRowCount()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }       
+    
+    public function testStatementBindParamByPosition()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }      
+    
+    public function testStatementBindValueByPosition()
+    {
+        $this->markTestIncomplete($this->getDriver() . ' TODO');    
+    }         
+    
     public function getDriver()
     {
         return 'Firebird';

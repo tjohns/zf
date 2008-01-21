@@ -26,6 +26,64 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Select_FirebirdTest extends Zend_Db_Table_Select_TestCommon
 {
 
+    public function testSelectJoin()
+    {
+        $select = $this->_selectJoin();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(6, count($result));
+        $this->assertEquals(4, count($result[0]));
+    }    
+    
+    public function testSelectJoinInner()
+    {
+        $select = $this->_selectJoinInner();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(6, count($result));
+        $this->assertEquals(4, count($result[0]));
+    }    
+    
+    public function testSelectJoinRight()
+    {
+        $select = $this->_selectJoinRight();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(7, count($result));
+        $this->assertEquals(10, count($result[0]));
+        $this->assertEquals(3, $result[3]['product_id']);
+        $this->assertNull($result[6]['product_id']);
+    }    
+    
+    public function testSelectJoinLeft()
+    {
+        $select = $this->_selectJoinLeft();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(7, count($result));
+        $this->assertEquals(10, count($result[0]));
+        $this->assertEquals(3, $result[3]['product_id']);
+        $this->assertNull($result[6]['product_id']);
+    }    
+    
+    public function testSelectJoinCross()
+    {
+        $select = $this->_selectJoinCross();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(18, count($result));
+        $this->assertEquals(4, count($result[0]));
+    }    
+    
+    public function testSelectJoinWithCorrelationName()
+    {
+        $select = $this->_selectJoinWithCorrelationName();
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(1, count($result));
+        $this->assertEquals(4, count($result[0]));
+    }
+
     public function getDriver()
     {
         return 'Firebird';

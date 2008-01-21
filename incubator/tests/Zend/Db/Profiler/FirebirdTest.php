@@ -40,6 +40,35 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
  */
 class Zend_Db_Profiler_FirebirdTest extends Zend_Db_Profiler_TestCommon
 {
+
+    protected function _testProfilerSetFilterQueryTypeCommon($queryType)
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs', true);
+        $bug_status = $this->_db->quoteIdentifier('bug_status', true);
+        $bug_id = $this->_db->quoteIdentifier('bug_id', true);
+
+        $prof = $this->_db->getProfiler();
+        $prof->setEnabled(true);
+
+        $this->assertSame($prof->setFilterQueryType($queryType), $prof);
+        $this->assertEquals($queryType, $prof->getFilterQueryType());
+
+        $this->_db->query("SELECT * FROM $bugs");
+        $this->_db->query("INSERT INTO $bugs ($bug_id, $bug_status) VALUES (GEN_ID(\"zfbugs_seq\", 1), ?)", array('NEW'));
+        $this->_db->query("DELETE FROM $bugs");
+        $this->_db->query("UPDATE $bugs SET $bug_status = ?", array('FIXED'));
+
+        $qps = $prof->getQueryProfiles();
+        $this->assertType('array', $qps, 'Expecting some query profiles, got none');
+        foreach ($qps as $qp) {
+            $qtype = $qp->getQueryType();
+            $this->assertEquals($queryType, $qtype,
+                "Found query type $qtype, which should have been filtered out");
+        }
+
+        $prof->setEnabled(false);
+    }
+
     public function getDriver()
     {
         return 'Firebird';

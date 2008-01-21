@@ -44,9 +44,9 @@ class Zend_Db_TestUtil_Firebird extends Zend_Db_TestUtil_Common
     {
         $this->_db = $db;
         $this->createSequence('zfbugs_seq');
-        $this->_rawQuery('SET GENERATOR zfbugs_seq TO 4');
+        $this->_rawQuery('SET GENERATOR "zfbugs_seq" TO 4');
         $this->createSequence('zfproducts_seq');
-        $this->_rawQuery('SET GENERATOR zfproducts_seq TO 3');
+        $this->_rawQuery('SET GENERATOR "zfproducts_seq" TO 3');
         parent::setUp($db);
     }
 

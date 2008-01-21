@@ -53,11 +53,6 @@ require_once 'Zend/Db/Statement/Firebird.php';
 class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
 {
 
-
-    protected $_autoQuoteIdentifiers = true;
-    
-    protected $_caseFolding = Zend_Db::CASE_UPPER;
-
     /**
      * The transaction resource.
      *
@@ -213,10 +208,10 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             'TYPE_TIME' => 'TIME',
             'NUMERIC'   => 'NUMERIC',
             'DATE'      => 'DATE',
-            'BLOB'      => 'BLOB'
+            'BLOB'      => 'BLOB',
+            'TIMESTAMP' => 'TIMESTAMP'
         );
 
-        // @todo : build query without subselects
         $sql = 'select
                     RF.RDB$RELATION_NAME, \'\', RF.RDB$FIELD_NAME, T.RDB$TYPE_NAME,
                     RF.RDB$DEFAULT_VALUE, RF.RDB$NULL_FLAG, RF.RDB$FIELD_POSITION,
@@ -276,10 +271,10 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             $row[$data_type] = trim($row[$data_type]);
             $row[$data_type] = ($fieldMaps[$row[$data_type]]) ? $fieldMaps[$row[$data_type]] : $row[$data_type];
 
-            $desc[$this->foldCase(trim($row[$column_name]))] = array(
+            $desc[trim($row[$column_name])] = array(
                 'SCHEMA_NAME'      => '',
-                'TABLE_NAME'       => $this->foldCase(trim($row[$table_name])),
-                'COLUMN_NAME'      => $this->foldCase(trim($row[$column_name])),
+                'TABLE_NAME'       => trim($row[$table_name]),
+                'COLUMN_NAME'      => trim($row[$column_name]),
                 'COLUMN_POSITION'  => $row[$column_id] +1,
                 'DATA_TYPE'        => $row[$data_type],
                 'DEFAULT'          => $row[$data_default],
