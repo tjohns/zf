@@ -10,6 +10,8 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Action/Helper/Json.php';
 
+require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Response/Http.php';
 require_once 'Zend/Json.php';
@@ -50,6 +52,8 @@ class Zend_Controller_Action_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $front->resetInstance();
         $front->setResponse($this->response);
 
+        $this->viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+        Zend_Controller_Action_HelperBroker::addHelper($this->viewRenderer);
         $this->helper = new Zend_Controller_Action_Helper_Json();
         $this->helper->suppressExit = true;
     }
@@ -93,20 +97,24 @@ class Zend_Controller_Action_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('foobar'), Zend_Json::decode($data));
     }
 
-    public function testJsonHelperDisablesLayoutsByDefault()
+    public function testJsonHelperDisablesLayoutsAndViewRendererByDefault()
     {
         $layout = Zend_Layout::startMvc();
         $this->assertTrue($layout->isEnabled());
+        $this->assertFalse($this->viewRenderer->getNoRender());
         $this->testJsonHelperReturnsJsonEncodedString();
         $this->assertFalse($layout->isEnabled());
+        $this->assertTrue($this->viewRenderer->getNoRender());
     }
 
-    public function testJsonHelperDoesNotDisableLayoutsWhenKeepLayoutFlagTrue()
+    public function testJsonHelperDoesNotDisableLayoutsAndViewRendererWhenKeepLayoutFlagTrue()
     {
         $layout = Zend_Layout::startMvc();
         $this->assertTrue($layout->isEnabled());
+        $this->assertFalse($this->viewRenderer->getNoRender());
         $data = $this->helper->encodeJson(array('foobar'), true);
         $this->assertTrue($layout->isEnabled());
+        $this->assertFalse($this->viewRenderer->getNoRender());
     }
 
     public function testSendJsonSendsResponse()
@@ -117,21 +125,21 @@ class Zend_Controller_Action_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array('foobar'), Zend_Json::decode($response));
     }
 
-    public function testDirectProxiesToEncodeJsonByDefault()
+    public function testDirectProxiesToSendJsonByDefault()
     {
-        $data = $this->helper->direct(array('foobar'));
+        $this->helper->direct(array('foobar'));
+        $this->verifyJsonHeader();
+        $response = $this->response->getBody();
+        $this->assertSame(array('foobar'), Zend_Json::decode($response));
+    }
+
+    public function testCanPreventDirectSendingResponse()
+    {
+        $data = $this->helper->direct(array('foobar'), false);
         $this->assertSame(array('foobar'), Zend_Json::decode($data));
         $this->verifyJsonHeader();
         $response = $this->response->getBody();
         $this->assertTrue(empty($response));
-    }
-
-    public function testDirectProxiesToSendJsonWhenRequested()
-    {
-        $this->helper->direct(array('foobar'), true);
-        $this->verifyJsonHeader();
-        $response = $this->response->getBody();
-        $this->assertSame(array('foobar'), Zend_Json::decode($response));
     }
 
     public function testCanKeepLayoutsWhenUsingDirect()
@@ -139,6 +147,7 @@ class Zend_Controller_Action_Helper_JsonTest extends PHPUnit_Framework_TestCase
         $layout = Zend_Layout::startMvc();
         $data = $this->helper->direct(array('foobar'), false, true);
         $this->assertTrue($layout->isEnabled());
+        $this->assertFalse($this->viewRenderer->getNoRender());
     }
 }
 

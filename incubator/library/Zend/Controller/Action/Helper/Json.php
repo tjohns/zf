@@ -45,7 +45,8 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
      * Create JSON response
      *
      * Encodes and returns data to JSON. Content-Type header set to 
-     * 'application/json', and layouts disabled (if being used).
+     * 'application/json', and disables layouts and viewRenderer (if being 
+     * used).
      *
      * @param  mixed $data
      * @param  bool  $keepLayouts
@@ -53,17 +54,13 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
      */
     public function encodeJson($data, $keepLayouts = false)
     {
-        require_once 'Zend/Json.php';
-        $data = Zend_Json::encode($data);
-
-        $this->getResponse()->setHeader('Content-Type', 'application/json');
+        require_once 'Zend/View/Helper/Json.php';
+        $jsonHelper = new Zend_View_Helper_Json();
+        $data = $jsonHelper->json($data, $keepLayouts);
 
         if (!$keepLayouts) {
-            require_once 'Zend/Layout.php';
-            $layout = Zend_Layout::getMvcInstance();
-            if ($layout instanceof Zend_Layout) {
-                $layout->disableLayout();
-            }
+            require_once 'Zend/Controller/Action/HelperBroker.php';
+            Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->setNoRender(true);
         }
 
         return $data;
@@ -101,7 +98,7 @@ class Zend_Controller_Action_Helper_Json extends Zend_Controller_Action_Helper_A
      * @param  bool $keepLayouts 
      * @return string|void
      */
-    public function direct($data, $sendNow = false, $keepLayouts = false)
+    public function direct($data, $sendNow = true, $keepLayouts = false)
     {
         if ($sendNow) {
             return $this->sendJson($data, $keepLayouts);
