@@ -1,3 +1,4 @@
+<!-- EN-Revision: 7552 -->
 <sect1 id="zend.mail.read">
     <title>メールメッセージの読み込み</title>
 
@@ -334,7 +335,7 @@ echo $part->getContent();]]>
         <programlisting role="php"><![CDATA[<?php
 // 最初の text/plain パートを出力します
 $foundPart = null;
-foreach (RecursiveIteratorIterator($mail->getMessage(1)) as $part) {
+foreach (new RecursiveIteratorIterator($mail->getMessage(1)) as $part) {
     try {
         if (strtok($part->contentType, ';') == 'text/plain') {
             $foundPart = $part;
