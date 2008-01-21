@@ -16,7 +16,7 @@
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 
 
@@ -107,6 +107,12 @@ class Zend_Mail extends Zend_Mime_Message
      * @var string
      */
     protected $_subject = null;
+
+    /**
+     * Date: header
+     * @var string
+     */
+    protected $_date = null;
 
     /**
      * text/plain MIME part
@@ -606,6 +612,51 @@ class Zend_Mail extends Zend_Mime_Message
     {
         return $this->_subject;
     }
+    
+    /**
+     * Sets Date-header
+     *
+     * @param  string    $date
+     * @return Zend_Mail Provides fluent interface
+     * @throws Zend_Mail_Exception if called subsequent times
+     */
+    public function setDate($date = null)
+    {
+        if ($this->_date === null) {
+            if ($date === null) {
+                $date = date('r');
+            } else if (is_int($date)) {
+                $date = date('r', $date);
+            } else if (is_string($date)) {
+            	$date = strtotime($date);
+                if ($date === false || $date < 0) {
+                    throw new Zend_Mail_Exception('String representations of Date Header must be ' .
+                                                  'strtotime()-compatible');
+                }
+                $date = date('r', $date);
+            } else if ($date instanceof Zend_Date) {
+                $date = $date->get(Zend_Date::RFC_2822);
+            } else {
+                throw new Zend_Mail_Exception(__METHOD__ . ' only accepts UNIX timestamps, Zend_Date objects, ' .
+                                              ' and strtotime()-compatible strings');
+            }
+            $this->_date = $date;
+            $this->_storeHeader('Date', $date);
+        } else {
+            throw new Zend_Mail_Exception('Date Header set twice');
+        }
+        return $this;
+    }
+
+    /**
+     * Returns the formatted date of the message
+     *
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->_date;
+    }
 
     /**
      * Add a custom header to the message
@@ -618,7 +669,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addHeader($name, $value, $append = false)
     {
-        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path'))) {
+        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path', 'date'))) {
             /**
              * @see Zend_Mail_Exception
              */
@@ -660,6 +711,10 @@ class Zend_Mail extends Zend_Mime_Message
             } else {
                 $transport = self::$_defaultTransport;
             }
+        }
+
+        if (is_null($this->_date)) {
+            $this->setDate();
         }
 
         $transport->send($this);

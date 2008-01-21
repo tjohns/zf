@@ -45,6 +45,11 @@ require_once 'Zend/Mail/Transport/Sendmail.php';
 require_once 'Zend/Mail/Transport/Smtp.php';
 
 /**
+ * Zend_Date
+ */
+require_once 'Zend/Date.php';
+
+/**
  * Mock mail transport class for testing purposes
  *
  * @category   Zend
@@ -62,6 +67,7 @@ class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
     public $returnPath = null;
     public $subject    = null;
     public $from       = null;
+    public $headers    = null;
     public $called     = false;
 
     public function _sendMail()
@@ -70,6 +76,7 @@ class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
         $this->subject    = $this->_mail->getSubject();
         $this->from       = $this->_mail->getFrom();
         $this->returnPath = $this->_mail->getReturnPath();
+        $this->headers    = $this->_headers;
         $this->called     = true;
     }
 }
@@ -529,6 +536,116 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         try {
             $mail->setType('text/plain');
             $this->fail('Invalid Zend_Mime type should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testDateSet()
+    {
+        $mail = new Zend_Mail();
+        $res = $mail->setBodyText('Date Test');
+        $mail->setFrom('testmail@example.com', 'test Mail User');
+        $mail->setSubject('Date Test');
+        $mail->addTo('recipient@example.com');
+
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+
+        $this->assertTrue($mock->called);
+        $this->assertTrue(isset($mock->headers['Date']));
+        $this->assertTrue(isset($mock->headers['Date'][0]));
+        $this->assertTrue(strlen($mock->headers['Date'][0]) > 0);
+    }
+
+    public function testSetDateInt()
+    {
+        $mail = new Zend_Mail();
+        $res = $mail->setBodyText('Date Test');
+        $mail->setFrom('testmail@example.com', 'test Mail User');
+        $mail->setSubject('Date Test');
+        $mail->addTo('recipient@example.com');
+        $mail->setDate(362656800);
+
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+
+        $this->assertTrue($mock->called);
+        $this->assertTrue(strpos(implode('', $mock->headers['Date']), 'Mon, 29 Jun 1981') === 0);
+    }
+
+    public function testSetDateString()
+    {
+        $mail = new Zend_Mail();
+        $res = $mail->setBodyText('Date Test');
+        $mail->setFrom('testmail@example.com', 'test Mail User');
+        $mail->setSubject('Date Test');
+        $mail->addTo('recipient@example.com');
+        $mail->setDate('1981-06-29T12:00:00');
+
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+
+        $this->assertTrue($mock->called);
+        $this->assertTrue(strpos(implode('', $mock->headers['Date']), 'Mon, 29 Jun 1981') === 0);
+    }
+
+    public function testSetDateObject()
+    {
+        $mail = new Zend_Mail();
+        $res = $mail->setBodyText('Date Test');
+        $mail->setFrom('testmail@example.com', 'test Mail User');
+        $mail->setSubject('Date Test');
+        $mail->addTo('recipient@example.com');
+        $mail->setDate(new Zend_Date('1981-06-29T12:00:00', Zend_Date::ISO_8601));
+
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+
+        $this->assertTrue($mock->called);
+        $this->assertTrue(strpos(implode('', $mock->headers['Date']), 'Mon, 29 Jun 1981') === 0);
+    }
+
+    public function testSetDateInvalidString()
+    {
+        $mail = new Zend_Mail();
+        
+        try {
+            $mail->setDate('invalid date');
+            $this->fail('Invalid date should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testSetDateInvalidType()
+    {
+        $mail = new Zend_Mail();
+
+        try {
+            $mail->setDate(true);
+            $this->fail('Invalid date should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testSetDateInvalidObject()
+    {
+        $mail = new Zend_Mail();
+
+        try {
+            $mail->setDate($mail);
+            $this->fail('Invalid date should throw an exception');
+        } catch (Exception $e) {
+        }
+    }
+
+    public function testSetDateTwice()
+    {
+        $mail = new Zend_Mail();
+
+        $mail->setDate();
+        try {
+            $mail->setDate(123456789);
+            $this->fail('setting date twice should throw an exception');
         } catch (Exception $e) {
         }
     }
