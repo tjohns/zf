@@ -26,6 +26,40 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Select_FirebirdTest extends Zend_Db_Table_Select_TestCommon
 {
 
+    protected function _selectOrderByAutoExpr()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts')
+            ->order("UPPER($products.$product_id)");
+        return $select;
+    }
+    
+    protected function _selectGroupByAutoExpr()
+    {
+        $thecount = $this->_db->quoteIdentifier('thecount');
+        $bugs_products = $this->_db->quoteIdentifier('zfbugs_products');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
+        $select = $this->_db->select()
+            ->from('zfbugs_products', array('bug_id'=>"UPPER($bugs_products.$bug_id)", new Zend_Db_Expr("COUNT(*) AS $thecount")))
+            ->group("UPPER($bugs_products.$bug_id)")
+            ->order("UPPER($bugs_products.$bug_id)");
+        return $select;
+    }
+
+    public function testSelectFromQualified()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not report its schema as we expect.');
+    }    
+    
+    public function testSelectJoinQualified()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not report its schema as we expect.');
+    } 
+	
     public function testSelectJoin()
     {
         $select = $this->_selectJoin();

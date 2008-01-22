@@ -52,12 +52,12 @@ class Zend_Db_Select_FirebirdTest extends Zend_Db_Select_TestCommon
 
     public function testSelectFromQualified()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+        $this->markTestSkipped($this->getDriver() . ' does not report its schema as we expect.');
     }    
     
     public function testSelectJoinQualified()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+        $this->markTestSkipped($this->getDriver() . ' does not report its schema as we expect.');
     }    
     
     public function testSelectJoin()

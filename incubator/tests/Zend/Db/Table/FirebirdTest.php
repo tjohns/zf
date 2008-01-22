@@ -26,6 +26,35 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_FirebirdTest extends Zend_Db_Table_TestCommon
 {
 
+    public function testTableInsert()
+    {
+        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
+    }
+	
+    public function testTableInsertWithSchema()
+    {
+        $this->markTestSkipped($this->getDriver() . ' does not report its schema as we expect.');	
+	}
+	
+    public function testTableCascadeDelete()
+    {
+        $table = $this->_table['products'];
+        $row1 = $table->find(2)->current();
+        $row1->delete();
+
+        // Test for 'false' value in cascade config
+        $table = $this->_table['bugs'];
+        $row2 = $table->find(1)->current();
+        $row2->delete();
+
+        $table = $this->_table['bugs_products'];
+        $select = $table->select()
+            ->where('"product_id" = ?', 2);
+
+        $rows = $table->fetchAll($select);
+        $this->assertEquals(0, count($rows));
+    }	
+
     public function getDriver()
     {
         return 'Firebird';
