@@ -214,6 +214,9 @@ abstract class Zend_Form_Decorator_Abstract implements Zend_Form_Decorator_Inter
                 case self::PREPEND:
                     $placement = $this->_placement = $placementOpt;
                     break;
+                case false:
+                    $placement = $this->_placement = null;
+                    break;
                 default:
                     break;
             }

@@ -28,6 +28,7 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  * Accepts the options:
  * - separator: separator to use between label and content (defaults to PHP_EOL)
  * - placement: whether to append or prepend label to content (defaults to prepend)
+ * - tag: if set, used to wrap the label in an additional HTML tag
  *
  * Any other options passed will be used as HTML attributes of the label tag.
  * 
@@ -62,17 +63,34 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
 
         $label = $element->getLabel();
         $label = trim($label);
-        if (empty($label)) {
-            return $content;
-        }
 
-        if (null !== ($translator = $element->getTranslator())) {
+        if (!empty($label) && (null !== ($translator = $element->getTranslator()))) {
             $label = $translator->translate($label);
         }
 
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
-        $label     = $view->formLabel($element->getName(), $label, $this->getOptions()); 
+        $options   = $this->getOptions();
+        $tag       = null;
+        if (isset($options['tag'])) {
+            $tag = $options['tag'];
+            unset($options['tag']);
+        }
+
+        if (empty($label) && empty($tag)) {
+            return $content;
+        }
+
+        if (!empty($label)) {
+            $label     = $view->formLabel($element->getName(), $label, $options); 
+        }
+
+        if (null !== $tag) {
+            require_once 'Zend/Form/Decorator/HtmlTag.php';
+            $decorator = new Zend_Form_Decorator_HtmlTag();
+            $decorator->setOptions(array('tag' => $tag));
+            $label = $decorator->render($label);
+        }
 
         switch ($placement) {
             case self::APPEND:

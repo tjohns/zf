@@ -14,37 +14,47 @@
  *
  * @category   Zend
  * @package    Zend_Form
+ * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Form */
-require_once 'Zend/Form.php';
+/** Zend_Form_Decorator_Abstract */
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
- * Zend_Form_SubForm
+ * Zend_Form_Decorator_DtDdWrapper
+ *
+ * Creates an empty <dt> item, and wraps the content in a <dd>. Used as a 
+ * default decorator for subforms and display groups.
  * 
  * @category   Zend
  * @package    Zend_Form
+ * @subpackage Decorator
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-class Zend_Form_SubForm extends Zend_Form
+class Zend_Form_Decorator_DtDdWrapper extends Zend_Form_Decorator_Abstract
 {
     /**
-     * Constructor
-     * 
-     * @param  array|Zend_Config $options 
-     * @return void
+     * Default placement: surround content
+     * @var string
      */
-    public function __construct($options = null)
-    {
-        $this->addDecorator('FormElements')
-             ->addDecorator('HtmlTag', array('tag' => 'dl'))
-             ->addDecorator('Fieldset')
-             ->addDecorator('DtDdWrapper');
+    protected $_placement = null;
 
-        parent::__construct($options);
+    /**
+     * Render 
+     *
+     * Renders as the following:
+     * <dt></dt>
+     * <dd>$content</dd>
+     * 
+     * @param  string $content 
+     * @return string
+     */
+    public function render($content)
+    {
+        return '<dt></dt><dd>' . $content . '</dd>';
     }
 }

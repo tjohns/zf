@@ -111,7 +111,8 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
         if (empty($decorators)) {
             $this->addDecorator('FormElements')
                  ->addDecorator('HtmlTag', array('tag' => 'dl'))
-                 ->addDecorator('Fieldset');
+                 ->addDecorator('Fieldset')
+                 ->addDecorator('DtDdWrapper');
         }
     }
 
