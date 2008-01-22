@@ -509,6 +509,7 @@ class Zend_Locale {
     {
         // load class within method for speed
         require_once 'Zend/Locale/Data.php';
+        require_once 'Zend/Locale/Exception.php';
 
         if ($locale === null) {
             $locale = $this->_Locale;
@@ -610,6 +611,7 @@ class Zend_Locale {
     {
         // load class within method for speed
         require_once 'Zend/Locale/Data.php';
+        require_once 'Zend/Locale/Exception.php';
 
         if ($locale === null) {
             $locale = $this->_Locale;
