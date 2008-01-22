@@ -58,18 +58,6 @@ class Zend_Form implements Iterator, Countable
     protected $_decorators = array();
 
     /**
-     * Default decorator
-     * @var string
-     */
-    protected $_defaultDecorator = 'form';
-
-    /**
-     * Default decorator options
-     * @var array
-     */
-    protected $_defaultDecoratorOptions = array();
-
-    /**
      * Groups of elements grouped for display purposes
      * @var array
      */
@@ -139,7 +127,9 @@ class Zend_Form implements Iterator, Countable
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator($this->_defaultDecorator, $this->_defaultDecoratorOptions);
+            $this->addDecorator('FormElements')
+                 ->addDecorator('HtmlTag', array('tag' => 'dl', 'class' => 'zend_form'))
+                 ->addDecorator('Form');
         }
     }
 
@@ -1288,7 +1278,7 @@ class Zend_Form implements Iterator, Countable
      * @param  Zend_View_Interface $view 
      * @return Zend_Form
      */
-    public function setView(Zend_View_Interface $view)
+    public function setView(Zend_View_Interface $view = null)
     {
         $this->_view = $view;
         return $this;
@@ -1499,7 +1489,7 @@ class Zend_Form implements Iterator, Countable
      * @param  Zend_Translate_Adapter $translator 
      * @return Zend_Form
      */
-    public function setTranslator(Zend_Translate_Adapter $translator)
+    public function setTranslator(Zend_Translate_Adapter $translator = null)
     {
         $this->_translator = $translator;
         return $this;

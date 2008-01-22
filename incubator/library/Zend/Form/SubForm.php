@@ -33,8 +33,17 @@ require_once 'Zend/Form.php';
 class Zend_Form_SubForm extends Zend_Form
 {
     /**
-     * Default decorator options; set helper to 'fieldset'
-     * @var string
+     * Constructor
+     * 
+     * @param  array|Zend_Config $options 
+     * @return void
      */
-    protected $_defaultDecoratorOptions = array('helper' => 'fieldset');
+    public function __construct($options = null)
+    {
+        $this->addDecorator('FormElements')
+             ->addDecorator('HtmlTag', array('tag' => 'dl'))
+             ->addDecorator('Fieldset');
+
+        parent::__construct($options);
+    }
 }

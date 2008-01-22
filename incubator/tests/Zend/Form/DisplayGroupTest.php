@@ -13,6 +13,7 @@ require_once 'Zend/Form/DisplayGroup.php';
 
 require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Form/Decorator/Form.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
 require_once 'Zend/Loader/PluginLoader.php';
@@ -143,12 +144,12 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     // Decorators
 
-    public function testFormDecoratorRegisteredByDefault()
+    public function testDefaultDecoratorsRegistered()
     {
-        $decorator = $this->group->getDecorator('form');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
-        $options = $decorator->getOptions();
-        $this->assertEquals('fieldset', $options['helper']);
+        $decorator = $this->group->getDecorator('FormElements');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_FormElements);
+        $decorator = $this->group->getDecorator('Fieldset');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Fieldset);
     }
 
     public function testAddingInvalidDecoratorThrowsException()
@@ -173,8 +174,8 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanRetrieveSingleDecoratorRegisteredAsStringUsingClassName()
     {
-        $decorator = $this->group->getDecorator('Zend_Form_Decorator_Form');
-        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Form);
+        $decorator = $this->group->getDecorator('Zend_Form_Decorator_FormElements');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_FormElements);
     }
 
     public function testCanAddSingleDecoratorAsDecoratorObject()
@@ -218,7 +219,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testCanRemoveDecorator()
     {
-        $this->testFormDecoratorRegisteredByDefault();
+        $this->testDefaultDecoratorsRegistered();
         $this->group->removeDecorator('form');
         $this->assertFalse($this->group->getDecorator('form'));
     }
@@ -239,7 +240,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         $this->group->addElements(array($foo, $bar));
         $html = $this->group->render($this->getView());
         $this->assertRegexp('#^<fieldset.*?</fieldset>$#s', $html, $html);
-        $this->assertContains('<input', $html);
+        $this->assertContains('<input', $html, $html);
         $this->assertContains('"foo"', $html);
         $this->assertContains('"bar"', $html);
     }

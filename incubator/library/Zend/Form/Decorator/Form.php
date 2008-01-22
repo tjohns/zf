@@ -125,13 +125,6 @@ class Zend_Form_Decorator_Form extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        $content = '';
-        $items   = array();
-        foreach ($form as $item) {
-            $item->setView($view);
-            $items[] = $item->render();
-        }
-        $content = implode($this->getSeparator(), $items);
         $helper  = $this->getHelper();
         return $view->$helper($form->getName(), $content, $this->getOptions()); 
     }

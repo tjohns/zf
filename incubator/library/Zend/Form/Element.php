@@ -155,29 +155,29 @@ class Zend_Form_Element implements Zend_Validate_Interface
     {
         if (is_string($spec)) {
             $this->setName($spec);
-        } elseif (is_array($spec)) {
-            $this->setOptions($spec);
-        } elseif ($spec instanceof Zend_Config) {
-            $this->setConfig($spec);
-        }
-
-        if (null === $this->getName()) {
-            require_once 'Zend/Form/Exception.php';
-            throw new Zend_Form_Exception('Zend_Form_Element requires each element to have a name');
         }
 
         /**
          * Register ViewHelper decorator by default
          */
         $this->addDecorator('ViewHelper', array('helper' => $this->_defaultHelper))
-             ->addDecorator('Label')
              ->addDecorator('Errors')
-             ->addDecorator('HtmlTag', array('tag' => 'div', 'class' => 'form element'));
+             ->addDecorator('HtmlTag', array('tag' => 'dd'))
+             ->addDecorator('Label', array('tag' => 'dt'));
 
-        if (is_array($options)) {
+        if (is_array($spec)) {
+            $this->setOptions($spec);
+        } elseif ($spec instanceof Zend_Config) {
+            $this->setConfig($spec);
+        } elseif (is_array($options)) {
             $this->setOptions($options);
         } elseif ($options instanceof Zend_Config) {
             $this->setConfig($options);
+        }
+
+        if (null === $this->getName()) {
+            require_once 'Zend/Form/Exception.php';
+            throw new Zend_Form_Exception('Zend_Form_Element requires each element to have a name');
         }
     }
 
@@ -238,7 +238,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @param  Zend_Translate_Adapter $translator 
      * @return Zend_Form_Element
      */
-    public function setTranslator(Zend_Translate_Adapter $translator)
+    public function setTranslator(Zend_Translate_Adapter $translator = null)
     {
         $this->_translator = $translator;
         return $this;
@@ -1008,7 +1008,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
      * @param  Zend_View_Interface $view 
      * @return Zend_Form_Element
      */
-    public function setView(Zend_View_Interface $view)
+    public function setView(Zend_View_Interface $view = null)
     {
         $this->_view = $view;
         return $this;
