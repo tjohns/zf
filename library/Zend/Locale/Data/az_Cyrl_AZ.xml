@@ -7,5 +7,7 @@
 		<language type="az"/>
 		<script type="Cyrl"/>
 		<territory type="AZ"/>
+		<!-- stub file for completing the tree -->
 	</identity>
 </ldml>
+

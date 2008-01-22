@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.46 $"/>
-		<generation date="$Date: 2007/07/19 22:31:40 $"/>
+		<version number="$Revision: 1.47 $"/>
+		<generation date="$Date: 2007/11/28 21:17:49 $"/>
 		<language type="zh"/>
 		<script type="Hans"/>
 		<territory type="SG"/>
@@ -46,7 +46,6 @@
 							<pattern>a hh:mm:ss z</pattern>
 							<pattern alt="proposed-x1001" draft="unconfirmed">ahh时mm分ss秒</pattern>
 							<pattern alt="proposed-x1002" draft="unconfirmed">z ahh时mm分ss秒</pattern>
-							<pattern alt="proposed-x1003" draft="unconfirmed">EST ahh时mm分ss秒</pattern>
 						</timeFormat>
 					</timeFormatLength>
 					<timeFormatLength type="medium">

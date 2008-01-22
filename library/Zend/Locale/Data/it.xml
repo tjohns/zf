@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.92 $"/>
-		<generation date="$Date: 2007/07/20 17:14:05 $"/>
+		<version number="$Revision: 1.93 $"/>
+		<generation date="$Date: 2007/11/14 16:26:58 $"/>
 		<language type="it"/>
 	</identity>
 	<localeDisplayNames>
@@ -1396,6 +1396,7 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zurigo</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Pasqua</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Isola di Pasqua</exemplarCity>
@@ -1418,6 +1419,7 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity>Algeri</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Canarie</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Isole Canarie</exemplarCity>
@@ -1452,6 +1454,7 @@
 			<zone type="America/Guyana">
 				<exemplarCity>Guiana</exemplarCity>
 			</zone>
+			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Giacarta</exemplarCity>
 			</zone>
@@ -1506,6 +1509,7 @@
 			<zone type="America/Puerto_Rico">
 				<exemplarCity>Portorico</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azzorre</exemplarCity>
 			</zone>
@@ -1545,6 +1549,7 @@
 			<zone type="America/Anchorage">
 				<exemplarCity>Fuso orario Alaska</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Samarcanda</exemplarCity>
 			</zone>
@@ -1900,7 +1905,7 @@
 				<long>
 					<standard>Ora Standard Cina</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">China Standard Time</standard>
-					<daylight>Ora Standard Cina</daylight>
+					<daylight>Ora Legale Cina</daylight>
 					<daylight alt="proposed-x1001" draft="unconfirmed">China Daylight Time</daylight>
 				</long>
 				<short>
@@ -3437,4 +3442,63 @@
 			<yesstr>sì:si:s</yesstr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R085" uri="WWW.google.com">Google results</reference>
+		<reference type="R086" uri="http://www.intercultura.it/">RF1</reference>
+		<reference type="R087" uri="http://it.wikipedia.org/wiki/Pagina_principale">Wikipedia</reference>
+		<reference type="R088" uri="http://www.portalingua.info/it/recherche/recherche_avancee/1/index.php">Portalingua</reference>
+		<reference type="RP1" uri="http://de.wikipedia.org/wiki/Anführungszeichen#Schweiz" draft="unconfirmed">Quotation marks in Swiss German/French/Italian</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/it.txt?only_with_tag=final-update-LDML
+
+        KP { "Corea del Nord" }    // alternate name { "Corea, Repubblica Popolare Democratica" }
+        KR { "Corea del Sud" }    // alternate name { "Corea, Repubblica" }
+        SY { "Siria" }    // alternate name { "Repubblica Araba di Siria" }
+        TW { "Taiwan (provincia della Cina)" }    // alternate name { "Taiwan" }
+Currency display names
+XPS { "XPS", "Lira Sterlina" }
+XSS { "XSS", "Sterlina" }
+        bla { "siksika" }   // blackfoot
+fan { "fan" }
+fon { "fon" }
+ijo { "ijo" }
+nia { "nia" }
+tiv { "tiv" }
+vai { "vai" }
+        vo  { "volap\u00fck" }   // Yes the iso-639 standard uses the umlaut in the English name
+zh_cn { "Cinese (Semplificato)" }
+zh_tw { "Cinese (Tradizionale)" }
+        Qaai { "ereditato" } // PUA
+        Zyyy { "comune" } // This may need to become "undetermined script"
+
+Comments without bases
+
+ Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
+ Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ Ecuador 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
+ Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
+ United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
+ Ukraine 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Uzhgorod"]
+ Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
+ Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
+ United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
+ Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ French Polynesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
+ New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
+ Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
+ Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+ China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
+-->
+

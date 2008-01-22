@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.54 $"/>
-		<generation date="$Date: 2007/07/19 22:31:39 $"/>
+		<version number="$Revision: 1.55 $"/>
+		<generation date="$Date: 2007/08/21 16:11:36 $"/>
 		<language type="en"/>
 		<territory type="GB"/>
 	</identity>
@@ -77,6 +77,17 @@
 				</dateTimeFormats>
 			</calendar>
 		</calendars>
+		<timeZoneNames>
+			<metazone type="Europe_Central">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+			<metazone type="Europe_Eastern">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+			<metazone type="Europe_Western">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+		</timeZoneNames>
 	</dates>
 	<numbers>
 		<currencyFormats>

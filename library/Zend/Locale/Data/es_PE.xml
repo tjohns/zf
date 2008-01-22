@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.51 $"/>
-		<generation date="$Date: 2007/07/21 21:12:28 $"/>
+		<version number="$Revision: 1.52 $"/>
+		<generation date="$Date: 2007/11/19 23:42:54 $"/>
 		<language type="es"/>
 		<territory type="PE"/>
 	</identity>
@@ -27,4 +27,14 @@
 			</calendar>
 		</calendars>
 	</dates>
+	<numbers>
+		<symbols>
+			<decimal>.</decimal>
+			<group>,</group>
+		</symbols>
+	</numbers>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/es_PE.txt?only_with_tag=final-update-LDML
+-->
+

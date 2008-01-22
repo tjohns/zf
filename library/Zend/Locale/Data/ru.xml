@@ -359,6 +359,7 @@
 			<language type="nai">Северной Америки индейцев (другие)</language>
 			<language type="nap">неаполитанский</language>
 			<language type="nb" draft="contributed">норвежский букмол</language>
+			<!-- <language type="nb">норвежский</language> -->
 			<language type="nd">ндебели (северный)</language>
 			<language type="nd" alt="proposed-x1001" draft="unconfirmed">Северный Ндебели</language>
 			<language type="nds">нижнегерманский</language>
@@ -1507,9 +1508,11 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>Комодоро-Ривадавия</exemplarCity>
 			</zone>
+			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity>Белфаст</exemplarCity>
 			</zone>
+			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity>Яп, о-ва</exemplarCity>
 			</zone>
@@ -1544,6 +1547,7 @@
 			<zone type="Africa/Luanda">
 				<exemplarCity>Луанда</exemplarCity>
 			</zone>
+			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>Ротера</exemplarCity>
 			</zone>
@@ -1576,6 +1580,7 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity>Мак-Мердо</exemplarCity>
 			</zone>
+			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity>Рио-Гальегос</exemplarCity>
 			</zone>
@@ -1612,6 +1617,7 @@
 			<zone type="Europe/Vienna">
 				<exemplarCity>Вена</exemplarCity>
 			</zone>
+			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity>Перт</exemplarCity>
 			</zone>
@@ -1697,6 +1703,7 @@
 				<exemplarCity>Ла-Пас</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ла Пас</exemplarCity>
 			</zone>
+			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity>Эйрунепе</exemplarCity>
 			</zone>
@@ -1762,6 +1769,7 @@
 			<zone type="America/Belize">
 				<exemplarCity>Белиз</exemplarCity>
 			</zone>
+			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity>Доусон</exemplarCity>
 			</zone>
@@ -1843,6 +1851,7 @@
 			<zone type="Indian/Cocos">
 				<exemplarCity>Кокосовые острова</exemplarCity>
 			</zone>
+			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Киншаса</exemplarCity>
 			</zone>
@@ -1864,6 +1873,7 @@
 			<zone type="Pacific/Rarotonga">
 				<exemplarCity>Раротонга</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Пасхи, о-в</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Остров Пасхи</exemplarCity>
@@ -1874,6 +1884,7 @@
 			<zone type="Africa/Douala">
 				<exemplarCity>Дуала</exemplarCity>
 			</zone>
+			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity>Кашгар</exemplarCity>
 			</zone>
@@ -1931,6 +1942,7 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity>Алжир</exemplarCity>
 			</zone>
+			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Галапагос, о-ва</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Галапагос</exemplarCity>
@@ -1952,6 +1964,7 @@
 			<zone type="Africa/Asmera">
 				<exemplarCity>Асмера</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Канарские о-ва</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Канарские острова</exemplarCity>
@@ -2017,6 +2030,7 @@
 			<zone type="Europe/Gibraltar">
 				<exemplarCity>Гибралтар</exemplarCity>
 			</zone>
+			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity>Туле</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Тули</exemplarCity>
@@ -2081,6 +2095,7 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity>Будапешт</exemplarCity>
 			</zone>
+			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Джакарта</exemplarCity>
 			</zone>
@@ -2144,6 +2159,7 @@
 				<exemplarCity>Пномпень</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Пном-Пень</exemplarCity>
 			</zone>
+			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity>Эндербери, о-в</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Острова Эндербери</exemplarCity>
@@ -2175,6 +2191,7 @@
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Джорджтаун</exemplarCity>
 				<exemplarCity alt="proposed-x1002" draft="unconfirmed">Кайман</exemplarCity>
 			</zone>
+			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity>Актау</exemplarCity>
 			</zone>
@@ -2240,6 +2257,7 @@
 			<zone type="Indian/Antananarivo">
 				<exemplarCity>Антананариву</exemplarCity>
 			</zone>
+			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>Кваджалейн</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Кваджелейн</exemplarCity>
@@ -2250,12 +2268,14 @@
 			<zone type="Europe/Skopje">
 				<exemplarCity draft="contributed">Скопье</exemplarCity>
 			</zone>
+			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity>Бамако</exemplarCity>
 			</zone>
 			<zone type="Asia/Rangoon">
 				<exemplarCity>Рангун</exemplarCity>
 			</zone>
+			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity>Ховд</exemplarCity>
 			</zone>
@@ -2294,6 +2314,7 @@
 			<zone type="Africa/Blantyre">
 				<exemplarCity>Блантайр</exemplarCity>
 			</zone>
+			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity>Тихуана</exemplarCity>
 			</zone>
@@ -2318,6 +2339,7 @@
 			<zone type="America/Cancun">
 				<exemplarCity>Канкун</exemplarCity>
 			</zone>
+			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>Куала-Лумпур</exemplarCity>
 			</zone>
@@ -2361,6 +2383,7 @@
 				<exemplarCity>Ниуэ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ниуе</exemplarCity>
 			</zone>
+			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity>Чатем, о-в</exemplarCity>
 			</zone>
@@ -2378,6 +2401,7 @@
 			<zone type="America/Lima">
 				<exemplarCity>Лима</exemplarCity>
 			</zone>
+			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>Таити, о-в</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Таити</exemplarCity>
@@ -2417,6 +2441,7 @@
 			<zone type="Asia/Gaza">
 				<exemplarCity>Газа</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Азорские о-ва</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Понта-Дельгада</exemplarCity>
@@ -2446,6 +2471,7 @@
 			<zone type="Europe/Belgrade">
 				<exemplarCity draft="contributed">Белград</exemplarCity>
 			</zone>
+			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>Калининград</exemplarCity>
 			</zone>
@@ -2521,6 +2547,7 @@
 			<zone type="Europe/Ljubljana">
 				<exemplarCity draft="contributed">Любляна</exemplarCity>
 			</zone>
+			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity>Ян-Майен, о-в</exemplarCity>
 			</zone>
@@ -2609,6 +2636,7 @@
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity>Дар-эс-Салам</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Ужгород</exemplarCity>
 			</zone>
@@ -2624,6 +2652,7 @@
 			<zone type="Africa/Kampala">
 				<exemplarCity>Кампала</exemplarCity>
 			</zone>
+			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity>Мидуэй, о-ва</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Мидуэй</exemplarCity>
@@ -2636,6 +2665,7 @@
 				<exemplarCity>Уэйк, о-в</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Остров Вэйк</exemplarCity>
 			</zone>
+			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity>Адак, о-в</exemplarCity>
 			</zone>
@@ -2718,6 +2748,7 @@
 			<zone type="America/Montevideo">
 				<exemplarCity>Монтевидео</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Самарканд</exemplarCity>
 			</zone>
@@ -3492,6 +3523,7 @@
 			</currency>
 			<currency type="RUR">
 				<displayName>Российский рубль (1991-1998)</displayName>
+				<!-- changed to something else, according to 786 - ср. for old ruble -->
 				<symbol>р.</symbol>
 			</currency>
 			<currency type="RWF">
@@ -3771,4 +3803,35 @@
 			<nostr>нет:н</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R215" uri="http://www.bibliography.ru/method/gosts/7-12/7_12.htm">http://www.gsnti-norms.ru/norms/common/doc.asp?0&amp;/norms/stands/7_12.htm</reference>
+		<reference type="R215" uri="http://www.bibliography.ru/method/gosts/7-12/7_12.htm" alt="proposed-x1001" draft="unconfirmed">ГОСТ 7.12-93</reference>
+		<reference type="R216" uri="http://www.spravka.gramota.ru/pravila.html?perenos.htm">Правила переносов</reference>
+		<reference type="R415" uri="http://www.bibliography.ru/method/gosts/7-12/7_12.htm">ГОСТ 7.12-93</reference>
+		<reference type="RP1" uri="http://www.gsnti-norms.ru/norms/common/doc.asp?2&amp;/norms/stands/7_75.htm" draft="provisional">ГОСТ 7.75-97 Коды наименований языков</reference>
+		<reference type="RP2" uri="http://money.rin.ru/content/?id=1075" draft="provisional">Общероссийский классификатор валют</reference>
+		<reference type="RP3" uri="http://wwp.european-union-eu.com/romania/currency-converter.htm" draft="unconfirmed">Old and New Romanian Leu</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/ru.txt?only_with_tag=final-update-LDML
+
+BA { "\u0411\u043E\u0441\u043D\u0438\u044F \u0438 \u0413\u0435\u0440\u0446\u0435\u0433\u043E\u0432\u0438\u043D\u0430" } // From translation center
+CZ { "\u0427\u0435\u0445\u0438\u044F" } // Old value
+IR { "\u0418\u0441\u043B\u0430\u043C\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u0418\u0440\u0430\u043D" }
+        KP { "\u0421\u0435\u0432\u0435\u0440\u043D\u0430\u044F \u041A\u043E\u0440\u0435\u044F" }    // alternate name { "\u041A\u043E\u0440\u0435\u0439\u0441\u043A\u0430\u044F \u041D\u0430\u0440\u043E\u0434\u043D\u043E-\u0414\u0435\u043C\u043E\u043A\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430" }
+        KR { "\u042E\u0436\u043D\u0430\u044F \u041A\u043E\u0440\u0435\u044F" }    // alternate name { "\u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430 \u041A\u043E\u0440\u0435\u044F" }
+LA { "\u041B\u0430\u0442\u0438\u043D\u0441\u043A\u0430\u044F \u0410\u043C\u0435\u0440\u0438\u043A\u0430" }
+LY { "\u041B\u0438\u0432\u0438\u0439\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0431\u0441\u043A\u0430\u044F \u0414\u0436\u0430\u043C\u0430\u0445\u0438\u0440\u0438\u044F" }
+MK { "\u041C\u0430\u043A\u0435\u0434\u043E\u043D\u0438\u044F, \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430" } // From translation center
+RU { "\u0420\u043E\u0441\u0441\u0438\u0439\u0441\u043A\u0430\u044F \u0424\u0435\u0434\u0435\u0440\u0430\u0446\u0438\u044F" } // From translation center
+        SY { "\u0421\u0438\u0440\u0438\u0439\u0441\u043A\u0430\u044F \u0410\u0440\u0430\u0431\u0441\u043A\u0430\u044F \u0420\u0435\u0441\u043F\u0443\u0431\u043B\u0438\u043A\u0430" }    // alternate name { "\u0421\u0438\u0440\u0438\u044F" }
+        TW { "\u0422\u0430\u0439\u0432\u0430\u043D\u044C, \u041A\u0438\u0442\u0430\u0439\u0441\u043A\u0430\u044F \u041F\u0440\u043E\u0432\u0438\u043D\u0446\u0438\u044F" }    // alternate name { "\u0422\u0430\u0439\u0432\u0430\u043D\u044C" }
+US { "\u0421\u0428\u0410" }
+ZA { "\u042E\u0410\u0420" } // Old value
+jw { "\u042f\u0432\u0430\u043d\u0441\u043a\u0438\u0439" } // Use jv instead
+lv { "\u041B\u0430\u0442\u0432\u0438\u0439\u0441\u043A\u0438\u0439" } // Old value
+        "Cyrl"      // ISO 15924 Name 
+Currency display names
+-->
+

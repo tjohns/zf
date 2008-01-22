@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.89 $"/>
-		<generation date="$Date: 2007/07/24 23:39:15 $"/>
+		<version number="$Revision: 1.91 $"/>
+		<generation date="$Date: 2007/11/29 18:23:44 $"/>
 		<language type="pt"/>
 	</identity>
 	<localeDisplayNames>
@@ -1744,6 +1744,7 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity draft="provisional">Argel</exemplarCity>
 			</zone>
+			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Galápagos</exemplarCity>
 			</zone>
@@ -1751,6 +1752,7 @@
 				<exemplarCity>Guaiaquil</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Guayaquil</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Canárias</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ilhas Canárias</exemplarCity>
@@ -1791,6 +1793,7 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity draft="provisional">Budapeste</exemplarCity>
 			</zone>
+			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Jacarta</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Jakarta</exemplarCity>
@@ -1876,6 +1879,7 @@
 			<zone type="America/Panama">
 				<exemplarCity draft="provisional">Panamá</exemplarCity>
 			</zone>
+			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>Taiti</exemplarCity>
 			</zone>
@@ -1885,6 +1889,7 @@
 			<zone type="America/Puerto_Rico">
 				<exemplarCity draft="provisional">Porto Rico</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Açores</exemplarCity>
 			</zone>
@@ -2216,7 +2221,7 @@
 					<daylight>Horário de Verão da Austrália Central</daylight>
 				</long>
 				<short>
-					<standard draft="contributed">ACST</standard>
+					<standard draft="contributed">ACST (Austrália)</standard>
 					<daylight draft="contributed">ACDT</daylight>
 				</short>
 			</metazone>
@@ -2530,28 +2535,12 @@
 					<standard draft="contributed">GST</standard>
 				</short>
 			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic>Horário do Havaí</generic>
-					<standard>Horário Padrão do Havaí</standard>
-					<daylight>Horário de Verão do Havaí</daylight>
-				</long>
-				<short>
-					<generic draft="contributed">HT</generic>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
-			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
-					<generic draft="contributed">Horário do Havaí-Aleuta</generic>
 					<standard draft="contributed">Horário Padrão do Havaí-Aleuta</standard>
-					<daylight draft="contributed">Horário de Verão do Havaí-Aleuta</daylight>
 				</long>
 				<short>
-					<generic draft="contributed">HAT</generic>
-					<standard draft="contributed">HAST</standard>
-					<daylight draft="contributed">HADT</daylight>
+					<standard draft="contributed">HST</standard>
 				</short>
 			</metazone>
 			<metazone type="India">
@@ -2593,8 +2582,7 @@
 					<daylight>Horário de Verão de Israel</daylight>
 				</long>
 				<short>
-					<standard>IST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">IST (Israel)</standard>
+					<standard>IST (Israel)</standard>
 					<daylight>IDT</daylight>
 				</short>
 			</metazone>
@@ -2634,7 +2622,7 @@
 			</metazone>
 			<metazone type="Kazakhstan_Western">
 				<long>
-					<standard draft="contributed">Horário da Argentina Ocidental</standard>
+					<standard draft="contributed">Horário do Cazaquistão Ocidental</standard>
 				</long>
 				<short>
 					<standard draft="contributed">WKST</standard>
@@ -4042,4 +4030,63 @@
 			<nostr draft="contributed">não:nao:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R213" uri="http://ec.europa.eu/comm/translation/currencies/pttable1.htm">EU Currency and Country List</reference>
+		<reference type="R214">the changes on “code lists” and “other items” are based on results of google searches within Portugal pages</reference>
+		<reference type="RP1" uri="http://pt.wikipedia.org" draft="contributed">Wikipedia_PT</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/pt.txt?only_with_tag=final-update-LDML
+
+The vast majority of this data is based on the pt_BR locale.
+The pt_PT locale should be used when Portugal Portuguese is needed.
+                "a.C.", // antes de Cristo 
+                "d.C.", // depois de Cristo
+BN { "Brunei Darussalam" }
+CN { "China (PRC)" }
+        KP { "Cor\u00E9ia, Norte" }    // alternate name { "Cor\u00E9ia, Rep\u00FAblica Popular Democr\u00E1tica da " }
+        KR { "Cor\u00E9ia, Sul" }    // alternate name { "Cor\u00E9ia, Rep\u00FAblica da" }
+Currency display names
+        AFA { "AFA", "Afegane (1927-2002)" } // 1927- 
+        bla { "siksika" }   // Blackfoot
+ijo { "ijo" }
+luo { "luo" }
+tiv { "tiv" }
+vai { "vai" }
+        Hans { "han simplificado" } // Not a formal part of ISO-15924 yet
+        Hant { "han tradicional" } // Not a formal part of ISO-15924 yet
+        Qaai { "herdado" } // PUA
+        Thai { "tailand\u00eas" } // Just happens to be a duplicate
+        Zyyy { "comum" } // This may need to become "undetermined script"
+PREEURO { "Pr\u00e9-Euro" }
+
+Comments without bases
+
+ Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
+ Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
+ United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
+ Ukraine 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Uzhgorod"]
+ Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
+ Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
+ United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
+ Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ Chile 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Easter"]
+ New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
+ Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Uzbekistan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
+ Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
+ Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+ China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
+-->
+

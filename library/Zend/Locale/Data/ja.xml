@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.114 $"/>
-		<generation date="$Date: 2007/07/24 23:39:15 $"/>
+		<version number="$Revision: 1.115 $"/>
+		<generation date="$Date: 2007/11/14 16:26:58 $"/>
 		<language type="ja"/>
 	</identity>
 	<localeDisplayNames>
@@ -1448,7 +1448,18 @@
 			</calendar>
 			<calendar type="japanese">
 				<eras>
+					<!-- The following eraNames are duplicate of eraAbbr.
+						 An alias to the abbreviated names should be used, if these names are really desired.
+
+						 eraNames>
+						 <era type="232" draft="true">明治</era>
+						 <era type="233" draft="true">大正</era>
+						 <era type="234" draft="true">昭和</era>
+						 <era type="235" draft="true">平成</era>
+						 </eraNames
+					-->
 					<eraAbbr>
+						<!-- see comment in root.xml -->
 						<era type="0">大化</era>
 						<era type="1">白雉</era>
 						<era type="2">白鳯</era>
@@ -1750,9 +1761,11 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>アメリカ/アルゼンチン/コモドロリバダビア</exemplarCity>
 			</zone>
+			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity>ヨーロッパ/ベルファスト</exemplarCity>
 			</zone>
+			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity>太平洋/ヤップ</exemplarCity>
 			</zone>
@@ -1786,6 +1799,7 @@
 			<zone type="Africa/Luanda">
 				<exemplarCity draft="provisional">ルアンダ</exemplarCity>
 			</zone>
+			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>南極/ロデラ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ロセラ基地</exemplarCity>
@@ -1826,6 +1840,7 @@
 				<exemplarCity>南極/マクムード</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">マックマード</exemplarCity>
 			</zone>
+			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity>アメリカ/アルゼンチン/リオガイェゴス</exemplarCity>
 			</zone>
@@ -1863,6 +1878,7 @@
 			<zone type="Europe/Vienna">
 				<exemplarCity draft="provisional">ウィーン</exemplarCity>
 			</zone>
+			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity>オーストラリア/パース</exemplarCity>
 			</zone>
@@ -1935,6 +1951,7 @@
 			<zone type="America/La_Paz">
 				<exemplarCity draft="provisional">ラパス</exemplarCity>
 			</zone>
+			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity>アメリカ/エイルネペ</exemplarCity>
 			</zone>
@@ -2009,6 +2026,7 @@
 			<zone type="America/Belize">
 				<exemplarCity draft="provisional">ベリーズ</exemplarCity>
 			</zone>
+			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity>アメリカ/ドーソン</exemplarCity>
 			</zone>
@@ -2087,6 +2105,7 @@
 			<zone type="Indian/Cocos">
 				<exemplarCity draft="provisional">ココス</exemplarCity>
 			</zone>
+			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>アフリカ/キンシャサ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">キンシャサ</exemplarCity>
@@ -2110,6 +2129,7 @@
 			<zone type="Pacific/Rarotonga">
 				<exemplarCity draft="provisional">ラロトンガ</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>太平洋/イースター</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">イースター島</exemplarCity>
@@ -2121,6 +2141,7 @@
 			<zone type="Africa/Douala">
 				<exemplarCity draft="provisional">ドゥアラ</exemplarCity>
 			</zone>
+			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity>アジア/カシガル</exemplarCity>
 			</zone>
@@ -2172,6 +2193,7 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity draft="provisional">アルジェ</exemplarCity>
 			</zone>
+			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>太平洋/ガラパゴス</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ガラパゴス</exemplarCity>
@@ -2192,6 +2214,7 @@
 			<zone type="Africa/Asmera">
 				<exemplarCity draft="provisional">アスマラ</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>大西洋/カナリー</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">カナリア諸島</exemplarCity>
@@ -2256,6 +2279,7 @@
 			<zone type="Europe/Gibraltar">
 				<exemplarCity draft="provisional">ジブラルタル</exemplarCity>
 			</zone>
+			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity>アメリカ/チューレ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">チューレ</exemplarCity>
@@ -2311,6 +2335,7 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity draft="provisional">ブダペスト</exemplarCity>
 			</zone>
+			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>アジア/ジャカルタ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ジャカルタ</exemplarCity>
@@ -2365,6 +2390,7 @@
 			<zone type="Asia/Phnom_Penh">
 				<exemplarCity draft="provisional">プノンペン</exemplarCity>
 			</zone>
+			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity>太平洋/エンダベリー</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">エンダベリー</exemplarCity>
@@ -2395,6 +2421,7 @@
 			<zone type="America/Cayman">
 				<exemplarCity draft="provisional">ケイマン</exemplarCity>
 			</zone>
+			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity>アジア/アクタウ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">アクタウ</exemplarCity>
@@ -2458,6 +2485,7 @@
 			<zone type="Indian/Antananarivo">
 				<exemplarCity draft="provisional">アンタナナリボ</exemplarCity>
 			</zone>
+			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>太平洋/クワゼリン</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">クワジェリン</exemplarCity>
@@ -2466,6 +2494,7 @@
 				<exemplarCity>太平洋/マジュロ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">マジュロ</exemplarCity>
 			</zone>
+			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity>アフリカ/バマコ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">バマコ</exemplarCity>
@@ -2473,6 +2502,7 @@
 			<zone type="Asia/Rangoon">
 				<exemplarCity draft="provisional">ラングーン</exemplarCity>
 			</zone>
+			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity>アジア/ホブド</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ホブド</exemplarCity>
@@ -2512,6 +2542,7 @@
 			<zone type="Africa/Blantyre">
 				<exemplarCity draft="provisional">ブランタイア</exemplarCity>
 			</zone>
+			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity>アメリカ/ティフアナ</exemplarCity>
 			</zone>
@@ -2536,6 +2567,7 @@
 			<zone type="America/Cancun">
 				<exemplarCity>アメリカ/カンクン</exemplarCity>
 			</zone>
+			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>アジア/クアラルンプール</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">クアラルンプール</exemplarCity>
@@ -2579,6 +2611,7 @@
 			<zone type="Pacific/Niue">
 				<exemplarCity draft="provisional">ニウエ</exemplarCity>
 			</zone>
+			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity>太平洋/チャタム</exemplarCity>
 			</zone>
@@ -2595,6 +2628,7 @@
 			<zone type="America/Lima">
 				<exemplarCity draft="provisional">リマ</exemplarCity>
 			</zone>
+			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>太平洋/タヒチ</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">タヒチ</exemplarCity>
@@ -2631,6 +2665,7 @@
 			<zone type="Asia/Gaza">
 				<exemplarCity draft="provisional">ガザ</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>大西洋/アゾレス</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">アゾレス諸島</exemplarCity>
@@ -2657,6 +2692,7 @@
 			<zone type="Europe/Bucharest">
 				<exemplarCity>ブカレスト</exemplarCity>
 			</zone>
+			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>ヨーロッパ/カリーニングラード</exemplarCity>
 			</zone>
@@ -2723,6 +2759,7 @@
 			<zone type="Atlantic/St_Helena">
 				<exemplarCity draft="provisional">セントヘレナ</exemplarCity>
 			</zone>
+			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity>大西洋/ヤンマイエン</exemplarCity>
 			</zone>
@@ -2801,6 +2838,7 @@
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity draft="provisional">ダルエスサラーム</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>ヨーロッパ/ウジゴロド</exemplarCity>
 			</zone>
@@ -2817,6 +2855,7 @@
 			<zone type="Africa/Kampala">
 				<exemplarCity draft="provisional">カンパラ</exemplarCity>
 			</zone>
+			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity>太平洋/ミッドウェー</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ミッドウェー</exemplarCity>
@@ -2829,6 +2868,7 @@
 				<exemplarCity>太平洋/ウェイク</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ウェーク</exemplarCity>
 			</zone>
+			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity>アメリカ/アダック</exemplarCity>
 			</zone>
@@ -2905,6 +2945,7 @@
 			<zone type="America/Montevideo">
 				<exemplarCity draft="provisional">モンテビデオ</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="unconfirmed">サマルカンド</exemplarCity>
 			</zone>
@@ -3046,16 +3087,6 @@
 				</long>
 				<short>
 					<standard>GMT</standard>
-				</short>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>ハワイ標準時</standard>
-					<daylight>ハワイ夏時間</daylight>
-				</long>
-				<short>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
 				</short>
 			</metazone>
 			<metazone type="Israel">
@@ -4111,4 +4142,56 @@
 			<nostr draft="provisional">いいえ:イイエ</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R089" uri="http://www.ndl.go.jp/jp/library/data/k.pdf" draft="provisional">National Diet Library publication</reference>
+		<reference type="RP1" uri="http://www.mofa.go.jp/mofaj/gaiko/bluebook/1972/s47-2-2-3.htm" draft="provisional">The Ministry of Foreign Affairs of Japan Blue book</reference>
+		<reference type="RP2" uri="http://www.sj-ri.co.jp/issue/quarterly/data/qt31-2.pdf" draft="provisional">Sompo Japan Research Institute LLoyd's Report</reference>
+		<reference type="RP3" uri="http://www.mofa.go.jp/mofaj/area/" draft="provisional">The Ministry of Foreign Affairs of Japan, Area Information</reference>
+		<reference type="RP4" draft="provisional">Ethnologue, Languages of the World</reference>
+		<reference type="RP4" uri="http://www.ethnologue.com/" alt="proposed-x1001" draft="unconfirmed">三省堂言語学大事典</reference>
+		<reference type="RP5" uri="http://www.sanseido.co.jp/publ/dicts/gengogaku.html#4" draft="provisional">三省堂言語学大事典・言語一覧</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/ja.txt?only_with_tag=final-update-LDML
+
+Below are same as root
+abbreviated{
+"10",
+"11",
+"12",
+}
+narrow{
+"10",
+"11",
+"12",
+}
+BM { "\u30d0\u30fc\u30df\u30e5\u30fc\u30c0\u8af8\u5cf6" } // Baamyuuda Shodou
+        BM { "\u30d0\u30fc\u30df\u30e5\u30fc\u30c0" } // Baamyuuda
+CN { "\u4e2d\u83ef\u4eba\u6c11\u5171\u548c\u56fd" } // China (PRC)
+        CN { "\u4e2d\u56fd" } // China
+HK { "\u9999\u6e2f\u7279\u5225\u884c\u653f\u533a" } // Hong Kong SAR
+        HK { "\u4e2d\u83ef\u4eba\u6c11\u5171\u548c\u56fd\u9999\u6e2f\u7279\u5225\u884c\u653f\u533a" } // PRC Hong Kong SAR
+LA { "\u30e9\u30aa\u30b9\u4eba\u6c11\u6c11\u4e3b\u5171\u548c\u56fd" } // From translation center
+LU { "\u30eb\u30af\u30bb\u30f3\u30d6\u30eb\u30af" } // Old value. Spelling error?
+MO { "\u30de\u30ab\u30aa\u7279\u5225\u884c\u653f\u533a" } // Makao SAR
+        MO { "\u4e2d\u83ef\u4eba\u6c11\u5171\u548c\u56fd\u30de\u30ab\u30aa\u7279\u5225\u884c\u653f\u533a" } // PRC Makao SAR
+MQ { "\u30de\u30eb\u30c1\u30cb\u30fc\u30af\u5cf6" } // From translation center
+TF { "\u4ecf\u9818\u6975\u5357\u8af8\u5cf6" } // From translation center
+TL { "\u6771\u30c1\u30e2\u30fc\u30eb" } // From translation center
+VA { "\u30d0\u30c1\u30ab\u30f3" } // Old value
+YU { "\u30e6\u30fc\u30b4\u30b9\u30e9\u30d3\u30a2\u9023\u90a6" } // Yuugosurabia Rempou (Union)
+        YU { "\u30e6\u30fc\u30b4\u30b9\u30e9\u30d3\u30a2" } // Yuugosurabia
+be { "\u767d\u30ed\u30b7\u30a2\u8a9e" } // Old value
+el { "\u30ae\u30ea\u30b7\u30a2\u8a9e" } // Old value
+lv { "\u30e9\u30c8\u30d3\u30a2\u8a9e (\u30ec\u30c3\u30c8\u8a9e)" } // Old value
+zh_cn { "\u4e2d\u56fd\u8a9e (\u7c21\u4f53\u5b57)" }
+zh_tw { "\u4e2d\u56fd\u8a9e (\u7e41\u4f53\u5b57)" }
+"\u2030",
+"\u221e",
+"\ufffd",
+}
+Qaai { "Inherited" } // PUA
+Zyyy { "Common" } // This may need to become "undetermined script"
+-->
+

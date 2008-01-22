@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.53 $"/>
-		<generation date="$Date: 2007/07/19 22:31:39 $"/>
+		<version number="$Revision: 1.54 $"/>
+		<generation date="$Date: 2007/08/21 16:11:36 $"/>
 		<language type="en"/>
 		<territory type="CA"/>
 	</identity>
@@ -32,6 +32,11 @@
 				</dateTimeFormats>
 			</calendar>
 		</calendars>
+		<timeZoneNames>
+			<metazone type="Newfoundland">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+		</timeZoneNames>
 	</dates>
 	<numbers>
 		<currencies>
@@ -44,3 +49,7 @@
 		</currencies>
 	</numbers>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/en_CA.txt?only_with_tag=final-update-LDML
+-->
+

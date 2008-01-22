@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.42 $"/>
-		<generation date="$Date: 2007/07/19 22:31:39 $"/>
+		<version number="$Revision: 1.43 $"/>
+		<generation date="$Date: 2007/08/21 16:11:36 $"/>
 		<language type="en"/>
 		<territory type="ZW"/>
 	</identity>
@@ -53,6 +53,20 @@
 				</dateTimeFormats>
 			</calendar>
 		</calendars>
+		<timeZoneNames>
+			<metazone type="Africa_Central">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+			<metazone type="Africa_Eastern">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+			<metazone type="Africa_Southern">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+			<metazone type="Africa_Western">
+				<commonlyUsed>true</commonlyUsed>
+			</metazone>
+		</timeZoneNames>
 	</dates>
 	<numbers>
 		<currencyFormats>

@@ -1066,6 +1066,13 @@
 						<era type="1" alt="proposed-x1001" draft="unconfirmed">למנינם</era>
 						<era type="1" alt="proposed-x1002" draft="unconfirmed">CE</era>
 					</eraNames>
+					<!-- The following data is probably bad. It should probably use \u05F4 instead of &quot;
+						 and it's probably duplicate data.
+						 eraNames>
+						 <era type="0" draft="true">לפנה&quot;ס</era>
+						 <era type="1" draft="true">לסה&quot;נ</era>
+						 </eraNames
+					-->
 					<eraAbbr>
 						<era type="0">לפנה״ס</era>
 						<era type="1">לסה״נ</era>
@@ -1264,9 +1271,15 @@
 			<gmtFormat draft="unconfirmed">GMT{0}</gmtFormat>
 			<regionFormat>שעון {0}</regionFormat>
 			<regionFormat alt="proposed-x1001" draft="unconfirmed">{0}</regionFormat>
+			<!-- Marshall Islands
+				 Mali
+			-->
 			<zone type="Africa/Timbuktu">
 				<exemplarCity>אפריקה/טימבקטו</exemplarCity>
 			</zone>
+			<!-- Micronesia
+				 United Kingdom
+			-->
 			<zone type="Europe/Belfast">
 				<exemplarCity>אירופה/בלפסט</exemplarCity>
 			</zone>
@@ -1303,6 +1316,7 @@
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="provisional">רות'רה</exemplarCity>
 			</zone>
+			<!-- Antarctica -->
 			<zone type="Antarctica/Palmer">
 				<exemplarCity>אמריקה/פאלמר</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">פאלמר</exemplarCity>
@@ -1331,6 +1345,7 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity draft="provisional">מקמרדו</exemplarCity>
 			</zone>
+			<!-- Argentina -->
 			<zone type="America/Mendoza">
 				<exemplarCity>אמריקה/מנדוזה</exemplarCity>
 			</zone>
@@ -1349,6 +1364,7 @@
 			<zone type="Europe/Vienna">
 				<exemplarCity draft="provisional">וינה</exemplarCity>
 			</zone>
+			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity>אוסטרליה/פרת'</exemplarCity>
 			</zone>
@@ -1436,6 +1452,7 @@
 			<zone type="America/Araguaina">
 				<exemplarCity draft="provisional">אראגואינה</exemplarCity>
 			</zone>
+			<!-- Brazil -->
 			<zone type="America/Sao_Paulo">
 				<exemplarCity>אמריקה/סאן-פאולו</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">סאו פאולו</exemplarCity>
@@ -1471,6 +1488,7 @@
 			<zone type="America/Belize">
 				<exemplarCity draft="provisional">בליז</exemplarCity>
 			</zone>
+			<!-- Canada -->
 			<zone type="America/Vancouver">
 				<exemplarCity>אמריקה/ונקובר</exemplarCity>
 			</zone>
@@ -1519,6 +1537,9 @@
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="provisional">איי הפסחא</exemplarCity>
 			</zone>
+			<!-- Democratic Republic of the Congo
+				 Chile
+			-->
 			<zone type="America/Santiago">
 				<exemplarCity>אמריקה/סנטיאגו</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">סנטייגו</exemplarCity>
@@ -1526,6 +1547,7 @@
 			<zone type="Africa/Douala">
 				<exemplarCity draft="provisional">דואלה</exemplarCity>
 			</zone>
+			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>אסיה/שנחאי</exemplarCity>
 			</zone>
@@ -1565,6 +1587,7 @@
 			<zone type="Africa/Algiers">
 				<exemplarCity draft="provisional">אלג'יר</exemplarCity>
 			</zone>
+			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>פסיפי/גלאפגוס</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">גלפגוס</exemplarCity>
@@ -1584,6 +1607,7 @@
 			<zone type="Africa/Asmera">
 				<exemplarCity draft="provisional">אסמרה</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>אטלנטי/קנרי</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">האיים הקנריים</exemplarCity>
@@ -1695,6 +1719,9 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity draft="provisional">בודפשט</exemplarCity>
 			</zone>
+			<!-- Greenland
+				 Indonesia
+			-->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>אסיה/ג'קרטה</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ג'אקארטה</exemplarCity>
@@ -1776,6 +1803,9 @@
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="provisional">אקטאו</exemplarCity>
 			</zone>
+			<!-- Kiribati
+				 Kazakhstan
+			-->
 			<zone type="Asia/Oral">
 				<exemplarCity>אסיה/אורל</exemplarCity>
 			</zone>
@@ -1875,6 +1905,9 @@
 			<zone type="Africa/Blantyre">
 				<exemplarCity draft="provisional">בלנטיר</exemplarCity>
 			</zone>
+			<!-- Mongolia
+				 Mexico
+			-->
 			<zone type="America/Mazatlan">
 				<exemplarCity>אמריקה/מזטלן</exemplarCity>
 			</zone>
@@ -1887,6 +1920,7 @@
 			<zone type="America/Cancun">
 				<exemplarCity>אמריקה/קנקון</exemplarCity>
 			</zone>
+			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>קואלה לומפור</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">קואלה למפור</exemplarCity>
@@ -1927,6 +1961,7 @@
 			<zone type="Pacific/Niue">
 				<exemplarCity draft="provisional">ניווה</exemplarCity>
 			</zone>
+			<!-- New Zealand -->
 			<zone type="Pacific/Auckland">
 				<exemplarCity>פסיפי/אוקלנד</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">אוקלנד</exemplarCity>
@@ -1940,6 +1975,7 @@
 			<zone type="America/Lima">
 				<exemplarCity draft="provisional">לימה</exemplarCity>
 			</zone>
+			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>פסיפי/טהיטי</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">טהיטי</exemplarCity>
@@ -1977,6 +2013,7 @@
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="provisional">האיים האזורים</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Europe/Lisbon">
 				<exemplarCity>אירופה/ליסבון</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">ליסבון</exemplarCity>
@@ -1996,6 +2033,7 @@
 			<zone type="Europe/Bucharest">
 				<exemplarCity draft="provisional">בוקרשט</exemplarCity>
 			</zone>
+			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>אירופה/מוסקבה</exemplarCity>
 			</zone>
@@ -2106,6 +2144,9 @@
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity draft="provisional">דאר א-סאלם</exemplarCity>
 			</zone>
+			<!-- Svalbard and Jan Mayen
+				 Ukraine
+			-->
 			<zone type="Europe/Kiev">
 				<exemplarCity>אירופה/קייב</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">קייב</exemplarCity>
@@ -2122,6 +2163,9 @@
 			<zone type="Pacific/Wake">
 				<exemplarCity draft="provisional">וואק</exemplarCity>
 			</zone>
+			<!-- United States Minor Outlying Islands
+				 United States
+			-->
 			<zone type="Pacific/Honolulu">
 				<exemplarCity>פסיפי/הונולולו</exemplarCity>
 			</zone>
@@ -2161,6 +2205,7 @@
 			<zone type="America/Montevideo">
 				<exemplarCity draft="provisional">מונטווידאו</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>אסיה/סמרקנד</exemplarCity>
 			</zone>
@@ -2977,4 +3022,17 @@
 			<nostr>לא:ל</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="RP1" uri="http://directory.kol-israel.com/asites/favorites.html?www.nrg.co.il/" draft="provisional">nrg on-line news - see date on right</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/he.txt?only_with_tag=final-update-LDML
+
+        KP { "\u05E7\u05D5\u05E8\u05D9\u05D0\u05D4, \u05E6\u05E4\u05D5\u05DF" }    // alternate name { "\u05E7\u05D5\u05E8\u05D9\u05D0\u05D4, \u05D4\u05E8\u05E4\u05D5\u05D1\u05DC\u05D9\u05E7\u05D4 \u05D4\u05D3\u05DE\u05D5\u05E7\u05E8\u05D8\u05D9\u05EA \u05D4\u05E2\u05DE\u05DE\u05D9\u05EA" }
+        KR { "\u05E7\u05D5\u05E8\u05D9\u05D0\u05D4, \u05D3\u05E8\u05D5\u05DD" }    // alternate name { "\u05E7\u05D5\u05E8\u05D9\u05D0\u05D4, \u05D4\u05E8\u05E4\u05D5\u05D1\u05DC\u05D9\u05E7\u05D4" }
+        SY { "\u05D4\u05E8\u05E4\u05D5\u05D1\u05DC\u05D9\u05E7\u05D4 \u05D4\u05E2\u05E8\u05D1\u05D9\u05EA \u05D4\u05E1\u05D5\u05E8\u05D9\u05EA" }    // alternate name { "\u05E1\u05D5\u05E8\u05D9\u05D4" }
+zh_cn { "\u05E1\u05D9\u05E0\u05D9\u05EA (\u05DE\u05E4\u05D5\u05E9\u05D8\u05EA)" }
+zh_tw { "\u05E1\u05D9\u05E0\u05D9\u05EA (\u05DE\u05E1\u05D5\u05E8\u05EA\u05D9\u05EA)" }
+-->
+

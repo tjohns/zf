@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.156 $"/>
-		<generation date="$Date: 2007/07/24 01:06:02 $"/>
+		<version number="$Revision: 1.161 $"/>
+		<generation date="$Date: 2007/11/07 23:36:50 $"/>
 		<language type="en"/>
 	</identity>
 	<localeDisplayNames>
@@ -561,6 +561,7 @@
 			<language type="ypk" alt="proposed-x1001" draft="unconfirmed">Yupik language</language>
 			<language type="za">Zhuang</language>
 			<language type="zap">Zapotec</language>
+			<language type="zbl">Blissymbols</language>
 			<language type="zen">Zenaga</language>
 			<language type="zh">Chinese</language>
 			<language type="zh_Hans">Simplified Chinese</language>
@@ -575,6 +576,7 @@
 		<scripts>
 			<script type="Arab">Arabic</script>
 			<script type="Armn">Armenian</script>
+			<script type="Avst">Avestan</script>
 			<script type="Bali">Balinese</script>
 			<script type="Batk">Batak</script>
 			<script type="Beng">Bengali</script>
@@ -639,6 +641,7 @@
 			<script type="Lyci">Lycian</script>
 			<script type="Lydi">Lydian</script>
 			<script type="Mand">Mandaean</script>
+			<script type="Mani">Manichaean</script>
 			<script type="Maya">Mayan hieroglyphs</script>
 			<script type="Mero">Meroitic</script>
 			<script type="Mlym">Malayalam</script>
@@ -654,12 +657,14 @@
 			<script type="Osma">Osmanya</script>
 			<script type="Perm">Old Permic</script>
 			<script type="Phag">Phags-pa</script>
+			<script type="Phlv">Book Pahlavi</script>
 			<script type="Phnx">Phoenician</script>
 			<script type="Plrd">Pollard Phonetic</script>
 			<script type="Qaai">Inherited</script>
 			<script type="Rjng">Rejang</script>
 			<script type="Roro">Rongorongo</script>
 			<script type="Runr">Runic</script>
+			<script type="Samr">Samaritan</script>
 			<script type="Sara">Sarati</script>
 			<script type="Saur">Saurashtra</script>
 			<script type="Sgnw">SignWriting</script>
@@ -696,6 +701,7 @@
 		</scripts>
 		<territories>
 			<territory type="001">World</territory>
+			<!-- UN codes -->
 			<territory type="002">Africa</territory>
 			<territory type="003">North America</territory>
 			<territory type="005">South America</territory>
@@ -755,6 +761,7 @@
 			<territory type="BH">Bahrain</territory>
 			<territory type="BI">Burundi</territory>
 			<territory type="BJ">Benin</territory>
+			<territory type="BL">Saint Barthélemy</territory>			
 			<territory type="BM">Bermuda</territory>
 			<territory type="BN">Brunei</territory>
 			<territory type="BO">Bolivia</territory>
@@ -876,6 +883,7 @@
 			<territory type="MD">Moldova</territory>
 			<territory type="ME">Montenegro</territory>
 			<territory type="MG">Madagascar</territory>
+			<territory type="MF">Saint Martin</territory>
 			<territory type="MH">Marshall Islands</territory>
 			<territory type="MI">Midway Islands</territory>
 			<territory type="MK">Macedonia</territory>
@@ -998,6 +1006,7 @@
 		</territories>
 		<variants>
 			<variant type="1901">Traditional German orthography</variant>
+			<variant type="1994">Standardized Resian orthography</variant>
 			<variant type="1996">German orthography of 1996</variant>
 			<variant type="1606NICT">Late Middle French to 1606</variant>
 			<variant type="AREVELA">Eastern Armenian</variant>
@@ -1006,6 +1015,7 @@
 			<variant type="BOONT">Boontling</variant>
 			<variant type="FONIPA">IPA Phonetics</variant>
 			<variant type="FONUPA">UPA Phonetics</variant>
+			<variant type="LIPAW">The Lipovaz dialect of Resian</variant>
 			<variant type="GAULISH">Gaulish</variant>
 			<variant type="GUOYU">Mandarin or Standard Chinese</variant>
 			<variant type="HAKKA">Hakka</variant>
@@ -1019,6 +1029,7 @@
 			<variant type="REVISED">Revised Orthography</variant>
 			<variant type="ROZAJ">Resian</variant>
 			<variant type="SAAHO">Saho</variant>
+			<variant type="SCOTLAND">Scottish Standard English</variant>
 			<variant type="SCOUSE">Scouse</variant>
 			<variant type="SOLBA">Stolvizza/Solbica dialect</variant>
 			<variant type="TARASK">Taraskievica orthography</variant>
@@ -1278,8 +1289,8 @@
 					<daylight>Acre Summer Time</daylight>
 				</long>
 				<short>
-					<standard>ACT</standard>
-					<daylight>ACST</daylight>
+					<standard>ACT (Acre)</standard>
+					<daylight>ACST (Acre)</daylight>
 				</short>
 			</metazone>
 			<metazone type="Afghanistan">
@@ -1297,7 +1308,6 @@
 				<short>
 					<standard>CAT</standard>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Africa_Eastern">
 				<long>
@@ -1306,7 +1316,6 @@
 				<short>
 					<standard>EAT</standard>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Africa_Southern">
 				<long>
@@ -1317,7 +1326,6 @@
 					<generic>SAT</generic>
 					<standard>SAST</standard>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Africa_Western">
 				<long>
@@ -1328,7 +1336,6 @@
 					<standard>WAT</standard>
 					<daylight>WAST</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Aktyubinsk">
 				<long>
@@ -1541,7 +1548,6 @@
 					<standard>ACST</standard>
 					<daylight>ACDT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Australia_CentralWestern">
 				<long>
@@ -1558,7 +1564,6 @@
 					<standard alt="proposed-x1001" draft="unconfirmed">CWST</standard>
 					<daylight>ACWDT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Australia_Eastern">
 				<long>
@@ -1571,7 +1576,6 @@
 					<standard>AEST</standard>
 					<daylight>AEDT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Australia_Western">
 				<long>
@@ -1584,7 +1588,6 @@
 					<standard>AWST</standard>
 					<daylight>AWDT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Azerbaijan">
 				<long>
@@ -1874,7 +1877,6 @@
 					<standard>CET</standard>
 					<daylight>CEST</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Europe_Eastern">
 				<long>
@@ -1885,7 +1887,6 @@
 					<standard>EET</standard>
 					<daylight>EEST</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Europe_Western">
 				<long>
@@ -1896,7 +1897,6 @@
 					<standard>WET</standard>
 					<daylight>WEST</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Falkland">
 				<long>
@@ -2043,29 +2043,12 @@
 					<standard>GYT</standard>
 				</short>
 			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic>Hawaii Time</generic>
-					<standard>Hawaii Standard Time</standard>
-					<daylight>Hawaii Daylight Time</daylight>
-				</long>
-				<short>
-					<generic>HT</generic>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
-				<commonlyUsed>true</commonlyUsed>
-			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
-					<generic>Hawaii-Aleutian Time</generic>
 					<standard>Hawaii-Aleutian Standard Time</standard>
-					<daylight>Hawaii-Aleutian Daylight Time</daylight>
 				</long>
 				<short>
-					<generic>HAT</generic>
-					<standard>HAST</standard>
-					<daylight>HADT</daylight>
+					<standard>HST</standard>
 				</short>
 				<commonlyUsed>true</commonlyUsed>
 			</metazone>
@@ -2469,7 +2452,6 @@
 					<standard>NZST</standard>
 					<daylight>NZDT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Newfoundland">
 				<long>
@@ -2482,7 +2464,6 @@
 					<standard>NST</standard>
 					<daylight>NDT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Niue">
 				<long>
@@ -3652,6 +3633,7 @@
 			</currency>
 			<currency type="ROL">
 				<displayName>Old Romanian Leu</displayName>
+				<!-- FYI Lei is the plural form of Leu. The currency symbol should be considered for change too. -->
 				<symbol choice="true">=0#Old lei|1#Old leu|1&lt;Old lei</symbol>
 			</currency>
 			<currency type="RON">
@@ -3939,4 +3921,20 @@
 			<nostr>no:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R032"/>
+		<reference type="R033"/>
+		<reference type="R034" uri="isbn:0-321-18578-1">The Unicode Standard 4.0</reference>
+		<reference type="R035">Special reference used only to prevent minimalization</reference>
+		<reference type="R036">The Economist Style Guide</reference>
+		<reference type="R037" uri="http://unstats.un.org/unsd/geoinfo/">UN Geographical Names</reference>
+		<reference type="R434" uri="isbn:0-19-571804-6">South African Concise Oxford Dictionary 1999</reference>
+		<reference type="RP1">National Standard of Canada, CAN/CSA-Z234.4-89: All-Numeric Dates and Times. (Reaffirmed 2000-05-25)</reference>
+		<reference type="RP2" uri="http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html">ISO 4217</reference>
+	</references>
 </ldml>
+<!-- Comments without bases
+
+ See the National Bank of Romania for details http://www.bnro.ro/def_en.htm 	 - was on: //ldml/numbers/currencies/currency[@type="RON"]/displayName[@alt="proposed"] 
+-->
+

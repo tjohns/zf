@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.103 $"/>
-		<generation date="$Date: 2007/07/24 23:39:15 $"/>
+		<version number="$Revision: 1.105 $"/>
+		<generation date="$Date: 2007/11/14 16:26:58 $"/>
 		<language type="zh"/>
 	</identity>
 	<localeDisplayNames>
@@ -1765,9 +1765,21 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>科摩罗（群岛）</exemplarCity>
 			</zone>
+			<!-- <zone type="America/Indiana/Indianapolis">
+				 <exemplarCity>印地安那州/印第安纳波利斯</exemplarCity>
+				 </zone>
+
+
+				 <zone type="America/Kentucky/Louisville">
+				 <exemplarCity>路易斯维尔</exemplarCity>
+				 </zone>
+
+				 United Kingdom
+			-->
 			<zone type="Europe/Belfast">
 				<exemplarCity>贝尔法斯特</exemplarCity>
 			</zone>
+			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="provisional">雅浦</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">雅浦岛</exemplarCity>
@@ -1809,6 +1821,7 @@
 				<exemplarCity>罗安达</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">安哥拉</exemplarCity>
 			</zone>
+			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity>罗瑟拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">路德</exemplarCity>
@@ -1845,6 +1858,7 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity>马克默多</exemplarCity>
 			</zone>
+			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity>里奥加耶戈斯</exemplarCity>
 			</zone>
@@ -1882,6 +1896,7 @@
 			<zone type="Europe/Vienna">
 				<exemplarCity>维也纳</exemplarCity>
 			</zone>
+			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity>佩思</exemplarCity>
 			</zone>
@@ -1971,6 +1986,7 @@
 				<exemplarCity>拉巴斯</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">玻利维亚</exemplarCity>
 			</zone>
+			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="provisional">依伦尼贝</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">埃鲁内佩</exemplarCity>
@@ -2039,6 +2055,7 @@
 			<zone type="America/Belize">
 				<exemplarCity>伯利兹</exemplarCity>
 			</zone>
+			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity>道森</exemplarCity>
 			</zone>
@@ -2121,6 +2138,7 @@
 				<exemplarCity>可可斯</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">可可群岛</exemplarCity>
 			</zone>
+			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>金沙萨</exemplarCity>
 			</zone>
@@ -2147,6 +2165,7 @@
 				<exemplarCity>拉罗汤加</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">拉罗汤加岛</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>复活节岛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">复活节</exemplarCity>
@@ -2158,6 +2177,7 @@
 				<exemplarCity>杜阿拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">喀麦隆</exemplarCity>
 			</zone>
+			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity>喀什葛尔</exemplarCity>
 			</zone>
@@ -2218,6 +2238,7 @@
 				<exemplarCity>阿尔及尔</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">阿尔及利亚</exemplarCity>
 			</zone>
+			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>加拉帕哥斯</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">加拉帕哥</exemplarCity>
@@ -2241,6 +2262,7 @@
 				<exemplarCity>阿斯马拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">厄立特里亚</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>加那利</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">加那利群岛</exemplarCity>
@@ -2316,6 +2338,7 @@
 			<zone type="Europe/Gibraltar">
 				<exemplarCity>直布罗陀</exemplarCity>
 			</zone>
+			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity>图勒</exemplarCity>
 			</zone>
@@ -2383,6 +2406,7 @@
 			<zone type="Europe/Budapest">
 				<exemplarCity>布达佩斯</exemplarCity>
 			</zone>
+			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>雅加达</exemplarCity>
 			</zone>
@@ -2452,6 +2476,7 @@
 			<zone type="Asia/Phnom_Penh">
 				<exemplarCity>金边</exemplarCity>
 			</zone>
+			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity>恩德贝里</exemplarCity>
 			</zone>
@@ -2485,6 +2510,7 @@
 				<exemplarCity>开曼</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">开曼群岛</exemplarCity>
 			</zone>
+			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity>阿克图</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">阿克套</exemplarCity>
@@ -2555,6 +2581,7 @@
 				<exemplarCity draft="unconfirmed">安塔那利佛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">安塔那那利佛</exemplarCity>
 			</zone>
+			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>夸贾林</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">夸贾林岛</exemplarCity>
@@ -2566,12 +2593,14 @@
 			<zone type="Europe/Skopje">
 				<exemplarCity draft="provisional">斯科普里</exemplarCity>
 			</zone>
+			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity>巴马科</exemplarCity>
 			</zone>
 			<zone type="Asia/Rangoon">
 				<exemplarCity>仰光</exemplarCity>
 			</zone>
+			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity>科布多</exemplarCity>
 			</zone>
@@ -2612,6 +2641,7 @@
 				<exemplarCity>布兰太尔</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">马拉维</exemplarCity>
 			</zone>
+			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity>提华纳</exemplarCity>
 			</zone>
@@ -2637,6 +2667,7 @@
 				<exemplarCity>坎昆</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">坎空</exemplarCity>
 			</zone>
+			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity>吉隆坡</exemplarCity>
 			</zone>
@@ -2684,6 +2715,7 @@
 			<zone type="Pacific/Niue">
 				<exemplarCity>纽埃</exemplarCity>
 			</zone>
+			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity>查塔姆</exemplarCity>
 			</zone>
@@ -2701,6 +2733,7 @@
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">莱马</exemplarCity>
 				<exemplarCity alt="proposed-x1002" draft="unconfirmed">秘鲁</exemplarCity>
 			</zone>
+			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity>塔希提</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">塔希提岛</exemplarCity>
@@ -2741,6 +2774,7 @@
 			<zone type="Asia/Gaza">
 				<exemplarCity>加沙</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="unconfirmed">亚述尔群岛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">亚速</exemplarCity>
@@ -2773,6 +2807,7 @@
 			<zone type="Europe/Belgrade">
 				<exemplarCity draft="provisional">贝尔格莱德</exemplarCity>
 			</zone>
+			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>加里宁格勒</exemplarCity>
 			</zone>
@@ -2853,6 +2888,7 @@
 			<zone type="Europe/Ljubljana">
 				<exemplarCity draft="provisional">卢布尔维</exemplarCity>
 			</zone>
+			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="provisional">扬马延岛</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">扬马延</exemplarCity>
@@ -2954,6 +2990,7 @@
 				<exemplarCity>达累斯萨拉姆</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Tanzania</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>乌日戈罗德</exemplarCity>
 			</zone>
@@ -2970,6 +3007,7 @@
 				<exemplarCity>坎帕拉</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">乌干达</exemplarCity>
 			</zone>
+			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="provisional">中途岛</exemplarCity>
 			</zone>
@@ -2980,6 +3018,7 @@
 				<exemplarCity>威克</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">威克岛</exemplarCity>
 			</zone>
+			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity>艾德克</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">艾德克岛</exemplarCity>
@@ -3064,6 +3103,7 @@
 				<exemplarCity>蒙得维的亚</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">乌拉圭</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>撒马尔罕</exemplarCity>
 			</zone>
@@ -3132,12 +3172,8 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">Acre 夏令时</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">ACT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">ACST</generic>
-					<standard draft="provisional">ACST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">ACT</standard>
-					<daylight draft="provisional">ACDT</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">ACST</daylight>
+					<standard draft="provisional">ACT (Acre)</standard>
+					<daylight draft="provisional">ACST (Acre)</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3145,16 +3181,9 @@
 				<long>
 					<generic>非洲中部时间</generic>
 					<standard>中部非洲标准时间</standard>
-					<daylight>非洲中部夏令时间</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">非洲中部白昼时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">CAT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">ACT</generic>
-					<standard draft="provisional">CAST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">CAT</standard>
-					<daylight draft="provisional">CADT</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">ACDT</daylight>
+					<standard draft="provisional">CAT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3162,30 +3191,9 @@
 				<long>
 					<generic>非洲东部时间</generic>
 					<standard>东部非洲标准时间</standard>
-					<daylight>非洲东部夏令时间</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">非洲东部白昼时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">EAT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">AET</generic>
-					<standard draft="provisional">EAST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">EAT</standard>
-					<daylight draft="provisional">EADT</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">AEDT</daylight>
-				</short>
-				<commonlyUsed draft="provisional">false</commonlyUsed>
-			</metazone>
-			<metazone type="Africa_FarWestern">
-				<long>
-					<generic>非洲西部时间</generic>
-					<standard>非洲西部标准时间</standard>
-					<daylight>非洲西部夏令时间</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">非洲西部白昼时间</daylight>
-				</long>
-				<short>
-					<generic alt="proposed-x1001" draft="unconfirmed">AFT</generic>
-					<standard alt="proposed-x1001" draft="unconfirmed">AFST</standard>
-					<daylight alt="proposed-x1001" draft="unconfirmed">AFDT</daylight>
+					<standard draft="provisional">EAT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3193,15 +3201,11 @@
 				<long>
 					<generic>非洲南部时间</generic>
 					<standard>南部非洲标准时间</standard>
-					<daylight>非洲南部夏令时间</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">非洲南部白昼时间</daylight>
 				</long>
 				<short>
 					<generic draft="provisional">SAT</generic>
 					<generic alt="proposed-x1001" draft="unconfirmed">AST</generic>
 					<standard draft="provisional">SAST</standard>
-					<daylight draft="provisional">SADT</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">ASDT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3214,12 +3218,8 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">西部非洲白昼时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">WAT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">AWT</generic>
-					<standard draft="provisional">WAST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">WAT</standard>
-					<daylight draft="provisional">WADT</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">WAST</daylight>
+					<standard draft="provisional">WAT</standard>
+					<daylight draft="provisional">WAST</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3231,12 +3231,8 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">阿尔卑斯夏令时</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">AKTT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">AT</generic>
-					<standard draft="provisional">AKTST</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">AKTT</standard>
-					<daylight draft="provisional">AKTDT</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">AKTST</daylight>
+					<standard draft="provisional">AKTT</standard>
+					<daylight draft="provisional">AKTST</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3278,9 +3274,8 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">Almaty 白昼时间</daylight>
 				</long>
 				<short>
-					<generic alt="proposed-x1001" draft="unconfirmed">AT</generic>
-					<standard alt="proposed-x1001" draft="unconfirmed">AST</standard>
-					<daylight alt="proposed-x1001" draft="unconfirmed">ADT</daylight>
+					<standard alt="proposed-x1001" draft="unconfirmed">ALMT</standard>
+					<daylight alt="proposed-x1001" draft="unconfirmed">ALMST</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3292,9 +3287,8 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">亚马逊白昼时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">AMT</generic>
-					<standard draft="provisional">AMST</standard>
-					<daylight draft="provisional">AMDT</daylight>
+					<standard draft="provisional">AMT</standard>
+					<daylight draft="provisional">AMST</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3813,16 +3807,12 @@
 			</metazone>
 			<metazone type="GMT">
 				<long>
-					<generic draft="provisional">格林尼治时间</generic>
 					<standard>格林尼治标准时间</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">格林威治标准时间</standard>
-					<daylight draft="provisional">格林尼治夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">GMT</generic>
 					<standard>GMT</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">格林尼治标准时间</standard>
-					<daylight draft="provisional">GDT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">true</commonlyUsed>
 			</metazone>
@@ -3912,81 +3902,48 @@
 					<standard draft="provisional">GST</standard>
 				</short>
 			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic draft="provisional">夏威夷时间</generic>
-					<standard>夏威夷标准时间</standard>
-					<daylight>夏威夷夏令时间</daylight>
-				</long>
-				<short>
-					<generic draft="provisional">HT</generic>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
-				<commonlyUsed draft="provisional">false</commonlyUsed>
-			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
-					<generic draft="provisional">夏威夷—阿留申时间</generic>
 					<standard draft="provisional">夏威夷—阿留申标准时间</standard>
-					<daylight draft="provisional">夏威夷—阿留申夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">HAT</generic>
-					<standard draft="provisional">HAST</standard>
-					<daylight draft="provisional">HADT</daylight>
+					<standard draft="provisional">HST</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
 			<metazone type="India">
 				<long>
-					<generic draft="provisional">印度时间</generic>
 					<standard draft="provisional">印度标准时间</standard>
-					<daylight draft="provisional">印度夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">IT</generic>
 					<standard draft="provisional">IST</standard>
-					<daylight draft="provisional">IDT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
 			<metazone type="Indonesia_Central">
 				<long>
-					<generic draft="provisional">印度尼西亚中部时间</generic>
 					<standard draft="provisional">印度尼西亚中部标准时间</standard>
-					<daylight draft="provisional">印度尼西亚中部夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">CIT</generic>
-					<standard draft="provisional">CIST</standard>
-					<daylight draft="provisional">CIDT</daylight>
+					<standard draft="provisional">CIT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
 			<metazone type="Indonesia_Eastern">
 				<long>
-					<generic draft="provisional">印度尼西亚东部时间</generic>
 					<standard draft="provisional">印度尼西亚东部标准时间</standard>
-					<daylight draft="provisional">印度尼西亚东部夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">EIT</generic>
-					<standard draft="provisional">EIST</standard>
-					<daylight draft="provisional">EIDT</daylight>
+					<standard draft="provisional">EIT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
 			<metazone type="Indonesia_Western">
 				<long>
-					<generic draft="provisional">印度尼西亚西部时间</generic>
 					<standard draft="provisional">印度尼西亚西部标准时间</standard>
-					<daylight draft="provisional">印度尼西亚西部夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">WIT</generic>
-					<standard draft="provisional">WIST</standard>
-					<daylight draft="provisional">WIDT</daylight>
+					<standard draft="provisional">WIT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -3997,7 +3954,7 @@
 					<daylight>以色列夏令时间</daylight>
 				</long>
 				<short>
-					<standard>IST</standard>
+					<standard>IST (Israel)</standard>
 					<daylight>IDT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
@@ -4027,14 +3984,10 @@
 			</metazone>
 			<metazone type="Kashgar">
 				<long>
-					<generic draft="provisional">喀什时间</generic>
 					<standard draft="provisional">喀什标准时间</standard>
-					<daylight draft="provisional">喀什夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">KAT</generic>
 					<standard draft="provisional">KAST</standard>
-					<daylight draft="provisional">KADT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -4042,12 +3995,10 @@
 				<long>
 					<generic draft="provisional">哈萨克斯坦东部时间</generic>
 					<standard draft="provisional">哈萨克斯坦东部标准时间</standard>
-					<daylight draft="provisional">哈萨克斯坦东部夏令时间</daylight>
 				</long>
 				<short>
 					<generic draft="provisional">EKT</generic>
 					<standard draft="provisional">EKST</standard>
-					<daylight draft="provisional">EKDT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -4055,12 +4006,10 @@
 				<long>
 					<generic draft="provisional">哈萨克斯坦西部时间</generic>
 					<standard draft="provisional">哈萨克斯坦西部标准时间</standard>
-					<daylight draft="provisional">哈萨克斯坦西部夏令时间</daylight>
 				</long>
 				<short>
 					<generic draft="provisional">WKT</generic>
 					<standard draft="provisional">WKST</standard>
-					<daylight draft="provisional">WKDT</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -4442,9 +4391,8 @@
 					<daylight draft="provisional">土耳其夏令时间</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">TRT</generic>
-					<standard draft="provisional">TRST</standard>
-					<daylight draft="provisional">TRDT</daylight>
+					<standard draft="provisional">TRT</standard>
+					<daylight draft="provisional">TRST</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -5520,4 +5468,356 @@
 			<nostr>否:否定</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R500">Languages (GB/T 4880.2-2000)</reference>
+		<reference type="R501" uri="http://zh.wikipedia.org/wiki/ISO_639">ISO 639 - Wikipedia</reference>
+		<reference type="R502">http://www.geocities.com/jusjih/iso3166-zh-cn.html</reference>
+		<reference type="R503" uri="http://www.bjfao.gov.cn/newsite/world/detail.asp?countryID=391">Chinese (Simplified Han): timezones:Pacific/Kosrae/exemplarCity (change from &quot;科斯里&quot; to &quot;科斯雷&quot;)</reference>
+		<reference type="R504">Chinese (Simplified Han): currencies: &quot;Polish Zloty (1950-1995) (symbol)&quot; propose &quot;PLZ (1950-1995)&quot;</reference>
+		<reference type="R505">Chinese (Simplified Han): currencies: &quot;Angolan Kwanza (1977-1990) (symbol)&quot; propose &quot;AOK (1977-1990)&quot;</reference>
+		<reference type="R506" uri="http://www.bridge69.com/365/ylxx/5-3money.htm">Currency Units</reference>
+		<reference type="R507" uri="http://cb.kingsoft.com">Kingsoft Online Dictionary</reference>
+		<reference type="R508" uri="http://140.111.1.22/mandr/clc/dict.new/public_html/dict/htm/fulu/huo3.htm">Currency Units of African Countries</reference>
+		<reference type="R509">Chinese (Simplified Han): currencies: &quot;Russian Ruble (1991-1998) (symbol)&quot; propose &quot;RUR (1991-1998)&quot;</reference>
+		<reference type="R510">Chinese (Simplified Han): timezones: Asia/Shanghai/long/daylight (change from &quot;中国标准时间&quot; to &quot;中国夏令时间&quot;)</reference>
+		<reference type="R511">Chinese (Simplified Han): timezones: Africa/Casablanca/long/daylight (change from &quot;格林尼治标准时间&quot; to &quot;格林尼治夏令时间&quot;)</reference>
+		<reference type="R512">Chinese (Simplified Han): languages: &quot;Ganda&quot; propose &quot;干达文&quot;</reference>
+		<reference type="R513">Chinese (Simplified Han): currencies: &quot;Argentine Peso (1983-1985) (symbol)&quot; propose &quot;ARP (1983-1985)&quot;</reference>
+		<reference type="R514">Chinese (Simplified Han): timezones: America/Indianapolis/short/daylight (change from &quot;EST&quot; to &quot;EDT&quot;)</reference>
+		<reference type="R515">Chinese (Simplified Han): timezones: Pacific/Honolulu/short/daylight (change from &quot;HST&quot; to &quot;HDT&quot;)</reference>
+		<reference type="R516">Currency Units</reference>
+		<reference type="R517">Chinese (Simplified Han): timezones: Pacific/Honolulu/long/daylight (change from &quot;夏威夷标准时间&quot; to &quot;夏威夷夏令时间&quot;)</reference>
+		<reference type="R518" uri="http://www.info.gov.hk/info/holiday_c.htm">二零零五年公眾假期刊登憲報</reference>
+		<reference type="R519">Chinese (Simplified Han): timezones: Europe/Paris/short/standard (change from &quot;CET&quot; to &quot;CEST&quot;)</reference>
+		<reference type="R520" uri="http://www.bjfao.gov.cn/newsite/world/detail.asp?countryID=389">Chinese (Simplified Han): timezones: Pacific/Kiritimati/exemplarCity (change from &quot;克里斯马斯&quot; to &quot;圣诞岛&quot;)</reference>
+		<reference type="R521">Chinese (Simplified Han): timezones: America/Phoenix/short/daylight (change from &quot;MST&quot; to &quot;MDT&quot;)</reference>
+		<reference type="R522" uri="http://www.fmprc.gov.cn/chn/gjhdq/default.htm">Territories</reference>
+		<reference type="R523">Chinese (Simplified Han): currencies: &quot;Angolan Kwanza Reajustado (1995-1999) (symbol)&quot; propose &quot;AOR (1995-1999)&quot;</reference>
+		<reference type="R524">Chinese (Simplified Han): timezones: Asia/Tokyo/long/daylight (change from &quot;日本标准时间&quot; to &quot;日本夏令时间&quot;)</reference>
+		<reference type="R525">Chinese (Simplified Han): timezones: Africa/Casablanca/short/daylight (change from &quot;GMT&quot; to &quot;GDT&quot;)</reference>
+		<reference type="R526">Chinese (Simplified Han): currencies: &quot;Belarussian New Ruble (1994-1999) (symbol)&quot; propose &quot;BYB (1994-1999)&quot;</reference>
+		<reference type="R527">Chinese (Simplified Han): languages: &quot;Cornish&quot; propose &quot;康沃尔文&quot;</reference>
+		<reference type="R528">Kingsoft Online Dictionary</reference>
+		<reference type="R529" uri="http://www.xzqh.org/waiguo/asia/1046.htm">Chinese (Simplified Han): timezones: Asia/Oral/exemplarCity (change from  &quot;奥拉&quot; to &quot;乌拉尔&quot;)</reference>
+		<reference type="R530">Chinese (Simplified Han): currencies: &quot;Angolan New Kwanza (1990-2000) (symbol) propose &quot;AON (1990-2000)&quot;</reference>
+		<reference type="R531">Chinese (Simplified Han): timezones: Europe/Paris/short/daylight (chang from &quot;CEST&quot; to &quot;CEDT&quot;)</reference>
+		<reference type="R532">Chinese (Simplified Han): timezones: Asia/Tokyo/short/daylight (change form &quot;JST&quot; to &quot;JDT&quot;)</reference>
+		<reference type="R533">Chinese (Simplified Han, Singapore): languages: &quot;Root&quot; propose &quot;Root&quot;</reference>
+		<reference type="R534" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Central European Daylight Time (change from “中歐日光節約時間” to “中歐夏令時間”)</reference>
+		<reference type="R535" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Cham.htm">Script : Cham (It's a new term)</reference>
+		<reference type="R536" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Pacific Daylight Time(change from “太平洋日光節約時間” to “太平洋夏令時間”)</reference>
+		<reference type="R537" uri="http://www.ncn.org/asp/zwgInfo/bg_Da.asp?ID=67438%20&amp;amp;amp;ad=1/2/2006">Script : Kayah Li  (It's a new term)</reference>
+		<reference type="R538" uri="http://www.google.com/search?q=Filipino&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=40&amp;amp;amp;sa=N">Language: Filipino (change from &amp;amp;quot;fil&amp;amp;quot; to &amp;amp;quot;菲律賓文&amp;amp;quot;)</reference>
+		<reference type="R539" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Louisville&amp;amp;amp;btnG=Google+%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Louisville&amp;amp;amp;btnG=Google+%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW</reference>
+		<reference type="R539" alt="proposed-x1001" draft="unconfirmed">Germanic(Other) =&gt; Should be 日耳曼文（其他）</reference>
+		<reference type="R540" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Newfoundland Daylight Time(change from “纽芬蘭日光節約時間” to “纽芬蘭夏令時間”)</reference>
+		<reference type="R541" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Petersburg&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Petersburg (Petersburg is a new word, change from “Petersburg” to “彼得堡”).</reference>
+		<reference type="R542" uri="http://egyptwords.blogspot.com/">Script: Egyptian hieroglyphs (It's a new term)</reference>
+		<reference type="R543" uri="http://wiki.foreprinciple.org/mediawiki-1.3.8/index.php?title=%E6%8F%90%E9%9D%9E%E7%B4%8D%E6%96%87">Script : Tifinagh (Berber) (It's a new term)</reference>
+		<reference type="R544" uri="http://www.fantasyweb.idv.tw/yilu/gallery/Spec/Tolkien_fonts/index.htm">Script : Tengwar (It's a new term)</reference>
+		<reference type="R545" uri="http://www.cc-us.org/usa/H39-5.htm">Script : Pollard Phonetic (It's a new term)</reference>
+		<reference type="R546" uri="http://www.macaoheritage.net/Trends/NewsC.asp?nid=5678">Script : Orkhon (It's a new term)</reference>
+		<reference type="R547" uri="http://140.128.159.78/yldict/word.asp?w=Fraktur">Script : Latin (Fraktur variant) (It's a new term)</reference>
+		<reference type="R548" uri="http://blog.yam.com/festival/archives/1044108.html">Script :Bali (It's a new term)</reference>
+		<reference type="R549" uri="http://www.google.com/search?q=Ainu&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Ainu (change from &amp;amp;quot;ain&amp;amp;quot; to &amp;amp;quot;愛奴語&amp;amp;quot;)</reference>
+		<reference type="R550">Currencies: East German Ostmark (change from &amp;amp;quot;東德東德馬克&amp;amp;quot; to &amp;amp;quot;東德奧斯特馬克&amp;amp;quot;)</reference>
+		<reference type="R551" uri="http://www.evangellite.org/159/article01.html &amp;amp;amp; http://wordpedia.britannica.com/concise/content.aspx?id=488&amp;amp;amp;hash=O12Uh%2FEcmekMDUZER8jE%2BA%3D%3D&amp;amp;amp;t=3">Script : Sumero-Akkadian Cuneiform (It's a new term)</reference>
+		<reference type="R552">Currencies: El Salvador Colon (change from &amp;amp;quot;愛爾 薩爾瓦多科郎&amp;amp;quot; to &amp;amp;quot;愛爾薩爾瓦多科郎&amp;amp;quot;)</reference>
+		<reference type="R553" uri="http://www.3miao.net/Article/ShowArticle.asp?ArticleID=717">Script :Pahawh Hmong   (It's a new term)</reference>
+		<reference type="R554" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Petersburg&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Petersburg&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW</reference>
+		<reference type="R554" alt="proposed-x1001" draft="unconfirmed">Chinese (Traditional Han)/Scripts/Simplified Han, please use &quot;簡體中文&quot; since it is traditional Chinese and none of the currect choice is correct.</reference>
+		<reference type="R555" uri="//www.google.com/search?q=Moncton&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Timezones: Moncton(This is a new word, change from “Moncton” to “曼克頓”)</reference>
+		<reference type="R556" uri="http://wordpedia.britannica.com/concise/content.aspx?id=7841&amp;amp;amp;hash=PF16q%2BQ%2FWdoVa2%2Bve%2B%2FS%2Bg%3D%3D">Language: Old Provençal  (change from “普羅文斯文 (to 1500)” to “古普羅旺斯文”)</reference>
+		<reference type="R557" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Hawaii Daylight Time(change from “夏威夷標準時間” to “夏威夷夏令時間”)</reference>
+		<reference type="R558" uri="http://www.google.com/search?q=Haitian&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=0&amp;amp;amp;sa=N">Language: Haitian (change from &amp;amp;quot;海地人&amp;amp;quot; to &amp;amp;quot;海地文&amp;amp;quot;)</reference>
+		<reference type="R559">Currencies: Serbian Dinar (change from &amp;amp;quot;Serbian Dinar&amp;amp;quot; to &amp;amp;quot;塞爾維亞第納爾&amp;amp;quot;)</reference>
+		<reference type="R560" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Mirandese&amp;amp;amp;btnG=搜尋&amp;amp;amp;lr=lang_zh-TW">Language: Mirandese (change from “mwl” to “米蘭德斯文”)</reference>
+		<reference type="R561" uri="http://www.ntctc.edu.tw/spc/ebook/pdf/9003/1.pdf">Script :Blissymbols (It's a new term)</reference>
+		<reference type="R562" uri="http://tw.britannica.com/MiniSite/Article/id00036950.html">Script : Linear A (It's a new term)</reference>
+		<reference type="R563" uri="none">Language: Egyptian (Ancient) (change from &amp;amp;quot;古埃及文)&amp;amp;quot; to &amp;amp;quot;古埃及文&amp;amp;quot;)</reference>
+		<reference type="R564" uri="http://www.ccea.org.tw/missionworld/functioncode/publish/articleshow.asp?sn=916&amp;amp;amp;type=0">Script :Cyrillic (Old Church Slavonic variant) (It's a new term)</reference>
+		<reference type="R565" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: China Daylight Time(change from “中國日光節約時間” to “中國夏令時間”)</reference>
+		<reference type="R566" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Syriac-Estrangelo.htm &amp;amp;amp; http://artvine.com.tw/cgi-bin/board/bbsboard.pl?board_id=2&amp;amp;amp;type=show_post&amp;amp;amp;post=3997">Script : Syriac (Estrangelo variant) (It's a new term)</reference>
+		<reference type="R567" uri="http://www.google.com/search?q=Commonwealth+of+Independent+States&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Territories: Commonwealth of Independent States (change from “Commonwealth of Independent States” to “獨立國家國協”)</reference>
+		<reference type="R568" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Indianapolis&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Indianapolis (Indianapolis is a new word, change from “Indianapolis” to “印第安那波里斯”).</reference>
+		<reference type="R569">Currencies: Saint Helena Pound (change from &amp;amp;quot;聖赫勒拿 鎊&amp;amp;quot; to &amp;amp;quot;聖赫勒拿鎊&amp;amp;quot;)</reference>
+		<reference type="R570" uri="http://140.111.34.46/cgi-bin/jdict/loadpage.cgi?file=gm/12-6-27.html&amp;amp;amp;word=%E8%98%87%E5%88%A9%E5%8D%97%E5%85%B1%E5%92%8C%E5%9C%8B">Language: Sranan Tongo  (change from “srn” to “蘇拉南東墎文”)</reference>
+		<reference type="R571" uri="http://tw.britannica.com/MiniSite/Article/id00048822.html">Script : Old Permic (It's a new term)</reference>
+		<reference type="R572" uri="http://egyptwords.blogspot.com/">Script : Egyptian hieratic (It's a new term)</reference>
+		<reference type="R573" uri="http://www.thisisthelife.com/zh/historical-sites/easter-island.htm">Script : Rongorongo (It's a new term)</reference>
+		<reference type="R574" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Petersburg&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Petersburg</reference>
+		<reference type="R575" uri="http://www.google.com/search?q=Currie&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=50&amp;amp;amp;sa=N">Timezones: Currie(This is a new word, change from “Currie” to “居里”)</reference>
+		<reference type="R576" uri="http://tw.britannica.com/MiniSite/Article/id00005994.html">Script :Brahmi (It's a new term)</reference>
+		<reference type="R577" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: America/Indianapolis/long/daylight (change from “東部標準時間” to “東部夏令時間”)</reference>
+		<reference type="R578" uri="http://203.64.158.220/ebintra/Content.asp?ContentID=25845 &amp;amp;amp;">Script : Lepcha (Róng) (It's a new term)</reference>
+		<reference type="R579">Currencies: Netherlands Antillan Guilder (change from &amp;amp;quot;荷蘭 安梯蘭 盾&amp;amp;quot; to &amp;amp;quot;荷蘭安梯蘭盾&amp;amp;quot;, extra spaces deleted)</reference>
+		<reference type="R580" uri="http://egyptwords.blogspot.com/">Script :  Egyptian demotic (It's a new term)</reference>
+		<reference type="R581" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Africa/Casablanca/long/daylight (change from “格林威治標準時間” to “格林威治夏令時間”)</reference>
+		<reference type="R582" uri="http://www.tattpe.org.tw/news_20051114-2.shtml">Script : New Tai Lue (It's a new term)</reference>
+		<reference type="R583" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Classical+Newari+&amp;amp;amp;btnG=Google+搜尋&amp;amp;amp;lr=lang_zh-TW">Language: Classical Newari (change from “ nwc  ” to “ 古尼瓦爾文  ”)</reference>
+		<reference type="R584" uri="http://www.google.com/search?q=Germanic+(Other)&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=60&amp;amp;amp;sa=N">Language: Germanic (Other) (change from &amp;amp;quot;德國的(其他)&amp;amp;quot; to &amp;amp;quot;日耳曼文（其它）&amp;amp;quot;)</reference>
+		<reference type="R585" uri="http://www2.ccim.org:8088/dictionary/zhaoindex.jsp?k=Gnosticism">Script : Mandaean (It's a new term)</reference>
+		<reference type="R586" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Mountain Daylight Time(change from “山區日光節約時間” to “山區夏令時間”)</reference>
+		<reference type="R587" uri="http://www.google.com/search?q=Vincennes&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Timezones: Vincennes (Louisville is a new word, change from “Vincennes” to “溫森斯”).</reference>
+		<reference type="R588" uri="http://zh.wikipedia.org/wiki/ç²¾éèª">Script : Sarati (It's a new term)</reference>
+		<reference type="R589" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Latin+America+and+the+Caribbean&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Territories: Latin America and the Caribbean (change from “Latin America and the Caribbean” to “拉丁美洲和加勒比海”)</reference>
+		<reference type="R590" uri="http://zh.wikipedia.org/wiki/%E5%85%AB%E6%80%9D%E5%B7%B4%E5%AD%97">Script : Phags-pa (It's a new term)</reference>
+		<reference type="R591" uri="http://www.google.com/search?q=Dutch&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=20&amp;amp;amp;sa=N">Language: Middle Dutch (change from &amp;amp;quot;荷蘭，中古 (ca. 1050-1350)&amp;amp;quot; to &amp;amp;quot;荷蘭文，中古&amp;amp;quot;)</reference>
+		<reference type="R592" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Javanese&amp;amp;amp;btnG=搜尋&amp;amp;amp;lr=lang_zh-TW">Scripts: Javanese (change from “Java” to “爪哇文”)</reference>
+		<reference type="R593" uri="http://egyptwords.blogspot.com/">Script :  Egyptian hieroglyphs (It's a new term)</reference>
+		<reference type="R594" draft="unconfirmed">Language: Klingon (change from “tlh” to “克林貢文”)</reference>
+		<reference type="R595">Currencies: Spanish Peseta (convertible account) (change from &amp;amp;quot;西班牙比塞塔（可轉換單位）&amp;amp;quot; to &amp;amp;quot;西班牙披索（可轉換單位）&amp;amp;quot;)</reference>
+		<reference type="R596">Currencies: Brazilian Cruzeiro Novo (1967-1986) (change from &amp;amp;quot;巴西克魯薩多 農瓦 (1967-1986)&amp;amp;quot; to &amp;amp;quot;巴西克魯薩多農瓦 (1967-1986)&amp;amp;quot;, extra spaces deleted)</reference>
+		<reference type="R597" uri="http://webtitle.nmh.gov.tw/india/page/page.php?id=103">Script : Kharoshthi (It's a new term)</reference>
+		<reference type="R598" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: America/Phoenix/long/daylight(change from “山區標準時間” to “山區夏令時間”)</reference>
+		<reference type="R599">Currencies: Spanish Peseta (A account) (change from &amp;amp;quot;西班牙比塞塔（會計單位）&amp;amp;quot; to &amp;amp;quot;西班牙披索（會計單位）&amp;amp;quot;)</reference>
+		<reference type="R600" uri="http://www.google.com/search?q=Sicilian+%E6%96%87&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;ie=UTF-8&amp;amp;amp;inlang=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Sicilian  (change from “scn” to “西西里文”)</reference>
+		<reference type="R601" uri="http://www.unicode.org/cldr/data/common/main/zh_Hant.xml">Script : Buginese  (It's a new term)</reference>
+		<reference type="R602">Territories: Greenland (After check again, “格陵蘭”is right, please ignore: “陵蘭”)</reference>
+		<reference type="R603" uri="http://tw.britannica.com/MiniSite/Article/id00040761.html">Script : Meroitic (It's a new term)</reference>
+		<reference type="R604" uri="http://wordpedia.britannica.com/concise/content.aspx?id=570&amp;amp;amp;hash=vsW50K8BiqKfMw5LJ8gJmA%3D%3D&amp;amp;amp;t=3">Script : Cyrillic (Old Church Slavonic variant) (It's a new term)</reference>
+		<reference type="R605">types: Stroke Order (change &amp;amp;quot;筆劃顺序&amp;amp;quot; to &amp;amp;quot;筆劃順序&amp;amp;quot;)</reference>
+		<reference type="R606">Territories: Macao S.A.R., China(After check again, “中華人民共和國澳門特別行政區”is right, please ignore: “澳門特別行政區”)</reference>
+		<reference type="R607" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Southern+Africa&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Territories: Southern Africa (change from “南非” to “非洲南部”)</reference>
+		<reference type="R608">Currencies: Bolivian Mvdol (change from &amp;amp;quot;利維亞 幕多&amp;amp;quot; to &amp;amp;quot;利維亞幕多&amp;amp;quot;, extra spaces deleted)</reference>
+		<reference type="R609" uri="http://203.64.158.220/ebintra/Content.asp?ContentID=16907">Script : Glagolitic (It's a new term)</reference>
+		<reference type="R610" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Eastern European Daylight Time(change from “東歐日光節約時間” to “東歐夏令時間”)</reference>
+		<reference type="R611" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Central Daylight Time(change from “中部日光節約時間” to “中部夏令時間”)</reference>
+		<reference type="R612" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Japan Daylight Time(change from “日本日光節約時間” to “日本夏令時間”)</reference>
+		<reference type="R613" uri="http://www.google.com/search?q=Central+Asia&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=270&amp;amp;amp;sa=N">Territories: Central Asia (change from “143” to “中亞”)</reference>
+		<reference type="R614">Currencies: Laotian Kip (change from &amp;amp;quot;老撾 開普&amp;amp;quot; to &amp;amp;quot;老撾開普&amp;amp;quot;)</reference>
+		<reference type="R615" uri="http://www.gamez.com.tw/printthread.php?t=17770&amp;amp;amp;pp=40">Script : Cirth (It's a new term)</reference>
+		<reference type="R616" uri="http://www.e-safety.com.tw/1_main/103_learning/1037_news/ENS48/pdf/C6.pdf">Script : Gujarati (It's a new term)</reference>
+		<reference type="R617">Currencies: Brazilian Cruzado Novo (change from &amp;amp;quot;巴西 克如爾達 農瓦&amp;amp;quot; to &amp;amp;quot;巴西克如爾達農瓦&amp;amp;quot;)</reference>
+		<reference type="R618" uri="http://tw.britannica.com/MiniSite/Article/id00036950.html">Script : Linear B (It's a new term)</reference>
+		<reference type="R619" uri="http://www.google.com/search?q=Chuvash&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Chuvash (change from &amp;amp;quot;楚瓦甚文&amp;amp;quot; to &amp;amp;quot;楚瓦士文&amp;amp;quot;)</reference>
+		<reference type="R620" uri="http://homework.wtuc.edu.tw/~wenlurg/forghis/0323-10.htm">Script :Indus (Harappan) (It's a new term)</reference>
+		<reference type="R621" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Louisville&amp;amp;amp;btnG=Google+%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Louisville (Louisville is a new word, change from “Louisville” to “路易斯維爾”).</reference>
+		<reference type="R622" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Eastern Daylight Time(change from “東部日光節約時間” to “東部夏令時間”)</reference>
+		<reference type="R623" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Atlantic Daylight Time(change from “大西洋日光節約時間” to “大西洋夏令時間”)</reference>
+		<reference type="R624">Currencies: Swaziland Lilangeni (change from &amp;amp;quot;斯威士蘭 里郎&amp;amp;quot; to &amp;amp;quot;斯威士蘭里郎&amp;amp;quot;)</reference>
+		<reference type="R625" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Israel Daylight Time(change from “以色列日光節約時間” to “以色列夏令時間”)</reference>
+		<reference type="R626" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Alaska Daylight Time(change from “阿拉斯加日光節約時間” to “阿拉斯加夏令時間”)</reference>
+		<reference type="R627">Currencies: Georgian Kupon Larit (change from &amp;amp;quot;喬治 庫旁 拉里&amp;amp;quot; to &amp;amp;quot;喬治庫旁拉里&amp;amp;quot;)</reference>
+		<reference type="R628" uri="http://www.taiwanus.us/MediaVideoAudio/books/history/b5/03.htm">Script :Batak (It's a new term)</reference>
+		<reference type="R629" uri="http://hk.dictionary.yahoo.com/search.html?s=Gaelic">Script : Latin (Gaelic variant) (It's a new term)</reference>
+		<reference type="R630" uri="http://tw.britannica.com/MiniSite/Article/id00049079.html">Script : Phoenician (It's a new term)</reference>
+		<reference type="R631" uri="http://www.zftrans.com/favorite/vocabulary/20050707/185716-83.htm">Timezones: Coral Harbour (Coral Harbour is a new word, change from “Coral Harbour” to “珊瑚港”).</reference>
+		<reference type="R632" uri="http://www.google.com/search?q=Dutch&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=20&amp;amp;amp;sa=N">Language: Middle Dutch  (change from “荷蘭，中古 (ca. 1050-1350)” to “中古荷蘭文”)</reference>
+		<reference type="R633" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Altai.htm">Language: Southern Altai  (change from “alt” to “南阿爾泰語”)</reference>
+		<reference type="R634" uri="http://www.apecgender.org/Page_Show.asp?Page_ID=177">Timezones: Petersburg (Petersburg is a new word, change from “Petersburg” to “彼得堡”)</reference>
+		<reference type="R635" uri="http://www.taiwanus.us/MediaVideoAudio/books/history/b5/03.htm">Script: Batak (It's a new term)</reference>
+		<reference type="R636" uri="http://tw.britannica.com/MiniSite/Article/id00005994.html">Script: Brahmi (It's a new term)</reference>
+		<reference type="R637">types: Stroke Order  (change &amp;quot;筆劃顺序&amp;quot; to &amp;quot;筆劃順序&amp;quot;)</reference>
+		<reference type="R638" uri="http://www.google.com/search?q=Chuvash&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Chuvash (change from “楚瓦甚文” to “楚瓦士文”)</reference>
+		<reference type="R639" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: China Daylight Time(change from “中國標準時間” to “中國夏令時間”)</reference>
+		<reference type="R640">Currencies: Uzbekistan Sum (change from &amp;quot;烏茲別克斯坦 薩木&amp;quot; to &amp;quot;烏茲別克斯坦薩木&amp;quot;)</reference>
+		<reference type="R641" uri="http://www.google.com/search?q=Commonwealth+of+Independent+States&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Territories: Commonwealth of Independent States (change from “172” to “獨立國家國協”)</reference>
+		<reference type="R642" uri="http://www.google.com/search?q=Filipino&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=40&amp;amp;amp;sa=N">Language: Filipino  (change from “fil” to “菲律賓文”)</reference>
+		<reference type="R643" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Eastern Daylight Time(change from “東部日光節約時間” to “東部夏令時間”)</reference>
+		<reference type="R644">Currencies: Brazilian Cruzeiro Novo (1967-1986) (change from &amp;quot;巴西克魯薩多 農瓦 (1967-1986)&amp;quot; to &amp;quot;巴西克魯薩多農瓦 (1967-1986)&amp;quot;)</reference>
+		<reference type="R645" uri="http://tw.britannica.com/MiniSite/Article/id00036950.html">Script: Linear B (It's a new term)</reference>
+		<reference type="R646" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: America/Phoenix/long/daylight(change from “山區標準時間” to “山區夏令時間”)</reference>
+		<reference type="R647" uri="http://www.e-safety.com.tw/1_main/103_learning/1037_news/ENS48/pdf/C6.pdf">Script: Gujarati (It's a new term)</reference>
+		<reference type="R648" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Indianapolis&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Indianapolis (Indianapolis is a new word, change from “Indianapolis” to “印第安那波里斯”)</reference>
+		<reference type="R649" uri="http://140.128.159.78/yldict/word.asp?w=Fraktur">Script: Latin (Fraktur variant) (It's a new term)</reference>
+		<reference type="R650" uri="http://www.cc-us.org/usa/H39-5.htm">Script: Pollard Phonetic (It's a new term)</reference>
+		<reference type="R651" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Africa/Casablanca/long/daylight (change from “格林威治標準時間” to “格林威治夏令時間”)</reference>
+		<reference type="R652" uri="http://www.zftrans.com/favorite/vocabulary/20050707/185716-83.htm">Timezones: Coral Harbour (Coral Harbour is a new word, change from “Coral Harbour” to “珊瑚港”).</reference>
+		<reference type="R653" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: America/Indianapolis/long/daylight (change from “東部標準時間” to “東部夏令時間”)</reference>
+		<reference type="R654" uri="http://www2.ccim.org:8088/dictionary/zhaoindex.jsp?k=Gnosticism">Script: Mandaean (It's a new term)</reference>
+		<reference type="R655" uri="RP39  http://blog.yam.com/festival/archives/1044108.html">Script: Bali (It's a new term)</reference>
+		<reference type="R656" uri="//www.google.com/search?q=Moncton&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Timezones: Moncton(This is a new word, change from “Moncton” to “曼克頓”)</reference>
+		<reference type="R657" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Pacific Daylight Time(change from “太平洋日光節約時間” to “太平洋夏令時間”)</reference>
+		<reference type="R658" uri="http://homework.wtuc.edu.tw/~wenlurg/forghis/0323-10.htm">Script: Indus (Harappan) (It's a new term)</reference>
+		<reference type="R659" uri="http://www.tattpe.org.tw/news_20051114-2.shtml">Script: New Tai Lue (It's a new term)</reference>
+		<reference type="R660" uri="http://wordpedia.britannica.com/concise/content.aspx?id=7841&amp;amp;amp;hash=PF16q%2BQ%2FWdoVa2%2Bve%2B%2FS%2Bg%3D%3D">Language: Old Provençal  (change from “普羅文斯文 (to 1500)” to “古普羅旺斯文”)</reference>
+		<reference type="R661">Currencies: Belgian Franc (convertible) (change from &amp;quot;比利時法郎 （可轉換）&amp;quot; to &amp;quot;比利時法郎（可轉換）&amp;quot;)</reference>
+		<reference type="R662" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Classical+Newari+&amp;amp;amp;btnG=Google+搜尋&amp;amp;amp;lr=lang_zh-TW">Language: Classical Newari (change from “ nwc  ” to “ 古尼瓦爾文  ”)</reference>
+		<reference type="R663" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Central Daylight Time(change from “中部日光節約時間” to “中部夏令時間”)</reference>
+		<reference type="R664" uri="http://www.macaoheritage.net/Trends/NewsC.asp?nid=5678">Script: Orkhon (It's a new term)</reference>
+		<reference type="R665" uri="http://www.google.com/search?q=Central+Asia&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=270&amp;amp;amp;sa=N">Territories: Central Asia (change from “143” to “中亞”)</reference>
+		<reference type="R666" uri="http://www.google.com/search?q=Macao+S.A.R.,+China&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Territories: Macao S.A.R., China(change from “澳門特別行政區”to “中華人民共和國澳門特別行政區”)</reference>
+		<reference type="R667">Currencies: CFA Franc BEAC (change from &amp;quot;西非 法郎 BEAC&amp;quot; to &amp;quot;西非法郎BEAC&amp;quot;)</reference>
+		<reference type="R668" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Atlantic Daylight Time(change from “大西洋日光節約時間” to “大西洋夏令時間”)</reference>
+		<reference type="R669">Currencies: Trinidad and Tobago Dollar (change from &amp;quot;千里達及托巴哥r&amp;quot; to &amp;quot;千里達及托巴哥元&amp;quot;)</reference>
+		<reference type="R670" uri="http://tw.britannica.com/MiniSite/Article/id00049079.html">Script: Phoenician (It's a new term)</reference>
+		<reference type="R671">Currencies: Tajikistan Somoni (change from &amp;quot;塔吉克斯坦 索莫尼&amp;quot; to &amp;quot;塔吉克斯坦索莫尼&amp;quot;)</reference>
+		<reference type="R672" uri="http://tw.britannica.com/MiniSite/Article/id00036950.htm">Script: Linear A (It's a new term)</reference>
+		<reference type="R673">Currencies: Georgian Kupon Larit (change from &amp;quot;喬治 庫旁 拉里&amp;quot; to &amp;quot;喬治庫旁拉里&amp;quot;)</reference>
+		<reference type="R674">Timezones: America/New_York/long/standard Eastern Daylight Time ( “東部標準時間” is right, please ignore “東部夏令時間”)</reference>
+		<reference type="R675" uri="http://www.google.com/search?q=Currie&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=50&amp;amp;amp;sa=N">Timezones: Currie(This is a new word, change from “Currie” to “居里”)</reference>
+		<reference type="R676">The simplifed Chinese should be changed to the Traditional Chinese.</reference>
+		<reference type="R677" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Louisville&amp;amp;amp;btnG=Google+%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Louisville (Louisville is a new word, change from “Louisville” to “路易斯維爾”)</reference>
+		<reference type="R678" uri="http://tw.britannica.com/MiniSite/Article/id00048822.html">Script: Old Permic (It's a new term)</reference>
+		<reference type="R679" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Alaska Daylight Time(change from “阿拉斯加日光節約時間” to “阿拉斯加夏令時間”)</reference>
+		<reference type="R680">Currencies: Saint Helena Pound (change from &amp;quot;聖赫勒拿 鎊&amp;quot; to &amp;quot;聖赫勒拿鎊&amp;quot;)</reference>
+		<reference type="R681" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Israel Daylight Time(change from “以色列日光節約時間” to “以色列夏令時間”)</reference>
+		<reference type="R682">Currencies: Bolivian Mvdol (change from &amp;quot;玻利維亞 幕多&amp;quot; to &amp;quot;玻利維亞幕多&amp;quot;)</reference>
+		<reference type="R683" uri="http://www.gamez.com.tw/printthread.php?t=17770&amp;amp;amp;pp=40">Script: Cirth (It's a new term)</reference>
+		<reference type="R684" uri="http://egyptwords.blogspot.com/">Script: Egyptian demotic (It's a new term)</reference>
+		<reference type="R685" uri="http://egyptwords.blogspot.com/">Script: Egyptian hieroglyphs (It's a new term)</reference>
+		<reference type="R686" uri="http://www.google.com/search?q=Germanic+(Other)&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=60&amp;amp;amp;sa=N">Language: Germanic (Other)  (change from “德國的(其他)” to “日耳曼文（其它）”)</reference>
+		<reference type="R687" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Hawaii Daylight Time(change from “夏威夷標準時間” to “夏威夷夏令時間”)</reference>
+		<reference type="R688" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Cham.htm">Script: Cham (It's a new term)</reference>
+		<reference type="R689" uri="http://www.ncn.org/asp/zwgInfo/bg_Da.asp?ID=67438%20&amp;amp;amp;ad=1/2/2006">Script: Kayah Li (It's a new term)</reference>
+		<reference type="R690" uri="http://www.unicode.org/cldr/data/common/main/zh_Hant.xml">Script: Buginese (It's a new term)</reference>
+		<reference type="R691" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Eastern European Daylight Time(change from “東歐日光節約時間” to “東歐夏令時間”)</reference>
+		<reference type="R692">Currencies: Laotian Kip (change from &amp;quot;老撾 開普&amp;quot; to &amp;quot;老撾開普&amp;quot;)</reference>
+		<reference type="R693">Currencies: Ukrainian Karbovanetz (change from &amp;quot;烏克蘭 卡本瓦那茲&amp;quot; to &amp;quot;烏克蘭卡本瓦那茲&amp;quot;)</reference>
+		<reference type="R694">Currencies: CFA Franc BEAC (change from &amp;quot;西非 法郎 BEAC&amp;quot; to &amp;quot;西非法郎 BEAC&amp;quot;)</reference>
+		<reference type="R695" uri="http://www.google.com/search?q=Haitian&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=0&amp;amp;amp;sa=N">Language: Haitian  (change from “海地人” to “海地文”)</reference>
+		<reference type="R696">Currencies: Tanzanian Shilling (change from &amp;quot;坦桑尼亞 先令&amp;quot; to &amp;quot;坦桑尼亞先令&amp;quot;)</reference>
+		<reference type="R697" uri="http://203.64.158.220/ebintra/Content.asp?ContentID=16907">Script: Glagolitic (It's a new term)</reference>
+		<reference type="R699">Currencies: El Salvador Colon (change from &amp;quot;愛爾 薩爾瓦多科郎&amp;quot; to &amp;quot;愛爾薩爾瓦多科郎&amp;quot;)</reference>
+		<reference type="R700">Currencies: Netherlands Antillan Guilder (change from &amp;quot;荷蘭 安梯蘭 盾&amp;quot; to &amp;quot;荷蘭安梯蘭盾&amp;quot;)</reference>
+		<reference type="R701" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Mirandese&amp;amp;amp;btnG=搜尋&amp;amp;amp;lr=lang_zh-TW">Language: Mirandese (change from “mwl” to “米蘭德斯文”)</reference>
+		<reference type="R702" uri="http://wiki.foreprinciple.org/mediawiki-1.3.8/index.php?title=%E6%8F%90%E9%9D%9E%E7%B4%8D%E6%96%87">Script: Tifinagh (Berber)  (It's a new term)</reference>
+		<reference type="R703" uri="http://wordpedia.britannica.com/concise/content.aspx?id=570&amp;amp;amp;hash=vsW50K8BiqKfMw5LJ8gJmA%3D%3D&amp;amp;amp;t=3">Script: Cyrillic (Old Church Slavonic variant) (It's a new term)</reference>
+		<reference type="R704" uri="http://egyptwords.blogspot.com/">Script: Egyptian hieratic (It's a new term)</reference>
+		<reference type="R705" uri="http://www.fantasyweb.idv.tw/yilu/gallery/Spec/Tolkien_fonts/index.htm">Script: Tengwar (It's a new term)</reference>
+		<reference type="R706" uri="http://www.google.com/search?q=Vincennes&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Timezones: Vincennes (Louisville is a new word, change from “Vincennes” to “溫森斯”).</reference>
+		<reference type="R707" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Southern+Africa&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Territories: Southern Africa (change from “南非” to “非洲南部”)</reference>
+		<reference type="R708" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Mountain Daylight Time(change from “山區日光節約時間” to “山區夏令時間”)</reference>
+		<reference type="R709" uri="http://www.google.com/search?q=Klingon+%E6%96%87&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;ie=UTF-8&amp;amp;amp;inlang=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Klingon  (change from “tlh” to “克林貢文”)</reference>
+		<reference type="R710">Currencies: Nicaraguan Cordoba Oro (change from &amp;quot;尼加拉瓜 金哥多華&amp;quot; to &amp;quot;尼加拉瓜金哥多華&amp;quot;)</reference>
+		<reference type="R711">Currencies: Yugoslavian Convertible Dinar (change from &amp;quot;南斯拉夫 可轉換第納爾&amp;quot; to &amp;quot;南斯拉夫可轉換第納爾&amp;quot;)</reference>
+		<reference type="R712" uri="http://leoboard.cpatch.org/cgi-bin/topic.cgi?forum=4&amp;amp;amp;topic=164">Script: Javanese (It's a new term)</reference>
+		<reference type="R713" uri="http://203.64.158.220/ebintra/Content.asp?ContentID=25845">Script: Lepcha (Róng) (It's a new term)</reference>
+		<reference type="R714" uri="http://webtitle.nmh.gov.tw/india/page/page.php?id=103">Script: Kharoshthi (It's a new term)</reference>
+		<reference type="R715">Currencies: Trinidad and Tobago Dollar (change from &amp;quot;千里達及托巴哥r&amp;quot; to &amp;quot;千里達及托巴哥&amp;quot;)</reference>
+		<reference type="R716" uri="http://tw.britannica.com/MiniSite/Article/id00040761.html">Script: Meroitic (It's a new term)</reference>
+		<reference type="R717" uri="http://140.111.34.46/cgi-bin/jdict/loadpage.cgi?file=gm/12-6-27.html&amp;amp;amp;word=%E8%98%87%E5%88%A9%E5%8D%97%E5%85%B1%E5%92%8C%E5%9C%8B">Language: Sranan Tongo  (change from “srn” to “蘇拉南東墎文”)</reference>
+		<reference type="R718" uri="http://www.google.com/search?q=Sicilian+%E6%96%87&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;ie=UTF-8&amp;amp;amp;inlang=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Sicilian  (change from “scn” to “西西里文”)</reference>
+		<reference type="R719">Currencies: CFA Franc BCEAO (change from &amp;quot;西非 法郎 BCEAO&amp;quot; to &amp;quot;西非法郎 BCEAO&amp;quot;)</reference>
+		<reference type="R720" draft="unconfirmed">Currencies: East German Ostmark (change from &amp;quot;東德東德馬克&amp;quot; to &amp;quot;東德奧斯特馬克&amp;quot;)</reference>
+		<reference type="R721">Currencies: Swaziland Lilangeni (change from &amp;quot;斯威士蘭 里郎&amp;quot; to &amp;quot;斯威士蘭里郎&amp;quot;)</reference>
+		<reference type="R722" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Central European Daylight Time (change from “中歐日光節約時間” to “中歐夏令時間”)</reference>
+		<reference type="R723" uri="http://hk.dictionary.yahoo.com/search.html?s=Gaelic">Script: Latin (Gaelic variant) (It's a new term)</reference>
+		<reference type="R724">Currencies: Brazilian Cruzado Novo (change from &amp;quot;巴西 克如爾達 農瓦&amp;quot; to &amp;quot;巴西克如爾達農瓦&amp;quot;)</reference>
+		<reference type="R725" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Newfoundland Daylight Time(change from “纽芬蘭日光節約時間” to “纽芬蘭夏令時間”)</reference>
+		<reference type="R726">Currencies: Timor Escudo (change from &amp;quot;帝汶 埃斯庫多&amp;quot; to &amp;quot;帝汶埃斯庫多&amp;quot;)</reference>
+		<reference type="R727" uri="http://zh.wikipedia.org/wiki/%E5%85%AB%E6%80%9D%E5%B7%B4%E5%AD%97">Script: Phags-pa (It's a new term)</reference>
+		<reference type="R728">Currencies: Belgian Franc (financial) (change from &amp;quot;比利時法郎 （金融）&amp;quot; to &amp;quot;比利時法郎（金融）&amp;quot;)</reference>
+		<reference type="R729" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Latin+America+and+the+Caribbean&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Territories: Latin America and the Caribbean (change from “419” to “拉丁美洲和加勒比海”)</reference>
+		<reference type="R730" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Hk Timezones: Japan Daylight Time(change from “日本標準時間” to “日本夏令時間”)</reference>
+		<reference type="R731" uri="http://www.ntctc.edu.tw/spc/ebook/pdf/9003/1.pdf">Script: Blissymbols (It's a new term)</reference>
+		<reference type="R732" uri="http://leoboard.cpatch.org/cgi-bin/topic.cgi?forum=4&amp;amp;amp;topic=164">Script: Javanese (It's a new term)</reference>
+		<reference type="R733" uri="http://egyptwords.blogspot.com/">Script: Egyptian hieratic (It's a new term)</reference>
+		<reference type="R734" uri="http://www.apecgender.org/Page_Show.asp?Page_ID=177">Timezones: Petersburg (Petersburg is a new word, change from “Petersburg” to “彼得堡”)</reference>
+		<reference type="R735">Currencies:Netherlands Antillan Guilder (change from &amp;quot;荷蘭 安梯蘭 盾&amp;quot; to &amp;quot;荷蘭安梯蘭盾&amp;quot;)</reference>
+		<reference type="R736">Currencies: Belgian Franc (convertible) (change from &amp;quot;比利時法郎 （可轉換）&amp;quot; to &amp;quot;比利時法郎（可轉換）&amp;quot;)</reference>
+		<reference type="R737" uri="http://www.google.com/search?q=Macao+S.A.R.,+China&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Territories: Macao S.A.R., China(change from “澳門特別行政區”to “中華人民共和國澳門特別行政區”)</reference>
+		<reference type="R738" uri="http://www.macaoheritage.net/Trends/NewsC.asp?nid=5678">Script: Orkhon (It's a new term)</reference>
+		<reference type="R739" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Altai.htm">Language: Southern Altai  (change from “alt” to “南阿爾泰語”)</reference>
+		<reference type="R740" uri="http://www.e-safety.com.tw/1_main/103_learning/1037_news/ENS48/pdf/C6.pdf">Script: Gujarati (It's a new term)</reference>
+		<reference type="R741" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Latin+America+and+the+Caribbean&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Territories: Latin America and the Caribbean (change from “419” to “拉丁美洲和加勒比海”)</reference>
+		<reference type="R742" uri="http://www.ncn.org/asp/zwgInfo/bg_Da.asp?ID=67438%20&amp;amp;amp;ad=1/2/2006">Script:  Kayah Li  (It's a new term)</reference>
+		<reference type="R743" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Eastern Daylight Time(change from “東部日光節約時間” to “東部夏令時間”)</reference>
+		<reference type="R744" uri="http://www.google.com/search?q=Germanic+(Other)&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=60&amp;amp;amp;sa=N">Language: Germanic (Other)  (change from “德國的(其他)” to “日耳曼文（其它）”)</reference>
+		<reference type="R745" uri="http://www.evangellite.org/159/article01.html &amp;amp;amp; http://wordpedia.britannica.com/concise/content.aspx?id=488&amp;amp;amp;hash=O12Uh%2FEcmekMDUZER8jE%2BA%3D%3D&amp;amp;amp;t=3">Script: Sumero-Akkadian Cuneiform (It's a new term)</reference>
+		<reference type="R746" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: America/Phoenix/long/daylight(change from “山區標準時間” to “山區夏令時間”)</reference>
+		<reference type="R747">Currencies: Trinidad and Tobago Dollar (change from &amp;quot;千里達及托巴哥r&amp;quot; to &amp;quot;千里達及托巴哥元&amp;quot;)</reference>
+		<reference type="R748" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Indianapolis&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Indianapolis (Indianapolis is a new word, change from “Indianapolis” to “印第安那波里斯”)</reference>
+		<reference type="R749" uri="http://wiki.foreprinciple.org/mediawiki-1.3.8/index.php?title=%E6%8F%90%E9%9D%9E%E7%B4%8D%E6%96%87">Script:  Tifinagh (Berber)  (It's a new term)</reference>
+		<reference type="R750">Currencies: Uzbekistan Sum (change from &amp;quot;烏茲別克斯坦 薩木&amp;quot; to &amp;quot;烏茲別克斯坦薩木&amp;quot;)</reference>
+		<reference type="R751" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Africa/Casablanca/long/daylight (change from “格林威治標準時間” to “格林威治夏令時間”)</reference>
+		<reference type="R752" uri="http://www.zftrans.com/favorite/vocabulary/20050707/185716-83.htm">Timezones: Coral Harbour (Coral Harbour is a new word, change from “Coral Harbour” to “珊瑚港”).</reference>
+		<reference type="R753" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: America/Indianapolis/long/daylight (change from “東部標準時間” to “東部夏令時間”)</reference>
+		<reference type="R754">Currencies: El Salvador Colon (change from &amp;quot;愛爾 薩爾瓦多科郎&amp;quot; to &amp;quot;愛爾薩爾瓦多科郎&amp;quot;)</reference>
+		<reference type="R755" uri="http://www.google.com/search?q=Haitian&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=0&amp;amp;amp;sa=N">Language: Haitian  (change from “海地人” to “海地文”)</reference>
+		<reference type="R756" uri="//www.google.com/search?q=Moncton&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Timezones: Moncton(This is a new word, change from “Moncton” to “曼克頓”)</reference>
+		<reference type="R757" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Pacific Daylight Time(change from “太平洋日光節約時間” to “太平洋夏令時間”)</reference>
+		<reference type="R758">Currencies: CFA Franc BEAC (change from &amp;quot;西非 法郎 BEAC&amp;quot; to &amp;quot;西非法郎 BEAC&amp;quot;)</reference>
+		<reference type="R759" uri="http://tw.britannica.com/MiniSite/Article/id00040761.html">Script: Meroitic (It's a new term)</reference>
+		<reference type="R760" uri="http://hk.dictionary.yahoo.com/search.html?s=Gaelic">Script: Latin (Gaelic variant) (It's a new term)</reference>
+		<reference type="R761" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Syriac-Estrangelo.htm &amp;amp;amp; http://artvine.com.tw/cgi-bin/board/bbsboard.pl?board_id=2&amp;amp;amp;type=show_post&amp;amp;amp;post=3997">Script:  Syriac (Estrangelo variant)  (It's a new term)</reference>
+		<reference type="R762" uri="http://140.128.159.78/yldict/word.asp?w=Fraktur">Script: Latin (Fraktur variant) (It's a new term)</reference>
+		<reference type="R763" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Central Daylight Time(change from “中部日光節約時間” to “中部夏令時間”)</reference>
+		<reference type="R764">Currencies: Tajikistan Somoni (change from &amp;quot;塔吉克斯坦 索莫尼&amp;quot; to &amp;quot;塔吉克斯坦索莫尼&amp;quot;)</reference>
+		<reference type="R765" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Southern+Africa&amp;amp;amp;btnG=%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Territories: Southern Africa (change from “南非” to “非洲南部”)</reference>
+		<reference type="R766" uri="http://www.google.com/search?q=Commonwealth+of+Independent+States&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Territories: Commonwealth of Independent States (change from “172” to “獨立國家國協”)</reference>
+		<reference type="R767" uri="http://www.google.com/search?q=Sicilian+%E6%96%87&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;ie=UTF-8&amp;amp;amp;inlang=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Sicilian  (change from “scn” to “西西里文”)</reference>
+		<reference type="R768" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Atlantic Daylight Time(change from “大西洋日光節約時間” to “大西洋夏令時間”)</reference>
+		<reference type="R769" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Classical+Newari+&amp;amp;amp;btnG=Google+搜尋&amp;amp;amp;lr=lang_zh-TW">Language: Classical Newari (change from “ nwc  ” to “ 古尼瓦爾文  ”)</reference>
+		<reference type="R770">Currencies: Ukrainian Karbovanetz (change from &amp;quot;烏克蘭 卡本瓦那茲&amp;quot; to &amp;quot;烏克蘭卡本瓦那茲&amp;quot;)</reference>
+		<reference type="R771" uri="http://wordpedia.britannica.com/concise/content.aspx?id=570&amp;amp;amp;hash=vsW50K8BiqKfMw5LJ8gJmA%3D%3D&amp;amp;amp;t=3">Script: Cyrillic (Old Church Slavonic variant)  (It's a new term)</reference>
+		<reference type="R772">Currencies: Saint Helena Pound (change from &amp;quot;聖赫勒拿 鎊&amp;quot; to &amp;quot;聖赫勒拿鎊&amp;quot;)</reference>
+		<reference type="R773" uri="http://tw.britannica.com/MiniSite/Article/id00005994.html">Script: Brahmi (It's a new term)</reference>
+		<reference type="R774" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Mirandese&amp;amp;amp;btnG=搜尋&amp;amp;amp;lr=lang_zh-TW">Language: Mirandese (change from “mwl” to “米蘭德斯文”)</reference>
+		<reference type="R775" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Japan Daylight Time(change from “日本標準時間” to “日本夏令時間”)</reference>
+		<reference type="R776">types: Stroke Order (change &amp;quot;筆劃顺序&amp;quot; to &amp;quot;筆劃順序&amp;quot;)</reference>
+		<reference type="R777" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;q=Louisville&amp;amp;amp;btnG=Google+%E6%90%9C%E5%B0%8B&amp;amp;amp;lr=lang_zh-TW">Timezones: Louisville (Louisville is a new word, change from “Louisville” to “路易斯維爾”)</reference>
+		<reference type="R778">Currencies: Timor Escudo (change from &amp;quot;帝汶 埃斯庫多&amp;quot; to &amp;quot;帝汶埃斯庫多&amp;quot;)</reference>
+		<reference type="R779" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Alaska Daylight Time(change from “阿拉斯加日光節約時間” to “阿拉斯加夏令時間”)</reference>
+		<reference type="R780" uri="http://www.worldlanguage.com/ChineseTraditional/Languages/Cham.htm">Script: Cham (It's a new term)</reference>
+		<reference type="R781" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Israel Daylight Time(change from “以色列日光節約時間” to “以色列夏令時間”)</reference>
+		<reference type="R782" uri="http://www.taiwanus.us/MediaVideoAudio/books/history/b5/03.htm">Script: Batak (It's a new term)</reference>
+		<reference type="R783">Currencies: Bolivian Mvdol (change from &amp;quot;玻利維亞 幕多&amp;quot; to &amp;quot;玻利維亞幕多&amp;quot;)</reference>
+		<reference type="R784">Currencies: Brazilian Cruzeiro Novo (1967-1986) (change from &amp;quot;巴西克魯薩多 農瓦 (1967-1986)&amp;quot; to &amp;quot;巴西克魯薩多農瓦 (1967-1986)&amp;quot;)</reference>
+		<reference type="R785" draft="unconfirmed">Currencies: East German Ostmark (change from &amp;quot;東德東德馬克&amp;quot; to &amp;quot;東德奧斯特馬克&amp;quot;)</reference>
+		<reference type="R786" uri="http://www.google.com/search?q=Klingon+%E6%96%87&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;ie=UTF-8&amp;amp;amp;inlang=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Klingon  (change from “tlh” to “克林貢文”)</reference>
+		<reference type="R787" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Hawaii Daylight Time(change from “夏威夷標準時間” to “夏威夷夏令時間”)</reference>
+		<reference type="R788">Currencies: Belgian Franc (financial) (change from &amp;quot;比利時法郎 （金融）&amp;quot; to &amp;quot;比利時法郎（金融）&amp;quot;)</reference>
+		<reference type="R789" uri="http://www.fantasyweb.idv.tw/yilu/gallery/Spec/Tolkien_fonts/index.htm">Script: Tengwar (It's a new term)</reference>
+		<reference type="R790" uri="http://www.cc-us.org/usa/H39-5.htm">Script:  Pollard Phonetic  (It's a new term)</reference>
+		<reference type="R791" uri="http://www.google.com/search?q=Currie&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=50&amp;amp;amp;sa=N">Timezones: Currie(This is a new word, change from “Currie” to “居里”)</reference>
+		<reference type="R792" uri="http://www.google.com/search?q=Dutch&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=20&amp;amp;amp;sa=N">Language: Middle Dutch  (change from “荷蘭，中古 (ca. 1050-1350)” to “中古荷蘭文”)</reference>
+		<reference type="R793" uri="http://203.64.158.220/ebintra/Content.asp?ContentID=16907">Script: Glagolitic (It's a new term)</reference>
+		<reference type="R794" uri="http://wordpedia.britannica.com/concise/content.aspx?id=7841&amp;amp;amp;hash=PF16q%2BQ%2FWdoVa2%2Bve%2B%2FS%2Bg%3D%3D">Language: Old Provençal  (change from “普羅文斯文 (to 1500)” to “古普羅旺斯文”)</reference>
+		<reference type="R795" uri="http://www2.ccim.org:8088/dictionary/zhaoindex.jsp?k=Gnosticism">Script: Mandaean (It's a new term)</reference>
+		<reference type="R796" uri="http://egyptwords.blogspot.com/">Script:  Egyptian hieroglyphs (It's a new term)</reference>
+		<reference type="R797" uri="http://www.tattpe.org.tw/news_20051114-2.shtml">Script: New Tai Lue (It's a new term)</reference>
+		<reference type="R798" uri="http://www.gamez.com.tw/printthread.php?t=17770&amp;amp;amp;pp=40">Script: Cirth (It's a new term)</reference>
+		<reference type="R799" uri="http://www.google.com/search?q=Filipino&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=40&amp;amp;amp;sa=N">Language: Filipino  (change from “fil” to “菲律賓文”)</reference>
+		<reference type="R800" uri="http://webtitle.nmh.gov.tw/india/page/page.php?id=103">Script: Kharoshthi (It's a new term)</reference>
+		<reference type="R801" uri="http://zh.wikipedia.org/wiki/%E5%85%AB%E6%80%9D%E5%B7%B4%E5%AD%97">Script: Phags-pa (It's a new term)</reference>
+		<reference type="R802" uri="http://www.thisisthelife.com/zh/historical-sites/easter-island.htm">Script: Rongorongo (It's a new term)</reference>
+		<reference type="R803">Currencies: Brazilian Cruzado Novo (change from &amp;quot;巴西 克如爾達 農瓦&amp;quot; to &amp;quot;巴西克如爾達農瓦&amp;quot;)</reference>
+		<reference type="R804" uri="http://tw.britannica.com/MiniSite/Article/id00048822.html">Script: Old Permic  (It's a new term)</reference>
+		<reference type="R805" uri="http://www.google.com/search?q=Vincennes&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Timezones: Vincennes (Louisville is a new word, change from “Vincennes” to “溫森斯”).</reference>
+		<reference type="R806" draft="unconfirmed">Territories: Southern Asia(change from “034” to “南亞”)</reference>
+		<reference type="R807" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Mountain Daylight Time(change from “山區日光節約時間” to “山區夏令時間”)</reference>
+		<reference type="R808" uri="http://tw.britannica.com/MiniSite/Article/id00036950.html">Script: Linear B (It's a new term)</reference>
+		<reference type="R809" uri="http://www.unicode.org/cldr/data/common/main/zh_Hant.xml">Script: Buginese (It's a new term)</reference>
+		<reference type="R810" uri="http://homework.wtuc.edu.tw/~wenlurg/forghis/0323-10.htm">Script: Indus (Harappan) (It's a new term)</reference>
+		<reference type="R811">Currencies: CFA Franc BCEAO (change from &amp;quot;西非 法郎 BCEAO&amp;quot; to &amp;quot;西非法郎 BCEAO&amp;quot;)</reference>
+		<reference type="R812">Currencies: Nicaraguan Cordoba Oro (change from &amp;quot;尼加拉瓜 金哥多華&amp;quot; to &amp;quot;尼加拉瓜金哥多華普&amp;quot;)</reference>
+		<reference type="R813">Currencies: Laotian Kip (change from &amp;quot;老撾 開普&amp;quot; to &amp;quot;老撾開普&amp;quot;)</reference>
+		<reference type="R814" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Eastern European Daylight Time(change from “東歐日光節約時間” to “東歐夏令時間”)</reference>
+		<reference type="R815">Currencies: Swaziland Lilangeni (change from &amp;quot;斯威士蘭 里郎&amp;quot; to &amp;quot;斯威士蘭里郎&amp;quot;)</reference>
+		<reference type="R816" uri="http://tw.britannica.com/MiniSite/Article/id00036950.htm">Script: Linear A (It's a new term)</reference>
+		<reference type="R817" uri="http://203.64.158.220/ebintra/Content.asp?ContentID=25845 &amp;amp;amp;">Script: Lepcha (Róng) (It's a new term)</reference>
+		<reference type="R818" uri="http://140.111.34.46/cgi-bin/jdict/loadpage.cgi?file=gm/12-6-27.html&amp;amp;amp;word=%E8%98%87%E5%88%A9%E5%8D%97%E5%85%B1%E5%92%8C%E5%9C%8B">Language: Sranan Tongo  (change from “srn” to “蘇拉南東墎文”)</reference>
+		<reference type="R819" uri="http://www.ntctc.edu.tw/spc/ebook/pdf/9003/1.pdf">Script: Blissymbols (It's a new term)</reference>
+		<reference type="R820" uri="http://www.google.com/search?q=Chuvash&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=10&amp;amp;amp;sa=N">Language: Chuvash (change from “楚瓦甚文” to “楚瓦士文”)</reference>
+		<reference type="R821" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Central European Daylight Time (change from “中歐日光節約時間” to “中歐夏令時間”)</reference>
+		<reference type="R822" uri="http://wiki.foreprinciple.org/mediawiki-1.3.8/index.php?title=%E6%8F%90%E9%9D%9E%E7%B4%8D%E6%96%87">Script: Tifinagh (Berber)  (It's a new term)</reference>
+		<reference type="R823" uri="http://blog.yam.com/festival/archives/1044108.html">Script: Bali (It's a new term)</reference>
+		<reference type="R824" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: Newfoundland Daylight Time(change from “纽芬蘭日光節約時間” to “纽芬蘭夏令時間”)</reference>
+		<reference type="R825" uri="http://egyptwords.blogspot.com/">Script:  Egyptian demotic (It's a new term)</reference>
+		<reference type="R826">Currencies: Tanzanian Shilling (change from &amp;quot;坦桑尼亞 先令&amp;quot; to &amp;quot;坦桑尼亞先令&amp;quot;)</reference>
+		<reference type="R827" uri="http://zh.wikipedia.org/wiki/ç²¾éèª ">Script: Sarati (It's a new term)</reference>
+		<reference type="R828" uri="http://www.google.com/search?q=Central+Asia&amp;amp;amp;hl=zh-TW&amp;amp;amp;lr=lang_zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;start=270&amp;amp;amp;sa=N">Territories: Central Asia (change from “143” to “中亞”)</reference>
+		<reference type="R829" uri="http://www.google.com/search?hl=zh-TW&amp;amp;amp;newwindow=1&amp;amp;amp;q=Daylight+Time&amp;amp;amp;lr=lang_zh-TW">Timezones: China Daylight Time(change from “中國標準時間” to “中國夏令時間”)</reference>
+		<reference type="R830" uri="http://tw.britannica.com/MiniSite/Article/id00049079.html">Script: Phoenician (It's a new term)</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/zh.txt?only_with_tag=final-update-LDML
+
+        CN { "\u4E2D\u56FD" }  // From the JDK and translation center
+CN { "\u4E2D\u83EF\u4EBA\u6C11\u5171\u548C\u570B" } // Old value
+KR { "\u5357\u671D\u9C9C" } // Old value
+Currency display names
+? an  { "\u963F\u62C9\u8CA2\u6587" }
+? ht  { "\u6D77\u5730\u4EBA" }
+        Hans { "\u7B80\u4F53\u6C49\u8BED" } // Not a formal part of ISO-15924 yet
+        Hant { "\u7E41\u4F53\u6C49\u8BED" } // Not a formal part of ISO-15924 yet
+Linb { "\u7EBF\u5F62\u6587\u5B57\u4E59" }
+Qaai { "\u7EE7\u627F\u8BED" } // PUA
+Zyyy { "\u672A\u786E\u5B9A\u8BED\u7CFB" } // This may need to become "undetermined script"
+EURO    { "\u6b27\u5143" }
+PREEURO { "\u65e7\u5e01" }
+-->
+

@@ -1587,4 +1587,25 @@
 			<nostr>ne:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R194" uri="http://europa.eu.int/constitution/lt/ptoc133_lt.htm">Constitution of Europe</reference>
+		<reference type="R195" uri="http://eur-lex.europa.eu/LexUriServ/site/lt/oj/2005/l_158/l_15820050621lt00060009.pdf">European Commision Reglament EB Nr. 936/2005</reference>
+		<reference type="RP1" uri="http://unicode.org/Public/UNIDATA/SpecialCasing.txt">Unicode Special Casing</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/lt.txt?only_with_tag=final-update-LDML
+
+        FK { "Folklendo salos (Malvinai)" }    // alternate name { "Folklendo salos" }
+        KP { "\u0160iaur\u0117s Kor\u0117ja" }    // alternate name { "Kor\u0117jos Demokratin\u0117 Liaudies Respublika" }
+        KR { "Piet\u0173 Kor\u0117ja" }    // alternate name { "Kor\u0117jos Respublika" }
+        SY { "Sirija" }    // alternate name { "Sirijos Arab\u0173 Respublika" }
+US { "JAV" } // Poor translation. JAV -> United States
+        VI { "JAV Virginijos salos" } // Poor translation? JAV -> United States
+zh_cn { "Kin\u0173 (supaprastinta)" }
+zh_tw { "Kin\u0173 (tadicin\u0117)" }
+        "Latn",  // ISO 15924 Name 
+Currency display names
+                4, // "Minimal Days in First Week"   Lithuania follows ISO 8601
+-->
+

@@ -197,5 +197,9 @@
 			</currency>
 		</currencies>
 	</numbers>
+	<references>
+		<reference type="R030" uri="http://www.omniglot.com/writing/ewe.htm">Omniglot on Ewe</reference>
+		<reference type="R031" uri="http://developer.mimer.com/charts/ewe.htm">Mimer Ewe collation</reference>
+	</references>
 </ldml>
 

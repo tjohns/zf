@@ -203,6 +203,7 @@
 				<am>పూర్వాహ్నం</am>
 				<pm>అపరాహ్నం</pm>
 				<eras>
+					<!-- Warning: These look like abbreviations and not full names. -->
 					<eraNames>
 						<era type="0" draft="unconfirmed">ఈసాపూర్వ.</era>
 						<era type="1" draft="unconfirmed">సన్.</era>
@@ -349,3 +350,6 @@
 		</messages>
 	</posix>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+Telugu Locale. Data by Ram [ram <at> jtcsv.com]
+-->

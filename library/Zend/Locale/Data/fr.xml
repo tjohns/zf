@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.104 $"/>
-		<generation date="$Date: 2007/07/20 17:14:05 $"/>
+		<version number="$Revision: 1.107 $"/>
+		<generation date="$Date: 2007/11/14 16:26:57 $"/>
 		<language type="fr"/>
 	</identity>
 	<localeDisplayNames>
@@ -2129,10 +2129,12 @@
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Lubumbashi (rép. dém. du Congo)</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Île de Pâques</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Hanga Roa</exemplarCity>
 			</zone>
+			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity>Kachgar</exemplarCity>
 			</zone>
@@ -2188,6 +2190,7 @@
 			<zone type="Africa/Asmera">
 				<exemplarCity draft="contributed">Asmara</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Îles Canaries</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Les Canaries</exemplarCity>
@@ -2320,6 +2323,7 @@
 				<exemplarCity draft="provisional">Caïmans</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">George Town</exemplarCity>
 			</zone>
+			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Chevtchenko</exemplarCity>
 			</zone>
@@ -2439,6 +2443,7 @@
 				<exemplarCity>Porto Rico</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">San Juan</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Açores</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Ponta Delgada</exemplarCity>
@@ -2549,6 +2554,7 @@
 			<zone type="America/Port_of_Spain">
 				<exemplarCity draft="unconfirmed">Port-d’Espagne</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Oujgorod</exemplarCity>
 			</zone>
@@ -2652,18 +2658,6 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">HAAFO</daylight>
 				</short>
 			</metazone>
-			<metazone type="Africa_FarWestern">
-				<long>
-					<generic alt="proposed-x1001" draft="unconfirmed">Heure d’Afrique extrème-ocidentale</generic>
-					<standard alt="proposed-x1001" draft="unconfirmed">Heure avancée normale d’Afrique extrème-ocidentale</standard>
-					<daylight alt="proposed-x1001" draft="unconfirmed">Heure avancée d’Afrique extrème-ocidentale</daylight>
-				</long>
-				<short>
-					<generic alt="proposed-x1001" draft="unconfirmed">HAEO</generic>
-					<standard alt="proposed-x1001" draft="unconfirmed">HNAEO</standard>
-					<daylight alt="proposed-x1001" draft="unconfirmed">HAAEO</daylight>
-				</short>
-			</metazone>
 			<metazone type="Africa_Southern">
 				<long>
 					<generic alt="proposed-x1001" draft="unconfirmed">Heure d’Afrique méridionale</generic>
@@ -2699,7 +2693,6 @@
 					<standard>HNAK</standard>
 					<daylight>HAAK</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="America_Central">
 				<long>
@@ -2712,7 +2705,6 @@
 					<standard>HNC</standard>
 					<daylight>HAC</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="America_Eastern">
 				<long>
@@ -2725,7 +2717,6 @@
 					<standard>HNE</standard>
 					<daylight>HAE</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="America_Mountain">
 				<long>
@@ -2738,7 +2729,6 @@
 					<standard>HNR</standard>
 					<daylight>HAR</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="America_Pacific">
 				<long>
@@ -2751,7 +2741,6 @@
 					<standard>HNP</standard>
 					<daylight>HAP</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="Atlantic">
 				<long>
@@ -2764,7 +2753,6 @@
 					<standard>HNA</standard>
 					<daylight>HAA</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="China">
 				<long>
@@ -2800,17 +2788,6 @@
 				</short>
 				<commonlyUsed>true</commonlyUsed>
 			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic>Heure d’Hawaï</generic>
-					<standard>Heure normale d’Hawaï</standard>
-					<daylight>Heure avancée d’Hawaï</daylight>
-				</long>
-				<short>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
-			</metazone>
 			<metazone type="Israel">
 				<long>
 					<standard>Heure normale d’Israël</standard>
@@ -2842,7 +2819,6 @@
 					<standard>HNT</standard>
 					<daylight>HAT</daylight>
 				</short>
-				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 		</timeZoneNames>
 	</dates>
@@ -3987,4 +3963,82 @@
 			<nostr>non:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R056" uri="http://www.iso.org/iso/fr/prods-services/iso3166ma/02iso-3166-code-lists/list-fr1.html">ISO 3166 Standard for Territories</reference>
+		<reference type="R056" alt="proposed-x1001" draft="unconfirmed">ISO 3166 - Listes de codes et noms de pays (French country names and code elements)</reference>
+		<reference type="R057" uri="http://www.loc.gov/standards/iso639-2/englangn.html">ISO 639.2 Standard</reference>
+		<reference type="R057" alt="proposed-x1001" draft="unconfirmed">ISO 639.2 - Codes pour la représentation des noms de langues</reference>
+		<reference type="R058" uri="http://www.iso.org/iso/fr/prods-services/popstds/currencycodeslist.html">ISO 4217 Standard for Currencies</reference>
+		<reference type="R058" alt="proposed-x1001" draft="unconfirmed">ISO 4217 - Liste des codes des monnaies et des types de fonds</reference>
+		<reference type="R059" uri="http://www.unicode.org/iso15924/iso15924-fr.html">ISO 15924 Strandard for Scripts names</reference>
+		<reference type="R059" alt="proposed-x1001" draft="unconfirmed">ISO 15924 - Liste alphabétique des noms d’écriture en français</reference>
+		<reference type="R060" uri="http://www.google.fr">Results of Google searches</reference>
+		<reference type="R060" alt="proposed-x1001" draft="unconfirmed">Résultats des recherches sur Google (édition française)</reference>
+		<reference type="R061" uri="http://fr.wikipedia.org/wiki/Codes_des_monnaies">Codes des monnaies (ISO 4217) - Wikipedia</reference>
+		<reference type="R062" uri="http://fr.wikipedia.org/wiki/ISO_3166-1">ISO 3166-1 Standard for Territories (from Wikipedia)</reference>
+		<reference type="R062" alt="proposed-x1001" draft="unconfirmed">ISO 3166-1 (article de Wikipédia, édition francophone)</reference>
+		<reference type="R063" uri="http://fr.wikipedia.org/wiki/Accueil">Entries/articles on Wikipedia (French version)</reference>
+		<reference type="R063" alt="proposed-x1001" draft="unconfirmed">Articles de Wikipédia (édition francophone)</reference>
+		<reference type="R064" uri="http://www.geocities.com/jusjih/iso3166-fr.html">ISO 4217 Standard for Currencies (from Geocities)</reference>
+		<reference type="R065" uri="http://meta.wikimedia.org/wiki/List_of_Wikipedias">List of Wikipedias on Meta (Wikimedia.org)</reference>
+		<reference type="R066" uri="http://atlas.gc.ca/site/francais/maps/reference/national/timezones/map.pdf">Canadian Timezones</reference>
+		<reference type="R066" alt="proposed-x1001" draft="unconfirmed">Fuseaux horaires canadiens (sur atlas.gc.ca)</reference>
+		<reference type="R067" uri="http://www.tlfi.fr/">Le Trésor de la langue française informatisé (CDROM)</reference>
+		<reference type="R068" uri="CD-Rom">Le Robert &amp; Collins (bilingual dictionary French-English)</reference>
+		<reference type="RP1" uri="http://www.asianlang.mq.edu.au/INL/tetfran.pdf" draft="unconfirmed">Dictionnaire tétoum-français de l'Université de Macquarie (Australie)</reference>
+		<reference type="RP10" uri="http://cat.inist.fr/?aModele=afficheN&amp;cpsidt=3294092" draft="unconfirmed">Étude ethnologique et linguistique des peuples Krous en Afrique occidentale: &quot;Les ambiguïtés du regard, un masque krou(...)&quot;, J.C. Huet, Université de Paris IV-Sorbonne</reference>
+		<reference type="RP2">National Standard of Canada, CAN/CSA-Z234.4-89: All-Numeric Dates and Times. (Reaffirmed 2000-05-25)</reference>
+		<reference type="RP3" uri="http://www.droitconstitutionnel.org/ColloqueRennes/Matala-Tala/Matala-Tala.texte.html" draft="unconfirmed">Unilinguisme ou multilinguisme officiel en droit comparé, cas des pays africains (DroitConstitutionnel.org)</reference>
+		<reference type="RP4" uri="http://fr.wikipedia.org/wiki/Tokelauan" draft="unconfirmed">Article &quot;tokelauan&quot; de Wikipédia (voir aussi autres sources) ; ne pasconfondre avec Tokelau (le nom des îles)</reference>
+		<reference type="RP5" uri="http://fr.encarta.msn.com/" draft="unconfirmed">Entrées/articles de l'encyclopédie MSN Encarta (édition française)</reference>
+		<reference type="RP6" uri="http://www.dicoland.com/fr/tigrigna/dictionnaire-tigrigna-francais-francais-tigrigna-erythreen-655" draft="unconfirmed">Dictionnaire Tigrigna-Français / Français-Tigrigna (Erythréen), par Rilliet</reference>
+		<reference type="RP7" uri="http://www.unesco.org/courier/2000_04/fr/doss12.htm" draft="unconfirmed">UNESCO, Guerre et paix des langues, &quot;Kenya : retour au kikouyou&quot;</reference>
+		<reference type="RP8" uri="http://www.tlfq.ulaval.ca/AXL/AFRIQUE/rwanda.htm" draft="unconfirmed">Lois organiques et constitution (version francophone) du Rwanda, voir</reference>
+		<reference type="RP9" uri="http://www.civilization.ca/aborig/haida/haindexf.html" draft="unconfirmed">&quot;Les Haïdas - Les Enfants de l’aigle et du corbeau&quot; (civilisation.ca)</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/fr.txt?only_with_tag=final-update-LDML
+
+AH = Anno Hijri  (in root)
+http://www.iso.org/iso/en/prods-services/iso3166ma/index.html
+        KP { "Cor\u00E9e du Nord" }    // alternate name { "Cor\u00E9e, R\u00E9publique populaire d\u00E9mocratique de" }
+        KR { "Cor\u00E9e du Sud" }    // alternate name { "Cor\u00E9e, R\u00E9publique de" }
+MD { "Moldavie" }
+TL { "Timor" }
+DIF { "DIF", "franc de Djibouti" } ( unconfirmed )
+XPS { "XPS", "livre sterling" }
+XSS { "XSS", "shilling sterling" }
+http://lcweb.loc.gov/standards/iso639-2/frenchlangn.html
+Fallback { "en" }
+        Qaai { "h\u00E9rit\u00E9" } // PUA
+Zyyy { "commun" } // This could be "\u00E9criture ind\u00E9termin\u00E9e"
+
+Comments without bases
+
+ Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
+ Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ Ecuador 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
+ Indonesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Jakarta"]
+ Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
+ United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
+ Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
+ United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
+ Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ French Polynesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
+ New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
+ Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Uzbekistan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
+ Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
+ Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+-->
+

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
+<!-- Data donated by Mr.Raymond Doctor, CDAC, Pune, India ! -->
 <ldml>
 	<identity>
 		<version number="$Revision: 1.46 $"/>
@@ -879,3 +880,8 @@
 		</messages>
 	</posix>
 </ldml>
+<!-- Comments without bases
+
+ needs translation 	 - was on: //ldml/dates/calendars/calendar[@type="gregorian"]/eras/eraAbbr/era[@type="1"][@alt="proposed"] 
+-->
+

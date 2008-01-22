@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.89 $"/>
-		<generation date="$Date: 2007/07/21 03:48:07 $"/>
+		<version number="$Revision: 1.90 $"/>
+		<generation date="$Date: 2007/11/14 16:26:57 $"/>
 		<language type="da"/>
 	</identity>
 	<localeDisplayNames>
@@ -2215,7 +2215,6 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">Mellemeuropæisk sommertid</daylight>
 				</long>
 				<short>
-					<generic>CET</generic>
 					<standard>CET</standard>
 					<daylight>CEST</daylight>
 				</short>
@@ -2230,7 +2229,6 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">Østeuropæisk sommertid</daylight>
 				</long>
 				<short>
-					<generic>EET</generic>
 					<standard>EET</standard>
 					<daylight>EEST</daylight>
 				</short>
@@ -2243,35 +2241,21 @@
 					<daylight>vesteuropæisk sommertid</daylight>
 				</long>
 				<short>
-					<generic>WET</generic>
+					<standard>WET</standard>
+					<daylight>WEST</daylight>
 				</short>
 				<commonlyUsed>true</commonlyUsed>
 			</metazone>
 			<metazone type="GMT">
 				<long>
-					<generic draft="contributed">verdenstid</generic>
 					<standard>Verdenstid</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">GMT-tid</standard>
 					<standard alt="proposed-x1002" draft="unconfirmed">verdenstid</standard>
-					<daylight>GMT-sommertid</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">verdenstid</daylight>
 				</long>
 				<short>
-					<generic>GMT</generic>
 					<standard>GMT</standard>
-					<daylight>GMT</daylight>
 				</short>
 				<commonlyUsed>true</commonlyUsed>
-			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<standard>Hawaii-normaltid</standard>
-					<daylight>Hawaii-sommertid</daylight>
-				</long>
-				<short>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
 			</metazone>
 			<metazone type="Israel">
 				<long>
@@ -3218,4 +3202,66 @@
 			<nostr>nej:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R016" uri="http://www.eki.ee/itstandard/docs/draft-alvestrand-lang-char-03.txt">Alvestrand, Characters and character sets for various languages</reference>
+		<reference type="R017" uri="http://www.dsn.dk/oss_faq.htm">Dansk Sprognævn - Ofte stillede spørgsmål (OSS)</reference>
+		<reference type="R018" uri="http://publications.eu.int/code/da/da-5000500.htm">Office for Official Publications of the European Communities</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/da.txt?only_with_tag=final-update-LDML
+
+IR { "Den Islamiske Republik Iran" }
+        KP { "Nordkorea" }    // alternate name { "Den Demokratiske Folkerepublik Korea" }
+        KR { "Sydkorea" }    // alternate name { "Republikken Korea" }
+Currency display names
+ath { "Athapascan Languages" }
+bai { "Bamileke Languages" }
+        bla { "Siksika" }   // Blackfoot
+da { "dansk" } // Old value
+mno { "Manobo Languages" }
+pra { "Prakrit Languages" }
+sal { "Salishan languages" }
+sio { "Siouan Languages" }
+tup { "Tupi languages" }
+        vo  { "Volap\u00fck" }   // Yes the iso-639 standard uses the umlaut in the English name
+wak { "Wakashan Languages" }
+ypk { "Yupik Languages" }
+zh_cn { "Kinesisk (Forkortet)" }
+zh_tw { "Kinesisk (Uforkortet)" }
+Yiii { "Jiddisch" } // This is wrong. This is Yi, not Yiddish.
+        Zyyy { "Ukendt" } // This may need to become "undetermined script"
+variants for collation (traditional may also be used for traditional chinese)
+
+Comments without bases
+
+ Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
+ Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ Ecuador 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
+ Indonesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Jakarta"]
+ Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
+ United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
+ Ukraine 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Uzhgorod"]
+ Portugal 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Azores"]
+ Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
+ Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
+ United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
+ Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ French Polynesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
+ New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
+ Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Uzbekistan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
+ Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
+ Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+ China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
+-->
+

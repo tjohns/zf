@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.84 $"/>
-		<generation date="$Date: 2007/07/21 21:12:28 $"/>
+		<version number="$Revision: 1.85 $"/>
+		<generation date="$Date: 2007/11/28 21:17:49 $"/>
 		<language type="sl"/>
 	</identity>
 	<localeDisplayNames>
@@ -755,7 +755,6 @@
 						<dateFormatItem id="HHmm" draft="provisional">HH:mm</dateFormatItem>
 						<dateFormatItem id="HHmmss" draft="provisional">HH:mm:ss</dateFormatItem>
 						<dateFormatItem id="MMMMd">d MMMM</dateFormatItem>
-						<dateFormatItem id="MMMMd" alt="proposed-x1001" draft="unconfirmed">14 september</dateFormatItem>
 						<dateFormatItem id="MMMMdd" draft="unconfirmed">dd. MMMM</dateFormatItem>
 						<dateFormatItem id="Md" draft="provisional">d.M</dateFormatItem>
 						<dateFormatItem id="mmss" draft="provisional">mm:ss</dateFormatItem>
@@ -831,6 +830,7 @@
 			<zone type="Asia/Yerevan">
 				<exemplarCity draft="provisional">Erevan</exemplarCity>
 			</zone>
+			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Južni pol</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Južni tečaj</exemplarCity>
@@ -862,6 +862,7 @@
 			<zone type="Indian/Cocos">
 				<exemplarCity draft="provisional">Kokosovi</exemplarCity>
 			</zone>
+			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Kinšasa</exemplarCity>
 			</zone>
@@ -875,6 +876,7 @@
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="provisional">Velikonočni otok</exemplarCity>
 			</zone>
+			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Šangaj</exemplarCity>
 			</zone>
@@ -1034,6 +1036,7 @@
 			<zone type="Europe/Bucharest">
 				<exemplarCity draft="provisional">Bukarešta</exemplarCity>
 			</zone>
+			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>Moskva</exemplarCity>
 			</zone>
@@ -1073,6 +1076,7 @@
 			<zone type="Africa/Dar_es_Salaam">
 				<exemplarCity draft="provisional">Darussalam</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Užgorod</exemplarCity>
 			</zone>
@@ -1085,6 +1089,7 @@
 			<zone type="America/Anchorage">
 				<exemplarCity draft="provisional">Čas Na Aljaski</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taškent</exemplarCity>
 			</zone>
@@ -1379,3 +1384,16 @@
 		</messages>
 	</posix>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/sl.txt?only_with_tag=final-update-LDML
+
+                1, // "Minimal Days in First Week" is unknown. Root value used instead
+        FK { "Falklandski (Malvinski) otoki" }    // alternate name { "Falklandski otoki" }
+        KP { "Severna Koreja" }    // alternate name { "Demokrati\u010Dna ljudska republika Koreja" }
+        KR { "Ju\u017Ena Koreja" }    // alternate name { "Republika Koreja" }
+Currency display names
+zh_cn { "Kitaj\u0161\u010Dina (poenostavljena)" }
+zh_tw { "Kitaj\u0161\u010Dina (tradicionalna)" }
+        "Latn",  // ISO 15924 Name
+-->
+

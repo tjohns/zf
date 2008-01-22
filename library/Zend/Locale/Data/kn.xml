@@ -236,6 +236,7 @@
 				<am>ಪೂರ್ವಾಹ್ನ</am>
 				<pm>ಅಪರಾಹ್ನ</pm>
 				<eras>
+					<!-- Warning: These look like abbreviations and not full names. -->
 					<eraNames>
 						<era type="0" draft="unconfirmed">ಈಸಪೂವ೯.</era>
 						<era type="1" draft="unconfirmed">ಸನ್.</era>
@@ -353,5 +354,8 @@
 			<nostr draft="unconfirmed">ಇಲ್ಲ:ಅಲ್ಲ</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R090" uri="http://tdil.mit.gov.in/newsIndexOct02.htm">TDIL Vishwabharat Magazine, Oct 2002</reference>
+	</references>
 </ldml>
 

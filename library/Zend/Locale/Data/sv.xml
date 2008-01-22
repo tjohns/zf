@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.108 $"/>
-		<generation date="$Date: 2007/07/21 02:09:45 $"/>
+		<version number="$Revision: 1.109 $"/>
+		<generation date="$Date: 2007/11/14 16:26:58 $"/>
 		<language type="sv"/>
 	</identity>
 	<localeDisplayNames>
@@ -750,38 +750,50 @@
 			<language type="zza">zaza</language>
 		</languages>
 		<scripts>
+			<!-- Only script codes that can be encoded with Unicode are included -->
 			<script type="Arab">arabiska</script>
 			<script type="Armn">armeniska</script>
 			<script type="Bali">balinesiska</script>
 			<script type="Batk">batak</script>
+			<!-- script draft="true" type="Batk">batak</script -->
 			<script type="Beng">bengaliska</script>
 			<script type="Blis">blissymboler</script>
+			<!-- script draft="true" type="Blis">blissymboler</script -->
 			<script type="Bopo">bopomofo</script>
 			<script type="Brah">brami</script>
 			<script type="Brah" alt="proposed-x1001" draft="unconfirmed">brahmiska</script>
+			<!-- script draft="true" type="Brah">brami</script -->
 			<script type="Brai">blindskrift</script>
 			<script type="Bugi">buginesiska</script>
 			<script type="Buhd">buhid</script>
 			<script type="Cans">kanadensiska stavelsetecken</script>
 			<script type="Cari">kariska</script>
 			<script type="Cham">cham</script>
+			<!-- script draft="true" type="Cham">cham</script -->
 			<script type="Cher">cherokee</script>
 			<script type="Cirt">cirt</script>
+			<!-- script draft="true" type="Cirt">cirt</script -->
 			<script type="Copt">koptiska</script>
 			<script type="Cprt">cypriotiska</script>
 			<script type="Cyrl">kyrilliska</script>
 			<script type="Cyrs">fornkyrkoslavisk kyrilliska</script>
 			<script type="Cyrs" alt="proposed-x1001" draft="unconfirmed">fornkyrkokyrilliska</script>
 			<script type="Cyrs" alt="proposed-x1002" draft="unconfirmed">kyrilliska (fornkyrkoslavisk variant)</script>
+			<!-- script draft="true" type="Cyrs">kyrilliska (fornkyrkslavisk variant)</script -->
 			<script type="Deva">devanagari</script>
 			<script type="Dsrt">deseret</script>
 			<script type="Egyd">demotiska</script>
 			<script type="Egyh">hieratiska</script>
 			<script type="Egyp">egyptiska hieroglyfer</script>
+			<!-- script draft="true" type="Egyd">demotiska</script
+				 script draft="true" type="Egyh">hieratiska</script
+				 script draft="true" type="Egyp">egyptiska hieroglyfer</script
+			-->
 			<script type="Ethi">etiopiska</script>
 			<script type="Geok">kutsuri</script>
 			<script type="Geor">georgiska</script>
 			<script type="Glag">glagolitiska</script>
+			<!-- script draft="true" type="Glag">glaglitiska</script -->
 			<script type="Goth">gotiska</script>
 			<script type="Grek">grekiska</script>
 			<script type="Gujr">gujarati</script>
@@ -798,15 +810,23 @@
 			<script type="Hebr">hebreiska</script>
 			<script type="Hira">hiragana</script>
 			<script type="Hmng">pahaw mong</script>
+			<!-- script draft="true" type="Hmng">pahaw mong</script -->
 			<script type="Hrkt">katakana/hiragana</script>
 			<script type="Hung">fornungerska</script>
 			<script type="Inds">indus</script>
+			<!-- script draft="true" type="Hung">fornungerska</script
+				 script draft="true" type="Inds">indus</script
+			-->
 			<script type="Ital">fornitaliska</script>
 			<script type="Java">javanska</script>
 			<script type="Jpan">japanska</script>
 			<script type="Kali">kaya li</script>
+			<!-- script draft="true" type="Java">javanesiska</script
+				 script draft="true" type="Kali">kaya li</script
+			-->
 			<script type="Kana">katakana</script>
 			<script type="Khar">kharoshti</script>
+			<!-- script draft="true" type="Khar">karochti</script -->
 			<script type="Khmr">khmeriska</script>
 			<script type="Knda">kanaresiska</script>
 			<script type="Lana">lanna</script>
@@ -817,14 +837,19 @@
 			<script type="Latg">gaeliskt latin</script>
 			<script type="Latg" alt="proposed-x1001" draft="unconfirmed">latinska (gaelisk variant)</script>
 			<script type="Latg" alt="proposed-x1002" draft="unconfirmed">gaelisklatinska</script>
+			<!-- script draft="true" type="Latf">latinska (fraktur)</script
+				 script draft="true" type="Latg">latinska (gaeliska)</script
+			-->
 			<script type="Latn">latinska</script>
 			<script type="Latn" alt="proposed-x1001" draft="unconfirmed">romersk</script>
 			<script type="Latn" alt="proposed-x1002" draft="unconfirmed">latin</script>
 			<script type="Latn" alt="proposed-x1003" draft="unconfirmed">detta handar inte om latin, utan latinska bokstäver</script>
 			<script type="Lepc">rong</script>
+			<!-- script draft="true" type="Lepc">lephca</script -->
 			<script type="Limb">limbu</script>
 			<script type="Lina">linjär A</script>
 			<script type="Lina" alt="proposed-x1001" draft="unconfirmed">linear A</script>
+			<!-- script draft="true" type="Lina">linjär A</script -->
 			<script type="Linb">linjär B</script>
 			<script type="Linb" alt="proposed-x1001" draft="unconfirmed">linear B</script>
 			<script type="Lyci">lykiska</script>
@@ -832,6 +857,10 @@
 			<script type="Mand">mandaéiska</script>
 			<script type="Maya">mayahieroglyfer</script>
 			<script type="Mero">meriotiska</script>
+			<!-- script draft="true" type="Mand">mandaéiska</script
+				 script draft="true" type="Maya">mayahieroglyfer</script
+				 script draft="true" type="Mero">meriotiska</script
+			-->
 			<script type="Mlym">malayalam</script>
 			<script type="Mong">mongoliska</script>
 			<script type="Moon">moon</script>
@@ -842,6 +871,7 @@
 			<script type="Ogam">ogham</script>
 			<script type="Olck">ol-chiki</script>
 			<script type="Orkh">orkon</script>
+			<!-- script draft="true" type="Orkh">orkon</script -->
 			<script type="Orya">oriya</script>
 			<script type="Osma">osmanja</script>
 			<script type="Osma" alt="proposed-x1001" draft="unconfirmed">osmanska är orelaterat till osmanja</script>
@@ -853,19 +883,27 @@
 			<script type="Phnx" alt="proposed-x1001" draft="unconfirmed">fenisiska</script>
 			<script type="Plrd">pollardtecken</script>
 			<script type="Plrd" alt="proposed-x1001" draft="unconfirmed">Pollardtecken</script>
+			<!-- script draft="true" type="Perm">pollard</script
+				 script draft="true" type="Phag">enskilt bruk (början)</script
+				 script draft="true" type="Phnx">ärvd</script
+				 script draft="true" type="Plrd">enskilt bruk (slut)</script
+			-->
 			<script type="Qaai">ärvda</script>
 			<script type="Qaai" alt="proposed-x1001" draft="unconfirmed">ärvt</script>
 			<script type="Qaai" alt="proposed-x1002" draft="unconfirmed">ärvd</script>
 			<script type="Rjng">rejang</script>
 			<script type="Roro">rongo-rongo</script>
+			<!-- script draft="true" type="Roro">rongorongo</script -->
 			<script type="Runr">runor</script>
 			<script type="Sara">sarati</script>
 			<script type="Saur">saurashtra</script>
 			<script type="Sgnw">teckningsskrift</script>
+			<!-- script draft="true" type="Sara">sarati</script -->
 			<script type="Shaw">shawiska</script>
 			<script type="Sinh">singalesiska</script>
 			<script type="Sund">sundanesiska</script>
 			<script type="Sylo">syloti nagri</script>
+			<!-- script draft="true" type="Sylo">syloti nagri</script -->
 			<script type="Syrc">syriska</script>
 			<script type="Syre">estrangelosyriska</script>
 			<script type="Syre" alt="proposed-x1001" draft="unconfirmed">syriska (estrangelovariant)</script>
@@ -874,14 +912,22 @@
 			<script type="Syrn">östsyriska</script>
 			<script type="Syrn" alt="proposed-x1001" draft="unconfirmed">östlig syriska</script>
 			<script type="Syrn" alt="proposed-x1002" draft="unconfirmed">syriska (östlig variant)</script>
+			<!-- script draft="true" type="Syre">syriska (estrangelo)</script
+				 script draft="true" type="Syrj">syriska (väst)</script
+				 script draft="true" type="Syrn">syriska (öst)</script
+			-->
 			<script type="Tagb">tagbanwa</script>
 			<script type="Tale">tai le</script>
 			<script type="Talu">tai lue</script>
+			<!-- script draft="true" type="Talu">tai lue</script -->
 			<script type="Taml">tamil</script>
 			<script type="Taml" alt="proposed-x1001" draft="unconfirmed">tamilska</script>
 			<script type="Telu">telugu</script>
 			<script type="Teng">tengwar</script>
 			<script type="Tfng">tifinagh</script>
+			<!-- script draft="true" type="Teng">tengwar</script
+				 script draft="true" type="Tfng">berbiska</script
+			-->
 			<script type="Tglg">tagalog</script>
 			<script type="Thaa">taana</script>
 			<script type="Thaa" alt="proposed-x1001" draft="unconfirmed">thaana</script>
@@ -893,12 +939,21 @@
 			<script type="Xpeo">fornpersiska</script>
 			<script type="Xsux">sumeo-akkadisk kilskrift</script>
 			<script type="Xsux" alt="proposed-x1001" draft="unconfirmed">sumeo-akkadiska</script>
+			<!-- script draft="true" type="Vaii">vaj</script
+				 script draft="true" type="Visp">synligt tal</script
+				 script draft="true" type="Xpeo">fornpersiska</script
+				 script draft="true" type="Xsux">sumeo-akkadiska</script
+			-->
 			<script type="Yiii">yi</script>
 			<script type="Zxxx">oskrivet språk</script>
 			<script type="Zxxx" alt="proposed-x1001" draft="unconfirmed">(oskrivet språk)</script>
+			<!-- script draft="true" type="Zxxx">oskrivna språk</script -->
 			<script type="Zyyy">gemensamma</script>
 			<script type="Zyyy" alt="proposed-x1001" draft="unconfirmed">gemensam</script>
 			<script type="Zyyy" alt="proposed-x1002" draft="unconfirmed">gemensamt</script>
+			<!-- script draft="true" type="Zyyy">obestämt skript</script
+				 script draft="true" type="Zzzz">okodat skript</script
+			-->
 			<script type="Zzzz">okodat skript</script>
 			<script type="Zzzz" alt="proposed-x1001" draft="unconfirmed">(okodat skriftsystem)</script>
 			<script type="Zzzz" alt="proposed-x1002" draft="unconfirmed">okodad skrift</script>
@@ -1014,9 +1069,11 @@
 			<territory type="CC" alt="proposed-x1002" draft="unconfirmed">Kokosöarna; Keelingöarna</territory>
 			<territory type="CD">Kongo-Kinshasa</territory>
 			<territory type="CD" alt="proposed-x1001" draft="unconfirmed">Zaire</territory>
+			<!-- Rarely used colloquial name -->
 			<territory type="CF">Centralafrikanska republiken</territory>
 			<territory type="CG">Kongo-Brazzaville</territory>
 			<territory type="CG" alt="proposed-x1001" draft="unconfirmed">Kongo</territory>
+			<!-- Rarely used colloquial name due to the CD name conflict -->
 			<territory type="CH">Schweiz</territory>
 			<territory type="CI">Elfenbenskusten</territory>
 			<territory type="CK">Cooköarna</territory>
@@ -1710,6 +1767,7 @@
 				<exemplarCity>Dumont d’Urville</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Dumont d'Urville</exemplarCity>
 			</zone>
+			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Argentina/Rio Gallegos</exemplarCity>
 			</zone>
@@ -1768,6 +1826,7 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Påskön</exemplarCity>
 			</zone>
@@ -1799,6 +1858,7 @@
 			<zone type="Africa/Cairo">
 				<exemplarCity>Kairo</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanarieöarna</exemplarCity>
 			</zone>
@@ -1921,6 +1981,7 @@
 			<zone type="Europe/Warsaw">
 				<exemplarCity>Warszawa</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azorerna</exemplarCity>
 			</zone>
@@ -1982,6 +2043,7 @@
 				<exemplarCity>Dusjanbe</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Dushanbe</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Uzjgorod</exemplarCity>
 			</zone>
@@ -2020,12 +2082,10 @@
 			</metazone>
 			<metazone type="Africa_Central">
 				<long>
-					<generic>centralafrikansk tid</generic>
-					<standard draft="contributed">centralafrikansk tid</standard>
+					<standard>centralafrikansk tid</standard>
 				</long>
 				<short>
-					<generic>CAT</generic>
-					<standard draft="contributed">CAT</standard>
+					<standard>CAT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -2036,8 +2096,7 @@
 					<standard alt="proposed-x1001" draft="unconfirmed">östafrikansk tid</standard>
 				</long>
 				<short>
-					<generic>EAT</generic>
-					<standard draft="contributed">EAT</standard>
+					<standard>EAT</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -2047,8 +2106,8 @@
 					<standard draft="contributed">sydafrikansk normaltid</standard>
 				</long>
 				<short>
-					<standard draft="contributed">SAT</standard>
-					<daylight draft="contributed">sydafrikansk sommartid</daylight>
+					<generic draft="contributed">SAT</generic>
+					<standard draft="contributed">SAST</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -2059,8 +2118,6 @@
 					<daylight draft="contributed">västafrikansk sommartid</daylight>
 				</long>
 				<short>
-					<generic>WAT</generic>
-					<generic alt="proposed-x1001" draft="unconfirmed">VAT</generic>
 					<standard draft="contributed">WAT</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">VAT</standard>
 					<daylight draft="contributed">VAST</daylight>
@@ -2153,9 +2210,9 @@
 					<daylight draft="contributed">saudiarabisk sommartid</daylight>
 				</long>
 				<short>
-					<generic draft="contributed">AT</generic>
-					<standard draft="contributed">AST</standard>
-					<daylight alt="proposed-x1001" draft="unconfirmed">ADT</daylight>
+					<generic draft="contributed">AT (saudiarabisk)</generic>
+					<standard draft="contributed">AST (saudiarabisk)</standard>
+					<daylight alt="proposed-x1001" draft="unconfirmed">ADT (saudiarabisk)</daylight>
 				</short>
 			</metazone>
 			<metazone type="Argentina">
@@ -2318,7 +2375,6 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">centraleuropeisk sommartid</daylight>
 				</long>
 				<short>
-					<generic draft="contributed">CET</generic>
 					<standard>CET</standard>
 					<daylight>CEST</daylight>
 				</short>
@@ -2333,7 +2389,6 @@
 					<daylight alt="proposed-x1001" draft="unconfirmed">östeuropeisk sommatid</daylight>
 				</long>
 				<short>
-					<generic draft="contributed">EET</generic>
 					<standard>EET</standard>
 					<daylight>EEST</daylight>
 				</short>
@@ -2346,7 +2401,6 @@
 					<daylight draft="contributed">västeuropeisk sommartid</daylight>
 				</long>
 				<short>
-					<generic draft="contributed">WET</generic>
 					<standard draft="contributed">WET</standard>
 					<daylight draft="contributed">WEST</daylight>
 				</short>
@@ -2354,15 +2408,11 @@
 			</metazone>
 			<metazone type="GMT">
 				<long>
-					<generic draft="contributed">greenwichtid</generic>
 					<standard>Greenwichtid</standard>
 					<standard alt="proposed-x1001" draft="unconfirmed">greenwichtid</standard>
-					<daylight draft="contributed">greenwichtid</daylight>
 				</long>
 				<short>
-					<generic draft="contributed">GMT</generic>
 					<standard>GMT</standard>
-					<daylight draft="contributed">GMT</daylight>
 				</short>
 				<commonlyUsed draft="contributed">true</commonlyUsed>
 			</metazone>
@@ -2422,19 +2472,6 @@
 					<standard alt="proposed-x1002" draft="unconfirmed">Persiska Golfennormaltid</standard>
 				</long>
 			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic draft="contributed">hawaiiansk tid</generic>
-					<standard>Hawaii, normaltid</standard>
-					<standard alt="proposed-x1001" draft="unconfirmed">hawaiiansk normaltid</standard>
-					<daylight>Hawaii, sommartid</daylight>
-					<daylight alt="proposed-x1001" draft="unconfirmed">hawaiiansk sommartid</daylight>
-				</long>
-				<short>
-					<standard>HST</standard>
-					<daylight>HDT</daylight>
-				</short>
-			</metazone>
 			<metazone type="India">
 				<long>
 					<generic draft="contributed">indisk tid</generic>
@@ -2475,7 +2512,7 @@
 				</long>
 				<short>
 					<generic draft="unconfirmed">IT</generic>
-					<standard>IST</standard>
+					<standard>IST (Israel)</standard>
 					<daylight>IDT</daylight>
 				</short>
 			</metazone>
@@ -2545,8 +2582,8 @@
 					<daylight>Newfoundland, sommartid</daylight>
 				</long>
 				<short>
-					<standard>CNT</standard>
-					<daylight>CDT</daylight>
+					<standard>NST</standard>
+					<daylight>NDT</daylight>
 				</short>
 			</metazone>
 			<metazone type="Pakistan">
@@ -3877,4 +3914,84 @@
 			<nostr>nej:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R217">Svenska skrivregler</reference>
+		<reference type="R218">Svenska språknämnden</reference>
+		<reference type="R219">Länder och valutor</reference>
+		<reference type="R220" uri="http://www.libris.kb.se/tjanster/katalogisering/formathandbok/sprakkoder.htm">LIBRIS språkkoder</reference>
+		<reference type="R221">Landskoder på Internet</reference>
+		<reference type="R222">Utrikes namnbok</reference>
+		<reference type="R223" uri="http://www.kb.se/">Kungliga bibliotekets protokoll över ämnesord</reference>
+		<reference type="R423">Finlands Statskalender 2006</reference>
+		<reference type="RP1" uri="http://sv.wikipedia.org/wiki" draft="provisional">Wikipedia</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/sv.txt?only_with_tag=final-update-LDML
+
+        KP {"Nordkorea"}    // alternate name { "Demokratiska folkrepubliken Korea" }
+        KR {"Sydkorea"}    // alternate name { "Republiken Korea" }
+AX? \u00C5L         {"\u00C5land"}
+
+Comments without bases
+
+ Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
+ Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
+ Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
+ United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
+ Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Ecuador 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
+ Indonesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Jakarta"]
+ United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
+ Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
+ Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ French Polynesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
+ New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
+ Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Uzbekistan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
+ Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
+ Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+ China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
+
+Comments without bases
+
+ Marshall Islands	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
+ Mali	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ Spain	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Ceuta"]
+ Russia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
+ Chile	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Santiago"]
+ Malaysia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Ukraine	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kiev"]
+ Canada	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Micronesia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
+ Mexico	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ United States Minor Outlying Islands	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
+ Kiribati	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Ecuador	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
+ Indonesia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Jakarta"]
+ United States	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Kazakhstan	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
+ Portugal	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Madeira"]
+ Brazil	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Antarctica	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Democratic Republic of the Congo	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ French Polynesia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
+ New Zealand	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
+ Mongolia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Greenland	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Svalbard and Jan Mayen	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
+ Uzbekistan	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
+ Australia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+ China	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
+-->
+

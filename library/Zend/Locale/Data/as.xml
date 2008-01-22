@@ -121,7 +121,9 @@
 					</quarterContext>
 				</quarters>
 				<am>পূৰ্বা</am>
+				<!-- Purbahna পূৰ্বাহ্ণ -->
 				<pm>অপ</pm>
+				<!-- Aparahna অপৰাহ্ণ -->
 				<eras>
 					<eraAbbr>
 						<era type="0" draft="unconfirmed">BCE</era>
@@ -196,6 +198,7 @@
 				</dateTimeFormats>
 			</calendar>
 		</calendars>
+		<!-- NOTE: NO ERA INFO -->
 		<timeZoneNames>
 			<hourFormat draft="unconfirmed">+HH:mm;-HH:mm</hourFormat>
 			<gmtFormat draft="unconfirmed">GMT{0}</gmtFormat>
@@ -242,5 +245,8 @@
 			</currency>
 		</currencies>
 	</numbers>
+	<references>
+		<reference type="R006" uri="http://www.iitg.ernet.in/rcilts/newassamesedesign.pdf">Assamese Design Guide, IIT Guwahati</reference>
+	</references>
 </ldml>
 

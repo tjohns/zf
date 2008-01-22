@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.87 $"/>
-		<generation date="$Date: 2007/07/20 17:14:05 $"/>
+		<version number="$Revision: 1.89 $"/>
+		<generation date="$Date: 2007/11/14 16:26:57 $"/>
 		<language type="hu"/>
 	</identity>
 	<localeDisplayNames>
@@ -1446,6 +1446,7 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity>Comodoro Rivadavia</exemplarCity>
 			</zone>
+			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity>Yap-szigetek</exemplarCity>
 			</zone>
@@ -1536,6 +1537,7 @@
 			<zone type="Europe/Zurich">
 				<exemplarCity>Zürich</exemplarCity>
 			</zone>
+			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Húsvét-szigetek</exemplarCity>
 			</zone>
@@ -1566,6 +1568,7 @@
 			<zone type="America/Dominica">
 				<exemplarCity>Dominika</exemplarCity>
 			</zone>
+			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity>Galapagos-szigetek</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Galapagos</exemplarCity>
@@ -1573,6 +1576,7 @@
 			<zone type="Africa/Cairo">
 				<exemplarCity>Kairó</exemplarCity>
 			</zone>
+			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanári-szigetek</exemplarCity>
 			</zone>
@@ -1616,6 +1620,7 @@
 			<zone type="Atlantic/South_Georgia">
 				<exemplarCity>Dél-Georgia</exemplarCity>
 			</zone>
+			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity>Dzsakarta</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Jakarta</exemplarCity>
@@ -1692,6 +1697,7 @@
 			<zone type="Europe/Podgorica">
 				<exemplarCity>Montenegró</exemplarCity>
 			</zone>
+			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity>Kwajalein-zátony</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Kwajalein</exemplarCity>
@@ -1730,9 +1736,11 @@
 			<zone type="America/Cancun">
 				<exemplarCity>Cancún</exemplarCity>
 			</zone>
+			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity>Chatham-szigetek</exemplarCity>
 			</zone>
+			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Tahiti-sziget</exemplarCity>
 			</zone>
@@ -1750,6 +1758,7 @@
 			<zone type="Pacific/Pitcairn">
 				<exemplarCity>Pitcairn-szigetek</exemplarCity>
 			</zone>
+			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azori-szigetek</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Azóri-szigetek</exemplarCity>
@@ -1770,6 +1779,7 @@
 			<zone type="Europe/Belgrade">
 				<exemplarCity draft="provisional">Szerbia</exemplarCity>
 			</zone>
+			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity>Kalinyingrád</exemplarCity>
 			</zone>
@@ -1815,6 +1825,7 @@
 			<zone type="Asia/Singapore">
 				<exemplarCity>Szingapúr</exemplarCity>
 			</zone>
+			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="provisional">Jan Mayen-szigetek</exemplarCity>
 			</zone>
@@ -1833,6 +1844,7 @@
 			<zone type="Asia/Taipei">
 				<exemplarCity draft="provisional">Tajvan</exemplarCity>
 			</zone>
+			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Ungvár</exemplarCity>
 			</zone>
@@ -1845,6 +1857,7 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity>Zaporozsje</exemplarCity>
 			</zone>
+			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity>Midway-szigetek</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Midway</exemplarCity>
@@ -1857,6 +1870,7 @@
 				<exemplarCity draft="unconfirmed">Alaszkai Idő</exemplarCity>
 				<exemplarCity alt="proposed-x1001" draft="unconfirmed">Anchorage</exemplarCity>
 			</zone>
+			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity>Szamarkand</exemplarCity>
 			</zone>
@@ -1876,8 +1890,8 @@
 					<daylight draft="provisional">Acre nyári idő</daylight>
 				</long>
 				<short>
-					<standard draft="provisional">ACT</standard>
-					<daylight draft="provisional">ACST</daylight>
+					<standard draft="provisional">ACT (Acre)</standard>
+					<daylight draft="provisional">ACST (Acre)</daylight>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -1906,9 +1920,6 @@
 				<short>
 					<standard draft="provisional">EAT</standard>
 				</short>
-				<commonlyUsed draft="provisional">false</commonlyUsed>
-			</metazone>
-			<metazone type="Africa_FarWestern">
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
 			<metazone type="Africa_Southern">
@@ -2668,29 +2679,12 @@
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
-			<metazone type="Hawaii">
-				<long>
-					<generic draft="provisional">Hawaii idő</generic>
-					<standard draft="provisional">Hawaii szabvány idő</standard>
-					<daylight draft="provisional">Hawaii nappali idő</daylight>
-				</long>
-				<short>
-					<generic draft="provisional">HT</generic>
-					<standard draft="provisional">HST</standard>
-					<daylight draft="provisional">HDT</daylight>
-				</short>
-				<commonlyUsed draft="provisional">false</commonlyUsed>
-			</metazone>
 			<metazone type="Hawaii_Aleutian">
 				<long>
-					<generic draft="provisional">Hawaii-aleut idő</generic>
 					<standard draft="provisional">Hawaii-aleut szabvány idő</standard>
-					<daylight draft="provisional">Hawaii-aleut idő</daylight>
 				</long>
 				<short>
-					<generic draft="provisional">HAT</generic>
-					<standard draft="provisional">HAST</standard>
-					<daylight draft="provisional">HADT</daylight>
+					<standard draft="provisional">HST</standard>
 				</short>
 				<commonlyUsed draft="provisional">false</commonlyUsed>
 			</metazone>
@@ -4978,4 +4972,45 @@
 			<nostr>nem:n</nostr>
 		</messages>
 	</posix>
+	<references>
+		<reference type="R076" uri="http://www.cartographia.hu/">Földrajzi világatlasz, Cartographia Kft., Budapest, 2004, ISBN 963 352 570 5 CM</reference>
+		<reference type="R077">Helyesírási kéziszótár, Második kiadás, Akadémiai Kiadó, Budapest, 1991, ISBN 963 05 6040 2</reference>
+		<reference type="R078">Angol-magyar nagyszótár, Tizenegyedik kiadás (az ötödik, teljesen átdolgozott és bővített kiadás változatlan lenyomata), Akadémiai Kiadó, Budapest, 1992, ISBN 963 05 6349 5 (I-II. kötet)</reference>
+		<reference type="R079" uri="http://www.akademiaikiado.hu/">A magyar helyesírás szabályai, Tizenegyedik kiadás, Tizenkettedik (szótári anyagában bővített) lenyomat, Akadémiai Kiadó, Budapest, 2000, ISBN 963 05 7735 6</reference>
+		<reference type="R080" uri="http://web.tvnetwork.hu/~aguti/shufa.htm">Kalligráfia</reference>
+		<reference type="RP1" uri="http://hu.wikipedia.org/wiki/Írásjel">Wikipédia - Különleges írásjelek</reference>
+		<reference type="RP2" uri="http://hu.wikipedia.org/wiki/Magyar_helyesírás">Wikipédia - Magyar helyesírás</reference>
+		<reference type="RP3" uri="http://hu.wikipedia.org/wiki/Helyesírás">Wikipédia - Helyesírás</reference>
+		<reference type="RP4" uri="http://hu.wikipedia.org/wiki/Idézőjel">Wikipédia - Idézőjel</reference>
+	</references>
 </ldml>
+<!-- Old Comments. See root.xml for more info.
+URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/hu.txt?only_with_tag=final-update-LDML
+
+HK { "Hong Kong S.A.R. of China" }
+        KP { "Korea, \u00C9szak" }    // alternate name { "Korea, N\u00E9pi Demokratikus K\u00F6zt\u00E1rsas\u00E1g" }
+        KR { "Korea, D\u00E9l" }    // alternate name { "Koreai K\u00F6zt\u00E1rsas\u00E1g" }
+MO { "Macao S.A.R. of China" }
+        SY { "Sz\u00EDriai Arab K\u00F6zt\u00E1rsas\u00E1g" }    // alternate name { "Sz\u00EDria" }
+        "Latn",  // ISO 15924 Name
+
+Comments without bases
+
+ Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
+ Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
+ United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
+ Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
+ Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
+ Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
+ Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
+ Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
+ Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
+ Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
+ Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
+ United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
+ Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
+ Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
+ Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
+ China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
+-->
+

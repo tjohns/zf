@@ -1053,7 +1053,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'BR' => 'BRL', 'BS' => 'BSD', 'BT' => 'INR', 'BV' => 'NOK', 'BW' => 'BWP', 'BY' => 'BYR',
             'BZ' => 'BZD', 'CA' => 'CAD', 'CC' => 'AUD', 'CD' => 'CDF', 'CF' => 'XAF', 'CG' => 'XAF',
             'CH' => 'CHF', 'CI' => 'XOF', 'CK' => 'NZD', 'CL' => 'CLP', 'CM' => 'XAF', 'CN' => 'CNY',
-            'CO' => 'COP', 'CR' => 'CRC', 'CS' => 'EUR', 'CU' => 'CUP', 'CV' => 'CVE', 'CX' => 'AUD',
+            'CO' => 'COP', 'CR' => 'CRC', 'CS' => 'CSD', 'CU' => 'CUP', 'CV' => 'CVE', 'CX' => 'AUD',
             'CY' => 'EUR', 'CZ' => 'CZK', 'DE' => 'EUR', 'DJ' => 'DJF', 'DK' => 'DKK', 'DM' => 'XCD',
             'DO' => 'DOP', 'DZ' => 'DZD', 'EC' => 'USD', 'EE' => 'EEK', 'EG' => 'EGP', 'EH' => 'MAD',
             'ER' => 'ERN', 'ES' => 'EUR', 'ET' => 'ETB', 'FI' => 'EUR', 'FJ' => 'FJD', 'FK' => 'FKP',
@@ -1085,7 +1085,9 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'TT' => 'TTD', 'TV' => 'AUD', 'TW' => 'TWD', 'TZ' => 'TZS', 'UA' => 'UAH', 'UG' => 'UGX',
             'UM' => 'USD', 'US' => 'USD', 'UY' => 'UYU', 'UZ' => 'UZS', 'VA' => 'EUR', 'VC' => 'XCD',
             'VE' => 'VEF', 'VG' => 'USD', 'VI' => 'USD', 'VN' => 'VND', 'VU' => 'VUV', 'WF' => 'XPF',
-            'WS' => 'WST', 'YE' => 'YER', 'YT' => 'EUR', 'ZA' => 'ZAR', 'ZM' => 'ZMK', 'ZW' => 'ZWD');
+            'WS' => 'WST', 'YE' => 'YER', 'YT' => 'EUR', 'ZA' => 'ZAR', 'ZM' => 'ZMK', 'ZW' => 'ZWD',
+            'ZR' => 'ZRN', 'YU' => 'YUM', 'TP' => 'TPE', 'SU' => 'SUR', 'QU' => 'EUR', 'MF' => 'EUR',
+            'DD' => 'DDM', 'BU' => 'BUK', 'BL' => 'EUR');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'currencytoregion', 'AT');
@@ -1100,7 +1102,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     {
         $value = Zend_Locale_Data::getList('de_AT', 'regiontocurrency');
         $result = array(
-            'EUR' => 'AD AT AX BE CS CY DE ES FI FR GF GP GR IE IT LU MC ME MQ MT NL PM PT RE SI SM TF VA YT',
+            'EUR' => 'AD AT AX BE BL CY DE ES FI FR GF GP GR IE IT LU MC ME MF MQ MT NL PM PT QU RE SI SM TF VA YT',
             'AED' => 'AE', 'AFN' => 'AF', 'XCD' => 'AG AI DM GD KN LC MS VC', 'ALL' => 'AL', 'AMD' => 'AM',
             'ANG' => 'AN', 'AOA' => 'AO', 'XXX' => 'AQ', 'ARS' => 'AR', 'AWG' => 'AW', 'AZN' => 'AZ',
             'USD' => 'AS EC FM GU IO MH MP PR PW TC TL UM US VG VI', 'AUD' => 'AU CC CX HM KI NF NR TV',
@@ -1128,11 +1130,12 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'SVC' => 'SV', 'SYP' => 'SY', 'SZL' => 'SZ', 'THB' => 'TH', 'TJS' => 'TJ', 'TMM' => 'TM',
             'TND' => 'TN', 'TOP' => 'TO', 'TRY' => 'TR', 'TTD' => 'TT', 'TWD' => 'TW', 'TZS' => 'TZ',
             'UAH' => 'UA', 'UGX' => 'UG', 'UYU' => 'UY', 'UZS' => 'UZ', 'VEF' => 'VE', 'VND' => 'VN',
-            'VUV' => 'VU', 'WST' => 'WS', 'YER' => 'YE', 'ZMK' => 'ZM', 'ZWD' => 'ZW');
+            'VUV' => 'VU', 'WST' => 'WS', 'YER' => 'YE', 'ZMK' => 'ZM', 'ZWD' => 'ZW', 'ZRN' => 'ZR',
+            'YUM' => 'YU', 'TPE' => 'TP', 'SUR' => 'SU', 'DDM' => 'DD', 'CSD' => 'CS', 'BUK' => 'BU');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'regiontocurrency', 'EUR');
-        $this->assertEquals("AD AT AX BE CS CY DE ES FI FR GF GP GR IE IT LU MC ME MQ MT NL PM PT RE SI SM TF VA YT", $value);
+        $this->assertEquals("AD AT AX BE BL CY DE ES FI FR GF GP GR IE IT LU MC ME MF MQ MT NL PM PT QU RE SI SM TF VA YT", $value);
     }
 
     /**
@@ -1153,7 +1156,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             '155' => 'AT BE CH DE DD FR FX LI LU MC NL', '017' => 'AO CD ZR CF CG CM GA GQ ST TD',
             '172' => 'AM AZ BY GE KG KZ MD RU TJ TM UA UZ', '018' => 'BW LS NA SZ ZA',
             '019' => '005 013 021 029 003 419', '002' => '011 014 015 017 018', '021' => 'BM CA GL PM US',
-            '029' => 'AG AI AN AW BB BS CU DM DO GD GP HT JM KN KY LC MQ MS PR TC TT VC VG VI',
+            '029' => 'AG AI AN AW BB BL BS CU DM DO GD GP HT JM KN KY LC MF MQ MS PR TC TT VC VG VI',
             '003' => '013 021 029', '030' => 'CN HK JP KP KR MN MO TW',
             '035' => 'BN ID KH LA MM BU MY PH SG TH TL TP VN',
             '039' => 'AD AL BA ES GI GR HR IT ME MK MT CS RS PT SI SM VA YU', '419' => '005 013 029',
@@ -1224,7 +1227,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'IN' => '034', 'IR' => '034', 'LK' => '034', 'MV' => '034', 'NP' => '034', 'PK' => '034',
             '053' => '009', '054' => '009', '057' => '009', '061' => '009', 'QO' => '009', 'AQ' => 'QO',
             'BV' => 'QO', 'CC' => 'QO', 'CX' => 'QO', 'GS' => 'QO', 'HM' => 'QO', 'IO' => 'QO', 'TF' => 'QO',
-            'UM' => 'QO');
+            'UM' => 'QO', 'MF' => '029', 'BL' => '029');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'territorytoregion', 'AT');
@@ -1268,7 +1271,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'ka' => 'Geor', 'kaa' => 'Cyrl', 'kab' => 'Latn', 'kaj' => 'Latn', 'kam' => 'Latn', 'kbd' => 'Cyrl',
             'kca' => 'Cyrl', 'kcg' => 'Latn', 'kdt' => 'Thai', 'kfo' => 'Latn', 'kfr' => 'Deva',
             'kha' => 'Latn', 'khb' => 'Talu', 'kht' => 'Mymr', 'ki' => 'Latn', 'kj' => 'Latn', 'kjh' => 'Cyrl',
-            'kk' => 'Cyrl', 'kl' => 'Latn', 'km' => 'Khmr', 'kmb' => 'Latn', 'kn' => 'Knda', 'ko' => 'Hang',
+            'kk' => 'Cyrl', 'kl' => 'Latn', 'km' => 'Khmr', 'kmb' => 'Latn', 'kn' => 'Knda', 'ko' => 'Kore',
             'koi' => 'Cyrl', 'kok' => 'Deva', 'kos' => 'Latn', 'kpe' => 'Latn', 'kpv' => 'Cyrl',
             'kpy' => 'Cyrl', 'kr' => 'Latn', 'krc' => 'Cyrl', 'krl' => 'Cyrl Latn', 'kru' => 'Deva',
             'ks' => 'Arab Deva', 'ku' => 'Arab Cyrl Latn', 'kum' => 'Cyrl', 'kv' => 'Cyrl Latn', 'kw' => 'Latn',
@@ -1309,7 +1312,8 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'vai' => 'Vaii', 've' => 'Latn', 'vi' => 'Latn', 'vo' => 'Latn', 'wa' => 'Latn', 'wal' => 'Ethi',
             'war' => 'Latn', 'wo' => 'Latn', 'xal' => 'Cyrl', 'xh' => 'Latn', 'xsr' => 'Deva',
             'xum' => 'Ital Latn', 'yao' => 'Latn', 'yap' => 'Latn', 'yi' => 'Hebr', 'yo' => 'Latn',
-            'yrk' => 'Cyrl', 'za' => 'Hani', 'zh' => 'Hans Hant', 'zu' => 'Latn');
+            'yrk' => 'Cyrl', 'za' => 'Hani', 'zh' => 'Hans Hant', 'zu' => 'Latn', 'zbl' => 'Blis', 'nds' => 'Latn',
+            'hsb' => 'Latn', 'frs' => 'Latn', 'frr' => 'Latn', 'dsb' => 'Latn');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'scripttolanguage', 'uk');
@@ -1324,7 +1328,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     {
         $value = Zend_Locale_Data::getList('de_AT', 'languagetoscript');
         $result = array(
-            'Latn' => 'aa ace af ain ak amo ast ay az bal ban bbc bem bi bin bm br bs buc bug bya ca cch ceb ch chk chm chr co cpe cr cs cy da de dgr dyu ee efi en eo es et ett eu fan fi fil fiu fj fo fon fr fur fy ga gaa gcr gd gil gl gn gor gsw gv gwi ha hai haw hil hmn hnn ho hop hr ht hu ia ibb id ig ii ik ilo is it jv kab kaj kam kcg kfo kha ki kj kl kmb kos kpe kr krl ku kv kw la lb lg li lis ln lol lt lu lua luo lut lv mad mak mdh men mfe mg mh mi min mo mos ms mt na nap nb nbf nd ng niu nl nn no nr nso nv ny nym nyn oc om os osc pag pam pap pau pl pon prg pt qu rcf rm rn ro rom rw sas scn sco se sg sga sid sk sl sm sma smi smj smn sms sn snk so son sq sr srn srr ss st su suk sus sv sw tbw tem tet tg tiv tk tkl tl tmh tn to tpi tr tru ts tsg tum tvl tw ty tzm uli umb uz ve vi vo wa war wo xh xum yao yap yo zu',
+            'Latn' => 'aa ace af ain ak amo ast ay az bal ban bbc bem bi bin bm br bs buc bug bya ca cch ceb ch chk chm chr co cpe cr cs cy da de dgr dsb dyu ee efi en eo es et ett eu fan fi fil fiu fj fo fon fr frr frs fur fy ga gaa gcr gd gil gl gn gor gsw gv gwi ha hai haw hil hmn hnn ho hop hr hsb ht hu ia ibb id ig ii ik ilo is it jv kab kaj kam kcg kfo kha ki kj kl kmb kos kpe kr krl ku kv kw la lb lg li lis ln lol lt lu lua luo lut lv mad mak mdh men mfe mg mh mi min mo mos ms mt na nap nb nbf nd nds ng niu nl nn no nr nso nv ny nym nyn oc om os osc pag pam pap pau pl pon prg pt qu rcf rm rn ro rom rw sas scn sco se sg sga sid sk sl sm sma smi smj smn sms sn snk so son sq sr srn srr ss st su suk sus sv sw tbw tem tet tg tiv tk tkl tl tmh tn to tpi tr tru ts tsg tum tvl tw ty tzm uli umb uz ve vi vo wa war wo xh xum yao yap yo zu',
             'Cyrl' => 'ab abq ady aii av az ba be bg bxr ce chm cjs ckt cv dar dng evn gag gld inh kaa kbd kca kjh kk koi kpv kpy krc krl ku kum kv ky lbe lez mdf mk mn mns myv nog os rom ru sah sel sr tab tg tk tt ttt tut tyv ude udm uk uz xal yrk',
             'Kana' => 'ain', 'Xsux' => 'akk', 'Ethi' => 'am byn gez ti tig wal',
             'Arab' => 'ar az bal cjm cop doi fa ha ks ku ky lah prd ps sd swb tg tk ug ur uz',
@@ -1335,11 +1339,12 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'Ital' => 'ett osc xum', 'Telu' => 'gon lmn te', 'Goth' => 'got', 'Cprt' => 'grc', 'Linb' => 'grc',
             'Gujr' => 'gu', 'Hebr' => 'he lad sam yi', 'Armn' => 'hy', 'Yiii' => 'ii', 'Jpan' => 'ja',
             'Geor' => 'ka', 'Thai' => 'kdt lcp lwl pi th tts', 'Talu' => 'khb', 'Mymr' => 'kht mnw my shn',
-            'Khmr' => 'km', 'Knda' => 'kn tcy', 'Hang' => 'ko', 'Lepc' => 'lep', 'Limb' => 'lif',
+            'Khmr' => 'km', 'Knda' => 'kn tcy', 'Lepc' => 'lep', 'Limb' => 'lif',
             'Laoo' => 'lo', 'Bugi' => 'mdr', 'Mlym' => 'ml', 'Mong' => 'mn mnc', 'Nkoo' => 'nqo',
             'Orya' => 'or sat', 'Guru' => 'pa', 'Xpeo' => 'peo', 'Phnx' => 'phn', 'Sinh' => 'pi sa si',
             'Khar' => 'pra', 'Olck' => 'sat', 'Ogam' => 'sga', 'Syrc' => 'syr', 'Tale' => 'tdd',
-            'Tfng' => 'tzm', 'Ugar' => 'uga', 'Vaii' => 'vai', 'Hani' => 'za', 'Hans' => 'zh', 'Hant' => 'zh');
+            'Tfng' => 'tzm', 'Ugar' => 'uga', 'Vaii' => 'vai', 'Hani' => 'za', 'Hans' => 'zh', 'Hant' => 'zh',
+            'Blis' => 'zbl', 'Kore' => 'ko');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'languagetoscript', 'Kana');
@@ -1355,7 +1360,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Data::getList('de_AT', 'territorytolanguage');
         $result = array('aa' => 'DJ', 'ab' => 'GE', 'abr' => 'GH', 'ace' => 'ID', 'ady' => 'RU', 'af' => 'ZA',
             'ak' => 'GH', 'am' => 'ET', 'ar' => 'AE BH DJ DZ EG EH ER IL IQ JO KM KW LB LY MA MR OM PS QA SA SD SY TD TN YE',
-            'as' => 'IN', 'ast' => 'ES', 'auv' => 'FR', 'av' => 'RU', 'awa' => 'IN', 'ay' => 'BO', 'az' => 'AZ',
+            'as' => 'IN', 'ast' => 'ES', 'av' => 'RU', 'awa' => 'IN', 'ay' => 'BO', 'az' => 'AZ',
             'ba' => 'RU', 'bal' => 'PK', 'ban' => 'ID', 'bbc' => 'ID', 'bcl' => 'PH', 'be' => 'BY',
             'bem' => 'ZM', 'bew' => 'ID', 'bg' => 'BG', 'bgc' => 'IN', 'bhb' => 'IN', 'bhi' => 'IN',
             'bhk' => 'PH', 'bho' => 'IN MU NP', 'bi' => 'VU', 'bin' => 'NG', 'bjj' => 'IN', 'bjn' => 'ID',
@@ -1368,7 +1373,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'en' => 'AG AI AS AU BB BM BS BW BZ CA CC CK CM CX DM FJ FK FM GB GD GG GH GI GM GU GY HK HN IE IM JE JM KE KI KN KY LC LR LS MH MP MS MT MU MW NA NF NG NR NU NZ PG PH PK PN PR RW SB SC SG SH SL SZ TC TK TO TT TV TZ UG UM US VC VG VI VU WS ZA ZM ZW',
             'es' => 'AR BO CL CO CR CU DO EC ES GQ GT HN MX NI PA PE PH PR PY SV UY VE', 'et' => 'EE',
             'eu' => 'ES', 'fa' => 'AF IR', 'fan' => 'GQ', 'fi' => 'FI', 'fil' => 'PH', 'fj' => 'FJ', 'fo' => 'FO', 'fon' => 'BJ',
-            'fr' => 'BE BF BI BJ CA CD CF CG CH CI CM DJ DZ FR GA GF GN GP GQ HT KM LU MA MC MG ML MQ MU NC NE PF PM RE RW SC SN SY TD TG TN VU WF YT',
+            'fr' => 'BE BF BI BJ BL CA CD CF CG CH CI CM DJ DZ FR GA GF GN GP GQ HT KM LU MA MC MF MG ML MQ MU NC NE PF PM RE RW SC SN SY TD TG TN VU WF YT',
             'fud' => 'WF', 'fuv' => 'NG', 'fy' => 'NL', 'ga' => 'IE', 'gaa' => 'GH', 'gbm' => 'IN',
             'gcr' => 'GF', 'gd' => 'GB', 'gil' => 'KI', 'gl' => 'ES', 'glk' => 'IR', 'gn' => 'PY',
             'gno' => 'IN', 'gon' => 'IN', 'gsw' => 'CH LI', 'gu' => 'IN', 'guz' => 'KE', 'ha' => 'NG',
@@ -1378,7 +1383,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'is' => 'IS', 'it' => 'CH IT SM', 'iu' => 'CA GL', 'ja' => 'JP', 'jv' => 'ID', 'ka' => 'GE',
             'kab' => 'DZ', 'kam' => 'KE', 'kbd' => 'RU', 'kfy' => 'IN', 'kha' => 'IN', 'khn' => 'IN',
             'ki' => 'KE', 'kj' => 'NA', 'kk' => 'KZ', 'kl' => 'GL', 'kln' => 'KE', 'km' => 'KH', 'kmb' => 'AO',
-            'kn' => 'IN', 'ko' => 'KP KR', 'koi' => 'RU', 'kok' => 'IN', 'kon' => 'CD', 'kos' => 'FM',
+            'kn' => 'IN', 'ko' => 'KP KR', 'koi' => 'RU', 'kok' => 'IN', 'kos' => 'FM',
             'kpv' => 'RU', 'krc' => 'RU', 'kri' => 'SL', 'kru' => 'IN', 'ks' => 'IN', 'ku' => 'IQ IR SY TR',
             'kum' => 'RU', 'kxm' => 'TH', 'ky' => 'KG', 'la' => 'VA', 'lah' => 'PK', 'lb' => 'LU',
             'lbe' => 'RU', 'lez' => 'RU', 'lg' => 'UG', 'ljp' => 'ID', 'lmn' => 'IN', 'ln' => 'CD CG',
@@ -1407,7 +1412,8 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'uli' => 'FM', 'umb' => 'AO', 'und' => 'AQ BV GS HM IO TF', 'ur' => 'IN PK', 'uz' => 'UZ',
             've' => 'ZA', 'vi' => 'VN', 'vmw' => 'MZ', 'wal' => 'ET', 'war' => 'PH', 'wbq' => 'IN',
             'wbr' => 'IN', 'wls' => 'WF', 'wo' => 'SN', 'wtm' => 'IN', 'xh' => 'ZA', 'xnr' => 'IN',
-            'xog' => 'UG', 'yap' => 'FM', 'yo' => 'NG', 'za' => 'CN', 'zh' => 'CN HK MO SG TW', 'zu' => 'ZA');
+            'xog' => 'UG', 'yap' => 'FM', 'yo' => 'NG', 'za' => 'CN', 'zh' => 'CN HK MO SG TW', 'zu' => 'ZA',
+            'oc' => 'FR', 'kg' => 'CD');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'territorytolanguage', 'uk');
@@ -1430,7 +1436,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'MA' => 'ar fr rif tzm', 'MR' => 'ar', 'OM' => 'ar', 'PS' => 'ar', 'QA' => 'ar', 'SA' => 'ar',
             'SD' => 'ar', 'SY' => 'ar fr ku', 'TD' => 'ar fr', 'TN' => 'ar fr', 'YE' => 'ar',
             'IN' => 'as awa bgc bhb bhi bho bjj bn dcc dhd doi gbm gno gon gu hi hne hoc kfy kha khn kn kok kru ks lmn mag mai ml mni mr mtr mup muw noe or pa rjb sa sat sck sd swv ta tcy te ur wbq wbr wtm xnr',
-            'ES' => 'ast es eu gl', 'FR' => 'auv fr', 'BO' => 'ay es qu', 'AZ' => 'az',
+            'ES' => 'ast es eu gl', 'FR' => 'fr oc', 'BO' => 'ay es qu', 'AZ' => 'az',
             'PK' => 'bal brh en hno lah ur', 'PH' => 'bcl bhk ceb en es fil hil ilo mdh pag pam tl tsg war',
             'BY' => 'be ru', 'ZM' => 'bem en', 'BG' => 'bg', 'MU' => 'bho en fr mfe', 'NP' => 'bho mai ne',
             'VU' => 'bi en fr', 'NG' => 'bin efi en fuv ha ibb ig tiv yo', 'ML' => 'bm fr', 'BD' => 'bn syl',
@@ -1455,7 +1461,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'CL' => 'es', 'CO' => 'es', 'CR' => 'es', 'CU' => 'es', 'DO' => 'es', 'EC' => 'es',
             'GQ' => 'es fan fr', 'GT' => 'es', 'MX' => 'es', 'NI' => 'es', 'PA' => 'es', 'PE' => 'es qu',
             'PY' => 'es gn', 'SV' => 'es', 'UY' => 'es', 'VE' => 'es', 'EE' => 'et', 'AF' => 'fa haz ps',
-            'FI' => 'fi sv', 'FO' => 'fo', 'BJ' => 'fon fr', 'BI' => 'fr rn', 'CD' => 'fr kon ln lu lua',
+            'FI' => 'fi sv', 'FO' => 'fo', 'BJ' => 'fon fr', 'BI' => 'fr rn', 'CD' => 'fr kg ln lu lua',
             'CF' => 'fr sg', 'CG' => 'fr ln', 'CI' => 'fr', 'GA' => 'fr', 'GF' => 'fr gcr', 'GP' => 'fr',
             'HT' => 'fr ht', 'MC' => 'fr', 'MG' => 'fr mg', 'MQ' => 'fr', 'NC' => 'fr', 'PF' => 'fr ty',
             'PM' => 'fr', 'RE' => 'fr rcf', 'SN' => 'fr srr wo', 'TG' => 'fr', 'WF' => 'fr fud wls',
@@ -1469,7 +1475,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'LK' => 'si ta', 'SK' => 'sk', 'SI' => 'sl', 'SO' => 'so', 'AL' => 'sq', 'ME' => 'sr', 'RS' => 'sr',
             'AX' => 'sv', 'SE' => 'sv', 'TJ' => 'tg', 'TM' => 'tk', 'UA' => 'uk', 'AQ' => 'und', 'BV' => 'und',
             'GS' => 'und', 'HM' => 'und', 'IO' => 'und', 'TF' => 'und', 'UZ' => 'uz', 'VN' => 'vi',
-            'MO' => 'zh', 'TW' => 'zh');
+            'MO' => 'zh', 'TW' => 'zh', 'BL' => 'fr', 'MF' => 'fr');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'languagetoterritory', 'GQ');
@@ -1670,7 +1676,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'Pacific/Noumea' => 'NC', 'Pacific/Pago_Pago' => 'AS', 'Pacific/Palau' => 'PW', 'Pacific/Pitcairn' => 'PN',
             'Pacific/Ponape' => 'FM', 'Pacific/Port_Moresby' => 'PG', 'Pacific/Rarotonga' => 'CK', 'Pacific/Saipan' => 'MP',
             'Pacific/Tahiti' => 'PF', 'Pacific/Tarawa' => 'KI', 'Pacific/Tongatapu' => 'TO', 'Pacific/Truk' => 'FM',
-            'Pacific/Wake' => 'UM', 'Pacific/Wallis' => 'WF');
+            'Pacific/Wake' => 'UM', 'Pacific/Wallis' => 'WF', 'America/Indiana/Tell_City' => 'US', 'America/Resolute' => 'CA');
         $this->assertEquals($result, $value);
 
         $value = Zend_Locale_Data::getContent('de_AT', 'territorytotimezone', 'Pacific/Fiji');

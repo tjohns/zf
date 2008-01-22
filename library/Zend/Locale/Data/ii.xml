@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.4 $"/>
-		<generation date="$Date: 2007/07/19 22:31:39 $"/>
+		<version number="$Revision: 1.5 $"/>
+		<generation date="$Date: 2007/11/28 00:17:37 $"/>
 		<language type="ii"/>
 	</identity>
 	<localeDisplayNames>
@@ -242,7 +242,6 @@
 		<symbols>
 			<decimal>.</decimal>
 			<group>,</group>
-			<exponential draft="provisional">1.23456789E4</exponential>
 		</symbols>
 		<currencies>
 			<currency type="XXX">

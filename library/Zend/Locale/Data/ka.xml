@@ -2,8 +2,8 @@
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.5/ldml.dtd">
 <ldml>
 	<identity>
-		<version number="$Revision: 1.46 $"/>
-		<generation date="$Date: 2007/07/19 23:30:28 $"/>
+		<version number="$Revision: 1.47 $"/>
+		<generation date="$Date: 2007/11/28 21:17:49 $"/>
 		<language type="ka"/>
 	</identity>
 	<localeDisplayNames>
@@ -521,13 +521,6 @@
 	</characters>
 	<dates>
 		<calendars>
-			<calendar type="buddhist">
-				<dateTimeFormats>
-					<availableFormats>
-						<dateFormatItem id="yyQQQQ" draft="provisional">III კვარტალი 42</dateFormatItem>
-					</availableFormats>
-				</dateTimeFormats>
-			</calendar>
 			<calendar type="gregorian">
 				<months>
 					<monthContext type="format">
