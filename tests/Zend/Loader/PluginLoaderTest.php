@@ -1,19 +1,20 @@
 <?php
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.
-if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
-    define("PHPUnit_MAIN_METHOD", "Zend_Loader_PluginLoaderTest::main");
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Loader_PluginLoaderTest::main');
 }
 
-require_once "PHPUnit/Framework/TestCase.php";
-require_once "PHPUnit/Framework/TestSuite.php";
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Loader/PluginLoader.php';
 
 /**
  * Test class for Zend_Loader_PluginLoader.
  */
-class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase 
+class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -51,7 +52,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $this->clearStaticPaths();
     }
 
-    public function clearStaticPaths() 
+    public function clearStaticPaths()
     {
         if (null !== $this->key) {
             $loader = new Zend_Loader_PluginLoader(array(), $this->key);
@@ -324,6 +325,6 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
 }
 
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_Loader_PluginLoaderTest::main") {
+if (PHPUnit_MAIN_METHOD === 'Zend_Loader_PluginLoaderTest::main') {
     Zend_Loader_PluginLoaderTest::main();
 }
