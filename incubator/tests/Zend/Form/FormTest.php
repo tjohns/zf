@@ -1538,7 +1538,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
                     $this->assertEquals('baz', $nameNode->nodeValue);
                     break;
                 default:
-                    $this->fail('There should only be two input nodes in this display group');
+                    $this->fail('There should only be two input nodes in this display group: ' . $html);
             }
         }
     }

@@ -56,8 +56,8 @@ class Zend_Form_Decorator_Errors extends Zend_Form_Decorator_Abstract
         }
 
         if (null !== ($translator = $element->getTranslator())) {
-            foreach ($errors as $key => $error) {
-                $errors[$key] = $translator->translate($error);
+            foreach ($errors as $code => $message) {
+                $errors[$code] = $translator->translate($code);
             }
         }
 

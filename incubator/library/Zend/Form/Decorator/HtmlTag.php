@@ -29,6 +29,12 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  *
  * Options accepted are:
  * - tag: tag to use in decorator
+ * - noAttribs: do not render attributes in the opening tag
+ * - placement: 'append' or 'prepend'. If 'append', renders opening and 
+ *   closing tag after content; if prepend, renders opening and closing tag
+ *   before content.
+ * - openOnly: render opening tag only
+ * - closeOnly: render closing tag only
  *
  * Any other options passed are processed as HTML attributes of the tag.
  * 
@@ -42,6 +48,17 @@ require_once 'Zend/Form/Decorator/Abstract.php';
 class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
 {
     /**
+     * Placement; default to surround content
+     * @var string
+     */
+    protected $_placement = null;
+
+    /**
+     * @var Zend_Filter
+     */
+    protected $_tagFilter;
+
+    /**
      * Convert options to tag attributes
      * 
      * @return string
@@ -54,7 +71,7 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
             if (is_array($val)) {
                 $val = implode(' ', $val);
             }
-            $val =htmlspecialchars($val, ENT_COMPAT, 'UTF-8');
+            $val    = htmlspecialchars($val, ENT_COMPAT, 'UTF-8');
             $xhtml .= " $key=\"$val\"";
         }
         return $xhtml;
@@ -76,9 +93,37 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
             require_once 'Zend/Filter/StringToLower.php';
             $this->_filter = new Zend_Filter();
             $this->_filter->addFilter(new Zend_Filter_Alpha())
-                   ->addFilter(new Zend_Filter_StringToLower());
+                          ->addFilter(new Zend_Filter_StringToLower());
         }
         return $this->_filter->filter($tag);
+    }
+
+    /**
+     * Get the formatted open tag
+     * 
+     * @param  string $tag 
+     * @param  array $attribs 
+     * @return string
+     */
+    protected function _getOpenTag($tag, array $attribs = null)
+    {
+        $html = '<' . $tag;
+        if (null !== $attribs) {
+            $html .= $this->_htmlAttribs($attribs);
+        }
+        $html .= '>';
+        return $html;
+    }
+
+    /**
+     * Get formatted closing tag
+     * 
+     * @param  string $tag 
+     * @return string
+     */
+    protected function _getCloseTag($tag)
+    {
+        return '</' . $tag . '>';
     }
 
     /**
@@ -89,15 +134,50 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
      */
     public function render($content)
     {
-        $options = $this->getOptions();
         $tag     = 'div';
-        if (isset($options['tag'])) {
-            $tag = $this->normalizeTag($options['tag']);
-            unset($options['tag']);
+        if (null !== ($tagOption = $this->getOption('tag'))) {
+            $tag = $this->normalizeTag($tagOption);
+            $this->removeOption('tag');
         }
 
-        return '<' . $tag . $this->_htmlAttribs($options) . '>'
-               . $content
-               . '</' . $tag . '>';
+        $placement = $this->getPlacement();
+        $noAttribs = $this->getOption('noAttribs');
+        $openOnly  = $this->getOption('openOnly');
+        $closeOnly = $this->getOption('closeOnly');
+        $this->removeOption('noAttribs');
+        $this->removeOption('openOnly');
+        $this->removeOption('closeOnly');
+
+        $attribs = null;
+        if (!$noAttribs) {
+            $attribs = $this->getOptions();
+        }
+
+        switch ($placement) {
+            case self::APPEND:
+                if ($closeOnly) {
+                    return $content . $this->_getCloseTag($tag);
+                }
+                if ($openOnly) {
+                    return $content . $this->_getOpenTag($tag, $attribs);
+                }
+                return $content 
+                     . $this->_getOpenTag($tag, $attribs) 
+                     . $this->_getCloseTag($tag);
+            case self::PREPEND:
+                if ($closeOnly) {
+                    return $this->_getCloseTag($tag) . $content;
+                }
+                if ($openOnly) {
+                    return $this->_getOpenTag($tag, $attribs) . $content;
+                }
+                return $this->_getOpenTag($tag, $attribs)
+                     . $this->_getCloseTag($tag)
+                     . $content;
+            default:
+                return (($openOnly || !$closeOnly) ? $this->_getOpenTag($tag, $attribs) : '')
+                     . $content
+                     . (($closeOnly || !$openOnly) ? $this->_getCloseTag($tag) : '');
+        }
     }
 }

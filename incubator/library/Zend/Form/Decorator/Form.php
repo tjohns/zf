@@ -68,9 +68,9 @@ class Zend_Form_Decorator_Form extends Zend_Form_Decorator_Abstract
      */
     public function getHelper()
     {
-        if (isset($this->_options['helper'])) {
-            $this->setHelper($this->_options['helper']);
-            unset($this->_options['helper']);
+        if (null !== ($helper = $this->getOption('helper'))) {
+            $this->setHelper($helper);
+            $this->removeOption('helper');
         }
         return $this->_helper;
     }
@@ -90,11 +90,15 @@ class Zend_Form_Decorator_Form extends Zend_Form_Decorator_Abstract
                 $element->getAction();
                 $method = $element->getMethod();
                 if ($method == Zend_Form::METHOD_POST) {
-                    $this->_options['enctype'] = 'application/x-www-form-urlencoded';
+                    $this->setOption('enctype', 'application/x-www-form-urlencoded');
                 }
-                $this->_options = array_merge($this->_options, $element->getAttribs());
+                foreach ($element->getAttribs() as $key => $value) {
+                    $this->setOption($key, $value);
+                }
             } elseif ($element instanceof Zend_Form_DisplayGroup) {
-                $this->_options = array_merge($this->_options, $element->getAttribs());
+                foreach ($element->getAttribs() as $key => $value) {
+                    $this->setOption($key, $value);
+                }
             }
         }
 
