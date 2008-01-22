@@ -18,13 +18,18 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: Abstract.php 6320 2007-09-12 00:27:22Z bkarwin $
  */
 
 /**
  * @see Zend_Db_Adapter_Abstract
  */
 require_once 'Zend/Db/Adapter/Abstract.php';
+
+/**
+ * @see Zend_Db_Adapter_Abstract
+ */
+require_once 'Zend/Db/Select.php';
 
 /**
  * @see Zend_Db
@@ -262,6 +267,7 @@ abstract class Zend_Db_Table_Abstract
         }
 
         $this->_setup();
+        $this->init();
     }
 
     /**
@@ -708,6 +714,17 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
+     * Initialize object
+     *
+     * Called from {@link __construct()} as final step of object instantiation.
+     *
+     * @return void
+     */
+    public function init()
+    {
+    }
+
+    /**
      * Returns table information.
      *
      * @return array
@@ -726,6 +743,17 @@ abstract class Zend_Db_Table_Abstract
             self::DEPENDENT_TABLES => $this->_dependentTables,
             self::SEQUENCE         => $this->_sequence
         );
+    }
+
+    /**
+     * Returns an instance of a Zend_Db_Table_Select object.
+     *
+     * @return Zend_Db_Table_Select
+     */
+    public function select()
+    {
+        require_once 'Zend/Db/Table/Select.php';
+        return new Zend_Db_Table_Select($this);
     }
 
     /**
@@ -784,21 +812,9 @@ abstract class Zend_Db_Table_Abstract
         $pkData = array_intersect_key($data, array_flip($primary));
         if (count($primary) == 1) {
             return current($pkData);
-        } else {
-            return $pkData;
         }
 
-        /**
-         * The last case:  the user did not specify a value for the primary
-         * key, nor is this table class declared to use an auto-increment key.
-         * Since the insert did not fail, we can assume this is one of the edge
-         * cases, which may include:
-         * - the table has no primary key defined;
-         * - the database table uses a trigger to set a primary key value;
-         * - the RDBMS permits primary keys to be NULL or have a value set
-         *   to the column's DEFAULT
-         */
-        return null;
+        return $pkData;
     }
 
     /**
@@ -825,7 +841,7 @@ abstract class Zend_Db_Table_Abstract
     public function _cascadeUpdate($parentTableClassname, array $oldPrimaryKey, array $newPrimaryKey)
     {
         $rowsAffected = 0;
-        foreach ($this->_getReferenceMapNormalized() as $rule => $map) {
+        foreach ($this->_getReferenceMapNormalized() as $map) {
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_UPDATE])) {
                 switch ($map[self::ON_UPDATE]) {
                     case self::CASCADE:
@@ -874,7 +890,7 @@ abstract class Zend_Db_Table_Abstract
     public function _cascadeDelete($parentTableClassname, array $primaryKey)
     {
         $rowsAffected = 0;
-        foreach ($this->_getReferenceMapNormalized() as $rule => $map) {
+        foreach ($this->_getReferenceMapNormalized() as $map) {
             if ($map[self::REF_TABLE_CLASS] == $parentTableClassname && isset($map[self::ON_DELETE])) {
                 switch ($map[self::ON_DELETE]) {
                     case self::CASCADE:
@@ -915,7 +931,7 @@ abstract class Zend_Db_Table_Abstract
      * @return Zend_Db_Table_Rowset_Abstract Row(s) matching the criteria.
      * @throws Zend_Db_Table_Exception
      */
-    public function find($key)
+    public function find()
     {
         $args = func_get_args();
         $keyNames = array_values((array) $this->_primary);
@@ -974,17 +990,39 @@ abstract class Zend_Db_Table_Abstract
      *
      * Honors the Zend_Db_Adapter fetch mode.
      *
-     * @param string|array $where            OPTIONAL An SQL WHERE clause.
-     * @param string|array $order            OPTIONAL An SQL ORDER clause.
-     * @param int          $count            OPTIONAL An SQL LIMIT count.
-     * @param int          $offset           OPTIONAL An SQL LIMIT offset.
+     * @param string|array|Zend_Db_Table_Select $where  OPTIONAL An SQL WHERE clause or Zend_Db_Table_Select object.
+     * @param string|array                      $order  OPTIONAL An SQL ORDER clause.
+     * @param int                               $count  OPTIONAL An SQL LIMIT count.
+     * @param int                               $offset OPTIONAL An SQL LIMIT offset.
      * @return Zend_Db_Table_Rowset_Abstract The row results per the Zend_Db_Adapter fetch mode.
      */
     public function fetchAll($where = null, $order = null, $count = null, $offset = null)
     {
+        if (!($where instanceof Zend_Db_Table_Select)) {
+            $select = $this->select();
+            
+            if ($where !== null) {
+                $this->_where($select, $where);
+            }
+
+            if ($order !== null) {
+                $this->_order($select, $order);
+            }
+
+            if ($count !== null || $offset !== null) {
+                $select->limit($count, $offset);
+            }
+
+        } else {
+            $select = $where;
+        }
+        
+        $rows = $this->_fetch($select);
+
         $data  = array(
             'table'    => $this,
-            'data'     => $this->_fetch($where, $order, $count, $offset),
+            'data'     => $rows,
+            'readOnly' => $select->isReadOnly(),
             'rowClass' => $this->_rowClass,
             'stored'   => true
         );
@@ -995,20 +1033,33 @@ abstract class Zend_Db_Table_Abstract
 
     /**
      * Fetches one row in an object of type Zend_Db_Table_Row_Abstract,
-     * or returns null if no row matches the specified criteria.
+     * or returns Boolean false if no row matches the specified criteria.
      *
-     * @param string|array $where         OPTIONAL An SQL WHERE clause.
-     * @param string|array $order         OPTIONAL An SQL ORDER clause.
+     * @param string|array|Zend_Db_Table_Select $where  OPTIONAL An SQL WHERE clause or Zend_Db_Table_Select object.
+     * @param string|array                      $order  OPTIONAL An SQL ORDER clause.
      * @return Zend_Db_Table_Row_Abstract The row results per the
      *     Zend_Db_Adapter fetch mode, or null if no row found.
      */
     public function fetchRow($where = null, $order = null)
     {
-        $keys    = array_values((array) $this->_primary);
-        $vals    = array_fill(0, count($keys), null);
-        $primary = array_combine($keys, $vals);
+        if (!($where instanceof Zend_Db_Table_Select)) {
+            $select = $this->select();
+            
+            if ($where !== null) {
+                $this->_where($select, $where);
+            }
 
-        $rows = $this->_fetch($where, $order, 1);
+            if ($order !== null) {
+                $this->_order($select, $order);
+            }
+
+            $select->limit(1);
+
+        } else {
+            $select = $where->limit(1);
+        }
+
+        $rows = $this->_fetch($select);
 
         if (count($rows) == 0) {
             return null;
@@ -1016,7 +1067,8 @@ abstract class Zend_Db_Table_Abstract
 
         $data = array(
             'table'   => $this,
-            'data'    => $rows[0],
+            'data'     => $rows[0],
+            'readOnly' => $select->isReadOnly(),
             'stored'  => true
         );
 
@@ -1049,34 +1101,26 @@ abstract class Zend_Db_Table_Abstract
         $data = array_merge($defaults, $data);
 
         $config = array(
-            'table'   => $this,
-            'data'    => $data,
-            'stored'  => false
+            'table'    => $this,
+            'data'     => $data,
+            'readOnly' => false,
+            'stored'   => false
         );
 
         Zend_Loader::loadClass($this->_rowClass);
         return new $this->_rowClass($config);
     }
-
+    
     /**
-     * Support method for fetching rows.
+     * Generate WHERE clause from user-supplied string or array
      *
      * @param  string|array $where  OPTIONAL An SQL WHERE clause.
-     * @param  string|array $order  OPTIONAL An SQL ORDER clause.
-     * @param  int          $count  OPTIONAL An SQL LIMIT count.
-     * @param  int          $offset OPTIONAL An SQL LIMIT offset.
-     * @return array The row results, in FETCH_ASSOC mode.
+     * @return Zend_Db_Table_Select
      */
-    protected function _fetch($where = null, $order = null, $count = null, $offset = null)
+    protected function _where(Zend_Db_Table_Select $select, $where)
     {
-        // selection tool
-        $select = $this->_db->select();
-
-        // the FROM clause
-        $select->from($this->_name, $this->_cols, $this->_schema);
-
-        // the WHERE clause
         $where = (array) $where;
+
         foreach ($where as $key => $val) {
             // is $key an int?
             if (is_int($key)) {
@@ -1089,18 +1133,36 @@ abstract class Zend_Db_Table_Abstract
             }
         }
 
-        // the ORDER clause
+        return $select;
+    }
+
+    /**
+     * Generate ORDER clause from user-supplied string or array
+     *
+     * @param  string|array $order  OPTIONAL An SQL ORDER clause.
+     * @return Zend_Db_Table_Select
+     */
+    protected function _order(Zend_Db_Table_Select $select, $order)
+    {
         if (!is_array($order)) {
             $order = array($order);
         }
+
         foreach ($order as $val) {
             $select->order($val);
         }
 
-        // the LIMIT clause
-        $select->limit($count, $offset);
+        return $select;
+    }
 
-        // return the results
+    /**
+     * Support method for fetching rows.
+     *
+     * @param  Zend_Db_Table_Select $select  query options.
+     * @return array An array containing the row results in FETCH_ASSOC mode.
+     */
+    protected function _fetch(Zend_Db_Table_Select $select)
+    {
         $stmt = $this->_db->query($select);
         $data = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
         return $data;

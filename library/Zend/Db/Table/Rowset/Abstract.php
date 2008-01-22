@@ -18,7 +18,7 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: Abstract.php 5896 2007-07-27 20:04:24Z bkarwin $
  */
 
 /**
@@ -99,6 +99,11 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     protected $_stored = false;
 
     /**
+     * @var boolean
+     */
+    protected $_readOnly = false;
+
+    /**
      * Constructor.
      *
      * @param array $config
@@ -116,12 +121,17 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
         if (isset($config['data'])) {
             $this->_data       = $config['data'];
         }
+        if (isset($config['readOnly'])) {
+            $this->_readOnly   = $config['readOnly'];
+        }
         if (isset($config['stored'])) {
             $this->_stored     = $config['stored'];
         }
 
         // set the count of rows
         $this->_count = count($this->_data);
+        
+        $this->init();
     }
 
     /**
@@ -131,7 +141,8 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
      */
     public function __sleep()
     {
-        return array('_data', '_tableClass', '_rowClass', '_pointer', '_count', '_rows', '_stored');
+        return array('_data', '_tableClass', '_rowClass', '_pointer', '_count', '_rows', '_stored',
+                     '_readOnly');
     }
 
     /**
@@ -144,6 +155,27 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     public function __wakeup()
     {
         $this->_connected = false;
+    }
+
+    /**
+     * Initialize object
+     *
+     * Called from {@link __construct()} as final step of object instantiation.
+     *
+     * @return void
+     */
+    public function init()
+    {
+    }
+
+    /**
+     * Return the connected state of the rowset.
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return $this->_connected;
     }
 
     /**
@@ -170,7 +202,7 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
         $this->_connected = false;
         // @todo This works only if we have iterated through
         // the result set once to instantiate the rows.
-        foreach ($this->_rows as $row) {
+        foreach ($this as $row) {
             $connected = $row->setTable($table);
             if ($connected == true) {
                 $this->_connected = true;
@@ -219,9 +251,10 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
         if (empty($this->_rows[$this->_pointer])) {
             $this->_rows[$this->_pointer] = new $this->_rowClass(
                 array(
-                    'table'   => $this->_table,
-                    'data'    => $this->_data[$this->_pointer],
-                    'stored'  => $this->_stored
+                    'table'    => $this->_table,
+                    'data'     => $this->_data[$this->_pointer],
+                    'stored'   => $this->_stored,
+                    'readOnly' => $this->_readOnly
                 )
             );
         }
@@ -276,17 +309,6 @@ abstract class Zend_Db_Table_Rowset_Abstract implements Iterator, Countable
     public function count()
     {
         return $this->_count;
-    }
-
-    /**
-     * Returns true if and only if count($this) > 0.
-     *
-     * @return bool
-     * @deprecated since 0.9.3; use count() instead
-     */
-    public function exists()
-    {
-        return $this->_count > 0;
     }
 
     /**

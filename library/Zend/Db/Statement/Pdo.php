@@ -107,6 +107,17 @@ class Zend_Db_Statement_Pdo extends Zend_Db_Statement
     protected function _bindParam($parameter, &$variable, $type = null, $length = null, $options = null)
     {
         try {
+            if ($type === null) {
+                if (is_bool($variable)) {
+                    $type = PDO::PARAM_BOOL;
+                } elseif (is_null($variable)) {
+                    $type = PDO::PARAM_NULL;
+                } elseif (is_integer($variable)) {
+                    $type = PDO::PARAM_INT;
+                } else {
+                    $type = PDO::PARAM_STR;
+                }
+            }
             return $this->_stmt->bindParam($parameter, $variable, $type, $length, $options);
         } catch (PDOException $e) {
             require_once 'Zend/Db/Statement/Exception.php';

@@ -18,7 +18,7 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: Abstract.php 6332 2007-09-13 00:35:08Z bkarwin $
  */
 
 /**
@@ -76,6 +76,15 @@ abstract class Zend_Db_Table_Row_Abstract
     protected $_connected = true;
 
     /**
+     * A row is marked read only if it contains columns that are not physically represented within
+     * the database schema (e.g. evaluated columns/Zend_Db_Expr columns). This can also be passed
+     * as a run-time config options as a means of protecting row data.
+     *
+     * @var boolean
+     */
+    protected $_readOnly = false;
+
+    /**
      * Name of the class of the Zend_Db_Table_Abstract object.
      *
      * @var string
@@ -118,11 +127,17 @@ abstract class Zend_Db_Table_Row_Abstract
             $this->_cleanData = $this->_data;
         }
 
+        if (isset($config['readOnly']) && $config['readOnly'] === true) {
+            $this->setReadOnly(true);
+        }
+
         // Retrieve primary keys from table schema
-        if ($table = $this->_getTable()) {
+        if (($table = $this->_getTable())) {
             $info = $table->info();
             $this->_primary = (array) $info['primary'];
         }
+        
+        $this->init();
     }
 
     /**
@@ -199,7 +214,7 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     public function __sleep()
     {
-        return array('_tableClass', '_primary', '_data', '_cleanData');
+        return array('_tableClass', '_primary', '_data', '_cleanData', '_readOnly');
     }
 
     /**
@@ -212,6 +227,17 @@ abstract class Zend_Db_Table_Row_Abstract
     public function __wakeup()
     {
         $this->_connected = false;
+    }
+
+    /**
+     * Initialize object
+     *
+     * Called from {@link __construct()} as final step of object instantiation.
+     *
+     * @return void
+     */
+    public function init()
+    {
     }
 
     /**
@@ -232,7 +258,7 @@ abstract class Zend_Db_Table_Row_Abstract
      * @return boolean
      * @throws Zend_Db_Table_Row_Exception
      */
-    public function setTable(Zend_Db_Table_Abstract $table)
+    public function setTable(Zend_Db_Table_Abstract $table = null)
     {
         if ($table == null) {
             $this->_table = null;
@@ -278,6 +304,47 @@ abstract class Zend_Db_Table_Row_Abstract
     }
 
     /**
+     * Test the connected status of the row.
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return $this->_connected;
+    }
+
+    /**
+     * Test the read-only status of the row.
+     *
+     * @return boolean
+     */
+    public function isReadOnly()
+    {
+        return $this->_readOnly;
+    }
+
+    /**
+     * Set the read-only status of the row.
+     *
+     * @param boolean $flag
+     * @return boolean
+     */
+    public function setReadOnly($flag)
+    {
+        $this->_readOnly = (bool) $flag;
+    }
+
+    /**
+     * Returns an instance of the parent table's Zend_Db_Table_Select object.
+     *
+     * @return Zend_Db_Table_Select
+     */
+    public function select()
+    {
+        return $this->getTable()->select();
+    }
+
+    /**
      * Saves the properties to the database.
      *
      * This performs an intelligent insert/update, and reloads the
@@ -306,6 +373,14 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     protected function _doInsert()
     {
+        /**
+         * A read-only row cannot be saved.
+         */
+        if ($this->_readOnly === true) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception('This row has been marked read-only');
+        }
+
         /**
          * Run pre-INSERT logic
          */
@@ -354,6 +429,14 @@ abstract class Zend_Db_Table_Row_Abstract
     protected function _doUpdate()
     {
         /**
+         * A read-only row cannot be saved.
+         */
+        if ($this->_readOnly === true) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception('This row has been marked read-only');
+        }
+
+        /**
          * Get expressions for a WHERE clause
          * based on the primary key value(s).
          */
@@ -385,7 +468,6 @@ abstract class Zend_Db_Table_Row_Abstract
                 $db = $this->_getTable()->getAdapter();
                 $pkNew = $this->_getPrimaryKey(true);
                 $pkOld = $this->_getPrimaryKey(false);
-                $thisClass = get_class($this);
                 foreach ($depTables as $tableClass) {
                     try {
                         Zend_Loader::loadClass($tableClass);
@@ -405,9 +487,8 @@ abstract class Zend_Db_Table_Row_Abstract
          * Use the $diffData variable, so the UPDATE statement
          * includes SET terms only for data values that changed.
          */
-        $result = 0;
         if (count($diffData) > 0) {
-            $result = $this->_getTable()->update($diffData, $where);
+            $this->_getTable()->update($diffData, $where);
         }
 
         /**
@@ -431,9 +512,9 @@ abstract class Zend_Db_Table_Row_Abstract
         $primaryKey = $this->_getPrimaryKey(true);
         if (count($primaryKey) == 1) {
             return current($primaryKey);
-        } else {
-            return $primaryKey;
         }
+
+        return $primaryKey;
     }
 
     /**
@@ -457,7 +538,6 @@ abstract class Zend_Db_Table_Row_Abstract
         if (!empty($depTables)) {
             $db = $this->_getTable()->getAdapter();
             $pk = $this->_getPrimaryKey();
-            $thisClass = get_class($this);
             foreach ($depTables as $tableClass) {
                 try {
                     Zend_Loader::loadClass($tableClass);
@@ -517,16 +597,6 @@ abstract class Zend_Db_Table_Row_Abstract
     }
 
     /**
-     * Refreshes properties from the database.
-     *
-     * @return void
-     */
-    public function refresh()
-    {
-        return $this->_refresh();
-    }
-
-    /**
      * Retrieves an instance of the parent table.
      *
      * @return Zend_Db_Table_Abstract
@@ -548,6 +618,11 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     protected function _getPrimaryKey($useDirty = true)
     {
+        if (!is_array($this->_primary)) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception("The primary key must be set as an array");
+        }
+
         $primary = array_flip($this->_primary);
         if ($useDirty) {
             $array = array_intersect_key($this->_data, $primary);
@@ -698,10 +773,10 @@ abstract class Zend_Db_Table_Row_Abstract
      * @return Zend_Db_Table_Rowset_Abstract Query result from $dependentTable
      * @throws Zend_Db_Table_Row_Exception If $dependentTable is not a table or is not loadable.
      */
-    public function findDependentRowset($dependentTable, $ruleKey = null)
+    public function findDependentRowset($dependentTable, $ruleKey = null, Zend_Db_Table_Select $select = null)
     {
         $db = $this->_getTable()->getAdapter();
-
+        
         if (is_string($dependentTable)) {
             try {
                 Zend_Loader::loadClass($dependentTable);
@@ -720,9 +795,14 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception("Dependent table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        if ($select === null) {
+            $select = $dependentTable->select();
+        } else {
+            $select->setTable($dependentTable);
+        }
+
         $map = $this->_prepareReference($dependentTable, $this->_getTable(), $ruleKey);
 
-        $where = array();
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $parentColumnName = $db->foldCase($map[Zend_Db_Table_Abstract::REF_COLUMNS][$i]);
             $value = $this->_data[$parentColumnName];
@@ -730,9 +810,10 @@ abstract class Zend_Db_Table_Row_Abstract
             $dependentColumn = $db->quoteIdentifier($dependentColumnName, true);
             $dependentInfo = $dependentTable->info();
             $type = $dependentInfo[Zend_Db_Table_Abstract::METADATA][$dependentColumnName]['DATA_TYPE'];
-            $where[] = $db->quoteInto("$dependentColumn = ?", $value, $type);
+            $select->where("$dependentColumn = ?", $value, $type);
         }
-        return $dependentTable->fetchAll($where);
+
+        return $dependentTable->fetchAll($select);
     }
 
     /**
@@ -743,7 +824,7 @@ abstract class Zend_Db_Table_Row_Abstract
      * @return Zend_Db_Table_Row_Abstract   Query result from $parentTable
      * @throws Zend_Db_Table_Row_Exception If $parentTable is not a table or is not loadable.
      */
-    public function findParentRow($parentTable, $ruleKey = null)
+    public function findParentRow($parentTable, $ruleKey = null, Zend_Db_Table_Select $select = null)
     {
         $db = $this->_getTable()->getAdapter();
 
@@ -765,9 +846,14 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception("Parent table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        if ($select === null) {
+            $select = $parentTable->select();
+        } else {
+            $select->setTable($parentTable);
+        }
+
         $map = $this->_prepareReference($this->_getTable(), $parentTable, $ruleKey);
 
-        $where = array();
         for ($i = 0; $i < count($map[Zend_Db_Table_Abstract::COLUMNS]); ++$i) {
             $dependentColumnName = $db->foldCase($map[Zend_Db_Table_Abstract::COLUMNS][$i]);
             $value = $this->_data[$dependentColumnName];
@@ -775,9 +861,10 @@ abstract class Zend_Db_Table_Row_Abstract
             $parentColumn = $db->quoteIdentifier($parentColumnName, true);
             $parentInfo = $parentTable->info();
             $type = $parentInfo[Zend_Db_Table_Abstract::METADATA][$parentColumnName]['DATA_TYPE'];
-            $where[] = $db->quoteInto("$parentColumn = ?", $value, $type);
+            $select->where("$parentColumn = ?", $value, $type);
         }
-        return $parentTable->fetchRow($where);
+
+        return $parentTable->fetchRow($select);
     }
 
     /**
@@ -788,7 +875,8 @@ abstract class Zend_Db_Table_Row_Abstract
      * @return Zend_Db_Table_Rowset_Abstract Query result from $matchTable
      * @throws Zend_Db_Table_Row_Exception If $matchTable or $intersectionTable is not a table class or is not loadable.
      */
-    public function findManyToManyRowset($matchTable, $intersectionTable, $callerRefRule = null, $matchRefRule = null)
+    public function findManyToManyRowset($matchTable, $intersectionTable, $callerRefRule = null,
+                                         $matchRefRule = null, Zend_Db_Table_Select $select = null)
     {
         $db = $this->_getTable()->getAdapter();
 
@@ -828,6 +916,12 @@ abstract class Zend_Db_Table_Row_Abstract
             throw new Zend_Db_Table_Row_Exception("Match table must be a Zend_Db_Table_Abstract, but it is $type");
         }
 
+        if ($select === null) {
+            $select = $matchTable->select();
+        } else {
+            $select->setTable($matchTable);
+        }
+        
         $interInfo = $intersectionTable->info();
         $interName = $interInfo['name'];
         $matchInfo = $matchTable->info();
@@ -842,9 +936,9 @@ abstract class Zend_Db_Table_Row_Abstract
         }
         $joinCond = implode(' AND ', $joinCond);
 
-        $select = $db->select()
-            ->from(array('i' => $interName), array())
-            ->join(array('m' => $matchName), $joinCond, '*');
+        $select->from(array('i' => $interName))
+               ->joinInner(array('m' => $matchName), $joinCond)
+               ->setIntegrityCheck(false);
 
         $callerMap = $this->_prepareReference($intersectionTable, $this->_getTable(), $callerRefRule);
 
@@ -858,12 +952,14 @@ abstract class Zend_Db_Table_Row_Abstract
             $type = $matchInfo[Zend_Db_Table_Abstract::METADATA][$matchColumnName]['DATA_TYPE'];
             $select->where($db->quoteInto("$interCol = ?", $value, $type));
         }
+
         $stmt = $select->query();
 
         $config = array(
             'table'    => $matchTable,
             'data'     => $stmt->fetchAll(Zend_Db::FETCH_ASSOC),
             'rowClass' => $matchTable->getRowClass(),
+            'readOnly' => false,
             'stored'   => true
         );
 
@@ -883,13 +979,20 @@ abstract class Zend_Db_Table_Row_Abstract
      * to the above methods.
      *
      * @param string $method
-     * @param array $args
+     * @param array $args OPTIONAL Zend_Db_Table_Select query modifier
      * @return Zend_Db_Table_Row_Abstract|Zend_Db_Table_Rowset_Abstract
      * @throws Zend_Db_Table_Row_Exception If an invalid method is called.
      */
     protected function __call($method, array $args)
     {
-
+        $matches = array();
+        
+        if (count($args) && $args[0] instanceof Zend_Db_Table_Select) {
+            $select = $args[0];
+        } else {
+            $select = null;
+        }
+        
         /**
          * Recognize methods for Has-Many cases:
          * findParent<Class>()
@@ -899,7 +1002,7 @@ abstract class Zend_Db_Table_Row_Abstract
         if (preg_match('/^findParent(\w+?)(?:By(\w+))?$/', $method, $matches)) {
             $class    = $matches[1];
             $ruleKey1 = isset($matches[2]) ? $matches[2] : null;
-            return $this->findParentRow($class, $ruleKey1);
+            return $this->findParentRow($class, $ruleKey1, $select);
         }
 
         /**
@@ -914,7 +1017,7 @@ abstract class Zend_Db_Table_Row_Abstract
             $viaClass = $matches[2];
             $ruleKey1 = isset($matches[3]) ? $matches[3] : null;
             $ruleKey2 = isset($matches[4]) ? $matches[4] : null;
-            return $this->findManyToManyRowset($class, $viaClass, $ruleKey1, $ruleKey2);
+            return $this->findManyToManyRowset($class, $viaClass, $ruleKey1, $ruleKey2, $select);
         }
 
         /**
@@ -926,7 +1029,7 @@ abstract class Zend_Db_Table_Row_Abstract
         if (preg_match('/^find(\w+?)(?:By(\w+))?$/', $method, $matches)) {
             $class    = $matches[1];
             $ruleKey1 = isset($matches[2]) ? $matches[2] : null;
-            return $this->findDependentRowset($class, $ruleKey1);
+            return $this->findDependentRowset($class, $ruleKey1, $select);
         }
 
         require_once 'Zend/Db/Table/Row/Exception.php';
