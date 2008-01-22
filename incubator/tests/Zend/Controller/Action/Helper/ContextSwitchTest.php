@@ -10,6 +10,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Controller/Action/Helper/ContextSwitch.php';
 
+require_once 'Zend/Config.php';
 require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/Controller/Front.php';
@@ -768,6 +769,46 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->helper->clearActionContexts();
         $contexts = $this->helper->getActionContexts();
         $this->assertTrue(empty($contexts));
+    }
+
+    public function getOptions()
+    {
+        $options = array(
+            'contexts' => array('ajax' => array('suffix' => 'ajax', 'headers' => array('Content-Type' => 'text/x-html')), 'json' => array('suffix' => 'json', 'headers' => array('Content-Type' => 'application/json'), 'callbacks' => array('init' => 'initJsonCallback', 'post' => 'postJsonCallback'))),
+            'autoJsonSerialization' => false,
+            'suffix' => array('json' => array('suffix' => 'js', 'prependViewRendererSuffix' => false)),
+            'headers' => array('json' => array('Content-Type' => 'text/js')),
+            'callbacks' => array('json' => array('init' => 'htmlentities')),
+            'contextParam' => 'foobar',
+            'defaultContext' => 'json',
+            'autoDisableLayout' => false,
+        );
+        return $options;
+    }
+
+    public function checkOptionsAreSet()
+    {
+        $this->assertFalse($this->helper->getAutoJsonSerialization());
+        $this->assertEquals('js', $this->helper->getSuffix('json'));
+        $this->assertEquals('text/js', $this->helper->getHeader('json', 'Content-Type'));
+        $this->assertEquals('htmlentities', $this->helper->getCallback('json', 'init'));
+        $this->assertEquals('foobar', $this->helper->getContextParam());
+        $this->assertEquals('json', $this->helper->getDefaultContext());
+        $this->assertFalse($this->helper->getAutoDisableLayout());
+        $this->assertTrue($this->helper->hasContext('ajax'));
+    }
+
+    public function testCanSetOptionsViaArray()
+    {
+        $this->helper->setOptions($this->getOptions());
+        $this->checkOptionsAreSet();
+    }
+
+    public function testCanSetOptionsViaConfig()
+    {
+        $config = new Zend_Config($this->getOptions());
+        $this->helper->setConfig($config);
+        $this->checkOptionsAreSet();
     }
 }
 

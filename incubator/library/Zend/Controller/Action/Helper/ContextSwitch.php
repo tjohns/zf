@@ -86,6 +86,30 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     protected $_disableLayout = true; 
 
     /**
+     * Methods that require special configuration
+     * @var array
+     */
+    protected $_specialConfig = array(
+        'setSuffix',
+        'setHeaders',
+        'setCallbacks',
+    );
+
+    /**
+     * Methods that are not configurable via setOptions and setConfig
+     * @var array
+     */
+    protected $_unconfigurable = array(
+        'setOptions',
+        'setConfig',
+        'setHeader',
+        'setCallback',
+        'setContext',
+        'setActionContext',
+        'setActionContexts',
+    );
+
+    /**
      * @var Zend_Controller_Action_Helper_ViewRenderer
      */
     protected $_viewRenderer;
@@ -114,6 +138,47 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
                 )
             ));
         }
+    }
+
+    /**
+     * Configure object from array of options
+     * 
+     * @param  array $options 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setOptions(array $options)
+    {
+        if (isset($options['contexts'])) {
+            $this->setContexts($options['contexts']);
+            unset($options['contexts']);
+        }
+
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $this->_unconfigurable)) {
+                continue;
+            }
+
+            if (in_array($method, $this->_specialConfig)) {
+                $method = '_' . $method;
+            }
+
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Set object state from config object
+     * 
+     * @param  Zend_Config $config 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    public function setConfig(Zend_Config $config)
+    {
+        return $this->setOptions($config->toArray());
     }
 
     /**
@@ -247,6 +312,70 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     {
         return $this->_autoJsonSerialization;
     }
+
+    /**
+     * Set suffix from array
+     * 
+     * @param  array $spec 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    protected function _setSuffix(array $spec)
+    {
+        foreach ($spec as $context => $suffixInfo) {
+            if (!is_string($context)) {
+                $context = null;
+            }
+
+            if (is_string($suffixInfo)) {
+                $this->setSuffix($context, $suffixInfo);
+                continue;
+            } elseif (is_array($suffixInfo)) {
+                if (isset($suffixInfo['suffix'])) {
+                    $suffix                    = $suffixInfo['suffix'];
+                    $prependViewRendererSuffix = true;
+
+                    if ((null === $context) && isset($suffixInfo['context'])) {
+                        $context = $suffixInfo['context'];
+                    }
+
+                    if (isset($suffixInfo['prependViewRendererSuffix'])) {
+                        $prependViewRendererSuffix = $suffixInfo['prependViewRendererSuffix'];
+                    }
+
+                    $this->setSuffix($context, $suffix, $prependViewRendererSuffix);
+                    continue;
+                }
+
+                $count = count($suffixInfo);
+                switch (true) {
+                    case (($count < 2) && (null === $context)):
+                        require_once 'Zend/Controller/Action/Exception.php';
+                        throw new Zend_Controller_Action_Exception('Invalid suffix information provided in config');
+                    case ($count < 2):
+                        $suffix = array_shift($suffixInfo);
+                        $this->setSuffix($context, $suffix);
+                        break;
+                    case (($count < 3) && (null === $context)):
+                        $context = array_shift($suffixInfo);
+                        $suffix  = array_shift($suffixInfo);
+                        $this->setSuffix($context, $suffix);
+                        break;
+                    case (($count == 3) && (null === $context)):
+                        $context = array_shift($suffixInfo);
+                        $suffix  = array_shift($suffixInfo);
+                        $prependViewRendererSuffix = array_shift($suffixInfo);
+                        $this->setSuffix($context, $suffix, $prependViewRendererSuffix);
+                        break;
+                    case ($count >= 2):
+                        $suffix  = array_shift($suffixInfo);
+                        $prependViewRendererSuffix = array_shift($suffixInfo);
+                        $this->setSuffix($context, $suffix, $prependViewRendererSuffix);
+                        break;
+                }
+            }
+        }
+        return $this;
+    }
  
     /**
      * Customize view script suffix to use when switching context.
@@ -254,16 +383,16 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
      * Passing an empty suffix value to the setters disables the view script
      * suffix change.
      *
-     * @param  string $type   Context type for which to set suffix
+     * @param  string $context   Context type for which to set suffix
      * @param  string $suffix Suffix to use
      * @param  bool $prependViewRendererSuffix Whether or not to prepend the new suffix to the viewrenderer suffix
      * @return Zend_Controller_Action_Helper_ContextSwitch
      */ 
-    public function setSuffix($type, $suffix, $prependViewRendererSuffix = true)
+    public function setSuffix($context, $suffix, $prependViewRendererSuffix = true)
     {
-        if (!isset($this->_contexts[$type])) {
+        if (!isset($this->_contexts[$context])) {
             require_once 'Zend/Controller/Action/Exception.php';
-            throw new Zend_Controller_Action_Exception(sprintf('Cannot set suffix; invalid context type "%s"', $type));
+            throw new Zend_Controller_Action_Exception(sprintf('Cannot set suffix; invalid context type "%s"', $context));
         }
 
         if (empty($suffix)) {
@@ -291,7 +420,7 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
             }
         }
 
-        $this->_contexts[$type]['suffix'] = $suffix;
+        $this->_contexts[$context]['suffix'] = $suffix;
         return $this;
     }
 
@@ -407,6 +536,24 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
     {
         foreach ($headers as $header => $content) {
             $this->addHeader($context, $header, $content);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set headers from context => headers pairs
+     * 
+     * @param  array $options 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    protected function _setHeaders(array $options)
+    {
+        foreach ($options as $context => $headers) {
+            if (!is_array($headers)) {
+                continue;
+            }
+            $this->setHeaders($context, $headers);
         }
 
         return $this;
@@ -542,6 +689,24 @@ class Zend_Controller_Action_Helper_ContextSwitch extends Zend_Controller_Action
         }
 
         $this->_contexts[$context]['callbacks'][$trigger] = $callback;
+        return $this;
+    }
+
+    /**
+     * Set callbacks from array of context => callbacks pairs
+     * 
+     * @param  array $options 
+     * @return Zend_Controller_Action_Helper_ContextSwitch
+     */
+    protected function _setCallbacks(array $options)
+    {
+        foreach ($options as $context => $callbacks) {
+            if (!is_array($callbacks)) {
+                continue;
+            }
+
+            $this->setCallbacks($context, $callbacks);
+        }
         return $this;
     }
 
