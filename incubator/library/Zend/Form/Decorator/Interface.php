@@ -75,11 +75,43 @@ interface Zend_Form_Decorator_Interface
     public function setConfig(Zend_Config $config);
 
     /**
+     * Set a single option
+     * 
+     * @param  string $key 
+     * @param  mixed $value 
+     * @return Zend_Form_Decorator_Interface
+     */
+    public function setOption($key, $value);
+
+    /**
+     * Retrieve a single option
+     * 
+     * @param  string $key 
+     * @return mixed
+     */
+    public function getOption($key);
+
+    /**
      * Retrieve decorator options
      * 
      * @return array
      */
     public function getOptions();
+
+    /**
+     * Delete a single option
+     * 
+     * @param  string $key 
+     * @return bool
+     */
+    public function removeOption($key);
+
+    /**
+     * Clear all options
+     * 
+     * @return Zend_Form_Decorator_Interface
+     */
+    public function clearOptions();
 
     /**
      * Render the element

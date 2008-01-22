@@ -137,6 +137,35 @@ class Zend_Form_Decorator_AbstractTest extends PHPUnit_Framework_TestCase
         $this->decorator->setOptions(array('separator' => '<br />'));
         $this->assertEquals('<br />', $this->decorator->getSeparator());
     }
+
+    public function testCanSetIndividualOptions()
+    {
+        $this->assertNull($this->decorator->getOption('foo'));
+        $this->decorator->setOption('foo', 'bar');
+        $this->assertEquals('bar', $this->decorator->getOption('foo'));
+    }
+
+    public function testCanRemoveIndividualOptions()
+    {
+        $this->assertNull($this->decorator->getOption('foo'));
+        $this->decorator->setOption('foo', 'bar');
+        $this->assertEquals('bar', $this->decorator->getOption('foo'));
+        $this->decorator->removeOption('foo');
+        $this->assertNull($this->decorator->getOption('foo'));
+    }
+
+    public function testCanClearAllOptions()
+    {
+        $this->assertNull($this->decorator->getOption('foo'));
+        $this->assertNull($this->decorator->getOption('bar'));
+        $this->assertNull($this->decorator->getOption('baz'));
+        $options = array('foo' => 'bar', 'bar' => 'baz', 'baz' => 'bat');
+        $this->decorator->setOptions($options);
+        $received = $this->decorator->getOptions();
+        $this->assertEquals($options, $received);
+        $this->decorator->clearOptions();
+        $this->assertEquals(array(), $this->decorator->getOptions());
+    }
 }
 
 // Call Zend_Form_Decorator_AbstractTest::main() if this source file is executed directly.
