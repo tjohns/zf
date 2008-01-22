@@ -236,7 +236,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
             $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
         }
         $this->assertEquals('Zend_View_Helper_FormButton', $className);
-        $this->assertTrue(class_exists('Zend_View_Helper_FormButton'));
+        $this->assertTrue(class_exists('Zend_View_Helper_FormButton', false));
         $this->assertTrue($loader->isLoaded('FormButton'));
     }
 
@@ -252,7 +252,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
             $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
         }
         $this->assertEquals('Zend_View_Helper_FormRadio', $className);
-        $this->assertTrue(class_exists('Zend_View_Helper_FormRadio'));
+        $this->assertTrue(class_exists('Zend_View_Helper_FormRadio', false));
         $this->assertTrue($loader->isLoaded('FormRadio'));
     }
 
@@ -305,6 +305,21 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals($className, $loader->getClassName('FormCheckbox'));
         $this->assertEquals('Zend_View_Helper_FormCheckbox', $loader->getClassName('FormCheckbox'));
+    }
+
+    public function testClassFilesAreSearchedInLifoOrder()
+    {
+        $loader = new Zend_Loader_PluginLoader(array());
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        $loader->addPrefixPath('ZfTest', dirname(__FILE__) . '/_files/ZfTest');
+        try {
+            $className = $loader->load('FormSubmit');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertEquals($className, $loader->getClassName('FormSubmit'));
+        $this->assertEquals('ZfTest_FormSubmit', $loader->getClassName('FormSubmit'));
     }
 }
 
