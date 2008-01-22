@@ -397,9 +397,9 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     {
         $command = 'php -d include_path='
             . escapeshellarg(get_include_path())
-            . ' Zend/Loader/AutoloadDoesNotHideParseError.php';
+            . ' Zend/Loader/AutoloadDoesNotHideParseError.php 2>&1';
         $output = shell_exec($command);
-        $this->assertContains('parse error, unexpected T_STRING, expecting T_FUNCTION', $output);
+        $this->assertRegexp('/error, unexpected T_STRING, expecting T_FUNCTION/i', $output, $output);
     }
 
     /**
