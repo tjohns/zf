@@ -288,7 +288,7 @@ echo $part->getContent();]]>
         <programlisting role="php"><![CDATA[<?php
 // affiche la première partie de type text/plain=
 $foundPart = null;
-foreach (RecursiveIteratorIterator($mail->getMessage(1)) as $part) {
+foreach (new RecursiveIteratorIterator($mail->getMessage(1)) as $part) {
     try {
         if (strtok($part->contentType, ';') == 'text/plain') {
             $foundPart = $part;
