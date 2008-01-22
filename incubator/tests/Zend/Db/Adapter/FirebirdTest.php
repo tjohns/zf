@@ -69,17 +69,7 @@ class Zend_Db_Adapter_FirebirdTest extends Zend_Db_Adapter_TestCommon
         $this->assertEquals('4', (string) $lastInsertId, 'Expected new id to be 4');
         $this->assertEquals('4', (string) $lastSequenceId, 'Expected new id to be 4');
     }		
-
-    public function testAdapterTransactionCommit()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
-    }
-
-    public function testAdapterTransactionRollback()
-    {
-        $this->markTestIncomplete($this->getDriver() . ' is having trouble with transactions');
-    }
-    
+ 
     /**
      * test that quote() escapes a single-quote
      * character in a string.
@@ -149,7 +139,64 @@ class Zend_Db_Adapter_FirebirdTest extends Zend_Db_Adapter_TestCommon
     {
 		//Don't affect Firebird
     }	
-	
+
+    public function testAdapterTransactionCommit()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+
+        // use our default connection as the Connection1
+        $dbConnection1 = $this->_db;
+
+        // create a second connection to the same database
+        $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
+        $dbConnection2->getConnection();
+
+        // notice the number of rows in connection 2
+        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count, 'Expecting to see 4 rows in bugs table (step 1)');
+
+        // start an explicit transaction in connection 1
+        $dbConnection1->beginTransaction();
+
+        // delete a row in connection 1
+        $rowsAffected = $dbConnection1->delete(
+            'zfbugs',
+            "$bug_id = 1"
+        );
+
+        $this->assertEquals(1, $rowsAffected);
+
+        // we should still see all rows in connection 2
+        // because the DELETE has not been committed yet
+        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(4, $count, 'Expecting to still see 4 rows in bugs table (step 2); perhaps Adapter is still in autocommit mode?');
+
+        // commit the DELETE
+        $dbConnection1->commit();
+
+        // now we should see one fewer rows in connection 2
+		/* Deffers from others RDBMS, Firebird always is in a transaction, and for Zend_Db the default
+		// transaction Isolation is snapshot, changes made by other transaction is only visible with new
+		// transaction, commiting retaining or rollback retaining
+		*/
+		$dbConnection2->commit();
+        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(3, $count, 'Expecting to see 3 rows in bugs table after DELETE (step 3)');
+
+        // delete another row in connection 1
+        $rowsAffected = $dbConnection1->delete(
+            'zfbugs',
+            "$bug_id = 2"
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        // we should see results immediately, because
+        // the db connection returns to auto-commit mode
+        $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
+        $this->assertEquals(2, $count);
+    }
+
     public function getDriver()
     {
         return 'Firebird';

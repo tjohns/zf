@@ -80,9 +80,12 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      */
     public function _prepare($sql)
     {
-        $firebird = $this->_adapter->getConnection();
+        $connection = $this->_adapter->getConnection();
 
-        $this->_stmt_prepared = @ibase_prepare($firebird, $sql);
+		if ($trans = $this->_adapter->getTransaction())
+			$this->_stmt_prepared = @ibase_prepare($connection, $trans, $sql);
+		else
+			$this->_stmt_prepared = @ibase_prepare($connection, $sql);
 
         if ($this->_stmt_prepared === false || ibase_errcode()) {
             /**
@@ -117,12 +120,12 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
     public function close()
     {
         if ($stmt = $this->_stmt_result) {
-            ibase_free_result($this->_stmt_result);
+            @ibase_free_result($this->_stmt_result);
             $this->_stmt_result = null;
         }
 
         if ($this->_stmt_prepared) {
-            $r = ibase_free_query($this->_stmt_prepared);
+            $r = @ibase_free_query($this->_stmt_prepared);
             $this->_stmt_prepared = null;
             return $r;
         }
@@ -137,7 +140,7 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
     public function closeCursor()
     {
         if ($stmt = $this->_stmt_result) {
-            return ibase_free_result($this->_stmt_result);
+            return @ibase_free_result($this->_stmt_result);
         }
         return false;
     }
@@ -153,6 +156,9 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
         if ($this->_stmt_result) {
             return ibase_num_fields($this->_stmt_result);
         }
+        if ($this->_stmt_prepared) {
+            return ibase_num_fields($this->_stmt_prepared);
+        }		
         return 0;
     }
 
@@ -213,8 +219,8 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
                 $params
             );
         } else
-          // execute the statement
-          $retval = ibase_execute($this->_stmt_prepared);
+			// execute the statement
+			$retval = ibase_execute($this->_stmt_prepared);
         $this->_stmt_result = $retval;
 
 
@@ -241,7 +247,6 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             }
         }
 
-
         if ($retval === false) {
             /**
              * @see Zend_Db_Statement_Firebird_Exception
@@ -249,7 +254,11 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
             require_once 'Zend/Db/Statement/Firebird/Exception.php';
             throw new Zend_Db_Statement_Firebird_Exception("Firebird statement execute error : " . ibase_errmsg());
         }
-        return $retval;
+		
+		if ($trans = $this->_adapter->getTransaction())		
+			return ibase_affected_rows($trans);
+		else
+			return ibase_affected_rows($this->_adapter->getConnection());		
     }
 
     /**
@@ -357,14 +366,24 @@ class Zend_Db_Statement_Firebird extends Zend_Db_Statement
      * statement object.
      *
      * @return int     The number of rows affected.
+     * @throws Zend_Db_Statement_Exception
      */
     public function rowCount()
     {
-        if (!$this->_adapter) {
-            return false;
+		if ($trans = $this->_adapter->getTransaction())		
+			$num_rows = ibase_affected_rows($trans);
+		else
+			$num_rows = ibase_affected_rows($this->_adapter->getConnection());
+
+        if ($num_rows === false) {
+            /**
+             * @see Zend_Db_Adapter_Firebird_Exception
+             */
+            require_once 'Zend/Db/Statement/Frebird/Exception.php';
+            throw new Zend_Db_Statement_Firebird_Exception(ibase_errmsg());
         }
-        $firebird = $this->_adapter->getConnection();
-        return ibase_affected_rows($firebird);
-    }
+
+        return $num_rows;
+    }	
 
 }

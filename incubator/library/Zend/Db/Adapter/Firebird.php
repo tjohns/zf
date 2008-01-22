@@ -65,9 +65,9 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
      * @return bool
      */
 
-    public function inTransaction()
+    public function getTransaction()
 	{
-		return is_resource($this->_transResource);
+		return (is_resource($this->_transResource) ? $this->_transResource : null);
 	}
 
     /**
@@ -292,17 +292,6 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Returns the underlying database connection object or resource.
-     * If not presently connected, this initiates the connection.
-     *
-     * @return object|resource|null
-     */
-    public function getConnection()
-    {
-        return (is_resource($this->_transResource) ? $this->_transResource : parent::getConnection());
-    }
-
-    /**
      * Creates a connection to the database.
      *
      * @return void
@@ -315,15 +304,15 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         }
 
         if (isset($this->_config['port'])) {
-            $port = (integer) $this->_config['port'];
+            $port = '/' . (integer) $this->_config['port'];
         } else {
-            $port = null;
+            $port = '';
         }
 
         // Suppress connection warnings here.
         // Throw an exception instead.
         @$this->_connection = ibase_connect(
-                                $this->_config['host'] . ($port?'/'.$port:'') . ':' . $this->_config['dbname'],
+                                $this->_config['host'] .$port. ':' . $this->_config['dbname'],
                                 $this->_config['username'],
                                 $this->_config['password'],
                                 $this->_config['charset'],
@@ -354,7 +343,6 @@ class Zend_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $this->_transResource = null;
 
         if (is_resource($this->_connection)) {
-            //ibase_rollback($this->_connection);
             ibase_close($this->_connection);
         }
         $this->_connection = null;
