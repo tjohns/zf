@@ -282,9 +282,9 @@ echo $form;
         <programlisting role="php"><![CDATA[<?php
 $element->addDecorators(array(
     array('ViewHelper', array('helper' => '<HELPERNAME>')),
-    'label',
-    'errors',
-    array('HtmlTag', array('tag' => 'div', 'class' => 'form element'))
+    'Errors',
+    array('HtmlTag', array('tag' => 'dd')),
+    array('Label', array('tag' => 'dt')),
 ));
 ?>]]></programlisting>
 
@@ -298,14 +298,14 @@ $element->addDecorators(array(
         </para>
 
         <programlisting role="html"><![CDATA[
-<div class="form element">
-    <label for="username">
+<dt><label for="username"></dt>
+<dd>
     <input type="text" name="username" value="123-abc" />
     <ul class="errors">
         <li>'123-abc' has not only alphabetic and digit characters</li>
         <li>'123-abc' does not match against pattern '/^[a-z]/i'</li>
     </ul>
-</div>
+</dd>
 ]]></programlisting>
 
         <para>

@@ -534,25 +534,25 @@ $unfiltered = $element->getUnfilteredValue();
         <itemizedlist>
             <listitem><para>
                 <emphasis>ViewHelper</emphasis>: specifies a view helper to use
-                to render the element
-            </para></listitem>
-
-            <listitem><para>
-                <emphasis>Label</emphasis>: prepends a label to the element
-                using <code>Zend_View_Helper_FormLabel</code>. If no label is
-                present, none is rendered.
+                to render the element 
             </para></listitem>
 
             <listitem><para>
                 <emphasis>Errors</emphasis>: appends error messages to the
-                element using <code>Zend_View_Helper_FormErrors</code>. If none
-                are present, nothing is appended.
+                element using Zend_View_Helper_FormErrors. If none are present,
+                nothing is appended.
             </para></listitem>
 
             <listitem><para>
-                <emphasis>HtmlTag</emphasis>: wraps the label, element, and
-                errors in an HTML div, with the class attribute set to "form
-                element".
+                <emphasis>HtmlTag</emphasis>: wraps the element and errors in
+                an HTML &lt;dd&gt; tag.
+            </para></listitem>
+
+            <listitem><para>
+                <emphasis>Label</emphasis>: prepends a label to the element
+                using Zend_View_Helper_FormLabel, and wraps it in a &lt;dt&gt;
+                tag. If no label is provided, just the definition term tag is
+                rendered.
             </para></listitem>
         </itemizedlist>
 
@@ -567,38 +567,34 @@ $unfiltered = $element->getUnfilteredValue();
 
         <programlisting role="php"><![CDATA[<?php
 $this->addDecorators(array(
-    array(
-        'decorator' => 'viewHelper', 
-        'options'   => array('helper' => '<HELPERNAME>')),
-    array('decorator' => 'label'),
-    array('decorator' => 'errors'),
-    array(
-        'decorator' => 'htmlTag',
-        'options'   => array('tag' => 'div', 'class' => 'form element'))
+    array('ViewHelper', array('helper' => '<HELPERNAME>')),
+    array('Errors'),
+    array('HtmlTag', array('tag' => 'dd')),
+    array('Label', array('tag' => 'dt')),
 ));
 ?>]]></programlisting>
 
         <para>
-            The initial content is created by the 'viewHelper' decorator, which
-            creates the form element itself. The next decorator, 'label',
-            retrieves the element's label and passes it to the 'formLabel' view
-            helper; the value is prepended to the content by default. Next, the
-            'errors' decorator fetches error messages from the element, and, if
-            any are present, passes them to the 'formErrors' view helper to
-            render; this content is then appended to the previous content.
-            Finally, the 'htmlTag' decorator takes the existing content, and
-            wraps it in a 'div' tag that has the class 'form element'. The
-            resulting output looks basically like this:
+            The initial content is created by the 'ViewHelper' decorator, which
+            creates the form element itself. Next, the 'Errors' decorator
+            fetches error messages from the element, and, if any are present,
+            passes them to the 'FormErrors' view helper to render.  The next
+            decorator, 'HtmlTag', wraps the element and errors in an HTML
+            &lt;dd&gt; tag.  Finally, the last decorator, 'label', retrieves
+            the element's label and passes it to the 'FormLabel' view helper,
+            wrapping it in an HTML &lt;dt&gt; tag; the value is prepended to
+            the content by default The resulting output looks basically like
+            this:
         </para>
 
         <programlisting role="html"><![CDATA[
-<div class="form element">
-    <label for="foo">Foo</label>
+<dt><label for="foo">Foo</label></dt>
+<dd>
     <input type="text" name="foo" id="foo" value="123" />
     <ul class="errors">
         <li>"123" is not an alphanumeric value</li>
     </ul>
-</div>
+</dd>
 ]]></programlisting>
 
         <para>
