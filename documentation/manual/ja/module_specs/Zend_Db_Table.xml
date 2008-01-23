@@ -1,86 +1,86 @@
+<!-- EN-Revision: 7576 -->
 <sect1 id="zend.db.table">
+  <title>Zend_Db_Table</title>
 
-    <title>Zend_Db_Table</title>
+  <sect2 id="zend.db.table.introduction">
+    <title>テーブルクラスについて</title>
 
-    <sect2 id="zend.db.table.introduction">
+    <para>
+      Zend_Db_Table クラスは、データベースのテーブルへの
+      オブジェクト指向のインターフェイスです。
+      テーブルに対するさまざまな共通操作のためのメソッドを提供します。
+      基底クラスは拡張可能なので、独自のロジックを組み込むこともできます。
+    </para>
 
-        <title>テーブルクラスについて</title>
+    <para>
+      Zend_Db_Table は、
+      <ulink url="http://www.martinfowler.com/eaaCatalog/tableDataGateway.html">テーブルデータゲートウェイ</ulink>
+      パターンを実装したものです。また、そのほかにも
+      <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">行データゲートウェイ</ulink>
+      パターンを実装したクラスも含んでいます。
+    </para>
+  </sect2>
 
-        <para>
-            Zend_Db_Table クラスは、データベースのテーブルへの
-            オブジェクト指向のインターフェイスです。
-            テーブルに対するさまざまな共通操作のためのメソッドを提供します。
-            基底クラスは拡張可能なので、独自のロジックを組み込むこともできます。
-        </para>
+  <sect2 id="zend.db.table.defining">
+    <title>テーブルクラスの定義</title>
 
-        <para>
-            Zend_Db_Table は、
-            <ulink url="http://www.martinfowler.com/eaaCatalog/tableDataGateway.html">テーブルデータゲートウェイ</ulink>
-            パターンを実装したものです。また、そのほかにも
-            <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">行データゲートウェイ</ulink>
-            パターンを実装したクラスも含んでいます。
-        </para>
+    <para>
+      データベース内でアクセスしたいテーブルそれぞれについて、
+      Zend_Db_Table_Abstract を継承したクラスを定義します。
+    </para>
 
-    </sect2>
+    <sect3 id="zend.db.table.defining.table-schema">
+      <title>テーブル名およびスキーマの定義</title>
 
-    <sect2 id="zend.db.table.defining">
-        <title>テーブルクラスの定義</title>
+      <para>
+        そのクラスが定義しているデータベースのテーブルを定義するには、
+        protected な変数 <code>$_name</code> を使用します。
+        これは文字列で、データベースでのテーブル名を指定する必要があります。
+      </para>
 
-        <para>
-            データベース内でアクセスしたいテーブルそれぞれについて、
-            Zend_Db_Table_Abstract を継承したクラスを定義します。
-        </para>
+      <example id="zend.db.table.defining.table-schema.example1">
+        <title>テーブル名を明示的に指定することによるテーブルクラスの宣言</title>
 
-        <sect3 id="zend.db.table.defining.table-schema">
-
-            <title>テーブル名およびスキーマの定義</title>
-
-            <para>
-                そのクラスが定義しているデータベースのテーブルを定義するには、
-                protected な変数 <code>$_name</code> を使用します。
-                これは文字列で、データベースでのテーブル名を指定する必要があります。
-            </para>
-
-            <example id="zend.db.table.defining.table-schema.example1">
-                <title>テーブル名を明示的に指定することによるテーブルクラスの宣言</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 }
-]]></programlisting>
-            </example>
+</programlisting>
+      </example>
 
-            <para>
-                テーブル名を指定しなかった場合のデフォルトは、クラス名となります。
-                このデフォルトを使用する場合は、クラス名をデータベースでのテーブル名と一致させる必要があります。
-            </para>
+      <para>
+        テーブル名を指定しなかった場合のデフォルトは、クラス名となります。
+        このデフォルトを使用する場合は、クラス名をデータベースでのテーブル名と一致させる必要があります。
+      </para>
 
-            <example id="zend.db.table.defining.table-schema.example">
-                <title>テーブル名を暗黙的に指定することによるテーブルクラスの宣言</title>
-                <programlisting role="php"><![CDATA[<?php
+      <example id="zend.db.table.defining.table-schema.example">
+        <title>テーブル名を暗黙的に指定することによるテーブルクラスの宣言</title>
+
+        <programlisting role="php">&lt;?php
 
 class bugs extends Zend_Db_Table_Abstract
 {
     // テーブル名とクラス名が一致します
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                テーブルのスキーマについても、protected 変数
-                <code>$_schema</code> で宣言することができます。
-                あるいは <code>$_name</code> プロパティでテーブル名の前にスキーマ名をつなげて指定することもできます。
-                <code>$_name</code> で指定したスキーマのほうが、
-                <code>$_schema</code> プロパティで指定したスキーマよりも優先されます。
-                RDBMS によってはスキーマのことを「データベース」や「表領域」
-                などということもありますが、同じように使用できます。
-                スキーマを、テーブル名の一部として宣言することもできます。
-            </para>
+      <para>
+        テーブルのスキーマについても、protected 変数
+        <code>$_schema</code> で宣言することができます。
+        あるいは <code>$_name</code> プロパティでテーブル名の前にスキーマ名をつなげて指定することもできます。
+        <code>$_name</code> で指定したスキーマのほうが、
+        <code>$_schema</code> プロパティで指定したスキーマよりも優先されます。
+        RDBMS によってはスキーマのことを「データベース」や「表領域」
+        などということもありますが、同じように使用できます。
+        スキーマを、テーブル名の一部として宣言することもできます。
+      </para>
 
-            <example id="zend.db.table.defining.table-schema.example3">
-                <title>テーブルクラスでのスキーマの宣言</title>
-                <programlisting role="php"><![CDATA[<?php
+      <example id="zend.db.table.defining.table-schema.example3">
+        <title>テーブルクラスでのスキーマの宣言</title>
+
+        <programlisting role="php">&lt;?php
 
 // 一つ目の方法
 
@@ -104,22 +104,21 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name   = 'bug_db.bugs';
     protected $_schema = 'ignored';
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                スキーマ名とテーブル名は、コンストラクタの設定ディレクティブでも指定することができます。
-                これは、<code>$_name</code> や <code>$_schema</code>
-                といったプロパティで設定したデフォルト値を上書きします。
-                <code>name</code> ディレクティブで指定したスキーマ名は、
-                <code>schema</code> オプションで指定したスキーマ名より優先されます。
-            </para>
+      <para>
+        スキーマ名とテーブル名は、コンストラクタの設定ディレクティブでも指定することができます。
+        これは、<code>$_name</code> や <code>$_schema</code>
+        といったプロパティで設定したデフォルト値を上書きします。
+        <code>name</code> ディレクティブで指定したスキーマ名は、
+        <code>schema</code> オプションで指定したスキーマ名より優先されます。
+      </para>
 
-            <example id="zend.db.table.defining.table-schema.example.constructor">
+      <example id="zend.db.table.defining.table-schema.example.constructor">
+        <title>インスタンス作成時のテーブル名とスキーマ名の指定</title>
 
-                <title>インスタンス作成時のテーブル名とスキーマ名の指定</title>
-
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -127,321 +126,340 @@ class Bugs extends Zend_Db_Table_Abstract
 
 // 最初の方法
 
-$tableBugs = new Bugs(array('name' => 'bugs', 'schema' => 'bug_db'));
+$tableBugs = new Bugs(array('name' =&gt; 'bugs', 'schema' =&gt; 'bug_db'));
 
 // もうひとつの方法
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs');
+$tableBugs = new Bugs(array('name' =&gt; 'bug_db.bugs');
 
 // スキーマを 'name' と 'schema' の両方で指定した場合は、
 // 'name' で指定したものが優先されます
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');]]></programlisting>
+$tableBugs = new Bugs(array('name' =&gt; 'bug_db.bugs', 'schema' =&gt; 'ignored');</programlisting>
+      </example>
 
-            </example>
+      <para>
+        スキーマ名を指定しなかった場合のデフォルトは、
+        そのデータベースアダプタが接続しているスキーマとなります。
+      </para>
+    </sect3>
 
-            <para>
-                スキーマ名を指定しなかった場合のデフォルトは、
-                そのデータベースアダプタが接続しているスキーマとなります。
-            </para>
+    <sect3 id="zend.db.table.defining.primary-key">
+      <title>テーブルの主キーの定義</title>
 
-        </sect3>
+      <para>
+        すべてのテーブルは主キーを持たなければなりません。
+        主キーカラムを宣言するには、protected 変数
+        <code>$_primary</code> を使用します。
+        これは、単一のカラムの名前を表す文字列か、
+        もし主キーが複合キーの場合はカラム名の配列となります。
+      </para>
 
-        <sect3 id="zend.db.table.defining.primary-key">
+      <example id="zend.db.table.defining.primary-key.example">
+        <title>主キーを指定する例</title>
 
-            <title>テーブルの主キーの定義</title>
-
-            <para>
-                すべてのテーブルは主キーを持たなければなりません。
-                主キーカラムを宣言するには、protected 変数
-                <code>$_primary</code> を使用します。
-                これは、単一のカラムの名前を表す文字列か、
-                もし主キーが複合キーの場合はカラム名の配列となります。
-            </para>
-
-            <example id="zend.db.table.defining.primary-key.example">
-                <title>主キーを指定する例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_primary = 'bug_id';
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                主キーを指定しなかった場合は、Zend_Db_Table_Abstract は
-                <code>describeTable()</code> メソッドの情報に基づいて主キーを見つけます。
-            </para>
+      <para>
+        主キーを指定しなかった場合は、Zend_Db_Table_Abstract は
+        <code>describeTable()</code> メソッドの情報に基づいて主キーを見つけます。
+      </para>
 
-            <note>
-                <para>
-                    すべてのテーブルクラスは、行を一意に決定するために
-                    どのカラムを使用するのかを知っている必要があります。
-                    テーブルクラスの定義やコンストラクタの引数、
-                    あるいは <code>describeTable()</code>
-                    によるメタデータで主キーカラムが定義されていない場合は、
-                    そのテーブルを Zend_Db_Table で使用することはできません。
-                </para>
-            </note>
+      <note>
+        <para>
+          すべてのテーブルクラスは、行を一意に決定するために
+          どのカラムを使用するのかを知っている必要があります。
+          テーブルクラスの定義やコンストラクタの引数、
+          あるいは <code>describeTable()</code>
+          によるメタデータで主キーカラムが定義されていない場合は、
+          そのテーブルを Zend_Db_Table で使用することはできません。
+        </para>
+      </note>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.defining.setup">
+      <title>テーブルの設定メソッドのオーバーライド</title>
 
-        <sect3 id="zend.db.table.defining.setup">
+      <para>
+        テーブルクラスのインスタンスを作成する際に、
+        コンストラクタ内でいくつかの protected メソッドをコールします。
+        これにより、テーブルのメタデータを初期化します。
+        これらのメソッドを拡張して、メタデータを明示的に定義することも可能です。
+        その場合は、メソッドの最後で親クラスの同名のメソッドをコールすることを忘れないようにしましょう。
+      </para>
 
-            <title>テーブルの設定メソッドのオーバーライド</title>
+      <example id="zend.db.table.defining.setup.example">
+        <title>_setupTableName() メソッドのオーバーライドの例</title>
 
-            <para>
-                テーブルクラスのインスタンスを作成する際に、
-                コンストラクタ内でいくつかの protected メソッドをコールします。
-                これにより、テーブルのメタデータを初期化します。
-                これらのメソッドを拡張して、メタデータを明示的に定義することも可能です。
-                その場合は、メソッドの最後で親クラスの同名のメソッドをコールすることを忘れないようにしましょう。
-            </para>
-
-            <example id="zend.db.table.defining.setup.example">
-                <title>_setupTableName() メソッドのオーバーライドの例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
     {
-        $this->_name = 'bugs';
+        $this-&gt;_name = 'bugs';
         parent::_setupTableName();
     }
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                オーバーライドできるメソッドは、次のとおりです。
-            </para>
+      <para>
+        オーバーライドできるメソッドは、次のとおりです。
+      </para>
 
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        <code>_setupDatabaseAdapter()</code>
-                        は、アダプタが設定されているかどうかを調べ、
-                        必要に応じてレジストリからデフォルトのアダプタを取得します。
-                        このメソッドをオーバーライドすると、
-                        データベースアダプタを別の場所から取得できます。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <code>_setupTableName()</code>
-                        は、デフォルトのテーブル名をクラス名に設定します。
-                        このメソッドをオーバーライドすると、
-                        この処理の前にテーブル名を指定することができます。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <code>_setupMetadata()</code>
-                        はテーブル名が "schema.table" 形式の場合にスキーマを設定し、
-                        <code>describeTable()</code> をコールしてメタデータ情報を取得します。
-                        このメソッドが返す配列のカラム
-                        <code>$_cols</code> の情報をデフォルトで使用します。
-                        このメソッドをオーバーライドすると、カラムを指定することができます。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <code>_setupPrimaryKey()</code>
-                        はデフォルトの主キーを <code>describeTable()</code>
-                        から取得した内容に設定し、配列 <code>$_cols</code>
-                        に主キーカラムが含まれているかどうかを調べます。
-                        このメソッドをオーバーライドすると、主キーカラムを指定することができます。
-                    </para>
-                </listitem>
-            </itemizedlist>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <code>_setupDatabaseAdapter()</code>
+            は、アダプタが設定されているかどうかを調べ、
+            必要に応じてレジストリからデフォルトのアダプタを取得します。
+            このメソッドをオーバーライドすると、
+            データベースアダプタを別の場所から取得できます。
+          </para>
+        </listitem>
 
-        </sect3>
+        <listitem>
+          <para>
+            <code>_setupTableName()</code>
+            は、デフォルトのテーブル名をクラス名に設定します。
+            このメソッドをオーバーライドすると、
+            この処理の前にテーブル名を指定することができます。
+          </para>
+        </listitem>
 
-    </sect2>
+        <listitem>
+          <para>
+            <code>_setupMetadata()</code>
+            はテーブル名が "schema.table" 形式の場合にスキーマを設定し、
+            <code>describeTable()</code> をコールしてメタデータ情報を取得します。
+            このメソッドが返す配列のカラム
+            <code>$_cols</code> の情報をデフォルトで使用します。
+            このメソッドをオーバーライドすると、カラムを指定することができます。
+          </para>
+        </listitem>
 
-    <sect2 id="zend.db.table.constructing">
+        <listitem>
+          <para>
+            <code>_setupPrimaryKey()</code>
+            はデフォルトの主キーを <code>describeTable()</code>
+            から取得した内容に設定し、配列 <code>$_cols</code>
+            に主キーカラムが含まれているかどうかを調べます。
+            このメソッドをオーバーライドすると、主キーカラムを指定することができます。
+          </para>
+        </listitem>
+      </itemizedlist>
+    </sect3>
 
-        <title>テーブルのインスタンスの作成</title>
+    <sect3>
+      <title>テーブルの初期化</title>
 
-        <para>
-            テーブルクラスを使用する前に、コンストラクタでそのインスタンスを作成します。
-            コンストラクタの引数はオプションの配列となります。
-            テーブルのコンストラクタのオプションのうち、最も重要なのは
-            データベースアダプタのインスタンスとなります。
-            これは RDBMS への有効な接続を表します。
-            データベースアダプタをテーブルクラスに指定する方法は三通りあります。
-            それぞれについて、以下で説明します。
-        </para>
+      <para>
+        テーブルクラスの作成時にアプリケーション固有のロジックを初期化したい場合は、
+        その作業を <code>init()</code> メソッドで行います。
+        これは、テーブルのメタデータがすべて処理された後にコールされます。
+        メタデータを変更するつもりがないのなら、<code>__construct</code>
+        メソッドよりもこちらを使用することを推奨します。
+        <example id="zend.db.table.defining.setup.example">
+          <title>init() メソッドの使用例</title>
 
-        <sect3 id="zend.db.table.constructing.adapter">
+          <programlisting role="php">&lt;?php
 
-            <title>データベースアダプタの指定</title>
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_observer;
 
-            <para>
-                データベースアダプタをテーブルクラスに指定する最初の方法は、
-                Zend_Db_Adapter_Abstract 型のオブジェクトをオプションの配列で渡すことです。
-                配列のキーは <code>'db'</code> となります。
-            </para>
+    protected function init()
+    {
+        $this-&gt;_observer = new MyObserverClass();
+    }
+}</programlisting>
+        </example></para>
+    </sect3>
+  </sect2>
 
-            <example id="zend.db.table.constructing.adapter.example">
-                <title>アダプタオブジェクトを使用した、テーブルの作成の例</title>
-                <programlisting role="php"><![CDATA[<?php
+  <sect2 id="zend.db.table.constructing">
+    <title>テーブルのインスタンスの作成</title>
+
+    <para>
+      テーブルクラスを使用する前に、コンストラクタでそのインスタンスを作成します。
+      コンストラクタの引数はオプションの配列となります。
+      テーブルのコンストラクタのオプションのうち、最も重要なのは
+      データベースアダプタのインスタンスとなります。
+      これは RDBMS への有効な接続を表します。
+      データベースアダプタをテーブルクラスに指定する方法は三通りあります。
+      それぞれについて、以下で説明します。
+    </para>
+
+    <sect3 id="zend.db.table.constructing.adapter">
+      <title>データベースアダプタの指定</title>
+
+      <para>
+        データベースアダプタをテーブルクラスに指定する最初の方法は、
+        Zend_Db_Adapter_Abstract 型のオブジェクトをオプションの配列で渡すことです。
+        配列のキーは <code>'db'</code> となります。
+      </para>
+
+      <example id="zend.db.table.constructing.adapter.example">
+        <title>アダプタオブジェクトを使用した、テーブルの作成の例</title>
+
+        <programlisting role="php">&lt;?php
 
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
-$table = new Bugs(array('db' => $db));]]></programlisting>
-            </example>
+$table = new Bugs(array('db' =&gt; $db));</programlisting>
+      </example>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.constructing.default-adapter">
+      <title>デフォルトのデータベースアダプタの設定</title>
 
-        <sect3 id="zend.db.table.constructing.default-adapter">
+      <para>
+        データベースアダプタをテーブルクラスに指定する二番目の方法は、
+        デフォルトのデータベースアダプタとして Zend_Db_Adapter_Abstract
+        型のオブジェクトを宣言することです。そのアプリケーション内で、
+        これ以降に作成したテーブルインスタンスについてこれが用いられます。
+        これを行うには、静的メソッド
+        <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code>
+        を使用します。引数は、Zend_Db_Adapter_Abstract
+        型のオブジェクトとなります。
+      </para>
 
-            <title>デフォルトのデータベースアダプタの設定</title>
+      <example id="zend.db.table.constructing.default-adapter.example">
+        <title>デフォルトアダプタを使用した、テーブルの作成の例</title>
 
-            <para>
-                データベースアダプタをテーブルクラスに指定する二番目の方法は、
-                デフォルトのデータベースアダプタとして Zend_Db_Adapter_Abstract
-                型のオブジェクトを宣言することです。そのアプリケーション内で、
-                これ以降に作成したテーブルインスタンスについてこれが用いられます。
-                これを行うには、静的メソッド
-                <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code>
-                を使用します。引数は、Zend_Db_Adapter_Abstract
-                型のオブジェクトとなります。
-            </para>
-
-            <example id="zend.db.table.constructing.default-adapter.example">
-                <title>デフォルトアダプタを使用した、テーブルの作成の例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
 // その後...
 
-$table = new Bugs();]]></programlisting>
-            </example>
+$table = new Bugs();</programlisting>
+      </example>
 
-            <para>
-                これは、たとえば起動ファイルなどでデータベースアダプタオブジェクトを作成し、
-                それをデフォルトのアダプタとして保存しておく場合などに便利です。
-                これにより、アプリケーション全体で共通のアダプタを使用することが保証されます。
-                しかし、デフォルトのアダプタのインスタンスは、ひとつだけしか設定できません。
-            </para>
+      <para>
+        これは、たとえば起動ファイルなどでデータベースアダプタオブジェクトを作成し、
+        それをデフォルトのアダプタとして保存しておく場合などに便利です。
+        これにより、アプリケーション全体で共通のアダプタを使用することが保証されます。
+        しかし、デフォルトのアダプタのインスタンスは、ひとつだけしか設定できません。
+      </para>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.constructing.registry">
+      <title>データベースアダプタのレジストリへの保存</title>
 
+      <para>
+        データベースアダプタをテーブルクラスに指定する三番目の方法は、
+        文字列ををオプションの配列で渡すことです。
+        配列のキーは、この場合も <code>'db'</code> となります。
+        この文字列は、静的な Zend_Registry インスタンスのキーとして使用します。
+        このキーのエントリが Zend_Db_Adapter_Abstract 型のオブジェクトとなります。
+      </para>
 
-        <sect3 id="zend.db.table.constructing.registry">
+      <example id="zend.db.table.constructing.registry.example">
+        <title>レジストリのキーを使用した、テーブルの作成の例</title>
 
-            <title>データベースアダプタのレジストリへの保存</title>
-
-            <para>
-                データベースアダプタをテーブルクラスに指定する三番目の方法は、
-                文字列ををオプションの配列で渡すことです。
-                配列のキーは、この場合も <code>'db'</code> となります。
-                この文字列は、静的な Zend_Registry インスタンスのキーとして使用します。
-                このキーのエントリが Zend_Db_Adapter_Abstract 型のオブジェクトとなります。
-            </para>
-
-            <example id="zend.db.table.constructing.registry.example">
-                <title>レジストリのキーを使用した、テーブルの作成の例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Registry::set('my_db', $db);
 
 // その後...
 
-$table = new Bugs(array('db' => 'my_db'));]]></programlisting>
-            </example>
+$table = new Bugs(array('db' =&gt; 'my_db'));</programlisting>
+      </example>
 
-            <para>
-                デフォルトアダプタの指定と同様、これにより、
-                アプリケーション全体で共通のアダプタを使用することが保証されます。
-                レジストリには複数のアダプタインスタンスを保存できるため、
-                より柔軟に使用できます。指定したアダプタインスタンスは
-                特定の RDBMS やデータベースインスタンスに固有のものとなります。
-                複数のデータベースにアクセスする必要がある場合は、
-                複数のアダプタが必要です。
-            </para>
+      <para>
+        デフォルトアダプタの指定と同様、これにより、
+        アプリケーション全体で共通のアダプタを使用することが保証されます。
+        レジストリには複数のアダプタインスタンスを保存できるため、
+        より柔軟に使用できます。指定したアダプタインスタンスは
+        特定の RDBMS やデータベースインスタンスに固有のものとなります。
+        複数のデータベースにアクセスする必要がある場合は、
+        複数のアダプタが必要です。
+      </para>
+    </sect3>
+  </sect2>
 
-        </sect3>
+  <sect2 id="zend.db.table.insert">
+    <title>テーブルへの行の挿入</title>
 
-    </sect2>
+    <para>
+      テーブルオブジェクトを使用して、そのオブジェクトの元になっているテーブルに
+      行を挿入することができます。そのためには、テーブルオブジェクトの
+      <code>insert()</code> メソッドを使用します。引数は連想配列で、
+      カラム名と値の対応を指定します。
+    </para>
 
-    <sect2 id="zend.db.table.insert">
+    <example id="zend.db.table.insert.example">
+      <title>テーブルへの挿入の例</title>
 
-        <title>テーブルへの行の挿入</title>
-
-        <para>
-            テーブルオブジェクトを使用して、そのオブジェクトの元になっているテーブルに
-            行を挿入することができます。そのためには、テーブルオブジェクトの
-            <code>insert()</code> メソッドを使用します。引数は連想配列で、
-            カラム名と値の対応を指定します。
-        </para>
-
-        <example id="zend.db.table.insert.example">
-            <title>テーブルへの挿入の例</title>
-            <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
 $data = array(
-    'created_on'      => '2007-03-22',
-    'bug_description' => 'Something wrong',
-    'bug_status'      => 'NEW'
+    'created_on'      =&gt; '2007-03-22',
+    'bug_description' =&gt; '何かおかしい',
+    'bug_status'      =&gt; 'NEW'
 );
 
-$table->insert($data);]]></programlisting>
-        </example>
+$table-&gt;insert($data);</programlisting>
+    </example>
 
-        <para>
-            デフォルトでは、配列内の値はリテラル値として扱われ、
-            パラメータを使用して挿入されます。これを SQL の式として扱いたい場合は、
-            文字列ではない形式で指定する必要があります。その際には
-            Zend_Db_Expr 型のオブジェクトを使用します。
-        </para>
+    <para>
+      デフォルトでは、配列内の値はリテラル値として扱われ、
+      パラメータを使用して挿入されます。これを SQL の式として扱いたい場合は、
+      文字列ではない形式で指定する必要があります。その際には
+      Zend_Db_Expr 型のオブジェクトを使用します。
+    </para>
 
-        <example id="zend.db.table.insert.example-expr">
-            <title>式をテーブルに挿入する例</title>
-            <programlisting role="php"><![CDATA[<?php
+    <example id="zend.db.table.insert.example-expr">
+      <title>式をテーブルに挿入する例</title>
+
+      <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
 $data = array(
-    'created_on'      => new Zend_Db_Expr('CURDATE()'),
-    'bug_description' => 'Something wrong',
-    'bug_status'      => 'NEW'
-);]]></programlisting>
-        </example>
+    'created_on'      =&gt; new Zend_Db_Expr('CURDATE()'),
+    'bug_description' =&gt; '何かおかしい',
+    'bug_status'      =&gt; 'NEW'
+);</programlisting>
+    </example>
 
-        <para>
-            上の例では、テーブルには自動インクリメントの主キーがあるものとします。
-            これは Zend_Db_Table_Abstract のデフォルトの挙動ですが、
-            それ以外の形式の主キーも扱えます。以下の節では、
-            さまざまな形式の主キーを扱う方法を説明します。
-        </para>
+    <para>
+      上の例では、テーブルには自動インクリメントの主キーがあるものとします。
+      これは Zend_Db_Table_Abstract のデフォルトの挙動ですが、
+      それ以外の形式の主キーも扱えます。以下の節では、
+      さまざまな形式の主キーを扱う方法を説明します。
+    </para>
 
-        <sect3 id="zend.db.table.insert.key-auto">
+    <sect3 id="zend.db.table.insert.key-auto">
+      <title>自動インクリメントのキーを持つテーブルの使用</title>
 
-            <title>自動インクリメントのキーを持つテーブルの使用</title>
+      <para>
+        自動インクリメントの主キーは、SQL の <code>INSERT</code>
+        文で主キー列を省略した場合に一意な整数値を生成します。
+      </para>
 
-            <para>
-                自動インクリメントの主キーは、SQL の <code>INSERT</code>
-                文で主キー列を省略した場合に一意な整数値を生成します。
-            </para>
+      <para>
+        Zend_Db_Table_Abstract で protected 変数
+        <code>$_sequence</code> の値を boolean の <code>true</code>
+        にすると、そのテーブルは自動インクリメントの主キーを持つものとみなされます。
+      </para>
 
-            <para>
-                Zend_Db_Table_Abstract で protected 変数
-                <code>$_sequence</code> の値を boolean の <code>true</code>
-                にすると、そのテーブルは自動インクリメントの主キーを持つものとみなされます。
-            </para>
+      <example id="zend.db.table.insert.key-auto.example">
+        <title>自動インクリメントの主キーを持つテーブルを宣言する例</title>
 
-            <example id="zend.db.table.insert.key-auto.example">
-                <title>自動インクリメントの主キーを持つテーブルを宣言する例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -450,271 +468,276 @@ class Bugs extends Zend_Db_Table_Abstract
     // これは Zend_Db_Table_Abstract クラスのデフォルト設定です。
     // 特に定義する必要はありません。
     protected $_sequence = true;
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                MySQL、Microsoft SQL Server そして SQLite
-                などの RDBMS が、主キーの自動インクリメントをサポートしています。
-            </para>
+      <para>
+        MySQL、Microsoft SQL Server そして SQLite
+        などの RDBMS が、主キーの自動インクリメントをサポートしています。
+      </para>
 
-            <para>
-                PostgreSQL の <code>SERIAL</code> 記法を使用すると、
-                テーブル名とカラム名をもとにして暗黙的にシーケンスを定義します。
-                新しい行を作成した際にはこのシーケンスを用いてキーの値を生成します。
-                IBM DB2 には、これと同等の動作をする <code>IDENTITY</code> という記法があります。
-                これらの記法を使用する場合は、Zend_Db_Table クラスで
-                <code>$_sequence</code> を <code>true</code> と設定し、
-                自動インクリメントを有効にしてください。
-            </para>
+      <para>
+        PostgreSQL の <code>SERIAL</code> 記法を使用すると、
+        テーブル名とカラム名をもとにして暗黙的にシーケンスを定義します。
+        新しい行を作成した際にはこのシーケンスを用いてキーの値を生成します。
+        IBM DB2 には、これと同等の動作をする <code>IDENTITY</code> という記法があります。
+        これらの記法を使用する場合は、Zend_Db_Table クラスで
+        <code>$_sequence</code> を <code>true</code> と設定し、
+        自動インクリメントを有効にしてください。
+      </para>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.insert.key-sequence">
+      <title>シーケンスを持つテーブルの使用</title>
 
-        <sect3 id="zend.db.table.insert.key-sequence">
+      <para>
+        シーケンスとはデータベースのオブジェクトの一種で、
+        一意な値を生成するものです。これを、
+        ひとつあるいは複数のテーブルの主キーの値として使用できます。
+      </para>
 
-            <title>シーケンスを持つテーブルの使用</title>
+      <para>
+        <code>$_sequence</code> に文字列を設定すると、
+        Zend_Db_Table_Abstract は、それがデータベースの
+        シーケンスオブジェクトの名前であるとみなします。
+        シーケンスを実行して新しい値を生成し、その値を
+        <code>INSERT</code> 操作で使用します。
+      </para>
 
-            <para>
-                シーケンスとはデータベースのオブジェクトの一種で、
-                一意な値を生成するものです。これを、
-                ひとつあるいは複数のテーブルの主キーの値として使用できます。
-            </para>
+      <example id="zend.db.table.insert.key-sequence.example">
+        <title>シーケンスを用いたテーブルを宣言する例</title>
 
-            <para>
-                <code>$_sequence</code> に文字列を設定すると、
-                Zend_Db_Table_Abstract は、それがデータベースの
-                シーケンスオブジェクトの名前であるとみなします。
-                シーケンスを実行して新しい値を生成し、その値を
-                <code>INSERT</code> 操作で使用します。
-            </para>
-
-            <example id="zend.db.table.insert.key-sequence.example">
-                <title>シーケンスを用いたテーブルを宣言する例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
 
     protected $_sequence = 'bug_sequence';
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                Oracle、PostgreSQL そして IBM DB2 などの RDBMS が、
-                データベースでのシーケンスオブジェクトをサポートしています。
-            </para>
+      <para>
+        Oracle、PostgreSQL そして IBM DB2 などの RDBMS が、
+        データベースでのシーケンスオブジェクトをサポートしています。
+      </para>
 
-        </sect3>
+      <para>
+        PostgreSQL および IBM DB2 は、
+        暗黙的にシーケンスを定義してカラムに関連付ける構文もサポートしています。
+        この記法を使う場合は、
+        そのテーブルで自動インクリメントキーのカラムを使用するようにします。
+        シーケンスのキーの次の値を取得することがある場合にのみ
+        シーケンス名を文字列で定義します。
+      </para>
+    </sect3>
 
-        <sect3 id="zend.db.table.insert.key-natural">
+    <sect3 id="zend.db.table.insert.key-natural">
+      <title>自然キーを持つテーブルの使用</title>
 
-            <title>自然キーを持つテーブルの使用</title>
+      <para>
+        自然キーを持つテーブルもあります。自然キーとは、
+        テーブルやシーケンスによって自動生成されるもの以外のキーということです。
+        この場合は、主キーの値を指定する必要があります。
+      </para>
 
-            <para>
-                自然キーを持つテーブルもあります。自然キーとは、
-                テーブルやシーケンスによって自動生成されるもの以外のキーということです。
-                この場合は、主キーの値を指定する必要があります。
-            </para>
+      <para>
+        <code>$_sequence</code> の値を boolean の <code>false</code>
+        にすると、Zend_Db_Table_Abstract はそのテーブルが自然キーを持つものとみなします。
+        <code>insert()</code> メソッドを使用する際には、
+        主キーカラムの値をデータの配列で指定する必要があります。
+        指定しなかった場合、このメソッドは
+        Zend_Db_Table_Exception をスローします。
+      </para>
 
-            <para>
-                <code>$_sequence</code> の値を boolean の <code>false</code>
-                にすると、Zend_Db_Table_Abstract はそのテーブルが自然キーを持つものとみなします。
-                <code>insert()</code> メソッドを使用する際には、
-                主キーカラムの値をデータの配列で指定する必要があります。
-                指定しなかった場合、このメソッドは
-                Zend_Db_Table_Exception をスローします。
-            </para>
+      <example id="zend.db.table.insert.key-natural.example">
+        <title>自然キーを用いたテーブルを宣言する例</title>
 
-            <example id="zend.db.table.insert.key-natural.example">
-                <title>自然キーを用いたテーブルを宣言する例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class BugStatus extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bug_status';
 
     protected $_sequence = false;
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <note>
-                <para>
-                    自然キーのテーブルは、すべての RDBMS がサポートしています。
-                    自然キーを使用するテーブルの例としては、
-                    ルックアップテーブルや多対多リレーションの中間テーブル、
-                    そして複合主キーを持つ大半のテーブルなどがあります。
-                </para>
-            </note>
-
-        </sect3>
-
-    </sect2>
-
-    <sect2 id="zend.db.table.update">
-
-        <title>テーブルの行の更新</title>
-
+      <note>
         <para>
-            データベースのテーブルの行を更新するには、テーブルクラスの
-            <code>update</code> メソッドを使用します。
-            このメソッドには二つの引数を指定します。変更するカラムと
-            それらのカラムに代入する新しい値を表す連想配列、
-            そして <code>UPDATE</code> 操作の対象となる行を指定する
-            <code>WHERE</code> 句で使用する SQL 式です。
+          自然キーのテーブルは、すべての RDBMS がサポートしています。
+          自然キーを使用するテーブルの例としては、
+          ルックアップテーブルや多対多リレーションの中間テーブル、
+          そして複合主キーを持つ大半のテーブルなどがあります。
         </para>
+      </note>
+    </sect3>
+  </sect2>
 
-        <example id="zend.db.table.update.example">
-            <title>テーブルの行の更新の例</title>
-            <programlisting role="php"><![CDATA[<?php
+  <sect2 id="zend.db.table.update">
+    <title>テーブルの行の更新</title>
+
+    <para>
+      データベースのテーブルの行を更新するには、テーブルクラスの
+      <code>update</code> メソッドを使用します。
+      このメソッドには二つの引数を指定します。変更するカラムと
+      それらのカラムに代入する新しい値を表す連想配列、
+      そして <code>UPDATE</code> 操作の対象となる行を指定する
+      <code>WHERE</code> 句で使用する SQL 式です。
+    </para>
+
+    <example id="zend.db.table.update.example">
+      <title>テーブルの行の更新の例</title>
+
+      <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
 $data = array(
-    'updated_on'      => '2007-03-23',
-    'bug_status'      => 'FIXED'
+    'updated_on'      =&gt; '2007-03-23',
+    'bug_status'      =&gt; 'FIXED'
 );
 
-$where = $table->getAdapter()->quoteInto('bug_id = ?', 1234);
+$where = $table-&gt;getAdapter()-&gt;quoteInto('bug_id = ?', 1234);
 
-$table->update($data, $where);]]></programlisting>
-        </example>
+$table-&gt;update($data, $where);</programlisting>
+    </example>
 
-        <para>
-            テーブルの <code>update()</code> メソッドはデータベースアダプタの
-            <link linkend="zend.db.adapter.write.update"><code>update()</code></link>
-            メソッドへのプロキシなので、
-            二番目の引数は、SQL 式の配列とすることができます。
-            その場合、それぞれの式が論理演算子 <code>AND</code>
-            で連結されます。
-        </para>
+    <para>
+      テーブルの <code>update()</code> メソッドはデータベースアダプタの
+      <link linkend="zend.db.adapter.write.update"><code>update()</code></link>
+      メソッドへのプロキシなので、
+      二番目の引数は、SQL 式の配列とすることができます。
+      その場合、それぞれの式が論理演算子 <code>AND</code>
+      で連結されます。
+    </para>
 
-        <note>
-            <para>
-                SQL 式の中の値や識別子は、自動的にはクォートされません。
-                クォートが必要な値や識別子を使用する場合は、自分でクォートする必要があります。
-                データベースアダプタの <code>quote()</code>、<code>quoteInto()</code>
-                および <code>quoteIdentifier()</code> を使用してください。
-            </para>
-        </note>
+    <note>
+      <para>
+        SQL 式の中の値や識別子は、自動的にはクォートされません。
+        クォートが必要な値や識別子を使用する場合は、自分でクォートする必要があります。
+        データベースアダプタの <code>quote()</code>、<code>quoteInto()</code>
+        および <code>quoteIdentifier()</code> を使用してください。
+      </para>
+    </note>
+  </sect2>
 
-    </sect2>
+  <sect2 id="zend.db.table.delete">
+    <title>テーブルからの行の削除</title>
 
-    <sect2 id="zend.db.table.delete">
+    <para>
+      データベースのテーブルから行を削除するには、テーブルクラスの
+      <code>delete()</code> メソッドを使用します。
+      このメソッドにはひとつの引数を指定します。この引数は
+      <code>WHERE</code> 句で使用する SQL 式で、
+      これにより、削除対象となる行を指定します。
+    </para>
 
-        <title>テーブルからの行の削除</title>
+    <example id="zend.db.table.delete.example">
+      <title>テーブルからの行の削除の例</title>
 
-        <para>
-            データベースのテーブルから行を削除するには、テーブルクラスの
-            <code>delete()</code> メソッドを使用します。
-            このメソッドにはひとつの引数を指定します。この引数は
-            <code>WHERE</code> 句で使用する SQL 式で、
-            これにより、削除対象となる行を指定します。
-        </para>
-
-        <example id="zend.db.table.delete.example">
-            <title>テーブルからの行の削除の例</title>
-            <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
-$where = $table->getAdapter()->quoteInto('bug_id = ?', 1235);
+$where = $table-&gt;getAdapter()-&gt;quoteInto('bug_id = ?', 1235);
 
-$table->delete($where);]]></programlisting>
-        </example>
+$table-&gt;delete($where);</programlisting>
+    </example>
 
-        <para>
-            二番目の引数は、SQL 式の配列とすることができます。
-            その場合、それぞれの式が論理演算子 <code>AND</code>
-            で連結されます。
-        </para>
+    <para>
+      二番目の引数は、SQL 式の配列とすることができます。
+      その場合、それぞれの式が論理演算子 <code>AND</code>
+      で連結されます。
+    </para>
 
-        <para>
-            テーブルの <code>delete()</code> メソッドはデータベースアダプタの
-            <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link>
-            メソッドへのプロキシなので、
-            二番目の引数は、SQL 式の配列とすることができます。
-            その場合、それぞれの式が論理演算子 <code>AND</code>
-            で連結されます。
-        </para>
+    <para>
+      テーブルの <code>delete()</code> メソッドはデータベースアダプタの
+      <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link>
+      メソッドへのプロキシなので、
+      二番目の引数は、SQL 式の配列とすることができます。
+      その場合、それぞれの式が論理演算子 <code>AND</code>
+      で連結されます。
+    </para>
 
-        <note>
-            <para>
-                SQL 式の中の値や識別子は、自動的にはクォートされません。
-                クォートが必要な値や識別子を使用する場合は、自分でクォートする必要があります。
-                データベースアダプタの <code>quote()</code>、<code>quoteInto()</code>
-                および <code>quoteIdentifier()</code> を使用してください。
-            </para>
-        </note>
+    <note>
+      <para>
+        SQL 式の中の値や識別子は、自動的にはクォートされません。
+        クォートが必要な値や識別子を使用する場合は、自分でクォートする必要があります。
+        データベースアダプタの <code>quote()</code>、<code>quoteInto()</code>
+        および <code>quoteIdentifier()</code> を使用してください。
+      </para>
+    </note>
+  </sect2>
 
-    </sect2>
+  <sect2 id="zend.db.table.find">
+    <title>主キーによる行の検索</title>
 
-    <sect2 id="zend.db.table.find">
+    <para>
+      データベースのテーブルに対して、指定した主キーの値に対応する行を問い合わせるには
+      <code>find()</code> メソッドを使用します。
+      このメソッドの最初の引数は、テーブルの主キーに対応する
+      単一の値か、あるいは複数の値の配列となります。
+    </para>
 
-        <title>主キーによる行の検索</title>
+    <example id="zend.db.table.find.example">
+      <title>主キーの値によって行を捜す例</title>
 
-        <para>
-            データベースのテーブルに対して、指定した主キーの値に対応する行を問い合わせるには
-            <code>find()</code> メソッドを使用します。
-            このメソッドの最初の引数は、テーブルの主キーに対応する
-            単一の値か、あるいは複数の値の配列となります。
-        </para>
-
-        <example id="zend.db.table.find.example">
-            <title>主キーの値によって行を捜す例</title>
-            <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
 // 単一の行を探し、
 // Rowset を返します
-$rows = $table->find(1234);
+$rows = $table-&gt;find(1234);
 
 // 複数の行を探し、
 // こちらも Rowset を返します
-$rows = $table->find(array(1234, 5678));]]></programlisting>
-        </example>
+$rows = $table-&gt;find(array(1234, 5678));</programlisting>
+    </example>
 
-        <para>
-            単一の値を指定した場合は、このメソッドが返す行数は最大でも一行になります。
-            主キーの値が重複することはないので、指定した値に対応する行は
-            テーブル内で最大でも一行だけだからです。
-            複数の値を配列で指定した場合は、このメソッドが返す結果の最大数は
-            配列で指定した値の数となります。
-        </para>
+    <para>
+      単一の値を指定した場合は、このメソッドが返す行数は最大でも一行になります。
+      主キーの値が重複することはないので、指定した値に対応する行は
+      テーブル内で最大でも一行だけだからです。
+      複数の値を配列で指定した場合は、このメソッドが返す結果の最大数は
+      配列で指定した値の数となります。
+    </para>
 
-        <para>
-            <code>find()</code> メソッドの返す行数は、主キーで指定した値より少なくなるかもしれません。
-            たとえば指定した値に対応する行がデータベースのテーブルに存在しなかった場合などです。
-            このメソッドが返す行数がゼロになる可能性もあります。
-            このように結果の行数が可変なので、<code>find()</code>
-            メソッドが返すオブジェクトの型は Zend_Db_Table_Rowset_Abstract
-            となります。
-        </para>
+    <para>
+      <code>find()</code> メソッドの返す行数は、主キーで指定した値より少なくなるかもしれません。
+      たとえば指定した値に対応する行がデータベースのテーブルに存在しなかった場合などです。
+      このメソッドが返す行数がゼロになる可能性もあります。
+      このように結果の行数が可変なので、<code>find()</code>
+      メソッドが返すオブジェクトの型は Zend_Db_Table_Rowset_Abstract
+      となります。
+    </para>
 
-        <para>
-            主キーが複合キーの場合、つまり複数のカラムから構成されるキーの場合は、
-            追加のカラムを <code>find()</code> メソッドの引数で指定します。
-            テーブルの主キーのカラム数と同じ数の引数を指定しなければなりません。
-        </para>
+    <para>
+      主キーが複合キーの場合、つまり複数のカラムから構成されるキーの場合は、
+      追加のカラムを <code>find()</code> メソッドの引数で指定します。
+      テーブルの主キーのカラム数と同じ数の引数を指定しなければなりません。
+    </para>
 
-        <para>
-            複合主キーのテーブルから複数行を取得するには、
-            各引数を配列で指定します。これらすべての配列の要素数は同じでなければなりません。
-            各配列の値が、その順にキー列の値として用いられます。
-            たとえば、すべての配列の最初の要素で複合主キーの最初の値を指定し、
-            すべての配列の二番目の要素で複合主キーの二番目の値を設定し、……
-            というようになります。
-        </para>
+    <para>
+      複合主キーのテーブルから複数行を取得するには、
+      各引数を配列で指定します。これらすべての配列の要素数は同じでなければなりません。
+      各配列の値が、その順にキー列の値として用いられます。
+      たとえば、すべての配列の最初の要素で複合主キーの最初の値を指定し、
+      すべての配列の二番目の要素で複合主キーの二番目の値を設定し、……
+      というようになります。
+    </para>
 
-        <example id="zend.db.table.find.example-compound">
-            <title>複合主キーの値の指定による行の取得の例</title>
-            <para>
-                以下の <code>find()</code> メソッドは、データベース内のふたつの行にマッチします。
-                最初の行の主キーの値は (1234, 'ABC') で、次の行の主キーの値は
-                (5678, 'DEF') となります。
-            </para>
-            <programlisting role="php"><![CDATA[<?php
+    <example id="zend.db.table.find.example-compound">
+      <title>複合主キーの値の指定による行の取得の例</title>
+
+      <para>
+        以下の <code>find()</code> メソッドは、データベース内のふたつの行にマッチします。
+        最初の行の主キーの値は (1234, 'ABC') で、次の行の主キーの値は
+        (5678, 'DEF') となります。
+      </para>
+
+      <programlisting role="php">&lt;?php
 
 class BugsProducts extends Zend_Db_Table_Abstract
 {
@@ -726,114 +749,203 @@ $table = new BugsProducts();
 
 // 単一の行を複合主キーで探し、
 // Rowset を返します
-$rows = $table->find(1234, 'ABC');
+$rows = $table-&gt;find(1234, 'ABC');
 
 // 複数の行を複合主キーで探し、
 // こちらも Rowset を返します
-$rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]></programlisting>
-        </example>
+$rows = $table-&gt;find(array(1234, 5678), array('ABC', 'DEF'));</programlisting>
+    </example>
+  </sect2>
 
-    </sect2>
+  <sect2 id="zend.db.table.fetch-all">
+    <title>行セットの問い合わせ</title>
 
-    <sect2 id="zend.db.table.fetch-all">
+    <sect3 id="zend.db.table.fetch-all.select">
+      <title>Select API</title>
 
-        <title>行セットの問い合わせ</title>
+      <para><warning>
+          <para>
+            取得操作用の API は変更され、
+            <code>Zend_Db_Table_Select</code> オブジェクトでクエリを変更できるようになりました。
+            しかし、昔ながらの方法である <code>fetchRow()</code> や
+            <code>fetchAll()</code> は今でも同じように使用することができます。
+          </para>
 
-        <para>
-            主キーの値以外を条件として行のセットを問い合わせるには、
-            テーブルクラスの <code>fetchAll()</code> メソッドを使用します。
-            このメソッドは、Zend_Db_Table_Rowset_Abstract
-            型のオブジェクトを返します。
-        </para>
+          <para>
+            次の文は、どれも正しくて同じ動作をします。
+            しかし、新しい使用法に対応するためにもできるだけ新しい書き方に変更することをお勧めします。
+          </para>
 
+          <para><programlisting role="php">// 行セットを取得します
+    $rows = $table-&gt;fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
+    $rows = $table-&gt;fetchAll($table-&gt;select()-&gt;where('bug_status = ?', 'NEW')
+                                             -&gt;order('bug_id ASC')
+                                             -&gt;limit(10, 0));
+
+    // 単一の行を取得します
+    $row = $table-&gt;fetchRow('bug_status = "NEW"', 'bug_id ASC');
+    $row = $table-&gt;fetchRow($table-&gt;select()-&gt;where('bug_status = ?', 'NEW')
+                                            -&gt;order('bug_id ASC'));</programlisting></para>
+        </warning></para>
+
+      <para>
+        <classname>Zend_Db_Table_Select</classname> オブジェクトは
+        <classname>Zend_Db_Select</classname> を継承したものであり、
+        クエリにはいくつか制限があります。追加された機能や制限事項を以下にまとめます。
+      </para>
+
+      <itemizedlist>
+        <listitem>
+          <para>
+            fetchRow あるいは fetchAll のクエリで、カラムのサブセットを返すことが
+            <emphasis>できます</emphasis>。
+            結果が巨大なものになるけれどもその中には使用しないカラムもある
+            といった場合に有用です。
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            select する際に、式の結果をカラムとして指定することが
+            <emphasis>できます</emphasis>。
+            しかし、この場合は行 (あるいは行セット) は
+            <property>readOnly</property> となり、save()
+            することはできません。<property>readOnly</property> な
+            <code>Zend_Db_Table_Row</code> に対して
+            <code>save()</code> を実行しようとすると、例外がスローされます。
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            select で JOIN 句を使用して、複数テーブルからの検索を行うことが
+            <emphasis>できます</emphasis>。
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            JOIN したテーブルのカラムを結果の行や行セットに指定することは
+            <emphasis>できません</emphasis>。
+            そうすると、例外がスローされます。
+            これにより、<code>Zend_Db_Table</code>
+            の整合性が保証されます。つまり、
+            <code>Zend_Db_Table_Row</code> はその親のテーブルのカラムしか参照しないということです。
+          </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>
+        <classname>Zend_Db_Table_Select</classname> が開発者向けに提供するメソッドは
+        <code>isReadOnly()</code> だけです。これは、select
+        が SQL クエリ文字列に変換された後で評価されます。
+        主な目的は、SELECT クエリの条件が正しい形式であるかどうかを確認することです。
         <example id="zend.db.table.fetch-all.example1a">
-            <title>式から行を取得する例</title>
-            <programlisting role="php"><![CDATA[<?php
+          <title>単純な使用法</title>
+
+          <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
-$where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
+$select = $table-&gt;select();
+$select-&gt;where('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($where);]]></programlisting>
-        </example>
+$rows = $table-&gt;fetchAll($select);</programlisting>
+        </example></para>
 
-        <para>
-            このメソッドの最初の引数は
-            <code>WHERE</code> 句で使用する SQL 式です。
-            先ほど <code>update()</code> メソッドや <code>delete()</code>
-            メソッドで説明したものと似ています。
-        </para>
+      <para>
+        このコンポーネントでは「流れるようなインターフェイス」
+        を実装しているので、この例はもっと省略して書くこともできます。
+      </para>
 
-        <para>
-            <code>WHERE</code> 句の引数は、上の例のような文字列以外にも配列となることもあります。
-            配列の各要素について、もしキーが文字列なら
-            「キーはプレースホルダを含む SQL の式、
-            そして値はプレースホルダを置き換える値」
-            として扱われます。
-        </para>
+      <para><example id="zend.db.table.fetch-all.example1a">
+          <title>流れるようなインターフェイスの例</title>
 
-        <example id="zend.db.table.fetch-all.example1b">
-            <title>式の配列から行を取得する例</title>
-            <programlisting role="php"><![CDATA[<?php
+          <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
-$where = array('bug_status = ?' => 'NEW');
+$rows = $table-&gt;fetchAll($table-&gt;select()-&gt;where('bug_status = ?', 'NEW'));</programlisting>
+        </example></para>
+    </sect3>
 
-$rows = $table->fetchAll($where);]]></programlisting>
-        </example>
+    <sect3 id="zend.db.table.fetch-all.usage">
+      <title>行セットの取得</title>
 
-        <para>
-            配列に複数の要素が含まれる場合は、それらを
-            <code>AND</code> で連結して使用します。
-        </para>
+      <para>
+        主キーの値以外を条件として行のセットを問い合わせるには、
+        テーブルクラスの <code>fetchAll()</code> メソッドを使用します。
+        このメソッドは、<code>Zend_Db_Table_Rowset_Abstract</code>
+        型のオブジェクトを返します。
+      </para>
 
-        <example id="zend.db.table.fetch-all.example1c">
-            <title>複数の式の配列から行を取得する例</title>
-            <programlisting role="php"><![CDATA[<?php
+      <example id="zend.db.table.fetch-all.example1a">
+        <title>式から行を取得する例</title>
+
+        <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
-$where = array(
-            'bug_status = ?'  => 'NEW',
-            'reported_by = ?' => 'dduck'
-        );
+$select = $table-&gt;select()-&gt;where('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($where);
+$rows = $table-&gt;fetchAll($select);</programlisting>
+      </example>
+
+      <para>
+        <code>WHERE</code> 句の引数は、上の例のような文字列以外にも配列となることもあります。
+        配列の各要素について、もしキーが文字列なら
+        「キーはプレースホルダを含む SQL の式、
+        そして値はプレースホルダを置き換える値」
+        として扱われます。
+      </para>
+
+      <example id="zend.db.table.fetch-all.example1b">
+        <title>式の配列から行を取得する例</title>
+
+        <programlisting role="php">&lt;?php
+
+$table = new Bugs();
+
+$select = $table-&gt;select()-&gt;where(array('bug_status = ?' =&gt; 'NEW'));
+
+$rows = $table-&gt;fetchAll($select);</programlisting>
+      </example>
+
+      <para>
+        配列に複数の要素が含まれる場合は、それらを
+        <code>AND</code> で連結して使用します。
+      </para>
+
+      <example id="zend.db.table.fetch-all.example1c">
+        <title>複数の式の配列から行を取得する例</title>
+
+        <programlisting role="php">&lt;?php
+
+$table = new Bugs();
+
+$select = $table-&gt;select()-&gt;where(array('bug_status = ?' =&gt; 'NEW',
+                                        'reported_by = ?' =&gt; 'dduck'));
+
+$rows = $table-&gt;fetchAll($select);
 // 作成される SQL は、次のようになります
 // WHERE bug_status = 'NEW' AND reported_by = 'dduck'
-]]></programlisting>
-        </example>
+</programlisting>
+      </example>
 
-        <note>
-            <para>
-                SQL 式の中の値や識別子は、自動的にはクォートされません。
-                クォートが必要な値や識別子を使用する場合は、自分でクォートする必要があります。
-                データベースアダプタの <code>quote()</code>、<code>quoteInto()</code>
-                および <code>quoteIdentifier()</code> を使用してください。
-            </para>
-        </note>
+      <para>
+        <code>ORDER BY</code> での並べ替えの条件句やオフセットを表す整数値を指定して、
+        クエリの返す結果を絞りこむことができます。
+        これらの値は <code>LIMIT</code> 句で用いられます。
+        <code>LIMIT</code> 構文をサポートしていない RDBMS
+        では、それと同等のロジックで用いられます。
+      </para>
 
-        <para>
-            二番目の引数は、単一の式あるいは複数の式の配列です。これは、
-            <code>ORDER BY</code> 句の並べ替え条件として使用します。
-        </para>
+      <example id="zend.db.table.fetch-all.example2">
+        <title>式を使用した行の検索の例</title>
 
-        <para>
-            三番目および四番目の引数は、件数およびオフセットを表す整数値です。
-            クエリの結果の特定の一部を返すために使用します。
-            これらの値は <code>LIMIT</code> 句で用いられます。
-            <code>LIMIT</code> 構文をサポートしていない RDBMS
-            では、それと同等のロジックで用いられます。
-        </para>
-
-        <example id="zend.db.table.fetch-all.example2">
-            <title>式を使用した行の検索の例</title>
-            <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 $table = new Bugs();
-
-$where  = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
 
 $order  = 'bug_id';
 
@@ -841,207 +953,293 @@ $order  = 'bug_id';
 $count  = 10;
 $offset = 20;
 
-$rows = $table->fetchAll($where, $order, $count, $offset);]]></programlisting>
-        </example>
+$select = $table-&gt;select()-&gt;where(array('bug_status = ?' =&gt; 'NEW'))
+                          -&gt;order($order)
+                          -&gt;limit($count, $offset);
 
-        <para>
-            これらのオプションはどれも、必須ではありません。
-            引数を省略した場合は、結果セットには
-            テーブルのすべての行が含まれ、その順序は予測不可能です。
-        </para>
+$rows = $table-&gt;fetchAll($select);</programlisting>
+      </example>
 
-    </sect2>
+      <para>
+        これらのオプションはどれも、必須ではありません。
+        ORDER 句を省略した場合は、結果セットに複数の行が含まれる場合の並び順は予測不可能です。
+        LIMIT 句を省略した場合は、WHERE 句にマッチするすべての行を取得することになります。
+      </para>
+    </sect3>
 
-    <sect2 id="zend.db.table.fetch-row">
+    <sect3>
+      <title>高度な使用法</title>
 
-        <title>単一の行の問い合わせ</title>
+      <para>
+        リクエストの内容をより明確に指定して最適化するために、
+        行/行セットが返すカラムの数を絞り込みたいこともあるでしょう。
+        これは、select オブジェクトの FROM 句で行います。
+        FROM 句の最初の引数は Zend_Db_Select オブジェクトと同じですが、
+        さらに Zend_Db_Table_Abstract
+        のインスタンスを渡すこともでき、テーブル名を自動的に検出します。
+      </para>
 
-        <para>
-            主キーの値以外を条件として単一の行を問い合わせるには、
-            テーブルクラスの <code>fetchRow()</code> メソッドを使用します。
-            このメソッドの使用法は <code>fetchAll()</code> メソッドと似ており、
-            引数には <code>WHERE</code> の式および並べ替えの条件を指定します。
-        </para>
+      <para><example id="zend.db.table.fetch-all.example1a">
+          <title>指定したカラムの取得</title>
 
-        <example id="zend.db.table.fetch-row.example1">
-            <title>式から単一の行を取得する例</title>
-            <programlisting role="php"><![CDATA[<?php
-
-$table = new Bugs();
-
-$where  = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
-
-$order  = 'bug_id';
-
-$row = $table->fetchRow($where, $order);]]></programlisting>
-        </example>
-
-        <para>
-            このメソッドは、Zend_Db_Table_Row_Abstract 型のオブジェクトを返します。
-            指定した検索条件に一致する行がデータベースのテーブルにない場合は、
-            <code>fetchRow()</code> は PHP の <code>null</code> 値を返します。
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.db.table.info">
-
-        <title>テーブルのメタデータ情報の取得</title>
-
-        <para>
-            Zend_Db_Table_Abstract クラスは、メタデータに関するいくつかの情報を提供します。
-            <code>info()</code> メソッドは配列を返し、その中には
-            テーブルについての情報、カラムや主キー、その他のメタデータが含まれます。
-        </para>
-
-        <example id="zend.db.table.info.example">
-            <title>テーブル名を取得する例</title>
-            <programlisting role="php"><![CDATA[<?php
+          <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
-$info = $table->info();
+$select = $table-&gt;select();
+$select-&gt;from($table, array('bug_id', 'bug_description'))
+       -&gt;where('bug_status = ?', 'NEW');
 
-echo "テーブル名は " . $info['name'] . " です\n";]]></programlisting>
+$rows = $table-&gt;fetchAll($select);</programlisting>
+        </example></para>
+
+      <para>
+        <important>
+          <para>
+            この状態でも、行セット自体は '正しい' 形式です。
+            単にひとつのテーブルの中の一部のカラムを含んでいるというだけです。
+            この中の行に対して save() メソッドをコールすると、
+            そこに含まれているフィールドだけを更新します。
+          </para>
+        </important>
+        FROM 句で式を指定すると、その結果を readOnly の行/行セット
+        として返します。この例では、bugs テーブルを検索して
+        個人別のバグの報告件数を取得しています。
+        GROUP 句に注目しましょう。これで、返される行に
+        'count' というカラムが含まれるようになり、
+        スキーマの他のカラムと同じようにアクセスできるようになります。
+      </para>
+
+      <para>
+        <example id="zend.db.table.fetch-all.example1a">
+          <title>式の結果をカラムとして取得する</title>
+
+          <programlisting role="php">&lt;?php
+
+$table = new Bugs();
+
+$select = $table-&gt;select();
+$select-&gt;from($table, array('COUNT(reported_by) as `count`', 'reported_by'))
+       -&gt;where('bug_status = ?', 'NEW')
+       -&gt;group('reported_by');
+
+$rows = $table-&gt;fetchAll($select);</programlisting>
         </example>
+        クエリの一部にルックアップテーブルを使用し、
+        より絞り込んで取得することもできます。
+        この例では、検索時に accounts テーブルを使用して
+        'Bob' が報告したすべてのバグを探しています。
+      </para>
 
+      <para>
+        <example id="zend.db.table.fetch-all.example1a">
+          <title>ルックアップテーブルによる fetchAll() の結果の絞込み</title>
+
+          <programlisting role="php">&lt;?php
+
+$table = new Bugs();
+
+$select = $table-&gt;select();
+$select-&gt;where('bug_status = ?', 'NEW')
+       -&gt;join('accounts', 'accounts.account_id = bugs.reported_by')
+       -&gt;where('accounts.account_name = ?', 'Bob');
+
+$rows = $table-&gt;fetchAll($select);</programlisting>
+        </example>
+      </para>
+    </sect3>
+  </sect2>
+
+  <sect2 id="zend.db.table.fetch-row">
+    <title>単一の行の問い合わせ</title>
+
+    <para>
+      <code>fetchAll()</code> と同じような条件を指定して、
+      単一の行を問い合わせることができます。
+    </para>
+
+    <example id="zend.db.table.fetch-row.example1">
+      <title>式から単一の行を取得する例</title>
+
+      <programlisting role="php">&lt;?php
+
+$table = new Bugs();
+
+$select  = $table-&gt;select()-&gt;where('bug_status = ?', 'NEW')
+                           -&gt;order('bug_id');
+
+$row = $table-&gt;fetchRow($where);</programlisting>
+    </example>
+
+    <para>
+      このメソッドは、Zend_Db_Table_Row_Abstract 型のオブジェクトを返します。
+      指定した検索条件に一致する行がデータベースのテーブルにない場合は、
+      <code>fetchRow()</code> は PHP の <code>null</code> 値を返します。
+    </para>
+  </sect2>
+
+  <sect2 id="zend.db.table.info">
+    <title>テーブルのメタデータ情報の取得</title>
+
+    <para>
+      Zend_Db_Table_Abstract クラスは、メタデータに関するいくつかの情報を提供します。
+      <code>info()</code> メソッドは配列を返し、その中には
+      テーブルについての情報、カラムや主キー、その他のメタデータが含まれます。
+    </para>
+
+    <example id="zend.db.table.info.example">
+      <title>テーブル名を取得する例</title>
+
+      <programlisting role="php">&lt;?php
+
+$table = new Bugs();
+
+$info = $table-&gt;info();
+
+echo "テーブル名は " . $info['name'] . " です\n";</programlisting>
+    </example>
+
+    <para>
+      <code>info()</code> メソッドが返す配列のキーについて、
+      以下にまとめます。
+    </para>
+
+    <itemizedlist>
+      <listitem>
         <para>
-            <code>info()</code> メソッドが返す配列のキーについて、
-            以下にまとめます。
+          <emphasis role="strong">name</emphasis> =&gt;
+          テーブルの名前。
         </para>
+      </listitem>
 
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis role="strong">name</emphasis> =>
-                    テーブルの名前。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">cols</emphasis> =>
-                    テーブルのカラム名を表す配列。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">primary</emphasis> =>
-                    主キーのカラム名を表す配列。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">metadata</emphasis> =>
-                    カラム名とカラムに関する情報を関連付けた連想配列。
-                    これは <code>describeTable()</code> メソッドが返す情報です。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">rowClass</emphasis> =>
-                    このテーブルインスタンスのメソッドが返す行オブジェクトで使用する
-                    具象クラス名。デフォルトは Zend_Db_Table_Row です。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">rowsetClass</emphasis> =>
-                    このテーブルインスタンスのメソッドが返す行セットオブジェクトで使用する
-                    具象クラス名。デフォルトは Zend_Db_Table_Rowset です。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">referenceMap</emphasis> =>
-                    このテーブルから任意の親テーブルに対する参照の情報を含む連想配列。
-                    <xref linkend="zend.db.table.relationships.defining" />
-                    を参照ください。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">dependentTables</emphasis> =>
-                    このテーブルを参照しているテーブルのクラス名の配列。
-                    <xref linkend="zend.db.table.relationships.defining" />
-                    を参照ください。
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="strong">schema</emphasis> =>
-                    テーブルのスキーマ (あるいはデータベース、あるいは表領域)
-                    の名前。
-                </para>
-            </listitem>
-        </itemizedlist>
-
-    </sect2>
-
-    <sect2 id="zend.db.table.metadata.caching">
-
-        <title>テーブルのメタデータのキャッシュ</title>
-
+      <listitem>
         <para>
-            デフォルトでは <code>Zend_Db_Table_Abstract</code> の問合せ先は
-            テーブルオブジェクトのインスタンスの
-            <link linkend="zend.db.table.info">テーブルメタデータ</link>
-            が指すデータベースとなります。
-            つまり、テーブルオブジェクトを作成する際にデフォルトで行われれることは、アダプタの
-            <code>describeTable()</code> メソッドによってデータベースからテーブルのメタデータを取得するということになります。
+          <emphasis role="strong">cols</emphasis> =&gt;
+          テーブルのカラム名を表す配列。
         </para>
+      </listitem>
 
+      <listitem>
         <para>
-            同一のテーブルに対して複数のテーブルオブジェクトを作成する場合などに、
-            毎回テーブルのめたデータをデータベースに問い合わせることは
-            パフォーマンスの観点からも好ましくありません。
-            このような場合のために、データベースから取得したテーブルメタデータをキャッシュしておくことができます。
+          <emphasis role="strong">primary</emphasis> =&gt;
+          主キーのカラム名を表す配列。
         </para>
+      </listitem>
 
+      <listitem>
         <para>
-            テーブルのメタデータをキャッシュする主な方法は、次のふたつです。
-
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        <emphasis role="strong">Zend_Db_Table_Abstract::setDefaultMetadataCache() をコールする</emphasis> -
-                        これは、すべてのテーブルクラスで使用するデフォルトのキャッシュオブジェクトを一度で設定できます。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="strong">Zend_Db_Table_Abstract::__construct() を設定する</emphasis> -
-                        これは、特定のテーブルクラスのインスタンスでh使用するキャッシュオブジェクトを設定できます。
-                    </para>
-                </listitem>
-            </itemizedlist>
-
-            どちらの場合においても、メソッドの引数はひとつで、<code>null</code> (キャッシュを使用しない)
-            あるいは <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>
-            のインスタンスを指定します。これらを組み合わせることで、
-            デフォルトのメタデータキャッシュを指定した上で
-            特定のテーブルオブジェクトについてのみ別のキャッシュを使用させることができます。
+          <emphasis role="strong">metadata</emphasis> =&gt;
+          カラム名とカラムに関する情報を関連付けた連想配列。
+          これは <code>describeTable()</code> メソッドが返す情報です。
         </para>
+      </listitem>
 
-        <example id="zend.db.table.metadata.caching-default">
+      <listitem>
+        <para>
+          <emphasis role="strong">rowClass</emphasis> =&gt;
+          このテーブルインスタンスのメソッドが返す行オブジェクトで使用する
+          具象クラス名。デフォルトは Zend_Db_Table_Row です。
+        </para>
+      </listitem>
 
-            <title>すべてのテーブルオブジェクトでのデフォルトのメタデータキャッシュの使用</title>
+      <listitem>
+        <para>
+          <emphasis role="strong">rowsetClass</emphasis> =&gt;
+          このテーブルインスタンスのメソッドが返す行セットオブジェクトで使用する
+          具象クラス名。デフォルトは Zend_Db_Table_Rowset です。
+        </para>
+      </listitem>
 
-            <para>
-                次のコードは、デフォルトのメタデータキャッシュをすべてのテーブルオブジェクトで使用する方法を示すものです。
-            </para>
+      <listitem>
+        <para>
+          <emphasis role="strong">referenceMap</emphasis> =&gt;
+          このテーブルから任意の親テーブルに対する参照の情報を含む連想配列。
+          <xref linkend="zend.db.table.relationships.defining" />
+          を参照ください。
+        </para>
+      </listitem>
 
-            <programlisting role="php"><![CDATA[<?php
+      <listitem>
+        <para>
+          <emphasis role="strong">dependentTables</emphasis> =&gt;
+          このテーブルを参照しているテーブルのクラス名の配列。
+          <xref linkend="zend.db.table.relationships.defining" />
+          を参照ください。
+        </para>
+      </listitem>
+
+      <listitem>
+        <para>
+          <emphasis role="strong">schema</emphasis> =&gt;
+          テーブルのスキーマ (あるいはデータベース、あるいは表領域)
+          の名前。
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect2>
+
+  <sect2 id="zend.db.table.metadata.caching">
+    <title>テーブルのメタデータのキャッシュ</title>
+
+    <para>
+      デフォルトでは <code>Zend_Db_Table_Abstract</code> の問合せ先は
+      テーブルオブジェクトのインスタンスの
+      <link linkend="zend.db.table.info">テーブルメタデータ</link>
+      が指すデータベースとなります。
+      つまり、テーブルオブジェクトを作成する際にデフォルトで行われれることは、アダプタの
+      <code>describeTable()</code> メソッドによってデータベースからテーブルのメタデータを取得するということになります。
+    </para>
+
+    <para>
+      同一のテーブルに対して複数のテーブルオブジェクトを作成する場合などに、
+      毎回テーブルのめたデータをデータベースに問い合わせることは
+      パフォーマンスの観点からも好ましくありません。
+      このような場合のために、データベースから取得したテーブルメタデータをキャッシュしておくことができます。
+    </para>
+
+    <para>
+      テーブルのメタデータをキャッシュする主な方法は、次のふたつです。
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis role="strong">Zend_Db_Table_Abstract::setDefaultMetadataCache() をコールする</emphasis> -
+            これは、すべてのテーブルクラスで使用するデフォルトのキャッシュオブジェクトを一度で設定できます。
+          </para>
+        </listitem>
+
+        <listitem>
+          <para>
+            <emphasis role="strong">Zend_Db_Table_Abstract::__construct() を設定する</emphasis> -
+            これは、特定のテーブルクラスのインスタンスでh使用するキャッシュオブジェクトを設定できます。
+          </para>
+        </listitem>
+      </itemizedlist> 
+      どちらの場合においても、メソッドの引数はひとつで、<code>null</code> (キャッシュを使用しない)
+      あるいは <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>
+      のインスタンスを指定します。これらを組み合わせることで、
+      デフォルトのメタデータキャッシュを指定した上で
+      特定のテーブルオブジェクトについてのみ別のキャッシュを使用させることができます。
+    </para>
+
+    <example id="zend.db.table.metadata.caching-default">
+      <title>すべてのテーブルオブジェクトでのデフォルトのメタデータキャッシュの使用</title>
+
+      <para>
+        次のコードは、デフォルトのメタデータキャッシュをすべてのテーブルオブジェクトで使用する方法を示すものです。
+      </para>
+
+      <programlisting role="php">&lt;?php
 
 // まずキャッシュを作成します
 
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-    'automatic_serialization' => true
+    'automatic_serialization' =&gt; true
     );
 
 $backendOptions  = array(
-    'cacheDir'                => 'cacheDir'
+    'cacheDir'                =&gt; 'cacheDir'
     );
 
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
@@ -1064,36 +1262,34 @@ class Bugs extends Zend_Db_Table_Abstract
 
 // Bugs の各インスタンスは、これでデフォルトのメタデータキャッシュを用いるようになります
 
-$bugs = new Bugs();]]></programlisting>
+$bugs = new Bugs();</programlisting>
+    </example>
 
-        </example>
+    <example id="zend.db.table.metadata.caching-instance">
+      <title>特定のテーブルオブジェクトでのメタデータキャッシュの使用</title>
 
-        <example id="zend.db.table.metadata.caching-instance">
+      <para>
+        次のコードは、メタデータキャッシュを特定のテーブルオブジェクトに設定する方法を示すものです。
+      </para>
 
-            <title>特定のテーブルオブジェクトでのメタデータキャッシュの使用</title>
-
-            <para>
-                次のコードは、メタデータキャッシュを特定のテーブルオブジェクトに設定する方法を示すものです。
-            </para>
-
-            <programlisting role="php"><![CDATA[<?php
+      <programlisting role="php">&lt;?php
 
 // まずキャッシュを作成します
 
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-    'automatic_serialization' => true
+    'automatic_serialization' =&gt; true
     );
 
 $backendOptions  = array(
-    'cacheDir'                => 'cacheDir'
+    'cacheDir'                =&gt; 'cacheDir'
     );
 
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 
-// テーブルクラスとそのインスタンスを作成します
+// テーブルクラスも必要です
 
 require_once 'Zend/Db/Table/Abstract.php';
 
@@ -1102,73 +1298,59 @@ class Bugs extends Zend_Db_Table_Abstract
     // ...
 }
 
-$bugs = new Bugs();
 
+// インスタンスを設定します
 
-// このテーブルオブジェクトでキャッシュを使用するように設定します
+$bugs = new Bugs(array('metadataCache' =&gt; $cache));</programlisting>
+    </example>
 
-$bugs->setMetadataCache($cache);
+    <note>
+      <title>キャッシュのフロントエンドにおける自動シリアライズ</title>
 
-// $bugs は、メタデータ情報をキャッシュします
+      <para>
+        アダプタの describeTable() メソッドの返す内容は配列なので、
+        <code>Zend_Cache_Core</code> フロントエンドのオプション
+        <code>automatic_serialization</code> は <code>true</code> と設定しましょう。
+      </para>
+    </note>
 
+    <para>
+      上の例では <code>Zend_Cache_Backend_File</code> を使用していますが、
+      状況に応じて適切なバックエンドを使い分けることができます。詳細な情報は
+      <link linkend="zend.cache">Zend_Cache</link> を参照ください。
+    </para>
+  </sect2>
 
-// あるいは、インスタンスの作成時にこのように設定することもできます
+  <sect2 id="zend.db.table.extending">
+    <title>テーブルクラスのカスタマイズおよび拡張</title>
 
-$bugs = new Bugs(array('metadataCache' => $cache));]]></programlisting>
+    <sect3 id="zend.db.table.extending.row-rowset">
+      <title>独自の行クラスあるいは行セットクラスの使用</title>
 
-        </example>
+      <para>
+        デフォルトでは、テーブルクラスが返す行セットは
+        具象クラス Zend_Db_Table_Rowset のインスタンスであり、
+        行セットには具象クラス Zend_Db_Table_Row
+        のインスタンスの集合が含まれます。
+        これらのいずれについても、別のクラスを使用することが可能です。
+        しかし、使用するクラスはそれぞれ
+        Zend_Db_Table_Rowset_Abstract および
+        Zend_Db_Table_Row_Abstract を継承したものでなければなりません。
+      </para>
 
-        <note>
+      <para>
+        行クラスおよび行セットクラスを指定するには、
+        テーブルのコンストラクタのオプション配列を使用します。
+        対応するキーは、それぞれ
+        <code>'rowClass'</code> および
+        <code>'rowsetClass'</code> となります。
+        ここには、クラスの名前を文字列で指定します。
+      </para>
 
-            <title>キャッシュのフロントエンドにおける自動シリアライズ</title>
+      <example id="zend.db.table.extending.row-rowset.example">
+        <title>行クラスおよび行セットクラスの指定の例</title>
 
-            <para>
-                アダプタの describeTable() メソッドの返す内容は配列なので、
-                <code>Zend_Cache_Core</code> フロントエンドのオプション
-                <code>automatic_serialization</code> は <code>true</code> と設定しましょう。
-            </para>
-
-        </note>
-
-        <para>
-            上の例では <code>Zend_Cache_Backend_File</code> を使用していますが、
-            状況に応じて適切なバックエンドを使い分けることができます。詳細な情報は
-            <link linkend="zend.cache">Zend_Cache</link> を参照ください。
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.db.table.extending">
-
-        <title>テーブルクラスのカスタマイズおよび拡張</title>
-
-        <sect3 id="zend.db.table.extending.row-rowset">
-
-            <title>独自の行クラスあるいは行セットクラスの使用</title>
-
-            <para>
-                デフォルトでは、テーブルクラスが返す行セットは
-                具象クラス Zend_Db_Table_Rowset のインスタンスであり、
-                行セットには具象クラス Zend_Db_Table_Row
-                のインスタンスの集合が含まれます。
-                これらのいずれについても、別のクラスを使用することが可能です。
-                しかし、使用するクラスはそれぞれ
-                Zend_Db_Table_Rowset_Abstract および
-                Zend_Db_Table_Row_Abstract を継承したものでなければなりません。
-            </para>
-
-            <para>
-                行クラスおよび行セットクラスを指定するには、
-                テーブルのコンストラクタのオプション配列を使用します。
-                対応するキーは、それぞれ
-                <code>'rowClass'</code> および
-                <code>'rowsetClass'</code> となります。
-                ここには、クラスの名前を文字列で指定します。
-            </para>
-
-            <example id="zend.db.table.extending.row-rowset.example">
-                <title>行クラスおよび行セットクラスの指定の例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class My_Row extends Zend_Db_Table_Row_Abstract
 {
@@ -1182,70 +1364,70 @@ class My_Rowset extends Zend_Db_Table_Rowset_Abstract
 
 $table = new Bugs(
     array(
-        'rowClass'    => 'My_Row',
-        'rowsetClass' => 'My_Rowset'
+        'rowClass'    =&gt; 'My_Row',
+        'rowsetClass' =&gt; 'My_Rowset'
     )
 );
 
-$where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
+$where = $table-&gt;getAdapter()-&gt;quoteInto('bug_status = ?', 'NEW')
 
 // My_Rowset 型のオブジェクトを返します。
 // その中には My_Row 型のオブジェクトの配列が含まれます。
-$rows = $table->fetchAll($where);]]></programlisting>
-            </example>
+$rows = $table-&gt;fetchAll($where);</programlisting>
+      </example>
 
-            <para>
-                クラスを変更するには、<code>setRowClass()</code> メソッドおよび
-                <code>setRowsetClass()</code> メソッドを使用します。
-                これは、それ以降に作成される行および行セットに適用されます。
-                すでに出来上がっている行オブジェクトや行セットオブジェクトには
-                何の影響も及ぼしません。
-            </para>
+      <para>
+        クラスを変更するには、<code>setRowClass()</code> メソッドおよび
+        <code>setRowsetClass()</code> メソッドを使用します。
+        これは、それ以降に作成される行および行セットに適用されます。
+        すでに出来上がっている行オブジェクトや行セットオブジェクトには
+        何の影響も及ぼしません。
+      </para>
 
-            <example id="zend.db.table.extending.row-rowset.example2">
-                <title>行クラスおよび行セットクラスの変更の例</title>
-                <programlisting role="php"><![CDATA[<?php
+      <example id="zend.db.table.extending.row-rowset.example2">
+        <title>行クラスおよび行セットクラスの変更の例</title>
+
+        <programlisting role="php">&lt;?php
 
 $table = new Bugs();
 
-$where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
+$where = $table-&gt;getAdapter()-&gt;quoteInto('bug_status = ?', 'NEW')
 
 // Zend_Db_Table_Rowset 型のオブジェクトを返します。
 // その中には Zend_Db_Table_Row 型のオブジェクトの配列が含まれます。
-$rowsStandard = $table->fetchAll($where);
+$rowsStandard = $table-&gt;fetchAll($where);
 
-$table->setRowClass('My_Row');
-$table->setRowsetClass('My_Rowset');
+$table-&gt;setRowClass('My_Row');
+$table-&gt;setRowsetClass('My_Rowset');
 
 // My_Rowset 型のオブジェクトを返します。
 // その中には My_Row 型のオブジェクトの配列が含まれます。
-$rowsCustom = $table->fetchAll($where);
+$rowsCustom = $table-&gt;fetchAll($where);
 
-// $rowsStandard オブジェクトはまだ存在しますが、なにも変更されていません]]></programlisting>
-            </example>
+// $rowsStandard オブジェクトはまだ存在しますが、なにも変更されていません</programlisting>
+      </example>
 
-            <para>
-                行クラスおよび行セットクラスについての詳細は
-                <xref linkend="zend.db.table.row" /> および
-                <xref linkend="zend.db.table.rowset" /> を参照ください。
-            </para>
+      <para>
+        行クラスおよび行セットクラスについての詳細は
+        <xref linkend="zend.db.table.row" /> および
+        <xref linkend="zend.db.table.rowset" /> を参照ください。
+      </para>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.extending.insert-update">
+      <title>Insert、Update および Delete 時の独自ロジックの定義</title>
 
-        <sect3 id="zend.db.table.extending.insert-update">
+      <para>
+        テーブルクラスの <code>insert()</code> メソッドや
+        <code>update()</code> メソッドをオーバーライドすることができます。
+        これにより、データベース操作の前に実行される独自のコードを実装することができます。
+        最後に親クラスのメソッドをコールすることを忘れないようにしましょう。
+      </para>
 
-            <title>Insert、Update および Delete 時の独自ロジックの定義</title>
+      <example id="zend.db.table.extending.insert-update.example">
+        <title>タイムスタンプを処理する独自ロジック</title>
 
-            <para>
-                テーブルクラスの <code>insert()</code> メソッドや
-                <code>update()</code> メソッドをオーバーライドすることができます。
-                これにより、データベース操作の前に実行される独自のコードを実装することができます。
-                最後に親クラスのメソッドをコールすることを忘れないようにしましょう。
-            </para>
-
-            <example id="zend.db.table.extending.insert-update.example">
-                <title>タイムスタンプを処理する独自ロジック</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -1268,33 +1450,32 @@ class Bugs extends Zend_Db_Table_Abstract
         }
         return parent::update($data, $where);
     }
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                <code>delete()</code> メソッドをオーバーライドすることもできます。
-            </para>
+      <para>
+        <code>delete()</code> メソッドをオーバーライドすることもできます。
+      </para>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.extending.finders">
+      <title>Zend_Db_Table における独自の検索メソッドの定義</title>
 
-        <sect3 id="zend.db.table.extending.finders">
+      <para>
+        もし特定の条件によるテーブルの検索を頻繁に行うのなら、
+        独自の検索メソッドをテーブルクラスで実装することができます。
+        大半の問い合わせは <code>fetchAll()</code>
+        を用いて書くことができますが、
+        アプリケーション内の複数の箇所でクエリを実行する場合には
+        問い合わせ条件を指定するコードが重複してしまいます。
+        そんな場合は、テーブルクラスでメソッドを実装し、
+        よく使う問い合わせを定義しておいたほうが便利です。
+      </para>
 
-            <title>Zend_Db_Table における独自の検索メソッドの定義</title>
+      <example id="zend.db.table.extending.finders.example">
+        <title>状況を指定してバグを検索する独自メソッド</title>
 
-            <para>
-                もし特定の条件によるテーブルの検索を頻繁に行うのなら、
-                独自の検索メソッドをテーブルクラスで実装することができます。
-                大半の問い合わせは <code>fetchAll()</code>
-                を用いて書くことができますが、
-                アプリケーション内の複数の箇所でクエリを実行する場合には
-                問い合わせ条件を指定するコードが重複してしまいます。
-                そんな場合は、テーブルクラスでメソッドを実装し、
-                よく使う問い合わせを定義しておいたほうが便利です。
-            </para>
-
-            <example id="zend.db.table.extending.finders.example">
-                <title>状況を指定してバグを検索する独自メソッド</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -1302,70 +1483,69 @@ class Bugs extends Zend_Db_Table_Abstract
 
     public function findByStatus($status)
     {
-        $where = $this->getAdapter()->quoteInto('bug_status = ?', $status);
-        return $this->fetchAll($where, 'bug_id');
+        $where = $this-&gt;getAdapter()-&gt;quoteInto('bug_status = ?', $status);
+        return $this-&gt;fetchAll($where, 'bug_id');
     }
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
+    </sect3>
 
-        </sect3>
+    <sect3 id="zend.db.table.extending.inflection">
+      <title>Zend_Db_Table における語尾変化の定義</title>
 
-        <sect3 id="zend.db.table.extending.inflection">
+      <para>
+        テーブルのクラス名を RDBMS のテーブル名とあわせるために、
+        <emphasis>inflection (語尾変化)</emphasis>
+        と呼ばれる文字列変換を使用することを好む方もいます。
+      </para>
 
-            <title>Zend_Db_Table における語尾変化の定義</title>
+      <para>
+        たとえば、テーブルのクラス名が
+        "<code>BugsProducts</code>" だとすると、クラスのプロパティ
+        <code>$_name</code> を明示的に宣言しなかった場合は
+        データベース内の物理的なテーブル
+        "<code>bugs_products</code>" にマッチします。この関連付けでは、
+        "CamelCase" 形式のクラス名が小文字に変換され、単語の区切りがアンダースコアに変わります。
+      </para>
 
-            <para>
-                テーブルのクラス名を RDBMS のテーブル名とあわせるために、
-                <emphasis>inflection (語尾変化)</emphasis>
-                と呼ばれる文字列変換を使用することを好む方もいます。
-            </para>
+      <para>
+        データベースのテーブル名を、クラス名とは独立したものにすることもできます。
+        その場合は、テーブルクラスのプロパティ <code>$_name</code>
+        に、そのクラス名を指定します。
+      </para>
 
-            <para>
-                たとえば、テーブルのクラス名が
-                "<code>BugsProducts</code>" だとすると、クラスのプロパティ
-                <code>$_name</code> を明示的に宣言しなかった場合は
-                データベース内の物理的なテーブル
-                "<code>bugs_products</code>" にマッチします。この関連付けでは、
-                "CamelCase" 形式のクラス名が小文字に変換され、単語の区切りがアンダースコアに変わります。
-            </para>
+      <para>
+        Zend_Db_Table_Abstract は、クラス名とテーブル名を関連付けるための語尾変化は行いません。
+        テーブルクラスで <code>$_name</code> の宣言を省略すると、
+        そのクラス名に正確に一致する名前のテーブルと関連付けられます。
+      </para>
 
-            <para>
-                データベースのテーブル名を、クラス名とは独立したものにすることもできます。
-                その場合は、テーブルクラスのプロパティ <code>$_name</code>
-                に、そのクラス名を指定します。
-            </para>
+      <para>
+        データベースの識別子を変換することは、適切ではありません。
+        なぜなら、それは不明確な状態を引き起こし、
+        時には識別子にアクセスできなくなってしまうからです。
+        SQL の識別子をデータベース内にあるそのままの形式で扱うことで、
+        Zend_Db_Table_Abstract はシンプルで柔軟なものになっています。
+      </para>
 
-            <para>
-                Zend_Db_Table_Abstract は、クラス名とテーブル名を関連付けるための語尾変化は行いません。
-                テーブルクラスで <code>$_name</code> の宣言を省略すると、
-                そのクラス名に正確に一致する名前のテーブルと関連付けられます。
-            </para>
+      <para>
+        語尾変化を行いたい場合は、その変換を独自に実装しなければなりません。そのためには
+        テーブルクラスで <code>_setupTableName()</code> メソッドをオーバーライドします。
+        これを行うひとつの方法としては、Zend_Db_Table_Abstract
+        を継承した抽象クラスを作成し、さらにそれを継承したテーブルクラスを作成するという方法があります。
+      </para>
 
-            <para>
-                データベースの識別子を変換することは、適当ではありません。
-                なぜなら、それは不明確な状態を引き起こし、
-                時には識別子にアクセスできなくなってしまうからです。
-                SQL の識別子をデータベース内にあるそのままの形式で扱うことで、
-                Zend_Db_Table_Abstract はシンプルで柔軟なものになっています。
-            </para>
+      <example id="zend.db.table.extending.inflection.example">
+        <title>語尾変化を実装した抽象テーブルクラスの例</title>
 
-            <para>
-                語尾変化を行いたい場合は、その変換を独自に実装しなければなりません。そのためには
-                テーブルクラスで <code>_setupTableName()</code> メソッドをオーバーライドします。
-                これを行うひとつの方法としては、Zend_Db_Table_Abstract
-                を継承した抽象クラスを作成し、さらにそれを継承したテーブルクラスを作成するという方法があります。
-            </para>
-
-            <example id="zend.db.table.extending.inflection.example">
-                <title>語尾変化を実装した抽象テーブルクラスの例</title>
-                <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php">&lt;?php
 
 abstract class MyAbstractTable extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
     {
-        if (!$this->_name) {
-            $this->_name = myCustomInflector(get_class($this));
+        if (!$this-&gt;_name) {
+            $this-&gt;_name = myCustomInflector(get_class($this));
         }
         parent::_setupTableName();
     }
@@ -1373,18 +1553,15 @@ abstract class MyAbstractTable extends Zend_Db_Table_Abstract
 
 class BugsProducts extends MyAbstractTable
 {
-}]]></programlisting>
-            </example>
+}</programlisting>
+      </example>
 
-            <para>
-                語尾変化を行う関数を書くのはあなたの役割です。
-                Zend Framework にはそのような関数はありません。
-            </para>
-
-        </sect3>
-
-    </sect2>
-
+      <para>
+        語尾変化を行う関数を書くのはあなたの役割です。
+        Zend Framework にはそのような関数はありません。
+      </para>
+    </sect3>
+  </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
