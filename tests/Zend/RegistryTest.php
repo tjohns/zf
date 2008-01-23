@@ -17,13 +17,17 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
+/**
+ * @see Zend_Registry
+ */
 require_once 'Zend/Registry.php';
 
 /**
@@ -197,7 +201,10 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
             $registry = Zend_Registry::setClassName('classdoesnotexist');
             $this->fail('Expected exception, because we cannot initialize the registry using a non-existent class.');
         } catch (Zend_Exception $e) {
-            $this->assertContains('File "classdoesnotexist.php" was not found', $e->getMessage());
+            $this->assertTrue(is_array($e->includeErrors));
+            $this->assertEquals(2, count($e->includeErrors));
+            $this->assertRegExp('/failed to open stream: No such file/i', $e->includeErrors[0]->errstr);
+            $this->assertRegExp('/Failed opening \'classdoesnotexist\.php\'/i', $e->includeErrors[1]->errstr);
         }
     }
 
