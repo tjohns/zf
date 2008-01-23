@@ -192,14 +192,14 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("titlecase-firstword", $layout['inList']);
         $this->assertEquals("lowercase-words",     $layout['currency']);
         $this->assertEquals("mixed",               $layout['dayWidth']);
-        $this->assertEquals("lowercase-words",     $layout['fields']);
+        $this->assertEquals("mixed",               $layout['fields']);
         $this->assertEquals("lowercase-words",     $layout['keys']);
         $this->assertEquals("lowercase-words",     $layout['languages']);
         $this->assertEquals("lowercase-words",     $layout['long']);
         $this->assertEquals("lowercase-words",     $layout['measurementSystemNames']);
         $this->assertEquals("mixed",               $layout['monthWidth']);
-        $this->assertEquals("lowercase-words",     $layout['quarterWidth']);
-        $this->assertEquals("lowercase-words",     $layout['scripts']);
+        $this->assertEquals("mixed",               $layout['quarterWidth']);
+        $this->assertEquals("mixed",               $layout['scripts']);
         $this->assertEquals("mixed",               $layout['territories']);
         $this->assertEquals("lowercase-words",     $layout['types']);
         $this->assertEquals("mixed",               $layout['variants']);
@@ -635,7 +635,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     public function testTime()
     {
         $date = Zend_Locale_Data::getList('de_AT', 'time');
-        $result = array("full" => "HH:mm 'Uhr' v", "long" => "HH:mm:ss z",
+        $result = array("full" => "HH:mm:ss v", "long" => "HH:mm:ss z",
                         "medium" => "HH:mm:ss", "short" => "HH:mm");
         $this->assertEquals($result, $date);
 
@@ -737,7 +737,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     {
         $value = Zend_Locale_Data::getList('de_AT', 'symbols');
         $result = array(    "decimal"  => ",", "group" => ".", "list"  => ";", "percent"  => "%",
-            "zero"  => "0", "pattern"  => "#", "plus"  => "+", "minus" => "−", "exponent" => "×10^",
+            "zero"  => "0", "pattern"  => "#", "plus"  => "+", "minus" => "-", "exponent" => "E",
             "mille" => "‰", "infinity" => "∞", "nan"   => "NaN");
         $this->assertEquals($result, $value);
     }
@@ -1772,13 +1772,13 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'Africa/Djibouti' => 'Dschibuti', 'Europe/Copenhagen' => 'Kopenhagen', 'Africa/Algiers' => 'Algier',
             'Africa/Cairo' => 'Kairo', 'Africa/El_Aaiun' => 'El Aaiún', 'Atlantic/Canary' => 'Kanaren',
             'Africa/Addis_Ababa' => 'Addis Abeba', 'Pacific/Fiji' => 'Fidschi', 'Atlantic/Faeroe' => 'Färöer',
-            'Asia/Tbilisi' => 'Tiflis', 'Africa/Accra' => 'Akkra', 'America/Scoresbysund' => 'Ostgrönland',
+            'Asia/Tbilisi' => 'Tiflis', 'Africa/Accra' => 'Akkra',
             'Europe/Athens' => 'Athen', 'Atlantic/South_Georgia' => 'Süd-Georgien', 'Asia/Hong_Kong' => 'Hongkong',
             'Asia/Baghdad' => 'Bagdad', 'Asia/Tehran' => 'Teheran', 'Europe/Rome' => 'Rom', 'America/Jamaica' => 'Jamaika',
             'Asia/Tokyo' => 'Tokio', 'Asia/Bishkek' => 'Bischkek', 'Indian/Comoro' => 'Komoren', 'America/St_Kitts' => 'St. Kitts',
             'Asia/Pyongyang' => 'Pjöngjang', 'America/Cayman' => 'Kaimaninseln', 'Asia/Aqtobe' => 'Aktobe',
             'America/St_Lucia' => 'St. Lucia', 'Europe/Vilnius' => 'Wilna', 'Europe/Luxembourg' => 'Luxemburg',
-            'Africa/Tripoli' => 'Tripolis', 'Europe/Chisinau' => 'Kischinau', 'Asia/Ulaanbaatar' => 'Ulan-Bator',
+            'Africa/Tripoli' => 'Tripolis', 'Europe/Chisinau' => 'Kischinau',
             'Asia/Macau' => 'Macao', 'Indian/Maldives' => 'Malediven', 'America/Mexico_City' => 'Mexiko-Stadt',
             'Africa/Niamey' => 'Niger', 'Asia/Muscat' => 'Muskat', 'Europe/Warsaw' => 'Warschau',
             'Atlantic/Azores' => 'Azoren', 'Europe/Lisbon' => 'Lissabon', 'America/Asuncion' => 'Asunción',
@@ -1790,7 +1790,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'Africa/Mogadishu' => 'Mogadischu', 'Africa/Sao_Tome' => 'São Tomé', 'America/El_Salvador' => 'Salvador',
             'Asia/Damascus' => 'Damaskus', 'Asia/Dushanbe' => 'Duschanbe', 'America/Port_of_Spain' => 'Port-of-Spain',
             'Asia/Taipei' => 'Taipeh', 'Africa/Dar_es_Salaam' => 'Daressalam', 'Europe/Uzhgorod' => 'Uschgorod',
-            'Europe/Kiev' => 'Kiew', 'Europe/Zaporozhye' => 'Saporischja', 'America/Anchorage' => 'Alaska Time',
+            'Europe/Kiev' => 'Kiew', 'Europe/Zaporozhye' => 'Saporischja',
             'Asia/Tashkent' => 'Taschkent', 'America/St_Vincent' => 'St. Vincent', 'America/St_Thomas' => 'St. Thomas');
         $this->assertEquals($result, $value);
 
@@ -1814,13 +1814,13 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'Dschibuti' => 'Africa/Djibouti', 'Kopenhagen' => 'Europe/Copenhagen', 'Algier' => 'Africa/Algiers',
             'Kairo' => 'Africa/Cairo', 'El Aaiún' => 'Africa/El_Aaiun', 'Kanaren' => 'Atlantic/Canary',
             'Addis Abeba' => 'Africa/Addis_Ababa', 'Fidschi' => 'Pacific/Fiji', 'Färöer' => 'Atlantic/Faeroe',
-            'Tiflis' => 'Asia/Tbilisi', 'Akkra' => 'Africa/Accra', 'Ostgrönland' => 'America/Scoresbysund',
+            'Tiflis' => 'Asia/Tbilisi', 'Akkra' => 'Africa/Accra',
             'Athen' => 'Europe/Athens', 'Süd-Georgien' => 'Atlantic/South_Georgia', 'Hongkong' => 'Asia/Hong_Kong',
             'Bagdad' => 'Asia/Baghdad', 'Teheran' => 'Asia/Tehran', 'Rom' => 'Europe/Rome', 'Jamaika' => 'America/Jamaica',
             'Tokio' => 'Asia/Tokyo', 'Bischkek' => 'Asia/Bishkek', 'Komoren' => 'Indian/Comoro', 'St. Kitts' => 'America/St_Kitts',
             'Pjöngjang' => 'Asia/Pyongyang', 'Kaimaninseln' => 'America/Cayman', 'Aktobe' => 'Asia/Aqtobe',
             'St. Lucia' => 'America/St_Lucia', 'Wilna' => 'Europe/Vilnius', 'Luxemburg' => 'Europe/Luxembourg',
-            'Tripolis' => 'Africa/Tripoli', 'Kischinau' => 'Europe/Chisinau', 'Ulan-Bator' => 'Asia/Ulaanbaatar',
+            'Tripolis' => 'Africa/Tripoli', 'Kischinau' => 'Europe/Chisinau',
             'Macao' => 'Asia/Macau', 'Malediven' => 'Indian/Maldives', 'Mexiko-Stadt' => 'America/Mexico_City',
             'Niger' => 'Africa/Niamey', 'Muskat' => 'Asia/Muscat', 'Warschau' => 'Europe/Warsaw', 'Azoren' => 'Atlantic/Azores',
             'Lissabon' => 'Europe/Lisbon', 'Asunción' => 'America/Asuncion', 'Katar' => 'Asia/Qatar',
@@ -1832,7 +1832,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
             'São Tomé' => 'Africa/Sao_Tome', 'Salvador' => 'America/El_Salvador', 'Damaskus' => 'Asia/Damascus',
             'Duschanbe' => 'Asia/Dushanbe', 'Port-of-Spain' => 'America/Port_of_Spain', 'Taipeh' => 'Asia/Taipei',
             'Daressalam' => 'Africa/Dar_es_Salaam', 'Uschgorod' => 'Europe/Uzhgorod', 'Kiew' => 'Europe/Kiev',
-            'Saporischja' => 'Europe/Zaporozhye', 'Alaska Time' => 'America/Anchorage', 'Taschkent' => 'Asia/Tashkent',
+            'Saporischja' => 'Europe/Zaporozhye', 'Taschkent' => 'Asia/Tashkent',
             'St. Vincent' => 'America/St_Vincent', 'St. Thomas' => 'America/St_Thomas');
         $this->assertEquals($result, $value);
 
